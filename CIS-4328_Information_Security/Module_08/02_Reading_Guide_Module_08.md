@@ -232,6 +232,22 @@ The following SY0-701 exam objectives are covered in this module:
 
 ---
 
+## 9. Supplemental Resources
+
+**1. CIS Benchmarks — Center for Internet Security**
+<https://www.cisecurity.org/cis-benchmarks/>
+Free downloadable hardening baselines for Windows, Linux, macOS, cloud platforms, and network devices. The Level 1 Windows benchmark directly maps to Module 08 system hardening content covering password policy, audit settings, unnecessary services, and application control. Registration required but free.
+
+**2. CISA Known Exploited Vulnerabilities Catalog**
+<https://www.cisa.gov/known-exploited-vulnerabilities-catalog>
+The authoritative federal catalog of vulnerabilities with confirmed active exploitation. Understanding how to use KEV status alongside CVSS scores for patch prioritization is a practical skill directly tested in Module 08 lab scenarios and Security+ exam questions on vulnerability management.
+
+**3. NIST SP 800-124 Rev. 2 — Guidelines for Managing the Security of Mobile Devices in the Enterprise**
+<https://csrc.nist.gov/publications/detail/sp/800-124/rev-2/final>
+NIST's comprehensive guidance on enterprise mobile device security covering MDM, MAM, BYOD policy frameworks, remote wipe, certificate-based authentication, and mobile threat categories. Directly supports Module 08 MDM/MAM content and the mobile policy design lab tasks.
+
+---
+
 ## Review Checklist
 
 Before taking the Module 08 quiz, verify you can do each of the following without notes:

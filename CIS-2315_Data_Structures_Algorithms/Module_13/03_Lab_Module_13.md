@@ -377,3 +377,21 @@ Submit to Canvas:
 | Gas Station | Reset `start = i+1` when `current_tank < 0`; return -1 if `total_tank < 0` |
 | Fractional knapsack | Greedy by value/weight ratio — optimal |
 | 0/1 knapsack | Greedy fails — requires DP (Module 14) |
+
+---
+
+## Part 9 — Challenge Exercise
+
+These steps are **optional** and ungraded. They are designed for students who want to deepen their understanding beyond the core lab.
+
+### 9.1 — Non-Overlapping Intervals with Meeting Rooms (LeetCode #252 / #253)
+
+LeetCode #252 (Meeting Rooms) asks whether a person can attend all meetings given a list of time intervals. LeetCode #253 (Meeting Rooms II) asks the minimum number of conference rooms required. Solve both problems. For #252, sort by start time and check consecutive overlap in O(n log n). For #253, use a min-heap to track when rooms free up: push end times onto the heap; if the next meeting's start is after `heap[0]`, pop the earliest ending room and reuse it; otherwise push a new room. Verify that your #253 solution handles overlapping intervals, back-to-back intervals (touching is allowed), and a single interval. Explain why a greedy min-heap is optimal for #253 and state the time complexity.
+
+### 9.2 — Task Scheduler (LeetCode #621)
+
+Given a list of CPU tasks (each labeled A–Z) and a cooldown period `n`, find the minimum time to complete all tasks. The greedy insight is to always schedule the most frequent remaining task, using idle slots when no valid task exists. Implement the solution using a max-heap (negate counts for Python's min-heap) and a cooldown queue of `(count, available_at_time)` tuples. Trace through `tasks=["A","A","A","B","B","B"], n=2` step by step, showing the heap state after each scheduling decision. Verify the output is 8, and explain why greedy by frequency is optimal here whereas a different ordering could produce a longer schedule.
+
+### 9.3 — Huffman Encoding (Greedy + Priority Queue)
+
+Huffman coding is a classic greedy algorithm for lossless data compression. Given a frequency table for characters, build an optimal prefix-free binary encoding tree: repeatedly merge the two lowest-frequency nodes into a parent node (using a min-heap), until only one root remains. Implement `build_huffman_tree(freq_table)` that returns a dict mapping each character to its binary code string. Verify on `{'a':5, 'b':9, 'c':12, 'd':13, 'e':16, 'f':45}` — character 'f' should have the shortest code (1 bit) and 'a' the longest. Prove the exchange argument: if any two leaves at equal depth are swapped, the total weighted path length cannot decrease, confirming the greedy merge is optimal.

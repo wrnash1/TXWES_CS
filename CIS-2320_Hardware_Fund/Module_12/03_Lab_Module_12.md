@@ -185,3 +185,33 @@ Submit your completed lab responses as a single typed document to the Canvas ass
 - Table cells must use correct device names and OSI layers. "I don't know" or blank cells receive zero for that row.
 - Scenario responses must identify correct devices and explain the technical reasoning. Vague answers receive partial credit only.
 - PoE calculations must show the arithmetic, not just a final answer.
+
+---
+
+## Part 9 — Challenge Exercise
+
+These advanced steps are optional and are not included in the standard grading rubric.
+
+### Challenge Step 1 — Packet Tracer Network Build
+
+Download and install Cisco Packet Tracer (free at netacad.com with a free Networking Academy account) and build the following network topology:
+
+1. Place one router, one 24-port managed switch, two PCs, and one wireless access point on the canvas. Connect the devices: PC1 to switch port 1, PC2 to switch port 2, the WAP to switch port 3, and the switch's uplink port to the router's LAN interface. Configure the router with IP address 192.168.1.1/24 on the LAN interface and enable DHCP for the 192.168.1.0/24 subnet. Verify that both PCs receive IP addresses automatically and can ping each other and the router.
+1. Create two VLANs on the managed switch: VLAN 10 (name: "Workstations") assigned to ports 1 and 2, and VLAN 20 (name: "Guest") assigned to port 4. Configure the router uplink port as a trunk carrying both VLANs. Configure sub-interfaces on the router for each VLAN (192.168.10.1/24 for VLAN 10; 192.168.20.1/24 for VLAN 20) and enable DHCP for each subnet. Document the commands used and verify that a PC on VLAN 10 can ping the router's VLAN 10 sub-interface.
+1. Write 2–3 sentences explaining why two PCs on different VLANs on the same physical switch cannot communicate without the router, even though they are physically connected to the same hardware. Reference the OSI layer at which VLANs operate and the OSI layer at which the router resolves the isolation.
+
+### Challenge Step 2 — Wireshark ARP and DHCP Capture
+
+Download and install Wireshark (free at wireshark.org) on any available Windows or macOS computer connected to a local network:
+
+1. Start a packet capture on the active network interface. Open a command prompt and run `arp -d *` (Windows) or `sudo arp -d -a` (macOS) to clear the ARP cache, then ping the default gateway (find it with `ipconfig` or `ifconfig`). Stop the capture after 30 seconds. Filter the results using the display filter `arp` and locate the ARP request and ARP reply packets. Document: the source MAC, destination MAC (broadcast for request), source IP, and the IP being resolved in the request; and the source MAC, destination MAC, and the MAC-to-IP mapping in the reply.
+1. Start a second capture on the same interface. Open a command prompt and run `ipconfig /release` then `ipconfig /renew` (Windows) to force a DHCP transaction. Filter using `bootp` or `dhcp`. Locate the four DHCP exchange packets (Discover, Offer, Request, Acknowledge) and for each one document: the source IP, destination IP, and what information the packet carries (what the client is asking for, what the server is offering or confirming).
+1. Write 2–3 sentences explaining what would happen to the ARP and DHCP traffic behavior if you replaced the managed switch in this network with an unmanaged hub — specifically addressing which devices would receive the ARP broadcast and why this creates a security and performance concern that VLANs on a managed switch eliminate.
+
+### Challenge Step 3 — Double-NAT Diagnosis and Resolution
+
+Research the double-NAT problem described in Question 11 and document the complete resolution procedure:
+
+1. Describe two methods for resolving double-NAT when a second consumer router is connected to the LAN port of a first router: (a) putting the second router in AP (Access Point) mode by disabling its DHCP server and connecting it via a LAN-to-LAN cable rather than WAN-to-LAN, and (b) configuring the second router as a true router with proper static routes. For method (a), write the exact configuration steps needed on the second router. For method (b), write the routing table entries that would need to be added to both routers to enable bi-directional communication.
+1. Research the term "CGNAT" (Carrier-Grade NAT) — a situation where the ISP itself places the subscriber behind NAT before the public internet, assigning a private RFC 6598 address (100.64.0.0/10) to the modem's WAN interface. Explain in 2–3 sentences how CGNAT creates a triple-NAT scenario in a home with a consumer router, and why port forwarding configured on the consumer router will not work for hosting a server when CGNAT is in use.
+1. Research and document what IPv6 eliminates from this entire discussion: explain why IPv6 removes the need for NAT entirely, how IPv6 addresses allow every device to have a globally routable address, and why this is beneficial for peer-to-peer applications and IoT devices while also introducing new security considerations that a firewall must address.

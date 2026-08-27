@@ -241,3 +241,235 @@ B is correct. A single Transit Gateway VPN connection ($0.05/hour for the VPN + 
 C is incorrect. Direct Connect is explicitly excluded by the budget constraint. MACsec on Direct Connect would also not apply without the Direct Connect circuit.
 
 D is incorrect. AWS PrivateLink exposes specific services from within a VPC to consumers over private network connectivity. It does not provide general network connectivity for an on-premises network to reach multiple VPCs.
+
+---
+
+### Question 11 (5 points)
+
+A company is migrating a large Oracle database to Amazon Aurora PostgreSQL. The schema uses Oracle-specific PL/SQL stored procedures and data types that are not compatible with PostgreSQL. Which AWS tool converts the schema and code automatically before migration?
+
+A. AWS Database Migration Service (DMS) with Full Load mode
+
+B. AWS Schema Conversion Tool (SCT) followed by DMS for ongoing replication
+
+C. AWS DataSync with Oracle agent configuration
+
+D. AWS Snowball Edge with the Oracle database export feature
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect. DMS handles data migration (rows) but does not convert schemas or stored procedures. Oracle-specific PL/SQL code cannot be migrated to Aurora PostgreSQL by DMS alone — schema conversion must happen first.
+- B is correct. AWS SCT analyzes the Oracle schema and automatically converts compatible objects (tables, views, indexes) to PostgreSQL syntax and flags objects (PL/SQL procedures, Oracle-specific functions) that require manual review. After SCT converts the schema, DMS migrates the data with ongoing replication to minimize downtime during cutover.
+- C is incorrect. AWS DataSync is a file transfer service that moves data between on-premises file storage and AWS storage services (S3, EFS, FSx). It does not handle database schema conversion or relational data migration.
+- D is incorrect. Snowball Edge is a physical data transport device for large-scale offline data transfer. It is used when network bandwidth is insufficient to transfer data online — it does not perform schema conversion.
+
+---
+
+### Question 12 (5 points)
+
+A company has a Direct Connect connection to AWS but wants to ensure encrypted connectivity for sensitive financial data traveling between on-premises and their VPC. Direct Connect does not encrypt traffic by default. What is the MOST cost-effective solution that adds encryption without replacing the Direct Connect connection?
+
+A. Replace the Direct Connect connection with an IPsec Site-to-Site VPN
+
+B. Configure MACsec encryption on the Direct Connect connection (requires a dedicated connection)
+
+C. Establish a Site-to-Site VPN over the existing Direct Connect connection using a Private Virtual Interface and a Virtual Private Gateway
+
+D. Enable TLS on all application traffic — transport-layer encryption eliminates the need for network-layer encryption
+
+**Correct Answer: C**
+
+**Distractor Analysis:**
+
+- A is incorrect. Replacing Direct Connect with a VPN loses the dedicated bandwidth, consistent latency, and higher throughput that Direct Connect provides. It is not the most cost-effective solution when Direct Connect is already in place.
+- B is incorrect. MACsec provides Layer 2 encryption on Direct Connect but requires a dedicated Direct Connect connection (not a hosted connection) and supported hardware at the customer premises. It is not universally available and adds cost and hardware requirements.
+- C is correct. Running an IPsec VPN tunnel over a Direct Connect Private VIF combines Direct Connect's reliable dedicated bandwidth with VPN's encryption. The VPN tunnel uses the Direct Connect path rather than the public internet, providing both performance and encryption at minimal additional cost.
+- D is incorrect. TLS encrypts application-layer traffic between specific endpoints, but it does not encrypt all traffic at the network level. Non-TLS protocols, management traffic, and database replication streams may traverse the connection unencrypted. Network-layer encryption provides defense in depth that application-layer TLS alone cannot.
+
+---
+
+### Question 13 (5 points)
+
+A company completed a Rehost migration of 200 servers to EC2 using AWS Application Migration Service (MGN). Six months later, the cloud team is asked to reduce costs and improve performance. Which migration strategy should they apply next?
+
+A. Retire — decommission servers that are no longer needed after the rehost
+
+B. Replatform — move databases from EC2 to RDS and application servers to Elastic Beanstalk without changing core logic
+
+C. Repurchase — replace the existing applications with SaaS alternatives
+
+D. Retain — keep the applications running as-is on EC2 indefinitely
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect. Retiring applies to servers that are no longer needed — this is appropriate for some servers post-migration but does not improve performance or reduce costs for the servers that must remain.
+- B is correct. Replatforming is the logical next step after Rehost. Moving databases from self-managed EC2 to RDS eliminates patching, backup management, and Multi-AZ complexity. Moving application tiers to managed services reduces operational overhead and often reduces cost compared to always-on EC2 instances. Core application logic remains unchanged.
+- C is incorrect. Repurchase (replace with SaaS) is appropriate when a commercial off-the-shelf SaaS application can replace a custom-built workload. It requires vendor evaluation, data migration, and user retraining — a much larger effort than replatforming.
+- D is incorrect. Retaining applications as-is on EC2 after a Rehost provides no cost reduction or performance improvement beyond the initial lift-and-shift. It is appropriate only for applications that cannot be changed for technical or compliance reasons.
+
+---
+
+### Question 14 (5 points)
+
+A company's on-premises DNS server resolves `app.internal.corp` for on-premises clients. After migrating the application to AWS, EC2 instances in a VPC also need to resolve `app.internal.corp` using the same on-premises DNS server. What must be configured in AWS?
+
+A. A Route 53 private hosted zone for `internal.corp` with an A record pointing to the EC2 instance
+
+B. A Route 53 Resolver Outbound Endpoint with a forwarding rule that routes queries for `internal.corp` to the on-premises DNS server IP
+
+C. A Route 53 Resolver Inbound Endpoint with a forwarding rule that routes queries from on-premises to Route 53
+
+D. A DHCP Option Set on the VPC pointing the DNS server to the on-premises DNS server IP
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect. Creating a Route 53 private hosted zone duplicates DNS records in AWS but does not leverage the authoritative on-premises DNS server. Any changes on-premises would require manual updates in Route 53, creating a synchronization problem.
+- B is correct. A Route 53 Resolver Outbound Endpoint provides Route 53 Resolver with ENIs in the VPC. A forwarding rule directs DNS queries for `internal.corp` from VPC resources to the specified on-premises DNS server IP. This allows EC2 instances to resolve on-premises domain names through the existing authoritative DNS server.
+- C is incorrect. Inbound Endpoints accept DNS queries from on-premises clients directed at AWS private hosted zones — they solve the opposite problem (on-premises resolving AWS names), not VPC instances resolving on-premises names.
+- D is incorrect. Setting the VPC DHCP Option Set DNS server to the on-premises IP would route all DNS queries (including AWS internal names like EC2 instance hostnames and S3 endpoints) to the on-premises DNS server. This breaks AWS service discovery and is not recommended.
+
+---
+
+### Question 15 (5 points)
+
+A financial services company must keep all primary data processing within their on-premises data center due to regulatory requirements, but wants to burst compute capacity to AWS during month-end processing peaks. Which hybrid architecture pattern enables this?
+
+A. AWS Storage Gateway File Gateway — cache on-premises files and process them in S3
+
+B. AWS Outposts — deploy AWS infrastructure in the on-premises data center for consistent hybrid compute
+
+C. VMware Cloud on AWS — migrate on-premises VMs to AWS-hosted VMware infrastructure
+
+D. AWS Wavelength — deploy compute at carrier network edges close to the data center
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect. Storage Gateway File Gateway provides cloud-backed file storage for on-premises applications — it enables access to S3 from on-premises but does not provide compute burst capacity and moves data to AWS storage, potentially violating the data residency requirement.
+- B is correct. AWS Outposts deploys genuine AWS infrastructure (servers, networking) physically inside the on-premises data center. Applications running on Outposts use AWS APIs and services but data never leaves the premises. During peaks, workloads can seamlessly burst to AWS Region capacity using the same APIs, fulfilling the regulatory residency requirement while enabling elastic scale.
+- C is incorrect. VMware Cloud on AWS migrates VMs to AWS-hosted VMware infrastructure — the compute runs in an AWS Region, not on-premises. This does not satisfy the requirement to keep primary data processing within the on-premises data center.
+- D is incorrect. AWS Wavelength deploys compute at telecom carrier network edges (5G) to reduce latency for mobile and edge applications. It is not designed for on-premises data center compute bursting or regulatory data residency scenarios.
+
+---
+
+### Question 16 (5 points)
+
+A company uses AWS DataSync to migrate 500 TB from an on-premises NAS to Amazon S3. Their internet connection is 1 Gbps. The migration must complete within 10 days. Is DataSync over the existing internet connection feasible?
+
+A. Yes — DataSync saturates a 1 Gbps connection and can transfer approximately 10.8 TB per day, completing the migration in under 50 days
+
+B. No — 500 TB over 1 Gbps takes approximately 46 days at maximum theoretical throughput; AWS Snowball Edge should be used instead
+
+C. Yes — DataSync compresses data before transfer and can achieve 10x compression, effectively transferring 500 TB in under 5 days
+
+D. No — DataSync cannot transfer more than 100 TB in a single task; multiple tasks would be required
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect. The calculation is accurate (1 Gbps = 10.8 TB/day theoretical maximum at 100% utilization), but the conclusion is wrong. At 10.8 TB/day, 500 TB takes approximately 46 days — far exceeding the 10-day requirement.
+- B is correct. At 1 Gbps theoretical maximum (never achieved in practice due to protocol overhead, latency, and competing traffic), transferring 500 TB takes approximately 46 days. AWS Snowball Edge devices can transfer 80 TB each — 7 devices would complete the physical transfer within the 10-day window, with DataSync handling the final delta sync.
+- C is incorrect. DataSync does not apply general-purpose compression to all data. Compression ratios vary by data type and are not a reliable planning assumption. Binary files, encrypted data, and already-compressed formats achieve little to no compression.
+- D is incorrect. DataSync tasks do not have a 100 TB limit. A single DataSync task can transfer petabyte-scale datasets. Multiple tasks can be used for parallelism, but the limitation here is network bandwidth, not DataSync task size.
+
+---
+
+### Question 17 (5 points)
+
+A company runs a Transit Gateway in `us-east-1` with 10 VPCs attached. They want VPCs in `eu-west-1` to communicate with the `us-east-1` VPCs without routing through the public internet. What is the correct solution?
+
+A. Create VPC peering connections between each `eu-west-1` VPC and each `us-east-1` VPC
+
+B. Deploy a Transit Gateway in `eu-west-1`, attach the `eu-west-1` VPCs, and create a Transit Gateway inter-region peering connection between the two Transit Gateways
+
+C. Configure a Direct Connect connection between the two regions
+
+D. Use AWS Global Accelerator to route traffic between the VPCs across regions
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect. Creating individual VPC peering connections between every `eu-west-1` VPC and every `us-east-1` VPC creates a mesh that scales as O(n×m) — in this case up to 10 × (number of eu-west-1 VPCs) peering connections. VPC peering does not support transitive routing, so each pair requires its own connection.
+- B is correct. Transit Gateway inter-region peering connects two Transit Gateways across regions over the AWS global backbone network (not the public internet). All VPCs attached to each TGW can reach each other through the peered TGWs with a single inter-region peering connection, providing scalable transitive routing across regions.
+- C is incorrect. Direct Connect connects on-premises data centers to AWS regions — it does not connect AWS regions to each other. Inter-region connectivity between VPCs uses the AWS backbone, not Direct Connect.
+- D is incorrect. AWS Global Accelerator routes end-user traffic to optimal AWS endpoints over the AWS global network to improve application performance. It is not designed for private VPC-to-VPC inter-region routing.
+
+---
+
+### Question 18 (5 points)
+
+A company's application requires sub-millisecond latency to a large on-premises data store that cannot be migrated to AWS. The application logic must run in AWS to use managed services. Which AWS feature minimizes latency between the AWS compute and the on-premises data store?
+
+A. AWS Direct Connect with a 10 Gbps dedicated connection
+
+B. Amazon ElastiCache deployed in the same VPC as the application to cache on-premises data locally
+
+C. AWS Outposts deployed in the same on-premises facility as the data store, running the application compute on AWS infrastructure co-located with the data
+
+D. AWS Local Zones deployed in the nearest city to the on-premises facility
+
+**Correct Answer: C**
+
+**Distractor Analysis:**
+
+- A is incorrect. Direct Connect provides dedicated, consistent bandwidth between on-premises and AWS regions, reducing latency compared to internet VPN. However, even a 10 Gbps Direct Connect connection has 1–10ms latency depending on physical distance — insufficient for sub-millisecond requirements.
+- B is incorrect. ElastiCache caches data locally in the VPC, which would serve cache hits at low latency — but cache misses still require round-trips to the on-premises data store over the network. For workloads requiring consistent sub-millisecond access to the full dataset, caching does not solve the problem.
+- C is correct. AWS Outposts places AWS compute infrastructure physically inside the on-premises facility, co-located with the data store. Traffic between Outposts compute and the on-premises data store travels over the local data center network at sub-millisecond speeds, while the application still uses AWS managed services APIs.
+- D is incorrect. AWS Local Zones extend AWS compute closer to specific metropolitan areas to reduce latency for end users. They do not deploy inside a specific on-premises facility and still have network hops between the Local Zone and any on-premises data store.
+
+---
+
+### Question 19 (5 points)
+
+A company uses AWS VPN CloudHub. They have a central VGW in `us-east-1` with three Customer Gateways configured — one at their New York office, one in London, and one in Tokyo. Which traffic flows are supported by this architecture?
+
+A. New York → AWS VPC only; office-to-office traffic is not supported by VPN CloudHub
+
+B. New York → AWS VPC, and New York → London → Tokyo hub-and-spoke traffic through the VGW
+
+C. New York → London directly, bypassing the VGW for lower latency
+
+D. The architecture is invalid — a VGW can only have one Customer Gateway attached at a time
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect. VPN CloudHub specifically enables site-to-site traffic between Customer Gateways through the central VGW — this is the defining feature of CloudHub that distinguishes it from a standard VPN connection.
+- B is correct. VPN CloudHub allows each Customer Gateway to communicate with the VPC and with each other through the hub VGW. New York, London, and Tokyo offices can all reach the AWS VPC and exchange traffic with each other by routing through the VGW in `us-east-1`. This hub-and-spoke model is the core CloudHub architecture.
+- C is incorrect. Traffic between Customer Gateways in CloudHub always transits through the VGW — there is no direct Customer Gateway-to-Customer Gateway path that bypasses the hub.
+- D is incorrect. A VGW supports multiple Customer Gateway connections simultaneously — this is fundamental to both standard multi-site VPN configurations and VPN CloudHub. There is no single-CGW limit on a VGW.
+
+---
+
+### Question 20 (5 points)
+
+A company is performing a migration assessment using the 7 Rs framework. They have identified a legacy monolithic application with tightly coupled components that would significantly benefit from being decomposed into microservices. Business leadership wants maximum long-term cloud benefit and is willing to invest significant development effort. Which strategy applies?
+
+A. Rehost — migrate the monolith as-is to EC2
+
+B. Replatform — move the monolith to Elastic Beanstalk without changing the architecture
+
+C. Refactor (Re-architect) — redesign the application as microservices using Lambda, ECS, and API Gateway
+
+D. Retain — keep the monolith on-premises until a full rewrite is complete
+
+**Correct Answer: C**
+
+**Distractor Analysis:**
+
+- A is incorrect. Rehosting (lift-and-shift) moves the monolith to EC2 unchanged. It achieves the fastest migration with the least effort but provides no architectural improvement and does not decompose the tightly coupled components. It does not deliver maximum long-term cloud benefit.
+- B is incorrect. Replatforming moves to a managed platform (Elastic Beanstalk) with minor optimizations but does not redesign the architecture. The monolith remains tightly coupled — the core architectural problem is unaddressed.
+- C is correct. Refactoring (Re-architecting) is the highest-effort, highest-reward strategy. Decomposing a monolith into microservices using Lambda (serverless functions), ECS (containers), and API Gateway (managed routing) provides independent scaling, fault isolation, faster deployment cycles, and optimized cloud cost per service. This is the strategy when maximum long-term benefit justifies the development investment.
+- D is incorrect. Retaining on-premises delays cloud benefits entirely and provides no value during the retention period. Retaining is appropriate for applications with hard regulatory or technical constraints, not for applications where leadership is actively willing to invest in modernization.
+
+---

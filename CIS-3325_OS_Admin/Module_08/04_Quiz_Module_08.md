@@ -211,3 +211,242 @@ Distractor Analysis:
 - Why A is incorrect: dos in the fdisk output refers to the MBR (Master Boot Record) partition table format used by MS-DOS and early PCs, not a FAT32 filesystem. The filesystem type and the partition table type are different concepts.
 - Why C is incorrect: While MBR partition tables do work on Linux, they are not correct for disks larger than 2 TB. Partitions on the portion of the disk beyond 2 TB would be inaccessible with an MBR partition table.
 - Why D is incorrect: The output is not an error — it is a description of the partition table type. fsck is a filesystem check tool, not a partition table repair tool, and running fsck on a raw disk device with no filesystem would not accomplish anything useful.
+
+---
+
+**Question 11**
+
+An administrator runs `lsblk` and sees that `/dev/sdb` has no partitions listed beneath it. They
+want to initialize it as a single Physical Volume for LVM. Which sequence of commands is correct?
+
+- A) mkfs.ext4 /dev/sdb → pvcreate /dev/sdb → vgcreate vg01 /dev/sdb
+- B) fdisk /dev/sdb (create partition sdb1) → pvcreate /dev/sdb1 → vgcreate vg01 /dev/sdb1
+- C) pvcreate /dev/sdb → vgcreate vg01 /dev/sdb (using the whole disk directly, no partition needed)
+- D) gdisk /dev/sdb → mkfs.xfs /dev/sdb1 → pvcreate /dev/sdb1
+
+Correct Answer: C) pvcreate /dev/sdb → vgcreate vg01 /dev/sdb (using the whole disk directly, no partition needed)
+
+Distractor Analysis:
+
+- Why A is incorrect: Running mkfs.ext4 on the raw disk before pvcreate writes an ext4 superblock to the device, which is unnecessary and misleading. LVM does not require a filesystem to be created first; pvcreate writes its own metadata (the PV label) directly to the device.
+- Why B is incorrect: While partitioning before LVM is a common practice, it is not required when using a whole disk. pvcreate can be run directly on /dev/sdb without creating a partition first. The sequence described is valid but not the only correct approach — option C is also correct and simpler.
+- Why D is incorrect: Creating a GPT partition with gdisk and then running mkfs.xfs would create a standalone filesystem, not an LVM physical volume. pvcreate must be used to initialize a device for LVM use.
+
+---
+
+**Question 12**
+
+A volume group named `vg_data` has 20 GB of free space. An administrator runs:
+
+```
+lvcreate -L 15G -n lv_logs vg_data
+mkfs.xfs /dev/vg_data/lv_logs
+```
+
+They then add the following line to `/etc/fstab`:
+
+```
+/dev/vg_data/lv_logs  /var/log/app  xfs  defaults  0  2
+```
+
+After rebooting, the mount fails with "special device does not exist." What is the most likely cause?
+
+- A) XFS filesystems cannot be mounted via /etc/fstab entries that use logical volume paths.
+- B) The logical volume name lv_logs contains an underscore, which is not allowed in LVM names.
+- C) The /var/log/app mount point directory does not exist and was not created before the reboot.
+- D) The lvcreate command requires the -n flag to come before the -L flag.
+
+Correct Answer: C) The /var/log/app mount point directory does not exist and was not created before the reboot.
+
+Distractor Analysis:
+
+- Why A is incorrect: XFS filesystems can be mounted via /etc/fstab using logical volume device paths. The path /dev/vg_data/lv_logs is a valid device node created by the device mapper subsystem.
+- Why B is incorrect: LVM names may contain underscores. The naming rules for LVM objects (VGs, LVs, PVs) permit alphanumeric characters, hyphens, underscores, and dots.
+- Why D is incorrect: The -n and -L flags in lvcreate are not order-dependent. Both orders are syntactically valid. The problem is not with the lvcreate command.
+
+---
+
+**Question 13**
+
+An administrator needs to reduce the size of an XFS logical volume from 50 GB to 30 GB because
+space is needed elsewhere in the volume group. They run `lvreduce -L 30G /dev/vg01/lv_data`.
+What is the result?
+
+- A) The logical volume is safely shrunk to 30 GB and the filesystem adjusts automatically.
+- B) The lvreduce command refuses to proceed because the XFS filesystem must be shrunk first.
+- C) The logical volume metadata is resized to 30 GB but the XFS filesystem is now larger than the device, causing filesystem corruption.
+- D) The command fails with "permission denied" because only root can reduce logical volumes.
+
+Correct Answer: C) The logical volume metadata is resized to 30 GB but the XFS filesystem is now larger than the device, causing filesystem corruption.
+
+Distractor Analysis:
+
+- Why A is incorrect: XFS does not support shrinking. There is no xfs_shrink tool. Running lvreduce on a logical volume containing an XFS filesystem without first backing up and recreating the filesystem will cause data corruption.
+- Why B is incorrect: lvreduce does not automatically check filesystem size before reducing. It will proceed with the reduction even if the filesystem is larger than the target size, resulting in the corruption described in option C. The administrator is responsible for verifying that the filesystem is smaller than the new LV size before running lvreduce.
+- Why D is incorrect: The command would be run as root and would not produce a permission denied error for a root user. The fundamental problem is the incompatibility between XFS and volume shrink operations.
+
+---
+
+**Question 14**
+
+A RAID 5 array is built from four 2 TB drives. How much usable storage capacity does this
+array provide, and what is the minimum number of drive failures it can tolerate?
+
+- A) 8 TB usable; tolerates 2 simultaneous drive failures.
+- B) 6 TB usable; tolerates 1 drive failure.
+- C) 4 TB usable; tolerates 2 drive failures.
+- D) 2 TB usable; tolerates 3 drive failures.
+
+Correct Answer: B) 6 TB usable; tolerates 1 drive failure.
+
+Distractor Analysis:
+
+- Why A is incorrect: RAID 5 uses distributed parity that consumes the equivalent of one drive's capacity for parity data. With four 2 TB drives the usable space is (4-1) × 2 TB = 6 TB, not 8 TB. RAID 5 also tolerates only one simultaneous drive failure, not two.
+- Why C is incorrect: 4 TB usable would correspond to a RAID 6 array (two parity drives) built from four 2 TB drives: (4-2) × 2 TB = 4 TB. RAID 6 also tolerates two simultaneous failures, not RAID 5.
+- Why D is incorrect: 2 TB usable with three-failure tolerance would describe a configuration with an extreme redundancy overhead that does not match any standard RAID level for four drives.
+
+---
+
+**Question 15**
+
+An administrator examines `/etc/fstab` and finds this entry:
+
+```
+UUID=a1b2c3d4  /data  ext4  defaults,noatime,nofail  0  2
+```
+
+What is the purpose of the `nofail` mount option?
+
+- A) It prevents the filesystem from being checked with fsck during boot.
+- B) It allows the system to complete the boot process even if the device with the specified UUID is not found.
+- C) It disables journaling on the ext4 filesystem to improve write performance.
+- D) It prevents the mount from appearing in the output of the `mount` command.
+
+Correct Answer: B) It allows the system to complete the boot process even if the device with the specified UUID is not found.
+
+Distractor Analysis:
+
+- Why A is incorrect: The fsck pass order is controlled by the last numeric field in /etc/fstab (0 = skip, 1 = check first, 2 = check after root). The nofail option does not affect fsck execution.
+- Why C is incorrect: Disabling the ext4 journal would require the noload or data=writeback mount options, not nofail. The nofail option has no effect on filesystem journaling behavior.
+- Why D is incorrect: The mount command shows all currently mounted filesystems regardless of the /etc/fstab options used. nofail affects boot behavior only, not the visibility of a successfully mounted filesystem.
+
+---
+
+**Question 16**
+
+A system administrator runs `pvs` and sees the following output:
+
+```
+  PV         VG      Fmt  Attr PSize  PFree
+  /dev/sdb1  vg_web  lvm2 a--  20.00g  0
+  /dev/sdc1  vg_web  lvm2 a--  20.00g  5.00g
+```
+
+They want to remove `/dev/sdb1` from the volume group without losing data. Which command
+must be run before `vgreduce vg_web /dev/sdb1`?
+
+- A) pvremove /dev/sdb1
+- B) lvremove /dev/vg_web/lv_data
+- C) pvmove /dev/sdb1
+- D) vgscan /dev/sdb1
+
+Correct Answer: C) pvmove /dev/sdb1
+
+Distractor Analysis:
+
+- Why A is incorrect: pvremove removes the LVM metadata from a physical volume, making it no longer part of any volume group. Running pvremove before moving data off /dev/sdb1 would corrupt or destroy the data stored on that PV.
+- Why B is incorrect: Removing the logical volume would destroy the data. The goal is to move the data off /dev/sdb1 and keep it intact on the remaining PV, not delete it.
+- Why D is incorrect: vgscan scans for volume groups and updates the LVM cache. It does not move data between physical volumes. The data on /dev/sdb1 must be migrated to /dev/sdc1 before the PV can be removed from the volume group.
+
+---
+
+**Question 17**
+
+An administrator needs to create a snapshot of a logical volume `/dev/vg01/lv_prod` before
+applying a software update. Which command creates a 5 GB snapshot named `lv_snap`?
+
+- A) lvcreate -s -n lv_snap -L 5G /dev/vg01/lv_prod
+- B) lvcreate -n lv_snap -L 5G /dev/vg01/vg01
+- C) lvsnap -n lv_snap -L 5G /dev/vg01/lv_prod
+- D) cp -a /dev/vg01/lv_prod /dev/vg01/lv_snap
+
+Correct Answer: A) lvcreate -s -n lv_snap -L 5G /dev/vg01/lv_prod
+
+Distractor Analysis:
+
+- Why B is incorrect: The -s flag (snapshot) is missing. Without -s, lvcreate creates a regular new logical volume, not a snapshot of an existing one. The device path at the end must be the source LV, not the VG.
+- Why C is incorrect: There is no lvsnap command in LVM. Snapshots are created with lvcreate -s. This answer tests whether students know the actual LVM command set.
+- Why D is incorrect: cp copies file data; it cannot be used to create an LVM snapshot. An LVM snapshot is a block-level copy-on-write structure managed by the kernel device mapper, not a file copy.
+
+---
+
+**Question 18**
+
+A system has a software RAID 1 array `/dev/md0` managed by mdadm. One drive fails and is
+replaced. An administrator runs `mdadm --add /dev/md0 /dev/sdc1` to add the new drive. What
+process begins immediately after this command?
+
+- A) The RAID array is rebuilt — the data from the surviving drive is copied to the new drive in the background.
+- B) The new drive becomes a hot spare but is not added to the array until the next reboot.
+- C) The array switches to degraded mode and the administrator must run mdadm --assemble to begin the rebuild.
+- D) mdadm formats /dev/sdc1 with ext4 before adding it to the array.
+
+Correct Answer: A) The RAID array is rebuilt — the data from the surviving drive is copied to the new drive in the background.
+
+Distractor Analysis:
+
+- Why B is incorrect: mdadm --add immediately begins the resync/rebuild process for a degraded RAID 1 array. Hot spare behavior is a configuration option; without that configuration the drive is added as a full member and rebuild starts immediately.
+- Why C is incorrect: The array is already in degraded mode due to the failed drive. Running mdadm --add triggers the rebuild automatically — no separate assemble command is needed.
+- Why D is incorrect: mdadm does not format drives with a filesystem. RAID members are raw block devices used by the RAID layer; the filesystem (if any) sits on top of /dev/md0, not on the individual RAID member devices.
+
+---
+
+**Question 19**
+
+An administrator adds a second disk `/dev/sdb` to a VM and wants to mount it persistently at
+`/mnt/data`. They create a partition `/dev/sdb1`, format it with ext4, and add the following
+line to `/etc/fstab`:
+
+```
+/dev/sdb1  /mnt/data  ext4  defaults  0  2
+```
+
+A colleague says this entry should use the UUID instead of the device path. Why?
+
+- A) UUID-based entries are required by systemd; device path entries are silently ignored.
+- B) Device paths like /dev/sdb1 can change between reboots if disks are added or removed, causing the wrong device to be mounted. UUIDs are permanently tied to the filesystem and do not change.
+- C) /dev/sdb1 is a symbolic link that expires after 24 hours; UUIDs are permanent entries in the kernel.
+- D) ext4 filesystems cannot be mounted using device paths; only UUIDs, labels, or loop devices are supported.
+
+Correct Answer: B) Device paths like /dev/sdb1 can change between reboots if disks are added or removed, causing the wrong device to be mounted. UUIDs are permanently tied to the filesystem and do not change.
+
+Distractor Analysis:
+
+- Why A is incorrect: systemd does accept device path entries in /etc/fstab. Both device paths and UUIDs are valid. The preference for UUIDs is about reliability and correctness, not a hard requirement.
+- Why C is incorrect: /dev/sdb1 is a device node managed by udev, not a symbolic link with an expiration. However, udev can assign a different device node name to the same physical disk on the next boot if another disk is present, which is why UUIDs are preferred.
+- Why D is incorrect: ext4 filesystems can be mounted by device path, UUID, or filesystem label. The fstab entry using /dev/sdb1 would work; it is simply less reliable than a UUID entry.
+
+---
+
+**Question 20**
+
+An administrator runs `vgextend vg_data /dev/sdd1` and receives the error:
+
+```
+Device /dev/sdd1 not found (or ignored by filtering).
+```
+
+What is the most likely cause?
+
+- A) /dev/sdd1 is already a member of another volume group.
+- B) /dev/sdd1 has not been initialized as an LVM Physical Volume with pvcreate.
+- C) The volume group vg_data is full and cannot accept additional physical volumes.
+- D) vgextend requires the -f flag when adding partitions (as opposed to whole disks).
+
+Correct Answer: B) /dev/sdd1 has not been initialized as an LVM Physical Volume with pvcreate.
+
+Distractor Analysis:
+
+- Why A is incorrect: If the device were already a member of another VG, the error message would typically indicate "Device already in use" or reference the existing VG. The "not found or ignored by filtering" message specifically indicates the device lacks a valid PV label.
+- Why C is incorrect: A volume group has no limit on the number of physical volumes it can contain. Adding PVs to a VG always increases capacity; it cannot fail because the VG is "full" in this sense.
+- Why D is incorrect: vgextend does not require a -f flag for partitions. The command syntax is the same regardless of whether the device is a whole disk or a partition. The -f flag in some LVM commands forces operations to proceed despite warnings but is not required for normal vgextend usage.

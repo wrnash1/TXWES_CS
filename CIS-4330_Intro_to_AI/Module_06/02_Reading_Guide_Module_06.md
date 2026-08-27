@@ -209,3 +209,17 @@ Covers object detection projects in Custom Vision including labeling and evaluat
 - [ ] Complete the Module 06 quiz.
 - [ ] Complete the Module 06 lab.
 - [ ] Post initial discussion by Wednesday 11:59 PM and respond to two peers by Sunday 11:59 PM.
+
+## 9. Supplemental Resources
+
+**1. Papers with Code — Image Classification Benchmarks**
+<https://paperswithcode.com/task/image-classification>
+A real-time leaderboard tracking the state-of-the-art on major computer vision benchmarks (ImageNet, CIFAR-10, etc.) with links to papers and code. Provides context for understanding where Azure Computer Vision and Custom Vision sit relative to cutting-edge research models.
+
+**2. OpenCV University — Free Computer Vision Course**
+<https://opencv.org/university/>
+Free introductory courses from the team behind the OpenCV library covering image processing fundamentals, object detection, and face recognition. Provides practical background for the Python-based lab exercises throughout this course.
+
+**3. MIT OpenCourseWare — 6.869: Advances in Computer Vision (lecture notes)**
+<https://ocw.mit.edu/courses/6-869-advances-in-computer-vision-spring-2022/>
+Freely available lecture notes and slides from MIT's advanced computer vision course. Covers CNNs, segmentation, detection, and generative models at a rigorous level — useful for students who want to understand the underlying techniques that power Azure Computer Vision.

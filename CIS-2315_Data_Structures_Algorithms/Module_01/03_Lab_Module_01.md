@@ -348,3 +348,27 @@ Submit to Canvas:
 | Space complexity | Count extra memory only; recursion depth counts |
 | Amortized O(1) | `list.append()` — occasional resize amortized over n ops |
 | Time-space tradeoff | Hash map buys O(n) → O(n) time at cost of O(n) space |
+
+---
+
+## Part 9 — Challenge Exercise
+
+These steps are **optional** and ungraded. They are designed for students who want to deepen their understanding beyond the core lab.
+
+### 9.1 — Empirical Master Theorem Verification
+
+Extend `lab01_benchmark.py` to benchmark a recursive merge sort implementation you write yourself (not Python's built-in `sorted()`). Measure runtimes for n = 1,000; 5,000; 10,000; 50,000. Compute the ratio `T(2n) / T(n)` for each consecutive pair. According to the Master Theorem, T(n) = 2T(n/2) + O(n) yields O(n log n). For O(n log n), the ratio `T(2n)/T(n)` approaches `2 * log(2n) / log(n)` as n grows. Verify empirically that your ratios approach this theoretical value and write a 3-sentence explanation of what you observe.
+
+### 9.2 — Space Profiling with `tracemalloc`
+
+Python's standard library includes `tracemalloc` for measuring memory allocation. Modify your `lab01_benchmark.py` to measure peak memory usage (in KB) for the brute-force Two Sum and the hash-map Two Sum for n = 10,000 and n = 100,000. Use `tracemalloc.start()`, `tracemalloc.get_traced_memory()`, and `tracemalloc.stop()`. Confirm that the hash-map version uses O(n) extra memory while the brute-force version uses O(1) extra memory — and quantify the difference in kilobytes.
+
+### 9.3 — LeetCode Complexity Ladder
+
+Solve the following three LeetCode problems in order of increasing difficulty. For each solution, add a comment block stating exact time and space complexity and one sentence of justification:
+
+- **LeetCode #217 — Contains Duplicate** (O(n) time, O(n) space — hash set)
+- **LeetCode #238 — Product of Array Except Self** (O(n) time, O(1) extra space — prefix/suffix approach)
+- **LeetCode #347 — Top K Frequent Elements** (O(n log k) time — heap approach)
+
+Record your acceptance screenshots or paste the runtime/memory percentile results as comments at the top of each solution file.

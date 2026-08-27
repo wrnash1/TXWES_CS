@@ -307,6 +307,30 @@ Watch Episodes 5–6 of the [Python for Everybody Course Playlist](https://www.y
 
 ---
 
+## 9. Supplemental Resources
+
+**1. Official Python 3 Docs — Built-in Functions: `input()`**
+[https://docs.python.org/3/library/functions.html#input](https://docs.python.org/3/library/functions.html#input)
+The authoritative specification for Python's `input()` function. Covers the prompt parameter, return type, and EOF behavior. Short and essential — read it before the lab.
+
+**2. Official Python 3 Docs — Formatted String Literals (f-strings)**
+[https://docs.python.org/3/reference/lexical_analysis.html#f-strings](https://docs.python.org/3/reference/lexical_analysis.html#f-strings)
+The complete f-string specification including nested expressions, format specs (width, precision, alignment), and conversion flags (`!r`, `!s`, `!a`). The format mini-language section is PCAP-testable content.
+
+**3. Python for Everybody — Chapter 2: Variables, Expressions and Statements**
+[https://www.py4e.com/html3/02-variables](https://www.py4e.com/html3/02-variables)
+Covers variable naming rules, assignment, type conversion, and user input with worked examples and self-check exercises. Free and interactive.
+
+**4. Real Python — Python's `input()` Function: Get User Input**
+[https://realpython.com/python-input-function/](https://realpython.com/python-input-function/)
+A detailed article on `input()` covering its return type, common `TypeError` pitfalls, and best practices for safe numeric input. Includes comparison with Python 2's `raw_input()` — useful context for PCAP questions.
+
+**5. PEP 498 — Literal String Interpolation (the f-string PEP)**
+[https://peps.python.org/pep-0498/](https://peps.python.org/pep-0498/)
+The original design document for f-strings, accepted for Python 3.6. Reading the Motivation and Rationale sections explains why f-strings were added and how they compare to `%`-formatting and `str.format()`. Understanding all three formatting styles is valuable for reading legacy code.
+
+---
+
 ## 8. Study Checklist
 
 - [ ] Watch the Module 03 video lecture by Professor Nash.

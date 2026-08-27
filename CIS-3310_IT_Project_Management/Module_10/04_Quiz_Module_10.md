@@ -225,3 +225,203 @@ Distractor Analysis:
 - **Why A is incorrect:** SPI proximity to 1.0 addresses schedule, not cost. The sponsor's question about recovery almost certainly concerns whether the project will come in within budget. SPI does not answer cost recovery questions.
 - **Why C is incorrect:** Being a positive number is not the same as performing well. Indices of 0.92 and 0.88 are both below 1.0, indicating below-target performance on both dimensions — this is not "good shape."
 - **Why D is incorrect:** CPI becomes more reliable and meaningful as the project progresses. It is most informative and most predictive after the 20% completion mark — the opposite of what this distractor claims.
+
+---
+
+## Question 11
+
+A project has BAC = $600,000 and is 50% complete at the midpoint. The team has spent $360,000 so far. What is the current CPI, and what does it indicate?
+
+- A) CPI = 0.83; the project is over budget.
+- B) CPI = 1.20; the project is under budget.
+- C) CPI = 1.00; the project is exactly on budget.
+- D) CPI = 0.50; the project has spent its full budget prematurely.
+
+**Correct Answer:** A) CPI = 0.83; the project is over budget.
+
+**Distractor Analysis:**
+
+- *Why A is correct:* EV = BAC × % complete = $600,000 × 0.50 = $300,000. CPI = EV / AC = $300,000 / $360,000 = 0.833. A CPI below 1.0 means the team is getting less than $1.00 of value for every $1.00 spent — the project is over budget.
+- *Why B is incorrect:* A CPI of 1.20 would require EV > AC ($300K / AC = 1.20 → AC = $250K). The project has spent $360K, far more than $250K.
+- *Why C is incorrect:* CPI = 1.00 would require EV = AC = $300K. The actual cost is $360K, not $300K.
+- *Why D is incorrect:* CPI = 0.50 would require AC = $600K (the full BAC). The project has spent $360K, not the full budget.
+
+---
+
+## Question 12
+
+Using the same project from Question 11 (BAC = $600,000, EV = $300,000, AC = $360,000), calculate the Estimate at Completion (EAC) using the formula that assumes the current CPI will continue.
+
+- A) $660,000
+- B) $720,000
+- C) $630,000
+- D) $600,000
+
+**Correct Answer:** B) $720,000
+
+**Distractor Analysis:**
+
+- *Why B is correct:* EAC = BAC / CPI = $600,000 / 0.833 = $720,096, rounded to $720,000. This assumes the efficiency problem continues for all remaining work.
+- *Why A is incorrect:* $660,000 = AC + (BAC - EV) = $360,000 + $300,000 — this uses the "atypical variance" formula, not the "CPI continues" formula.
+- *Why C is incorrect:* $630,000 does not result from any standard EAC formula using these inputs.
+- *Why D is incorrect:* $600,000 is the original BAC. EAC equals BAC only when CPI = 1.0. Since CPI = 0.833, the project is projected to overrun.
+
+---
+
+## Question 13
+
+A project manager reports PV = $500,000, EV = $520,000, and AC = $490,000. Which statement accurately describes this project?
+
+- A) Over budget and behind schedule
+- B) Under budget and behind schedule
+- C) Under budget and ahead of schedule
+- D) Over budget and ahead of schedule
+
+**Correct Answer:** C) Under budget and ahead of schedule
+
+**Distractor Analysis:**
+
+- *Why C is correct:* SV = EV - PV = $520,000 - $500,000 = +$20,000 (ahead of schedule, positive). CV = EV - AC = $520,000 - $490,000 = +$30,000 (under budget, positive). Both are favorable.
+- *Why A is incorrect:* Both variances are positive — over budget and behind schedule would require negative CV and negative SV.
+- *Why B is incorrect:* SV is positive (+$20K), indicating ahead of schedule — not behind.
+- *Why D is incorrect:* CV is positive (+$30K), indicating under budget — not over budget.
+
+---
+
+## Question 14
+
+What does Earned Value (EV) represent in EVM?
+
+- A) The total amount of money the project has spent to date
+- B) The amount of work that was planned to be done by a specific point in time, expressed in dollars
+- C) The budgeted value of the work actually completed to date
+- D) The difference between the project budget and the actual cost
+
+**Correct Answer:** C) The budgeted value of the work actually completed to date.
+
+**Distractor Analysis:**
+
+- *Why C is correct:* EV = BAC × % work actually complete. It represents what the completed work was supposed to cost according to the original plan. EV is the bridge between schedule (what was done) and cost (what was budgeted for it).
+- *Why A is incorrect:* Money spent to date is Actual Cost (AC). AC measures spending, not value earned from completed work.
+- *Why B is incorrect:* The amount of work planned to be done by a given time is Planned Value (PV), not EV. PV is the schedule baseline value.
+- *Why D is incorrect:* The difference between budget and actual cost is the Cost Variance (CV = EV - AC) — not EV itself.
+
+---
+
+## Question 15
+
+At project completion, the final EAC is $850,000 for a project with BAC = $800,000. What is the Variance at Completion (VAC)?
+
+- A) +$50,000 (under budget)
+- B) -$50,000 (over budget)
+- C) $800,000
+- D) 0.94 (the CPI at completion)
+
+**Correct Answer:** B) -$50,000 (over budget)
+
+**Distractor Analysis:**
+
+- *Why B is correct:* VAC = BAC - EAC = $800,000 - $850,000 = -$50,000. Negative VAC means the project finished over budget by $50,000.
+- *Why A is incorrect:* A positive VAC would require EAC < BAC. Since EAC ($850K) > BAC ($800K), VAC is negative.
+- *Why C is incorrect:* $800,000 is the BAC — not the VAC. The VAC is the difference between them.
+- *Why D is incorrect:* 0.94 looks like a CPI-type ratio. VAC is always expressed in dollars, not as an index.
+
+---
+
+## Question 16
+
+A project manager wants to forecast the remaining cost of work using the ETC formula that assumes future work will be done at the original budgeted efficiency. Which formula applies?
+
+- A) ETC = EAC - AC
+- B) ETC = (BAC - EV) / CPI
+- C) ETC = BAC - EV
+- D) ETC = AC + BAC
+
+**Correct Answer:** C) ETC = BAC - EV
+
+**Distractor Analysis:**
+
+- *Why C is correct:* ETC = BAC - EV represents the remaining work valued at the original budgeted rate. It assumes the current variances are atypical and future work will proceed as planned — the "optimistic" ETC formula.
+- *Why A is incorrect:* ETC = EAC - AC is the generic ETC formula. It calculates remaining cost as total expected cost minus what has already been spent, but requires EAC to be known separately and does not specify any performance assumption.
+- *Why B is incorrect:* ETC = (BAC - EV) / CPI adjusts the remaining work for the current CPI — this assumes the efficiency problem will continue, not that future work will be done at budgeted rates.
+- *Why D is incorrect:* AC + BAC is not a valid EVM formula. It would sum past spending with the total budget — a meaningless combination.
+
+---
+
+## Question 17
+
+Which of the following correctly describes when to use the EAC formula EAC = AC + [(BAC - EV) / (CPI × SPI)]?
+
+- A) When future work is expected to be completed at the original budgeted rate
+- B) When both schedule and cost performance are expected to continue at current rates and both indexes are influencing the outcome
+- C) When the project sponsor has approved a revised cost baseline
+- D) When the current cost variance is believed to be a one-time exception
+
+**Correct Answer:** B) When both schedule and cost performance are expected to continue at current rates and both indexes are influencing the outcome.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* This composite EAC formula — dividing remaining work by both CPI and SPI — reflects projects where schedule pressure is compressing the time available to do remaining work and both performance inefficiencies are expected to persist.
+- *Why A is incorrect:* Future work at the original rate describes EAC = AC + (BAC - EV), not the composite formula.
+- *Why C is incorrect:* Sponsor approval of a revised baseline triggers a rebaselined BAC, not a specific EAC formula variant.
+- *Why D is incorrect:* A one-time exception describes EAC = AC + (BAC - EV) — the formula that assumes the variance will not recur.
+
+---
+
+## Question 18
+
+A project has a TCPI of 0.85. What does this mean?
+
+- A) The team must work 15% more efficiently than it has been in order to meet the budget.
+- B) The team can afford to work at 85% of its past efficiency and still meet the budget target.
+- C) The project is 85% complete.
+- D) The project is 15% over budget.
+
+**Correct Answer:** B) The team can afford to work at 85% of its past efficiency and still meet the budget target.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* A TCPI < 1.0 means the remaining budget is MORE than the remaining work requires. The team can deliver the rest of the project at only 85% of the efficiency required and still stay within budget — this is a favorable position.
+- *Why A is incorrect:* Having to work more efficiently than before describes TCPI > 1.0. A TCPI of 0.85 is favorable, not a warning sign.
+- *Why C is incorrect:* TCPI is a cost efficiency ratio, not a completion percentage. Percent complete is measured separately.
+- *Why D is incorrect:* Being 15% over budget would be reflected in CPI (approximately 0.87) and VAC — not in TCPI. A TCPI of 0.85 is actually favorable news.
+
+---
+
+## Question 19
+
+Which of the following is the BEST description of Planned Value (PV)?
+
+- A) The total budget authorized for the project
+- B) The budgeted cost of the work that was scheduled to be done by a specific point in time
+- C) The actual cost incurred to date for all work performed
+- D) The efficiency ratio of earned value to planned value
+
+**Correct Answer:** B) The budgeted cost of the work that was scheduled to be done by a specific point in time.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* PV is the schedule baseline expressed in dollars. At any point in time, PV answers: "According to the plan, how much work should have been completed and what should it have cost?" PV increases over time as planned work accumulates.
+- *Why A is incorrect:* The total budget authorized for the project is the BAC (Budget at Completion) — PV at the end of the project equals BAC.
+- *Why C is incorrect:* Actual cost to date is AC — what has actually been spent, regardless of how much work was planned or completed.
+- *Why D is incorrect:* The efficiency ratio of EV to PV is the Schedule Performance Index (SPI), not PV itself.
+
+---
+
+## Question 20
+
+A project is 75% complete, has a BAC of $400,000, a CPI of 0.95, and AC of $315,000. What is the Estimate to Complete (ETC) using the formula ETC = (BAC - EV) / CPI?
+
+- A) $85,000
+- B) $105,263
+- C) $100,000
+- D) $78,947
+
+**Correct Answer:** B) $105,263
+
+**Distractor Analysis:**
+
+- *Why B is correct:* EV = BAC × % complete = $400,000 × 0.75 = $300,000. Remaining work = BAC - EV = $400,000 - $300,000 = $100,000. ETC = $100,000 / 0.95 = $105,263. This ETC assumes the current CPI inefficiency will continue for the remaining work.
+- *Why A is incorrect:* $85,000 = AC - EV = $315,000 - $300,000 = $15,000 — no, that is CV. $400,000 - $315,000 = $85,000 is the simple remaining budget (BAC - AC), not ETC.
+- *Why C is incorrect:* $100,000 = BAC - EV, which is the remaining work at the budgeted rate (the atypical variance ETC formula). It does not apply the CPI adjustment as the question requires.
+- *Why D is incorrect:* $78,947 = EV / CPI = $300,000 / 3.8 — this does not correspond to any standard ETC formula using the given values.

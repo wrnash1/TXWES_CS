@@ -323,3 +323,69 @@ Submit the following as a single PDF or Word document in Canvas:
 | Troubleshooting Scenario B              | 13     | Correct identification of pool exhaustion and show dhcp pool reading  |
 
 Partial credit is awarded for demonstrably attempted but incomplete work.
+
+---
+
+## Part 9 — Challenge Exercise
+
+This optional challenge extends the lab to CCNA exam difficulty. Complete all steps and include deliverables in your submission for up to 20 bonus points.
+
+### Challenge Step 1: Configure DHCP for Multiple VLANs with a Layer 3 Switch Relay
+
+Extend the topology by replacing R2 with a Cisco Catalyst 3650 multilayer switch (MLS1) performing inter-VLAN routing via SVIs. Configure MLS1 to relay DHCP for three VLANs (VLAN 10: 192.168.10.0/24, VLAN 20: 192.168.20.0/24, VLAN 30: 192.168.30.0/24) all pointing to the central DHCP server at 10.0.0.1.
+
+```ios
+MLS1(config)# interface vlan 10
+MLS1(config-if)# ip helper-address 10.0.0.1
+
+MLS1(config)# interface vlan 20
+MLS1(config-if)# ip helper-address 10.0.0.1
+
+MLS1(config)# interface vlan 30
+MLS1(config-if)# ip helper-address 10.0.0.1
+```
+
+Add three DHCP pools to R1 for the new VLANs with appropriate exclusions, default gateways, and DNS server entries. Verify all three VLAN client PCs receive addresses from the correct scope using `show ip dhcp binding`. Document the binding table output and confirm the giaddr field behavior by running `debug ip dhcp server packets` briefly on R1 — observe that incoming Discover messages show the relay's SVI address in the gateway IP field.
+
+### Challenge Step 2: Configure and Verify DHCP Snooping with Dynamic ARP Inspection (DAI)
+
+Build on the existing snooping configuration by adding Dynamic ARP Inspection on VLAN 10. DAI uses the DHCP snooping binding table to validate ARP packets, preventing ARP spoofing attacks.
+
+```ios
+SW1(config)# ip arp inspection vlan 10
+SW1(config)# interface GigabitEthernet0/1
+SW1(config-if)# ip arp inspection trust
+```
+
+To test DAI, manually configure a PC in VLAN 10 with a static IP of 192.168.10.50 (without going through DHCP). Attempt to ping the default gateway from this statically configured PC. Observe that the ping fails because no DHCP snooping binding exists for 192.168.10.50 on that port, causing DAI to drop the ARP.
+
+Verify with:
+
+```ios
+SW1# show ip arp inspection statistics vlan 10
+SW1# show ip dhcp snooping binding
+```
+
+Document the forwarded vs. dropped ARP packet counts. Explain in 3–4 sentences how DAI uses the snooping binding table as its source of truth and why statically configured hosts require a static ARP inspection entry (`ip arp inspection filter`) to bypass DAI validation.
+
+### Challenge Step 3: Implement a Cisco IOS DNS Server for Internal Hostname Resolution
+
+Configure R1 to act as a simple DNS server for internal hostnames, providing name-to-IP mappings for key infrastructure devices without relying on an external DNS service.
+
+```ios
+R1(config)# ip dns server
+R1(config)# ip host gw.corp.local 192.168.10.1
+R1(config)# ip host dhcpserver.corp.local 10.0.0.1
+R1(config)# ip host sw1.corp.local 192.168.10.2
+R1(config)# ip name-server 8.8.8.8
+R1(config)# ip domain-lookup
+```
+
+Configure the DHCP pools to deliver R1's LAN interface address as the DNS server for clients:
+
+```ios
+R1(config)# ip dhcp pool VLAN10
+R1(config-dhcp)# dns-server 192.168.10.1
+```
+
+From a DHCP client PC, verify that `nslookup gw.corp.local` resolves to 192.168.10.1. Use `debug ip dns` on R1 to observe the lookup process. Then verify that R1 can still forward external queries to 8.8.8.8 for names not in the local host table (test by pinging a public hostname). Document the debug output and explain in 2–3 sentences how Cisco IOS DNS server behavior differs from a full enterprise DNS deployment (e.g., Windows Server DNS or BIND).

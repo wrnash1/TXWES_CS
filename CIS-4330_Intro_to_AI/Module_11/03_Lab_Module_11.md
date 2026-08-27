@@ -217,4 +217,28 @@ The following resources are recommended for completing this lab.
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Quantitative Fairness Audit with Fairlearn
+
+1. Install Fairlearn: `pip install fairlearn scikit-learn pandas`. Load the Adult Income dataset from `sklearn.datasets.fetch_openml(name='adult', version=2)`. Train a `LogisticRegression` classifier to predict income (>50K vs <=50K) using numeric features only (age, hours-per-week, education-num, capital-gain, capital-loss).
+2. Use Fairlearn's `MetricFrame` to compute accuracy, precision, recall, and false positive rate grouped by `sex` (the sensitive attribute). Print the `by_group` table.
+3. Calculate the fairness gap for each metric (max group value minus min group value). Identify which metric shows the largest disparity and which group is disadvantaged.
+4. Apply `ExponentiatedGradient` from `fairlearn.reductions` with `DemographicParity` as the constraint. Retrain the mitigated model and recompute the `MetricFrame`. Report how the disparity gap changed compared to the baseline and what overall accuracy was sacrificed.
+
+### Challenge 2: Model Card Analysis and Gap Assessment
+
+1. Locate a published model card for a production AI system. Recommended sources: Hugging Face Model Hub (any model with a populated Model Card tab), Google Model Cards (modelcards.withgoogle.com), or a Microsoft Azure AI model card published in documentation. Cite the model name and URL.
+2. Map the model card's content to the following eight fields: (a) intended use, (b) out-of-scope uses, (c) training data description, (d) evaluation metrics and datasets, (e) performance disaggregated by demographic groups, (f) known limitations, (g) ethical considerations, (h) contact or feedback mechanism. For each field, note whether it is present, absent, or partially addressed.
+3. Score the model card 1–5 on each of the six Microsoft Responsible AI principles: Fairness, Reliability and Safety, Privacy and Security, Inclusiveness, Transparency, and Accountability. Justify each score in one sentence.
+4. Write a 3–4 sentence recommendation: What is the single most important gap in this model card? What specific information should be added, and which Responsible AI principle would it most strengthen?
+
+### Reflection Questions
+
+1. After completing Challenge 1, explain why demographic parity is not always the right fairness metric. Describe one scenario where equalizing false negative rates (equalized odds) would be more appropriate than demographic parity, and explain the harm avoided by choosing the correct metric.
+
+2. Based on Challenge 2, explain why a model card alone is insufficient to ensure responsible AI deployment. What additional mechanisms — organizational, technical, or regulatory — are needed to close the gap between documented intentions and real-world outcomes?
+
+---
+
 End of Lab 11

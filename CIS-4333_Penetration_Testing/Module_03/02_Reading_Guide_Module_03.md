@@ -254,3 +254,19 @@ Reconnaissance documentation is the foundation for the entire engagement. The ex
 - [ ] Identify three types of sensitive data commonly found in public GitHub repositories
 - [ ] List the required fields for documenting each OSINT finding
 - [ ] Complete Module 03 lab and attempt all ten quiz questions before checking answers
+
+---
+
+## 9. Supplemental Resources
+
+**1. OSINT Framework — Categorized OSINT Tool Directory**
+[https://osintframework.com/](https://osintframework.com/)
+A comprehensive, community-maintained tree of OSINT tools and sources organized by category (username, email, domain, IP, social networks, and more). Useful for discovering additional passive reconnaissance resources aligned to the techniques covered in Module 03.
+
+**2. Shodan — Search Engine for Internet-Connected Devices**
+[https://www.shodan.io/](https://www.shodan.io/)
+Shodan indexes banners, service information, and metadata from internet-connected devices. The free tier allows limited queries useful for practicing target organization lookups, banner analysis, and understanding what information is publicly exposed about networked infrastructure.
+
+**3. Google Dorking Cheat Sheet — Exploit-DB Google Hacking Database**
+[https://www.exploit-db.com/google-hacking-database](https://www.exploit-db.com/google-hacking-database)
+The Exploit-DB Google Hacking Database (GHDB) catalogs hundreds of Google dork queries organized by category (sensitive files, login portals, exposed configuration files, and more). Reviewing the GHDB alongside Module 03 content reinforces practical Google dorking skills tested on PT0-002.

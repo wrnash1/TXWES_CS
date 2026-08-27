@@ -601,3 +601,31 @@ Submit the following:
 | Script exits immediately | `set -e` is active; a command returned non-zero; add error handling |
 | `command not found` in loop | Check variable quoting; an empty variable expands to nothing |
 | `shellcheck` not installed | `sudo apt install shellcheck` or `sudo dnf install ShellCheck` |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Robust System Health Report Script
+
+Write a production-quality bash script that generates a formatted health report for the local system, demonstrating argument handling, functions, error handling, and output formatting.
+
+1. Create `~/health_report.sh` with a shebang of `#!/usr/bin/env bash` and strict mode (`set -euo pipefail`). The script should accept an optional `-o OUTFILE` flag that redirects the report to a file instead of stdout. Implement a `usage()` function that prints help text and a `log()` function that writes timestamped messages to stderr (not stdout). Use `getopts` to parse the `-o` flag: `while getopts "o:h" opt; do case $opt in o) OUTFILE="$OPTARG" ;; h) usage; exit 0 ;; esac; done`.
+2. Add a `section()` function that prints a formatted separator line with a section title, and implement at least four report sections: `System Info` (hostname, kernel version from `uname -r`, uptime), `CPU` (core count from `nproc`, load average from `/proc/loadavg`), `Memory` (total and available from `free -h`), and `Disk` (all mounted filesystems from `df -h --output=target,size,used,avail,pcent`). Each section should call `section "Section Name"` then print the data.
+3. Add a `check_threshold()` function that takes a disk usage percentage (integer) and a mount point, and prints a warning to stderr if usage exceeds 80%: extract the percentage from `df --output=pcent MOUNT | tail -1 | tr -d ' %'` and compare with `-gt 80`. Call this function for `/` and `/home` (if it exists as a separate mount).
+4. Test by running `bash -x ~/health_report.sh 2>/dev/null` to see trace output, then `~/health_report.sh -o /tmp/health.txt` to test file output. Run `shellcheck ~/health_report.sh` and fix any warnings it reports.
+
+### Challenge 2: Batch File Processor with Logging and Rollback
+
+Write a script that processes a set of input files, maintaining an audit log and implementing a rollback capability if any step fails.
+
+1. Create `~/batch_process.sh`. The script should accept a directory path as `$1`. Validate that the argument was provided and that the directory exists; exit with code 1 and a usage message if either check fails. Create a log file at `/tmp/batch_$$.log` (using `$$` for the PID to make it unique) and set up a `trap` to print the log file path and optionally clean up on EXIT.
+2. Implement a `process_file()` function that takes a file path, converts its contents to uppercase using `tr '[:lower:]' '[:upper:]'`, writes the result to a `processed/` subdirectory (create it with `mkdir -p`), and appends a log entry. Each log entry should include the timestamp (`date '+%Y-%m-%d %H:%M:%S'`), the filename, and either `SUCCESS` or `FAILURE`.
+3. Loop over all `.txt` files in the input directory using `for f in "$DIR"/*.txt`. Use `if process_file "$f"; then` to handle per-file failures gracefully — a single file failure should log the error but not abort the entire batch (do NOT use `set -e` for this loop; handle exit codes explicitly instead).
+4. After the loop completes, print a summary to stdout showing total files processed, success count, and failure count. Use counters (`TOTAL=0`, `SUCCESS=0`, `FAIL=0`) incremented inside the loop. Test the script by creating a directory with several `.txt` files including one that is not readable (`chmod 000 unreadable.txt`) to trigger a failure path.
+
+### Reflection Questions
+
+1. `set -e` causes a script to exit on any non-zero exit code. However, certain constructs — like a command inside an `if` condition or followed by `|| true` — suppress this behavior. Explain why this design is necessary rather than a flaw, and describe a scenario where `set -e` without these exceptions would make it impossible to write useful error-checking logic.
+
+2. The `trap cleanup EXIT` pattern and `set -e` interact in a specific way: when `set -e` triggers an exit due to a command failure, the EXIT trap still fires. Describe a real sysadmin use case where this interaction is critical to correctness — for example, a script that acquires a lock file or creates a temporary directory — and explain what would happen to system state if the trap did NOT fire on an unexpected exit.

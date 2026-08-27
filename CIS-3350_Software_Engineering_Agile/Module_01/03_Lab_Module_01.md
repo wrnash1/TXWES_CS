@@ -112,6 +112,33 @@ Submit to the Canvas assignment portal by the module due date.
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: SDLC Model Decision Tree
+
+Build a one-page decision tree (hand-drawn or using a free tool such as draw.io) that a project manager could use to select the most appropriate SDLC model. Your tree must:
+
+1. Start with the question "Are requirements fully known and stable?" and branch from there.
+2. Include at least six decision nodes covering requirement stability, regulatory compliance needs, team size, and acceptable risk tolerance.
+3. Terminate each branch at one of the four models covered in this module (Waterfall, Spiral, Iterative, Agile/Scrum) with a one-sentence justification.
+4. Export or photograph the tree and include it in your submission document.
+
+### Challenge 2: Cost-of-Change Estimation Exercise
+
+Using the University Course Registration System scenario from Part 3, estimate how the cost of fixing each of your five identified risks would change depending on when the risk is discovered. For each risk:
+
+1. Assign a base cost (in relative units, e.g., 1 = discovered in requirements phase) to fixing the risk if caught during requirements.
+2. Apply Boehm's cost-of-change multipliers to estimate the cost if the same risk is discovered during testing and again during post-deployment maintenance.
+3. Write two to three sentences explaining which of your five risks has the highest total cost exposure if discovered late and why.
+4. Conclude with a recommendation: would Waterfall or Scrum reduce overall cost-of-change exposure for this project, and why?
+
+### Reflection Questions
+
+1. After building the decision tree, did any of the four models end up with no valid paths leading to it? If so, what does that reveal about that model's practical applicability compared to the others?
+2. Real projects rarely fit a single SDLC model perfectly. Identify one hybrid approach you observed in the Reading Guide or lecture content and describe which two models it combines and under what conditions that hybrid might outperform either pure model.
+
+---
+
 ## Rubric Summary
 
 | Component | Points |

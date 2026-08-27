@@ -283,3 +283,19 @@ Work through each item before attempting the module quiz.
 ---
 
 Reading Guide — Module 02 | CIS-4315 | Texas Wesleyan University
+
+---
+
+## 9. Supplemental Resources
+
+**NIST SP 800-39: Managing Information Security Risk**
+URL: https://csrc.nist.gov/publications/detail/sp/800-39/final
+Description: Free NIST publication providing a comprehensive framework for integrating security risk management into organizational strategy. Chapter 2 covers organization-level risk framing, which directly supports the security strategy development process covered in this module.
+
+**ISACA State of Cybersecurity Report (Annual)**
+URL: https://www.isaca.org/state-of-cybersecurity
+Description: ISACA's annual survey of security professionals covering workforce trends, threat landscape shifts, and budget challenges. Provides real-world data on how organizations align security investment with business strategy — useful for understanding the gap between strategy theory and organizational practice.
+
+**SANS Reading Room: Building a Security Strategy**
+URL: https://www.sans.org/reading-room/
+Description: The SANS Reading Room hosts practitioner-authored white papers on security strategy development, current state assessment methodology, and roadmap construction. Search for "security strategy" or "security program development" to find papers aligned with this module's topics.

@@ -411,3 +411,75 @@ Submit a PDF containing:
 | Part 6: pg_stat_statements query results captured | 15 |
 | Part 7: PgBouncer running with SHOW POOLS output | 15 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Row-Level Security for a Multi-Tenant Schema
+
+Implement a multi-tenant data isolation policy using PostgreSQL Row-Level Security.
+
+```sql
+-- Create a multi-tenant orders table
+CREATE TABLE tenant_orders (
+    order_id   SERIAL PRIMARY KEY,
+    tenant_id  INTEGER NOT NULL,
+    item_name  VARCHAR(200) NOT NULL,
+    amount     NUMERIC(10,2) NOT NULL
+);
+
+-- Insert sample data for two tenants
+INSERT INTO tenant_orders (tenant_id, item_name, amount) VALUES
+    (1, 'Widget A', 49.99),
+    (1, 'Widget B', 19.99),
+    (2, 'Gadget X', 99.99),
+    (2, 'Gadget Y', 149.99);
+
+-- Create two tenant application roles
+CREATE ROLE tenant1_app WITH LOGIN PASSWORD 'T1pass!';
+CREATE ROLE tenant2_app WITH LOGIN PASSWORD 'T2pass!';
+
+GRANT SELECT ON tenant_orders TO tenant1_app, tenant2_app;
+```
+
+Then complete the following steps:
+
+1. Enable RLS and create a policy that uses `current_setting('app.tenant_id')::INTEGER` to restrict each role to its own tenant rows. Apply the policy and verify that connecting as `tenant1_app` with `SET app.tenant_id = '1'` returns only tenant 1 rows while `SELECT COUNT(*)` as `tenant2_app` with `SET app.tenant_id = '2'` returns only tenant 2 rows.
+2. Attempt to query `tenant_orders` as `tenant1_app` without setting `app.tenant_id` first. Record the result and explain whether RLS silently returns zero rows or raises an error.
+3. Write a paragraph explaining the security implication if a developer accidentally calls `SET app.tenant_id = '0'` and what additional application-layer guard should be implemented.
+
+### Challenge 2: Autovacuum Tuning for a High-Churn Table
+
+Simulate a high-churn workload and measure its effect on dead tuple accumulation, then tune autovacuum to respond faster.
+
+Run the following to create churn:
+
+```sql
+CREATE TABLE churn_test (id SERIAL PRIMARY KEY, val TEXT);
+INSERT INTO churn_test (val) SELECT md5(random()::text) FROM generate_series(1, 100000);
+
+-- Simulate repeated updates creating dead tuples
+UPDATE churn_test SET val = md5(random()::text);
+UPDATE churn_test SET val = md5(random()::text);
+UPDATE churn_test SET val = md5(random()::text);
+```
+
+Then complete the following steps:
+
+1. Query `pg_stat_user_tables` to record `n_dead_tup` for `churn_test` immediately after the updates. Note whether autovacuum has already run.
+2. Override the autovacuum settings to trigger more aggressively, then wait 60–90 seconds for autovacuum to respond:
+
+```sql
+ALTER TABLE churn_test SET (
+    autovacuum_vacuum_scale_factor = 0.01,
+    autovacuum_vacuum_threshold    = 50
+);
+```
+
+3. Re-query `pg_stat_user_tables` to check `last_autovacuum` and the new `n_dead_tup` value. Capture the before and after values and write a paragraph explaining how `autovacuum_vacuum_scale_factor` and `autovacuum_vacuum_threshold` combine to determine when autovacuum triggers.
+
+### Reflection Questions
+
+1. In Challenge 1, what is the difference between a permissive and a restrictive RLS policy, and in what scenario would you use a restrictive policy in addition to a permissive one on the same table?
+2. In Challenge 2, if autovacuum is disabled entirely on a production table to reduce I/O overhead during a bulk load, what operational steps must the DBA take immediately after the load completes to prevent transaction ID wraparound and query plan degradation?

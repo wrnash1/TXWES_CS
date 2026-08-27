@@ -280,3 +280,19 @@ Complete before attempting the quiz:
 - Complete Lab 04.
 - Post to Discussion Forum 04 by Wednesday at 11:59 PM.
 - Complete Quiz 04 (10 questions).
+
+---
+
+## 9. Supplemental Resources
+
+**1. SAP Learning — SAP Activate Methodology Overview**
+<https://learning.sap.com/learning-journeys/implement-sap-s-4hana-cloud-public-edition-with-sap-activate>
+Official SAP learning journey covering the full SAP Activate methodology phases, workstreams, and key deliverables. Directly maps to the Explore-Realize-Deploy framework covered in this module and tested on the SAP Associate exam.
+
+**2. Prosci — ADKAR Model for Change Management**
+<https://www.prosci.com/methodology/adkar>
+The definitive explanation of the ADKAR change management model from Prosci, its developer. Includes case studies on applying ADKAR in ERP implementations and free resources for building awareness and desire among resistant stakeholders.
+
+**3. Salesforce Trailhead — Sandbox Basics**
+<https://trailhead.salesforce.com/content/learn/modules/starting_force_com/starting_developer_console>
+Covers Salesforce sandbox types (Developer, Developer Pro, Partial Copy, Full) and their role in the implementation lifecycle. Understanding sandbox use in deployment pipelines is tested in both Salesforce Associate and Administrator certification exams.

@@ -301,4 +301,22 @@ ceiling of experience is pursued.
 
 ---
 
+---
+
+## Supplemental Resources
+
+**1. AXELOS — ITIL 4 Service Level Management Practice**
+<https://www.axelos.com/resource-hub/blog/itil-4-service-level-management>
+Official AXELOS description of the Service Level Management practice, including SLA structure, the three-tier agreement model, service review meetings, and the shift to experience-level agreements. Essential for Foundation exam preparation.
+
+**2. XLA Manifesto — itSMF UK**
+<https://xla-manifesto.com>
+The definitive industry document on Experience Level Agreements — what they are, why they complement SLAs, and how to design and measure them. Published by itSMF UK in collaboration with leading ITSM practitioners.
+
+**3. Freshservice — SLA Management Best Practices**
+<https://freshservice.com/itsm/sla-management-guide>
+A practitioner guide covering SLA design, breach prevention, escalation automation, and reporting. Includes a section on watermelon reporting and how to avoid misleading metric presentations — directly relevant to this module's SLA reporting section.
+
+---
+
 Module 10 Reading Guide | CIS-4335 IT Service Management | Texas Wesleyan University

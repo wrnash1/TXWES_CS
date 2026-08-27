@@ -210,3 +210,38 @@ Accepted formats: PDF, DOCX, or Google Docs link with comment access enabled.
 If you are unsure about a component recommendation, the Reading Guide Section 2-5 specification tables provide specific guidance for each build type. Professor Messer's free study notes at professormesser.com (220-1101, Domain 3.4) include additional use-case comparisons.
 
 Do not use fabricated URLs or cite product reviews for component justifications. Base your answers on the technical principles covered in this module.
+
+---
+
+## Part 9 — Challenge Exercise
+
+These advanced steps are optional and are not included in the standard grading rubric.
+
+### Challenge Step 1 — Virtual Machine Creation with VirtualBox
+
+Download and install VirtualBox (free at [https://www.virtualbox.org/](https://www.virtualbox.org/)) on any available Windows, macOS, or Linux host:
+
+1. Create a new VM with the following specifications: 2 vCPUs, 2 GB RAM, 20 GB dynamically allocated virtual disk.
+1. Install a lightweight Linux distribution as the guest OS (Ubuntu Server 22.04 LTS ISO, free at [https://ubuntu.com/download/server](https://ubuntu.com/download/server), is recommended for minimal resource usage).
+1. After installation, open a terminal in the VM and run `nproc` (reports logical CPU count), `free -h` (reports total and available RAM), and `df -h` (reports disk space).
+1. In your lab report, document the host's physical core count and total RAM, the VM's allocated vCPUs and RAM, and calculate: if you created four identical VMs simultaneously on this host, what percentage of host RAM would be consumed by VMs alone?
+1. Write 2–3 sentences explaining what "CPU oversubscription" means for a virtualization host and why it can be acceptable in some scenarios (e.g., development lab VMs that are mostly idle) but problematic in others (e.g., production database servers).
+
+### Challenge Step 2 — Custom Build Cost Comparison
+
+Using PCPartPicker ([https://pcpartpicker.com/](https://pcpartpicker.com/)), build and price four complete systems — one for each custom build type:
+
+1. **CAD Workstation:** Intel or AMD professional platform, professional GPU (NVIDIA RTX A-series or AMD Radeon Pro), 64 GB ECC RAM, 1 TB NVMe SSD.
+1. **Virtualization Host:** Maximum core-count CPU, 128 GB ECC RAM, 2 TB NVMe SSD, minimal GPU (integrated or low-end discrete).
+1. **Gaming PC:** Mid-to-high-end consumer GPU, 32 GB DDR5, 1 TB NVMe SSD, balanced gaming CPU.
+1. **Home NAS:** Low-TDP CPU, 16 GB ECC RAM, 4× 4 TB NAS-rated HDDs in RAID 5.
+
+For each build: record the total cost, the most expensive single component, and the component that most strongly differentiates this build type from the others. Write one sentence explaining the cost difference between the most and least expensive of your four builds.
+
+### Challenge Step 3 — RAID Rebuild Time Estimation
+
+Research the typical RAID 5 rebuild time formula: **Rebuild Time ≈ (Drive Capacity × Array Size) / (Controller Rebuild Speed)**.
+
+1. A RAID 5 array uses five 8 TB enterprise NAS drives. The RAID controller performs rebuilds at approximately 200 MB/s. Estimate the rebuild time in hours. Show your calculation.
+1. During this rebuild window, the array has zero fault tolerance. Research the concept of "URE (Unrecoverable Read Error)" and explain in 2–3 sentences why large-capacity drives (8+ TB) increase the probability of a URE occurring during RAID 5 rebuild — and what RAID level a storage administrator should consider instead for drives of this size.
+1. Based on your research, what is the recommended maximum usable drive size for RAID 5 before the URE risk becomes statistically significant, and what RAID level is recommended for drives above that threshold?

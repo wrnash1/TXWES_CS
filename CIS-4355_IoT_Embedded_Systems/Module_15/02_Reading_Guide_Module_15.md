@@ -247,3 +247,17 @@ Incomplete decommissioning creates persistent security risks. A device in a dump
 10. Enumerate the four required steps of complete device decommissioning. For each step, explain what security risk is mitigated by that step.
 
 ---
+
+## 9. Supplemental Resources
+
+**1. AWS IoT Core — Fleet Provisioning and Device Management Developer Guide**
+[https://docs.aws.amazon.com/iot/latest/developerguide/iot-fleet-provisioning.html](https://docs.aws.amazon.com/iot/latest/developerguide/iot-fleet-provisioning.html)
+AWS's official documentation covering Just-In-Time Provisioning (JITP), fleet provisioning by claim certificate, device registry structure, device shadow (twin) desired/reported/delta mechanics, and fleet indexing SQL queries — all of which map directly to the concepts in Sections 1 and 2 of this reading guide. The Fleet Indexing section includes worked query examples for targeting devices by firmware version, battery level, and connectivity state, making it a practical companion to the registry and shadow material in this module.
+
+**2. InfluxDB — Time Series Data Platform Documentation**
+[https://docs.influxdata.com/influxdb/cloud/](https://docs.influxdata.com/influxdb/cloud/)
+InfluxDB's documentation covers the column-oriented storage model, high-cardinality tag indexing, automatic downsampling with Flux tasks, and retention policy configuration — the four TSDB features described in Section 4 of this reading guide. The "IoT Use Cases" section of the documentation demonstrates the exact pattern of storing device telemetry (device ID as a tag, sensor values as fields), computing per-device rolling averages, and setting alert thresholds — directly applicable to the fleet health monitoring workflow in the lab.
+
+**3. Espressif Systems — ESP-IDF Over-the-Air Updates (OTA) API Reference**
+[https://docs.espressif.com/projects/esp-idf/en/stable/esp32/api-reference/system/ota.html](https://docs.espressif.com/projects/esp-idf/en/stable/esp32/api-reference/system/ota.html)
+Espressif's official OTA API documentation covering the A/B partition scheme, the `esp_ota_begin()` / `esp_ota_write()` / `esp_ota_end()` download pipeline, `esp_ota_set_boot_partition()`, `esp_ota_mark_app_valid_cancel_rollback()`, the bootloader's rollback detection logic, and resumable downloads via `esp_https_ota_perform()` with HTTP Range requests. This is the authoritative reference for the ESP32-specific OTA mechanics described in Section 3 and directly corresponds to the OTA simulation in the lab exercise.

@@ -203,3 +203,203 @@ Distractor Analysis:
 - *Why B is incorrect:* Waiting for a formal meeting before logging a newly identified risk creates a gap in the risk management system. The register should be updated as new risks are discovered, regardless of meeting schedules.
 - *Why C is incorrect:* New risks do not require sponsor escalation before being added to the Risk Register. The PM adds risks to the register as part of normal project management duties. Escalation may be appropriate for very high-priority risks, but it does not precede documentation.
 - *Why D is incorrect:* Closing the Risk Register before project completion is a serious risk management error. The register remains open and active throughout the project lifecycle until all risks have been resolved or the project is closed.
+
+---
+
+## Question 11
+
+A project manager decides to purchase cybersecurity insurance for a cloud migration project in case of a data breach. Which risk response strategy is being used?
+
+- A) Avoid
+- B) Mitigate
+- C) Transfer
+- D) Accept
+
+**Correct Answer:** C) Transfer
+
+**Distractor Analysis:**
+
+- *Why C is correct:* Transferring a risk shifts the financial consequence to a third party (an insurer, contractor, or warranty provider). The risk event still can occur, but the financial liability is borne by someone else. Insurance is the most common example.
+- *Why A is incorrect:* Avoiding a risk eliminates the cause of the risk entirely — for example, deciding not to use the cloud service at all. Insurance does not prevent the data breach; it only covers its cost.
+- *Why B is incorrect:* Mitigation reduces the probability or impact of the risk through preventive action — such as implementing stronger encryption or access controls. Insurance does not reduce likelihood or impact; it transfers financial consequences.
+- *Why D is incorrect:* Acceptance means the team acknowledges the risk and decides to deal with it if it occurs (passive) or sets aside contingency reserves (active). Insurance is not acceptance — it is a contractual transfer of financial liability.
+
+---
+
+## Question 12
+
+Which of the following BEST defines a "trigger condition" in a risk response plan?
+
+- A) The probability rating assigned to a risk during qualitative analysis
+- B) A specific, observable event or indicator that signals a risk is about to occur or has occurred, prompting the execution of the risk response plan
+- C) The contingency reserve amount budgeted for a specific risk
+- D) The risk owner's name and contact information in the Risk Register
+
+**Correct Answer:** B) A specific, observable event or indicator that signals a risk is about to occur or has occurred, prompting the execution of the risk response plan.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* A trigger (also called a risk symptom or warning sign) is the detectable signal that tells the PM and risk owner it is time to execute the planned response. Without triggers, response plans sit idle until the risk event has already caused damage.
+- *Why A is incorrect:* Probability rating is used during qualitative analysis to prioritize risks. It is an assessment metric, not an action signal.
+- *Why C is incorrect:* Contingency reserve is funding set aside for the risk — part of the response plan, not the trigger condition.
+- *Why D is incorrect:* The risk owner is the person responsible for monitoring and responding to the risk. Contact information is a register field, not a trigger.
+
+---
+
+## Question 13
+
+The probability-impact matrix scores a risk as follows: Probability = 4 (out of 5), Impact = 5 (out of 5). The organization uses a score threshold of ≥ 15 as "High Priority." What priority is this risk?
+
+- A) Low — because only one factor is at maximum
+- B) Medium — because the combined average is 4.5
+- C) High — because 4 × 5 = 20, which exceeds the threshold of 15
+- D) Cannot be determined without quantitative analysis
+
+**Correct Answer:** C) High — because 4 × 5 = 20, which exceeds the threshold of 15.
+
+**Distractor Analysis:**
+
+- *Why C is correct:* The standard probability-impact score is calculated by multiplying the two values: P × I = 4 × 5 = 20. Since 20 ≥ 15 (the high threshold), this risk is classified as High Priority and should receive immediate attention and a detailed response plan.
+- *Why A is incorrect:* Priority is determined by the product of P × I, not by whether any single factor is at maximum. A moderate probability combined with maximum impact still produces a high score.
+- *Why B is incorrect:* The probability-impact matrix uses multiplication, not averaging. (4 + 5) / 2 = 4.5 is not the correct calculation.
+- *Why D is incorrect:* Qualitative analysis using the probability-impact matrix is sufficient to prioritize risks. Quantitative analysis (Monte Carlo, decision trees) is reserved for high-priority risks requiring numerical modeling.
+
+---
+
+## Question 14
+
+A project team decides to reduce the likelihood of a vendor delivery delay by adding a backup supplier who can fulfill orders within 48 hours. Which risk response strategy is this?
+
+- A) Avoid
+- B) Transfer
+- C) Mitigate
+- D) Exploit
+
+**Correct Answer:** C) Mitigate
+
+**Distractor Analysis:**
+
+- *Why C is correct:* Mitigation reduces the probability or impact of a threat. Adding a backup supplier does not eliminate the risk of a primary vendor delay, but it reduces the impact (48-hour backup availability significantly limits the disruption). This is a mitigation response.
+- *Why A is incorrect:* Avoidance would mean eliminating the risk source entirely — for example, by bringing fulfillment in-house so there is no vendor dependency at all.
+- *Why B is incorrect:* Transfer shifts financial consequences to a third party. Adding a backup supplier is a redundancy strategy, not a liability transfer.
+- *Why D is incorrect:* Exploit is an opportunity response strategy — it is used to ensure a positive risk (opportunity) definitely occurs. This scenario involves a threat, not an opportunity.
+
+---
+
+## Question 15
+
+What is the difference between a "residual risk" and a "secondary risk"?
+
+- A) Residual risk is a threat; secondary risk is an opportunity.
+- B) Residual risk is the risk that remains after a response has been applied; secondary risk is a new risk that is created by the risk response itself.
+- C) They are synonyms — both describe risks that were not identified during initial planning.
+- D) Residual risk requires quantitative analysis; secondary risk requires only qualitative analysis.
+
+**Correct Answer:** B) Residual risk is the risk that remains after a response has been applied; secondary risk is a new risk that is created by the risk response itself.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* These are two distinct concepts. Residual risk = what is left over after mitigation (e.g., after encrypting data, some breach risk remains). Secondary risk = a new risk introduced by the response action itself (e.g., adding a backup supplier creates a risk of inconsistent product quality from the new vendor).
+- *Why A is incorrect:* Both residual and secondary risks can be threats or opportunities. The distinction is about timing and cause, not risk type.
+- *Why C is incorrect:* They are not synonyms. Residual risks were part of the original risk, and secondary risks were created by the response — both concepts are distinct and important.
+- *Why D is incorrect:* Both types of risk go through the same qualitative/quantitative analysis process as any other risk. There is no PMI rule assigning different analysis methods to residual vs. secondary risks.
+
+---
+
+## Question 16
+
+Which of the following is the BEST example of "active risk acceptance"?
+
+- A) The team decides to ignore the risk because its probability is very low.
+- B) The team documents the risk in the Risk Register and establishes a contingency reserve of $15,000 in case it occurs.
+- C) The team purchases warranty coverage from the hardware vendor to cover replacement costs.
+- D) The team eliminates the possibility of the risk by selecting a different technology platform.
+
+**Correct Answer:** B) The team documents the risk in the Risk Register and establishes a contingency reserve of $15,000 in case it occurs.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* Active acceptance acknowledges the risk and prepares for it by setting aside contingency budget or creating a contingency plan. The team consciously chooses not to prevent the risk but is ready to handle it.
+- *Why A is incorrect:* Ignoring a risk without documentation or reserve is passive acceptance — the least proactive form and not generally recommended for significant risks.
+- *Why C is incorrect:* Purchasing warranty coverage transfers financial liability to a vendor — that is a Transfer response, not acceptance.
+- *Why D is incorrect:* Selecting a different technology platform to eliminate the risk source is Avoidance — the risk is removed from the project entirely.
+
+---
+
+## Question 17
+
+A project manager receives a report showing that three risk triggers have fired simultaneously. She immediately executes the contingency plans for two risks and asks the risk owners to implement workarounds for the third. What is a "workaround"?
+
+- A) A planned risk response executed when a trigger fires
+- B) An unplanned response to a risk event that occurs when no contingency plan was developed
+- C) A documented risk mitigation action taken before the risk occurs
+- D) A formal change request submitted to the Change Control Board to adjust the schedule
+
+**Correct Answer:** B) An unplanned response to a risk event that occurs when no contingency plan was developed.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* A workaround is an ad hoc, unplanned response to a risk that either was not identified or had no pre-approved contingency plan. The PM and team improvise a response in real time. Workarounds are then documented and may become inputs to future risk planning.
+- *Why A is incorrect:* A planned response executed when a trigger fires is a contingency plan — not a workaround. Workarounds are unplanned by definition.
+- *Why C is incorrect:* Documented mitigation actions taken before the risk occurs describe proactive risk responses, not workarounds. Workarounds are reactive and after the risk event.
+- *Why D is incorrect:* A change request may follow a workaround to formally adjust baselines, but it is not the definition of a workaround.
+
+---
+
+## Question 18
+
+Which risk identification technique involves the team brainstorming all possible risks using a structured prompt such as "What could prevent us from delivering this milestone on time?"
+
+- A) Delphi technique
+- B) Root cause analysis
+- C) Prompt list / structured brainstorming
+- D) SWOT analysis
+
+**Correct Answer:** C) Prompt list / structured brainstorming
+
+**Distractor Analysis:**
+
+- *Why C is correct:* Prompt lists provide structured categories or questions to guide brainstorming sessions, helping the team systematically surface risks across different domains (technical, external, organizational, schedule). Using "What could prevent...?" is a classic prompt-based facilitation technique.
+- *Why A is incorrect:* The Delphi technique uses anonymous expert panels who independently provide risk assessments that are then consolidated. It does not involve a real-time group brainstorming session.
+- *Why B is incorrect:* Root cause analysis is used to understand why a risk or problem occurred after the fact — it is a quality and issue management tool, not a forward-looking risk identification technique.
+- *Why D is incorrect:* SWOT analysis examines internal Strengths and Weaknesses and external Opportunities and Threats. It is a strategic planning tool that can feed risk identification, but it is not the same as structured brainstorming using prompts.
+
+---
+
+## Question 19
+
+A project manager discovers that a key third-party API the project depends on is being deprecated in four months — two months before the project go-live. What risk response strategy is MOST appropriate?
+
+- A) Accept the risk and document a contingency plan to use the deprecated API temporarily.
+- B) Avoid the risk by immediately initiating a workstream to replace the deprecated API with an alternative before the go-live date.
+- C) Transfer the risk by requiring the vendor to maintain the deprecated API through contract terms.
+- D) Mitigate the risk by adding extra testing to detect failures caused by the deprecation.
+
+**Correct Answer:** B) Avoid the risk by immediately initiating a workstream to replace the deprecated API with an alternative before the go-live date.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* The risk is known, the timeline is clear, and there is time to eliminate it before it materializes. Replacing the deprecated API removes the cause of the risk entirely — a textbook avoidance strategy. Avoidance is the strongest response when feasible.
+- *Why A is incorrect:* Accepting a known critical dependency risk with a four-month deadline and a two-month exposure window is irresponsible when avoidance is possible.
+- *Why C is incorrect:* Transfer via contract might be feasible, but the vendor has already announced deprecation, making contract enforcement uncertain and legally complex. Avoidance is more reliable.
+- *Why D is incorrect:* Adding extra testing addresses failure detection, not the root cause. It reduces impact slightly but does not prevent the API from failing after deprecation. This is a weak mitigation that leaves the core risk unresolved.
+
+---
+
+## Question 20
+
+Which of the following is an example of "exploiting" a positive risk (opportunity)?
+
+- A) The team decides to accept that a new open-source framework might speed up development.
+- B) The team actively assigns its best developers to a module where the new framework can definitely reduce build time by three weeks.
+- C) The team shares the opportunity with a partner organization that can use the framework more extensively.
+- D) The team monitors the situation and will implement the framework if it proves stable.
+
+**Correct Answer:** B) The team actively assigns its best developers to a module where the new framework can definitely reduce build time by three weeks.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* Exploit is the opportunity response that takes deliberate action to ensure the opportunity definitely occurs. Assigning the best developers specifically to capture the time savings guarantee the benefit materializes — this is not passive, it is active exploitation.
+- *Why A is incorrect:* Accepting an opportunity means acknowledging it may happen but taking no specific action to ensure it does. Passively hoping the framework speeds things up is acceptance.
+- *Why C is incorrect:* Sharing an opportunity with a partner is the "Share" response — collaborating with a third party best positioned to capture the benefit.
+- *Why D is incorrect:* Monitoring and implementing if stable is the "Enhance" or conditional approach — closer to acceptance or enhance than exploit. Exploit requires proactive action to make the opportunity certain.

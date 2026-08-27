@@ -412,4 +412,20 @@ Use this checklist in the final week before your exam:
 
 ---
 
+## Supplemental Resources
+
+**1. Terraform Associate 003 Exam Review Guide**
+<https://developer.hashicorp.com/terraform/tutorials/certification-003/associate-review-003>
+The official HashiCorp exam review guide for the Terraform Associate 003 certification. Maps every exam objective domain to specific tutorials, documentation pages, and hands-on exercises. Use this guide alongside Module 16 content in the final two weeks before the exam to identify any knowledge gaps and prioritize review areas. Includes the complete list of exam objectives with difficulty indicators.
+
+**2. HashiCorp Learn — Terraform Tutorials**
+<https://developer.hashicorp.com/terraform/tutorials>
+The central index of all official Terraform tutorials organized by topic. Covers the full certification exam scope including core workflow, state management, module development, Terraform Cloud configuration, security, and advanced HCL patterns. Each tutorial includes a working code example, estimated completion time, and prerequisite list. Completing the tutorials tagged "Associate" provides practical experience with every exam domain.
+
+**3. Terraform Associate 003 Sample Questions**
+<https://developer.hashicorp.com/terraform/tutorials/certification-003/associate-questions>
+Official sample questions released by HashiCorp for the Terraform Associate 003 exam. Covers all nine objective domains with questions at representative difficulty levels. Use these questions to calibrate your readiness after completing the course review, identify domains where additional study is needed, and familiarize yourself with the question format and phrasing used on the actual exam.
+
+---
+
 End of Module 16 Reading Guide

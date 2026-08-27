@@ -391,4 +391,20 @@ Post-exploitation techniques map to these ATT&CK tactics:
 
 ---
 
+---
+
+## 10. Supplemental Resources
+
+**1. GTFOBins — Linux Privilege Escalation via Misconfigured Binaries**
+[https://gtfobins.github.io/](https://gtfobins.github.io/)
+GTFOBins documents Unix binaries that can be exploited by an attacker with limited privileges to bypass local security restrictions. The site is organized by binary name and shows SUID, sudo, and file read/write exploitation techniques. It is the essential reference for the Linux privilege escalation techniques covered in Module 08 and is regularly tested on PT0-002.
+
+**2. LOLBAS — Living Off the Land Binaries and Scripts (Windows)**
+[https://lolbas-project.github.io/](https://lolbas-project.github.io/)
+The LOLBAS project catalogs Windows binaries, scripts, and libraries that can be used by attackers for execution, download, and evasion — the Windows equivalent of GTFOBins. It is directly applicable to the living-off-the-land post-exploitation techniques in Module 08 and the PT0-002 defense evasion exam objectives.
+
+**3. TryHackMe — Linux and Windows Privilege Escalation Rooms**
+[https://tryhackme.com/room/linprivesc](https://tryhackme.com/room/linprivesc)
+TryHackMe's privilege escalation rooms provide guided hands-on practice with SUID abuse, sudo misconfigurations, writable paths, cron job exploitation, and Windows token impersonation against dedicated vulnerable machines. Completing these rooms reinforces all Module 08 lab exercises and builds proficiency with the tools and techniques required for PT0-002 Domain 3.
+
 **Proprietary and Confidential. Not for disclosure outside of Texas Wesleyan University course use.**

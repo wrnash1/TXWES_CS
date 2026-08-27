@@ -390,3 +390,31 @@ Submit a lab report in PDF format containing:
 | Part 7: RAID analysis table | 5 |
 | Written explanations | 5 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: LVM Thin Provisioning
+
+Implement LVM thin provisioning to create a pool that can be over-committed and observe how thin volumes behave differently from thick volumes.
+
+1. On the VM's second disk (ensure `/dev/sdb` has free space or an available partition), create a new volume group `thinvg`: `sudo pvcreate /dev/sdbX && sudo vgcreate thinvg /dev/sdbX`. Create a thin pool named `thinpool` consuming all free space: `sudo lvcreate -l 100%FREE --thinpool thinpool thinvg`. Verify with `sudo lvs thinvg` and note the `ThinPool` attribute in the `Attr` column.
+2. Create two thin logical volumes of 5 GB each from the pool, even if the pool itself is smaller than 10 GB total: `sudo lvcreate -V 5G --thin -n thin1 thinvg/thinpool && sudo lvcreate -V 5G --thin -n thin2 thinvg/thinpool`. Format and mount them: `sudo mkfs.ext4 /dev/thinvg/thin1 && sudo mkdir -p /mnt/thin1 && sudo mount /dev/thinvg/thin1 /mnt/thin1`. Run `df -h /mnt/thin1` — it should report 5 GB despite the pool being smaller.
+3. Write data to observe pool consumption: `sudo dd if=/dev/urandom of=/mnt/thin1/testdata bs=1M count=200`. After writing, run `sudo lvs thinvg` and observe the `Data%` column of the pool increasing. Calculate: at what fill percentage would the pool become full? What happens to mounted thin volumes when the pool fills completely?
+4. Create an LVM snapshot of `thin1` (thin snapshots have different syntax): `sudo lvcreate -s --name thin1_snap thinvg/thin1`. Write more data to the original: `sudo dd if=/dev/urandom of=/mnt/thin1/postsnap bs=1M count=50`. Mount the snapshot read-only and verify it does NOT contain `postsnap`: `sudo mkdir /mnt/snap && sudo mount -o ro /dev/thinvg/thin1_snap /mnt/snap && ls /mnt/snap`. Clean up: `sudo umount /mnt/snap && sudo lvremove thinvg/thin1_snap`.
+
+### Challenge 2: Automated Storage Health Monitor
+
+Write a comprehensive storage health monitoring script that combines LVM status, filesystem usage, SMART data, and RAID status into a single report.
+
+1. Create `~/storage_health.sh`. The script should collect four categories of data: (1) LVM status — run `sudo pvs`, `sudo vgs`, `sudo lvs` and flag any VG with less than 10% free space; (2) filesystem usage — parse `df -h --output=target,pcent` and flag any filesystem over 80% full; (3) RAID status — check `cat /proc/mdstat 2>/dev/null` and flag any array not showing `[UU]` (active healthy disks) in its status line; (4) SMART health — loop over disks from `lsblk -d -o NAME -n` and run `sudo smartctl -H /dev/$DISK 2>/dev/null | grep "SMART overall"`.
+2. Implement output formatting: print a section header for each category, print GREEN/PASS for healthy items (use `echo -e "\e[32mPASS\e[0m"`) and RED/FAIL for problems (use `echo -e "\e[31mFAIL\e[0m"`). Add a final summary line showing total checks run and total failures found.
+3. Add a `--quiet` flag: when passed, suppress all PASS output and show only FAILures and the summary. Implement this by checking `[ "$1" = "--quiet" ]` and conditionally calling a `verbose_pass()` function that only prints if not in quiet mode.
+4. Schedule the script to run daily at 6 AM: add a cron entry with `crontab -e`: `0 6 * * * /bin/bash ~/storage_health.sh --quiet >> /var/log/storage_health.log 2>&1`. Verify the crontab entry and simulate a run: `bash ~/storage_health.sh --quiet`.
+
+### Reflection Questions
+
+1. LVM allows logical volumes to be extended online without unmounting. However, shrinking an ext4 logical volume requires the filesystem to be unmounted first. Describe what would physically happen to a mounted ext4 filesystem's data structures if `lvreduce` were run without first shrinking the filesystem — at which layer does the corruption first occur, and why does the filesystem not detect it until the next mount?
+
+2. A common recommendation is to use RAID 10 for database servers rather than RAID 5, even though RAID 10 provides only 50% space efficiency compared to RAID 5's (N-1)/N efficiency. Explain the specific I/O characteristics of database workloads that make RAID 5's parity-calculation overhead problematic, and describe the concrete performance scenario where this difference would be measurable in production.

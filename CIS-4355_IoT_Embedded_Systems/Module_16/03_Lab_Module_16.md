@@ -336,3 +336,54 @@ Submit the following as a single PDF to the Canvas LMS capstone assignment:
 8. Written reflection (200–300 words): What is the most important design decision you made in this capstone, and what would you change if you were building this for production deployment at 10,000 devices?
 
 ---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: OWASP IoT Top 10 Gap Analysis and Remediation ADR
+
+Perform a rigorous OWASP IoT Top 10 analysis of the capstone system and produce a professional ADR for each identified gap, prioritized by risk.
+
+1. For each of the ten OWASP IoT Top 10 categories, classify the capstone system as Fully Mitigated, Partially Mitigated, or Not Addressed. Record your classification in a Markdown table with five columns: `Category`, `OWASP Number`, `Classification`, `Evidence`, and `Residual Risk`. The Evidence column must reference a specific capstone component (e.g., "mTLS with per-device X.509 certificate in Mosquitto broker config"), not a general statement. The Residual Risk column must be one of: None, Low, Medium, High.
+
+   | Category | OWASP # | Classification | Evidence | Residual Risk |
+   |---|---|---|---|---|
+   | Weak Passwords | #1 | Fully Mitigated | Per-device X.509 mTLS; no password-based auth | None |
+   | Insecure Network Services | #2 | ... | ... | ... |
+   | ... | | | | |
+
+1. Identify the two highest residual risk categories from your analysis. For each, write a complete ADR using the five-element format from the reading guide (Decision, Context, Options Considered, Decision Rationale, Limitations). The ADR must document a specific, implementable remediation — not a general statement like "implement better security." For example, if the residual risk is certificate renewal (OWASP #4 or general lifecycle management), the ADR must specify: the renewal trigger mechanism (device shadow desired state push vs. certificate expiry alert), the renewal protocol (ACME, AWS ACM PCA, or manual re-provisioning), and the rollback procedure if renewal fails.
+
+1. For the highest-risk gap identified, add a fourth ADR for the workaround that will be used until the full remediation is implemented. The workaround ADR must include a "sunset condition" — the specific, measurable event that will trigger switching from the workaround to the full remediation (e.g., "This workaround is retired when the automated certificate monitoring alert described in ADR-005 is deployed and verified for 30 days without a missed expiry event").
+
+1. In your lab report, write a 3–4 sentence analysis of which OWASP category represents the most systemic challenge for IoT deployments at scale — not just for this capstone, but for the industry broadly — and justify your choice using a concrete real-world IoT incident as supporting evidence.
+
+---
+
+### Challenge 2: Production Readiness Checklist and Architecture Review Board Simulation
+
+Produce the documentation a production IoT system would require before receiving approval for fleet-wide deployment, and simulate an Architecture Review Board (ARB) challenge process.
+
+1. Write a Production Readiness Checklist for the capstone system covering six dimensions. For each dimension, define the specific pass/fail criterion and evaluate the capstone system against it (Pass, Fail, or Partial with explanation). The six dimensions are:
+
+   - **Security**: All OWASP Top 10 categories at Medium residual risk or below
+   - **Reliability**: Watchdog timer covers all tasks; MQTT task reconnects within 30 seconds of network loss
+   - **Observability**: All alert conditions have documented thresholds; telemetry covers all four monitoring categories from Module 15
+   - **Operations**: Certificate expiry monitoring alert in place; decommissioning procedure documented and tested
+   - **Scalability**: Architecture supports 100 devices without code changes; broker configured for concurrent connections
+   - **Documentation**: Architecture diagram complete; three ADRs written; OWASP analysis complete; known limitations documented
+
+1. Assign each dimension a traffic-light status (Green/Yellow/Red) based on the capstone evaluation. A "Green" requires a full Pass; "Yellow" requires Partial; "Red" requires Fail. Write a one-sentence deployment recommendation: either "Approved for canary deployment (1% of fleet)" if all dimensions are Yellow or better, "Approved for pilot deployment (10% of fleet)" if all dimensions are Green, or "Not approved — remediate [list specific Red dimensions] before deployment."
+
+1. Simulate three ARB challenge questions. For each question, write a 3–5 sentence technical response that references specific capstone components, code, or documentation:
+
+   - Challenge A: "The z-score anomaly detector uses a 10-sample window. At a 30-second reporting interval, this means the detector has no valid history for the first 5 minutes of device operation. How does the system behave during this warm-up period, and is this acceptable for your use case?"
+   - Challenge B: "The decommissioning procedure in Module 15 marks the certificate as revoked in a local registry file. How does the broker know the certificate has been revoked if the CRL is not published to the broker? What is the lag between registry revocation and broker enforcement, and what attack is possible during that lag?"
+   - Challenge C: "The telemetry CSV grows indefinitely. At 30-second intervals, 100 devices would generate approximately 10,400 rows per hour. What is the projected storage consumption after 90 days, and what retention policy would you implement?"
+
+---
+
+### Reflection Questions
+
+1. The Production Readiness Checklist in Challenge 2 evaluates the capstone against six dimensions independently. In a real production deployment, these dimensions interact: improving Security (client certificate validation on every API endpoint) may reduce Scalability (certificate validation adds latency to every request). Describe one specific trade-off in the capstone system where improving one dimension of the checklist would degrade another dimension, and explain how you would resolve the conflict using the ADR format (without writing the full ADR — just identify the decision, the competing dimensions, and the rationale direction).
+
+2. The ARB simulation in Challenge 2 tests your ability to defend design decisions under adversarial questioning. In a professional engineering context, an ARB question you cannot answer is more valuable than one you can — it identifies a real gap in the system design. Identify one additional ARB question about the capstone system that you would not be able to answer confidently with the current implementation, explain why that question is important (what risk it exposes), and describe what you would need to build or measure to answer it.

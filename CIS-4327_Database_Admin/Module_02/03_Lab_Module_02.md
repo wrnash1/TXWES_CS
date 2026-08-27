@@ -179,3 +179,58 @@ Write two to three sentences below the ERD explaining the most significant norma
 ---
 
 Reference: cloud.google.com/learn
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Detecting and Fixing a BCNF Violation
+
+Create the following table in your Cloud SQL PostgreSQL instance and insert at least 6 sample rows:
+
+```sql
+CREATE TABLE course_instructors (
+    student_id    INTEGER,
+    course_id     INTEGER,
+    instructor_id INTEGER,
+    PRIMARY KEY (student_id, course_id)
+);
+```
+
+Then complete the following steps:
+
+1. Identify whether this table is in 3NF but violates BCNF by analyzing whether `instructor_id → course_id` holds (an instructor teaches only one course). Write a one-paragraph explanation of the BCNF violation.
+2. Decompose the table into two BCNF-compliant tables: one storing `(instructor_id, course_id)` and one storing `(student_id, instructor_id)`. Implement both tables with proper primary keys and foreign keys.
+3. Verify that the original `course_instructors` data can be reconstructed by performing a natural JOIN of the two decomposed tables and confirming row counts match.
+
+### Challenge 2: Normalization Audit of a Legacy Import Table
+
+Create an unnormalized staging table that mimics a CSV import:
+
+```sql
+CREATE TABLE legacy_import (
+    record_id        SERIAL PRIMARY KEY,
+    order_id         INTEGER,
+    customer_email   VARCHAR(255),
+    customer_city    VARCHAR(100),
+    product_sku      VARCHAR(50),
+    product_name     VARCHAR(200),
+    category         VARCHAR(100),
+    qty              INTEGER,
+    unit_price       NUMERIC(10,2),
+    sales_rep_id     INTEGER,
+    sales_rep_name   VARCHAR(100),
+    sales_rep_region VARCHAR(100)
+);
+```
+
+Then complete the following steps:
+
+1. List all functional dependencies you can identify in this table using the notation `X → Y`.
+2. Identify which normal form each dependency violates (1NF, 2NF, or 3NF) and write the fully normalized target schema (table names, columns, PKs, FKs) that resolves all violations.
+3. Implement the normalized schema as DDL and migrate the data from `legacy_import` using INSERT ... SELECT statements.
+
+### Reflection Questions
+
+1. In Challenge 1, what specific condition made the `course_instructors` table a BCNF violation even though it was already in 3NF, and how did the decomposition resolve it?
+2. In a production migration from a legacy flat-file import table to a normalized Cloud SQL schema, what risks does the data migration step (INSERT ... SELECT) introduce, and what validation queries would you run to confirm no data was lost?

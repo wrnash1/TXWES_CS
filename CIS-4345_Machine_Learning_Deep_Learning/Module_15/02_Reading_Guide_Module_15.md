@@ -368,3 +368,16 @@ Fine-tuning for 2–4 epochs at `lr=2e-5` is typical. The small learning rate pr
 ## Next Module Preview
 
 Module 16 is our exam preparation and capstone module. We review all four TensorFlow Developer Certificate exam categories, work through practice problems under timed conditions, and discuss career paths in machine learning. Bring your questions about any topic from Modules 1–15.
+
+---
+
+## 9. Supplemental Resources
+
+**1. [The Illustrated Transformer — Jay Alammar](https://jalammar.github.io/illustrated-transformer/)**
+A widely referenced visual walkthrough of the Transformer architecture — covering token embeddings, positional encodings, scaled dot-product attention, multi-head attention, encoder/decoder stacks, and the residual + layer normalization structure. Uses step-by-step diagrams that complement the mathematical treatment in the reading guide and directly support the lab's attention implementation.
+
+**2. [TensorFlow VAE Tutorial — Convolutional VAE](https://www.tensorflow.org/tutorials/generative/cvae)**
+Official TensorFlow tutorial building a convolutional VAE on MNIST from scratch, including the ELBO loss derivation, custom training loop with `tf.GradientTape`, latent space visualization, and image generation via decoder sampling. Directly extends the dense VAE built in the lab to convolutional architectures and demonstrates the latent grid visualization technique.
+
+**3. [Hugging Face — Fine-Tuning BERT for Text Classification](https://huggingface.co/docs/transformers/training)**
+Practical guide to loading pretrained BERT variants via the Transformers library, tokenizing inputs with `AutoTokenizer`, fine-tuning with the `Trainer` API, and evaluating with standard metrics. Demonstrates the same transfer learning workflow covered in Section 6 of this reading guide using the production-grade Hugging Face ecosystem.

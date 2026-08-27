@@ -205,3 +205,173 @@ OPA Conftest uses the `deny` rule pattern in Rego policies. What happens when a 
 ---
 
 Quiz — Module 06 | CIS-4350 | Texas Wesleyan University | Professor Nash
+
+---
+
+### Question 11 (5 points)
+
+A Terraform configuration uses a `locals` block to construct a security group name from a variable: `local.sg_name = "${var.env}-app-sg"`. An attacker injects `; rm -rf /` as the `env` variable value. Why does this NOT result in code execution in Terraform?
+
+- A) Terraform sanitizes all variable inputs automatically before use
+- B) Terraform's HCL interpolation is a configuration language, not a shell — string interpolation does not execute OS commands
+- C) Terraform runs in a sandboxed environment that blocks all system calls
+- D) The `locals` block has no network access so injected commands cannot exfiltrate data
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Terraform does not automatically sanitize inputs — but HCL is a declarative language where string values are treated as data, not as shell commands.
+  - C) Terraform does not run in a formal sandbox — the language design prevents injection, not a sandbox.
+  - D) Whether network access exists is irrelevant to whether the injected string executes as a command.
+
+---
+
+### Question 12 (5 points)
+
+A checkov scan produces a `CKV_AWS_18` finding on an S3 bucket configuration. The finding indicates access logging is not enabled. The team decides to accept this risk for a scratch bucket. How should this exception be documented to satisfy audit requirements?
+
+- A) Delete the S3 bucket resource from the Terraform file until the scan passes
+- B) Add `# checkov:skip=CKV_AWS_18: Scratch bucket — no PII, logging accepted risk, reviewed YYYY-MM-DD` inline in the resource block
+- C) Lower the checkov severity threshold so CKV_AWS_18 is no longer reported
+- D) Add the bucket to a global `.checkov.yaml` exclusion file without a justification comment
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Deleting the resource defeats the purpose — the bucket needs to exist.
+  - C) Lowering severity thresholds suppresses other findings and does not create an auditable exception record.
+  - D) Global exclusion files are appropriate for false positives but require justification; an undocumented suppression cannot satisfy audit requirements.
+
+---
+
+### Question 13 (5 points)
+
+A Terraform remote backend uses an S3 bucket for state storage. Which two additional configurations are required to meet security best practices for state management?
+
+- A) Public ACL enabled + versioning disabled
+- B) Server-side encryption (SSE) + DynamoDB table for state locking
+- C) Bucket replication enabled + CloudFront distribution for global access
+- D) Bucket policy allowing all IAM users + versioning enabled
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Public ACL should be disabled — state files contain sensitive data and must not be publicly accessible.
+  - C) Replication and CloudFront are availability/performance features — they do not address the security requirements of encryption and concurrent-write protection.
+  - D) Allowing all IAM users is a permissions anti-pattern — least-privilege access to state should be strictly controlled.
+
+---
+
+### Question 14 (5 points)
+
+A tfsec finding reports `aws-ec2-no-public-ingress-sgr` on a security group rule allowing `0.0.0.0/0` on port 443. The team intentionally hosts a public HTTPS endpoint. What is the correct way to handle this?
+
+- A) Disable tfsec entirely — it produces too many false positives for public-facing infrastructure
+- B) Use tfsec's `#tfsec:ignore:aws-ec2-no-public-ingress-sgr` annotation on the resource with an explanatory comment
+- C) Change the security group to block port 443 — public HTTPS is not allowed by the security policy
+- D) Switch from tfsec to checkov — checkov does not flag port 443 public ingress rules
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Disabling tfsec entirely removes all IaC security checks — a targeted suppression is appropriate.
+  - C) Public HTTPS on port 443 is a standard and legitimate requirement — blocking it defeats the purpose of the service.
+  - D) checkov also flags public ingress — switching tools does not resolve the issue.
+
+---
+
+### Question 15 (5 points)
+
+In a GitOps workflow using Flux or ArgoCD, which security control ensures that only IaC changes reviewed and merged to `main` can be applied to the production cluster?
+
+- A) A pre-commit hook that validates YAML before the developer pushes
+- B) The GitOps operator reconciles cluster state exclusively from the `main` branch, so only merged, reviewed changes are applied
+- C) A `terraform apply -auto-approve` command in the CI pipeline triggered on every push
+- D) Manual SSH access to the cluster to apply manifests after review
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Pre-commit hooks are client-side and run before push — they do not control which branch the cluster tracks.
+  - C) Auto-approve on every push bypasses the review gate — the GitOps model requires changes to go through a pull request and merge to a protected branch first.
+  - D) Manual SSH application defeats the automation and auditability benefits of GitOps.
+
+---
+
+### Question 16 (5 points)
+
+A Rego Conftest policy contains `deny[msg] { input.resource_changes[_].type == "aws_s3_bucket"; not input.resource_changes[_].change.after.versioning[_].enabled }`. What is the policy checking?
+
+- A) That all S3 bucket names end with a versioning suffix
+- B) That every S3 bucket in the Terraform plan has versioning enabled
+- C) That no S3 buckets are being destroyed in the plan
+- D) That S3 bucket objects are encrypted before upload
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) The policy checks the `versioning.enabled` boolean field — not bucket name patterns.
+  - C) Deletion checks would look at `change.actions` containing `"delete"` — not the `versioning` field.
+  - D) Object encryption is a separate configuration (`server_side_encryption_configuration`) — not what this policy checks.
+
+---
+
+### Question 17 (5 points)
+
+What is the primary risk of using `terraform apply` with static, long-lived AWS access keys stored as CI/CD environment variables?
+
+- A) Long-lived keys increase Terraform plan execution time due to AWS API rate limiting
+- B) Compromised CI/CD environment or pipeline logs can expose keys with full infrastructure modification access for an extended period
+- C) AWS does not accept static access keys for Terraform — only IAM roles are supported
+- D) Long-lived keys cause Terraform state drift because they use cached credentials
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Key longevity has no effect on Terraform execution time or API rate limits.
+  - C) AWS fully supports static access keys for Terraform — IAM roles via OIDC are simply the more secure alternative.
+  - D) State drift is caused by out-of-band infrastructure changes, not credential type.
+
+---
+
+### Question 18 (5 points)
+
+A Terraform `resource "aws_db_instance"` block has `publicly_accessible = true`. Which IaC scanning tool and check would detect this misconfiguration?
+
+- A) gitleaks with the `database-secret` rule
+- B) checkov with `CKV_AWS_17` (Ensure that RDS database is not publicly accessible)
+- C) Trivy with the `HIGH` severity container scan
+- D) tfsec with the `general-secrets` check
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) gitleaks detects secrets in code — it does not analyze resource configuration attributes like `publicly_accessible`.
+  - C) Trivy container scanning analyzes Docker images, not Terraform resource attributes.
+  - D) tfsec's `general-secrets` check looks for hardcoded credentials — not resource accessibility flags.
+
+---
+
+### Question 19 (5 points)
+
+The `terraform plan -out=tfplan.binary` command followed by `terraform show -json tfplan.binary > tfplan.json` produces JSON that Conftest can test. Why is testing the plan JSON preferred over testing the raw `.tf` source files?
+
+- A) Plan JSON is smaller than `.tf` files, making Rego evaluation faster
+- B) Plan JSON represents resolved values after variable substitution and module expansion, reflecting what will actually be applied to the cloud provider
+- C) Testing `.tf` source files requires a running Terraform provider — plan JSON does not
+- D) Conftest only supports JSON input — it cannot parse HCL `.tf` files directly
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) File size is not the reason — plan JSON is often larger than source `.tf` files.
+  - C) Running a provider is required to generate the plan — this is not an advantage of plan JSON over source.
+  - D) Conftest can parse `.tf` files with the `--parser` flag — the preference for plan JSON is about accuracy, not format limitation.
+
+---
+
+### Question 20 (5 points)
+
+An organization uses Terraform Cloud with Sentinel policies at the `hard-mandatory` enforcement level. A developer attempts to apply a Terraform plan that creates an unencrypted RDS instance. What happens?
+
+- A) Terraform Cloud logs the violation and sends an email but allows the apply to proceed
+- B) The apply is blocked and cannot be overridden by any user, including workspace admins
+- C) The apply is blocked but a workspace admin can override the policy and proceed
+- D) The apply proceeds but the RDS instance is automatically remediated by Terraform Cloud to enable encryption
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Logging with email and allowing the apply is the behavior of `advisory` enforcement level, not `hard-mandatory`.
+  - C) Override capability is the behavior of `soft-mandatory` — `hard-mandatory` cannot be overridden.
+  - D) Terraform Cloud does not auto-remediate resources — it enforces policies at plan time, not after apply.

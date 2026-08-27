@@ -339,3 +339,17 @@ Your submission must include:
 **`az vm get-instance-view` returns no powerState:** The VM may still be transitioning states. Wait 30 seconds and retry.
 
 **Portal does not show VM:** Confirm you are viewing the correct subscription. Use the subscription filter in the Portal top navigation bar.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Compare Stop vs. Deallocate Billing States
+Using Azure CLI, create a Standard_B1s Linux VM. Record its public IP address. Run `az vm stop` and then query the power state and public IP. Then run `az vm deallocate` and query both again. Document the difference in power state, public IP assignment, and — using the Azure Pricing Calculator — calculate the hourly cost difference between Stopped (allocated) and Deallocated states for the Standard_B1s size. Clean up the VM and resource group when finished.
+
+### Challenge 2: Design a Scale Set Autoscale Policy
+Without deploying resources, design a complete autoscale policy for a retail website that must handle the following traffic pattern: 9 AM–5 PM weekdays at moderate load (60% CPU), 5 PM–9 PM weekdays at peak load (85% CPU), and overnight at minimal load (10% CPU). Specify the minimum, default, and maximum instance counts, the scale-out and scale-in CPU thresholds and time windows, and the cool-down periods. Justify each value with a sentence explaining your reasoning. Then explain what the `--no-wait` flag does in `az vmss scale` and why it matters for automation scripts.
+
+### Reflection Questions
+1. During the lab you observed that `az vm stop` does not stop compute billing but `az vm deallocate` does. Why does Azure charge for a stopped-but-allocated VM? What physical resource is Azure reserving on your behalf that justifies the charge?
+2. A colleague argues that VM Scale Sets are unnecessary because you can manually add VMs to a load balancer backend pool when traffic increases. What operational problems would arise with manual scaling that Scale Sets solve automatically?

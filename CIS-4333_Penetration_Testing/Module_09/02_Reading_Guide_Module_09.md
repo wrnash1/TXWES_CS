@@ -392,4 +392,20 @@ ffuf -u https://TARGET/FUZZ -w /usr/share/seclists/Discovery/Web-Content/api-end
 
 ---
 
+---
+
+## 11. Supplemental Resources
+
+**1. OWASP Web Security Testing Guide (WSTG)**
+[https://owasp.org/www-project-web-security-testing-guide/](https://owasp.org/www-project-web-security-testing-guide/)
+The OWASP Web Security Testing Guide is the most comprehensive free reference for web application penetration testing methodology. It provides test case descriptions, payloads, and analysis guidance for every major vulnerability class in the OWASP Top 10 and beyond. It is directly applicable to all Module 09 lab exercises and provides the depth needed for PT0-002 Domain 3 web application questions.
+
+**2. PortSwigger Web Security Academy**
+[https://portswigger.net/web-security](https://portswigger.net/web-security)
+PortSwigger's free Web Security Academy provides hands-on interactive labs for SQL injection, XSS, SSRF, IDOR, authentication bypass, CSRF, and all other major web vulnerability classes using their deliberately vulnerable web application platform. Labs are directly tied to Burp Suite usage and reinforce every technique covered in Module 09 with immediate feedback.
+
+**3. DVWA — Damn Vulnerable Web Application**
+[https://github.com/digininja/DVWA](https://github.com/digininja/DVWA)
+DVWA is the primary lab target for Module 09 and the industry-standard web application security training platform. The GitHub repository includes full setup documentation, security level configuration, and vulnerability descriptions for each module. Setting up DVWA locally as a persistent lab environment enables ongoing practice beyond the scheduled lab activity.
+
 **Proprietary and Confidential. Not for disclosure outside of Texas Wesleyan University course use.**

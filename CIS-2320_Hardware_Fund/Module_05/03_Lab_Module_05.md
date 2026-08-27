@@ -218,3 +218,41 @@ If you are unsure about a drive type or connector, refer to the following resour
 - Reading Guide Section 2 (Drive Comparison Table) and Section 4 (Connector Identification Reference)
 - Professor Messer's CompTIA A+ Core 1 free course storage videos at [https://www.professormesser.com/free-a-plus-training/220-1101/220-1101-video/](https://www.professormesser.com/free-a-plus-training/220-1101/220-1101-video/)
 - CompTIA A+ exam objectives Domain 3.1 at [https://www.comptia.org/certifications/a](https://www.comptia.org/certifications/a)
+
+---
+
+## Part 9 — Challenge Exercise
+
+These advanced steps are optional and are not included in the standard grading rubric.
+
+### Challenge Step 1 — Drive Health Inspection with CrystalDiskInfo
+
+Download CrystalDiskInfo (free at [https://crystalmark.info/en/software/crystaldiskinfo/](https://crystalmark.info/en/software/crystaldiskinfo/)) and run it on any available Windows system:
+
+1. For each detected drive, record: drive model, interface (SATA/NVMe), capacity, SMART health status, temperature, and Power On Hours.
+1. Locate the following SMART attributes and record their current and worst values:
+   - Reallocated Sector Count (HDD: indicates sectors that have been remapped due to errors; SSD: similar warning)
+   - Pending Sector Count (sectors waiting to be reallocated)
+   - Uncorrectable Sector Count (sectors that could not be read)
+1. If any of these three attributes have non-zero values on an HDD, write a 2–3 sentence explanation of what this means for the drive's reliability and what action a technician should take.
+1. Note the drive's temperature. Research the safe operating temperature range for your drive model (look up the spec sheet). Is the drive operating within its rated range?
+
+### Challenge Step 2 — Storage Performance Benchmark
+
+Download CrystalDiskMark (free at [https://crystalmark.info/en/software/crystaldiskmark/](https://crystalmark.info/en/software/crystaldiskmark/)) and benchmark at least two storage devices if available (one SSD and one HDD, or an NVMe vs. SATA SSD):
+
+1. Run a 1 GiB benchmark on each drive. Record the Sequential Read and Sequential Write speeds, and the Random 4K Read and Random 4K Write speeds (Q1T1 — single queue, single thread).
+1. Create a comparison table with all four metrics for each drive.
+1. Analyze the results: the sequential vs. random performance gap is much larger on HDDs than on SSDs. Explain in 3–4 sentences why random 4K I/O is so much slower on an HDD than on an SSD, using the concepts of rotational latency and seek time from the reading guide.
+
+### Challenge Step 3 — RAID Capacity and Fault Tolerance Extended Planning
+
+Using only pencil and paper (or a spreadsheet), design storage solutions for three advanced scenarios:
+
+**Scenario A:** A video production company needs 100 TB of raw usable storage that can survive exactly one simultaneous drive failure. They will use 14 TB enterprise HDDs. What RAID level do you choose? How many drives are required? What is the total raw drive purchase cost at $300 per drive?
+
+**Scenario B:** A hospital requires 20 TB of usable storage with protection against two simultaneous drive failures (they cannot afford any data loss). They will use 4 TB SSDs. What RAID level do you choose? How many minimum drives are required? What is the usable capacity with your chosen drive count?
+
+**Scenario C:** A startup wants the maximum possible read and write speed for a temporary scratch storage system used in machine learning training jobs. The data is regenerable — no redundancy needed. They have eight 2 TB NVMe SSDs available. What RAID level do you recommend? What is the total usable capacity? What is the risk?
+
+For each scenario, show your capacity calculation and justify your RAID level choice in 2–3 sentences.

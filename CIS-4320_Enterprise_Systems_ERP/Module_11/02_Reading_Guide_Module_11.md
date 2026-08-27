@@ -329,3 +329,19 @@ MULTI-LEVEL BOM EXPLOSION:
 - Complete Lab 11.
 - Post to Discussion Forum 11 by Wednesday at 11:59 PM.
 - Complete Quiz 11.
+
+---
+
+## 9. Supplemental Resources
+
+**1. SAP Learning — Manufacturing with SAP S/4HANA**
+<https://learning.sap.com/learning-journeys/plan-and-manufacture-with-sap-s-4hana>
+Official SAP learning journey covering the complete Production Planning process: BOM and Routing master data, MRP planning run, Production Order creation and execution, Goods Issue and Goods Receipt, and order settlement with variance analysis. Maps directly to the transaction codes (CS01, MD01, CO01, CO11N, KO88) tested in this module's quiz and Lab 11.
+
+**2. APICS — Manufacturing Planning and Control for Supply Chain Management**
+<https://www.ascm.org/learning-development/certifications-credentials/cpim/>
+The ASCM CPIM certification covers Manufacturing Resource Planning (MRP II) theory, BOM structures, capacity requirements planning, and production scheduling — the conceptual foundation underlying SAP PP configuration decisions. Particularly relevant to MRP netting logic, lot sizing rules, and Make-to-Order vs. Make-to-Stock environments covered in this module.
+
+**3. SAP Help Portal — Production Orders in SAP S/4HANA**
+<https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/production-planning>
+Official SAP documentation for Production Planning. Covers Production Order lifecycle management (statuses CRTD through CLSD), operation confirmation, movement types for Goods Issue and Goods Receipt, and the PP-MM-FI-CO integration points — essential reference for understanding the accounting entries and integration flows analyzed in Lab 11.

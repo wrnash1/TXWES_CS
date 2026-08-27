@@ -136,6 +136,34 @@ Submit to the Canvas assignment portal by the module due date.
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Scrum Event Chain Simulation
+
+Simulate one full Sprint cycle on paper or in a document, treating yourself as both the Product Owner and a Developer on a fictional three-person team building a campus event-scheduling app. Complete all of the following:
+
+1. Write a Product Goal (one sentence) and a Product Backlog of at least eight items (title + one-line description each), ordered by priority.
+2. Conduct a written Sprint Planning: select four to five items, write a Sprint Goal that unifies them, and decompose at least two items into sub-tasks of one day or less.
+3. Write three Daily Scrum entries (Day 1, Day 5, Day 9 of a two-week Sprint) showing realistic progress, one impediment discovered, and how the Sprint Backlog was adapted.
+4. Write a Sprint Review summary (three to five sentences) describing what was demonstrated, one stakeholder question raised, and how the Product Backlog was updated.
+5. Write a Sprint Retrospective summary identifying one process problem observed and one concrete improvement action for the next Sprint.
+
+### Challenge 2: Definition of Done Ladder
+
+A "DoD Ladder" is a structured way to grow quality standards incrementally across Sprints. Build one for the campus event-scheduling app:
+
+1. Write a Minimum DoD for Sprint 1 (at least three criteria a brand-new team could realistically achieve).
+2. Write an Intermediate DoD for Sprint 6 (add at least two new criteria the team could add after establishing basic rhythm).
+3. Write an Advanced DoD for Sprint 12 (add at least two more criteria requiring automated tooling or higher technical maturity).
+4. For each new criterion added after Sprint 1, identify which Scrum value (Commitment, Focus, Openness, Respect, or Courage) it most directly supports and explain why in one sentence.
+
+### Reflection Questions
+
+1. After simulating the Sprint cycle, which event felt most difficult to do authentically (Sprint Planning, Daily Scrum, Review, or Retrospective) and why? What does that difficulty reveal about the skill or discipline that event requires in practice?
+2. The Scrum Guide says the Retrospective's most impactful improvement items can be added directly to the Sprint Backlog. What is the risk of doing this, and what is the risk of not doing it?
+
+---
+
 ## Rubric Summary
 
 | Component | Points |

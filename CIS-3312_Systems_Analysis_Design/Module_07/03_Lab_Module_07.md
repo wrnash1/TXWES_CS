@@ -169,3 +169,27 @@ For any requirement that fails one or more criteria, revise it to address the fa
 Submit your completed lab document to the Canvas assignment portal by the due date. All exercises must be substantively completed. Requirements must be written in full sentences using the specified formats — not described in abstract terms. Show your reasoning, not just your conclusions.
 
 **Grading:** Each exercise is worth 25 points, distributed across tasks based on completeness, accuracy, and application of elicitation and requirements concepts.
+
+---
+
+## Part 9 — Challenge Exercise
+
+This section is optional and not separately graded. It extends the lab into advanced elicitation and requirements management practice aligned with ECBA exam competencies.
+
+### Challenge Step 1: Elicitation Risk Assessment
+
+Using the case study from your assigned lab, identify the top three elicitation risks that could prevent you from gathering complete, accurate requirements. For each risk:
+
+- Describe the risk in one sentence (what could go wrong)
+- Identify the BABOK KA 4 task most affected by this risk
+- Describe a specific mitigation strategy the BA should implement before the risk materializes
+
+Format your assessment as a three-row risk table with columns: Risk Description | Affected KA 4 Task | Mitigation Strategy. This exercise develops the analytical habit of proactively managing elicitation quality rather than reacting to requirements gaps after they cause downstream problems.
+
+### Challenge Step 2: Stakeholder Communication Plan
+
+Select three stakeholders from the case study. For each stakeholder, design a tailored communication approach covering: the elicitation technique(s) most appropriate for this stakeholder and why, the format and frequency of requirements updates you will send them, the specific risk to requirements quality if this stakeholder is under-engaged, and one concrete action you will take if this stakeholder becomes unavailable during the elicitation phase. Present your plan as a structured table. This exercise integrates KA 2 stakeholder engagement planning with KA 4 elicitation technique selection.
+
+### Challenge Step 3: Requirements Baseline Change Scenario
+
+Assume you have completed elicitation and the requirements are baselined. Two weeks later, a stakeholder sends an email requesting a significant change — they want to add a feature that was explicitly descoped at the project kickoff. Write a formal Change Impact Assessment memo covering: what the proposed change is, which baselined requirements it would affect, the estimated impact on project scope, schedule, and budget (high/medium/low with brief rationale), and your recommendation (accept, modify, or reject) with justification. This exercise practices BABOK KA 6 requirements change control in a realistic scenario.

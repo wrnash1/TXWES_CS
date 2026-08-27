@@ -120,3 +120,19 @@ debug ip eigrp                         ! Real-time EIGRP updates (use with cauti
 **Prompt:** A senior network engineer at your company has proposed migrating a 50-router single-area OSPF network to a multi-area design. A junior engineer objects, arguing that the reconfiguration risk and downtime outweigh the benefits because "OSPF is already working fine." Write a substantive response (400+ words) from the perspective of the senior engineer. Address: (1) the specific technical limitations of a 50-router single-area OSPF network, (2) the concrete benefits of multi-area design in terms of convergence and scalability, and (3) a brief migration strategy that minimizes risk. Cite at least one RFC or Cisco design guide in your argument.
 
 **Peer Response:** After posting your initial response, provide substantive replies to at least two classmates. Challenge their migration strategy or add a complicating scenario (e.g., "What if some of the 50 routers are in a remote data center with limited maintenance windows?").
+
+---
+
+## 9. Supplemental Resources
+
+**1. Cisco OSPF Troubleshooting Guide — "OSPF Neighbor Problems Explained"**
+https://www.cisco.com/c/en/us/support/docs/ip/open-shortest-path-first-ospf/13733-26.html
+Authoritative Cisco troubleshooting reference covering all OSPF neighbor state failures (EXSTART, EXCHANGE, LOADING). Essential reading for understanding why adjacencies fail and how to diagnose them from `show ip ospf neighbor` output.
+
+**2. IETF RFC 4750 — OSPF MIB (OSPF Version 2 Management Information Base)**
+https://datatracker.ietf.org/doc/html/rfc4750
+Defines the SNMP MIB objects for OSPF v2. Useful for understanding what operational data OSPF exposes for monitoring — directly relevant to production network management and the CCNP ENCOR network management domain.
+
+**3. Cisco EIGRP Technology White Paper — "Introduction to EIGRP"**
+https://www.cisco.com/c/en/us/support/docs/ip/enhanced-interior-gateway-routing-protocol-eigrp/16406-eigrp-toc.html
+Comprehensive Cisco white paper covering DUAL algorithm internals, metric calculation, Named Mode, and redistribution — written at CCNP depth and freely available without registration.

@@ -196,6 +196,20 @@ Indicators of Compromise are pieces of forensic evidence suggesting a system has
 
 ---
 
+## 9. Supplemental Resources
+
+**1. NIST SP 800-30 Rev. 1 — Guide for Conducting Risk Assessments**
+<https://csrc.nist.gov/publications/detail/sp/800-30/rev-1/final>
+Authoritative NIST guidance on risk assessment methodology including threat identification, vulnerability analysis, and likelihood/impact scoring. Directly supports CIA Triad application and the vocabulary of threats, vulnerabilities, and risk tested on SY0-701 Domain 2.
+
+**2. MITRE ATT&CK Enterprise Matrix**
+<https://attack.mitre.org/matrices/enterprise/>
+A comprehensive, freely accessible framework cataloging real-world adversary tactics, techniques, and procedures. Use it to explore how each threat actor type (nation-state, organized crime, insider) maps to specific attack techniques covered in Module 01, and to see real examples of IOCs for each technique.
+
+**3. CISA Known Exploited Vulnerabilities Catalog**
+<https://www.cisa.gov/known-exploited-vulnerabilities-catalog>
+CISA's authoritative list of vulnerabilities being actively exploited in the wild. Browsing entries reinforces the relationship between vulnerability classes, threat actors, and real-world exploitation — directly supporting the Module 01 concepts of zero-day exploits, missing patches, and IOC analysis.
+
 ## 10. Required Study Resources
 
 Complete the following before taking the Module 01 quiz:

@@ -369,3 +369,87 @@ Submit the following to Canvas:
 | Event delegation used for accordion (one listener on `.faq-section`) | 10 |
 | Required screenshots submitted | 5 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Keyboard-Accessible Card Selection with DocumentFragment Batch Insert
+
+Extend the card grid so users can select multiple cards with both mouse clicks and the keyboard, then batch-insert a summary of selected cards into the DOM using a `DocumentFragment`.
+
+1. Add a `tabindex="0"` and `role="button"` attribute to each `.card` element so they are keyboard-focusable. Add a `keydown` listener (via event delegation on `.card-grid`) that triggers the same selection toggle when the user presses Enter or Space on a focused card:
+
+```javascript
+cardGrid.addEventListener('keydown', function (event) {
+  if (event.key === 'Enter' || event.key === ' ') {
+    const card = event.target.closest('.card');
+    if (card) {
+      event.preventDefault();
+      card.classList.toggle('selected');
+    }
+  }
+});
+```
+
+1. Add a `<button id="show-selected">Show Selected</button>` below the card grid and a `<ul id="selected-list"></ul>` beneath it.
+1. In the button's click handler, read all `.card.selected` elements, build `<li>` elements from their `<h4>` text using a `DocumentFragment`, then replace the `<ul>`'s children in a single DOM operation:
+
+```javascript
+document.querySelector('#show-selected').addEventListener('click', function () {
+  const selected = document.querySelectorAll('.card.selected');
+  const fragment = document.createDocumentFragment();
+  selected.forEach(function (card) {
+    const li = document.createElement('li');
+    li.textContent = card.querySelector('h4').textContent;
+    fragment.appendChild(li);
+  });
+  const list = document.querySelector('#selected-list');
+  list.replaceChildren(fragment);
+});
+```
+
+1. Open DevTools Performance panel, record while clicking "Show Selected" with all four cards selected, and verify only one DOM mutation appears in the Recalculate Style entry.
+
+### Challenge 2: Intersection Observer for Scroll-Triggered Animation
+
+Use the `IntersectionObserver` API to animate `.card` elements into view as the user scrolls them into the viewport.
+
+1. Add the following CSS to `styles.css` to define the initial hidden state and the animated visible state:
+
+```css
+.card {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+```
+
+1. In `app.js`, after `DOMContentLoaded`, create an `IntersectionObserver` that adds the `visible` class when a card enters the viewport and stops observing it afterward:
+
+```javascript
+const observer = new IntersectionObserver(function (entries) {
+  entries.forEach(function (entry) {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.card').forEach(function (card) {
+  observer.observe(card);
+});
+```
+
+1. Add enough content above the card grid to push it below the fold, then reload and scroll down — verify each card fades in as it enters the viewport.
+1. Open DevTools and confirm the `visible` class is added to each card element as it scrolls into view.
+
+### Reflection Questions
+
+1. The `DocumentFragment` approach batches 50 DOM insertions into one operation. Why does reducing the number of separate DOM mutations improve browser rendering performance?
+2. The `IntersectionObserver` is described as more performant than listening for the `scroll` event. What is the key reason that `scroll`-based visibility detection is less efficient?

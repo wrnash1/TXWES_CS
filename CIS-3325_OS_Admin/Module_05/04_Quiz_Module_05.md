@@ -212,3 +212,215 @@ Distractor Analysis:
 - Why A is incorrect: rpm -qa --last sorts the installed packages list by install date, which shows when packages were installed, but it does not show the full transaction context (who ran dnf, what was installed together, or what was removed). dnf history is the proper transaction log tool.
 - Why C is incorrect: There is no standard /var/log/packages.log file on RHEL systems. Package transaction history is managed by dnf in its own database, not as a flat log file at that path.
 - Why D is incorrect: dpkg -l --history is not valid dpkg syntax. The --history flag does not exist for dpkg. On Debian/Ubuntu systems, apt history is found in /var/log/apt/history.log, not via dpkg flags.
+
+---
+
+Questions 11-20 — 5 pts each
+
+---
+
+**Question 11**
+
+An Ubuntu administrator wants to prevent a specific package from being upgraded when running
+apt upgrade because a custom configuration depends on the current version. Which command
+holds the package at its current version?
+
+- A) apt mark hold nginx
+- B) apt-mark hold nginx
+- C) dpkg --hold nginx
+- D) apt pin nginx
+
+Correct Answer: B) apt-mark hold nginx
+
+Distractor Analysis:
+
+- Why A is incorrect: The correct command is apt-mark (hyphenated) not "apt mark" with a space. "apt mark" is not a valid apt subcommand and will produce an error.
+- Why C is incorrect: dpkg --hold is not valid dpkg syntax. The hold state is managed through apt-mark, not directly via dpkg flags.
+- Why D is incorrect: apt pin is not a valid apt subcommand. Package pinning is done through /etc/apt/preferences files, not via an apt pin command.
+
+---
+
+**Question 12**
+
+An administrator on Ubuntu 22.04 adds a new third-party repository by placing a .list file
+in /etc/apt/sources.list.d/. After running apt update, the command fails with a "NO_PUBKEY"
+error. What must the administrator do to resolve this?
+
+- A) Run apt install --fix-missing to download missing package signatures.
+- B) Import the repository's GPG signing key using apt-key add or by placing the key in /etc/apt/trusted.gpg.d/.
+- C) Edit /etc/apt/sources.list and add a trusted=yes option for the repository.
+- D) Disable signature verification globally with APT::Get::AllowUnauthenticated "true" in apt.conf.
+
+Correct Answer: B) Import the repository's GPG signing key using apt-key add or by placing the key in /etc/apt/trusted.gpg.d/.
+
+Distractor Analysis:
+
+- Why A is incorrect: apt install --fix-missing attempts to work around missing packages, not missing cryptographic signing keys. It does not resolve key trust errors.
+- Why C is incorrect: Adding trusted=yes to a source entry bypasses signature verification for that repository entirely, which is a security risk and not the correct resolution for a missing key.
+- Why D is incorrect: Setting AllowUnauthenticated globally disables package signature verification for all repositories, creating a serious security vulnerability. The correct fix is importing the specific key.
+
+---
+
+**Question 13**
+
+Which file on a Debian/Ubuntu system contains the list of configured apt repositories,
+including the main, restricted, universe, and multiverse components?
+
+- A) /etc/dpkg/sources
+- B) /etc/apt/sources.list and files in /etc/apt/sources.list.d/
+- C) /var/lib/apt/lists/
+- D) /etc/apt/apt.conf.d/
+
+Correct Answer: B) /etc/apt/sources.list and files in /etc/apt/sources.list.d/
+
+Distractor Analysis:
+
+- Why A is incorrect: /etc/dpkg/sources does not exist as a standard configuration path. dpkg's configuration directory is /etc/dpkg/ but it does not contain repository source lists.
+- Why C is incorrect: /var/lib/apt/lists/ contains the cached repository metadata downloaded by apt update. These are auto-generated index files, not the source configuration that specifies which repositories to use.
+- Why D is incorrect: /etc/apt/apt.conf.d/ contains apt behavior configuration files (proxy settings, cache limits, etc.) but not repository source definitions.
+
+---
+
+**Question 14**
+
+On a RHEL 9 system, an administrator wants to install a package from a specific repository
+while that repository is normally disabled. Which dnf flag enables a disabled repository
+for a single transaction?
+
+- A) dnf install --repo=rhel-extras package
+- B) dnf install --enablerepo=rhel-extras package
+- C) dnf enable rhel-extras && dnf install package
+- D) dnf install --from=rhel-extras package
+
+Correct Answer: B) dnf install --enablerepo=rhel-extras package
+
+Distractor Analysis:
+
+- Why A is incorrect: --repo= is not a valid dnf install flag. The correct flag for enabling a specific repo in a single transaction is --enablerepo=.
+- Why C is incorrect: dnf enable is not a valid dnf subcommand. Enabling a repository permanently is done with dnf config-manager --enable rhel-extras. The --enablerepo flag enables it for just one command.
+- Why D is incorrect: --from= is not a valid dnf flag. This syntax does not exist in the dnf command set.
+
+---
+
+**Question 15**
+
+An administrator runs dpkg -l | grep "^ii" on an Ubuntu server. What does the "^ii" pattern
+in the grep filter match?
+
+- A) Packages whose names begin with the letters "ii".
+- B) Lines where the package status is "ii" — installed and correctly configured (desired: install, status: installed).
+- C) Packages that are partially installed or in an error state.
+- D) Packages installed from a third-party repository rather than the official Ubuntu archive.
+
+Correct Answer: B) Lines where the package status is "ii" — installed and correctly configured (desired: install, status: installed).
+
+Distractor Analysis:
+
+- Why A is incorrect: The pattern ^ii anchors to the beginning of the line. The "ii" in dpkg -l output is a two-character status code in the first columns, not part of the package name.
+- Why C is incorrect: Partially installed packages show as "iF" (desired install, failed) or "pF" (purge, failed). The "ii" code specifically means fully installed and configured.
+- Why D is incorrect: dpkg -l output does not distinguish package origin (official vs. third-party). The status field only reflects installation state, not repository source.
+
+---
+
+**Question 16**
+
+A systems administrator needs to download a .deb package and all its dependencies to a
+directory for offline installation on an air-gapped server. Which apt command downloads
+without installing?
+
+- A) apt get --download-only nginx
+- B) apt-get download nginx
+- C) apt download nginx
+- D) Both B and C
+
+Correct Answer: D) Both B and C
+
+Distractor Analysis:
+
+- Why A is incorrect: "apt get --download-only" is not valid syntax. apt-get install --download-only downloads a package and dependencies to the cache but does not install. "apt get" with a space is not a valid command.
+- Why B alone is partially correct: apt-get download is a valid legacy command that downloads the .deb file to the current directory. It downloads only the named package, not dependencies.
+- Why C alone is partially correct: apt download is the modern equivalent of apt-get download, introduced in newer apt versions. Both B and C download the .deb to the current directory.
+
+---
+
+**Question 17**
+
+After a security incident on a RHEL system, an administrator wants to check whether the
+/etc/crontab file has been tampered with. The file is owned by the cronie package. Which
+command verifies its integrity?
+
+- A) md5sum /etc/crontab
+- B) sha256sum /etc/crontab
+- C) rpm -Vf /etc/crontab
+- D) dnf check /etc/crontab
+
+Correct Answer: C) rpm -Vf /etc/crontab
+
+Distractor Analysis:
+
+- Why A is incorrect: md5sum produces a checksum but requires a trusted baseline to compare against. Without a pre-established record of the original hash, the output alone cannot confirm integrity.
+- Why B is incorrect: Same issue as A — sha256sum is cryptographically stronger but still requires a baseline. rpm -Vf uses the package database as the trusted baseline automatically.
+- Why D is incorrect: dnf check is used to verify the consistency of the rpm database itself, not the integrity of individual installed files. It does not check file checksums against the package database.
+
+---
+
+**Question 18**
+
+An Ubuntu administrator wants to see exactly which files would be removed if they ran
+apt purge nginx, without actually removing anything. Which command performs a dry run?
+
+- A) apt purge --simulate nginx
+- B) apt purge -n nginx
+- C) apt-get --dry-run purge nginx
+- D) All of the above are valid
+
+Correct Answer: D) All of the above are valid
+
+Distractor Analysis:
+
+- Why A alone is partially correct: apt purge --simulate is valid syntax. --simulate tells apt to show what would happen without making changes.
+- Why B alone is partially correct: The -n flag is the short form of --simulate in apt. Both forms are accepted.
+- Why C alone is partially correct: apt-get --dry-run is the legacy equivalent. --dry-run and --simulate are synonymous in apt/apt-get. All three expressions trigger a simulation run showing what files would be removed.
+
+---
+
+**Question 19**
+
+A package called legacy-tool is no longer in the Ubuntu repository but a .deb file has
+been provided by the vendor. The administrator installs it with dpkg -i legacy-tool.deb
+and gets "dpkg: error processing archive ... dependency problems." What is the correct
+next step to resolve the dependencies automatically?
+
+- A) apt install -f
+- B) apt install legacy-tool
+- C) dpkg --configure -a
+- D) apt update && apt upgrade
+
+Correct Answer: A) apt install -f
+
+Distractor Analysis:
+
+- Why B is incorrect: The package is not in the repository, so apt install legacy-tool would fail with "package not found." The package was already placed into dpkg's database by the dpkg -i command; apt just needs to resolve its missing dependencies.
+- Why C is incorrect: dpkg --configure -a attempts to configure all unpacked but unconfigured packages. While sometimes useful after dpkg errors, it does not fetch or install missing dependency packages from repositories.
+- Why D is incorrect: apt update refreshes repository metadata and apt upgrade upgrades existing packages. Neither step resolves the specific dependency error for a manually installed .deb package. apt install -f (fix-broken) is the correct tool.
+
+---
+
+**Question 20**
+
+An administrator reviews /var/log/apt/history.log on Ubuntu and sees a package was
+installed at an unexpected time. Which command shows the complete history of apt
+transactions including install, remove, and upgrade actions with timestamps?
+
+- A) dpkg --get-selections
+- B) cat /var/log/apt/history.log
+- C) apt list --installed
+- D) dpkg -l | grep ii
+
+Correct Answer: B) cat /var/log/apt/history.log
+
+Distractor Analysis:
+
+- Why A is incorrect: dpkg --get-selections lists packages and their desired installation state (install, deinstall, purge) but does not include timestamps, transaction history, or who performed the action.
+- Why C is incorrect: apt list --installed shows currently installed packages with their versions but provides no historical timeline of when they were installed or removed.
+- Why D is incorrect: dpkg -l lists installed packages in a formatted table. Like option C, it shows current state only — no historical transactions, timestamps, or action context.

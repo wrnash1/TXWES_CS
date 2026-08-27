@@ -287,7 +287,28 @@ const area = PI * radius * radius;
 
 ---
 
-## 7. JSE Certification Exam Tips
+## 7. Supplemental Resources
+
+The following free, openly available resources extend and reinforce the topics covered in this module.
+
+- **[MDN Web Docs — `let`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/let)**
+  Full reference for the `let` keyword, including block scoping rules, the Temporal Dead Zone, re-declaration restrictions, and code examples demonstrating hoisting behavior.
+
+- **[MDN Web Docs — `const`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/const)**
+  Full reference for `const`, with clear examples showing the difference between binding immutability and value mutability for objects and arrays.
+
+- **[javascript.info — Variables](https://javascript.info/variables)**
+  Beginner-friendly deep-dive into variable declarations, naming rules, and conventions. Includes interactive examples and a section comparing `var`, `let`, and `const` with clear diagrams.
+
+- **[Eloquent JavaScript — Chapter 2: Program Structure](https://eloquentjavascript.net/02_program_structure.html)**
+  The course's primary OER textbook. Chapter 2 covers variables, bindings, and scope in the context of writing small programs. Essential reading.
+
+- **[javascript.info — The Old "var"](https://javascript.info/var)**
+  A focused article specifically about `var`'s quirks: hoisting, function vs. block scope, and IIFE patterns. Useful for understanding why `var` was replaced by `let` and `const`.
+
+---
+
+## 8. JSE Certification Exam Tips
 
 1. **`var` leaks out of blocks.** A `var` declared inside an `if` or `for` block is accessible after that block closes. A `let` or `const` is not — it throws `ReferenceError`.
 
@@ -305,7 +326,7 @@ const area = PI * radius * radius;
 
 ---
 
-## 8. Study Checklist
+## 9. Study Checklist
 
 - [ ] Watch the Module 02 video lecture by Professor Nash.
 - [ ] Read Chapter 2 (Program Structure) of [Eloquent JavaScript](https://eloquentjavascript.net/02_program_structure.html).

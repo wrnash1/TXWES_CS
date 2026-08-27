@@ -265,4 +265,20 @@ Work through this checklist before taking the quiz.
 
 ---
 
+## 11. Supplemental Resources
+
+**1. Microsoft Learn — Build a bot with Azure AI Language and Azure Bot Service**
+<https://learn.microsoft.com/en-us/training/paths/create-conversational-ai-solutions/>
+A free Microsoft Learn learning path covering Question Answering, CLU, Orchestration Workflow, and Azure Bot Service end to end. Includes sandboxed environments that align directly with the Module 09 lab activities.
+
+**2. Botframework.com — Bot Framework Emulator (download and documentation)**
+<https://github.com/microsoft/BotFramework-Emulator>
+The official GitHub repository for the Bot Framework Emulator, including download links, release notes, and documentation on using the emulator for local bot testing and activity inspection. Required tool for the Module 09 lab.
+
+**3. Microsoft AI Blog — Responsible Bots: 10 Guidelines for Developers**
+<https://www.microsoft.com/en-us/research/publication/responsible-bots/>
+Microsoft Research's guidelines for building responsible conversational AI systems, covering transparency, graceful failure, human escalation, and avoiding harmful outputs. Directly relevant to the Module 09 responsible AI reflection exercise.
+
+---
+
 End of Reading Guide — Module 09

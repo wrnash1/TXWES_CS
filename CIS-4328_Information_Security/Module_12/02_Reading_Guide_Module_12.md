@@ -277,6 +277,22 @@ Three legal bases for forensic access:
 
 ---
 
+## 9. Supplemental Resources
+
+**1. NIST SP 800-86 — Guide to Integrating Forensic Techniques into Incident Response**
+<https://csrc.nist.gov/publications/detail/sp/800-86/final>
+The authoritative NIST guide covering the four-stage forensic process (identification, preservation, collection, analysis), evidence handling procedures, and integration with incident response workflows. Required reading for all Module 12 content on the forensic process, order of volatility, and reporting requirements. Directly tested on Security+ SY0-701.
+
+**2. Volatility Foundation — Documentation and Plugin Reference**
+<https://volatility3.readthedocs.io/en/latest/>
+The official documentation for Volatility 3, the industry-standard open-source memory forensics framework. Covers plugin usage, OS profile identification, and output interpretation for pslist, psscan, netscan, malfind, and hashdump. Directly supports Module 12 memory analysis lab exercises and the Security+ exam objective on identifying evidence recoverable from memory.
+
+**3. SANS DFIR Posters — Memory Forensics and Evidence of Execution**
+<https://www.sans.org/posters/windows-forensics-evidence-of/>
+SANS Institute's free Windows Forensics reference poster series covering Windows forensic artifact locations, evidence of execution sources (Prefetch, Shimcache, Amcache, UserAssist), and key event IDs for investigative triage. Complements Module 12 coverage of Windows artifact analysis, registry forensics, and log analysis with a practical quick-reference format used by professional DFIR investigators.
+
+---
+
 ## Certification Exam Tip
 
 Security+ SY0-701 tests digital forensics with scenario-based questions. Common question types: "Which action should the investigator perform first on a live system?" (answer involves volatile memory or order of volatility), "What device prevents modification of evidence during imaging?" (write blocker), and "Which tool creates a bit-for-bit copy of a drive?" (dd, dcfldd, or FTK Imager). Know the difference between dd and FTK Imager (command-line vs. GUI, raw vs. E01 output) and understand what chain of custody protects.

@@ -305,4 +305,20 @@ Before taking the graded quiz, answer these practice questions on paper or in yo
 
 ---
 
+## 11. Supplemental Resources
+
+**1. Microsoft Azure — Computer Vision Documentation (official)**
+<https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/>
+The complete official documentation for Azure AI Vision, Custom Vision, Face API, and Document Intelligence. Includes quickstarts, API references, and best practice guides directly relevant to the Module 07 lab exercises.
+
+**2. Roboflow — How to Annotate Images for Computer Vision (free guide)**
+<https://blog.roboflow.com/tips-for-how-to-label-images/>
+A practical guide to image annotation best practices — bounding box drawing, labeling consistency, and managing annotation quality. Directly useful for the Custom Vision object detection portions of the lab where annotation quality drives model performance.
+
+**3. GitHub — Microsoft Responsible AI Transparency Reports**
+<https://github.com/microsoft/responsible-ai-toolbox>
+Microsoft's open-source Responsible AI Toolbox repository, which provides tools for model interpretability, fairness assessment, and error analysis for computer vision and other AI models. Relevant to the Module 07 discussion of bias in visual recognition systems.
+
+---
+
 End of Reading Guide — Module 07

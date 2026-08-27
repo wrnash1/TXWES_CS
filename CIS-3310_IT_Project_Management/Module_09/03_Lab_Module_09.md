@@ -175,3 +175,21 @@ Submit as a single PDF or Word document to the Canvas Module 09 Lab assignment.
 | Part 2: Risk Register | 35 | Five complete entries; cause-event-effect descriptions; trigger conditions specific |
 | Part 3: Response Plans | 35 | Correct strategies; specific actions; secondary risks addressed; opportunity question answered |
 | **Total** | **100** | |
+
+---
+
+## Part 9 — Challenge Exercise
+
+This section is optional for students seeking additional depth and exam preparation. It is not graded as part of the standard 100-point lab but may be used for extra credit at the instructor's discretion.
+
+### Challenge Step 1: Risk Quantification — Expected Monetary Value
+
+For two of the highest-priority risks from your Part 2 Risk Register, calculate the Expected Monetary Value (EMV) using EMV = Probability × Impact (in dollars). Assume: Risk A has a 30% probability and $40,000 cost impact. Risk B has a 70% probability and $12,000 cost impact. Show your calculations, determine which risk contributes more to the contingency reserve requirement, and write two sentences explaining why EMV is a more precise prioritization tool than the probability-impact score alone.
+
+### Challenge Step 2: Secondary Risk Assessment
+
+Choose two of the risk response actions you developed in Part 3. For each response, identify one secondary risk that the response itself could introduce. Document each secondary risk in a mini Risk Register entry (description, probability, impact, proposed response). Write a brief paragraph explaining why secondary risks are important to track and how they demonstrate the iterative nature of risk management.
+
+### Challenge Step 3: Risk Watch List Review
+
+Using the risks from Part 1 that you classified as Low Priority, create a formal Risk Watch List — a brief summary table with three columns: Risk Description, Watch Condition (the threshold or signal that would upgrade it to Active), and Review Frequency. The watch list demonstrates that low-priority risks are not ignored; they are monitored. Explain in two sentences how the Watch List supports the Monitor Risks process.

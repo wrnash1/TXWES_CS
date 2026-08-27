@@ -351,3 +351,19 @@ Disadvantages: Gateway is a single point of failure. Requires gateway hardware a
 6. A thermostat is offline for 3 hours. During that time, a user changes the target temperature via a phone app. How does Device Shadow ensure the thermostat eventually applies the new temperature? Walk through each step.
 7. What is the purpose of the `${iot:ClientId}` policy variable in an AWS IoT Core policy, and why is it more secure than using a wildcard `*` for all resources?
 8. An IoT Rules Engine rule processes 50 million messages per month. Using AWS IoT Core pricing, calculate the monthly cost for just the messaging and rules engine actions (assume each message triggers one rule with one action).
+
+---
+
+## 9. Supplemental Resources
+
+**1. AWS IoT Core Developer Guide — Device Provisioning and Certificates**
+[https://docs.aws.amazon.com/iot/latest/developerguide/iot-provision.html](https://docs.aws.amazon.com/iot/latest/developerguide/iot-provision.html)
+Amazon's official documentation for registering Things, creating X.509 certificates, attaching IoT policies, and implementing Device Shadow. Covers both single-device and fleet provisioning patterns (just-in-time provisioning, JITR) referenced in Sections 1–3 of this guide.
+
+**2. Azure IoT Hub Developer Guide — Device Twins and Direct Methods**
+[https://learn.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-device-twins](https://learn.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-device-twins)
+Microsoft's reference for Azure IoT Hub Device Twins, including the desired/reported/delta property model, device-to-cloud and cloud-to-device messaging patterns, and the Device Provisioning Service (DPS). Directly supports Section 4 of this reading guide on Azure IoT integration.
+
+**3. NIST SP 800-213 — IoT Device Cybersecurity Guidance for the Federal Government**
+[https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-213.pdf](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-213.pdf)
+NIST's IoT device security baseline covering device identity, configuration management, data protection, and logical access controls. Provides the policy-level framework behind the technical controls (mTLS, X.509, Device Shadow policies) covered throughout this module.

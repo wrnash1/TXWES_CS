@@ -255,3 +255,89 @@ Submit a single PDF containing all of the following:
 | Part 4 — DR plan outline (RTO/RPO correct, procedures actionable) | 20 |
 | Reflection paragraph | 10 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+These advanced steps extend the Module 15 lab with SLA calculation, a complete change request scenario, and a multi-system DR planning exercise.
+
+### Challenge Step 1: SLA and Availability Calculations
+
+Complete the following calculations in your lab report. Show all work.
+
+**Scenario A — SLA Comparison:**
+
+A vendor offers two service tiers for a managed WAN link:
+
+- Tier 1: 99.9% monthly availability, $500/month
+- Tier 2: 99.99% monthly availability, $1,200/month
+
+Calculate:
+1. Maximum monthly downtime allowed for each tier (in minutes). Use 30-day month = 43,200 minutes.
+2. The difference in allowed downtime between the two tiers (in minutes).
+3. If the business estimates each minute of WAN outage costs $85 in lost productivity, calculate the maximum monthly financial exposure for each tier.
+4. Based on your calculations, which tier is cost-justified? Show your math comparing the tier cost difference to the financial risk difference.
+
+**Scenario B — MTBF and MTTR:**
+
+A core switch has the following failure history over three years:
+
+- Year 1: 1 failure, restored in 45 minutes
+- Year 2: 2 failures, restored in 30 minutes and 90 minutes respectively
+- Year 3: 1 failure, restored in 60 minutes
+
+Total runtime hours: 26,280 hours (3 years × 8,760 hr/yr)
+
+Calculate:
+1. MTBF (Mean Time Between Failures)
+2. MTTR (Mean Time to Repair)
+3. Availability percentage: Availability = MTBF / (MTBF + MTTR)
+
+**Challenge Question 1:** Based on your Scenario A calculations, explain why the cost-per-minute-of-downtime approach is useful for SLA tier selection. What additional business factors — beyond raw downtime minutes — should influence which SLA tier an organization chooses for a given system?
+
+### Challenge Step 2: Write a Complete Change Request
+
+Write a full Change Request document for the following scenario:
+
+**Scenario:** The organization's core switch (Switch-CORE-01, Cisco Catalyst 9300) is running IOS-XE version 16.9.4. A security vulnerability (CVE published last month) requires upgrading to IOS-XE 17.9.5a. The upgrade will be performed during the Sunday 2:00–4:00 AM maintenance window. The switch serves 180 workstations, 3 servers, and the uplink to the WAN router. Estimated upgrade time: 25 minutes including reload.
+
+Your Change Request must include all of the following sections:
+
+1. **Change ID and date**
+2. **Requestor name and department**
+3. **Change description** — what is being changed and why
+4. **Affected systems and users** — be specific
+5. **Risk assessment** — probability of failure, impact if it fails
+6. **Rollback procedure** — step-by-step procedure to revert if the upgrade fails
+7. **Testing procedure** — how you will verify success after the upgrade
+8. **Implementation schedule** — exact window with buffer time
+9. **CAB approval signature line**
+
+**Challenge Question 2:** The rollback procedure is a required part of every normal change request. Why does the CAB specifically require a documented rollback plan before approving a change? Describe two specific scenarios during this IOS upgrade where the rollback procedure would be activated, and explain what "rollback" actually means in each scenario.
+
+### Challenge Step 3: Multi-System DR Plan with RTO/RPO Targets
+
+The organization has the following four systems, each with different business criticality:
+
+| System | Business Function | Users Affected | RTO Target | RPO Target |
+|---|---|---|---|---|
+| Active Directory (DC01) | Authentication for all users | 180 | 1 hour | 15 minutes |
+| ERP (SAP) | Order processing, invoicing | 45 | 4 hours | 1 hour |
+| File server (FS01) | Shared documents | 180 | 8 hours | 4 hours |
+| Dev/test server | Internal development only | 8 | 72 hours | 24 hours |
+
+For each system:
+
+1. Determine which DR site type (hot, warm, or cold) is appropriate given the RTO target.
+2. Determine the minimum backup/replication frequency required to meet the RPO target.
+3. Identify one specific technical mechanism (e.g., real-time AD replication to DC02, SQL transaction log shipping, nightly backup to NAS) that would satisfy the RPO requirement.
+4. Write one sentence describing the recovery procedure trigger — what condition activates the DR plan for that system?
+
+Present your answers in a table format in the lab report.
+
+**Challenge Question 3:** The dev/test server has an RTO of 72 hours and an RPO of 24 hours. Some IT managers argue that dev/test servers do not need DR planning at all. Present one argument in favor of including dev/test in the DR plan and one argument that the 72-hour/24-hour targets are appropriate rather than stricter targets. Then explain how BIA (Business Impact Analysis) would be used to formally justify the RTO/RPO targets assigned to each system.
+
+---
+
+*CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash*

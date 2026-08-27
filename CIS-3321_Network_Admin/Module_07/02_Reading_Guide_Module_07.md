@@ -192,4 +192,30 @@ Supplemental Reference: CompTIA official N10-008 exam objectives — Domain 1.2 
 
 ---
 
-CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash
+## 9. Supplemental Resources
+
+The following free resources extend Module 07 content on network monitoring tools, Wireshark, and SNMP.
+
+**1. Professor Messer — Network Monitoring and Troubleshooting Tools (N10-008)**
+URL: https://www.professormesser.com/network-plus/n10-008/n10-008-video/
+Relevance: Professor Messer covers SNMP versions, Wireshark, syslog, NetFlow, and packet analysis in videos directly aligned with Network+ exam objectives for this module.
+
+**2. Wireshark Official User Guide (Free)**
+URL: https://www.wireshark.org/docs/wsug_html_chunked/
+Relevance: The complete free Wireshark documentation including display filter syntax, capture filter syntax, protocol decoding, and follow-stream analysis. The display filter reference appendix is essential for exam questions on Wireshark filter writing.
+
+**3. Cisco — Understanding SNMP**
+URL: https://www.cisco.com/c/en/us/support/docs/ip/simple-network-management-protocol-snmp/7282-12.html
+Relevance: Cisco's free authoritative documentation explaining SNMP versions, MIBs, OIDs, traps, and community strings. Covers the differences between SNMPv1, v2c, and v3 with configuration examples.
+
+**4. RFC 5424 — The Syslog Protocol**
+URL: https://datatracker.ietf.org/doc/html/rfc5424
+Relevance: The authoritative IETF syslog protocol standard. Reading Section 6 (Syslog message format) and the severity level definitions (0=Emergency through 7=Debug) is essential for Network+ syslog questions.
+
+**5. NetFlow Protocol Overview — Cisco (Free)**
+URL: https://www.cisco.com/c/en/us/products/ios-nx-os-software/ios-netflow/index.html
+Relevance: Cisco's free NetFlow product page and documentation explain how NetFlow v5 and v9 work, what data they export, and how flow collectors use the data for traffic analysis — directly relevant to Network+ bandwidth and flow monitoring objectives.
+
+---
+
+*CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash*

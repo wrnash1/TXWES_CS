@@ -200,3 +200,19 @@ Customer engagement activities in SLM include:
 ---
 
 Module 11 Reading Guide | CIS-4335 IT Service Management | Texas Wesleyan University
+
+---
+
+## Supplemental Resources
+
+**1. AXELOS — ITIL 4 Service Level Management Practice Guide**
+<https://www.axelos.com/resource-hub/blog/itil-4-service-level-management>
+Official AXELOS overview of the Service Level Management practice, covering SLA design, OLA and UC alignment, service review meetings, and the shift from technical metrics to experience-level agreements. Essential for Foundation exam preparation and practical SLM implementation.
+
+**2. Freshservice — Watermelon SLA: What It Is and How to Avoid It**
+<https://freshservice.com/itsm/sla-management-guide>
+Practitioner-focused guide that explains the watermelon SLA failure mode — green on the outside, red on the inside — and provides actionable strategies for aligning technical metrics with genuine customer experience outcomes. Includes breach prevention and escalation automation techniques.
+
+**3. itSMF UK — XLA Manifesto**
+<https://xla-manifesto.com>
+The industry reference document on Experience Level Agreements, authored by leading ITSM practitioners. Explains why XLAs complement rather than replace SLAs, how to design measurable experience targets, and how to use NPS, CES, and outcome-based measurement alongside traditional service level metrics.

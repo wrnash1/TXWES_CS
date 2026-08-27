@@ -372,3 +372,25 @@ Answer these questions in writing after completing the lab. Submit with your lab
 | Part 5: Dockerfile written, image built and run | 25 |
 | Part 6: System prune executed and verified | 15 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Multi-Container Networking with a Custom Bridge
+Practice Docker networking by running two containers that communicate by name rather than IP address.
+1. Create a custom bridge network: `docker network create lab15-net`.
+2. Start a named nginx container on that network: `docker run -d --name web15 --network lab15-net nginx`.
+3. Start a second container on the same network and test name resolution: `docker run --rm --network lab15-net alpine sh -c "wget -qO- http://web15"` — confirm the nginx welcome page is returned, demonstrating DNS resolution by container name.
+4. Run `docker network inspect lab15-net` and identify both containers in the `Containers` section. Clean up with `docker stop web15 && docker rm web15 && docker network rm lab15-net`.
+
+### Challenge 2: Optimized Multi-Stage Dockerfile Build
+Refactor the lab image to use Docker's multi-stage build feature to minimize the final image size.
+1. Create a new directory `~/lab15-multistage` and write a two-stage Dockerfile: the first stage uses `FROM node:18 AS builder` to install dependencies and compile assets, and the second stage uses `FROM nginx:alpine` and copies only the built output from the builder stage using `COPY --from=builder`.
+2. Build the image with `docker build -t lab15-multistage:1.0 ~/lab15-multistage`.
+3. Compare image sizes with `docker images | grep lab15` — the multi-stage image should be significantly smaller than a single-stage build that includes the full Node.js runtime.
+4. Run a container from the multi-stage image, verify it serves content correctly with `curl http://localhost:8082/`, then clean up all lab15 images and containers.
+
+### Reflection Questions
+1. A containerized application writes log files inside its container filesystem. After `docker rm` the container, all logs are lost. Describe two different approaches to preserve the logs — one using a named volume and one using a bind mount — and explain a scenario where each approach is preferable.
+2. Your team is adopting Docker for a Python web application that previously ran directly on the host. The application reads a config file, connects to a PostgreSQL database, and serves HTTP traffic on port 5000. Design the `docker run` command including all necessary flags (port mapping, volume or bind mount for config, environment variable for database URL, detached mode, and a meaningful container name).

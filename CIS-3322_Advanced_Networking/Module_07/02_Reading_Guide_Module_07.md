@@ -230,3 +230,19 @@ Work through each item before taking the quiz.
 
 - Cisco CCNA certification training information: cisco.com/c/en/us/training-events/training-certifications
 - Free CCNA study notes and video summaries: professormesser.com
+
+---
+
+## 10. Supplemental Resources
+
+The following open educational resources extend inter-VLAN routing concepts to CCNA exam depth. All resources are freely available.
+
+1. **Cisco Networking Academy — CCNA: Switching, Routing, and Wireless Essentials, Chapter 4 (Inter-VLAN Routing)** (skillsforall.com): This free chapter covers all three inter-VLAN routing methods (legacy, ROAS, and SVI) with interactive Packet Tracer activities for configuring and troubleshooting each method.
+
+2. **Jeremy's IT Lab — Inter-VLAN Routing (Days 17–19)** (youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ): These video lessons provide side-by-side configuration demonstrations for ROAS and SVI routing, including the `ip routing` requirement, SVI state troubleshooting, and the traffic path comparison.
+
+3. **Cisco Learning Network — Inter-VLAN Routing Study Group** (learningnetwork.cisco.com): Community discussions include configuration scenario questions comparing ROAS and SVI performance trade-offs, common SVI down/down troubleshooting scenarios, and CCNA exam-style inter-VLAN routing questions.
+
+4. **Cisco Packet Tracer — Inter-VLAN Routing Lab Files** (skillsforall.com): Pre-built Packet Tracer activities are available for both ROAS and SVI configurations. These labs guide students through complete configurations and verification steps matching the Module 07 lab objectives.
+
+5. **Cisco IOS Configuration Guide — Configuring SVIs** (cisco.com): Cisco's official documentation for configuring Switched Virtual Interfaces on Catalyst multilayer switches, covering SVI state requirements, IP address assignment, and `ip routing` interaction.

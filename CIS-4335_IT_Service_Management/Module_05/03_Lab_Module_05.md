@@ -126,3 +126,29 @@ Practices to map:
 ## Submission Instructions
 
 Compile all four exercises into a single document with clear headings. Label each numbered item before your response. Submit to the Module 05 Lab assignment in Canvas by the posted deadline.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Value Stream Redesign
+
+A regional bank's IT department handles customer loan application processing through the following informal steps: (1) a banker emails the IT help desk requesting access to the loan origination system for a new hire, (2) an IT technician manually creates the account two to four days later, (3) no testing or confirmation is sent to the banker, (4) the new hire discovers the account has wrong permissions on their first day and calls the help desk again.
+
+1. Map each of the four existing steps to the SVC activity it most closely represents (or note if a required SVC activity is missing).
+2. Redesign this process as a formal value stream. List the SVC activities in the order you would include them and write one sentence for each explaining what work happens at that step in this specific context.
+3. Identify two ITIL 4 practices that would provide the capability needed at two of the steps in your redesigned value stream.
+
+### Challenge 2: Multi-Activity Scenario Analysis
+
+Read the following scenario and answer the questions below.
+
+Apex Logistics is launching a new real-time package tracking service. The project team has completed vendor selection (GPS tracking hardware and a cloud API provider), developed the mobile application, conducted load testing, and is preparing the go-live deployment. Two weeks post-launch, the operations team notices that GPS refresh rates are slower than the contracted 30-second interval during peak delivery hours. The team opens a formal improvement initiative to renegotiate the cloud API contract and optimize the data pipeline.
+
+1. Identify all SVC activities that appear in this scenario and provide a one-sentence explanation of where each appears.
+2. The post-launch GPS performance problem — which SVC activity is primarily responsible for detecting this issue, and which activity processes the formal improvement initiative?
+
+### Reflection Questions
+
+1. The Improve activity connects bidirectionally to all other SVC activities. Based on this module, explain in your own words why this architectural choice is more effective than placing improvement at the end of a linear service lifecycle (as ITIL v3's CSI phase did).
+2. Consider a service you use frequently (a food delivery app, a campus IT system, an e-commerce site). Describe one improvement that the provider could make that would require all six SVC activities to be involved. Briefly explain which activity would handle each aspect of that improvement.

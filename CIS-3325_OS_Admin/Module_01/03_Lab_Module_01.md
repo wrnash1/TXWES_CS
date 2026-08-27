@@ -333,3 +333,79 @@ Submit all of the following through the course LMS:
 | Analysis Question 4 (service management) | 5 |
 | Analysis Question 5 (attack surface) | 10 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+These steps go beyond the standard lab and are designed for students who want to deepen their
+skills. Challenge exercises are not graded but are strongly recommended for exam preparation.
+
+**Challenge Step 1 — Explore the /proc virtual filesystem**
+
+The /proc filesystem exposes live kernel data. Run the following commands and record what each
+file contains:
+
+```bash
+cat /proc/version
+cat /proc/cpuinfo | grep "model name" | head -1
+cat /proc/meminfo | grep -E "^MemTotal|^MemFree|^MemAvailable"
+cat /proc/uptime
+ls /proc/ | grep -E "^[0-9]+" | wc -l
+```
+
+For the last command, the number displayed is the count of running processes (each numbered
+directory in /proc corresponds to one PID). Document what you observe and explain in two
+sentences why /proc does not consume disk space even though it appears as files.
+
+**Challenge Step 2 — Inspect EFI boot entries and partition layout**
+
+If your VM was installed in UEFI mode, run the following commands to examine the boot
+configuration:
+
+```bash
+sudo efibootmgr -v
+sudo blkid
+sudo lsblk -f
+sudo parted /dev/sda print
+```
+
+Compare the UUID shown by blkid for your /boot/efi partition against the entry in /etc/fstab:
+
+```bash
+cat /etc/fstab
+```
+
+Confirm that the UUID in /etc/fstab matches the UUID reported by blkid. Explain in two
+sentences why /etc/fstab uses UUIDs rather than device names like /dev/sda2 to identify
+partitions.
+
+**Challenge Step 3 — Verify system integrity using package manager checksums**
+
+Use the package manager to verify that key system binaries have not been altered since
+installation. Run:
+
+```bash
+sudo dpkg --verify bash
+sudo dpkg --verify coreutils
+sudo dpkg --verify openssh-server
+sudo dpkg --verify sudo
+```
+
+If any command produces output, a file has been modified from its packaged state. No output
+means all files match. Next, deliberately test the verification:
+
+```bash
+sudo touch /usr/bin/ls
+sudo dpkg --verify coreutils
+```
+
+Observe that dpkg now reports a timestamp discrepancy for ls. Restore it:
+
+```bash
+sudo apt install --reinstall coreutils
+sudo dpkg --verify coreutils
+```
+
+Document the output at each stage and explain in three sentences why relying on ls -la
+timestamps alone is insufficient for detecting a binary replacement by a sophisticated attacker.

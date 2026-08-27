@@ -376,7 +376,28 @@ Note: `items` itself would be truthy (an empty array is truthy), but `items.leng
 
 ---
 
-## 7. JSE Certification Exam Tips
+## 7. Supplemental Resources
+
+The following free, openly available resources extend and reinforce the topics covered in this module.
+
+- **[Eloquent JavaScript — Chapter 2: Program Structure](https://eloquentjavascript.net/02_program_structure.html)**
+  The primary OER textbook. Covers `if/else`, expressions vs. statements, and how control flow structures determine the path of program execution.
+
+- **[MDN Web Docs — `switch`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/switch)**
+  Full reference for the `switch` statement including fall-through behavior, the `default` clause, and grouped cases. Includes live examples you can run in the browser.
+
+- **[javascript.info — Conditional branching: if, '?'](https://javascript.info/ifelse)**
+  Covers `if`, `else if`, `else`, and the ternary operator with interactive examples. Explains the truthiness evaluation that drives every conditional branch.
+
+- **[MDN Web Docs — Nullish coalescing operator (`??`)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing)**
+  Full reference for `??` with comparison to `||`, optional chaining integration, and browser compatibility notes. Essential for distinguishing `??` from `||` on the exam.
+
+- **[javascript.info — Logical operators](https://javascript.info/logical-operators)**
+  Detailed explanation of `&&`, `||`, and `!` with short-circuit evaluation rules. Includes examples of returning values (not just booleans) from logical expressions.
+
+---
+
+## 8. JSE Certification Exam Tips
 
 1. **`switch` fall-through without `break`** — execution continues into subsequent cases. Without `break`, all cases from the match to the end (or the next `break`) run.
 
@@ -396,7 +417,7 @@ Note: `items` itself would be truthy (an empty array is truthy), but `items.leng
 
 ---
 
-## 8. Study Checklist
+## 9. Study Checklist
 
 - [ ] Watch the Module 04 video lecture by Professor Nash.
 - [ ] Read Chapter 2 (Program Structure) of [Eloquent JavaScript](https://eloquentjavascript.net/02_program_structure.html).

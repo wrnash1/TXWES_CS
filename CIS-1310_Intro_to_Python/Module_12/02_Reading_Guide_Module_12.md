@@ -382,7 +382,31 @@ Watch Episode 7 of the [Python for Everybody Course Playlist](https://www.youtub
 
 ---
 
-## 7. Study Checklist
+## 7. Supplemental Resources
+
+**1. Official Python 3 Docs — Errors and Exceptions**
+[https://docs.python.org/3/tutorial/errors.html](https://docs.python.org/3/tutorial/errors.html)
+The authoritative tutorial chapter on exception handling — covers syntax errors, `try`/`except`/`else`/`finally`, raising exceptions, user-defined exceptions, and exception chaining. This is the primary source for PCAP exam questions on exception handling.
+
+**2. Official Python 3 Docs — Built-in Exceptions**
+[https://docs.python.org/3/library/exceptions.html](https://docs.python.org/3/library/exceptions.html)
+The complete exception hierarchy with descriptions of every built-in exception class. Shows the full inheritance tree from `BaseException` through `Exception` to specific exception types. Essential for understanding which `except` clause catches which exception.
+
+**3. Python for Everybody — Chapter 7: Files**
+[https://www.py4e.com/html3/07-files](https://www.py4e.com/html3/07-files)
+Free textbook chapter demonstrating exception handling in the context of file I/O — the most common real-world use of `try/except`. Includes `try/except` with `open()`, `IOError`, and the guard pattern for safe file access.
+
+**4. Real Python — Python Exceptions: An Introduction**
+[https://realpython.com/python-exceptions/](https://realpython.com/python-exceptions/)
+A comprehensive free article covering the exception hierarchy, `try/except/else/finally`, raising and re-raising, and custom exception classes with practical examples. The section on exception chaining (`raise ... from ...`) provides useful context beyond the PCAP exam scope.
+
+**5. Real Python — Python's assert: Debug and Test Your Code**
+[https://realpython.com/python-assert-statement/](https://realpython.com/python-assert-statement/)
+A focused article on Python's `assert` statement — when to use it, `AssertionError`, and how it relates to testing. Includes important warnings about relying on `assert` for input validation in production code (assert statements are disabled when Python runs with optimization flags).
+
+---
+
+## 8. Study Checklist
 
 - [ ] Watch the Module 12 video lecture by Professor Nash.
 - [ ] Read the High-Yield Glossary — especially execution order, `else` vs `finally`, and the ordering rule.

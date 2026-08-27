@@ -315,3 +315,53 @@ Submit the following as a single PDF or Word document in Canvas:
 | Troubleshooting Scenario B              | 10     | Correct explanation of ACL mismatch diagnosis using show commands     |
 
 Partial credit is awarded for demonstrably attempted but incomplete work.
+
+---
+
+## Part 9 — Challenge Exercise
+
+This optional challenge extends the lab to CCNA exam difficulty. Complete all steps and include deliverables in your submission for up to 20 bonus points.
+
+### Challenge Step 1: Configure Dynamic NAT with a Pool and Observe Pool Exhaustion
+
+Extend the existing topology by configuring a second NAT rule using a named pool instead of the interface method. Create a pool with only two public addresses (203.0.113.30 and 203.0.113.31) and configure dynamic NAT (without overload) for a second inside subnet 192.168.2.0/24.
+
+```ios
+R1(config)# ip nat pool LIMITED_POOL 203.0.113.30 203.0.113.31 netmask 255.255.255.252
+R1(config)# access-list 2 permit 192.168.2.0 0.0.0.255
+R1(config)# ip nat inside source list 2 pool LIMITED_POOL
+```
+
+Connect three hosts in the 192.168.2.0/24 subnet and have all three attempt to ping the external server simultaneously. Observe that only two hosts receive translations (one per pool address) and the third host's traffic is dropped. Use `show ip nat translations` to verify the pool entries and `show ip nat statistics` to observe the pool exhaustion counter (`pool exhausted` line). Document the output and explain in 3–4 sentences why PAT with `overload` is almost always preferred over dynamic NAT in enterprise deployments.
+
+### Challenge Step 2: Implement NAT with a DMZ Using Static and PAT Together
+
+Build a topology that simultaneously uses static NAT for an internal server and PAT for LAN users, reflecting a real-world DMZ design. Add a second server (SRV-INTERNAL) at 192.168.1.200 that must be reachable from the internet at 203.0.113.15 (static NAT), while LAN PCs continue to use PAT through the existing interface address.
+
+```ios
+R1(config)# ip nat inside source static 192.168.1.200 203.0.113.15
+```
+
+Verify that both NAT types coexist:
+- From SRV-EXT, ping 203.0.113.15 and confirm it reaches SRV-INTERNAL via static NAT
+- From PC-A, ping SRV-EXT and confirm PAT translations still appear for PC-A
+
+Run `show ip nat translations` and identify the two different entry types: the permanent static entry (marked Pro `---`) and the dynamic PAT entries with TCP/UDP port numbers. Explain in 2–3 sentences how the router decides which NAT rule to apply when a packet arrives from the inside network.
+
+### Challenge Step 3: Analyze Translation Table Aging and Configure Custom Timeouts
+
+Investigate NAT translation aging by observing the default timeout behavior and then configuring custom timeouts. After generating PAT translations from PC-A to SRV-EXT, use `show ip nat translations verbose` to observe the timeout countdown on each entry.
+
+```ios
+R1# show ip nat translations verbose
+```
+
+Note the `create` and `use` timestamps and the remaining time before expiration. Then configure custom NAT timeouts to simulate an environment requiring faster session cleanup:
+
+```ios
+R1(config)# ip nat translation timeout 120
+R1(config)# ip nat translation tcp-timeout 300
+R1(config)# ip nat translation udp-timeout 60
+```
+
+Generate new traffic, observe the new timeout values in `show ip nat translations verbose`, and then use `clear ip nat translation *` to manually clear all dynamic entries. Verify with `show ip nat translations` that only the static entry for SRV-INTERNAL remains. Explain in 2–3 sentences the operational difference between `ip nat translation timeout` (generic) and the protocol-specific timeout commands, and describe a scenario where reducing the UDP timeout would be beneficial in a high-traffic environment.

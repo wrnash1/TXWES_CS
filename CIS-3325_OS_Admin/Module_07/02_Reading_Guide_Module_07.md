@@ -235,3 +235,40 @@ Before the quiz and lab, confirm you can do all of the following without looking
 - Write a here document that feeds multi-line input to a command
 - Use at least three parameter expansion operators from the reference table
 - Construct a logging function that writes timestamped output to a file and stdout
+
+---
+
+## 9. Supplemental Resources
+
+**1. The Linux Command Line (TLCL) — Chapters 24–36: Shell Scripting**
+URL: https://linuxcommand.org/tlcl.php
+Coverage: William Shotts' free book covers everything in this module: writing scripts, flow control,
+reading keyboard input, functions, and string/number operations. Chapters 24–36 map directly to the
+Module 07 objectives. Download the PDF for offline use.
+
+**2. GNU Bash Manual — Official Reference**
+URL: https://www.gnu.org/software/bash/manual/bash.html
+Coverage: The authoritative reference for all bash syntax. Key sections for this module: 3.2 (shell
+commands), 3.4 (shell parameters and variables), 3.5 (parameter expansion), 4.1 (set built-in and
+flags including -e, -u, -o pipefail), 3.7 (redirections), and 6.1 (invoking bash). Use as a lookup
+reference when the man page summary is insufficient.
+
+**3. Advanced Bash-Scripting Guide (TLDP)**
+URL: https://tldp.org/LDP/abs/html/
+Coverage: Comprehensive community guide covering parameter substitution, string operations, arrays,
+process substitution, here documents, and debugging techniques. Chapter 10 covers parameter expansion
+operators in depth. Chapter 20 covers I/O redirection. Useful as a supplement to the GNU manual for
+worked examples.
+
+**4. bash(1) Man Page — man7.org**
+URL: https://man7.org/linux/man-pages/man1/bash.1.html
+Coverage: The full bash man page in searchable web format. Search for SPECIAL PARAMETERS ($0, $#,
+$@, $*, $?), PARAMETER EXPANSION (:-, :=, :+, :?), SHELL BUILTIN COMMANDS (set, trap, read,
+local, return), and HEREDOC (here-document) syntax. Essential for exam-level command accuracy.
+
+**5. Bash Pitfalls — Greg's Wiki (wooledge.org)**
+URL: https://mywiki.wooledge.org/BashPitfalls
+Coverage: A curated list of common bash scripting errors and how to avoid them. Covers word splitting
+with unquoted variables, pitfalls with for loops over ls output, the read -r flag requirement, IFS
+handling, and why set -e does not behave as expected with certain constructs. Directly relevant to
+the set -euo pipefail and while read loop content in this module.

@@ -378,6 +378,74 @@ Submit a document containing:
 
 ---
 
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Row-Level Security Policy
+
+1. On your Cloud SQL for PostgreSQL instance, enable row-level security on the `employees` table and create a policy that restricts each user to rows in their own department:
+
+   ```sql
+   ALTER TABLE employees ENABLE ROW LEVEL SECURITY;
+
+   CREATE POLICY dept_isolation ON employees
+     USING (department = current_setting('app.current_department'));
+   ```
+
+2. Create two test roles and grant them table access:
+
+   ```sql
+   CREATE ROLE analyst_finance;
+   CREATE ROLE analyst_hr;
+   GRANT SELECT ON employees TO analyst_finance, analyst_hr;
+   ```
+
+3. Test the policy by setting the session variable and querying as each role:
+
+   ```sql
+   SET ROLE analyst_finance;
+   SET app.current_department = 'Finance';
+   SELECT * FROM employees;
+   -- Should return only Finance rows
+
+   SET app.current_department = 'HR';
+   SELECT * FROM employees;
+   -- Should return only HR rows
+   ```
+
+4. Verify that a superuser bypasses RLS by default, then force the policy to apply to superusers using `ALTER TABLE employees FORCE ROW LEVEL SECURITY;` and re-test.
+
+### Challenge 2: Least-Privilege Application Account Audit
+
+1. List all database users and their privileges on the `orders` and `customers` tables:
+
+   ```sql
+   SELECT grantee, table_name, privilege_type
+   FROM information_schema.role_table_grants
+   WHERE table_name IN ('orders', 'customers')
+   ORDER BY grantee, table_name, privilege_type;
+   ```
+
+2. Create a least-privilege application role that has only INSERT and SELECT on `orders` and SELECT-only on `customers`:
+
+   ```sql
+   CREATE ROLE app_readonly;
+   GRANT SELECT ON customers TO app_readonly;
+   GRANT SELECT, INSERT ON orders TO app_readonly;
+   ```
+
+3. Attempt operations that exceed this role's privileges (UPDATE, DELETE, DROP) and confirm each is rejected with a permission denied error.
+
+4. Write a query against `pg_roles` and `pg_auth_members` that lists all roles that are members of the `app_readonly` role, to audit which accounts could use these privileges.
+
+### Reflection Questions
+
+1. In Challenge 1, you used `current_setting('app.current_department')` as the RLS policy filter. What is the security risk of this approach if an attacker controls the client session, and what is a more secure alternative using authenticated identity rather than a session variable?
+2. In Challenge 2, you audited an application role's privileges. In a real DBA environment, how would you audit privilege creep — where accounts accumulate permissions over time — and what automated process would you put in place to detect when a role's privileges have changed since the last review?
+
+---
+
 Module 13 Lab — CIS-4327 Database Administration
 
 Texas Wesleyan University | Proprietary and Confidential. Not for disclosure outside of course participants.

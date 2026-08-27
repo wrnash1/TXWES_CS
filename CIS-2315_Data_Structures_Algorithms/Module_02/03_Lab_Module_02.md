@@ -471,3 +471,21 @@ Submit to Canvas:
 | Reversal | Three pointers: prev, current, next_node |
 | LRU cache | Doubly linked list + hash map — both ops O(1) |
 | Dummy head | Eliminates head-deletion edge case |
+
+---
+
+## Part 9 — Challenge Exercise
+
+These steps are **optional** and ungraded. They are designed for students who want to deepen their understanding beyond the core lab.
+
+### 9.1 — Cycle Entry Point Detection
+
+Floyd's algorithm can do more than detect whether a cycle exists — it can find the exact node where the cycle begins. After `slow` and `fast` meet inside the cycle, reset one pointer to `head` and advance both one step at a time. The node where they meet again is the cycle entry point. Implement `find_cycle_entry(head)` that returns the entry node (or `None` if no cycle), verify it on a hand-crafted cycle, and explain in a comment why the two-pointer reset proves correctness mathematically.
+
+### 9.2 — Merge K Sorted Linked Lists
+
+Implement `merge_k_sorted(lists)` where `lists` is a Python list of `k` sorted singly linked list heads. Use a min-heap (`heapq`) to always extract the smallest current head across all lists. The time complexity should be O(N log k) where N is the total number of nodes and k is the number of lists. Compare this to the naive O(Nk) approach of merging lists one pair at a time, and add a comment explaining why the heap approach is asymptotically superior for large k. This is LeetCode #23.
+
+### 9.3 — Reorder List In-Place
+
+LeetCode #143 asks you to reorder a list `L₀ → L₁ → … → Lₙ` into `L₀ → Lₙ → L₁ → Lₙ₋₁ → L₂ → Lₙ₋₂ → …` in O(n) time and O(1) extra space. The solution requires three techniques from this module in sequence: (1) find the middle using fast-slow pointers, (2) reverse the second half in place, then (3) interleave the two halves. Implement the complete solution, verify it locally on lists of both odd and even length, and annotate each of the three phases with its time and space complexity.

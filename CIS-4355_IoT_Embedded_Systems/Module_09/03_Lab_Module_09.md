@@ -416,3 +416,56 @@ void loop() {
 **GATT characteristics read 0x0000:** The DHT22 may not be initialized correctly or may return NaN. Verify the DHT22 is wired correctly from Module 08 and that `dht.begin()` is called before the first read.
 
 **nRF Connect shows raw bytes:** This is correct behavior — GATT characteristics return binary data. The app displays it as hex. Your written deliverable in Part D explains the conversion.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: LoRaWAN Simulation with TTN and a Single-Channel Packet Forwarder
+
+Simulate a LoRaWAN uplink path using a software packet forwarder and The Things Network (TTN) free tier.
+
+1. Create a free account on [The Things Network console](https://console.thethingsnetwork.org/) and register a new application. Within the application, register a new end device with device type "Other" and manually specify a DevEUI, AppEUI, and AppKey (generate random values using the TTN console's key generator). Set activation mode to OTAA.
+
+2. On your laptop, install the `ttn-lw-cli` tool or use the TTN HTTP integration. Write a Python script that simulates an OTAA join by sending a crafted uplink payload to the TTN application via the MQTT integration. Use the TTN-provided MQTT broker (`eu1.cloud.thethings.network`, port 8883 with TLS). Subscribe to `v3/{app_id}@{tenant_id}/devices/{device_id}/up` and confirm you can receive the simulated uplink JSON.
+
+3. Add a downlink scheduler: publish a JSON downlink message to `v3/{app_id}@{tenant_id}/devices/{device_id}/down/push` that contains a 2-byte payload representing a target temperature setpoint (e.g., `0x1A 0x00` = 26°C). Print the received downlink in your subscriber terminal.
+
+4. Write a 3–4 sentence analysis comparing the security of this simulated OTAA flow (MQTT over TLS to TTN) with the plaintext MQTT broker used in Module 07. Specifically address what additional protection OTAA and TLS provide over ABP and plain MQTT.
+
+### Challenge 2: BLE Beacon Proximity Alert on Raspberry Pi
+
+Use a Raspberry Pi (or laptop with a Bluetooth adapter) as a BLE scanner to detect the ESP32 beacon from Part C and trigger an action when RSSI exceeds a threshold.
+
+1. On the Raspberry Pi (or laptop with BlueZ), install `bluepy` or `bleak` Python library (`pip install bleak`). Write a Python scanner that continuously scans for BLE advertisements and filters for your ESP32 beacon by its advertised name (`ESP32-Lab09`) or service UUID (`0x181A`):
+
+```python
+import asyncio
+from bleak import BleakScanner
+
+TARGET_NAME = "ESP32-Lab09"
+RSSI_THRESHOLD = -65  # dBm — "near" threshold
+
+async def scan():
+    while True:
+        devices = await BleakScanner.discover(timeout=2.0)
+        for d in devices:
+            if d.name and TARGET_NAME in d.name:
+                status = "NEAR" if d.rssi >= RSSI_THRESHOLD else "FAR"
+                print(f"[{status}] {d.name}: {d.rssi} dBm")
+        await asyncio.sleep(1)
+
+asyncio.run(scan())
+```
+
+2. Extend the script to log each detection event to a CSV file with columns `timestamp`, `rssi`, `status`. Move the ESP32 closer and farther from the scanner and verify that the `NEAR`/`FAR` status transitions at approximately the -65 dBm threshold.
+
+3. Add a simple action trigger: when the device transitions from `FAR` to `NEAR`, print `"ALERT: ESP32 beacon entered proximity"` to the terminal (or send an MQTT message to `lab09/beacon/proximity` with payload `"entered"`). When it transitions from `NEAR` to `FAR`, send `"exited"`. Track state to avoid repeated alerts on every scan cycle.
+
+4. In 2–3 sentences, explain why RSSI-based proximity detection is imprecise and describe two physical factors that can cause the measured RSSI to vary by 10–15 dBm even when the device is at a constant distance.
+
+### Reflection Questions
+
+1. In Part B you used Wi-Fi deep sleep with a full reconnect cycle on each wake. The reconnect takes approximately 500–2000 ms for DHCP and TCP handshake. Describe how you could reduce this reconnect latency using static IP configuration and stored credentials, and estimate the battery life improvement in percentage terms given a 2-second versus 0.5-second active window.
+
+2. The ESP32 BLE GATT server in Part D used the NOTIFY property for the temperature characteristic. If instead you had used INDICATE, what change would occur in the ESP32 firmware behavior when `pCharacteristic->indicate()` is called, and how would this affect throughput for a sensor sending data at 10 Hz?

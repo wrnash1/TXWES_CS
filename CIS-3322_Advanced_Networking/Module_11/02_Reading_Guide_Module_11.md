@@ -365,3 +365,19 @@ Work through each item before taking the Module 11 quiz.
 - Cisco CCNA certification training information: cisco.com/c/en/us/training-events/training-certifications
 - Free CCNA study notes and practice questions: professormesser.com
 - Cisco DHCP configuration guide: cisco.com/c/en/us/td/docs/ios-xml/ios/ipaddr_dhcp/configuration/15-mt/dhcp-15-mt-book.html
+
+---
+
+## 11. Supplemental Resources
+
+The following open educational resources extend DHCP and DNS concepts to CCNA exam depth. All resources are freely available.
+
+1. **Cisco Networking Academy — CCNA: Enterprise Networking, Security, and Automation, Chapter 7 (DHCP)** (skillsforall.com): Free chapter covering IOS DHCP server configuration, the relay agent (`ip helper-address`), DHCP snooping, and verification commands with interactive Packet Tracer activities that build multi-VLAN DHCP topologies.
+
+2. **Jeremy's IT Lab — DHCP (Day 38) and DNS (Day 53)** (youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ): Video lessons covering the DORA process, IOS DHCP configuration, relay agent placement, DNS record types, recursive vs. iterative resolution, and exam-style scenario walkthroughs. Jeremy's DHCP video includes a Packet Tracer follow-along with troubleshooting.
+
+3. **Cisco Learning Network — DHCP and DNS Study Group** (learningnetwork.cisco.com): Community discussion threads on DHCP relay troubleshooting, DHCP snooping trust port misconfigurations, split-horizon DNS scenarios, and CCNA exam question patterns for IP Services topics.
+
+4. **Cisco IOS DHCP Snooping Configuration Guide** (cisco.com): Cisco's official guide covering DHCP snooping configuration, trust port designation, Option 82, the snooping binding database, and integration with Dynamic ARP Inspection (DAI). Includes CLI examples for multi-VLAN deployments.
+
+5. **RFC 2131 — Dynamic Host Configuration Protocol** (rfc-editor.org/rfc/rfc2131): The authoritative IETF specification for DHCPv4, including the full DORA message exchange, relay agent behavior, `giaddr` field definition, and lease lifecycle management. The message format section is particularly useful for understanding what each DHCP packet field contains.

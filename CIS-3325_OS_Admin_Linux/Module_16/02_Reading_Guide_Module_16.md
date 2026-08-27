@@ -412,3 +412,16 @@ The Linux+ XK0-005 is a challenging but achievable certification. Students who c
 3. Have a systematic troubleshooting approach they can apply under pressure
 
 You have done the work. Trust your preparation.
+
+---
+
+## 9. Supplemental Resources
+
+**1. [CompTIA Linux+ XK0-005 Exam Objectives — CompTIA.org](https://www.comptia.org/certifications/linux)**
+The official exam objectives document from CompTIA. This is the authoritative blueprint for the XK0-005 exam, listing all four domains (System Management, Security, Scripting, Automation and Containers, and Troubleshooting), their percentage weights, and the specific skill areas tested. Reading this document before your final review session helps you identify gaps between what you have studied and what the exam specifically covers. Available as a free PDF download.
+
+**2. [Professor Messer's CompTIA Linux+ Course Notes — professormesser.com](https://www.professormesser.com/linux-plus/xk0-005/xk0-005-video/comptia-linux-plus-course-notes/)**
+Professor Messer's free Linux+ course notes companion to his video series. Organized by exam domain and objective, these notes provide concise summaries of key concepts in a format designed for exam review. Particularly useful in the final week before the exam when reviewing breadth rather than depth. The video series (available free on YouTube) is the most-recommended supplemental resource among Linux+ candidates.
+
+**3. [Linux Journey — linuxjourney.com](https://linuxjourney.com/)**
+An interactive, self-paced Linux learning platform covering all core administration topics: command line, text processing, user management, filesystems, networking, processes, and more. Each lesson includes exercises and quizzes. Linux Journey is especially useful for reinforcing the hands-on command syntax that the Linux+ performance-based questions test — the questions that require you to type actual commands rather than select from multiple choice options.

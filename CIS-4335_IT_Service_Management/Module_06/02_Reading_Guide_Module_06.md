@@ -245,3 +245,19 @@ Step 7 — Momentum: Standardize knowledge base and script. Log remaining gap to
 * [ ] Take the Module 06 Quiz.
 * [ ] Post your initial discussion response by Wednesday at 11:59 PM.
 * [ ] Reply to at least two classmates by Sunday at 11:59 PM.
+
+---
+
+## Supplemental Resources
+
+**1. AXELOS — ITIL 4 Continual Improvement Practice**
+<https://www.axelos.com/resource-hub/blog/itil-4-continual-improvement>
+The official AXELOS article on the Continual Improvement practice, covering the seven-step model, the CIR, and how improvement is embedded in the SVS. Recommended as the primary reference for exam questions on this practice.
+
+**2. ISACA — Metrics for ITSM Continual Improvement**
+<https://www.isaca.org/resources/isaca-journal/issues/2021/volume-3/measuring-itsm-improvement>
+A practitioner guide covering how to define, collect, and use metrics to evaluate improvement progress. Directly supports Steps 2, 6, and 7 of the Continual Improvement Model with real measurement frameworks.
+
+**3. Lean IT Association — Applying Lean to IT Service Improvement**
+<https://leanit.org/lean-itsm>
+An overview of how Lean principles (waste elimination, flow, continuous improvement) complement the ITIL 4 Continual Improvement practice. Provides practical examples of improvement techniques such as Kaizen events and value stream analysis that can be used within the ITIL model.

@@ -370,3 +370,19 @@ Complete each item before moving to the quiz:
 - [ ] Take Quiz Module 01 (10 questions)
 - [ ] Post your Module 01 Discussion initial post by Wednesday 11:59 PM
 - [ ] Respond to two classmates by Sunday 11:59 PM
+
+---
+
+## 9. Supplemental Resources
+
+**1. Microsoft Learn — Describe cloud computing**
+https://learn.microsoft.com/en-us/training/modules/describe-cloud-compute/
+The official AZ-900 learning module covering cloud definitions, the shared responsibility model, and deployment models with interactive knowledge checks.
+
+**2. Microsoft Learn — Describe the benefits of using cloud services**
+https://learn.microsoft.com/en-us/training/modules/describe-benefits-use-cloud-services/
+Covers high availability, scalability, elasticity, reliability, security, governance, and manageability in depth with scenario-based practice questions aligned directly to AZ-900 exam objectives.
+
+**3. Microsoft Azure Shared Responsibility in the Cloud**
+https://learn.microsoft.com/en-us/azure/security/fundamentals/shared-responsibility
+The official Microsoft documentation defining the shared responsibility model with a layer-by-layer breakdown for IaaS, PaaS, and SaaS. Recommended reading for both the AZ-900 exam and real-world cloud security conversations.

@@ -218,4 +218,204 @@ D) The switch must be configured with a dedicated PoE VLAN to allocate additiona
 
 ---
 
+### Question 11
+
+A network administrator uses copper twisted-pair cabling throughout a building. One run measures 110 meters. Which of the following accurately describes whether this installation will function correctly for Gigabit Ethernet?
+
+- A) It will function correctly because the maximum distance for 1000BASE-T is 150 meters.
+- B) It will not function correctly because 1000BASE-T has a maximum run of 100 meters including patch cables.
+- C) It will function correctly only if Cat5 cable is used instead of Cat5e or Cat6.
+- D) Distance does not affect copper Ethernet performance; only fiber optic cables have distance limits.
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* The IEEE 802.3 standard specifies 100 meters (328 feet) as the maximum for copper-based Ethernet (including 1000BASE-T), not 150 meters. Exceeding this limit causes signal degradation.
+- *Why B is correct:* The 100-meter limit includes the total channel length: horizontal cable run plus patch cables at both ends. A 110-meter run exceeds this limit and will result in errors or failed connectivity for 1000BASE-T.
+- *Why C is incorrect:* Cat5 cable is not recommended for Gigabit Ethernet. Cat5e (or Cat6) is the minimum recommended cabling standard for 1000BASE-T — Cat5 alone is insufficient, not superior.
+- *Why D is incorrect:* Copper Ethernet absolutely has distance limitations (attenuation, crosstalk, and signal integrity degrade over long runs). The 100-meter limit is an IEEE fundamental specification, not a suggestion.
+
+---
+
+### Question 12
+
+Which of the following cable types is most resistant to electromagnetic interference (EMI) and is the best choice for cable runs that must pass near industrial motors or fluorescent lighting?
+
+- A) UTP Cat6
+- B) STP Cat6A
+- C) Coaxial RG-6
+- D) Single-mode fiber optic
+
+**Correct Answer:** D
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* UTP (Unshielded Twisted Pair) has no metallic shielding and is the most susceptible to EMI of the options listed. It should not be used near high-interference sources.
+- *Why B is incorrect:* STP (Shielded Twisted Pair) provides better EMI resistance than UTP, but the metallic shielding still conducts — it is better than UTP in high-EMI environments but not as immune as fiber.
+- *Why C is incorrect:* Coaxial cable offers some EMI resistance due to its shielded construction, but it is not commonly used in modern Ethernet LANs and still carries an electrical signal that can be affected by extreme EMI.
+- *Why D is correct:* Fiber optic cable transmits light, not electrical signals. It is completely immune to electromagnetic interference regardless of the proximity to motors, transformers, or fluorescent lighting. This makes it the definitive choice for high-EMI environments.
+
+---
+
+### Question 13
+
+A network administrator connects two Cisco switches together using a single gigabit Ethernet cable to carry traffic for 10 VLANs simultaneously. Which port configuration must be applied to the switch ports on each end of this cable?
+
+- A) Access port configured in the native VLAN
+- B) Trunk port using 802.1Q encapsulation
+- C) PortFast-enabled access port with BPDU guard
+- D) PoE-enabled uplink port with 802.3at
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* An access port carries traffic for only one VLAN. It cannot carry multiple VLANs simultaneously.
+- *Why B is correct:* A trunk port using 802.1Q encapsulation tags each frame with a VLAN ID, allowing a single physical link to carry traffic for multiple VLANs simultaneously between two switches. Trunk ports are the standard inter-switch link configuration.
+- *Why C is incorrect:* PortFast is designed for access ports connecting to end devices (PCs, printers) — enabling it on an inter-switch link can cause Spanning Tree issues. Access ports only carry one VLAN.
+- *Why D is incorrect:* PoE is a power delivery mechanism for powered devices such as APs and IP phones. It is unrelated to VLAN trunking.
+
+---
+
+### Question 14
+
+What is the function of the Spanning Tree Protocol (STP) in a switched network?
+
+- A) STP assigns VLAN IDs to switch ports to separate broadcast domains.
+- B) STP prevents Layer 2 switching loops by placing redundant switch ports into a blocking state.
+- C) STP encrypts inter-switch traffic to prevent VLAN hopping attacks.
+- D) STP balances traffic load across multiple equal-cost paths simultaneously.
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* VLAN assignment is performed by VLAN configuration (switchport access vlan) — it is not a function of STP.
+- *Why B is correct:* STP (IEEE 802.1D) prevents Layer 2 broadcast storms and switching loops by electing a root bridge and then placing all redundant ports into a blocking state, keeping only one active forwarding path between any two switches.
+- *Why C is incorrect:* STP has no encryption capability. VLAN hopping prevention is addressed by VLAN access control and port security.
+- *Why D is incorrect:* STP blocks redundant paths — it does not load-balance across them. EtherChannel (LACP/PAgP) aggregates links for load sharing while STP treats the bundle as a single logical link.
+
+---
+
+### Question 15
+
+An administrator runs `show mac address-table` on a Cisco switch. The table shows no entry for a destination MAC address. What action does the switch take when forwarding a frame to that unknown destination?
+
+- A) The switch drops the frame and sends an ICMP error to the source.
+- B) The switch forwards the frame only to the port that has the best metric route to the destination.
+- C) The switch floods the frame out all active ports in the same VLAN except the port the frame arrived on.
+- D) The switch discards the frame until the destination device initiates contact first.
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Switches operate at Layer 2 and do not generate ICMP error messages (that is a Layer 3 function). Unknown MAC addresses trigger flooding, not drops.
+- *Why B is incorrect:* Forwarding decisions based on routing metrics are a Layer 3 router function. A Layer 2 switch does not use routing metrics — it uses the MAC address table.
+- *Why C is correct:* When a switch receives a frame with an unknown destination MAC address (no entry in the MAC address table), it floods (forwards) the frame out all active ports in the same VLAN except the ingress port. This is called unknown unicast flooding.
+- *Why D is incorrect:* Switches do not queue frames waiting for a device to initiate contact. Unknown unicast flooding occurs immediately upon receiving the frame.
+
+---
+
+### Question 16
+
+Which fiber optic cable type supports the longest transmission distances and is designed for use between buildings or in core network backbones?
+
+- A) Multimode OM3
+- B) Multimode OM4
+- C) Single-mode OS2
+- D) Multimode OM1
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* OM3 multimode fiber supports 10GbE up to 300 meters — suitable for data center inter-rack runs but not long-distance backbone links between buildings.
+- *Why B is incorrect:* OM4 multimode fiber supports 10GbE up to 550 meters — improved over OM3 but still limited to campus or data center distances, not metropolitan or WAN distances.
+- *Why C is correct:* Single-mode OS2 fiber uses a smaller 9-micron core that allows light to travel in a single path with minimal dispersion. It supports distances of 10 km to 100+ km, making it the standard choice for inter-building, campus backbone, and WAN fiber runs.
+- *Why D is incorrect:* OM1 is the oldest and lowest-performing multimode fiber, supporting only 10GbE up to 33 meters. It is effectively obsolete for new installations.
+
+---
+
+### Question 17
+
+A network administrator needs to connect a switch's SFP port to a copper Cat6 cable rather than a fiber cable. Which device is needed to accomplish this?
+
+- A) A crossover cable adapter
+- B) A media converter or copper SFP transceiver
+- C) A GBIC transceiver with a fiber pigtail
+- D) An inline PoE injector
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* A crossover cable only changes the wiring pinout — it cannot convert between optical and electrical signal types.
+- *Why B is correct:* A media converter translates between fiber and copper signals, allowing an SFP-equipped switch to connect to a copper Cat6 run. Alternatively, a copper SFP transceiver (RJ45 SFP) can be inserted directly into the SFP slot to provide a copper port.
+- *Why C is incorrect:* A GBIC (Gigabit Interface Converter) is an older, larger transceiver form factor that predates SFP. A GBIC with a fiber pigtail would still require fiber, not copper connectivity.
+- *Why D is incorrect:* A PoE injector adds Power over Ethernet to a non-PoE switch port — it does not convert signal types between fiber and copper.
+
+---
+
+### Question 18
+
+Which of the following best describes the difference between a collision domain and a broadcast domain in a switched network?
+
+- A) A collision domain is defined by a router; a broadcast domain is defined by a switch.
+- B) Each switch port is its own collision domain; a broadcast domain is bounded by a router or VLAN boundary.
+- C) Collision domains and broadcast domains are identical in modern switched networks.
+- D) A hub breaks up collision domains; a switch breaks up broadcast domains.
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Routers define broadcast domain boundaries, and switches define collision domain boundaries — this answer has the devices reversed.
+- *Why B is correct:* In a modern switched network, each full-duplex switch port is its own collision domain (collisions cannot occur on full-duplex links, so this is theoretical but correct). Broadcast domains are bounded by routers or VLAN boundaries — all ports in the same VLAN share a broadcast domain.
+- *Why C is incorrect:* Switches eliminate collisions (per-port collision domains) but do not break broadcast domains without VLAN configuration or routing. They are not identical.
+- *Why D is incorrect:* This is backwards. A hub creates one large collision domain for all connected devices. A switch separates collision domains per port. Routers (not switches by default) break broadcast domains.
+
+---
+
+### Question 19
+
+What is the purpose of a rollover (console) cable when working with Cisco network devices?
+
+- A) To connect two switches together for inter-VLAN routing
+- B) To connect a PC's serial or USB port to the console port of a router or switch for out-of-band management
+- C) To extend Ethernet distances beyond 100 meters using signal regeneration
+- D) To connect an older hub to a modern Gigabit switch using crossover wiring
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Inter-switch connections use straight-through or crossover Ethernet cables (or fiber). A rollover cable is not used for data network connections.
+- *Why B is correct:* A rollover cable (also called a Cisco console cable) has reversed wiring — pin 1 on one end connects to pin 8 on the other. It connects a PC's COM port (or USB-to-serial adapter) to the console port on a Cisco router or switch for out-of-band management access via terminal emulation software.
+- *Why C is incorrect:* Extending Ethernet beyond 100 meters requires a repeater, switch, or fiber optic cable — not a console cable.
+- *Why D is incorrect:* Connecting hubs to switches uses standard Ethernet cables. Rollover cables have a completely different wiring standard and purpose.
+
+---
+
+### Question 20
+
+A Cat6A cable specification advertises a bandwidth of 500 MHz. What does this specification indicate about the cable's performance?
+
+- A) The cable can carry 500 Mbps of data throughput.
+- B) The cable supports signal frequencies up to 500 MHz, enabling 10-Gigabit Ethernet at full 100-meter distances.
+- C) The cable must be terminated with 500-ohm impedance connectors.
+- D) The cable operates at 500 MHz radio frequency and requires wireless antennas.
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* MHz is a unit of frequency (bandwidth of the cable's signal channel), not data throughput in megabits per second. 500 MHz bandwidth supports data rates far exceeding 500 Mbps.
+- *Why B is correct:* Cat6A is specified for 500 MHz bandwidth, which provides sufficient headroom to support 10GBASE-T (10-Gigabit Ethernet) at the full 100-meter maximum distance. Cat6 is specified for 250 MHz and can only support 10GbE at distances up to 55 meters.
+- *Why C is incorrect:* Ethernet cabling uses 100-ohm impedance connectors. The 500 MHz figure refers to signal frequency bandwidth, not impedance.
+- *Why D is incorrect:* Cat6A is a copper twisted-pair cable, not a wireless medium. MHz in the context of cabling refers to electrical signal frequency, not radio frequency.
+
+---
+
 *CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash*

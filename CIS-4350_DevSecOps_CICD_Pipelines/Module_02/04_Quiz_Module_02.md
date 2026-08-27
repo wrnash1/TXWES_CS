@@ -205,3 +205,173 @@ Which statement about the `--no-allow-bypass` branch protection setting in GitHu
 ---
 
 Quiz — Module 02 | CIS-4350 | Texas Wesleyan University | Professor Nash
+
+---
+
+### Question 11 (5 points)
+
+A team stores Infrastructure as Code in a monorepo. They want to ensure that only the platform security team can approve changes to Terraform files. Which file and mechanism accomplish this?
+
+- A) `.gitignore` with a `*.tf` entry to exclude Terraform files from indexing
+- B) A `CODEOWNERS` file with `*.tf @org/platform-security-team`
+- C) A branch protection rule that blocks all pushes containing `.tf` files
+- D) A pre-commit hook that rejects commits touching Terraform files
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) `.gitignore` prevents files from being tracked by Git — it does not control who can review them.
+  - C) Branch protection can restrict pushes broadly but cannot filter by file type — CODEOWNERS is the correct mechanism for file-based review requirements.
+  - D) A pre-commit hook could warn but would not enforce a review requirement — it runs client-side and can be bypassed.
+
+---
+
+### Question 12 (5 points)
+
+When using `git filter-repo` to remove a secret from repository history, what must happen to remote copies of the repository?
+
+- A) Nothing — git filter-repo automatically pushes the cleaned history to all remotes
+- B) The remote must be force-pushed with the cleaned history, and all collaborators must re-clone or rebase
+- C) The remote repository must be deleted and recreated from scratch
+- D) Running `git gc --prune=now` on the remote server is sufficient to remove the secret
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) `git filter-repo` only modifies local history — it does not push to remotes automatically.
+  - C) Recreating the repository is one option but is more disruptive than necessary; a force push with collaborator re-clone achieves the same result.
+  - D) `git gc` compacts objects locally but does not rewrite history or affect what is stored on the remote server.
+
+---
+
+### Question 13 (5 points)
+
+What is the primary security purpose of enabling "Dismiss stale pull request approvals when new commits are pushed" in GitHub branch protection?
+
+- A) It automatically closes pull requests that have not been updated in 30 days
+- B) It prevents a PR from being merged with an approval that was given before a potentially dangerous new commit was added
+- C) It reduces the number of required approvers when PRs are updated frequently
+- D) It triggers a new CI pipeline run whenever a new approval is submitted
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) This setting does not close PRs — it only invalidates approvals.
+  - C) The setting does not change the required approval count — it requires those approvals to be re-earned after new commits.
+  - D) CI pipeline triggers are driven by push events, not approval events; these are independent settings.
+
+---
+
+### Question 14 (5 points)
+
+Which gitleaks mode should be used in a pre-commit hook to scan only the files staged for the current commit, rather than the entire repository history?
+
+- A) `gitleaks detect --source .`
+- B) `gitleaks protect --staged`
+- C) `gitleaks git --all`
+- D) `gitleaks scan --head-only`
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) `detect --source .` scans the working directory or full repo, not just staged changes.
+  - C) `--all` scans the full history — this is the slowest option and inappropriate for per-commit hooks.
+  - D) `--head-only` is not a valid gitleaks flag.
+
+---
+
+### Question 15 (5 points)
+
+An organization requires that all commits to their main branch include a Jira ticket reference (e.g., `JIRA-1234`) in the commit message. Which git hook type enforces this?
+
+- A) pre-commit
+- B) pre-push
+- C) commit-msg
+- D) post-commit
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) The pre-commit hook fires before the message is written — the message does not yet exist to validate.
+  - B) pre-push fires before a push to a remote — by then many commits may already exist locally without a valid message.
+  - D) post-commit fires after the commit is complete — the commit already exists and cannot be blocked.
+
+---
+
+### Question 16 (5 points)
+
+Which of the following is NOT a valid reason to use trunk-based development over GitFlow?
+
+- A) Security patches reach all developers faster with shorter branch lifetimes
+- B) It eliminates the need for automated testing because fewer branches exist
+- C) It simplifies merge history, reducing conflict-resolution bugs
+- D) CI pipeline results always reflect current production-bound code
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) This is a genuine security advantage of trunk-based development — shorter branches mean fewer days of drift.
+  - C) Simpler merge history is a real advantage that reduces the chance of human error during conflict resolution.
+  - D) CI running on every main commit is a core benefit of trunk-based development.
+
+---
+
+### Question 17 (5 points)
+
+SSH key signing for Git commits (introduced in Git 2.34) differs from GPG signing in which way?
+
+- A) SSH signing does not provide non-repudiation — it only encrypts the commit content
+- B) SSH signing uses the developer's existing SSH key pair, eliminating the need to manage a separate GPG key
+- C) SSH-signed commits are not supported by GitHub's "Verified" badge system
+- D) SSH signing requires a hardware security key (YubiKey) and cannot be done with a software key
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) SSH signing does provide non-repudiation through asymmetric cryptography — the same principle as GPG.
+  - C) GitHub supports SSH-signed commits and displays the "Verified" badge for them since 2022.
+  - D) SSH signing works with any SSH key pair, including software-generated keys — a hardware key is optional.
+
+---
+
+### Question 18 (5 points)
+
+A `.gitignore` file contains the following entry: `!.env.example`. What does the `!` prefix mean in this context?
+
+- A) It is a comment indicating that `.env.example` should not be used in production
+- B) It negates the previous ignore rule, re-including `.env.example` so it is tracked by Git
+- C) It marks `.env.example` as a required file that will cause an error if missing
+- D) It encrypts `.env.example` before adding it to the repository
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Comments in `.gitignore` use `#`, not `!`.
+  - C) `.gitignore` has no mechanism to require files — it only controls exclusion.
+  - D) `.gitignore` is a text pattern file with no encryption capability.
+
+---
+
+### Question 19 (5 points)
+
+GitHub's secret scanning "push protection" feature operates at which point in the developer workflow?
+
+- A) During a CI pipeline run after the push is accepted
+- B) During a nightly scheduled scan of all repository contents
+- C) At the moment of the `git push`, before the commits are accepted by the server
+- D) When a pull request is opened for review
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) Push protection is a pre-receive mechanism — it blocks the push before commits are stored, not after.
+  - B) Nightly scanning exists as a separate feature; push protection operates in real time at push time.
+  - D) Pull request scanning is a separate check; push protection fires during the push itself, regardless of whether a PR is involved.
+
+---
+
+### Question 20 (5 points)
+
+A developer's machine is compromised and an attacker uses `git config user.name` and `git config user.email` to impersonate a senior engineer before committing malicious code. Which control specifically prevents this attack?
+
+- A) Branch protection requiring at least two code reviewers
+- B) Mandatory GPG or SSH commit signing with keys stored in a hardware security module
+- C) A pre-commit hook that validates the committer's email against an allowlist
+- D) Enabling two-factor authentication on the GitHub account
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Two reviewers check the code content but cannot detect identity impersonation if the commit appears to come from a legitimate author.
+  - C) A pre-commit hook runs on the attacker's compromised machine and can be bypassed with `--no-verify`; it also cannot verify key possession.
+  - D) 2FA protects the GitHub web/API login session but does not protect commit authorship in the local Git client.

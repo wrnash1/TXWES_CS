@@ -245,6 +245,22 @@ The same rules apply to `at` via `/etc/at.allow` and `/etc/at.deny`.
 
 ---
 
+## 9. Supplemental Resources
+
+**1. [crontab(5) — Linux manual pages](https://man7.org/linux/man-pages/man5/crontab.5.html)**
+https://man7.org/linux/man-pages/man5/crontab.5.html
+The authoritative man page for crontab file format, covering field ranges, special characters (*/N, N-M, N,M), the username field in /etc/crontab, and environment variable handling in cron jobs.
+
+**2. [systemd.timer — freedesktop.org](https://www.freedesktop.org/software/systemd/man/latest/systemd.timer.html)**
+https://www.freedesktop.org/software/systemd/man/latest/systemd.timer.html
+Official reference for all systemd timer unit directives including OnCalendar, Persistent, AccuracySec, OnBootSec, and OnUnitActiveSec with calendar expression examples.
+
+**3. [anacron(8) — Linux manual pages](https://man7.org/linux/man-pages/man8/anacron.8.html)**
+https://man7.org/linux/man-pages/man8/anacron.8.html
+Complete reference for anacron configuration and behavior, covering the /etc/anacrontab format, PERIOD/DELAY/JOB-ID fields, and how anacron determines whether a missed job needs to run using /var/spool/anacron timestamps.
+
+---
+
 ### Study Checklist
 
 Before the quiz and lab, confirm you can do all of the following without looking them up:

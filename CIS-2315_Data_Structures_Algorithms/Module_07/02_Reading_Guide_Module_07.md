@@ -216,6 +216,27 @@ Time: O(N log K) where N = total elements, K = number of lists.
 
 ---
 
+## 9. Supplemental Resources
+
+The following free, openly licensed resources reinforce the concepts in this module. All are zero-cost and require no account to access.
+
+1. **VisuAlgo — Binary Heap Visualizations** — [https://visualgo.net/en/heap](https://visualgo.net/en/heap)
+   Animated step-by-step visualization of heap insert (sift-up) and extract-min (sift-down) operations. Watch how the array index formula maps to the tree representation in real time.
+
+2. **OpenDSA — Heaps Chapter** — [https://opendsa-server.cs.vt.edu/ODSA/Books/Everything/html/Heaps.html](https://opendsa-server.cs.vt.edu/ODSA/Books/Everything/html/Heaps.html)
+   Free interactive OER textbook covering the heap property, array representation, heapify algorithm, and the O(n) proof for `heapify`. Includes embedded exercises.
+
+3. **Python `heapq` Module Documentation** — [https://docs.python.org/3/library/heapq.html](https://docs.python.org/3/library/heapq.html)
+   Official Python documentation for all `heapq` functions including `heappush`, `heappop`, `heapify`, `heapreplace`, `nlargest`, and `nsmallest`. Includes worked examples and a note on max-heap simulation with negated values.
+
+4. **NeetCode — Heap / Priority Queue Playlist (YouTube)** — [https://www.youtube.com/playlist?list=PLot-Xpze53ldg4pN6PfzoJY7KsKcxF1jg](https://www.youtube.com/playlist?list=PLot-Xpze53ldg4pN6PfzoJY7KsKcxF1jg)
+   Free video solutions for common heap interview problems including Kth Largest Element, Top K Frequent Elements, and Merge K Sorted Lists, each with clear explanation of the min-heap-of-size-K pattern.
+
+5. **Abdul Bari — Heap Sort (YouTube)** — [https://www.youtube.com/watch?v=HqPJF2L5h9U](https://www.youtube.com/watch?v=HqPJF2L5h9U)
+   Clear diagram-based walkthrough of heapify, heap sort, and the O(n log n) time complexity analysis. Useful for understanding why `heapify` is O(n) despite appearing to be O(n log n).
+
+---
+
 ## 7. Study Checklist
 
 - [ ] Watch the Module 07 video lecture by Professor Nash.

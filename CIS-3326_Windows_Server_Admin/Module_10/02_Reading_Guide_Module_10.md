@@ -342,4 +342,26 @@ the Spooler clears stuck jobs.
 
 ---
 
+## 9. Supplemental Resources
+
+The following free, open-access resources go deeper on Module 10 topics:
+
+**1. Microsoft Learn — Implement and manage file server high availability**
+<https://learn.microsoft.com/en-us/training/modules/implement-manage-file-server-high-availability/>
+Covers DFS Namespaces, DFS Replication, File Server failover clustering, and storage redundancy strategies with sandbox exercises aligned to the AZ-800 exam.
+
+**2. Microsoft Docs — Access-Based Enumeration**
+<https://learn.microsoft.com/en-us/windows-server/storage/dfs-namespaces/enable-access-based-enumeration-on-a-namespace>
+Step-by-step guide to enabling ABE at the namespace level and the share level, explaining how enumeration filtering interacts with NTFS permissions and DFS referrals.
+
+**3. Microsoft Docs — DFS Namespaces overview**
+<https://learn.microsoft.com/en-us/windows-server/storage/dfs-namespaces/dfs-overview>
+Full architecture reference for DFS Namespaces including namespace types (domain-based vs. stand-alone), namespace server roles, folder targets, referral ordering, and site costing.
+
+**4. Microsoft Docs — Print and Document Services**
+<https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/print-and-document-services>
+Reference for Print Server role installation, shared printer configuration, printer pooling, driver management, and the Print Spooler service including command-line and PowerShell management tools.
+
+---
+
 *Review all sections before beginning Lab 10, Quiz 10, and Discussion 10.*

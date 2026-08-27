@@ -262,3 +262,33 @@ Accepted formats: PDF, DOCX, or Google Docs link with comment access enabled.
 ## Reference Notes
 
 All answers should be based on the Reading Guide, lecture notes, and module content. For beep code questions, the Reading Guide Section 3 tables are the authoritative reference for this course. For BSOD stop codes, the Reading Guide Section 4 table covers all required stop codes. Additional reference at professormesser.com (220-1101 Domain 5.3) and comptia.org.
+
+---
+
+## Part 9 — Challenge Exercise
+
+These advanced steps are optional and are not included in the standard grading rubric.
+
+### Challenge Step 1 — BSOD Minidump Analysis with BlueScreenView
+
+Download the free portable utility BlueScreenView from NirSoft ([https://www.nirsoft.net/utils/blue_screen_view.html](https://www.nirsoft.net/utils/blue_screen_view.html)) and run it on any available Windows computer:
+
+1. Launch BlueScreenView and examine any minidump files that exist from previous BSOD events (stored in `C:\Windows\Minidump\`). For each dump file found, record: the stop code name, the date and time of the crash, the faulting module name (driver or system file), and the memory address of the fault. If no dump files exist on your system (which means no recent BSODs have occurred), research and describe what information a minidump file contains and why it is more useful for diagnosis than reading only the on-screen stop code during the BSOD.
+1. For each stop code you find (or for any three stop codes from the Reading Guide Section 4 table if no dumps are available), research the most common hardware and software causes and document your findings in a table with columns: Stop Code, Most Common Cause, Diagnostic Tool, Resolution.
+1. Write 2–3 sentences explaining why Windows generates both a stop code visible on the BSOD screen and a minidump file written to disk, and describe a scenario where having the minidump file would provide information that the on-screen stop code alone cannot.
+
+### Challenge Step 2 — UEFI Boot Configuration Lab
+
+On any available Windows PC with UEFI firmware, access the UEFI setup utility and perform the following research tasks (read-only — do not change settings on a production machine):
+
+1. Navigate to the boot configuration section and document: the current boot order (list all entries), whether Secure Boot is enabled or disabled, whether the firmware mode is set to UEFI or Legacy/CSM, and whether Fast Boot is enabled. Take a photograph or screenshot if permitted, or sketch the boot order screen layout in your lab document.
+1. Locate the Secure Boot key management section (it may be under Security, Boot, or Advanced). Document what categories of keys are listed (PK, KEK, db, dbx) and describe in one sentence what each category controls. Research the difference between the "Restore Factory Keys" and "Clear All Secure Boot Keys" options and explain in 2–3 sentences when a technician would use each one.
+1. Without making any changes, describe the exact steps required to temporarily disable Secure Boot to install an older Linux distribution that does not support Secure Boot, and the steps required to re-enable it safely afterward. Explain why re-enabling Secure Boot after OS installation is considered a security best practice.
+
+### Challenge Step 3 — Boot Repair with Windows Recovery Environment
+
+Using Windows installation media (a bootable USB drive created from a Windows 11 ISO) or the Windows Recovery Environment accessible from the boot menu, practice or research the following boot repair commands:
+
+1. Document the complete command sequence a technician would run in the Windows Recovery Environment Command Prompt to repair a PC with a corrupt BCD store. Include the commands: `bootrec /fixmbr`, `bootrec /fixboot`, `bootrec /scanos`, and `bootrec /rebuildbcd` — explain what each command does and in what order they should be run, and why running them out of order can fail.
+1. Research the `bcdedit` command and document: how to view the current BCD entries (`bcdedit /enum all`), how to add a Linux boot entry to the Windows Boot Manager, and what the `{bootmgr}`, `{current}`, and `{default}` identifiers represent. Explain in 2–3 sentences why `bcdedit` is more powerful than `bootrec` for advanced multi-boot configurations.
+1. Write a step-by-step procedure a technician would follow to recover a PC displaying "INACCESSIBLE_BOOT_DEVICE" after a SATA controller mode was accidentally changed from AHCI to IDE in the BIOS. Include both the BIOS fix and the Windows Registry fix (loading the HKLM\SYSTEM hive offline and enabling the iaStorV and storahci services) that allows Windows to boot after the mode change.

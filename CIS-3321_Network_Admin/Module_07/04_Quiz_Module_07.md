@@ -224,4 +224,204 @@ D) He is using the top-down approach. He has determined that DNS is the root cau
 
 ---
 
-CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash
+### Question 11
+
+A network administrator uses the `netstat -an` command on a Windows server and observes a connection with the state "TIME_WAIT." What does this TCP connection state indicate?
+
+- A) The connection has been fully established and data is actively being transferred.
+- B) The server is listening for incoming connections on the specified port.
+- C) The local side has sent a FIN to close the connection and is waiting for the remote side's TIME_WAIT period to expire.
+- D) The connection is half-closed — the local application has sent a FIN and is waiting for all packets to expire from the network before the port is reused.
+
+**Correct Answer:** D
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* An actively transferring connection is in the ESTABLISHED state, not TIME_WAIT.
+- *Why B is incorrect:* A port waiting for incoming connections is in the LISTEN state, not TIME_WAIT.
+- *Why C is incorrect:* TIME_WAIT is not simply waiting for the remote side — it is the local side's waiting period after sending the final ACK, designed to ensure all delayed packets from the session expire from the network before the port is reused.
+- *Why D is correct:* TIME_WAIT is the final TCP state. After sending the last ACK in the four-way FIN exchange, the closing side enters TIME_WAIT (typically 2 × MSL = 2 minutes). This ensures that any lingering packets from the closed connection are discarded and do not corrupt a new connection using the same port.
+
+---
+
+### Question 12
+
+An administrator suspects high CPU utilization on a router is causing packet loss. Which SNMP concept should be configured to automatically alert the NMS when the CPU threshold exceeds 80%?
+
+- A) SNMP GET request
+- B) SNMP TRAP
+- C) SNMP SET command
+- D) SNMP Walk
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* An SNMP GET request is a poll sent FROM the NMS TO the device, requesting the current value of a specific OID. It does not automatically alert when thresholds are exceeded.
+- *Why B is correct:* An SNMP TRAP is an unsolicited message sent FROM the device TO the NMS when a defined threshold or event occurs. Configuring a CPU threshold trap on the router causes it to proactively notify the NMS without waiting for a poll.
+- *Why C is incorrect:* An SNMP SET command is sent from the NMS to modify a configuration value on the device. It is used for remote management, not alerting.
+- *Why D is incorrect:* An SNMP Walk retrieves all OID values under a branch of the MIB tree through sequential GET-NEXT requests. It is used for inventory or discovery — not threshold alerting.
+
+---
+
+### Question 13
+
+A network engineer uses Wireshark and applies the display filter `tcp.port == 443 and ip.src == 10.0.0.50`. What traffic will this filter display?
+
+- A) All TCP traffic from any host using any port communicating with 10.0.0.50
+- B) All HTTPS traffic from the host 10.0.0.50 as the source
+- C) All TCP traffic where either the source or destination is 10.0.0.50, on port 443
+- D) Only outbound HTTPS traffic initiated by host 10.0.0.50, not responses to it
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* The filter specifies `tcp.port == 443`, which limits results to port 443 traffic only — not all TCP traffic.
+- *Why B is correct:* `tcp.port == 443` matches any TCP packet where source OR destination port is 443. Combined with `ip.src == 10.0.0.50`, the filter shows only TCP port 443 packets where 10.0.0.50 is the source IP — which is outbound HTTPS traffic from that host.
+- *Why C is incorrect:* The filter specifies `ip.src`, which means source IP must be 10.0.0.50. It does not also match traffic where 10.0.0.50 is the destination. For bidirectional filtering, `ip.addr` would be needed.
+- *Why D is incorrect:* TCP port matching in Wireshark (`tcp.port`) matches both source and destination port 443. This includes both SYN packets (client to server on port 443) and all response traffic flowing back through the same TCP stream where 10.0.0.50 is the source.
+
+---
+
+### Question 14
+
+Which network monitoring protocol version introduced authentication and encryption using MD5/SHA, addressing a critical security weakness present in earlier versions?
+
+- A) SNMPv1
+- B) SNMPv2c
+- C) SNMPv3
+- D) Syslog over TLS
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* SNMPv1 uses community strings (cleartext passwords) for authentication — no encryption. It is considered insecure.
+- *Why B is incorrect:* SNMPv2c retained the same community string authentication as SNMPv1 (still cleartext). It improved performance and added bulk retrieval (GetBulk) but did not add encryption or strong authentication.
+- *Why C is correct:* SNMPv3 introduced user-based security with authentication (HMAC-MD5 or HMAC-SHA) and optional encryption (DES or AES). This addresses the community string cleartext weakness of v1 and v2c and is the recommended version for production networks.
+- *Why D is incorrect:* Syslog over TLS (RFC 5425) is a separate protocol for secure log forwarding — it is not an SNMP version and is not related to SNMP authentication.
+
+---
+
+### Question 15
+
+A network engineer runs `traceroute 8.8.8.8` and sees that hop 5 shows three asterisks (***). Hop 6 shows normal RTT values. What does the asterisk at hop 5 most likely indicate?
+
+- A) Hop 5 is offline and all packets after it are being rerouted.
+- B) Hop 5 is a router configured to not respond to ICMP TTL-exceeded messages, but it is still forwarding packets.
+- C) The traceroute has reached the final destination, which uses asterisks to confirm successful arrival.
+- D) Hop 5 is experiencing 100% packet loss and the rest of the traceroute results are unreliable.
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* If hop 5 were offline and packets were being rerouted, subsequent hops (like hop 6) might show unusual paths or the route might fail entirely. The fact that hop 6 shows normal results indicates hop 5 is still forwarding packets.
+- *Why B is correct:* Asterisks in traceroute indicate that the router at that hop is not generating ICMP Time Exceeded responses (often due to ACLs or rate limiting on ICMP). The router is still forwarding packets (as evidenced by responses at hop 6) — it is simply silent about its own address.
+- *Why C is incorrect:* Traceroute reaches its destination when it receives an ICMP Port Unreachable (UDP-based traceroute) or ICMP Echo Reply (ICMP-based traceroute) from the final host. Asterisks appear in the middle of a route, not at the destination.
+- *Why D is incorrect:* If hop 5 were truly unreachable (100% packet loss at that node), all subsequent hops would also fail because packets could not pass through. Since hop 6 responds normally, hop 5 is forwarding packets.
+
+---
+
+### Question 16
+
+What is the primary purpose of a network baseline, and how often should it be updated according to best practice?
+
+- A) A baseline records MAC address table contents to recover from switch failures. It should be updated daily.
+- B) A baseline documents normal network performance metrics (bandwidth, latency, CPU utilization) used to identify deviations. It should be updated at least annually or after significant infrastructure changes.
+- C) A baseline encrypts configuration backups for compliance auditing. It should be updated after every configuration change.
+- D) A baseline defines which IP addresses are statically assigned versus DHCP. It should be updated whenever IP addresses change.
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* MAC address tables are dynamic, switch-maintained data structures — not a baseline document. They rebuild automatically and do not need manual backup.
+- *Why B is correct:* A performance baseline captures normal metric values (typical bandwidth utilization, average latency, packet error rates, CPU/memory utilization under normal load). When current measurements deviate significantly from the baseline, it indicates a problem. Baselines should be re-captured annually and after major infrastructure changes (new devices, link upgrades, significant growth).
+- *Why C is incorrect:* Configuration backups are separate from performance baselines. Encrypting configuration files is a security practice, not a baselining activity.
+- *Why D is incorrect:* IP address documentation (IPAM) is a separate administrative function. While important, it is distinct from performance baselining.
+
+---
+
+### Question 17
+
+Which tool would a network administrator use to capture and analyze raw network packets traversing an interface for the purpose of protocol-level troubleshooting?
+
+- A) SNMP NMS (Network Management System)
+- B) Syslog server
+- C) Protocol analyzer (packet sniffer)
+- D) NetFlow collector
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* An SNMP NMS collects and displays performance statistics from managed devices via SNMP polling. It shows metrics but does not capture raw packet payloads for protocol analysis.
+- *Why B is incorrect:* A syslog server collects event and error messages from network devices. Syslog messages are text-based logs — they do not contain raw packet captures.
+- *Why C is correct:* A protocol analyzer (packet sniffer), such as Wireshark or tcpdump, captures raw packets at the wire level and decodes them frame-by-frame. This enables protocol-level troubleshooting — examining headers, flags, payloads, and the exact sequence of exchanges between devices.
+- *Why D is incorrect:* A NetFlow collector receives summarized traffic flow records (source/destination IP, protocol, byte counts, duration) exported by routers and switches. NetFlow provides traffic volume analysis but not raw packet captures — you cannot see individual frame headers or protocol exchanges with NetFlow data alone.
+
+---
+
+### Question 18
+
+An administrator uses the `nslookup` tool and sets the server to a known-good public DNS server (8.8.8.8). He queries a company's internal hostname and receives a "Server failed" or "NXDOMAIN" response. The same query against the company's internal DNS server succeeds. What does this indicate?
+
+- A) The internal hostname exists only in the company's private DNS zone and is not published to public DNS.
+- B) The company's DNS server is misconfigured and returning incorrect responses.
+- C) The public DNS server 8.8.8.8 is unreachable.
+- D) Split DNS is disabled and all DNS queries must go through the company's proxy.
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- *Why A is correct:* Internal hostnames (such as `intranet.company.local` or internal server names) are typically hosted in a private DNS zone that is only accessible via the organization's internal DNS servers. Public DNS servers like 8.8.8.8 do not have records for internal names by design. This is expected and correct behavior — it is often called a split-horizon or split-DNS configuration.
+- *Why B is incorrect:* The internal DNS server is returning a successful response, which indicates it is functioning correctly. The "failure" is from the public server not knowing about an internal name — this is normal, not a misconfiguration.
+- *Why C is incorrect:* If 8.8.8.8 were unreachable, the nslookup query would time out entirely rather than returning NXDOMAIN or "Server failed" with a specific response.
+- *Why D is incorrect:* A DNS proxy configuration is unrelated to why a public DNS server lacks records for private internal hostnames.
+
+---
+
+### Question 19
+
+What does the SNMP OID (Object Identifier) represent in the context of network monitoring?
+
+- A) The IP address of the SNMP-managed device
+- B) A unique numerical identifier for a specific manageable data point in the Management Information Base (MIB)
+- C) The SNMP community string used for authentication
+- D) The version number of the SNMP protocol being used
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* The managed device's IP address is used to identify the device in SNMP communications — it is not an OID. OIDs identify specific data values within a device.
+- *Why B is correct:* An OID is a hierarchical numerical address (e.g., 1.3.6.1.2.1.1.1.0) that uniquely identifies a specific manageable variable in the MIB tree. For example, one OID identifies CPU utilization, another identifies interface input errors. SNMP GET requests specify which OID to retrieve.
+- *Why C is incorrect:* The community string is a cleartext password used in SNMPv1/v2c for authentication. It is a separate field from the OID.
+- *Why D is incorrect:* The SNMP version is indicated in the protocol header (version 1, 2c, or 3). It is not encoded in an OID.
+
+---
+
+### Question 20
+
+A network administrator needs to capture traffic at a specific switch port without interrupting the live network. The switch is a managed Cisco Catalyst. Which switch feature should be configured to copy traffic from the production port to a monitoring port where a packet analyzer is connected?
+
+- A) Port Security
+- B) SPAN (Switched Port Analyzer)
+- C) VLAN access control list (VACL)
+- D) EtherChannel
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Port Security restricts which MAC addresses can connect to a switch port. It does not copy traffic for monitoring purposes.
+- *Why B is correct:* SPAN (Switched Port Analyzer), also called port mirroring, is a Cisco switch feature that copies all traffic from one or more source ports (or VLANs) to a designated destination port where a packet analyzer is connected. The original traffic flows unaffected.
+- *Why C is incorrect:* A VACL (VLAN Access Control List) filters traffic within a VLAN based on policy. While VACLs can be used with a capture ACL to redirect matching traffic, SPAN is the standard tool for non-intrusive traffic capture.
+- *Why D is incorrect:* EtherChannel bundles multiple physical links into one logical link for increased bandwidth and redundancy. It is unrelated to traffic capture or monitoring.
+
+---
+
+*CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash*

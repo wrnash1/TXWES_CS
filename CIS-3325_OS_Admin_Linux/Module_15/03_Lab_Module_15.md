@@ -496,3 +496,31 @@ Submit a PDF report containing:
 | Part 4: Password policies | 25 |
 | Written analysis | 10 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Custom Audit Policy for a Web Application
+
+Design and implement a comprehensive auditd policy that monitors all security-relevant events for a web application, then use `aureport` to generate executive summary statistics.
+
+1. Design audit rules for a simulated web application at `/opt/webapp/`. Create audit rules that watch: (a) all write and attribute changes to `/opt/webapp/config/` with key `webapp_config`; (b) all execution of files in `/opt/webapp/bin/` with key `webapp_exec`; (c) all failed file open attempts (using syscall rules): `auditctl -a always,exit -F arch=b64 -S open -F exit=-EACCES -k access_denied`; (d) modifications to `/etc/passwd`, `/etc/shadow`, and `/etc/sudoers` with key `auth_files`. Write all rules to `/etc/audit/rules.d/webapp.rules` using the persistent format (lines without `auditctl`).
+2. Generate test events: create a file in `/opt/webapp/config/` (`sudo mkdir -p /opt/webapp/config && sudo touch /opt/webapp/config/test.conf`), attempt to read a file you don't have permission to access (`cat /etc/shadow 2>/dev/null`), and run `sudo passwd --expire testuser` to modify `/etc/shadow`. Then query the log: `ausearch -k webapp_config -ts today`, `ausearch -k access_denied -ts today | head -30`, `ausearch -k auth_files -ts today`.
+3. Generate an `aureport` executive summary: `sudo aureport --summary`, `sudo aureport -au` (authentication report), `sudo aureport -f` (file access report), `sudo aureport -x` (executable report). Save the output to `~/audit_summary.txt`: `sudo aureport --summary > ~/audit_summary.txt && sudo aureport -au >> ~/audit_summary.txt`.
+4. Install and run `Lynis` for a comprehensive system audit: `sudo apt install lynis` (or `sudo dnf install lynis`). Run: `sudo lynis audit system 2>/dev/null | tee ~/lynis_report.txt`. Find the hardening index score: `grep "Hardening index" ~/lynis_report.txt`. List all WARNING items: `grep "^\[WARNING\]" ~/lynis_report.txt`. Research and implement fixes for at least 2 of the warnings.
+
+### Challenge 2: SELinux Custom Policy Module
+
+Develop a custom SELinux policy module to allow a non-standard application to run in enforcing mode without setting global booleans or file contexts inappropriately.
+
+1. Create a test scenario that triggers SELinux denials: write a simple Python script at `/opt/myapp/myapp.py` that reads `/etc/hostname` and writes to `/var/log/myapp.log`. Run it: `python3 /opt/myapp/myapp.py`. Check for AVC denials: `sudo ausearch -m AVC -ts recent`. Identify all denied operations from the script's process context.
+2. Use `audit2allow` to generate a custom policy module from the AVC denials: `sudo ausearch -m AVC -ts recent | audit2allow -M myapp_policy`. This creates `myapp_policy.te` (type enforcement file) and `myapp_policy.pp` (compiled policy package). Inspect the generated `.te` file: `cat myapp_policy.te`. Review each `allow` rule and understand what access it grants.
+3. Install the custom module: `sudo semodule -i myapp_policy.pp`. Verify it loaded: `sudo semodule -l | grep myapp`. Re-run the application and confirm the previously denied operations now succeed with SELinux still in enforcing mode. Verify with `sudo ausearch -m AVC -ts recent` — the denials should be absent.
+4. Remove the module when done: `sudo semodule -r myapp_policy`. Consider the security implications: in your lab notes, explain when it is appropriate to use `audit2allow` to generate a custom module versus using a pre-existing boolean, and identify the risk of blindly applying `audit2allow` output without reviewing the `.te` file.
+
+### Reflection Questions
+
+1. Setting SELinux to Permissive mode is a common "quick fix" for SELinux-related application failures, but security professionals consider it dangerous in production. Describe a specific attack scenario where an attacker could exploit a system running in SELinux Permissive mode that would be blocked in Enforcing mode, and explain why the application failures that prompted the change to Permissive would not appear in the application's own logs.
+
+2. `fail2ban` works by watching log files for failure patterns and dynamically adding firewall rules. Describe two specific attack techniques an adversary could use to either evade fail2ban detection or weaponize it as a denial-of-service tool against legitimate users, and propose a mitigation for each technique.

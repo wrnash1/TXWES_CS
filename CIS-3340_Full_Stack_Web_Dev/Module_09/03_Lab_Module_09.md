@@ -391,3 +391,120 @@ Submit a zip file containing your entire `lab09-dashboard` project folder (exclu
 | useEffect used for data loading with loading state | 15 |
 | Code quality: no console errors, no direct state mutation | 5 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Add a Student Form with Controlled Inputs
+
+Extend the dashboard with a form that adds a new student to the list using controlled inputs and immutable state updates.
+
+1. Create `src/components/AddStudentForm.jsx` with a controlled form that collects `name`, `major`, `gpa`, and `status`:
+
+```jsx
+import { useState } from 'react';
+
+function AddStudentForm({ onAdd }) {
+  const [form, setForm] = useState({ name: '', major: '', gpa: '', status: 'active' });
+
+  function handleChange(e) {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (!form.name || !form.major || !form.gpa) return;
+    onAdd({
+      id: Date.now(),
+      name: form.name,
+      major: form.major,
+      gpa: parseFloat(form.gpa),
+      status: form.status,
+      enrolled: new Date().getFullYear()
+    });
+    setForm({ name: '', major: '', gpa: '', status: 'active' });
+  }
+
+  return (
+    <form onSubmit={handleSubmit} style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '16px' }}>
+      <input name="name" value={form.name} onChange={handleChange} placeholder="Name" required />
+      <input name="major" value={form.major} onChange={handleChange} placeholder="Major" required />
+      <input name="gpa" type="number" min="0" max="4" step="0.01" value={form.gpa} onChange={handleChange} placeholder="GPA" required />
+      <select name="status" value={form.status} onChange={handleChange}>
+        <option value="active">Active</option>
+        <option value="probation">Probation</option>
+        <option value="at-risk">At Risk</option>
+      </select>
+      <button type="submit">Add Student</button>
+    </form>
+  );
+}
+
+export default AddStudentForm;
+```
+
+1. In `App.jsx`, import `AddStudentForm` and add an `addStudent` handler that uses the spread pattern to avoid direct mutation:
+
+```jsx
+function addStudent(newStudent) {
+  setAllStudents(prev => [...prev, newStudent]);
+}
+```
+
+1. Render `<AddStudentForm onAdd={addStudent} />` above the search controls. Verify that adding a student updates the count and the new card appears immediately without a page reload.
+1. Test the edge case: submit the form with the GPA field empty — confirm the form does not add a student (the `if (!form.gpa)` guard fires).
+
+### Challenge 2: Sort Controls and useMemo Optimization
+
+Add sortable columns to the dashboard and use `useMemo` to avoid recomputing the filtered and sorted list on every render.
+
+1. Add a sort state variable in `App.jsx`:
+
+```jsx
+const [sortBy, setSortBy] = useState('name');
+const [sortDir, setSortDir] = useState('asc');
+```
+
+1. Replace the `visible` derived variable with a `useMemo` call:
+
+```jsx
+import { useState, useEffect, useMemo } from 'react';
+
+const visible = useMemo(() => {
+  const filtered = allStudents.filter(s => {
+    const matchesFilter = filter === 'all' || s.status === filter;
+    const matchesSearch =
+      s.name.toLowerCase().includes(search.toLowerCase()) ||
+      s.major.toLowerCase().includes(search.toLowerCase());
+    return matchesFilter && matchesSearch;
+  });
+  return [...filtered].sort((a, b) => {
+    const aVal = typeof a[sortBy] === 'string' ? a[sortBy].toLowerCase() : a[sortBy];
+    const bVal = typeof b[sortBy] === 'string' ? b[sortBy].toLowerCase() : b[sortBy];
+    if (aVal < bVal) return sortDir === 'asc' ? -1 : 1;
+    if (aVal > bVal) return sortDir === 'asc' ? 1 : -1;
+    return 0;
+  });
+}, [allStudents, filter, search, sortBy, sortDir]);
+```
+
+1. Add sort buttons above the list — clicking a button sets `sortBy` to that field and toggles `sortDir` between `'asc'` and `'desc'` if the same field is clicked twice:
+
+```jsx
+function SortButton({ label, field, current, dir, onSort }) {
+  const active = current === field;
+  return (
+    <button onClick={() => onSort(field)} style={{ fontWeight: active ? 'bold' : 'normal' }}>
+      {label} {active ? (dir === 'asc' ? '▲' : '▼') : ''}
+    </button>
+  );
+}
+```
+
+1. Verify that clicking "GPA" sorts lowest-to-highest and clicking it again sorts highest-to-lowest. Confirm the search and filter still work correctly while sorted.
+
+### Reflection Questions
+
+1. `useMemo` recomputes only when its dependency array values change. If you removed `useMemo` and used a plain variable instead, the sort and filter logic would still produce correct results. What specific problem does `useMemo` solve, and in what scenario would it provide a measurable performance benefit?
+2. The `AddStudentForm` uses `Date.now()` as the `id` for new students. Why would this be a problem in a real application backed by a PostgreSQL database, and what would you use instead?

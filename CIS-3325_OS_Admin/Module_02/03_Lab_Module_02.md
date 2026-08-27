@@ -440,3 +440,69 @@ Submit all of the following through the course LMS:
 | Analysis Question 4 (grep patterns) | 5 |
 | Analysis Question 5 (redirection) | 10 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+**Challenge Step 1 — Build and traverse a deep directory tree with relative paths**
+
+Create a multi-level directory structure and practice navigating it using only relative paths
+and the special directory references . and ..:
+
+```bash
+mkdir -p ~/challenge/level1/level2/level3/level4
+cd ~/challenge/level1/level2/level3/level4
+pwd
+ls ../../../
+cd ../../
+pwd
+ls -la
+```
+
+Now create files at multiple levels and practice using tab completion to navigate:
+
+```bash
+touch ~/challenge/level1/alpha.txt
+touch ~/challenge/level1/level2/beta.conf
+touch ~/challenge/level1/level2/level3/gamma.log
+find ~/challenge -type f -ls
+```
+
+Document the inode numbers shown in the find output. Explain in two sentences what an inode
+is and why two hard-linked files share the same inode number.
+
+**Challenge Step 2 — Advanced grep: multi-pattern search and context output**
+
+Use grep to perform forensic-style log analysis on the system authentication log:
+
+```bash
+sudo grep -E "Failed|Invalid|refused" /var/log/auth.log | wc -l
+sudo grep -E "Failed password" /var/log/auth.log | awk '{print $11}' | sort | uniq -c | sort -rn | head -10
+sudo grep -n "sudo" /var/log/auth.log | tail -20
+sudo grep -B2 -A2 "session opened" /var/log/auth.log | head -30
+```
+
+The second command extracts the source IP address of failed password attempts, counts
+occurrences, and sorts them by frequency. If /var/log/auth.log does not exist, use
+/var/log/syslog as a substitute. Document your output and explain in two sentences how this
+grep pipeline could be incorporated into a daily security monitoring script.
+
+**Challenge Step 3 — Redirection chaining and tee**
+
+Demonstrate mastery of output redirection by capturing both a command's output and errors
+while simultaneously displaying them on screen:
+
+```bash
+find /etc -name "*.conf" 2>/dev/null | tee /tmp/conf_list.txt | wc -l
+cat /tmp/conf_list.txt | head -10
+
+find / -name "shadow" 2>/dev/null | tee /tmp/shadow_search.txt
+cat /tmp/shadow_search.txt
+
+(echo "=== Disk Usage ===" && df -h && echo "=== Memory ===" && free -h) > /tmp/system_report.txt 2>&1
+cat /tmp/system_report.txt
+```
+
+Explain in three sentences the difference between > (overwrite), >> (append), and tee in
+terms of where output goes and when you would choose each one in a production environment.

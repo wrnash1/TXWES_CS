@@ -292,3 +292,19 @@ Complete before attempting the quiz:
 - Complete Lab 06.
 - Post to Discussion Forum 06 by Wednesday at 11:59 PM.
 - Complete Quiz 06 (10 questions).
+
+---
+
+## 9. Supplemental Resources
+
+**1. SAP Learning — Materials Management (MM) and Supply Chain Fundamentals**
+<https://learning.sap.com/learning-journeys/acquire-core-skills-for-sap-s-4hana-sourcing-and-procurement>
+Official SAP learning journey for S/4HANA Sourcing and Procurement. Covers purchase requisitions, purchase orders, goods receipts, invoice verification, and the MRP planning run — the core P2P process mapped in this module.
+
+**2. APICS / ASCM — Supply Chain Management Fundamentals**
+<https://www.ascm.org/learning-development/certifications-credentials/cscp/>
+The Association for Supply Chain Management (ASCM) offers the CSCP certification in supply chain management. Their free introductory resources cover MRP, inventory management, and demand planning concepts that complement the ERP-focused content of this module.
+
+**3. MIT OpenCourseWare — Supply Chain Planning and Inventory Management**
+<https://ocw.mit.edu/courses/15-762j-supply-chain-planning/>
+Free MIT course materials on supply chain planning, including MRP logic, safety stock calculations, and demand forecasting. Provides the theoretical foundation behind SAP's MRP algorithms covered in this module.

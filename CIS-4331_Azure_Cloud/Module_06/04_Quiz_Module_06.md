@@ -204,3 +204,192 @@ Azure Blob Storage supports static website hosting, allowing HTML, CSS, and Java
 - *Why A is incorrect:* Storage redundancy (RA-GRS vs. LRS etc.) has no relationship to website hosting or public accessibility of blobs. Redundancy determines where copies are stored, not whether they are publicly accessible.
 - *Why C is incorrect:* SAS tokens are used for authenticated access, not for public anonymous access. Embedding SAS tokens in HTML links is also a security anti-pattern — the tokens would be visible in browser source code and could be shared inappropriately.
 - *Why D is incorrect:* Premium performance tier uses SSD-backed storage optimized for high-IOPS workloads. Static website hosting does not require Premium tier and is fully functional on the Standard tier. Using Premium for static website files would be unnecessarily expensive.
+
+---
+
+### Question 11 (5 points)
+
+A video streaming company stores 200 TB of video files that are accessed frequently during the first 30 days after upload, then accessed rarely after that. To minimize storage costs, which Azure Blob Storage feature should they implement?
+
+- A) Move all videos to Archive tier on a fixed schedule using a script
+- B) Configure a Blob Storage Lifecycle Management policy that transitions blobs to Cool tier after 30 days and to Archive tier after 90 days
+- C) Create two separate storage accounts — one Hot and one Archive — and manually copy files between them
+- D) Use ZRS redundancy to reduce per-GB storage costs
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Azure Blob Storage Lifecycle Management policies automate tier transitions based on blob age (days since last modification or creation). A policy can be configured to move blobs from Hot to Cool after 30 days and to Archive after 90 days without any manual intervention. This is the purpose-built solution for cost optimization based on access patterns.
+  - *Why A is incorrect:* Using a script to manually move blobs is operationally complex, error-prone, and requires ongoing maintenance. Lifecycle Management policies are declarative and fully managed by Azure — no custom scripts or scheduling are needed.
+  - *Why C is incorrect:* Manually copying files between storage accounts is operationally expensive, requires custom scripts, and creates a period where data exists in both accounts (wasting money). Lifecycle Management handles this automatically within a single account.
+  - *Why D is incorrect:* ZRS redundancy affects durability (data copies across zones) not the per-GB storage price tier. Changing redundancy does not reduce costs based on access frequency. Access tier (Hot/Cool/Archive) determines per-GB storage price.
+
+---
+
+### Question 12 (5 points)
+
+A developer needs to allow a third-party application to upload files directly to a specific Azure Blob container without exposing the storage account key. The upload permission should be limited to a single container and expire in 24 hours. Which access mechanism satisfies all of these requirements?
+
+- A) Account-level SAS token with write permission on all containers
+- B) Service-level SAS token scoped to the specific container with write permission and a 24-hour expiry
+- C) Grant the third-party application the Storage Blob Data Owner RBAC role
+- D) Enable public write access on the container
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* A service-level SAS token can be scoped to a single container with only write permission and a defined expiry time. This satisfies all three requirements: no storage key exposure, single-container scope, and automatic expiry after 24 hours.
+  - *Why A is incorrect:* An account-level SAS with write on all containers grants broader access than required. The principle of least privilege requires limiting the scope to only the specific container needed.
+  - *Why C is incorrect:* Storage Blob Data Owner is a permanent RBAC role assignment that does not expire automatically. It also grants read, write, and delete permissions across all containers in the account — far more than write access to a single container.
+  - *Why D is incorrect:* Public write access is not a supported configuration in Azure Blob Storage. Azure only supports public anonymous read access for containers (anonymous reads, not writes). Enabling any form of public access also violates least privilege and would expose the container to the internet.
+
+---
+
+### Question 13 (5 points)
+
+A storage administrator is choosing between LRS, ZRS, GRS, and GZRS for a production financial application that requires protection against both a single datacenter failure and a complete regional disaster, with the lowest possible RPO (Recovery Point Objective). Which redundancy option best meets these requirements?
+
+- A) LRS — three copies in one datacenter, zero RPO within the datacenter
+- B) ZRS — copies across three zones, protection against datacenter failures
+- C) GRS — copies across two regions, uses LRS in the primary region
+- D) GZRS — copies across three zones in the primary region and asynchronously replicated to the secondary region
+
+- **Correct Answer:** D
+- **Distractor Analysis:**
+  - *Why D is correct:* GZRS provides both zone-level redundancy (ZRS in the primary region — three availability zones) and geo-redundancy (asynchronous replication to a secondary paired region). It protects against single datacenter failures via zone distribution AND against complete regional disasters via geo-replication. For a financial application needing the highest durability and broadest failure coverage, GZRS is the correct choice.
+  - *Why A is incorrect:* LRS stores all three copies within a single datacenter in one region. A single datacenter fire, flood, or power failure could destroy all copies. It provides no protection against datacenter-level or regional failures.
+  - *Why B is incorrect:* ZRS distributes copies across three zones in one region, protecting against individual datacenter failures. However, a scenario affecting the entire region (large-scale natural disaster, regional Azure outage) would affect all three zones simultaneously. ZRS provides no regional failover protection.
+  - *Why C is incorrect:* GRS replicates to a secondary region but uses LRS within the primary region (single datacenter). A datacenter fire in the primary region would cause data loss equal to the replication lag (typically seconds to minutes) until failover. GRS does not provide the zone-level protection that GZRS does within the primary region.
+
+---
+
+### Question 14 (5 points)
+
+An organization stores files in Azure Blob Storage and uses a Shared Access Signature (SAS) to grant read access to a partner. Security auditors discover the SAS token was embedded in a mobile application's source code and exposed in a public GitHub repository. What is the most immediate action to revoke the compromised token?
+
+- A) Delete and recreate the storage account
+- B) Rotate the storage account access key that was used to sign the SAS token
+- C) Change the storage account name to invalidate the existing SAS URI
+- D) Enable Azure Defender for Storage to block the token
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* A SAS token is cryptographically signed using either a storage account key or a User Delegation Key. If the SAS was signed with account key1, rotating (regenerating) key1 immediately invalidates all SAS tokens signed with that key — even ones that have not yet reached their expiry time. This is the fastest way to revoke a compromised SAS token.
+  - *Why A is incorrect:* Deleting and recreating the storage account is a destructive action that would delete all stored data. This is completely disproportionate to the incident and would cause a major service outage.
+  - *Why C is incorrect:* Storage account names cannot be changed after creation. An Azure Storage account name is permanent and tied to the DNS namespace (`[name].blob.core.windows.net`).
+  - *Why D is incorrect:* Microsoft Defender for Storage provides threat detection and alerting — it monitors for suspicious activity. It does not have the ability to retroactively block or revoke an existing SAS token that was already issued.
+
+---
+
+### Question 15 (5 points)
+
+Which Azure Storage service stores data as key-attribute pairs (NoSQL), is highly scalable for workloads requiring rapid lookups of structured data by a partition key and row key, and does not support SQL joins or stored procedures?
+
+- A) Azure SQL Database
+- B) Azure Table Storage
+- C) Azure Queue Storage
+- D) Azure Blob Storage
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Azure Table Storage is a NoSQL key-value store that organizes data into tables with partition key and row key as the composite primary key. It is optimized for rapid lookups by these keys, stores structured data without a fixed schema, scales to billions of entities, and does not support SQL joins, foreign keys, or stored procedures.
+  - *Why A is incorrect:* Azure SQL Database is a fully relational database service that fully supports SQL joins, stored procedures, and ACID transactions. It is not a key-value store and does not use partition/row key concepts.
+  - *Why C is incorrect:* Azure Queue Storage is a message queuing service for asynchronous communication. It stores messages (not structured data entities) and is designed for temporary message passing, not data lookup by key.
+  - *Why D is incorrect:* Azure Blob Storage is an object store for unstructured data — files, images, video, backups. It does not have a key-attribute entity model or support structured data queries.
+
+---
+
+### Question 16 (5 points)
+
+A company needs to mount a file share on both Windows Server VMs (which use SMB protocol) and Linux VMs (which use NFS protocol). Which Azure storage service supports both protocols?
+
+- A) Azure Blob Storage with hierarchical namespace enabled
+- B) Azure Files
+- C) Azure Table Storage
+- D) Azure Queue Storage
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Azure Files supports both SMB (Server Message Block) for Windows clients and NFS (Network File System) for Linux clients. Windows VMs can map Azure File shares as drive letters using SMB; Linux VMs mount them via NFS. This makes Azure Files the direct cloud replacement for on-premises network file servers that serve mixed OS environments.
+  - *Why A is incorrect:* Azure Blob Storage with hierarchical namespace (Azure Data Lake Storage Gen2) provides a filesystem-like hierarchy for analytics workloads but does not support SMB or NFS mounting for general-purpose file share access. It is accessed via HDFS-compatible API, not as a network drive.
+  - *Why C is incorrect:* Azure Table Storage is a NoSQL key-value store. It has no file system semantics and cannot be mounted via SMB or NFS.
+  - *Why D is incorrect:* Azure Queue Storage is a message queue service. It has no file system semantics and is not mountable as a network drive.
+
+---
+
+### Question 17 (5 points)
+
+A developer creates a new Azure Storage account and uploads a blob to a private container. Later, they want to verify that the blob cannot be accessed without authentication. Which URL format would return an HTTP 404 or 403 error if the container is private?
+
+- A) `https://[account].blob.core.windows.net/[container]/[blob]` with no SAS token or auth header
+- B) `https://[account].blob.core.windows.net/[container]/[blob]?sp=r&sig=[key]` with a valid SAS
+- C) `az storage blob download --account-name [account] --container-name [container] --name [blob]` with authenticated CLI
+- D) A URL with a valid Authorization header from Entra ID RBAC
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - *Why A is correct:* Accessing a blob URL in a private container without any authentication (no SAS token, no Authorization header) returns HTTP 403 (ResourceNotFound or AuthorizationFailure) — the request is rejected. This is the expected behavior for a private container and confirms that anonymous access is blocked.
+  - *Why B is incorrect:* A URL with a valid SAS token (`?sp=r&sig=...`) provides read authorization and would successfully return the blob content — HTTP 200. This does not test anonymous access denial.
+  - *Why C is incorrect:* `az storage blob download` with an authenticated Azure CLI session uses the user's Entra ID credentials for authorization. An authenticated download would succeed — it does not test anonymous access.
+  - *Why D is incorrect:* A valid Authorization header from Entra ID RBAC (with appropriate Storage Blob Data Reader role) would successfully authorize the request and return the blob. This is authenticated access, not anonymous access testing.
+
+---
+
+### Question 18 (5 points)
+
+A company's compliance policy requires that all data written to Azure Storage be encrypted at rest. A security officer asks whether Azure Storage automatically encrypts data. What is the correct response?
+
+- A) Azure Storage encryption at rest is optional and must be enabled per storage account
+- B) Azure Storage automatically encrypts all data at rest using 256-bit AES encryption by default, and this cannot be disabled
+- C) Azure Storage encrypts only Premium tier storage; Standard tier requires manual encryption configuration
+- D) Azure Storage encryption at rest requires the customer to provide their own encryption keys stored on-premises
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Azure Storage Service Encryption (SSE) is enabled by default on all storage accounts — new and existing — and cannot be disabled. All data written to Azure Storage (Blob, Files, Queue, Table) is automatically encrypted at rest using 256-bit AES before being persisted to disk. Decryption is automatic and transparent on reads. No configuration is required.
+  - *Why A is incorrect:* SSE is not optional — it is always on. There is no setting to disable at-rest encryption in Azure Storage.
+  - *Why C is incorrect:* SSE applies to all Azure Storage tiers — both Standard and Premium. The distinction between Standard and Premium is performance (HDD vs. SSD), not encryption capability.
+  - *Why D is incorrect:* By default, Azure manages the encryption keys (Microsoft-managed keys). Customers have the option to provide their own keys using Customer-Managed Keys (CMK) stored in Azure Key Vault, but this is not a requirement. The default (Microsoft-managed) configuration is fully compliant for most regulatory frameworks.
+
+---
+
+### Question 19 (5 points)
+
+An organization uses Azure Files to host a shared departmental drive. Users report that file operations are slow when accessing the share from VMs in a different Azure region. Which Azure Files feature can reduce latency for users in multiple regions without requiring each user to have a direct connection to the primary file share?
+
+- A) Azure Files Sync — synchronize the share to on-premises Windows Server file servers near the users
+- B) Azure Files geo-redundancy — use GZRS to automatically serve reads from the nearest region
+- C) Azure File Share snapshots — take regular snapshots to create read-only copies in each region
+- D) Azure CDN — cache file share content at CDN edge nodes globally
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - *Why A is correct:* Azure File Sync synchronizes an Azure file share to one or more Windows Server instances. Servers in different regions (or on-premises locations) can cache the share content locally. Users access the local cache on the Windows Server with LAN-speed latency, while the Azure cloud share remains the authoritative master copy. This is the purpose-built solution for multi-site file share access latency.
+  - *Why B is incorrect:* GZRS geo-redundancy replicates data to the secondary region for disaster recovery, but the secondary endpoint is read-only and not directly mountable as a file share by users. GZRS is a durability feature, not a performance/latency feature.
+  - *Why C is incorrect:* Azure File Share snapshots are point-in-time backups of a file share. They create read-only snapshots within the same storage account and do not create copies in other regions. Snapshots are a backup and recovery feature, not a latency optimization.
+  - *Why D is incorrect:* Azure CDN is designed for HTTP-accessible content (web assets, blobs with public access). Azure Files uses SMB/NFS protocols, which are not compatible with CDN caching. CDN cannot cache or serve SMB file share content.
+
+---
+
+### Question 20 (5 points)
+
+A developer creates an Azure Storage account using the Azure CLI command below. What is missing that would cause blob operations on the account to fail when using object replication or versioning features?
+
+```bash
+az storage account create \
+  --name "mystoragev2" \
+  --resource-group "lab-rg" \
+  --location "eastus" \
+  --sku "Standard_LRS" \
+  --kind "BlobStorage"
+```
+
+- A) The `--sku` should be `Standard_GRS` to support versioning
+- B) The `--kind` should be `StorageV2` (General Purpose v2) instead of `BlobStorage` to support all blob features
+- C) The `--location` must be `westus` for versioning to be supported
+- D) A `--enable-versioning true` flag must be added at account creation time
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* The `BlobStorage` account kind is a legacy account type (Blob-only storage, also called v1 Blob). Many modern features — including object replication, versioning, lifecycle management, and hierarchical namespace — require a `StorageV2` (General Purpose v2) account. Microsoft recommends creating `StorageV2` accounts for all new workloads.
+  - *Why A is incorrect:* The `--sku` (redundancy) setting does not affect whether versioning or object replication is supported. LRS is a valid SKU for accounts that use these features.
+  - *Why C is incorrect:* Azure Blob versioning and object replication are available in all Azure regions including `eastus`. Region selection does not affect feature support for these capabilities.
+  - *Why D is incorrect:* Blob versioning is not enabled at account creation time with a creation flag — it is configured separately after the account is created (`az storage account blob-service-properties update --enable-versioning true`). The account kind (`StorageV2`) is the prerequisite, not a creation-time flag.

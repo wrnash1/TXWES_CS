@@ -305,7 +305,31 @@ Watch Episodes 8–9 of the [Python for Everybody Course Playlist](https://www.y
 
 ---
 
-## 9. Lab and Command Preview
+## 9. Supplemental Resources
+
+**1. Official Python 3 Docs — The for Statement**
+[https://docs.python.org/3/reference/compound_stmts.html#the-for-statement](https://docs.python.org/3/reference/compound_stmts.html#the-for-statement)
+Authoritative specification for the `for` loop, `break`, `continue`, and the `else` clause. The formal grammar definition clarifies exactly when `else` executes. Essential reading before the PCAP exam.
+
+**2. Official Python 3 Docs — range()**
+[https://docs.python.org/3/library/stdtypes.html#range](https://docs.python.org/3/library/stdtypes.html#range)
+The complete `range()` specification including all three argument forms, negative steps, membership testing, and slicing. The note on memory efficiency (ranges are lazy sequences) is tested on PCAP.
+
+**3. Python for Everybody — Chapter 5: Iteration**
+[https://www.py4e.com/html3/05-iterations](https://www.py4e.com/html3/05-iterations)
+Dr. Severance's free chapter on `while` and `for` loops, accumulator patterns, `break`, and `continue`. Includes self-check exercises and auto-graded practice problems directly relevant to this module.
+
+**4. Real Python — Python for Loops: The Definitive Guide**
+[https://realpython.com/python-for-loop/](https://realpython.com/python-for-loop/)
+Comprehensive free article covering `for` loops, `range()`, `enumerate()`, `zip()`, nested loops, comprehensions (preview), and the `else` clause. The section on `enumerate()` and `zip()` is particularly well-illustrated.
+
+**5. Real Python — How to Use the Python while Loop**
+[https://realpython.com/python-while-loop/](https://realpython.com/python-while-loop/)
+Covers `while` loops, infinite loop patterns, `break`/`continue`/`else`, and common pitfalls like missing increment statements. The section on `while True` with `break` is directly applicable to the guessing game lab.
+
+---
+
+## 10. Lab and Command Preview
 
 | Task | What You Will Do |
 |---|---|

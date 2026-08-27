@@ -306,3 +306,85 @@ Submit the following as a single PDF or Word document in Canvas:
 | Troubleshooting Scenario B             | 10     | Correct explanation of destination mismatch and OSPF failure      |
 
 Partial credit is awarded for demonstrably attempted but incomplete work.
+
+---
+
+## Part 9 — Challenge Exercise
+
+This optional challenge extends the lab to CCNA exam difficulty. Complete all steps and include deliverables in your submission for up to 20 bonus points.
+
+### Challenge Step 1: Add IPsec Encryption to the GRE Tunnel (GRE over IPsec)
+
+Extend the existing GRE tunnel between R1 and R2 by adding IPsec encryption. This creates a GRE over IPsec configuration — the standard enterprise solution for running dynamic routing protocols over an encrypted WAN.
+
+```ios
+R1(config)# crypto isakmp policy 10
+R1(config-isakmp)# encryption aes 128
+R1(config-isakmp)# hash sha
+R1(config-isakmp)# authentication pre-share
+R1(config-isakmp)# group 14
+R1(config-isakmp)# exit
+
+R1(config)# crypto isakmp key LABKEY address 203.0.113.5
+
+R1(config)# crypto ipsec transform-set GRE_PROTECT esp-aes esp-sha-hmac
+R1(cfg-crypto-trans)# mode transport
+
+R1(config)# crypto map VPN_MAP 10 ipsec-isakmp
+R1(config-crypto-map)# set peer 203.0.113.5
+R1(config-crypto-map)# set transform-set GRE_PROTECT
+R1(config-crypto-map)# match address GRE_TRAFFIC
+
+R1(config)# ip access-list extended GRE_TRAFFIC
+R1(config-ext-nacl)# permit gre host 203.0.113.1 host 203.0.113.5
+
+R1(config)# interface GigabitEthernet0/1
+R1(config-if)# crypto map VPN_MAP
+```
+
+Apply the mirror configuration on R2. Verify the IPsec SA has been established:
+
+```ios
+R1# show crypto ipsec sa
+R1# show crypto isakmp sa
+```
+
+Confirm OSPF neighbors remain in FULL state and pings from PC-A to PC-C still succeed. Explain in 2–3 sentences why IPsec `transport` mode (rather than `tunnel` mode) is used when IPsec protects an already-encapsulated GRE packet.
+
+### Challenge Step 2: Configure a Redundant GRE Tunnel with IP SLA Tracking
+
+Add a second GRE tunnel between R1 and R2 using a different WAN path (simulate with a second serial link or loopback). Configure IP SLA to monitor the primary tunnel and automatically adjust a floating static route to failover to the secondary tunnel.
+
+```ios
+R1(config)# ip sla 1
+R1(config-ip-sla)# icmp-echo 172.16.0.2 source-interface Tunnel0
+R1(config-ip-sla-echo)# frequency 10
+R1(config)# ip sla schedule 1 life forever start-time now
+
+R1(config)# track 1 ip sla 1 reachability
+
+R1(config)# ip route 192.168.2.0 255.255.255.0 Tunnel0 track 1
+R1(config)# ip route 192.168.2.0 255.255.255.0 Tunnel1 200
+```
+
+Simulate primary tunnel failure by shutting down the primary path. Observe IP SLA detect the failure (within the frequency interval), remove the tracked route, and install the floating static route pointing to Tunnel1. Verify with `show ip route` before and after the failure. Document the route table changes and the IP SLA state output from `show ip sla statistics`.
+
+### Challenge Step 3: Analyze PPPoE Session Establishment
+
+Configure R1 as a PPPoE client connecting to a simulated ISP (R-ISP configured as a PPPoE access concentrator). Capture and analyze the PPPoE discovery and session establishment phases.
+
+```ios
+R-ISP(config)# bba-group pppoe GLOBAL
+R-ISP(config-bba-group)# virtual-template 1
+
+R-ISP(config)# interface Virtual-Template1
+R-ISP(config-if)# ip unnumbered GigabitEthernet0/0
+R-ISP(config-if)# peer default ip address pool ISP_POOL
+R-ISP(config-if)# ppp authentication chap
+
+R-ISP(config)# ip local pool ISP_POOL 10.10.10.100 10.10.10.110
+R-ISP(config)# interface GigabitEthernet0/0
+R-ISP(config-if)# pppoe enable group GLOBAL
+```
+
+After completing the PPPoE server (R-ISP) configuration, enable `debug pppoe events` on R1 and bring up the Dialer interface. Document the four PPPoE discovery messages (PADI, PADO, PADR, PADS) and the subsequent PPP LCP and IPCP negotiation visible in the debug output. Explain in 3–4 sentences the role of each discovery message and why PPPoE uses a two-phase approach (discovery phase + session phase) instead of a direct PPP connection.

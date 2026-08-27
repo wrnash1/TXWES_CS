@@ -358,3 +358,247 @@ Submit all of the following through the course LMS:
 | Analysis Question 4 (firewalld --reload) | 10 |
 | Analysis Question 5 (source-restricted rules) | 15 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+**Challenge Step 1 — Rate limiting and connection tracking with iptables**
+
+Implement a stateful firewall ruleset that uses connection tracking and rate limiting to
+protect against SSH brute-force attacks, then verify the rules fire correctly:
+
+```bash
+sudo iptables -F INPUT
+sudo iptables -F OUTPUT
+sudo iptables -F FORWARD
+
+sudo iptables -P INPUT DROP
+sudo iptables -P OUTPUT ACCEPT
+sudo iptables -P FORWARD DROP
+
+sudo iptables -A INPUT -i lo -j ACCEPT
+sudo iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+
+sudo iptables -A INPUT -p tcp --dport 22 \
+    -m conntrack --ctstate NEW \
+    -m recent --set --name SSH_TRACK
+
+sudo iptables -A INPUT -p tcp --dport 22 \
+    -m conntrack --ctstate NEW \
+    -m recent --update --seconds 60 --hitcount 5 --name SSH_TRACK \
+    -j LOG --log-prefix "SSH BRUTE FORCE: " --log-level 4
+
+sudo iptables -A INPUT -p tcp --dport 22 \
+    -m conntrack --ctstate NEW \
+    -m recent --update --seconds 60 --hitcount 5 --name SSH_TRACK \
+    -j DROP
+
+sudo iptables -A INPUT -p tcp --dport 22 -m conntrack --ctstate NEW -j ACCEPT
+sudo iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+sudo iptables -A INPUT -p tcp --dport 443 -j ACCEPT
+sudo iptables -A INPUT -p icmp --icmp-type echo-request -j ACCEPT
+
+sudo iptables -L INPUT -n -v --line-numbers
+```
+
+Test the rate limiting by simulating rapid connection attempts:
+
+```bash
+for i in {1..6}; do
+    ssh -o ConnectTimeout=2 -o BatchMode=yes labadmin@127.0.0.1 exit 2>&1 | head -1
+    echo "Attempt $i"
+done
+
+sudo dmesg | grep "SSH BRUTE FORCE" | tail -5
+sudo cat /proc/net/xt_recent/SSH_TRACK
+```
+
+View connection tracking table entries:
+
+```bash
+sudo apt install -y conntrack 2>/dev/null || true
+sudo conntrack -L --proto tcp --dport 22 2>/dev/null | head -10
+sudo iptables -L INPUT -n -v | grep "dpt:22"
+```
+
+Reset the recent tracking table to restore normal access:
+
+```bash
+echo / | sudo tee /proc/net/xt_recent/SSH_TRACK
+```
+
+Document the packet and byte counts from iptables -L -v after the rate limit test, and
+the kernel log entries from dmesg. Explain in three sentences how the -m recent module
+tracks connection attempts, why hitcount 5 within 60 seconds is a reasonable threshold
+for production SSH hardening, and what the tradeoff is between false positives (locking
+out legitimate users) and false negatives (allowing brute force to continue).
+
+**Challenge Step 2 — nftables ruleset as iptables replacement**
+
+On modern Ubuntu systems, nftables is the preferred kernel packet filtering framework.
+Translate the firewall from Step 1 into an equivalent nftables ruleset:
+
+```bash
+sudo apt install -y nftables
+sudo systemctl enable nftables
+
+sudo nft list ruleset
+
+sudo nft flush ruleset
+
+sudo nft add table inet filter
+sudo nft add chain inet filter input  '{ type filter hook input  priority 0 ; policy drop ; }'
+sudo nft add chain inet filter output '{ type filter hook output priority 0 ; policy accept ; }'
+sudo nft add chain inet filter forward '{ type filter hook forward priority 0 ; policy drop ; }'
+
+sudo nft add rule inet filter input iif lo accept
+sudo nft add rule inet filter input ct state established,related accept
+
+sudo nft add rule inet filter input \
+    tcp dport 22 ct state new \
+    meter ssh_meter '{ ip saddr timeout 60s limit rate over 4/minute }' \
+    log prefix \"SSH RATE LIMIT: \" drop
+
+sudo nft add rule inet filter input tcp dport 22 ct state new accept
+sudo nft add rule inet filter input tcp dport { 80, 443 } accept
+sudo nft add rule inet filter input icmp type echo-request accept
+
+sudo nft list ruleset
+```
+
+Save the nftables ruleset to the persistent configuration file:
+
+```bash
+sudo nft list ruleset | sudo tee /etc/nftables.conf
+sudo systemctl restart nftables
+sudo nft list ruleset
+```
+
+Test that the ruleset survives a service restart:
+
+```bash
+sudo systemctl restart nftables
+sudo nft list ruleset | grep -E "hook|policy|dport"
+ping -c 2 127.0.0.1
+ssh -o ConnectTimeout=3 -o BatchMode=yes labadmin@127.0.0.1 exit && echo "SSH: OK"
+```
+
+Restore ufw for the remainder of the lab course:
+
+```bash
+sudo nft flush ruleset
+sudo systemctl disable --now nftables
+sudo ufw --force enable
+sudo ufw status
+```
+
+Document the nft list ruleset output after all rules are added. Explain in two sentences
+how nftables meters differ from iptables -m recent for rate limiting, and why nftables
+consolidates IPv4 and IPv6 rules in a single inet table while iptables requires separate
+iptables and ip6tables commands.
+
+**Challenge Step 3 — Firewall audit and compliance reporting script**
+
+Write a script that audits the current firewall state against a defined security baseline
+and produces a compliance report:
+
+```bash
+mkdir -p ~/lab11
+cat > ~/lab11/fw_audit.sh << 'EOF'
+#!/usr/bin/env bash
+set -euo pipefail
+
+REPORT="/tmp/fw_audit_$(date +%Y%m%d_%H%M%S).txt"
+PASS=0; FAIL=0; WARN=0
+
+log()  { echo "$1"       | tee -a "$REPORT"; }
+pass() { echo "PASS: $1" | tee -a "$REPORT"; (( PASS++ )); }
+fail() { echo "FAIL: $1" | tee -a "$REPORT"; (( FAIL++ )); }
+warn() { echo "WARN: $1" | tee -a "$REPORT"; (( WARN++ )); }
+
+log "=== Firewall Compliance Audit: $(date) ==="
+log "Host: $(hostname -f)"
+log ""
+
+log "--- Firewall Service Status ---"
+if systemctl is-active --quiet ufw 2>/dev/null; then
+    pass "ufw service is active"
+    UFW_STATUS=$(sudo ufw status 2>/dev/null)
+    if echo "$UFW_STATUS" | grep -q "Status: active"; then
+        pass "ufw is enabled"
+    else
+        fail "ufw is installed but not enabled"
+    fi
+elif systemctl is-active --quiet firewalld 2>/dev/null; then
+    pass "firewalld service is active"
+else
+    fail "No active firewall service (ufw or firewalld)"
+fi
+
+log ""
+log "--- Default INPUT Policy ---"
+DEFAULT_INPUT=$(sudo iptables -L INPUT | head -1 | awk '{print $4}' | tr -d ')')
+if [[ "$DEFAULT_INPUT" == "DROP" || "$DEFAULT_INPUT" == "REJECT" ]]; then
+    pass "Default INPUT policy is $DEFAULT_INPUT (restrictive)"
+else
+    fail "Default INPUT policy is $DEFAULT_INPUT (should be DROP)"
+fi
+
+log ""
+log "--- Dangerous Open Ports ---"
+DANGEROUS_PORTS="23 21 69 512 513 514"
+for port in $DANGEROUS_PORTS; do
+    if ss -tlnp | grep -q ":${port} "; then
+        fail "Dangerous port $port is listening"
+    else
+        pass "Port $port is not listening"
+    fi
+done
+
+log ""
+log "--- SSH Exposure ---"
+if sudo iptables -L INPUT -n 2>/dev/null | grep -q "dpt:22.*ACCEPT"; then
+    warn "SSH (port 22) is accepted — verify source restriction is in place"
+elif sudo ufw status 2>/dev/null | grep -q "22.*ALLOW"; then
+    warn "SSH is allowed via ufw — verify source is restricted if public-facing"
+else
+    pass "SSH does not appear to be broadly open in INPUT chain"
+fi
+
+log ""
+log "--- Listening Services Inventory ---"
+log "Services currently listening on 0.0.0.0 (all interfaces):"
+ss -tlnp | awk 'NR>1 && $4 ~ /^0\.0\.0\.0:/ {print "  " $4, $6}' | tee -a "$REPORT"
+
+log ""
+log "=== Summary ==="
+log "PASS: $PASS  FAIL: $FAIL  WARN: $WARN"
+log "Report: $REPORT"
+(( FAIL == 0 ))
+EOF
+chmod +x ~/lab11/fw_audit.sh
+```
+
+Run the audit against the current firewall state:
+
+```bash
+sudo ~/lab11/fw_audit.sh
+echo "Exit code: $?"
+```
+
+Temporarily disable ufw to trigger failures, then re-enable and verify a clean run:
+
+```bash
+sudo ufw disable
+sudo ~/lab11/fw_audit.sh || echo "Audit failed as expected"
+sudo ufw --force enable
+sudo ~/lab11/fw_audit.sh && echo "Audit passed after re-enable"
+```
+
+Document the PASS/FAIL/WARN counts from each run and the listening services inventory
+section. Explain in three sentences: (1) why automated firewall auditing is important in
+environments with configuration management or multiple administrators, (2) what additional
+checks you would add to make this script suitable for a CIS Benchmark compliance audit,
+and (3) how this script could be integrated into a CI/CD pipeline to prevent firewall
+misconfigurations from reaching production servers.

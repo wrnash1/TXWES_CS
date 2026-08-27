@@ -280,3 +280,79 @@ Compile all deliverables into a single PDF. Include all code, outputs, chart ima
 | D | Correlation Analysis | 20 |
 | E | Submission completeness and formatting | 15 |
 | **Total** | | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: ANOVA and Post-Hoc Analysis
+
+Extend the lab to compare sales performance across three training intensity groups.
+
+1. Using the `sales_data` DataFrame, create a new column `training_group` by binning `training_hours` into three groups: Low (< 15 hours), Medium (15–25 hours), High (> 25 hours) using `pd.cut()`. Print the group counts and mean quarterly sales per group.
+2. Conduct a one-way ANOVA using `scipy.stats.f_oneway()` comparing `quarterly_sales` across the three training groups. State H0 and H1, report the F-statistic and p-value, and make a decision at alpha = 0.05.
+3. If the ANOVA is significant, perform pairwise independent t-tests between all three group pairs (Low vs. Medium, Low vs. High, Medium vs. High). Apply a Bonferroni correction by dividing alpha by the number of comparisons (3). Report which pairs are significantly different after correction.
+
+```python
+from scipy.stats import f_oneway
+
+sales_data["training_group"] = pd.cut(
+    sales_data["training_hours"],
+    bins=[0, 15, 25, 100],
+    labels=["Low", "Medium", "High"]
+)
+print(sales_data.groupby("training_group")["quarterly_sales"].agg(["mean","count"]))
+
+low    = sales_data[sales_data["training_group"]=="Low"]["quarterly_sales"]
+medium = sales_data[sales_data["training_group"]=="Medium"]["quarterly_sales"]
+high   = sales_data[sales_data["training_group"]=="High"]["quarterly_sales"]
+
+f_stat, p_anova = f_oneway(low, medium, high)
+print(f"\nANOVA: F={f_stat:.4f}, p={p_anova:.4f}")
+
+alpha_bonferroni = 0.05 / 3
+pairs = [("Low","Medium",low,medium),("Low","High",low,high),("Medium","High",medium,high)]
+for name1, name2, g1, g2 in pairs:
+    t, p = stats.ttest_ind(g1, g2)
+    sig = "SIGNIFICANT" if p <= alpha_bonferroni else "not significant"
+    print(f"{name1} vs {name2}: t={t:.3f}, p={p:.4f} → {sig} (Bonferroni alpha={alpha_bonferroni:.4f})")
+```
+
+### Challenge 2: Correlation Matrix and Heatmap
+
+Explore the full correlation structure of the sales dataset and visualize it.
+
+1. Add two new columns to `sales_data`: `client_meetings` (simulated with `np.random.normal(10, 3, 40).round(0)`) representing average monthly client meetings, and `experience_years` (simulated with `np.random.randint(1, 15, 40)`). Compute the full 4×4 Pearson correlation matrix for `training_hours`, `quarterly_sales`, `client_meetings`, and `experience_years`.
+2. Visualize the correlation matrix as a heatmap using `matplotlib` (use `plt.imshow()` or import `seaborn` if available). Annotate each cell with the rounded r value. Apply a diverging colormap (e.g., `RdBu_r`) centered at zero. Save as `correlation_heatmap.png`.
+3. Identify the strongest and weakest correlations in the matrix. For the strongest correlation, write two sentences explaining whether it is likely causal, what confounding variables might explain it, and what business decision it might support.
+
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+
+np.random.seed(7)
+sales_data["client_meetings"]  = np.random.normal(10, 3, 40).round(0)
+sales_data["experience_years"] = np.random.randint(1, 15, 40)
+
+cols = ["training_hours","quarterly_sales","client_meetings","experience_years"]
+corr_matrix = sales_data[cols].corr().round(2)
+print(corr_matrix)
+
+fig, ax = plt.subplots(figsize=(7, 6))
+im = ax.imshow(corr_matrix, cmap="RdBu_r", vmin=-1, vmax=1)
+plt.colorbar(im, ax=ax)
+ax.set_xticks(range(len(cols))); ax.set_xticklabels(cols, rotation=30, ha="right")
+ax.set_yticks(range(len(cols))); ax.set_yticklabels(cols)
+for i in range(len(cols)):
+    for j in range(len(cols)):
+        ax.text(j, i, str(corr_matrix.iloc[i,j]), ha="center", va="center", fontsize=11)
+ax.set_title("Pearson Correlation Matrix")
+plt.tight_layout()
+plt.savefig("correlation_heatmap.png", dpi=100)
+plt.show()
+```
+
+### Reflection Questions
+
+1. In Challenge 1, the Bonferroni correction adjusts the significance threshold for multiple comparisons. Why is this correction necessary? What statistical error are you controlling for, and what is the cost (tradeoff) of applying it?
+2. In Challenge 2, if `training_hours` and `quarterly_sales` show a strong positive correlation, but a confounding variable (experience years) is also correlated with both, what analytical technique would you apply next to isolate the independent contribution of training hours to sales performance?

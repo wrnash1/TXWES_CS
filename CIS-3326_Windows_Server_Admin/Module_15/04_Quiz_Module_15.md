@@ -335,3 +335,221 @@ Distractor Analysis:
 ---
 
 *Submit answers to Canvas by the due date shown in the course schedule.*
+
+---
+
+### Question 11 (5 points)
+
+An administrator needs to monitor `\Processor(_Total)\% Processor Time` once
+every 5 seconds for 60 seconds and export the results to a CSV file. Which
+PowerShell command accomplishes this?
+
+- A) `Get-Counter "\Processor(_Total)\% Processor Time" -SampleInterval 5 -MaxSamples 12 | Export-Csv "C:\cpu.csv" -NoTypeInformation`
+- B) `Get-Counter "\Processor(_Total)\% Processor Time" -SampleInterval 5 -MaxSamples 12 | Select-Object -ExpandProperty CounterSamples | Export-Csv "C:\cpu.csv" -NoTypeInformation`
+- C) `Get-Counter "\Processor(_Total)\% Processor Time" -Duration 60 | Export-Counter -Path "C:\cpu.csv"`
+- D) `Measure-Command { Get-Counter "\Processor(_Total)\% Processor Time" -SampleInterval 5 } | Export-Csv "C:\cpu.csv"`
+
+- **Correct Answer: B**
+- **Distractor Analysis:**
+  - **A** — Exporting the raw `PerformanceCounterSampleSet` objects (what `Get-Counter` returns) to CSV produces metadata objects, not the individual counter path and value rows. The `CounterSamples` property must be expanded first for useful CSV output.
+  - **B** — Correct. `-SampleInterval 5 -MaxSamples 12` collects 12 samples at 5-second intervals (60 seconds total). Expanding `CounterSamples` gives flat objects with `Path`, `CookedValue`, and `Timestamp` properties suitable for CSV export.
+  - **C** — `Export-Counter` exports to BLG or CSV format using the Performance Logging service, but `-Duration 60` is not a valid `Get-Counter` parameter. The correct parameter is `-MaxSamples`.
+  - **D** — `Measure-Command` measures how long a script block takes to run. It does not capture performance counter values.
+
+---
+
+### Question 12 (5 points)
+
+An administrator is reviewing a performance baseline and notices that
+`% Privileged Time` is consistently 35% while `% Processor Time` is 40% on a
+server running a database application. What does this ratio indicate?
+
+- A) The database application is using 35% CPU for user-mode processing
+- B) The system is spending a disproportionate amount of CPU time in kernel mode, suggesting driver or I/O overhead rather than application processing
+- C) 35% of CPU capacity is reserved for the operating system and unavailable to applications
+- D) The server has 35% of its cores disabled to save power
+
+- **Correct Answer: B**
+- **Distractor Analysis:**
+  - **A** — `% Privileged Time` measures CPU in kernel mode (driver calls, system calls, I/O processing), not user-mode application processing. User-mode CPU time is measured by `% User Time`.
+  - **B** — Correct. When `% Privileged Time` is close to `% Processor Time`, it means most CPU work is happening in kernel mode — typically due to high disk I/O, network processing, or driver activity. A well-optimized application should have the majority of CPU time in user mode. The 35/40 ratio indicates a kernel-heavy workload, pointing to I/O or driver overhead.
+  - **C** — Windows does not statically reserve a percentage of CPU for OS use. Kernel mode CPU is driven by actual system calls and I/O operations.
+  - **D** — CPU core disablement is managed in BIOS/power settings and does not appear in `% Privileged Time` metrics.
+
+---
+
+### Question 13 (5 points)
+
+A DSC configuration uses the `File` resource to ensure a configuration file
+exists at `C:\App\config.ini`. The LCM `ConfigurationMode` is set to
+`ApplyAndAutoCorrect`. An application deletes `config.ini` during an error
+condition. What does the LCM do?
+
+- A) Nothing — the LCM only monitors during the initial application
+- B) Logs the drift in the event log but takes no action until the next manual push
+- C) At the next consistency check interval, detects the missing file and restores it
+- D) Terminates the application that deleted the file
+
+- **Correct Answer: C**
+- **Distractor Analysis:**
+  - **A** — `ApplyOnly` would take no action after initial application. `ApplyAndAutoCorrect` continuously monitors and corrects drift.
+  - **B** — `ApplyAndMonitor` logs drift without correcting it. `ApplyAndAutoCorrect` goes further and automatically re-applies the configuration to correct the drift.
+  - **C** — Correct. `ApplyAndAutoCorrect` causes the LCM to run consistency checks at the `RefreshFrequencyMins` interval (default 30 minutes). When it detects that `config.ini` is missing, it uses the `File` resource to restore the file to its desired state.
+  - **D** — DSC does not monitor or terminate processes. It manages resource states (file presence, service status, registry values) but has no visibility into which process caused a state change.
+
+---
+
+### Question 14 (5 points)
+
+An administrator splatted parameters to `New-ADUser` as follows:
+
+```powershell
+$params = @{
+    Name              = "Alice Johnson"
+    SamAccountName    = "ajohnson"
+    UserPrincipalName = "ajohnson@txwes.edu"
+    Enabled           = $true
+}
+New-ADUser @params
+```
+
+What does the `@params` syntax do when calling `New-ADUser`?
+
+- A) Passes `$params` as a single hashtable argument to a `-Parameters` parameter
+- B) Expands the hashtable keys as parameter names and values as parameter values, equivalent to typing each `-Key Value` pair explicitly
+- C) Converts the hashtable to a JSON string and passes it as a single string argument
+- D) Passes `$params` by reference so `New-ADUser` can modify the hashtable
+
+- **Correct Answer: B**
+- **Distractor Analysis:**
+  - **A** — There is no `-Parameters` parameter on `New-ADUser`. Splatting is not passing a hashtable argument; it is expanding the hashtable into individual named parameters.
+  - **B** — Correct. Splatting with `@params` expands the hashtable so PowerShell treats it as if the administrator had typed `-Name "Alice Johnson" -SamAccountName "ajohnson" -UserPrincipalName "ajohnson@txwes.edu" -Enabled $true`. This improves readability for cmdlets with many parameters.
+  - **C** — Splatting does not serialize to JSON. The values are passed as their original .NET types.
+  - **D** — PowerShell does not have pass-by-reference semantics for hashtables in the way C does. Splatting is purely a parameter expansion mechanism.
+
+---
+
+### Question 15 (5 points)
+
+An administrator writes a DSC configuration that must install IIS, then create
+a website directory, then start the W3SVC service. Which DSC property chain
+enforces this order?
+
+- A) The `DependsOn` property on the directory resource references the IIS feature; the `DependsOn` property on the service resource references the directory resource
+- B) The resources are listed in order in the configuration block and DSC executes them sequentially
+- C) The `RunOrder` property is set to 1, 2, 3 on each resource respectively
+- D) The `Requires` property on each resource specifies the previous resource name
+
+- **Correct Answer: A**
+- **Distractor Analysis:**
+  - **A** — Correct. `DependsOn` chains resources. The directory resource includes `DependsOn = "[WindowsFeature]IIS"` ensuring IIS installs first. The service resource includes `DependsOn = "[File]WebDir"` ensuring the directory exists before the service starts. DSC resolves the dependency graph before applying resources.
+  - **B** — DSC is declarative, not sequential. The order of resource blocks in a configuration does not guarantee execution order. `DependsOn` is required to enforce dependencies.
+  - **C** — `RunOrder` is not a DSC resource property. DSC uses `DependsOn` for dependency management.
+  - **D** — `Requires` is not a valid DSC resource property. The correct property is `DependsOn`.
+
+---
+
+### Question 16 (5 points)
+
+An administrator uses `Get-Counter` to collect memory performance data and wants
+to check if available memory is below 200 MB in the sample results. Which
+PowerShell expression evaluates the collected sample correctly?
+
+- A) `(Get-Counter "\Memory\Available MBytes").CookedValue -lt 200`
+- B) `(Get-Counter "\Memory\Available MBytes").CounterSamples[0].CookedValue -lt 200`
+- C) `(Get-Counter "\Memory\Available MBytes").Value -lt 200`
+- D) `Get-Counter "\Memory\Available MBytes" | Where-Object {$_ -lt 200}`
+
+- **Correct Answer: B**
+- **Distractor Analysis:**
+  - **A** — `Get-Counter` returns a `PerformanceCounterSampleSet` object. The `CookedValue` property does not exist directly on the sample set; it exists on each individual `CounterSample` within the `CounterSamples` collection.
+  - **B** — Correct. `CounterSamples[0].CookedValue` accesses the first (and in this single-counter case, only) counter sample and its numeric value. This can then be compared to the threshold of 200.
+  - **C** — `Value` is not a property of the `PerformanceCounterSampleSet` object. The numeric metric is accessed via `CounterSamples[0].CookedValue`.
+  - **D** — `Get-Counter` returns a sample set object, not a numeric value. Piping to `Where-Object {$_ -lt 200}` compares a complex object to 200, which produces a false result since objects are never less than integers.
+
+---
+
+### Question 17 (5 points)
+
+An administrator wants to create a Custom View in Event Viewer that shows only
+Critical and Error events from the System and Application logs in the last 24
+hours. How does a Custom View differ from using Filter Current Log?
+
+- A) Custom Views apply permanently to all event logs; Filter Current Log applies only to the current view
+- B) Custom Views are saved in the Event Viewer navigation tree and persist between sessions; Filter Current Log is temporary and lost when Event Viewer closes
+- C) Custom Views can filter on Event IDs but Filter Current Log can only filter on severity
+- D) Filter Current Log is faster because it queries the log locally; Custom Views query the domain controller
+
+- **Correct Answer: B**
+- **Distractor Analysis:**
+  - **A** — Both Custom Views and Filter Current Log can span multiple logs. The distinction is persistence, not scope.
+  - **B** — Correct. The key difference is persistence. A Custom View is saved in Event Viewer's navigation tree under Custom Views and remains available across Event Viewer sessions. Filter Current Log applies a temporary filter that disappears when the view is changed or Event Viewer is closed.
+  - **C** — Both Filter Current Log and Custom Views support filtering by Event ID, source, level, and time range. There is no functional difference in filtering capabilities.
+  - **D** — Both tools query the local event log. Neither queries a domain controller for event data.
+
+---
+
+### Question 18 (5 points)
+
+A DSC configuration is compiled with `Node "localhost"`. The resulting MOF file
+is pushed to the local server using `Start-DscConfiguration`. The LCM is set to
+`RefreshMode = "Push"`. When does the LCM next apply the configuration?
+
+- A) Only when an administrator manually runs `Start-DscConfiguration` again
+- B) Every 15 minutes automatically, as that is the Push mode default interval
+- C) At the `RefreshFrequencyMins` interval for consistency checks, but Push mode only delivers new configurations on manual push
+- D) Never — Push mode applies configurations only once
+
+- **Correct Answer: C**
+- **Distractor Analysis:**
+  - **A** — In Push mode, new configurations are delivered manually. However, the LCM in `ApplyAndMonitor` or `ApplyAndAutoCorrect` mode still runs consistency checks at the `RefreshFrequencyMins` interval (default 30 minutes) to detect and optionally correct drift.
+  - **B** — Push mode does not automatically pull or reapply configurations on an interval. The 15-minute interval is not accurate; the LCM default consistency check is 30 minutes.
+  - **C** — Correct. Push mode means configurations are delivered by an administrator running `Start-DscConfiguration`. The LCM's consistency check (`RefreshFrequencyMins`) still runs on schedule to check for and correct drift if `ApplyAndAutoCorrect` is set. New configurations, however, are only applied when pushed manually.
+  - **D** — DSC LCM in `ApplyAndAutoCorrect` mode continues to run consistency checks and apply corrections indefinitely. It is not a one-time application.
+
+---
+
+### Question 19 (5 points)
+
+An administrator wants to identify which process on a server is causing high disk
+I/O, specifically which files are being written to most frequently. Which Windows
+monitoring tool provides per-process disk write activity at the file level?
+
+- A) Task Manager — Processes tab
+- B) Performance Monitor — `\PhysicalDisk(_Total)\Disk Writes/sec`
+- C) Resource Monitor — Disk tab, showing per-process disk write activity
+- D) Event Viewer — System log filtered for disk write events
+
+- **Correct Answer: C**
+- **Distractor Analysis:**
+  - **A** — Task Manager's Processes tab shows aggregate disk I/O per process (read + write combined in bytes per second) but does not show file-level detail or separate read/write activity.
+  - **B** — Performance Monitor's `\PhysicalDisk\Disk Writes/sec` shows total disk write rate but does not identify which process or files are responsible.
+  - **C** — Correct. Resource Monitor's Disk tab shows per-process disk activity including which specific files are being read and written, the read/write rate in bytes per second, and the total I/O for each process. This is the correct tool for diagnosing per-process disk I/O at the file level.
+  - **D** — Event Viewer's System log does not record individual file write operations. Disk-related events in the System log are typically errors or warnings from storage drivers, not performance-level write activity tracking.
+
+---
+
+### Question 20 (5 points)
+
+An administrator runs the following command to verify that a DSC-managed server
+is in compliance:
+
+```powershell
+Get-DscConfigurationStatus
+```
+
+The output shows `Status: Failure` and `ResourcesNotInDesiredState` with one
+entry. What is the correct next step to force a re-application of the
+configuration?
+
+- A) `Push-DscConfiguration -Wait`
+- B) `Start-DscConfiguration -UseExisting -Wait -Verbose`
+- C) `Restore-DscConfiguration -ComputerName localhost`
+- D) `Set-DscLocalConfigurationManager -ConfigurationMode ApplyAndAutoCorrect`
+
+- **Correct Answer: B**
+- **Distractor Analysis:**
+  - **A** — `Push-DscConfiguration` is not a valid DSC cmdlet. Configurations are pushed using `Start-DscConfiguration` with the MOF path or `-UseExisting`.
+  - **B** — Correct. `Start-DscConfiguration -UseExisting -Wait -Verbose` re-applies the currently stored MOF configuration on the node without requiring the MOF file to be re-pushed. `-UseExisting` uses the MOF already in `C:\Windows\System32\Configuration`. `-Wait` blocks until complete; `-Verbose` shows resource-level detail.
+  - **C** — `Restore-DscConfiguration` is not a valid built-in DSC cmdlet. There is no standard restore command; re-application is done with `Start-DscConfiguration`.
+  - **D** — `Set-DscLocalConfigurationManager` changes the LCM settings (mode, refresh interval, etc.) but does not immediately re-apply the current configuration. It would take effect on the next consistency check cycle.

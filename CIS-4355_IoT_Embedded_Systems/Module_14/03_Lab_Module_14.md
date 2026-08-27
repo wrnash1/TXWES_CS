@@ -297,3 +297,100 @@ Submit the following to the Canvas LMS assignment portal:
 5. Written analysis (150–200 words): Explain why the representative dataset is required for full integer quantization but not for dynamic range quantization. In your answer, define what "scale" and "zero_point" represent in the quantization formula, and explain how the representative dataset is used to compute them.
 
 ---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Vibration Anomaly Detector — Autoencoder Training and Threshold Calibration
+
+Train a compact autoencoder for anomaly detection on synthetic accelerometer data, apply full integer quantization, calibrate the detection threshold from the validation error distribution, and evaluate its sensitivity at several threshold values.
+
+1. Generate synthetic training data representing normal machine vibration (combination of three sine waves with Gaussian noise), and test data containing both normal and anomalous samples (anomalies are generated with a higher-amplitude spike overlaid on the sine base):
+
+```python
+import numpy as np
+import tensorflow as tf
+
+np.random.seed(0)
+WINDOW = 64   # 64-sample vibration window
+
+def make_normal(n):
+    t = np.linspace(0, 1, WINDOW)
+    return (np.sin(2*np.pi*10*t) + 0.5*np.sin(2*np.pi*25*t)
+            + 0.2*np.sin(2*np.pi*50*t)
+            + np.random.normal(0, 0.05, (n, WINDOW))).astype(np.float32)
+
+def make_anomaly(n):
+    base = make_normal(n)
+    spike_pos = np.random.randint(10, 54, n)
+    for i, p in enumerate(spike_pos):
+        base[i, p:p+4] += np.random.uniform(2.0, 4.0)
+    return base
+
+X_train = make_normal(4000)
+X_val   = make_normal(500)
+X_test_normal  = make_normal(200)
+X_test_anomaly = make_anomaly(200)
+```
+
+1. Build and train a dense autoencoder (encoder: 64→32→8 neurons; decoder: 8→32→64 neurons, all ReLU except final sigmoid), compile with MSE loss, and train for 30 epochs. After training, compute reconstruction error on the validation set and set the anomaly threshold at the 99th percentile of validation MSE values. Then evaluate the threshold on the test set and compute precision, recall, and F1 score:
+
+```python
+from sklearn.metrics import precision_recall_fscore_support
+
+def reconstruction_mse(model, X):
+    preds = model.predict(X, verbose=0)
+    return np.mean((X - preds)**2, axis=1)
+
+val_errors   = reconstruction_mse(autoencoder, X_val)
+threshold_99 = np.percentile(val_errors, 99)
+print(f"Threshold (99th pct): {threshold_99:.6f}")
+
+test_errors_n = reconstruction_mse(autoencoder, X_test_normal)
+test_errors_a = reconstruction_mse(autoencoder, X_test_anomaly)
+all_errors = np.concatenate([test_errors_n, test_errors_a])
+true_labels = np.array([0]*200 + [1]*200)
+pred_labels = (all_errors > threshold_99).astype(int)
+
+p, r, f1, _ = precision_recall_fscore_support(true_labels, pred_labels, average='binary')
+print(f"Precision: {p:.3f}  Recall: {r:.3f}  F1: {f1:.3f}")
+```
+
+1. Repeat the threshold evaluation at the 95th and 99.9th percentiles. Record precision, recall, and F1 at all three thresholds in a table. Identify which percentile produces the best F1 score for this dataset and explain in 2–3 sentences why the optimal threshold is not necessarily the highest or lowest value.
+
+---
+
+### Challenge 2: Quantization Accuracy Sweep Across Representative Dataset Sizes
+
+Investigate how representative dataset size affects post-training int8 quantization accuracy by repeating the quantization from Part 2 with representative datasets of 10, 50, 200, and 500 samples, and plotting MAE vs. dataset size.
+
+1. Modify the `representative_dataset()` generator from Step 2.4 to accept a parameter `n_samples` and yield `n_samples` samples from `X_train`. Run the full integer quantization pipeline four times (n=10, 50, 200, 500), evaluating MAE on `X_val` after each run. Record the model file size (should be identical — quantization parameters are per-layer constants, not data) and MAE for each run.
+
+1. Plot MAE vs. representative dataset size using `matplotlib`:
+
+```python
+import matplotlib.pyplot as plt
+
+sizes = [10, 50, 200, 500]
+maes  = [...]   # fill in your measured values
+
+plt.figure(figsize=(8, 4))
+plt.plot(sizes, maes, 'o-', linewidth=2)
+plt.axhline(val_mae, color='red', linestyle='--', label=f'Float32 MAE ({val_mae:.4f})')
+plt.xlabel("Representative Dataset Size (samples)")
+plt.ylabel("Validation MAE (°C)")
+plt.title("Quantization MAE vs. Representative Dataset Size")
+plt.legend()
+plt.tight_layout()
+plt.savefig("quantization_sweep.png", dpi=150)
+plt.show()
+```
+
+1. Submit the plot as a lab deliverable. In 3–4 sentences, explain the observed trend: does MAE improve monotonically with dataset size, and at what size does the improvement plateau? Based on this experiment, provide a recommendation for the minimum representative dataset size to use in production quantization pipelines.
+
+---
+
+### Reflection Questions
+
+1. In Challenge 1, you set the anomaly threshold at the 99th percentile of validation reconstruction errors. Explain why the validation set used for threshold calibration must come from held-out normal data that was not used during autoencoder training — specifically, what would happen to the threshold if you computed it on the training set instead of the validation set, and how would that affect detection sensitivity on real anomalies?
+
+2. In Challenge 2, the model file size is identical regardless of representative dataset size, but the inference accuracy differs. Explain how two models with identical file sizes can produce different inference accuracy, focusing on the quantization scale and zero_point values stored per layer and how miscalibrated scale factors (from a too-small representative dataset) affect the mapping between float32 values and int8 values during inference.

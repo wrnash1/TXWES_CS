@@ -372,3 +372,19 @@ Work through each item in the week before your exam.
 * Professor Messer CCNA 200-301 course (free): professormesser.com
 * Cisco DevNet sandbox for API labs: developer.cisco.com/site/sandbox
 * Cisco Packet Tracer (free): skillsforall.com
+
+---
+
+## Section 10: Supplemental Resources
+
+The following open educational resources support final CCNA 200-301 exam preparation. All resources are freely available.
+
+1. **Cisco CCNA 200-301 Official Exam Topics** (cisco.com/c/en/us/training-events/training-certifications): The official Cisco exam topics document listing all tested concepts by domain with percentage weights. Use this as the authoritative checklist to identify remaining gaps before exam day.
+
+2. **Jeremy's IT Lab — Complete Free CCNA Course** (youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ): 67-video free course covering every CCNA 200-301 exam topic with Packet Tracer labs and concise exam flashcards. The playlist is organized by topic domain and is the most widely recommended free CCNA study resource available.
+
+3. **Cisco Networking Academy — CCNA: Introduction to Networks, Switching, Routing and Wireless Essentials, and Enterprise Networking** (skillsforall.com): Three free course tracks that together cover all CCNA domains with interactive content, Packet Tracer activities, practice quizzes, and skills assessments. These align directly to the official CCNA curriculum.
+
+4. **Neil Anderson's CCNA 200-301 Complete Course** (udemy.com): Udemy's highest-rated CCNA course (also sold as "The Complete Networking Fundamentals Course") by Network Engineer Neil Anderson — comprehensive lab-based instruction with real device configuration examples covering all exam domains.
+
+5. **Boson NetSim and ExSim** (boson.com): Industry-standard CCNA practice exams (ExSim-Max) and network simulator (NetSim) that replicate actual exam question style and difficulty. Free practice questions are available; paid full exams are widely used by candidates in the final weeks before exam day.

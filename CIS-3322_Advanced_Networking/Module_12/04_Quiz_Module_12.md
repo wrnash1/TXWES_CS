@@ -223,3 +223,203 @@ A network administrator reviews the WAN requirements for a new branch office loc
 - B is correct: 4G LTE is available in rural areas where fiber and cable are not, can be activated with a cellular data plan almost immediately (within hours), and supports standard routing and IPsec for secure site-to-site VPN connectivity to headquarters. All four requirements are met: internet access, HQ connectivity, available technology in rural areas, and 24-hour deployment.
 - C is incorrect: DSL requires existing telephone copper infrastructure and a CO (central office) within approximately 5.5 km. Rural areas frequently lack both the physical infrastructure and the distance requirement for reliable DSL. Additionally, GRE without encryption does not meet the secure connectivity requirement.
 - D is incorrect: Metro Ethernet E-Line is a carrier-provided point-to-point service requiring the carrier to provision the service from the nearest point of presence to the branch location. Like MPLS, this cannot be deployed within 24 hours, and availability in rural areas is limited.
+
+---
+
+## Question 11
+
+An enterprise network engineer configures a GRE tunnel between R1 (WAN IP 203.0.113.1) and R2 (WAN IP 203.0.113.5). After configuration, `show interface Tunnel0` on R1 shows `Tunnel0 is up, line protocol is up`. However, pings from R1's tunnel IP to R2's tunnel IP fail. What is the most likely cause?
+
+- A) GRE does not support ICMP — use TCP to test tunnel connectivity
+- B) The tunnel IP addresses on R1 and R2 are in different subnets
+- C) The tunnel source and destination physical WAN addresses are misconfigured
+- D) OSPF must be running over the tunnel before IP connectivity is available
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A is incorrect: GRE is a Layer 3 encapsulation protocol and supports any Layer 3 protocol including ICMP. Pinging the tunnel IP is the standard method to verify GRE tunnel connectivity.
+- B is correct: The tunnel line protocol being `up` confirms routing to the tunnel destination exists (the physical WAN path works). If pings between tunnel IPs fail, the most likely cause is mismatched tunnel IP subnets — for example, R1 configured with 172.16.0.1/30 and R2 configured with 172.16.0.5/30 (different /30 blocks). The tunnel endpoints must share the same subnet for layer 3 communication across the tunnel to succeed.
+- C is incorrect: If the physical WAN addresses were misconfigured, the tunnel line protocol would be `down` because the router would have no route to the tunnel destination. The scenario states the line protocol is `up`, ruling out this cause.
+- D is incorrect: OSPF and other routing protocols run over an already-functioning GRE tunnel. The tunnel must be functional first. GRE tunnel IP-to-IP reachability is independent of OSPF.
+
+---
+
+## Question 12
+
+In the Cisco SD-WAN architecture, which component manages the data plane and forwards traffic between enterprise sites?
+
+- A) vManage
+- B) vSmart
+- C) vBond
+- D) vEdge
+
+**Correct Answer:** D
+
+**Distractor Analysis:**
+
+- A is incorrect: vManage is the management plane — the NMS (network management system) where administrators configure policies, monitor the fabric, and manage devices. It does not forward data traffic.
+- B is incorrect: vSmart is the control plane. It distributes routing tables, policies, and keys to vEdge devices but does not itself forward user data traffic.
+- C is incorrect: vBond is the orchestration plane responsible for initial device authentication and directing new devices to the controllers. It has no role in data forwarding.
+- D is correct: vEdge (also called WAN Edge) devices form the data plane. They are physical or virtual routers deployed at each branch, data center, and campus site. vEdge devices establish encrypted BFD-monitored tunnels with each other and forward actual enterprise traffic based on policies received from vSmart.
+
+---
+
+## Question 13
+
+Which statement correctly describes MPLS VPN operation from a customer perspective?
+
+- A) The customer must configure MPLS labels manually on their CE router
+- B) The customer sees the MPLS network as a fully meshed IP VPN — any CE can communicate with any other CE without knowing about the provider's label infrastructure
+- C) MPLS VPNs require static routing between all CE routers because MPLS does not support dynamic routing protocols
+- D) The customer must assign a VPN ID to each CE router's interface facing the provider
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A is incorrect: Customers do not configure MPLS labels. Label operations (push, swap, pop) are entirely managed by the provider's PE and P routers. The CE router uses standard IP routing and has no knowledge of MPLS.
+- B is correct: From the customer's perspective, MPLS VPN appears as a fully meshed private IP network. Each CE router can communicate with every other CE router in the VPN as if they were directly connected. The provider's MPLS label switching infrastructure is transparent to the customer. This is the key business value of MPLS — any-to-any connectivity without the customer managing individual tunnels.
+- C is incorrect: MPLS VPN fully supports dynamic routing protocols (OSPF, EIGRP, BGP) between CE and PE routers. In fact, BGP (specifically IBGP with VPNv4) is used internally within the provider network to distribute VPN routes between PE routers.
+- D is incorrect: VPN configuration in MPLS is done entirely on the provider's PE routers using VRF (Virtual Routing and Forwarding) instances. Customers configure their CE routers with normal IP routing — no VPN IDs are required from the customer side.
+
+---
+
+## Question 14
+
+A network engineer needs to configure IPsec between two Cisco routers. Phase 1 (IKE) completes successfully, but Phase 2 (IPsec SA) fails to establish. What is the most likely cause?
+
+- A) The pre-shared key used in Phase 1 does not match
+- B) The transform set (encryption and hashing algorithm) parameters do not match between the peers
+- C) The IPsec access list is missing from one of the routers
+- D) The `crypto map` is not applied to the correct interface
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A is incorrect: Pre-shared key mismatch causes Phase 1 to fail, not Phase 2. If Phase 1 completed successfully, the pre-shared key matched and ISAKMP SA was established.
+- B is correct: Phase 2 (IPsec SA) uses a transform set to negotiate the encryption algorithm (AES, 3DES), hashing (SHA, MD5), and mode (tunnel or transport). If the transform set parameters do not match on both peers, Phase 2 negotiation fails. Both routers must have identical transform set configurations (same algorithms, same mode).
+- C is incorrect: A missing crypto ACL would prevent interesting traffic from triggering the VPN, but the Phase 2 SA itself could still negotiate if one side initiates. However, the most direct cause of Phase 2 failure is a transform set mismatch.
+- D is incorrect: If the crypto map were not applied to the interface, the VPN would never trigger at all — Phase 1 would not even initiate. Since Phase 1 succeeded, the crypto map is correctly applied.
+
+---
+
+## Question 15
+
+A remote worker uses Cisco AnyConnect to connect to the corporate VPN. After connecting successfully, the worker can access corporate resources but cannot browse the internet. What VPN configuration is causing this behavior?
+
+- A) The AnyConnect client version is incompatible with the ASA's SSL certificate
+- B) Full-tunnel VPN is configured — all traffic including internet-bound traffic is routed through the corporate VPN
+- C) Split-tunnel VPN is configured — internet traffic is being blocked by the corporate firewall
+- D) The VPN session has a bandwidth limit that restricts simultaneous corporate and internet access
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A is incorrect: A version incompatibility would cause the connection to fail entirely, not selectively block internet while allowing corporate access. The scenario states the connection was successful.
+- B is correct: Full-tunnel VPN routes all client traffic — both corporate and internet — through the VPN gateway. Internet traffic is sent through the VPN to the corporate network, then out the corporate internet connection. If the corporate firewall blocks or does not route the worker's internet traffic, the worker loses internet access while connected. The solution is to configure split-tunnel, which only routes corporate-destined traffic through the VPN and sends internet traffic directly from the client.
+- C is incorrect: Split-tunnel does the opposite of what is described. With split-tunnel, only traffic destined for corporate networks goes through the VPN — internet traffic goes directly from the client's local network. Split-tunnel would allow internet access, not block it.
+- D is incorrect: VPN sessions do not have per-user bandwidth configurations that would selectively restrict internet while allowing corporate access. Bandwidth policies on VPN gateways are aggregate, not selective by traffic type.
+
+---
+
+## Question 16
+
+What is the purpose of the `keepalive` command on a GRE tunnel interface?
+
+- A) It sends periodic OSPF Hello packets to verify that the remote OSPF neighbor is still active
+- B) It sends periodic probe packets through the GRE tunnel to detect if the tunnel path has failed, allowing faster reconvergence
+- C) It negotiates the GRE tunnel's MTU value with the remote endpoint to prevent fragmentation
+- D) It enables CHAP authentication on the GRE tunnel to verify the remote router's identity
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A is incorrect: OSPF Hello packets are separate from GRE tunnel keepalives. OSPF manages its own neighbor liveliness independently. Tunnel keepalives and OSPF Hellos are parallel but separate mechanisms.
+- B is correct: GRE tunnel keepalives are probe packets sent periodically by the local router into the tunnel. If the remote end does not respond within the keepalive timeout, the local router marks the tunnel interface as down, allowing routing protocols to reconverge to an alternative path. Without keepalives, a GRE tunnel stays `up/up` even if the underlying path has failed — routing protocols would continue using it and traffic would blackhole.
+- C is incorrect: GRE tunnel MTU is controlled separately using `ip mtu` and `ip tcp adjust-mss` on the tunnel interface. Keepalives do not negotiate MTU values.
+- D is incorrect: GRE does not support CHAP authentication. GRE is a simple encapsulation protocol with no built-in authentication mechanism. Authentication for GRE tunnels is provided by the underlying IPsec layer when GRE over IPsec is configured.
+
+---
+
+## Question 17
+
+An organization has four branch offices, each with a 100 Mbps broadband internet connection. They want to use SD-WAN to connect all branches to a central data center. They also want to add a 4G LTE backup link at each branch for resiliency. Which SD-WAN capability handles automatic failover from broadband to LTE when the primary link degrades?
+
+- A) vSmart policy distribution
+- B) Application-aware routing with BFD (Bidirectional Forwarding Detection)
+- C) vBond zero-touch provisioning
+- D) OSPF redistribution from CE routers
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A is incorrect: vSmart distributes the policies that define how application-aware routing works, but the detection of link failure and the actual failover decision are made by the vEdge router using BFD probes on each transport link.
+- B is correct: SD-WAN vEdge routers continuously monitor each WAN path (broadband and LTE) using BFD probes, measuring latency, jitter, and packet loss. Application-aware routing policies define thresholds for each application class. When broadband metrics exceed the configured thresholds or the link fails BFD probes, the vEdge automatically switches the affected application traffic to the LTE link. This is real-time, policy-driven path selection.
+- C is incorrect: vBond zero-touch provisioning handles initial device onboarding — connecting new vEdge devices to the fabric for the first time. It has no role in runtime link failover decisions.
+- D is incorrect: OSPF redistribution is not part of SD-WAN link failover. SD-WAN uses its own OMP (Overlay Management Protocol) for route distribution, not OSPF from CE routers.
+
+---
+
+## Question 18
+
+Which command on a Cisco router verifies whether a GRE tunnel is currently forwarding packets and shows the tunnel source and destination addresses?
+
+- A) `show ip route`
+- B) `show crypto ipsec sa`
+- C) `show interface Tunnel0`
+- D) `show ip ospf neighbor`
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- A is incorrect: `show ip route` shows the routing table, which may include a route pointing to the tunnel interface. However, it does not show tunnel-specific details like source/destination addresses, tunnel state, or packet counters.
+- B is incorrect: `show crypto ipsec sa` shows IPsec security association details — encrypted packets sent/received and SA parameters. It applies to IPsec, not plain GRE. If the tunnel is GRE without IPsec, this command returns no relevant output.
+- C is correct: `show interface Tunnel0` displays the tunnel's operational state (up/up or up/down), the tunnel source and destination IP addresses, the tunnel protocol, and input/output packet counters. This is the primary command for verifying GRE tunnel operation and is always the first command to run when troubleshooting tunnel issues.
+- D is incorrect: `show ip ospf neighbor` shows OSPF adjacency state with neighboring routers. It confirms whether OSPF is functioning over the tunnel but does not show tunnel configuration details or verify GRE operation directly.
+
+---
+
+## Question 19
+
+A network engineer configures IPsec using IKEv2 instead of IKEv1. Which statement correctly describes an advantage of IKEv2 over IKEv1?
+
+- A) IKEv2 requires only one exchange to establish the IKE SA, reducing the number of messages compared to IKEv1
+- B) IKEv2 uses AH instead of ESP, providing stronger encryption than IKEv1
+- C) IKEv2 eliminates the need for a pre-shared key or certificate — identity is verified by IP address alone
+- D) IKEv2 is Cisco-proprietary and only works between two Cisco devices
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- A is correct: IKEv2 reduces the number of messages required to establish an IKE SA from 6 (IKEv1 Main Mode) or 3 (IKEv1 Aggressive Mode) to 4 messages in a single exchange. IKEv2 also supports MOBIKE (mobility), EAP authentication for remote access, and built-in NAT traversal. It is more efficient and more resilient than IKEv1.
+- B is incorrect: IKEv2 is a key exchange protocol — it does not change whether AH or ESP is used for actual data encryption. Both IKEv1 and IKEv2 can negotiate IPsec with ESP or AH in Phase 2. The choice of AH vs ESP is independent of the IKE version.
+- C is incorrect: IKEv2, like IKEv1, requires strong peer authentication using pre-shared keys, digital certificates, or EAP. Authentication by IP address alone (used in older IKEv1 "identity protection" mode) is not a feature of IKEv2.
+- D is incorrect: IKEv2 is standardized by the IETF (RFC 7296) and is vendor-neutral. It operates between Cisco and non-Cisco devices, including Juniper, Palo Alto, pfSense, and Linux strongSwan implementations.
+
+---
+
+## Question 20
+
+A company uses MPLS L3VPN to connect 10 branch offices. The network architect wants to add a new branch. What configuration is required on the customer's CE router to integrate into the existing MPLS VPN?
+
+- A) Configure MPLS labels and an LDP (Label Distribution Protocol) neighbor on the CE router
+- B) Configure normal IP routing (static or dynamic routing protocol) between the CE and the provider's PE router — no MPLS configuration is required on the CE
+- C) Configure a GRE tunnel from the CE router to every other CE router in the VPN
+- D) Configure a VRF on the CE router matching the VRF name used on the PE router
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A is incorrect: CE routers do not participate in MPLS label exchange. LDP and label operations are entirely within the provider network (between PE and P routers). The CE router operates in standard IP mode with no knowledge of MPLS.
+- B is correct: A new CE router in an MPLS L3VPN only needs standard IP connectivity and routing configuration to the provider's PE router. This is typically a routing protocol (OSPF, EIGRP, or BGP peering with the PE) or static routes. The provider handles all MPLS-related configuration on their PE router, including VRF assignment. This is a key advantage of MPLS — minimal customer configuration.
+- C is incorrect: MPLS VPN provides any-to-any connectivity without the customer configuring point-to-point tunnels. Configuring GRE tunnels to each branch would negate the operational simplicity that MPLS provides and is not how MPLS L3VPN works.
+- D is incorrect: VRF configuration is done on the provider's PE router, not the customer's CE router. The CE router has no VRF context — it connects to the PE using a normal routed interface.

@@ -260,3 +260,17 @@ Format your submission as a single PDF or Word document. Include your full name,
 **TCO Calculator results seem unrealistic:** Verify your workload configuration. Eight VMs with 4 cores and 16 GB RAM is a modest workload — results showing $50,000 or more in 5-year on-premises costs are reasonable when data center, licensing, and IT labor are included.
 
 **Unsure about a Shared Responsibility cell:** Re-read Section 2.4 of the Reading Guide (service model comparison table). Focus on which party manages the OS — that is the dividing line between IaaS and PaaS for most layers.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Build a Custom Shared Responsibility Scenario
+Identify a real-world application your organization, school, or employer currently uses (examples: a learning management system, a payroll service, a cloud file storage product). Determine which service model it represents (IaaS, PaaS, or SaaS). Then document at least five specific responsibilities and categorize each as Customer, Provider, or Shared. For each responsibility, write one sentence explaining how a misconfiguration or neglect of that responsibility could create a security or compliance risk.
+
+### Challenge 2: Composite SLA Calculation for a Three-Tier Architecture
+Design a simple three-tier web application on Azure using only services covered in this module's reading guide. For each tier, assign the appropriate Azure service and look up its published SLA on learn.microsoft.com/en-us/azure/reliability/. Calculate the composite SLA assuming all three tiers must be available for the application to function (multiply the three SLAs). Then describe one architectural change — using redundancy or alternative services — that would improve the composite SLA, and explain why.
+
+### Reflection Questions
+1. After completing the TCO Calculator exercise, what cost categories surprised you most? Were any on-premises costs higher or lower than you expected before running the calculator?
+2. If a company's compliance team insists that all data must remain on company-owned hardware, but the operations team wants cloud elasticity, which deployment model would you recommend and why? What trade-offs does that model involve?

@@ -402,3 +402,19 @@ Work through this checklist before attempting the Module 9 quiz:
 - CIS Controls v8 — Control 8: Audit Log Management
 
 - SANS Reading Room: Security Metrics — A Practical Guide
+
+---
+
+## 9. Supplemental Resources
+
+**NIST SP 800-55 Rev. 1 — Performance Measurement Guide for Information Security**
+URL: https://csrc.nist.gov/publications/detail/sp/800-55/rev-1/final
+Description: Free NIST publication providing the authoritative framework for developing, selecting, and implementing information security performance measures. Defines the five criteria for effective metrics (measurable, actionable, relevant, comparable, cost-effective), describes the three types of measures (implementation, effectiveness/efficiency, impact), and provides a step-by-step measurement development process. Directly supports the KPI/KRI design and dashboard construction content in Sections 1 and 2 of this module.
+
+**NIST SP 800-92 — Guide to Computer Security Log Management**
+URL: https://csrc.nist.gov/publications/detail/sp/800-92/final
+Description: Free NIST publication covering the full log management lifecycle — log generation, transmission, storage, analysis, and disposal. Provides guidance on log retention requirements, log protection controls (integrity, access control), centralized log infrastructure design, and log review processes. Directly supports the log management and compliance sections of this module, including PCI DSS and HIPAA retention requirement analysis.
+
+**Splunk Security Essentials — SIEM Use Case Library**
+URL: https://www.splunk.com/en_us/software/splunk-security-essentials.html
+Description: Free Splunk resource providing a catalog of pre-built SIEM detection use cases organized by MITRE ATT&CK tactic, covering lateral movement, credential theft, data exfiltration, and insider threat scenarios. Each use case includes detection logic, tuning guidance, and false positive reduction recommendations — directly applicable to the SIEM correlation rule design and alert fatigue content in Sections 3 and 4 of this module.

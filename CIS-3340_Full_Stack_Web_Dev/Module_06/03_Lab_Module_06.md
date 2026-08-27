@@ -35,7 +35,7 @@ Write a complete REST API specification for the following domain:
 
 For each resource, specify the full CRUD endpoint set.
 
-### Template for each endpoint:
+### Template for each endpoint
 
 ```markdown
 ### [HTTP METHOD] /api/resource
@@ -218,3 +218,63 @@ Submit to Canvas:
 | Thunder Client PUT and DELETE screenshots | 5 |
 | Correct use of REST conventions throughout (no verbs in URLs, correct methods) | 5 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Design a Rate-Limiting and Pagination Strategy
+
+Extend your `api-design.md` with a formal pagination and rate-limiting specification section.
+
+1. Add a `## Pagination` section to your design document. Define a consistent query parameter convention for all collection endpoints. Use cursor-based pagination for the Students and Orders resources and document the response envelope format:
+
+```json
+{
+  "data": [ ...items... ],
+  "pagination": {
+    "page": 2,
+    "limit": 25,
+    "total": 312,
+    "totalPages": 13,
+    "nextCursor": "eyJpZCI6MTI1fQ==",
+    "prevCursor": "eyJpZCI6MTAwfQ=="
+  }
+}
+```
+
+1. Add a `## Rate Limiting` section specifying:
+   - Maximum requests per minute per API key: 120
+   - The three response headers your API will include on every response: `X-RateLimit-Limit`, `X-RateLimit-Remaining`, `X-RateLimit-Reset`
+   - The `429 Too Many Requests` response body format including a `retryAfter` field in seconds
+1. Write one example Thunder Client test showing a successful paginated `GET /api/v1/students?page=2&limit=10` request against JSONPlaceholder's `/users` endpoint (which does not paginate, but document what the response envelope would look like if it did).
+
+### Challenge 2: HATEOAS Link Relations
+
+Add a `## HATEOAS` section to your design document demonstrating hypermedia-driven API responses for the Student resource.
+
+1. Define an extended response body for `GET /api/v1/students/42` that includes a `_links` object following the HAL (Hypertext Application Language) convention:
+
+```json
+{
+  "id": 42,
+  "firstName": "Alice",
+  "lastName": "Johnson",
+  "email": "alice@example.com",
+  "_links": {
+    "self": { "href": "/api/v1/students/42" },
+    "enrollments": { "href": "/api/v1/students/42/enrollments" },
+    "update": { "href": "/api/v1/students/42", "method": "PATCH" },
+    "delete": { "href": "/api/v1/students/42", "method": "DELETE" },
+    "collection": { "href": "/api/v1/students" }
+  }
+}
+```
+
+1. Explain in a short paragraph (3–5 sentences) how including `_links` in API responses allows clients to discover available actions without hard-coding URLs — and how this relates to the REST "Uniform Interface" constraint.
+1. Use Thunder Client to fetch `https://jsonplaceholder.typicode.com/users/1` and note which HATEOAS links are missing from its response. List at least three links that a fully HATEOAS-compliant response for that resource would include.
+
+### Reflection Questions
+
+1. Your pagination design uses both `page`/`limit` offset-based parameters and `cursor`-based navigation. In what scenario does offset-based pagination (`?page=2&limit=25`) produce inconsistent results, and how does cursor-based pagination solve that problem?
+2. REST is described as "stateless" — each request is self-contained. How does this constraint interact with the need to authenticate API requests? What mechanism allows authentication without server-side sessions?

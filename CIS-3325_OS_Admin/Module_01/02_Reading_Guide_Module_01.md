@@ -270,3 +270,38 @@ environment is structured after installation.
 
 Review CompTIA Linux+ study materials at professormesser.com for additional coverage of
 installation and hardware topics aligned to the XK0-005 exam objectives.
+
+---
+
+## 9. Supplemental Resources
+
+The following free, openly licensed resources extend the concepts covered in this module. All
+links are Zero Textbook Cost (ZTC) and do not require login or purchase.
+
+**1. The Linux Command Line — William Shotts (Chapter 1 & 2)**
+URL: https://linuxcommand.org/tlcl.php
+Coverage: Shell basics, filesystem navigation, and Linux environment overview. Read after
+completing the lab to reinforce the FHS directory structure and command-line fundamentals.
+
+**2. Linux man pages online — kernel.org**
+URL: https://www.kernel.org/doc/man-pages/
+Coverage: Authoritative reference for every system call, library function, and standard
+command described in this module. Key pages: man 1 uname, man 8 fdisk, man 8 grub-install,
+man 5 fstab. Use this as your primary reference when lab commands produce unexpected output.
+
+**3. The Linux Documentation Project (TLDP) — Linux Installation HOWTO**
+URL: https://tldp.org/HOWTO/Installation-HOWTO/
+Coverage: Detailed walkthrough of Linux installation scenarios including disk partitioning
+decisions, bootloader configuration, and post-install verification steps. Complements the
+lab procedures in this module.
+
+**4. Red Hat Customer Portal — Understanding systemd targets**
+URL: https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_basic_system_settings/working-with-systemd-targets_configuring-basic-system-settings
+Coverage: Explains systemd targets and their SysV runlevel equivalents. Essential background
+for understanding why modern Linux systems no longer use /etc/inittab.
+
+**5. ArchWiki — GRUB**
+URL: https://wiki.archlinux.org/title/GRUB
+Coverage: The most comprehensive freely available GRUB2 reference. Covers BIOS vs UEFI
+installation, grub.cfg generation, kernel parameters, and rescue procedures. Distribution-
+agnostic and kept current by the Arch Linux community.

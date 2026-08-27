@@ -354,4 +354,17 @@ cosign sign myregistry.io/myapp:v1.2.3
 
 ---
 
+## 9. Supplemental Resources
+
+**1. [Docker security best practices — official documentation](https://docs.docker.com/develop/security-best-practices/)**
+Docker's official security guide covering non-root users, read-only filesystems, capability dropping, seccomp profiles, multi-stage builds, and secrets handling. A foundational reference for all container hardening topics in this module.
+
+**2. [Trivy documentation — container and IaC scanning](https://aquasecurity.github.io/trivy/)**
+Comprehensive documentation for Trivy covering all scan targets (image, filesystem, repo, config), severity filtering, SARIF output, CI integration, and SBOM generation. Includes GitHub Actions usage examples.
+
+**3. [Sigstore cosign — keyless signing and SBOM attestation](https://docs.sigstore.dev/cosign/overview/)**
+Official documentation for cosign, including keyless signing with OIDC, SBOM attestation with Syft, policy verification, and integration with container registries. Covers the supply chain security use cases introduced in this module.
+
+---
+
 Reading Guide — Module 04 | CIS-4350 | Texas Wesleyan University | Professor Nash

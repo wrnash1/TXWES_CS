@@ -127,6 +127,186 @@ An analyst wants to test whether customer satisfaction scores (Satisfied / Not S
 
 ---
 
+### Question 11 (5 points)
+
+A retailer tests whether a store redesign increased average daily sales. Before redesign: 25 days measured, mean = $4,200. After redesign: 25 different days measured, mean = $4,650. p = 0.031 at alpha = 0.05. Which statement is the most complete and accurate conclusion?
+
+- A) The redesign proved it caused higher sales
+- B) There is statistically significant evidence that average daily sales after the redesign differ from before; the observed difference of $450 is unlikely to be due to chance alone
+- C) The null hypothesis is now proven false permanently
+- D) The redesign always increases sales in every store
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - **Why B is correct:** This statement correctly applies the p-value decision (reject H0 at alpha = 0.05), describes the direction and magnitude of the difference, and uses appropriately cautious causal language ("unlikely to be due to chance" rather than "caused by").
+  - **Why A is incorrect:** A hypothesis test does not prove causation. Other factors (season, promotions, economic conditions) could explain the change. The test establishes statistical association, not a causal mechanism.
+  - **Why C is incorrect:** Rejecting H0 in one test does not permanently falsify it. A different sample or test might fail to reject. "Proven false permanently" is too absolute.
+  - **Why D is incorrect:** A result from 50 days in one store cannot be generalized to "always" and "every store" without broader evidence.
+
+---
+
+### Question 12 (5 points)
+
+What does a Pearson r value of -0.71 indicate?
+
+- A) A weak negative linear relationship between the two variables
+- B) A strong negative linear relationship — as one variable increases, the other tends to decrease
+- C) A negative value means the data is invalid and should be recollected
+- D) The two variables are not related at all
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - **Why B is correct:** r = -0.71 falls in the "strong" range (absolute value 0.60–0.79). The negative sign means the variables move in opposite directions — when one increases, the other tends to decrease. Both magnitude and sign carry information.
+  - **Why A is incorrect:** r = -0.71 is a strong relationship, not weak. Weak would be below 0.40 in absolute value.
+  - **Why C is incorrect:** A negative correlation is a valid and meaningful statistical finding. Many important relationships are negative (e.g., more practice hours correlates with fewer errors).
+  - **Why D is incorrect:** r = 0 would indicate no linear relationship. r = -0.71 is a strong relationship in the negative direction.
+
+---
+
+### Question 13 (5 points)
+
+A company increases its sample size from n = 30 to n = 3,000 for a hypothesis test. Which effect is most likely?
+
+- A) The Type I error rate increases because the larger sample finds more differences
+- B) The test loses statistical power because larger samples are harder to manage
+- C) Trivially small real differences may become statistically significant because the test's power increases substantially
+- D) The confidence interval becomes wider as more data introduces more variability
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - **Why C is correct:** Larger samples increase statistical power — the ability to detect real differences. With n = 3,000, even a 0.1% difference may become statistically significant. Analysts must evaluate whether statistically significant results are also practically meaningful.
+  - **Why A is incorrect:** The Type I error rate is controlled by alpha, which remains fixed regardless of sample size. A larger sample does not change the probability of a false positive.
+  - **Why B is incorrect:** Statistical power increases with larger samples, not decreases. Larger samples make it easier, not harder, to detect real effects.
+  - **Why D is incorrect:** Confidence intervals become narrower (more precise) with larger samples, not wider. The standard error of the mean decreases as n increases.
+
+---
+
+### Question 14 (5 points)
+
+A company tests whether their new checkout process reduces shopping cart abandonment. The null hypothesis is: "The new process has no effect on abandonment rate." After testing, p = 0.18 at alpha = 0.05. Which conclusion is correct?
+
+- A) The new checkout process definitely does not reduce abandonment
+- B) The new checkout process proves the null hypothesis is correct
+- C) There is insufficient evidence to conclude the new process affects abandonment; we fail to reject H0
+- D) The test result is invalid because p > alpha means the data was collected incorrectly
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - **Why C is correct:** p = 0.18 > 0.05 means we fail to reject H0. This does not prove the null is true — it only means this sample did not provide sufficient evidence to reject it. The process may still have an effect that a larger sample would detect.
+  - **Why A is incorrect:** Failing to reject H0 is not proof that the new process has no effect. A Type II error (missed real effect) is possible, especially with a small sample.
+  - **Why B is incorrect:** Hypothesis testing never proves H0. "Fail to reject" and "prove true" are fundamentally different conclusions.
+  - **Why D is incorrect:** p > alpha is a valid, interpretable result. It means we do not have sufficient evidence to reject H0. It does not indicate any error in data collection.
+
+---
+
+### Question 15 (5 points)
+
+An ANOVA test compares quarterly sales across five regions and returns p = 0.02. What does this result tell the analyst?
+
+- A) All five regions have significantly different mean sales from each other
+- B) At least one region's mean sales differs significantly from the others, but the test does not identify which regions
+- C) The region with the highest mean sales is significantly better than the region with the lowest
+- D) Sales are normally distributed in all five regions
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - **Why B is correct:** ANOVA's null hypothesis is that all group means are equal. Rejecting it (p = 0.02 < 0.05) means at least one mean differs, but the F-test does not identify which pair or pairs differ. Post-hoc tests (e.g., Tukey's HSD, Bonferroni) are needed to make pairwise comparisons.
+  - **Why A is incorrect:** ANOVA only indicates that at least one group differs. It is possible that four regions are similar and only one is significantly different from the others.
+  - **Why C is incorrect:** ANOVA compares all groups simultaneously. It does not directly compare the highest to the lowest mean — that requires a post-hoc test.
+  - **Why D is incorrect:** ANOVA does assume approximately normal distributions within groups, but a p-value of 0.02 tests the equality of means, not whether the data is normally distributed.
+
+---
+
+### Question 16 (5 points)
+
+A study finds a strong positive correlation (r = 0.88) between ice cream sales and drowning deaths in a beach town. A news outlet reports: "Ice cream causes drowning." What is the correct statistical critique?
+
+- A) The correlation coefficient should be r = 1.00 before reporting any causal claim
+- B) Hot weather is a confounding variable that causes both increased ice cream sales and increased beach visits (and thus drowning risk), creating a spurious correlation
+- C) The correlation is valid evidence of causation because the r value is very high
+- D) The study sample size must have been too small to produce valid results
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - **Why B is correct:** This is the classic confounding variable explanation. Hot weather drives both ice cream consumption and beach activity. More beach activity increases drowning exposure. The ice cream-drowning correlation is spurious — both are caused by a third variable (temperature), not by each other.
+  - **Why A is incorrect:** r = 1.00 is not a threshold for causal claims. Even a perfect correlation does not establish causation. Causation requires experimental evidence or a demonstrated mechanism.
+  - **Why C is incorrect:** A high r value indicates a strong linear relationship, not a causal one. Correlation strength is independent of whether a causal mechanism exists.
+  - **Why D is incorrect:** Sample size affects statistical power, not whether causation can be inferred from correlation. Even a correlation based on millions of data points does not prove causation without a controlled design.
+
+---
+
+### Question 17 (5 points)
+
+An analyst computes a 90% confidence interval instead of the standard 95% interval. What is the practical effect of this choice?
+
+- A) The interval becomes wider, providing more certainty about the population parameter
+- B) The interval becomes narrower, providing less certainty that the true mean is contained within it
+- C) The interval becomes wider, reducing precision but increasing confidence
+- D) Confidence level has no effect on interval width
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - **Why B is correct:** A 90% confidence interval is narrower than a 95% interval (for the same data), because you are willing to accept a 10% chance the interval misses the true mean rather than 5%. The tradeoff: more precision (narrower interval) for less confidence (higher miss rate).
+  - **Why A is incorrect:** A lower confidence level produces a narrower interval, not a wider one. Lower confidence = less certainty = narrower interval is the correct relationship.
+  - **Why C is incorrect:** A wider interval would result from increasing the confidence level (e.g., from 95% to 99%), not decreasing it.
+  - **Why D is incorrect:** Confidence level directly determines the critical t-value used to construct the interval. A higher confidence level uses a larger t-value, producing a wider interval.
+
+---
+
+### Question 18 (5 points)
+
+Which of the following correctly describes Cohen's d?
+
+- A) The ratio of the p-value to the significance level alpha
+- B) A standardized measure of the difference between two group means, expressed in standard deviation units
+- C) The probability of making a Type II error
+- D) The correlation between two continuous variables
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - **Why B is correct:** Cohen's d = (mean1 − mean2) / pooled standard deviation. It expresses the practical magnitude of the difference between groups in standard deviation units, independent of sample size. This allows comparison of effect sizes across different studies.
+  - **Why A is incorrect:** The ratio of p to alpha has no standard statistical name or interpretation. Comparing p to alpha determines whether to reject H0, but their ratio is not Cohen's d.
+  - **Why C is incorrect:** The probability of a Type II error is beta. Statistical power is 1 − beta. Cohen's d is unrelated to these error probabilities.
+  - **Why D is incorrect:** The correlation between two continuous variables is Pearson's r. Cohen's d applies to comparing two group means, not to measuring co-movement between variables.
+
+---
+
+### Question 19 (5 points)
+
+An analyst runs three separate t-tests on the same dataset at alpha = 0.05. What statistical problem does this create?
+
+- A) Running multiple t-tests requires a larger sample size for each individual test
+- B) The probability of making at least one Type I error across the three tests exceeds 0.05, inflating the familywise error rate
+- C) The t-test is invalid when run more than once on the same dataset
+- D) Multiple t-tests reduce statistical power by consuming degrees of freedom
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - **Why B is correct:** Each test at alpha = 0.05 has a 5% chance of a false positive. Running three independent tests: probability of at least one false positive ≈ 1 − (0.95)^3 ≈ 0.143 (14%). This is the multiple comparisons problem. ANOVA or Bonferroni correction should be used instead.
+  - **Why A is incorrect:** Sample size requirements are not affected by how many tests are run. Each test has its own power calculation, but running multiple tests does not change the minimum n for each.
+  - **Why C is incorrect:** There is no rule prohibiting multiple t-tests. The issue is statistical validity — the inflated Type I error rate — not a prohibition on the operation itself.
+  - **Why D is incorrect:** Multiple t-tests do not consume degrees of freedom from each other. Degrees of freedom are a function of sample size, not the number of tests performed.
+
+---
+
+### Question 20 (5 points)
+
+A hospital implements a new triage protocol and compares average ER wait times before and after for the same 50 patients who visited twice. Which test is most appropriate?
+
+- A) Independent samples t-test, because there are two time periods
+- B) Paired t-test, because each patient's before measurement is matched to their after measurement
+- C) ANOVA, because two measurements per patient means more than two groups
+- D) Chi-square test, because wait time is recorded in minutes (categorical)
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - **Why B is correct:** The same 50 patients are measured before and after — each person provides a matched pair of observations. The paired t-test is designed precisely for this structure: it calculates the difference for each matched pair and tests whether the mean difference is zero.
+  - **Why A is incorrect:** An independent samples t-test assumes the two groups are composed of different, unrelated individuals. When the same people are measured twice, their measurements are correlated, and a paired test is required to account for that correlation.
+  - **Why C is incorrect:** ANOVA compares three or more independent groups. Two measurements from the same person is not "more than two groups" — it is a within-subjects paired design.
+  - **Why D is incorrect:** Wait time in minutes is a continuous ratio-scale variable, not categorical. The chi-square test is for categorical variables. Treating wait time as categorical by rounding to minutes does not make chi-square appropriate.
+
+---
+
 ## Question 7
 
 A study with n = 10,000 participants finds that a new app feature increases daily session time by an average of 4 seconds (p < 0.001). What concern should an analyst raise about this finding?

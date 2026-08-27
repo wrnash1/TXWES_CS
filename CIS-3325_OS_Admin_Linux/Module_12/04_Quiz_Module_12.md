@@ -166,6 +166,156 @@ Which systemd target is most equivalent to the legacy SysVinit runlevel 3 (multi
 
 ---
 
+**Question 11** (5 points)
+
+Which section of a systemd service unit file contains the `WantedBy=` directive that determines the target at which the service is activated when enabled?
+
+- A) `[Unit]`
+- B) `[Service]`
+- C) `[Install]`
+- D) `[Target]`
+
+**Correct Answer: C**
+
+*Explanation: The `[Install]` section contains directives that control what happens when `systemctl enable` is run. `WantedBy=multi-user.target` causes a symlink to be created in `multi-user.target.wants/`, which pulls the service into that target. `[Unit]` contains metadata and dependencies. `[Service]` contains execution parameters. There is no `[Target]` section in service unit files.*
+
+---
+
+**Question 12** (5 points)
+
+An administrator wants to see the complete dependency tree for `httpd.service` — all units it depends on and all units that depend on it. Which commands provide this?
+
+- A) `systemctl status httpd --full`
+- B) `systemctl list-dependencies httpd` and `systemctl list-dependencies --reverse httpd`
+- C) `systemctl show httpd --dependencies`
+- D) `systemd-analyze httpd`
+
+**Correct Answer: B**
+
+*Explanation: `systemctl list-dependencies httpd` shows the tree of units that httpd depends on. `--reverse` inverts the query to show which units depend on httpd. These two commands together provide both directions of the dependency graph. `systemd-analyze` is used for boot time analysis, not dependency inspection.*
+
+---
+
+**Question 13** (5 points)
+
+A systemd timer unit should trigger its associated service every 15 minutes. Which `OnCalendar=` expression in the timer's `[Timer]` section is correct?
+
+- A) `OnCalendar=*-*-* *:15:00`
+- B) `OnCalendar=*/15`
+- C) `OnCalendar=*-*-* *:0/15:00`
+- D) `OnCalendar=15min`
+
+**Correct Answer: C**
+
+*Explanation: The systemd calendar expression `*-*-* *:0/15:00` means every day, every hour, every 15 minutes starting from minute 0 (i.e., :00, :15, :30, :45). The `/` means "every N" starting from the left value. Option A would run at minute 15 of every hour only. Option B and D are not valid systemd calendar syntax.*
+
+---
+
+**Question 14** (5 points)
+
+What is the correct way to view the environment variables that a running systemd service (`nginx.service`) currently has access to?
+
+- A) `systemctl env nginx`
+- B) `cat /proc/$(systemctl show nginx -p MainPID --value)/environ | tr '\0' '\n'`
+- C) `journalctl -u nginx | grep ENV`
+- D) `systemctl show nginx --environment`
+
+**Correct Answer: B**
+
+*Explanation: A running process's environment is exposed in `/proc/PID/environ` as null-delimited strings. `systemctl show nginx -p MainPID --value` retrieves the PID of the main nginx process, and `tr '\0' '\n'` converts null bytes to newlines for readable output. There is no `systemctl env` or `--environment` flag. journalctl does not record environment variables in log entries by default.*
+
+---
+
+**Question 15** (5 points)
+
+An administrator configures a service with `Restart=on-failure` in the `[Service]` section. The service crashes 10 times in rapid succession. After some time, it stops restarting. What systemd setting controls this behavior?
+
+- A) `RestartSec=` limits the total number of restarts
+- B) `StartLimitIntervalSec=` and `StartLimitBurst=` together limit restart attempts within a time window
+- C) `MaxRestartCount=` in the `[Unit]` section sets a hard limit
+- D) `Restart=on-failure` only allows 3 restart attempts by default
+
+**Correct Answer: B**
+
+*Explanation: `StartLimitIntervalSec=` (default: 10 seconds) and `StartLimitBurst=` (default: 5 attempts) in the `[Unit]` section work together to implement rate limiting. If the service starts and fails more than `StartLimitBurst` times within `StartLimitIntervalSec`, systemd stops attempting restarts and puts the unit into a failed state. `RestartSec=` only adds a delay between restarts. There is no `MaxRestartCount=` directive.*
+
+---
+
+**Question 16** (5 points)
+
+Which `journalctl` filter shows all messages from the current boot that arrived since 30 minutes ago?
+
+- A) `journalctl -b --since "-30 minutes"`
+- B) `journalctl -b --since "30 minutes ago"`
+- C) `journalctl -b -30m`
+- D) `journalctl --last 30min`
+
+**Correct Answer: B**
+
+*Explanation: `--since "30 minutes ago"` uses a human-readable relative time string. The `-b` flag restricts output to the current boot. `journalctl` accepts many time formats including "2024-01-15 14:30:00", "yesterday", "30 minutes ago", and "1 hour ago". Option A's syntax is incorrect. Option C and D are not valid flags.*
+
+---
+
+**Question 17** (5 points)
+
+A user-level systemd service (running in the user session, not system-wide) is configured in `~/.config/systemd/user/myapp.service`. Which command enables and starts it for the current user?
+
+- A) `sudo systemctl enable --now myapp`
+- B) `systemctl --user enable --now myapp`
+- C) `systemctl enable --user myapp && systemctl start --user myapp`
+- D) `systemctl user-enable myapp`
+
+**Correct Answer: B**
+
+*Explanation: The `--user` flag instructs systemctl to interact with the user-level systemd instance instead of the system-wide one. `systemctl --user enable --now myapp` enables the unit in the user's systemd instance and starts it immediately. Using `sudo` would operate on the system instance and would not find the user-level unit file.*
+
+---
+
+**Question 18** (5 points)
+
+The output of `systemctl status myservice` shows `Active: failed (Result: exit-code)`. Which `journalctl` command is the most direct way to see why it failed?
+
+- A) `journalctl -u myservice -b -n 50`
+- B) `journalctl -xe`
+- C) `journalctl -u myservice -b -p err..emerg`
+- D) `journalctl --failed myservice`
+
+**Correct Answer: A**
+
+*Explanation: `journalctl -u myservice -b -n 50` shows the last 50 lines from the current boot session for the specific failing unit. This is the fastest path to the service's own output and error messages. `-xe` shows the last journal entries with context but is not filtered to the failing unit. Option C would miss stdout output that was not logged at error level. Option D is not valid syntax.*
+
+---
+
+**Question 19** (5 points)
+
+An administrator wants to run a script every day at midnight using a systemd timer instead of cron. The timer unit `backup.timer` is configured with `OnCalendar=daily`. What additional file is required for this to work, and what must its name be?
+
+- A) `backup.service` — a service unit with the same base name as the timer
+- B) `backup.target` — a target unit that the timer activates
+- C) `backup.sh` — the script file must be in the same directory as the timer
+- D) `backup.conf` — a configuration file specifying the script path
+
+**Correct Answer: A**
+
+*Explanation: A systemd timer unit activates a corresponding service unit with the same base name by default. `backup.timer` automatically activates `backup.service` when it fires. The service unit defines what command to run in its `ExecStart=` directive. This is why timer and service files are always created in pairs. A different unit can be specified with `Unit=` in the `[Timer]` section.*
+
+---
+
+**Question 20** (5 points)
+
+What is the effect of running `systemctl isolate rescue.target`?
+
+- A) It reboots the system into rescue mode at the next boot.
+- B) It immediately switches the running system to rescue mode, stopping all services except those required for rescue.
+- C) It schedules a maintenance window and notifies logged-in users.
+- D) It creates a snapshot of the current target state for rollback.
+
+**Correct Answer: B**
+
+*Explanation: `systemctl isolate TARGET` immediately transitions the system to the specified target, stopping all units that are not part of that target and starting any that are. `isolate rescue.target` drops the system to single-user rescue mode immediately, terminating normal services and network connections. This is used for emergency maintenance. Unlike `set-default`, it takes effect right now, not at the next boot.*
+
+---
+
 ### Answer Key
 
 | Question | Answer |
@@ -180,3 +330,13 @@ Which systemd target is most equivalent to the legacy SysVinit runlevel 3 (multi
 | 8 | B |
 | 9 | B |
 | 10 | C |
+| 11 | C |
+| 12 | B |
+| 13 | C |
+| 14 | B |
+| 15 | B |
+| 16 | B |
+| 17 | B |
+| 18 | A |
+| 19 | A |
+| 20 | B |

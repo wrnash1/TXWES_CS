@@ -110,3 +110,16 @@ This week's lab focuses on VM setup and first login. Before moving to Module 2, 
 - [ ] Explain what a terminal emulator does and how it differs from the shell.
 - [ ] Install VirtualBox and create an Ubuntu Server 22.04 VM.
 - [ ] Complete the Module 1 quiz.
+
+---
+
+## 9. Supplemental Resources
+
+**1. [The Linux Kernel Archives — Official Kernel Releases](https://www.kernel.org/)**
+The official home of Linux kernel source releases. Provides historical releases, the latest stable kernel, and release notes. Useful for understanding kernel versioning and the release cadence Torvalds uses.
+
+**2. [GNU Project — Free Software Foundation](https://www.gnu.org/licenses/gpl-3.0.en.html)**
+The official text of the GNU General Public License v3 and accompanying explanations from the FSF. Essential reading for understanding copyleft, the four software freedoms, and what is actually required when distributing GPL-licensed software.
+
+**3. [Ubuntu Server Official Documentation — Installation Guide](https://ubuntu.com/server/docs/installation)**
+Canonical's official Ubuntu Server installation documentation. Covers the subiquity installer step-by-step, network configuration during install, and post-install verification steps directly relevant to the Module 1 lab.

@@ -285,4 +285,127 @@ Submit in a single ZIP file:
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Automated Data Quality Pipeline
+
+Build a reusable Python function that accepts a DataFrame and a configuration dictionary, then runs a configurable set of data quality checks and returns a structured report.
+
+1. Define a function `run_dq_checks(df, config)` where `config` is a dictionary specifying: (a) required fields that must not be null, (b) numeric fields with min/max bounds, and (c) string fields with a regex pattern they must match (e.g., email format). The function should return a DataFrame with columns: `check_name`, `dimension`, `records_checked`, `violations`, `violation_pct`, and `status` (PASS if violation_pct < 5%, WARN if 5–20%, FAIL if > 20%).
+2. Apply `run_dq_checks()` to the lab dataset using a config that covers at least one check from each category (null check, bounds check, regex check). Print the full results table. Write two sentences explaining how this function could be integrated into an automated ETL pipeline to prevent bad data from reaching a production data warehouse.
+
+```python
+import pandas as pd
+import re
+
+def run_dq_checks(df, config):
+    results = []
+
+    for field in config.get("required_fields", []):
+        nulls = df[field].isnull().sum()
+        pct = round(nulls / len(df) * 100, 2)
+        results.append({
+            "check_name": f"{field} not null",
+            "dimension": "Completeness",
+            "records_checked": len(df),
+            "violations": nulls,
+            "violation_pct": pct,
+            "status": "PASS" if pct < 5 else "WARN" if pct <= 20 else "FAIL"
+        })
+
+    for field, bounds in config.get("numeric_bounds", {}).items():
+        lo, hi = bounds
+        mask = df[field].notna() & ((df[field] < lo) | (df[field] > hi))
+        viols = mask.sum()
+        pct = round(viols / len(df) * 100, 2)
+        results.append({
+            "check_name": f"{field} in [{lo}, {hi}]",
+            "dimension": "Validity",
+            "records_checked": len(df),
+            "violations": viols,
+            "violation_pct": pct,
+            "status": "PASS" if pct < 5 else "WARN" if pct <= 20 else "FAIL"
+        })
+
+    for field, pattern in config.get("regex_checks", {}).items():
+        mask = df[field].notna() & ~df[field].astype(str).str.match(pattern)
+        viols = mask.sum()
+        pct = round(viols / len(df) * 100, 2)
+        results.append({
+            "check_name": f"{field} matches pattern",
+            "dimension": "Validity",
+            "records_checked": len(df),
+            "violations": viols,
+            "violation_pct": pct,
+            "status": "PASS" if pct < 5 else "WARN" if pct <= 20 else "FAIL"
+        })
+
+    return pd.DataFrame(results)
+```
+
+### Challenge 2: Cross-System Consistency Check
+
+Simulate a cross-system consistency audit comparing a primary CRM export with a billing system extract.
+
+1. Create two small DataFrames representing customer records from two systems (CRM and Billing). Include at least 15 customers with deliberate inconsistencies: a few records in CRM but not Billing (and vice versa), and a few with matching IDs but different email formats or phone number formats. Perform an outer join on `customer_id` and classify each record as: Matched (in both), CRM-only, Billing-only, or Format-Mismatch (present in both but with inconsistent values).
+2. Build a consistency summary table showing the count and percentage of records in each category. Save a simple horizontal bar chart of the category counts as `consistency_audit.png`. Write three sentences explaining what each category of inconsistency means in a business context and which category would be most urgent to remediate first.
+
+```python
+import pandas as pd
+import matplotlib.pyplot as plt
+
+crm = pd.DataFrame({
+    "customer_id": ["C001","C002","C003","C004","C005","C006","C007","C008","C009","C010",
+                    "C011","C012","C013","C014","C015"],
+    "email":  ["a@x.com","b@x.com","c@x.com","d@x.com","e@x.com",
+               "f@x.com","g@x.com","h@x.com","i@x.com","j@x.com",
+               "k@x.com","l@x.com","m@x.com","n@x.com","o@x.com"],
+    "phone_crm": ["5121110001","5121110002","5121110003","5121110004","5121110005",
+                  "5121110006","5121110007","5121110008","5121110009","5121110010",
+                  "5121110011","5121110012","5121110013","5121110014","5121110015"]
+})
+
+billing = pd.DataFrame({
+    "customer_id": ["C001","C002","C003","C004","C005","C006","C007","C008","C009","C010",
+                    "C012","C013","C016","C017"],
+    "email_billing": ["a@x.com","b@x.com","c@x.com","d@x.com","e@x.com",
+                      "f@x.com","g@x.com","INVALID","i@x.com","j_old@x.com",
+                      "l@x.com","m@x.com","p@x.com","q@x.com"],
+    "phone_billing": ["(512)111-0001","(512)111-0002","(512)111-0003","(512)111-0004","(512)111-0005",
+                      "(512)111-0006","(512)111-0007","(512)111-0008","(512)111-0009","(512)111-0010",
+                      "(512)111-0012","(512)111-0013","(512)111-0016","(512)111-0017"]
+})
+
+merged = crm.merge(billing, on="customer_id", how="outer", indicator=True)
+merged["category"] = merged["_merge"].map({
+    "left_only": "CRM-only",
+    "right_only": "Billing-only",
+    "both": "Matched"
+})
+# Reclassify email mismatches for 'both' records
+both_mask = merged["_merge"] == "both"
+email_mismatch = both_mask & (merged["email"] != merged["email_billing"])
+merged.loc[email_mismatch, "category"] = "Format-Mismatch"
+
+summary = merged["category"].value_counts().reset_index()
+summary.columns = ["category", "count"]
+summary["pct"] = (summary["count"] / len(merged) * 100).round(1)
+print(summary.to_string(index=False))
+
+fig, ax = plt.subplots(figsize=(7, 4))
+ax.barh(summary["category"], summary["count"], color="steelblue")
+ax.set_xlabel("Record Count")
+ax.set_title("Cross-System Consistency Audit", fontsize=13, fontweight="bold")
+plt.tight_layout()
+plt.savefig("consistency_audit.png", dpi=150)
+plt.show()
+```
+
+### Reflection Questions
+
+1. In Challenge 1, the `run_dq_checks()` function uses thresholds of 5% and 20% to assign PASS/WARN/FAIL status. These thresholds are arbitrary defaults. How would you determine the appropriate thresholds for a healthcare dataset where data inaccuracies could affect patient safety, versus a marketing dataset used for email campaign targeting? What governance process should define these thresholds?
+2. In Challenge 2, the consistency audit identified records that exist in one system but not the other. In a real enterprise environment, what business process failure could cause CRM-only or Billing-only records, and which data governance role (owner, steward, or custodian) would be responsible for resolving each type of discrepancy?
+
+---
+
 End of Lab 10

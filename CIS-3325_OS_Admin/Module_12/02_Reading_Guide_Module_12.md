@@ -192,6 +192,22 @@ Or set Storage=persistent in /etc/systemd/journald.conf.
 
 ---
 
+## 9. Supplemental Resources
+
+**1. [systemd-journald Documentation — freedesktop.org](https://www.freedesktop.org/software/systemd/man/latest/systemd-journald.service.html)**
+https://www.freedesktop.org/software/systemd/man/latest/systemd-journald.service.html
+Official reference for the systemd journal daemon, covering storage modes, configuration directives in journald.conf, and the relationship between volatile and persistent journal storage.
+
+**2. [sysstat — sar, iostat, vmstat User Guide](https://github.com/sysstat/sysstat)**
+https://github.com/sysstat/sysstat
+The official sysstat project repository with documentation for sar, iostat, mpstat, and pidstat. Includes examples for interpreting %util, await, and run-queue metrics used throughout this module.
+
+**3. [logrotate Man Page — Linux manual pages](https://man7.org/linux/man-pages/man8/logrotate.8.html)**
+https://man7.org/linux/man-pages/man8/logrotate.8.html
+Complete reference for all logrotate configuration directives including compress, delaycompress, rotate, postrotate, and the missingok and notifempty flags covered in the quiz and lab.
+
+---
+
 ### Study Checklist
 
 Before the quiz and lab, confirm you can do all of the following without looking them up:

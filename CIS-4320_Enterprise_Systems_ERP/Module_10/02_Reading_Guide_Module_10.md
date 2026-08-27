@@ -285,3 +285,19 @@ SAP can be configured to automatically post invoices with small variances (withi
 - Complete Lab 10.
 - Post to Discussion Forum 10 by Wednesday at 11:59 PM.
 - Complete Quiz 10.
+
+---
+
+## 9. Supplemental Resources
+
+**1. SAP Learning — Sourcing and Procurement with SAP S/4HANA**
+<https://learning.sap.com/learning-journeys/source-and-procure-with-sap-s-4hana>
+Official SAP learning journey covering the end-to-end Procure-to-Pay process: purchase requisitions, purchase orders, goods receipts, MIRO invoice verification, and automatic payment. Maps directly to the transaction codes (ME51N, ME21N, MIGO, MIRO, F110) and three-way match logic tested in this module's quiz and Lab 10.
+
+**2. ASCM — Certified in Planning and Inventory Management (CPIM) Body of Knowledge**
+<https://www.ascm.org/learning-development/certifications-credentials/cpim/>
+The ASCM (formerly APICS) CPIM certification body of knowledge covers MRP logic, inventory valuation methods (standard price vs. moving average), reorder point planning, and safety stock calculation — the inventory management theory underlying SAP MM configuration decisions covered in this module.
+
+**3. SAP Help Portal — Inventory Management and Physical Inventory**
+<https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/inventory-management>
+Official SAP product documentation for Inventory Management. Covers movement types, material documents, valuation classes, and G/L account determination via the Account Determination framework (OBYC) — essential reference for understanding how SAP MM posting logic works and how Valuation Class maps to G/L accounts.

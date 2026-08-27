@@ -266,4 +266,99 @@ Submit in a single ZIP file:
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: PySpark Window Functions and Ranking
+
+Extend the aggregation work from Part 3 using PySpark window functions to rank customers and categories.
+
+1. Using the `ecommerce_orders.csv` dataset, compute the total spend per customer across all orders (excluding returns where `is_returned = 1`). Using a PySpark window function (`Window.orderBy`), assign a rank to each customer by total spend in descending order. Print the top 5 customers with their total spend and rank.
+2. For each region, compute the rank of each product category by total revenue using `Window.partitionBy("region").orderBy(desc("total_revenue"))`. Print the top-ranked category for each region. Write two sentences interpreting which region has the most revenue concentration in a single category.
+
+```python
+from pyspark.sql import functions as F
+from pyspark.sql.window import Window
+
+# Customer total spend (no returns)
+cust_spend = (
+    df.filter(F.col("is_returned") == 0)
+    .groupBy("customer_id")
+    .agg(F.round(F.sum("amount"), 2).alias("total_spend"))
+)
+
+cust_window = Window.orderBy(F.desc("total_spend"))
+cust_ranked = cust_spend.withColumn("rank", F.rank().over(cust_window))
+print("Top 5 Customers by Spend:")
+cust_ranked.orderBy("rank").show(5)
+
+# Category revenue by region
+region_cat = (
+    df.filter(F.col("is_returned") == 0)
+    .groupBy("region", "category")
+    .agg(F.round(F.sum("amount"), 2).alias("total_revenue"))
+)
+region_window = Window.partitionBy("region").orderBy(F.desc("total_revenue"))
+region_ranked = region_cat.withColumn("cat_rank", F.rank().over(region_window))
+print("\nTop Category per Region:")
+region_ranked.filter(F.col("cat_rank") == 1).orderBy("region").show()
+```
+
+### Challenge 2: Simulated Streaming Aggregation with Micro-Batches
+
+Simulate a streaming scenario by processing the dataset in time-ordered micro-batches and computing rolling metrics.
+
+1. Sort the `ecommerce_orders.csv` data by `order_date` and split it into two "micro-batches": January orders and February orders. For each batch, compute the total order count, total revenue, and return rate (returned orders / total orders as a percentage). Print a summary table comparing the two batches side by side using a pandas DataFrame.
+2. Simulate a running total by computing the cumulative revenue per order date using a PySpark window ordered by `order_date`. Plot the cumulative revenue as a line chart with `order_date` on the x-axis. Save as `cumulative_revenue.png`. Write one sentence describing the revenue growth pattern between January and February.
+
+```python
+import pandas as pd
+import matplotlib.pyplot as plt
+import matplotlib.ticker as mticker
+
+# Micro-batch comparison (pandas)
+pdf = df.toPandas()
+pdf["order_date"] = pd.to_datetime(pdf["order_date"])
+pdf["month"] = pdf["order_date"].dt.to_period("M").astype(str)
+
+batch_summary = (
+    pdf.groupby("month")
+    .apply(lambda g: pd.Series({
+        "order_count": len(g),
+        "total_revenue": g.loc[g["is_returned"] == 0, "amount"].sum().round(2),
+        "return_rate_pct": round(g["is_returned"].mean() * 100, 1)
+    }))
+    .reset_index()
+)
+print(batch_summary.to_string(index=False))
+
+# Cumulative revenue line chart
+daily = (
+    pdf[pdf["is_returned"] == 0]
+    .groupby("order_date")["amount"].sum()
+    .sort_index()
+    .cumsum()
+    .reset_index()
+)
+daily.columns = ["order_date", "cumulative_revenue"]
+
+fig, ax = plt.subplots(figsize=(9, 4))
+ax.plot(daily["order_date"], daily["cumulative_revenue"],
+        marker="o", linewidth=2, color="steelblue")
+ax.yaxis.set_major_formatter(mticker.FuncFormatter(lambda x, _: f"${x:,.0f}"))
+ax.set_title("Cumulative Revenue Over Time", fontsize=13, fontweight="bold")
+ax.set_xlabel("Order Date")
+ax.set_ylabel("Cumulative Revenue ($)")
+plt.xticks(rotation=30, ha="right")
+plt.tight_layout()
+plt.savefig("cumulative_revenue.png", dpi=150)
+plt.show()
+```
+
+### Reflection Questions
+
+1. In Challenge 1, window functions allow ranking within partitions without collapsing rows the way `groupBy` does. Explain the conceptual difference between `rank()` and `dense_rank()` in PySpark. Give an example where using the wrong function would produce misleading business results (e.g., top-N customer reports).
+2. In Challenge 2, the micro-batch simulation approximates how Spark Structured Streaming processes data in time windows. If you were processing this clickstream data in a real production environment with sub-second latency requirements, what changes would you make to the architecture — specifically regarding the storage layer, trigger interval, and output sink?
+
+---
+
 End of Lab 09

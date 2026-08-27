@@ -289,3 +289,19 @@ Always include a footnote or tooltip that defines how each metric is calculated.
 * **Microsoft Power BI documentation** — [learn.microsoft.com/power-bi](https://learn.microsoft.com/en-us/power-bi/)
 * **Google Looker documentation** — [cloud.google.com/looker/docs](https://cloud.google.com/looker/docs)
 * **DataViz Project — chart type reference** — [datavizproject.com](https://datavizproject.com/)
+
+---
+
+## 9. Supplemental Resources
+
+**1. Storytelling with Data — Chart Guide**
+<https://www.storytellingwithdata.com/chart-guide>
+Cole Nussbaumer Knaflic's free chart selection guide covering when to use each chart type, how to eliminate chart junk, and how to direct audience attention. Directly reinforces the visualization selection and dashboard design principles in Module 13 and the Data+ Domain 4 exam content.
+
+**2. Google Data Studio (Looker Studio) — Quick Start Guide**
+<https://support.google.com/datastudio/answer/6283323>
+Google's official quickstart for Looker Studio (formerly Data Studio), a free BI and dashboard tool. Useful for hands-on practice with dashboard layout, KPI tiles, chart types, and filter controls — closely matching the concepts in Module 13 without requiring a paid tool license.
+
+**3. Harvard Business Review — The Art of Data Storytelling**
+<https://hbr.org/2013/04/how-to-tell-a-story-with-data>
+A practitioner-focused HBR article on structuring data narratives for executive audiences — covering context, insight, and call-to-action framing. Supports the data storytelling and audience communication skills tested in Module 13 and essential for real-world BI analyst roles.

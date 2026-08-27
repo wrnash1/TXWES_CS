@@ -418,3 +418,25 @@ Before moving to the lab, confirm you can answer yes to each item:
 - [ ] I can describe the three built-in API Gateway WebSocket routes and what each Lambda does
 - [ ] I know why `410 Gone` from `PostToConnectionCommand` means the connectionId should be deleted
 - [ ] I can explain when to choose Socket.io vs API Gateway WebSocket API
+
+---
+
+## 10. Supplemental Resources
+
+The following free, open-access resources go deeper on Module 15 topics:
+
+**1. Socket.io Official Documentation — Getting Started**
+[https://socket.io/docs/v4/](https://socket.io/docs/v4/)
+The official Socket.io v4 documentation covering server setup, client installation, event emission targets (`io.emit`, `socket.to`, `socket.broadcast`), rooms, namespaces, middleware, and the `io.use()` authentication pattern — the primary reference for all Socket.io patterns in Lab 15.
+
+**2. MDN Web Docs — The WebSocket API**
+[https://developer.mozilla.org/en-US/docs/Web/API/WebSocket](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket)
+The complete browser WebSocket API reference covering the `WebSocket` constructor, `readyState` values (`CONNECTING`, `OPEN`, `CLOSING`, `CLOSED`), `onmessage`, `onerror`, `onclose` handlers, and the `101 Switching Protocols` handshake — directly aligned to Section 1 of this guide and the native WebSocket client used with API Gateway.
+
+**3. AWS Documentation — API Gateway WebSocket APIs**
+[https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-websocket-api.html](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-websocket-api.html)
+The official AWS reference for API Gateway WebSocket APIs covering the `$connect`, `$disconnect`, and `$default` routes, route selection expressions, Lambda integration, the `ApiGatewayManagementApi` for sending messages back to clients, connection management, and the `410 Gone` status code — covers all Section 6 concepts and the DVA-C02 WebSocket exam topics.
+
+**4. Socket.io Documentation — Rooms**
+[https://socket.io/docs/v4/rooms/](https://socket.io/docs/v4/rooms/)
+The Socket.io official reference for rooms covering `socket.join()`, `socket.leave()`, `io.to(room).emit()`, `socket.to(room).emit()`, auto-generated socket ID rooms, and the difference between the sender-inclusive and sender-exclusive broadcast variants — directly reinforces Section 4 of this guide and the user-room notification pattern in Lab 15.

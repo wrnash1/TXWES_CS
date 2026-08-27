@@ -230,3 +230,225 @@ A user at 172.16.10.55 reports they can still reach HTTPS websites. The `show ac
 - B is possible but less likely: DHCP reassignment is a valid operational concern but the question focuses on ACL logic and the show output provides a clearer diagnostic — zero matches on line 10 indicates the traffic is not reaching that entry.
 - C is correct: The zero matches on line 10 combined with the increasing matches on line 20 indicate that traffic from 172.16.10.55 is matching line 20 and being permitted, which means the ACL logic is running but the specific deny is not being hit. The most operationally likely cause in a real scenario is that the ACL is applied to the wrong interface and never sees the HTTPS traffic from that host. If the ACL were on the correct inbound interface facing the HR subnet, line 10 would fire for any HTTPS traffic from .55.
 - D is incorrect: Line 10 is a deny for a specific host. Line 20 permits the broader subnet. Because line 10 comes first in sequence order, it would be evaluated before line 20 for traffic from host .55. If the ACL were processing traffic from .55, line 10 would match first.
+
+---
+
+## Question 11
+
+A network administrator configures a named extended ACL called BLOCK_TELNET with the entry `deny tcp any any eq 23` and applies it outbound on the LAN interface. A user on the LAN still successfully opens a Telnet session to an external server. Which of the following is the most likely cause?
+
+- A) Extended ACLs cannot filter Telnet traffic — only standard ACLs can block TCP port 23
+- B) The ACL is applied outbound on the wrong interface; to block LAN users from initiating Telnet, the ACL should be applied inbound on the LAN-facing interface
+- C) The named ACL syntax `deny tcp any any eq 23` is invalid; the correct syntax requires specifying the source and destination as host addresses rather than `any`
+- D) The ACL is missing an explicit `permit ip any any` statement and is therefore blocking all traffic including Telnet, making it appear to pass through
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A is incorrect: Extended ACLs can absolutely filter TCP port 23 (Telnet). The `deny tcp any any eq 23` syntax is correct for blocking Telnet. Standard ACLs filter only on source IP and cannot match port numbers.
+- B is correct: When applied outbound on a LAN interface, the ACL filters traffic leaving the router toward the LAN — meaning traffic destined for LAN hosts, not traffic originating from LAN users heading to the internet. To block LAN users from initiating Telnet sessions outbound, the ACL should be applied inbound on the LAN-facing interface to filter traffic as it enters the router from the LAN.
+- C is incorrect: `any` is valid wildcard syntax in both named and numbered extended ACLs. It is equivalent to `0.0.0.0 255.255.255.255`. There is no requirement to specify host addresses.
+- D is incorrect: While an ACL without an explicit permit does implicitly deny all unmatched traffic, this would block ALL traffic, not allow Telnet through. If the implicit deny were the issue, no traffic would pass — not just Telnet.
+
+---
+
+## Question 12
+
+An engineer configures the following named ACL and applies it inbound on Gi0/1:
+
+```text
+ip access-list standard MGMT
+ 10 permit 10.10.10.0 0.0.0.255
+```
+
+A host at 10.10.10.50 is trying to access the router's VTY lines but the connection is refused. The ACL is applied to `line vty 0 4` with `access-class MGMT in`. Why would the VTY connection still be refused?
+
+- A) Named standard ACLs cannot be used with `access-class`
+- B) `access-class` requires a numbered ACL; named ACLs are not supported on VTY lines
+- C) The ACL is applied correctly but `transport input ssh` is blocking Telnet
+- D) `access-class` on VTY lines and `ip access-group` on a physical interface use the same ACL name, causing a conflict
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- A is incorrect: Named standard ACLs are supported with `access-class` on VTY lines in modern Cisco IOS versions. The syntax `access-class MGMT in` with a named ACL is valid.
+- B is incorrect: Both numbered and named ACLs work with `access-class`. There is no restriction to numbered ACLs only for VTY line access.
+- C is correct: The ACL permits 10.10.10.0/24, so the source address is not the blocking factor. If `transport input ssh` is configured (or `transport input none`), Telnet connections would be refused regardless of ACL configuration. The `transport input` setting controls which management protocols are accepted on the VTY lines — an ACL controls which source IPs are allowed, but if the protocol itself is disabled, no connection succeeds.
+- D is incorrect: Using the same ACL name for both `ip access-group` on an interface and `access-class` on VTY lines does not cause a conflict. The same ACL can be referenced in both places — each reference is evaluated independently in its own context.
+
+---
+
+## Question 13
+
+Which command correctly removes only sequence number 30 from a named extended ACL called EGRESS_FILTER without deleting the entire ACL?
+
+- A) `no access-list EGRESS_FILTER 30`
+- B) `ip access-list extended EGRESS_FILTER` followed by `no 30`
+- C) `no ip access-list extended EGRESS_FILTER sequence 30`
+- D) `ip access-list extended EGRESS_FILTER` followed by `delete 30`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A is incorrect: `no access-list EGRESS_FILTER 30` is not valid IOS syntax. The `no access-list` command form is used to delete entire numbered ACLs (e.g., `no access-list 100`), not individual entries within a named ACL.
+- B is correct: Entering `ip access-list extended EGRESS_FILTER` puts the router in named ACL configuration mode. From there, `no 30` removes only the sequence number 30 entry without affecting any other entries. This is the advantage of named ACLs over numbered ACLs.
+- C is incorrect: `no ip access-list extended EGRESS_FILTER sequence 30` is not valid IOS syntax. The correct approach is to enter the ACL configuration mode and issue `no [sequence-number]`.
+- D is incorrect: `delete` is not a valid IOS command within ACL configuration mode. The correct verb for removing an entry by sequence number is `no [sequence-number]`.
+
+---
+
+## Question 14
+
+A standard ACL permits traffic from host 192.168.1.100 and denies all other traffic from 192.168.1.0/24. A host at 192.168.1.100 is still being denied. `show access-lists` shows zero matches on the permit entry. What is the most likely cause?
+
+- A) Standard ACLs process deny statements before permit statements
+- B) The access list is not applied to any interface — the permit entry was never evaluated
+- C) The host at 192.168.1.100 is using a different source IP than expected due to NAT
+- D) The ACL was configured with `host 192.168.1.100` but the traffic source uses 192.168.1.100/32
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A is incorrect: ACL entries are evaluated in sequence order (lowest sequence number first), not by entry type. There is no rule that denies are evaluated before permits.
+- B is correct: Zero matches on the permit entry means the traffic from 192.168.1.100 is never being evaluated against that ACL. This is a strong indicator that the ACL is not applied to the correct interface or direction, or not applied at all. Verify with `show ip interface [interface]` to see which ACLs are applied.
+- C is possible but less directly indicated: NAT would change the source IP before or after the ACL evaluation depending on direction. However, the zero-match diagnostic more directly points to the ACL not being evaluated at all.
+- D is incorrect: `host 192.168.1.100` and `192.168.1.100 0.0.0.0` (the equivalent with /32 wildcard) both match exactly the same single address. There is no difference in how IOS interprets them.
+
+---
+
+## Question 15
+
+An extended ACL is applied outbound on the interface connecting to the internet (Gi0/2). The ACL includes:
+
+```text
+10 permit tcp 10.0.0.0 0.255.255.255 any eq 80
+20 permit tcp 10.0.0.0 0.255.255.255 any eq 443
+30 deny ip any any log
+```
+
+Users report that DNS lookups (UDP port 53) are failing. What is the cause and the correct fix?
+
+- A) DNS uses TCP, not UDP. Add `permit tcp any any eq 53` before line 30
+- B) Line 30 explicitly denies all traffic except HTTP and HTTPS. Add `permit udp 10.0.0.0 0.255.255.255 any eq 53` before line 30
+- C) DNS traffic is blocked by the implicit deny that follows line 30
+- D) The outbound direction blocks DNS replies — move the ACL to the inbound direction
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A is incorrect: DNS primarily uses UDP port 53. TCP port 53 is only used for DNS zone transfers and large responses. Standard DNS queries from clients use UDP. The fix must include UDP.
+- B is correct: The ACL only explicitly permits TCP 80 and TCP 443. DNS queries use UDP port 53. Line 30 denies all IP traffic not matched by lines 10 or 20. Adding `permit udp 10.0.0.0 0.255.255.255 any eq 53` before line 30 allows DNS queries to exit toward the internet.
+- C is incorrect: Line 30 IS the explicit deny — it is not a separate implicit deny. The explicit `deny ip any any log` has the same functional effect as the implicit deny but adds logging. Either way, the fix is to add a permit for UDP/53.
+- D is incorrect: The ACL direction is appropriate for controlling outbound traffic from internal users. Moving it inbound would filter traffic entering from the internet, not traffic leaving from internal users. The direction is correct.
+
+---
+
+## Question 16
+
+An engineer adds the line `ip access-list extended INSIDE_OUT` followed by `no 15` on a router that currently has sequence numbers 10, 20, and 30 in INSIDE_OUT. What is the result?
+
+- A) All entries in INSIDE_OUT are deleted because `no 15` removes the first sequence
+- B) Nothing changes because sequence number 15 does not exist in the ACL
+- C) Sequence number 15 is created as an empty placeholder entry
+- D) The ACL is reset and sequence numbers are renumbered starting from 1
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A is incorrect: `no 15` removes only the entry at sequence number 15. It does not affect any other entries. Since there is no entry at sequence 15, no entries are removed.
+- B is correct: Issuing `no 15` when sequence number 15 does not exist in the ACL produces no change. IOS simply ignores the command without error in most IOS versions (or returns a "no matching sequence" message). The ACL remains unchanged with entries at 10, 20, and 30.
+- C is incorrect: Cisco IOS does not create empty placeholder entries. `no 15` is interpreted as "remove entry 15 if it exists" — if it does not exist, nothing happens.
+- D is incorrect: Removing a non-existent sequence number does not trigger ACL renumbering. Sequence renumbering requires an explicit `ip access-list resequence` command.
+
+---
+
+## Question 17
+
+What is the correct wildcard mask to match all hosts in the range 192.168.16.0 through 192.168.31.255?
+
+- A) 0.0.15.255
+- B) 0.0.16.255
+- C) 0.0.255.255
+- D) 0.0.0.255
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- A is correct: The range 192.168.16.0 through 192.168.31.255 spans 16 values in the third octet (16 through 31). In binary, these are 00010000 through 00011111 — the first 3 bits (000) are fixed and the last 4 bits vary. The block size is 16 (2^4). The wildcard mask for the third octet is 15 (16-1=15). Full wildcard: 0.0.15.255.
+- B is incorrect: 0.0.16.255 would be unusual — the wildcard must be one less than the block size. 16 minus 1 is 15, not 16.
+- C is incorrect: 0.0.255.255 matches all addresses from 192.168.0.0 through 192.168.255.255 (an entire /16 block), which is much broader than the specified range.
+- D is incorrect: 0.0.0.255 matches a /24 range (192.168.16.0 through 192.168.16.255 if applied to 192.168.16.0). It does not cover the full range through .31.255.
+
+---
+
+## Question 18
+
+An engineer applies the following ACL to restrict SSH access to the router's management plane:
+
+```text
+ip access-list standard SSH_MGMT
+ 10 permit host 10.50.1.10
+```
+
+The ACL is applied with `access-class SSH_MGMT in` on `line vty 0 4`. A technician at 10.50.1.10 can SSH into the router. A second technician at 10.50.1.20 attempts SSH and is blocked. What happens when the technician at 10.50.1.20 tries to connect?
+
+- A) The connection is refused silently because the implicit deny at the end of the ACL drops the packet without notification
+- B) The router sends an ICMP Destination Unreachable message back to 10.50.1.20
+- C) The connection times out because the implicit deny drops the TCP SYN packet on the VTY line
+- D) The router redirects the 10.50.1.20 connection to a honeypot
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- A is correct: The implicit deny at the end of every ACL drops matching traffic without sending any notification. For VTY line access, the TCP connection attempt from 10.50.1.20 will simply be rejected — the connection is refused without an error message to the connecting host. The technician typically sees a "Connection refused" or timeout from their SSH client.
+- B is incorrect: Cisco IOS does not generate ICMP Unreachable messages in response to ACL drops on VTY lines. ICMP Unreachable messages are generated for routing failures or some interface ACL drops, not VTY access control.
+- C is incorrect: The TCP SYN is not technically dropped at the routing level — the VTY line ACL filters the connection attempt at the management plane. The behavior is that the connection is refused, but "times out" is less precise than "refused silently."
+- D is incorrect: Cisco IOS access-class ACLs do not include honeypot redirection functionality. This is not a feature of standard IOS ACL behavior.
+
+---
+
+## Question 19
+
+An IPv6 ACL named IPV6_POLICY is applied inbound on an interface. The ACL has only one entry: `permit ipv6 2001:DB8:1::/64 any`. An administrator verifies that IPv6 routing is functioning correctly. A host in 2001:DB8:1::/64 sends a Neighbor Solicitation (NS) to resolve another host's MAC address. Will the NS message be forwarded?
+
+- A) Yes — NDP messages are always permitted regardless of ACL configuration
+- B) No — the NS is a multicast packet and the ACL only permits unicast traffic from 2001:DB8:1::/64
+- C) Yes — IPv6 ACLs have implicit permit statements for NDP (nd-ns and nd-na) that appear before the implicit deny
+- D) No — the ACL has no permit for ICMPv6, so NDP is blocked by the implicit deny
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- A is incorrect: NDP is not unconditionally permitted by Cisco IOS regardless of ACLs. While the behavior described is functionally similar, the mechanism is specific: Cisco IOS inserts implicit permit entries for NDP before the implicit deny in IPv6 ACLs.
+- B is incorrect: The NS message is sent from the 2001:DB8:1::/64 prefix source to a solicited-node multicast address. The explicit permit for 2001:DB8:1::/64 traffic technically covers the unicast source portion, but C is the more precise and correct explanation.
+- C is correct: Cisco IOS automatically inserts two implicit permit statements at the end of every IPv6 ACL (before the implicit deny): `permit icmp any any nd-na` and `permit icmp any any nd-ns`. These allow Neighbor Discovery Protocol messages to pass regardless of the ACL content, preventing NDP from being accidentally blocked.
+- D is incorrect: While ICMPv6 is not explicitly permitted, Cisco IOS adds implicit NDP permits specifically to protect NDP functionality. The implicit deny does not apply to NDP messages because the implicit NDP permits appear first.
+
+---
+
+## Question 20
+
+A network engineer needs to allow FTP data transfer (TCP port 20) from a specific server 203.0.113.50 to any internal host, while blocking all other inbound connections from the internet. The ACL is applied inbound on the outside interface. Which entry correctly accomplishes the FTP data permit?
+
+- A) `permit tcp host 203.0.113.50 any eq 20`
+- B) `permit tcp any eq 20 host 203.0.113.50`
+- C) `permit ftp host 203.0.113.50 any`
+- D) `permit tcp host 203.0.113.50 eq 20 any`
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- A is correct: In an extended ACL applied inbound on the outside interface, the source of incoming FTP data traffic is the server (203.0.113.50) and the destination is "any" internal host. FTP data uses TCP port 20. The server-side source port is 20. The correct syntax: `permit tcp host [source] any eq [dest-port]` — but for FTP data, the server uses source port 20. `permit tcp host 203.0.113.50 any eq 20` permits TCP from that server where the destination port is 20. For inbound FTP data from the server's port 20, the statement correctly identifies the server as source.
+- B is incorrect: This form reverses source and destination. `any eq 20` means "any source using port 20 as source port" — which is the server initiating FTP data. However, the standard field order is source-first, destination-second. The correct source here is `host 203.0.113.50`.
+- C is incorrect: `ftp` is not a valid protocol keyword in Cisco IOS extended ACL syntax. The valid layer 4 keywords are `tcp`, `udp`, `icmp`, and `ip`. FTP must be specified as TCP with the appropriate port number.
+- D is incorrect: `permit tcp host 203.0.113.50 eq 20 any` specifies that the source port must be 20 AND the source is 203.0.113.50. For the server sending FTP data, this is the server's perspective. However the standard CCNA ACL syntax for source port matching places `eq [port]` after the source address. This form is actually technically valid syntax but targets source-port-20 specifically. Option A targets destination port 20 which is the more common exam expectation for "allow FTP data port."

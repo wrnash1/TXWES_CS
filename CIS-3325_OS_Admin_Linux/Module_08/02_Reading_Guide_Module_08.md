@@ -484,3 +484,16 @@ mount | grep "$(df -P /path/to/file | tail -1 | cut -d' ' -f1)"
 - `man 5 acl` — ACL format documentation
 - `man 1 namei` — namei path permission tracer
 - Linux+ Study Guide (CompTIA XK0-005) — Domain 2: Security, File Permissions section
+
+---
+
+## 9. Supplemental Resources
+
+**1. [Linux File Permissions Explained — Red Hat Enable Sysadmin](https://www.redhat.com/sysadmin/linux-file-permissions-explained)**
+A practical Red Hat sysadmin article covering standard Unix permission bits, octal notation, the SUID/SGID/sticky bit, and real-world scenarios where each special bit applies. Includes worked examples with `chmod`, `chown`, and `ls -l` output interpretation — directly aligned with the Module 08 lab tasks on special bit configuration and permission debugging.
+
+**2. [Arch Linux Wiki — Access Control Lists](https://wiki.archlinux.org/title/Access_Control_Lists)**
+The definitive community reference for POSIX ACLs on Linux. Covers `setfacl` and `getfacl` syntax in depth, the ACL mask and its effect on effective permissions, default ACLs for directories, and how ACLs interact with standard Unix permissions. Includes examples for both named-user and named-group ACL entries and how to back up and restore complete ACL trees with `getfacl -R` and `setfacl --restore`.
+
+**3. [Understanding Linux File Permissions — TLDP](https://tldp.org/HOWTO/Security-HOWTO/file-security.html)**
+The Linux Documentation Project's security HOWTO chapter on file security. Provides accessible coverage of umask calculation, the implications of world-writable directories, SUID/SGID security risks, and the principle of least privilege applied to file ownership. A useful complement to the lab's security audit challenges and the exam's Domain 2 security objectives.

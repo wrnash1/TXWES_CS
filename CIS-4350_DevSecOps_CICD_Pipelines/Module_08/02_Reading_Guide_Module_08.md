@@ -329,4 +329,17 @@ A SLSA provenance document is an attestation answering five questions:
 
 ---
 
+## 9. Supplemental Resources
+
+**1. [Snyk documentation — CLI reference and CI/CD integration](https://docs.snyk.io/snyk-cli)**
+Official Snyk CLI documentation covering all commands (`test`, `monitor`, `sbom`), severity threshold flags, JSON output format, and GitHub Actions integration. Includes language-specific scanning guides for Python, Node.js, Java, and Go.
+
+**2. [SLSA framework — supply chain levels and requirements](https://slsa.dev/spec/v1.0/)**
+The official SLSA specification defining the four integrity levels for software artifacts. Covers provenance requirements, build platform requirements, and examples of what satisfies each level. Essential for understanding modern software supply chain security requirements.
+
+**3. [OpenSSF Sigstore documentation](https://docs.sigstore.dev/)**
+Comprehensive documentation for the Sigstore project (cosign, Fulcio, Rekor). Covers keyless signing with OIDC, transparency log queries, policy verification, and integration with GitHub Actions and Kubernetes admission control.
+
+---
+
 Reading Guide — Module 08 | CIS-4350 | Texas Wesleyan University | Professor Nash

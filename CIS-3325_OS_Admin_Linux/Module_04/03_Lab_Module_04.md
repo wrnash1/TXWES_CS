@@ -473,4 +473,25 @@ Challenge tasks are extra credit (up to 15 points).
 
 ---
 
-*End of Module 04 Lab*
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Real Log Analysis with awk Reporting
+
+Use awk to build a formatted summary report directly from the access log — no external tools except sort.
+
+1. Write an awk command against `~/lab04/access.log` that counts the number of requests per HTTP status code and prints a formatted table with headers. Your output should look like: `Status   Count` with each code and its count below. Use `printf` inside awk for alignment.
+2. Extend the command with an `END` block that also prints the total number of requests processed. Verify the total matches `wc -l ~/lab04/access.log`.
+3. Add a pattern condition so only requests with status codes 400 or above are included in the report. Verify that 200-status lines are excluded.
+
+### Challenge 2: Multi-Step sed Config Transformation
+
+Transform a configuration file through a pipeline of sed operations that simulate a production deployment rename.
+
+1. Copy `~/lab04/app.conf.bak` to `~/lab04/app_deploy.conf`. Using a single `sed -i` command with multiple `-e` expressions, perform all of the following on `app_deploy.conf`: remove all comment lines (starting with `#`), remove all blank lines, and replace `db01.txwes.edu` with `db-prod.txwes.edu` (note: if you completed Task 4.2 the domain was already changed from example.com).
+2. Run `diff ~/lab04/app.conf.bak ~/lab04/app_deploy.conf` to view all differences. Record how many lines changed.
+3. Use `sed -n '/^db_/p' ~/lab04/app_deploy.conf` to confirm only the database section lines remain and they reference the production hostname.
+
+### Reflection Questions
+
+1. The `grep | sort | uniq -c | sort -nr | head` pipeline pattern appeared in multiple tasks. Describe a real-world sysadmin scenario — other than web log analysis — where this exact pattern would surface actionable information. What would you pipe into it and what would the result tell you?
+2. vim's modal design is often criticized by beginners but praised by experienced administrators. After completing the vim tasks in this lab, describe one scenario where vim's Normal mode commands (dd, yy, p, :%s) would allow you to make changes significantly faster than using nano's interface.

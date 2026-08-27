@@ -293,3 +293,19 @@ The following concepts are high-frequency exam topics from Domain 3.
 - [ ] Complete the Module 06 lab (charter drafting exercise)
 - [ ] Take the Module 06 quiz
 - [ ] Post to the Module 06 discussion forum by Wednesday 11:59 PM
+
+---
+
+## 9. Supplemental Resources
+
+**NIST SP 800-100 — Information Security Handbook: A Guide for Managers**
+URL: https://csrc.nist.gov/publications/detail/sp/800-100/final
+Description: Free NIST publication providing comprehensive management-level guidance on developing and operating an information security program, including program management, security planning, risk management integration, and resource planning. Chapter 4 covers security program management directly, covering the charter, policy hierarchy, and resource allocation topics central to Module 06.
+
+**ISACA CISM Review Manual — Domain 3: Information Security Program**
+URL: https://www.isaca.org/credentialing/cism/cism-exam-resources
+Description: ISACA's official CISM exam preparation resources for Domain 3, covering information security program development, management, and governance. The review manual chapters on program charter, policy hierarchy, and strategic alignment provide exam-focused summaries of the concepts covered in this module and include practice questions aligned with the CISM item format.
+
+**CIS Controls v8 — Implementation Groups and Safeguards**
+URL: https://www.cisecurity.org/controls/v8
+Description: The Center for Internet Security's free Controls v8 publication organizes 153 safeguards across 18 control families into three Implementation Groups based on organizational maturity and resources. This is directly applicable to Module 06's discussion of phased security program development — Implementation Group 1 represents foundational controls, Groups 2 and 3 represent progressively mature capabilities. Free download available at the CIS website.

@@ -405,3 +405,29 @@ at least one exam domain.
 *End of Reading Guide — Module 16*
 
 *Texas Wesleyan University — CIS-3310 IT Project Management*
+
+---
+
+## 9. Supplemental Resources
+
+The following free, openly licensed resources extend the concepts in this module. All links are publicly accessible — no account or purchase required.
+
+1. **CompTIA Project+ PK0-005 Exam Objectives (Free Official Download)**
+   *CompTIA* — [comptia.org/certifications/project](https://www.comptia.org/certifications/project)
+   The official exam objectives document listing every domain, objective, and sub-objective tested on the Project+ PK0-005 exam. Essential reading before scheduling the exam — use it as a final checklist against your Module 16 study guide.
+
+2. **Professor Messer — CompTIA Project+ Study Materials (Free)**
+   *Professor Messer* — [professormesser.com/project-plus/pk0-005/pk0-005-training-course](https://www.professormesser.com/project-plus/pk0-005/pk0-005-training-course/)
+   Free video-based study course organized by exam domain. Covers all five Project+ domains with concise explanations. Particularly useful for final review of EVM formulas, change control, and risk response strategies.
+
+3. **PMI — PMBOK Guide Seventh Edition Overview (Free Article)**
+   *Project Management Institute* — [pmi.org/pmbok-guide-standards/foundational/pmbok](https://www.pmi.org/pmbok-guide-standards/foundational/pmbok)
+   PMI's overview of the PMBOK Seventh Edition shift from process groups to project performance domains. Understanding the evolution from PMBOK 6 to PMBOK 7 helps answer Project+ questions that blend both frameworks.
+
+4. **Earned Value Management Tutorial — Practice Problems (Free)**
+   *PM Study Circle* — [pmstudycircle.com/earned-value-management](https://pmstudycircle.com/earned-value-management/)
+   Free EVM practice problems with worked solutions covering SV, CV, SPI, CPI, EAC, ETC, VAC, and TCPI. Ideal for final exam preparation — the Module 16 mock exam includes multiple EVM calculation questions.
+
+5. **Project Management Open Textbook — Full Course Reference (Free)**
+   *BC Campus OpenEd* — [opentextbc.ca/projectmanagement](https://opentextbc.ca/projectmanagement/)
+   The complete open-access project management textbook covering all knowledge areas. Use the chapter index to revisit any module topic before the Project+ exam. Freely downloadable as PDF for offline study.

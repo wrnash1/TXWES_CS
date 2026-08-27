@@ -198,4 +198,30 @@ PoE requires a PoE-capable switch (PSE — Power Sourcing Equipment) or a PoE in
 
 ---
 
+## 9. Supplemental Resources
+
+The following free resources extend Module 05 content on network cabling, switching hardware, and infrastructure.
+
+**1. Professor Messer — Network Infrastructure Free Videos**
+URL: https://www.professormesser.com/network-plus/n10-008/n10-008-video/
+Relevance: Professor Messer's free videos cover copper cabling standards, fiber types, switch operation, PoE, and STP in dedicated segments aligned to Network+ exam objectives.
+
+**2. TIA-568 Cabling Standard Overview — BICSI Free Resources**
+URL: https://www.bicsi.org/education-certification/education-@bicsi-learning-academy/free-resources
+Relevance: BICSI (Building Industry Consulting Service International) provides free resources covering structured cabling standards including TIA-568-C categories, installation practices, and cable testing — the industry standards referenced in all Network+ cabling questions.
+
+**3. Cisco — Understanding Spanning Tree Protocol**
+URL: https://www.cisco.com/c/en/us/support/docs/lan-switching/spanning-tree-protocol/5234-5.html
+Relevance: Cisco's authoritative free documentation on STP operation, bridge election, port states, and convergence. Explains the root bridge election process and blocking/forwarding port states referenced in this module.
+
+**4. Cisco — Configuring EtherChannel**
+URL: https://www.cisco.com/c/en/us/support/docs/lan-switching/etherchannel/12023-4.html
+Relevance: Free Cisco documentation covering LACP and PAgP EtherChannel configuration. Understanding how link aggregation interacts with STP is a Network+ exam topic covered in this module.
+
+**5. Fluke Networks — Cable Testing Reference Guides (Free)**
+URL: https://www.flukenetworks.com/knowledge-base
+Relevance: Fluke Networks provides free technical guides covering cable test parameters (insertion loss, NEXT, return loss) that are tested on the Network+ exam in the context of diagnosing copper and fiber cabling faults.
+
+---
+
 *CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash*

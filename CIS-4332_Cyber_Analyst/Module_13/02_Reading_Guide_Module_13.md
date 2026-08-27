@@ -235,6 +235,22 @@ The exam tests compliance and controls validation at several specific levels:
 
 ---
 
+## 9. Supplemental Resources
+
+**1. NIST Cybersecurity Framework v2.0 — Official Documentation**
+<https://www.nist.gov/cyberframework>
+The authoritative source for NIST CSF v2.0, which added the Govern function and updated guidance across Identify, Protect, Detect, Respond, and Recover. The site includes the full framework core, implementation tiers, profiles, and quick-start guides by organization type. For the exam, the ability to map an organizational activity to the correct CSF function is a high-frequency question type — this resource provides the primary reference material for that skill.
+
+**2. CIS Controls v8 — Center for Internet Security**
+<https://www.cisecurity.org/controls/v8>
+The definitive reference for all 18 CIS Controls and their associated Safeguards, including Implementation Group (IG1/IG2/IG3) assignments. Each Control includes a "why" statement, asset type, security function, and specific Safeguards with activity descriptions. For compliance and gap analysis work, this resource is the mapping authority — exam questions regularly present a security gap and ask which CIS Safeguard addresses it. The free download requires registration.
+
+**3. CISA Cybersecurity Performance Goals (CPGs)**
+<https://www.cisa.gov/cross-sector-cybersecurity-performance-goals>
+CISA's voluntary baseline security practices for critical infrastructure, cross-walked to NIST CSF and CIS Controls. The CPGs represent the minimum security baseline that CISA recommends all organizations achieve regardless of sector. Reviewing the CPG table reinforces the practical application of compliance frameworks — mapping CPG items to their parent NIST CSF function and CIS Control Safeguard builds the multi-framework translation skill tested in CySA+ Domain 2 and Domain 3 scenario questions.
+
+---
+
 ## Required Resources
 
 - NIST Cybersecurity Framework v2.0 — nist.gov/cyberframework (free)

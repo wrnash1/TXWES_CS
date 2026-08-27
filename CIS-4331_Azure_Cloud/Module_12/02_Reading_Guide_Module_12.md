@@ -321,3 +321,13 @@ az account management-group list \
 ---
 
 Module 12 Reading Guide | CIS-4331 Azure Cloud | Texas Wesleyan University
+
+---
+
+## 9. Supplemental Resources
+
+1. Azure Policy documentation — overview of policy definitions, initiatives, assignments, and compliance evaluation: https://learn.microsoft.com/en-us/azure/governance/policy/overview
+
+2. Management Groups documentation — organizing subscriptions into a hierarchy for unified governance and policy inheritance: https://learn.microsoft.com/en-us/azure/governance/management-groups/overview
+
+3. Microsoft Purview data governance documentation — scanning, classifying, and cataloging data assets across hybrid and multi-cloud environments: https://learn.microsoft.com/en-us/purview/purview

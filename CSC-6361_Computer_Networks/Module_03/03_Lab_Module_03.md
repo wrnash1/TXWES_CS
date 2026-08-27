@@ -190,3 +190,25 @@ Repeat on BRANCH-B-R with router-id 3.3.3.3 and network 192.168.30.0.
 | OSPF over GRE (Part 4) | 25 |
 | End-to-End Verification (Part 5) | 15 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Convert Hub-and-Spoke to Partial Mesh with IKEv2
+Extend the existing topology by adding a direct GRE tunnel between BRANCH-A-R and BRANCH-B-R (bypassing HQ-R), converting the design from hub-and-spoke to partial mesh:
+1. Add Tunnel2 on BRANCH-A-R (source: Gi0/0, destination: 10.0.2.1) with tunnel IP 172.16.3.1/30, and a matching Tunnel2 on BRANCH-B-R with IP 172.16.3.2/30.
+2. Configure IPsec between BRANCH-A-R and BRANCH-B-R using a new crypto map entry and ACL matching GRE traffic between 10.0.1.1 and 10.0.2.1.
+3. Add OSPF network statements for the 172.16.3.0/30 tunnel subnet on both branch routers.
+4. Verify: traceroute from PC-A to PC-B should now show a direct path (BRANCH-A → BRANCH-B) instead of routing through HQ. Capture `show ip ospf neighbor` on BRANCH-A-R confirming three OSPF neighbors (HQ-R and BRANCH-B-R).
+
+### Challenge 2: MTU Troubleshooting with Wireshark Simulation
+Investigate the effect of MTU mismatch on the GRE/IPsec tunnel using Packet Tracer's simulation mode:
+1. Temporarily remove `ip mtu 1400` and `ip tcp adjust-mss 1360` from HQ-R's Tunnel0 interface.
+2. Use Packet Tracer simulation mode to send a large ICMP packet (set the ping repeat count to 5 and size to 1400 bytes using extended ping) from PC-HQ to PC-A. Observe whether fragmentation or drops occur.
+3. Re-apply `ip mtu 1400` and `ip tcp adjust-mss 1360`. Repeat the test and compare results.
+4. Document in your lab report: what specific field in the IP header does the router examine to determine whether to fragment, and what happens when a packet has the Don't Fragment (DF) bit set and exceeds the tunnel MTU?
+
+### Reflection Questions
+1. In the hub-and-spoke GRE/IPsec design, all branch-to-branch traffic traverses HQ-R twice (branch→HQ→branch). What is the quantitative latency impact of this design if HQ-R is located 30ms away from each branch, and how does DMVPN Phase 3 solve this specific problem without requiring pre-configured spoke-to-spoke tunnels?
+2. The lab uses IKEv1 (ISAKMP) due to Packet Tracer limitations. In a production deployment, what are three specific technical advantages of IKEv2 over IKEv1, and which advantage is most relevant to a large enterprise deploying hundreds of branch VPN tunnels?

@@ -144,6 +144,22 @@ CVSS Base Score factors: Attack Vector, Attack Complexity, Privileges Required, 
 
 ---
 
+## 9. Supplemental Resources
+
+**1. OWASP Top 10 — 2021 Edition**
+<https://owasp.org/www-project-top-ten/>
+The authoritative ranked list of the ten most critical web application security risks, maintained by the Open Web Application Security Project. Directly maps to the injection, XSS, IDOR, SSRF, and security misconfiguration vulnerabilities covered in Module 03, and provides detailed descriptions, attack scenarios, and prevention guidance for each category.
+
+**2. OWASP Web Security Testing Guide (WSTG)**
+<https://owasp.org/www-project-web-security-testing-guide/>
+A comprehensive open-source guide for testing web application security. Use it to understand how testers identify SQL injection, XSS, CSRF, directory traversal, and SSRF in practice — directly reinforcing the Module 03 vulnerability recognition and defense content tested on SY0-701.
+
+**3. NIST National Vulnerability Database (NVD) — CVE Search**
+<https://nvd.nist.gov/vuln/search>
+The US government repository of vulnerability data using the CVE standard and CVSS scoring. Search for real CVE entries for SQL injection, buffer overflow, or XSS to see how CVSS scores are assigned to each factor (Attack Vector, Complexity, Privileges Required) covered in Module 03 Section 7, and to observe the relationship between vulnerability class and severity score.
+
+---
+
 ## 9. Security+ Exam Tips for Module 03
 
 **Exam Tip 1:** SQL injection fix = parameterized queries (prepared statements). Input filtering alone is easily bypassed. Stored procedures alone are insufficient unless they also use parameters.

@@ -173,4 +173,20 @@ This objective explicitly lists SQL injection, XSS, command injection, directory
 
 ---
 
+---
+
+## 9. Supplemental Resources
+
+**1. PortSwigger Web Security Academy — SQL Injection and XSS Labs**
+[https://portswigger.net/web-security/sql-injection](https://portswigger.net/web-security/sql-injection)
+PortSwigger's free Web Security Academy provides hands-on browser-based labs for every SQL injection and XSS variant covered in Module 10 — union-based injection, blind injection, reflected XSS, stored XSS, and JavaScript context injection. Labs include automated grading and hints. Completing the apprentice and practitioner tiers directly reinforces all Module 10 lab skills.
+
+**2. HackTricks — Web Application Penetration Testing Techniques**
+[https://book.hacktricks.xyz/pentesting-web/web-vulnerabilities-methodology](https://book.hacktricks.xyz/pentesting-web/web-vulnerabilities-methodology)
+HackTricks is a comprehensive community-maintained reference for web application attack techniques, including file inclusion, path traversal, CSRF, mass assignment, and SSRF. It provides real-world payloads, bypass techniques, and detection guidance in a format directly applicable to professional penetration testing and PT0-002 Domain 3 exam preparation.
+
+**3. OWASP Testing Guide — Web Application Security Testing**
+[https://owasp.org/www-project-web-security-testing-guide/](https://owasp.org/www-project-web-security-testing-guide/)
+The OWASP Web Security Testing Guide provides formal test case methodology for every vulnerability class in Module 10, including test objective, how to test, and remediation guidance for each. It is the authoritative reference document used by professional penetration testers and provides the testing methodology that the PT0-002 exam scenarios are based on.
+
 *End of Module 10 Reading Guide*

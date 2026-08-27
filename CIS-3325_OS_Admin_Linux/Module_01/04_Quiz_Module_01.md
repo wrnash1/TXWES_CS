@@ -214,6 +214,206 @@ D. Guest Additions
 
 ---
 
+### Question 11 (5 points)
+
+Which of the following is NOT one of the four essential freedoms defined by the Free Software Foundation?
+
+A. The freedom to run the program for any purpose.
+B. The freedom to study and modify the source code.
+C. The freedom to charge any price for the software.
+D. The freedom to distribute copies of your modified versions.
+
+**Correct Answer: C**
+
+**Distractor Analysis**:
+
+- **A** is incorrect as a "not" question — Freedom 0 is explicitly the freedom to run the program for any purpose.
+- **B** is incorrect as a "not" question — Freedom 1 is the freedom to study and change the source code, which requires access to the source.
+- **C** is correct as a "not" question. The four freedoms (0–3) cover running, studying, redistributing, and distributing modifications. Setting a price is permitted but is not itself one of the four defined freedoms.
+- **D** is incorrect as a "not" question — Freedom 3 is the freedom to distribute copies of your modified versions to others.
+
+---
+
+### Question 12 (5 points)
+
+What is the primary purpose of the `/etc/os-release` file on a Linux system?
+
+A. To store the root user's password hash.
+B. To define default environment variables for all users.
+C. To provide machine-readable distribution identification information.
+D. To list all installed packages and their versions.
+
+**Correct Answer: C**
+
+**Distractor Analysis**:
+
+- **A** is incorrect — password hashes are stored in `/etc/shadow` (or `/etc/passwd` on very old systems). `/etc/os-release` has nothing to do with authentication.
+- **B** is incorrect — system-wide environment variables are typically set in `/etc/environment` or `/etc/profile`. `/etc/os-release` contains only distribution metadata.
+- **C** is correct. `/etc/os-release` contains key=value pairs identifying the distribution name, version, and ID. It is the standard way for scripts to detect which Linux distribution they are running on.
+- **D** is incorrect — installed package lists are managed by the package manager (dpkg, rpm). You would use `dpkg -l` or `rpm -qa` to list packages, not read `/etc/os-release`.
+
+---
+
+### Question 13 (5 points)
+
+The `uname -a` command is run on a Linux system and returns output that includes `x86_64`. What does this indicate?
+
+A. The system is running a 32-bit operating system.
+B. The processor architecture is 64-bit AMD/Intel compatible.
+C. The kernel version is 64 bits long as a binary number.
+D. The system has 64 GB of installed RAM.
+
+**Correct Answer: B**
+
+**Distractor Analysis**:
+
+- **A** is incorrect — `x86_64` specifically indicates a 64-bit architecture, not 32-bit. A 32-bit x86 system would show `i386` or `i686`.
+- **B** is correct. `x86_64` (also written as `amd64`) is the 64-bit extension of the x86 instruction set. It is the dominant architecture for modern servers and desktops.
+- **C** is incorrect — the kernel version is expressed as a text string (e.g., `6.5.0-21-generic`), not a binary number. The architecture field is separate.
+- **D** is incorrect — `uname -a` does not report RAM. The `free -h` or `cat /proc/meminfo` commands show memory information.
+
+---
+
+### Question 14 (5 points)
+
+Which of the following commands displays only the username of the currently logged-in user?
+
+A. `id`
+B. `whoami`
+C. `hostname`
+D. `pwd`
+
+**Correct Answer: B**
+
+**Distractor Analysis**:
+
+- **A (id)** is incorrect — the `id` command displays the user ID (UID), group ID (GID), and all group memberships. It includes more information than just the username.
+- **B (whoami)** is correct. The `whoami` command prints only the effective username of the current user — nothing else.
+- **C (hostname)** is incorrect — `hostname` prints the system's hostname, not the logged-in username.
+- **D (pwd)** is incorrect — `pwd` prints the current working directory path, not any user information.
+
+---
+
+### Question 15 (5 points)
+
+A student wants to understand what a Linux command does before running it. Which command should they use first?
+
+A. `info`
+B. `man`
+C. `help`
+D. `explain`
+
+**Correct Answer: B**
+
+**Distractor Analysis**:
+
+- **A (info)** is incorrect as the primary answer — `info` is the GNU documentation reader and provides more verbose documentation for some commands. However, `man` (the manual) is the standard, universally available first resource and is tested on the Linux+ exam.
+- **B (man)** is correct. `man <command>` opens the manual page for a command. Man pages are available on every Linux system and are the authoritative reference for command syntax, options, and behavior.
+- **C (help)** is incorrect — `help` only works for bash built-in commands (like `cd`, `echo`, `export`). It does not provide documentation for external programs.
+- **D (explain)** is incorrect — there is no standard Linux command named `explain`. This is a distractor.
+
+---
+
+### Question 16 (5 points)
+
+In the context of Linux virtualization labs, what is the primary advantage of taking a VirtualBox snapshot BEFORE making major system changes?
+
+A. It compresses the VM's virtual disk to save space.
+B. It allows you to restore the VM to a known-good state if changes cause problems.
+C. It automatically backs up the VM to cloud storage.
+D. It speeds up the VM by caching its current memory state.
+
+**Correct Answer: B**
+
+**Distractor Analysis**:
+
+- **A** is incorrect — snapshots actually consume additional disk space because they store the delta (changes) from the previous state. They do not compress the virtual disk.
+- **B** is correct. The primary purpose of a pre-change snapshot is recovery. If a configuration change breaks the system, you can restore the snapshot in seconds and return to the working state.
+- **C** is incorrect — VirtualBox snapshots are stored locally on the host filesystem. They do not sync to any cloud service unless you separately back up the VM folder.
+- **D** is incorrect — snapshots do not improve VM performance. Saving a snapshot pauses the VM briefly and increases overall disk usage.
+
+---
+
+### Question 17 (5 points)
+
+Which of the following best describes the role of a bootloader such as GRUB2?
+
+A. It manages running processes after the operating system has started.
+B. It provides a graphical desktop environment for the user.
+C. It locates the kernel on disk, loads it into memory, and passes control to it.
+D. It handles network configuration during the boot process.
+
+**Correct Answer: C**
+
+**Distractor Analysis**:
+
+- **A** is incorrect — managing running processes is the kernel's job, assisted by init systems like systemd. GRUB2 exits after handing off to the kernel.
+- **B** is incorrect — graphical desktop environments (GNOME, KDE) are userspace applications. GRUB2 typically displays a text menu and has no desktop role.
+- **C** is correct. GRUB2 (Grand Unified Bootloader version 2) reads the filesystem, locates the Linux kernel image, loads it into RAM, and transfers execution to it. GRUB2 also allows selecting different kernels or boot parameters.
+- **D** is incorrect — network configuration during a running system is handled by systemd-networkd, NetworkManager, or netplan. GRUB2 does not configure networking.
+
+---
+
+### Question 18 (5 points)
+
+A sysadmin checks the output of `df -h` and sees that the root filesystem (`/`) is at 94% usage. What is the most immediate concern?
+
+A. The kernel will automatically compress old files to reclaim space.
+B. The system may become unstable or services may fail if the filesystem fills completely.
+C. The system will automatically delete the oldest log files.
+D. The `/tmp` directory will be automatically cleared by the OS.
+
+**Correct Answer: B**
+
+**Distractor Analysis**:
+
+- **A** is incorrect — Linux does not automatically compress files to reclaim space. Compression must be explicitly configured (e.g., via filesystem-level compression with Btrfs or ZFS, which is not the default).
+- **B** is correct. A full root filesystem is a critical emergency. Many services (databases, web servers, logging daemons) write to disk and will fail or crash if they cannot write. SSH may even refuse new connections if certain log or lock files cannot be created.
+- **C** is incorrect — Linux does not automatically delete old log files in response to disk pressure. `logrotate` can be configured to manage log rotation on a schedule, but it does not trigger automatically when the disk is full.
+- **D** is incorrect — while `/tmp` is often mounted as `tmpfs` (RAM-backed) on modern systems, it is a separate filesystem from `/`. Even if `/tmp` is automatically cleaned (some systems clean it at boot), that does not affect the root filesystem's usage.
+
+---
+
+### Question 19 (5 points)
+
+What command would you run to display how long a Linux system has been running since its last boot?
+
+A. `ps aux`
+B. `top`
+C. `uptime`
+D. `last`
+
+**Correct Answer: C**
+
+**Distractor Analysis**:
+
+- **A (ps aux)** is incorrect — `ps aux` lists all currently running processes. It does not report system uptime directly.
+- **B (top)** is incorrect — while the `top` command does display uptime in its header, the dedicated command for displaying uptime is `uptime`. On the Linux+ exam, use the most specific command.
+- **C (uptime)** is correct. The `uptime` command prints the current time, how long the system has been running, the number of logged-in users, and the 1-, 5-, and 15-minute load averages.
+- **D (last)** is incorrect — `last` shows a history of user logins and system reboots by reading `/var/log/wtmp`. It can show when the system was last rebooted but does not directly report current uptime.
+
+---
+
+### Question 20 (5 points)
+
+Which of the following statements about the Linux kernel is TRUE?
+
+A. The Linux kernel is licensed under the MIT License, allowing proprietary forks.
+B. The Linux kernel is a monolithic kernel that includes drivers and system call handling.
+C. The Linux kernel runs entirely in userspace for security isolation.
+D. The Linux kernel was first released in 2001 by the Linux Foundation.
+
+**Correct Answer: B**
+
+**Distractor Analysis**:
+
+- **A** is incorrect — the Linux kernel is licensed under GPL v2, which is a copyleft license. It cannot be incorporated into proprietary software without releasing derivative source code.
+- **B** is correct. Linux is a monolithic kernel — the core kernel, device drivers, and filesystem code run together in kernel space as a single large program. This contrasts with microkernels (like Mach) that run drivers in userspace.
+- **C** is incorrect — the kernel runs in privileged kernel space, not userspace. User programs run in userspace and must use system calls to request kernel services. Running the kernel in userspace would defeat the purpose of kernel privilege separation.
+- **D** is incorrect — the Linux kernel was first released in 1991 by Linus Torvalds, a Finnish university student. The Linux Foundation was not founded until 2000 and does not own the kernel.
+
+---
+
 ### Answer Key
 
 | Question | Answer |
@@ -228,3 +428,13 @@ D. Guest Additions
 | 8 | D |
 | 9 | B |
 | 10 | C |
+| 11 | C |
+| 12 | C |
+| 13 | B |
+| 14 | B |
+| 15 | B |
+| 16 | B |
+| 17 | C |
+| 18 | B |
+| 19 | C |
+| 20 | B |

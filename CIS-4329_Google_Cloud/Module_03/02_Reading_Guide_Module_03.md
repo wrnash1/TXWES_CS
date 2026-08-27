@@ -401,3 +401,23 @@ When GCP preempts a VM, the VM receives a 30-second shutdown signal
 - Instance groups: cloud.google.com/compute/docs/instance-groups
 - Preemptible VMs: cloud.google.com/compute/docs/instances/preemptible
 - Spot VMs: cloud.google.com/compute/docs/instances/spot
+
+## 9. Supplemental Resources
+
+**1. Google Cloud Documentation — Compute Engine Machine Families**
+<https://cloud.google.com/compute/docs/machine-resource>
+Complete reference for all machine families (E2, N2, C2, M2, A2, etc.),
+including vCPU/memory ranges, supported features, and guidance on choosing
+the right family for your workload type.
+
+**2. Google Cloud Skills Boost — Creating Virtual Machines**
+<https://www.cloudskillsboost.google/focuses/3563>
+Hands-on lab covering VM creation with various machine types, disk
+configurations, and startup scripts. Includes tasks on instance groups and
+autoscaling directly relevant to the ACE exam.
+
+**3. Google Cloud Documentation — Managed Instance Groups**
+<https://cloud.google.com/compute/docs/instance-groups/creating-groups-of-managed-instances>
+Official guide covering MIG creation, rolling updates, autohealing, and
+autoscaling configuration with detailed examples for both zonal and regional
+MIG deployments.

@@ -272,3 +272,33 @@ Submit a single document to Canvas containing:
   correctly. Use the Lab_15_Seed.sh script from Canvas to replant them and restart from Part 2.
 - **sha256sum not available**: On some minimal Kali builds, use `openssl dgst -sha256
   filename` as an alternative.
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Incomplete Cleanup Scenario Analysis
+
+A teammate's engagement log from a prior session lists the following artifacts as "removed" but their cleanup verification column is blank:
+
+- A cron job at `/etc/cron.d/recon_cron`
+- A local account named `svctest01`
+- A web shell at `/var/www/html/uploads/shell.php`
+
+Working in your authorized Metasploitable 2 lab environment:
+
+1. Use the seed script (`Lab_15_Seed.sh`) to plant all three artifacts on the target, then run the appropriate verification commands for each to confirm they are present before cleanup begins.
+2. Remove each artifact and re-run the verification command after each removal to produce before-and-after evidence. Capture terminal output for each step.
+3. Draft an updated cleanup attestation entry for each artifact using the table format from Part 5, filling in the Cleanup Action and Status After Cleanup columns with the specific command used and the verified result.
+4. Write a brief paragraph (50–75 words) explaining why a blank verification column in a teammate's cleanup log is a professional liability — not just an administrative gap — and what process you would recommend to prevent it in future engagements.
+
+### Challenge 2: Retest Scope Boundary Scenario
+
+During a retest of FIND-003 (an authenticated remote code execution in the client's web portal), you discover a new unauthenticated SQL injection vulnerability in a login form that was not part of the original engagement.
+
+1. Document how you would correctly classify the remediation status of FIND-003 based on the retest result, and draft the one-paragraph finding update that would appear in the retest report.
+2. Write the two-to-three sentence professional communication you would send to the client contact notifying them of the newly discovered SQL injection finding — explaining why it cannot be included in the current retest report and what the next steps are.
+3. Record both outputs (the FIND-003 retest update and the client notification) in your submission document with clear section headings.
+
+### Reflection Questions
+
+1. A retest authorization document scopes the tester to "verify remediation of FIND-001 through FIND-006 from the original report dated March 15." During the retest you discover a new critical vulnerability unrelated to any original finding. What methodology principle governs whether you can test it, and how does the engagement documentation structure protect both you and the client in this situation?
+2. If a client's legal counsel contacts you directly — bypassing your engagement manager — and asks you to remove a finding from the report before it is submitted to their board, what ethical and legal considerations govern your response, and which professional standard or framework supports your position?

@@ -328,3 +328,67 @@ Submit your Packet Tracer .pka file through the course LMS. Include screenshots 
 1. WLC Monitor > Access Points with both APs showing Registered status
 2. WLC Monitor > Clients showing both laptops with correct VLAN assignments
 3. Ping output from Laptop-1 demonstrating VLAN isolation
+
+---
+
+## Part 9 — Challenge Exercise
+
+This optional challenge extends the lab to CCNA exam difficulty. Complete all steps and include deliverables in your submission for up to 20 bonus points.
+
+### Challenge Step 1: Configure a Third WLAN with WPA2-Enterprise Authentication
+
+Add a third WLAN (SSID: CORP-SECURE) that uses WPA2-Enterprise with 802.1X authentication, requiring clients to authenticate against a RADIUS server before gaining network access. In Packet Tracer, add a RADIUS server to the topology and connect it to SW1.
+
+Configure the RADIUS server:
+
+- Server IP: 10.0.0.50
+- Shared secret: WLC-RADIUS-KEY
+- Add a test user: Username `student1` / Password `S3cur3Pass`
+
+Configure the RADIUS server on the WLC:
+
+Navigate to WLC GUI: Security > AAA > RADIUS > Authentication. Add the RADIUS server with the shared secret. Then create the third WLAN:
+
+- SSID: CORP-SECURE
+- Security: WPA2-Enterprise
+- RADIUS server: 10.0.0.50
+- Map to VLAN 10 (same as CORP-WLAN for this exercise)
+
+Connect Laptop-3 to CORP-SECURE using the `student1` credentials. Verify successful authentication using WLC Monitor > Clients. Document the authentication method shown for Laptop-3 and explain in 2–3 sentences why WPA2-Enterprise is preferred over WPA2-PSK for corporate deployments with named user accounts.
+
+### Challenge Step 2: Configure FlexConnect Mode on One AP
+
+Change AP2 from Local mode to FlexConnect mode and configure local switching for the CORP-WLAN on that AP. This simulates a remote branch scenario where AP2's client traffic should be switched locally rather than tunneled through the WLC.
+
+In the WLC GUI, navigate to Wireless > Access Points > AP2 > Advanced. Change the AP mode to FlexConnect. Then configure FlexConnect Local Switching for the WLAN:
+
+Navigate to WLANs > CORP-WLAN > Advanced. Enable FlexConnect Local Switching and FlexConnect Local Auth.
+
+Verify the change:
+
+```text
+(WLC)> show ap config general AP2
+(WLC)> show flexconnect group summary
+```
+
+Connect a client to AP2 and verify that traffic is locally switched by checking the client entry in WLC Monitor > Clients — the data switching mode should show "Local." Document the AP mode change and explain in 3–4 sentences the operational difference between data centrally switched through the WLC (Local mode) and locally switched directly to the LAN (FlexConnect), including when each is appropriate.
+
+### Challenge Step 3: Implement WLAN Security Hardening
+
+Apply security hardening to the wireless infrastructure addressing three common wireless attack vectors:
+
+**Management Frame Protection (MFP):** Enable Infrastructure MFP on the WLC to protect 802.11 management frames (deauthentication, disassociation) from spoofing attacks:
+
+Navigate to WLC GUI: Security > Wireless Protection Policies > AP Authentication Policy. Enable MFP Infrastructure.
+
+**SSID Cloaking (evaluate the tradeoff):** Configure the GUEST-WLAN SSID to be hidden (broadcast SSID disabled):
+
+Navigate to WLANs > GUEST-WLAN > General. Uncheck "Broadcast SSID."
+
+Attempt to connect Laptop-2 to GUEST-WLAN after hiding the SSID. Document whether the client can still connect by manually specifying the SSID. Then re-enable SSID broadcast.
+
+**Client Isolation:** Enable client isolation on GUEST-WLAN to prevent wireless clients from communicating with each other:
+
+Navigate to WLANs > GUEST-WLAN > Advanced. Enable "P2P Blocking" (peer-to-peer blocking).
+
+Connect two laptops to GUEST-WLAN and attempt to ping between them. Document that the ping fails due to client isolation. Explain in 3–4 sentences: (1) why hiding the SSID is considered security theater rather than real protection, (2) what client isolation prevents and why it is important for guest wireless networks, and (3) what MFP protects against and what attack it specifically mitigates.

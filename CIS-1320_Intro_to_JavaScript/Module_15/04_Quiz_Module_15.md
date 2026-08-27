@@ -4,7 +4,7 @@
 
 **Certification Alignment:** JSE — Certified Associate in JavaScript Programming (OpenEDG / JS Institute)
 
-**Instructions:** Choose the single best answer for each question.
+**Instructions:** Choose the single best answer for each question. Each question is worth 5 points (20 questions × 5 points = 100 points).
 
 ---
 
@@ -259,3 +259,252 @@ What is logged?
 - *Why B is correct:* When a class extends `Error` and does not override `this.name`, the `name` property is inherited from `Error.prototype`, which has the value `'Error'`. The subclass name is not automatically inferred from the class declaration — it must be set explicitly with `this.name = 'NetworkError'` inside the constructor.
 - *Why C is incorrect:* `name` is not `undefined`. It is inherited from `Error.prototype.name`, which has the default string value `'Error'`.
 - *Why D is incorrect:* No error is thrown when reading `err.name`. The property exists on the prototype chain and returns `'Error'` as a string.
+
+---
+
+### Question 11
+
+What is the output of the following code?
+
+```javascript
+function test() {
+  try {
+    throw new RangeError('out of bounds');
+  } catch (err) {
+    console.log(err.name + ': ' + err.message);
+    return 'caught';
+  } finally {
+    console.log('finally');
+  }
+}
+
+console.log(test());
+```
+
+- A) `'RangeError: out of bounds'`, `'caught'`
+- B) `'RangeError: out of bounds'`, `'finally'`, `'caught'`
+- C) `'finally'`, `'RangeError: out of bounds'`, `'caught'`
+- D) `'finally'`, `'caught'`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `finally` always runs. It executes before the function returns — even when `catch` has a `return` statement.
+- *Why B is correct:* Execution flows: (1) `try` throws, (2) `catch` logs `'RangeError: out of bounds'` and prepares to `return 'caught'`, (3) `finally` runs and logs `'finally'` before the return takes effect, (4) the function returns `'caught'`, which `console.log(test())` prints.
+- *Why C is incorrect:* `finally` does not run before `catch`. The `catch` block executes first (because the throw occurred), then `finally` runs before the function actually returns.
+- *Why D is incorrect:* `catch` logs the error message before returning. `err.name + ': ' + err.message` is logged as the first line of output.
+
+---
+
+### Question 12
+
+A developer writes the following `catch` block. What is wrong with it?
+
+```javascript
+try {
+  fetchData();
+} catch (err) {
+  // do nothing
+}
+```
+
+- A) The `catch` block is missing a return statement
+- B) The empty `catch` block silently suppresses all errors — including unexpected ones
+- C) An empty `catch` block causes a `SyntaxError`
+- D) The `catch` block must rethrow `err` to prevent memory leaks
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `catch` blocks are not required to have a `return` statement. The issue is not about return values.
+- *Why B is correct:* An empty `catch` block is called "swallowing" an error. When an unexpected bug occurs (for example, a `TypeError` in `fetchData`), the error is silently ignored. No error appears in the console and no feedback is given. This is one of the most common anti-patterns in JavaScript error handling.
+- *Why C is incorrect:* An empty `catch` block is syntactically valid JavaScript. No error is thrown at parse time.
+- *Why D is incorrect:* Not rethrowing `err` does not cause memory leaks. The issue is logical — bugs are hidden, not memory-related.
+
+---
+
+### Question 13
+
+What is the output of the following code?
+
+```javascript
+function risky() {
+  try {
+    return 'try';
+  } finally {
+    return 'finally';
+  }
+}
+
+console.log(risky());
+```
+
+- A) `'try'`
+- B) `'finally'`
+- C) `'try'` then `'finally'`
+- D) `undefined`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* When `finally` also contains a `return` statement, the `finally` return overrides the `try` return. The `return 'try'` is discarded.
+- *Why B is correct:* `finally` always runs. If `finally` contains a `return` statement, that value replaces any `return` from the `try` or `catch` block. `risky()` returns `'finally'`.
+- *Why C is incorrect:* Only one value is returned. `console.log` is only called once with the function's single return value.
+- *Why D is incorrect:* The function does return a value — `'finally'`. `undefined` would only result from a function with no return statement.
+
+---
+
+### Question 14
+
+Which error type would be thrown by `new Array(4294967296)` (a value exceeding the maximum allowed array length)?
+
+- A) `TypeError`
+- B) `OverflowError`
+- C) `RangeError`
+- D) `SyntaxError`
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `TypeError` is for type mismatches — for example, calling a non-function or accessing a property on null. Passing an oversized number to `Array()` is not a type mismatch; the argument is a valid number, just outside the allowed range.
+- *Why B is incorrect:* `OverflowError` does not exist as a standard JavaScript error type. The six built-in types are `SyntaxError`, `ReferenceError`, `TypeError`, `RangeError`, `URIError`, and `EvalError`.
+- *Why C is correct:* `RangeError` is thrown when a value is outside the legal range for an operation. The maximum length for a JavaScript array is `2^32 - 1` (4,294,967,295). Passing a value larger than this to `new Array()` throws `RangeError: Invalid array length`.
+- *Why D is incorrect:* `SyntaxError` is a parse-time error. The code `new Array(4294967296)` is syntactically valid — the error only occurs at runtime when the array length is evaluated.
+
+---
+
+### Question 15
+
+A developer wants to log a message only when a condition is false — without stopping execution. Which is the correct tool?
+
+- A) `throw new Error('condition failed')`
+- B) `console.assert(condition, 'condition failed')`
+- C) `console.error('condition failed')` inside an `if (!condition)` block
+- D) Both B and C achieve the same result
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `throw` stops execution and requires a `catch` handler. It is the right tool for errors that the program cannot continue from — not for development-time sanity checks.
+- *Why B is correct:* `console.assert(condition, message)` logs a styled error message to the console (similar to `console.error`) only when `condition` is falsy. Execution continues normally in all cases. This is the purpose-built method for this exact pattern.
+- *Why C is incorrect:* `console.error` inside an `if` block also works, but it requires wrapping in a conditional and is less concise. The question asks for the correct tool designed for this purpose.
+- *Why D is incorrect:* B and C are not equivalent. `console.assert` is a single-expression check with built-in assertion semantics. C uses two lines and a conditional. They produce similar output but B is the idiomatic, purpose-built approach.
+
+---
+
+### Question 16
+
+What error type does `undeclaredVariable` throw (when `undeclaredVariable` has never been declared)?
+
+- A) `TypeError`
+- B) `ReferenceError`
+- C) `SyntaxError`
+- D) `EvalError`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `TypeError` occurs when an operation is invalid for the value's type. Accessing an undeclared variable is not a type issue — it is a name lookup failure.
+- *Why B is correct:* `ReferenceError` is thrown when the JavaScript engine cannot resolve a variable name — the identifier does not exist in any accessible scope. Accessing a variable that was never declared with `var`, `let`, or `const` produces: `ReferenceError: undeclaredVariable is not defined`.
+- *Why C is incorrect:* `SyntaxError` prevents the script from parsing. Using an undeclared identifier is syntactically valid JavaScript (it looks like any other variable name). The error only appears at runtime when the engine tries to resolve the name.
+- *Why D is incorrect:* `EvalError` relates specifically to misuse of the `eval()` function and is rarely thrown in modern JavaScript engines.
+
+---
+
+### Question 17
+
+What does the following code print?
+
+```javascript
+class AppError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = 'AppError';
+  }
+}
+
+const e = new AppError('test');
+console.log(e instanceof Error);
+console.log(e instanceof AppError);
+console.log(e.name);
+```
+
+- A) `false`, `true`, `'AppError'`
+- B) `true`, `true`, `'Error'`
+- C) `true`, `true`, `'AppError'`
+- D) `true`, `false`, `'AppError'`
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `e instanceof Error` is `true` because `AppError extends Error`, making every `AppError` also an instance of `Error` through the prototype chain.
+- *Why B is incorrect:* `e.name` is `'AppError'` because the constructor explicitly sets `this.name = 'AppError'`. Without that line it would be `'Error'`, but the line is present here.
+- *Why C is correct:* `e instanceof Error` is `true` (via prototype chain). `e instanceof AppError` is `true` (direct construction). `e.name` is `'AppError'` (explicitly set in the constructor). All three are correct.
+- *Why D is incorrect:* `e instanceof AppError` is `true` — the object was constructed with `new AppError(...)`. It is an instance of its own class.
+
+---
+
+### Question 18
+
+Which DevTools stepping action should you use to execute the current line and then move to the next line in the same function — without stepping into any called function?
+
+- A) Step Into (F11)
+- B) Step Out (Shift+F11)
+- C) Step Over (F10)
+- D) Resume (F8)
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Step Into (F11) moves into the body of any function called on the current line. If the current line calls `processData()`, Step Into takes you into `processData`'s code.
+- *Why B is incorrect:* Step Out (Shift+F11) completes the rest of the current function and returns you to its caller. It does not advance line-by-line.
+- *Why C is correct:* Step Over (F10) executes the current line entirely (including any function calls on that line) and pauses on the next line in the current function. Functions called on that line run in their entirety without pausing inside them.
+- *Why D is incorrect:* Resume (F8) continues execution until the next breakpoint or the program ends. It does not advance by one line.
+
+---
+
+### Question 19
+
+Which statement about `SyntaxError` is correct?
+
+- A) It can be caught with `try/catch` anywhere in your code
+- B) It is thrown at runtime when a type operation fails
+- C) It prevents the entire script from parsing and executing
+- D) It only occurs inside `eval()` calls
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* A `SyntaxError` in the top-level script prevents the script from running at all — there is no way to wrap the script's own syntax in `try/catch`. `SyntaxError` can only be caught in `try/catch` when it occurs inside an `eval()` call, which is parsed at runtime.
+- *Why B is incorrect:* That is `TypeError`. `SyntaxError` is a parse-time error caused by malformed code structure.
+- *Why C is correct:* When the JavaScript engine encounters a `SyntaxError` while parsing your script, it aborts parsing and does not execute any code in that script. The error appears in the console but no user-defined code runs.
+- *Why D is incorrect:* While `SyntaxError` from `eval()` can be caught (because `eval` is called at runtime), most `SyntaxError` occurrences happen when loading the script file — before any code runs. The restriction to `eval()` is a special case, not the general rule.
+
+---
+
+### Question 20
+
+A developer uses the Watch panel in Chrome DevTools to evaluate the expression `order.items.length` while paused at a breakpoint. What does this do?
+
+- A) Permanently stores `order.items.length` as a variable in the current scope
+- B) Evaluates the expression in the current scope every time execution pauses and displays the result
+- C) Sets a conditional breakpoint that triggers when `order.items.length` changes
+- D) Logs `order.items.length` to the console on every line of execution
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Watch expressions do not modify the scope or create variables. They are read-only evaluations for display purposes.
+- *Why B is correct:* The Watch panel accepts any JavaScript expression. Each time execution pauses (at a breakpoint, after a step), DevTools re-evaluates all Watch expressions in the current scope and displays their values. This lets you track the value of complex expressions without adding `console.log` calls.
+- *Why C is incorrect:* That is a conditional breakpoint — set by right-clicking a line number and entering a condition. The Watch panel only evaluates and displays; it does not trigger pauses.
+- *Why D is incorrect:* Watch expressions are only evaluated when execution is paused. They do not run continuously or log to the console during normal execution.

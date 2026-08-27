@@ -532,3 +532,45 @@ Due date: See course calendar.
 *End of Lab — Module 16*
 
 *Texas Wesleyan University — CIS-3310 IT Project Management*
+
+---
+
+## Part 9 — Challenge Exercise
+
+This section is optional for students seeking additional depth and exam preparation. It is not graded as part of the standard 100-point lab but may be used for extra credit at the instructor's discretion.
+
+### Challenge Step 1: Cross-Domain Scenario Analysis
+
+Read the following scenario and answer the questions that follow.
+
+A municipal government has contracted an IT firm to implement a new permitting system. The project is 10 months into a 14-month schedule. The current EVM data is: BAC = $850,000, PV = $607,000, EV = $510,000, AC = $595,000. The project team has identified three open risks rated High on the probability-impact matrix, two of which were escalated from Medium in the previous risk review. The vendor recently requested a scope change adding online payment integration; the change was verbally approved by the deputy director but has not gone through the ICC process. Three team members have been reassigned to an emergency infrastructure project mid-sprint.
+
+Answer all four questions:
+
+(a) Calculate SPI, CPI, CV, and EAC (assuming current performance continues). State in plain language whether the project is in trouble and on which dimensions.
+
+(b) The verbal scope approval by the deputy director — what specific risk does this create, and what must the PM do immediately?
+
+(c) The three risk escalations from Medium to High — what process should have been triggered, and which risk response strategy is most appropriate for a risk you cannot control (e.g., a regulatory change)?
+
+(d) The mid-sprint team reassignment — which Agile principle does this violate if the team is using Scrum, and what governance mechanism should the PM invoke to protect sprint capacity?
+
+### Challenge Step 2: Project Closure Checklist and Lessons Learned Entry
+
+You are closing the permitting system project from Challenge Step 1. Draft two deliverables:
+
+**Deliverable A — Administrative Closure Checklist**: List at least eight line items required for formal project closure. For each, specify the responsible party and the verification artifact (sign-off form, archived document, system entry, etc.).
+
+**Deliverable B — Lessons Learned Entry**: Write one complete lessons learned entry in the format: Situation (what happened), Cause (why it happened), Effect (what it cost the project in time, money, or quality), Recommendation (what a future PM should do differently). Base your entry on the unauthorized scope change scenario from Challenge Step 1. This entry should be written as if it will be stored in the organizational OPA repository and read by a PM who knows nothing about this project.
+
+### Challenge Step 3: Personal Exam Readiness Action Plan
+
+Using your Part 1 mock exam results and Part 2.1 gap analysis, build a structured 30-day study plan for the CompTIA Project+ exam. Your plan must include:
+
+- Your target exam date (specific calendar date, at least 14 days from today)
+- Your two weakest domains based on mock exam performance
+- For each weak domain: three specific study actions (e.g., re-read Module 10 reading guide, complete three EVM practice problem sets, watch Professor Messer Domain 2 videos)
+- One timed practice exam you will complete by Day 20
+- A final review checklist of the ten highest-frequency exam topics from across all 16 modules
+
+Format your plan as a structured table with columns: Day Range, Activity, Resource, Completion Criteria. This exercise directly mirrors the professional development planning competency tested in Project+ Domain 1.

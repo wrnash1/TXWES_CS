@@ -253,6 +253,30 @@ Watch episodes 3 and 4 of the [Python for Everybody Course Playlist](https://www
 
 ---
 
+## 9. Supplemental Resources
+
+**1. Official Python 3 Docs — Built-in Types**
+[https://docs.python.org/3/library/stdtypes.html](https://docs.python.org/3/library/stdtypes.html)
+The authoritative reference for all built-in types including `int`, `float`, `bool`, `str`, and `NoneType`. Sections on numeric types cover truthiness, arithmetic operations, and type hierarchy. Essential bookmarked reading for the PCAP exam.
+
+**2. Python for Everybody — Chapter 2: Variables, Expressions and Statements**
+[https://www.py4e.com/html3/02-variables](https://www.py4e.com/html3/02-variables)
+Dr. Severance's free textbook chapter directly aligned to Module 02 topics. Covers literals, operators, order of operations, and type conversions with clear examples and practice exercises.
+
+**3. Real Python — Operators and Expressions in Python**
+[https://realpython.com/python-operators-expressions/](https://realpython.com/python-operators-expressions/)
+A comprehensive free article covering all Python operators, precedence rules, and associativity with worked examples. The section on augmented assignment operators previews content from Module 03.
+
+**4. Python Docs — Floating Point Arithmetic: Issues and Limitations**
+[https://docs.python.org/3/tutorial/floatingpoint.html](https://docs.python.org/3/tutorial/floatingpoint.html)
+The official explanation of why `0.1 + 0.2 != 0.3`. Essential reading for understanding IEEE 754 binary floating-point and why you should never use `==` to compare floats. This page is directly referenced in PCAP study materials.
+
+**5. Wikipedia — IEEE 754 Floating-Point Standard (Simplified Overview)**
+[https://en.wikipedia.org/wiki/IEEE_754](https://en.wikipedia.org/wiki/IEEE_754)
+Background reading on the binary floating-point standard that governs Python's `float` type. The "Basic and interchange formats" section explains double-precision (64-bit) format used by Python. Understanding this removes all mystery from float imprecision issues.
+
+---
+
 ## 8. Study Checklist
 
 Work through in order:

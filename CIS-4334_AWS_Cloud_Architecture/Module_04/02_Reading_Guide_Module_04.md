@@ -432,3 +432,19 @@ aws s3 presign s3://my-bucket/myfile.pdf \
 ## References
 
 All certification study materials and exam registration: <aws.amazon.com/certification>
+
+---
+
+## 9. Supplemental Resources
+
+**1. AWS Documentation — Amazon S3 Storage Classes**
+https://docs.aws.amazon.com/AmazonS3/latest/userguide/storage-class-intro.html
+Official AWS documentation covering all S3 storage classes, minimum storage durations, retrieval fees, and use cases — the authoritative reference for SAA-C03 storage class selection questions.
+
+**2. AWS Skill Builder — Amazon S3 Storage and Data Management (Free Digital Course)**
+https://skillbuilder.aws/learn/course/external/view/elearning/497/amazon-s3-storage-and-data-management
+Free course covering S3 fundamentals, access control, lifecycle management, encryption, and replication — directly supporting Module 04 exam preparation.
+
+**3. AWS Documentation — S3 Object Lock Overview**
+https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock-overview.html
+Comprehensive guide to S3 Object Lock Governance and Compliance modes, retention policies, and legal hold — essential for understanding WORM compliance requirements tested on the SAA-C03 exam.

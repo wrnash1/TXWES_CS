@@ -315,4 +315,22 @@ Reconnect with `sudo openvpn username.ovpn`. TryHackMe machines time out after a
 
 ---
 
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Privilege Escalation Path Documentation
+
+On your authorized Metasploitable 2 target (or a TryHackMe privilege escalation room machine), enumerate all available privilege escalation vectors using at least three different enumeration methods: manual SUID search (`find / -perm -4000 2>/dev/null`), sudo permissions (`sudo -l`), and world-writable cron jobs (`ls -la /etc/cron* /var/spool/cron/`). For each vector you discover, create a structured entry documenting: the vector name and category (SUID, sudo misconfiguration, weak permissions, etc.), the exact command that reveals the vulnerability, the exploitation command or steps, the privilege level obtained, the ATT&CK technique identifier (from TA0004 Privilege Escalation), and the remediation recommendation. Format your entries as a table. This exercise practices the systematic enumeration approach that produces comprehensive privilege escalation findings in real engagements.
+
+### Challenge 2: Post-Exploitation Impact Chain
+
+After achieving root/SYSTEM access on your authorized target, document a complete post-exploitation impact chain demonstrating what a real attacker could accomplish. Your chain must include at minimum: credential collection (reading `/etc/shadow` or dumping hashes), identification of at least one lateral movement opportunity (another host reachable from the compromised system), one persistence mechanism installed AND removed (with before/after screenshots confirming cleanup), and a data discovery step (identifying what sensitive files or directories are accessible from the root context). Write a 250-word narrative framing this chain as it would appear in the "Attack Narrative" section of a professional penetration test report — describing each step in terms of business impact rather than technical jargon.
+
+### Reflection Questions
+
+1. Your escalation from a low-privileged web shell to root took three steps: SUID Python exploitation, reading `/etc/shadow`, and finding a cron job with a writable script path. Map each step to its corresponding MITRE ATT&CK tactic and technique ID. Then explain why understanding ATT&CK mappings improves the quality of your penetration test report — specifically how it helps the client's defensive security team prioritize remediation and detect similar attacks in the future.
+
+2. A client's security team asks you to leave your persistence mechanism in place for an additional two weeks after the engagement end date so they can "test their detection capabilities." Using the legal and professional framework from Modules 01 and 02, explain why you must decline this request, what risks it creates for you personally, and what the correct process is for the client to authorize an extended access exercise.
+
 **Proprietary and Confidential. Not for disclosure outside of Texas Wesleyan University course use.**

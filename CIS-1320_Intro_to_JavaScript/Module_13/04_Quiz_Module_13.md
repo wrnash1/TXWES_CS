@@ -4,7 +4,7 @@
 
 **Certification Alignment:** JSE — Certified Associate in JavaScript Programming (OpenEDG / JS Institute)
 
-**Instructions:** Choose the single best answer for each question.
+**Instructions:** Choose the single best answer for each question. Each question is worth 5 points (20 questions × 5 points = 100 points).
 
 ---
 
@@ -232,3 +232,246 @@ A developer needs to fetch data from three independent API endpoints and use all
 - *Why B is correct:* `Promise.all([fetch(url1), fetch(url2), fetch(url3)])` starts all three requests at the same time. They run concurrently (the browser sends all three requests simultaneously). Total wait time equals the duration of the slowest single request, not their sum. This is the correct pattern for independent parallel operations.
 - *Why C is incorrect:* Staggering requests with `setTimeout` adds artificial delay and still does not make the requests overlap in a coordinated way. `Promise.all` is the right tool.
 - *Why D is incorrect:* `setInterval` is for repeating operations, not for making a single efficient parallel request. Retry logic is a separate concern from parallel loading.
+
+---
+
+### Question 11
+
+What is the output of the following code?
+
+```javascript
+console.log('start');
+
+Promise.resolve('done').then(v => console.log(v));
+
+console.log('end');
+```
+
+- A) `start`, `done`, `end`
+- B) `start`, `end`, `done`
+- C) `done`, `start`, `end`
+- D) `start`, `end`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Promise callbacks (microtasks) do not interrupt synchronous execution. `console.log('end')` is synchronous and runs before any Promise `.then` callback executes.
+- *Why B is correct:* `'start'` logs synchronously first. `Promise.resolve('done').then(...)` schedules the `.then` callback as a microtask — it is deferred until after all current synchronous code finishes. `'end'` logs synchronously. Then the microtask queue runs and logs `'done'`.
+- *Why C is incorrect:* `'done'` is deferred as a microtask. It cannot log before the synchronous `console.log('start')`.
+- *Why D is incorrect:* `'done'` does eventually log — after the synchronous code completes, the microtask queue drains and the `.then` callback runs.
+
+---
+
+### Question 12
+
+What does `Promise.allSettled([p1, p2, p3])` return when `p2` rejects?
+
+- A) A rejected Promise with `p2`'s error
+- B) A fulfilled Promise with an array of result objects for all three, indicating each outcome
+- C) A fulfilled Promise with the results of `p1` and `p3` only
+- D) It throws a `TypeError` because mixed fulfilled/rejected arrays are not allowed
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `Promise.allSettled` never rejects. Unlike `Promise.all`, it waits for all Promises to settle regardless of outcome and always fulfills.
+- *Why B is correct:* `Promise.allSettled` waits for all Promises to complete, then fulfills with an array of objects — one per Promise — each with `{ status: 'fulfilled', value }` or `{ status: 'rejected', reason }`. This allows you to inspect every outcome individually.
+- *Why C is incorrect:* `Promise.allSettled` includes a result object for every Promise, including the rejected one. It does not filter out rejections.
+- *Why D is incorrect:* `Promise.allSettled` is specifically designed for mixed outcomes. No error is thrown. It is the go-to method when you need results from all operations regardless of individual failures.
+
+---
+
+### Question 13
+
+What does `await` do to the calling context when it encounters an unsettled Promise?
+
+- A) It blocks the entire JavaScript thread until the Promise resolves
+- B) It pauses only the `async` function — the event loop continues processing other tasks
+- C) It converts the Promise to a synchronous value immediately
+- D) It throws a `SyntaxError` if the Promise is still pending
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* JavaScript is single-threaded but non-blocking. `await` does not freeze the thread. The async function is suspended, but other event handlers and microtasks can run while it waits.
+- *Why B is correct:* `await` suspends execution of the `async` function at that line and yields control back to the event loop. The event loop continues running other queued callbacks and microtasks until the awaited Promise settles, then resumes the `async` function with the resolved value.
+- *Why C is incorrect:* `await` cannot convert an asynchronous operation to a synchronous value — it merely provides syntax that reads that way. The underlying mechanism is still asynchronous.
+- *Why D is incorrect:* A pending Promise is the normal case for `await`. `await` is designed to wait for pending Promises — that is its entire purpose. No error is thrown.
+
+---
+
+### Question 14
+
+What does the following code log?
+
+```javascript
+async function run() {
+  return 'hello';
+}
+
+const result = run();
+console.log(typeof result);
+```
+
+- A) `'string'`
+- B) `'undefined'`
+- C) `'object'`
+- D) `'promise'`
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `run()` does not return the string `'hello'` directly. The `async` keyword wraps the return value in a Promise. `typeof Promise` is `'object'`, not `'string'`.
+- *Why B is incorrect:* `result` is a Promise object — it is not `undefined`. `typeof undefined` is `'undefined'`, but a Promise instance is a defined value.
+- *Why C is correct:* An `async` function always returns a Promise. `typeof` a Promise instance is `'object'` (Promises are objects). The resolved value is `'hello'`, but `result` itself is the Promise wrapper.
+- *Why D is incorrect:* `typeof` does not return `'promise'`. The possible values of `typeof` are `'undefined'`, `'boolean'`, `'number'`, `'bigint'`, `'string'`, `'symbol'`, `'function'`, and `'object'`. There is no `'promise'` type.
+
+---
+
+### Question 15
+
+A developer writes an `async` function without a `try/catch`. Inside, `await fetch(url)` throws due to a network error. What happens?
+
+- A) The error is silently ignored
+- B) The program crashes with an uncaught exception
+- C) The `async` function returns a rejected Promise with the error
+- D) The `async` function returns `undefined`
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Errors thrown inside `async` functions are not silently discarded. They become rejections in the returned Promise.
+- *Why B is incorrect:* The error does not immediately crash the program. It produces a rejected Promise. If the caller does not handle the rejected Promise (no `.catch` and no `try/catch` at the call site), modern JavaScript environments will emit an `UnhandledPromiseRejectionWarning` — but the function itself just returns a rejected Promise.
+- *Why C is correct:* Any uncaught `throw` (including a rejected `await`) inside an `async` function causes the function's returned Promise to reject with the thrown value. The caller can handle it with `.catch()` or by `await`-ing inside a `try/catch`.
+- *Why D is incorrect:* The function does not return `undefined` — it returns a rejected Promise. `undefined` would only be the resolved value if the function returned nothing and succeeded.
+
+---
+
+### Question 16
+
+Which method waits for the first Promise to fulfill (ignoring rejections until all have rejected)?
+
+- A) `Promise.all`
+- B) `Promise.race`
+- C) `Promise.allSettled`
+- D) `Promise.any`
+
+**Correct Answer:** D
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `Promise.all` resolves when ALL Promises fulfill and rejects as soon as any one rejects. It does not ignore individual rejections.
+- *Why B is incorrect:* `Promise.race` settles with the first Promise to settle — fulfilled OR rejected. If the first to settle is a rejection, `race` rejects immediately.
+- *Why C is incorrect:* `Promise.allSettled` waits for all Promises to settle and never rejects. It fulfills with all outcomes, not just the first fulfillment.
+- *Why D is correct:* `Promise.any` fulfills as soon as any one Promise fulfills. If some Promises reject, they are ignored as long as at least one fulfills. It only rejects if every Promise in the array rejects (with an `AggregateError`).
+
+---
+
+### Question 17
+
+What is the purpose of `clearInterval(id)` in the following code?
+
+```javascript
+let count = 0;
+const id = setInterval(() => {
+  count++;
+  if (count >= 5) clearInterval(id);
+}, 1000);
+```
+
+- A) It pauses the interval temporarily
+- B) It cancels all pending timers in the program
+- C) It stops the specific interval from firing additional callbacks
+- D) It resets `count` to zero
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `clearInterval` permanently cancels the interval — there is no way to resume it. If you need to pause and resume, you would need to cancel it and create a new `setInterval`.
+- *Why B is incorrect:* `clearInterval(id)` only cancels the specific interval identified by `id`. Other intervals and timeouts are unaffected.
+- *Why C is correct:* `clearInterval(id)` cancels the interval timer identified by `id`. After this call, no more callbacks are scheduled. The specific condition here cancels the interval after 5 ticks.
+- *Why D is incorrect:* `clearInterval` has no effect on variables. `count` retains its current value — `5` — after the interval is cancelled.
+
+---
+
+### Question 18
+
+What is wrong with the following code?
+
+```javascript
+function loadData() {
+  const data = await fetch('/api/data').then(r => r.json());
+  return data;
+}
+```
+
+- A) `fetch` cannot be used with `.then` and `await` simultaneously
+- B) `await` can only be used inside a function declared with the `async` keyword
+- C) `.then` is not a valid method on a fetch response
+- D) `return data` will return `undefined` because `await` is not a valid keyword here
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Mixing `await` with `.then` is valid inside an `async` function — though redundant. The issue here is not the combination but the missing `async` keyword.
+- *Why B is correct:* `await` is only valid inside functions declared with `async`. Using `await` inside a regular function declaration causes a `SyntaxError`. The fix is to add `async` before `function loadData()`.
+- *Why C is incorrect:* `.then` is valid on a Promise, and `fetch` returns a Promise. `fetch(...).then(r => r.json())` is perfectly valid syntax.
+- *Why D is incorrect:* The actual error is a `SyntaxError` at parse time — the code never executes. `data` would not be `undefined`; the script would fail to run at all.
+
+---
+
+### Question 19
+
+After calling `clearTimeout(timerId)`, what happens if the callback's delay had not yet expired?
+
+- A) The callback fires once immediately before being cancelled
+- B) The callback is scheduled to fire at the next available opportunity
+- C) The callback never fires — the timer is permanently cancelled
+- D) `clearTimeout` only works if called before `setTimeout`
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `clearTimeout` does not trigger an early firing. The callback is simply discarded — it never runs.
+- *Why B is incorrect:* `clearTimeout` permanently cancels the timer. There is no rescheduling or delayed execution. The callback is dropped entirely.
+- *Why C is correct:* `clearTimeout(timerId)` cancels the pending timer. If the delay has not yet expired, the callback will never be called. If the delay has already expired and the callback is already in the queue, `clearTimeout` may or may not prevent it from running depending on whether the event loop has already dequeued it — but typically, calling `clearTimeout` before the callback runs is sufficient to cancel it.
+- *Why D is incorrect:* `clearTimeout` is designed to be called after `setTimeout` and before the callback fires. That is its normal usage.
+
+---
+
+### Question 20
+
+A developer writes the following code and notices the requests fire one after the other, not simultaneously:
+
+```javascript
+async function loadAll() {
+  const u = await fetch('/api/user').then(r => r.json());
+  const p = await fetch('/api/posts').then(r => r.json());
+  const c = await fetch('/api/comments').then(r => r.json());
+  return { u, p, c };
+}
+```
+
+Which refactoring makes all three requests run concurrently?
+
+- A) Use `setTimeout` to start each request at the same time
+- B) Move the `await` keywords outside the `async` function
+- C) Use `Promise.all` to start all three `fetch` calls before awaiting any of them
+- D) Use `setInterval` to repeat the requests until all three respond
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `setTimeout` staggers callbacks by time but does not guarantee concurrent execution and adds unnecessary complexity. `Promise.all` is the correct tool.
+- *Why B is incorrect:* `await` cannot be used outside `async` functions. This would cause a `SyntaxError`.
+- *Why C is correct:* The sequential version awaits each request before starting the next. The fix is: `const [u, p, c] = await Promise.all([fetch('/api/user').then(r => r.json()), fetch('/api/posts').then(r => r.json()), fetch('/api/comments').then(r => r.json())]);` — all three `fetch` calls start simultaneously, and `Promise.all` waits for all three to complete.
+- *Why D is incorrect:* `setInterval` repeats operations on a timer. It is not a mechanism for concurrent parallel requests.

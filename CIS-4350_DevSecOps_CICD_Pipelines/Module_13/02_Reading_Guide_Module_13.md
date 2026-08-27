@@ -297,4 +297,17 @@ Before attempting the Module 13 quiz, confirm you can do the following without r
 
 ---
 
+## 9. Supplemental Resources
+
+**1. [Open Policy Agent documentation — Rego language reference](https://www.openpolicyagent.org/docs/latest/policy-language/)**
+The official OPA documentation for the Rego policy language, covering rule types (complete, incremental, partial), the `input` document, `with` keyword for test mocking, built-in functions (`contains`, `endswith`, `sprintf`, `count`), and the `not` operator. The definitive reference for writing and debugging Rego policies.
+
+**2. [OPA Gatekeeper policy library](https://github.com/open-policy-agent/gatekeeper-library)**
+The community-maintained library of pre-built Gatekeeper ConstraintTemplates and Constraints covering Kubernetes security baselines, PSA equivalence, PCI-DSS controls, and resource governance. Provides working examples of ConstraintTemplate structure, Rego constraint logic, and Constraint resource format that can be used as starting points for custom organizational policies.
+
+**3. [Conftest documentation and examples](https://www.conftest.dev/)**
+The official Conftest documentation covering installation, `conftest test` usage, `--policy` and `--all-namespaces` flags, supported input formats (YAML, JSON, HCL, Dockerfile, CUE), `--output github` for PR annotations, and how to share policies using OPA bundles. Includes worked examples for Kubernetes manifest validation, Terraform plan evaluation, and Dockerfile compliance checking.
+
+---
+
 *CIS-4350 DevSecOps and CI/CD Pipelines | Texas Wesleyan University | Professor Nash*

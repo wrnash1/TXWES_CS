@@ -341,3 +341,19 @@ Reference: learn.microsoft.com/en-us/cli/azure/account
 - [ ] Take Quiz Module 02
 - [ ] Post Discussion Module 02 initial post by Wednesday 11:59 PM
 - [ ] Respond to two classmates by Sunday 11:59 PM
+
+---
+
+## 9. Supplemental Resources
+
+**1. Microsoft Learn — Azure regions and Availability Zones**
+https://learn.microsoft.com/en-us/azure/reliability/availability-zones-overview
+Comprehensive overview of Availability Zones architecture, zone-enabled services, and the SLA improvements achieved by zone-redundant deployments. Includes interactive diagrams of the zone topology.
+
+**2. Microsoft Learn — Cross-region replication in Azure**
+https://learn.microsoft.com/en-us/azure/reliability/cross-region-replication-azure
+Full list of Azure region pairs, explanation of why region pairs exist, and the benefits they provide for planned maintenance, geo-redundant storage, and disaster recovery prioritization.
+
+**3. Microsoft Learn — Organize and manage multiple Azure subscriptions**
+https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/organize-subscriptions
+Cloud Adoption Framework guidance on designing subscription and management group hierarchies for enterprise environments, with decision trees for subscription design patterns.

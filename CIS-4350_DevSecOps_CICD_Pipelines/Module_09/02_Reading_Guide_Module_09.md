@@ -159,3 +159,20 @@ The principle of least privilege in secrets management mirrors RBAC least privil
 - [ ] Review the OWASP Secrets Management Cheat Sheet at [https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html](https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html).
 - [ ] Complete the Module 09 lab activity.
 - [ ] Attempt all 10 quiz questions and review distractor analysis for any incorrect answers.
+
+---
+
+## 9. Supplemental Resources
+
+**1. [HashiCorp Vault documentation — getting started and secrets engines](https://developer.hashicorp.com/vault/docs)**
+The official Vault documentation covering all authentication methods, secrets engines (KV, database, AWS, PKI), policies, audit logging, and dynamic secrets. Essential reference for all hands-on Vault configuration tasks in this module.
+
+**2. [AWS Secrets Manager developer guide](https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html)**
+Official AWS documentation covering secret creation, automatic rotation with Lambda, OIDC-based IAM role access, cross-account access, and cost model. Includes worked examples for RDS credential rotation and ECS task role integration.
+
+**3. [GitHub Actions — using secrets and OIDC with cloud providers](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions)**
+GitHub's guide to secrets management in Actions, covering secret scoping (repository, environment, organization), OIDC federation setup for AWS and Azure, secret masking in logs, and security hardening recommendations.
+
+---
+
+Reading Guide — Module 09 | CIS-4350 | Texas Wesleyan University | Professor Nash

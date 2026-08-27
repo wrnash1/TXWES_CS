@@ -366,4 +366,20 @@ Microsoft's Azure AI certification path progresses from foundational to expert l
 
 ---
 
-*Reading Guide Line Count: 265 | Module 15 — Emerging AI Technologies*
+## Supplemental Resources
+
+**1. Microsoft AutoGen — Multi-Agent Conversation Framework (official documentation)**
+<https://microsoft.github.io/autogen/>
+The official AutoGen documentation covering agent roles, conversation patterns, human-in-the-loop configurations, and code execution agents. Directly supports the agentic AI section of Module 15 and provides runnable examples for building multi-agent systems with safety controls.
+
+**2. Flower — Federated Learning Framework (official documentation)**
+<https://flower.dev/docs/>
+Flower is a popular open-source federated learning framework used in both research and production. Its documentation covers FedAvg implementation, non-IID data simulation, privacy-preserving aggregation, and deployment across heterogeneous devices — extending the federated learning simulation in the Module 15 lab.
+
+**3. EU Artificial Intelligence Act — Full Legislative Text (Official Journal of the EU)**
+<https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689>
+The complete text of the EU AI Act as adopted in 2024. Includes the risk tier definitions, prohibited AI practices, high-risk system requirements, and obligations for general-purpose AI models. Essential reference for the regulatory landscape section of Module 15 and for understanding how emerging AI technologies are governed in the EU.
+
+---
+
+Reading Guide Line Count: 265 | Module 15 — Emerging AI Technologies

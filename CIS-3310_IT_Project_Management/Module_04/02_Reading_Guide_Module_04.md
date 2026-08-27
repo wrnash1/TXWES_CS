@@ -216,3 +216,29 @@ Complete the following before the lab and quiz:
 - [ ] Complete the Module 04 Lab CPM calculation exercises
 - [ ] Take the Module 04 Quiz
 - [ ] Post Module 04 Discussion initial response by Wednesday at 11:59 PM
+
+---
+
+## 9. Supplemental Resources
+
+The following free, openly licensed resources extend the concepts in this module. All links are publicly accessible — no account or purchase required.
+
+1. **Project Management Open Textbook — Chapter 6: Schedule Management**
+   *BC Campus OpenEd* — [opentextbc.ca/projectmanagement — Chapter 6](https://opentextbc.ca/projectmanagement/chapter/chapter-6-project-time-management/)
+   Covers activity sequencing, network diagrams, critical path method, and schedule compression. Includes step-by-step CPM examples.
+
+2. **YouTube — "Critical Path Method Explained" (Practical PM)**
+   [youtube.com/watch?v=4oDLMs11Exs](https://www.youtube.com/watch?v=4oDLMs11Exs)
+   Clear visual walkthrough of the forward pass, backward pass, and float calculation — essential preparation for the Module 04 lab calculations.
+
+3. **PMI — Practice Standard for Scheduling (Overview)**
+   *Project Management Institute* — [pmi.org/pmbok-guide-standards/practice-guides/scheduling](https://www.pmi.org/pmbok-guide-standards/practice-guides/scheduling)
+   Official PMI scheduling guidance covering PDM dependencies, float types, and schedule baseline development.
+
+4. **Gantt Chart Tutorial — ProjectManager.com (Free)**
+   [projectmanager.com/blog/gantt-chart-a-complete-guide](https://www.projectmanager.com/blog/gantt-chart-a-complete-guide)
+   Comprehensive free guide to Gantt chart construction, reading milestone markers, and communicating schedule information to stakeholders.
+
+5. **PERT/CPM Calculator — PM Study Circle**
+   [pmstudycircle.com/pert-cpm](https://pmstudycircle.com/pert-and-cpm/)
+   Interactive examples and formula drills for PERT three-point estimating and CPM float calculations — excellent practice before the quiz.

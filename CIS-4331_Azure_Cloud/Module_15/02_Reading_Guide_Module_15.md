@@ -319,3 +319,13 @@ Azure supports GDPR compliance through the Data Processing Addendum (contractual
 ---
 
 *Texas Wesleyan University — CIS-4331 Azure Cloud Computing — Module 15 Reading Guide*
+
+---
+
+## 9. Supplemental Resources
+
+1. Microsoft Service Trust Portal — downloadable audit reports, compliance guides, and shared responsibility matrices for ISO 27001, SOC 2, PCI DSS, FedRAMP, HIPAA, and other frameworks: https://servicetrust.microsoft.com
+
+2. Azure compliance documentation — overview of compliance offerings, regulatory frameworks supported, and compliance resources by industry and region: https://learn.microsoft.com/en-us/azure/compliance/
+
+3. Microsoft Purview compliance portal documentation — data classification, sensitivity labels, compliance score, and regulatory compliance assessment tools: https://learn.microsoft.com/en-us/purview/purview-compliance-portal

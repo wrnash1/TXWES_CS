@@ -191,3 +191,29 @@ Complete the following before the lab and quiz:
 - [ ] Complete the Module 03 Lab activity
 - [ ] Take the Module 03 Quiz
 - [ ] Post Module 03 Discussion initial response by Wednesday at 11:59 PM
+
+---
+
+## 9. Supplemental Resources
+
+The following free, openly licensed resources extend the concepts in this module. All links are publicly accessible — no account or purchase required.
+
+1. **Project Management Open Textbook — Chapter 5: Scope Management**
+   *BC Campus OpenEd* — [opentextbc.ca/projectmanagement — Chapter 5](https://opentextbc.ca/projectmanagement/chapter/chapter-5-project-scope-management/)
+   Covers the full Scope Management knowledge area including WBS construction, scope verification, and scope control. Includes worked examples applicable to IT projects.
+
+2. **PMI — Practice Standard for Work Breakdown Structures (Free Overview)**
+   *Project Management Institute* — [pmi.org/pmbok-guide-standards/practice-guides/wbs](https://www.pmi.org/pmbok-guide-standards/practice-guides/wbs)
+   PMI's official guidance on WBS best practices including the 100% Rule, decomposition depth, and WBS Dictionary requirements.
+
+3. **WBS Tutorial — Lucidchart (Free)**
+   [lucidchart.com/blog/work-breakdown-structure](https://www.lucidchart.com/blog/work-breakdown-structure)
+   Visual guide to building a WBS with examples across multiple project types. Includes templates usable with the free tier of Lucidchart.
+
+4. **YouTube — "Work Breakdown Structure Explained" (Mike Clayton / OnlinePMCourses)**
+   [youtube.com/watch?v=_OIcFkjGBO8](https://www.youtube.com/watch?v=_OIcFkjGBO8)
+   A 12-minute video walkthrough of WBS structure, the 100% Rule, and WBS Dictionary creation. Directly supports the Module 03 lab.
+
+5. **Scope Creep vs. Gold Plating — PM Study Circle**
+   [pmstudycircle.com/scope-creep-vs-gold-plating](https://pmstudycircle.com/scope-creep-vs-gold-plating/)
+   Concise explanation of the difference between scope creep and gold plating with exam-focused examples. Targets one of the most commonly missed distinctions on the Project+ exam.

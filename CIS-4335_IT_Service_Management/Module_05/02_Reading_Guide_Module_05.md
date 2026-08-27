@@ -250,3 +250,19 @@ The ITIL 4 SVC is explicitly non-linear and non-sequential. This is the single m
 * [ ] Take the Module 05 Quiz.
 * [ ] Post your initial discussion response by Wednesday at 11:59 PM.
 * [ ] Reply to at least two classmates by Sunday at 11:59 PM.
+
+---
+
+## Supplemental Resources
+
+**1. AXELOS — ITIL 4 Service Value Chain**
+<https://www.axelos.com/resource-hub/blog/itil-4-service-value-chain>
+Official AXELOS description of the six SVC activities, their purposes, and how they combine into value streams. Essential reference for the Foundation exam section on SVC activity identification.
+
+**2. IT Process Wiki — Value Stream Mapping in ITSM**
+<https://wiki.en.it-processmaps.com/index.php/Value_Stream_Mapping>
+A practitioner guide to value stream mapping as applied to IT service management workflows. Includes examples of how SVC activities appear in real-world service delivery value streams.
+
+**3. Atlassian — Incident Management Best Practices**
+<https://www.atlassian.com/incident-management/incident-response>
+A detailed practitioner resource covering the full incident management lifecycle from detection through post-incident review. Directly maps to the Deliver and Support and Improve SVC activities that are central to this module.

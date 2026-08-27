@@ -396,6 +396,28 @@ Answer these questions in writing after completing the lab. Submit with your lab
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Scheduled Disk Space Alert
+Create a cron job and supporting script that monitors disk usage and alerts when a threshold is exceeded:
+1. Write a script `/usr/local/bin/disk_alert.sh` that checks the usage percentage of the root filesystem (`df /` parsed with `awk`) and appends a warning line to `/var/log/disk_alert.log` if usage exceeds 80%.
+2. Add a crontab entry to run the script every 15 minutes using step syntax.
+3. Manually trigger the script and confirm the log file is written correctly.
+4. Use `grep CRON /var/log/syslog` to confirm cron records the execution after the next 15-minute mark.
+
+### Challenge 2: systemd Timer with Dependency Guard
+Extend the systemd timer from Part 5 to add a dependency check before the main task runs:
+1. Modify the `lab13-timer-demo.service` unit to include a `ConditionPathExists=/tmp/timer_enabled` check in the `[Unit]` section — the service should only run when that file exists.
+2. Create `/tmp/timer_enabled` and verify the timer fires on the next cycle and writes to `/tmp/timer_demo.log`.
+3. Remove `/tmp/timer_enabled` and confirm the timer skips execution on the following cycle (check `journalctl -u lab13-timer-demo.service -n 5` for the condition skip message).
+4. Run `systemd-analyze calendar "*:0/2"` to validate the OnCalendar expression and note the next scheduled time shown in the output.
+
+### Reflection Questions
+1. A script runs perfectly when executed manually as root but produces no output and no error when run by cron at the same schedule. List three distinct root causes and the specific diagnostic step to confirm each one.
+2. Your organization runs application servers that are rebooted for patching every Sunday night. A daily database backup cron job is scheduled at 2 AM every day. Should you use cron, anacron, or a systemd timer with `Persistent=true` for this backup job, and why? What would happen to the Sunday-night backup under each approach?
+
+---
+
 ### Cleanup
 
 ```bash

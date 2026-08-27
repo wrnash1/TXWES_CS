@@ -247,6 +247,22 @@ For the exam, know these forensic topics precisely:
 
 ---
 
+## 9. Supplemental Resources
+
+**1. Volatility Foundation — Plugin Documentation and Cheat Sheet**
+<https://volatilityfoundation.org/the-volatility-framework/>
+The official Volatility documentation and plugin reference. The key plugins for this module — `pslist`, `pstree`, `netscan`, `cmdline`, `filescan`, `malfind`, `dlllist`, and `procdump` — each have dedicated documentation explaining their output format and forensic interpretation. Working through example plugin outputs in the documentation builds the pattern recognition needed for memory forensics exam questions.
+
+**2. Eric Zimmerman's Forensic Tools**
+<https://ericzimmerman.github.io/>
+A collection of free, open-source Windows forensic tools by DFIR practitioner Eric Zimmerman, including tools for parsing Prefetch files (PECmd), Registry hives (RECmd), Jump Lists, and Shellbags. Even without a live lab environment, reviewing the tool documentation illustrates what each Windows artifact contains and proves — directly reinforcing Section 4 of this guide.
+
+**3. SANS — Windows Forensic Analysis Poster**
+<https://www.sans.org/posters/windows-forensics-evidence-of/>
+A free single-page reference poster summarizing Windows forensic artifacts organized by attacker activity type (execution, account usage, file access, network activity, persistence). This is the most efficient study aid for connecting artifact names (Prefetch, ShimCache, Amcache, RecentDocs, Shellbags) to what attacker behavior each artifact reveals — precisely the structure of CySA+ forensics scenario questions.
+
+---
+
 ## Required Resources
 
 - Volatility Foundation documentation — volatilityfoundation.org

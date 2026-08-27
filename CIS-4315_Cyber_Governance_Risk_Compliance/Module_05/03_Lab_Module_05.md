@@ -194,3 +194,57 @@ Write a paragraph (75–100 words) explaining why documenting residual risk is a
 ## Academic Integrity Notice
 
 Your treatment recommendations, control selections, and cost-benefit analyses must reflect your own reasoning. For the cost-benefit calculations, there is one mathematically correct answer — show your work so partial credit can be awarded for correct methodology even if arithmetic errors occur. Cite any external sources consulted beyond course materials.
+
+---
+
+## Part 9 — Challenge Exercise
+
+These challenges extend the Module 05 lab into advanced risk treatment and control governance scenarios. Complete both challenges and the reflection questions for up to 15 bonus points.
+
+---
+
+### Challenge 1: Risk Treatment Portfolio Optimization
+
+Hartland Financial Services has identified seven risks through its annual assessment. The CISO must allocate a fixed $400,000 annual control budget across available treatment options. Use the data below to build a cost-optimized treatment portfolio.
+
+| Risk ID | ALE (Current) | Available Control | Annual Control Cost | ALE After Control | Notes |
+|---------|--------------|-------------------|--------------------|--------------------|-------|
+| RF-01 | $310,000 | WAF + input validation | $48,000 | $62,000 | Regulatory fine exposure if exploited |
+| RF-02 | $175,000 | Cyber insurance policy | $38,000 | $0 (transferred) | Residual covered by policy |
+| RF-03 | $520,000 | EDR + immutable backup | $72,000 | $78,000 | Ransomware risk |
+| RF-04 | $95,000 | Enhanced background checks | $12,000 | $28,500 | Insider threat |
+| RF-05 | $40,000 | Accept (no control) | $0 | $40,000 | Within appetite |
+| RF-06 | $230,000 | PAM solution | $55,000 | $34,500 | Privileged account abuse |
+| RF-07 | $180,000 | Vendor security assessment program | $35,000 | $54,000 | Third-party supply chain risk |
+
+**Step 1**: Calculate the net annual benefit (ALE reduction minus control cost) for each risk where a control is available. Identify which individual controls are cost-justified on their own merits.
+
+**Step 2**: Hartland's board has defined a risk appetite threshold of $100,000 ALE. Identify which risks exceed this threshold before and after control implementation. For risks that remain above the threshold after their available control is applied, recommend a secondary treatment action (accept with formal documentation, transfer via additional insurance, or escalate for budget increase).
+
+**Step 3**: Working within the $400,000 budget constraint, select the combination of controls that maximizes total ALE reduction. Show your selection logic — which controls did you include, which did you exclude, and why? Present your final portfolio as a table showing: Risk ID, Treatment Selected, Annual Cost, ALE Before, ALE After, Net Benefit.
+
+---
+
+### Challenge 2: Compensating Control Design and Documentation
+
+Hartland Financial Services is subject to PCI DSS v4.0 and has a legacy wire transfer system that cannot be upgraded for 18 months due to vendor constraints. The system fails three PCI DSS requirements:
+
+- Requirement 8.3.6 (minimum password complexity — system enforces only 6-character passwords, not the required 12)
+- Requirement 10.3.3 (audit log backups to external media — system logs only to local disk)
+- Requirement 7.2.1 (access control system enforcing least privilege — system uses shared service accounts)
+
+**Step 1**: For each of the three failed requirements, design a compensating control. Your compensating control must: (a) address the intent of the original requirement, (b) be technically feasible given the legacy system's constraints, and (c) not introduce a new significant risk. Document each compensating control in a table with columns: Failed Requirement, Compensating Control Description, How It Addresses Intent, Technical Feasibility Notes, New Risk Introduced (if any).
+
+**Step 2**: PCI DSS requires that compensating controls be documented in a Compensating Control Worksheet (CCW) and reviewed annually. Draft the key sections of a CCW for the password complexity compensating control (Requirement 8.3.6). Your CCW must include: the original requirement, the business constraint preventing compliance, the objective of the original requirement, the compensating control in detail, the validation method, and the annual review date.
+
+**Step 3**: Hartland's QSA (Qualified Security Assessor) has reviewed your compensating controls and accepted two of the three, but rejected the shared service account compensating control for Requirement 7.2.1, noting that it does not adequately address the intent of least-privilege access control. Write a 150-200 word response to the QSA explaining your revised compensating control approach for Requirement 7.2.1, acknowledging the deficiency in the original proposal and presenting a stronger alternative.
+
+---
+
+### Reflection Questions
+
+Answer each reflection question in four to six sentences.
+
+1. Risk treatment frameworks typically present four options — avoid, accept, mitigate, and transfer — as if they are discrete choices. In practice, organizations often apply combinations of these options to the same risk. Describe a realistic scenario where an organization would apply all four treatment options to different aspects of the same risk, and explain what governance documentation would be required for each component of the combined treatment.
+
+2. A colleague argues that formal risk acceptance is unnecessary bureaucracy — if the security team has done its analysis and the risk is within appetite, why require executive signatures and written documentation? Construct a counterargument that explains the specific governance, legal, and audit purposes served by formal risk acceptance documentation, drawing on at least two scenarios where the absence of documentation would create a concrete organizational problem.

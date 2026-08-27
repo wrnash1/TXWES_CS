@@ -169,3 +169,39 @@ Complete the PIR template below.
 Submit your completed lab document to the Canvas assignment portal by the due date shown in the course schedule. Your document should include all four exercises with substantive responses — not template placeholders. Screenshots or supplemental diagrams may be included but are not required.
 
 **Grading:** Each exercise is worth 25 points. Within each exercise, points are allocated based on completeness, accuracy of ITIL 4 terminology, and quality of reasoning.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Deployment Approach Design Under Constraints
+
+A global e-commerce company is preparing to release a new checkout flow that replaces the existing one entirely. The release includes front-end changes, back-end API changes, and a database schema change that adds four new columns to the orders table and modifies the data type of one existing column. The following constraints apply:
+
+- The company processes approximately 50,000 orders per day globally.
+- The peak sales period begins in three weeks — no releases are permitted during peak.
+- A previous checkout release two years ago caused a 4-hour outage that cost approximately $2.4 million in lost sales.
+- The engineering team has a fully automated test suite with 91% code coverage.
+- The company does not currently have blue-green deployment infrastructure, but it could be built within two weeks.
+
+1. Evaluate each of the four deployment approaches (big bang, phased, blue-green, canary) for this specific release and set of constraints. For each approach, state whether it is viable, identify its primary risk in this context, and explain how the database schema change affects the approach's viability.
+
+2. Recommend a deployment approach with justification. Your recommendation must address: the schema change complexity, the two-week infrastructure window, the peak season deadline, and the lessons implied by the previous outage.
+
+3. Design a rollback plan for the database schema component specifically. Your plan must include: the trigger condition that initiates rollback, at least four numbered rollback steps, and an explanation of why a simple schema rollback is insufficient if transactions have already been written to the new columns.
+
+### Challenge 2: Post-Implementation Review Quality
+
+An IT organization completes PIRs after every major release but has found that their PIRs consistently produce the same five generic recommendations: "improve testing," "communicate better," "update runbooks," "review capacity," and "add monitoring." No specific actions result, no CIR items are ever assigned owners, and the same problems recur release after release.
+
+1. Identify three characteristics of a low-quality PIR process, using specific evidence from the scenario above and referencing Release and Deployment Management concepts from this module.
+
+2. Design a PIR template structure that would produce actionable outputs. Your template must include at least six sections, and for each section, explain what question it answers and what artifact or action it should produce.
+
+3. A release manager argues that PIRs are unnecessary overhead because "if a deployment went well, there is nothing to review, and if it went badly, the incident PIR already covers it." Construct a counter-argument using ITIL 4 concepts. Your counter-argument must reference at least one specific mechanism that connects PIR outputs to broader organizational improvement.
+
+### Reflection Questions
+
+1. The "Optimize and Automate" guiding principle is often summarized as "automate everything." Based on this module, explain why this summary is incomplete and potentially harmful. Use the deployment pipeline examples from the lab to illustrate your answer.
+
+2. A colleague argues that canary deployments are always preferable to big bang deployments because they reduce risk. Identify one scenario where big bang deployment is the more appropriate choice and explain, using Release and Deployment Management concepts, why the canary approach would be worse in that scenario.

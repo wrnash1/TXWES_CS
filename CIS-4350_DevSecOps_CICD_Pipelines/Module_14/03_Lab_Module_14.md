@@ -282,4 +282,41 @@ Submit the following in your lab report document:
 
 ---
 
-*CIS-4350 DevSecOps and CI/CD Pipelines | Texas Wesleyan University | Professor Nash*
+CIS-4350 DevSecOps and CI/CD Pipelines | Texas Wesleyan University | Professor Nash
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Threat Model a New Feature — AI Inference Endpoint
+
+A team is adding an AI inference API endpoint to their existing cloud-native application. The endpoint accepts user-provided text, sends it to an external LLM provider API, and returns the response. Conduct a sprint-cadence threat model for this new component.
+
+1. Draw an updated DFD (using Threat Dragon or a diagram tool) that adds the new components: `AI Inference Endpoint` (process), `LLM Provider API` (external entity), and a new trust boundary at the egress connection to the LLM provider.
+2. Apply STRIDE analysis to the new trust boundary. For each applicable STRIDE category, document: the threat title, description, severity (Critical/High/Medium/Low), and a specific mitigation.
+3. Identify at least one prompt injection threat and categorize it in STRIDE. Document the specific pipeline or runtime control that would detect or prevent prompt injection attempts.
+4. Produce a traceability matrix row for each new threat, mapping it to a CI/CD or runtime control. Identify any threats for which no existing control applies and mark them as gaps requiring new security requirements.
+
+### Challenge 2: Automate Threat Model Coverage Verification
+
+Write a script that parses the Threat Dragon JSON export and verifies that every identified threat has a mitigation and a non-empty status. Flag threats with `status: Open` (no mitigation implemented) as pipeline failures.
+
+1. Export the threat model from Lab Part 3 as `cis4350-lab14-threat-model.json`.
+2. Write a Python script `validate_threat_model.py` that reads the JSON, iterates over all threats in all components, and exits with code 1 if any threat has `status: Open` without a recorded mitigation. Print a summary table of findings.
+3. Add the following GitHub Actions step to your CI pipeline YAML and test it by introducing a threat with `status: Open` and no mitigation:
+
+```yaml
+- name: Validate threat model coverage
+  run: python validate_threat_model.py cis4350-lab14-threat-model.json
+```
+
+1. Verify the pipeline fails when an unmitigated threat is present and passes when all threats have mitigations or are accepted with justification.
+
+### Reflection Questions
+
+1. You have completed a threat model for the CI/CD pipeline in this lab. A colleague argues that threat modeling is a one-time activity — once the initial model is complete, it only needs to be revisited during annual security reviews. Using the sprint-cadence threat modeling approach, explain why this argument is incorrect and describe the five DFD change conditions that should trigger a new threat modeling activity during a sprint.
+2. The traceability matrix you produced maps each STRIDE threat to a CI/CD pipeline control. Review the matrix and identify which STRIDE category has the fewest automated pipeline controls available and must rely primarily on manual review or runtime detective controls. Explain why automated pipeline controls are less effective for this category and what compensating controls a DevSecOps team should implement.
+
+---
+
+Lab 14 | CIS-4350 | Texas Wesleyan University | Professor Nash

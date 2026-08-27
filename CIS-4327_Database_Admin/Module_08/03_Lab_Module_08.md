@@ -388,3 +388,49 @@ Submit a PDF containing:
 | Part 4: PITR restore demonstrated with recovered data | 25 |
 | Written reflection on RPO/RTO analysis | 10 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Parallel pg_dump and Restore Benchmarking
+
+Compare single-threaded vs. parallel dump and restore performance on a large dataset.
+
+First, generate a large test table:
+
+```sql
+CREATE TABLE benchmark_data AS
+SELECT
+    generate_series        AS id,
+    md5(random()::text)    AS payload,
+    NOW() - (random() * INTERVAL '365 days') AS created_at
+FROM generate_series(1, 500000);
+```
+
+Then complete the following steps:
+
+1. Time a single-threaded custom format dump: `time pg_dump -Fc -d labdb -t benchmark_data -f /tmp/bench_single.dump` — record the elapsed time and file size with `ls -lh /tmp/bench_single.dump`.
+2. Time a directory format dump with 4 parallel workers: `time pg_dump -Fd -d labdb -t benchmark_data -j 4 -f /tmp/bench_parallel/` — record elapsed time and total directory size with `du -sh /tmp/bench_parallel/`.
+3. Restore both dumps to separate target databases (`bench_restore_single` and `bench_restore_parallel`) and time each restore. Record all four times in a comparison table and write a paragraph explaining under what production conditions parallel dump/restore provides the most benefit.
+
+### Challenge 2: Backup Validation Automation Script
+
+Write a shell script that automates backup verification on Cloud SQL.
+
+The script should perform the following steps in order:
+
+1. Trigger an on-demand Cloud SQL backup: `gcloud sql backups create --instance=$INSTANCE --project=$PROJECT`
+2. Wait for the backup to reach SUCCESSFUL status by polling `gcloud sql backups list` every 30 seconds.
+3. Restore the backup to a validation instance named `validation-$(date +%Y%m%d)`.
+4. Wait for the validation instance to reach RUNNABLE state.
+5. Connect to the validation instance and run a row count query to confirm data integrity: `SELECT COUNT(*) FROM labdb.products;`
+6. Compare the count to the production instance count and print PASS or FAIL.
+7. Delete the validation instance regardless of the result.
+
+Write this as a complete bash script, test it in Cloud Shell, and include the script and its output in your lab report. Write a paragraph explaining how this script would be scheduled as a weekly Cloud Scheduler job triggering a Cloud Run job.
+
+### Reflection Questions
+
+1. In Challenge 1, why does parallel dump performance not scale linearly with worker count (e.g., 4 workers does not deliver exactly 4x speedup), and what I/O bottleneck typically limits further parallelism beyond 4–8 workers?
+2. In Challenge 2, the validation script deletes the restored instance after the check. What is the trade-off between deleting immediately (saving cost) versus retaining the instance for 24 hours (enabling deeper investigation), and how would you encode this decision in the script based on the PASS/FAIL result?

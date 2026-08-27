@@ -206,3 +206,29 @@ Of the three detection recommendations you wrote, rank them 1 (highest priority)
 ## Academic Integrity Notice
 
 This lab contains an educational simulation of a cyber intrusion for learning purposes. All work must be your own. Do not share answers before the submission deadline. Reference the MITRE ATT&CK Enterprise Matrix at attack.mitre.org and study materials at professormesser.com and comptia.org for additional context.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: ATT&CK Coverage Gap Analysis
+
+You are given a simplified detection inventory. Your organization has active SIEM rules for: T1078 (Valid Accounts), T1059.001 (PowerShell), T1566.001 (Spearphishing Attachment), and T1486 (Data Encrypted for Impact). A threat intelligence report indicates a threat actor targeting your industry commonly uses: T1078, T1059.001, T1547.001 (Registry Run Keys), T1003.001 (LSASS Memory), T1071.001 (Web Protocols C2), and T1486.
+
+1. Build a coverage table listing each of the six threat actor techniques, whether your organization has a detection, and the ATT&CK tactic each belongs to.
+2. For each uncovered technique, identify the log source most likely to produce detectable evidence (e.g., Windows Security Event Log, Sysmon, network proxy logs).
+3. Write a one-sentence detection hypothesis for T1003.001 in this format: "Alert when [observable event] occurs on [asset type] during [time or context condition]."
+4. Explain which of the uncovered techniques poses the highest risk if undetected and justify your answer using the Pyramid of Pain.
+
+### Challenge 2: Intelligence Product Assessment
+
+You receive two intelligence reports about the same threat actor. Report A is a vendor blog post published 11 months ago listing 14 IP addresses and 3 file hashes. Report B is a CISA advisory published last week describing the actor's TTPs, preferred initial access methods, and targeted sectors, with ATT&CK technique mappings.
+
+1. Classify each report by intelligence type (strategic, operational, or tactical) and justify your classification.
+2. Assign a source reliability rating (A–F per NATO STANAG 2511 conventions or equivalent) to each report and explain your reasoning.
+3. Identify which report provides more durable defensive value and explain why using the Pyramid of Pain framework.
+
+### Reflection Questions
+
+1. A colleague argues that MITRE ATT&CK and the Cyber Kill Chain accomplish the same thing and organizations only need one. Based on the differences you studied in Section 4, write a two-sentence explanation of why both frameworks provide complementary rather than redundant value.
+2. In your own words, explain the intelligence lifecycle phase where an analyst's judgment matters most, and describe one way that analytical bias could negatively affect the quality of finished intelligence.

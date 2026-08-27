@@ -223,3 +223,223 @@ Correct Answer: B
 - B is correct: Aurora Global Database provides sub-second cross-region replication and supports managed failover with RTO under 1 minute. Users in each Region can read from their local Aurora Replicas for low latency. In a regional failure, the secondary Region can be promoted to primary quickly.
 - C is incorrect: Application-level replication introduces significant complexity, potential data consistency issues, and operational overhead. It is not a best-practice AWS architecture for this requirement.
 - D is incorrect: CloudFront caches static content — it cannot serve dynamic database reads. A Multi-AZ cluster in a single Region provides HA within that Region but does not address the global latency or cross-region failover requirements.
+
+---
+
+## Question 11
+
+A company runs an RDS for PostgreSQL database that processes thousands of short-lived database connections from Lambda functions. The Lambda functions are invoked up to 2,000 times per minute, each opening and closing a new database connection. The database is experiencing connection exhaustion. Which AWS service is specifically designed to address this problem?
+
+- A) Amazon ElastiCache for Redis as a connection pooling proxy in front of RDS
+- B) Amazon RDS Proxy, which pools and multiplexes application connections to the database
+- C) Enable RDS Multi-AZ to distribute connections between the primary and standby instances
+- D) Increase the max_connections parameter on the RDS instance to accommodate all Lambda connections
+
+### Answer 11
+
+Correct Answer: B
+
+### Explanation 11
+
+- A is incorrect: ElastiCache for Redis is an in-memory cache for caching data, not a database connection proxy. It cannot pool PostgreSQL database connections or serve as a proxy to RDS.
+- B is correct: Amazon RDS Proxy is a fully managed, highly available database proxy that pools and multiplexes application connections. Lambda functions connect to the RDS Proxy endpoint instead of directly to RDS. The proxy maintains a pool of established connections to the database and reuses them, reducing the number of actual database connections to a fraction of the application connections. RDS Proxy supports RDS for MySQL, PostgreSQL, MariaDB, Aurora MySQL, and Aurora PostgreSQL.
+- C is incorrect: RDS Multi-AZ maintains a synchronous standby replica for failover. The standby instance does not serve any read or write traffic during normal operation. It does not solve the connection exhaustion problem.
+- D is incorrect: The max_connections parameter is limited by the instance's available memory. Increasing it beyond the database's capacity causes memory exhaustion and instability. The fundamental problem is the connection-per-invocation pattern of Lambda, which requires connection pooling, not simply a higher connection limit.
+
+---
+
+## Question 12
+
+A solutions architect is comparing RDS Multi-AZ and RDS Read Replicas for a high-availability use case. An application requires that if the primary database fails, the application can resume writes within 2 minutes with no DNS endpoint changes. Which configuration satisfies this requirement?
+
+- A) RDS Read Replica with automatic promotion configured
+- B) RDS Multi-AZ deployment using synchronous replication
+- C) Amazon Aurora with three Read Replicas and manual failover scripts
+- D) RDS for MySQL with a cross-region Read Replica for failover
+
+### Answer 12
+
+Correct Answer: B
+
+### Explanation 12
+
+- A is incorrect: RDS Read Replicas use asynchronous replication. Promoting a Read Replica to primary requires a manual action or custom automation, takes several minutes, and results in a new instance with a different endpoint DNS name. The application would need to be updated with the new endpoint unless DNS is manually updated.
+- B is correct: RDS Multi-AZ uses synchronous replication to a standby replica in a second AZ. On primary failure, RDS automatically promotes the standby in 60-120 seconds and updates the existing endpoint DNS record to point to the new primary. The application connection string does not change, satisfying the "no DNS endpoint changes" requirement within 2 minutes.
+- C is incorrect: Aurora Read Replicas support automatic failover, but the question specifies RDS Multi-AZ behavior specifically (synchronous replication, automatic failover, same endpoint). Aurora has different characteristics than standard RDS for this scenario.
+- D is incorrect: Cross-region Read Replicas are for disaster recovery, not same-region high availability. Cross-region promotion takes significantly longer than 2 minutes and requires manual intervention.
+
+---
+
+## Question 13
+
+A development team needs to create multiple isolated copies of a production Aurora MySQL database for testing without impacting production performance and without waiting for a full database snapshot restore. Which Aurora feature provides near-instant database clones?
+
+- A) Aurora Read Replicas provisioned in a separate Aurora cluster
+- B) Aurora Fast Cloning using copy-on-write, which creates a clone without copying data until it diverges
+- C) AWS Database Migration Service to replicate the database to a separate cluster
+- D) RDS point-in-time restore to a new Aurora cluster for each testing environment
+
+### Answer 13
+
+Correct Answer: B
+
+### Explanation 13
+
+- A is incorrect: Aurora Read Replicas are connected to the source cluster and share the same storage volume. They serve reads from the primary cluster but are not isolated for destructive testing. Read Replicas cannot be promoted to independent clusters for testing without disrupting replication.
+- B is correct: Aurora Fast Cloning uses a copy-on-write mechanism. The clone initially points to the same underlying storage pages as the original cluster. Data is only physically copied when either the clone or the original cluster modifies a page. This makes cloning nearly instantaneous regardless of database size. Testing environments can make destructive changes without affecting production data.
+- C is incorrect: AWS Database Migration Service performs a full data copy from source to target, which takes significant time proportional to database size. It also imposes replication load on the source database. This is not equivalent to Fast Cloning's instantaneous copy-on-write approach.
+- D is incorrect: RDS point-in-time restore creates a new instance from a backup snapshot and transaction logs. The restore time is proportional to database size and can take tens of minutes to hours. For creating multiple isolated test environments quickly, Fast Cloning is orders of magnitude faster.
+
+---
+
+## Question 14
+
+An application uses Amazon RDS for MySQL with automated backups retained for 7 days. A DBA accidentally runs a `DROP TABLE` command at 3:15 PM that deletes critical production data. The DBA needs to recover the deleted data with minimal data loss. What is the correct recovery approach?
+
+- A) Restore the most recent daily automated backup snapshot from yesterday, losing approximately 24 hours of data
+- B) Use RDS point-in-time restore to create a new DB instance at 3:14 PM (one minute before the DROP TABLE), then migrate the recovered data back to the production instance
+- C) Enable Multi-AZ on the RDS instance to restore from the standby replica, which was not affected by the DROP TABLE command
+- D) Use AWS Backup to restore the table from the most recent hourly backup taken before 3:15 PM
+
+### Answer 14
+
+Correct Answer: B
+
+### Explanation 14
+
+- A is incorrect: Restoring the most recent daily snapshot would recover to approximately the same time the previous day's backup was taken — potentially 24 hours before the data loss. With 7-day backup retention and continuous transaction logs, point-in-time recovery to one minute before the incident is possible.
+- B is correct: RDS point-in-time restore uses automated backups (daily snapshots) combined with continuously captured transaction logs stored in S3. Recovery to 3:14 PM is feasible because transaction logs are applied on top of the daily snapshot to reconstruct the database state at the specified second. The restore creates a new DB instance (not the original) to avoid additional risk. The missing data can then be exported from the recovery instance and imported into the production instance.
+- C is incorrect: RDS Multi-AZ standby replication is synchronous — the `DROP TABLE` command was replicated to the standby instance immediately. The standby is not a separate backup that avoids replication of destructive operations. Multi-AZ provides HA for infrastructure failures, not protection against logical errors.
+- D is incorrect: AWS Backup integrates with RDS but uses the same automated backup mechanism (daily snapshots + transaction logs). AWS Backup does not provide hourly snapshots by default for RDS unless a custom backup plan is configured. Even if available, point-in-time restore is more precise than restoring from an hourly backup.
+
+---
+
+## Question 15
+
+A financial services company needs to migrate from an Oracle database to a managed AWS database service. The application uses Oracle-specific stored procedures, PL/SQL packages, and Oracle's analytical functions extensively. The migration timeline is 18 months. Which migration path aligns best with AWS recommendations for this scenario?
+
+- A) Migrate directly to Amazon Aurora PostgreSQL and rewrite all Oracle-specific code immediately
+- B) Migrate to Amazon RDS for Oracle (Bring Your Own License) to maintain compatibility, then plan a gradual refactoring to Aurora PostgreSQL using Schema Conversion Tool
+- C) Migrate to Amazon DynamoDB and convert all relational queries to NoSQL key-value operations
+- D) Continue running Oracle on EC2 instances in AWS to avoid any refactoring cost
+
+### Answer 15
+
+Correct Answer: B
+
+### Explanation 15
+
+- A is incorrect: Migrating directly to Aurora PostgreSQL requires rewriting all Oracle-specific PL/SQL code, stored procedures, and Oracle analytical functions before migration. With a complex Oracle workload, an immediate full rewrite within 18 months carries high risk of regressions and project failure.
+- B is correct: RDS for Oracle allows a lift-and-shift migration with full Oracle compatibility, immediately reducing operational overhead (AWS manages backups, patching, hardware) while maintaining application compatibility. The AWS Schema Conversion Tool (SCT) and Database Migration Service (DMS) can then be used to gradually refactor and migrate to Aurora PostgreSQL over the 18-month timeline. This two-phase approach reduces risk while achieving the cloud migration goal.
+- C is incorrect: DynamoDB is a NoSQL key-value and document database. Converting a relational Oracle database with complex stored procedures and analytical functions to DynamoDB would require a fundamental redesign of the data model and application logic. This is a multi-year effort, not a 18-month migration.
+- D is incorrect: Running Oracle on EC2 gives no managed service benefits. The customer still manages OS patching, storage, backups, replication, and hardware provisioning — the same operational burden as on-premises. This option does not achieve any cloud adoption benefit.
+
+---
+
+## Question 16
+
+A company uses Amazon Aurora PostgreSQL. A database administrator notices that during peak hours, the primary writer instance CPU reaches 95% while the two Aurora Reader instances are only at 15% CPU. Application read queries are being routed to the writer instance. What is the most likely cause?
+
+- A) Aurora Reader instances cannot serve read traffic until explicitly promoted to writer
+- B) The application is using the cluster endpoint (writer endpoint) for all queries instead of the reader endpoint
+- C) Aurora Reader instances do not support complex read queries — only simple SELECT statements
+- D) The Aurora cluster parameter group is configured to route all traffic to the writer for consistency
+
+### Answer 16
+
+Correct Answer: B
+
+### Explanation 16
+
+- A is incorrect: Aurora Reader instances serve read traffic by default and automatically when the application connects to the reader endpoint. They do not require promotion to serve read queries.
+- B is correct: Aurora provides two primary endpoints: the cluster endpoint (which always routes to the current writer) and the reader endpoint (which load-balances across all Reader instances). If the application is using the cluster endpoint for all queries — including read queries — all traffic reaches the writer. The fix is to update read-heavy operations in the application to use the reader endpoint.
+- C is incorrect: Aurora Reader instances fully support all PostgreSQL read query types including complex analytical queries, aggregations, joins, and stored procedure calls. They are identical in capability to the writer for read operations.
+- D is incorrect: Aurora cluster parameter groups configure database-level settings (like connection timeout, log settings), not traffic routing. Traffic routing is determined by which endpoint the application uses.
+
+---
+
+## Question 17
+
+A solutions architect needs to ensure that an Amazon RDS for MySQL database instance cannot be accessed from the public internet. The application tier runs in EC2 instances in private subnets within the same VPC. Which configuration correctly implements private-only database access?
+
+- A) Disable the RDS instance's public accessibility setting, deploy the instance in a private subnet, and configure the database security group to allow inbound MySQL traffic only from the application tier's security group
+- B) Enable the RDS instance's public accessibility setting but restrict the security group to the EC2 instances' IP addresses
+- C) Deploy the RDS instance in a public subnet with a Network ACL blocking all traffic from 0.0.0.0/0
+- D) Enable RDS Multi-AZ to move the primary database instance to a private subnet while the standby remains in a public subnet
+
+### Answer 17
+
+Correct Answer: A
+
+### Explanation 17
+
+- A is correct: This is the correct three-part configuration: (1) disable public accessibility (no public IP assigned to the RDS instance); (2) deploy in a private subnet (no route to an Internet Gateway); (3) security group allows port 3306 inbound from the application tier security group only. This ensures the database is completely isolated from the public internet.
+- B is incorrect: Enabling public accessibility assigns a public IP to the RDS instance, making it DNS-resolvable from the internet. While the security group restricts access, EC2 IP addresses can change, and relying on IP-based security group rules for RDS access is an anti-pattern. Security group references (by SG ID) are the correct approach.
+- C is incorrect: Deploying RDS in a public subnet with public accessibility enabled means the database has a publicly routable IP address. NACL rules add a layer but are not the correct primary control for this requirement — the instance should be in a private subnet with no public accessibility.
+- D is incorrect: Both the primary and standby instances in an RDS Multi-AZ deployment follow the same subnet and public accessibility configuration. Multi-AZ does not allow different accessibility settings for primary vs. standby.
+
+---
+
+## Question 18
+
+A company is evaluating Amazon Aurora Serverless v2 for a new application. The application has unpredictable traffic — virtually idle for most of the day but with occasional spikes to high load. Which characteristic of Aurora Serverless v2 is most relevant to this use case?
+
+- A) Aurora Serverless v2 automatically scales storage capacity but uses fixed compute capacity
+- B) Aurora Serverless v2 automatically scales compute capacity (ACUs) in fine-grained increments in response to load changes without pausing connections
+- C) Aurora Serverless v2 pauses the database after 5 minutes of inactivity, resuming on the first connection with a brief cold start delay
+- D) Aurora Serverless v2 is only available for development workloads and cannot be used in production
+
+### Answer 18
+
+Correct Answer: B
+
+### Explanation 18
+
+- A is incorrect: Aurora Serverless v2 scales both compute and storage automatically. Compute is measured in Aurora Capacity Units (ACUs) that scale in 0.5 ACU increments. Storage scales independently as data grows.
+- B is correct: Aurora Serverless v2 continuously scales compute capacity from a configured minimum to maximum ACU value. Scaling is nearly instantaneous and does not drop existing connections. This makes it ideal for applications with unpredictable workloads that need to go from near-zero to high capacity quickly without over-provisioning.
+- C is incorrect: Pausing after inactivity with a cold-start resume time is a characteristic of Aurora Serverless v1, not v2. Aurora Serverless v2 does not pause — it scales down to the configured minimum ACUs but remains continuously running with no cold-start delay. The pause-and-resume behavior of v1 is what made it unsuitable for production workloads.
+- D is incorrect: Aurora Serverless v2 is production-ready and supports all Aurora features including Multi-AZ, Read Replicas, Global Database, and RDS Proxy. It can be used for production workloads.
+
+---
+
+## Question 19
+
+An RDS for MySQL instance is encrypted with an AWS KMS customer-managed key. A data analyst needs to share a copy of a database snapshot with a second AWS account for analysis. What are the required steps?
+
+- A) Export the snapshot to S3 and share the S3 bucket with the second account using a bucket policy
+- B) Copy the snapshot, share the KMS key policy to grant the second account kms:Decrypt and kms:CreateGrant permissions, then share the encrypted snapshot with the second account
+- C) Disable encryption on the snapshot before sharing, as encrypted snapshots cannot be shared between accounts
+- D) Enable cross-region replication on the RDS instance, then share the replicated instance with the second account
+
+### Answer 19
+
+Correct Answer: B
+
+### Explanation 19
+
+- A is incorrect: Exporting a snapshot to S3 is a separate feature for data extraction to Parquet format. It does not create a sharable RDS snapshot copy in another account. The analyst would receive raw Parquet files, not a usable RDS instance.
+- B is correct: Sharing an encrypted RDS snapshot with another account requires: (1) copying the snapshot (optionally to ensure it is encrypted with a customer-managed key rather than the default KMS key, which cannot be shared); (2) modifying the KMS key policy to grant the destination account `kms:Decrypt` and `kms:CreateGrant` permissions; (3) sharing the snapshot with the destination account ID. The destination account can then copy the snapshot using the shared key and restore it.
+- C is incorrect: Encrypted RDS snapshots CAN be shared between accounts, but only when encrypted with a customer-managed KMS key (not the default AWS-managed key). The solution is proper KMS key sharing, not disabling encryption.
+- D is incorrect: Cross-region replication creates Read Replicas in another Region, not in another AWS account. RDS Read Replicas cannot be transferred to a different AWS account.
+
+---
+
+## Question 20
+
+A company runs Amazon Aurora MySQL with one writer and three reader instances. During a maintenance window, the writer instance fails. What happens to the Aurora cluster?
+
+- A) All Aurora instances stop functioning until the writer is manually replaced from a snapshot
+- B) Aurora automatically promotes one of the reader instances to writer based on replica promotion tier priority with no data loss due to Aurora's shared storage architecture
+- C) The reader instances continue serving read traffic but write operations fail until the writer is manually restored
+- D) Aurora Multi-AZ standby promotes to writer, and the three reader instances remain as readers
+
+### Answer 20
+
+Correct Answer: B
+
+### Explanation 20
+
+- A is incorrect: Aurora does not require manual recovery from a snapshot for writer instance failure. Aurora's automatic failover promotes a reader to writer in typically under 30 seconds.
+- B is correct: Aurora uses a shared distributed storage volume that all instances (writer and readers) connect to. Because the storage layer is separate from the compute layer, there is no data loss during failover — the new writer connects to the same storage volume. Aurora automatically promotes the reader with the highest priority promotion tier to become the new writer. The failover typically completes within 30 seconds.
+- C is incorrect: While readers continue serving reads during a brief failover window, Aurora automatically promotes a reader to writer without manual intervention. Write operations are unavailable only during the short promotion window (typically 30 seconds).
+- D is incorrect: Aurora does not use a separate Multi-AZ "standby" instance in the same way as standard RDS Multi-AZ. Aurora Reader instances are the replicas, and one of them is promoted to writer on failure. There is no separate standby that is distinct from the readers.

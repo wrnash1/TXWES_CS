@@ -322,3 +322,25 @@ FOREST: corp.local
 - [FSMO roles in Active Directory](https://learn.microsoft.com/en-us/troubleshoot/windows-server/active-directory/fsmo-roles)
 - [Kerberos authentication overview](https://learn.microsoft.com/en-us/windows-server/security/kerberos/kerberos-authentication-overview)
 - [Active Directory trusts](https://learn.microsoft.com/en-us/azure/active-directory-domain-services/concepts-forest-trust)
+
+---
+
+## 9. Supplemental Resources
+
+The following free, open-access resources go deeper on Module 02 topics:
+
+**1. Microsoft Learn — Deploy and manage Active Directory Domain Services**
+<https://learn.microsoft.com/en-us/training/modules/deploy-manage-active-directory-domain-services/>
+Hands-on Microsoft Learn module covering AD DS installation, domain promotion, and FSMO role management with browser-based sandbox exercises.
+
+**2. Microsoft Learn — Manage Active Directory objects**
+<https://learn.microsoft.com/en-us/training/modules/manage-active-directory-objects/>
+Covers creating and managing users, computers, groups, and OUs using PowerShell and the graphical tools — directly complementing the lab work in this module.
+
+**3. Microsoft Docs — FSMO placement and optimization**
+<https://learn.microsoft.com/en-us/troubleshoot/windows-server/active-directory/fsmo-placement-and-optimization-on-active-directory-domain-controllers>
+Deep-dive reference on FSMO role placement best practices, common failure scenarios, and how to seize or transfer roles. Essential reading before the midterm.
+
+**4. Microsoft Learn — Understand Kerberos authentication in Active Directory**
+<https://learn.microsoft.com/en-us/windows-server/security/kerberos/kerberos-authentication-overview>
+Official Kerberos protocol overview including ticket lifecycle, clock skew tolerances, and troubleshooting authentication failures — covers the exact concepts tested in Questions 7 and 18.

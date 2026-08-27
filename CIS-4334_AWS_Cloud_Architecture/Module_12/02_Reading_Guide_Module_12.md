@@ -331,3 +331,19 @@ Step Functions coordinates multi-step distributed transactions. On any step fail
 - Lambda asynchronous failures route to DLQ or Destinations (not retried by the caller)
 - DynamoDB Streams retention: 24 hours. For longer retention, use Kinesis Data Streams.
 - EventBridge is the right answer for SaaS event integration and complex content-based routing
+
+---
+
+## 10. Supplemental Resources
+
+**1. AWS Documentation — AWS Lambda Developer Guide**
+https://docs.aws.amazon.com/lambda/latest/dg/welcome.html
+Complete reference for Lambda function configuration, execution environments, concurrency models, event source mappings, and cold start optimization — directly aligned to the Lambda topics in Module 12 and the SAA-C03 Serverless domain.
+
+**2. AWS Skill Builder — AWS Lambda Foundations**
+https://skillbuilder.aws/learn/course/external/view/elearning/1034/aws-lambda-foundations
+Free course covering Lambda invocation models, execution lifecycle, concurrency controls, error handling, and deployment packaging — supporting the hands-on lab and exam preparation for this module.
+
+**3. AWS Documentation — AWS Step Functions Developer Guide**
+https://docs.aws.amazon.com/step-functions/latest/dg/welcome.html
+Authoritative guide to Step Functions Standard and Express workflows, Amazon States Language, error handling with Catch and Retry, and integration patterns with Lambda, DynamoDB, and SQS — the reference for the orchestration patterns covered in Section 9.

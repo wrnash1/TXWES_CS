@@ -268,4 +268,20 @@ Work through this checklist before the quiz.
 
 ---
 
+## 10. Supplemental Resources
+
+**1. Microsoft Responsible AI Resource Center**
+<https://www.microsoft.com/en-us/ai/responsible-ai>
+Microsoft's central hub for responsible AI guidance, tools, and case studies. Includes links to the Responsible AI Standard document, Fairlearn, InterpretML, and Azure Machine Learning Responsible AI Dashboard — directly supporting every principle covered in Module 11.
+
+**2. Fairlearn — Fairness Assessment and Mitigation for Machine Learning (official documentation)**
+<https://fairlearn.org/v0.10/user_guide/index.html>
+The official user guide for Fairlearn, Microsoft's open-source Python library. Covers fairness metrics (demographic parity, equalized odds), disparity visualization, and mitigation algorithms (ExponentiatedGradient, GridSearch). Hands-on supplement to the Module 11 bias analysis exercises.
+
+**3. NIST AI Risk Management Framework (AI RMF 1.0)**
+<https://airc.nist.gov/RMF>
+The US National Institute of Standards and Technology's AI Risk Management Framework, covering Govern, Map, Measure, and Manage functions. Directly relevant to the EU AI Act and NIST comparison content in Module 11 and a key reference for the AI impact assessment in Part D of the lab.
+
+---
+
 End of Reading Guide — Module 11

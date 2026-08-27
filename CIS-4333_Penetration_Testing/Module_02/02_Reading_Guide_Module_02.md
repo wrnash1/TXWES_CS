@@ -241,3 +241,19 @@ Findings from a penetration engagement go to the client. The tester does not ind
 - [ ] List three state computer crime laws and their home states
 - [ ] Complete the Module 02 lab exercises
 - [ ] Attempt all ten Module 02 quiz questions before checking answers
+
+---
+
+## 9. Supplemental Resources
+
+**1. OWASP Testing Guide — Legal Issues in Penetration Testing**
+[https://owasp.org/www-project-web-security-testing-guide/](https://owasp.org/www-project-web-security-testing-guide/)
+The OWASP Web Security Testing Guide includes a section on legal considerations, pre-engagement agreements, and scope definition practices that directly support Module 02 concepts on the RoE and compliance frameworks.
+
+**2. SANS Reading Room — Legal Issues in Penetration Testing**
+[https://www.sans.org/white-papers/](https://www.sans.org/white-papers/)
+SANS publishes free white papers on legal and ethical considerations in penetration testing. Search for papers on CFAA compliance, responsible disclosure, and RoE best practices to supplement the reading guide content.
+
+**3. OffSec — PWK / PEN-200 Ethics and Legal Module**
+[https://www.offsec.com/courses/pen-200/](https://www.offsec.com/courses/pen-200/)
+The Offensive Security PEN-200 course (OSCP preparation) includes a dedicated module on legal and ethical responsibilities, authorization documentation, and professional conduct that aligns with PT0-002 planning and scoping objectives.

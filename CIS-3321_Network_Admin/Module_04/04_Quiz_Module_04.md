@@ -218,4 +218,204 @@ D) DNS AAAA records — IPv6 addresses include embedded MAC information for reso
 
 ---
 
+### Question 11
+
+Which of the following correctly abbreviates the IPv6 address 2001:0DB8:0000:0000:0000:0000:0000:0001?
+
+- A) 2001:DB8::1
+- B) 2001:0DB8::0001
+- C) 2001:DB8:0:0:0:0:0:1
+- D) 2001:DB8:000::1
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- *Why A is correct:* Both abbreviation rules are applied correctly. Leading zeros are removed from each group (0DB8 → DB8, 0001 → 1). The six consecutive all-zero groups are replaced with :: (only once). Result: 2001:DB8::1.
+- *Why B is incorrect:* Leading zeros within groups are not removed (0DB8 and 0001 still have them). The :: is correctly placed but the address is not fully abbreviated.
+- *Why C is incorrect:* The six consecutive zero groups are written out individually rather than being replaced with ::. Rule 2 (double-colon compression) has not been applied.
+- *Why D is incorrect:* Leading zeros within the first zero group (000) are not fully removed. Partial abbreviation is not correct — all leading zeros in each group must be removed.
+
+---
+
+### Question 12
+
+An IPv6 host automatically generates its own global unicast address without the assistance of a DHCP server by using the network prefix advertised in a Router Advertisement. This process is called:
+
+- A) Stateful DHCPv6
+- B) NAT64
+- C) SLAAC
+- D) NDP Neighbor Solicitation
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Stateful DHCPv6 requires a DHCPv6 server to assign addresses and track leases — it is not self-configuration without a server.
+- *Why B is incorrect:* NAT64 is a transition technology for IPv6-to-IPv4 translation at a network border. It is not an address autoconfiguration mechanism.
+- *Why C is correct:* SLAAC (Stateless Address Autoconfiguration) allows a host to generate its own global unicast address by combining the /64 network prefix from a Router Advertisement with a self-generated 64-bit interface ID (typically via EUI-64 or random privacy extension). No DHCPv6 server is required.
+- *Why D is incorrect:* Neighbor Solicitation is an NDP message used for neighbor address resolution (replacing ARP) and Duplicate Address Detection — not for address autoconfiguration.
+
+---
+
+### Question 13
+
+What is the IPv6 loopback address, and at which OSI layer is it used?
+
+- A) fe80::1 — Layer 2 (Data Link)
+- B) ::1 — Layer 3 (Network)
+- C) ff02::1 — Layer 3 (Network)
+- D) 2001:db8::1 — Layer 7 (Application)
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* fe80::1 is a link-local address, not a loopback. Link-local addresses begin with fe80::/10 and are used for communication within a local segment.
+- *Why B is correct:* The IPv6 loopback address is ::1 (equivalent to IPv4's 127.0.0.1). It operates at Layer 3 and can be used to test the local IPv6 stack. Pinging ::1 confirms the network interface's IP stack is functioning.
+- *Why C is incorrect:* ff02::1 is the all-nodes multicast address — it addresses all IPv6 nodes on the local link. It is not a loopback address.
+- *Why D is incorrect:* 2001:db8::/32 is a documentation prefix reserved by RFC 3849 for examples and documentation. It is not used in operational networks or as a loopback.
+
+---
+
+### Question 14
+
+In EUI-64 interface ID generation, a host has a MAC address of 00:1A:2B:3C:4D:5E. After inserting FF:FE in the middle and flipping the seventh bit, what is the resulting 64-bit interface ID?
+
+- A) 021A:2BFF:FE3C:4D5E
+- B) 001A:2BFF:FE3C:4D5E
+- C) 021A:2BFF:FE3C:4D5E
+- D) FF1A:2BFF:FE3C:4D5E
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- *Why A is correct:* MAC = 00:1A:2B:3C:4D:5E. Insert FF:FE in the middle: 00:1A:2B:FF:FE:3C:4D:5E. The seventh bit of the first byte: 00 = 00000000 binary. Bit 7 (second LSB of first byte from left) = 0 → flip to 1 → 00000010 = 02 hex. Result: 02:1A:2B:FF:FE:3C:4D:5E = 021A:2BFF:FE3C:4D5E.
+- *Why B is incorrect:* The first byte remains 00, but EUI-64 requires flipping the seventh bit of the first byte (universal/local bit), changing 00 to 02.
+- *Why C is incorrect:* This is the same as A — it is the correct answer.
+- *Why D is incorrect:* FF is the FFFE insertion prefix placed in the middle of the MAC address, not the modified first byte. The first byte (00 → 02) is correctly modified separately.
+
+---
+
+### Question 15
+
+Which IPv6 address type is automatically assigned to every IPv6-enabled interface at startup and is only valid for communication within the local link segment?
+
+- A) Global unicast address (2000::/3)
+- B) Unique local address (fc00::/7)
+- C) Multicast address (ff00::/8)
+- D) Link-local address (fe80::/10)
+
+**Correct Answer:** D
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Global unicast addresses are routable on the public internet and require router advertisement or DHCPv6 assignment — they are not automatically generated at startup without external input.
+- *Why B is incorrect:* Unique local addresses (fc00::/7) are the IPv6 equivalent of RFC 1918 private addresses and are used for private network communication. They are not automatically configured at startup.
+- *Why C is incorrect:* Multicast addresses (ff00::/8) are used to send packets to a group of interested receivers. They are destination addresses, not source addresses assigned to an interface.
+- *Why D is correct:* Every IPv6-enabled interface automatically generates a link-local address in the fe80::/10 range at startup, derived from the interface MAC address via EUI-64. Link-local addresses are mandatory for IPv6 routing protocol operation and NDP.
+
+---
+
+### Question 16
+
+Which IPv6 transition technology encapsulates IPv6 packets within IPv4 packets to transport them across an IPv4-only backbone?
+
+- A) SLAAC
+- B) 6to4 tunneling
+- C) NAT64
+- D) Dual stack
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* SLAAC is an IPv6 address autoconfiguration mechanism. It has nothing to do with transporting IPv6 over IPv4 infrastructure.
+- *Why B is correct:* 6to4 tunneling (and similar technologies like ISATAP and Teredo) encapsulate IPv6 packets inside IPv4 packets, allowing IPv6 traffic to cross IPv4-only network segments without requiring native IPv6 routing on intermediate devices.
+- *Why C is incorrect:* NAT64 translates between IPv6 and IPv4 at a border gateway. It does not encapsulate IPv6 within IPv4.
+- *Why D is incorrect:* Dual stack runs both IPv4 and IPv6 natively on the same device and network. It does not encapsulate one protocol inside the other.
+
+---
+
+### Question 17
+
+What is the total number of bits in an IPv6 address, and how is it divided between the network prefix and the interface ID in a standard /64 deployment?
+
+- A) 128 bits total — 64 bits network prefix, 64 bits interface ID
+- B) 128 bits total — 48 bits network prefix, 80 bits interface ID
+- C) 64 bits total — 32 bits network prefix, 32 bits interface ID
+- D) 128 bits total — 96 bits network prefix, 32 bits interface ID
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- *Why A is correct:* IPv6 addresses are 128 bits in total. In a standard /64 deployment, the first 64 bits form the network prefix (typically a /48 site prefix + /16 subnet ID) and the last 64 bits form the interface ID. The 64-bit interface ID boundary also enables EUI-64 address generation.
+- *Why B is incorrect:* A 48-bit prefix does not match the /64 standard. 48 bits would create a /48, which is the typical ISP site allocation — but the full address remains 128 bits with a 64-bit interface ID after the /64 split.
+- *Why C is incorrect:* IPv6 addresses are 128 bits, not 64 bits. IPv4 addresses are 32 bits.
+- *Why D is incorrect:* A /96 network prefix leaves only 32 bits for the interface ID. This does not match the standard /64 deployment used for SLAAC and EUI-64.
+
+---
+
+### Question 18
+
+A DNS record that maps a hostname to an IPv6 address is called:
+
+- A) An A record
+- B) A PTR record
+- C) An AAAA record
+- D) An MX record
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* An A record maps a hostname to an IPv4 (32-bit) address. A records do not store IPv6 addresses.
+- *Why B is incorrect:* A PTR record performs reverse DNS lookup — it maps an IP address (IPv4 or IPv6) back to a hostname.
+- *Why C is correct:* An AAAA (quad-A) record maps a hostname to an IPv6 (128-bit) address. The name reflects that IPv6 is four times longer than IPv4 (4 × 32 bits = 128 bits).
+- *Why D is incorrect:* An MX (Mail Exchange) record identifies the mail server responsible for accepting email for a domain. It does not map hostnames to IP addresses.
+
+---
+
+### Question 19
+
+Which of the following IPv6 addresses is in the documentation/example prefix range and should never appear in operational networks?
+
+- A) fe80::1
+- B) fc00::1
+- C) 2001:db8::1
+- D) ::1
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* fe80::1 is a valid link-local address used on every IPv6-enabled interface. It appears routinely in operational networks.
+- *Why B is incorrect:* fc00::1 is a unique local address (private IPv6 equivalent) and can be used in operational private networks.
+- *Why C is correct:* The 2001:db8::/32 prefix is reserved by RFC 3849 exclusively for use in documentation, examples, and textbooks. It must not be assigned to real interfaces or appear in routing tables on live networks.
+- *Why D is incorrect:* ::1 is the IPv6 loopback address — it is valid and functional in operational environments, equivalent to 127.0.0.1 in IPv4.
+
+---
+
+### Question 20
+
+Which NDP message type does an IPv6 host send to perform Duplicate Address Detection (DAD) before using a newly generated IPv6 address?
+
+- A) Router Solicitation
+- B) Neighbor Advertisement
+- C) Redirect
+- D) Neighbor Solicitation
+
+**Correct Answer:** D
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Router Solicitation is sent by a host to request a Router Advertisement from a router, used in SLAAC to discover the network prefix. It is not related to Duplicate Address Detection.
+- *Why B is incorrect:* Neighbor Advertisement is the response to a Neighbor Solicitation. During DAD, the host waits for a Neighbor Advertisement; if one is received, a duplicate has been detected.
+- *Why C is incorrect:* Redirect messages are sent by routers to inform a host of a better first-hop router for a destination. They are unrelated to DAD.
+- *Why D is correct:* During DAD, a host sends a Neighbor Solicitation to the solicited-node multicast address of its tentative IPv6 address. If another device on the link already uses that address, it responds with a Neighbor Advertisement, and the new host detects the duplication.
+
+---
+
 *CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash*

@@ -331,3 +331,328 @@ Distractor Analysis:
 ---
 
 *Quiz — Module 11 | CIS-3312 Systems Analysis and Design | Texas Wesleyan University*
+
+---
+
+### Question 11
+
+A business analyst is reviewing a proposed ERD and notices that the Author entity has
+attributes AuthorID (PK), FirstName, LastName, and Bio. The Book entity has a separate
+AuthorID (FK) column. The relationship line shows each Book associated with exactly one
+Author, and each Author associated with one-or-more Books. A stakeholder points out that
+some books have two or three co-authors. What change is required to the data model?
+
+A. Add a CoAuthor1 and CoAuthor2 column to the Book entity to store additional authors
+
+B. Remove the Author entity and store author names as a comma-separated list in the
+   Book.Author column
+
+C. Change the Book-Author relationship to many-to-many and introduce an associative
+   entity (such as BookAuthor) to store the authorship role and sequence order
+
+D. Create separate entity types PrimaryAuthor and SecondaryAuthor, each with a one-to-
+   many relationship to Book
+
+Correct Answer: C
+
+Distractor Analysis:
+
+- A is incorrect because adding fixed-count columns (CoAuthor1, CoAuthor2) fails when a
+  book has more co-authors than the columns accommodate. This is a repeating group that
+  violates first normal form.
+- B is incorrect because storing multiple values in a single column (comma-separated list)
+  violates first normal form and makes individual author queries, sorts, and joins
+  impossible without string parsing.
+- D is incorrect because separating authors into PrimaryAuthor and SecondaryAuthor entities
+  creates maintenance complexity and still fails for books with three or more authors. It
+  also forces a business distinction that may not always apply.
+
+---
+
+### Question 12
+
+In a Crow's Foot ERD, what does a circle symbol at the inner position of a relationship
+endpoint signify?
+
+A. The relationship is mandatory — at least one instance must exist
+
+B. The relationship is optional — zero instances are allowed
+
+C. The relationship is many — multiple instances are expected
+
+D. The relationship is a primary key reference
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A describes the single vertical line at the inner position, which signals that the
+  relationship is mandatory and at least one instance must participate.
+- C describes the outer crow's foot symbol, which signals multiplicity (many). The inner
+  symbol governs minimum participation (optionality), not maximum.
+- D is incorrect because primary key references are communicated through (PK) attribute
+  annotations and foreign key columns, not through relationship endpoint symbols.
+
+---
+
+### Question 13
+
+A university data model includes a Course entity and a Section entity. The narrative
+states: "Each Course may be offered as one or more Sections per semester; a Section cannot
+exist without being associated with a Course." What type of entity is Section relative to
+Course, and what is the correct cardinality at the Section end of the Course-Section
+relationship line?
+
+A. Section is a strong entity; the Section end shows zero-or-more (crow's foot + circle)
+
+B. Section is a weak entity; the Section end shows one-or-more (crow's foot + line)
+   because a Section must belong to exactly one Course and at least one Section is required
+
+C. Section is an associative entity; the Section end shows many-to-many cardinality
+
+D. Section is a weak entity; the Course end shows one-or-more (crow's foot + line)
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A is incorrect because Section cannot be identified without its parent Course (a section
+  number like "001" exists across many courses), making it a weak entity, not a strong one.
+  The crow's foot + circle would mean zero or more sections, but the narrative says one or
+  more sections per course.
+- C is incorrect because Section is not an associative entity resolving a many-to-many. It
+  is a dependent child entity of Course.
+- D misreads the direction. The symbols at an endpoint describe how many of that entity are
+  associated with one instance of the opposite entity. The crow's foot belongs at the
+  Section end (one Course has many Sections), not at the Course end.
+
+---
+
+### Question 14
+
+An analyst proposes using a natural key — specifically, the ISBN — as the primary key for
+the Book entity in the LMS data model. A colleague argues for a surrogate key (BookID).
+Which statement best supports the surrogate key argument?
+
+A. ISBNs are too long to display in a user interface, making them impractical as keys
+
+B. ISBN values can theoretically be reassigned by publishers when a book is reissued with
+   significant revisions, and the system would need to update all foreign key references
+   if the ISBN changes — surrogate keys avoid this cascade problem
+
+C. Surrogate keys are required by BABOK Guide standards for all entity primary keys
+
+D. ISBNs are not unique — two different books can share the same ISBN
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A is incorrect because primary keys do not need to be displayed in the user interface.
+  The display identifier (ISBN or title) can differ from the internal primary key.
+- C is incorrect because BABOK does not prescribe surrogate versus natural key choices.
+  This is a data modeling design decision, not a BABOK mandate.
+- D is incorrect because ISBNs are designed to be globally unique identifiers. Duplicate
+  ISBNs represent data entry errors, not a structural problem with the ISBN standard.
+
+---
+
+### Question 15
+
+A logical ERD for a hospital system shows a Patient entity and a Physician entity. A
+business rule states: "Each patient is assigned to exactly one primary care physician.
+A physician may have zero patients in the system initially." A second business rule adds:
+"A patient may also have referrals to zero or more specialist physicians." How many
+separate relationships are needed, and what cardinality does each require?
+
+A. One relationship — Patient-Physician — with many-to-many cardinality resolved by a
+   single associative entity
+
+B. Two relationships: Patient-PrimaryPhysician (each Patient has exactly one, each
+   Physician has zero-or-more) and Patient-Specialist modeled through a separate
+   Referral associative entity
+
+C. One relationship — Patient-Physician — with one-to-one cardinality because each
+   patient has only one physician
+
+D. Two relationships both using one-to-many cardinality, with no associative entity needed
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A is incorrect because collapsing primary care and specialist referrals into one
+  many-to-many relationship loses the business distinction between the two physician roles
+  and the different business rules that govern each.
+- C is incorrect because the one-to-one reading ignores the second business rule about
+  specialist referrals entirely, and it also misrepresents the primary care rule (each
+  physician has many patients, not one).
+- D is incorrect because the specialist referral relationship is many-to-many (a patient
+  can have multiple specialist referrals, and one specialist can receive referrals from
+  many patients), which requires an associative entity, not a direct one-to-many line.
+
+---
+
+### Question 16
+
+A business analyst is building a logical ERD and notices that the Customer entity contains
+a PhoneNumbers attribute that can hold multiple values — a customer may have a home phone,
+a mobile phone, and a work phone. What is the correct way to handle this in a relational
+data model?
+
+A. Store all phone numbers in a single VARCHAR column separated by semicolons
+
+B. Add three columns to Customer: HomePhone, MobilePhone, WorkPhone
+
+C. Create a separate CustomerPhone entity with a composite or surrogate key, a PhoneType
+   attribute, and a foreign key referencing Customer.CustomerID
+
+D. Make PhoneNumbers a derived attribute calculated from a separate lookup table
+
+Correct Answer: C
+
+Distractor Analysis:
+
+- A violates first normal form by storing multiple values in a single column. This makes
+  it impossible to query or validate individual phone numbers without string manipulation.
+- B uses a fixed set of columns for a variable set of values. If a customer has four phone
+  numbers, or if phone type categories change, the structure fails without schema changes.
+- D is incorrect because phone numbers are not derived — they are stored facts about a
+  customer, not calculated values. Derived attributes are computed from other attributes
+  already in the model (such as Age derived from BirthDate).
+
+---
+
+### Question 17
+
+An analyst reviews an ERD for a project management system. The relationship between Project
+and Employee shows the business rule: "A project must have at least one employee assigned,
+and an employee may be assigned to zero or more projects." An intern has drawn both
+endpoints with crow's foot symbols. What error has the intern made, and what is the correct
+fix?
+
+A. The intern is correct — both entities participate in the many side, so both get crow's
+   foot symbols
+
+B. The Project end should show one-or-more (crow's foot + line), but the Employee end
+   should show a line (outer) and circle (inner) — zero-or-one — because employees have
+   limited assignments
+
+C. The Project end should show a line (outer) and line (inner) — one-and-only-one —
+   because the project is mandatory; the Employee end should show crow's foot + circle
+   for zero-or-more
+
+D. The cardinality is many-to-many, which cannot be shown directly; an associative entity
+   called ProjectAssignment is needed, with the Project side one-or-more and the Employee
+   side zero-or-more
+
+Correct Answer: D
+
+Distractor Analysis:
+
+- A is incorrect because crow's foot symbols at both ends of a direct relationship line
+  represent a many-to-many, which cannot be directly implemented in a relational database.
+  The intern's error is not in the symbol choice but in leaving the M:N unresolved.
+- B is incorrect because the business rule states employees can be assigned to zero or more
+  projects — not zero or one. The zero-or-one notation would mean each employee has at
+  most one project assignment.
+- C describes the cardinality in the wrong direction. The rule says a project needs at
+  least one employee (one-or-more employees per project), not that the project relates to
+  exactly one employee.
+
+---
+
+### Question 18
+
+Which of the following scenarios describes a violation of referential integrity?
+
+A. A Member row has a null value in the Phone column
+
+B. A Loan row has a MemberID value of 5001, but no row with MemberID = 5001 exists in
+   the Member table
+
+C. Two Loan rows have the same MemberID value of 3312
+
+D. A Book row has a Title column that contains a numeric value
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A describes a null value in a non-key column. Null in optional attributes (Phone may not
+  be known) is permitted and does not violate referential integrity. Entity integrity
+  would be violated only if a primary key were null.
+- C is not a violation — multiple loans belonging to the same member is the expected and
+  correct behavior in a one-to-many relationship. Referential integrity requires FK values
+  to match a PK, not to be unique.
+- D describes a domain integrity issue (wrong data type in a column), not a referential
+  integrity violation. Referential integrity specifically governs foreign key to primary
+  key relationships across tables.
+
+---
+
+### Question 19
+
+An analyst is presented with the following entity description: "An invoice line item
+represents one product on one invoice. Its line number (1, 2, 3…) is unique within the
+invoice but not globally. It cannot exist without its parent invoice." What are the
+correct primary key and entity classification for InvoiceLine?
+
+A. Strong entity; primary key = LineNumber alone, since it is unique within the invoice
+
+B. Weak entity; composite primary key = (InvoiceID, LineNumber) because the entity's
+   identity depends on the parent Invoice
+
+C. Associative entity; it resolves a many-to-many between Invoice and Product
+
+D. Strong entity; primary key = a system-generated InvoiceLineID surrogate key, making
+   it independent of Invoice
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A is incorrect because LineNumber is not globally unique — the same LineNumber value
+  exists in every invoice. A primary key must uniquely identify each row across the entire
+  table, not just within a subset.
+- C is incorrect because InvoiceLine is not an associative entity resolving an M:N. It
+  is a dependent child of Invoice. An associative entity would bridge two independent
+  parent entities in a many-to-many relationship.
+- D is technically implementable in a database, but it misidentifies the entity
+  classification. Using a surrogate key does not change the fact that InvoiceLine is
+  conceptually a weak entity whose identity is derived from Invoice.
+
+---
+
+### Question 20
+
+A conceptual ERD for the LMS shows a Genre entity and a Book entity connected by a
+relationship line. The analyst needs to select the correct cardinality. The library
+requires that every book be classified into exactly one genre, and that a genre may
+exist in the catalog even if no books have been assigned to it yet. Which Crow's Foot
+notation correctly represents the Genre end of the Genre-Book relationship line when
+reading from Book toward Genre?
+
+A. Crow's foot (outer) and circle (inner) — zero-or-more
+
+B. Single line (outer) and single line (inner) — one-and-only-one
+
+C. Crow's foot (outer) and line (inner) — one-or-more
+
+D. Single line (outer) and circle (inner) — zero-or-one
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A would mean each book belongs to zero or more genres, contradicting the rule that every
+  book must belong to exactly one genre.
+- C would mean each book belongs to one or more genres, again allowing multiple genre
+  memberships per book, which contradicts the single-genre rule.
+- D would mean each book belongs to zero or one genre, allowing a book to have no genre
+  classification. The business rule states every book must be classified into exactly one
+  genre, so zero is not permitted — making the relationship mandatory.
+
+---
+
+*Quiz — Module 11 (extended) | CIS-3312 Systems Analysis and Design | Texas Wesleyan University*

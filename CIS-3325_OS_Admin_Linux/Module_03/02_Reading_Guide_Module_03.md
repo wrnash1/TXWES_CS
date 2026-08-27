@@ -123,3 +123,16 @@ Module 3 covers the Linux Filesystem Hierarchy Standard (FHS) and the tools used
 - [ ] Explain what `2>/dev/null` does and when you would use it.
 - [ ] Complete the Module 3 lab.
 - [ ] Complete the Module 3 quiz.
+
+---
+
+## 9. Supplemental Resources
+
+**1. [The Linux Documentation Project — Filesystem Hierarchy Standard](https://tldp.org/LDP/Linux-Filesystem-Hierarchy/html/)**
+A thorough walkthrough of every directory in the Linux filesystem hierarchy with explanations of what belongs in each. Directly reinforces the FHS section of this module and is frequently referenced for Linux+ exam questions about file placement.
+
+**2. [man7.org — find(1) Manual Page](https://man7.org/linux/man-pages/man1/find.1.html)**
+The complete `find` manual from the Linux man-pages project. Covers every predicate (`-mtime`, `-size`, `-perm`, `-exec`, `-print0`) with precise definitions. Invaluable for understanding the `+N`, `-N`, and `N` semantics of numeric predicates.
+
+**3. [GNU Coreutils — Redirections and Pipes (Bash Manual)](https://www.gnu.org/software/bash/manual/bash.html#Redirections)**
+The official GNU Bash manual section on I/O redirection. Covers all redirect operators (`>`, `>>`, `2>`, `&>`, `<<<`, process substitution) with formal definitions. Essential reference for understanding how file descriptors 0, 1, and 2 are manipulated.

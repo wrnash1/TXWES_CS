@@ -413,4 +413,51 @@ Submit the following on Canvas:
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Run an Authenticated ZAP Scan
+
+Configure OWASP ZAP to scan the DVWA application using a logged-in session so protected pages are also tested.
+
+1. Start DVWA in Docker: `docker run -p 80:80 vulnerables/web-dvwa`
+2. Use the ZAP Automation Framework to configure an authenticated scan. Create a `zap-auth-plan.yaml` file that includes a `scriptBasedAuthentication` or `formBasedAuthentication` job targeting `http://localhost/login.php` with credentials `admin:password`.
+3. Run the authenticated scan and compare the alert count to your unauthenticated baseline scan from Part 2. Record how many additional alerts were found when ZAP had access to authenticated endpoints.
+4. Identify one authenticated-only finding (e.g., CSRF, IDOR, or session management issue) and document the alert name, risk level, and affected URL in your lab report.
+
+### Challenge 2: Generate a VEX Document for a False-Positive CVE
+
+Produce a Vulnerability Exploitability Exchange (VEX) document that marks a specific CVE in your SBOM as `not_affected`.
+
+1. From the Grype scan output in Part 4, identify one CVE that you can argue is not exploitable in your specific application context (for example, a CVE in a crypto library for a hash function your application does not call).
+2. Create a `vex.cdx.json` CycloneDX VEX document with status `not_affected` and justification `component_not_present` or `protected_by_mitigating_control`:
+
+```json
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.5",
+  "version": 1,
+  "vulnerabilities": [
+    {
+      "id": "CVE-YYYY-NNNNN",
+      "affects": [{"ref": "pkg:pypi/PACKAGE@VERSION"}],
+      "analysis": {
+        "state": "not_affected",
+        "justification": "component_not_present",
+        "detail": "The vulnerable function is not called by this application."
+      }
+    }
+  ]
+}
+```
+
+1. Run Grype with your VEX document: `grype sbom:sbom.json --vex vex.cdx.json` and verify the CVE is suppressed from the output.
+2. Document the CVE, the justification used, and the technical rationale for why it is not exploitable.
+
+### Reflection Questions
+
+1. You ran both SAST (Semgrep) and DAST (ZAP) against the same vulnerable application. Make a table comparing the findings: which vulnerabilities did SAST catch that DAST missed, and vice versa? What does this tell you about why both tool types are required in a complete DevSecOps pipeline?
+2. Your SBOM shows 847 transitive dependencies. A new CVE is published for one of them. Describe the end-to-end process your team would follow — from CVE publication to verified fix in production — including which tools trigger alerts, how exploitability is assessed, how the fix is prioritized and deployed, and how the resolution is documented.
+
+---
+
 Lab 07 | CIS-4350 | Texas Wesleyan University | Professor Nash

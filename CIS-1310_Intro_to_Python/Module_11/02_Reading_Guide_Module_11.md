@@ -435,7 +435,31 @@ Watch Episode 6 of the [Python for Everybody Course Playlist](https://www.youtub
 
 ---
 
-## 7. Study Checklist
+## 7. Supplemental Resources
+
+**1. Official Python 3 Docs — String Methods**
+[https://docs.python.org/3/library/stdtypes.html#string-methods](https://docs.python.org/3/library/stdtypes.html#string-methods)
+The complete reference for every string method with precise signatures, return types, and edge-case behavior. This is the authoritative source for PCAP exam questions on string methods — every method in the exam's topic list is documented here.
+
+**2. Python for Everybody — Chapter 6: Strings**
+[https://www.py4e.com/html3/06-strings](https://www.py4e.com/html3/06-strings)
+Free textbook chapter covering string indexing, slicing, iteration, immutability, and parsing patterns with step-by-step examples. The looping-over-strings section and the parsing exercises mirror PCAP exam question formats exactly.
+
+**3. Real Python — Python String Formatting Best Practices**
+[https://realpython.com/python-string-formatting/](https://realpython.com/python-string-formatting/)
+A free article comparing all Python string formatting approaches: `%` operator, `.format()`, f-strings, and template strings. The f-string section covers format specs (alignment, width, precision) that appear on the PCAP exam.
+
+**4. Official Python 3 Docs — Text Processing Services**
+[https://docs.python.org/3/library/text.html](https://docs.python.org/3/library/text.html)
+Overview of Python's text processing capabilities beyond the built-in string type, including `re` (regular expressions), `textwrap`, and `unicodedata`. Useful for understanding where string methods fit in the broader ecosystem.
+
+**5. Real Python — Python String Immutability**
+[https://realpython.com/python-strings/](https://realpython.com/python-strings/)
+A comprehensive free article on Python strings covering indexing, slicing, all major methods, immutability, and encoding. The section on `ord()` and `chr()` and Unicode code points is directly relevant to PCAP exam questions on character arithmetic.
+
+---
+
+## 8. Study Checklist
 
 - [ ] Watch the Module 11 video lecture by Professor Nash.
 - [ ] Read the High-Yield Glossary — pay special attention to `.find()` vs `.index()`, `.split()` edge cases, and `.join()` syntax.

@@ -342,4 +342,57 @@ Submit the following on Canvas:
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Add a SAST Stage with Semgrep
+
+Extend your `devsecops-pipeline.yml` to include a third job that runs Semgrep static analysis on the repository source code.
+
+1. Add a new job `sast-scan` that runs after `secrets-scan` using `needs: secrets-scan`.
+2. Use the Semgrep Docker image (`returntocorp/semgrep`) or the official GitHub Action (`semgrep/semgrep-action`). Configure it to use the `p/owasp-top-ten` ruleset.
+3. Set `exit-code: 1` so the pipeline fails if any HIGH severity findings are present.
+4. Upload the Semgrep SARIF output to the GitHub Security tab using `github/codeql-action/upload-sarif`.
+
+```yaml
+  sast-scan:
+    name: SAST — Semgrep
+    runs-on: ubuntu-latest
+    needs: secrets-scan
+    steps:
+      - uses: actions/checkout@v4
+      - uses: semgrep/semgrep-action@v1
+        with:
+          config: p/owasp-top-ten
+          generateSarif: "1"
+      - uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: semgrep.sarif
+```
+
+### Challenge 2: Implement a Pre-commit Hook for Local Secrets Detection
+
+Configure gitleaks as a local pre-commit hook so secrets are blocked before they ever reach the remote repository.
+
+1. Install the `pre-commit` framework: `pip install pre-commit`.
+2. Create a `.pre-commit-config.yaml` file in your repository root:
+
+```yaml
+repos:
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.18.0
+    hooks:
+      - id: gitleaks
+```
+
+1. Run `pre-commit install` to register the hook in your local `.git/hooks/` directory.
+2. Attempt to commit a file containing a fake AWS key (use the same `AKIAIOSFODNN7EXAMPLE` pattern from Part 2). Confirm the commit is blocked before it reaches the remote.
+
+### Reflection Questions
+
+1. The pipeline now has three sequential security jobs (secrets, SAST, container scan). If the secrets-scan job takes 45 seconds and the SAST job takes 3 minutes, what is the total minimum pipeline time before the container scan can begin? What architectural change to the workflow YAML could reduce that wait time, and what trade-off does that change introduce?
+2. You installed a pre-commit hook and a CI pipeline secrets scanner — both catching the same class of problem. Is this redundancy wasteful, or does it provide value? Explain your reasoning using the "defense in depth" concept from the Module 01 reading guide.
+
+---
+
 Lab 01 | CIS-4350 | Texas Wesleyan University | Professor Nash

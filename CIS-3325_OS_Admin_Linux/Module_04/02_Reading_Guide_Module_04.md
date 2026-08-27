@@ -339,4 +339,19 @@ Expect exam questions on:
 
 ---
 
+---
+
+## 9. Supplemental Resources
+
+**1. [Vim Adventures — Interactive vim Tutorial](https://vim-adventures.com/)**
+A browser-based game that teaches vim navigation and commands through puzzle levels. Particularly effective for building muscle memory for `h/j/k/l`, `w/b`, `gg/G`, and mode-switching without the cognitive overhead of a text document.
+
+**2. [The GNU awk (gawk) User's Guide](https://www.gnu.org/software/gawk/manual/gawk.html)**
+The official reference manual for GNU awk. Covers all built-in variables (`NR`, `NF`, `FS`, `OFS`, `RS`), built-in functions, arrays, and the `BEGIN`/`END` block structure. Use the pattern-action sections when building complex log analysis pipelines.
+
+**3. [man7.org — sed(1) Manual Page](https://man7.org/linux/man-pages/man1/sed.1.html)**
+The complete sed manual page from the Linux man-pages project. Covers all sed commands (`s`, `d`, `p`, `i`, `a`, `c`, `y`, `=`), address forms (line numbers, regex, ranges), and the critical `-i` in-place editing behavior including the backup-extension variant (`-i.bak`).
+
+---
+
 *End of Module 04 Reading Guide*

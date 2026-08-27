@@ -266,3 +266,19 @@ Research in organizational culture consistently identifies leadership behavior a
 - [ ] Complete the Module 08 lab (role-based training curriculum design)
 - [ ] Take the Module 08 quiz
 - [ ] Post to the Module 08 discussion forum by Wednesday 11:59 PM
+
+---
+
+## 10. Supplemental Resources
+
+**NIST SP 800-50 Rev. 1 — Building a Cybersecurity and Privacy Learning Program**
+URL: https://csrc.nist.gov/publications/detail/sp/800-50/rev-1/final
+Description: Free NIST publication providing comprehensive guidance on designing, implementing, and maintaining cybersecurity awareness and training programs for federal and non-federal organizations. Covers role-based training requirements, learning program components, and program evaluation methods — directly aligned with the ADDIE-based program design approach and Kirkpatrick evaluation framework covered in this module.
+
+**SANS Security Awareness Maturity Model**
+URL: https://www.sans.org/security-awareness-training/resources/maturity-model/
+Description: Free SANS Institute publication defining five stages of security awareness program maturity — from compliance-focused to culture-embedded. Provides assessment criteria for each stage and a roadmap for progression, enabling organizations to benchmark their current program and identify specific improvements. Directly applicable to the security culture continuum and program effectiveness measurement topics in Sections 6 and 7 of this module.
+
+**Anti-Phishing Working Group (APWG) — Phishing Activity Trends Reports**
+URL: https://apwg.org/resources/apwg-reports/
+Description: Free quarterly reports from the APWG documenting current phishing attack trends, lure themes, target industries, and attack infrastructure. These reports provide current threat intelligence for designing realistic phishing simulations and for calibrating training content to reflect the actual attacks employees are most likely to encounter — supporting the phishing simulation design principles in Section 5 of this module.

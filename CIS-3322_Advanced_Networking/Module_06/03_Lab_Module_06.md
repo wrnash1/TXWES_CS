@@ -277,3 +277,44 @@ Submit the following as a single PDF or Word document in Canvas:
 | Troubleshooting Scenarios | 15 | Correct analysis for all three scenarios (5 pts each) |
 
 Partial credit awarded for demonstrably attempted but incomplete work.
+
+---
+
+## Part 9 — Challenge Exercise
+
+This optional challenge extends the lab to CCNA exam difficulty. Complete all steps and include deliverables in your submission for up to 20 bonus points.
+
+### Challenge Step 1: Add a Third Member Link and Verify LACP Standby Behavior
+
+Expand EtherChannel 1 (LACP) between SW1 and SW2 to include a third link (Gi0/3 on both switches). With LACP limiting active ports to 8, all three links should become active. Configure and verify:
+
+```ios
+SW1(config)# interface GigabitEthernet0/3
+SW1(config-if)# channel-group 1 mode active
+SW2(config)# interface GigabitEthernet0/3
+SW2(config-if)# channel-group 1 mode active
+```
+
+Verify `show etherchannel summary` shows all three ports with the "P" (bundled) flag. Then observe the aggregate STP port cost of the port-channel — it should be lower than a single gigabit link. Document the cost shown in `show spanning-tree vlan 10` for Po1 and explain why the cost decreases as more links are added.
+
+### Challenge Step 2: Test EtherChannel Load Balancing with Different Methods
+
+Change the load balancing method to `src-dst-mac` and generate traffic between multiple PCs. Then change to `src-dst-ip` and observe any difference. Use the command `test etherchannel load-balance interface port-channel 1 ip [src-ip] [dst-ip]` to simulate which physical link a specific flow would use:
+
+```ios
+SW1# test etherchannel load-balance interface port-channel 1 ip 192.168.10.100 192.168.20.200
+```
+
+Run this command with three different source IP combinations and document which physical link each would use. In your deliverable, explain in 2–3 sentences what determines which physical link handles a particular flow and why per-packet round-robin would cause problems for TCP connections.
+
+### Challenge Step 3: Configure EtherChannel with a Layer 3 Routed Port-Channel
+
+On a Layer 3 switch, convert port-channel 1 from a Layer 2 trunk to a Layer 3 routed interface and assign it an IP address for routing between two switches:
+
+```ios
+SW1(config)# interface port-channel 1
+SW1(config-if)# no switchport
+SW1(config-if)# ip address 10.1.12.1 255.255.255.252
+```
+
+Configure the corresponding address on SW2's port-channel 1 (10.1.12.2/30). Enable `ip routing` on both multilayer switches and verify a routing adjacency or static route across the Layer 3 port-channel. Document the output of `show ip route` on SW1 and explain in 2–3 sentences what advantages a Layer 3 EtherChannel port-channel provides over a Layer 2 trunk EtherChannel in a routed campus core design.

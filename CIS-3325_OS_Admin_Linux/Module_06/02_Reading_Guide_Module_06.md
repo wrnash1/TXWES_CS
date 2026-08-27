@@ -407,4 +407,19 @@ Expect exam questions on:
 
 ---
 
+---
+
+## 9. Supplemental Resources
+
+**1. [Red Hat — A Practical Guide to LVM](https://www.redhat.com/sysadmin/lvm-vs-partitioning)**
+A Red Hat sysadmin article comparing LVM to traditional partitioning, with practical guidance on when to use each. Includes the complete LVM workflow from `pvcreate` through `lvcreate` and covers online resizing for both ext4 and XFS — directly mapped to the Module 06 lab tasks.
+
+**2. [Arch Linux Wiki — fstab](https://wiki.archlinux.org/title/fstab)**
+The Arch Wiki's fstab reference is one of the best-maintained documentation sources for `/etc/fstab`. Covers all six fields with examples, common mount options with explanations, automount with systemd, UUID vs LABEL vs PARTUUID, and troubleshooting boot failures caused by incorrect fstab entries.
+
+**3. [smartmontools — Using smartctl](https://www.smartmontools.org/wiki/TocDoc)**
+The official smartmontools documentation wiki. Covers all SMART attribute definitions, how to interpret threshold values vs. current values, how to set up `smartd` for automated background monitoring with email alerts, and which SMART attributes are the most reliable early warning signs of drive failure.
+
+---
+
 *End of Module 06 Reading Guide*

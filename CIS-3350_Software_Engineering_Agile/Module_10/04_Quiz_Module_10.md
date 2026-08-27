@@ -199,3 +199,171 @@ Distractor Analysis:
 - Why D is incorrect: Regulatory traceability typically applies to all safety-relevant requirements. Exempting functional requirements from traceability would likely fail a regulatory audit.
 
 ---
+
+### Question 11 (5 points)
+
+Which of the five requirements engineering activities is most analogous to the Sprint Review in Scrum?
+
+- A) Elicitation — because the Sprint Review gathers new requirements from stakeholders
+- B) Validation — because the Sprint Review confirms that implemented items match actual stakeholder needs
+- C) Specification — because the Sprint Review produces documentation of completed features
+- D) Management — because the Sprint Review tracks requirements changes over time
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Incorrect — While new requirements may surface at a Sprint Review, the primary purpose is validating what was built, not eliciting new requirements.
+  - C) Incorrect — The Sprint Review demonstrates working software; it is not a documentation-production activity.
+  - D) Incorrect — Requirements management (tracking changes) is the Product Owner's ongoing Product Backlog activity, not the Sprint Review's primary function.
+
+---
+
+### Question 12 (5 points)
+
+A use case lists the following as a postcondition: "User's password has been updated and the old password is invalidated." What does this postcondition tell the system designer?
+
+- A) The condition the system must be in after the main success scenario completes
+- B) The condition the system must be in before the use case can begin executing
+- C) An alternative path the user may take if they forget their new password immediately
+- D) A test case that must be executed before the use case is approved
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - B) Incorrect — A condition that must be true before the use case begins is a precondition, not a postcondition.
+  - C) Incorrect — An alternative path during the use case execution is an alternative flow, not a postcondition.
+  - D) Incorrect — A postcondition is part of the use case specification, not a test case document; it describes the state after success, which test cases may verify.
+
+---
+
+### Question 13 (5 points)
+
+A stakeholder says: "The app needs to work on iPhones, Androids, and older browsers." Is this a functional or non-functional requirement?
+
+- A) Functional — because it describes what users can do with the app
+- B) Non-functional — it is a compatibility/portability quality attribute constraint, not a specific behavior the system performs
+- C) Functional — because platform support is a specific feature the Product Owner can order in the backlog
+- D) It is neither functional nor non-functional; it is a design constraint that belongs in the technical architecture document
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Incorrect — Platform support is not a user-triggered behavior; it is a constraint on the system's portability quality attribute.
+  - C) Incorrect — While it may appear as a backlog item requiring specific development work, the requirement itself is a quality attribute (portability), not a user action.
+  - D) Incorrect — Cross-platform support is classified as a non-functional requirement (portability); it is not excluded from the requirements taxonomy.
+
+---
+
+### Question 14 (5 points)
+
+In Scrum, what is the recommended approach for capturing a significant non-functional requirement like "all database queries must complete within 100ms" that requires dedicated optimization work?
+
+- A) Add it to the Definition of Done only, since performance standards always belong there
+- B) Add it both to the Definition of Done (as a quality gate) and as a Product Backlog Item requiring specific development effort if the current architecture cannot meet the standard
+- C) Write it as a user story: "As a user, I can experience fast queries so that the app feels responsive"
+- D) Ignore it until a Sprint Review stakeholder complains about performance
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Incorrect — If meeting the performance standard requires substantial development work (optimization, indexing, caching), that work needs to be explicitly tracked as a backlog item, not just listed as a DoD quality gate.
+  - C) Incorrect — While writing it as a user story captures the user value, it lacks the specific, testable quality attribute standard needed and should be supplemented with the DoD entry.
+  - D) Incorrect — Reactive performance fixes are far more expensive than proactive NFR planning; deferring until complaints arrive is a classic NFR neglect pattern.
+
+---
+
+### Question 15 (5 points)
+
+What is progressive elaboration in Scrum requirements management?
+
+- A) A technique where the Product Owner writes more detailed requirements with each Sprint until a complete specification exists
+- B) The practice of adding detail to Product Backlog items gradually as they move closer to the top of the backlog and nearer to Sprint-level work
+- C) The process of elaborating on completed features in the Sprint Review documentation
+- D) A Waterfall technique that was adapted into Scrum for large enterprise projects
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Incorrect — The goal is not to build a complete specification over time; items at the bottom of the backlog intentionally remain vague because detailed specification now would likely be wasted if priorities change.
+  - C) Incorrect — Sprint Review documentation is about demonstrating the Increment, not elaborating on completed features.
+  - D) Incorrect — Progressive elaboration is a core Agile/Scrum principle, not a Waterfall technique.
+
+---
+
+### Question 16 (5 points)
+
+A use case includes the following step: "4a. If the entered email does not match any registered account, display a generic success message." What type of use case flow is this?
+
+- A) A postcondition
+- B) A main success scenario step
+- C) An alternative flow branching from step 4
+- D) An exception flow for a system error
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) Incorrect — A postcondition describes the state after the use case completes; this step describes behavior during execution when a condition is met.
+  - B) Incorrect — The "4a." notation indicates a branch from step 4, which is the convention for alternative flows; main success scenario steps are sequentially numbered without letter suffixes.
+  - D) Incorrect — An exception flow handles system errors (e.g., database failure); this step handles a valid user input condition (unrecognized email), which is an alternative flow.
+
+---
+
+### Question 17 (5 points)
+
+Which of the following Product Backlog items best captures a non-functional requirement as a user story?
+
+- A) "As a developer, I will optimize database indexes to improve query performance."
+- B) "As a user, I can search for products and receive results within 2 seconds so that I can find what I need without waiting."
+- C) "The system shall maintain 99.9% uptime during peak hours."
+- D) "Performance: all API endpoints must respond within 500ms (P99)."
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Incorrect — This is a developer-perspective technical task, not a user story with a user benefit; it also lacks the performance standard as a user-visible outcome.
+  - C) Incorrect — "The system shall" is system-specification language, not a user story format; it also lacks a user perspective and benefit.
+  - D) Incorrect — This is a technical specification statement, not a user story; it belongs in the Definition of Done or technical documentation, not as a standalone user story.
+
+---
+
+### Question 18 (5 points)
+
+The Scrum Guide says the Product Owner is accountable for "developing and explicitly communicating the Product Goal." How does this responsibility relate to traditional requirements engineering?
+
+- A) The Product Goal replaces all traditional requirements activities — no analysis or validation is needed
+- B) The Product Goal serves as the strategic vision that gives context to requirements elicitation, helping the team understand which requirements align with the product's intended direction
+- C) The Product Goal is equivalent to a requirements specification document that stakeholders sign off on before Sprint 1
+- D) The Product Goal is created by the Scrum Master and communicated to the Product Owner at project kickoff
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Incorrect — The Product Goal provides strategic direction but does not replace analysis, validation, or backlog refinement activities.
+  - C) Incorrect — The Product Goal is a future-state vision statement, not a detailed specification; it does not require stakeholder sign-off as a Waterfall requirements freeze.
+  - D) Incorrect — The Product Goal is developed and owned by the Product Owner, not the Scrum Master.
+
+---
+
+### Question 19 (5 points)
+
+A traditional requirements matrix includes columns: Requirement ID, Description, Source, Priority, Status, and Test Case. Which Scrum artifact and practice combination provides equivalent traceability?
+
+- A) The Sprint Goal, which covers all requirements for a Sprint in one statement
+- B) The Definition of Done, which maps every requirement to a test case
+- C) Product Backlog Items with acceptance criteria linked to test cases in the team's tooling, combined with the Definition of Done for quality standards
+- D) The Daily Scrum, where Developers report requirement completion status to stakeholders
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) Incorrect — The Sprint Goal is a one-sentence objective for a Sprint; it does not provide item-level traceability.
+  - B) Incorrect — The Definition of Done provides quality standards but does not map individual functional requirements to specific test cases.
+  - D) Incorrect — The Daily Scrum is a 15-minute Developer synchronization event; it does not produce traceability documentation.
+
+---
+
+### Question 20 (5 points)
+
+A Product Owner asks a Developer to skip writing acceptance criteria for a well-understood story because "everyone knows what it should do." What risk does this create?
+
+- A) No significant risk — well-understood stories do not need formal acceptance criteria
+- B) The team loses a shared, explicit definition of Done for that item, risking disagreement at Sprint Review about whether it is complete
+- C) The story violates the INVEST "Testable" criterion, making it ineligible for Sprint Planning
+- D) The Scrum Master must refuse to facilitate Sprint Planning for that Sprint until acceptance criteria are added
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Incorrect — "Everyone knows what it should do" is a common assumption that breaks down under pressure, ambiguity, or when different people have different mental models.
+  - C) Incorrect — While a story without acceptance criteria fails the "Testable" criterion, it is not automatically "ineligible"; it signals that refinement is needed, not that Sprint Planning must be blocked.
+  - D) Incorrect — The Scrum Master does not refuse to facilitate Sprint Planning; they coach the team on quality practices but do not veto events.

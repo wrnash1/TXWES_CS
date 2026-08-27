@@ -209,4 +209,42 @@ Before submitting, verify:
 
 ---
 
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Value Stream Comparison
+
+Design two short value streams for the same organization — a university IT department — for two different demand scenarios:
+
+**Scenario A:** A faculty member requests a new software license for a research tool not currently in the service catalog.
+
+**Scenario B:** A student reports that the campus VPN is not connecting and they cannot access course materials.
+
+For each scenario:
+
+1. List the SVC activities in the sequence they would occur (you do not need to use all six).
+2. Write one sentence per activity describing the specific work done in that scenario.
+3. Identify one key difference between the two value streams and explain why the difference exists.
+
+### Challenge 2: Bottleneck Identification and Improvement
+
+An IT organization's value stream for new user account provisioning consistently takes five business days, causing new hires to be unproductive on their first day. The team maps the current value stream and finds these steps and durations:
+
+- Engage: HR submits request via email — 1 day average waiting for IT to read it
+- Plan: Manager approval required via paper form — 2 days average
+- Obtain/Build: Account creation in Active Directory — 30 minutes
+- Design and Transition: Testing that permissions are correct — 30 minutes
+- Deliver and Support: Notifying the new hire and providing credentials — 1 day average
+
+1. Identify the two biggest bottlenecks by SVC activity name and explain why each is a bottleneck rather than a necessary step.
+2. Apply two ITIL 4 Guiding Principles to redesign the two bottleneck steps. Name the principle, describe the specific change, and estimate the time reduction.
+
+### Reflection Questions
+
+1. The SVC model allows organizations to combine activities in any order. However, in practice, some sequences are more common than others. Based on what you learned in this module, explain why Engage typically appears early in most value streams, and what would go wrong if an organization always started with Obtain/Build instead.
+2. Consider a service failure you have experienced personally (a system outage, a failed delivery, a broken process). Map what happened — and what should have happened — to SVC activities. Identify which activity was missing or poorly executed and how correcting it would have changed the outcome.
+
+---
+
 Module 07 Lab | CIS-4335 IT Service Management | Texas Wesleyan University

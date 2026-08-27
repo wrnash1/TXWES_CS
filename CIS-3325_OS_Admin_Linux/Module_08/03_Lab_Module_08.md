@@ -413,3 +413,31 @@ Submit a short report covering:
 | SGID not inherited | Verify directory has SGID set with `ls -ld dir` |
 | ACL not taking effect | Check the mask entry with `getfacl`; may be restricting effective permissions |
 | `groupdel: cannot remove the primary group of user` | Remove users from primary group first |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: SUID/SGID Security Audit
+
+Perform a systematic security audit of special permission bits across the running system, establish a baseline, and detect any changes.
+
+1. Generate a baseline inventory of all SUID and SGID binaries on the system and save it to a file: `sudo find / -type f \( -perm -4000 -o -perm -2000 \) -ls 2>/dev/null | sort > ~/suid_baseline.txt`. Count the results with `wc -l ~/suid_baseline.txt`. Review the output and identify at least three SUID binaries whose purpose you can explain (use `man` to research any unfamiliar ones).
+2. Create a test binary and apply SUID to it to observe how the kernel enforces it: `cp /bin/cat ~/testcat && chmod u+s ~/testcat && ls -l ~/testcat`. Verify SUID is set. Then confirm that SUID on a file owned by a regular user does not grant elevated privilege — only files owned by root gain meaningful SUID elevation. Check ownership with: `stat --format="%a %U %G" ~/testcat`.
+3. Simulate a security event: copy a binary to a temp location, set SUID root on it, then re-run the audit to detect the change: `sudo cp /bin/ls /tmp/suspicious_ls && sudo chmod 4755 /tmp/suspicious_ls`. Re-run the find command and compare against the baseline: `sudo find / -type f -perm -4000 -ls 2>/dev/null | sort > ~/suid_current.txt && diff ~/suid_baseline.txt ~/suid_current.txt`. Observe the diff output, then clean up: `sudo rm /tmp/suspicious_ls`.
+4. Audit world-writable files outside `/tmp` and `/proc` as a companion check: `sudo find / -type f -perm -0002 -not -path "/tmp/*" -not -path "/proc/*" -ls 2>/dev/null | head -20`. Any results outside expected system paths warrant investigation.
+
+### Challenge 2: ACL-Based Collaborative Directory
+
+Build a multi-team shared directory structure where fine-grained ACL policies enforce that developers can read and write, QA can read only, and auditors can read a reports subdirectory but nothing else — without changing traditional group memberships.
+
+1. Set up the directory structure: `sudo mkdir -p /srv/collab/{code,reports,private}`. Create three test users if not already present: `sudo useradd -m devuser && sudo useradd -m qauser && sudo useradd -m audituser`. Set ownership and restrictive base permissions: `sudo chown -R root:root /srv/collab && sudo chmod -R 770 /srv/collab`.
+2. Apply ACLs to grant `devuser` read/write/execute on `code` and `reports`, `qauser` read/execute on `code` only, and `audituser` read/execute on `reports` only: `sudo setfacl -m u:devuser:rwx /srv/collab/code /srv/collab/reports && sudo setfacl -m u:qauser:r-x /srv/collab/code && sudo setfacl -m u:audituser:r-x /srv/collab/reports`. Verify with `getfacl /srv/collab/code` and `getfacl /srv/collab/reports`.
+3. Set a default ACL on the `code` directory so files created there automatically inherit `devuser` read/write: `sudo setfacl -d -m u:devuser:rw- /srv/collab/code`. Test by creating a file as root: `sudo touch /srv/collab/code/newfile.txt && getfacl /srv/collab/code/newfile.txt`. Confirm the default ACL was inherited on the new file.
+4. Verify enforcement: confirm `audituser` is denied access to `code`: `sudo -u audituser ls /srv/collab/code 2>&1` — expect `Permission denied`. Confirm `audituser` can read `reports`: `sudo -u audituser ls /srv/collab/reports`. Back up the entire ACL configuration: `getfacl -R /srv/collab > ~/collab_acls_backup.txt`.
+
+### Reflection Questions
+
+1. The kernel permission check is a first-match model — if you are the file owner, owner bits apply exclusively, even if group or other bits are more permissive. Describe a real scenario where this behavior could cause a sysadmin to accidentally lock themselves out of a file they own, and explain the exact sequence of events that would produce the lockout.
+
+2. SUID on an executable causes it to run with the file owner's effective UID. From a security perspective, explain why applying SUID to a shell interpreter (such as `/bin/bash`) is considered one of the most dangerous misconfigurations on a Linux system, and describe what an attacker could do upon discovering a SUID bash binary on a server they have limited access to.

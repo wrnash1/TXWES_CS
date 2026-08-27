@@ -180,3 +180,45 @@ Submit a single PDF to Canvas containing:
 5. Part 5 — Independent hunt plan
 
 **Grading:** 100 points total. Parts 1 and 4 are worth 25 points each. Parts 2, 3, and 5 are worth 17 points each (rounding to 101 — Part 5 is worth 16 points to sum to 100).
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Hunt Hypothesis Development Under Adversary Pressure
+
+You are the lead threat hunter at a healthcare organization. Your CISO has forwarded a CISA advisory indicating that threat actor group TA-HEALTH has been actively targeting healthcare organizations using the following confirmed TTPs:
+
+- Initial access via compromised remote access credentials (T1078 — Valid Accounts, T1133 — External Remote Services)
+- Defense evasion by disabling Windows Defender via PowerShell and Group Policy modification
+- Credential dumping from LSASS memory using a custom DLL injected via Reflective DLL Injection (T1055.001)
+- Lateral movement via WMI remote execution (T1047) to medical device management servers
+- Data staging in a compressed archive under `C:\Windows\Temp\` before exfiltration over SFTP
+
+Your hunting team has the following data sources available: Windows Event Logs (4624, 4648, 4688, 7045), EDR process telemetry, network flow data, DNS query logs, and firewall egress logs. You have a 40-hour weekly hunting budget shared across two analysts.
+
+1. Develop three prioritized hunting hypotheses for TA-HEALTH activity. For each hypothesis, write the full structured hypothesis statement, identify the ATT&CK technique ID, specify the exact data source and fields to query, provide the specific query logic (filter conditions in plain language, not code), and estimate analyst hours required. Prioritize the three hypotheses by highest expected detection value given your available data sources.
+2. Two of the five TA-HEALTH TTPs cannot be effectively hunted with your available data sources. Identify which two, explain why your current data sources cannot detect them, and specify what additional logging, tooling, or data source would need to be enabled to close the gap.
+3. After executing Hunt 1 from your prioritized list, you find 14 events matching your query criteria. Describe your methodology for triaging these 14 results — what additional context would you gather for each, what criteria would you use to classify each as malicious, suspicious, or benign, and how many would you expect to escalate to IR given typical false-positive rates for the technique you chose?
+4. Write the complete hunt documentation record header (Hunt ID, Date, Analyst, Hypothesis, Data Sources, Time Range, Queries Executed) for Hunt 1 before execution — this is the standard "hunt plan" document that should be written before beginning, not after.
+
+### Challenge 2: Detection Engineering from Hunt Findings
+
+A threat hunter at your organization completed a hunt for TA-FREIGHT lateral movement activity (from the lab scenario) and identified the following confirmed findings over the past 90 days:
+
+- 3 instances of `excel.exe` spawning `powershell.exe` with `-enc` arguments, all from user workstations in the Finance department
+- 1 instance of `mshta.exe` spawning `powershell.exe` on a server used for payroll processing
+- 2 instances of `regsvr32.exe` executing DLLs from `C:\Users\Public\` paths
+- 14 instances of `cmd.exe` running discovery commands (`net group`, `whoami`, `ipconfig`) within 5 minutes of a `powershell.exe` parent
+
+None of these events were detected by existing SIEM rules at the time they occurred.
+
+1. For each of the four finding categories above, write a structured detection rule description (in plain language, not SIEM-specific syntax) that specifies: the event source, the field conditions that must be true, any correlation conditions (e.g., "within 5 minutes of"), the severity level, and the recommended analyst action when the rule fires.
+2. The 14 discovery command events include both malicious activity (confirmed on 2 hosts) and legitimate administrator activity (confirmed on 12 hosts). Explain how you would tune the detection rule to reduce false positives while preserving detection of the 2 malicious instances. Provide at least two specific tuning criteria with justification.
+3. After deploying these four new detection rules, estimate the weekly false-positive rate per rule, given that this is a finance-sector organization with approximately 300 endpoints and 20 servers. For each rule, identify the primary legitimate use case that will generate false positives and propose a specific exception logic.
+4. Write a one-page detection engineering summary suitable for the SOC operations weekly report, covering: what hunt was conducted, what coverage gaps were identified, what detection rules were created, the expected impact on alert volume, and any residual risk that remains after rule deployment.
+
+### Reflection Questions
+
+1. Threat hunting requires access to high-quality telemetry. Describe three specific telemetry gaps (logging not enabled, data source not collected, or retention period too short) that would make it impossible to hunt for the TA-FREIGHT attack chain described in this lab, and explain what organizational change or investment would close each gap.
+2. A threat hunt that finds no evidence of an attacker technique can be interpreted two ways: either the attacker has not used that technique against your organization, or the attacker has used it but your telemetry is insufficient to detect it. Describe how you would distinguish between these two interpretations, and explain what the difference means for your next hunt priority.

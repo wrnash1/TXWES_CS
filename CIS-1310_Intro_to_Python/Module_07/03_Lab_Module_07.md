@@ -567,6 +567,49 @@ Zip all 5 screenshots and upload to the Canvas Module 07 Lab Assignment.
 
 ---
 
+## Part 9 — Challenge Exercise
+
+These steps are optional and ungraded. They apply tuples, sets, and advanced sorting to non-trivial data problems.
+
+### Challenge 9.1 — Anagram Detector Using Sets and Sorting
+
+Write `~/cis1310/module07/anagram_checker.py` that determines whether two words are anagrams of each other. Two words are anagrams if they contain the same characters with the same frequencies (e.g., "listen" and "silent").
+
+Implement three different approaches and verify all three agree:
+
+1. Sort both words' character lists and compare: `sorted(word1) == sorted(word2)`
+2. Use `Counter` from the `collections` module (preview): `Counter(word1) == Counter(word2)`
+3. Use set intersection — note this approach has a limitation: it cannot distinguish words like "aab" and "abb" (same characters, different counts). Document this limitation in a comment.
+
+Test with: ("listen", "silent"), ("hello", "world"), ("race", "care"), ("aab", "abb").
+
+---
+
+### Challenge 9.2 — Multi-Criteria Student Ranking
+
+Write `~/cis1310/module07/student_ranking.py` with a list of at least 8 student tuples in the format `(name, gpa, credits)`. Sort the students by:
+
+1. GPA descending (highest first)
+2. Among students with equal GPA, by credits completed descending (more credits = more senior)
+3. Among students with equal GPA and credits, by name ascending (alphabetical tiebreaker)
+
+Use a single `sorted()` call with a lambda that returns a tuple key: `lambda s: (-s[1], -s[2], s[0])`. Print the ranked list with rank numbers using `enumerate(result, start=1)`. Then produce a second ranking: top 3 students by GPA as a `frozenset` of names — demonstrate that `frozenset` is hashable by using it as a dictionary key.
+
+---
+
+### Challenge 9.3 — Set Algebra Proof Checker
+
+Write `~/cis1310/module07/set_laws.py` that demonstrates the four fundamental set algebra laws using Python:
+
+1. **Commutative**: `A | B == B | A` and `A & B == B & A`
+2. **Associative**: `(A | B) | C == A | (B | C)`
+3. **Distributive**: `A & (B | C) == (A & B) | (A & C)`
+4. **De Morgan's**: `A - (B | C) == (A - B) & (A - C)`
+
+For each law, use three sample sets (`A = {1,2,3,4}`, `B = {3,4,5,6}`, `C = {5,6,7,8}`), evaluate both sides, and print `PASS` or `FAIL` with the actual values. All four should print `PASS`. This exercise concretely reinforces set operator meanings in a way that directly prepares for PCAP scenario questions.
+
+---
+
 ## Troubleshooting Guide
 
 **`(42)` is an int, not a tuple.**

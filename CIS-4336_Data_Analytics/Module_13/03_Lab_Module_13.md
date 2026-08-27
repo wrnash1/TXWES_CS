@@ -232,3 +232,96 @@ Compile all four parts into a single PDF document named `module13_lab_[YourLastN
 | Part 3: All six chart selections are correct and justified | 24 |
 | Part 4: All four narrative parts present and clearly written | 16 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Dashboard Critique and Redesign Proposal
+
+Apply the five dashboard design principles from Module 13 to evaluate a real-world BI screenshot and produce a structured redesign brief.
+
+1. Find a public Tableau Public or Power BI community dashboard that contains at least 3 charts and 4 KPI tiles (search Tableau Public at <https://public.tableau.com/app/discover> for any topic that interests you). Capture the URL. For each of the five design principles (single audience/purpose, limit KPI count, consistent color encoding, remove chart junk, appropriate chart types), write 2–3 sentences assessing whether the dashboard follows or violates the principle, citing specific elements from the dashboard as evidence.
+2. Produce a written redesign brief (minimum 300 words) that: (a) states the target audience and purpose you would assign to the dashboard, (b) names the 3–5 KPIs you would keep or replace and why, (c) describes the color palette you would standardize on and what each color would represent, and (d) identifies at least two chart types you would change and specifies the replacement chart type with justification.
+
+No code is required for this challenge. Submit the dashboard URL, the five-principle critique, and the redesign brief as a written document.
+
+### Challenge 2: Python Dashboard Mock-Up with matplotlib
+
+Build a 2×2 dashboard figure using matplotlib subplots that mirrors the structure of a professional BI dashboard: one KPI scorecard panel, one trend chart, one comparison chart, and one distribution chart.
+
+1. Using the retail sales dataset from Lab 07 (or any dataset from a previous lab), create a `fig, axes = plt.subplots(2, 2, figsize=(14, 9))` layout with: (a) top-left: a text-only "KPI panel" using `ax.text()` displaying total revenue, order count, and average order value as formatted strings with color-coded deltas vs. prior period; (b) top-right: a line chart of monthly revenue trend; (c) bottom-left: a grouped or stacked bar chart comparing revenue by region for two periods; (d) bottom-right: a histogram of order value distribution with mean and median lines.
+2. Apply consistent styling: use a single color palette across all four panels, add a `fig.suptitle()` dashboard title, and remove unnecessary spines (use `ax.spines['top'].set_visible(False)` and `ax.spines['right'].set_visible(False)` on all axes). Save as `dashboard_mockup.png` at `dpi=150`. Write two sentences evaluating which of the four panels is most and least effective at communicating a business insight and why.
+
+```python
+import pandas as pd
+import matplotlib.pyplot as plt
+import matplotlib.ticker as mticker
+import numpy as np
+
+# Load your dataset (adjust path as needed)
+df = pd.read_csv("retail_sales.csv")
+df["month_order"] = df["month"].map({"Jan": 1, "Feb": 2})
+
+monthly_rev = df.groupby("month")["sales_amount"].sum().reindex(["Jan", "Feb"])
+region_rev  = df.groupby(["region", "month"])["sales_amount"].sum().unstack(fill_value=0)
+
+total_rev  = df["sales_amount"].sum()
+order_cnt  = len(df)
+avg_order  = total_rev / order_cnt
+
+BLUE  = "#2196F3"
+GREEN = "#4CAF50"
+GRAY  = "#9E9E9E"
+
+fig, axes = plt.subplots(2, 2, figsize=(14, 9))
+fig.suptitle("Sales Performance Dashboard", fontsize=16, fontweight="bold", y=1.01)
+
+# KPI Panel
+ax = axes[0, 0]
+ax.axis("off")
+ax.text(0.5, 0.75, f"Total Revenue\n${total_rev:,.0f}", ha="center", va="center",
+        fontsize=14, fontweight="bold", color=BLUE, transform=ax.transAxes)
+ax.text(0.5, 0.50, f"Order Count\n{order_cnt}", ha="center", va="center",
+        fontsize=14, color=GRAY, transform=ax.transAxes)
+ax.text(0.5, 0.25, f"Avg Order Value\n${avg_order:,.0f}", ha="center", va="center",
+        fontsize=14, color=GREEN, transform=ax.transAxes)
+ax.set_title("KPI Summary", fontsize=11, fontweight="bold")
+
+# Trend chart
+ax = axes[0, 1]
+ax.plot(monthly_rev.index, monthly_rev.values, marker="o", color=BLUE, linewidth=2)
+ax.yaxis.set_major_formatter(mticker.FuncFormatter(lambda x, _: f"${x:,.0f}"))
+ax.set_title("Monthly Revenue Trend", fontsize=11, fontweight="bold")
+for spine in ["top", "right"]: ax.spines[spine].set_visible(False)
+
+# Grouped bar chart
+ax = axes[1, 0]
+x = np.arange(len(region_rev.index))
+w = 0.35
+ax.bar(x - w/2, region_rev.get("Jan", 0), w, label="Jan", color=BLUE)
+ax.bar(x + w/2, region_rev.get("Feb", 0), w, label="Feb", color=GREEN)
+ax.set_xticks(x); ax.set_xticklabels(region_rev.index, rotation=20)
+ax.yaxis.set_major_formatter(mticker.FuncFormatter(lambda x, _: f"${x:,.0f}"))
+ax.legend(fontsize=8)
+ax.set_title("Revenue by Region (Jan vs Feb)", fontsize=11, fontweight="bold")
+for spine in ["top", "right"]: ax.spines[spine].set_visible(False)
+
+# Histogram
+ax = axes[1, 1]
+ax.hist(df["sales_amount"], bins=10, color=BLUE, edgecolor="white", alpha=0.85)
+ax.axvline(df["sales_amount"].mean(),   color="red",   linestyle="--", linewidth=1.5, label="Mean")
+ax.axvline(df["sales_amount"].median(), color="orange", linestyle="-",  linewidth=1.5, label="Median")
+ax.set_title("Order Value Distribution", fontsize=11, fontweight="bold")
+ax.legend(fontsize=8)
+for spine in ["top", "right"]: ax.spines[spine].set_visible(False)
+
+plt.tight_layout()
+plt.savefig("dashboard_mockup.png", dpi=150, bbox_inches="tight")
+plt.show()
+```
+
+### Reflection Questions
+
+1. In Challenge 2, the KPI panel uses `ax.axis("off")` and `ax.text()` to create a text-only scorecard. A colleague suggests using a bar chart for the KPI panel instead to show magnitude. Evaluate this suggestion using the dashboard design principle of appropriate chart type selection — under what circumstances would a bar chart be better, and when is a text-only KPI tile superior?
+2. The four-panel dashboard in Challenge 2 is built in Python and saved as a static PNG. A real Power BI or Tableau dashboard would be interactive (filterable, drillable). Describe two specific interactive features that would make this dashboard significantly more useful for a business user, and explain what technical capability (filter, slicer, drill-through, tooltip) each feature represents.

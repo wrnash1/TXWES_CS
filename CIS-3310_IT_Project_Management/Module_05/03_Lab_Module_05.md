@@ -183,3 +183,27 @@ Submit as a single PDF or Word document to the Canvas Module 05 Lab assignment.
 | Part 2: EVM Calculations | 50 | All formulas shown; all values correct; one-sentence interpretation per metric |
 | Part 3: Decision Analysis | 30 | Plain-language status summary; justified corrective action; correct reserve analysis |
 | **Total** | **100** | |
+
+---
+
+## Part 9 — Challenge Exercise
+
+This section is optional for students seeking additional depth and exam preparation. It is not graded as part of the standard 100-point lab but may be used for extra credit at the instructor's discretion.
+
+### Challenge Step 1: EAC Sensitivity Comparison
+
+Using the EVM values from Part 2 of this lab, calculate THREE different EAC values using the three standard formulas:
+
+- EAC₁ = BAC / CPI (current variance will continue)
+- EAC₂ = AC + (BAC - EV) (current variance is atypical)
+- EAC₃ = AC + [(BAC - EV) / CPI] (both CPI and SPI persist)
+
+Present all three values in a table. Write a paragraph (5–7 sentences) explaining which estimate you would recommend presenting to the project sponsor and why — considering the project's current cost and schedule status.
+
+### Challenge Step 2: TCPI Decision Point
+
+Calculate the TCPI for the project in Part 2 using TCPI = (BAC - EV) / (BAC - AC). Then interpret the result: can the project team realistically achieve this performance level? If the TCPI exceeds 1.20, write a one-paragraph recommendation for re-baselining the project budget (revising the EAC as the new target). Explain what governance steps are required to re-baseline under PMI methodology.
+
+### Challenge Step 3: Stakeholder Cost Report Narrative
+
+Draft a brief (8–10 sentence) written cost status report as if you were the project manager presenting to an executive sponsor with no EVM background. Translate the CPI, SPI, CV, SV, EAC, and VAC values from Part 2 into plain English without using any EVM abbreviations. The goal is to communicate project financial health clearly to a non-technical decision-maker — a critical PM communication skill tested in Project+ Domain 3.

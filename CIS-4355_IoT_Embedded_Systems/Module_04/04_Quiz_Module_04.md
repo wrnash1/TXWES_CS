@@ -207,4 +207,186 @@ AMQP is described as an enterprise-grade IoT backend messaging protocol. Which o
 
 ---
 
+---
+
+### Question 11 (5 points)
+
+A Mosquitto broker is configured with `allow_anonymous true` in its configuration file. What is the security implication of this setting?
+
+- A) Only devices with valid X.509 certificates can connect; anonymous means certificate-only access.
+- B) Any device that can reach the broker's TCP port can connect, publish, and subscribe without providing a username or password.
+- C) Anonymous devices can subscribe to topics but cannot publish messages.
+- D) The setting enables read-only access to the broker's management API without credentials.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) `allow_anonymous true` is the opposite of certificate-only access. It disables all credential requirements entirely for devices that do not present credentials.
+  - B) `allow_anonymous true` in Mosquitto means any device that can reach the TCP port (1883 or 8883) may connect without supplying a username or password. Combined with no ACL file, this means any device can publish and subscribe to any topic — a complete absence of access control.
+  - C) Anonymous access in Mosquitto does not automatically restrict devices to subscribe-only. Without an ACL file, anonymous clients have full publish and subscribe permissions.
+  - D) The Mosquitto management API is a separate configuration namespace. `allow_anonymous` governs MQTT client connections, not the management REST interface.
+
+---
+
+### Question 12 (5 points)
+
+An MQTT Last Will and Testament (LWT) message is configured with topic `devices/sensor-42/status`, payload `"offline"`, and QoS 1. Under which condition does the broker publish this will message?
+
+- A) When the client sends a DISCONNECT packet to cleanly end its session.
+- B) When the client's network connection drops without a DISCONNECT packet being sent (unexpected disconnection).
+- C) When the client publishes more than 100 messages within one minute, exceeding the rate limit.
+- D) When the broker restarts and reloads the client's session from persistent storage.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) A clean DISCONNECT causes the broker to discard the will message, not publish it. LWT is only triggered by unexpected disconnections, not graceful ones.
+  - B) The LWT message is published by the broker when the client's network connection terminates without a proper DISCONNECT packet — for example, due to a power failure, network outage, or application crash. This is the entire design purpose of LWT: detecting unexpected device outages.
+  - C) Rate limiting is not a feature of standard MQTT. The LWT is not triggered by message frequency.
+  - D) Broker restarts do not trigger will messages for all stored sessions. The will is only triggered when the specific client's connection is detected as unexpectedly dropped.
+
+---
+
+### Question 13 (5 points)
+
+In a Zigbee network with AES-128 encryption, which two key types does the Zigbee specification use, and what does each protect?
+
+- A) Master key (encrypts device identity) and session key (encrypts application payloads per transaction).
+- B) Network key (encrypts all traffic between all devices in the network) and link key (encrypts traffic on a specific device-to-device link).
+- C) Public key (broadcast to all devices) and private key (stored only on the coordinator's Trust Center).
+- D) Channel key (unique per radio channel) and mesh key (unique per routing hop).
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) "Master key" and "session key" are TLS/DTLS terminology, not Zigbee. Zigbee uses network and link keys.
+  - B) The Zigbee network key is a shared AES-128 key distributed to all devices in the network by the Trust Center. It protects broadcast traffic and device-to-network communications. The link key is a pairwise key negotiated between two specific devices for end-to-end protection of sensitive application data.
+  - C) Zigbee uses symmetric AES-128 keys distributed by the Trust Center, not asymmetric public/private key pairs for normal device communication.
+  - D) "Channel key" and "mesh key" are not Zigbee specification terms. Zigbee uses network and link keys as the two key hierarchy levels.
+
+---
+
+### Question 14 (5 points)
+
+Which MQTT topic subscription would match the message published to `home/kitchen/fridge/temperature` but NOT match `home/kitchen/temperature`?
+
+- A) `home/#`
+- B) `home/kitchen/#`
+- C) `home/+/+/temperature`
+- D) `home/kitchen/+`
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) `home/#` matches any topic starting with `home/`, including both `home/kitchen/fridge/temperature` and `home/kitchen/temperature`. It does not distinguish them.
+  - B) `home/kitchen/#` matches any topic starting with `home/kitchen/`, including both `home/kitchen/fridge/temperature` and `home/kitchen/temperature`. It matches both, not just the first.
+  - C) `home/+/+/temperature` requires exactly four levels: `home`, one single level, one single level, and `temperature`. This matches `home/kitchen/fridge/temperature` (levels: home, kitchen, fridge, temperature) but NOT `home/kitchen/temperature` (only three levels). The `+` wildcard matches exactly one level.
+  - D) `home/kitchen/+` matches exactly three-level topics starting with `home/kitchen/`. It matches `home/kitchen/fridge` but NOT `home/kitchen/fridge/temperature` (four levels) or `home/kitchen/temperature` (correct three levels but missing fridge).
+
+---
+
+### Question 15 (5 points)
+
+A CoAP GET request is sent to `coap://192.168.1.50/sensors/temperature`. The server responds with a `2.05 Content` response code. What does this response code indicate?
+
+- A) The request was accepted but the resource has not been created yet.
+- B) The resource was not found at the specified URI.
+- C) The request succeeded and the response body contains the current value of the requested resource.
+- D) The server requires DTLS authentication before serving the resource.
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) Accepted-but-not-created corresponds to CoAP `2.31 Continue` or `2.01 Created` for POST operations. `2.05` is not a pending-creation response.
+  - B) Resource not found is CoAP `4.04 Not Found`, which is analogous to HTTP 404. A 2.xx response always indicates success in CoAP.
+  - C) CoAP `2.05 Content` is the standard success response to a GET request. It is the CoAP equivalent of HTTP `200 OK` and indicates the body contains the current representation of the requested resource.
+  - D) An authentication requirement would be indicated by CoAP `4.01 Unauthorized`. A `2.xx` code can only be returned after authentication has already succeeded.
+
+---
+
+### Question 16 (5 points)
+
+Which Paho MQTT Python method must be called after `client.connect()` to allow the library to process incoming and outgoing network traffic in a non-blocking background thread?
+
+- A) `client.loop_forever()`
+- B) `client.loop_start()`
+- C) `client.run()`
+- D) `client.start_thread()`
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) `client.loop_forever()` starts a blocking network loop that does not return until `client.disconnect()` is called. It is appropriate for subscriber scripts that run indefinitely but blocks the calling thread — it cannot be used for publishers that need to continue executing code after connecting.
+  - B) `client.loop_start()` starts a background daemon thread that handles network I/O. The main program continues executing. When finished, call `client.loop_stop()`. This is the correct pattern for publisher scripts that need to send messages and then proceed with other logic.
+  - C) `run()` is not a method on the Paho `mqtt.Client` class. Using it would raise an `AttributeError`.
+  - D) `start_thread()` is not a Paho MQTT method. The correct background thread method is `loop_start()`.
+
+---
+
+### Question 17 (5 points)
+
+An IoT system uses Z-Wave for smart home device control. Which frequency band does Z-Wave use in the United States, and what advantage does this provide over 2.4 GHz protocols?
+
+- A) 2.4 GHz — the same as Zigbee, providing interoperability between the two protocols.
+- B) 5 GHz — providing higher bandwidth for video streaming from smart cameras.
+- C) 908 MHz — avoiding congestion from Wi-Fi and Bluetooth devices that share the 2.4 GHz band.
+- D) 433 MHz — providing multi-kilometer range comparable to LoRaWAN.
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) Z-Wave uses 908 MHz in the US, not 2.4 GHz. Z-Wave and Zigbee are not interoperable protocols despite both targeting smart home applications.
+  - B) Z-Wave's 908 MHz band has lower bandwidth than 5 GHz. Z-Wave's maximum data rate is 100 kbps — entirely unsuitable for video. The 908 MHz choice is about reducing interference, not increasing bandwidth.
+  - C) Z-Wave operates at 908 MHz in the US (868 MHz in EU). This sub-GHz frequency avoids the congested 2.4 GHz band where Wi-Fi, Bluetooth, Zigbee, and microwave ovens all coexist. Less interference means more reliable communication in dense environments with many wireless devices.
+  - D) 433 MHz is used by some remote controls and older ISM devices but not Z-Wave. Z-Wave uses 908 MHz (US) specifically. LoRaWAN range advantages come from spread-spectrum modulation technique, not from 433 MHz operation.
+
+---
+
+### Question 18 (5 points)
+
+Which characteristic of MQTT's publish-subscribe pattern makes it suitable for IoT deployments where many sensors report to many consumers simultaneously?
+
+- A) Publishers must maintain a persistent TCP connection to every subscriber simultaneously.
+- B) Each subscriber polls the broker on a configurable interval to retrieve new messages.
+- C) Publishers and subscribers are fully decoupled — a publisher does not need to know how many subscribers exist or their addresses.
+- D) The broker enforces a maximum of one subscriber per topic to prevent message duplication.
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) In MQTT, publishers connect only to the broker, not to subscribers. The broker distributes messages. Publishers have no knowledge of or connection to subscribers.
+  - B) MQTT subscribers receive messages pushed by the broker when they arrive. There is no polling in MQTT's publish-subscribe model. Polling would describe HTTP REST with client-initiated requests.
+  - C) Decoupling is MQTT's core architectural advantage. A publisher sends to a topic on the broker. The broker can have zero, one, or thousands of subscribers on that topic without the publisher knowing or caring. This scales to massive IoT deployments without modifying publishers as consumers are added or removed.
+  - D) MQTT imposes no subscriber limit per topic. Multiple subscribers can receive the same message, which is fundamental to fan-out architectures (e.g., dashboards, databases, and alerting systems all subscribing to the same sensor topic).
+
+---
+
+### Question 19 (5 points)
+
+A 6LoWPAN network connects IPv6-addressed sensors to an IPv6 backbone network. What function does 6LoWPAN provide that makes this possible?
+
+- A) 6LoWPAN translates Zigbee application layer commands to HTTP REST endpoints.
+- B) 6LoWPAN compresses IPv6 headers and fragments large IPv6 packets to fit within the 127-byte IEEE 802.15.4 frame size limit.
+- C) 6LoWPAN adds a 64-bit mesh routing layer on top of IPv4 to support sensor addressing.
+- D) 6LoWPAN provides a gateway function that converts MQTT messages to CoAP before forwarding to sensors.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) 6LoWPAN is a network adaptation layer, not an application protocol translator. It operates at the network layer (Layer 3) and has no knowledge of application protocols like HTTP or Zigbee application clusters.
+  - B) IPv6 headers are 40 bytes. The IEEE 802.15.4 maximum frame payload is 127 bytes. 6LoWPAN (RFC 4944) solves this mismatch by providing header compression (reducing the 40-byte IPv6 header to as few as 2 bytes) and packet fragmentation/reassembly, enabling native IPv6 addressing directly on constrained sensor nodes.
+  - C) 6LoWPAN is specifically designed for IPv6, not IPv4. The "6" in 6LoWPAN refers to IPv6. It does not operate over IPv4.
+  - D) Protocol translation between MQTT and CoAP is a gateway function unrelated to 6LoWPAN's network adaptation role.
+
+---
+
+### Question 20 (5 points)
+
+A Zigbee End Device in a smart building cannot reach its parent router due to a router failure. What happens next in a properly configured Zigbee mesh network?
+
+- A) The end device broadcasts a distress signal on all channels and waits for the coordinator to respond directly.
+- B) The end device autonomously reroutes traffic through an alternate router or finds a new parent — the mesh self-heals.
+- C) The entire Zigbee network shuts down until the failed router is replaced.
+- D) The end device switches to Wi-Fi to maintain connectivity during the outage.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Zigbee end devices are sleepy leaf nodes — they do not broadcast distress signals or manage routing. Routing decisions are made by routers and the coordinator.
+  - B) Zigbee mesh networks are self-healing. When a router fails, other routers detect the topology change and update their routing tables. End devices that have lost their parent will re-associate with an alternative router. This self-healing property is one of the primary advantages of mesh topology over star topology.
+  - C) The loss of one router does not bring down a properly designed Zigbee mesh. Redundant routing paths allow the network to continue operating around the failed node.
+  - D) Zigbee end devices are single-radio devices. They cannot autonomously switch to a different wireless technology. Technology fallback requires a multi-radio gateway design at a higher layer.
+
+---
+
 End of Quiz – Module 04

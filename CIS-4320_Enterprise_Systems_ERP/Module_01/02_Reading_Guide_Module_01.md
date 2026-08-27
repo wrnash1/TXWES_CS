@@ -242,3 +242,19 @@ Work through each item before submitting the quiz.
 - Complete Lab 01.
 - Post your initial response to Discussion Forum 01 by Wednesday at 11:59 PM.
 - Complete Quiz 01 (10 questions).
+
+---
+
+## 9. Supplemental Resources
+
+**1. openSAP — Enterprise Resource Planning with SAP S/4HANA**
+<https://open.sap.com/courses/s4h14>
+Free introductory course from SAP covering S/4HANA architecture, the SAP Fiori user experience, and the core module structure. Ideal preparation for the SAP Certified Associate exam's foundational concepts section.
+
+**2. Salesforce Trailhead — Salesforce Associate Certification Prep**
+<https://trailhead.salesforce.com/en/users/salesforce/trailmixes/prepare-for-your-salesforce-certified-associate-credential>
+Official Salesforce-curated trailmix that maps directly to the Salesforce Certified Associate exam domains. Covers platform basics, multi-tenancy, the standard data model, and the Salesforce ecosystem — all relevant to Module 01 concepts.
+
+**3. SAP Learning — Introduction to ERP and SAP System Overview**
+<https://learning.sap.com/learning-journeys/discover-sap-s-4hana>
+SAP's official learning journey for S/4HANA discovery. Covers the business case for ERP, the HANA in-memory database advantage, and the SAP module landscape. Free with SAP Universal ID registration.

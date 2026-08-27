@@ -685,6 +685,57 @@ Zip all 5 screenshots and upload to the Canvas Module 04 Lab Assignment.
 
 ---
 
+## Part 9 — Challenge Exercise
+
+These steps are optional and ungraded. They extend conditional logic toward more realistic program scenarios.
+
+### Challenge 9.1 — BMI Calculator with Category Classification
+
+Create `~/cis1310/module04/bmi_calculator.py` that:
+
+1. Prompts the user for weight in pounds and height in inches
+2. Converts to metric: `weight_kg = pounds * 0.453592`, `height_m = inches * 0.0254`
+3. Calculates BMI: `bmi = weight_kg / height_m ** 2`
+4. Classifies using the standard WHO ranges with a proper if-elif-else chain:
+   - `< 18.5`: Underweight
+   - `18.5 <= bmi < 25.0`: Normal weight
+   - `25.0 <= bmi < 30.0`: Overweight
+   - `>= 30.0`: Obese
+5. Uses a guardian to reject non-positive weight or height inputs
+6. Displays BMI rounded to 1 decimal place and the category
+
+The challenge: implement the range checks using chained comparisons (`18.5 <= bmi < 25.0`) rather than `and` compounds.
+
+---
+
+### Challenge 9.2 — Logic Truth Table Generator
+
+Write `~/cis1310/module04/truth_table.py` that systematically prints the truth table for `and`, `or`, and `not` using all combinations of `True`/`False` for two boolean variables `p` and `q`:
+
+```text
+p       q       p and q   p or q   not p
+True    True    True      True     False
+True    False   False     True     False
+False   True    False     True     True
+False   False   False     False    True
+```
+
+Format each column with consistent width using f-string `:<8` left-alignment. This exercise solidifies the boolean logic required for the PCAP exam — you are essentially building the exam's own reference table.
+
+---
+
+### Challenge 9.3 — Short-Circuit Evaluation Demonstrator
+
+Write `~/cis1310/module04/short_circuit_demo.py` that creates a function `expensive_check()` that prints a message and returns `True` each time it is called. Then write three test cases:
+
+1. `False and expensive_check()` — demonstrate that `expensive_check()` is NOT called
+2. `True or expensive_check()` — demonstrate that `expensive_check()` is NOT called
+3. `True and expensive_check()` — demonstrate that `expensive_check()` IS called
+
+For each case, print a label before the expression and count how many times `expensive_check()` was invoked. This concretely proves short-circuit behavior rather than just describing it, and reinforces why guard conditions must appear on the left side of `and`.
+
+---
+
 ## Troubleshooting Guide
 
 **`SyntaxError: invalid syntax` on an `elif` line.**

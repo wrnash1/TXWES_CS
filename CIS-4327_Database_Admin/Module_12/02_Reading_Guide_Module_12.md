@@ -339,6 +339,26 @@ and security patterns.
 
 ---
 
+---
+
+## 9. Supplemental Resources
+
+The following free, open-access resources support Module 12 topics:
+
+**1. [BigQuery Documentation — Introduction to Partitioned Tables](https://cloud.google.com/bigquery/docs/partitioned-tables)**
+Covers date, timestamp, and integer range partitioning strategies, partition pruning mechanics, and the `require_partition_filter` table option.
+
+**2. [BigQuery Documentation — Introduction to Clustered Tables](https://cloud.google.com/bigquery/docs/clustered-tables)**
+Explains clustering column selection, block-level pruning behavior, the interaction between partitioning and clustering, and best practices for high-cardinality columns.
+
+**3. [BigQuery Documentation — Materialized Views](https://cloud.google.com/bigquery/docs/materialized-views-intro)**
+Documents materialized view creation, incremental refresh, smart tuning query rewriting, and the `max_staleness` option for controlling refresh frequency.
+
+**4. [BigQuery Documentation — Introduction to BigQuery Time Travel](https://cloud.google.com/bigquery/docs/time-travel)**
+Explains the `FOR SYSTEM_TIME AS OF` clause, the 7-day time travel window, fail-safe retention, and how to use time travel for point-in-time recovery of accidentally deleted rows.
+
+---
+
 Module 12 Reading Guide — CIS-4327 Database Administration
 
 Texas Wesleyan University | Proprietary and Confidential. Not for disclosure outside of course participants.

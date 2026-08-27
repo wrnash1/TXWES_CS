@@ -386,3 +386,21 @@ This is the core Agile benefit of design patterns: new Sprint features extend th
 | Strategy | Pattern making algorithms interchangeable at runtime |
 | Command | Pattern encapsulating requests as objects supporting undo and queuing |
 | Open/Closed Principle | Design principle: classes should be open for extension but closed for modification |
+
+---
+
+## Supplemental Resources
+
+The following free, open-access resources go deeper on Module 12 topics:
+
+**1. "Refactoring.Guru — Design Patterns" — Alexander Shvets**
+<https://refactoring.guru/design-patterns>
+A comprehensive free reference for all 23 Gang of Four design patterns with UML diagrams, pseudocode, and real-world analogies. The site organizes patterns by category and includes a pattern comparison tool. Particularly strong on Builder, Command, and Observer with step-by-step structural explanations.
+
+**2. "Design Patterns: Elements of Reusable Object-Oriented Software" — Summary (O'Reilly)**
+<https://www.oreilly.com/library/view/design-patterns-elements/0201633612/>
+The original Gang of Four book table of contents and sample chapters are freely accessible via O'Reilly's preview. The introduction and pattern catalog overview give the full context for why patterns were catalogued and how to apply them in practice.
+
+**3. "The Command Pattern" — SourceMaking**
+<https://sourcemaking.com/design_patterns/command>
+A free deep dive into the Command pattern with diagrams, multiple implementation examples, and a clear explanation of how CommandHistory enables undo/redo. Particularly useful for the lab's Command implementation tasks. Covers the pattern's connection to transaction management and macro recording.

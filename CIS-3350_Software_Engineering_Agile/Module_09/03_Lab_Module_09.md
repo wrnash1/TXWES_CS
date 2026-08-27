@@ -126,6 +126,33 @@ Submit to the Canvas assignment portal by the module due date.
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: WIP Limit Calibration Experiment
+
+The university IT Operations team from Part 1 wants to determine whether their WIP limits are set correctly. Design a one-month calibration experiment:
+
+1. Define the three metrics the team should track daily to assess whether the WIP limits are helping or hurting: name each metric, describe how it is measured, and explain what trend would indicate the WIP limits are too high, too low, or approximately right.
+2. Write a decision rule for the team: "If metric X shows behavior Y over Z days, we should adjust the WIP limit by action W." Write one decision rule per metric.
+3. At the end of one month, the experiment shows that Tier 2 technicians are frequently blocked waiting for Tier 3 to pick up escalations. Propose a specific WIP limit adjustment for the Tier 3 column and explain the rationale using Little's Law.
+4. Write a two-to-three sentence policy statement that the team could add to their board as an explicit policy governing what happens when the Tier 3 WIP limit is reached.
+
+### Challenge 2: Value Stream Future State Design
+
+Using the DevCorp feature request process from Part 2, design a "future state" value stream map that eliminates or reduces the three waste items you identified in Task B. For each improvement:
+
+1. Describe the specific process change (not just "reduce wait time" — specify the mechanism: automated approval, standing meeting replacement, self-service portal, etc.).
+2. Calculate the new estimated cycle time for the step after the improvement.
+3. Calculate the total cycle time for the future state process and compare it to the current state total. Show both calculations.
+4. Identify any new risks or trade-offs introduced by your improvements (e.g., if you eliminate a committee review, what quality risk does that create and how would you mitigate it?).
+
+### Reflection Questions
+
+1. Lean's "Seek Perfection" principle says improvement is continuous and never finished. What mechanisms does Scrum provide to implement this principle at the team level? Is the Sprint Retrospective sufficient, or are there types of improvement that require a different forum?
+2. Some Agile practitioners argue that WIP limits create artificial constraints that slow teams down when urgent work arrives. Construct the strongest possible argument for this position, then construct the strongest counter-argument from the Kanban perspective. Which argument do you find more compelling, and why?
+
+---
+
 ## Rubric Summary
 
 | Component | Points |

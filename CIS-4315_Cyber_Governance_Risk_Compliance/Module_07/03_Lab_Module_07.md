@@ -165,3 +165,43 @@ Late submissions lose 10 points per day per the course late policy.
 | C | Defense-in-Depth Assessment | 20 |
 | D | Prioritized Remediation Roadmap | 15 |
 | **Total** | | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+These challenges extend the Module 07 lab into advanced security architecture and control framework scenarios. Complete both challenges and the reflection questions for up to 15 bonus points.
+
+---
+
+### Challenge 1: Zero Trust Migration Planning
+
+Cascade Logistics is a regional trucking and freight company with 800 employees distributed across 12 dispatch centers. The company's current architecture relies on a traditional perimeter model: a central data center in Dallas, site-to-site VPN connections to all dispatch centers, and an assumption that all traffic inside the VPN is trusted. The CISO has been directed to develop a Zero Trust migration roadmap following a security incident in which an attacker moved laterally from a compromised dispatch center workstation to the central payroll server.
+
+**Step 1**: Identify at least four specific weaknesses in Cascade's current perimeter-based architecture that the lateral movement incident revealed. For each weakness, identify the Zero Trust principle or component (e.g., continuous verification, micro-segmentation, least-privilege access, device health validation) that would address it.
+
+**Step 2**: Design a phased Zero Trust migration roadmap for Cascade over 24 months. Organize your roadmap into three phases of approximately 8 months each. For each phase, identify: the ZTA capabilities being implemented, the specific controls or technologies required, the business risk reduced by each phase, and the success criteria for completing the phase before proceeding.
+
+**Step 3**: The CFO asks for financial justification before approving the $1.2M migration budget. Using the ALE formula, construct a financial justification. Assume: the payroll server asset value is $4,500,000; the lateral movement attack scenario has an exposure factor of 0.55; the current ARO is 0.40; after ZTA implementation the ARO is estimated at 0.05. Calculate the current ALE, the projected ALE after ZTA, and the net annual benefit. Present this as a one-paragraph executive summary suitable for a board briefing.
+
+---
+
+### Challenge 2: Control Framework Gap Analysis and Crosswalk
+
+A healthcare organization (250 employees, subject to HIPAA) has been using CIS Controls v8 Implementation Group 1 as its primary security framework. Following a HIPAA audit, the organization received findings that several HIPAA Security Rule requirements are not addressed by IG1 alone. The CISO needs to perform a control gap analysis and crosswalk to identify which additional controls from CIS IG2 or NIST SP 800-53 Moderate baseline are required to satisfy the HIPAA deficiencies.
+
+**Step 1**: The audit identified four specific HIPAA Security Rule gaps: (1) no audit controls for ePHI access (§164.312(b)), (2) no automatic log-off on workstations (§164.312(a)(2)(iii)), (3) no encryption of ePHI at rest (§164.312(a)(2)(iv)), and (4) no formal risk analysis documentation (§164.308(a)(1)). For each gap, identify the corresponding CIS Controls v8 safeguard (from IG2 or IG3 if not in IG1) and the NIST SP 800-53 control family that addresses the requirement.
+
+**Step 2**: Construct a compliance crosswalk table with the following columns: HIPAA Security Rule Requirement, CIS Controls v8 Safeguard (number and name), NIST SP 800-53 Control ID, Current Status (Gap/Partial/Met), and Remediation Priority (High/Medium/Low).
+
+**Step 3**: Write a 200-word gap remediation recommendation memo to the CISO prioritizing the four findings. Your memo must explain why one finding should be addressed before the others (reference both compliance risk and operational risk in your justification), and identify any control that simultaneously addresses more than one HIPAA gap.
+
+---
+
+### Reflection Questions
+
+Answer each reflection question in four to six sentences.
+
+1. Defense-in-depth is sometimes criticized as producing unnecessary complexity and cost without proportional security benefit — particularly when organizations layer controls that protect against the same attack vector rather than different vectors. Describe how a security architect should evaluate whether a proposed additional control layer genuinely adds defense-in-depth value versus redundantly duplicating an existing control, and what criteria should drive that decision.
+
+2. The NIST Cybersecurity Framework is deliberately framework-agnostic — it can be used alongside NIST SP 800-53, CIS Controls, ISO 27001, or any other control catalog. Explain why this agnosticism is a design feature rather than a weakness, and describe a scenario where an organization would benefit from using the CSF as an overlay across two different control frameworks simultaneously.

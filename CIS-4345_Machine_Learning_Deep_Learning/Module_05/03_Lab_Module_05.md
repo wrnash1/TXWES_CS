@@ -347,6 +347,109 @@ Answer these in a markdown cell in your notebook:
 
 **Multi-input prediction shape error:** When calling `model.predict([a, b])`, the inputs must be in the same order as defined in `tf.keras.Model(inputs=[...])`. Swap the list order if you get a shape mismatch.
 
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Building and Comparing Sequential vs. Functional Skip-Connection Model
+
+Build two models for the same binary classification task — one plain Sequential model and one Functional model with a skip connection — and compare their training behavior.
+
+```python
+import tensorflow as tf
+import numpy as np
+from sklearn.datasets import make_classification
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+
+X, y = make_classification(n_samples=2000, n_features=32, random_state=42)
+X = StandardScaler().fit_transform(X).astype(np.float32)
+y = y.astype(np.float32)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Model A: plain Sequential
+model_seq = tf.keras.Sequential([
+    tf.keras.layers.Dense(32, activation='relu', input_shape=(32,)),
+    tf.keras.layers.Dense(32, activation='relu'),
+    tf.keras.layers.Dense(1, activation='sigmoid')
+])
+model_seq.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+
+# Model B: Functional with skip connection
+inputs = tf.keras.Input(shape=(32,))
+x = tf.keras.layers.Dense(32, activation='relu')(inputs)
+x = tf.keras.layers.Dense(32, activation='relu')(x)
+x = tf.keras.layers.Add()([inputs, x])   # residual: same shape (32,)
+outputs = tf.keras.layers.Dense(1, activation='sigmoid')(x)
+model_skip = tf.keras.Model(inputs=inputs, outputs=outputs)
+model_skip.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+
+import matplotlib.pyplot as plt
+hist_seq  = model_seq.fit(X_train, y_train,  epochs=40, validation_split=0.15, verbose=0)
+hist_skip = model_skip.fit(X_train, y_train, epochs=40, validation_split=0.15, verbose=0)
+
+plt.figure(figsize=(10, 4))
+plt.plot(hist_seq.history['val_accuracy'],  label='Sequential — Val Acc', color='steelblue')
+plt.plot(hist_skip.history['val_accuracy'], label='Skip-Connection — Val Acc', color='coral')
+plt.title('Sequential vs. Skip-Connection Model: Validation Accuracy')
+plt.xlabel('Epoch'); plt.ylabel('Accuracy'); plt.legend()
+plt.tight_layout(); plt.savefig('skip_connection_comparison.png', dpi=100); plt.show()
+
+print("Sequential params: ", model_seq.count_params())
+print("Skip-connection params:", model_skip.count_params())
+_, acc_seq  = model_seq.evaluate(X_test, y_test, verbose=0)
+_, acc_skip = model_skip.evaluate(X_test, y_test, verbose=0)
+print(f"Test accuracy — Sequential: {acc_seq:.4f} | Skip-Connection: {acc_skip:.4f}")
+```
+
+1. Compare the parameter counts of both models — are they the same or different? Explain why.
+2. Note whether the skip-connection model converges faster or to a higher accuracy. Consider what the residual path provides that the plain path does not.
+
+### Challenge 2: Extracting and Visualizing Intermediate Layer Activations
+
+Use the Functional API to build a feature extractor that exposes the output of each hidden layer, then visualize the activation distributions.
+
+```python
+# Build a model and train it briefly
+model = tf.keras.Sequential([
+    tf.keras.layers.Dense(64, activation='relu', input_shape=(32,), name='dense_1'),
+    tf.keras.layers.Dense(32, activation='relu', name='dense_2'),
+    tf.keras.layers.Dense(1, activation='sigmoid', name='output')
+])
+model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+model.fit(X_train, y_train, epochs=10, verbose=0)
+
+# Create extractor models for each hidden layer
+layer_names = ['dense_1', 'dense_2']
+extractors = {
+    name: tf.keras.Model(inputs=model.input,
+                         outputs=model.get_layer(name).output)
+    for name in layer_names
+}
+
+fig, axes = plt.subplots(1, 2, figsize=(12, 4))
+for ax, name in zip(axes, layer_names):
+    activations = extractors[name].predict(X_test[:200], verbose=0)
+    ax.hist(activations.flatten(), bins=50, color='teal', edgecolor='black', alpha=0.7)
+    ax.set_title(f'Activation Distribution — {name}')
+    ax.set_xlabel('Activation Value'); ax.set_ylabel('Count')
+
+plt.tight_layout(); plt.savefig('activation_distributions.png', dpi=100); plt.show()
+
+for name in layer_names:
+    acts = extractors[name].predict(X_test[:200], verbose=0)
+    dead_pct = (acts == 0).mean() * 100
+    print(f"{name}: mean={acts.mean():.4f}, dead neuron %={dead_pct:.1f}%")
+```
+
+1. Observe what fraction of neurons in each layer are "dead" (outputting exactly 0.0). Is there a difference between layers closer to and farther from the input?
+2. Try changing the activation to `'sigmoid'` in both hidden layers and re-run. How does the activation distribution change, and what does that imply about gradient flow?
+
+### Part 9 Reflection Questions
+
+1. The Functional API skip-connection model and Sequential model had similar (or identical) parameter counts. If skip connections do not add parameters, what is the mechanism by which they can improve training or generalization?
+2. When extracting intermediate activations, you created new `tf.keras.Model` objects that share weights with the original model. If you continue training the original model, will the extractor models automatically reflect the updated weights? Explain why or why not.
+
 **Softmax sum not equal to 1.0:** Numerical precision may cause the sum to be `0.9999999` or `1.0000001`. Values within `1e-5` of 1.0 are acceptable. Use `np.isclose(predictions[0].sum(), 1.0)` to check programmatically.
 
 **`count_params()` returns different values:** Verify that both models use identical layer configurations. A difference of 1 or more means a layer unit count or activation was specified differently.

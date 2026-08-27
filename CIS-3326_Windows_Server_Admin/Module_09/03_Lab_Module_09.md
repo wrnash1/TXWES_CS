@@ -390,3 +390,121 @@ service is running and the server is authorized:
 Get-Service -Name DHCPServer | Select-Object Status, StartType
 Get-DhcpServerInDC
 ```
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Configure DNS Debug Logging and Analyze a Query Trace
+
+DNS debug logging captures every query and response, allowing you to verify forwarder
+behavior and diagnose resolution failures. Enable it, generate traffic, then analyze
+the log.
+
+1. Enable DNS debug logging on DC1, capturing queries and responses to a log file:
+
+   ```powershell
+   Set-DnsServerDiagnostics -ComputerName DC1 `
+       -Queries $true `
+       -Answers $true `
+       -SendPackets $true `
+       -ReceivePackets $true `
+       -LogFilePath "C:\Windows\System32\dns\dns_debug.log" `
+       -MaxMBFileSize 10 `
+       -EnableLoggingToFile $true
+   ```
+
+   Verify logging is active:
+
+   ```powershell
+   Get-DnsServerDiagnostics -ComputerName DC1 |
+       Select-Object Queries, Answers, EnableLoggingToFile, LogFilePath
+   ```
+
+2. Generate DNS traffic by resolving several external names and one internal name:
+
+   ```powershell
+   Resolve-DnsName -Name "microsoft.com"   -Server 127.0.0.1
+   Resolve-DnsName -Name "github.com"      -Server 127.0.0.1
+   Resolve-DnsName -Name "dc1.txwes.edu"   -Server 127.0.0.1
+   ```
+
+3. Open the debug log and search for your queries:
+
+   ```powershell
+   Select-String -Path "C:\Windows\System32\dns\dns_debug.log" `
+       -Pattern "microsoft.com|github.com|dc1.txwes.edu" |
+       Select-Object -First 20
+   ```
+
+   In your lab notes, identify: which queries were forwarded to the external forwarder,
+   which were answered from the local zone, and how you can tell the difference from
+   the log entries.
+
+4. Disable debug logging when done to avoid filling the disk:
+
+   ```powershell
+   Set-DnsServerDiagnostics -ComputerName DC1 -EnableLoggingToFile $false
+   ```
+
+### Challenge 2: Configure DHCP Failover and Verify Lease Synchronization
+
+DHCP Failover ensures IP address continuity when the primary DHCP server is
+unavailable. Configure Hot Standby failover between DC1 and a second server, then
+verify that leases synchronize.
+
+1. Install DHCP on a second server (DC2 or a member server) and authorize it in
+   Active Directory:
+
+   ```powershell
+   Install-WindowsFeature -Name DHCP -IncludeManagementTools -ComputerName DC2
+   Add-DhcpServerInDC -DnsName "dc2.txwes.edu" -IPAddress 192.168.10.11
+   ```
+
+2. Configure DHCP Failover in Hot Standby mode for the `192.168.10.0` scope,
+   designating DC2 as the standby server with a 5% reserve address percentage:
+
+   ```powershell
+   Add-DhcpServerv4Failover `
+       -Name       "TXWES-Failover" `
+       -ScopeId    "192.168.10.0" `
+       -PartnerServer "dc2.txwes.edu" `
+       -Mode       HotStandby `
+       -ServerRole Active `
+       -ReservePercent 5 `
+       -SharedSecret "Lab@Secret1" `
+       -AutoStateTransition $true `
+       -MaxClientLeadTime 01:00:00
+   ```
+
+3. Verify the failover relationship was created and leases are replicated:
+
+   ```powershell
+   Get-DhcpServerv4Failover -Name "TXWES-Failover"
+
+   # Force immediate lease replication to the standby server
+   Invoke-DhcpServerv4FailoverReplication -Name "TXWES-Failover" -Force
+
+   # Confirm the scope is visible on DC2
+   Get-DhcpServerv4Scope -ComputerName dc2.txwes.edu
+   ```
+
+4. In your lab notes, explain what happens to DHCP lease assignment if DC1 goes
+   offline while in Hot Standby mode. How does the `MaxClientLeadTime` parameter
+   control when DC2 begins serving leases, and why is the `-SharedSecret` parameter
+   required?
+
+### Reflection Questions
+
+1. DNS debug logging captures both query and response packets and can quickly fill
+   disk space in a high-traffic environment. Describe two specific scenarios where
+   enabling DNS debug logging would be justified in production, and identify two
+   operational controls you would implement to prevent the log from consuming all
+   available disk space.
+
+2. DHCP Failover in Hot Standby mode reserves a percentage of the address pool for
+   the standby server. If `ReservePercent` is set to 5% on a scope with 100 available
+   addresses, the standby server holds 5 addresses. What risk does this create if the
+   active server goes offline and the standby takes over with only 5 addresses, and
+   how would you adjust the failover configuration to reduce this risk in an
+   environment with 500 DHCP clients?

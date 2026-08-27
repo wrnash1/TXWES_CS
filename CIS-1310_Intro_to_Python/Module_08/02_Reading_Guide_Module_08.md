@@ -391,6 +391,30 @@ Watch Episode 4 of the [Python for Everybody Course Playlist](https://www.youtub
 
 ---
 
+## 8. Supplemental Resources
+
+**1. Official Python 3 Docs — Defining Functions**
+[https://docs.python.org/3/tutorial/controlflow.html#defining-functions](https://docs.python.org/3/tutorial/controlflow.html#defining-functions)
+The authoritative tutorial section covering function definitions, docstrings, default argument values, keyword arguments, `*args`, `**kwargs`, and lambda expressions. Essential reading before the PCAP exam — most Module 08 exam questions are drawn directly from this section.
+
+**2. Official Python 3 Docs — More on Defining Functions**
+[https://docs.python.org/3/tutorial/controlflow.html#more-on-defining-functions](https://docs.python.org/3/tutorial/controlflow.html#more-on-defining-functions)
+Extends the basics with keyword-only arguments (`*` separator), positional-only parameters (`/`), and arbitrary argument lists. Covers the mutable default argument pitfall formally.
+
+**3. Python for Everybody — Chapter 4: Functions**
+[https://www.py4e.com/html3/04-functions](https://www.py4e.com/html3/04-functions)
+Free textbook chapter on function calls, building functions, return values, and parameters. Includes live worked examples and self-check exercises.
+
+**4. Real Python — Defining Your Own Python Functions**
+[https://realpython.com/defining-your-own-python-function/](https://realpython.com/defining-your-own-python-function/)
+A comprehensive free article covering all function features including type hints, closures, decorators (preview), and best practices. The section on default argument pitfalls and keyword-only arguments is directly aligned with PCAP exam content.
+
+**5. Python Docs — PEP 3102: Keyword-Only Arguments**
+[https://peps.python.org/pep-3102/](https://peps.python.org/pep-3102/)
+The design document for the bare `*` syntax that forces keyword-only arguments. Reading the Motivation section explains why this feature was added and when you would use it in real code — useful context beyond what the exam tests.
+
+---
+
 ## 8. Study Checklist
 
 - [ ] Watch the Module 08 video lecture by Professor Nash.

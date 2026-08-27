@@ -385,3 +385,51 @@ Submit the following to the Canvas assignment portal:
 | Card grid reflow screenshot at 600px | 5 |
 | Grid overlay DevTools screenshot | 5 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: CSS Custom Properties for a Theme System
+
+Extend your stylesheet to use CSS custom properties (variables) for colors and spacing so the visual theme can be changed from a single location.
+
+1. At the top of `styles.css`, before all other rules, add a `:root` block declaring at least four custom properties:
+
+```css
+:root {
+  --color-primary: #1a1a2e;
+  --color-accent: #4361ee;
+  --color-bg: #f8f9fa;
+  --color-surface: #ffffff;
+  --space-sm: 0.75rem;
+  --space-md: 1.5rem;
+  --space-lg: 2rem;
+}
+```
+
+1. Replace every hard-coded color and spacing value in your existing rules with the appropriate custom property using `var(--property-name)`.
+1. Add a second theme by writing a `[data-theme="dark"]` selector block that overrides the same custom properties with dark-mode values (dark background, light text).
+1. In your HTML, add a `<button id="themeToggle">Toggle Theme</button>` to the header and a small inline `<script>` at the bottom of `<body>` that toggles `document.documentElement.dataset.theme` between `""` and `"dark"` on click. Verify the theme switches without a page reload.
+
+### Challenge 2: Sticky Sidebar with Scroll Behavior
+
+Make the sidebar stick to the top of the viewport as the user scrolls past the header.
+
+1. Add the following properties to your `.sidebar` rule:
+
+```css
+.sidebar {
+  position: sticky;
+  top: 1rem;
+}
+```
+
+1. Ensure the `<main>` grid container has `align-items: start` so the sidebar's grid cell height does not constrain the sticky behavior.
+1. Add enough placeholder paragraph content to the `.main-content` article to make the page scrollable (at least 2000px of content height).
+1. Open the page in Chrome and scroll down — verify that the sidebar remains visible at the top of the viewport while the article content scrolls past it.
+
+### Reflection Questions
+
+1. When you replaced hard-coded values with CSS custom properties, how does this approach reduce the effort required to apply a new visual theme compared to editing individual rule declarations?
+2. Why does `position: sticky` require the parent grid container to have `align-items: start` or the sidebar item to have `align-self: start` to work correctly in a CSS Grid layout?

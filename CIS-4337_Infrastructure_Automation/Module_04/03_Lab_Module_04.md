@@ -313,4 +313,47 @@ Your AWS credentials lack permission to access S3 or DynamoDB. Ensure your IAM u
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Declarative Import Block (Terraform 1.5+)
+
+Terraform 1.5 introduced `import` blocks as a declarative alternative to the imperative `terraform import` command. Practice the new pattern on a resource you created in an earlier step.
+
+1. Remove `aws_s3_bucket.main_bucket` from state (but not from AWS) using `terraform state rm`.
+2. Add the following `import` block to `main.tf`, replacing `<your-actual-bucket-name>` with the real bucket name:
+
+```hcl
+import {
+  to = aws_s3_bucket.main_bucket
+  id = "<your-actual-bucket-name>"
+}
+```
+
+1. Run `terraform plan` — Terraform should show the import in the plan output alongside a zero-change result for the resource attributes.
+2. Run `terraform apply -auto-approve` to execute the import. Confirm with `terraform state show aws_s3_bucket.main_bucket` that the resource is back in state.
+3. Remove the `import` block from `main.tf` after the apply. Record in `lab_notes.txt`: what advantage does a declarative `import` block have over the imperative `terraform import` command in a CI/CD pipeline?
+
+### Challenge 2: Workspace-Isolated State
+
+Use Terraform workspaces to demonstrate state isolation between environments.
+
+1. Create a `dev` workspace and a `staging` workspace using the following commands:
+
+```bash
+terraform workspace new dev
+terraform workspace new staging
+```
+
+1. Switch to the `dev` workspace and run `terraform apply -auto-approve`. Note the state key path used in S3 (check with `aws s3 ls s3://<bucket>/`).
+2. Switch to the `staging` workspace and run `terraform apply -auto-approve`. Confirm a separate state file is created for `staging`.
+3. Run `terraform workspace list` and record all workspace names. Then switch back to `default` with `terraform workspace select default`.
+4. Record in `lab_notes.txt`: how does the S3 key path differ between `default` and named workspaces?
+
+### Reflection Questions
+
+1. You used both `terraform state rm` + `terraform import` and the declarative `import {}` block. For a migration project with 50 existing cloud resources to onboard into Terraform, which approach would scale better and why?
+2. The S3 backend requires a DynamoDB table for locking, but other backends (Azure Blob, GCS) provide native locking without additional services. What are the operational trade-offs of using S3+DynamoDB versus a backend with native locking in a production environment?
+
+---
+
 Module 04 Lab — CIS-4337 Infrastructure Automation — Texas Wesleyan University

@@ -240,3 +240,19 @@ Keep It Simple and Practical focuses on reducing unnecessary complexity in proce
 * [ ] Take the Module 04 Quiz.
 * [ ] Post your initial discussion response by Wednesday at 11:59 PM.
 * [ ] Reply to at least two classmates by Sunday at 11:59 PM.
+
+---
+
+## Supplemental Resources
+
+**1. AXELOS — ITIL 4 Guiding Principles Explained**
+<https://www.axelos.com/resource-hub/blog/itil-4-the-7-guiding-principles>
+The official AXELOS article covering all seven Guiding Principles with descriptions and application examples. Use this as a reference when working through scenario-based exam questions.
+
+**2. Pink Elephant — ITIL 4 Guiding Principles in Practice**
+<https://www.pinkelephant.com/resource-center/blog/applying-the-itil-4-guiding-principles>
+A practitioner-focused article from one of the world's leading ITSM training organizations explaining how each principle applies in real service improvement projects. Includes common mistakes teams make when misapplying the principles.
+
+**3. Lean IT — Optimize Before You Automate**
+<https://leanit.org/optimize-before-automate>
+A short practitioner guide on the relationship between process simplification and automation — directly aligned with the Optimize and Automate Guiding Principle. Reinforces why automating a poorly designed process produces faster failures.

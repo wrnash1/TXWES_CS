@@ -312,3 +312,72 @@ Submit the following to the Canvas assignment portal:
 | Footer stacks on mobile and expands to 4 columns at 1024px | 10 |
 | Screenshots at all required breakpoints submitted | 10 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Dark Mode with prefers-color-scheme
+
+Implement an automatic dark mode using CSS custom properties and the `prefers-color-scheme` media query — no JavaScript required.
+
+1. Add a `:root` block at the top of `styles.css` declaring light-mode custom properties for background, surface, text, and accent colors:
+
+```css
+:root {
+  --color-bg: #f8f9fa;
+  --color-surface: #ffffff;
+  --color-text: #1a1a2e;
+  --color-muted: #555555;
+  --color-accent: #4361ee;
+  --color-nav-bg: #1a1a2e;
+}
+```
+
+1. Add a `@media (prefers-color-scheme: dark)` block that overrides the same properties with dark values:
+
+```css
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #0d1117;
+    --color-surface: #161b22;
+    --color-text: #c9d1d9;
+    --color-muted: #8b949e;
+    --color-accent: #58a6ff;
+    --color-nav-bg: #010409;
+  }
+}
+```
+
+1. Replace all hard-coded color values in your existing CSS rules with the corresponding `var()` references.
+1. In Chrome DevTools, open the Rendering tab (three-dot menu → More tools → Rendering), scroll to "Emulate CSS media feature prefers-color-scheme," and toggle between `light` and `dark`. Verify the page colors switch without a reload.
+
+### Challenge 2: Container Query for the Card Component
+
+Refactor the `.card` component to respond to its container's width rather than the viewport width, using a CSS container query.
+
+1. Add `container-type: inline-size` to `.card-grid` to establish it as a query container:
+
+```css
+.card-grid {
+  container-type: inline-size;
+  container-name: card-grid;
+}
+```
+
+1. Replace the `.card-grid` `@media` breakpoint rule with a `@container` rule so the cards reflow based on the grid container's own width, not the viewport:
+
+```css
+@container card-grid (min-width: 400px) {
+  .card-grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+}
+```
+
+1. Drag the browser window and observe that the card layout responds to the container width rather than the full viewport, allowing the cards to reflow even if the container is embedded inside a narrow sidebar.
+
+### Reflection Questions
+
+1. The dark mode implementation using `prefers-color-scheme` required no JavaScript. What advantage does this CSS-only approach have over a JavaScript toggle for users who visit the page for the first time?
+2. Container queries respond to the element's own width rather than the viewport width. Describe a real-world scenario where a component should reflow based on its container size rather than the screen size.

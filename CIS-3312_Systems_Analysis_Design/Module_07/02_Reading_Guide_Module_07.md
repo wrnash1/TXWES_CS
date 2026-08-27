@@ -246,3 +246,29 @@ When stakeholder requirements conflict, the BA's role is not to arbitrate the co
 7. What is the difference between a throwaway prototype and an evolutionary prototype?
 
 8. A stakeholder has high influence but low interest in the project. What is the appropriate stakeholder management strategy?
+
+---
+
+## 9. Supplemental Resources
+
+The following open educational resources extend module content on elicitation techniques, requirements documentation, and stakeholder management. All are freely accessible without login or purchase.
+
+1. **BABOK Guide v3 — Elicitation and Collaboration (KA 4) and Requirements Life Cycle Management (KA 6)**
+   <https://www.iiba.org/career-resources/a-business-analysis-professionals-foundation-for-success/babok/>
+   Focus: Official IIBA reference for all tasks in KA 4 and KA 6. KA 4 covers the five elicitation tasks tested in this module; KA 6 covers requirements maintenance and change control.
+
+2. **Tacit Knowledge in Requirements Engineering — IEEE Software (open abstract)**
+   <https://ieeexplore.ieee.org/document/6816468>
+   Focus: Academic paper examining why tacit knowledge is the most common source of missing requirements and how observation and cognitive interview techniques surface it. Supports the observation and interview sections of this guide.
+
+3. **Requirements Elicitation Techniques Comparison — Bridging the Gap**
+   <https://www.bridging-the-gap.com/elicitation-techniques/>
+   Focus: Practitioner-level comparison of elicitation technique strengths, weaknesses, and appropriate use contexts. Reinforces the technique selection framework discussed in the Elicitation Techniques section of this guide.
+
+4. **Stakeholder Analysis Power-Interest Grid — MindTools**
+   <https://www.mindtools.com/pages/article/newPPM_07.htm>
+   Focus: Illustrated explanation of the Power-Interest Grid with engagement strategy examples for each quadrant. Directly supports the Stakeholder Analysis section and the Study Question 8 in this guide.
+
+5. **Focus Group Research Methodology — Research Methods Knowledge Base**
+   <https://conjointly.com/kb/focus-groups/>
+   Focus: Academic-quality explanation of focus group strengths, limitations (dominance effects, groupthink), and best practices. Reinforces the focus group technique content and the limitation discussed in Question 12 of the quiz.

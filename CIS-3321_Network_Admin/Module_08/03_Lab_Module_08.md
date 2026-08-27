@@ -311,4 +311,69 @@ Submit to the Module 08 Lab assignment in the course LMS before the posted deadl
 
 ---
 
-CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash
+## Part 9 — Challenge Exercise
+
+These advanced steps extend the Module 08 security lab with DHCP Snooping, IPS simulation, and DMZ architecture.
+
+### Challenge Step 1: Configure DHCP Snooping and Dynamic ARP Inspection
+
+In Packet Tracer, extend your existing topology with the following:
+1. Add a DHCP server on your trusted switch uplink (Gi0/1 on the switch).
+2. Add a rogue DHCP server on access port Fa0/5 (simulating an attacker's device).
+3. Configure DHCP Snooping on the switch:
+   ```
+   ip dhcp snooping
+   ip dhcp snooping vlan 1
+   no ip dhcp snooping information option
+   interface Gi0/1
+    ip dhcp snooping trust
+   ```
+4. Connect a PC and request a DHCP address. Verify it receives an address from the legitimate server (not the rogue).
+5. Configure Dynamic ARP Inspection:
+   ```
+   ip arp inspection vlan 1
+   interface Gi0/1
+    ip arp inspection trust
+   ```
+
+**Challenge Question 1:** After enabling DHCP Snooping, what happens when the rogue DHCP server on Fa0/5 sends a DHCP Offer? What switch log message would you expect to see? How does DAI use the DHCP Snooping binding table to protect against ARP poisoning, and what would happen if an attacker tried to send a gratuitous ARP reply from Fa0/5?
+
+### Challenge Step 2: Design and Build a Two-Firewall DMZ Architecture
+
+Build the following topology in Packet Tracer:
+- Internet Router (simulates ISP connection)
+- External Firewall (Router 1 with ACLs): connects internet to DMZ
+- DMZ switch with a Web Server (192.168.10.100/24) and Email Server (192.168.10.101/24)
+- Internal Firewall (Router 2 with ACLs): connects DMZ to LAN
+- Internal LAN switch with a Database Server (10.0.0.100/24) and Admin PC (10.0.0.200/24)
+
+Configure ACLs that implement this security policy:
+- Internet can reach Web Server on TCP 80 and 443 only
+- Internet can reach Email Server on TCP 25 only
+- DMZ servers cannot initiate connections to the LAN Database Server
+- Admin PC can connect to Web Server on any port for management
+- LAN clients can initiate HTTPS connections to the Web Server
+
+**Challenge Question 2:** The security policy states "DMZ servers cannot initiate connections to the LAN Database Server." On which firewall (External or Internal) and in which direction (inbound or outbound) do you place the ACL that enforces this rule? Write the specific ACL entry (permit/deny, protocol, source, destination, port) that would enforce this restriction.
+
+### Challenge Step 3: Implement SSH Hardening on Network Devices
+
+1. On a Cisco router in your Packet Tracer topology, disable Telnet and configure SSH-only access:
+   ```
+   hostname Lab-Router
+   ip domain-name txwes.edu
+   crypto key generate rsa modulus 2048
+   ip ssh version 2
+   line vty 0 4
+    transport input ssh
+    login local
+   username netadmin privilege 15 secret Str0ngP@ssw0rd!
+   ```
+2. Attempt to connect via Telnet from a PC — verify it is rejected.
+3. Connect via SSH — verify it succeeds.
+
+**Challenge Question 3:** List five specific network device hardening actions you applied or would apply to this router beyond disabling Telnet. For each, explain what attack or risk the hardening action mitigates. Include at least one hardening action related to management protocols (SNMP), one related to unused services, and one related to physical access or console port security.
+
+---
+
+*CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash*

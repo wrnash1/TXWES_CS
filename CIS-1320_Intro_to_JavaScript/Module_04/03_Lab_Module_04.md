@@ -423,6 +423,40 @@ Submit the following to the Module 04 Lab assignment in Canvas:
 
 ---
 
+## Part 9 — Challenge Exercise
+
+**This section is optional but strongly recommended.** These steps introduce decision-tree thinking and defensive coding patterns used in real applications.
+
+### Challenge Step 9.1 — Build a Role-Based Access Control Function
+
+Create `rbac.js`. Write a function `getPermissions(role, isActive)` that uses `if/else if/else` to return an array of permission strings. Define at least four roles: `'admin'` (all permissions), `'editor'` (read + write), `'viewer'` (read only), and any other role (no permissions). Add a guard at the top: if `!isActive`, return `[]` immediately regardless of role. Call the function with five different combinations and log the results with `console.table()`.
+
+### Challenge Step 9.2 — Implement a `switch (true)` Range Classifier
+
+Create `classifier.js`. Write a function `classifyBMI(bmi)` that uses `switch (true)` pattern to return a classification string based on numeric ranges:
+
+- Below 18.5: `'Underweight'`
+- 18.5–24.9: `'Normal'`
+- 25–29.9: `'Overweight'`
+- 30 and above: `'Obese'`
+
+Test it with at least five BMI values and verify the correct range is returned. This exercise reinforces that `switch (true)` is a valid alternative to long `if/else if` chains for range-based decisions.
+
+### Challenge Step 9.3 — Optional Chaining Deep Access
+
+Create `optional_chain.js`. Given the following object structure, safely access deeply nested properties using `?.` combined with `??` for defaults. Write at least five property access expressions, including paths that are intentionally `null` or `undefined` at different levels. Log each result and annotate with a comment explaining which part of the chain was missing:
+
+```javascript
+const company = {
+  name: 'TechCorp',
+  ceo: { name: 'Alice', contact: { email: 'alice@tech.com' } },
+  cto: null,
+  address: { city: 'Fort Worth', state: 'TX' }
+};
+```
+
+---
+
 ## Reflection Questions
 
 Answer in the Canvas text box (two to three sentences each):

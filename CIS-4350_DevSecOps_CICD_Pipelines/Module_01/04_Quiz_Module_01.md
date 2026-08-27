@@ -205,3 +205,173 @@ Conway's Law is relevant to DevSecOps because it suggests that:
 ---
 
 Quiz — Module 01 | CIS-4350 | Texas Wesleyan University | Professor Nash
+
+---
+
+### Question 11 (5 points)
+
+Which of the following best describes the PASTA threat modeling methodology?
+
+- A) A checklist of six threat categories applied to data flow diagrams
+- B) A risk-centric, seven-stage process that aligns threat analysis with business objectives
+- C) A penetration testing framework used exclusively during the Test phase
+- D) A policy language for encoding security controls in Kubernetes
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) describes STRIDE, not PASTA. PASTA (Process for Attack Simulation and Threat Analysis) takes a business risk perspective rather than a checklist approach.
+  - C) PASTA is a threat modeling methodology performed during planning, not a pentest framework used in the Test phase.
+  - D) describes OPA/Rego, which is unrelated to PASTA.
+
+---
+
+### Question 12 (5 points)
+
+In a GitHub Actions workflow, what is the purpose of setting `fetch-depth: 0` on the `actions/checkout` step when running a secrets scanner?
+
+- A) It reduces the download size of the repository to speed up the pipeline
+- B) It ensures the full Git history is checked out so secrets in older commits are also scanned
+- C) It prevents the runner from caching any credentials to disk
+- D) It restricts checkout to the default branch only
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) `fetch-depth: 0` actually increases download size by fetching all history — it does not reduce it.
+  - C) Credential caching is controlled by the credential helper, not the fetch-depth setting.
+  - D) `fetch-depth: 0` retrieves all branches and all history — it does not restrict to a single branch.
+
+---
+
+### Question 13 (5 points)
+
+What is a Software Bill of Materials (SBOM), and when in the DevSecOps lifecycle is it typically generated?
+
+- A) A budget document listing the cost of all security tools; generated during the Plan phase
+- B) An inventory of all software components, libraries, and their versions; generated at Release
+- C) A report from DAST scanning listing all discovered web application vulnerabilities
+- D) A container manifest that specifies the base image and exposed ports
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) An SBOM documents software components, not financial costs.
+  - C) A DAST report lists runtime vulnerabilities — it is not an SBOM and is produced during the Test phase.
+  - D) A Dockerfile or container manifest describes build instructions, not a comprehensive component inventory.
+
+---
+
+### Question 14 (5 points)
+
+Which metric measures the average time between a vulnerability being discovered in a pipeline scan and the corresponding fix being merged?
+
+- A) Pipeline Gate Pass Rate
+- B) Escape Rate
+- C) Mean Time to Remediate (MTTR)
+- D) Vulnerability Density
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) Pipeline Gate Pass Rate measures the percentage of builds that pass all gates — not time to fix.
+  - B) Escape Rate measures the percentage of vulnerabilities that reach production, not remediation time.
+  - D) Vulnerability Density measures the number of vulnerabilities per 1,000 lines of code, not elapsed time.
+
+---
+
+### Question 15 (5 points)
+
+The CALMS pillar of "Measurement" in a DevSecOps context primarily supports which outcome?
+
+- A) Justifying tool purchases to the CISO based on license cost comparisons
+- B) Enabling data-driven decisions about security posture and process improvement over time
+- C) Measuring individual developer productivity through lines-of-code metrics
+- D) Documenting compliance evidence for annual audits only
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Measurement in CALMS is about process telemetry and improvement, not procurement justification.
+  - C) Lines-of-code metrics are generally discouraged as a developer performance measure and are not the CALMS intent.
+  - D) CALMS Measurement provides continuous feedback, not a once-a-year audit data collection exercise.
+
+---
+
+### Question 16 (5 points)
+
+Which of the following describes the "Escape Rate" metric in DevSecOps?
+
+- A) The percentage of pipeline runs that fail due to tool configuration errors
+- B) The percentage of known vulnerabilities that were not caught by pipeline gates and reached production
+- C) The time elapsed between a CVE being published and a patch being applied
+- D) The number of secrets committed to source control per month
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Pipeline configuration failures are tracked separately and are not what Escape Rate measures.
+  - C) That describes patch lag or vulnerability exposure window, not Escape Rate.
+  - D) Committed secrets are tracked by secrets-detection tooling and reported as a count, not the Escape Rate metric.
+
+---
+
+### Question 17 (5 points)
+
+HashiCorp Vault is primarily used in a DevSecOps pipeline to address which concern?
+
+- A) Scanning container images for known CVEs before deployment
+- B) Centrally storing, managing, and dynamically injecting secrets so they are never hardcoded in code or environment files
+- C) Running static analysis on Terraform templates for configuration drift
+- D) Generating signed SBOMs for every container image pushed to a registry
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Container image scanning is the role of tools like Trivy or Grype, not Vault.
+  - C) Terraform static analysis is performed by tools like tfsec or checkov, not Vault.
+  - D) SBOM generation is performed by tools like Syft or CycloneDX, not Vault.
+
+---
+
+### Question 18 (5 points)
+
+Which statement correctly characterizes the "three ways" of DevOps (as described by Gene Kim)?
+
+- A) Plan, Build, Release — the three sequential gates before any deployment
+- B) Flow, Feedback, and Continual Learning and Experimentation
+- C) Culture, Automation, and Lean — a subset of the CALMS framework
+- D) People, Process, and Technology — the classic IT service management triad
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Plan, Build, Release describes a CI/CD phase model, not the Three Ways.
+  - C) Culture, Automation, and Lean are three of the five CALMS pillars, not the Three Ways.
+  - D) People, Process, Technology is an ITSM framework triad, unrelated to the Three Ways.
+
+---
+
+### Question 19 (5 points)
+
+A team uses Semgrep in their CI pipeline. Semgrep belongs to which DevSecOps tool category?
+
+- A) Dynamic Application Security Testing (DAST)
+- B) Container image scanning
+- C) Static Application Security Testing (SAST)
+- D) Infrastructure as Code (IaC) scanning
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) DAST tools like OWASP ZAP test running applications — Semgrep analyzes source code without executing it.
+  - B) Container image scanners like Trivy inspect OS packages and layers — Semgrep works on source code.
+  - D) IaC scanners like checkov or tfsec analyze Terraform/CloudFormation — Semgrep is a general-purpose code analysis engine.
+
+---
+
+### Question 20 (5 points)
+
+What is the primary security risk that OWASP Dependency-Check is designed to detect?
+
+- A) Misconfigurations in Kubernetes RBAC policies
+- B) Known CVEs in open-source libraries included in a project's build dependencies
+- C) Hardcoded API keys and passwords in application source code
+- D) SQL injection vulnerabilities in database query strings
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Kubernetes RBAC misconfiguration is addressed by IaC or policy scanners, not dependency checkers.
+  - C) Hardcoded secrets are detected by secrets-scanning tools like gitleaks or truffleHog.
+  - D) SQL injection detection is a SAST or DAST concern — dependency checkers focus on vulnerable third-party packages.

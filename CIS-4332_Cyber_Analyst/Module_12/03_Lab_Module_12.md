@@ -263,3 +263,36 @@ Submit a single PDF to Canvas containing:
 5. Part 5 — Chain of custody record
 
 **Grading:** 100 points total. Parts 1–3 are worth 20 points each. Parts 4 and 5 are worth 10 points each.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Memory Forensics — Process Injection Detection
+
+You are analyzing a Volatility output from a compromised workstation. The `pstree` output shows: `wininit.exe (PID 392) → services.exe (PID 488) → svchost.exe (PID 1044)` and separately `winlogon.exe (PID 440) → userinit.exe (PID 1188) → explorer.exe (PID 1832) → cmd.exe (PID 2240) → powershell.exe (PID 3108)`. The `malfind` output for PID 1832 (explorer.exe) shows a PAGE_EXECUTE_READWRITE region at base address 0x00B40000 containing the MZ header. The `netscan` output shows PID 1832 with an established connection to 198.51.100.44:443.
+
+1. Identify all anomalous indicators in the Volatility output and explain what each indicates about attacker activity (provide ATT&CK technique ID for each).
+2. What Volatility command would you run next to extract the injected code from the explorer.exe memory region at 0x00B40000, and what tool would you use to analyze the extracted binary?
+3. The `netscan` output shows `explorer.exe` with an outbound connection. Why is this suspicious, and how does it relate to the injected code finding?
+4. Write a Volatility command sequence (3–4 commands) that you would use to build a complete picture of the attack chain from this memory image.
+
+### Challenge 2: Artifact Correlation for Timeline Reconstruction
+
+You have the following artifacts from a compromised workstation examination:
+
+- **Windows Security Event Log**: EID 4624 Logon Type 3 for `DOMAIN\jsmythe` from 10.10.22.14 at 01:47:22 AM
+- **Prefetch**: `MIMIKATZ.EXE-C1234567.pf` with last run 01:49:08 AM, run count 3
+- **ShimCache / AppCompatCache**: Entry for `C:\Temp\update_svc.exe` with last modified 01:48:44 AM
+- **RecentDocs**: Reference to `HR_Annual_Payroll_2024.xlsx` at 01:52:30 AM (file not on disk)
+- **MFT $LogFile**: `HR_Annual_Payroll_2024.xlsx` deleted at 01:54:11 AM
+- **Shellbags**: `C:\Users\jsmythe\Desktop\ExfilPrep\` navigated at 01:50:12 AM (folder deleted)
+
+1. Build a complete 8-entry incident timeline from the artifacts above, with timestamp, artifact source, and one-sentence description of what the artifact proves for each entry.
+2. Identify which artifacts survived the attacker's anti-forensic cleanup and explain what specific cleanup action failed to eliminate each artifact.
+3. Based on the evidence, write a one-paragraph forensic conclusion paragraph suitable for inclusion in an incident report, addressing: attack entry, privilege escalation, data access, exfiltration staging, and anti-forensic activity.
+
+### Reflection Questions
+
+1. An attacker who clears the Windows Security Event Log, deletes the malware binary, deletes staged exfiltration files, and clears browser history has attempted thorough anti-forensic cleanup. Identify three artifact categories they likely missed and explain what each would still prove.
+2. Explain why forensic examination of RAM should be prioritized over disk imaging when an analyst has only 20 minutes before the system must be shut down, citing at least two specific types of volatile evidence that would be permanently lost.

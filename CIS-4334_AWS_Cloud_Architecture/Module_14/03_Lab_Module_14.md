@@ -195,3 +195,25 @@ There are no other billable resources created in this lab.
 - Screenshot of the S3 Lifecycle rule showing all three transitions/expiration rules
 - Screenshot of a Compute Optimizer recommendation (or explanation of why data is insufficient)
 - Written answers to all four reflection questions
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Savings Plans Purchase Analysis
+Use the AWS Savings Plans console to evaluate a real or simulated commitment and understand break-even calculations.
+1. Navigate to AWS Cost Management → Savings Plans → Recommendations. If your account has On-Demand EC2 or Lambda spend, AWS will display recommended Savings Plan commitments with estimated savings. Record the recommended hourly commitment, estimated annual savings, and coverage percentage shown.
+2. If no recommendations exist (new or free-tier account), use the Savings Plans pricing page to manually calculate: for an `m5.large` in `us-east-1` running 24/7, compare the 1-year No Upfront Compute Savings Plan effective rate against the On-Demand rate. Calculate the monthly savings and the total 12-month savings in dollars.
+3. Navigate to Savings Plans → Purchase Savings Plan (do NOT complete the purchase). Document all the configurable fields: plan type options (Compute, EC2 Instance, SageMaker), term options (1 or 3 year), payment options (All, Partial, No Upfront), and hourly commitment field. Screenshot the purchase form.
+4. Explain in 2–3 sentences why a Compute Savings Plan is generally preferable to an EC2 Instance Savings Plan for an organization that is actively modernizing from EC2 to containers and Lambda workloads.
+
+### Challenge 2: Cost Allocation Tag Activation and Tagging Audit
+Practice activating cost allocation tags and auditing resource tagging compliance across your account.
+1. Navigate to AWS Billing → Cost allocation tags. Activate the `Name`, `Environment`, and `Project` tags (or any tags already applied to your resources). Note the message that activated tags appear in Cost Explorer after 24 hours.
+2. Use the AWS CLI to list all EC2 instances and their current tags: `aws ec2 describe-instances --query "Reservations[*].Instances[*].{ID:InstanceId,Tags:Tags}" --output table`. Identify any instances missing the `Environment` or `Project` tag.
+3. Apply missing tags to at least one resource using the CLI: `aws ec2 create-tags --resources <instance-id> --tags Key=Environment,Value=Lab Key=Project,Value=CIS4334`. Verify: `aws ec2 describe-tags --filters "Name=resource-id,Values=<instance-id>" --output table`.
+4. Use Tag Editor (AWS Resource Groups → Tag Editor) to perform a multi-service tag search across your account: search for resources across EC2, S3, and Lambda that are missing the `Project` tag. Document the count of untagged resources found per service and explain why a high percentage of untagged resources is a cost visibility problem for finance teams.
+
+### Reflection Questions
+1. After completing Challenge 1, explain the trade-off between Compute Savings Plans and EC2 Instance Savings Plans in terms of flexibility versus discount depth. Under what specific organizational circumstances would you recommend locking into an EC2 Instance Savings Plan despite its lower flexibility — and what financial risk does that create if the organization's compute strategy changes during the commitment term?
+2. Based on Challenge 2, explain how inconsistent resource tagging creates downstream problems beyond Cost Explorer visibility — specifically for chargeback models, budget alerting accuracy, and automated cost optimization tools like Compute Optimizer. How does the AWS Well-Architected Framework Cost Optimization pillar's principle of "implement cloud financial management" address tagging as an organizational discipline rather than a technical configuration?

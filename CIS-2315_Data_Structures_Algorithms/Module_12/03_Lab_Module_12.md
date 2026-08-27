@@ -387,3 +387,21 @@ Submit to Canvas:
 | Binary search on answer | Monotone `feasible(x)`; converge with `while left < right` |
 | Rotated sorted array | One half always sorted; check which half contains target |
 | Master Theorem Case 2 | T(n)=aT(n/b)+O(n^c) with f(n)=Θ(n^c) → O(n^c log n) |
+
+---
+
+## Part 9 — Challenge Exercise
+
+These steps are **optional** and ungraded. They are designed for students who want to deepen their understanding beyond the core lab.
+
+### 9.1 — Merge Sort on Linked Lists (LeetCode #148)
+
+Sort a singly linked list in O(n log n) time and O(log n) space. The solution uses merge sort: find the midpoint using the fast-slow pointer technique, split the list into two halves, recursively sort each half, then merge the two sorted halves. The merge step is analogous to merging two sorted arrays, but operates on node pointers instead of array indices. Implement the full solution, verify it produces a sorted list for inputs of length 0, 1, 2, and 10+, and explain why this approach achieves O(log n) space while array-based merge sort uses O(n) space.
+
+### 9.2 — Find Median of Two Sorted Arrays (LeetCode #4)
+
+Given two sorted arrays `nums1` and `nums2` of sizes m and n respectively, find the median of the combined sorted array in O(log(min(m,n))) time. The optimal solution uses binary search on the smaller array to partition both arrays such that all elements on the left are ≤ all elements on the right. This is one of the hardest LeetCode problems and requires precise binary search boundary conditions. Implement the solution, verify it handles edge cases (empty arrays, arrays of different sizes, even and odd combined lengths), and explain in a comment why the naive O(m+n) merge approach does not satisfy the O(log(min(m,n))) requirement.
+
+### 9.3 — Quicksort Implementation and Worst-Case Analysis
+
+Implement quicksort with three pivot selection strategies: (1) first element as pivot, (2) random element as pivot, (3) median-of-three (median of first, middle, last). Benchmark all three on three input types: random, sorted ascending, and sorted descending, for n = 1,000, 10,000, and 100,000. Record the comparison counts (add a counter to your partition function). Confirm that first-element pivot on sorted input degrades to O(n²) comparisons, while random and median-of-three maintain near O(n log n). Explain why this makes quicksort's average case O(n log n) but worst case O(n²).

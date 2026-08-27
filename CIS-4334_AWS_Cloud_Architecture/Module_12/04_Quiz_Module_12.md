@@ -244,3 +244,235 @@ C is correct. Smaller packages download faster during environment initialization
 D is incorrect. Container images support larger packages but do not inherently reduce initialization time and can increase it due to image-pull overhead.
 
 E is incorrect. Changing the timeout affects maximum execution duration per invocation, not cold start initialization time.
+
+---
+
+### Question 11 (5 points)
+
+A company runs a Lambda function that processes customer orders. The function is invoked synchronously via API Gateway. During a traffic spike, 500 concurrent requests arrive simultaneously. The function has Reserved Concurrency set to 100. What happens to the remaining 400 requests?
+
+A. They queue automatically in Lambda's internal buffer and execute when concurrency is available
+
+B. They are throttled and API Gateway returns a 429 Too Many Requests response to the caller
+
+C. Lambda automatically scales beyond the Reserved Concurrency limit to handle all 500 requests
+
+D. They route to the Dead-Letter Queue configured on the function
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect. Lambda does not have an internal request buffer for synchronous invocations. When Reserved Concurrency is exhausted, synchronous invocations are immediately throttled — they are not queued.
+- B is correct. Reserved Concurrency is a hard cap. When all 100 reserved concurrent executions are in use, additional synchronous invocations are throttled. API Gateway translates the Lambda throttle response into an HTTP 429 error returned to the caller.
+- C is incorrect. Reserved Concurrency explicitly prevents scaling beyond the configured limit. It is a ceiling, not a soft target. Lambda will not exceed Reserved Concurrency regardless of available account-level concurrency.
+- D is incorrect. Dead-Letter Queues only apply to asynchronous Lambda invocations (event-driven, not synchronous). Synchronously throttled requests are returned as errors to the caller, not routed to a DLQ.
+
+---
+
+### Question 12 (5 points)
+
+A developer wants a Lambda function to process S3 object creation events but only for `.jpg` files in a specific prefix. Where should the filtering be configured?
+
+A. Inside the Lambda function code using an if-statement that checks the S3 key and returns early for non-matching objects
+
+B. In the S3 event notification configuration using prefix and suffix filters before the event reaches Lambda
+
+C. In an EventBridge rule with an event pattern matching the S3 event source and object key
+
+D. In an SQS queue between S3 and Lambda, with a message filter policy
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect. While filtering inside the function is technically possible, it still invokes Lambda for every S3 object creation event — consuming invocation capacity and cost. Filtering at the source eliminates unnecessary invocations.
+- B is correct. S3 event notifications support native prefix and suffix filter rules. Configuring `prefix: images/` and `suffix: .jpg` ensures that only matching object creation events trigger Lambda. No unnecessary invocations occur for non-matching objects.
+- C is incorrect. EventBridge S3 integration is possible but requires enabling S3 EventBridge notifications, adding latency and architectural complexity. Native S3 notification filters are the simpler, purpose-built solution for this use case.
+- D is incorrect. SQS does not support message filtering based on S3 object key attributes. SQS message filter policies apply to SNS subscription attributes, not S3 event content.
+
+---
+
+### Question 13 (5 points)
+
+A Step Functions Standard workflow orchestrates an order fulfillment process. One state calls an external payment API that occasionally takes up to 72 hours to respond. What is the correct way to handle this long-running external call in Step Functions?
+
+A. Increase the Lambda function timeout to 72 hours to wait for the payment API response
+
+B. Use a Step Functions Wait state with a fixed 72-hour timer
+
+C. Use the Step Functions callback pattern with a task token — pause the workflow and resume it when the external system sends a callback
+
+D. Use Step Functions Express Workflows instead, which support longer execution times for external integrations
+
+**Correct Answer: C**
+
+**Distractor Analysis:**
+
+- A is incorrect. Lambda has a maximum timeout of 15 minutes. A 72-hour wait inside a Lambda function is technically impossible, and even shorter waits would waste compute cost while the function is idle.
+- B is incorrect. A Wait state pauses the workflow for a fixed duration, but it resumes after the timer expires regardless of whether the external API has responded. This would not correctly wait for the actual payment confirmation.
+- C is correct. The callback pattern (`.waitForTaskToken`) pauses the workflow at that state and returns a task token to the external system. The workflow resumes only when the external system calls `SendTaskSuccess` or `SendTaskFailure` with the token — handling the 72-hour window without consuming compute resources.
+- D is incorrect. Step Functions Express Workflows have a maximum execution duration of 5 minutes, making them unsuitable for workflows requiring 72-hour waits. Standard Workflows support up to 1 year of execution duration.
+
+---
+
+### Question 14 (5 points)
+
+An API Gateway REST API is deployed to a stage. A developer changes a Lambda function behind one of the routes but the API continues returning old responses. What is the most likely cause?
+
+A. The Lambda function alias used by API Gateway points to the old function version
+
+B. API Gateway has a stage-level cache enabled and is returning cached responses
+
+C. The Lambda function's Reserved Concurrency is set to zero
+
+D. The API Gateway stage has not been redeployed after the Lambda change
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect. Lambda aliases and versions would cause this if the API Gateway integration used an explicit version ARN rather than `$LATEST`. However, this is less common than the caching scenario described and not the most likely cause when a deployed change isn't reflected.
+- B is correct. API Gateway REST APIs support response caching at the stage level with a configurable TTL (default 300 seconds). If caching is enabled, API Gateway returns cached responses without invoking Lambda until the TTL expires or the cache is invalidated. This is the most likely cause of stale responses after a Lambda update.
+- C is incorrect. Reserved Concurrency of zero would throttle all Lambda invocations, resulting in 429 errors — not stale responses from the old function.
+- D is incorrect. Lambda function changes (code updates to `$LATEST`) do not require API Gateway redeployment. The API Gateway integration continues to invoke the updated Lambda code automatically. Redeployment is required only when API Gateway configuration changes (routes, authorizers, integrations).
+
+---
+
+### Question 15 (5 points)
+
+A company uses Lambda to process messages from an SQS Standard queue. The Lambda function fails on 10% of messages due to a parsing error. These messages reappear in the queue after the visibility timeout and are retried. What is the correct configuration to prevent these messages from being retried indefinitely?
+
+A. Increase the Lambda function memory to handle larger payloads without parsing errors
+
+B. Configure a Dead-Letter Queue on the SQS source queue with a maxReceiveCount of 3
+
+C. Enable Lambda Destinations with an OnFailure destination pointing to an S3 bucket
+
+D. Set the Lambda function Reserved Concurrency to 1 to process messages sequentially
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect. The failures are due to parsing errors — they are data errors, not resource constraints. Increasing memory would not fix messages that fail due to malformed content.
+- B is correct. Configuring a DLQ on the SQS queue with a `maxReceiveCount` (redrive policy) causes messages that fail processing `maxReceiveCount` times to be moved to the DLQ automatically. This prevents infinite retry loops for persistently failing messages and allows them to be inspected and reprocessed separately.
+- C is incorrect. Lambda Destinations (OnFailure) apply to asynchronous Lambda invocations. When Lambda is invoked by an SQS event source mapping, the SQS queue's own DLQ configuration — not Lambda Destinations — controls message retry behavior.
+- D is incorrect. Setting concurrency to 1 processes messages one at a time but does not prevent retry loops. Failed messages will still be re-queued and retried indefinitely without a DLQ.
+
+---
+
+### Question 16 (5 points)
+
+A company wants to expose a serverless API that authenticates callers using JWTs from their corporate identity provider (IdP). They need to validate the JWT without writing custom Lambda code. Which API Gateway feature handles this?
+
+A. API Gateway resource policies that allow requests from the IdP's IP address range
+
+B. API Gateway Lambda authorizer that calls the IdP to validate each token
+
+C. API Gateway JWT authorizer (HTTP API) configured with the IdP's issuer URL and audience
+
+D. API Gateway usage plans with API keys distributed to the IdP
+
+**Correct Answer: C**
+
+**Distractor Analysis:**
+
+- A is incorrect. Resource policies control which AWS accounts, VPCs, or IP addresses can call the API — they do not validate JWT tokens or authenticate individual users.
+- B is incorrect. A Lambda authorizer can validate JWTs but requires writing and maintaining custom Lambda code, adding operational overhead. When the IdP supports OIDC discovery (which most modern IdPs do), the native JWT authorizer handles validation without custom code.
+- C is correct. API Gateway HTTP APIs support native JWT authorizers that validate tokens using the IdP's OIDC discovery endpoint. The authorizer verifies the signature, issuer, audience, and expiry automatically — no Lambda code required. This is the correct approach for OIDC/OAuth2 JWT validation.
+- D is incorrect. API keys in usage plans are opaque strings for identifying API consumers and enforcing rate limits — they are not authentication tokens and cannot validate identity provider JWTs.
+
+---
+
+### Question 17 (5 points)
+
+A Lambda function writes processed results to DynamoDB. During load testing, the function receives ThrottlingException errors from DynamoDB on write operations. The Lambda function has no retry logic. What is the BEST architectural fix?
+
+A. Increase Lambda Reserved Concurrency to match DynamoDB write capacity
+
+B. Add an SQS queue between the event source and Lambda to buffer writes, and add DynamoDB retry logic with exponential backoff in the Lambda function
+
+C. Switch the DynamoDB table from provisioned to on-demand capacity mode
+
+D. Increase the Lambda function timeout to allow writes to complete after throttling
+
+**Correct Answer: C**
+
+**Distractor Analysis:**
+
+- A is incorrect. Lambda concurrency and DynamoDB write capacity are independent. Matching Lambda concurrency to DynamoDB WCUs does not prevent throttling if write rates exceed provisioned capacity — it just ensures Lambda is available to attempt (and fail) the writes.
+- B is incorrect. Adding SQS buffering helps if the issue is burst traffic exceeding DynamoDB capacity temporarily, but it does not fix the root cause and adds architectural complexity. On-demand capacity is a simpler fix if the workload is variable.
+- C is correct. Switching to on-demand capacity mode allows DynamoDB to scale write capacity automatically with traffic. This eliminates ThrottlingExceptions from capacity exhaustion without requiring SQS buffering or application-level retry tuning for the provisioned capacity scenario described.
+- D is incorrect. Increasing Lambda timeout allows a single invocation to wait longer, but DynamoDB throttling under sustained load will not resolve itself within the timeout window. Timeout changes address response latency, not write capacity limitations.
+
+---
+
+### Question 18 (5 points)
+
+A developer is designing a serverless event pipeline. Multiple downstream services (billing, inventory, notifications) each need to receive and independently process every order event. Each service has different processing speeds. Which architecture correctly implements this?
+
+A. API Gateway → Lambda → synchronous calls to each downstream service in sequence
+
+B. API Gateway → Lambda → SNS topic with one SQS queue per downstream service subscribed to the topic
+
+C. API Gateway → Lambda → single SQS FIFO queue shared by all three downstream services
+
+D. API Gateway → Lambda → EventBridge event bus with a separate Lambda per downstream service
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect. Synchronous sequential calls mean a failure or slowdown in one downstream service blocks or delays all others. Services are tightly coupled and do not process independently.
+- B is correct. The SNS-to-SQS fan-out pattern delivers a copy of each message to every subscribed SQS queue. Each downstream service has its own queue and processes at its own pace, independently of others. A failure in one service does not affect others, and messages are durably stored in each queue.
+- C is incorrect. A single shared FIFO queue means only one service consumes each message — messages are not duplicated per consumer. Shared queues are for competing consumer patterns, not fan-out.
+- D is incorrect. EventBridge is suitable for content-based routing to different targets, but adds complexity compared to the direct SNS-SQS fan-out pattern when all consumers need every event and independent buffering is required per consumer.
+
+---
+
+### Question 19 (5 points)
+
+A company's Lambda function is triggered by DynamoDB Streams to process item changes. The function must process changes in the exact order they were made to each item. A developer notices that some items are being processed out of order. What is the most likely cause?
+
+A. The DynamoDB table does not have Streams enabled with the NEW_AND_OLD_IMAGES stream view type
+
+B. The Lambda event source mapping is processing records from multiple shards in parallel, and items for the same key can land in different shards
+
+C. The Lambda function's Reserved Concurrency is too high, causing parallel processing of the same shard
+
+D. DynamoDB Streams does not guarantee ordering — Kinesis Data Streams should be used instead
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect. The stream view type (KEYS_ONLY, NEW_IMAGE, OLD_IMAGE, NEW_AND_OLD_IMAGES) controls what data is included in stream records but does not affect ordering guarantees.
+- B is correct. DynamoDB Streams are sharded. Within a single shard, records are ordered. However, items with different partition keys can be distributed across multiple shards. Lambda processes each shard sequentially but processes multiple shards in parallel — so items in different shards can be processed concurrently and out of relative order across partition keys. Items for the same partition key always land in the same shard and are processed in order.
+- C is incorrect. Reserved Concurrency limits total concurrent Lambda executions. The Lambda event source mapping for DynamoDB Streams processes one batch per shard at a time — Reserved Concurrency does not cause parallel processing within the same shard.
+- D is incorrect. DynamoDB Streams does guarantee ordering within a shard (per partition key). The issue is cross-shard parallelism, not a fundamental ordering limitation of DynamoDB Streams itself.
+
+---
+
+### Question 20 (5 points)
+
+A company needs to run a nightly data aggregation job that queries 50 million DynamoDB records and produces a summary report. The job takes approximately 45 minutes. Lambda is proposed as the compute layer. What is the critical limitation that makes Lambda unsuitable without architectural changes?
+
+A. Lambda cannot query DynamoDB — it can only be triggered by DynamoDB Streams
+
+B. Lambda has a maximum execution timeout of 15 minutes, which is insufficient for a 45-minute job
+
+C. Lambda does not support the memory required to process 50 million records in a single invocation
+
+D. Lambda cannot be invoked on a schedule — EventBridge rules only support API calls, not Lambda
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect. Lambda can query DynamoDB using the AWS SDK from within the function code. Lambda can use Scan, Query, and all DynamoDB API operations. Being triggered by DynamoDB Streams is one invocation model, not a constraint on what Lambda can access.
+- B is correct. Lambda has an absolute maximum execution timeout of 15 minutes. A job requiring 45 minutes cannot run as a single Lambda invocation. The architectural fix is to either break the job into parallel Lambda functions (each processing a partition of data), use Step Functions to orchestrate multiple Lambda invocations, or use a different compute service like AWS Batch or Fargate for long-running jobs.
+- C is incorrect. Lambda supports up to 10 GB of memory. The 50 million records would not be loaded into memory simultaneously — they would typically be paginated through using DynamoDB Scan with pagination tokens. Memory is not the primary constraint here.
+- D is incorrect. EventBridge Scheduler and EventBridge rules both support Lambda as a target on a cron schedule. Scheduled Lambda invocations are a standard, well-supported pattern.
+
+---

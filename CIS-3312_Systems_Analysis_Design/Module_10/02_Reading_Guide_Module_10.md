@@ -327,4 +327,30 @@ Work through each item before attempting the quiz.
 
 ---
 
+---
+
+## 9. Supplemental Resources
+
+The following open educational resources extend module content on data flow diagrams. All are freely accessible without login or purchase.
+
+1. **Data Flow Diagrams — Visual Paradigm Complete Guide**
+   <https://www.visual-paradigm.com/guide/data-flow-diagram/what-is-data-flow-diagram/>
+   Focus: Comprehensive illustrated reference covering DFD symbols, leveling, data dictionary notation, and both Yourdon-Coad and Gane-Sarson notations. Directly supports all lab tasks.
+
+2. **Data Dictionary in Systems Analysis — TechTarget**
+   <https://www.techtarget.com/searchdatamanagement/definition/data-dictionary>
+   Focus: Explanation of data dictionary structure, notation conventions, and the relationship between data dictionary entries and DFD flows and stores. Reinforces the data dictionary lab task.
+
+3. **DFD Notation Comparison: Yourdon vs. Gane-Sarson — Sparxsystems**
+   <https://sparxsystems.com/resources/tutorials/uml/dataflow-diagram.html>
+   Focus: Side-by-side comparison of the two major DFD notations with shape descriptions. Essential for correctly identifying which notation is being tested in quiz questions.
+
+4. **Process Specifications (MiniSpecs) in Structured Analysis — Software Engineering Institute**
+   <https://resources.sei.cmu.edu/library/asset-view.cfm?assetid=5157>
+   Focus: Overview of process specifications (minispecifications) that document the transformation logic inside DFD process bubbles. Supplements the process specification content in this module.
+
+5. **Systems Analysis and Design OER — University of Minnesota Libraries**
+   <https://open.umn.edu/opentextbooks/textbooks/systems-analysis-and-design>
+   Focus: The primary ZTC textbook chapters on data flow diagrams, data modeling, and leveling. Read the DFD chapters alongside this reading guide for worked examples and exercises.
+
 *Reading Guide — Module 10 | CIS-3312 Systems Analysis and Design | Texas Wesleyan University*

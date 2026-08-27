@@ -329,3 +329,19 @@ In Keras: `kernel_initializer='he_normal'` or `kernel_initializer='he_uniform'`.
 - TensorFlow Keras activations guide: https://www.tensorflow.org/api_docs/python/tf/keras/activations
 - TensorFlow Keras optimizers guide: https://www.tensorflow.org/api_docs/python/tf/keras/optimizers
 - TensorFlow Neural Network Playground (interactive): https://playground.tensorflow.org/
+
+---
+
+## 9. Supplemental Resources
+
+**1. 3Blue1Brown — Neural Networks (YouTube Series)**
+<https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi>
+Four-video series providing the clearest visual explanations of how neurons, layers, backpropagation, and gradient descent work. Chapters 3 and 4 (backpropagation and chain rule) directly support the vanishing gradient and weight initialization topics in this module.
+
+**2. TensorFlow Neural Network Playground**
+<https://playground.tensorflow.org/>
+Interactive browser-based tool for visualizing how layer depth, activation functions, learning rate, and regularization affect a neural network's decision boundary in real time. Use this to build intuition for the bias-variance tradeoff before the Module 04 lab.
+
+**3. Andrej Karpathy — micrograd (GitHub)**
+<https://github.com/karpathy/micrograd>
+A minimal 100-line implementation of backpropagation and automatic differentiation from scratch. Reading this code alongside the module's chain-rule section makes the GradientTape concept concrete and demystifies what TensorFlow does internally during the backward pass.

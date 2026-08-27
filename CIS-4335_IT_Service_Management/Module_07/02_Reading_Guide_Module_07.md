@@ -334,4 +334,22 @@ involved. Answer: Engage (request received), Plan (budget/approval), Obtain/Buil
 
 ---
 
+---
+
+## Supplemental Resources
+
+**1. AXELOS — ITIL 4 Service Value Chain Activities**
+<https://www.axelos.com/resource-hub/blog/itil-4-service-value-chain>
+Official AXELOS explanation of all six SVC activities with descriptions, input/output tables, and examples of how they combine in value streams. Primary reference for Foundation exam SVC questions.
+
+**2. Atlassian — Value Stream Mapping for Software Teams**
+<https://www.atlassian.com/continuous-delivery/principles/value-stream-mapping>
+A practitioner guide on applying value stream mapping to IT delivery workflows. Provides examples that translate directly into ITIL 4 SVC activity sequences and help visualize how value flows from demand to delivered outcome.
+
+**3. ServiceNow — ITSM Value Stream Overview**
+<https://www.servicenow.com/products/it-service-management/what-is-value-stream-management.html>
+An industry practitioner overview of value stream management as applied in ITSM platforms. Shows how ServiceNow maps real workflows to SVC-aligned value streams, bridging ITIL 4 theory to enterprise tool implementation.
+
+---
+
 Module 07 Reading Guide | CIS-4335 IT Service Management | Texas Wesleyan University

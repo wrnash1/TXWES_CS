@@ -238,3 +238,36 @@ Submit via Canvas LMS before the module deadline.
 | KPI Framework (Part 3) | 25 | All metrics defined with sources, estimates, and targets; dashboard has 6+ panels with correct visualization types |
 | Transformation Roadmap (Part 4) | 25 | All three failure modes identified; roadmap is sequenced correctly; executive summary is accurate and professional |
 | **Total** | **100** | |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: DSOMM Gap Analysis and Roadmap for a Real-World Case Study
+
+Conduct a DSOMM Level 2 to Level 3 gap analysis for the following organization profile, and produce a prioritized 90-day roadmap.
+
+**Organization Profile:** A financial services company with 150 engineers across 15 teams. Current state: SAST and SCA gates deployed for 8 of 15 teams; 3 Security Champions identified (no formal training program); annual penetration test; no threat modeling; MTTD = 5 days; MTTR-Critical = 45 days; no KPI reporting to engineering leadership; secrets scanning not deployed; container scanning deployed on build pipelines but not post-deployment.
+
+1. Produce a gap table with columns: DSOMM Dimension, Current Level, Target Level (3), Gap Description, Priority (P1/P2/P3).
+2. For each P1 gap, write a specific remediation action with an estimated timeline (in weeks) and a named responsible role (Security Champion, Platform Team, CISO, etc.).
+3. Identify the single gap that, if closed first, would produce the largest reduction in Critical Escape Rate. Justify your choice using the DORA Change Failure Rate relationship.
+4. Write a 200-word executive summary suitable for presentation to the CISO, framing the current state, the target state, and the business risk of remaining at Level 2.
+
+### Challenge 2: Security Champion Onboarding Curriculum Design
+
+Design a 30-day Security Champion onboarding curriculum for a new champion on a Python/Django web application team.
+
+1. Create a weekly learning plan (Weeks 1–4) with specific resources. Week 1 must include the OWASP Top 10 (2021), at least one SANS course or resource, and a walkthrough of the team's current CI security gates. Week 2 must include hands-on use of the team's SAST tool (Semgrep or Bandit) against a vulnerable Python app (DVWA or WebGoat). Week 3 must include threat modeling the team's most critical feature using STRIDE. Week 4 must include a mock Security Review for an upcoming sprint feature.
+2. Define three measurable success criteria for the 30-day program that the champion's manager can verify.
+3. Identify two risks to the champion program and the mitigation for each (e.g., champion burnout from dual responsibility, champion leaving the team).
+4. Write the champion's role description in 100 words, suitable for inclusion in a team onboarding document.
+
+### Reflection Questions
+
+1. A security leader argues that the DORA metrics are purely an engineering operations concern and should not appear in security program reporting. Construct a counter-argument using at least two specific examples of how DORA metrics directly reflect security program outcomes, and explain what executive audience concern is addressed by including DORA metrics in a security quarterly business review.
+2. You have successfully reduced the Critical Escape Rate from 12% to 2% over two quarters by deploying comprehensive pipeline gates. Engineering leadership now wants to remove some gates because they are "slowing down deployments." Using the CALMS framework, explain how you would respond to this request, and describe the data you would present to make the case for keeping the gates while addressing the velocity concern.
+
+---
+
+Lab 15 | CIS-4350 | Texas Wesleyan University | Professor Nash

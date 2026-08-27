@@ -260,3 +260,19 @@ Exam Tip 8: IR playbooks reduce response time by pre-authorizing Tier 1 actions.
 - [ ] Complete the Module 08 Lab
 - [ ] Complete the Module 08 Quiz
 - [ ] Post initial response to the Module 08 Discussion by Wednesday at 11:59 PM
+
+---
+
+## 9. Supplemental Resources
+
+**1. FIRST — EPSS (Exploit Prediction Scoring System)**
+<https://www.first.org/epss/>
+The official EPSS specification and data download page. EPSS provides a daily-updated exploitation probability score for every CVE, complementing CVSS severity with real-world threat intelligence. The FIRST site includes research papers explaining the model and an API for programmatic access — essential reading for understanding modern risk-based vulnerability prioritization covered in Section 4 of this guide.
+
+**2. CISA — Stakeholder-Specific Vulnerability Categorization (SSVC) Guide**
+<https://www.cisa.gov/stakeholder-specific-vulnerability-categorization-ssvc>
+CISA's decision-tree framework for vulnerability prioritization that combines exploitation status, technical impact, and deployment context to produce actionable remediation decisions without relying solely on CVSS. The guide includes worked examples and a scoring calculator. SSVC is increasingly adopted by federal agencies and represents the current state of practice for risk-based vulnerability management.
+
+**3. NIST — NVD (National Vulnerability Database)**
+<https://nvd.nist.gov/>
+The primary source for CVSS vector strings, CWE classifications, CPE applicability, and vendor advisory links for every CVE. Practice reading the full NVD entry for any recent high-profile CVE to build fluency in interpreting CVSS Base metrics, temporal metrics, and the relationships between CVE, CWE, and CPE that are tested throughout the CySA+ exam.

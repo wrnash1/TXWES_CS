@@ -459,3 +459,21 @@ Submit to Canvas:
 | Grid traversal | 4-directional neighbors; bounds check first |
 | In-place marking | `grid[r][c] = '0'` avoids separate visited set |
 | Three-color DFS | 0=unvisited, 1=active, 2=done; detects directed cycles |
+
+---
+
+## Part 9 — Challenge Exercise
+
+These steps are **optional** and ungraded. They are designed for students who want to deepen their understanding beyond the core lab.
+
+### 9.1 — Word Ladder (LeetCode #127)
+
+Given a `beginWord`, `endWord`, and a `wordList`, find the length of the shortest transformation sequence from `beginWord` to `endWord`, changing one letter at a time (each intermediate word must be in `wordList`). This is a classic BFS shortest-path problem: treat each word as a graph node and add an edge between words that differ by exactly one letter. The BFS level counts give the minimum transformation steps. Implement the solution using BFS with a set-based `wordList` for O(1) membership checks. Verify on the standard test case (`beginWord="hit"`, `endWord="cog"`, `wordList=["hot","dot","dog","lot","log","cog"]`, expected output: 5) and state why DFS cannot guarantee the minimum path length.
+
+### 9.2 — Kahn's Topological Sort with Cycle Detection
+
+Implement Kahn's BFS-based topological sort: compute in-degrees for all vertices, enqueue all vertices with in-degree 0, then repeatedly dequeue a vertex, add it to the result, and decrement the in-degree of all its successors (enqueuing those that reach 0). If the result contains fewer than V vertices at the end, a cycle exists. Verify on Course Schedule II (LeetCode #210) which asks for the actual topological order. Compare Kahn's algorithm with the DFS post-order approach: implement both, verify they produce valid topological orderings for the same graph, and explain in a comment why they may produce different (but equally valid) orderings.
+
+### 9.3 — Bipartite Graph Check (LeetCode #785)
+
+A graph is bipartite if its vertices can be split into two independent sets such that every edge connects a vertex in one set to a vertex in the other. Implement a BFS-based 2-coloring algorithm: color the source vertex with color 0, then color all unvisited neighbors with color 1, then their neighbors with color 0, etc. If any neighbor already has the same color as the current vertex, the graph is not bipartite. Verify on a cycle of even length (bipartite) and a cycle of odd length (not bipartite). State the time complexity and explain why BFS naturally implements 2-coloring level by level.

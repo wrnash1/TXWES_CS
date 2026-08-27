@@ -323,4 +323,26 @@ Block rule for port 443, the Block rule wins.
 
 ---
 
+## 10. Supplemental Resources
+
+The following free, open-access resources go deeper on Module 11 topics:
+
+**1. Microsoft Learn — Implement Windows Server security**
+<https://learn.microsoft.com/en-us/training/modules/implement-windows-server-security/>
+Covers Windows Defender Firewall rule types, BitLocker deployment modes, EFS configuration, and Data Recovery Agent setup with sandbox exercises aligned to AZ-800.
+
+**2. Microsoft Docs — BitLocker overview**
+<https://learn.microsoft.com/en-us/windows/security/operating-system-security/data-protection/bitlocker/bitlocker-overview>
+Complete reference for BitLocker architecture including TPM protector modes, pre-boot authentication, recovery key management, and the relationship between PCR values and sealed key release.
+
+**3. Microsoft Docs — Encrypting File System overview**
+<https://learn.microsoft.com/en-us/windows/win32/fileio/file-encryption>
+Technical deep-dive on EFS including the FEK, DDF, DRF structure, certificate requirements, Data Recovery Agent configuration, and the behavior of EFS when files are moved between volumes of different file system types.
+
+**4. Microsoft Docs — Windows Defender Firewall with Advanced Security**
+<https://learn.microsoft.com/en-us/windows/security/operating-system-security/network-security/windows-firewall/windows-firewall-with-advanced-security>
+Full documentation for WFAS including firewall profiles, inbound and outbound rule configuration, Connection Security Rules (IPsec), logging settings, and Group Policy deployment options.
+
+---
+
 *Review all sections before beginning Lab 11, Quiz 11, and Discussion 11.*

@@ -246,3 +246,17 @@ print(f"95% CI: ({ci[0]:.2f}, {ci[1]:.2f})")
 
 - Official exam objectives: comptia.org (search "Data+ DA0-001 exam objectives")
 - Professor Messer's free study guides: professormesser.com
+
+## 9. Supplemental Resources
+
+**1. StatQuest with Josh Starmer — Hypothesis Testing (YouTube Playlist)**
+<https://www.youtube.com/playlist?list=PLblh5JKOoLUK0FLuzwntyYI10UQFUhsY9>
+A highly rated playlist covering p-values, t-tests, ANOVA, chi-square, and Type I/II errors with visual intuition. Widely used by students preparing for statistics exams and certifications.
+
+**2. Seeing Theory — Interactive Probability and Statistics**
+<https://seeing-theory.brown.edu/frequentist-inference/index.html>
+An interactive, browser-based visualization of confidence intervals, hypothesis testing, and the central limit theorem. Allows students to manipulate sample sizes and significance levels to observe effects in real time.
+
+**3. SciPy Stats Documentation — Statistical Tests Reference**
+<https://docs.scipy.org/doc/scipy/reference/stats.html>
+The official reference for all statistical tests available in Python's scipy.stats module, including t-tests, ANOVA, chi-square, Mann-Whitney, and Pearson correlation. Includes function signatures, parameters, and worked examples.

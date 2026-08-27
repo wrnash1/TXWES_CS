@@ -113,3 +113,16 @@ The first character of the permissions string identifies the file type: `-` = re
 - [ ] Use `man ls` to look up a flag not covered in the reading guide.
 - [ ] Complete the Module 2 lab.
 - [ ] Complete the Module 2 quiz.
+
+---
+
+## 9. Supplemental Resources
+
+**1. [Linux Filesystem Hierarchy Standard — The Linux Documentation Project](https://tldp.org/LDP/Linux-Filesystem-Hierarchy/html/)**
+A complete reference to the Linux Filesystem Hierarchy Standard (FHS), explaining the purpose of every top-level directory. Essential background for understanding where configuration files, binaries, logs, and variable data are stored by convention.
+
+**2. [Red Hat — How to Manage Partitions with fdisk](https://www.redhat.com/sysadmin/fdisk-partitioning)**
+A practical Red Hat sysadmin article covering `fdisk` for MBR partitioning and `gdisk` for GPT. Includes step-by-step partition creation and the MBR-vs-GPT decision framework used in real enterprise deployments.
+
+**3. [man7.org — ls(1) Manual Page](https://man7.org/linux/man-pages/man1/ls.1.html)**
+The online version of the `ls` man page from the Linux man-pages project. Useful for reviewing all available flags and their descriptions when not at a terminal, and for understanding the full output format of `ls -l`.

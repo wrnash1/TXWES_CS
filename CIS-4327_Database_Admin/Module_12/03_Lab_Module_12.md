@@ -345,6 +345,73 @@ bq rm -r -f ${PROJECT_ID}:cis4327_lab
 
 ---
 
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Time Travel Point-in-Time Recovery
+
+1. Insert 1,000 rows into your lab `orders` table, then record the current timestamp:
+
+   ```sql
+   INSERT INTO `your_project.lab_dataset.orders`
+   SELECT * FROM UNNEST(GENERATE_ARRAY(1,1000)) AS id,
+   CURRENT_DATE() AS order_date, RAND() * 1000 AS revenue;
+
+   SELECT CURRENT_TIMESTAMP() AS recovery_point;
+   ```
+
+2. Simulate an accidental delete of all rows with `revenue < 200`:
+
+   ```sql
+   DELETE FROM `your_project.lab_dataset.orders` WHERE revenue < 200;
+   SELECT COUNT(*) AS rows_after_delete FROM `your_project.lab_dataset.orders`;
+   ```
+
+3. Use time travel to recover the deleted rows by querying the table at the timestamp you recorded, then re-insert them:
+
+   ```sql
+   INSERT INTO `your_project.lab_dataset.orders`
+   SELECT * FROM `your_project.lab_dataset.orders`
+   FOR SYSTEM_TIME AS OF TIMESTAMP('REPLACE_WITH_YOUR_TIMESTAMP')
+   WHERE revenue < 200;
+   ```
+
+4. Verify the row count is restored to the original count and confirm `revenue < 200` rows are present again.
+
+### Challenge 2: Partition Filter Enforcement and Cost Estimation
+
+1. Create a new partitioned table with `require_partition_filter = true`:
+
+   ```sql
+   CREATE TABLE `your_project.lab_dataset.events_strict`
+   PARTITION BY event_date
+   OPTIONS (require_partition_filter = true)
+   AS SELECT * FROM `your_project.lab_dataset.events` LIMIT 0;
+   ```
+
+2. Attempt to query it without a partition filter and capture the error message:
+
+   ```sql
+   SELECT COUNT(*) FROM `your_project.lab_dataset.events_strict`;
+   ```
+
+3. Use `bq query --dry_run` from Cloud Shell to estimate bytes for a filtered query before executing it:
+
+   ```bash
+   bq query --dry_run --use_legacy_sql=false \
+   'SELECT COUNT(*) FROM your_project.lab_dataset.events WHERE event_date = "2025-06-01"'
+   ```
+
+4. Calculate the estimated cost using the on-demand rate of $6.25 per TB and record whether the result matches the Cloud Console query validator estimate.
+
+### Reflection Questions
+
+1. In Challenge 1, you used time travel to recover accidentally deleted rows. What is the maximum time travel window in BigQuery, and what is the "fail-safe" period that follows it? Explain the difference in terms of who can access data during each window.
+2. A colleague argues that `require_partition_filter = true` is too restrictive because it breaks ad-hoc exploratory queries. Describe the specific types of tables where this restriction is appropriate and the types where it would be counterproductive, with justification.
+
+---
+
 Module 12 Lab — CIS-4327 Database Administration
 
 Texas Wesleyan University | Proprietary and Confidential. Not for disclosure outside of course participants.

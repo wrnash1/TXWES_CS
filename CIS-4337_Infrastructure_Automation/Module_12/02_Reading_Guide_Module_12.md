@@ -310,4 +310,20 @@ Pipeline artifacts (plan files, scan reports, apply logs) should be retained for
 
 ---
 
+## Supplemental Resources
+
+**1. Automate Terraform with GitHub Actions**
+<https://developer.hashicorp.com/terraform/tutorials/automation/github-actions>
+The official HashiCorp tutorial walking through the complete GitHub Actions workflow for Terraform: format check, validate, plan with PR comment posting, and apply on merge. Covers `hashicorp/setup-terraform` action configuration, backend credential injection via GitHub Secrets, and the plan artifact upload-and-download pattern used to guarantee the reviewed plan is applied.
+
+**2. tfsec Documentation**
+<https://aquasecurity.github.io/tfsec/latest>
+Complete reference for tfsec including all built-in check IDs organized by cloud provider, the `--minimum-severity` and `--soft-fail` flags used in CI integration, the inline `#tfsec:ignore` comment syntax for documented suppressions, and instructions for writing custom YAML-based checks for organization-specific policies.
+
+**3. Checkov Documentation — Terraform Scanning**
+<https://www.checkov.io/5.Policy%20Index/terraform.html>
+The Checkov policy index for Terraform covering all `CKV_AWS_*`, `CKV_AZURE_*`, and `CKV_GCP_*` built-in check IDs with descriptions, severity levels, and remediation guidance. Also covers SARIF output format for GitHub Security tab integration, the `#checkov:skip=` inline suppression syntax, and custom policy authoring in Python.
+
+---
+
 End of Module 12 Reading Guide

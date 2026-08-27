@@ -210,4 +210,186 @@ Distractor Analysis:
 
 ---
 
+---
+
+### Question 11 (5 points)
+
+Which of the following is a valid local path source for a module located in a subdirectory named `compute` inside the current project?
+
+- A) `source = "compute"`
+- B) `source = "./compute"`
+- C) `source = "hashicorp/compute/local"`
+- D) `source = "file://compute"`
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why B is correct: Local path module sources must begin with `./` or `../`. The `./` prefix distinguishes a local filesystem path from a registry address or other source type.
+  - Why A is incorrect: A bare directory name without `./` is interpreted as a registry address lookup, which would fail because `compute` is not a valid three-part registry address.
+  - Why C is incorrect: `hashicorp/compute/local` is a registry address format, not a local filesystem path. It would attempt to download from registry.terraform.io.
+  - Why D is incorrect: The `file://` URI scheme is not a supported Terraform module source type. Local paths use relative `./` or `../` notation.
+
+---
+
+### Question 12 (5 points)
+
+A child module defines an `output "subnet_id"` block. The root module calls this child module with the label `"networking"`. What is the correct reference to use `subnet_id` in a root-level resource?
+
+- A) `output.networking.subnet_id`
+- B) `networking.subnet_id`
+- C) `module.networking.subnet_id`
+- D) `var.networking.subnet_id`
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why C is correct: Module outputs are always referenced using `module.<MODULE_LOCAL_NAME>.<OUTPUT_NAME>`. The `module.` prefix is required and the module's local name (the label in the `module` block) is the second component.
+  - Why A is incorrect: `output.` is not a valid first-class reference prefix in Terraform root configurations. Module outputs use `module.`, not `output.`.
+  - Why B is incorrect: Omitting the `module.` prefix causes Terraform to look for a resource or data source named `networking`, which does not exist.
+  - Why D is incorrect: `var.` references input variables. Module outputs are separate from the variable namespace.
+
+---
+
+### Question 13 (5 points)
+
+You want to call a registry module but need different versions for development and production pipelines. Which approach correctly supports this?
+
+- A) Use one `module` block with `version = dev ? "1.0" : "2.0"` — Terraform evaluates conditional version constraints.
+- B) Create two separate root configurations, each with a `module` block pointing to the same registry source but with different `version` constraints.
+- C) Pass `version` as an input variable to the child module's `variable` block.
+- D) Set `TF_MODULE_VERSION=2.0` as an environment variable before running `terraform apply`.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why B is correct: The `version` argument in a `module` block must be a literal string — it cannot use conditional expressions or variable references. Maintaining separate configurations (or separate Terraform workspaces with separate variable files) is the correct approach for environment-specific module versions.
+  - Why A is incorrect: The `version` argument does not support expression evaluation. Conditional expressions in version constraints are not valid HCL for module blocks.
+  - Why C is incorrect: Module version is a configuration-time argument resolved during `terraform init`, before variables are evaluated. It cannot be parameterized via variables.
+  - Why D is incorrect: There is no `TF_MODULE_VERSION` environment variable in Terraform. Module version is set only in the `version` argument of the `module` block.
+
+---
+
+### Question 14 (5 points)
+
+What happens to `.terraform/modules/` when you change a local module's source code (not its path) and re-run `terraform init`?
+
+- A) Terraform re-downloads the module into `.terraform/modules/` because source code changed.
+- B) For local path modules, Terraform does not copy files into `.terraform/modules/`; it reads directly from the source path. Only the module's symlink or manifest entry is updated.
+- C) Terraform deletes the entire `.terraform/modules/` directory and re-initializes all modules and providers.
+- D) Terraform prompts you to confirm before overwriting the cached module version.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why B is correct: Local path modules are referenced directly from their source directory. Terraform stores a manifest entry in `.terraform/modules/modules.json` but reads the actual module files from the declared path at runtime. Changes to local module files are picked up immediately without re-running `terraform init`.
+  - Why A is incorrect: Local path modules are not copied into the cache directory the way registry modules are. Registry module re-downloads only happen when the version or source changes.
+  - Why C is incorrect: `terraform init` is additive and incremental. It does not delete the entire `.terraform/` directory unless you explicitly pass `-upgrade` or clear it manually.
+  - Why D is incorrect: `terraform init` never prompts for confirmation about module cache updates.
+
+---
+
+### Question 15 (5 points)
+
+A root module passes `providers = { aws = aws.west }` inside a `module` block. What does this accomplish?
+
+- A) It installs a separate copy of the AWS provider plugin specifically for that module.
+- B) It passes the aliased `aws.west` provider configuration to the child module, overriding the module's default AWS provider with the west-region configuration.
+- C) It creates a new provider alias named `west` inside the child module's scope.
+- D) It locks the module to provider version `west`, preventing automatic upgrades.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why B is correct: The `providers` map in a `module` block maps the child module's expected provider to a specific provider configuration in the root. This is used for multi-region or multi-account deployments where a module should use a non-default provider configuration.
+  - Why A is incorrect: Provider plugins are shared across all modules in a configuration. No separate plugin installation occurs per module.
+  - Why C is incorrect: Aliases are defined in `provider` blocks, not through the `providers` argument in a `module` block. The `providers` argument maps existing aliases, it does not create them.
+  - Why D is incorrect: `west` in this context is a provider alias name, not a version string. Provider version locking is managed in `required_providers` and `.terraform.lock.hcl`.
+
+---
+
+### Question 16 (5 points)
+
+After running `terraform destroy` on a root configuration that uses two child modules, what happens to the module resource entries in the state file?
+
+- A) The module entries remain in state as a record of what was provisioned.
+- B) Only the root-level resources are removed from state; module resources persist until `terraform state rm` is called.
+- C) All resources from all modules are removed from state, leaving an empty `resources` array.
+- D) Each module creates its own `terraform.tfstate` file that must be destroyed separately.
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why C is correct: `terraform destroy` destroys all resources managed by the configuration, including those created by child modules. The state file is updated after each deletion. When complete, the `resources` array is empty regardless of which module created which resource.
+  - Why A is incorrect: The state file reflects current infrastructure state. After destroy completes, there is no infrastructure to record, so all entries are removed.
+  - Why B is incorrect: Terraform does not distinguish between root-level and module-level resources during destroy. All managed resources are destroyed.
+  - Why D is incorrect: All resources across all modules in a single configuration share one state file. There are no per-module state files.
+
+---
+
+### Question 17 (5 points)
+
+Which `terraform state` command would you use to view all attributes of the VPC created by a module named `network` with an internal resource name of `aws_vpc.this`?
+
+- A) `terraform state show aws_vpc.this`
+- B) `terraform state show network.aws_vpc.this`
+- C) `terraform state show module.network.aws_vpc.this`
+- D) `terraform state show module.network`
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why C is correct: Module resources are addressed with `module.<module_name>.<resource_type>.<resource_name>`. For a VPC inside the `network` module, the full address is `module.network.aws_vpc.this`.
+  - Why A is incorrect: `aws_vpc.this` without the module prefix refers to a root-level resource. If the VPC only exists inside the module, this address does not exist and the command returns an error.
+  - Why B is incorrect: The `module.` prefix is required. `network.aws_vpc.this` without it is not a valid Terraform state address.
+  - Why D is incorrect: `module.network` is not a valid state show argument — you must include the full resource type and name within the module.
+
+---
+
+### Question 18 (5 points)
+
+What is the purpose of the `README.md` file in a Terraform module directory?
+
+- A) It is required by Terraform to validate the module structure; modules without a README fail `terraform init`.
+- B) It serves as human-readable documentation for module consumers, describing inputs, outputs, and usage examples. It is optional from Terraform's perspective but required for publishing to the Terraform Registry.
+- C) It stores the module's provider configuration so that callers do not need to declare a provider block.
+- D) It is automatically generated by `terraform init` to list all resources the module will create.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why B is correct: Terraform does not read or validate `README.md`. It is purely for human documentation. However, the Terraform Registry requires a README to publish a module, and good READMEs are a best practice for community and internal modules.
+  - Why A is incorrect: A missing README does not cause `terraform init` to fail. Terraform only reads `.tf` files.
+  - Why C is incorrect: Provider configurations are declared in `.tf` files, not in README files. READMEs are documentation only.
+  - Why D is incorrect: `terraform init` does not create README files. It downloads providers and modules and creates `.terraform.lock.hcl`.
+
+---
+
+### Question 19 (5 points)
+
+A registry module call uses `version = "~> 4.0"`. A newer version `5.0.0` is released. What does `terraform init -upgrade` do?
+
+- A) It upgrades the module to version `5.0.0` because it is the latest available.
+- B) It updates to the latest version within the `4.x` range (e.g., `4.9.2`) but does not upgrade to `5.0.0`.
+- C) It ignores the upgrade because module versions are pinned in `.terraform.lock.hcl` permanently.
+- D) It prompts you to manually update the version constraint before proceeding.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why B is correct: The `~> 4.0` pessimistic constraint allows any version `>= 4.0, < 5.0`. Running `terraform init -upgrade` fetches the latest version within that range (e.g., `4.9.2`) but will not cross the major version boundary to `5.0.0`.
+  - Why A is incorrect: `~> 4.0` explicitly prohibits `5.0.0`. Terraform respects the declared constraint regardless of what is available.
+  - Why C is incorrect: The lock file records the currently selected version but `-upgrade` instructs `init` to re-evaluate and update within constraints. The lock file is updated as part of the upgrade process.
+  - Why D is incorrect: `terraform init -upgrade` runs non-interactively. It does not prompt for manual version changes; it simply applies the declared constraints.
+
+---
+
+### Question 20 (5 points)
+
+Why is it recommended to specify a `version` constraint when calling a module from the Terraform Registry in a production configuration?
+
+- A) Without a `version` constraint, `terraform init` will fail with a "version required" error.
+- B) Registry modules without a version constraint default to version `0.0.1`, which is typically incomplete.
+- C) Without a `version` constraint, `terraform init` always downloads the latest version, which may introduce breaking changes or unexpected behavior on future runs.
+- D) The Terraform Registry requires version constraints in all module calls or it blocks the download.
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why C is correct: Without a `version` constraint, Terraform fetches the latest available version every time `terraform init` is run (or when the cache is cleared). A future major release could introduce breaking changes that destroy existing infrastructure or change resource configurations in unexpected ways.
+  - Why A is incorrect: The `version` argument is optional for registry modules. Omitting it does not cause a failure — it causes Terraform to use the latest version.
+  - Why B is incorrect: Terraform does not default to version `0.0.1`. It defaults to the latest published version of the module.
+  - Why D is incorrect: The Terraform Registry does not enforce version constraints in calling configurations. The requirement to pin versions is an operational best practice, not a registry-enforced rule.
+
+---
+
 Module 05 Quiz — CIS-4337 Infrastructure Automation — Texas Wesleyan University

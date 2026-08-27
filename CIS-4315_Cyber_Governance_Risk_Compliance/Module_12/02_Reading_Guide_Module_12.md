@@ -267,3 +267,19 @@ Review each item below before proceeding to the lab and quiz.
 - [ ] I understand the purpose and categories of a fishbone diagram
 - [ ] I know what forensic readiness means and why it is a governance responsibility
 - [ ] I understand the order of volatility and can apply it to evidence collection sequencing
+
+---
+
+## 9. Supplemental Resources
+
+**1. NIST SP 800-86: Guide to Integrating Forensic Techniques into Incident Response**
+<https://csrc.nist.gov/publications/detail/sp/800-86/final>
+NIST's authoritative guide covering the forensic process model, evidence handling, media analysis, and integration of forensic practices into organizational incident response programs. Directly aligned with CISM Domain 4 competencies.
+
+**2. ISACA — Digital Forensics Audit and Assurance Guidance**
+<https://www.isaca.org/resources/isaca-journal/issues/2017/volume-2/digital-forensics-best-practices>
+ISACA's practitioner guidance on digital forensics best practices, forensic readiness program design, and the governance role of the information security manager in supporting investigations. Provides CISM exam-relevant framing.
+
+**3. SANS Institute — Windows Forensic Analysis Reading Room**
+<https://www.sans.org/white-papers/windows-forensic-analysis/>
+A collection of SANS practitioner papers covering Windows artifact analysis, memory forensics fundamentals, and chain of custody best practices. Useful for understanding how forensic techniques are applied to real-world Windows environments covered in this module's lab scenario.

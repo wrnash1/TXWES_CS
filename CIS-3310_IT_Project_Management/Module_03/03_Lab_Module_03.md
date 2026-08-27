@@ -233,3 +233,21 @@ Submit as a single PDF or Word document to the Canvas Module 03 Lab assignment.
 | Part 2: WBS | 40 | Noun phrases, 5 Level 2 categories, 100% Rule compliance, gold plating response |
 | Part 3: WBS Dictionary | 25 | Specific description, measurable criteria, logical activities, reasonable estimates |
 | **Total** | **100** | |
+
+---
+
+## Part 9 — Challenge Exercise
+
+This section is optional for students seeking additional depth and exam preparation. It is not graded as part of the standard 100-point lab but may be used for extra credit at the instructor's discretion.
+
+### Challenge Step 1: Requirements Traceability Matrix
+
+Select three requirements from the Scope Statement you wrote in Part 1. Build a simple Requirements Traceability Matrix (RTM) with the following columns: Requirement ID, Requirement Description, Source (who requested it), WBS Element that delivers it, and Test/Acceptance Criterion that validates it. Explain in two sentences why the RTM is important for audit and quality assurance purposes on an IT project.
+
+### Challenge Step 2: Scope Change Impact Analysis
+
+A late-arriving stakeholder requests that the EduConnect LMS deployment include integration with an external plagiarism detection service (not in the current scope). Using the Scope Statement and WBS you built in Parts 1 and 2, write a brief impact analysis (4–6 sentences) identifying: which WBS elements would be affected, the estimated schedule impact, the estimated cost impact, and your recommendation to the Change Control Board (approve, defer, or reject with rationale).
+
+### Challenge Step 3: WBS 100% Rule Audit
+
+Exchange your Part 2 WBS outline with a peer (or self-audit). Review each Level 2 branch and verify that the sum of all Level 3 work packages completely and exclusively covers the parent Level 2 element — no overlap, no gaps. Document any violations you find and describe how you would correct them. This audit mirrors the quality review a PMO would conduct before baselining the WBS.

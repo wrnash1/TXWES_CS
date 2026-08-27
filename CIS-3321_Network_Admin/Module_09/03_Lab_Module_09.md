@@ -258,4 +258,62 @@ Submit to the Module 09 Lab assignment in the course LMS before the posted deadl
 
 ---
 
-CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash
+## Part 9 — Challenge Exercise
+
+These advanced steps extend the Module 09 lab with DNSSEC validation, NTP configuration, and DHCP scope analysis.
+
+### Challenge Step 1: Verify DNSSEC Validation with dig
+
+1. On a Linux/macOS system, use the `dig` command with DNSSEC validation flags. On Windows, use an online dig tool (dnschecker.org/dig.php).
+2. Query a DNSSEC-signed domain:
+   ```
+   dig +dnssec google.com A
+   ```
+3. Look for the `ad` (Authenticated Data) flag in the response flags section — it indicates the response was DNSSEC-validated.
+4. Also query for the DNSKEY record:
+   ```
+   dig google.com DNSKEY
+   ```
+5. Record: Is the `ad` flag set? Are RRSIG records present alongside the A records?
+
+**Challenge Question 1:** Explain how DNSSEC prevents DNS cache poisoning. What is the role of the DNSKEY record, and what does the RRSIG record attached to each DNS response contain? Why does DNSSEC not encrypt DNS traffic (and which separate protocol does encrypt DNS queries for privacy)?
+
+### Challenge Step 2: Configure an NTP Server Hierarchy in Packet Tracer
+
+1. In Packet Tracer, add three routers: NTP-Master, NTP-Distribution, and a client Router.
+2. Configure NTP-Master to act as an NTP master (stratum 2 internal clock):
+   ```
+   ntp master 2
+   ```
+3. Configure NTP-Distribution to synchronize from NTP-Master:
+   ```
+   ntp server [NTP-Master IP]
+   ```
+4. Configure the client router to synchronize from NTP-Distribution:
+   ```
+   ntp server [NTP-Distribution IP]
+   ```
+5. Wait for synchronization and verify with:
+   ```
+   show ntp status
+   show ntp associations
+   ```
+
+**Challenge Question 2:** After synchronization, what stratum number would you expect on NTP-Distribution (synchronizing from a stratum 2 source)? What stratum would the client router be? What is the maximum stratum number before NTP considers a device unsynchronized? Why does Kerberos authentication fail if the NTP hierarchy is broken and clocks drift?
+
+### Challenge Step 3: Analyze DNS Over HTTPS (DoH) vs. Traditional DNS
+
+1. On your real computer, open a browser and navigate to: https://1.1.1.1/dns-query?name=google.com&type=A
+   This is a manual DoH query to Cloudflare's DNS.
+2. Observe the JSON response format — record the IP addresses returned.
+3. Run a traditional DNS query for the same hostname:
+   ```
+   nslookup google.com 1.1.1.1
+   ```
+   Record the IP addresses returned.
+
+**Challenge Question 3:** Compare the results of the DoH query and the traditional DNS query. Do they return the same IP addresses? What is the primary security benefit of DNS over HTTPS (DoH) compared to traditional UDP DNS? What is a potential network management drawback of deploying DoH in an enterprise environment (hint: consider network visibility and filtering)?
+
+---
+
+*CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash*

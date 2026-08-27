@@ -160,3 +160,27 @@ Common thermal failure symptoms:
 
 - [Professor Messer CompTIA A+ Core 1 (220-1101) Free Course — Processors and Cooling](https://www.professormesser.com/free-a-plus-training/220-1101/220-1101-video/)
 - [CompTIA A+ Certification Official Page and Exam Objectives](https://www.comptia.org/certifications/a)
+
+---
+
+## 9. Supplemental Resources
+
+1. **Professor Messer — CPU Installation and Cooling (220-1101 Free Video)**
+   URL: [https://www.professormesser.com/free-a-plus-training/220-1101/220-1101-video/](https://www.professormesser.com/free-a-plus-training/220-1101/220-1101-video/)
+   Relevance: Free video covering LGA/PGA socket installation, thermal paste application, heat sink types, and CPU_FAN header connections — all core topics for Module 03 lab and quiz preparation.
+
+2. **Tom's Hardware — How to Install a CPU (Free Guide with Photos)**
+   URL: [https://www.tomshardware.com/how-to/how-to-install-a-cpu](https://www.tomshardware.com/how-to/how-to-install-a-cpu)
+   Relevance: Step-by-step photographic walkthrough of CPU installation for both Intel LGA and AMD PGA/LGA sockets. Supplements the lab procedure section with detailed visual references.
+
+3. **Thermal Grizzly — Thermal Paste Comparison Guide (Free Reference)**
+   URL: [https://www.thermal-grizzly.com/products/thermal-grizzly-kryonaut](https://www.thermal-grizzly.com/products/thermal-grizzly-kryonaut)
+   Relevance: Overview of thermal paste formulations (silicone vs. metal-filled vs. phase-change). Useful background for understanding why thermal paste selection affects temperature outcomes in the lab challenge exercises.
+
+4. **CPU-Z (Free System Information Tool)**
+   URL: [https://www.cpuid.com/softwares/cpu-z.html](https://www.cpuid.com/softwares/cpu-z.html)
+   Relevance: Free Windows utility that displays live CPU core count, thread count, base/boost clock, cache sizes, and socket type. Use this tool during the lab to verify your CPU specification table entries without opening the case.
+
+5. **HWiNFO64 — Free Hardware Monitoring Tool**
+   URL: [https://www.hwinfo.com/download/](https://www.hwinfo.com/download/)
+   Relevance: Free real-time hardware monitoring tool that shows CPU temperature per core, fan RPM, and thermal throttling events. Essential for the challenge step where students observe thermal behavior and document throttling under load.

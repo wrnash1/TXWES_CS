@@ -4,7 +4,7 @@
 
 **Certification Alignment:** JSE — Certified Associate in JavaScript Programming (OpenEDG / JS Institute)
 
-**Instructions:** Choose the single best answer for each question.
+**Instructions:** Choose the single best answer for each question. Each question is worth 5 points (20 questions × 5 points = 100 points).
 
 ---
 
@@ -292,3 +292,310 @@ Which of the following is the most appropriate use of the ternary operator?
 - *Why B is incorrect:* Multi-branch logic with five outcomes requires `if/else if/else` or `switch`. Nested ternaries for five branches are technically valid but nearly impossible to read and are considered poor practice.
 - *Why C is incorrect:* The ternary operator is for value-producing expressions, not for executing multi-statement blocks. When you need to run multiple statements, use `if/else`.
 - *Why D is incorrect:* That describes a loop (`for`, `forEach`), not a conditional operator.
+
+---
+
+### Question 11
+
+What is the output of the following code?
+
+```javascript
+const x = 15;
+
+switch (true) {
+  case x < 10:
+    console.log('small');
+    break;
+  case x < 20:
+    console.log('medium');
+    break;
+  default:
+    console.log('large');
+}
+```
+
+- A) `small`
+- B) `medium`
+- C) `large`
+- D) `SyntaxError — switch cannot use boolean expressions`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `x < 10` is `15 < 10` which is `false`. `switch (true)` compares `true` against each case using `===`. `false === true` does not match.
+- *Why B is correct:* `switch (true)` is a valid pattern. The switch expression is `true`. `case x < 10` evaluates to `false === true` (no match). `case x < 20` evaluates to `true === true` (match) — `'medium'` prints and `break` exits.
+- *Why C is incorrect:* `case x < 20` matches before reaching `default`, so `default` is never executed.
+- *Why D is incorrect:* `switch (true)` is perfectly valid JavaScript. The switch expression can be any expression that evaluates to a value.
+
+---
+
+### Question 12
+
+What is the output of the following code?
+
+```javascript
+const grade = 'B';
+
+switch (grade) {
+  case 'A':
+  case 'B':
+    console.log('Honor roll');
+    break;
+  case 'C':
+    console.log('Satisfactory');
+    break;
+  default:
+    console.log('See advisor');
+}
+```
+
+- A) `Honor roll` then `Satisfactory`
+- B) `See advisor`
+- C) `Honor roll`
+- D) `Satisfactory`
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* The `break` after `'Honor roll'` exits the switch. `'Satisfactory'` is never reached.
+- *Why B is incorrect:* `grade` is `'B'`, which falls into the `case 'A': case 'B':` group. `'See advisor'` is the `default` branch and is not reached.
+- *Why C is correct:* `case 'A'` has no code and no `break` — it falls through to `case 'B'`. This is intentional fall-through used to group multiple matching values. `grade === 'B'` matches `case 'B'`, so execution reaches `console.log('Honor roll')` then hits `break`.
+- *Why D is incorrect:* `case 'C'` does not match `'B'`.
+
+---
+
+### Question 13
+
+What is the output of the following code?
+
+```javascript
+let result = '';
+
+if (false) {
+  result = 'A';
+} else if (false) {
+  result = 'B';
+} else if (true) {
+  result = 'C';
+} else {
+  result = 'D';
+}
+
+console.log(result);
+```
+
+- A) `'A'`
+- B) `'D'`
+- C) `'C'`
+- D) `'B'`
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* The first condition is `false`, so that branch is skipped.
+- *Why B is incorrect:* `'D'` is the `else` fallback that only runs when all prior conditions are false. The third condition `true` matches first.
+- *Why C is correct:* The engine evaluates each condition in order. The first two are `false` (skipped). The third is `true` — `result = 'C'` runs and the chain ends.
+- *Why D is incorrect:* The second condition is `false`, so `result = 'B'` is skipped.
+
+---
+
+### Question 14
+
+A developer writes the following conditional. What potential bug does it contain?
+
+```javascript
+const score = 72;
+if (score >= 70);
+  console.log('Passing');
+```
+
+- A) `SyntaxError` — a semicolon cannot follow a condition
+- B) `console.log('Passing')` always runs regardless of the condition
+- C) `console.log('Passing')` never runs because the condition has no body
+- D) The code works correctly and only prints when `score >= 70`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* A semicolon after an `if` condition is not a syntax error. It creates an `if` statement with an empty body (the semicolon is the body).
+- *Why B is correct:* `if (score >= 70);` creates an `if` statement whose body is the empty statement `;`. The `console.log` on the next line is not part of the `if` block — it is a separate statement that always executes unconditionally, regardless of the score.
+- *Why C is incorrect:* `console.log('Passing')` does run — always — because it is outside the (empty) `if` body.
+- *Why D is incorrect:* The code does not behave correctly. `console.log` runs for every score, including scores below 70.
+
+---
+
+### Question 15
+
+What is the output of the following code?
+
+```javascript
+const a = 5;
+const b = 10;
+const c = a > 3 ? (b > 8 ? 'both' : 'only a') : 'neither';
+console.log(c);
+```
+
+- A) `'only a'`
+- B) `'neither'`
+- C) `'both'`
+- D) `SyntaxError — ternary operators cannot be nested`
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* The inner condition `b > 8` is `10 > 8` which is `true`. The inner ternary returns `'both'`, not `'only a'`.
+- *Why B is incorrect:* `a > 3` is `5 > 3` which is `true`. The outer `else` branch (`'neither'`) is not reached.
+- *Why C is correct:* `a > 3` is `true`, so the outer ternary evaluates the nested ternary. `b > 8` is `true`, so the inner ternary returns `'both'`. `c` is `'both'`.
+- *Why D is incorrect:* Nested ternary operators are valid JavaScript syntax. They are generally discouraged for readability but are syntactically correct and commonly tested.
+
+---
+
+### Question 16
+
+What is the output of the following code?
+
+```javascript
+const user = { name: 'Alice', age: null };
+const displayAge = user.age ?? 'Not provided';
+console.log(displayAge);
+```
+
+- A) `null`
+- B) `'Not provided'`
+- C) `undefined`
+- D) `0`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `user.age` is `null`, which triggers the `??` operator to return the right-hand fallback.
+- *Why B is correct:* `user.age` is `null`. The nullish coalescing operator `??` returns the right-hand operand when the left is `null` or `undefined`. So `displayAge` is `'Not provided'`.
+- *Why C is incorrect:* `undefined` would be the result if `user.age` were not a property at all (undeclared property returns `undefined`). Here it is explicitly set to `null`.
+- *Why D is incorrect:* `0` is not involved anywhere in this code.
+
+---
+
+### Question 17
+
+What is the output of the following code?
+
+```javascript
+const isAdmin = true;
+const isLoggedIn = false;
+
+if (isAdmin && isLoggedIn) {
+  console.log('Admin access');
+} else if (isAdmin || isLoggedIn) {
+  console.log('Partial access');
+} else {
+  console.log('No access');
+}
+```
+
+- A) `'Admin access'`
+- B) `'No access'`
+- C) `'Partial access'`
+- D) `'Admin access'` then `'Partial access'`
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `isAdmin && isLoggedIn` is `true && false` which is `false`. The first branch is skipped.
+- *Why B is incorrect:* `isAdmin || isLoggedIn` is `true || false` which is `true`. The `else if` branch fires before reaching `else`.
+- *Why C is correct:* `true && false` is `false` (skip first branch). `true || false` is `true` (match second branch) → prints `'Partial access'` and exits.
+- *Why D is incorrect:* Only one branch runs in an `if/else if/else` chain.
+
+---
+
+### Question 18
+
+Which of the following correctly describes the optional chaining operator `?.`?
+
+- A) It converts `null` or `undefined` to `0` before accessing a property
+- B) It accesses a property and returns `undefined` (instead of throwing `TypeError`) if the left side is `null` or `undefined`
+- C) It is equivalent to `??` and only triggers when the left side is null or undefined
+- D) It checks whether a property exists on an object and returns `true` or `false`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `?.` does not convert values. It short-circuits — if the left side is `null` or `undefined`, the whole expression returns `undefined` without attempting the property access.
+- *Why B is correct:* `obj?.prop` safely accesses `prop` on `obj`. If `obj` is `null` or `undefined`, the expression evaluates to `undefined` instead of throwing `TypeError: Cannot read properties of null`. This is called optional chaining.
+- *Why C is incorrect:* `?.` and `??` are different operators. `?.` is for safe property access. `??` is for providing a fallback value. They are often used together: `obj?.prop ?? 'default'`.
+- *Why D is incorrect:* That describes the `in` operator (`'prop' in obj`). `?.` does not return a boolean.
+
+---
+
+### Question 19
+
+What is the output of the following code?
+
+```javascript
+const items = [];
+
+if (items) {
+  console.log('has items');
+} else {
+  console.log('no items');
+}
+
+if (items.length) {
+  console.log('array has content');
+} else {
+  console.log('array is empty');
+}
+```
+
+- A) `'no items'` then `'array is empty'`
+- B) `'has items'` then `'array has content'`
+- C) `'has items'` then `'array is empty'`
+- D) `'no items'` then `'array has content'`
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* An empty array `[]` is truthy. `if (items)` evaluates to `true`, so `'has items'` prints.
+- *Why B is incorrect:* `items.length` is `0` for an empty array. `0` is falsy, so the `else` branch prints `'array is empty'`.
+- *Why C is correct:* `items` is an empty array — a truthy object reference. `if (items)` is `true` → `'has items'`. `items.length` is `0` — falsy. `if (items.length)` is `false` → `'array is empty'`. This is the correct pattern for checking if an array actually contains elements.
+- *Why D is incorrect:* `items` is truthy, so `'no items'` never prints.
+
+---
+
+### Question 20
+
+What is the output of the following code?
+
+```javascript
+function getDiscount(isMember, totalSpend) {
+  if (isMember && totalSpend > 100) return 20;
+  if (isMember || totalSpend > 200) return 10;
+  return 0;
+}
+
+console.log(getDiscount(true, 150));
+console.log(getDiscount(false, 250));
+console.log(getDiscount(false, 50));
+```
+
+- A) `20`, `10`, `0`
+- B) `10`, `10`, `0`
+- C) `20`, `20`, `0`
+- D) `20`, `0`, `0`
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- *Why A is correct:* First call: `isMember=true, totalSpend=150` — `true && 150>100` is `true` → return `20`. Second call: `isMember=false, totalSpend=250` — first condition `false && ...` is `false` (skip). Second condition `false || 250>200` is `false || true` = `true` → return `10`. Third call: `isMember=false, totalSpend=50` — both conditions are `false` → return `0`.
+- *Why B is incorrect:* The first call satisfies `isMember && totalSpend > 100` and returns `20`, not `10`.
+- *Why C is incorrect:* The second call does not satisfy `isMember && totalSpend > 100` (`false && true` = `false`). It falls to the second condition and returns `10`, not `20`.
+- *Why D is incorrect:* The second call returns `10` because `totalSpend > 200` satisfies the `||` condition.

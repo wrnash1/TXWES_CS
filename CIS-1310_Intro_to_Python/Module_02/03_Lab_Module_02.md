@@ -605,6 +605,57 @@ Zip all 5 screenshots and upload to the Canvas Module 02 Lab Assignment.
 
 ---
 
+## Part 9 — Challenge Exercise
+
+These steps are optional and ungraded. They explore operator behavior at a deeper level suitable for PCAP exam preparation.
+
+### Challenge 9.1 — Build a Comprehensive Operator Truth Table
+
+Create a script that systematically demonstrates every edge case of Python's arithmetic operators with both positive and negative operands:
+
+```bash
+nano ~/cis1310/module02/operator_deep_dive.py
+```
+
+Write a script that prints the result of every combination below in a formatted table:
+
+- `7 // 3`, `7 // -3`, `-7 // 3`, `-7 // -3`
+- `7 % 3`, `7 % -3`, `-7 % 3`, `-7 % -3`
+- For each result, verify the invariant: `(a // b) * b + (a % b) == a`
+
+Your output should display each expression, its result, and a `PASS`/`FAIL` indicator for the invariant check. This pattern of systematic operator verification is directly tested on PCAP scenario questions.
+
+---
+
+### Challenge 9.2 — Implement a Precision-Safe Floating-Point Comparator
+
+The standard advice is "never use `==` for floats — use a tolerance." Write a function `float_eq(a, b, tolerance=1e-9)` that returns `True` if two floats are within `tolerance` of each other, and a test script that demonstrates:
+
+1. `float_eq(0.1 + 0.2, 0.3)` returns `True`
+2. `float_eq(0.1 + 0.2, 0.3, tolerance=0)` returns `False` (exact comparison)
+3. `float_eq(1.0, 1.0000000001)` returns `True` with default tolerance
+4. `float_eq(1.0, 1.001)` returns `False` with default tolerance
+
+Save as `~/cis1310/module02/float_comparator.py`. This pattern is used in production code (e.g., `math.isclose()`, which is the standard library implementation of this exact idea — compare your implementation to `math.isclose(a, b)` and verify they agree).
+
+---
+
+### Challenge 9.3 — Number Base Converter
+
+Write a script `~/cis1310/module02/base_converter.py` that accepts an integer and prints its representation in all four number systems Python supports:
+
+```python
+def show_bases(n):
+    print(f'Decimal:     {n}')
+    print(f'Binary:      {bin(n)}')
+    print(f'Octal:       {oct(n)}')
+    print(f'Hexadecimal: {hex(n)}')
+```
+
+Call `show_bases()` for the values: `0`, `10`, `15`, `16`, `255`, `256`, and `65535`. Study the output and explain in a comment why `255` is significant in both binary (`0b11111111`) and hexadecimal (`0xFF`) contexts (hint: it is the maximum value of a single byte — the foundation of color values in RGB, IP address octets, and memory addressing).
+
+---
+
 ## Troubleshooting Guide
 
 **`import math` causes `ModuleNotFoundError`.**

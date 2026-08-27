@@ -216,3 +216,29 @@ A TCPI of 1.20 means you need to work 20% more efficiently than you have been to
 - [ ] Complete the Module 10 Lab spreadsheet exercise
 - [ ] Take the Module 10 Quiz (10 questions, EVM focus)
 - [ ] Post Module 10 Discussion initial response by Wednesday at 11:59 PM
+
+---
+
+## 9. Supplemental Resources
+
+The following free, openly licensed resources extend the concepts in this module. All links are publicly accessible — no account or purchase required.
+
+1. **PMI — Practice Standard for Earned Value Management (2nd Edition Overview)**
+   *Project Management Institute* — [pmi.org/pmbok-guide-standards/practice-guides/earned-value-management](https://www.pmi.org/pmbok-guide-standards/practice-guides/earned-value-management)
+   The authoritative PMI reference for all EVM formulas, measurement baselines, and reporting guidance. Essential for students targeting CAPM or PMP after Project+.
+
+2. **EVM Formula Reference Sheet — PM PrepCast (Free)**
+   [project-management-prepcast.com/evm-formulas](https://www.project-management-prepcast.com/free/evm-formulas)
+   One-page formula card covering all nine EVM metrics with sign interpretation rules — ideal as a desk reference while completing the Module 10 lab spreadsheet.
+
+3. **YouTube — "Earned Value Management: Full Deep Dive" (Joseph Phillips)**
+   [youtube.com/watch?v=wEby_-MVXQM](https://www.youtube.com/watch?v=wEby_-MVXQM)
+   Detailed 25-minute lecture on EVM calculations including all three EAC variants and TCPI interpretation. Highly aligned with Module 10 content and the Project+ exam.
+
+4. **Khan Academy — EVM Practice Problems (free)**
+   [khanacademy.org — Project Management EVM](https://www.khanacademy.org/computing/computers-and-internet/x1bacd820c5e4194d:program-your-device/x1bacd820c5e4194d:project-management/a/earned-value-management)
+   Interactive EVM calculation practice with immediate feedback — suitable for students who want additional drill before the Module 10 quiz.
+
+5. **EVM Explained — ClearlyAgile (Free Article)**
+   [clearlyagile.com/agile-blog/earned-value-management](https://www.clearlyagile.com/agile-blog/earned-value-management)
+   Plain-language EVM explainer that covers how EVM applies in both predictive and hybrid agile contexts — useful for students heading into Module 12 (Agile) after mastering EVM.

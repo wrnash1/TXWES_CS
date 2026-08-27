@@ -264,3 +264,24 @@ Submit a single document (PDF or Word) containing:
 2. Your name, course section, and date at the top of the document.
 
 Upload to the Module 01 Lab Assignment in Canvas by the posted due date.
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Build Your Own AI vs. ML vs. DL Taxonomy
+
+1. Find three real news headlines or product announcements from technology companies that mention "AI," "machine learning," or "deep learning."
+2. For each headline, classify the system described as Traditional AI, Machine Learning, or Deep Learning. Write a two-sentence justification citing specific clues in the headline text.
+3. Identify at least one headline where the term used in the headline does not match your classification (e.g., a headline says "AI" but describes a rule-based system). Explain the mismatch.
+4. Reflect: Why do you think technology companies often use "AI" as a blanket marketing term regardless of the underlying technique?
+
+### Challenge 2: Responsible AI Audit of a Public System
+
+1. Research one publicly known AI system that has faced criticism for ethical concerns (examples: COMPAS recidivism algorithm, Amazon's scrapped hiring tool, facial recognition misidentification cases).
+2. Map the criticism to at least two of Microsoft's six responsible AI principles by name. Explain specifically how each principle is violated based on the reported facts.
+3. Propose one concrete technical change and one concrete organizational change that the deploying organization could make to better align with those principles.
+4. Identify which principle your proposed changes address and explain why that principle is the most important one to prioritize for the system you chose.
+
+### Reflection Questions
+
+1. After completing this lab and the challenge exercises, which of the three learning paradigms (supervised, unsupervised, reinforcement) do you think is the most difficult to apply in a real business context, and why?
+2. If you were advising a small nonprofit organization with no data science staff and a limited budget, which Azure AI service tier would you recommend they start with, and what are the trade-offs of that choice?

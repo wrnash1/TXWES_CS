@@ -267,3 +267,19 @@ Before starting Lab 11, confirm you can answer yes to each item:
   `https://cloud.google.com/docs/terraform/best-practices-for-terraform`
 - ACE exam guide:
   `https://cloud.google.com/certification/guides/cloud-engineer`
+
+---
+
+## 9. Supplemental Resources
+
+**1. Google Cloud Documentation — Terraform on Google Cloud**
+<https://cloud.google.com/docs/terraform>
+Official GCP guide to using Terraform covering provider configuration, GCS remote state setup, best practices for module structure, and how to store and manage Terraform configurations for GCP projects — directly applicable to the lab and ACE exam.
+
+**2. HashiCorp Learn — Get Started with Terraform on GCP**
+<https://developer.hashicorp.com/terraform/tutorials/gcp-get-started>
+Step-by-step tutorial series from HashiCorp covering Terraform installation, writing the first GCP configuration, running the five-step workflow (init/plan/apply/destroy), and using variables and outputs.
+
+**3. Google Cloud Documentation — Cloud Deployment Manager Fundamentals**
+<https://cloud.google.com/deployment-manager/docs/fundamentals>
+Comprehensive reference for Deployment Manager covering YAML configuration syntax, Jinja2 and Python templates, the `$(ref.RESOURCE.PROPERTY)` dependency syntax, preview mode, and deployment lifecycle management.

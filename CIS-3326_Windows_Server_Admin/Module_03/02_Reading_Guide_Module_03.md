@@ -392,3 +392,25 @@ ADDSForest   ADDSDomain    ADDSDomainController
 - [AD DS deployment with PowerShell](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/deploy/install-active-directory-domain-services--level-200-)
 - [AD DS replication concepts](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/get-started/replication/active-directory-replication-concepts)
 - [Read-Only Domain Controllers](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/deploy/rodc/read-only-domain-controller-updates)
+
+---
+
+## 9. Supplemental Resources
+
+The following free, open-access resources go deeper on Module 03 topics:
+
+**1. Microsoft Learn — Install and configure Active Directory Domain Services**
+<https://learn.microsoft.com/en-us/training/modules/install-configure-active-directory-domain-services/>
+Step-by-step module covering both GUI and PowerShell promotion workflows, DSRM password management, and post-promotion verification. Includes sandbox exercises.
+
+**2. Microsoft Docs — Troubleshoot AD DS replication with repadmin**
+<https://learn.microsoft.com/en-us/troubleshoot/windows-server/active-directory/replication-error-8606>
+Comprehensive repadmin reference with error code explanations and resolution steps for the most common replication failures encountered in production and lab environments.
+
+**3. Microsoft Docs — Active Directory functional levels**
+<https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/active-directory-functional-levels>
+Complete functional level feature matrix from Windows Server 2003 through current. Essential reference for identifying which feature unlocks at which level before raising your environment.
+
+**4. Microsoft Docs — Deploy a Read-Only Domain Controller**
+<https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/deploy/rodc/install-a-windows-server-2012-active-directory-read-only-domain-controller--rodc---level-200->
+Detailed RODC deployment guide covering Password Replication Policy configuration, pre-staging, and branch office security considerations aligned to AZ-800 exam scenarios.

@@ -260,3 +260,48 @@ Submit the following as a single PDF or Word document in Canvas:
 | Troubleshooting Scenarios | 15 | Correct analysis for all three scenarios (5 pts each) |
 
 Partial credit awarded for demonstrably attempted but incomplete work.
+
+---
+
+## Part 9 — Challenge Exercise
+
+This optional challenge extends the lab to CCNA exam difficulty. Complete all steps and include deliverables in your submission for up to 20 bonus points.
+
+### Challenge Step 1: Manipulate OSPF Cost to Control Path Selection
+
+In your three-router topology, add a parallel path between R1 and R3 (a second link). Both paths should be equal cost by default (both 1 Gbps). Verify equal-cost load balancing with `show ip route`. Then artificially increase the cost on one path to force all traffic to use the other link:
+
+```ios
+R1(config)# interface GigabitEthernet0/2
+R1(config-if)# ip ospf cost 100
+```
+
+Verify that `show ip route` now shows only one path to R3's networks. Run a traceroute from R1 to a PC behind R3 to confirm the traffic takes the lower-cost path. Document the routing table before and after the cost change.
+
+### Challenge Step 2: Configure and Verify OSPF Authentication
+
+Configure MD5 authentication on the OSPF link between R1 and R2. Both routers must use the same key ID and password string:
+
+```ios
+R1(config)# interface Serial0/0/0
+R1(config-if)# ip ospf authentication message-digest
+R1(config-if)# ip ospf message-digest-key 1 md5 CCNA2025
+
+R2(config)# interface Serial0/0/0
+R2(config-if)# ip ospf authentication message-digest
+R2(config-if)# ip ospf message-digest-key 1 md5 CCNA2025
+```
+
+Verify the adjacency remains FULL. Then intentionally use a mismatched key on R2 and document the symptom in `show ip ospf neighbor`. Restore the correct key and verify recovery. Include screenshots of neighbor state during both the mismatch and recovery.
+
+### Challenge Step 3: Configure a Default Route Redistribution into OSPF
+
+Add a loopback interface on R1 simulating an internet connection (e.g., 203.0.113.1/32). Configure a default route on R1 pointing to this loopback, then redistribute the default route into OSPF so all other routers receive a default route via OSPF:
+
+```ios
+R1(config)# ip route 0.0.0.0 0.0.0.0 Loopback0
+R1(config)# router ospf 1
+R1(config-router)# default-information originate
+```
+
+Verify that R2 and R3 receive an OSPF external route (marked `O*E2`) pointing to R1 for the default route. Run `show ip route` on R2 and R3 and document the `O*E2 0.0.0.0/0` entry. Explain in 2–3 sentences the difference between OSPF route types E1 and E2 and which is used by default with `default-information originate`.

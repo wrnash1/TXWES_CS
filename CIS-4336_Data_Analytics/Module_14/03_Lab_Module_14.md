@@ -274,3 +274,107 @@ Export your completed notebook as both `.ipynb` and PDF. Submit both files to th
 | Feature importance chart rendered with correct interpretation | 10 |
 | Summary reflection markdown cell with substantive answers | 10 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: ROC Curve and Threshold Analysis
+
+Extend the classification model evaluation from the lab by plotting a full ROC curve and analyzing the precision-recall tradeoff at multiple thresholds.
+
+1. Using the trained logistic regression or random forest from the lab, call `model.predict_proba(X_test)[:, 1]` to get the positive class probabilities. Use `sklearn.metrics.roc_curve` to compute false positive rates, true positive rates, and thresholds across the probability range. Plot the ROC curve with FPR on the x-axis and TPR on the y-axis. Add a diagonal dashed reference line representing a random classifier. Annotate the chart with the AUC score (`roc_auc_score`). Save as `roc_curve.png`.
+2. Create a precision-recall table for five threshold values (0.3, 0.4, 0.5, 0.6, 0.7) by computing precision and recall at each threshold using `precision_score` and `recall_score` with `threshold`-adjusted predictions. Print the table. Write two sentences explaining which threshold you would recommend for a churn model where retaining a churning customer is worth $200 but the outreach cost per contacted customer is $15.
+
+```python
+from sklearn.metrics import roc_curve, roc_auc_score, precision_score, recall_score
+import matplotlib.pyplot as plt
+import pandas as pd
+import numpy as np
+
+probs = model.predict_proba(X_test)[:, 1]
+fpr, tpr, thresholds_roc = roc_curve(y_test, probs)
+auc = roc_auc_score(y_test, probs)
+
+fig, ax = plt.subplots(figsize=(7, 5))
+ax.plot(fpr, tpr, color="steelblue", linewidth=2, label=f"ROC AUC = {auc:.3f}")
+ax.plot([0, 1], [0, 1], color="gray", linestyle="--", linewidth=1, label="Random")
+ax.set_xlabel("False Positive Rate")
+ax.set_ylabel("True Positive Rate")
+ax.set_title("ROC Curve", fontsize=13, fontweight="bold")
+ax.legend()
+for sp in ["top", "right"]: ax.spines[sp].set_visible(False)
+plt.tight_layout()
+plt.savefig("roc_curve.png", dpi=150)
+plt.show()
+
+rows = []
+for t in [0.3, 0.4, 0.5, 0.6, 0.7]:
+    preds = (probs >= t).astype(int)
+    rows.append({
+        "threshold": t,
+        "precision": round(precision_score(y_test, preds, zero_division=0), 3),
+        "recall":    round(recall_score(y_test, preds, zero_division=0), 3)
+    })
+print(pd.DataFrame(rows).to_string(index=False))
+```
+
+### Challenge 2: Hyperparameter Tuning with GridSearchCV
+
+Apply cross-validated grid search to optimize a decision tree or random forest and compare the tuned model to the default baseline.
+
+1. Define a parameter grid for `DecisionTreeClassifier`: `max_depth` in [3, 5, 7, 10, None] and `min_samples_split` in [2, 5, 10]. Use `GridSearchCV` with `cv=5`, `scoring='f1'`, and `refit=True`. Fit the grid search on `X_train` / `y_train`. Print the best parameters and best cross-validated F1 score.
+2. Evaluate the best estimator on `X_test` using a full classification report. Compare the tuned F1 score to the default tree's test F1 from the lab. Plot training and test F1 scores for each `max_depth` value (averaging over `min_samples_split`) as a line chart. Save as `depth_tuning.png`. Write two sentences explaining why the test F1 first increases then potentially decreases as `max_depth` grows, and what this shape tells you about the bias-variance tradeoff.
+
+```python
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.model_selection import GridSearchCV
+from sklearn.metrics import classification_report, f1_score
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+
+param_grid = {
+    "max_depth":        [3, 5, 7, 10, None],
+    "min_samples_split": [2, 5, 10]
+}
+
+grid = GridSearchCV(
+    DecisionTreeClassifier(random_state=42),
+    param_grid,
+    cv=5,
+    scoring="f1",
+    refit=True,
+    n_jobs=-1
+)
+grid.fit(X_train, y_train)
+
+print(f"Best params: {grid.best_params_}")
+print(f"Best CV F1:  {grid.best_score_:.4f}")
+print("\nTest Set Classification Report:")
+print(classification_report(y_test, grid.best_estimator_.predict(X_test)))
+
+# Plot F1 by max_depth
+results = pd.DataFrame(grid.cv_results_)
+depth_vals = [3, 5, 7, 10, 20]  # use 20 as proxy for None
+train_f1 = results.groupby("param_max_depth")["mean_train_score"].mean() \
+    if "mean_train_score" in results.columns else None
+test_f1  = results.groupby("param_max_depth")["mean_test_score"].mean()
+
+fig, ax = plt.subplots(figsize=(8, 4))
+ax.plot(test_f1.index.astype(str), test_f1.values,
+        marker="o", color="steelblue", linewidth=2, label="CV F1 (test fold)")
+ax.set_title("Decision Tree CV F1 by max_depth", fontsize=13, fontweight="bold")
+ax.set_xlabel("max_depth")
+ax.set_ylabel("Mean F1 Score")
+ax.legend()
+for sp in ["top", "right"]: ax.spines[sp].set_visible(False)
+plt.tight_layout()
+plt.savefig("depth_tuning.png", dpi=150)
+plt.show()
+```
+
+### Reflection Questions
+
+1. In Challenge 1, the cost-benefit analysis for threshold selection ($200 retention value vs. $15 outreach cost) implies that a false positive (contacting a non-churner) costs $15 while a false negative (missing a churner) costs $200. Using the precision-recall table you computed, which threshold minimizes expected cost per 1,000 test customers? Show your calculation.
+2. In Challenge 2, `GridSearchCV` uses 5-fold cross-validation internally. If the grid has 15 parameter combinations (5 depths × 3 min_samples values) and each fold trains a decision tree in approximately 0.02 seconds, estimate the total compute time for the grid search. Under what circumstances would you switch to `RandomizedSearchCV` instead of exhaustive `GridSearchCV`?

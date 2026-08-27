@@ -135,6 +135,24 @@ Tip 8: The Manifesto was written specifically about software development. The Sc
 
 ---
 
+## 9. Supplemental Resources
+
+The following free, open-access resources go deeper on Module 02 topics:
+
+**1. Agile Manifesto — Original Text and Twelve Principles**
+<https://agilemanifesto.org>
+The official source for the four Manifesto values and all twelve principles. Read the principles page separately from the values page — they are distinct documents. The "history" page also provides brief context on the Snowbird meeting.
+
+**2. "The New Methodology" — Martin Fowler (2005, updated 2018)**
+<https://martinfowler.com/articles/newMethodology.html>
+A comprehensive essay by a Manifesto signatory explaining the intellectual origins of Agile and contrasting it with heavyweight methods. Fowler covers the predictability problem, the human element, and the adaptive planning philosophy in depth. Free access on martinfowler.com.
+
+**3. Agile Alliance Glossary — Agile Alliance**
+<https://www.agilealliance.org/agile101/agile-glossary/>
+A curated, free glossary of Agile terms maintained by the Agile Alliance. Useful for cross-checking definitions of terms used in PSM I exam questions. Pay particular attention to entries for "Sustainable Pace," "Self-Organizing Team," and "Working Software."
+
+---
+
 ## 8. Study Checklist
 
 - [ ] Write out all four Agile Manifesto values from memory, including the "over" language and the closing sentence about items on the right

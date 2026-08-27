@@ -251,3 +251,187 @@ D. Passed as `Authorization` HTTP headers in every React fetch call to DynamoDB.
 - A is incorrect — `VITE_` environment variables are embedded in the client bundle and are publicly visible; never put AWS credentials there.
 - C is incorrect — storing AWS credentials in `localStorage` is a serious security vulnerability; they would be accessible to any JavaScript on the page.
 - D is incorrect — the React app should never call DynamoDB directly; all AWS service calls go through the backend Lambda function.
+
+---
+
+### Question 11 (5 points)
+
+A component renders a list with `items.map(item => <li>{item.name}</li>)`. React logs a warning about missing keys. Which fix is correct?
+
+- A) `items.map((item, index) => <li key={item.name}>{item.name}</li>)` — always use the name as the key.
+- B) `items.map(item => <li key={item.id}>{item.name}</li>)` — use the stable unique ID from the data.
+- C) `items.map((item, index) => <li key={index}>{item.name}</li>)` — array index is always the correct key.
+- D) Add `suppressKeyWarning={true}` to the parent `<ul>` element.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: Names may not be unique and can change, making them unreliable as keys. Stable IDs from the data source are preferred.
+  - Why B is correct: A stable, unique `id` from the data source is the ideal key — it survives reordering, filtering, and sorting without causing reconciliation bugs.
+  - Why C is incorrect: Array index is problematic when the list can be reordered, filtered, or have items inserted in the middle, as the index no longer corresponds to the same item.
+  - Why D is incorrect: `suppressKeyWarning` is not a real React prop — the warning cannot be suppressed this way.
+
+---
+
+### Question 12 (5 points)
+
+Which statement correctly describes the difference between `useEffect` cleanup and no cleanup?
+
+- A) Cleanup functions run before the component mounts, not after it unmounts.
+- B) A cleanup function returned from `useEffect` runs when the component unmounts or before the effect re-runs due to a dependency change — preventing resource leaks such as subscriptions or intervals.
+- C) Cleanup functions are required for all `useEffect` calls — omitting one causes a runtime error.
+- D) Cleanup only applies to effects with non-empty dependency arrays; effects with `[]` never need cleanup.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: Cleanup runs on unmount or before the next effect run — not before mount.
+  - Why B is correct: Returning a function from `useEffect` registers a cleanup that React calls when the component unmounts or when dependencies change and the effect is about to re-run.
+  - Why C is incorrect: Cleanup is optional — many effects (like one-time data fetches) do not need to clean anything up.
+  - Why D is incorrect: Even with `[]`, cleanup runs on unmount — for example, clearing a `setInterval` started on mount.
+
+---
+
+### Question 13 (5 points)
+
+A parent component passes `<Child onSave={handleSave} />`. Inside `Child`, how should the callback be invoked when a button is clicked?
+
+- A) `<button onClick={onSave()}>Save</button>` — call the function directly in JSX.
+- B) `<button onClick={() => onSave()}>Save</button>` — wrap in an arrow function so it is called on click, not on render.
+- C) `<button onClick={props.handleSave}>Save</button>` — use the parent function name directly.
+- D) `<button onSave={onSave}>Save</button>` — use the prop name as the event attribute.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: `onClick={onSave()}` calls the function immediately during render, not on click. The return value (likely `undefined`) becomes the onClick handler.
+  - Why B is correct: `onClick={() => onSave()}` passes a new function that calls `onSave` when the click event fires. Alternatively, `onClick={onSave}` works if no arguments need to be passed.
+  - Why C is incorrect: Inside `Child`, the prop is accessed as `onSave` (the prop name), not `handleSave` (the parent's variable name).
+  - Why D is incorrect: `onSave` is a custom prop name, not a valid DOM event attribute. The correct event attribute is `onClick`.
+
+---
+
+### Question 14 (5 points)
+
+What is the purpose of `React.Fragment` (or the shorthand `<>...</>`)?
+
+- A) It creates a higher-order component that wraps child components with additional logic.
+- B) It groups multiple sibling elements for return from a component without adding an extra DOM node.
+- C) It improves rendering performance by memoizing the wrapped elements.
+- D) It replaces the need for a `key` prop when rendering lists.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: Higher-order components are a separate pattern involving wrapping a component with a function — not related to `Fragment`.
+  - Why B is correct: A React component must return a single element. `Fragment` satisfies this requirement without inserting a real `<div>` or other node into the DOM.
+  - Why C is incorrect: Memoization is the purpose of `React.memo` and `useMemo` — not `Fragment`.
+  - Why D is incorrect: `Fragment` does not eliminate the need for `key` props in lists — when using `Fragment` as the list item wrapper, you must use the long form `<React.Fragment key={id}>`.
+
+---
+
+### Question 15 (5 points)
+
+A developer writes `const [items, setItems] = useState([]); items.push(newItem); setItems(items);`. What is the bug?
+
+- A) `items.push()` is asynchronous and the state update races with the render.
+- B) Directly mutating the state array with `push` violates React's immutability requirement. React uses reference equality to detect changes, so modifying the same array object may not trigger a re-render.
+- C) `setItems` expects a callback function, not an array value.
+- D) `useState` does not support arrays — an object must be used instead.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: `Array.push` is synchronous. The problem is mutation, not timing.
+  - Why B is correct: React compares the previous and next state by reference. Since `push` mutates the existing array and `setItems` receives the same reference, React may skip re-rendering. The correct approach is `setItems([...items, newItem])`.
+  - Why C is incorrect: `setItems` accepts either a new state value or a functional updater — both forms are valid.
+  - Why D is incorrect: `useState` supports arrays, objects, primitives, and any serializable value.
+
+---
+
+### Question 16 (5 points)
+
+When does `useEffect` run if called with no dependency array — `useEffect(fn)`?
+
+- A) Only once, when the component first mounts.
+- B) Never — a dependency array is required for `useEffect` to run.
+- C) After every render, including the initial render and every subsequent re-render.
+- D) Only when the component unmounts.
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why A is incorrect: Running only once on mount requires an empty dependency array `[]`. Without any array, the effect runs after every render.
+  - Why B is incorrect: The dependency array is optional — omitting it is valid and causes the effect to run on every render.
+  - Why C is correct: No dependency array = no condition on re-running. The effect executes after every completed render cycle.
+  - Why D is incorrect: Running only on unmount requires a cleanup function returned from an effect with `[]` — the effect itself does not run only on unmount.
+
+---
+
+### Question 17 (5 points)
+
+A Vite React project has the environment variable `VITE_API_URL=https://api.example.com` in its `.env` file. How is this variable accessed in a component?
+
+- A) `process.env.API_URL`
+- B) `process.env.VITE_API_URL`
+- C) `import.meta.env.VITE_API_URL`
+- D) `window.env.VITE_API_URL`
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why A is incorrect: `process.env` is a Node.js API. In Vite, environment variables are exposed via `import.meta.env`, not `process.env`. Also, the `VITE_` prefix would be missing.
+  - Why B is incorrect: `process.env` is not available in browser-side Vite code unless a polyfill is configured.
+  - Why C is correct: Vite exposes variables prefixed with `VITE_` on the `import.meta.env` object at build time.
+  - Why D is incorrect: `window.env` is not a standard browser API — it does not exist unless explicitly created.
+
+---
+
+### Question 18 (5 points)
+
+Two sibling components `<Cart />` and `<Header />` both need to display the number of items in the cart. Neither is a parent of the other. What is the correct React pattern?
+
+- A) Pass a `ref` from `Cart` to `Header` so `Header` can read `Cart`'s internal state.
+- B) Lift the cart state up to their nearest common ancestor and pass it down as props to both components.
+- C) Use `localStorage` to share state between sibling components in real time.
+- D) Have `Header` import and directly read `Cart`'s `useState` variable.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: `ref` is used to access DOM nodes or keep mutable values — it is not a state-sharing mechanism between sibling components.
+  - Why B is correct: "Lifting state up" is the canonical React pattern for sharing state between siblings — move the state to the closest common parent and pass it down as props.
+  - Why C is incorrect: `localStorage` is not reactive — `Header` would not automatically re-render when `Cart` writes to `localStorage`.
+  - Why D is incorrect: React state is local to the component instance. Another component cannot import or read another component's `useState` variable.
+
+---
+
+### Question 19 (5 points)
+
+A component conditionally renders an admin panel: `{isAdmin && <AdminPanel />}`. When `isAdmin` is `false`, what does React render?
+
+- A) A comment node `<!-- AdminPanel -->` as a placeholder.
+- B) An empty `<div>` where the component would have appeared.
+- C) Nothing — `false` is not rendered by React.
+- D) The string `"false"` in the DOM.
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why A is incorrect: React does not render comment nodes as placeholders for falsy expressions.
+  - Why B is incorrect: No wrapper element is inserted — React renders nothing when the expression is `false`, `null`, or `undefined`.
+  - Why C is correct: In JSX, `false`, `null`, `undefined`, and `0` (except when used as a short-circuit with a number) are valid children that render nothing.
+  - Why D is incorrect: The string `"false"` would only render if `isAdmin` were the string `"false"` — the boolean `false` renders nothing.
+
+---
+
+### Question 20 (5 points)
+
+What is the correct way to update a specific field in a state object without overwriting the other fields?
+
+```jsx
+const [user, setUser] = useState({ name: 'Alice', role: 'student', gpa: 3.8 });
+```
+
+- A) `setUser({ gpa: 4.0 })` — React merges partial updates automatically for objects.
+- B) `user.gpa = 4.0; setUser(user)` — mutate and re-set the reference.
+- C) `setUser({ ...user, gpa: 4.0 })` — spread the existing state and override the changed field.
+- D) `setUser(prev => prev.gpa = 4.0)` — use the functional updater to mutate and return the field value.
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why A is incorrect: Unlike `this.setState` in class components, the `useState` setter replaces state entirely — it does not merge partial objects.
+  - Why B is incorrect: Mutating the existing object and passing the same reference may not trigger a re-render, and direct mutation violates React's immutability requirement.
+  - Why C is correct: Spreading the existing state (`...user`) copies all fields, then the override (`gpa: 4.0`) replaces only the changed field, producing a new object reference.
+  - Why D is incorrect: `prev.gpa = 4.0` mutates the existing state object and returns the field value (`4.0`), not an object — this would replace the entire state with the number `4.0`.

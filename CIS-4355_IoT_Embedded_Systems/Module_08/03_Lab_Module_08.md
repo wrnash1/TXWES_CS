@@ -413,3 +413,89 @@ Multi-sensor logger ready. Output: JSON per line.
 **LDR always reads near 3.3V:** The LDR and resistor may be swapped. Swap which one connects to 3.3V vs GND.
 
 **Median function crashes:** Ensure the variable-length array in `median5()` is supported by your ESP32 Arduino core version. If not, replace with a fixed-size global array `float medBuf[5]`.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: MQTT Telemetry Publisher for Multi-Sensor Logger
+
+Extend the Part D combined sketch to publish the JSON sensor readings over MQTT instead of (or in addition to) the Serial Monitor.
+
+1. Add the `PubSubClient` library to your sketch. Configure the ESP32 to connect to your local Mosquitto broker (from Module 07 Lab) on port 1883. Use the topic `lab08/esp32/sensors` for the JSON payload already produced in Part D. Publish every 5 seconds matching the existing `delay(5000)` interval.
+
+2. Add a Last Will and Testament before calling `mqtt.connect()` so that `lab08/esp32/status` publishes `"offline"` (retained, QoS 1) on ungraceful disconnect. Publish `"online"` (retained) immediately after a successful connection.
+
+3. On your laptop, run this Python subscriber to log the data to a CSV file:
+
+```python
+# lab08_logger.py — subscribe to lab08/# and write CSV
+import paho.mqtt.client as mqtt
+import csv, datetime, json, sys
+
+BROKER = "localhost"
+OUTFILE = "sensor_log.csv"
+
+fieldnames = ["timestamp", "seq", "bmp_c", "hpa", "alt_m",
+              "dht_raw", "dht_cal", "rh", "lux_v"]
+
+with open(OUTFILE, "w", newline="") as f:
+    writer = csv.DictWriter(f, fieldnames=fieldnames)
+    writer.writeheader()
+
+    def on_message(client, userdata, msg):
+        if msg.topic == "lab08/esp32/sensors":
+            data = json.loads(msg.payload.decode())
+            data["timestamp"] = datetime.datetime.now().isoformat()
+            writer.writerow({k: data.get(k, "") for k in fieldnames})
+            f.flush()
+            print(data)
+
+    client = mqtt.Client()
+    client.on_message = on_message
+    client.connect(BROKER, 1883)
+    client.subscribe("lab08/#")
+    print(f"Logging to {OUTFILE} — Ctrl+C to stop")
+    client.loop_forever()
+```
+
+4. Run the logger for at least 2 minutes (24+ readings). Open `sensor_log.csv` in a spreadsheet or with Python `pandas` and plot the `dht_cal` and `bmp_c` columns together. Describe in 2–3 sentences whether the two temperature sensors track each other closely and what physical lag you observe in the DHT22 calibrated column versus the BMP280.
+
+### Challenge 2: BME280 Dew Point and Comfort Index Calculation
+
+Replace the BMP280 in your circuit with a BME280 (which adds a humidity channel) and compute derived environmental metrics.
+
+1. Install the `Adafruit BME280 Library` and update your sketch to read `bme.readHumidity()` in addition to temperature and pressure. Confirm both sensors are on the same I2C bus (BME280 default address is 0x76 — confirm with I2C scanner).
+
+2. Add a dew point calculation using the Magnus formula. Add this function to your sketch:
+
+```cpp
+float dewPoint(float tempC, float relHumidity) {
+  // Magnus formula constants (valid 0-60°C)
+  const float a = 17.27f;
+  const float b = 237.7f;
+  float gamma = (a * tempC / (b + tempC)) + log(relHumidity / 100.0f);
+  return (b * gamma) / (a - gamma);
+}
+```
+
+Call it with your calibrated BME280 temperature and humidity. Add `"dew_c"` to the JSON output string.
+
+3. Add a simple comfort index to the JSON output. Define comfort zones:
+
+```text
+Dew point < 10°C  → "dry"
+10–16°C           → "comfortable"
+16–21°C           → "humid"
+> 21°C            → "oppressive"
+```
+
+Add a `"comfort"` string field to the JSON payload. Verify in the Serial Monitor that the comfort label changes when you breathe on the sensor (briefly raising local humidity).
+
+4. Calculate how many bytes per day are saved by using CBOR encoding instead of the expanded JSON (which now has 9 fields including `dew_c` and `comfort`). Assume one reading every 5 seconds. Include this calculation in your written submission.
+
+### Reflection Questions
+
+1. In Challenge 1 you used `delay(5000)` to pace MQTT publishes. Explain why this approach blocks Wi-Fi keepalive packets and describe the `mqtt.loop()` call requirement. What is the preferred non-blocking alternative using `millis()`?
+
+2. The Magnus formula in Challenge 2 is valid between 0°C and 60°C. What would happen if you passed a temperature of −10°C into the formula, and how would you add input validation to prevent the function from returning a physically meaningless result?

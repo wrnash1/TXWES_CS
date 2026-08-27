@@ -242,6 +242,22 @@ Questions the review should answer:
 
 ---
 
+## 9. Supplemental Resources
+
+**1. NIST SP 800-61 Revision 2 — Computer Security Incident Handling Guide**
+<https://csrc.nist.gov/publications/detail/sp/800-61/rev-2/final>
+The authoritative NIST guide defining the four-phase incident response lifecycle (Preparation, Detection and Analysis, Containment/Eradication/Recovery, Post-Incident Activity). Required reading for all Module 11 content and directly tested on Security+ SY0-701. Focus on Sections 2 (IR Overview), 3 (Handling an Incident), and 4 (Coordination and Information Sharing).
+
+**2. CISA Federal Incident Notification Guidelines**
+<https://www.cisa.gov/federal-incident-notification-guidelines>
+CISA's guidelines for incident categorization, notification timelines, and reporting requirements for federal agencies — directly applicable to understanding how incident severity drives escalation and notification decisions. Supports Module 11 content on regulatory notification obligations and incident classification.
+
+**3. SANS Institute — Incident Handler's Handbook**
+<https://www.sans.org/white-papers/33901/>
+A practical, scenario-focused incident handling reference covering the PICERL model (Preparation, Identification, Containment, Eradication, Recovery, Lessons Learned), evidence collection procedures, and communication templates. Free with registration. Complements NIST SP 800-61 with operational implementation detail for the concepts covered in Module 11.
+
+---
+
 ## Certification Exam Tip
 
 Security+ SY0-701 frequently tests the four NIST IR phases in order, the definition of chain of custody, and the order of volatility. Expect scenario questions that ask you to identify the correct phase for a given action (e.g., "The team is wiping and rebuilding compromised servers" — that is eradication, not recovery). Know that recovery follows eradication and involves restoring from clean backups with monitoring.

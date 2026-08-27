@@ -383,3 +383,16 @@ Answer these before taking the quiz:
 - Never disable password authentication in `sshd_config` before confirming key authentication works from another terminal.
 - Port forwarding (`-L`, `-R`, `-D`) turns SSH into a versatile secure tunneling platform.
 - Ansible's agentless model means SSH must be working correctly before Ansible can manage hosts — fixing SSH issues is always the first step in Ansible troubleshooting.
+
+---
+
+## 9. Supplemental Resources
+
+**1. [OpenSSH Manual — ssh.com Academy](https://www.ssh.com/academy/ssh/command)**
+The SSH Academy provides accessible, well-organized documentation for all OpenSSH tools: `ssh`, `scp`, `sftp`, `ssh-keygen`, `ssh-agent`, and `ssh-add`. Particularly useful sections cover key algorithm choices (Ed25519 vs RSA), port forwarding types with diagrams, and the `~/.ssh/config` file directives. A strong companion to the official man pages for Module 14 lab preparation.
+
+**2. [Ansible Getting Started Documentation](https://docs.ansible.com/ansible/latest/getting_started/index.html)**
+The official Ansible getting started guide. Covers installation, inventory file formats (INI and YAML), ad-hoc commands, basic playbook structure (tasks, modules, handlers), variables, and facts. This is the authoritative source for the Ansible concepts introduced in Module 14 and the starting point for the CompTIA Linux+ automation objectives (XK0-005 Domain 4.3).
+
+**3. [SSH Hardening Guide — Mozilla InfoSec](https://infosec.mozilla.org/guidelines/openssh)**
+Mozilla's published SSH hardening guidelines, maintained by their security engineering team. Provides specific `sshd_config` and `ssh_config` recommendations with rationale, organized into Modern, Intermediate, and Old compatibility tiers. Covers key exchange algorithms, ciphers, MACs, authentication methods, and operational security practices. Directly applicable to the Module 14 lab's sshd_config hardening tasks.

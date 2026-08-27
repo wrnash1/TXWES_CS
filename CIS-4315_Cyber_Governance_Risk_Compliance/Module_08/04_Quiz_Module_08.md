@@ -209,3 +209,203 @@ A CISM candidate is reviewing a proposal for a new security awareness program. T
 - B — Correct. The most fundamental violation is the one-size-fits-all design. A 90-minute generic course treats a developer, a nurse, a finance analyst, and a facilities worker as if they have identical security risk profiles, identical learning needs, and identical technical backgrounds. This design produces generic content that is partially relevant to nobody and fully relevant to nobody.
 - C — Incorrect. HIPAA does not prescribe specific minimum training hours. This distractor invents a regulatory requirement that does not exist. Regulatory requirements typically specify topics and frequency, not exact durations.
 - D — Incorrect. The goal of an awareness program is behavioral change in the general workforce, not technical skill development. 90 minutes may be appropriate for an awareness module, and the insufficient depth concern misframes the problem. The design failure is relevance and segmentation, not duration.
+
+---
+
+## Question 11
+
+An organization's security awareness program has been running for two years. Annual phishing simulation click rates have dropped from 32% to 8%. Despite this improvement, the CISO reports the program is "not achieving its goals" at the quarterly board meeting. Which Kirkpatrick evaluation level finding would most directly support the CISO's conclusion?
+
+- A) Level 1 — post-training satisfaction surveys show employees rate the training as "irrelevant to their daily work"
+- B) Level 2 — pre- and post-training knowledge assessments show no improvement in employees' ability to identify phishing indicators
+- C) Level 3 — manager observations confirm that employees continue to click phishing links in their personal lives but not at work
+- D) Level 4 — the organization's phishing-related security incident count has not decreased despite the lower simulation click rate
+
+**Correct Answer:** D
+
+**Distractor Analysis:**
+
+- A — Incorrect. Level 1 measures learner reaction and satisfaction. Low satisfaction scores are a concern for program engagement but do not directly indicate that the program's behavioral or organizational goals are unmet. The program could have high dissatisfaction and still achieve risk reduction outcomes.
+- B — Incorrect. Level 2 measures learning — whether participants acquired the intended knowledge or skills. The scenario mentions that click rates dropped significantly, suggesting behavioral change occurred, which contradicts a Level 2 failure finding. This answer is also inconsistent with the observed click rate improvement.
+- C — Incorrect. Level 3 measures behavior transfer — whether learning is applied on the job. The question of personal behavior outside work is not a valid Level 3 metric; the Kirkpatrick model evaluates behavior in the organizational context, not in employees' personal lives.
+- D — Correct. Level 4 measures results — the organizational impact of the training program. If real phishing-related incidents have not decreased despite lower simulation click rates, the training may not be producing the intended security outcomes. The CISO's conclusion that the program is not achieving its goals is most directly supported by a Level 4 finding showing no reduction in actual incidents.
+
+---
+
+## Question 12
+
+A security awareness manager is planning a phishing simulation campaign. A colleague recommends using the CEO's name in the simulated phishing email to maximize realism. Which consideration should most influence the decision about whether to use executive impersonation in the simulation?
+
+- A) Technical feasibility — whether the simulation platform supports sender name spoofing
+- B) Organizational culture and potential trust damage — executive impersonation may undermine employee confidence in leadership communications
+- C) Regulatory compliance — impersonating executives in simulations may violate SEC disclosure requirements
+- D) Learning effectiveness — executive-branded emails are always more effective at changing behavior than generic phishing templates
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- B — Correct. The primary governance consideration for executive impersonation in phishing simulations is the potential to damage organizational trust and culture. If employees discover that leadership communications were used as deceptive training tools without prior disclosure, it can erode trust in genuine executive communications and create resentment toward the security team. Most mature security awareness programs recommend disclosing that simulations may include executive impersonation in the program announcement, and require HR and legal sign-off before using senior executive identities.
+- A — Incorrect. Technical feasibility is a practical consideration but not the governing factor. Most simulation platforms support sender name customization. The question of whether the capability exists is less important than whether using it is appropriate.
+- C — Incorrect. SEC disclosure requirements govern material financial information, not internal training simulations. There is no applicable SEC regulation that prohibits using executive names in internal phishing simulations. This distractor fabricates a regulatory constraint that does not exist.
+- D — Incorrect. Effectiveness is an empirical question — executive-branded emails are not universally "always more effective." The framing overstates the benefit and ignores the significant cultural risk. Effectiveness alone cannot justify a decision with potential trust consequences.
+
+---
+
+## Question 13
+
+After completing a security awareness training module, an employee can correctly define "phishing," list three indicators of a phishing email, and score 90% on the knowledge assessment. Two weeks later, the employee clicks a simulated phishing link. Which explanation best accounts for this outcome?
+
+- A) The training was ineffective at the Kirkpatrick Level 2 learning stage
+- B) The employee's knowledge acquisition did not transfer to behavioral change in the actual work environment
+- C) The phishing simulation was too realistic and should be simplified for better learning outcomes
+- D) The employee's manager failed to reinforce the training content during the two-week period
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- B — Correct. This scenario illustrates the gap between Kirkpatrick Level 2 (learning — demonstrated knowledge) and Level 3 (behavior — on-the-job application). The employee demonstrably acquired the knowledge (90% score) but did not apply it when facing a real-world stimulus. This is a well-documented challenge in security awareness: knowledge acquisition does not automatically produce behavioral change, particularly under cognitive load, time pressure, or emotional manipulation.
+- A — Incorrect. Level 2 learning was clearly achieved — the 90% knowledge score demonstrates that the employee understood the content. The failure is at Level 3 (behavior transfer), not Level 2. This is a common trap answer on CISM-style questions about Kirkpatrick.
+- C — Incorrect. Reducing simulation realism to prevent employees from clicking would defeat the purpose of simulation. The goal of phishing simulations is to expose employees to realistic stimuli in a safe environment, not to make them easier to pass. Making simulations unrealistically obvious trains employees to recognize artificially easy scenarios, not real attacks.
+- D — Incorrect. Manager reinforcement is a recommended practice that can improve behavior transfer, but the question asks for the best explanation of the outcome — not what should have been done differently. The primary explanation for the gap between knowledge and behavior is the Level 2 to Level 3 transfer challenge, not a single missing reinforcement activity.
+
+---
+
+## Question 14
+
+An organization's security culture assessment finds that employees routinely share passwords with colleagues "to get work done faster," believe security policies are obstacles rather than protections, and rarely report suspicious emails because they fear being wrong. Which intervention is MOST likely to begin shifting this culture toward a security-positive orientation?
+
+- A) Issuing a mandatory policy reminder from HR stating that password sharing is a terminable offense
+- B) Deploying a new technical control (password manager) to eliminate the need for password sharing
+- C) Visible senior leadership modeling secure behaviors, combined with a blame-free reporting program and regular communication about why security matters
+- D) Increasing the frequency of phishing simulations to create awareness through repeated exposure
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- C — Correct. Security culture change requires leadership modeling, psychological safety, and consistent communication of purpose — not just policy enforcement or technical controls. When employees fear being wrong and view policies as obstacles, the root cause is a compliance-driven culture rather than a values-driven one. Visible leadership modeling (executives following the same security rules), blame-free reporting programs (removing fear of consequences for reporting), and explaining the "why" behind security requirements are the primary culture-change levers.
+- A — Incorrect. Punitive policy reminders reinforce the perception that security is about enforcement rather than protection, deepening the compliance-driven culture. While consequences for policy violations are appropriate, leading with threats when the culture is already fear-based is likely to reduce reporting further rather than improve behavior.
+- B — Incorrect. Technical controls address specific behaviors but do not change underlying attitudes. Implementing a password manager eliminates one symptom but does not address the belief that security policies are obstacles. Employees will find other workarounds if the cultural root cause is not addressed.
+- D — Incorrect. Increasing simulation frequency in an environment where employees already fear being wrong could increase anxiety and avoidance rather than improve reporting behavior. Frequency alone does not address the cultural root cause, and overusing simulations can produce resentment toward the security team.
+
+---
+
+## Question 15
+
+A CISO presents the board with the following metrics from the annual security awareness program review: (1) annual training completion rate: 94%, (2) phishing simulation click rate: 11%, (3) security incident ticket volume: unchanged from prior year, (4) mean time to report a suspicious email: 4.2 hours. Which conclusion is best supported by these metrics together?
+
+- A) The program is highly effective — completion and click rates both demonstrate strong performance
+- B) The program is producing knowledge and behavioral improvement in simulations, but may not be translating to real-world incident reporting behavior
+- C) The program should be discontinued because incident volume has not decreased
+- D) The 4.2-hour mean reporting time indicates the program has achieved its security awareness goals
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- B — Correct. The metrics tell a layered story. High completion (94%) shows participation. Low click rate (11%) shows simulation-context behavioral improvement. But unchanged incident volume (Level 4 — results) suggests the knowledge is not translating to operational security outcomes. The 4.2-hour reporting time is concerning — for a phishing email, a nearly half-day reporting lag allows significant time for credential harvesting or malware execution. Together, these metrics indicate the program is achieving awareness and simulation-context behavior change but not yet producing the organizational security outcomes (faster reporting, fewer incidents) that demonstrate full program effectiveness.
+- A — Incorrect. Completion rate and simulation click rate alone do not demonstrate program effectiveness at the outcome level. The unchanged incident volume and slow reporting time are significant counterweights that this conclusion ignores. High completion and low click rates indicate the program is running but not necessarily achieving its security goals.
+- C — Incorrect. Flat incident volume does not by itself justify discontinuing a program that is showing improvement in other metrics. Incident volume is influenced by many factors beyond awareness training (threat landscape, technical controls, reporting behavior). Discontinuing a program showing behavioral improvement would be premature.
+- D — Incorrect. A 4.2-hour mean time to report a suspicious email is not a success indicator — it is a concern. Security incidents involving credential theft or malware installation can cause significant damage within hours. An effective awareness program should produce reporting behavior measured in minutes, not hours.
+
+---
+
+## Question 16
+
+A healthcare organization's security awareness program currently delivers a single 60-minute annual module to all 3,200 employees covering general security topics. The organization's most recent risk assessment identified that 78% of security incidents were caused by clinical staff mishandling patient data on mobile devices. Which program redesign decision is MOST aligned with a risk-based approach to security awareness?
+
+- A) Extend the annual module to 90 minutes to ensure broader topic coverage for all staff
+- B) Replace the annual module with monthly 10-minute microlearning modules for all staff to increase training frequency
+- C) Develop a targeted role-based module for clinical staff focused specifically on mobile device handling and patient data protection, while maintaining lighter-touch general awareness for other employees
+- D) Require clinical staff to complete the existing general awareness module twice per year instead of once
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- A — Incorrect. Extending the general module to 90 minutes for all employees increases time-on-task but does not address the root cause: the wrong content is being delivered to the wrong audience. Longer generic training for non-clinical employees does not reduce the mobile device risk concentrated in clinical staff.
+- B — Incorrect. Increasing frequency through microlearning is a valid engagement strategy, but changing only the delivery cadence without targeting the content to the identified risk does not address why 78% of incidents are happening. Frequency is a delivery design decision; content relevance to the risk profile is the more fundamental gap.
+- C — Correct. A risk-based approach directs training investment to the highest-risk populations and behaviors identified through the risk assessment. If 78% of incidents involve clinical staff and mobile device handling, the most effective use of program resources is a targeted module that directly addresses that specific risk and audience. Role-based training that matches content to the actual risk profile of each workforce segment is the CISM-recommended approach for mature security awareness programs.
+- D — Incorrect. Doubling the frequency of an ineffective module doubles the time investment without improving effectiveness. If the current module does not address mobile device handling and patient data protection, repeating it more often will not reduce the identified incident pattern.
+
+---
+
+## Question 17
+
+A large financial services organization is launching a new security awareness initiative. The security manager wants to ensure the program changes actual employee behavior, not just satisfies annual compliance requirements. Which program design characteristic MOST directly distinguishes a behavior-change program from a compliance-check-box program?
+
+- A) The program uses gamification elements such as leaderboards and badges to increase completion rates
+- B) The program measures behavioral outcomes (phishing click rates, reporting rates, incident cause analysis) rather than stopping at completion rates and quiz scores
+- C) The program delivers content through video format rather than text-based modules, which research shows produces higher engagement
+- D) The program is delivered by an external vendor with documented security awareness expertise
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A — Incorrect. Gamification can increase engagement and completion rates — both Level 1 (reaction) outcomes. However, a compliance program can use gamification just as easily as a behavior-change program. Gamification alone does not distinguish a behavior-change focus from a compliance focus.
+- B — Correct. The defining characteristic of a behavior-change program is that it measures behavior, not just training completion. Compliance programs define success as "all employees completed the module." Behavior-change programs define success as measurable changes in how employees act — lower phishing click rates, faster suspicious email reporting, fewer security incidents caused by human error. Using behavioral metrics as the primary outcome measure forces the program design to focus on what employees do, not what they know or whether they attended.
+- C — Incorrect. Video content may improve engagement over text for some learners, but format is a content delivery design choice, not the characteristic that distinguishes behavior-change programs from compliance programs. Both compliance-focused and behavior-change programs can use either format.
+- D — Incorrect. Vendor expertise may improve content quality, but the program's underlying purpose (compliance vs. behavior change) is determined by how the organization defines success and what metrics it tracks — not by who delivers the content.
+
+---
+
+## Question 18
+
+An organization's security awareness program has historically focused on phishing. The CISO now wants to expand the program to cover social engineering tactics used in vishing (voice phishing) attacks, after three recent incidents involved employees verbally disclosing passwords to callers impersonating IT help desk staff. Which of the following best describes the ADDIE phase that should drive the content expansion decision?
+
+- A) Develop — the security team should immediately create new vishing scenario scripts for use in simulations
+- B) Implement — the new vishing content should be scheduled for delivery during the next training cycle
+- C) Analyze — the recent incidents should be used as behavioral gap evidence to define the specific knowledge and behavior deficiencies that the new content must address
+- D) Evaluate — the program should be assessed to determine whether the existing phishing content sufficiently addresses vishing as a related threat
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- A — Incorrect. Development (creating scripts and content) is premature before analysis defines the specific behavioral gaps and learning objectives. Jumping to Develop without Analysis produces content that may not address the actual cause of the incidents.
+- B — Incorrect. Implementation is the phase where completed training is delivered. Scheduling delivery is appropriate only after Analysis, Design, and Development are complete. Scheduling without completing prior phases is premature.
+- C — Correct. In the ADDIE model, the Analyze phase establishes the factual basis for all subsequent design decisions. Before developing any new content, the security manager should analyze: What specific behaviors did employees exhibit that enabled these incidents? What did employees not know or not do that they should have? What is the target audience's current knowledge of vishing tactics? The three incidents are primary behavioral gap evidence that should define the learning objectives before content development begins.
+- D — Incorrect. Evaluation in ADDIE assesses the effectiveness of a completed training program against its objectives. The scenario describes a gap identification situation, not an evaluation of completed training. Using post-program evaluation to decide whether existing content "sufficiently addresses" an adjacent threat misapplies the Evaluate phase.
+
+---
+
+## Question 19
+
+A security manager reviews the results of the organization's most recent phishing simulation. The simulation sent 1,200 emails; 144 employees clicked the link, 96 submitted credentials on the landing page, and 72 reported the email using the organization's reporting button. Which analysis provides the MOST actionable insight for program improvement?
+
+- A) The 12% click rate means the program is performing acceptably — industry benchmarks suggest click rates above 20% indicate a failing program
+- B) The credential submission rate (8%) is more concerning than the click rate, indicating that employees who engage with phishing lures are not stopping before entering sensitive information
+- C) The reporting rate (6%) is the critical metric — the primary goal of a phishing simulation program is to maximize the number of employees who report suspicious emails
+- D) The gap between click rate (12%) and reporting rate (6%) is acceptable because employees who did not click are implicitly aware of the phishing threat
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A — Incorrect. Industry benchmarks provide context but cannot substitute for program-specific trend analysis. Benchmarks vary by industry, simulation complexity, and template type. More importantly, accepting any click rate as "acceptable" without analyzing the downstream behavior (credential submission, reporting) misses the more actionable data available in this simulation.
+- B — Correct. The credential submission rate is a more severe behavioral failure than the click rate alone. A click might indicate curiosity or accidental engagement; credential submission indicates that the employee not only engaged with the simulated attack but proceeded through the full compromise sequence. Of the 144 who clicked, 96 (67%) also submitted credentials — suggesting that employees who engage with lures are not pausing to reconsider before completing the attack chain. This finding identifies a specific behavior gap: employees need training on what to do after recognizing they may have clicked a suspicious link.
+- C — Incorrect. While the reporting rate is an important metric, characterizing it as the "primary goal" overstates its centrality. The reporting rate (72 out of 1,200, or 6%) includes only employees who reported; it does not capture whether non-clickers recognized the threat or simply deleted the email without action. The most actionable finding is the credential submission rate, which describes a complete simulated compromise sequence.
+- D — Incorrect. Employees who did not click the link may not have recognized the phishing attempt — they may have deleted it, been out of office, or overlooked it for unrelated reasons. The absence of a click cannot be interpreted as implicit awareness. The gap between click and reporting rates suggests that even employees who did not engage with the lure did not take the encouraged action of reporting it.
+
+---
+
+## Question 20
+
+A security awareness manager is designing the metrics framework for a newly launched SETA program. The program sponsor (the CISO) wants metrics that demonstrate business value to the board, not just training activity. Which metric set MOST directly demonstrates the business value of the security awareness program?
+
+- A) Number of awareness emails sent, average training completion time, and number of new security policies published during the year
+- B) Phishing simulation click rate trend over four quarters, mean time to report a suspicious email, and percentage of security incidents attributable to human error
+- C) Number of employees who completed annual training, number of employees who passed the post-training knowledge assessment, and number of training modules developed
+- D) Training budget spent versus training budget allocated, number of external security conferences attended by the security team, and number of security awareness posters displayed
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A — Incorrect. Emails sent and completion time are activity metrics, not outcome metrics. The number of new policies published is a program output measure. None of these tell the board whether employee behavior has changed or whether the organization is more secure. Activity metrics measure effort; outcome metrics measure impact.
+- B — Correct. These three metrics demonstrate business value because they measure behavioral change and risk reduction outcomes that are directly interpretable by board members: the phishing click rate trend shows whether the most prevalent human-factor attack vector is becoming more or less effective over time; mean time to report measures incident response readiness; and the percentage of incidents attributable to human error measures the program's direct contribution to reducing the organization's incident burden. All three connect the awareness program to the security outcomes that the board cares about.
+- C — Incorrect. Training completion counts and knowledge assessment pass rates are Kirkpatrick Level 1 and Level 2 metrics — they measure participation and knowledge acquisition. The CISO specifically asked for metrics demonstrating business value, which requires Level 3 (behavior) and Level 4 (results) evidence. Number of modules developed is a production output, not a business value indicator.
+- D — Incorrect. Budget utilization measures financial management, not security outcomes. Conference attendance and poster counts are program activity indicators with no connection to whether employee behavior changed or incidents decreased. These metrics are operationally irrelevant to a board-level business value discussion.

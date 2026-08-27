@@ -276,3 +276,24 @@ Q19: Overall accuracy of 94% on a non-representative benchmark does not reveal d
 ## Deliverable
 
 Submit a single document (PDF or Word) with all answers and justifications. Include the JSON excerpt inline with your Part C answers to show which portions you are referencing. Include your name, course section, and date at the top. Upload to the Module 06 Lab Assignment in Canvas by the posted due date.
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Image Preprocessing and Feature Visualization
+
+1. Using Python, PIL (Pillow), and matplotlib, load any publicly available image of your choice. Apply three preprocessing transformations: (a) convert to grayscale, (b) apply a Gaussian blur (`PIL.ImageFilter.GaussianBlur`), and (c) apply an edge-detection filter (`PIL.ImageFilter.FIND_EDGES`).
+2. Display all four versions (original + 3 transformed) in a 2x2 subplot grid using matplotlib. Label each subplot with the transformation name.
+3. Examine the edge-detection output. Identify at least three visual features that a CNN might learn to detect from this kind of edge representation (e.g., "corner of a building," "wheel rim").
+4. Explain in two sentences why CNNs don't need explicit edge-detection preprocessing — what mechanism in the convolutional layer learns the equivalent of the FIND_EDGES filter automatically?
+
+### Challenge 2: Precision-Recall Tradeoff for a Computer Vision Classifier
+
+1. Using sklearn, load the `digits` dataset (`sklearn.datasets.load_digits()`). Train a `RandomForestClassifier` to classify digit images (0-9) using an 80/20 train/test split.
+2. Print the full `classification_report` showing precision, recall, and F1 for each digit class. Identify which digit class has the lowest recall and hypothesize why it might be confused with another digit.
+3. Use `sklearn.metrics.confusion_matrix` and matplotlib's `imshow` to display the confusion matrix as a heatmap. Annotate which pairs of digits are most often confused.
+4. Simulate a high-stakes deployment scenario: if digit "1" were a medical code for a life-threatening condition, should the decision threshold be tuned to prioritize precision (fewer false alarms) or recall (fewer missed cases)? Justify your answer in 2-3 sentences.
+
+### Reflection Questions
+
+1. Based on Challenge 1, how does understanding low-level image features (edges, textures) change your intuition about why deep CNNs with many layers are needed for high-level tasks like recognizing vehicle damage severity?
+2. Based on Challenge 2, explain to a non-technical stakeholder what the "confidence threshold" setting in Azure Custom Vision does and how raising or lowering it affects the balance between false positives and false negatives in their specific application.

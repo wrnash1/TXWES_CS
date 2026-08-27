@@ -435,3 +435,17 @@ Before attempting the Module 11 quiz, verify:
 - MITRE ATT&CK Framework — Techniques reference for detection and eradication
 
 - CIS Controls v8 — Controls 13 (Network Monitoring), 17 (Incident Response Management)
+
+## 9. Supplemental Resources
+
+**1. MITRE ATT&CK Framework — Enterprise Techniques**
+https://attack.mitre.org/techniques/enterprise/
+The authoritative reference for attacker tactics, techniques, and procedures (TTPs). Use this resource to understand the detection opportunities at each phase of an attack — from initial access through persistence, lateral movement, and exfiltration. Directly applicable to building SIEM detection rules and eradication checklists.
+
+**2. CIS Controls v8 — Implementation Guidance**
+https://www.cisecurity.org/controls/v8
+The Center for Internet Security Controls v8 provides prioritized security actions organized into Implementation Groups. Controls 13 (Network Monitoring and Defense) and 17 (Incident Response Management) directly align with Module 11 content on detection architecture and the incident response lifecycle.
+
+**3. CISA Known Exploited Vulnerabilities Catalog**
+https://www.cisa.gov/known-exploited-vulnerabilities-catalog
+CISA's continuously updated catalog of vulnerabilities confirmed to be actively exploited in the wild. Critical resource for eradication planning — when identifying the attack vector used for initial access, this catalog helps confirm whether the vulnerability has been weaponized and prioritizes remediation urgency.

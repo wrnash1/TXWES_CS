@@ -360,4 +360,20 @@ aws autoscaling put-lifecycle-hook \
 
 All AWS certification study materials and exam registration: <aws.amazon.com/certification>
 
+---
+
+## 9. Supplemental Resources
+
+**1. AWS Documentation — Amazon EC2 Auto Scaling Lifecycle Hooks**
+https://docs.aws.amazon.com/autoscaling/ec2/userguide/lifecycle-hooks.html
+Detailed guide on Auto Scaling lifecycle hooks covering launch and termination transitions, heartbeat timeouts, default results, and integration with Lambda and SNS for custom automation.
+
+**2. AWS Skill Builder — Amazon EC2 Auto Scaling Deep Dive**
+https://skillbuilder.aws/learn/course/external/view/elearning/656/amazon-ec2-auto-scaling-deep-dive
+Free course covering Auto Scaling scaling policies (Target Tracking, Step, Scheduled, Predictive), launch templates, instance refresh, and warm pools — directly aligned to Module 07 advanced topics.
+
+**3. AWS Documentation — EC2 Instance Types Overview**
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html
+Official reference for all EC2 instance families including compute, memory, storage, accelerated computing, and network-optimized types — with vCPU counts, memory, and use case descriptions for SAA-C03 instance selection questions.
+
 *Proprietary and Confidential. Not for disclosure outside of Texas Wesleyan University.*

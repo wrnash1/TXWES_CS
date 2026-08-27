@@ -163,3 +163,25 @@ Compile all deliverables into a single document labeled clearly by task number. 
 | Part 2: Security Groups | 35 | All four SGs specify correct inbound and outbound rules; security group references used for east-west rules; CLI commands produce working SG rule; reference justification accurate |
 | Part 3: Network ACLs | 25 | NACL rules numbered correctly; block rule has lower number than allow rules; ephemeral ports included for both inbound and outbound; stateless explanation correctly distinguishes SG and NACL behavior |
 | **Total** | **100** | |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: VPC Flow Logs Analysis
+Enable VPC Flow Logs on a subnet and analyze the captured traffic records to identify network behavior.
+1. In the AWS Console, enable VPC Flow Logs on one of your VPC subnets, with destination set to CloudWatch Logs. Create a new log group named `/vpc/flowlogs/lab05`. Grant the VPC Flow Logs service the required IAM role permissions.
+2. Generate traffic by running `aws s3 ls` from an EC2 instance in the logged subnet, and attempt an SSH connection from a disallowed source IP to test REJECT records.
+3. After 5 minutes, open the CloudWatch log group and search for log records with `REJECT` in the Action field. Record the rejected traffic source, destination, and port.
+4. Find a `ACCEPT` record for DNS traffic (UDP port 53) to the VPC DNS resolver (VPC CIDR + 2 address). Document the source and destination IP addresses.
+
+### Challenge 2: VPC Gateway Endpoint for S3
+Create a VPC Gateway Endpoint for S3 and verify that S3 traffic from a private subnet no longer routes through the NAT Gateway.
+1. Create a VPC Gateway Endpoint for S3: navigate to VPC → Endpoints → Create Endpoint, select `com.amazonaws.<region>.s3`, choose your VPC, and select the private subnet route tables.
+2. Verify the endpoint was added to the route table: `aws ec2 describe-route-tables --filters Name=association.subnet-id,Values=<private-subnet-id> --query "RouteTables[*].Routes"`. Confirm a route entry with Destination `pl-xxxxxxxx` (S3 managed prefix list) pointing to the endpoint.
+3. From an EC2 instance in the private subnet, run `aws s3 ls --region <your-region>` and verify it succeeds without internet routing.
+4. Check NAT Gateway CloudWatch metrics (`BytesOutToDestination`) before and after the endpoint creation to confirm S3 traffic is no longer flowing through the NAT Gateway.
+
+### Reflection Questions
+1. After completing Challenge 1, explain what information VPC Flow Logs do NOT capture that would be needed for a complete security audit. What additional AWS service would you enable to capture DNS query content, and what service captures application-layer HTTP request details?
+2. How does the VPC Gateway Endpoint you created in Challenge 2 align with the AWS Well-Architected Framework Cost Optimization pillar? Calculate the approximate monthly NAT Gateway data processing cost savings if the endpoint redirects 1 TB of S3 traffic per month (NAT Gateway data processing rate: $0.045/GB).

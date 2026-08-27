@@ -165,3 +165,23 @@ learn.microsoft.com/en-us/training/modules/get-started-ai-fundamentals/
 - [ ] Complete the Module 12 quiz.
 - [ ] Complete the Module 12 lab.
 - [ ] Post initial discussion by Wednesday 11:59 PM and respond to two peers by Sunday 11:59 PM.
+
+---
+
+## Section 7: Supplemental Resources
+
+**1. Microsoft Learn — AI strategy for business leaders**
+<https://learn.microsoft.com/en-us/training/paths/ai-technology-for-business-leaders/>
+Microsoft's official learning path covering AI business value, use case selection, ROI measurement, and responsible AI considerations for leaders. Directly maps to the four AI value categories and the build-versus-buy framework covered in Module 12.
+
+**2. McKinsey Global Institute — The Age of AI: How companies are really deploying AI**
+<https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai>
+Annual survey-based report tracking real enterprise AI adoption rates, value realization patterns, and common barriers. Provides real-world context for the AI maturity model and ROI concepts covered in this module; useful for the discussion board post.
+
+**3. Azure Architecture Center — MLOps maturity model**
+<https://learn.microsoft.com/en-us/azure/architecture/ai-ml/guide/mlops-maturity-model>
+Microsoft's official MLOps maturity model guide mapping from Level 0 (no automation) through Level 5 (full automated retraining). Provides the technical foundation behind the AI maturity stages covered in Section 3 and directly relevant to Part E of the lab.
+
+---
+
+End of Reading Guide — Module 12

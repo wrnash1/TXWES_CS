@@ -308,3 +308,19 @@ Exam Tip 8: Diamond Model pivoting allows analysts to move from one known vertex
 - [ ] Complete the Module 02 Lab
 - [ ] Complete the Module 02 Quiz
 - [ ] Post your initial response to the Module 02 Discussion board by Wednesday at 11:59 PM
+
+---
+
+## 9. Supplemental Resources
+
+**1. MITRE ATT&CK Navigator**
+<https://mitre-attack.github.io/attack-navigator/>
+The official interactive heat-map tool for visualizing ATT&CK technique coverage. Use it to explore the Enterprise matrix, mark techniques with detection or mitigation coverage, and perform the gap analysis described in Section 5 of this guide. Hands-on navigation is the fastest way to internalize the tactic and technique structure.
+
+**2. CISA — Sharing Cyber Threat Intelligence**
+<https://www.cisa.gov/topics/cyber-threats-and-advisories/information-sharing>
+CISA's guidance on threat intelligence sharing programs, including the Automated Indicator Sharing (AIS) platform that uses STIX/TAXII. Reading this page connects the academic STIX/TAXII standards in Section 3 to real operational sharing infrastructure used by U.S. government and private sector partners.
+
+**3. FIRST — Traffic Light Protocol (TLP) Standard**
+<https://www.first.org/tlp/>
+The authoritative TLP specification maintained by the Forum of Incident Response and Security Teams (FIRST). The page defines all five TLP markings with usage guidance. This is the primary reference for TLP questions on the CySA+ exam and for professional CTI sharing decisions.

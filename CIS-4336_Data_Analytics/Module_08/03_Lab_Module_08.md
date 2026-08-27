@@ -310,4 +310,87 @@ Submit the following in a ZIP file:
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Random Forest vs. Decision Tree Comparison
+
+Extend the classification model from Part 2 by training a Random Forest and comparing its performance to the single decision tree.
+
+1. Using the same `X_train`, `X_test`, `y_train`, `y_test` from Part 1, train a `RandomForestClassifier` with `n_estimators=100` and `random_state=42`. Print a classification report for both the decision tree and the random forest side by side. Identify which model achieves higher F1 score on the test set.
+2. Extract feature importances from the random forest and plot them as a horizontal bar chart sorted in descending order of importance. Save as `rf_feature_importance.png`. Write two sentences comparing which features the random forest ranks highest versus what the single decision tree identified as most important.
+
+```python
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import classification_report
+import matplotlib.pyplot as plt
+import pandas as pd
+
+rf = RandomForestClassifier(n_estimators=100, random_state=42)
+rf.fit(X_train, y_train)
+y_pred_rf = rf.predict(X_test)
+
+print("=== Decision Tree ===")
+print(classification_report(y_test, y_pred_dt))
+print("=== Random Forest ===")
+print(classification_report(y_test, y_pred_rf))
+
+importances = pd.Series(rf.feature_importances_, index=feature_cols).sort_values()
+fig, ax = plt.subplots(figsize=(8, 5))
+importances.plot(kind="barh", ax=ax, color="steelblue")
+ax.set_title("Random Forest Feature Importances", fontsize=13, fontweight="bold")
+ax.set_xlabel("Importance Score")
+plt.tight_layout()
+plt.savefig("rf_feature_importance.png", dpi=150)
+plt.show()
+```
+
+### Challenge 2: Silhouette Analysis for Optimal k
+
+The elbow method gives a visual heuristic for choosing k. Silhouette score provides a quantitative alternative.
+
+1. For k = 2 through k = 8, compute the silhouette score for the k-means model fitted in Part 3 using `sklearn.metrics.silhouette_score`. Plot silhouette scores vs. k on a line chart. Save as `silhouette_scores.png`. Mark the k with the highest silhouette score on the chart using a vertical dashed line.
+2. Does the silhouette-optimal k match the elbow-method k from Part 3? Print a summary table showing WCSS and silhouette score for each k value. Write two sentences explaining a scenario where the two methods might disagree and what a data analyst should do when they conflict.
+
+```python
+from sklearn.metrics import silhouette_score
+import matplotlib.pyplot as plt
+import numpy as np
+
+k_range = range(2, 9)
+sil_scores = []
+wcss_scores = []
+
+for k in k_range:
+    km = KMeans(n_clusters=k, random_state=42, n_init=10)
+    labels = km.fit_predict(X_scaled)
+    sil_scores.append(silhouette_score(X_scaled, labels))
+    wcss_scores.append(km.inertia_)
+
+best_k = k_range[np.argmax(sil_scores)]
+print(f"\nk  | WCSS       | Silhouette")
+print("-" * 30)
+for k, w, s in zip(k_range, wcss_scores, sil_scores):
+    print(f"{k}  | {w:10.1f} | {s:.4f}")
+print(f"\nBest k by silhouette: {best_k}")
+
+fig, ax = plt.subplots(figsize=(7, 4))
+ax.plot(list(k_range), sil_scores, marker="o", linewidth=2, color="darkgreen")
+ax.axvline(best_k, color="red", linestyle="--", linewidth=1.5,
+           label=f"Best k = {best_k}")
+ax.set_title("Silhouette Score by Number of Clusters", fontsize=13, fontweight="bold")
+ax.set_xlabel("Number of Clusters (k)")
+ax.set_ylabel("Silhouette Score")
+ax.legend()
+plt.tight_layout()
+plt.savefig("silhouette_scores.png", dpi=150)
+plt.show()
+```
+
+### Reflection Questions
+
+1. In Challenge 1, the random forest reduces overfitting compared to a single decision tree by using bootstrap sampling and random feature selection. If the random forest achieves a much higher test F1 score than the decision tree, what does this tell you about how much variance the single tree had, and what is the practical tradeoff you accept when choosing a random forest over a decision tree?
+2. In Challenge 2, silhouette score measures how similar each point is to its own cluster compared to the nearest other cluster (range: -1 to +1). If you observe a high WCSS reduction at k=3 (elbow method) but the silhouette score peaks at k=5, which k would you recommend to a business stakeholder and what additional domain knowledge would help you decide?
+
+---
+
 End of Lab 08

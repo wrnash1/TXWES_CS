@@ -59,3 +59,19 @@ In this week's final review activities, you will complete the following:
 * [ ] Complete the Trailhead Trailmix [Associate Cert Prep](https://trailhead.salesforce.com/users/strailhead/trailmixes/associate-cert-prep) to earn all remaining certification-prep badges.
 * [ ] Complete the full concept map, certification readiness checklist, and practice scenario analysis lab activities.
 * [ ] Schedule your Salesforce Certified Associate exam through the Salesforce certification portal.
+
+---
+
+## 9. Supplemental Resources
+
+1. **Salesforce Trailhead — Salesforce Certified Associate Exam Prep Trailmix**
+   <https://trailhead.salesforce.com/users/strailhead/trailmixes/associate-cert-prep>
+   The official Salesforce-curated Trailmix for the Certified Associate exam. Complete every badge to cover all weighted topic areas (Ecosystem and Navigation, Functionality and Use Cases, Data Model). Completion generates a Trailhead certificate you can share with Professor Nash as study documentation.
+
+2. **SAP Learning — SAP S/4HANA Essentials Learning Journey**
+   <https://learning.sap.com/learning-journeys/explore-sap-s-4hana>
+   SAP's official free learning journey for the S/4HANA Essentials certification. Organized by process domain (FI, MM, SD, PP, HCM) with module-by-module video walkthroughs, guided exercises, and knowledge checks. Use the journey map to identify which modules align to quiz questions you missed in Modules 01–15 and target those sections for final review.
+
+3. **openSAP — SAP S/4HANA Enterprise Management — Certification Preparation**
+   <https://open.sap.com/courses/s4h16>
+   A free MOOC-style course on the openSAP platform that covers the SAP S/4HANA business processes tested on associate-level certification exams. Includes video lectures, weekly assignments, and a final exam simulation. Particularly useful for students who need structured review of the Procure-to-Pay, Order-to-Cash, and Record-to-Report process chains that appear as scenario questions on the SAP exam.

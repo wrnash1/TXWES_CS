@@ -348,4 +348,72 @@ Also delete the KMS key alias and schedule the KMS key for deletion (minimum 7-d
 
 ---
 
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Vault Dynamic Secrets Integration
+
+Simulate the Vault dynamic AWS credentials pattern using the Vault provider in a local Vault dev server.
+
+**Step A.** Start a local Vault dev server in one terminal:
+
+```bash
+vault server -dev -dev-root-token-id="root"
+```
+
+In a second terminal, configure the Vault AWS secrets engine (in dev mode, these commands configure the engine without real AWS credentials):
+
+```bash
+export VAULT_ADDR='http://127.0.0.1:8200'
+export VAULT_TOKEN='root'
+vault secrets enable aws
+vault write aws/config/root access_key="fake" secret_key="fake" region="us-east-2"
+vault write aws/roles/terraform-deployer \
+  credential_type=iam_user \
+  policy_arns="arn:aws:iam::aws:policy/ReadOnlyAccess"
+```
+
+1. Create a `vault_demo/main.tf` directory with the Vault provider configured to use `address = "http://127.0.0.1:8200"` and `token = "root"`.
+2. Add a `data "vault_aws_secret_backend_creds"` data source reading the `terraform-deployer` role. Add an output that shows the generated `access_key` (not the secret — this is a dev exercise, not a real secret).
+3. Run `terraform init && terraform plan` and observe that Terraform requests credentials from the Vault dev server. Note the generated access key format.
+4. Record in `lab_notes.txt`: in a production configuration, you would not hardcode the Vault token. What two Vault authentication methods are appropriate for a CI/CD pipeline that cannot interactively log in, and what are the security advantages of each over a static Vault token?
+
+### Challenge 2: Pre-commit Secret Scanning
+
+Set up `git-secrets` as a pre-commit hook to prevent accidental secret commits.
+
+**Step A.** Install and configure `git-secrets` in your lab repository:
+
+```bash
+# Install git-secrets (adjust for your OS)
+# macOS: brew install git-secrets
+# Linux: clone from https://github.com/awslabs/git-secrets and run make install
+
+cd module13-lab/
+git init
+git secrets --install
+git secrets --register-aws
+```
+
+**Step B.** Attempt to commit a file containing a fake AWS access key `AKIAIOSFODNN7EXAMPLE`:
+
+```bash
+echo 'fake_key = "AKIAIOSFODNN7EXAMPLE"' > test_secret.tf
+git add test_secret.tf
+git commit -m "testing git-secrets detection"
+```
+
+1. Observe that `git-secrets` blocks the commit and reports the detected pattern. Record the exact error message in `lab_notes.txt`.
+2. Add a Terraform-specific allowed pattern for `random_id` hex outputs (which contain character sequences that sometimes match key patterns): `git secrets --add --allowed 'random_id\.[a-z_]+\.hex'`.
+3. Create a `variables.tf` file with `variable "api_key" { type = string; sensitive = true }` and commit it. Confirm `git-secrets` allows this commit because the variable declaration does not contain a literal secret value.
+4. Document in `lab_notes.txt`: what types of secrets does `git-secrets --register-aws` detect by default, and what are two categories of secrets it would NOT detect without adding custom patterns?
+
+### Reflection Questions
+
+1. The lab used `sensitive = true` on variable declarations and `sensitive = true` on outputs to suppress display. Explain the complete path a sensitive value travels from the time it is set as a `TF_VAR_` environment variable through the plan, apply, state file, and `terraform output` command. At which points in this path is the value exposed in plaintext, and what specific control addresses each exposure point?
+2. The reading guide describes separating plan and apply IAM roles as a security control. A colleague argues this adds operational complexity for minimal benefit because "both roles run in the same CI pipeline on the same runner." Construct a counter-argument that explains the concrete threat model that role separation addresses, referencing at least one real-world attack scenario (supply chain compromise, dependency injection, PR-based attack) where the separation would limit damage.
+
+---
+
 End of Module 13 Lab

@@ -201,3 +201,201 @@ approval before merging to the main branch implements a peer review gate for all
 infrastructure changes. The CI/CD pipeline can run `terraform plan` on the PR to show
 reviewers exactly what will change. This is the standard GitOps practice for infrastructure
 change management. The other options do not enforce review before production changes.
+
+---
+
+### Question 11 (5 points)
+
+A Terraform configuration references a module hosted in a Cloud Storage bucket at
+`gs://my-tf-modules/network-module.zip`. After running `terraform init`, the module
+is not downloaded. What is the most likely cause?
+
+- A) Terraform does not support GCS as a module source
+- B) The GCS backend is not configured before using module sources
+- C) The user account running `terraform init` does not have Storage Object Viewer
+   access on the bucket
+- D) Module sources must be hosted in the Terraform Registry, not GCS
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) Terraform supports GCS as a module source using the `gcs::` source prefix; this is a documented and supported pattern.
+  - B) The GCS backend for remote state is a separate configuration from module sources; backend configuration does not need to be present for module downloads to work.
+  - D) The Terraform Registry is one source option, but Terraform also supports GCS, GitHub, Bitbucket, and other HTTP sources; GCS is a valid module source.
+
+---
+
+### Question 12 (5 points)
+
+You run `terraform destroy` on a production environment. After confirming, Terraform
+reports that 3 resources were destroyed but 1 resource failed with a dependency error.
+What is the correct next step?
+
+- A) Run `terraform apply` to recreate the resources and then retry destroy
+- B) Manually delete the failed resource in the GCP Console and then run `terraform
+   state rm` for that resource
+- C) Resolve the dependency that blocked deletion (e.g., detach or delete the
+   dependent resource first), then re-run `terraform destroy`
+- D) Run `terraform refresh` to sync state, which will automatically remove the
+   failed resource
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) Running `terraform apply` would attempt to recreate the three already-destroyed resources, expanding the problem rather than resolving the stuck deletion.
+  - B) Manually deleting in the Console and running `terraform state rm` is a last resort workaround; the dependency error should be resolved through proper IaC means first, as manual deletion bypasses Terraform's lifecycle hooks.
+  - D) `terraform refresh` updates the state file to reflect the current real-world state but does not delete resources or resolve dependency ordering issues.
+
+---
+
+### Question 13 (5 points)
+
+In a Deployment Manager template, which file format allows the use of Python logic
+(loops, conditionals) to generate resource configurations dynamically?
+
+- A) YAML only — Deployment Manager does not support dynamic generation
+- B) Jinja2 template (.jinja)
+- C) Python template (.py)
+- D) Both Jinja2 and Python templates support programmatic generation
+
+- **Correct Answer:** D
+- **Distractor Analysis:**
+  - A) Deployment Manager supports both Jinja2 and Python templates precisely to enable dynamic, programmatic resource generation; pure YAML does not support logic but is the base configuration format.
+  - B) Jinja2 templates support basic templating logic (loops, conditionals, variable substitution) but Python templates provide full Python scripting capability.
+  - C) Python templates offer the most flexibility with full Python language support, but Jinja2 templates also support loops and conditionals — so Python is not the only dynamic option.
+
+---
+
+### Question 14 (5 points)
+
+What does the `terraform state mv` command do?
+
+- A) Moves the state file from local storage to a GCS remote backend
+- B) Renames or moves a resource within the Terraform state file without
+   destroying and recreating the infrastructure
+- C) Migrates all resources from one GCP project to another
+- D) Moves a Terraform module from one directory to another
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Moving state to a remote backend is accomplished by configuring a `backend` block in the Terraform configuration and running `terraform init -migrate-state`; `terraform state mv` is not the command for this.
+  - C) Terraform does not have a built-in command to migrate deployed resources between GCP projects; that would require destroying in one project and applying in another.
+  - D) Moving module directories is a filesystem operation unrelated to `terraform state mv`; after moving files, you would update the `source` path in the configuration.
+
+---
+
+### Question 15 (5 points)
+
+A Deployment Manager deployment has 5 resources. You delete one resource from
+the config.yaml and run `gcloud deployment-manager deployments update`. What
+happens to the deleted resource?
+
+- A) It remains in GCP because Deployment Manager only adds resources on update
+- B) It is deleted from GCP because Deployment Manager reconciles the actual
+   state with the declared configuration
+- C) The update fails because you cannot remove resources from a running deployment
+- D) The resource is moved to a pending deletion queue and deleted after 24 hours
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Deployment Manager is a declarative tool; it reconciles the actual deployment to match the configuration, which means resources removed from the config are deleted from GCP on the next update.
+  - C) Removing resources from a Deployment Manager configuration is fully supported on update; the update will delete the removed resources.
+  - D) Deployment Manager does not have a pending deletion queue; resource deletion happens synchronously during the update operation.
+
+---
+
+### Question 16 (5 points)
+
+Which Terraform command validates the syntax and internal consistency of `.tf`
+configuration files without connecting to any provider API?
+
+- A) `terraform plan`
+- B) `terraform validate`
+- C) `terraform fmt`
+- D) `terraform check`
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) `terraform plan` validates configuration syntax but also connects to the provider API to compare the desired state against actual infrastructure; it requires provider credentials and API access.
+  - C) `terraform fmt` reformats `.tf` files to canonical style but does not validate configuration logic or resource attribute correctness.
+  - D) `terraform check` is not a standard Terraform CLI command; there is a `check` block feature in Terraform 1.5+ for custom condition assertions, but the CLI command is `validate`.
+
+---
+
+### Question 17 (5 points)
+
+A team wants to reuse the same Terraform configuration to deploy identical
+infrastructure in both `us-central1` and `us-east1` without duplicating code.
+Which Terraform feature enables this?
+
+- A) `terraform workspace` to create separate state workspaces per region
+- B) Input variables for the region combined with calling the root module twice
+   with different variable values
+- C) Terraform modules — define the infrastructure once in a module and call it
+   twice with different region variables
+- D) Terraform providers — configure two Google providers with different regions
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) Workspaces create isolated state environments but do not eliminate code duplication on their own; you still need parameterization to deploy to different regions from the same code.
+  - B) You cannot call the root module twice within itself; modules are the mechanism for reusable infrastructure components.
+  - D) Configuring two provider aliases is part of the implementation, but the module pattern is the primary code-reuse mechanism; provider aliases alone do not eliminate the need to duplicate resource definitions.
+
+---
+
+### Question 18 (5 points)
+
+What happens to existing GCP resources if you run `terraform import` for a resource
+that already has a matching block in your `.tf` configuration?
+
+- A) Terraform overwrites the resource with the values in the configuration file
+- B) The resource's current real-world state is added to the Terraform state file;
+   the configuration is not applied or changed
+- C) Terraform deletes the resource and recreates it from the configuration
+- D) The import fails because the resource block already exists in the configuration
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) `terraform import` only adds the resource to the state file; it does not modify the real GCP resource to match the configuration. Any configuration drift is visible on the next `terraform plan`.
+  - C) `terraform import` never destroys or recreates resources; it is a read operation that records existing infrastructure in Terraform state.
+  - D) A matching resource block in the configuration is required for `terraform import` to work; the import fails if there is NO block for the resource, not if there is one.
+
+---
+
+### Question 19 (5 points)
+
+A Deployment Manager configuration uses a template to create a firewall rule.
+The template needs to reference the network name from another resource in the
+same deployment. What is the correct syntax to reference the `selfLink` property
+of a resource named `my-vpc`?
+
+- A) `{{ my-vpc.selfLink }}`
+- B) `$(ref.my-vpc.selfLink)`
+- C) `${google_compute_network.my-vpc.self_link}`
+- D) `$(my-vpc.selfLink)`
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) `{{ ... }}` is Jinja2 template variable syntax for accessing `properties` values; it does not resolve runtime resource references like `selfLink` from deployed resources.
+  - C) `${google_compute_network.my-vpc.self_link}` is Terraform HCL interpolation syntax, not Deployment Manager syntax.
+  - D) `$(my-vpc.selfLink)` is missing the `ref.` keyword; the full syntax requires `ref.RESOURCE_NAME.PROPERTY` inside the `$()` reference notation.
+
+---
+
+### Question 20 (5 points)
+
+Your team uses Terraform for GCP infrastructure. After a Terraform apply, a junior
+engineer changes a firewall rule manually in the Console. The next day, another
+team member runs `terraform apply` with no configuration changes. What will Terraform
+do?
+
+- A) Terraform will do nothing because the configuration has not changed
+- B) Terraform will detect the manual change and revert the firewall rule to match
+   the configuration
+- C) Terraform will fail with an error because the state and real-world are out of sync
+- D) Terraform will prompt the user to choose between keeping the manual change or
+   reverting to the configuration
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Terraform runs a refresh during `terraform apply` to compare the real-world state against both the state file and the configuration; it detects the drift and plans a corrective change.
+  - C) Terraform handles state drift gracefully; it does not fail with an error. It shows the drift in the plan and applies a correction.
+  - D) Terraform does not interactively prompt the user to choose between the manual change and the configuration; it always converges toward the declared configuration, treating the configuration as the source of truth.

@@ -359,3 +359,19 @@ for device in devices.json()["response"]:
 4. Which configuration management tool requires no software installed on the managed network device?
 5. A code block shows `{ "hostname": "R1" }`. What data format is this and how do you know?
 6. What Python library is used to send HTTP requests to a REST API?
+
+---
+
+## Supplemental Resources
+
+The following open educational resources extend automation and programmability concepts to CCNA exam depth. All resources are freely available.
+
+1. **Cisco Networking Academy — CCNA: Enterprise Networking, Security, and Automation, Chapters 12–13 (Network Automation and Programmability)** (skillsforall.com): Free chapters covering SDN architecture, REST APIs and HTTP methods, JSON and XML data formats, NETCONF and RESTCONF, Python with `requests`, and Ansible playbook basics — exactly the content tested in the CCNA Automation domain.
+
+2. **Jeremy's IT Lab — Automation and Programmability (Days 61–66)** (youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ): Six video lessons covering SDN planes and APIs, OpenFlow, Cisco DNA Center, REST API operations, JSON/YAML/XML data formats, Ansible vs. Puppet vs. Chef comparison, and NETCONF/RESTCONF. Includes exam-style scenario walkthroughs for the full CCNA Automation domain.
+
+3. **Cisco DevNet Learning Labs** (developer.cisco.com/learning/labs): Cisco's free hands-on learning platform with interactive labs using the DNA Center Always-On sandbox. Labs cover REST API authentication, Python `requests` scripting, NETCONF with `ncclient`, and Ansible network automation — all freely accessible without a Cisco account.
+
+4. **Cisco Networking Academy — Cisco DevNet Associate Fundamentals** (skillsforall.com): Free course covering REST API concepts, HTTP methods, JSON data structures, Python for networking, and introduction to YANG models. Overlaps with CCNA automation content and provides a deeper programmability foundation.
+
+5. **Ansible for Network Automation Documentation** (docs.ansible.com/ansible/latest/network): Ansible's official network automation documentation covering cisco.ios collection modules, playbook structure for network devices, connection types (network_cli, netconf, httpapi), and idempotency behavior — free reference for understanding the Ansible concepts tested on the CCNA exam.

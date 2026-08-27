@@ -367,3 +367,16 @@ print(f"Test accuracy: {acc:.4f}")
 Texas Wesleyan University — CIS-4345 Machine Learning and Deep Learning
 
 Proprietary and Confidential. Not for disclosure outside of Texas Wesleyan University.
+
+---
+
+## 9. Supplemental Resources
+
+**1. [TensorFlow Text Classification with TF Hub](https://www.tensorflow.org/tutorials/keras/text_classification_with_hub)**
+Official TensorFlow tutorial that walks through sentiment classification on the IMDB dataset using pre-trained text embeddings from TF Hub. Demonstrates how to use a pre-built embedding module as a Keras layer, complementing this module's coverage of custom `Embedding` and `TextVectorization` layers.
+
+**2. [fast.ai NLP Course — Practical Deep Learning for Coders](https://course.fast.ai/Lessons/lesson8.html)**
+Jeremy Howard's practical NLP lessons from fast.ai, covering tokenization, transfer learning with language models, and fine-tuning for classification. Provides a modern perspective on NLP that extends beyond the TF exam fundamentals covered in this module.
+
+**3. [GloVe: Global Vectors for Word Representation](https://nlp.stanford.edu/projects/glove/)**
+Stanford NLP's GloVe project page, offering pre-trained word vectors (50d, 100d, 200d, 300d) trained on Wikipedia and Common Crawl. Includes the original paper and download links. Directly applicable to the technique of loading pre-trained embeddings into a Keras `Embedding` layer with `trainable=False`.

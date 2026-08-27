@@ -277,3 +277,57 @@ Note: deleting the primary instance also deletes its automated backups. If you w
 ---
 
 Reference: cloud.google.com/learn
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Simulating and Measuring HA Failover
+
+Connect to your Cloud SQL HA-enabled instance and run the following commands to observe failover behavior in real time.
+
+Open two Cloud Shell tabs. In Tab 1, run a continuous connectivity loop:
+
+```bash
+while true; do
+  gcloud sql connect txwes-pg-lab03 --user=postgres --quiet \
+    -e "SELECT NOW() AS ts, inet_server_addr() AS server_ip;" 2>&1 | tail -3
+  sleep 5
+done
+```
+
+In Tab 2, trigger a manual failover:
+
+```bash
+gcloud sql instances failover txwes-pg-lab03
+```
+
+Then complete the following steps:
+
+1. Record the timestamps from Tab 1 before and after the failover command. Calculate how many seconds elapsed between the last successful response and the first successful response after failover.
+2. Compare this observed failover time to the documented Cloud SQL HA SLA (~60 seconds). Note whether `inet_server_addr()` returned a different IP after failover.
+3. Write a two-paragraph analysis: the first paragraph describes what technically happened during failover (standby promotion, DNS update); the second paragraph explains how application retry logic should be designed to survive this interruption.
+
+### Challenge 2: WAL-Based Point-in-Time Recovery Drill
+
+Perform a controlled data loss and recovery exercise using PITR.
+
+```sql
+-- Step A: record the current timestamp before the "accident"
+SELECT NOW() AS before_delete;
+
+-- Step B: simulate accidental data loss
+DELETE FROM orders WHERE status = 'pending';
+SELECT COUNT(*) AS remaining FROM orders;
+```
+
+Then complete the following steps:
+
+1. Note the exact timestamp from Step A. Use `gcloud sql instances restore-backup` with `--restore-database-name` and `--restore-instance` to restore a clone of the instance to a point 30 seconds before the deletion timestamp.
+2. After the restore completes, connect to the restored instance and verify the deleted rows exist: `SELECT COUNT(*) FROM orders WHERE status = 'pending';`
+3. Document the full CLI commands used for the restore and write a one-paragraph explanation of why the recovery timestamp must be captured before — not after — the damaging operation.
+
+### Reflection Questions
+
+1. During the HA failover drill in Challenge 1, what was the actual observed downtime window, and what does this imply about the minimum retry timeout an application connection pool should be configured with when connecting to a Cloud SQL HA instance?
+2. In Challenge 2, if WAL archiving had not been enabled before the accidental DELETE, what would be the most recent recovery point available, and what data loss would result in a worst-case scenario?

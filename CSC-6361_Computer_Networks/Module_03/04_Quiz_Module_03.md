@@ -118,3 +118,122 @@ Explain what a TLOC is in Cisco SD-WAN and how it enables the system to use mult
 A junior engineer proposes configuring IPsec in `mode tunnel` on GRE tunnel interfaces to "provide maximum security." A senior engineer objects and says `mode transport` should be used instead. Who is correct, and why? (3–4 sentences)
 
 **Model Answer:** The senior engineer is correct. When IPsec is applied to a GRE tunnel interface, using `mode tunnel` would cause **double encapsulation**: GRE already adds an outer IP header (encapsulating the original packet), and then IPsec tunnel mode would add a second new outer IP header — resulting in three IP headers total, significantly increasing overhead. Using `mode transport` is correct: it encrypts only the GRE payload (the original IP packet), while preserving the GRE outer IP header for routing purposes. The result is a properly structured packet: [GRE outer IP] → [GRE header] → [ESP/AH] → [original encrypted IP packet], with one fewer header than double-tunnel mode would create.
+
+---
+
+> **Instructor Note — Questions 11–20:** These 10 questions are worth **5 pts each** (50 pts total).
+
+---
+
+### Question 11 (Multiple Choice — 5 pts)
+An MPLS network engineer runs `show mpls ldp neighbor` on a P router and sees no LDP neighbors, even though all interfaces are up and IGP is running. What is the MOST likely cause?
+
+- A) LDP requires BGP to be running before it can form neighbor relationships. ❌
+- B) The `mpls ip` command has not been enabled on the interfaces connecting to neighboring routers. ✅
+- C) LDP only operates on PE routers, not P routers. ❌
+- D) The MPLS TTL has been set to 0, preventing LDP hello packets from reaching neighbors. ❌
+
+**Answer:** B — LDP must be explicitly enabled per-interface with `mpls ip` (or globally if supported). Without it, the router does not send LDP Hello packets on those interfaces and no LDP session forms. Verifying with `show mpls interfaces` will show which interfaces have MPLS enabled.
+
+**Distractor Analysis:**
+- A: LDP is entirely independent of BGP; it runs over TCP directly between IGP neighbors.
+- C: LDP runs on all MPLS-enabled routers including P (core) routers.
+- D: MPLS TTL affects packet forwarding, not LDP session establishment.
+
+---
+
+### Question 12 (Multiple Choice — 5 pts)
+An enterprise runs MPLS L3VPN. Site A and Site B belong to Customer X's VRF, and Site C belongs to Customer Y's VRF. Both customers use the 10.0.0.0/8 address space. The PE router serving Site A shows both a Customer X and Customer Y route for 10.1.0.0/24 in its VPNv4 BGP table. How does the PE router forward traffic from Customer X's CE router destined for 10.1.0.0/24 to the correct site?
+
+- A) The PE uses NAT to translate the overlapping address before forwarding. ❌
+- B) The PE looks up the destination in Customer X's VRF routing table only, which contains only routes imported with Customer X's Route Target. The VRF lookup isolates the forwarding decision from Customer Y's routes entirely. ✅
+- C) The PE uses the BGP community value to distinguish between customers. ❌
+- D) The PE uses the CE router's MAC address to determine which customer the traffic belongs to. ❌
+
+**Answer:** B — VRFs provide complete routing table separation on the PE. When a packet arrives from Customer X's CE router on an interface bound to Customer X's VRF, the PE performs a lookup exclusively in that VRF's routing table — Customer Y's routes are in a separate VRF and are completely invisible to this lookup. The Route Target import/export mechanism controls which routes appear in each VRF.
+
+---
+
+### Question 13 (Scenario — 5 pts)
+A network engineer runs `show crypto ipsec sa` on HQ-R and sees that the `#pkts encrypt` counter is incrementing but `#pkts decrypt` is not. Traffic from HQ cannot reach the branch. What is the MOST likely cause?
+
+- A) The IPsec SA has expired and needs to be re-keyed manually. ❌
+- B) The crypto map is applied on the wrong interface — it should be on the WAN interface, not a LAN interface. ❌
+- C) The IPsec SA exists in one direction only — the branch router is not encrypting return traffic, likely because the crypto map or ACL on the branch is misconfigured. ✅
+- D) The transform set encryption algorithm is mismatched, so decryption fails silently. ❌ (mismatch prevents SA establishment)
+
+**Answer:** C — IPsec SAs are unidirectional. If HQ is encrypting traffic (encrypt counter rising) but not receiving encrypted replies (decrypt counter static), the branch's crypto map ACL is likely missing the return traffic entry, the branch's crypto map is not applied to its WAN interface, or the branch's pre-shared key is incorrect preventing its SA from forming. Use `show crypto isakmp sa` on the branch to check Phase 1 state.
+
+---
+
+### Question 14 (Multiple Choice — 5 pts)
+In Cisco SD-WAN, what is the role of the **vBond** controller?
+
+- A) vBond stores all network configuration templates and pushes them to vEdge devices. ❌
+- B) vBond is the orchestration plane — it authenticates new devices joining the SD-WAN fabric and provides the IP addresses of vSmart and vManage controllers to bootstrapping vEdge/cEdge devices. ✅
+- C) vBond computes and distributes OMP routing policies to all vEdge devices. ❌
+- D) vBond encrypts the data plane IPsec tunnels between vEdge devices. ❌
+
+**Answer:** B — vBond is the first controller a new vEdge device contacts when it boots. vBond authenticates the device (certificate-based), then provides the device with the IP addresses of vSmart (policy/control) and vManage (management) controllers. It also facilitates NAT traversal for devices behind NAT. After initial bootstrapping, vEdge devices communicate directly with vSmart and vManage — vBond is not in the ongoing control plane path.
+
+---
+
+### Question 15 (Multiple Choice — 5 pts)
+An engineer is configuring IKEv2 on a Cisco IOS-XE router. What is one significant operational advantage of IKEv2 over IKEv1 in a large enterprise with hundreds of VPN tunnels?
+
+- A) IKEv2 uses UDP port 443 instead of UDP port 500, making it easier to traverse firewalls. ❌
+- B) IKEv2 establishes the full IKE SA and IPsec SA in two exchanges (4 messages) instead of IKEv1's nine messages for main mode, significantly reducing tunnel establishment time and CPU load on the head-end device. ✅
+- C) IKEv2 does not require a pre-shared key or certificate — it uses anonymous authentication. ❌
+- D) IKEv2 supports only AES-256 encryption, making configuration simpler. ❌
+
+**Answer:** B — IKEv2 completes both Phase 1 (IKE SA) and Phase 2 (IPsec SA) setup in a single four-message exchange. IKEv1 Main Mode requires six messages for Phase 1 plus three more for Quick Mode Phase 2 — nine total. On a hub router with 500 branches simultaneously re-keying, this difference is significant in terms of CPU utilization and tunnel-up time.
+
+---
+
+### Question 16 (Multiple Choice — 5 pts)
+A network engineer wants to verify that OSPF is forming adjacencies correctly over the GRE tunnel between HQ-R and BRANCH-A-R. `show ip ospf neighbor` shows BRANCH-A-R stuck in EXSTART state. What is the MOST likely cause?
+
+- A) OSPF hello and dead timers are mismatched between the tunnel endpoints. ❌
+- B) The OSPF MTU on the tunnel interface is mismatched — if one side has `ip mtu 1400` and the other has the default 1500, the OSPF DBD exchange fails because the MTU in the DBD packet doesn't match. ✅
+- C) GRE tunnels do not support OSPF adjacency formation. ❌
+- D) The OSPF process ID must be the same on both routers. ❌
+
+**Answer:** B — OSPF EXSTART/EXCHANGE state failures are almost always caused by MTU mismatch. OSPF includes the interface MTU in Database Description (DBD) packets. If one side sends DBD packets advertising MTU 1500 and the other expects 1400 (due to `ip mtu 1400` on the tunnel), the router rejects the DBD and the adjacency stalls. Fix: ensure both tunnel endpoints have matching `ip mtu` values, or use `ip ospf mtu-ignore` on the tunnel interfaces (not recommended for production).
+
+---
+
+### Question 17 (Scenario — 5 pts)
+An SD-WAN deployment has three transports at each site: MPLS (labeled "mpls"), fiber internet (labeled "biz-internet"), and LTE (labeled "lte"). BFD sessions run over all three. The engineer configures an AAR policy: "For VoIP (DSCP EF) traffic, use a transport with loss < 1% and jitter < 10ms. Prefer MPLS first, then biz-internet, then LTE." Currently MPLS has 2% loss. What happens to VoIP traffic?
+
+- A) VoIP traffic continues on MPLS because it is the preferred transport regardless of SLA. ❌
+- B) VoIP traffic fails over to biz-internet if biz-internet meets the loss and jitter SLA thresholds. ✅
+- C) VoIP traffic is dropped until MPLS loss drops below 1%. ❌
+- D) The vSmart controller tears down the MPLS TLOC and reroutes all traffic to LTE. ❌
+
+**Answer:** B — AAR (Application-Aware Routing) continuously measures per-transport SLA metrics via BFD. When MPLS exceeds the configured loss threshold (1%), the policy fails over VoIP to the next preferred transport that meets the SLA — biz-internet in this case. If biz-internet also fails the SLA, the policy falls back to LTE. When MPLS recovers below 1% loss, AAR can optionally fail back to MPLS based on the configured restore timer.
+
+---
+
+### Question 18 (Multiple Choice — 5 pts)
+Which statement correctly describes the difference between an MPLS **Label Information Base (LIB)** and the **Label Forwarding Information Base (LFIB)**?
+
+- A) The LIB is the forwarding table used for packet switching; the LFIB is the full database of all label bindings learned from LDP. ❌
+- B) The LIB contains all label bindings learned from LDP (all peers, all prefixes); the LFIB contains only the best-path entries actually used for forwarding — analogous to the difference between the BGP table and the routing table. ✅
+- C) The LIB is used only on PE routers; the LFIB is used only on P routers. ❌
+- D) The LIB and LFIB are the same database with different display commands. ❌
+
+**Answer:** B — The LIB (`show mpls ldp bindings`) contains all label bindings learned from all LDP peers for all prefixes. The LFIB (`show mpls forwarding-table`) contains only the labels that will actually be used for forwarding — one entry per prefix, selected from the LIB based on the best-path in the IP routing table. This mirrors how the BGP RIB (all BGP routes) differs from the IP routing table (best routes only).
+
+---
+
+### Question 19 (Short Answer — 5 pts)
+Explain what **Penultimate Hop Popping (PHP)** is, why it is the default behavior in Cisco MPLS networks, and what the operational advantage is for the egress PE router. (2–3 sentences)
+
+**Model Answer:** PHP is a Cisco MPLS optimization where the second-to-last router in the label-switched path (the penultimate hop P router) removes the top MPLS label before forwarding the packet to the egress PE router, so the PE receives either a plain IP packet (for single-label stacks) or a packet with only the inner VPN label remaining. This is the default behavior because it eliminates a double lookup on the egress PE — without PHP, the PE would need to first look up the outer transport label in the LFIB, then look up the inner IP packet in the VRF routing table. With PHP, the PE only performs the IP or VPN label lookup, reducing forwarding latency and CPU load on the most critical (and often most loaded) device in the MPLS fabric.
+
+---
+
+### Question 20 (Short Answer — 5 pts)
+A network engineer proposes replacing the hub-and-spoke GRE/IPsec VPN in the lab with **DMVPN (Dynamic Multipoint VPN)**. Explain what specific scalability problem with static hub-and-spoke GRE DMVPN was designed to solve, and describe one key difference between DMVPN Phase 2 and Phase 3. (2–3 sentences)
+
+**Model Answer:** Static hub-and-spoke GRE requires a pre-configured tunnel interface on the hub for every spoke, and all branch-to-branch traffic must traverse the hub twice (spoke→hub→spoke) — with hundreds of branches this creates both administrative overhead (manually configuring hundreds of tunnel interfaces) and a traffic bottleneck at the hub. DMVPN solves this by using mGRE (multipoint GRE) on the hub and NHRP (Next Hop Resolution Protocol) to dynamically map spoke tunnel IPs to their physical WAN addresses, allowing new spokes to register automatically without hub reconfiguration. The key difference between Phase 2 and Phase 3 is spoke-to-spoke routing: in Phase 2, spoke routers can build direct spoke-to-spoke tunnels dynamically (bypassing the hub for data traffic), but the hub must not summarize routes so spokes can see each other's specific prefixes; in Phase 3, the hub can summarize routes and uses NHRP redirect/shortcut to dynamically redirect spoke-to-spoke traffic onto direct tunnels, providing both summarization benefits and optimal routing simultaneously.

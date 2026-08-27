@@ -197,6 +197,22 @@ This section lists the highest-frequency terms across all 16 modules, organized 
 
 ---
 
+## 9. Supplemental Resources
+
+**1. CompTIA CySA+ CS0-003 Official Exam Objectives**
+<https://www.comptia.org/training/resources/exam-objectives>
+The authoritative source for the CySA+ CS0-003 exam domain weights, objective statements, and topic coverage. The exam objectives document is the single most important study reference because it defines exactly what CompTIA will test. Each objective is a direct signal about what you must know. Download the free PDF and use it as a checklist — cross-reference every objective against the course modules to identify any remaining gaps before exam day. Pay particular attention to the domain weights (Domain 1: 33%, Domain 2: 30%, Domain 3: 20%, Domain 4: 17%) to allocate review time proportionally.
+
+**2. Professor Messer's CompTIA CySA+ Course Notes**
+<https://www.professormesser.com/cysa-plus/cs0-003/cs0-003-video/cs0-003-training-course/>
+Professor Messer provides free video training for every CompTIA certification exam, including CySA+ CS0-003. His course covers all exam domains with concise, exam-focused explanations and is widely used as a final exam preparation resource by security professionals. The short-format videos (typically 5–15 minutes per topic) are well-suited for reviewing specific concept areas where additional reinforcement is needed after completing this course. The accompanying study group and practice questions on his site complement the capstone lab questions in this module.
+
+**3. CompTIA CertMaster Practice — CySA+ CS0-003**
+<https://www.comptia.org/training/certmaster-practice/cysa>
+CompTIA's official adaptive practice question platform for CySA+ provides scenario-based questions that mirror the actual exam format, difficulty, and reasoning style. The platform adapts to your performance, focusing additional questions on weak areas. While this is a paid resource (available standalone or bundled with exam purchase), it is the closest available simulation to actual exam conditions. The reasoning explanations for both correct and incorrect answers mirror the distractor analysis format used throughout this course and reinforce the specific "why" behind each correct answer that the exam tests.
+
+---
+
 ## Required Resources
 
 - CompTIA CySA+ CS0-003 Official Exam Objectives — comptia.org (free)

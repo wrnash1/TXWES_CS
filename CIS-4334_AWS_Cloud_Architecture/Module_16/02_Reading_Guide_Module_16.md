@@ -255,3 +255,19 @@ Work through this list in the week before your exam:
 - Build and review flashcards for all service comparison tables in this guide
 - Confirm your exam appointment, testing center location, and ID requirements
 - Get 8 hours of sleep the night before the exam
+
+---
+
+## 9. Supplemental Resources
+
+**1. AWS Documentation — AWS Well-Architected Framework**
+https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html
+The authoritative reference for all six pillars of the AWS Well-Architected Framework, including detailed best practices, design principles, and question sets for each domain. Directly maps to the four SAA-C03 exam domains covered in this module.
+
+**2. AWS Skill Builder — AWS Certified Solutions Architect — Associate Official Practice Exam**
+https://skillbuilder.aws/learn/course/external/view/elearning/9149/aws-certified-solutions-architect-associate-official-practice-question-set-saa-c03-english
+Official AWS practice question set for SAA-C03 developed by AWS. Provides timed exam simulation across all four domains with detailed answer explanations — the highest-fidelity practice resource available for final exam preparation.
+
+**3. AWS Documentation — SAA-C03 Exam Guide**
+https://d1.awsstatic.com/training-and-certification/docs-sa-assoc/AWS-Certified-Solutions-Architect-Associate_Exam-Guide.pdf
+The official exam guide published by AWS, listing all in-scope services, technologies, and task statements for each domain. Use this document to confirm your study coverage and identify any service categories you have not yet reviewed.

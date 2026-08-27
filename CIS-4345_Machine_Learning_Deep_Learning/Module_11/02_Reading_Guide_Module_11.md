@@ -414,3 +414,16 @@ model.fit(train_ds, epochs=20, validation_data=val_ds,
 ---
 
 *End of Reading Guide — Module 11*
+
+---
+
+## 9. Supplemental Resources
+
+**1. [Transfer Learning and Fine-Tuning — TensorFlow Tutorial](https://www.tensorflow.org/tutorials/images/transfer_learning)**
+Official TensorFlow tutorial demonstrating the complete two-phase transfer learning workflow: Phase 1 feature extraction with a frozen MobileNetV2 base, followed by Phase 2 fine-tuning of the top layers. Includes data augmentation, the critical `training=False` argument, and learning rate reduction for fine-tuning.
+
+**2. [TensorFlow Hub — Image Feature Extraction](https://www.tensorflow.org/hub/tutorials/image_feature_vector)**
+Official TF Hub tutorial showing how to use pre-built image feature vector modules in a Keras model with `hub.KerasLayer`. Demonstrates how to swap different architectures (MobileNetV2, EfficientNet, ResNet) by changing only the Hub URL, without rewriting any model code.
+
+**3. [Papers With Code — ImageNet Benchmark](https://paperswithcode.com/sota/image-classification-on-imagenet)**
+State-of-the-art ImageNet classification leaderboard tracking accuracy, parameter count, and FLOPs for all major architectures including EfficientNet, ViT, ConvNeXt, and others. Useful for comparing the accuracy-efficiency tradeoffs of pretrained models when selecting a base for transfer learning.

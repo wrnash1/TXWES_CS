@@ -374,6 +374,30 @@ Watch Episode 7 of the [Python for Everybody Course Playlist](https://www.youtub
 
 ---
 
+## 9. Supplemental Resources
+
+**1. Official Python 3 Docs — Compound Statements: if**
+[https://docs.python.org/3/reference/compound_stmts.html#the-if-statement](https://docs.python.org/3/reference/compound_stmts.html#the-if-statement)
+The authoritative specification for `if`, `elif`, and `else` syntax. Includes the grammar definition and execution semantics. The Boolean operations section covers short-circuit evaluation rules.
+
+**2. Python for Everybody — Chapter 3: Conditional Execution**
+[https://www.py4e.com/html3/03-conditional](https://www.py4e.com/html3/03-conditional)
+Dr. Severance's free chapter on conditionals, covering `if-elif-else`, nested conditions, guardian patterns, and `try/except` for input validation. Includes worked examples and self-check exercises.
+
+**3. Real Python — Python Conditional Statements: if/elif/else**
+[https://realpython.com/python-conditional-statements/](https://realpython.com/python-conditional-statements/)
+A detailed free article covering all conditional forms, ternary expressions, nested conditions, and the match statement (Python 3.10+). The section on truthiness and falsiness goes deeper than the reading guide.
+
+**4. Python Docs — Boolean Operations (and, or, not)**
+[https://docs.python.org/3/reference/expressions.html#boolean-operations](https://docs.python.org/3/reference/expressions.html#boolean-operations)
+The specification for how `and`, `or`, and `not` return values (not just booleans) and how short-circuit evaluation works. This is where Python's "returns the operand, not True/False" behavior is formally defined.
+
+**5. Python Docs — Comparisons and Chained Comparisons**
+[https://docs.python.org/3/reference/expressions.html#comparisons](https://docs.python.org/3/reference/expressions.html#comparisons)
+Covers all comparison operators including chained comparisons (`a < b < c`), identity (`is`, `is not`), and membership (`in`, `not in`). PCAP directly tests chained comparison behavior.
+
+---
+
 ## 9. Study Checklist
 
 - [ ] Watch the Module 04 video lecture by Professor Nash.

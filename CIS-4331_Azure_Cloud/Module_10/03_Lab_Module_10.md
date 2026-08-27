@@ -359,3 +359,17 @@ Submit the following to Canvas:
 ---
 
 *Lab 10 — Module 10: Azure Databases | CIS-4331 | Texas Wesleyan University*
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Cosmos DB Partition Key Analysis
+Add 20 additional documents to your Cosmos DB Courses container — 15 with `"department": "Computer Science"` and 5 with `"department": "Mathematics"`. Then run a query filtered only by department (no partition key in the filter) and note the `x-ms-request-charge` header value in the Data Explorer response statistics. Next, query using the partition key field (`/courseId`) and compare the RU charge. Document both queries, their RU charges, and explain in 2–3 sentences why the cross-partition query consumed more RUs and what this means for partition key selection in a production application with millions of documents.
+
+### Challenge 2: Azure SQL Database Geo-Replication
+Using the Azure Portal, configure Active Geo-Replication on your `lab10-sqldb` database by adding a secondary in the West US region. Wait for the initial seeding to complete (visible in the Geo-Replication blade). Insert a new row into the Students table in the primary and then, within 30 seconds, connect to the secondary read-only endpoint using the Query Editor and verify the row is visible. Document the primary and secondary server names, the replication lag shown in the portal, and explain in 2–3 sentences how Active Geo-Replication differs from Auto-failover groups in terms of what automation is provided during a regional outage.
+
+### Reflection Questions
+1. In the lab you inserted two Cosmos DB documents with completely different field sets into the same container — one had `credits` and `professor` fields while the other had `format` and `enrolled` fields. In a relational database (Azure SQL Database), storing two different entity shapes in one table would require nullable columns for fields not applicable to all rows. Describe two specific scenarios where Cosmos DB's schema flexibility is a genuine advantage over the relational model, and one scenario where the lack of enforced schema could create data quality problems.
+2. The lab used Azure SQL Database's built-in Query Editor with a firewall rule allowing access from Azure services (0.0.0.0 to 0.0.0.0). A colleague argues this rule is a security risk because it allows any Azure service — not just your application — to attempt connections. Describe a more secure alternative to the 0.0.0.0 firewall rule for a production Azure SQL Database, and explain how Azure Private Endpoints would change the connection architecture entirely.

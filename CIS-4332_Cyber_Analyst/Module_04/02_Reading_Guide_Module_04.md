@@ -350,3 +350,19 @@ Exam Tip 8: Beaconing is characterized by regular, repetitive outbound connectio
 - [ ] Complete the Module 04 Lab
 - [ ] Complete the Module 04 Quiz
 - [ ] Post initial response to the Module 04 Discussion board by Wednesday at 11:59 PM
+
+---
+
+## 9. Supplemental Resources
+
+**1. Microsoft — Windows Security Event Log Reference (Event IDs)**
+<https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/security-auditing-overview>
+Microsoft's official documentation for Windows Security Event IDs, audit policy categories, and log field definitions. Use this as a reference when working through the Event ID table in Section 1 — each link leads to a detailed description of the event's fields, trigger conditions, and recommended monitoring guidance.
+
+**2. Florian Roth — Sigma Rules Repository (GitHub)**
+<https://github.com/SigmaHQ/sigma>
+Sigma is the open-source standard for writing SIEM-agnostic detection rules. The repository contains hundreds of community-contributed rules mapped to MITRE ATT&CK techniques. Reviewing a few rules for techniques you know (e.g., T1059.001 PowerShell, T1547.001 Registry Run Keys) illustrates how the log analysis concepts in this module translate into production detection logic.
+
+**3. Splunk — Search Tutorial and SPL Quick Reference**
+<https://docs.splunk.com/Documentation/Splunk/latest/SearchTutorial/WelcometotheSearchTutorial>
+Splunk's free interactive search tutorial walks through SPL query construction from basic keyword searches to stats, eval, and transaction commands. Even without a Splunk license, working through the tutorial exercises reinforces the query patterns covered in Section 5 of this guide.

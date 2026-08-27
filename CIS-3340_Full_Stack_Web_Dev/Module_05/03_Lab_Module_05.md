@@ -428,3 +428,78 @@ Submit to Canvas:
 | Search filter works and resets to page 1 on query change | 15 |
 | Required screenshots submitted | 5 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Parallel Fetch with Promise.allSettled
+
+Extend the app to fetch posts and users simultaneously, then annotate each post card with the author's name — using `Promise.allSettled` so a failure in either request degrades gracefully instead of breaking the entire page.
+
+1. Add a second fetch function that loads users from the JSONPlaceholder users endpoint:
+
+```javascript
+async function fetchUsers() {
+  const response = await fetch('https://jsonplaceholder.typicode.com/users');
+  if (!response.ok) throw new Error(`Users fetch failed: ${response.status}`);
+  return response.json();
+}
+```
+
+1. Refactor `loadPosts` to fire both fetches in parallel and handle partial failures:
+
+```javascript
+const [postsResult, usersResult] = await Promise.allSettled([
+  fetchPosts(),
+  fetchUsers()
+]);
+if (postsResult.status === 'rejected') throw postsResult.reason;
+allPosts = postsResult.value;
+const usersById = {};
+if (usersResult.status === 'fulfilled') {
+  usersResult.value.forEach(u => { usersById[u.id] = u.name; });
+}
+displayPage(1, usersById);
+```
+
+1. Pass `usersById` through `displayPage` → `renderCards` and add an author line to each card:
+
+```javascript
+const authorName = usersById[post.userId] || `User ${post.userId}`;
+```
+
+1. In DevTools Network tab, block the users endpoint by right-clicking it and selecting "Block request URL." Reload and verify that posts still render with fallback "User N" labels while the users request fails silently.
+
+### Challenge 2: Request Timeout with AbortController
+
+Add a 5-second timeout to `fetchPosts` using `AbortController` so the app shows a meaningful error if the API is unresponsive rather than waiting indefinitely.
+
+1. Wrap the fetch call in `fetchPosts` with an `AbortController` and a `setTimeout`:
+
+```javascript
+async function fetchPosts() {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 5000);
+  try {
+    const response = await fetch(API_URL, { signal: controller.signal });
+    clearTimeout(timeoutId);
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    return response.json();
+  } catch (error) {
+    if (error.name === 'AbortError') {
+      throw new Error('Request timed out after 5 seconds');
+    }
+    throw error;
+  }
+}
+```
+
+1. In DevTools Network tab, set throttling to "Slow 3G" (which simulates high latency). Reduce the timeout to 1000ms (1 second) to reliably trigger the abort on a slow connection.
+1. Click "Load Posts" and verify the error banner shows "Request timed out after 5 seconds" (or 1 second with your test value) and the Retry button appears.
+1. Reset throttling to "No throttling," restore the timeout to 5000ms, and verify posts load successfully.
+
+### Reflection Questions
+
+1. When using `Promise.allSettled` instead of `Promise.all`, what trade-off are you making between error visibility and resilience?
+2. The `AbortController` signal cancels the browser's in-flight request. Why is cancelling the request important from a server resource perspective, not just from the user experience perspective?

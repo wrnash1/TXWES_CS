@@ -222,3 +222,187 @@ An API Gateway REST API on AWS is configured to forward requests to a Lambda fun
 - Why B is correct: The `502` in API Gateway integrations is the standard error for a Lambda response that API Gateway cannot interpret — always the first thing to check in the Lambda return value.
 - Why C is incorrect: API Gateway returns `403 Missing Authentication Token` or `405 Method Not Allowed` for unrecognized routes — not `502`.
 - Why D is incorrect: CORS misconfiguration causes browser-side blocking with a specific CORS error — not a `502` status code from the server.
+
+---
+
+### Question 11 (5 points)
+
+A developer designs `GET /api/users/42/orders?status=pending`. What does the query parameter `status=pending` represent in REST conventions?
+
+- A) It identifies a specific resource called "pending" within the orders collection.
+- B) It is a filter applied to the collection of orders for user 42, returning only orders with a pending status.
+- C) It triggers a different handler function than `GET /api/users/42/orders` without the parameter.
+- D) It specifies the HTTP response status code the client expects to receive.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: Resource identifiers belong in the path segment, not the query string — `status=pending` is a filter, not an identifier.
+  - Why B is correct: Query parameters are the REST convention for filtering, sorting, and pagination of collections — they narrow a collection result without identifying a specific resource.
+  - Why C is incorrect: REST convention suggests the same handler processes the route regardless of query parameters; the handler reads the parameters to filter results.
+  - Why D is incorrect: The expected response status code is a concern of HTTP protocol, not a query parameter in the URL.
+
+---
+
+### Question 12 (5 points)
+
+Which HTTP status code should a server return when a client sends a `POST /api/users` request with a valid JSON body but an email address that already exists in the database?
+
+- A) `400 Bad Request`
+- B) `404 Not Found`
+- C) `409 Conflict`
+- D) `422 Unprocessable Entity`
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why A is incorrect: `400 Bad Request` is appropriate for malformed or missing fields — the email format may be valid; the problem is a state conflict with existing data.
+  - Why B is incorrect: `404 Not Found` means a resource does not exist — it is not used for duplicate creation attempts.
+  - Why C is correct: `409 Conflict` indicates the request could not be completed because it conflicts with the current state of the resource — a duplicate email is a classic 409 scenario.
+  - Why D is incorrect: `422 Unprocessable Entity` is used when the request is syntactically valid but semantically invalid (e.g., `age: -5`) — a duplicate email is a state conflict, not a semantic validation failure.
+
+---
+
+### Question 13 (5 points)
+
+A REST API returns the following response body for every error. Which property is most important for programmatic error handling by client code?
+
+```json
+{ "error": "User not found", "code": "USER_NOT_FOUND", "details": [] }
+```
+
+- A) `error` — because human-readable strings are easiest for client code to parse.
+- B) `code` — because machine-readable error codes allow client code to branch on specific error types without parsing natural-language strings.
+- C) `details` — because the details array contains the full error context.
+- D) The HTTP status code — the JSON body is informational only; clients should branch on the status code alone.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: Human-readable strings change between API versions and cannot be reliably parsed — they are for developer logs, not programmatic branching.
+  - Why B is correct: Machine-readable error codes like `USER_NOT_FOUND` are stable identifiers that client code can `switch` on without fragile string matching.
+  - Why C is incorrect: `details` supplements the error with field-level context — it is not the primary branching key.
+  - Why D is incorrect: HTTP status codes provide coarse-grained categories (404, 409, 422) but do not distinguish between specific error causes within the same status class — error codes fill that gap.
+
+---
+
+### Question 14 (5 points)
+
+A client sends `PUT /api/products/15` with only a `{ "price": 29.99 }` body, intending to update just the price. The server applies the body as a full replacement. What is the result?
+
+- A) The server merges the incoming price with the existing fields — PUT always performs a merge.
+- B) All fields not included in the PUT body (name, description, stock, etc.) are set to `null` or removed, because PUT replaces the entire resource representation.
+- C) The server returns `422 Unprocessable Entity` because PUT bodies must include all fields.
+- D) The server automatically uses PATCH semantics when only one field is provided.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: PUT is defined as a full replacement — it does not merge with existing values.
+  - Why B is correct: PUT semantics require the client to send the complete resource representation. Fields omitted from the body are overwritten with missing/null values, destroying existing data.
+  - Why C is incorrect: Many APIs accept partial PUT bodies without returning 422 — but the side effect is data loss, not an error response.
+  - Why D is incorrect: Servers do not automatically switch between PUT and PATCH based on body completeness — the HTTP method is explicit.
+
+---
+
+### Question 15 (5 points)
+
+What is the purpose of the `Location` header in a `201 Created` response?
+
+- A) It tells the browser to redirect to the new resource URL, loading it automatically.
+- B) It provides the URL of the newly created resource so the client can immediately access or reference it without making a separate discovery request.
+- C) It specifies the geographic region where the server stored the new resource.
+- D) It is required by the HTTP specification for all 2xx responses — omitting it causes clients to retry the request.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: A `201 Created` response does not trigger an automatic browser redirect — that behavior is associated with `301`, `302`, and `303` status codes.
+  - Why B is correct: The `Location` header in a 201 response gives the client the canonical URL of the created resource, following the REST HATEOAS principle of linking clients to the next logical state.
+  - Why C is incorrect: `Location` contains a URL path, not geographic information.
+  - Why D is incorrect: `Location` is required for 201 and 3xx responses — it is not required for all 2xx responses.
+
+---
+
+### Question 16 (5 points)
+
+An API endpoint is called `GET /api/v1/users/search?q=alice`. A colleague suggests renaming it to `GET /api/v1/users?name=alice`. Why is the colleague's suggestion more RESTful?
+
+- A) The colleague's URL uses a shorter path, which improves performance.
+- B) `search` is a verb — REST URLs should use nouns. Moving the search term to a query parameter on the collection endpoint removes the verb while achieving the same behavior.
+- C) `GET /api/v1/users/search` would conflict with `GET /api/v1/users/:id` if a user has the ID "search".
+- D) Query parameters are processed faster by API Gateway than URL path segments.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: URL length has negligible performance impact — REST conventions are about semantics, not performance.
+  - Why B is correct: REST naming rules forbid verbs in URL paths. "search" is a verb — the correct pattern uses query parameters to filter the collection resource.
+  - Why C is incorrect: While `search` could theoretically conflict with a string ID, this is a secondary concern — the primary reason is the REST convention against verbs in paths.
+  - Why D is incorrect: API Gateway routing is based on path pattern matching — query parameters and path segments have equivalent processing overhead.
+
+---
+
+### Question 17 (5 points)
+
+Which REST architectural constraint requires that each HTTP request contain all the information necessary to process it, with no server-side session state?
+
+- A) Uniform Interface
+- B) Cacheable
+- C) Stateless
+- D) Layered System
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why A is incorrect: Uniform Interface requires consistent URL, method, and representation conventions — not statelessness.
+  - Why B is incorrect: Cacheable requires responses to declare whether they can be cached — not statelessness.
+  - Why C is correct: The Stateless constraint means each request must carry all context the server needs (authentication, parameters, body) — the server stores no per-client session between requests.
+  - Why D is incorrect: Layered System allows clients to be unaware of intermediaries like proxies and CDNs — not statelessness.
+
+---
+
+### Question 18 (5 points)
+
+A developer adds a `PATCH /api/v1/users/:id/activate` endpoint to toggle a user's active status. A reviewer flags this as a REST violation. Why?
+
+- A) PATCH is not supported by all HTTP clients and should be avoided.
+- B) The endpoint contains a verb (`activate`) in the URL path — REST convention uses nouns; the correct design would be `PATCH /api/v1/users/:id` with `{ "active": true }` in the body.
+- C) User activation requires a POST request, not PATCH.
+- D) The `:id` path parameter should be a query string parameter for PATCH endpoints.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: PATCH is fully supported by all modern HTTP clients and servers — avoidance is not warranted.
+  - Why B is correct: `activate` is a verb. REST encodes actions through HTTP methods — partial state changes belong in the request body sent to the resource's canonical URL.
+  - Why C is incorrect: Whether to use POST or PATCH depends on whether you are creating a new resource or updating an existing one — toggling a field on an existing user is a PATCH operation.
+  - Why D is incorrect: Path parameters for resource identifiers are the correct REST pattern — moving them to query strings would violate the resource-identification convention.
+
+---
+
+### Question 19 (5 points)
+
+An API Gateway endpoint for `GET /api/products` returns a large JSON array. A developer wants CDN caching to serve this response directly from CloudFront without hitting the Lambda origin on every request. Which response header should the Lambda function include?
+
+- A) `X-Cache-Enable: true`
+- B) `Cache-Control: max-age=300`
+- C) `ETag: "abc123"`
+- D) `Vary: Accept-Encoding`
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: `X-Cache-Enable` is not a standard HTTP header — CloudFront does not recognize it.
+  - Why B is correct: `Cache-Control: max-age=300` instructs CloudFront (and browsers) to cache the response for 300 seconds. CloudFront uses this header to determine how long to serve the cached response before re-validating with the origin.
+  - Why C is incorrect: `ETag` is a cache validation header — it enables conditional requests but does not set a cache duration. Without `Cache-Control`, CloudFront will not cache the response.
+  - Why D is incorrect: `Vary: Accept-Encoding` instructs caches to store separate versions by encoding type — it does not enable or control caching duration.
+
+---
+
+### Question 20 (5 points)
+
+A developer receives a `429 Too Many Requests` response from an external API. What does this status code indicate and what is the standard client-side remedy?
+
+- A) The client sent a request body that is too large — reduce the payload size.
+- B) The client has exceeded the API's rate limit for the time window — implement exponential backoff and retry after the duration specified in the `Retry-After` response header.
+- C) The server is temporarily unavailable — this is equivalent to `503 Service Unavailable`.
+- D) The client's API key has been revoked due to abuse — contact the API provider to restore access.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: Oversized request bodies produce `413 Payload Too Large`, not `429`.
+  - Why B is correct: `429 Too Many Requests` specifically indicates rate limiting. The standard remedy is to honor the `Retry-After` header (if present) and implement exponential backoff to reduce request frequency.
+  - Why C is incorrect: `503 Service Unavailable` indicates server-side capacity issues — `429` is a client-side rate-limit enforcement.
+  - Why D is incorrect: A revoked API key typically produces `401 Unauthorized` or `403 Forbidden` — `429` is specifically about request frequency, not authentication status.

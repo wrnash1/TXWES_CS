@@ -321,3 +321,122 @@ Export your completed notebook as both `.ipynb` and PDF (File > Save and Export 
 * If `read_csv` raises a `FileNotFoundError`, verify the CSV is in the same folder as your notebook or provide the full file path.
 * If `seaborn` is not found, run `pip install seaborn` in a terminal or `!pip install seaborn` in a notebook cell.
 * If the PDF export fails, install `nbconvert` and a LaTeX engine, or export as HTML instead.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Automated EDA Report Function
+
+Build a reusable function `eda_report(df)` that produces a standardized exploratory data analysis summary for any pandas DataFrame.
+
+1. The function should print the following sections: (a) Shape and dtypes, (b) Null value counts and percentages per column, (c) Descriptive statistics for all numeric columns via `describe()`, (d) For each numeric column: skewness value and a one-line classification ('symmetric', 'right-skewed', or 'left-skewed' using `|skew| < 0.5` as the symmetric threshold), and (e) For each categorical column: the top 3 most frequent values and their counts.
+2. Apply `eda_report()` to the lab dataset. Then add a feature engineering step: create a `revenue_per_unit` column (revenue / units_sold, with `np.nan` where units_sold is 0), and re-run `eda_report()` on just the numeric columns. Write two sentences describing what the skewness of `revenue_per_unit` reveals about the distribution of per-unit revenue in the dataset.
+
+```python
+import pandas as pd
+import numpy as np
+
+def eda_report(df):
+    print(f"=== Shape: {df.shape} ===")
+    print(df.dtypes.to_string())
+
+    print("\n=== Null Summary ===")
+    null_pct = (df.isnull().sum() / len(df) * 100).round(2)
+    null_df = pd.DataFrame({"nulls": df.isnull().sum(), "pct": null_pct})
+    print(null_df[null_df["nulls"] > 0].to_string() if null_df["nulls"].sum() > 0
+          else "No nulls found.")
+
+    numeric_cols = df.select_dtypes(include="number").columns.tolist()
+    cat_cols = df.select_dtypes(include="object").columns.tolist()
+
+    if numeric_cols:
+        print("\n=== Descriptive Statistics (Numeric) ===")
+        print(df[numeric_cols].describe().round(2).to_string())
+        print("\n=== Skewness ===")
+        for col in numeric_cols:
+            sk = df[col].skew()
+            label = ("symmetric" if abs(sk) < 0.5
+                     else "right-skewed" if sk > 0 else "left-skewed")
+            print(f"  {col}: {sk:.3f} ({label})")
+
+    if cat_cols:
+        print("\n=== Top 3 Categorical Values ===")
+        for col in cat_cols:
+            print(f"\n  {col}:")
+            print(df[col].value_counts().head(3).to_string())
+```
+
+### Challenge 2: Time-Series Feature Engineering
+
+Extend the lab dataset with date-based feature engineering and visualize monthly trends with multiple series.
+
+1. If the lab dataset includes an `order_date` column, convert it to datetime and extract: `year`, `month`, `quarter`, `day_of_week` (0=Monday), and `is_weekend` (True/False). If the lab dataset does not have a date column, add a synthetic one by generating 100 random dates in 2024 using `pd.date_range('2024-01-01', '2024-12-31')` randomly sampled. Group by `year` and `month`, computing total revenue and order count per month. Plot a dual-axis line chart: revenue on the left y-axis and order count on the right y-axis. Save as `monthly_trends.png`.
+2. Create a `day_of_week_summary` groupby aggregation showing average revenue and order count for each day of the week. Sort by day number (0–6). Plot a bar chart with day names on the x-axis. Save as `dow_revenue.png`. Write two sentences explaining which day of the week appears to be highest-revenue and what a business analyst might do with this insight for staffing or marketing planning.
+
+```python
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.ticker as mticker
+
+# If your df already has order_date, skip the synthetic generation
+np.random.seed(42)
+n = len(df)
+df["order_date"] = pd.to_datetime(
+    np.random.choice(pd.date_range("2024-01-01", "2024-12-31"), size=n)
+)
+
+df["year"]        = df["order_date"].dt.year
+df["month"]       = df["order_date"].dt.month
+df["quarter"]     = df["order_date"].dt.quarter
+df["day_of_week"] = df["order_date"].dt.dayofweek
+df["is_weekend"]  = df["day_of_week"] >= 5
+
+monthly = (
+    df.groupby(["year", "month"])
+    .agg(total_revenue=("revenue", "sum"), order_count=("revenue", "count"))
+    .reset_index()
+    .sort_values(["year", "month"])
+)
+monthly["period"] = monthly["year"].astype(str) + "-" + monthly["month"].astype(str).str.zfill(2)
+
+fig, ax1 = plt.subplots(figsize=(11, 5))
+ax2 = ax1.twinx()
+ax1.plot(monthly["period"], monthly["total_revenue"], color="steelblue",
+         marker="o", linewidth=2, label="Revenue")
+ax2.plot(monthly["period"], monthly["order_count"], color="darkorange",
+         marker="s", linewidth=2, linestyle="--", label="Order Count")
+ax1.set_ylabel("Total Revenue ($)", color="steelblue")
+ax2.set_ylabel("Order Count", color="darkorange")
+ax1.set_title("Monthly Revenue and Order Count (2024)", fontsize=13, fontweight="bold")
+ax1.yaxis.set_major_formatter(mticker.FuncFormatter(lambda x, _: f"${x:,.0f}"))
+plt.xticks(rotation=40, ha="right")
+fig.legend(loc="upper left", bbox_to_anchor=(0.1, 0.9))
+plt.tight_layout()
+plt.savefig("monthly_trends.png", dpi=150)
+plt.show()
+
+day_names = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+dow = (
+    df.groupby("day_of_week")
+    .agg(avg_revenue=("revenue", "mean"), order_count=("revenue", "count"))
+    .reset_index()
+)
+dow["day_name"] = dow["day_of_week"].map(dict(enumerate(day_names)))
+
+fig, ax = plt.subplots(figsize=(8, 4))
+ax.bar(dow["day_name"], dow["avg_revenue"], color="steelblue")
+ax.yaxis.set_major_formatter(mticker.FuncFormatter(lambda x, _: f"${x:,.0f}"))
+ax.set_title("Average Revenue by Day of Week", fontsize=13, fontweight="bold")
+ax.set_xlabel("Day of Week")
+ax.set_ylabel("Average Revenue ($)")
+plt.tight_layout()
+plt.savefig("dow_revenue.png", dpi=150)
+plt.show()
+```
+
+### Reflection Questions
+
+1. In Challenge 1, the `eda_report()` function uses `|skew| < 0.5` as the threshold for calling a distribution symmetric. Is this threshold universally appropriate? Describe a domain (e.g., financial risk modeling, healthcare) where you would use a stricter threshold and explain why the choice of skewness threshold matters for downstream analytical decisions.
+2. In Challenge 2, you created `is_weekend` as a boolean feature. In a machine learning context, boolean features often need to be converted to integers (0/1) before being passed to a model. What pandas method would you use for this conversion, and what is the risk of leaving boolean features unconverted in a scikit-learn pipeline?

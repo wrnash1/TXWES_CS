@@ -207,3 +207,209 @@ Coldline would incur high retrieval costs for the actively queried recent files.
 versioning does not deduplicate content — it keeps multiple versions of each object,
 increasing storage. Copying to a different region adds egress costs and operational
 complexity.
+
+---
+
+### Question 11 (5 points)
+
+A new GCP engineer asks: "I created a budget alert for $500. After we hit $600 this
+month, why are our VMs still running?" Which response is correct?
+
+* A) The VMs are still running because the budget alert was not attached to the
+  correct billing account
+* B) Cloud Billing budget alerts are notification-only tools; they send emails when
+  thresholds are exceeded but do not stop or modify any running resources
+* C) The VMs are still running because the team has not acknowledged the alert in
+  the Cloud Console
+* D) Budget alerts only stop new resource creation; existing resources continue
+  running until manually stopped
+
+* **Correct Answer:** B
+* **Distractor Analysis:**
+  * A) Whether the budget is attached to the correct billing account affects which projects' spending it tracks, but even a correctly configured budget would not stop VMs; the notification-only behavior is fundamental to how budgets work.
+  * C) Cloud Billing budget alerts do not require acknowledgment in the Console to take effect; they fire the email notification automatically when the threshold is crossed.
+  * D) Budget alerts do not block new resource creation either; they have absolutely no enforcement capability on any GCP API calls or resource operations.
+
+---
+
+### Question 12 (5 points)
+
+Which GCP service provides automated recommendations to right-size an oversized
+Compute Engine VM based on its historical CPU and memory utilization?
+
+* A) Cloud Monitoring alert policies with VM metric thresholds
+* B) Security Command Center's vulnerability findings
+* C) The Recommender service with the `MachineTypeRecommender` recommender type
+* D) Cloud Profiler continuous profiling on the VM's processes
+
+* **Correct Answer:** C
+* **Distractor Analysis:**
+  * A) Cloud Monitoring alert policies fire notifications when metrics cross thresholds; they identify performance anomalies but do not generate machine type change recommendations.
+  * B) Security Command Center identifies security vulnerabilities and misconfigurations; it does not analyze compute utilization or recommend cost optimizations.
+  * D) Cloud Profiler analyzes CPU and memory usage within application code using instrumentation; it does not produce GCP infrastructure change recommendations.
+
+---
+
+### Question 13 (5 points)
+
+A company has 10 GCP projects all linked to the same billing account. The finance
+team wants to receive a single bill but also see a per-project cost breakdown.
+Which billing export configuration supports this?
+
+* A) Link each project to its own separate billing account and export each account
+  to a separate BigQuery dataset
+* B) Keep all projects under one billing account and enable detailed billing export
+  to BigQuery; query by `project.id` to see per-project costs
+* C) Create 10 separate Cloud Billing Reports dashboards, one per project
+* D) Enable Cloud Monitoring billing metrics and filter by project in Metrics Explorer
+
+* **Correct Answer:** B
+* **Distractor Analysis:**
+  * A) Using separate billing accounts produces separate invoices and complicates centralized payment; the consolidated billing model keeps a single invoice while enabling per-project analysis via BigQuery export.
+  * C) Cloud Billing Reports dashboards show costs for the billing account's projects but do not support custom SQL analysis or exporting per-project breakdowns for finance systems.
+  * D) Cloud Monitoring does not contain billing cost data; Metrics Explorer shows operational metrics (CPU, latency) but not financial charges.
+
+---
+
+### Question 14 (5 points)
+
+A team purchases a 1-year resource-based Committed Use Discount for 10 vCPUs
+of `N2` in `us-central1`. The team subsequently migrates their workload to
+`us-east1` N2 VMs. What happens to the CUD?
+
+* A) The CUD automatically transfers to `us-east1` to follow the workload
+* B) The CUD continues to apply to any `N2` usage in `us-central1`; since the
+  VMs moved to `us-east1`, the committed capacity in `us-central1` is billed
+  whether used or not
+* C) The CUD is cancelled and a partial refund is issued for the unused months
+* D) The CUD is paused until the workload returns to `us-central1`
+
+* **Correct Answer:** B
+* **Distractor Analysis:**
+  * A) Resource-based CUDs are region-specific; they do not follow workloads to other regions. Separate CUDs must be purchased for each region.
+  * C) GCP CUDs are non-cancellable commitments; there is no refund mechanism for unused committed capacity. The commitment must be honored for the full term.
+  * D) CUDs are not pausable; the commitment to pay for the reserved capacity in the specified region continues regardless of actual usage.
+
+---
+
+### Question 15 (5 points)
+
+A company's Cloud Billing account shows unexpectedly high network egress charges.
+They suspect data is being transferred out of GCP to the internet from a specific
+project. Which tool and query approach identifies the exact project and destination
+region responsible for the egress charges?
+
+* A) Cloud Monitoring Network dashboard showing bytes transmitted per VM
+* B) VPC Flow Logs exported to BigQuery — query by destination IP and project
+* C) Cloud Billing detailed export in BigQuery — query by `service.description`,
+  `project.id`, and `sku.description` filtering for `Egress`
+* D) Cloud Logging Admin Activity logs — filter for network resource modifications
+
+* **Correct Answer:** C
+* **Distractor Analysis:**
+  * A) Cloud Monitoring shows network bytes transmitted as an operational metric but does not contain cost data; you can see which VM sent the most bytes but not the corresponding dollar charges or destination region.
+  * B) VPC Flow Logs show network flow records (source/destination IP, bytes) and can help understand traffic patterns, but they do not contain billing cost data; identifying the dollar amount of egress charges requires the billing export.
+  * D) Admin Activity audit logs record GCP API calls that create or modify resources; they do not contain network traffic or billing cost data.
+
+---
+
+### Question 16 (5 points)
+
+Which Compute Engine VM pricing model applies a discount automatically and
+incrementally as a VM runs longer within a calendar month, with no commitment
+required?
+
+* A) Committed Use Discount (CUD)
+* B) Spot VM pricing
+* C) Sustained Use Discount (SUD)
+* D) Extended Use Discount (EUD)
+
+* **Correct Answer:** C
+* **Distractor Analysis:**
+  * A) CUDs require an explicit 1- or 3-year commitment purchase; they are not automatic and do not apply incrementally based on monthly runtime.
+  * B) Spot VM pricing is a flat reduced rate (up to 91% off) for preemptible VMs; it is not a discount that increases based on runtime duration within a month.
+  * D) Extended Use Discount is not a GCP pricing concept; this option is a distractor.
+
+---
+
+### Question 17 (5 points)
+
+A team enables the Cloud Billing standard export to BigQuery. After 48 hours, they
+run a query but find the BigQuery table is empty. What is the most likely cause?
+
+* A) Standard billing export has a 48-hour delay; data will appear after 72 hours
+* B) The BigQuery dataset is in a different region than the billing account
+* C) Billing export was enabled but the BigQuery dataset was created after the
+  export was configured, causing the export to fail silently
+* D) The BigQuery dataset and the billing export must be in the same GCP project
+  as the billing account's linked projects
+
+* **Correct Answer:** C
+* **Distractor Analysis:**
+  * A) Standard billing export typically populates within a few hours; a 48-hour wait is not a documented delay. Empty data after 48 hours indicates a configuration error, not a propagation delay.
+  * B) The billing export to BigQuery does not require the dataset to be in any specific region relative to the billing account; the export works across regions.
+  * D) The BigQuery dataset for billing export does not need to be in the same project as the linked projects; it only needs to be accessible to the Cloud Billing export service account.
+
+---
+
+### Question 18 (5 points)
+
+A startup uses GCP primarily for Cloud Run and Cloud Storage. Neither service
+uses Compute Engine VMs. Which discount type can reduce their Cloud Run costs?
+
+* A) Sustained Use Discounts — automatically applied to Cloud Run requests above
+  25% monthly utilization
+* B) Resource-based Committed Use Discounts for Cloud Run vCPU and memory
+* C) Spend-based Committed Use Discounts — commit to a minimum monthly dollar
+  spend on Cloud Run
+* D) Neither CUDs nor SUDs apply to Cloud Run; only on-demand pricing is
+  available
+
+* **Correct Answer:** C
+* **Distractor Analysis:**
+  * A) Sustained Use Discounts apply to Compute Engine N1 and N2 VMs only; they do not apply to Cloud Run, which is billed on actual request duration.
+  * B) Resource-based CUDs are specific to Compute Engine machine types; they do not apply to Cloud Run, which uses serverless pricing.
+  * D) Spend-based CUDs do apply to services like Cloud Run; a minimum monthly spend commitment provides a percentage discount on actual usage.
+
+---
+
+### Question 19 (5 points)
+
+A team uses labels to track costs by environment (`env: production`, `env: staging`).
+They query the BigQuery billing export and find that many resources show no label
+data. What is the most likely reason?
+
+* A) Labels are not exported to the BigQuery billing dataset
+* B) Resources created before labels were applied, or resources that do not support
+  labeling (e.g., some network resources), do not have label data in the export
+* C) The BigQuery billing export only includes label data for Compute Engine resources
+* D) Labels must be applied at the billing account level, not the resource level, to
+  appear in billing exports
+
+* **Correct Answer:** B
+* **Distractor Analysis:**
+  * A) Labels are included in the BigQuery billing export in the `labels` repeated field; absence of label data indicates the resources were not labeled, not that labels are excluded from the export.
+  * C) The BigQuery billing export includes labels for all GCP resources that support labeling, not just Compute Engine; Storage buckets, BigQuery datasets, Cloud Run services, and many others support labels.
+  * D) Labels are applied at the resource level (VM, bucket, etc.), not at the billing account level; applying them at the billing account level is not how GCP resource labeling works.
+
+---
+
+### Question 20 (5 points)
+
+An organization wants to automatically disable billing on a project when its
+monthly spend exceeds $1,000 to prevent runaway costs. A budget alert with a
+$1,000 threshold is already configured. What additional configuration is required?
+
+* A) Enable the "auto-stop" option on the budget configuration
+* B) Configure a Pub/Sub topic on the budget notification, then deploy a Cloud
+  Function that calls `billing.projects.updateBillingInfo` to unlink the billing
+  account when triggered
+* C) Set a project-level spending quota to $1,000 in the GCP Console
+* D) Enable VPC Service Controls on the project to block API calls after the
+  budget is exceeded
+
+* **Correct Answer:** B
+* **Distractor Analysis:**
+  * A) There is no "auto-stop" option on Cloud Billing budget alerts; budgets are notification-only by default and require custom automation for enforcement.
+  * C) GCP does not have a "spending quota" at the project level; quotas in GCP limit API call rates and resource quantities, not dollar amounts.
+  * D) VPC Service Controls restrict which networks and identities can access GCP services; they do not have any integration with billing spend thresholds.

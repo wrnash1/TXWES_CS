@@ -161,6 +161,24 @@ Scrum's three empirical pillars:
 
 ---
 
+## 9. Supplemental Resources
+
+The following free, open-access resources go deeper on Module 01 topics:
+
+**1. The 2020 Scrum Guide — Scrum.org**
+<https://scrumguides.org/scrum-guide.html>
+The authoritative, free, 13-page specification for the Scrum framework. Every PSM I question is answered by this document. Read the "Scrum Theory" and "Scrum Values" sections before attempting any exam practice.
+
+**2. Agile Manifesto and Twelve Principles — agilemanifesto.org**
+<https://agilemanifesto.org/principles.html>
+The original 2001 manifesto text plus the twelve supporting principles. Essential reading for understanding what Agile means philosophically before applying any specific framework.
+
+**3. Barry Boehm, "A Spiral Model of Software Development and Enhancement" (IEEE Computer, 1988)**
+<https://ieeexplore.ieee.org/document/59>
+The original peer-reviewed paper introducing the Spiral model and the cost-of-change concept. IEEE Xplore provides free access to this landmark article. Focus on Figure 1 (the spiral diagram) and the risk management quadrant descriptions.
+
+---
+
 ## 10. Study Checklist
 
 - [ ] Define software engineering in your own words and explain the 1968 NATO crisis that motivated it

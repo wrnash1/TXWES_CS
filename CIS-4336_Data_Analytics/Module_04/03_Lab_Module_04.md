@@ -256,3 +256,86 @@ Compile all queries, outputs, and written answers into a single PDF or Word docu
 | C | JOIN Queries | 25 |
 | D | Window Functions | 30 |
 | **Total** | | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Customer Cohort Analysis with Window Functions
+
+Build a month-over-month customer cohort analysis using the lab database.
+
+1. Write a CTE called `customer_monthly` that aggregates each customer's total spend and order count per calendar month (year + month extracted from `order_date`). Include `customer_id` and join to `customers` to include `first_name` and `loyalty_tier`.
+2. Using a second CTE on top of `customer_monthly`, add three window function columns: `cumulative_spend` (running total of spend per customer ordered by month), `monthly_rank` (rank of spend within each month across all customers, highest first), and `spend_vs_prev_month` (difference from the prior month's spend for the same customer using `LAG`).
+3. In the outer query, filter to return only rows where `monthly_rank <= 3` (top 3 spenders each month). Print the results and write two sentences identifying which customer appears most frequently in the top 3 and what this suggests about their purchasing behavior.
+
+```python
+query = """
+WITH customer_monthly AS (
+    SELECT c.customer_id, c.first_name, c.loyalty_tier,
+           strftime('%Y', o.order_date) AS yr,
+           strftime('%m', o.order_date) AS mo,
+           SUM(o.total_amount) AS monthly_spend,
+           COUNT(o.order_id) AS order_count
+    FROM orders o
+    JOIN customers c ON o.customer_id = c.customer_id
+    GROUP BY c.customer_id, yr, mo
+),
+ranked AS (
+    SELECT *,
+           SUM(monthly_spend) OVER (
+               PARTITION BY customer_id ORDER BY yr, mo
+           ) AS cumulative_spend,
+           RANK() OVER (
+               PARTITION BY yr, mo ORDER BY monthly_spend DESC
+           ) AS monthly_rank,
+           monthly_spend - LAG(monthly_spend, 1) OVER (
+               PARTITION BY customer_id ORDER BY yr, mo
+           ) AS spend_vs_prev_month
+    FROM customer_monthly
+)
+SELECT * FROM ranked WHERE monthly_rank <= 3 ORDER BY yr, mo, monthly_rank;
+"""
+df_cohort = pd.read_sql_query(query, conn)
+print(df_cohort)
+```
+
+### Challenge 2: Product Performance Dashboard Query
+
+Write a single analytical SQL query that produces a complete product performance summary suitable for an executive dashboard.
+
+1. Using a CTE, compute for each product: total units sold, total revenue, average order value, number of distinct customers who purchased it, and its revenue rank among all products.
+2. In the outer query, add a `performance_tier` classification using a CASE statement: products with revenue rank 1–3 are `'Top'`, ranks 4–6 are `'Mid'`, all others are `'Tail'`. Include the product name and category.
+3. Load the result into a pandas DataFrame, then use `groupby("performance_tier")["total_revenue"].sum()` to show how much total revenue each performance tier contributes. Print the tier summary and write one sentence interpreting the revenue concentration.
+
+```python
+query_perf = """
+WITH product_stats AS (
+    SELECT p.product_id, p.product_name, p.category,
+           SUM(o.quantity) AS units_sold,
+           SUM(o.total_amount) AS total_revenue,
+           AVG(o.total_amount) AS avg_order_value,
+           COUNT(DISTINCT o.customer_id) AS distinct_customers,
+           RANK() OVER (ORDER BY SUM(o.total_amount) DESC) AS revenue_rank
+    FROM orders o
+    JOIN products p ON o.product_id = p.product_id
+    GROUP BY p.product_id, p.product_name, p.category
+)
+SELECT *,
+       CASE
+           WHEN revenue_rank <= 3 THEN 'Top'
+           WHEN revenue_rank <= 6 THEN 'Mid'
+           ELSE 'Tail'
+       END AS performance_tier
+FROM product_stats
+ORDER BY revenue_rank;
+"""
+df_perf = pd.read_sql_query(query_perf, conn)
+print(df_perf)
+print(df_perf.groupby("performance_tier")["total_revenue"].sum())
+```
+
+### Reflection Questions
+
+1. In Challenge 1, the `spend_vs_prev_month` column returns NULL for a customer's first month. How would you handle this NULL in a dashboard context — replace it with zero, leave it as NULL, or use a different approach? Justify your choice.
+2. In Challenge 2, you used a CASE statement to classify products into performance tiers. What advantage does this derived classification provide over simply sorting by `revenue_rank` in downstream reporting?

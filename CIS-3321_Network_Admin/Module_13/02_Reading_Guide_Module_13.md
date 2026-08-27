@@ -353,3 +353,33 @@ Add 20% buffer: 2.61 × 1.20 = 3.13 Mbps required per direction.
 9. What is Call Admission Control and what problem does it solve?
 
 10. Explain the trade-off involved in configuring a jitter buffer depth.
+
+---
+
+## 9. Supplemental Resources
+
+The following free resources extend Module 13 content on VoIP, SIP, RTP, and QoS.
+
+**1. Professor Messer — VoIP and UC Free Videos (N10-008)**
+URL: https://www.professormesser.com/network-plus/n10-008/n10-008-video/
+Relevance: Professor Messer covers VoIP protocols (SIP, RTP, H.323), QoS markings (DSCP EF), jitter, latency, and VoIP quality metrics in videos directly aligned to Network+ exam objectives.
+
+**2. RFC 3261 — SIP: Session Initiation Protocol (Free)**
+URL: https://datatracker.ietf.org/doc/html/rfc3261
+Relevance: The authoritative SIP specification. Sections 8 (General User Agent Behavior) and 17 (Transactions) explain the INVITE-200OK-ACK call setup sequence. Sections on REGISTER and BYE clarify endpoint registration and call teardown tested on the exam.
+
+**3. Cisco — QoS Design Guide for Voice and Video (Free)**
+URL: https://www.cisco.com/c/en/us/td/docs/solutions/Enterprise/WAN_and_MAN/QoS_SRND/QoS_SRND_Book.html
+Relevance: Cisco's authoritative free QoS design guide covering DSCP markings, LLQ configuration, jitter buffer design, and bandwidth calculation for VoIP — directly applicable to the QoS concepts and bandwidth formulas in this module.
+
+**4. Wireshark — VoIP Analysis Tutorial (Free)**
+URL: https://wiki.wireshark.org/VoIP_calls
+Relevance: Wireshark's free VoIP call analysis documentation covers the RTP stream analysis feature, SIP call flow reconstruction, and quality metric extraction (jitter, packet loss, delta) used in the Module 13 lab.
+
+**5. ITU-T G.114 Recommendation (Free Abstract)**
+URL: https://www.itu.int/rec/T-REC-G.114/en
+Relevance: The ITU-T recommendation that defines the 150 ms one-way latency threshold for acceptable voice quality. The abstract is freely accessible and provides the authoritative source for the QoS thresholds referenced in Network+ exam questions.
+
+---
+
+*CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash*

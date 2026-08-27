@@ -269,4 +269,42 @@ Submit to the Module 06 Lab assignment in the course LMS before the posted deadl
 
 ---
 
-CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash
+## Part 9 — Challenge Exercise
+
+These advanced steps extend Module 06 with WPA3 configuration, RADIUS authentication simulation, and wireless channel analysis.
+
+### Challenge Step 1: Configure WPA3-Personal in Packet Tracer
+
+1. In your existing Packet Tracer wireless topology, access the wireless router's GUI configuration.
+2. Under Wireless Security settings, change the authentication method from WPA2-Personal/AES to WPA3-Personal (SAE) if your Packet Tracer version supports it. If not, document what would change in a WPA3 deployment.
+3. Update the wireless client configurations to use WPA3.
+4. Verify that both laptops still connect and can ping the router.
+
+**Challenge Question 1:** WPA3 replaces WPA2's PSK (Pre-Shared Key) exchange with SAE (Simultaneous Authentication of Equals). Explain the key security improvement SAE provides over PSK. Specifically, what attack does SAE prevent that WPA2-PSK is vulnerable to, and what property (relating to session keys) does SAE provide that WPA2-PSK does not?
+
+### Challenge Step 2: Simulate 802.1X/RADIUS Enterprise Authentication
+
+1. Add a server device to your Packet Tracer topology and configure it as an AAA/RADIUS server:
+   - Server Services → AAA → enable
+   - Add a network client entry for the wireless router IP with shared secret: `RadiusKey123`
+   - Add user accounts: `user1 / Password1` and `user2 / Password2`
+2. Configure the wireless router to use WPA2-Enterprise (802.1X) authentication and point to the RADIUS server IP.
+3. Configure each laptop's wireless profile to use 802.1X with one of the user accounts.
+4. Verify that each laptop authenticates with its own credentials and receives network access.
+
+**Challenge Question 2:** In WPA2-Enterprise, there are three 802.1X roles: the Supplicant, the Authenticator, and the Authentication Server. Identify which device in your Packet Tracer topology fills each role. Describe the EAP exchange sequence: what messages are exchanged between each role during a successful authentication?
+
+### Challenge Step 3: Analyze Your Local Wireless Environment for Security Issues
+
+1. On your real computer (not Packet Tracer), run a wireless scan using the command from Part 1 of the base lab.
+2. For each visible network, record: SSID, BSSID, signal strength, channel, and security type.
+3. Identify any of the following security concerns:
+   - Any network using WEP or no security (open)
+   - Any networks on the same channel as a nearby network (potential co-channel interference)
+   - Any networks with a hidden SSID (blank SSID field) — note these as potential security-through-obscurity configurations
+
+**Challenge Question 3:** For each security concern you identified (open networks, WEP, co-channel interference, hidden SSIDs), explain the specific risk and the recommended remediation. If you found a hidden SSID network, explain why SSID hiding is NOT a sufficient security measure and how an attacker can trivially discover hidden SSIDs using passive monitoring tools.
+
+---
+
+*CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash*

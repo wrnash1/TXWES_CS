@@ -384,3 +384,21 @@ Submit to Canvas:
 | AVL guarantee | O(log n) height always; ≤ 2 rotations per insert |
 | Red-Black | 5 properties; height ≤ 2 log n; ≤ 3 rotations per insert or delete |
 | Production use | Java TreeMap, C++ std::map, Linux scheduler — all Red-Black |
+
+---
+
+## Part 9 — Challenge Exercise
+
+These steps are **optional** and ungraded. They are designed for students who want to deepen their understanding beyond the core lab.
+
+### 9.1 — AVL Delete with Rebalancing
+
+Extend your `AVLNode`/`avl_insert` implementation to support `avl_delete(root, value)`. Deletion in an AVL tree requires finding and removing the node (using the inorder successor for two-child cases, as in a plain BST), then updating heights and checking balance factors on the way back up the recursion stack — potentially triggering O(log n) rotations. Implement the delete function, verify it on a sequence that forces rebalancing after deletion (e.g., build `[5, 3, 7, 1, 4]` then delete 7 to cause an LL imbalance), and confirm the tree remains balanced after each deletion.
+
+### 9.2 — Height Comparison: Sorted vs Random Insertion
+
+Write a script that builds two BSTs from the same n values — one inserted in sorted order, one in random order — and measures the resulting tree height for each. Run the experiment for n = 100, 1,000, and 10,000. Compare the results against the theoretical O(n) worst-case height for sorted insertion and the O(log n) expected height for random insertion. Then repeat the same insertion sequence using your AVL tree and confirm the AVL height stays at or below 1.44 × log₂(n) in all cases. Plot or print a table comparing the three heights.
+
+### 9.3 — Red-Black Insertion Trace
+
+Using Python, implement a Red-Black tree `rb_insert` that handles the three standard fixup cases: (1) uncle is red — recolor; (2) uncle is black, new node forms a triangle — rotate to make it a line; (3) uncle is black, new node forms a line — rotate and recolor. Verify the implementation preserves all five Red-Black properties after inserting the sequence `[10, 20, 30, 15, 25, 5]` by writing an assertion function that checks all five properties on the resulting tree. This is the most challenging exercise in the module — refer to CLRS Chapter 13 for the fixup cases.

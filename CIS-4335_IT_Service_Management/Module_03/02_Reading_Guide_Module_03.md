@@ -221,3 +221,19 @@ The exam often presents a scenario and asks which dimension a particular aspect 
 * [ ] Take the Module 03 Quiz.
 * [ ] Post your initial discussion response by Wednesday at 11:59 PM.
 * [ ] Reply to at least two classmates by Sunday at 11:59 PM.
+
+---
+
+## Supplemental Resources
+
+**1. AXELOS — ITIL 4 Four Dimensions of Service Management**
+<https://www.axelos.com/resource-hub/blog/itil-4-the-four-dimensions-of-service-management>
+The official AXELOS explanation of all four dimensions with examples of how each applies to service design and delivery decisions. Use this alongside the module reading guide to verify definitions and scenarios.
+
+**2. ISACA — PESTLE Analysis for IT Risk Management**
+<https://www.isaca.org/resources/news-and-trends/isaca-now-blog/2020/using-pestle-analysis-in-it-risk-management>
+A practitioner article applying the PESTLE framework to IT governance and risk contexts. Reinforces how external factors identified in PESTLE map directly to the four-dimensional service management model.
+
+**3. CIO.com — IT Change Management and People Dimension**
+<https://www.cio.com/article/change-management-in-it-projects.html>
+A practitioner guide on managing people-side challenges during IT service transformations. Directly relevant to the Organizations and People dimension and how culture, training, and role clarity affect service outcomes.

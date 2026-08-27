@@ -286,3 +286,19 @@ Work through each item before the Module 02 quiz.
 - [ ] Reproduce the training curve plot using placeholder loss values
 - [ ] Build a `tf.data.Dataset` from NumPy arrays with shuffle, batch, and prefetch
 - [ ] Convert a TensorFlow tensor to NumPy using `.numpy()`
+
+---
+
+## 9. Supplemental Resources
+
+**1. NumPy Official Documentation — Array Creation and Indexing**
+<https://numpy.org/doc/stable/user/basics.html>
+The authoritative reference for NumPy array creation, axis-based operations, broadcasting rules, and reshaping. The "Absolute Beginner's Guide" section provides concise worked examples for all the patterns used in this module's lab.
+
+**2. Pandas User Guide — Working with Missing Data**
+<https://pandas.pydata.org/docs/user_guide/missing_data.html>
+Official Pandas documentation covering `dropna`, `fillna`, imputation strategies, and detection of missing values. Includes examples for all the cleaning patterns in Part 2 of the lab.
+
+**3. TensorFlow tf.data Guide — Building Input Pipelines**
+<https://www.tensorflow.org/guide/data>
+Google's official guide to `tf.data.Dataset` covering `from_tensor_slices`, `shuffle`, `batch`, `prefetch`, and `map`. Includes performance benchmarks showing why shuffle-before-batch and prefetch matter for training throughput.

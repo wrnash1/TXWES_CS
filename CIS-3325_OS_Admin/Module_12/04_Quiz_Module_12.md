@@ -195,3 +195,230 @@ Distractor Analysis:
 - Why B is incorrect: 180 ms await is high even for a spinning HDD (acceptable range is up to ~50 ms for HDDs, 10-20 ms for SSDs). Values this high indicate severe I/O contention or a failing/degraded disk, not normal operation.
 - Why C is incorrect: `%util` in iostat measures the percentage of time the device was busy processing I/O requests — it is a utilization/saturation metric, not a disk space metric. Disk space is checked with `df -h`. A `%util` of 98% means the disk was busy 98% of the time, not that it is 98% full.
 - Why D is incorrect: High `await` can be caused by I/O saturation, a slow or failing disk, RAID degradation, or intensive workloads — not exclusively by swap activity. Swap-induced I/O would show up in vmstat's `si`/`so` columns and would not necessarily produce 180 ms await values. The correct tool for process-level I/O attribution is `iotop`.
+
+---
+
+**Question 11**
+
+An administrator runs `journalctl -p err -b` and sees no output. They then run
+`journalctl -p warning -b` and see 23 entries. Which statement correctly explains this?
+
+- A) The -p flag filters by exact priority only; err and warning are different priorities, so separate results are expected.
+- B) journalctl -p PRIORITY shows messages at that priority level and all higher severity levels. err (priority 3) shows errors, critical, alert, and emergency. warning (priority 4) shows warnings plus all higher severity levels including err — but if there are no entries at priorities 0-3 this boot, -p err returns nothing.
+- C) The systemd journal on this system is corrupted. Run journalctl --verify to check integrity.
+- D) -p err only shows kernel messages. -p warning shows both kernel and service messages.
+
+Correct Answer: B) journalctl -p PRIORITY shows messages at that priority level and all higher severity levels. err (priority 3) shows errors, critical, alert, and emergency. warning (priority 4) shows warnings plus all higher severity levels including err — but if there are no entries at priorities 0-3 this boot, -p err returns nothing.
+
+Distractor Analysis:
+
+- Why A is incorrect: journalctl -p does not filter by exact priority only. It shows the specified priority and all higher severity levels (lower priority numbers). The question is testing whether students understand the direction of the priority scale and the inclusive filtering behavior.
+- Why C is incorrect: No output from a specific priority filter on a healthy system is normal and expected when there are simply no messages at that severity level. It does not indicate journal corruption. --verify checks journal file integrity but would not explain empty priority filter results.
+- Why D is incorrect: The journalctl -p flag filters by syslog priority level across all sources — kernel messages, systemd units, and user services alike. There is no distinction between kernel and service filtering in the -p flag.
+
+---
+
+**Question 12**
+
+A system administrator needs to find all log entries related to failed sudo attempts in
+the last 24 hours on an Ubuntu 22.04 system. Which command is most appropriate?
+
+- A) grep "sudo" /var/log/auth.log | tail -100
+- B) journalctl -u sudo --since "24 hours ago"
+- C) journalctl --since "24 hours ago" | grep -i "sudo.*incorrect\|sudo.*authentication failure"
+- D) cat /var/log/secure | grep FAILED
+
+Correct Answer: C) journalctl --since "24 hours ago" | grep -i "sudo.*incorrect\|sudo.*authentication failure"
+
+Distractor Analysis:
+
+- Why A is incorrect: grep "sudo" /var/log/auth.log would match many sudo lines including successful ones. The tail -100 limit may miss relevant entries from earlier in the day. Using --since in journalctl is more precise than tail for time-based filtering.
+- Why B is incorrect: sudo is not a systemd service unit with its own journal identifier; -u sudo would produce no results. sudo log entries are written through PAM to the auth facility, not as a named systemd unit.
+- Why D is incorrect: /var/log/secure is the authentication log path on RHEL/CentOS systems, not Ubuntu 22.04. On Ubuntu, authentication logs are in /var/log/auth.log. Using the wrong path produces no output, not an error, which makes this a silent failure.
+
+---
+
+**Question 13**
+
+An administrator configures logrotate with this stanza for a custom application log:
+
+```
+/var/log/myapp/app.log {
+    daily
+    rotate 5
+    compress
+    delaycompress
+    missingok
+    notifempty
+    create 0640 www-data adm
+    postrotate
+        systemctl reload myapp
+    endscript
+}
+```
+
+What does `delaycompress` accomplish in this configuration?
+
+- A) It delays the logrotate job by one hour to avoid running during peak load.
+- B) It compresses all rotated files except the most recently rotated one, so the application can still write to the uncompressed previous log during the current rotation cycle.
+- C) It prevents compression until the log file reaches the size limit defined by the size directive.
+- D) It delays compression until the next system reboot.
+
+Correct Answer: B) It compresses all rotated files except the most recently rotated one, so the application can still write to the uncompressed previous log during the current rotation cycle.
+
+Distractor Analysis:
+
+- Why A is incorrect: delaycompress has no effect on scheduling or timing of the logrotate job. Logrotate scheduling is handled by cron or systemd timers, not by directives in the logrotate configuration stanza.
+- Why C is incorrect: delaycompress is not related to file size. The size directive controls when rotation is triggered based on file size; delaycompress only controls whether the most recent rotated file is compressed immediately or deferred to the next rotation cycle.
+- Why D is incorrect: delaycompress defers compression by one rotation cycle (typically one day with the daily directive), not until the next reboot. The deferred file gets compressed on the following logrotate run.
+
+---
+
+**Question 14**
+
+An administrator runs `vmstat 1 5` and consistently sees the `r` (run queue) column showing
+values of 12-15 on a 4-core system, while `id` (idle) shows 0. What does this indicate?
+
+- A) The system has 12-15 processes in memory, which is normal for a modern Linux server.
+- B) CPU saturation: more processes are ready to run than there are CPU cores to execute them, causing scheduling delays. The system is overloaded.
+- C) The `r` column shows the number of running threads, not processes. 12-15 threads across 4 cores is normal.
+- D) The run queue is high because the system is using a lot of swap. Increase the swap partition size.
+
+Correct Answer: B) CPU saturation: more processes are ready to run than there are CPU cores to execute them, causing scheduling delays. The system is overloaded.
+
+Distractor Analysis:
+
+- Why A is incorrect: The `r` column in vmstat counts processes in the run queue — processes that are ready to run but waiting for CPU time, plus processes currently running. It does not count all processes in memory (that would be in the hundreds on a typical server). An r value greater than the number of CPU cores indicates scheduling contention.
+- Why C is incorrect: The `r` column counts runnable processes (threads), not all threads. The relevant threshold for saturation is the number of CPU cores. Values consistently above the core count indicate CPU saturation regardless of whether they are processes or threads.
+- Why D is incorrect: Swap activity is indicated by the `si` (swap in) and `so` (swap out) columns, not the `r` column. A high run queue with `si`/`so` at zero indicates CPU-bound saturation, not memory pressure from swapping.
+
+---
+
+**Question 15**
+
+Which `journalctl` command displays all log entries from the **previous** boot session
+(not the current one)?
+
+- A) journalctl -b -1
+- B) journalctl --boot=last
+- C) journalctl -b --previous
+- D) journalctl --since "last boot"
+
+Correct Answer: A) journalctl -b -1
+
+Distractor Analysis:
+
+- Why B is incorrect: --boot=last is not valid journalctl syntax. The correct long-form equivalent of -b -1 is --boot=-1. The value after --boot or -b is a numeric offset or a boot ID, not a keyword like "last."
+- Why C is incorrect: There is no --previous flag in journalctl. The correct syntax uses the numeric offset with -b: -b 0 for current boot, -b -1 for previous boot, -b -2 for two boots ago, and so on.
+- Why D is incorrect: --since accepts time expressions like "yesterday", "1 hour ago", or ISO timestamps, not "last boot." The --since flag filters by timestamp, not by boot session boundary.
+
+---
+
+**Question 16**
+
+An administrator wants to limit the systemd journal to use no more than 500 MB of disk
+space and automatically remove entries older than 30 days. Which file should be edited
+and what settings should be added?
+
+- A) Edit /etc/systemd/journald.conf and add SystemMaxUse=500M and MaxRetentionSec=30day
+- B) Edit /etc/rsyslog.conf and add $MaxDiskUsage 500M and $RetentionDays 30
+- C) Edit /etc/logrotate.d/journal and add size 500M and rotate 30
+- D) Run journalctl --vacuum-size=500M --vacuum-time=30d to permanently set these limits.
+
+Correct Answer: A) Edit /etc/systemd/journald.conf and add SystemMaxUse=500M and MaxRetentionSec=30day
+
+Distractor Analysis:
+
+- Why B is incorrect: rsyslog.conf configures the rsyslog daemon, which is a separate logging system from the systemd journal. The directives $MaxDiskUsage and $RetentionDays do not exist in rsyslog configuration syntax.
+- Why C is incorrect: logrotate does not manage the systemd journal. The journal is a binary database managed by journald, not a text log file that logrotate can rotate. There is no /etc/logrotate.d/journal configuration.
+- Why D is incorrect: journalctl --vacuum-size and --vacuum-time are one-time cleanup operations that run immediately. They do not set persistent configuration limits. Running them removes old entries immediately but does not prevent the journal from growing beyond 500 MB in the future. Persistent limits require editing journald.conf.
+
+---
+
+**Question 17**
+
+An administrator runs `free -h` and sees:
+
+```
+              total        used        free      shared  buff/cache   available
+Mem:           7.7G        6.9G        120M        45M        680M        620M
+Swap:          2.0G          0B        2.0G
+```
+
+A junior colleague says "The system is almost out of memory — only 120 MB free." What is
+the correct interpretation?
+
+- A) The junior colleague is correct. 120 MB free means the system is critically low on memory.
+- B) The `available` column (620 MB) is the correct measure of memory the system can allocate to new processes without swapping. The buff/cache (680 MB) can be reclaimed by the kernel when needed.
+- C) The system is fine because swap is empty, meaning there is no memory pressure.
+- D) The used column (6.9 GB) includes the kernel itself, so actual application memory is much lower.
+
+Correct Answer: B) The `available` column (620 MB) is the correct measure of memory the system can allocate to new processes without swapping. The buff/cache (680 MB) can be reclaimed by the kernel when needed.
+
+Distractor Analysis:
+
+- Why A is incorrect: The `free` column shows memory that is not in use at all, which is normally low on a healthy Linux system because the kernel aggressively uses spare memory for caching. The `available` column is the meaningful metric for available memory because it includes reclaimable cache.
+- Why C is incorrect: Empty swap means no swapping is occurring currently, but it does not directly indicate available memory for new processes. A system with empty swap but only 50 MB available could start swapping as soon as new processes launch.
+- Why D is incorrect: The `used` column already accounts for kernel overhead. The buff/cache column is separated to show how much of the used memory is file system cache (reclaimable) versus application memory. The distinction between used and available is already accounted for in the free -h output layout.
+
+---
+
+**Question 18**
+
+An administrator wants to monitor which processes are consuming the most disk I/O in real
+time. Which command provides this information?
+
+- A) iostat -x 1
+- B) vmstat -d 1
+- C) iotop -o
+- D) sar -d 1 5
+
+Correct Answer: C) iotop -o
+
+Distractor Analysis:
+
+- Why A is incorrect: iostat -x shows per-device I/O statistics (device utilization, throughput, await times). It shows which disks are busy but does not break down I/O by individual process. It answers "which disk" but not "which process."
+- Why B is incorrect: vmstat -d shows disk statistics similar to iostat — reads, writes, and I/O times per disk device. Like iostat, it does not attribute I/O to specific processes.
+- Why D is incorrect: sar -d shows historical disk statistics collected by sysstat. The -o flag here is for iotop (show only processes doing I/O), not sar. sar cannot show per-process I/O attribution; it only shows aggregate device statistics.
+
+---
+
+**Question 19**
+
+A server's `/var` partition is filling up. An administrator runs `du -sh /var/*` and finds
+that `/var/log/journal/` is using 8 GB. They want to immediately reduce it to 1 GB. Which
+command accomplishes this?
+
+- A) rm -rf /var/log/journal/*
+- B) journalctl --vacuum-size=1G
+- C) systemctl restart systemd-journald
+- D) truncate -s 1G /var/log/journal/
+
+Correct Answer: B) journalctl --vacuum-size=1G
+
+Distractor Analysis:
+
+- Why A is incorrect: Deleting journal files directly with rm can corrupt the journal database and leave the system in an inconsistent state. journalctl --vacuum-size performs a clean, safe removal of the oldest journal files while maintaining journal integrity.
+- Why C is incorrect: Restarting systemd-journald does not remove existing journal entries or reduce disk usage. The service restart would close and reopen log files but would not reclaim space.
+- Why D is incorrect: truncate modifies file sizes at the filesystem level without understanding the journal's internal format. Truncating a journal file to 1 GB would corrupt it because the binary journal format has internal indexes and metadata that must be updated consistently by journald itself.
+
+---
+
+**Question 20**
+
+An administrator sets up logrotate for a web server with `compress` and `rotate 14`. After
+14 days, how are rotated log files named (assuming the default naming convention) and what
+happens to the oldest file on day 15?
+
+- A) Files are named access.log.1 through access.log.14. On day 15, access.log.14 is deleted.
+- B) Files are named access.log.1.gz through access.log.14.gz. On day 15, access.log.14.gz is deleted and all others are renumbered.
+- C) Files are named access.log.1 (uncompressed) and access.log.2.gz through access.log.14.gz. On day 15, access.log.14.gz is deleted and all files are renumbered.
+- D) Files use date-based names like access.log-20260101.gz. The 15th rotation deletes the oldest date-stamped file.
+
+Correct Answer: C) Files are named access.log.1 (uncompressed) and access.log.2.gz through access.log.14.gz. On day 15, access.log.14.gz is deleted and all files are renumbered.
+
+Distractor Analysis:
+
+- Why A is incorrect: With the compress option enabled, rotated files (except the most recently rotated one when delaycompress is used, or all of them without delaycompress) are compressed with gzip and given a .gz extension. Uncompressed numbering applies only when compress is not configured.
+- Why B is incorrect: With default logrotate behavior (no delaycompress), access.log.1 would be compressed to access.log.1.gz. However, many distributions configure delaycompress by default in the main logrotate.conf, which leaves access.log.1 uncompressed. Option C correctly reflects the delaycompress behavior that is common in practice.
+- Why D is incorrect: Date-based naming requires the dateext directive in the logrotate configuration. Without it, the default naming uses sequential numbers (.1, .2, .3...). Date-based naming is a common option but is not the default behavior.

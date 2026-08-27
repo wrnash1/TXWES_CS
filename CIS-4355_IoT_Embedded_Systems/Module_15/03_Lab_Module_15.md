@@ -380,3 +380,130 @@ Submit the following to the Canvas LMS assignment portal:
 5. Written answer (75–100 words): In the A/B partition OTA scheme, what prevents the device from permanently booting a defective firmware image that crashes on startup? Trace the exact sequence of bootloader decisions that causes automatic rollback.
 
 ---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Multi-Device Staged Rollout Simulation
+
+Extend the fleet server to manage ten simulated devices through a canary → pilot → general availability rollout, with automatic halt logic if the canary error rate exceeds the defined threshold.
+
+1. Register ten devices (`device-001` through `device-010`) in the fleet server. Inject a simulated firmware version discrepancy: devices `device-001` through `device-008` report `firmware_version: "v1.0.0"` and devices `device-009` and `device-010` report `firmware_version: "v1.1.0"` (already updated). Write a helper function `query_fleet(firmware_version)` that returns a list of device IDs from the registry JSON files whose `firmware_version` matches the given string.
+
+1. Implement a staged rollout controller in Python. The canary stage targets `device-001` only. After a 10-second simulated monitoring window, check whether `device-001`'s shadow `reported.firmware_version` matches `v1.1.0`. If so, advance to pilot (add `device-002` through `device-004`). After another 10-second window, verify all three pilot devices report `v1.1.0` and advance to GA (remaining devices). If any stage fails, set a `rollout_halted` flag and log the reason.
+
+   ```python
+   STAGES = [
+       {"name": "canary", "devices": ["device-001"],                          "window_s": 10},
+       {"name": "pilot",  "devices": ["device-002","device-003","device-004"], "window_s": 10},
+       {"name": "ga",     "devices": [f"device-{i:03d}" for i in range(5,9)], "window_s": 5},
+   ]
+
+   def run_rollout(client, target_version):
+       for stage in STAGES:
+           print(f"[Rollout] Starting {stage['name']} stage — {len(stage['devices'])} device(s)")
+           for dev in stage["devices"]:
+               shadow = load_shadow(dev)
+               shadow["desired"]["firmware_target"] = target_version
+               shadow = save_shadow(dev, shadow)
+               delta_topic = f"devices/{dev}/shadow/delta"
+               client.publish(delta_topic, json.dumps(shadow["delta"]))
+           time.sleep(stage["window_s"])
+           confirmed = [
+               d for d in stage["devices"]
+               if load_shadow(d)["reported"].get("firmware_version") == target_version
+           ]
+           if len(confirmed) < len(stage["devices"]):
+               failed = set(stage["devices"]) - set(confirmed)
+               print(f"[Rollout] HALTED at {stage['name']} — {failed} did not confirm update")
+               return False
+           print(f"[Rollout] {stage['name']} passed — advancing")
+       print(f"[Rollout] Complete — all devices on {target_version}")
+       return True
+   ```
+
+1. Simulate a canary failure: modify `device-001`'s shadow file so its `reported.firmware_version` remains `"v1.0.0"` after the canary window (do not update it). Verify that `run_rollout()` prints the HALTED message and returns `False` without publishing the delta to pilot or GA devices. Then restore `device-001`'s reported version and verify the full rollout completes successfully.
+
+1. In your lab report, write a 3–4 sentence analysis answering: what additional real-world metric (beyond firmware version confirmation) would you add as a canary halt condition, and what specific threshold value would you set? Justify your threshold using the alert calibration methodology described in the reading guide.
+
+---
+
+### Challenge 2: Automated Decommissioning Pipeline
+
+Implement a decommission script that executes all four required decommissioning steps for a device and produces a tamper-evident audit log of each action.
+
+1. Write a Python function `decommission_device(device_id)` that performs the four decommissioning steps in sequence. Each step must write an entry to a local `decommission_audit.log` file with a UTC ISO-8601 timestamp, the device ID, the step name, and a status of `"completed"` or `"failed"`. Step 1 marks the registry entry `status` field as `"revoked"` and adds a `revoked_at` timestamp. Step 2 renames the shadow file to `<device_id>.shadow.archived` (preserving data while removing it from the active shadows directory). Step 3 writes a data disposition record stating whether data was retained or deleted and the applicable retention reason. Step 4 overwrites the registry file with a minimal tombstone record containing only `device_id`, `status: "decommissioned"`, `decommissioned_at`, and `data_disposition`.
+
+   ```python
+   import hashlib
+
+   def decommission_device(device_id, retain_data=True, retention_reason="compliance-7yr"):
+       audit = []
+       def log_step(step, status, detail=""):
+           entry = {
+               "ts": datetime.utcnow().isoformat() + "Z",
+               "device_id": device_id,
+               "step": step,
+               "status": status,
+               "detail": detail,
+           }
+           audit.append(entry)
+           print(f"[Decommission] {step}: {status} — {detail}")
+
+       # Step 1 — Certificate revocation (simulated: mark registry status)
+       reg_path = f"{REGISTRY_DIR}/{device_id}.json"
+       try:
+           with open(reg_path) as f:
+               record = json.load(f)
+           record["status"]    = "revoked"
+           record["revoked_at"] = datetime.utcnow().isoformat() + "Z"
+           with open(reg_path, "w") as f:
+               json.dump(record, f, indent=2)
+           log_step("certificate_revocation", "completed", "status=revoked")
+       except Exception as e:
+           log_step("certificate_revocation", "failed", str(e))
+
+       # Step 2 — Registry/shadow archival
+       shadow_src  = f"{SHADOWS_DIR}/{device_id}.json"
+       shadow_arch = f"{SHADOWS_DIR}/{device_id}.shadow.archived"
+       try:
+           os.rename(shadow_src, shadow_arch)
+           log_step("registry_deletion", "completed", f"shadow archived to {shadow_arch}")
+       except Exception as e:
+           log_step("registry_deletion", "failed", str(e))
+
+       # Step 3 — Data disposition record
+       disposition = "retained" if retain_data else "deleted"
+       log_step("data_handling", "completed",
+                f"disposition={disposition} reason={retention_reason}")
+
+       # Step 4 — Physical security (simulated: write tombstone + checksum)
+       tombstone = {
+           "device_id":        device_id,
+           "status":           "decommissioned",
+           "decommissioned_at": datetime.utcnow().isoformat() + "Z",
+           "data_disposition": disposition,
+       }
+       tombstone_str  = json.dumps(tombstone, sort_keys=True)
+       tombstone["sha256"] = hashlib.sha256(tombstone_str.encode()).hexdigest()
+       with open(reg_path, "w") as f:
+           json.dump(tombstone, f, indent=2)
+       log_step("physical_security", "completed", f"tombstone written sha256={tombstone['sha256'][:16]}...")
+
+       # Write audit log
+       with open("decommission_audit.log", "a") as f:
+           for entry in audit:
+               f.write(json.dumps(entry) + "\n")
+       return audit
+   ```
+
+1. Run `decommission_device("device-001")`. Inspect `decommission_audit.log` and the contents of the registry file. Verify: (a) the registry tombstone contains a `sha256` field, (b) the shadow file no longer exists at its original path, and (c) all four step entries appear in the audit log with `status: "completed"`.
+
+1. Simulate a failure: delete the shadow file for `device-002` before calling `decommission_device("device-002")`. Verify that the audit log records `"status": "failed"` for the `registry_deletion` step while the other three steps still complete. Write a 2–3 sentence explanation of why partial completion is preferable to aborting on first error in a decommissioning workflow.
+
+---
+
+### Reflection Questions
+
+1. In Challenge 1, the rollout controller checks `reported.firmware_version` by reading the local JSON shadow file rather than subscribing to an MQTT confirmation topic. Explain one advantage and one disadvantage of the file-based polling approach compared to an MQTT subscription approach for determining rollout gate status. In a production fleet of 50,000 devices, which approach scales better, and why?
+
+2. In Challenge 2, Step 4 writes a SHA-256 checksum of the tombstone record into the tombstone itself. Explain what tamper-evidence property this provides and what it does not provide. Specifically: if an attacker with write access to the registry directory modifies the tombstone, how would the tamper be detected, and what additional mechanism would be required to make the audit log itself tamper-evident against an attacker with write access to the log file?

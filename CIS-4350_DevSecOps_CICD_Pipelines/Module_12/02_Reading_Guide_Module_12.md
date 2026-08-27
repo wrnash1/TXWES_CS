@@ -201,3 +201,20 @@ Note: A default-deny policy that blocks egress will also block DNS resolution. A
 - [ ] Name three `CKV_K8S_*` check IDs and the Security Context fields they enforce.
 - [ ] Complete the Module 12 lab activity.
 - [ ] Attempt all 10 quiz questions and review distractor analysis for any incorrect answers.
+
+---
+
+## 9. Supplemental Resources
+
+**1. [Kubernetes RBAC authorization documentation](https://kubernetes.io/docs/reference/access-authn-authz/rbac/)**
+The official Kubernetes documentation covering Role, ClusterRole, RoleBinding, and ClusterRoleBinding resources with worked examples. Includes the built-in role reference, aggregated ClusterRole patterns, and RBAC best practices for service accounts in CI/CD pipelines.
+
+**2. [Kubernetes Network Policies documentation](https://kubernetes.io/docs/concepts/services-networking/network-policies/)**
+Official Kubernetes documentation covering NetworkPolicy spec, pod and namespace selectors, ingress and egress rules, port specifications, and the default-deny pattern. Includes a CNI plugin compatibility note clarifying which plugins enforce policies and which do not.
+
+**3. [CIS Kubernetes Benchmark](https://www.cisecurity.org/benchmark/kubernetes)**
+The Center for Internet Security's authoritative benchmark for Kubernetes cluster hardening. Covers API server flags, etcd encryption, RBAC configuration, pod security, network policies, and node hardening. The benchmark maps directly to kube-bench check IDs and is the basis for many Checkov `CKV_K8S_*` rules.
+
+---
+
+Reading Guide — Module 12 | CIS-4350 | Texas Wesleyan University | Professor Nash

@@ -151,6 +151,24 @@ Tip 8: The Agile Manifesto's Principle 9 — continuous attention to technical e
 
 ---
 
+## 9. Supplemental Resources
+
+The following free, open-access resources go deeper on Module 13 topics:
+
+**1. "Continuous Integration" — Martin Fowler**
+<https://martinfowler.com/articles/continuousIntegration.html>
+The definitive free article on Continuous Integration by Martin Fowler, one of the Agile Manifesto signatories. Covers the full set of CI practices including daily integration, automated build, self-testing builds, and the cultural practices required for CI to succeed. Essential background for the lab's pipeline analysis tasks.
+
+**2. "Deployment Strategies" — The Twelve-Factor App**
+<https://12factor.net>
+A free methodology guide for building software-as-a-service applications, directly relevant to DevOps and CI/CD practices. Covers environment parity, release/run stages, and disposable processes — the foundational ideas behind blue-green and canary deployment strategies.
+
+**3. "What is DevOps?" — Atlassian**
+<https://www.atlassian.com/devops>
+A free comprehensive guide to DevOps culture, practices, and tooling from Atlassian. Covers the "you build it, you run it" principle, CI/CD pipelines, monitoring, and the relationship between DevOps and Agile teams. Includes a clear comparison of Continuous Integration, Continuous Delivery, and Continuous Deployment.
+
+---
+
 ## 8. Study Checklist
 
 - [ ] Define Continuous Integration and explain what the pipeline automates

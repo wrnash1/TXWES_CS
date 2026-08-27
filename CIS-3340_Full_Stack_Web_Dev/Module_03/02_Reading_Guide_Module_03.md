@@ -365,3 +365,25 @@ Using variables for spacing means a single media query change propagates through
 - [ ] Understand `prefers-reduced-motion` and its accessibility importance
 - [ ] Complete Lab 03 with DevTools device simulation verification
 - [ ] Complete Quiz 03 and Discussion 03 before the module deadline
+
+---
+
+## 11. Supplemental Resources
+
+The following free, open-access resources go deeper on Module 03 topics:
+
+**1. MDN Web Docs — Using media queries**
+[https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_media_queries/Using_media_queries](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_media_queries/Using_media_queries)
+Comprehensive reference covering media query syntax, all available media features (width, orientation, prefers-color-scheme, prefers-reduced-motion, hover, pointer), and combining conditions with `and`, `or`, and `not`.
+
+**2. MDN Web Docs — clamp()**
+[https://developer.mozilla.org/en-US/docs/Web/CSS/clamp](https://developer.mozilla.org/en-US/docs/Web/CSS/clamp)
+Full documentation for the `clamp(min, preferred, max)` function with interactive examples. Covers usage for fluid typography, spacing, and container sizing without media queries.
+
+**3. web.dev — Responsive design (Google)**
+[https://web.dev/learn/design](https://web.dev/learn/design)
+Google's free responsive design course covering the viewport, media queries, typography, images, the picture element, and CSS Grid — directly aligned to this module's content and the DVA-C02 deployment context.
+
+**4. The Odin Project — Responsive Design**
+[https://www.theodinproject.com/lessons/node-path-advanced-html-and-css-introduction-to-responsive-design](https://www.theodinproject.com/lessons/node-path-advanced-html-and-css-introduction-to-responsive-design)
+A free, project-based lesson covering mobile-first methodology, natural responsiveness, and responsive images with hands-on exercises that complement the Lab 03 hamburger navigation work.

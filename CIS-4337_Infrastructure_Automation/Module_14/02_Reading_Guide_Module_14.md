@@ -328,4 +328,20 @@ Multi-cloud is not justified when the primary motivation is "avoiding vendor loc
 
 ---
 
+## Supplemental Resources
+
+**1. Terraform Provider Configuration and Aliasing**
+<https://developer.hashicorp.com/terraform/language/providers/configuration>
+The official HashiCorp documentation for provider configuration, covering the `provider` block syntax, authentication methods, and the `alias` meta-argument used to define multiple configurations of the same provider. Includes concrete examples of multi-region and multi-account aliasing and explains how module `providers` maps pass aliased providers to child modules.
+
+**2. Dependency Lock File (.terraform.lock.hcl)**
+<https://developer.hashicorp.com/terraform/language/files/dependency-lock>
+Detailed reference for the `.terraform.lock.hcl` file, including how Terraform records selected provider versions and hashes, how the lock file interacts with version constraints in `required_providers`, and when to use `terraform init -upgrade` to intentionally move to a newer allowed version. Essential reading for understanding why the lock file must be committed to version control.
+
+**3. HashiCorp Terraform Multi-Cloud Architecture Guide**
+<https://developer.hashicorp.com/terraform/tutorials/aws/provider-use>
+A HashiCorp tutorial demonstrating practical multi-provider configurations, covering how to manage state for resources spanning multiple providers and accounts, how to use `assume_role` inside a provider block for cross-account AWS deployments, and the provider version constraint operators (`~>`, `>=`, `=`) with worked examples of how the lock file changes after each `init` or `init -upgrade` invocation.
+
+---
+
 End of Module 14 Reading Guide

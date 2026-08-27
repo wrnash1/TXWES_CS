@@ -343,3 +343,67 @@ Submit the following as a single PDF or Word document in Canvas:
 | Troubleshooting Scenario B         | 13     | Correct explanation of order error and fix                       |
 
 Partial credit is awarded for demonstrably attempted but incomplete work.
+
+---
+
+## Part 9 — Challenge Exercise
+
+This optional challenge extends the lab to CCNA exam difficulty. Complete all steps and include deliverables in your submission for up to 20 bonus points.
+
+### Challenge Step 1: Implement a Time-Based ACL
+
+Configure a time-based extended ACL on R1 that restricts web browsing (HTTP and HTTPS) from LAN A during business hours (Monday through Friday, 08:00–17:00), while allowing unrestricted access outside those hours. This simulates a corporate acceptable-use policy.
+
+```ios
+R1(config)# time-range BUSINESS_HOURS
+R1(config-time-range)# periodic weekdays 08:00 to 17:00
+
+R1(config)# ip access-list extended BROWSING_POLICY
+R1(config-ext-nacl)# deny tcp 192.168.1.0 0.0.0.255 any eq 80 time-range BUSINESS_HOURS
+R1(config-ext-nacl)# deny tcp 192.168.1.0 0.0.0.255 any eq 443 time-range BUSINESS_HOURS
+R1(config-ext-nacl)# permit ip any any
+
+R1(config)# interface GigabitEthernet0/0
+R1(config-if)# ip access-group BROWSING_POLICY in
+```
+
+Verify the time-range with `show time-range`. Use `show access-lists BROWSING_POLICY` to confirm the time-range name appears on the deny entries. Explain in 2–3 sentences why the `permit ip any any` at the end is critical and what would happen if it were omitted. Document the full ACL output and the time-range status.
+
+### Challenge Step 2: Configure a Reflexive ACL for Stateful Inspection
+
+Replace the VTY restriction on R1 with a reflexive ACL on the WAN interface (Gi0/1 toward R2) that permits return traffic for sessions initiated from LAN A while blocking unsolicited inbound connections. Reflexive ACLs track outbound sessions and dynamically permit the return traffic.
+
+```ios
+R1(config)# ip access-list extended OUTBOUND_INSPECT
+R1(config-ext-nacl)# permit tcp 192.168.1.0 0.0.0.255 any reflect LAN_A_SESSIONS
+R1(config-ext-nacl)# permit udp 192.168.1.0 0.0.0.255 any reflect LAN_A_SESSIONS
+R1(config-ext-nacl)# permit icmp 192.168.1.0 0.0.0.255 any reflect LAN_A_SESSIONS
+
+R1(config)# ip access-list extended INBOUND_FILTER
+R1(config-ext-nacl)# evaluate LAN_A_SESSIONS
+R1(config-ext-nacl)# deny ip any any
+
+R1(config)# interface GigabitEthernet0/1
+R1(config-if)# ip access-group OUTBOUND_INSPECT out
+R1(config-if)# ip access-group INBOUND_FILTER in
+```
+
+From PC-A, ping SRV1 through R2 and observe that the return traffic is permitted. Then attempt to initiate a ping from R2 toward PC-A and observe that it is blocked (no reflexive session exists for inbound-initiated traffic). Use `show ip access-lists LAN_A_SESSIONS` to view dynamic permit entries created by the reflexive ACL. Document the dynamic entries including their timeout values.
+
+### Challenge Step 3: Build a Complete IPv6 ACL Policy
+
+Add IPv6 addressing to the existing topology (use 2001:DB8::/32 space as documentation addresses). Configure an IPv6 ACL on R1 that blocks Telnet (TCP port 23) from the LAN A IPv6 subnet while permitting all other IPv6 traffic. Apply it inbound on Gi0/0.
+
+```ios
+R1(config)# interface GigabitEthernet0/0
+R1(config-if)# ipv6 address 2001:DB8:1::1/64
+
+R1(config)# ipv6 access-list V6_LAN_A_POLICY
+R1(config-ipv6-acl)# deny tcp 2001:DB8:1::/64 any eq 23
+R1(config-ipv6-acl)# permit ipv6 any any
+
+R1(config)# interface GigabitEthernet0/0
+R1(config-if)# ipv6 traffic-filter V6_LAN_A_POLICY in
+```
+
+Verify the ACL with `show ipv6 access-list`. Attempt a Telnet from the IPv6-addressed PC to SRV1 and confirm it is blocked. Attempt a ping and confirm it succeeds. Explain in 3–4 sentences: (1) why IPv6 ACLs must always be named, (2) what the two implicit NDP permit statements allow and why removing them breaks IPv6 functionality, and (3) how `ipv6 traffic-filter` differs from `ip access-group` in its syntax and behavior.

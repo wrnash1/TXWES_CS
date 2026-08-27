@@ -258,3 +258,88 @@ Import-Module ActiveDirectory
 ```
 
 If the OU path in `-Path` does not exist, the cmdlet returns "The directory path was not found." Use `Get-ADOrganizationalUnit -Filter *` to verify OU names and DNs before running user creation commands.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Create and Apply a Fine-Grained Password Policy
+
+Standard user accounts follow the Default Domain Policy. IT admin accounts should have stricter requirements. Create a PSO and apply it to the `G_ITAdmins` group.
+
+1. Create the Fine-Grained Password Policy with stricter settings than the default domain policy:
+
+   ```powershell
+   New-ADFineGrainedPasswordPolicy `
+       -Name "IT_Admin_Policy" `
+       -Precedence 10 `
+       -MinPasswordLength 16 `
+       -PasswordHistoryCount 24 `
+       -LockoutThreshold 3 `
+       -LockoutDuration "00:30:00" `
+       -LockoutObservationWindow "00:30:00" `
+       -ComplexityEnabled $true `
+       -ReversibleEncryptionEnabled $false
+   ```
+
+2. Apply the policy to the `G_ITAdmins` Global group:
+
+   ```powershell
+   Add-ADFineGrainedPasswordPolicySubject -Identity "IT_Admin_Policy" -Subjects "G_ITAdmins"
+   ```
+
+3. Verify the policy was applied and that `dprince` (a member of `G_ITAdmins`) is governed by it:
+
+   ```powershell
+   Get-ADUserResultantPasswordPolicy -Identity "dprince"
+   ```
+
+   Confirm the output shows `Name: IT_Admin_Policy` and `MinPasswordLength: 16`.
+
+4. Compare by checking a user NOT in `G_ITAdmins`, such as `sconnor`, and verify they return no FGPP (falls back to domain policy):
+
+   ```powershell
+   Get-ADUserResultantPasswordPolicy -Identity "sconnor"
+   ```
+
+   This should return no output (no PSO applies; domain policy governs instead).
+
+### Challenge 2: Bulk User Creation and Group Population via CSV
+
+Manually creating dozens of accounts is error-prone. Practice scripted bulk provisioning from a CSV input.
+
+1. Create a CSV file named `C:\users.csv` with the following content. Use PowerShell to write it:
+
+   ```powershell
+   @"
+   Name,GivenName,Surname,SamAccountName,UPN,OU
+   Peter Parker,Peter,Parker,pparker,pparker@corp.local,"OU=IT,OU=Departments,DC=corp,DC=local"
+   Clark Kent,Clark,Kent,ckent,ckent@corp.local,"OU=Finance,OU=Departments,DC=corp,DC=local"
+   Natasha Romanov,Natasha,Romanov,nromanov,nromanov@corp.local,"OU=HR,OU=Departments,DC=corp,DC=local"
+   "@ | Set-Content -Path "C:\users.csv"
+   ```
+
+2. Import the CSV and create each user account in a single loop:
+
+   ```powershell
+   $pwd = ConvertTo-SecureString "TempP@ss123!" -AsPlainText -Force
+   Import-Csv -Path "C:\users.csv" | ForEach-Object {
+       New-ADUser -Name $_.Name -GivenName $_.GivenName -Surname $_.Surname `
+           -SamAccountName $_.SamAccountName -UserPrincipalName $_.UPN `
+           -Path $_.OU -AccountPassword $pwd -Enabled $true -ChangePasswordAtLogon $true
+   }
+   ```
+
+3. Verify all three new users were created:
+
+   ```powershell
+   Get-ADUser -Filter * -SearchBase "OU=Departments,DC=corp,DC=local" |
+       Select-Object Name, SamAccountName, DistinguishedName
+   ```
+
+4. Add `pparker` and `ckent` to the appropriate Global groups (`G_ITAdmins` and `G_FinanceUsers` respectively) using a single pipeline expression with `ForEach-Object`, rather than two separate `Add-ADGroupMember` calls.
+
+### Reflection Questions
+
+1. The Fine-Grained Password Policy requires `Get-ADUserResultantPasswordPolicy` to show no output for `sconnor`. Explain why the absence of a PSO result does not mean the user has no password policy — what policy governs them instead, and where is that policy defined?
+2. You created user accounts from a CSV using a `ForEach-Object` loop. Describe two additional fields you would add to the CSV in a real onboarding process (beyond what was used in this lab), and explain what PowerShell parameter or cmdlet you would use to set each field during bulk creation.

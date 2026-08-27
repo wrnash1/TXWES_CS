@@ -212,3 +212,20 @@ Submit the following to the Canvas LMS assignment portal:
 ---
 
 *This lab is for authorized educational purposes only. All organizations, domains, and IP addresses are fictional. No actual systems are targeted.*
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: OSINT Documentation Portfolio
+
+Using the fictional organization "Lone Star Financial Services" from Module 01 as your target, construct a simulated passive reconnaissance documentation portfolio as if you had run theHarvester, reviewed WHOIS output, and queried certificate transparency logs. Invent plausible but clearly fictional results — for example, fictional subdomains, fictional employee names with realistic email formats, and a fictional SPF record. Format your portfolio using the six-field reconnaissance notes format from the lab (Source, Data Type, Value, Confidence, Date, Analysis Notes) with at least ten entries across at least four different OSINT source categories.
+
+### Challenge 2: Reconnaissance Report Narrative
+
+Based on the fictional findings you documented in Challenge 1, write a one-page reconnaissance summary narrative as it would appear in the reconnaissance section of a professional penetration test report. The narrative should synthesize the findings into a coherent picture of the target's attack surface — not just list the raw data. Address: external footprint size, notable exposures, technology stack inferences, and recommended focus areas for active testing phases.
+
+### Reflection Questions
+
+1. A colleague argues that passive reconnaissance is "risk-free" and does not need to be covered by the Rules of Engagement because it never touches the target's systems. Evaluate this argument — is passive reconnaissance truly without risk or obligation, and does it require authorization?
+2. What ethical obligations does a tester have when passive OSINT reveals sensitive personal information about employees (home addresses, personal social media, family members) that was not deliberately published by the organization?

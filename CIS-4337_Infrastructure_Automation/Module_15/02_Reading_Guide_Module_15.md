@@ -430,4 +430,20 @@ Each `moved` block maps one count-indexed instance to one for_each-keyed instanc
 
 ---
 
+## Supplemental Resources
+
+**1. Terraform Dynamic Blocks**
+<https://developer.hashicorp.com/terraform/language/expressions/dynamic-blocks>
+The official HashiCorp reference for dynamic blocks, covering the `for_each`, `iterator`, and `content` arguments in detail. Includes guidance on when dynamic blocks are appropriate versus explicit nested blocks, how to nest dynamic blocks for complex resource types, and the performance and readability trade-offs of generating large numbers of nested blocks programmatically.
+
+**2. Terraform Resource Addressing: count and for_each**
+<https://developer.hashicorp.com/terraform/language/meta-arguments/for_each>
+Comprehensive documentation for the `for_each` meta-argument including valid input types (maps and sets), the `each.key` and `each.value` references, how `for_each` instances are addressed in state and in cross-resource references, and the relationship between `for_each` on resource blocks versus `for_each` on module blocks. Covers the `toset()` conversion pattern and the behavior of removing keys from the collection.
+
+**3. Terraform Refactoring: moved Blocks and Import**
+<https://developer.hashicorp.com/terraform/language/modules/develop/refactoring>
+The official guide to non-destructive Terraform refactoring using `moved` blocks, including moving resources between modules, renaming resources, and migrating from `count` to `for_each`. Also covers when moved blocks can be safely removed after all state files have been updated. Pairs with the `import` block documentation for a complete picture of bringing existing infrastructure under Terraform management without downtime.
+
+---
+
 End of Module 15 Reading Guide

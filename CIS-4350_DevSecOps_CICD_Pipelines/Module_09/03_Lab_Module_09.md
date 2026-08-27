@@ -266,3 +266,53 @@ Submit written answers to all three questions. Label each answer with the questi
 ## Submission Instructions
 
 Combine all four parts into a single document. Label each part clearly. Include your name, date, course number (CIS-4350), and module number (09) at the top. Submit via the Canvas LMS assignment portal before the due date shown in Canvas.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Configure Vault Dynamic Database Secrets
+
+Set up Vault's database secrets engine to generate short-lived PostgreSQL credentials, replacing a static password.
+
+1. Start a local PostgreSQL instance: `docker run -d --name postgres -e POSTGRES_PASSWORD=vaultadmin -p 5432:5432 postgres:15`
+2. Enable the Vault database secrets engine and configure it for PostgreSQL:
+
+```bash
+vault secrets enable database
+vault write database/config/myapp \
+  plugin_name=postgresql-database-plugin \
+  allowed_roles="myapp-role" \
+  connection_url="postgresql://{{username}}:{{password}}@localhost:5432/postgres?sslmode=disable" \
+  username="postgres" \
+  password="vaultadmin"
+```
+
+1. Create a role with a 1-hour TTL: `vault write database/roles/myapp-role db_name=myapp creation_statements="CREATE ROLE \"{{name}}\" WITH LOGIN PASSWORD '{{password}}' VALID UNTIL '{{expiration}}'; GRANT SELECT ON ALL TABLES IN SCHEMA public TO \"{{name}}\";" default_ttl="1h" max_ttl="24h"`
+2. Request a dynamic credential: `vault read database/creds/myapp-role` — record the generated username and password, then verify you can connect to PostgreSQL with them.
+3. Wait for or force expiry: `vault lease revoke <lease_id>` — verify the credential is no longer valid.
+
+### Challenge 2: Use OIDC to Authenticate GitHub Actions to Vault
+
+Configure Vault JWT/OIDC authentication so a GitHub Actions workflow can fetch secrets without storing a static Vault token.
+
+1. Enable JWT auth on Vault: `vault auth enable jwt`
+2. Configure the JWT auth method to trust GitHub's OIDC provider:
+
+```bash
+vault write auth/jwt/config \
+  oidc_discovery_url="https://token.actions.githubusercontent.com" \
+  bound_issuer="https://token.actions.githubusercontent.com"
+```
+
+1. Create a Vault role that binds to your GitHub repository: `vault write auth/jwt/role/github-actions bound_audiences="https://github.com/YOUR_ORG" bound_subject="repo:YOUR_USERNAME/lab09:ref:refs/heads/main" policies="myapp-policy" ttl=20m`
+2. Add a GitHub Actions workflow step that authenticates to Vault using the `hashicorp/vault-action` action with `method: jwt` and retrieves a secret. Verify the workflow can fetch the secret without any stored Vault token in GitHub Secrets.
+
+### Reflection Questions
+
+1. You have implemented both Vault dynamic secrets (Challenge 1) and OIDC authentication (Challenge 2). Dynamic secrets means the database password changes every hour; OIDC means the Vault token changes every pipeline run. Together, how many static long-lived secrets remain in your system? What would it take to reach zero static long-lived secrets?
+2. Your organization is considering whether to use HashiCorp Vault (self-hosted) or AWS Secrets Manager (managed) for secrets management. List three specific criteria your team should evaluate when making this decision, and describe how the choice affects your DevSecOps pipeline design.
+
+---
+
+Lab 09 | CIS-4350 | Texas Wesleyan University | Professor Nash

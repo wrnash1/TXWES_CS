@@ -203,3 +203,39 @@ If you are unsure about a connector, cable version, or compatibility determinati
 - Reading Guide Section 3 (Connector Comparison Table), Section 4 (HDMI Bandwidth Reference), and Section 5 (DisplayPort Bandwidth Reference)
 - Professor Messer's CompTIA A+ Core 1 free course at [https://www.professormesser.com/free-a-plus-training/220-1101/220-1101-video/](https://www.professormesser.com/free-a-plus-training/220-1101/220-1101-video/)
 - CompTIA A+ exam objectives Domain 3.1 at [https://www.comptia.org/certifications/a](https://www.comptia.org/certifications/a)
+
+---
+
+## Part 9 — Challenge Exercise
+
+These advanced steps are optional and are not included in the standard grading rubric.
+
+### Challenge Step 1 — Display Bandwidth Calculation
+
+For each of the following display configurations, calculate the minimum required interface bandwidth using the formula: Bandwidth (Gbps) = (H × V × Refresh × Color Depth × 3) / 1,000,000,000 × 1.25 overhead factor. Then determine the minimum HDMI or DisplayPort version required.
+
+| Target Configuration | Calculated Bandwidth | Minimum Interface |
+|---|---|---|
+| 1080p@60Hz, 8-bit color | | |
+| 1440p@144Hz, 8-bit color | | |
+| 4K@60Hz, 10-bit color | | |
+| 4K@120Hz, 10-bit color | | |
+| 8K@30Hz, 8-bit color | | |
+
+After completing the table, answer: A monitor is advertised as "4K@144Hz HDMI 2.0." Is this specification achievable through HDMI 2.0 (18 Gbps)? Show your calculation and explain whether the marketing claim is misleading.
+
+### Challenge Step 2 — Multi-Monitor MST Configuration Research
+
+Research the DisplayPort MST (Multi-Stream Transport) daisy-chain feature:
+
+1. Find a real-world DisplayPort MST hub product (any available online) and document its: maximum number of supported monitors, maximum resolution per monitor at that count, and required DisplayPort version on the host GPU.
+1. Design a three-monitor MST setup for a data analyst workstation: one 1440p@60Hz primary monitor and two 1080p@60Hz secondary monitors, all connected from a single DisplayPort 1.2 port using a daisy-chain or MST hub. Calculate whether the total bandwidth required fits within DisplayPort 1.2 capacity (17.28 Gbps usable).
+1. Write a 2–3 sentence explanation of one limitation of MST daisy-chaining compared to using three separate GPU output ports.
+
+### Challenge Step 3 — Monitor Calibration Exercise
+
+Using Windows built-in color calibration (Settings > Display > Advanced display settings > Color profile > Calibrate display) or a free ICC profile tool:
+
+1. Run the Windows display color calibration wizard on any available monitor. Follow each calibration step (gamma, brightness, contrast, color balance).
+1. Before and after calibration, open any solid-color test image (a website like [https://www.eizo.com/library/basics/check-your-monitor/](https://www.eizo.com/library/basics/check-your-monitor/) provides free test patterns) and observe any visible difference in color rendering.
+1. In your lab report, describe any visible changes after calibration, which specific calibration step made the most noticeable difference, and explain why professional video/photo editors use hardware colorimeters rather than relying on the software wizard alone.

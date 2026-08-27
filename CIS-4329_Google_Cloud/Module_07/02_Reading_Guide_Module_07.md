@@ -365,3 +365,22 @@ gcloud tasks create-http-task \
 - Eventarc: cloud.google.com/eventarc/docs
 - Cloud Tasks: cloud.google.com/tasks/docs
 - Serverless VPC Access: cloud.google.com/vpc/docs/serverless-vpc-access
+
+## 9. Supplemental Resources
+
+**1. Google Cloud Documentation — Cloud Run: Deploying Container Images**
+<https://cloud.google.com/run/docs/deploying>
+Complete guide to deploying services on Cloud Run including traffic splitting,
+revision management, min/max instance configuration, and VPC connector setup.
+
+**2. Google Cloud Skills Boost — Serverless Cloud Run Development**
+<https://www.cloudskillsboost.google/focuses/21058>
+Hands-on lab covering Cloud Run service deployment, traffic splitting between
+revisions, and Eventarc trigger configuration for event-driven serverless
+architectures.
+
+**3. Google Cloud Documentation — Choosing an App Engine Environment**
+<https://cloud.google.com/appengine/docs/the-appengine-environments>
+Official comparison of App Engine Standard versus Flexible environments
+covering runtime support, scaling behavior, pricing model, and guidance on
+which to use for specific workload requirements.

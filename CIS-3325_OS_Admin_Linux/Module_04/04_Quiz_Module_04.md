@@ -268,6 +268,206 @@ D. The IP addresses sorted and deduplicated
 
 ---
 
+### Question 11 (5 points)
+
+An administrator runs `cut -d: -f1,3 /etc/passwd`. What does this command output?
+
+A. The first and third lines of `/etc/passwd`.
+B. The first and third characters of each line.
+C. The first and third colon-delimited fields from each line (username and UID).
+D. Lines from `/etc/passwd` that contain exactly three colon-delimited fields.
+
+**Correct Answer: C**
+
+**Distractor Analysis:**
+
+- **A** is incorrect. Selecting lines by number would use `sed -n '1p;3p'` or `head`/`tail`. `cut` operates on fields within each line.
+- **B** is incorrect. Character extraction uses `-c` with `cut`, not `-f`. For example, `cut -c1-3` would extract the first 3 characters.
+- **C** is correct. `-d:` sets the field delimiter to a colon; `-f1,3` selects the first and third fields. In `/etc/passwd`, field 1 is the username and field 3 is the UID.
+- **D** is incorrect. `cut` always processes every line — it does not filter lines based on field count.
+
+---
+
+### Question 12 (5 points)
+
+Which of the following sed commands modifies a file in place, replacing "localhost" with "127.0.0.1" throughout?
+
+A. `sed 's/localhost/127.0.0.1/g' config.txt > config.txt`
+B. `sed -n 's/localhost/127.0.0.1/g' config.txt`
+C. `sed -i 's/localhost/127.0.0.1/g' config.txt`
+D. `sed 's/localhost/127.0.0.1/' config.txt | tee config.txt`
+
+**Correct Answer: C**
+
+**Distractor Analysis:**
+
+- **A** is incorrect and destructive. Redirecting to the same file (`> config.txt`) truncates the file before sed reads it, resulting in an empty file. Never redirect a command's output to the same file it reads.
+- **B** is incorrect. `-n` suppresses default output (print only when explicitly requested with `p`). Without `-i`, no in-place modification occurs. The file would be unchanged.
+- **C** is correct. The `-i` flag tells sed to edit the file in place. Combined with the global `g` flag, every occurrence of "localhost" is replaced throughout the file.
+- **D** is incorrect. `tee config.txt` would also cause a conflict — the file would be truncated before sed finishes reading it, similar to the `>` redirect problem.
+
+---
+
+### Question 13 (5 points)
+
+An administrator runs `sort -k2 -n employees.txt`. What does the `-k2` option specify?
+
+A. Keep only the first 2 lines of the file.
+B. Sort using the second field as the sort key.
+C. Skip the first 2 header lines before sorting.
+D. Use 2 spaces as the field separator.
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- **A** is incorrect. Limiting output lines uses `head -2`. The `-k` option in `sort` specifies the key field for sorting.
+- **B** is correct. `-k2` tells `sort` to use the second whitespace-delimited field as the sort key. Combined with `-n`, the sort is numeric on that field.
+- **C** is incorrect. There is no skip-header option in `sort`. You would need to pipe through `tail -n +2` to skip a header line before sorting.
+- **D** is incorrect. The field separator for `sort` is set with `-t`. For example, `sort -t: -k3 -n` would sort `/etc/passwd` numerically by the third colon-delimited field.
+
+---
+
+### Question 14 (5 points)
+
+A sysadmin runs `grep -c "ERROR" /var/log/app.log`. The output is `47`. What does this mean?
+
+A. The file contains 47 characters matching "ERROR".
+B. 47 lines in the file contain the string "ERROR".
+C. The string "ERROR" appears exactly 47 times across all lines.
+D. There are 47 files in `/var/log` containing "ERROR".
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- **A** is incorrect. `-c` counts lines, not characters. Character counting uses `wc -c` or `grep -o "ERROR" | wc -l`.
+- **B** is correct. `grep -c` reports the count of matching lines (one count per file). A line that contains "ERROR" three times is still counted as one matching line.
+- **C** is incorrect. If a single line contains "ERROR" twice, `grep -c` still counts it as one line. The count of total occurrences (not lines) would require `grep -o "ERROR" | wc -l`.
+- **D** is incorrect. When given a single file as argument, `grep -c` reports the count for that file only — not the number of files containing the string. That would require `grep -rl "ERROR" /var/log/ | wc -l`.
+
+---
+
+### Question 15 (5 points)
+
+In vim, what is the effect of pressing `o` while in Normal mode?
+
+A. Opens a file browser to select another file.
+B. Moves the cursor to the end of the current line.
+C. Creates a new empty line below the current line and enters Insert mode.
+D. Overwrites the current line with the clipboard contents.
+
+**Correct Answer: C**
+
+**Distractor Analysis:**
+
+- **A** is incorrect. Opening a file browser is not a default vim Normal mode action. You would use `:e filename` or a plugin like NERDTree.
+- **B** is incorrect. Moving to the end of the current line is done with `$` in Normal mode.
+- **C** is correct. Pressing `o` opens a new line below the cursor and automatically places vim in Insert mode. Its counterpart `O` opens a new line above the current line.
+- **D** is incorrect. There is no "overwrite current line with clipboard" single-keystroke command in standard vim. Pasting the yank register uses `p` (below) or `P` (above).
+
+---
+
+### Question 16 (5 points)
+
+An administrator wants to display only the lines in `/etc/passwd` where the user's shell is `/bin/bash`. Which awk command accomplishes this?
+
+A. `awk '/bash/ { print }' /etc/passwd`
+B. `awk -F: '$7 == "/bin/bash" { print $1 }' /etc/passwd`
+C. `awk -F: '{ print $7 }' /etc/passwd | grep bash`
+D. `awk '{ print $7 }' /etc/passwd`
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- **A** is partially useful but imprecise. `/bash/` would also match lines where "bash" appears elsewhere in the entry, such as in a comment field or home path. An exact field comparison is more reliable.
+- **B** is correct. `-F:` sets the delimiter to a colon; `$7 == "/bin/bash"` performs an exact match on the seventh field (the shell). This is precise and avoids false positives.
+- **C** would work to list shells but only outputs field 7 after filtering — you would not see the usernames. The question asks for lines where the condition is met, implying more context is needed.
+- **D** is incorrect. Without `-F:`, awk uses whitespace as the delimiter. In `/etc/passwd`, all fields are colon-separated with no internal spaces, so `$7` would be empty for most lines.
+
+---
+
+### Question 17 (5 points)
+
+A sysadmin runs `tr 'a-z' 'A-Z'` on the text "hello world". What is the output?
+
+A. `HELLO WORLD`
+B. `hello world` (unchanged)
+C. `dlrow olleh`
+D. `hELLO wORLD`
+
+**Correct Answer: A**
+
+**Distractor Analysis:**
+
+- **A** is correct. `tr 'a-z' 'A-Z'` translates every lowercase letter to its uppercase equivalent. All alphabetic characters become uppercase; spaces and other characters are left unchanged.
+- **B** is incorrect. `tr` with valid character ranges performs the translation. The input would be modified.
+- **C** is incorrect. Reversing a string is not a `tr` operation. String reversal is done with `rev` or `tac`.
+- **D** is incorrect. `tr 'a-z' 'A-Z'` applies uniformly to all lowercase letters including the `h`. There is no behavior that would skip the first character.
+
+---
+
+### Question 18 (5 points)
+
+An administrator uses vim to search for the word "timeout" in a configuration file by pressing `/timeout` and Enter. After finding the first match, how do they jump to the next occurrence?
+
+A. Press `/` again and re-type `timeout`.
+B. Press `n`.
+C. Press `Enter`.
+D. Press `Ctrl+N`.
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- **A** works but is inefficient. Retyping the search string repeatedly is not the intended workflow. The `n` key exists specifically to repeat the last search.
+- **B** is correct. After a successful search in vim, pressing `n` jumps to the next match in the same direction. Pressing `N` jumps to the previous match.
+- **C** is incorrect. In Normal mode, pressing `Enter` moves the cursor to the beginning of the next line. It does not repeat a search.
+- **D** is incorrect. `Ctrl+N` in vim's Insert mode triggers word completion, not search navigation. In Normal mode, it moves the cursor down one line.
+
+---
+
+### Question 19 (5 points)
+
+What does the `uniq` command require about its input in order to correctly identify and remove duplicate lines?
+
+A. The input must be sorted so that duplicate lines are adjacent.
+B. The input must be piped from `find`.
+C. The input must contain only numeric data.
+D. The input must be in CSV format with headers.
+
+**Correct Answer: A**
+
+**Distractor Analysis:**
+
+- **A** is correct. `uniq` only detects duplicates when they are consecutive (adjacent). If a file contains "apple", "banana", "apple" in that order, `uniq` would output all three lines since the two "apple" lines are not adjacent. Sorting the input first ensures all identical lines are grouped together.
+- **B** is incorrect. `uniq` can receive input from any command or file. It has no dependency on `find`.
+- **C** is incorrect. `uniq` works on any text data — strings, mixed content, log lines. Numeric-only input is not required.
+- **D** is incorrect. `uniq` has no awareness of CSV format. It operates on raw lines regardless of content structure.
+
+---
+
+### Question 20 (5 points)
+
+An administrator runs this command: `grep -E "^(ERROR|WARN)" /var/log/app.log`. What does the `-E` flag enable?
+
+A. Case-insensitive matching across the entire line.
+B. Extended regular expression syntax, allowing `|` (alternation) and grouping with `()`.
+C. Recursive directory searching.
+D. Exact string matching without regex interpretation.
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- **A** is incorrect. Case-insensitive matching is enabled by `-i`. The `-E` flag has nothing to do with case sensitivity.
+- **B** is correct. `-E` (Extended regex) enables alternation with `|`, grouping with `()`, `+` (one or more), `?` (zero or one), and `{n,m}` repetition. Without `-E`, the parentheses and pipe would be treated as literal characters requiring backslash escaping.
+- **C** is incorrect. Recursive directory searching is enabled by `-r`. The `-E` flag is about regex syntax, not search scope.
+- **D** is incorrect. Fixed-string matching (no regex) is enabled by `-F`. `-E` does the opposite — it enables more powerful regex features, not less.
+
+---
+
 ## Answer Key
 
 | Question | Answer |
@@ -282,6 +482,16 @@ D. The IP addresses sorted and deduplicated
 | 8 | B |
 | 9 | C |
 | 10 | B |
+| 11 | C |
+| 12 | C |
+| 13 | B |
+| 14 | B |
+| 15 | C |
+| 16 | B |
+| 17 | A |
+| 18 | B |
+| 19 | A |
+| 20 | B |
 
 ---
 

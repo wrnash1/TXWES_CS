@@ -512,3 +512,31 @@ Submit a PDF report containing:
 | Part 6: Ansible basics | 10 |
 | Written explanation | 5 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: SSH Certificate Authority
+
+Implement an SSH Certificate Authority (CA) that signs host and user certificates, replacing the traditional known_hosts and authorized_keys trust model.
+
+1. Create a dedicated CA directory: `mkdir -p ~/ssh-ca/{user-ca,host-ca}`. Generate two CA keypairs — one for signing user certificates and one for signing host certificates: `ssh-keygen -t ed25519 -f ~/ssh-ca/user-ca/ca -C "UserCA" -N "" && ssh-keygen -t ed25519 -f ~/ssh-ca/host-ca/ca -C "HostCA" -N ""`. Never expose private CA keys; in a real environment these would be stored in HSMs.
+2. Sign a user's public key to create a user certificate: `ssh-keygen -s ~/ssh-ca/user-ca/ca -I "testuser@lab" -n testuser -V +52w ~/.ssh/id_ed25519.pub`. This creates `~/.ssh/id_ed25519-cert.pub`. Inspect the certificate: `ssh-keygen -L -f ~/.ssh/id_ed25519-cert.pub`. Note the validity period, principals, and key ID fields.
+3. Configure sshd to trust the user CA: add `TrustedUserCAKeys /home/$(whoami)/ssh-ca/user-ca/ca.pub` to a test sshd config or note what this directive would do. Add the host CA to trusted known hosts format: `echo "@cert-authority * $(cat ~/ssh-ca/host-ca/ca.pub)" >> ~/.ssh/known_hosts`. Explain in your lab notes: how does this model reduce the operational burden compared to distributing individual public keys to every server?
+4. Sign a host key to create a host certificate: `sudo ssh-keygen -s ~/ssh-ca/host-ca/ca -I "localhost" -h -n localhost,127.0.0.1 -V +52w /etc/ssh/ssh_host_ed25519_key.pub`. Inspect the certificate: `ssh-keygen -L -f /etc/ssh/ssh_host_ed25519_key-cert.pub`. Add `HostCertificate /etc/ssh/ssh_host_ed25519_key-cert.pub` to `/etc/ssh/sshd_config` and reload sshd.
+
+### Challenge 2: Ansible Playbook for Server Hardening
+
+Write an Ansible playbook that automates the SSH hardening steps from the Module 14 lab, demonstrating idempotent configuration management.
+
+1. Create an Ansible project directory: `mkdir -p ~/ansible-hardening/{inventory,roles/ssh_hardening/{tasks,handlers,templates}}`. Create an inventory file `~/ansible-hardening/inventory/hosts` with `localhost ansible_connection=local` in a group `[hardened]`. Create a `~/ansible-hardening/ansible.cfg` file with `[defaults]`, `inventory = inventory/hosts`, and `host_key_checking = False`.
+2. Write a tasks file at `~/ansible-hardening/roles/ssh_hardening/tasks/main.yml` with at least four tasks: (1) ensure `openssh-server` is installed using the `package` module, (2) deploy a hardened `sshd_config` from a template using the `template` module, (3) ensure sshd is enabled and running using the `service` module, (4) verify no PasswordAuthentication in the running config with a `command` module task and `register`/`assert`. Each config-change task should `notify: Restart sshd`.
+3. Create the handler file `~/ansible-hardening/roles/ssh_hardening/handlers/main.yml` with a single handler named `Restart sshd` that uses the `service` module to restart sshd. Create a Jinja2 template `~/ansible-hardening/roles/ssh_hardening/templates/sshd_config.j2` that sets `PasswordAuthentication no`, `PermitRootLogin no`, `MaxAuthTries 3`, and `Protocol 2`.
+4. Write the main playbook `~/ansible-hardening/site.yml` that applies the `ssh_hardening` role to the `hardened` group. Run it: `ansible-playbook ~/ansible-hardening/site.yml`. Verify idempotency by running it a second time — all tasks should show `ok` (not `changed`). Document the output of both runs.
+
+### Reflection Questions
+
+1. The standard `authorized_keys` model requires copying a user's public key to every server they need to access. SSH Certificate Authorities replace this with signing — one CA public key on every server trusts all certificates signed by that CA. Describe the specific operational advantage this provides for a 500-server fleet, and identify one new risk the CA model introduces that the individual key model does not have.
+
+2. `rsync --delete` will delete files from the destination that are absent from the source. Describe a specific scenario where running `rsync -a --delete /backup/ /production/` (with source and destination swapped accidentally) would cause a catastrophic production outage, and explain what operational safeguard (a specific rsync flag) can reduce this risk by performing a dry run before the actual sync.

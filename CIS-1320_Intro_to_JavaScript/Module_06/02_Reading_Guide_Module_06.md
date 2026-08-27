@@ -339,7 +339,28 @@ console.log(applyTwice(addTen, 5));   // 25 — addTen(addTen(5)) = addTen(15) =
 
 ---
 
-## 8. JSE Certification Exam Tips
+## 8. Supplemental Resources
+
+The following free, openly available resources extend and reinforce the topics covered in this module.
+
+- **[Eloquent JavaScript — Chapter 3: Functions](https://eloquentjavascript.net/03_functions.html)**
+  The primary OER textbook. Covers function declarations, expressions, arrow functions, closures, the call stack, and recursion with detailed explanations and exercises.
+
+- **[MDN Web Docs — Functions guide](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions)**
+  Comprehensive guide covering all function syntax forms, closures, default parameters, rest parameters, arguments object, and getter/setter functions.
+
+- **[MDN Web Docs — Arrow function expressions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions)**
+  Full reference for arrow functions including concise vs. block body syntax, lexical `this`, and limitations (cannot be used as constructors, no `arguments` object).
+
+- **[javascript.info — Functions](https://javascript.info/function-basics)**
+  Beginner-friendly introduction to function declarations, expressions, and return values, followed by an explanation of function naming best practices.
+
+- **[javascript.info — Closures](https://javascript.info/closure)**
+  In-depth explanation of the lexical environment, closure mechanics, and practical applications including the counter and memoization patterns demonstrated in this module.
+
+---
+
+## 9. JSE Certification Exam Tips
 
 1. **Function declaration hoisting** — function declarations are hoisted completely and can be called before their definition. Function expressions and arrow functions are not.
 
@@ -363,7 +384,7 @@ console.log(applyTwice(addTen, 5));   // 25 — addTen(addTen(5)) = addTen(15) =
 
 ---
 
-## 9. Study Checklist
+## 10. Study Checklist
 
 - [ ] Watch the Module 06 video lecture by Professor Nash.
 - [ ] Read Chapter 3 (Functions) of [Eloquent JavaScript](https://eloquentjavascript.net/03_functions.html).

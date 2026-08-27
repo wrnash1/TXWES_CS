@@ -240,4 +240,232 @@ D. NACLs only apply to inbound traffic; this must be a security group issue
 
 ---
 
+### Question 11 (5 points)
+
+An application running on EC2 in a private subnet must access Amazon S3 without sending traffic over the internet and without using a NAT Gateway. Which solution achieves private S3 access at the lowest cost?
+
+A. Configure an S3 Interface Endpoint (PrivateLink) in the private subnet
+
+B. Configure an S3 Gateway Endpoint and add the endpoint to the private subnet's route table
+
+C. Configure a NAT Instance in a public subnet and route S3 traffic through it
+
+D. Enable S3 Transfer Acceleration to route traffic over the AWS backbone
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect. S3 supports both Gateway Endpoints (free) and Interface Endpoints (hourly + data processing charges). The Gateway Endpoint is the more cost-effective option for S3 access from within a VPC. Interface Endpoints are appropriate when you need to access S3 from on-premises via Direct Connect or VPN.
+- B is correct. S3 Gateway Endpoints route S3 API traffic through the AWS private network at no additional charge. Adding the endpoint route to the private subnet's route table directs S3 traffic to the endpoint instead of the NAT Gateway, eliminating NAT data processing charges and internet routing.
+- C is incorrect. A NAT Instance is a self-managed alternative to NAT Gateway that still processes data and routes it over the internet. It does not keep S3 traffic within the AWS network and requires OS patching and HA configuration.
+- D is incorrect. S3 Transfer Acceleration routes uploads through CloudFront edge locations over the internet, improving throughput for geographically distant clients. It does not prevent traffic from traversing the internet and does not provide private network access.
+
+---
+
+### Question 12 (5 points)
+
+A company uses AWS Direct Connect with a 1 Gbps dedicated connection to connect its on-premises data center to AWS. They need to ensure that if the Direct Connect connection fails, applications can continue accessing AWS using an encrypted backup path. Which architecture provides this resilience?
+
+A. Add a second Direct Connect connection from a different Direct Connect location
+
+B. Configure an AWS Site-to-Site VPN as a backup to the Direct Connect connection, with BGP routing that prefers Direct Connect
+
+C. Enable Direct Connect resiliency mode in the AWS console to automatically create a backup path
+
+D. Use AWS Global Accelerator as a failover path for Direct Connect traffic
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect. A second Direct Connect connection provides redundancy against single-connection failures, but if both connections use the same Direct Connect location, a facility outage could take both down. Additionally, a second Direct Connect connection takes weeks to provision and may not be cost-justified as a backup.
+- B is correct. An AWS Site-to-Site VPN uses the public internet with IPSec encryption, providing an always-available backup path even when Direct Connect is down. BGP route preferences (lower MED/higher LOCAL_PREF for Direct Connect) ensure Direct Connect is preferred when available, with automatic failover to VPN. This is the AWS-recommended pattern for Direct Connect failover.
+- C is incorrect. There is no "Direct Connect resiliency mode" that automatically creates a backup path. Direct Connect resiliency is achieved through redundant connections, not a console toggle.
+- D is incorrect. AWS Global Accelerator is a networking service that routes application traffic over the AWS global backbone to the nearest healthy endpoint. It is designed for global application traffic optimization, not for Direct Connect failover.
+
+---
+
+### Question 13 (5 points)
+
+A company has a production VPC (10.0.0.0/16) and a development VPC (10.0.0.0/16) in the same Region. A developer wants to establish VPC Peering between them. What is the issue?
+
+A. VPC Peering is not supported between VPCs in the same Region
+
+B. VPC Peering cannot be established between VPCs with overlapping CIDR blocks
+
+C. Both VPCs must have an Internet Gateway attached to support VPC Peering
+
+D. VPC Peering requires both VPCs to use the same route table
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect. VPC Peering is fully supported between VPCs in the same Region (same-Region peering) and between VPCs in different Regions (inter-region peering), and even between different AWS accounts.
+- B is correct. VPC Peering requires non-overlapping CIDR blocks. Both VPCs use 10.0.0.0/16, which is identical — the routing would be ambiguous. When VPCs have overlapping CIDRs, AWS rejects the peering connection. The solution is to re-CIDR one of the VPCs before establishing peering.
+- C is incorrect. Internet Gateways are not required for VPC Peering. Peering enables private communication between VPCs using their private IP addresses. Internet Gateways are for public internet connectivity.
+- D is incorrect. Each VPC manages its own route tables independently. VPC Peering does not require shared route tables — each VPC adds a route pointing to the peering connection for the peer VPC's CIDR.
+
+---
+
+### Question 14 (5 points)
+
+An architect is designing a hub-and-spoke network topology connecting a central security VPC (hub) with 50 spoke VPCs across multiple AWS accounts. All inter-spoke traffic must be inspected by firewall appliances in the hub VPC. Which networking service enables this topology at scale?
+
+A. VPC Peering between each spoke and the hub, with VPC Peering between all spokes
+
+B. AWS Transit Gateway with a centralized inspection routing architecture using Gateway Load Balancer
+
+C. AWS PrivateLink endpoints in every spoke VPC pointing to the hub
+
+D. VPN connections from each spoke VPC to the hub using Virtual Private Gateway
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect. With 50 spokes, peering requires 50 connections to the hub plus 1,225 connections between all spokes (50×49/2) for full mesh — operationally unmanageable. VPC Peering is also non-transitive, so inter-spoke inspection through the hub is not achievable with peering alone.
+- B is correct. AWS Transit Gateway connects up to 5,000 VPCs and on-premises networks through a single managed hub, supporting centralized routing and inspection architectures. With Gateway Load Balancer and Transit Gateway together, all inter-VPC traffic can be directed through firewall appliances in the inspection VPC. This is the AWS-recommended architecture for enterprise hub-and-spoke with centralized security.
+- C is incorrect. AWS PrivateLink creates Interface Endpoints that expose specific services from a provider VPC to consumer VPCs. It is designed for service-to-service connectivity, not for a general-purpose hub-and-spoke network topology with centralized inspection.
+- D is incorrect. VPN connections from 50 spoke VPCs to a hub are operationally complex and limited by Virtual Private Gateway bandwidth. Transit Gateway supports higher aggregate bandwidth and simpler management for large-scale hub-and-spoke deployments.
+
+---
+
+### Question 15 (5 points)
+
+An EC2 instance in a private subnet in a VPC is experiencing intermittent connectivity failures to an external API endpoint. VPC Flow Logs are enabled. What steps allow the architect to determine whether the failure is a network-level block (REJECT) or if the traffic is leaving the VPC but failing beyond the VPC boundary?
+
+A. Check CloudTrail for API call failures from the EC2 instance
+
+B. Query VPC Flow Logs for the instance's ENI, filtering for records with the destination IP and Action=REJECT; if ACCEPT appears, the failure is outside the VPC boundary
+
+C. Run ping from the instance to the external IP and check the response time
+
+D. Check the EC2 Instance Console Output for network error messages
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect. CloudTrail logs AWS API calls made by IAM principals. It does not capture TCP/IP network traffic between an EC2 instance and an external API endpoint. External HTTP failures would not appear in CloudTrail.
+- B is correct. VPC Flow Logs record individual network flows with an Action field that is either ACCEPT or REJECT. If logs show Action=REJECT for the destination IP, the traffic is being blocked within the VPC (by a security group or NACL). If logs show Action=ACCEPT, the traffic is leaving the VPC successfully, and the failure is at the external endpoint or at an intermediate network layer outside the VPC.
+- C is incorrect. ICMP ping may be blocked by the remote API endpoint's firewall even when HTTP/HTTPS is working. Ping response is not a reliable indicator of HTTP connectivity, and no ping to a production API endpoint should be used in isolation for network troubleshooting.
+- D is incorrect. EC2 Instance Console Output captures the OS boot log and kernel messages. Application-level network failures to external endpoints would not normally appear in the console output unless the OS itself is logging them.
+
+---
+
+### Question 16 (5 points)
+
+A company wants to restrict all outbound internet access from EC2 instances in private subnets, except to a list of approved HTTPS endpoints. Which solution implements this with the LEAST operational overhead?
+
+A. Use a Network ACL with explicit Deny rules for all IP ranges except the approved endpoints
+
+B. Deploy an AWS Network Firewall with domain-based filtering rules that allow only approved HTTPS domains
+
+C. Create security group outbound rules allowing HTTPS only to the specific IP ranges of each approved endpoint
+
+D. Deploy a third-party proxy on EC2 instances with an allow-list of approved URLs
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect. NACL rules are IP-based only — you cannot filter by domain name. Cloud services like SaaS APIs often use dynamic IP addresses that change without notice. Maintaining a NACL with approved IP ranges requires ongoing updates every time endpoint IPs change.
+- B is correct. AWS Network Firewall supports stateful domain-based filtering rules. An allow rule for specific FQDN patterns (e.g., `*.example.com`) matches any IP that those domains resolve to, without requiring IP address maintenance. Network Firewall is a managed service requiring no EC2 instances to operate.
+- C is incorrect. Security group rules are also IP-based. For cloud APIs with dynamic or CDN-distributed IPs, maintaining accurate IP-based security group rules requires constant updates. This has high operational overhead for approved endpoint lists.
+- D is incorrect. A proxy running on EC2 instances requires patching, scaling, high-availability configuration, and ongoing maintenance. This has the highest operational overhead of all options.
+
+---
+
+### Question 17 (5 points)
+
+A company uses a VPN connection between their on-premises network (192.168.0.0/16) and their AWS VPC (10.0.0.0/16). The on-premises network can reach the VPC, but EC2 instances in the VPC cannot initiate connections to on-premises servers. What is the most likely cause?
+
+A. VPN connections are unidirectional — traffic can only flow from on-premises to AWS, not the reverse
+
+B. The VPC route table for the private subnets does not have a route for 192.168.0.0/16 pointing to the Virtual Private Gateway
+
+C. The on-premises firewall is blocking inbound VPN traffic on port 4500
+
+D. The EC2 instances need Elastic IP addresses to route traffic through the VPN
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect. AWS Site-to-Site VPN connections are bidirectional. Traffic can flow in both directions once the VPN tunnel is established and routing is configured on both sides.
+- B is correct. For EC2 instances to route traffic to on-premises networks, the VPC route table for the instances' subnets must have an entry for the on-premises CIDR (192.168.0.0/16) with the Virtual Private Gateway as the target. Without this route, packets destined for 192.168.0.0/16 addresses have no path and are dropped.
+- C is incorrect. If the on-premises firewall were blocking VPN traffic on port 4500 (IPSec NAT-T), the VPN tunnel itself would not be established and neither direction would work. The question states on-premises can reach the VPC, implying the tunnel is up.
+- D is incorrect. VPN traffic uses private IP addresses — it routes through the VPN tunnel, not through the Internet Gateway. Elastic IPs are for direct internet connectivity and are not required for or involved in VPN routing.
+
+---
+
+### Question 18 (5 points)
+
+A company's application sends events to an Amazon SQS queue. The consuming Lambda function processes one message at a time. During peak hours, the queue depth grows to 100,000 messages and messages take 4 hours to process. The business requires processing to complete within 30 minutes. Which solution resolves this?
+
+A. Increase the SQS visibility timeout to 4 hours to prevent message redelivery during processing
+
+B. Increase the Lambda concurrency limit and configure Lambda event source mapping to process larger batches from the queue
+
+C. Switch from SQS Standard to SQS FIFO queue to improve processing throughput
+
+D. Enable SQS long polling to reduce the time between message arrivals to Lambda
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect. Increasing the visibility timeout prevents duplicate processing of in-flight messages, but it does not increase throughput. Messages are still processed one at a time.
+- B is correct. The bottleneck is throughput — 100,000 messages cannot be processed in 30 minutes at a rate of one-at-a-time. Increasing Lambda concurrency allows multiple Lambda invocations to process messages in parallel. Increasing the batch size in the event source mapping allows each Lambda invocation to process multiple messages simultaneously. Together, these changes scale the consumer to match the queue depth.
+- C is incorrect. SQS FIFO queues provide ordering and exactly-once processing guarantees, but they do not improve throughput for high-volume scenarios — FIFO queues actually have lower throughput limits per message group than Standard queues.
+- D is incorrect. Long polling reduces the number of empty ReceiveMessage API calls and the latency between message arrival and Lambda invocation. It improves efficiency but does not directly increase the number of messages processed per second.
+
+---
+
+### Question 19 (5 points)
+
+An architect is designing an event-driven architecture. Multiple downstream services (notifications, inventory, analytics) must receive a copy of every order event published by the order service. If any downstream service is temporarily unavailable, its events must not be lost. Which architecture is MOST resilient?
+
+A. The order service publishes directly to each downstream service's API endpoint
+
+B. The order service publishes to an SNS topic; each downstream service has its own SQS queue subscribed to the topic
+
+C. The order service publishes to a single SQS queue that all downstream services poll
+
+D. The order service stores events in DynamoDB and each downstream service queries for new items on a polling schedule
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect. Direct API calls from the order service to each downstream service creates tight coupling. If any downstream service is unavailable during the API call, the order service must handle the failure and retry — potentially blocking order processing. This is the synchronous, tightly-coupled anti-pattern.
+- B is correct. This is the SNS fan-out with SQS buffering pattern. SNS delivers the event to all subscribed SQS queues simultaneously. If a downstream service is unavailable, its SQS queue retains the message (up to 14 days) until the service resumes and processes it. Each service's queue is independent — one service's slowness does not affect others.
+- C is incorrect. A single SQS queue shared by all consumers creates competing consumers — each message is delivered to only one consumer (whichever polls first). This does not fan out the event to all three services.
+- D is incorrect. Polling DynamoDB for new records introduces latency between event publication and processing. It also requires each service to maintain state about the last processed record and handle concurrent polling coordination. This is complex and brittle compared to the SNS/SQS pattern.
+
+---
+
+### Question 20 (5 points)
+
+An application in AWS VPC needs to communicate with on-premises Microsoft Active Directory servers. The on-premises network is connected to the VPC via AWS Direct Connect. The AD servers are at 192.168.10.5 and 192.168.10.6. DNS queries for the corporate domain (corp.example.com) must resolve to on-premises AD servers. Which Route 53 configuration enables this?
+
+A. Create a public hosted zone for corp.example.com with A records pointing to the on-premises AD servers' IP addresses
+
+B. Create a Route 53 Resolver Outbound Endpoint and a Resolver rule forwarding corp.example.com queries to 192.168.10.5 and 192.168.10.6
+
+C. Create a Route 53 Resolver Inbound Endpoint to receive DNS queries from on-premises and forward them to the VPC
+
+D. Enable Route 53 Resolver DNS Firewall to block external DNS queries and allow only corporate domain resolution
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect. A public hosted zone for corp.example.com would make internal corporate AD DNS records publicly visible on the internet. This is a security risk and not the correct mechanism for hybrid DNS resolution from within a VPC.
+- B is correct. Route 53 Resolver Outbound Endpoints allow DNS queries from EC2 instances in the VPC to be forwarded to on-premises DNS servers. The Resolver rule specifies that queries for `corp.example.com` are forwarded to the specified IP addresses (192.168.10.5 and 192.168.10.6) via the Direct Connect connection. This enables VPC resources to resolve on-premises hostnames.
+- C is incorrect. Route 53 Resolver Inbound Endpoints allow on-premises systems to query Route 53 for private hosted zone records in the VPC. This is the reverse direction — enabling on-premises-to-VPC DNS resolution, not VPC-to-on-premises DNS resolution.
+- D is incorrect. Route 53 Resolver DNS Firewall blocks DNS queries to specific domains for security filtering (blocking malware domains, etc.). It does not forward DNS queries to on-premises DNS servers.
+
 *Proprietary and Confidential. Not for disclosure outside of Texas Wesleyan University.*

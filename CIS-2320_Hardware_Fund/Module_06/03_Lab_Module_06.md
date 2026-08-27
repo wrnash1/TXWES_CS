@@ -247,3 +247,41 @@ If you are unsure about a connector, wattage method, or airflow concept, refer t
 - Reading Guide Section 1 (Glossary), Section 2 (Connector Table), Section 4 (Wattage Calculation), and Section 5 (Airflow Reference)
 - Professor Messer's CompTIA A+ Core 1 free course at [https://www.professormesser.com/free-a-plus-training/220-1101/220-1101-video/](https://www.professormesser.com/free-a-plus-training/220-1101/220-1101-video/)
 - CompTIA A+ exam objectives Domain 3.5 at [https://www.comptia.org/certifications/a](https://www.comptia.org/certifications/a)
+
+---
+
+## Part 9 — Challenge Exercise
+
+These advanced steps are optional and are not included in the standard grading rubric.
+
+### Challenge Step 1 — Real-Time PSU Voltage Monitoring
+
+Using HWiNFO64 (free at [https://www.hwinfo.com/](https://www.hwinfo.com/)) on any available Windows system with a hardware-monitoring capable motherboard:
+
+1. Launch HWiNFO64 in Sensors-only mode.
+1. Locate the motherboard voltage sensors. Record the reported voltages for the +12V, +5V, and +3.3V rails at idle (system at desktop for 5 minutes).
+1. Open a stress test (Prime95 or any CPU-intensive task) and record the voltages again after 5 minutes of sustained load.
+1. Calculate the voltage deviation from nominal for each rail: Deviation (%) = ((Measured − Nominal) / Nominal) × 100. ATX specification allows ±5% for +12V and +5V, ±4% for +3.3V. Are your measured voltages within specification?
+1. In 2–3 sentences, explain what it would mean for system stability if the +12V rail consistently dropped to 11.2V under load.
+
+### Challenge Step 2 — PSU Wattage Calculator Comparison
+
+Use three different online wattage calculators to estimate the power requirements of the same system configuration:
+
+- System configuration: Intel Core i7-12700K, RTX 3080, 32 GB DDR4, 2× NVMe SSD, 4× 120mm case fans, 1× AIO liquid cooler pump
+
+1. Calculator 1: OuterVision Power Supply Calculator ([https://outervision.com/power-supply-calculator](https://outervision.com/power-supply-calculator))
+1. Calculator 2: PCPartPicker estimated wattage ([https://pcpartpicker.com/](https://pcpartpicker.com/))
+1. Calculator 3: Be Quiet! PSU Calculator ([https://www.bequiet.com/en/psucalculator](https://www.bequiet.com/en/psucalculator))
+1. Record the recommended PSU wattage from each calculator. Note any differences.
+1. Write a 2–3 sentence explanation of why different calculators might produce different recommendations for the same hardware configuration (consider whether they account for the same headroom percentage, overclocking scenarios, or component aging).
+
+### Challenge Step 3 — Case Airflow Redesign
+
+Draw a top-down and front-view diagram of a mid-tower ATX case layout (sketch or use any free diagramming tool such as [https://www.diagrams.net/](https://www.diagrams.net/)):
+
+1. Place six fan mounting positions: 3 front (120mm), 2 top (140mm), 1 rear (120mm).
+1. Assign each fan as intake or exhaust to achieve slight positive pressure (more intake than exhaust).
+1. Draw directional arrows showing the intended airflow path from intake fans through the case, past the CPU, GPU, and RAM, and out through the exhaust fans.
+1. Calculate the total intake CFM and total exhaust CFM if front fans are 65 CFM each, top fans are 75 CFM each, and the rear fan is 70 CFM. Is your configuration positive pressure? By how many CFM?
+1. Write a 3-sentence justification explaining why your fan placement is optimal for cooling the CPU (located above the motherboard tray center) and the GPU (located in the lower PCIe area).

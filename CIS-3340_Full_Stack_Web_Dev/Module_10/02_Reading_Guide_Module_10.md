@@ -31,7 +31,7 @@ A very common mistake is managing server state with `useState` and `useEffect`. 
 
 Prop drilling occurs when a value must be passed through multiple layers of components that do not use it directly, only forwarding it further down.
 
-```
+```text
 App (user state)
   └── Layout (passes user down, doesn't use it)
         └── Sidebar (passes user down, doesn't use it)
@@ -405,3 +405,25 @@ export function CartProvider({ children }) {
 - [ ] Explain when to use Redux Toolkit instead of Context
 - [ ] Apply `React.memo`, `useMemo`, and `useCallback` to prevent unnecessary re-renders
 - [ ] Split a single large context into multiple focused contexts
+
+---
+
+## 9. Supplemental Resources
+
+The following free, open-access resources go deeper on Module 10 topics:
+
+**1. React Official Documentation — Context**
+[https://react.dev/learn/passing-data-deeply-with-context](https://react.dev/learn/passing-data-deeply-with-context)
+The official React guide to `createContext`, Provider nesting, and `useContext` — including worked examples of when to use context versus lifting state, directly aligned to the AuthContext and CartContext patterns in Lab 10.
+
+**2. TanStack Query (React Query) Documentation**
+[https://tanstack.com/query/latest/docs/framework/react/overview](https://tanstack.com/query/latest/docs/framework/react/overview)
+The complete reference for `useQuery`, `useMutation`, cache invalidation, optimistic updates, and the `QueryClientProvider` setup used in Lab 10 — the authoritative source for every option in the `useQuery` options reference table in this guide.
+
+**3. React Official Documentation — useReducer**
+[https://react.dev/reference/react/useReducer](https://react.dev/reference/react/useReducer)
+The official `useReducer` API reference with worked examples of the reducer pattern, action shapes, initialization strategies, and the Context + useReducer global store combination — covers all reducer concepts in Section 3 of this guide.
+
+**4. Redux Toolkit Official Documentation — Why Redux Toolkit**
+[https://redux-toolkit.js.org/introduction/why-rtk-is-redux-today](https://redux-toolkit.js.org/introduction/why-rtk-is-redux-today)
+The Redux team's explanation of when to use Redux Toolkit versus the Context API, covering `createSlice`, Immer-powered mutation syntax, and RTK Query — directly relevant to the Context vs Redux decision framework in Section 5.

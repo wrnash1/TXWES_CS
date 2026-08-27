@@ -204,3 +204,183 @@ An organization is migrating a monolithic .NET Framework 4.7 application to Azur
 - *Why A is incorrect:* A Linux container cannot run .NET Framework 4.7 applications that depend on Windows-specific APIs. ACI does support Windows containers, but App Service provides richer management features (deployment slots, custom domains, SSL) that align better with a production web application.
 - *Why C is incorrect:* AKS Linux node pools cannot run Windows containers. While AKS supports Windows node pools, the scenario specifically says no Kubernetes orchestration is needed — AKS would be an over-engineered solution.
 - *Why D is incorrect:* Azure Container Apps runs on Linux-based infrastructure and does not support Windows containers. It also requires Kubernetes-style configuration, adding unnecessary complexity for a single application migration.
+
+---
+
+### Question 11 (5 points)
+
+A company stores its container images in a public Docker Hub repository. Their security team requires all images to be stored privately and scanned for known vulnerabilities (CVEs) before deployment to production. Which Azure service satisfies both requirements?
+
+- A) Azure Container Instances with a private DNS zone
+- B) Azure Kubernetes Service with network policies
+- C) Azure Container Registry with Microsoft Defender for Containers enabled
+- D) Azure App Service with access restrictions
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - *Why C is correct:* Azure Container Registry is a private Docker-compatible image registry. Enabling Microsoft Defender for Containers on the registry adds continuous vulnerability scanning that evaluates images against CVE databases. This combination provides both private storage and automated security scanning before deployment.
+  - *Why A is incorrect:* ACI is a container runtime — it executes containers but does not store or scan images. Private DNS zones control name resolution, not image storage or scanning.
+  - *Why B is incorrect:* AKS is an orchestration platform. Network policies control traffic between pods. Neither AKS nor network policies provide image storage or pre-deployment vulnerability scanning.
+  - *Why D is incorrect:* App Service access restrictions control inbound HTTP/HTTPS traffic to a web application. They have no relationship to container image storage or vulnerability scanning.
+
+---
+
+### Question 12 (5 points)
+
+An organization runs a three-tier application: a web frontend, an API layer, and a database tier. Each tier must be able to scale independently and communicate over a private network. Which Azure container service provides the necessary orchestration and private networking for this architecture?
+
+- A) Azure Container Instances with a virtual network integration
+- B) Azure Container Apps with an internal environment
+- C) Azure Kubernetes Service with a VNet-integrated cluster
+- D) Azure Container Registry with geo-replication
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - *Why C is correct:* AKS supports VNet integration where the cluster nodes and pods run inside a customer-controlled Azure Virtual Network. Each tier can be deployed as a separate Kubernetes Deployment with independent scaling rules, and pod-to-pod communication stays private within the VNet. This is the standard architecture for multi-tier containerized applications requiring network isolation.
+  - *Why A is incorrect:* ACI supports VNet deployment for single containers, but it provides no orchestration, service discovery, or independent scaling across multiple tiers. Managing three independent ACI groups with private networking requires custom work that AKS handles natively.
+  - *Why B is incorrect:* Container Apps with an internal environment is a valid option for event-driven microservices, but it abstracts Kubernetes and has limitations for complex stateful applications like a database tier. AKS provides more control for a traditional three-tier architecture.
+  - *Why D is incorrect:* ACR geo-replication distributes container images to multiple regions. It is an image storage feature with no compute or networking capabilities for running application tiers.
+
+---
+
+### Question 13 (5 points)
+
+What is the key architectural difference between a container and a virtual machine in terms of how the operating system is used?
+
+- A) Containers include a full guest OS; VMs share the host OS kernel
+- B) Containers share the host OS kernel; VMs each run a separate guest OS on a hypervisor
+- C) Containers use hardware virtualization; VMs use OS-level isolation
+- D) Containers and VMs both require a hypervisor layer between the hardware and the workload
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* This is the fundamental architectural distinction. Containers use Linux namespaces and cgroups to isolate processes within the same OS kernel — no separate OS is needed. VMs use a hypervisor (like Hyper-V) to provide each VM with a complete, independent guest OS. This difference drives container advantages in startup time, image size, and density.
+  - *Why A is incorrect:* This reverses the correct relationship. Containers do not include a full guest OS — that is precisely what makes them lightweight. Including a full OS is the characteristic of VMs.
+  - *Why C is incorrect:* This also reverses the relationship. VMs use hardware virtualization (hypervisor). Containers use OS-level isolation (namespaces/cgroups). The statement as written is backward.
+  - *Why D is incorrect:* Containers do not require a hypervisor. Containers run directly on the host OS using kernel features. The hypervisor is specific to VM architecture, not containers.
+
+---
+
+### Question 14 (5 points)
+
+An AKS cluster has three node pools: a system node pool with 2 nodes and two user node pools with 3 nodes each. A developer deletes the system node pool. What happens?
+
+- A) The cluster continues operating normally using the user node pools as system nodes
+- B) The deletion fails because AKS requires at least one system node pool at all times
+- C) The cluster is automatically deleted along with all workloads
+- D) All user node pools are paused until a new system node pool is created
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* AKS requires at least one system node pool in every cluster. The system node pool runs critical system pods including CoreDNS, kube-proxy, and metrics-server. Azure enforces this constraint and will reject a deletion request that would leave the cluster without a system node pool.
+  - *Why A is incorrect:* User node pools cannot automatically become system node pools. The node pool mode (System vs. User) is an explicit configuration. User node pools run workload pods and are not designed to host system components.
+  - *Why C is incorrect:* AKS does not automatically delete the entire cluster when a node pool deletion fails or is blocked. The deletion is simply rejected and the cluster continues operating unchanged.
+  - *Why D is incorrect:* User node pools are not automatically paused based on system node pool operations. Each node pool operates independently within the cluster.
+
+---
+
+### Question 15 (5 points)
+
+A developer pushes a new container image to Azure Container Registry. A production AKS cluster should automatically deploy this new image without manual intervention. Which Kubernetes/AKS feature or pattern enables this automated deployment pipeline?
+
+- A) AKS node pool autoscaling
+- B) Kubernetes rolling update triggered by a CI/CD pipeline updating the Deployment manifest
+- C) ACI restart policy set to Always
+- D) Azure Container Apps scale-to-zero configuration
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* The standard pattern for automated deployment is a CI/CD pipeline (Azure DevOps, GitHub Actions) that builds the image, pushes to ACR, then updates the Kubernetes Deployment manifest with the new image tag using `kubectl set image` or by applying an updated YAML. Kubernetes then performs a rolling update automatically, replacing pods with the new image with no downtime.
+  - *Why A is incorrect:* Node pool autoscaling adds or removes worker nodes based on pod resource requests. It does not trigger application deployments or update container images.
+  - *Why C is incorrect:* ACI restart policy applies to Azure Container Instances, not AKS. Setting it to "Always" means a stopped container restarts automatically — it does not enable automated image deployments.
+  - *Why D is incorrect:* Container Apps scale-to-zero is about instance count management for idle applications. It does not trigger image updates or deployments in AKS.
+
+---
+
+### Question 16 (5 points)
+
+Which ACI container group restart policy should be used for a container that runs a one-time database migration script and should not restart after the script completes successfully?
+
+- A) Always
+- B) OnFailure
+- C) Never
+- D) Once
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - *Why C is correct:* The `Never` restart policy means the container runs once and is not restarted regardless of its exit code (success or failure). For a one-time migration script that must run exactly once and then stop, `Never` is the correct policy. ACI will bill only for the execution duration.
+  - *Why A is incorrect:* `Always` restarts the container every time it exits, whether successfully or not. A migration script with `Always` would run the migration repeatedly after each completion — potentially corrupting the database on subsequent runs.
+  - *Why B is incorrect:* `OnFailure` restarts the container only if it exits with a non-zero (error) exit code. While this might be appropriate for retrying a failed migration, it still allows unintended re-runs if the exit code is misreported. `Never` is safer for a destructive one-time operation.
+  - *Why D is incorrect:* `Once` is not a valid Azure Container Instances restart policy. The three valid ACI restart policies are `Always`, `OnFailure`, and `Never`.
+
+---
+
+### Question 17 (5 points)
+
+A Kubernetes Service of type `LoadBalancer` is created in an AKS cluster. What Azure resource does AKS automatically provision when this Service is created?
+
+- A) An Azure Application Gateway with WAF enabled
+- B) An Azure Public IP address and an Azure Load Balancer
+- C) An Azure VPN Gateway for external connectivity
+- D) An Azure DNS zone with an A record for the service
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* When a Kubernetes Service of type `LoadBalancer` is created in AKS, the AKS cloud controller manager automatically provisions an Azure Public IP address and configures an Azure Load Balancer rule to route traffic from that IP to the matching pods. This is the standard way to expose AKS services to the internet.
+  - *Why A is incorrect:* An Application Gateway with WAF is provisioned separately using the Application Gateway Ingress Controller (AGIC) add-on, not automatically by a LoadBalancer service type. Standard LoadBalancer services use Azure Load Balancer, not Application Gateway.
+  - *Why C is incorrect:* VPN Gateways establish encrypted network tunnels between on-premises and Azure. Creating a Kubernetes Service does not trigger VPN Gateway provisioning — these are completely unrelated operations.
+  - *Why D is incorrect:* AKS does not automatically create Azure DNS zones or records for LoadBalancer services. External DNS integration requires explicit configuration of the External-DNS controller, which is not enabled by default.
+
+---
+
+### Question 18 (5 points)
+
+An organization wants to use containers but their security policy requires that each container must have complete OS kernel isolation equivalent to a virtual machine. Which Azure service or configuration meets this requirement?
+
+- A) AKS with confidential computing node pools
+- B) Azure Container Instances with hypervisor-isolated containers
+- C) Azure Container Apps with dedicated workload profiles
+- D) AKS with network policies enabled
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Azure Container Instances supports hypervisor-isolated containers — each container group runs in its own dedicated virtual machine with a separate kernel, providing VM-equivalent isolation. This is ACI's isolation model by default: each container group gets a dedicated hypervisor-isolated compute allocation, not a shared host kernel.
+  - *Why A is incorrect:* AKS confidential computing nodes use AMD SEV-SNP or Intel SGX for hardware-based memory encryption and attestation. While they provide strong security, they are about data confidentiality in memory, not about providing each container with a separate OS kernel.
+  - *Why C is incorrect:* Container Apps dedicated workload profiles provide dedicated compute capacity for better performance predictability, but they still run containers on a shared Linux host without VM-equivalent kernel isolation per container.
+  - *Why D is incorrect:* AKS network policies control network traffic between pods (which pods can communicate with which). They are a network security feature and do not provide OS kernel isolation between containers.
+
+---
+
+### Question 19 (5 points)
+
+A data engineer wants to run a containerized Apache Spark job that processes 500 GB of data. The job runs once per night and takes approximately 2 hours. The engineer wants the lowest possible cost and does not need persistent infrastructure. Which Azure container service is best suited?
+
+- A) AKS with a dedicated node pool running 24/7
+- B) Azure Container Instances with sufficient CPU and memory configuration
+- C) Azure Container Apps with scale-to-zero enabled
+- D) Azure App Service with always-on disabled
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* ACI is purpose-built for short-duration, on-demand container workloads. The engineer can configure a container group with the required vCPU and memory for the Spark job, run it for the 2-hour nightly window, and ACI bills only for those 2 hours of execution. There is no cluster to maintain and no idle infrastructure costs between nightly runs.
+  - *Why A is incorrect:* An AKS cluster with a dedicated node pool running 24/7 incurs VM costs around the clock even when the Spark job is not running. For a 2-hour nightly job, this means paying for 22 hours of idle node time per day — very cost-inefficient.
+  - *Why C is incorrect:* Container Apps with scale-to-zero is excellent for event-driven web workloads, but it is not designed for large, long-running batch compute jobs. Container Apps has resource limits and is optimized for request-driven workloads, not 2-hour sustained Spark computations.
+  - *Why D is incorrect:* App Service always-on setting prevents the app from being idled after inactivity — it is a web hosting feature with no relevance to batch Spark job execution. App Service does not provide the per-second billing or on-demand compute model needed here.
+
+---
+
+### Question 20 (5 points)
+
+In Docker container architecture, what is the correct sequence of steps to go from application source code to a running container in Azure Container Instances?
+
+- A) Source code → Container → Image → Dockerfile → ACI
+- B) Dockerfile → Image (docker build) → Registry push (ACR) → ACI pull and run
+- C) Source code → ACI → Image → Registry → Dockerfile
+- D) Image → Dockerfile → Registry → Container → ACI
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* The correct sequence is: write a Dockerfile that describes how to build the application image; run `docker build` to produce the image; push the image to a registry (Azure Container Registry); then ACI pulls the image from the registry and creates a running container. This is the standard container CI/CD pipeline.
+  - *Why A is incorrect:* This sequence is backward. You cannot create a container before building an image, and a Dockerfile is the starting point (before the image), not a step after the container exists.
+  - *Why C is incorrect:* Source code does not go directly to ACI. ACI runs container images — the source code must first be packaged into an image via a Dockerfile build process.
+  - *Why D is incorrect:* The Image and Dockerfile order is reversed. A Dockerfile is the source/build script that produces the image. The image is the artifact that results from building the Dockerfile, not the starting point.

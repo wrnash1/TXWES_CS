@@ -196,6 +196,186 @@ D. `gcc → ./configure → sudo make install`
 
 ---
 
+**Question 11** (5 points)
+
+An administrator wants to list all files installed by the `openssh-server` package on an Ubuntu system. Which command is correct?
+
+A. `apt files openssh-server`
+
+B. `dpkg -L openssh-server`
+
+C. `apt-cache show openssh-server`
+
+D. `dpkg -S openssh-server`
+
+**Correct Answer:** B
+
+**Explanation:** `dpkg -L PACKAGE` lists all files owned by an installed package (L = list files). `dpkg -S FILE` does the reverse — finds which package owns a specific file. `apt-cache show` displays package metadata like description, version, and dependencies, not file lists. `apt files` is not a valid command.
+
+---
+
+**Question 12** (5 points)
+
+Which command removes packages that were automatically installed as dependencies but are no longer needed by any manually installed package?
+
+A. `sudo apt clean`
+
+B. `sudo apt autoremove`
+
+C. `sudo apt purge --auto`
+
+D. `sudo dpkg --remove-orphans`
+
+**Correct Answer:** B
+
+**Explanation:** `apt autoremove` removes packages that were installed as dependencies but are no longer required. These "orphaned" dependencies accumulate over time as software is removed. `apt clean` removes downloaded package cache files from `/var/cache/apt/archives/` but does not remove any installed packages. The other options are not valid commands.
+
+---
+
+**Question 13** (5 points)
+
+An administrator adds a third-party GPG key to verify packages from a new repository. Where does the key belong on a modern Debian/Ubuntu system using the recommended approach?
+
+A. `/etc/apt/trusted.gpg`
+
+B. `/etc/apt/trusted.gpg.d/`
+
+C. `/usr/share/keyrings/`
+
+D. `/etc/apt/keyrings/`
+
+**Correct Answer:** D
+
+**Explanation:** The current recommended practice (Debian/Ubuntu) is to store third-party repository keys in `/etc/apt/keyrings/` as dearmored (binary) `.gpg` files, and then reference them in the `.sources` or `.list` file with `signed-by=/etc/apt/keyrings/keyname.gpg`. `/etc/apt/trusted.gpg` and `trusted.gpg.d/` are the legacy approach that added keys to the global trust store — the modern approach scopes keys to specific repositories. `/usr/share/keyrings/` is used by distribution packages, not administrators.
+
+---
+
+**Question 14** (5 points)
+
+What is the purpose of `dnf makecache` on a RHEL system?
+
+A. It builds a local RPM database from installed packages.
+
+B. It downloads and stores repository metadata locally to speed up subsequent operations.
+
+C. It removes old cached packages from `/var/cache/dnf/`.
+
+D. It verifies the integrity of all installed packages.
+
+**Correct Answer:** B
+
+**Explanation:** `dnf makecache` downloads repository metadata (package lists, checksums, descriptions) from all enabled repositories and stores it locally. Subsequent `dnf install`, `dnf search`, and `dnf info` commands use this cached metadata instead of downloading it fresh each time, which speeds up operations significantly. `dnf clean all` removes cached data. `rpm -Va` verifies installed packages. There is no separate RPM database rebuild command needed in normal operation.
+
+---
+
+**Question 15** (5 points)
+
+An administrator installs a `.deb` file directly with `sudo dpkg -i package.deb`. The installation fails with "dependency problems." What is the correct follow-up command to automatically resolve the missing dependencies?
+
+A. `sudo apt install --fix-depends`
+
+B. `sudo apt --fix-broken install`
+
+C. `sudo dpkg --fix-missing package.deb`
+
+D. `sudo apt-get dep-install package.deb`
+
+**Correct Answer:** B
+
+**Explanation:** When `dpkg -i` fails due to missing dependencies, the package is left in a partially installed state. Running `sudo apt --fix-broken install` (equivalent to `apt -f install`) instructs apt to download and install any missing dependencies, then complete the package configuration. This is the standard recovery procedure after a failed `dpkg -i`. The other commands are either invalid or do not perform dependency resolution.
+
+---
+
+**Question 16** (5 points)
+
+What information does `rpm -qi packagename` provide that `rpm -q packagename` does not?
+
+A. A list of files installed by the package
+
+B. The full package metadata including description, version, license, URL, and install date
+
+C. The package's GPG signature status
+
+D. The list of other packages that depend on this package
+
+**Correct Answer:** B
+
+**Explanation:** `rpm -q PACKAGE` shows only the package name-version-release string (e.g., `nginx-1.20.1-10.el9.x86_64`). Adding the `-i` flag (info) displays full metadata: description, architecture, size, license, URL, build date, install date, packager, and more. `-l` lists files. `rpm -q --whatrequires` shows reverse dependencies. `rpm -K` checks GPG signatures.
+
+---
+
+**Question 17** (5 points)
+
+An administrator runs `sudo dnf update` and the kernel is updated. After rebooting, the old kernel still appears in the GRUB menu. What controls how many old kernel versions are retained?
+
+A. The `keepcache` setting in `/etc/dnf/dnf.conf`
+
+B. The `installonly_limit` setting in `/etc/dnf/dnf.conf`
+
+C. The `kernel_retain` setting in `/boot/grub2/grub.cfg`
+
+D. Old kernels must be removed manually with `rpm -e`
+
+**Correct Answer:** B
+
+**Explanation:** `installonly_limit` in `/etc/dnf/dnf.conf` controls how many versions of "install-only" packages (like the kernel) are kept. The default is 3. When a new kernel is installed and the limit is exceeded, dnf automatically removes the oldest kernel version. `keepcache` controls whether downloaded package files are retained after installation. GRUB configuration is generated automatically and is not where this is configured.
+
+---
+
+**Question 18** (5 points)
+
+Which of the following is a key advantage of Flatpak/Snap packages over distribution packages?
+
+A. They are smaller in size because they share all system libraries.
+
+B. They can run on any Linux distribution without modification and include their own dependencies.
+
+C. They receive security updates faster because they bypass package manager verification.
+
+D. They are always more secure than distribution packages because they require root to install.
+
+**Correct Answer:** B
+
+**Explanation:** Flatpak and Snap packages bundle their own dependencies in a sandboxed environment, making them distribution-agnostic — the same package works on Ubuntu, Fedora, or any other Linux system. This solves the "works on my distribution" problem. The tradeoff is larger package sizes (dependencies are not shared) and potential lag in security updates because the app maintainer, not the distribution, must update bundled libraries. They do not require root to install (Flatpak can install per-user without root).
+
+---
+
+**Question 19** (5 points)
+
+After adding a new repository to `/etc/yum.repos.d/`, a `dnf install` command fails with `repomd.xml: [Errno 14] HTTP Error 404 - Not Found`. What is the most likely cause?
+
+A. The GPG key for the repository has not been imported.
+
+B. The `baseurl` in the `.repo` file points to an invalid or incorrect URL.
+
+C. The repository requires `sudo` to access.
+
+D. The repository is disabled; use `--enablerepo` to activate it.
+
+**Correct Answer:** B
+
+**Explanation:** HTTP 404 means the URL was reached but the resource was not found. The `repomd.xml` file is the repository metadata index. A 404 error on this file almost always means the `baseurl=` or `mirrorlist=` URL in the `.repo` file is incorrect — either a typo, the wrong architecture in the URL, or the repository has moved. A missing GPG key would produce a different error. Repositories without `enabled=0` are active by default.
+
+---
+
+**Question 20** (5 points)
+
+What is the difference between `apt upgrade` and `apt full-upgrade` (`apt-get dist-upgrade`)?
+
+A. `apt upgrade` installs new packages; `apt full-upgrade` only updates existing ones.
+
+B. `apt upgrade` never removes packages; `apt full-upgrade` may remove packages to resolve dependency conflicts.
+
+C. `apt upgrade` requires internet access; `apt full-upgrade` works offline.
+
+D. There is no functional difference — they are synonyms.
+
+**Correct Answer:** B
+
+**Explanation:** `apt upgrade` upgrades all installed packages but will NOT remove any package, even if a dependency conflict requires removal to complete an upgrade. Packages that cannot be upgraded without removing something are "held back." `apt full-upgrade` (the newer name for `apt-get dist-upgrade`) performs a smarter upgrade that may remove packages if necessary to resolve dependency changes — this is appropriate when upgrading to a new distribution release. `apt full-upgrade` does not install entirely new packages unless they are pulled in as dependencies.
+
+---
+
 **Answer Key Summary**
 
 | Question | Answer |
@@ -210,3 +390,13 @@ D. `gcc → ./configure → sudo make install`
 | 8 | B |
 | 9 | C |
 | 10 | B |
+| 11 | B |
+| 12 | B |
+| 13 | D |
+| 14 | B |
+| 15 | B |
+| 16 | B |
+| 17 | B |
+| 18 | B |
+| 19 | B |
+| 20 | B |

@@ -365,3 +365,25 @@ RDS Proxy is configured in AWS — no application code changes are required.
 - [ ] Use `RETURNING *` to retrieve the inserted row
 - [ ] Implement a transaction with BEGIN/COMMIT/ROLLBACK
 - [ ] Explain when to use RDS versus DynamoDB and what RDS Proxy solves
+
+---
+
+## 13. Supplemental Resources
+
+The following free, open-access resources go deeper on Module 09 topics:
+
+**1. PostgreSQL Official Documentation — Tutorial**
+[https://www.postgresql.org/docs/current/tutorial.html](https://www.postgresql.org/docs/current/tutorial.html)
+The official PostgreSQL tutorial covering SQL basics, table creation, constraints, joins, and transactions — directly aligned to the schema design and CRUD query sections in this reading guide and Lab 09.
+
+**2. node-postgres (pg) Documentation**
+[https://node-postgres.com/](https://node-postgres.com/)
+The complete reference for the `pg` driver used to connect Node.js to PostgreSQL, covering Pool configuration, parameterized queries, transactions, and the result object fields (`rows`, `rowCount`) used in the async route handlers.
+
+**3. MDN Web Docs — SQL injection**
+[https://developer.mozilla.org/en-US/docs/Glossary/SQL_Injection](https://developer.mozilla.org/en-US/docs/Glossary/SQL_Injection)
+A concise explanation of SQL injection attacks and why parameterized queries (`$1`, `$2`) are the required defense — reinforces the critical security principle that all user-supplied values must be passed as parameters, never interpolated into SQL strings.
+
+**4. AWS Documentation — Amazon RDS for PostgreSQL**
+[https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_PostgreSQL.html](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_PostgreSQL.html)
+The official AWS guide for deploying PostgreSQL on RDS, covering Multi-AZ setup, automated backups, VPC configuration, and RDS Proxy — the managed deployment target for the Node.js/PostgreSQL application built in this module and deployed in Module 14.

@@ -210,6 +210,208 @@ A covers foundational data concepts and technology environments. B covers data c
 
 ---
 
+---
+
+### Question 11 (5 points)
+
+Under GDPR, which legal basis most commonly applies when a user voluntarily submits their email address through a website registration form to receive a newsletter?
+
+A) Vital interests — used when processing is necessary to protect someone's life.
+
+B) Legal obligation — used when processing is required by law, not voluntary user action.
+
+C) Consent — the user has freely given, specific, and informed agreement to processing their data for the stated purpose.
+
+D) Legitimate interests — appropriate when the organization's interest overrides user rights without requiring explicit consent.
+
+#### Q11 Correct Answer: C
+
+#### Q11 Distractor Analysis
+
+Voluntary form submission for a newsletter is the textbook example of consent as a legal basis under GDPR Article 6. Vital interests (A) apply in life-threatening situations, not marketing. Legal obligation (B) applies when a law mandates processing. Legitimate interests (D) is used without explicit consent and is not appropriate when consent is easily obtainable.
+
+---
+
+### Question 12 (5 points)
+
+A hospital uses a third-party cloud provider to store electronic health records. Under HIPAA, what agreement must exist between the hospital and the cloud provider?
+
+A) A GDPR Data Processing Agreement because cloud data crosses international borders.
+
+B) A Business Associate Agreement (BAA) — required when a covered entity shares PHI with a vendor or contractor who processes that PHI on its behalf.
+
+C) A CCPA Data Sale Opt-Out Contract because patient data is being shared with a third party.
+
+D) No agreement is required if the cloud provider is located in the United States.
+
+#### Q12 Correct Answer: B
+
+#### Q12 Distractor Analysis
+
+HIPAA requires a Business Associate Agreement whenever a covered entity (the hospital) shares PHI with a business associate (the cloud provider) that handles the data. A GDPR agreement (A) is for EU data, not US healthcare. CCPA (C) governs consumer data rights, not healthcare vendor contracts. D is incorrect; US location does not eliminate the BAA requirement.
+
+---
+
+### Question 13 (5 points)
+
+An analytics team removes names, emails, and phone numbers from a marketing dataset but retains income bracket, age group, and purchase category. A data privacy officer warns that re-identification is still possible. Which concept explains this risk?
+
+A) Differential privacy — small statistical noise is insufficient to protect precise records.
+
+B) Quasi-identifiers — attributes that are not direct identifiers but can uniquely identify individuals in combination, especially when cross-referenced with external datasets.
+
+C) Data leakage — the suppressed fields are still accessible through model predictions.
+
+D) Aggregation failure — grouped statistics can be reversed to individual records.
+
+#### Q13 Correct Answer: B
+
+#### Q13 Distractor Analysis
+
+Income bracket, age group, and purchase category are quasi-identifiers — individually non-identifying, but in combination with each other or with an external dataset they may re-identify specific individuals. Differential privacy (A) is a mathematical technique for adding noise, not a description of the risk. Data leakage (C) describes a model training error, not a re-identification mechanism. Aggregation failure (D) describes statistical disclosure, a related but distinct concept.
+
+---
+
+### Question 14 (5 points)
+
+Which of the following actions constitutes a data breach notification trigger under GDPR?
+
+A) An employee accidentally sends a non-confidential internal memo to the wrong colleague.
+
+B) A database containing personal data of EU residents is accessed by an unauthorized third party, exposing names, addresses, and payment card numbers.
+
+C) An analyst exports a de-identified summary report to a shared drive.
+
+D) A company updates its privacy policy without notifying users in advance.
+
+#### Q14 Correct Answer: B
+
+#### Q14 Distractor Analysis
+
+Under GDPR Article 33, a personal data breach — including unauthorized access to personal data — must be reported to the supervisory authority within 72 hours. A is not a personal data breach. C involves de-identified data, which is not personal data under GDPR. D is a transparency and notification obligation under Article 13/14, not a breach notification requirement.
+
+---
+
+### Question 15 (5 points)
+
+A company's employee directory dataset includes: employee name, job title, department, and work email. Under GDPR, which of the following statements is most accurate?
+
+A) This dataset does not require privacy protection because it contains only work-related information.
+
+B) Names and work emails are personal data under GDPR because they relate to identified individuals; the organization must have a lawful basis for processing this data.
+
+C) Only the employee name requires protection; job title and department are not personal data.
+
+D) This dataset is exempt from GDPR because it is used for internal purposes only.
+
+#### Q15 Correct Answer: B
+
+#### Q15 Distractor Analysis
+
+GDPR defines personal data broadly as any information relating to an identified or identifiable natural person. Employee names and work emails clearly meet this definition. A is incorrect; professional data is still personal data. C is incorrect; all fields in the record relate to an identifiable person. D is incorrect; internal use does not exempt data from GDPR requirements.
+
+---
+
+### Question 16 (5 points)
+
+A machine learning model trained to approve rental applications produces approval rates of 82% for applicants from primarily white ZIP codes and 41% for applicants from primarily minority ZIP codes, even though income and credit scores are equivalent. What is the most appropriate first step for an ethics review?
+
+A) Retrain the model with a larger dataset to reduce random variation.
+
+B) Remove income and credit score from the model to create a race-neutral decision.
+
+C) Conduct a disparate impact analysis to measure whether the gap is statistically significant and investigate which features are driving the differential outcome.
+
+D) Replace the model with a human review process for all applications from minority ZIP codes.
+
+#### Q16 Correct Answer: C
+
+#### Q16 Distractor Analysis
+
+The first step in an ethics review is to measure and understand the disparity — disparate impact analysis quantifies whether the gap is statistically significant and attribution analysis identifies the features responsible. A addresses noise but not systematic bias. B removing legitimate features does not address proxy discrimination in remaining features and may harm the model's legitimate predictive power. D creates a separate process based on ZIP code, which is itself potentially discriminatory.
+
+---
+
+### Question 17 (5 points)
+
+The principle of "purpose limitation" under GDPR means:
+
+A) An organization may only store data for a maximum of 12 months before deletion.
+
+B) Data collected for one specific, stated purpose may not be used for a different, incompatible purpose without obtaining new consent or another lawful basis.
+
+C) Organizations must limit the number of purposes they state in their privacy policy to three or fewer.
+
+D) Data may only be processed by employees whose job title includes the word "analyst."
+
+#### Q17 Correct Answer: B
+
+#### Q17 Distractor Analysis
+
+Purpose limitation (GDPR Article 5(1)(b)) requires that personal data collected for one stated purpose not be repurposed for an incompatible use. A describes data retention limitation — a separate principle. C and D have no basis in GDPR.
+
+---
+
+### Question 18 (5 points)
+
+An organization wants to train a customer behavior model but cannot share raw customer data due to privacy regulations. Instead, it adds calibrated statistical noise to the query results before releasing model training data. Which privacy-preserving technique is this?
+
+A) K-anonymity — ensures each quasi-identifier combination appears k times.
+
+B) Data masking — irreversibly replaces values with fictitious data.
+
+C) Pseudonymization — replaces direct identifiers with tokens using a mapping table.
+
+D) Differential privacy — adds mathematically calibrated noise so that individual records cannot be inferred from model outputs or aggregate query results.
+
+#### Q18 Correct Answer: D
+
+#### Q18 Distractor Analysis
+
+Differential privacy is the specific technique of adding calibrated random noise to query results or model outputs so that no individual's data can be inferred with high confidence. K-anonymity (A) suppresses or generalizes records but does not add noise. Data masking (B) replaces values but does not protect aggregate query results. Pseudonymization (C) replaces identifiers with tokens but does not protect against statistical inference.
+
+---
+
+### Question 19 (5 points)
+
+A data science team is building a credit scoring model. To ensure ethical AI practice, they document: the training data sources, all feature engineering decisions, model version history, and known performance gaps across demographic groups. What governance artifact does this describe?
+
+A) A data catalog entry for the credit scoring dataset.
+
+B) A model card — a standardized document describing a model's intended use, performance metrics, limitations, and fairness evaluation.
+
+C) A data lineage diagram showing ETL pipeline transformations.
+
+D) A business glossary definition for the "credit score" metric.
+
+#### Q19 Correct Answer: B
+
+#### Q19 Distractor Analysis
+
+A model card (introduced by Google in 2019) is a short document capturing a model's purpose, training data, evaluation results, and known biases — exactly what is described. A data catalog (A) documents data assets, not models. Data lineage (C) traces data transformations, not model documentation. A business glossary (D) defines metric terms, not model behavior.
+
+---
+
+### Question 20 (5 points)
+
+Which statement correctly distinguishes anonymization from pseudonymization under GDPR?
+
+A) Anonymized data is still personal data under GDPR and requires a lawful basis; pseudonymized data does not.
+
+B) Pseudonymized data is still personal data under GDPR because it can be re-identified using the mapping key; truly anonymized data (where re-identification is not reasonably possible) falls outside GDPR's scope.
+
+C) Anonymization and pseudonymization are interchangeable terms in GDPR; both require consent.
+
+D) Pseudonymization removes all direct identifiers; anonymization removes all quasi-identifiers in addition to direct identifiers.
+
+#### Q20 Correct Answer: B
+
+#### Q20 Distractor Analysis
+
+GDPR Recital 26 specifies that truly anonymized data — where re-identification is not reasonably possible — is not personal data and falls outside GDPR. Pseudonymized data (where a mapping key exists) is still personal data and GDPR continues to apply. A reverses the distinction. C is incorrect; they are distinct techniques with different legal implications. D describes operational steps, not the legal distinction.
+
+---
+
 ### Answer Key
 
 | Question | Correct Answer |
@@ -224,3 +426,13 @@ A covers foundational data concepts and technology environments. B covers data c
 | 8 | B |
 | 9 | B |
 | 10 | D |
+| 11 | C |
+| 12 | B |
+| 13 | B |
+| 14 | B |
+| 15 | B |
+| 16 | C |
+| 17 | B |
+| 18 | D |
+| 19 | B |
+| 20 | B |

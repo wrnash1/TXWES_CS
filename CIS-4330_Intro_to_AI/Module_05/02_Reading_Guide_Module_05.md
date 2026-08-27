@@ -242,3 +242,17 @@ Covers Azure Translator and Azure Speech translation capabilities.
 - [ ] Complete the Module 05 quiz.
 - [ ] Complete the Module 05 lab.
 - [ ] Post initial discussion by Wednesday 11:59 PM and respond to two peers by Sunday 11:59 PM.
+
+## 9. Supplemental Resources
+
+**1. Hugging Face — NLP Course (free)**
+<https://huggingface.co/learn/nlp-course/chapter1/1>
+A free, comprehensive NLP course from the team behind the most-used open-source NLP library. Covers transformers, tokenization, fine-tuning, and the key models (BERT, GPT) that underpin Azure Language Service. Accessible to students with basic Python knowledge.
+
+**2. Google AI — Machine Learning Glossary: NLP Terms**
+<https://developers.google.com/machine-learning/glossary/nlp>
+A concise reference glossary of NLP-specific terms including tokenization, embeddings, attention, and sequence-to-sequence models. Useful for quickly looking up definitions that arise in Module 05 readings and labs.
+
+**3. Microsoft Research — Responsible AI for NLP (blog)**
+<https://www.microsoft.com/en-us/research/blog/responsible-ai-for-natural-language-processing/>
+A Microsoft Research blog post examining fairness, bias, and responsible AI considerations specific to NLP applications. Directly connects Module 05 content to the AI-900 responsible AI domain and reinforces quiz content on NLP bias scenarios.

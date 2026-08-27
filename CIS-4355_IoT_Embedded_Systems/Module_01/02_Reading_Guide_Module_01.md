@@ -188,4 +188,20 @@ The following references are authoritative and free. No fabricated or third-part
 
 ---
 
+## 9. Supplemental Resources
+
+**1. MQTT Essentials — HiveMQ Blog Series**
+[https://www.hivemq.com/mqtt-essentials/](https://www.hivemq.com/mqtt-essentials/)
+A 10-part series covering every MQTT concept from broker basics to QoS levels and security. Written by the HiveMQ team and widely used as a reference alongside the OASIS specification. Free and publicly accessible.
+
+**2. LoRa and LoRaWAN — A Technical Overview (Semtech)**
+[https://lora-developers.semtech.com/documentation/tech-papers-and-guides/the-book-of-lora-lorawan/](https://lora-developers.semtech.com/documentation/tech-papers-and-guides/the-book-of-lora-lorawan/)
+The authoritative technical guide from LoRa chip designer Semtech. Covers modulation, spreading factors, network architecture, and regional frequency plans. Essential reading for understanding why LoRaWAN achieves multi-year battery life.
+
+**3. OWASP Internet of Things Project**
+[https://owasp.org/www-project-internet-of-things/](https://owasp.org/www-project-internet-of-things/)
+The home page for all OWASP IoT security resources, including the IoT Top 10, the IoT Attack Surface Areas project, and firmware analysis guides. Directly referenced by the CompTIA IoT+ exam objectives.
+
+---
+
 End of Reading Guide – Module 01

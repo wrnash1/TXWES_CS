@@ -180,3 +180,29 @@ The exam frequently tests the impact of adding stakeholders to an existing proje
 - [ ] Complete the Module 08 Lab activity
 - [ ] Take the Module 08 Quiz
 - [ ] Post Module 08 Discussion initial response by Wednesday at 11:59 PM
+
+---
+
+## 9. Supplemental Resources
+
+The following free, openly licensed resources extend the concepts in this module. All links are publicly accessible — no account or purchase required.
+
+1. **Project Management Open Textbook — Chapter 10: Communications Management**
+   *BC Campus OpenEd* — [opentextbc.ca/projectmanagement — Chapter 10](https://opentextbc.ca/projectmanagement/chapter/chapter-10-project-communications-management/)
+   Covers the communications model, push/pull/interactive methods, the Communications Management Plan, and stakeholder communication strategies.
+
+2. **PMI — Effective Communication in Project Management (Free Article)**
+   *Project Management Institute* — [pmi.org/learning/library/effective-communication-better-project-management](https://www.pmi.org/learning/library/effective-communication-better-project-management-8865)
+   PMI research article on communication effectiveness factors, barriers, and best practices — directly aligned to PK0-005 Domain 3.
+
+3. **Stakeholder Engagement Assessment Matrix Guide — PM Study Circle**
+   [pmstudycircle.com/stakeholder-engagement-assessment-matrix](https://pmstudycircle.com/stakeholder-engagement-assessment-matrix/)
+   Clear explanation of the five engagement levels (Unaware through Leading), how to read the matrix, and how to develop targeted engagement strategies.
+
+4. **YouTube — "Project Communications Management Overview" (Coursera / Google PM Certificate)**
+   [youtube.com/watch?v=3sJ8b0b7IH8](https://www.youtube.com/watch?v=3sJ8b0b7IH8)
+   Free lecture segment covering communication planning, stakeholder register, and communications plan components with worked examples.
+
+5. **Communication Channels Formula Drill — PM Exam SmartNotes (Free)**
+   [pmexamsmartnotes.com/communication-channels-formula](https://www.pmexamsmartnotes.com/communication-channels-formula/)
+   Interactive formula practice for N(N-1)/2 with examples at various team sizes — essential preparation for calculation questions on the Module 08 quiz.

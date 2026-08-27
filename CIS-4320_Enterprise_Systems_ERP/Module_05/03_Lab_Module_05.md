@@ -185,3 +185,29 @@ Crestview's Controller tells you that before SAP, the month-end close required 1
 2. Name your file: `Lab05_LastName_FirstName.pdf`
 3. Upload to Canvas under "Lab 05 — Financial Management Modules."
 4. Deadline: See course schedule in Canvas. Late submissions lose 10 points per day.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Multi-Entity Financial Consolidation Scenario
+
+A US-based consumer goods company (ParentCo) has two subsidiaries: SubA (Germany, reporting in EUR) and SubB (Brazil, reporting in BRL). ParentCo reports consolidated financials in USD under IFRS. During the quarter, SubA sold $200,000 of inventory to SubB at a 20% intercompany markup.
+
+1. Identify all three financial statement line items that must be eliminated during consolidation as a result of the intercompany sale. For each, explain the elimination entry (debit/credit) and the account affected.
+2. Explain the two-step currency translation process required to consolidate EUR and BRL subsidiary financials into USD. Specify which exchange rate (spot, average, historical) is used for income statement items versus balance sheet items under IFRS.
+3. Describe how SAP Group Reporting (or FI-LC) automates these eliminations, including what configuration is required to identify intercompany transactions for elimination.
+4. A junior accountant argues that the intercompany markup should be recognized as profit since it represents a real transaction between two legal entities. Write a 75-word explanation of why this is incorrect from a consolidated financial reporting perspective.
+
+### Challenge 2: Cost Center vs. Profit Center Design for a Service Company
+
+A 300-person IT consulting firm is implementing SAP CO. The firm has three service lines (Infrastructure, Application Development, Cybersecurity), four geographic offices (Dallas, Chicago, New York, London), and three support departments (Finance, HR, Legal).
+
+1. Design a cost center and profit center hierarchy for this company. Specify which organizational units become cost centers, which become profit centers, and explain the design rationale.
+2. Define three overhead allocation cycles: (a) allocate Finance department costs to service lines, (b) allocate HR department costs to geographic offices, (c) allocate shared IT infrastructure costs to all service lines. For each, specify the sending cost center, receiving cost centers/profit centers, and a realistic allocation key (the basis for the split).
+3. Explain what management reports this CO design makes possible that would not be possible using only the FI General Ledger.
+
+### Reflection Questions
+
+1. In the intercompany consolidation scenario, the elimination entries are required even when both entities have correctly recorded their side of the transaction. What does this tell you about the difference between legal entity accounting (what each subsidiary reports) and economic reality (what the group as a whole has earned)?
+2. The CO design challenge required choosing between cost centers and profit centers for each organizational unit. What is the key test question you would ask a department manager to determine which type of CO object is appropriate for their department?

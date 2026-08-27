@@ -207,6 +207,27 @@ def count_inversions(arr):
 
 ---
 
+## 9. Supplemental Resources
+
+The following free, openly licensed resources reinforce the concepts in this module. All are zero-cost and require no account to access.
+
+1. **VisuAlgo — Sorting Visualizations (Merge Sort)** — [https://visualgo.net/en/sorting](https://visualgo.net/en/sorting)
+   Step-by-step animated visualization of merge sort showing the divide and merge phases. Observe how sub-arrays are sorted at each recursion level and then merged in linear time.
+
+2. **OpenDSA — Binary Search and Merge Sort** — [https://opendsa-server.cs.vt.edu/ODSA/Books/Everything/html/MergeSort.html](https://opendsa-server.cs.vt.edu/ODSA/Books/Everything/html/MergeSort.html)
+   Free interactive OER textbook covering merge sort with embedded exercises, correctness proofs, and the derivation of O(n log n) via the recurrence T(n) = 2T(n/2) + O(n).
+
+3. **NeetCode — Binary Search Playlist (YouTube)** — [https://www.youtube.com/playlist?list=PLot-Xpze53leU0Ec0VkBhnf4npMRFiNcB](https://www.youtube.com/playlist?list=PLot-Xpze53leU0Ec0VkBhnf4npMRFiNcB)
+   Free video solutions for binary search interview problems including Search in Rotated Sorted Array, Find Minimum in Rotated Sorted Array, and the Binary Search on Answer pattern (Ship Packages Within D Days).
+
+4. **MIT OCW 6.006 — Merge Sort and Recurrences (Lecture 3)** — [https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/](https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/)
+   MIT lecture notes covering the Master Theorem for divide-and-conquer recurrences, including all three cases and worked examples with merge sort, binary search, and other algorithms.
+
+5. **Python `bisect` Module Documentation** — [https://docs.python.org/3/library/bisect.html](https://docs.python.org/3/library/bisect.html)
+   Official Python documentation for `bisect_left`, `bisect_right`, and `insort`. Shows how to use Python's built-in binary search functions for sorted arrays in interview problems requiring O(log n) search.
+
+---
+
 ## 7. Study Checklist
 
 - [ ] Watch the Module 12 video lecture by Professor Nash.

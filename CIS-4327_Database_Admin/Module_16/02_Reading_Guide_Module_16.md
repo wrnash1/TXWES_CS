@@ -269,6 +269,26 @@ verify you can confidently explain:
 
 ---
 
+---
+
+## 9. Supplemental Resources
+
+The following free, open-access resources support Module 16 capstone topics:
+
+**1. [Google Cloud — Professional Cloud Database Engineer Exam Guide](https://cloud.google.com/learn/certification/guides/database-engineer)**
+The official exam guide listing all exam domains, weightings, and topic areas. Use this to verify coverage before sitting the exam.
+
+**2. [Google Cloud — Database Services Overview](https://cloud.google.com/products/databases)**
+High-level summary of all GCP database services (Cloud SQL, Spanner, AlloyDB, Bigtable, Firestore, BigQuery) with links to documentation, helping with service selection decisions tested across all exam domains.
+
+**3. [Google Cloud — Architecture Center: Database Solutions](https://cloud.google.com/architecture/databases)**
+Reference architectures for common database patterns including HA, migration, analytics, and security configurations — all topics covered on the Professional Cloud Database Engineer exam.
+
+**4. [Google Cloud Skills Boost — Professional Cloud Database Engineer Learning Path](https://www.cloudskillsboost.google/paths/22)**
+Free hands-on labs, courses, and quests aligned to the Professional Cloud Database Engineer exam domains, including interactive Qwiklabs for Cloud SQL, BigQuery, Spanner, and Datastream.
+
+---
+
 Module 16 Reading Guide — CIS-4327 Database Administration
 
 Texas Wesleyan University | Proprietary and Confidential. Not for disclosure outside of course participants.

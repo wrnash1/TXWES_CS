@@ -452,6 +452,27 @@ Answer these questions in writing after completing the lab. Submit with your lab
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Automated Log Health Monitor Script
+Write a bash script named `log_health_check.sh` that performs the following steps:
+1. Checks whether the journal disk usage (from `journalctl --disk-usage`) exceeds 150 MB and prints a warning if it does.
+2. Counts the number of `err`-priority or higher journal entries from the current boot using `journalctl -b -p err -q --no-pager` and prints the count.
+3. Appends a timestamped summary line to `/tmp/log_health.log` regardless of findings.
+4. Make the script executable and run it, then verify the output file was created.
+
+### Challenge 2: Multi-Application logrotate Configuration
+Create a logrotate configuration at `/etc/logrotate.d/lab12multi` that manages two separate log paths — `/var/log/lab12app/app.log` and `/var/log/lab12app/error.log` — with the following distinct requirements:
+1. `app.log` should rotate daily, keep 14 copies, be compressed with `delaycompress`, and use `postrotate` to echo a rotation timestamp to `/tmp/rotate_event.log`.
+2. `error.log` should rotate when it reaches 10 MB (`size 10M`), keep 5 copies, and be compressed immediately (no `delaycompress`).
+3. Create both log files, populate them with test data, then use `logrotate -d` to verify both stanzas parse correctly without errors.
+
+### Reflection Questions
+1. Why is it safer to use `journalctl --vacuum-size=1G` than to delete files directly from `/var/log/journal/` with `rm`? What internal journal structures could be corrupted by direct deletion?
+2. A production web server generates 500 MB of access logs per day. Design a logrotate policy (list the specific directives) that retains 30 days of logs, minimizes disk I/O during peak hours, and ensures the web server process reopens its log file handle after each rotation.
+
+---
+
 ### Cleanup
 
 ```bash

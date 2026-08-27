@@ -209,3 +209,173 @@ D) A Managed Service Account (MSA) with the same name already present
   - Why A is incorrect: GC server placement affects logon performance but is not a prerequisite for gMSA creation.
   - Why C is incorrect: FGPPs are not required or related to gMSA creation. gMSAs manage their own passwords independently.
   - Why D is incorrect: There is no requirement to have an MSA before creating a gMSA. They are separate account types.
+
+---
+
+### Question 11 (5 points)
+
+An administrator creates a new user and uses `Set-ADUser -Identity "jdoe" -LogonWorkstations "WS-FIN-01,WS-FIN-02"`. What is the effect of this configuration?
+
+- A) The user can only log on to the domain from WS-FIN-01 and WS-FIN-02
+- B) The user's profile is copied to WS-FIN-01 and WS-FIN-02 at next logon
+- C) Group Policy from the workstations OU applies to the user only when logged on to those machines
+- D) The user's password expiration is tied to the last logon date on either workstation
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - Why B is incorrect: Profile copying is not triggered by the `LogonWorkstations` attribute. Roaming profiles are configured separately through the user's Profile tab.
+  - Why C is incorrect: Group Policy Computer Configuration applies based on the computer's OU placement, not on which user is logged on. The `LogonWorkstations` setting restricts logon access only.
+  - Why D is incorrect: Password expiration is governed by domain password policy or Fine-Grained Password Policies. It has no relationship to the `LogonWorkstations` attribute.
+
+---
+
+### Question 12 (5 points)
+
+Which PowerShell command creates a new user account named "John Doe" with the UPN `jdoe@corp.local` in the IT OU and requires a password change at first logon?
+
+- A) `New-ADUser -Name "John Doe" -SamAccountName "jdoe" -UserPrincipalName "jdoe@corp.local" -Path "OU=IT,OU=Departments,DC=corp,DC=local" -Enabled $true -ChangePasswordAtLogon $true`
+- B) `Add-ADUser -Name "John Doe" -UPN "jdoe@corp.local" -OU "OU=IT,OU=Departments" -ForcePasswordChange`
+- C) `New-ADUser -Identity "jdoe" -UPN "jdoe@corp.local" -Container "IT" -MustChangePassword`
+- D) `Set-ADUser -Name "John Doe" -Path "OU=IT" -NewPassword (Read-Host -AsSecureString) -Enabled`
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - Why B is incorrect: `Add-ADUser` is not a valid PowerShell cmdlet. The correct cmdlet is `New-ADUser`. The parameter names `-UPN` and `-ForcePasswordChange` are also invalid.
+  - Why C is incorrect: `-Identity` is used with existing objects, not during creation. `-Container` and `-MustChangePassword` are not valid `New-ADUser` parameter names. The correct parameters are `-Path` and `-ChangePasswordAtLogon`.
+  - Why D is incorrect: `Set-ADUser` modifies an existing account. It cannot create a new user. `New-ADUser` is required for account creation.
+
+---
+
+### Question 13 (5 points)
+
+A Universal security group named `U_AllSalesReps` has 5,000 members drawn from three domains in the forest. The membership changes frequently. Why might an administrator restructure this to use Global groups nested into the Universal group?
+
+- A) Universal groups cannot contain more than 1,000 members
+- B) Each change to Universal group membership triggers Global Catalog replication across the entire forest, creating unnecessary replication traffic; nesting Global groups means only role group membership changes replicate universally
+- C) Universal groups cannot assign permissions to resources — only Domain Local groups can
+- D) Universal groups are not stored in the AD database and rely on DNS for membership resolution
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: There is no 1,000-member limit on Universal groups. They can contain any number of members.
+  - Why C is incorrect: Universal groups can assign permissions to resources in any domain in the forest. The restriction is that Domain Local groups assign permissions only within their own domain.
+  - Why D is incorrect: Universal group membership is stored in the Global Catalog, which is a designation on a Domain Controller — not in DNS. Universal group data is part of the AD directory database.
+
+---
+
+### Question 14 (5 points)
+
+An administrator uses `Search-ADAccount -PasswordNeverExpires | Select-Object Name, SamAccountName` to audit the domain. Which type of accounts would typically appear in this output, and why is this a security concern?
+
+- A) Locked-out accounts; they should be reviewed for brute-force attack attempts
+- B) Service accounts configured with non-expiring passwords; stale credentials that have never rotated are a persistent security risk if compromised
+- C) Computer accounts; their passwords never expire by AD design
+- D) Disabled accounts; they retain their last password indefinitely after being disabled
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: `Search-ADAccount -PasswordNeverExpires` returns accounts with the password-never-expires flag. Locked-out accounts are found with `-LockedOut`. These are separate searches.
+  - Why C is incorrect: Computer account passwords rotate automatically every 30 days by default. They would not appear in a `PasswordNeverExpires` query unless the flag was explicitly set.
+  - Why D is incorrect: Disabling an account does not set the `PasswordNeverExpires` flag. These are separate attributes. A disabled account with an expiring password would not appear in this output.
+
+---
+
+### Question 15 (5 points)
+
+An administrator needs to find all users whose accounts have expired as of today. Which PowerShell command correctly retrieves these accounts?
+
+- A) `Get-ADUser -Filter {AccountExpirationDate -lt (Get-Date)}`
+- B) `Search-ADAccount -AccountExpired`
+- C) `Get-ADUser -Filter * -Properties AccountExpirationDate | Where-Object { $_.AccountExpirationDate -eq "Expired" }`
+- D) `Find-ADUser -Status Expired`
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: The `-Filter` syntax for `Get-ADUser` does not support comparison with `(Get-Date)` inline in the filter expression. This would produce an error or unexpected results.
+  - Why C is incorrect: `AccountExpirationDate` is a `DateTime` object, not a string. Comparing it to the literal string `"Expired"` will never match. This command returns no results.
+  - Why D is incorrect: `Find-ADUser` is not a valid PowerShell cmdlet in the Active Directory module. The `Search-ADAccount` cmdlet is the correct tool for state-based account queries.
+
+---
+
+### Question 16 (5 points)
+
+An administrator converts a Distribution group to a Security group. What immediate practical capability does this enable?
+
+- A) The group can now receive email, which Distribution groups cannot
+- B) The group can now be assigned NTFS and Share permissions on resources
+- C) The group can now contain members from other forests without a trust
+- D) The group members are now subject to Fine-Grained Password Policies
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: Distribution groups are already email-capable; that is their primary purpose. Security groups can also receive email. Converting to Security does not add email capability.
+  - Why C is incorrect: Cross-forest membership is governed by group scope (Universal) and forest trust relationships, not by whether the group is Security or Distribution type.
+  - Why D is incorrect: Fine-Grained Password Policies apply to users and groups regardless of whether the group is Security or Distribution type. Group type does not affect FGPP applicability.
+
+---
+
+### Question 17 (5 points)
+
+A Fine-Grained Password Policy named `IT_Admin_Policy` has Precedence 10. A second FGPP named `Standard_Policy` has Precedence 50. A user is a member of both groups that have these policies applied. Which policy governs the user's password requirements?
+
+- A) `Standard_Policy` because higher precedence numbers take priority
+- B) `IT_Admin_Policy` because lower precedence numbers take priority
+- C) Both policies merge — the most restrictive settings from each are applied
+- D) The domain Default Domain Policy overrides all FGPPs when a conflict exists
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: Precedence numbering is counterintuitive — lower numbers mean higher priority. Precedence 10 wins over Precedence 50.
+  - Why C is incorrect: FGPPs do not merge. The single winning policy (lowest precedence number) applies entirely to the user. There is no mixing of settings between competing PSOs.
+  - Why D is incorrect: FGPPs are specifically designed to override the Default Domain Policy for targeted users and groups. When an FGPP applies to a user, it takes priority over the domain-wide password policy.
+
+---
+
+### Question 18 (5 points)
+
+Which of the following group scope conversions is valid in Active Directory without first adding or removing members?
+
+- A) Domain Local → Global
+- B) Global → Domain Local
+- C) Universal → Domain Local
+- D) Global → Universal
+
+- **Correct Answer:** D
+- **Distractor Analysis:**
+  - Why A is incorrect: Converting Domain Local to Global is not allowed because a Domain Local group may contain members from other domains. Global groups can only contain members from the same domain.
+  - Why B is incorrect: Global to Domain Local conversion is not a supported direct conversion path in Active Directory.
+  - Why C is incorrect: Universal to Domain Local conversion requires that the Universal group not be a member of any other Universal group. While this conversion is technically possible under some conditions, Global to Universal is the standard supported path. Universal → Domain Local is not a standard scope upgrade path.
+
+---
+
+### Question 19 (5 points)
+
+An administrator creates a gMSA named `SVC_WebFarm` and grants a security group named `WebServers` the right to retrieve the managed password. What cmdlet parameter controls which computers can retrieve the gMSA password?
+
+- A) `-AllowedToRetrievePassword`
+- B) `-PrincipalsAllowedToRetrieveManagedPassword`
+- C) `-AuthorizedComputers`
+- D) `-PasswordRetrievalGroup`
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: `-AllowedToRetrievePassword` is not a valid parameter name for `New-ADServiceAccount`. The correct parameter name is `-PrincipalsAllowedToRetrieveManagedPassword`.
+  - Why C is incorrect: `-AuthorizedComputers` is not a valid parameter for `New-ADServiceAccount`. Computer authorization for gMSA password retrieval is set through the `-PrincipalsAllowedToRetrieveManagedPassword` parameter.
+  - Why D is incorrect: `-PasswordRetrievalGroup` is not a valid PowerShell parameter name for gMSA creation. This is a fabricated parameter name.
+
+---
+
+### Question 20 (5 points)
+
+An administrator disables a departing employee's user account and removes them from all security groups. Two weeks later, the manager requests the employee's account be reactivated due to a compliance requirement. What is the benefit of having disabled the account rather than deleted it?
+
+- A) Disabled accounts retain their password history, allowing the employee to log in with the same password
+- B) The original SID, group memberships (if preserved before removal), and all associated permissions are still recoverable because the AD object was not deleted
+- C) Disabled accounts are automatically re-enabled after 30 days if no deletion is requested
+- D) Disabled accounts remain active in Exchange mailbox but not in AD, simplifying email restoration
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: Password history (previously used passwords) is stored as a hashed list to prevent reuse. The ability to log in with the old password is not preserved or recoverable from the disabled state.
+  - Why C is incorrect: There is no automatic re-enable timer on disabled accounts. Accounts remain disabled until an administrator explicitly enables them.
+  - Why D is incorrect: Exchange mailbox status is separate from AD account enablement. Disabling an AD account disables Exchange logon as well. Mailbox access is not preserved in a separate active state.

@@ -334,6 +334,26 @@ choose between DMS, Datastream, BigQuery DTS, and manual approaches.
 
 ---
 
+---
+
+## 9. Supplemental Resources
+
+The following free, open-access resources support Module 14 topics:
+
+**1. [Database Migration Service Documentation — Overview](https://cloud.google.com/database-migration/docs/overview)**
+Covers supported source and target database pairs, migration job types (one-time vs continuous), prerequisites for MySQL and PostgreSQL sources, and connection profile configuration.
+
+**2. [Database Migration Service Documentation — Schema Conversion Workspace](https://cloud.google.com/database-migration/docs/schema-conversion-workspace)**
+Explains how to use the DMS schema conversion workspace to assess Oracle-to-PostgreSQL compatibility, review auto-converted objects, and manage manual conversion effort for stored procedures and triggers.
+
+**3. [Datastream Documentation — Overview](https://cloud.google.com/datastream/docs/overview)**
+Covers Datastream architecture, supported source databases (PostgreSQL, MySQL, Oracle), target destinations (BigQuery, Cloud Storage), and the CDC streaming pipeline configuration.
+
+**4. [Google Cloud — Database Migration Best Practices](https://cloud.google.com/architecture/database-migration-best-practices)**
+Architecture guidance for planning migration phases, choosing between one-time and continuous migration, performing data validation, and planning the cutover window to minimize downtime.
+
+---
+
 Module 14 Reading Guide — CIS-4327 Database Administration
 
 Texas Wesleyan University | Proprietary and Confidential. Not for disclosure outside of course participants.

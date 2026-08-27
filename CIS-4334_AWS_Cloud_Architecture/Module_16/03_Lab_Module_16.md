@@ -179,3 +179,30 @@ Submit a single PDF or Word document containing:
 **Length:** There is no minimum or maximum length. Aim for thoroughness and clarity. A well-reasoned 8–12 page document is appropriate.
 
 **Grading Note:** This lab is worth 50 points (separate from the module quiz). See the course rubric in the LMS for the full breakdown. Partial credit is awarded for well-reasoned justifications even when the specific service choice differs from the model answer.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Implement S3 Object Lock for PHI Compliance
+
+The HealthTrack compliance team requires that audit logs containing PHI access events be immutable for 7 years to satisfy HIPAA audit trail requirements.
+
+1. In the S3 console, create a new bucket named `healthtrack-audit-logs-[your-account-id]` with Object Lock enabled (Object Lock can only be enabled at bucket creation time).
+2. Under the bucket's **Object Lock** settings, configure a default retention period of 2557 days (7 years) in **Compliance** mode.
+3. Upload a test file named `audit-test.txt` with any content to the bucket. Verify in the object properties that the retain-until date is set approximately 7 years in the future.
+4. Attempt to delete the object from the console. Document the error message returned and explain in your lab document why Compliance mode prevents deletion even by an administrator.
+
+### Challenge 2: Deploy a Multi-Region Health Check with Route 53 Failover
+
+The HealthTrack SLA requires 99.95% API availability. Simulate the Route 53 health-check-based failover pattern that supports a multi-region DR strategy.
+
+1. In Route 53, create a health check targeting `https://httpstat.us/200` (a public endpoint that returns HTTP 200). Set the health check interval to 10 seconds and the failure threshold to 2 consecutive failures.
+2. Create a second health check targeting `https://httpstat.us/503` (returns HTTP 503 — simulates a failed primary region). Set the same interval and threshold.
+3. In a Route 53 hosted zone (you may use any domain or a test subdomain), create two weighted routing records pointing to different IP addresses. Associate the first record with the HTTP 200 health check and the second with the HTTP 503 health check.
+4. Observe in the Route 53 health check dashboard which check shows as healthy vs. unhealthy. In your lab document, describe how this pattern would be applied in a real failover scenario where `us-east-1` is the primary region and `us-west-2` is the DR region.
+
+### Reflection Questions
+
+1. S3 Object Lock Compliance mode prevents deletion by all IAM principals including the root account. What business and regulatory scenarios justify this level of immutability, and what operational risk does it introduce if retention periods are set incorrectly?
+2. Route 53 health checks add cost (approximately $0.50/month per health check for HTTPS endpoint checks). The AWS Well-Architected Framework Reliability pillar states that you should "test recovery procedures." How does configuring Route 53 health checks align with this principle, and how would you justify the added cost to a budget-conscious stakeholder?

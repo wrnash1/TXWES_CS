@@ -396,3 +396,22 @@ gcloud compute regions list
   cloud.google.com/sdk/gcloud
 - NIST SP 800-145 (Cloud Computing Definition):
   nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-145.pdf
+
+## 9. Supplemental Resources
+
+**1. Google Cloud Documentation — Resource Manager**
+<https://cloud.google.com/resource-manager/docs>
+Comprehensive reference for the GCP resource hierarchy, including Organization,
+Folder, and Project management. Covers IAM policy inheritance and Organization
+Policy constraints in detail.
+
+**2. Google Cloud Skills Boost (Qwiklabs) — A Tour of Google Cloud Hands-on Labs**
+<https://www.cloudskillsboost.google/focuses/2794>
+Hands-on introductory lab walking through the Cloud Console, Cloud Shell, and
+core navigation. Free with a Skills Boost subscription or free trial credits.
+
+**3. Google Cloud Architecture Framework — Resource Hierarchy Best Practices**
+<https://cloud.google.com/architecture/framework/security/resource-hierarchy>
+Official guidance from Google on structuring folders, projects, and billing
+accounts for enterprise environments, including naming conventions and
+governance recommendations.

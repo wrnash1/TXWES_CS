@@ -233,3 +233,233 @@ Distractor Analysis:
 - Why B is incorrect: Stakeholder engagement covers how the BA collaborates with stakeholders, not how requirements documents are stored and managed.
 - Why D is incorrect: Performance improvement monitoring evaluates the quality and progress of BA work; it does not address artifact storage and versioning.
 - Why C is correct: BABOK KA 2 task "Plan Business Analysis Information Management" specifically addresses how requirements and other BA work products will be stored, organized, versioned, and made accessible to stakeholders — exactly the gap the manager identified.
+
+---
+
+## Question 11
+
+According to BABOK KA 2, what is the primary purpose of defining a BA approach at the start of a project?
+
+A) To assign individual developers to specific coding tasks before design begins
+
+B) To determine the formality, methodology, and collaboration model the BA will use to conduct all business analysis work on the project
+
+C) To document the system architecture and infrastructure topology for the project sponsor
+
+D) To create a timeline with specific milestones for user acceptance testing
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- Why A is incorrect: Developer task assignment is a project management or sprint planning activity, not a BA approach definition.
+- Why C is incorrect: System architecture documentation is a design-phase artifact produced by architects, not part of the BA approach.
+- Why D is incorrect: A UAT timeline is a testing planning artifact; it may reference the BA approach but is not what the approach defines.
+- Why B is correct: The BA approach document, a KA 2 output, defines how the BA will conduct all BA activities — including the level of documentation formality, the methodology (predictive vs. adaptive), and how frequently the BA will collaborate with stakeholders.
+
+---
+
+## Question 12
+
+A BA on a government compliance project is required to submit all requirements documents to a regulatory change control board before any design work begins. This constraint most directly affects which KA 2 planning task?
+
+A) Plan Stakeholder Engagement
+
+B) Plan Business Analysis Information Management
+
+C) Plan Business Analysis Governance
+
+D) Identify Business Analysis Performance Improvements
+
+Correct Answer: C
+
+Distractor Analysis:
+
+- Why A is incorrect: Stakeholder engagement planning addresses who to engage and how, not who approves requirements documents.
+- Why B is incorrect: Information management covers how artifacts are stored and shared; it does not define the approval authority chain.
+- Why D is incorrect: Performance improvement is about monitoring BA work quality, not establishing document approval workflows.
+- Why C is correct: Governance planning defines who has authority to approve, reject, or change requirements and what process is followed. A mandatory regulatory change control board submission is a governance constraint that must be built into the governance plan.
+
+---
+
+## Question 13
+
+A BA is working on a project where a key stakeholder group — frontline warehouse workers — is classified as "Keep Informed" on the Power-Interest Grid. The BA's manager suggests removing them from the stakeholder register entirely because "they have no decision-making power." What should the BA do?
+
+A) Accept the manager's suggestion, since low-power stakeholders add no value to the requirements process
+
+B) Keep the stakeholders in the register; low-power stakeholders who interact with the system daily provide critical domain knowledge and must be informed of decisions that affect them
+
+C) Move the stakeholders to the "Monitor" quadrant to reduce engagement costs
+
+D) Assign them "Manage Closely" status to compensate for the manager's disengagement
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- Why A is incorrect: Removing domain experts because they lack formal power is a dangerous error; their knowledge is essential for discovering requirements and their dissatisfaction after go-live is a known risk.
+- Why C is incorrect: Moving them to "Monitor" would reduce engagement below what their high interest level warrants, resulting in missed requirements and low adoption.
+- Why D is incorrect: "Manage Closely" is reserved for high-power, high-interest stakeholders; promoting these workers beyond their actual power level misrepresents their organizational influence.
+- Why B is correct: BABOK KA 2 requires that all stakeholders — regardless of power — be registered and engaged at an appropriate level. Frontline users provide domain expertise that cannot be obtained from management alone.
+
+---
+
+## Question 14
+
+Which of the following is an accurate description of the "Stakeholder Register" as defined in BABOK KA 2?
+
+A) A legal contract signed by all project stakeholders agreeing to the approved requirements baseline
+
+B) A living document that records stakeholder identification, classification, engagement approach, and is updated throughout the project lifecycle
+
+C) A read-only record produced at project kickoff that is archived once elicitation is complete
+
+D) An organizational chart showing the reporting hierarchy of all personnel involved in the project
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- Why A is incorrect: The Stakeholder Register is not a contract; it is a planning and tracking tool used internally by the BA.
+- Why C is incorrect: BABOK explicitly describes the Stakeholder Register as a living document that must be updated when stakeholders join, depart, or change their posture.
+- Why D is incorrect: An organizational chart shows reporting relationships; the Stakeholder Register captures analysis data about each stakeholder's relationship to the project.
+- Why B is correct: The Stakeholder Register is maintained throughout the project. It captures identification, classification (power, interest, attitude), and the engagement strategy for each stakeholder or group.
+
+---
+
+## Question 15
+
+A BA selects a hybrid approach for a large enterprise resource planning (ERP) implementation. The core infrastructure and integrations will be specified using a predictive approach, while the departmental workflows and user interface configurations will be elaborated using two-week sprints. What characteristic of this project most justifies using a hybrid approach?
+
+A) The project manager prefers predictive methodology for all project work regardless of requirements stability
+
+B) Some components have stable, well-understood requirements while others are expected to evolve through user feedback
+
+C) The organization has never used Agile before and cannot switch methodologies partway through a project
+
+D) Regulatory auditors require a single consistent methodology documented in the project charter
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- Why A is incorrect: Methodology selection should be driven by project context and requirements characteristics, not individual preference.
+- Why C is incorrect: Hybrid approaches are explicitly recognized in BABOK; organizations can and do apply different approaches to different components of the same project.
+- Why D is incorrect: Regulatory auditors typically require evidence that requirements were controlled, not that a single specific methodology was used.
+- Why B is correct: A hybrid approach is appropriate when a project contains components with different requirement-stability profiles. Stable infrastructure specifications benefit from predictive documentation; evolving user-facing configurations benefit from iterative elaboration.
+
+---
+
+## Question 16
+
+During BA planning, a BA asks: "Who needs to see the requirements, in what format, and how often?" This question is primarily addressed by which KA 2 task?
+
+A) Plan Business Analysis Governance
+
+B) Plan Stakeholder Engagement
+
+C) Plan Business Analysis Information Management
+
+D) Plan Business Analysis Approach
+
+Correct Answer: C
+
+Distractor Analysis:
+
+- Why A is incorrect: Governance answers who can approve or change requirements, not who receives them or in what format.
+- Why B is incorrect: Stakeholder engagement addresses how the BA interacts with stakeholders; information management specifically addresses artifact storage, format, versioning, and distribution.
+- Why D is incorrect: The BA approach addresses methodology and formality of BA work overall, not the distribution and format of specific artifacts.
+- Why C is correct: "Plan Business Analysis Information Management" specifically answers questions about how requirements artifacts are stored, formatted, versioned, and distributed to stakeholders — including access rights and communication frequency.
+
+---
+
+## Question 17
+
+A BA's manager reviews the completed BA plan and notes: "You've planned how to gather requirements, but you haven't described what you will do if two key stakeholders give you conflicting requirements." Which planning gap does this describe?
+
+A) Missing stakeholder engagement strategy for monitoring stakeholders
+
+B) Missing governance plan for requirements conflict resolution and decision authority
+
+C) Missing elicitation technique selection for requirements gathering
+
+D) Missing performance metric to track elicitation session completion rates
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- Why A is incorrect: Monitoring stakeholders is about tracking stakeholder engagement levels, not about resolving requirements conflicts between them.
+- Why C is incorrect: Elicitation technique selection is part of the BA approach and KA 4; it does not address what happens after conflicting information is collected.
+- Why D is incorrect: Performance metrics track BA work efficiency, not conflict resolution procedures.
+- Why B is correct: Governance defines how decisions are made, including conflict resolution. A governance plan must specify what process is followed when stakeholders disagree on a requirement, and who has final authority to resolve the conflict.
+
+---
+
+## Question 18
+
+An organization is beginning a large-scale BA initiative. The project sponsor asks the BA: "How will we know if the business analysis work is going well?" Which KA 2 task directly addresses this question?
+
+A) Plan Business Analysis Governance
+
+B) Identify Business Analysis Performance Improvements
+
+C) Plan Stakeholder Engagement
+
+D) Plan Business Analysis Information Management
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- Why A is incorrect: Governance defines decision authority for requirements; it does not provide metrics for evaluating the quality or progress of BA activities.
+- Why C is incorrect: Stakeholder engagement planning addresses who to engage and how; it does not define how BA performance will be measured.
+- Why D is incorrect: Information management planning covers artifact storage and access; it does not address performance measurement.
+- Why B is correct: "Identify Business Analysis Performance Improvements" is the KA 2 task that establishes metrics for evaluating BA work quality, identifies variances from the plan, and recommends corrective actions. It directly answers the sponsor's question about how BA work quality will be assessed.
+
+---
+
+## Question 19
+
+A BA is planning an initiative where the organization has never used formal business analysis practices. The BA recognizes that stakeholders may not understand what they are being asked to review or approve. Which KA 2 activity addresses this challenge?
+
+A) Documenting assumptions in the business case to limit the BA's liability
+
+B) Including stakeholder education and expectation setting in the stakeholder engagement approach
+
+C) Reducing the number of stakeholders identified to minimize confusion
+
+D) Skipping requirements reviews and relying on the development team to verify correctness
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- Why A is incorrect: Documenting assumptions protects project decisions but does not address the stakeholder's lack of familiarity with the BA process.
+- Why C is incorrect: Reducing stakeholders to simplify engagement risks missing requirements and creating blind spots that appear as defects or scope gaps later.
+- Why D is incorrect: Skipping reviews is never appropriate; developer verification cannot substitute for stakeholder validation of business requirements.
+- Why B is correct: BABOK KA 2's stakeholder engagement approach should address stakeholder readiness, including education about the BA process when stakeholders are unfamiliar with it. Setting expectations early improves participation quality throughout elicitation and review.
+
+---
+
+## Question 20
+
+Which of the following scenarios best illustrates a failure of BABOK KA 2 activities?
+
+A) A BA spends three weeks conducting interviews before beginning requirements documentation
+
+B) A BA selects structured walkthroughs as the primary requirements review technique
+
+C) A project delivers a new system that works technically, but stakeholders in the Finance department complain they were never consulted during requirements gathering and the system does not meet their reporting needs
+
+D) A BA recommends a predictive approach on a project with stable, regulatory-driven scope
+
+Correct Answer: C
+
+Distractor Analysis:
+
+- Why A is incorrect: Spending time on elicitation before documentation is appropriate; it is not a KA 2 failure.
+- Why B is incorrect: Selecting a requirements review technique is a KA 5 activity; choosing walkthroughs is a valid technique selection, not a failure.
+- Why D is incorrect: Selecting a predictive approach for stable, regulatory-driven scope is a correct KA 2 decision.
+- Why C is correct: The Finance department being omitted from requirements gathering is a classic KA 2 stakeholder identification failure. KA 2 requires identifying all stakeholders — including downstream consumers like Finance — before elicitation begins. Their omission led directly to a requirements gap and a system that fails to meet their needs.

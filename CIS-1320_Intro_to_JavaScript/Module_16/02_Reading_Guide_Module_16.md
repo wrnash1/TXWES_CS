@@ -451,6 +451,27 @@ These are the specific facts that distinguish correct answers from plausible dis
 
 ---
 
+## Supplemental Resources
+
+The following free, openly available resources are ideal for final exam preparation across all JSE exam domains.
+
+- **[MDN Web Docs — JavaScript Guide](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide)**
+  A comprehensive, domain-organized reference covering variables, operators, control flow, functions, objects, arrays, classes, promises, and error handling. Use it to quickly look up any topic that feels uncertain — each section corresponds directly to a JSE exam domain.
+
+- **[Eloquent JavaScript — Third Edition](https://eloquentjavascript.net/)**
+  Full free textbook covering the entire JavaScript language with in-depth explanations, worked examples, and end-of-chapter exercises. Chapters 3–6 (functions, data structures, objects) and Chapters 11–14 (async, DOM, events) are the highest-value reading for the JSE exam.
+
+- **[javascript.info — The Modern JavaScript Tutorial](https://javascript.info/)**
+  The most thorough free JavaScript tutorial available. Part 1 (JavaScript language) covers every JSE domain with interactive exercises and distractor-quality explanations. Particularly strong on closures, prototype chain, Promises, and error handling.
+
+- **[OpenEDG JS Institute — JSE Exam Information](https://js.institute/jse-certification)**
+  The official exam page from the certifying body. Lists the current exam objectives, format, passing criteria, and links to official practice materials. Review this before scheduling to confirm you have covered every listed topic.
+
+- **[MDN Web Docs — JavaScript Reference](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference)**
+  The definitive language reference for syntax, built-in objects, and standard library methods. Use it during final review to confirm exact method signatures and return types for array methods, Promise combinators, and error types — all commonly tested on the JSE exam.
+
+---
+
 ## Study Plan — Final Week
 
 - [ ] Watch the Module 16 video lecture.

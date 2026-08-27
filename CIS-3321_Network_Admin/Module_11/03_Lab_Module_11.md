@@ -272,4 +272,69 @@ Submit to the Module 11 Lab assignment in the course LMS before the posted deadl
 
 ---
 
-CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash
+## Part 9 — Challenge Exercise
+
+These advanced steps extend the Module 11 lab with VLAN security hardening, RSTP analysis, and Port Security.
+
+### Challenge Step 1: Harden VLANs Against VLAN Hopping
+
+On your existing Packet Tracer switch topology:
+1. Change the native VLAN on all trunk ports from VLAN 1 to a dedicated unused VLAN (e.g., VLAN 999):
+   ```
+   interface fa0/24
+   switchport trunk native vlan 999
+   ```
+2. Configure all unused ports to be access ports in a parking VLAN (VLAN 998) and shut them down:
+   ```
+   interface range fa0/20 - 23
+   switchport mode access
+   switchport access vlan 998
+   shutdown
+   ```
+3. Disable DTP on all access ports:
+   ```
+   interface range fa0/1 - 10
+   switchport nonegotiate
+   ```
+4. Verify your trunk configuration with `show interfaces trunk` and confirm VLAN 999 is the native VLAN.
+
+**Challenge Question 1:** Explain how each of these three hardening steps (native VLAN change, unused port lockdown, DTP disable) specifically prevents one of the two VLAN hopping attack methods discussed in this module. For each step, name the attack method it mitigates and describe what an attacker would be able to do WITHOUT that protection in place.
+
+### Challenge Step 2: Configure Port Security with Sticky MAC Learning
+
+1. On Switch1, select an access port connected to PC-Finance (e.g., Fa0/1):
+   ```
+   interface fa0/1
+   switchport port-security
+   switchport port-security maximum 1
+   switchport port-security mac-address sticky
+   switchport port-security violation shutdown
+   ```
+2. Send a ping from PC-Finance to verify the MAC address is learned and stored as sticky.
+3. Run `show port-security interface fa0/1` and `show running-config` to verify the sticky MAC appears in the configuration.
+4. Replace PC-Finance with a different PC (change the device) — trigger the violation.
+5. Observe that the port is err-disabled. Record the err-disabled state with `show interfaces fa0/1`.
+6. Re-enable the port: `shutdown` then `no shutdown`.
+
+**Challenge Question 2:** What is the difference between `mac-address sticky` and manually specifying a static MAC address in port security? When would sticky learning be preferable to static configuration in a production environment? After you triggered the violation and the port went err-disabled, what administrative steps are required to restore connectivity — and could this be automated?
+
+### Challenge Step 3: Verify RSTP Convergence Timing
+
+1. Ensure your topology has a triangle of three switches (SW1-SW2-SW3 interconnected).
+2. Enable Rapid PVST+ on all switches:
+   ```
+   spanning-tree mode rapid-pvst
+   ```
+3. Run `show spanning-tree vlan 10` on all three switches and record all port states.
+4. Identify the Alternate Port on the non-root switches.
+5. Simulate a link failure by shutting down the Root Port on a non-root switch:
+   ```
+   shutdown
+   ```
+6. Time how quickly the Alternate Port transitions to Forwarding (use Packet Tracer's simulation mode).
+
+**Challenge Question 3:** Compare the convergence time you observed with RSTP to the 802.1D STP convergence time (50 seconds with default timers). What specific mechanism allows RSTP to converge so much faster than 802.1D? Describe the Alternate Port's role specifically — what pre-calculated information does RSTP maintain about the Alternate Port that allows instant transition to Forwarding?
+
+---
+
+*CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash*

@@ -201,3 +201,175 @@ Distractor Analysis:
 - A is incorrect — swapping algorithms at runtime describes the Strategy pattern, not Facade
 - C is incorrect — ensuring one instance is the Singleton pattern's purpose; Facade does not control instance count
 - D is incorrect — recording operations for audit and undo describes the Command pattern, not Facade
+
+---
+
+### Question 11 (5 points)
+
+A text editor needs to support undo and redo for insert, delete, and format operations. Each operation should be reversible and stored in a history stack. Which pattern is most appropriate?
+
+- A) Observer — to notify all UI components when the document changes
+- B) Strategy — to make insert, delete, and format interchangeable algorithms
+- C) Command — to encapsulate each operation as an object with execute() and undo() methods stored in a history stack
+- D) Builder — to construct the document state step-by-step using method chaining
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why A is incorrect: Observer handles event notification to multiple dependents; it does not encapsulate operations for reversal or queuing.
+  - Why B is incorrect: Strategy defines interchangeable algorithms for the same task; it does not provide a mechanism for storing and reversing past operations.
+  - Why D is incorrect: Builder constructs complex objects incrementally; it does not represent executable, reversible operations.
+
+---
+
+### Question 12 (5 points)
+
+The Builder pattern's method chaining (fluent interface) returns `this` from each setter method. What is the primary design reason for this?
+
+- A) It prevents other objects from modifying the builder's internal state during construction
+- B) It allows each configuration step to be called in sequence on the same object without storing intermediate variables
+- C) It ensures the builder's `build()` method is called last by making it the only method that does not return `this`
+- D) It restricts the builder to creating exactly one type of output object per chain
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: Method chaining does not provide immutability or access protection; it is purely a usability convenience for calling multiple setters.
+  - Why C is incorrect: While `build()` typically produces the final object and may not return `this`, this is a convention — the primary reason for chaining is readability and convenience, not to enforce call ordering.
+  - Why D is incorrect: Method chaining does not restrict output types; a builder can produce different object representations based on how it is configured.
+
+---
+
+### Question 13 (5 points)
+
+A team is choosing between the Adapter pattern and the Facade pattern to resolve a problem. The existing code has three complex subsystems (authentication, database, cache) that each work correctly individually but require a developer to coordinate all three with many setup steps every time a new feature is written. Which pattern is more appropriate and why?
+
+- A) Adapter — because the three subsystems have incompatible interfaces that need to be bridged
+- B) Facade — because the subsystems work correctly but exposing a single simplified method hides the multi-step coordination from feature developers
+- C) Adapter — because wrapping each subsystem with a common interface allows them to be used interchangeably
+- D) Facade — because it converts the interfaces of the three subsystems into a new format expected by the calling code
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: The scenario does not describe an interface incompatibility — the subsystems work fine. The problem is coordination complexity, not interface mismatch.
+  - Why C is incorrect: Making the three subsystems interchangeable describes Strategy; the scenario needs a single initialization point, not swappability.
+  - Why D is incorrect: Converting interfaces describes Adapter. Facade does not convert interfaces — it hides complexity behind a new simpler interface.
+
+---
+
+### Question 14 (5 points)
+
+Which of the following correctly identifies a risk of overusing the Singleton pattern in a codebase?
+
+- A) Singleton prevents polymorphism because it uses a private constructor
+- B) Singleton creates hidden global state that is shared across all tests, making it difficult to isolate test cases
+- C) Singleton increases coupling by requiring all callers to implement the Observer interface
+- D) Singleton violates the Open/Closed Principle because adding new behavior always requires modifying the Singleton class
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: Singleton does restrict subclassing via a private constructor, but this is not the most significant practical risk in most codebases.
+  - Why C is incorrect: Singleton has no connection to the Observer interface; callers simply call `getInstance()` — no interface implementation is required.
+  - Why D is incorrect: The Open/Closed Principle concern for Singleton is relevant but minor compared to test isolation issues; it is also not inherent to the pattern structure.
+
+---
+
+### Question 15 (5 points)
+
+A developer has both an Observer pattern and a Strategy pattern in the same module. A colleague says: "Both patterns use an interface — they must solve the same problem." What is the correct distinction?
+
+- A) Observer's interface has only one method (update); Strategy's interface always has many methods
+- B) Observer's interface defines how subjects push state changes to passive dependents; Strategy's interface defines how a context delegates active algorithm execution
+- C) Observer is a Creational pattern; Strategy is a Structural pattern — their categories define their different purposes
+- D) Observer requires more memory than Strategy because it stores a list of objects
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: The number of methods in an interface is not the defining distinction; both can have interfaces with one or multiple methods depending on implementation.
+  - Why C is incorrect: Both Observer and Strategy are Behavioral patterns — this answer is factually incorrect.
+  - Why D is incorrect: Memory characteristics are an implementation detail, not a design-level distinction between the patterns' purposes.
+
+---
+
+### Question 16 (5 points)
+
+The Command pattern's `CommandHistory` class stores executed commands. When `undo()` is called, what is the correct behavior?
+
+- A) The history is cleared and all commands are re-executed in the original order
+- B) The most recently executed command's `undo()` method is called, and the command is removed from the history stack
+- C) All commands in the history are undone simultaneously in a batch operation
+- D) The history is sent to a remote logging service before the undo operation begins
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: Clearing and re-executing all commands would not undo the last operation — it would replay the entire history.
+  - Why C is incorrect: Batch undo is not the standard Command pattern behavior; undo applies to one command at a time (the most recent), which is why a stack is used.
+  - Why D is incorrect: Remote logging is a valid additional feature some systems add, but it is not part of the Command pattern's definition or its `undo()` behavior.
+
+---
+
+### Question 17 (5 points)
+
+A Product Owner asks a developer: "Why does adding a new payment method take three days? It should be a simple dropdown change." The developer responds: "Because there's no Factory — every place in the code that processes payments has hard-coded conditionals for each payment type." Which pattern would directly fix this problem?
+
+- A) Observer — to notify all payment processing screens when a new payment type is added
+- B) Singleton — to ensure only one payment processor instance handles all transactions
+- C) Factory Method — to centralize payment processor creation so new types require only a new class and one registry entry
+- D) Command — to encapsulate each payment as a reversible operation
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why A is incorrect: Observer handles event notifications between components; it does not eliminate scattered conditional logic about which class to instantiate.
+  - Why B is incorrect: Singleton controls instance count; it does not address the proliferation of type-selection conditionals across the codebase.
+  - Why D is incorrect: Command handles reversibility and scheduling of operations; it does not address the problem of type selection during object creation.
+
+---
+
+### Question 18 (5 points)
+
+In the Decorator pattern, each decorator holds a reference to a Component object (the thing it is wrapping). What happens when the decorator's own method is called?
+
+- A) The decorator replaces the component entirely and executes its own logic without calling the wrapped component
+- B) The decorator adds its own behavior before or after delegating the same method call to the wrapped component
+- C) The decorator calls all registered observers and then executes the component's method
+- D) The decorator uses a factory to create a new component each time its method is called
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: If the decorator replaced the component, the original behavior would be lost — this defeats the purpose of Decorator, which extends rather than replaces.
+  - Why C is incorrect: Observer is a separate pattern; Decorator does not notify registered observers as part of its delegation mechanism.
+  - Why D is incorrect: Decorator holds a fixed reference to its wrapped component; it does not use a factory to create new instances during method calls.
+
+---
+
+### Question 19 (5 points)
+
+Which of the following scenarios describes correct use of the Builder pattern rather than a Factory Method or Singleton?
+
+- A) Ensuring only one global event bus handles all application events throughout the session
+- B) Creating the correct report generator (PDF, CSV, or Excel) based on a user's file format selection
+- C) Constructing an HTTP request object with optional headers, query parameters, timeout settings, and body content using fluent method calls
+- D) Wrapping a legacy XML parser so that it can be used with a modern JSON-based application
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why A is incorrect: One shared global object describes Singleton — not a step-by-step construction scenario.
+  - Why B is incorrect: Choosing which class to create based on runtime input describes Factory Method — type selection, not incremental construction.
+  - Why D is incorrect: Wrapping a legacy interface for compatibility describes Adapter — interface bridging, not step-by-step object assembly.
+
+---
+
+### Question 20 (5 points)
+
+A Scrum team's velocity drops because every Sprint that adds a new report type requires modifying five existing classes. Which design pattern would most directly prevent this from recurring?
+
+- A) Singleton — to ensure only one ReportManager instance handles all report generation
+- B) Observer — to notify all existing report classes when a new report type is added
+- C) Strategy — to define each report type as a separate class implementing a common ReportStrategy interface, so new types are added without modifying existing code
+- D) Facade — to hide the five existing report classes behind a single simplified interface
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why A is incorrect: Singleton controls instance count; it does not prevent modifications to existing code when new variants are added.
+  - Why B is incorrect: Observer handles state-change notification; it does not address the structural problem of type selection and modification coupling.
+  - Why D is incorrect: Facade simplifies access to existing complexity but does not prevent modification of the subsystem classes when new types are added.
+
+---

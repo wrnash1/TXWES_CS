@@ -637,6 +637,56 @@ Zip all 5 screenshots and upload to the Canvas Module 08 Lab Assignment.
 
 ---
 
+## Part 9 — Challenge Exercise
+
+These steps are optional and ungraded. They extend function concepts to more sophisticated design patterns.
+
+### Challenge 9.1 — Function Decorator (Preview)
+
+Write `~/cis1310/module08/timer_decorator.py` that implements a simple timing decorator using Python's `time` module. A decorator wraps a function to add behavior before and after it runs:
+
+```python
+import time
+
+def timer(func):
+    def wrapper(*args, **kwargs):
+        start = time.time()
+        result = func(*args, **kwargs)
+        end = time.time()
+        print(f'{func.__name__} took {end - start:.4f} seconds')
+        return result
+    return wrapper
+```
+
+Apply this decorator manually (without the `@` syntax, which is Module 14 content) to a function that computes the sum of squares from 1 to N: `sum_of_squares = timer(sum_of_squares)`. Test with N = 100, N = 10000, and N = 1000000. Observe how execution time grows. This exercise directly demonstrates closures (`wrapper` capturing `func`), `*args`/`**kwargs` forwarding, and the function-as-object concept.
+
+---
+
+### Challenge 9.2 — Recursive vs. Iterative Fibonacci
+
+Write `~/cis1310/module08/fibonacci.py` with two implementations of Fibonacci sequence generation:
+
+1. An iterative version using a loop and two accumulators
+2. A recursive version (preview of Module 09) — `def fib_recursive(n): return n if n <= 1 else fib_recursive(n-1) + fib_recursive(n-2)`
+
+For each, compute Fibonacci numbers 0 through 15 and verify both produce identical results. Add timing using `time.time()` to compare performance for `fib(30)`. The recursive version will be dramatically slower — measure and document why in a comment (exponential time complexity from repeated sub-problem computation). This comparison motivates the memoization and recursion content in Module 09.
+
+---
+
+### Challenge 9.3 — Type-Validated Function Using Docstrings and Guards
+
+Write `~/cis1310/module08/validated_math.py` with a function `safe_divide(numerator, denominator)` that:
+
+1. Has a complete docstring (description, Args section with types and meanings, Returns section, Raises section)
+2. Guards against zero denominator with an informative message
+3. Guards against non-numeric inputs by checking `isinstance(x, (int, float))`
+4. Returns the float result when all checks pass
+5. Has a second function `batch_divide(pairs)` that takes a list of `(num, denom)` tuples and returns a list of results, skipping invalid pairs and printing a warning for each skipped one
+
+Print `help(safe_divide)` at the end to demonstrate the docstring is accessible at runtime. This exercise reinforces the guardian pattern from Module 04 applied inside functions, plus professional documentation habits.
+
+---
+
 ## Troubleshooting Guide
 
 **`SyntaxError: non-default argument follows default argument`.**

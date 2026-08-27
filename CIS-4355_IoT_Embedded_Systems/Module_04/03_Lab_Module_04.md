@@ -244,4 +244,47 @@ Question 3: An IoT platform architect discovers that the company's MQTT broker i
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Add TLS and Retained Messages to Your Publisher
+
+Upgrade your Part 1 publisher to use encrypted transport and retained state.
+
+1. Modify `lab04_publisher.py` to connect to the Mosquitto TLS test port at `test.mosquitto.org:8883`. Add the following TLS configuration before calling `client.connect()`:
+
+   ```python
+   import ssl
+   client.tls_set(cert_reqs=ssl.CERT_NONE)
+   client.tls_insecure_set(True)
+   ```
+
+   Screenshot the terminal output confirming successful connection on port 8883. In a comment, explain why `CERT_NONE` is acceptable for a public test broker but would be a critical security flaw in a production deployment.
+
+2. Change the last published message (seq=10) to use `retain=True` by passing `retain=True` to `client.publish()`. Start a new subscriber instance after the publisher has finished and screenshot it immediately receiving the retained message without waiting for a new publish. Explain in two sentences what the retained message mechanism accomplishes.
+
+3. Add an LWT configuration before `client.connect()`. Use topic `iot4355/lab04/YOUR_FIRSTNAME/status`, payload `"offline"`, QoS 1. After the normal 10-message run, publish a final message to the same status topic with payload `"online"` and `retain=True` to simulate the device announcing it is alive. Explain when the broker would automatically publish the `"offline"` LWT instead.
+
+### Challenge 2: MQTT Topic Security Audit
+
+Perform a structured access control analysis on a hypothetical broker deployment.
+
+1. A building automation broker has these MQTT topics actively in use:
+   - `building/floor3/hvac/temperature` — read by dashboard
+   - `building/floor3/door-lock/cmd` — written by access control system to lock/unlock doors
+   - `building/floor3/camera/snapshot` — binary JPEG data from security cameras
+   - `admin/broker/config` — broker configuration reload commands
+
+   For each topic, write a one-sentence ACL rule in Mosquitto `aclfile` format specifying which client IDs should have read, write, or both permissions (use pattern: `topic [read|write|readwrite] <topic>`). Justify each restriction in one sentence.
+
+2. An attacker subscribes to `building/#` using an anonymous connection. List the four topics they can now read and describe the real-world harm enabled by each piece of data they receive.
+
+3. Propose the minimum Mosquitto configuration changes (list them as `mosquitto.conf` directives) that would prevent the unauthorized subscription in step 2 while still allowing the legitimate dashboard and access control system to function.
+
+### Reflection Questions
+
+1. Your Part 2 subscriber performed the `client.subscribe()` call inside the `on_connect` callback rather than in the main program body. Explain why this placement is important when a broker disconnects and reconnects — what would happen to topic subscriptions if you placed `subscribe()` only in the main program?
+2. The MQTT `#` wildcard is powerful but dangerous in a production ACL. Identify one scenario where granting a client `topic readwrite #` (access to all topics) would create a security vulnerability, and explain the principle of least privilege as it applies to MQTT topic permissions.
+
+---
+
 End of Lab – Module 04

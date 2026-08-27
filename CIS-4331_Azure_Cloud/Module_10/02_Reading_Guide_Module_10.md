@@ -407,6 +407,22 @@ az cosmosdb sql container create \
 
 ---
 
+## 9. Supplemental Resources
+
+**1. Microsoft Learn — Azure Cosmos DB consistency levels**
+https://learn.microsoft.com/en-us/azure/cosmos-db/consistency-levels
+Detailed explanation of all five consistency levels (Strong, Bounded Staleness, Session, Consistent Prefix, Eventual) with latency and throughput trade-offs, the consistency spectrum diagram, and guidance for choosing the right level for common application patterns.
+
+**2. Microsoft Learn — Azure SQL Database and SQL Managed Instance feature comparison**
+https://learn.microsoft.com/en-us/azure/azure-sql/database/features-comparison
+Side-by-side comparison of features supported in Azure SQL Database vs. SQL Managed Instance — including SQL Agent, linked servers, CLR, Service Broker, cross-database queries, and other SQL Server features critical for migration planning.
+
+**3. Microsoft Learn — Azure Synapse Analytics overview**
+https://learn.microsoft.com/en-us/azure/synapse-analytics/overview-what-is
+Covers the unified analytics workspace architecture including Dedicated SQL Pool (MPP data warehouse), Serverless SQL Pool (pay-per-query), Spark Pools, Synapse Pipelines, and Synapse Link for Cosmos DB — the reference for understanding Azure's end-to-end analytics platform.
+
+---
+
 ## Required Reading Resources
 
 - Azure SQL Database overview: learn.microsoft.com/en-us/azure/azure-sql/database/sql-database-paas-overview

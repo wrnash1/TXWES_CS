@@ -241,3 +241,183 @@ D. daysAfterExpiryGreaterThan: 60
 ---
 
 *Quiz 09 — Module 09: Azure Storage | CIS-4331 | Texas Wesleyan University*
+
+---
+
+### Question 11 (5 points)
+
+A company stores 10 TB of product images in Azure Blob Storage (Hot tier). Images are accessed heavily in the first week after upload but rarely afterward. The storage team wants to reduce costs automatically without manual intervention. Which Azure feature should they configure?
+
+- A) Azure Storage replication failover to move old blobs to a secondary region
+- B) A Blob Storage Lifecycle Management policy that transitions blobs to Cool tier after 7 days and Archive after 90 days
+- C) Azure File Sync to cache frequently accessed blobs on local servers
+- D) Change the entire storage account from GPv2 to Premium Block Blobs for lower per-GB cost
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Lifecycle Management policies automate tier transitions based on blob age metrics (days since creation, last modification, or last access). A policy moving blobs to Cool after 7 days and Archive after 90 days fully automates the cost optimization based on the described access pattern without any manual intervention.
+  - *Why A is incorrect:* Storage replication failover is for disaster recovery — it switches data to the secondary region during a regional outage. It does not move blobs between access tiers or reduce storage costs for infrequently accessed data.
+  - *Why C is incorrect:* Azure File Sync synchronizes Azure Files shares to on-premises Windows Servers — it has no relationship to Blob Storage access tiers or lifecycle management.
+  - *Why D is incorrect:* Premium Block Blobs uses SSD storage optimized for low-latency, high-throughput workloads. It is significantly more expensive per GB than Standard Hot tier and does not support access tiers. For a cost reduction scenario based on access frequency, Premium Block Blobs is the wrong direction.
+
+---
+
+### Question 12 (5 points)
+
+A developer uploads a file to Azure Blob Storage and then calls `az storage blob set-tier --tier Archive`. One hour later, another team member tries to download the file with `az storage blob download` and receives an error. What is the cause?
+
+- A) The `set-tier` command failed silently and the blob was deleted
+- B) Archive tier blobs are offline and must be rehydrated to Hot or Cool tier before they can be read; rehydration takes up to 15 hours at standard priority
+- C) The blob is locked because `set-tier` acquires an exclusive lease that must be released first
+- D) Archive tier requires RA-GRS redundancy; the account must be upgraded before the blob can be read
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Blobs in Archive tier are stored offline on a cost-optimized storage medium. They cannot be read directly. Before downloading, the blob must be rehydrated by changing its tier to Hot or Cool (or copying it to a new blob in a non-archive tier). Standard priority rehydration takes up to 15 hours; high priority takes under 1 hour for objects up to 10 GB.
+  - *Why A is incorrect:* The `set-tier` command does not delete blobs. The blob still exists in the container — it is simply offline and inaccessible until rehydrated.
+  - *Why C is incorrect:* The `set-tier` command does not acquire a lease on the blob. Azure Blob leases are a separate, explicit mechanism for exclusive write access. Tier changes do not affect blob lease state.
+  - *Why D is incorrect:* Archive tier has no dependency on GRS or RA-GRS redundancy. Any storage redundancy option (LRS, ZRS, GRS, etc.) supports Archive tier. Redundancy is independent of access tier.
+
+---
+
+### Question 13 (5 points)
+
+An organization needs to store structured NoSQL data where each record represents an IoT sensor reading with fields: `DeviceId` (used for grouping), `Timestamp` (used for ordering within a device), `Temperature`, and `Humidity`. The data will be queried by DeviceId and Timestamp range. Cost must be minimized. Which Azure storage option is most appropriate?
+
+- A) Azure SQL Database with a table indexed on DeviceId and Timestamp
+- B) Azure Table Storage with DeviceId as the PartitionKey and Timestamp as the RowKey
+- C) Azure Blob Storage with one JSON file per sensor reading
+- D) Azure Queue Storage with one message per sensor reading
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Azure Table Storage is a NoSQL key-value store optimized for exactly this pattern. The PartitionKey (DeviceId) determines the storage partition for efficient querying by device. The RowKey (Timestamp) orders rows within a partition for range queries. Table Storage charges per GB stored and per transaction, making it extremely cost-effective for high-volume IoT telemetry.
+  - *Why A is incorrect:* Azure SQL Database is a relational database with higher cost per GB and complex schema management. While it would work, it is over-engineered and more expensive for simple key-based lookups of unstructured IoT data. Table Storage is more cost-effective for this volume.
+  - *Why C is incorrect:* Storing one JSON file per sensor reading in Blob Storage creates millions of tiny blobs, making range queries by device and time extremely expensive in terms of both transactions and operational complexity. Blob Storage lacks native query capabilities for structured data.
+  - *Why D is incorrect:* Queue Storage is for temporary message passing — messages are deleted after processing. Sensor data needs to be retained for historical analysis, not consumed and discarded like a work queue message.
+
+---
+
+### Question 14 (5 points)
+
+A security team requires that all Azure Blob Storage data at rest be encrypted using keys managed by the organization (not Microsoft). The keys must be stored in Azure Key Vault and rotatable by the security team. Which Azure Storage encryption feature meets this requirement?
+
+- A) Azure Storage Service Encryption (SSE) with Microsoft-managed keys (default)
+- B) Customer-Managed Keys (CMK) with keys stored in Azure Key Vault
+- C) Client-side encryption with keys stored on-premises outside Azure
+- D) Azure Disk Encryption for storage accounts
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Customer-Managed Keys (CMK) allow organizations to use their own encryption keys stored in Azure Key Vault to encrypt Azure Storage data. The security team controls the key lifecycle — creation, rotation, and revocation. If the key is revoked, the storage account data becomes inaccessible. This satisfies the requirement for organization-controlled keys in Key Vault.
+  - *Why A is incorrect:* Microsoft-managed keys (SSE default) are controlled by Microsoft, not the organization. While data is still encrypted at rest, the organization has no control over the key material. This does not meet the requirement for organization-managed keys.
+  - *Why C is incorrect:* Client-side encryption (encrypting data before uploading it) uses keys managed entirely by the application. While this provides strong isolation, the keys must be managed entirely by the application code — not stored in Key Vault. It is also more complex to implement than CMK.
+  - *Why D is incorrect:* Azure Disk Encryption is for VM managed disks (OS and data disks), not for Azure Storage accounts. Storage accounts use Storage Service Encryption (SSE), not disk encryption.
+
+---
+
+### Question 15 (5 points)
+
+A company plans to migrate 500 TB of on-premises data to Azure using Azure Data Box. The Data Box device arrives, data is loaded onto it, and the device is shipped back to Microsoft. Once Microsoft receives the device, what happens to the data?
+
+- A) Microsoft engineers manually copy the data to the customer's specified storage account and then notify the customer
+- B) Microsoft uploads the data to the customer's specified Azure Storage account, then performs a secure wipe of the Data Box device
+- C) The data is held in a Microsoft staging area until the customer activates the storage account
+- D) Microsoft compresses and encrypts the data before uploading, which may alter the original file formats
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* When Microsoft receives the returned Data Box device, they upload all data to the customer's specified Azure Storage account. After the data copy is verified, Microsoft performs a secure wipe of the Data Box device following NIST 800-88r1 guidelines (for Data Box) before the device is reused or retired. The customer receives a notification when the upload is complete.
+  - *Why A is incorrect:* The process is automated, not performed by Microsoft engineers manually. The upload and wipe process is a standardized, automated procedure with tracking available through the Azure Portal.
+  - *Why C is incorrect:* Data is not held in a staging area pending customer action. The upload to the customer's storage account happens automatically after the device is received and processed by Microsoft.
+  - *Why D is incorrect:* Azure Data Box uploads data as-is without compressing or re-encoding it. Files arrive in Azure Storage in their original format. Azure Storage Service Encryption (SSE) encrypts the data at rest transparently, but this does not alter file formats or content.
+
+---
+
+### Question 16 (5 points)
+
+A development team uses Azure Storage to hold build artifacts. Each build uploads new files, and the team wants to prevent any build artifact from being deleted or overwritten for at least 30 days for compliance. Which Azure Blob Storage feature enforces this immutability requirement?
+
+- A) Azure Storage soft delete with a 30-day retention period
+- B) A Shared Access Signature (SAS) token with read-only permissions
+- C) Azure Blob Storage immutability policies (WORM — Write Once, Read Many) with a time-based retention of 30 days
+- D) Azure Storage Lifecycle Management with a delete rule at 30 days
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - *Why C is correct:* Azure Blob Storage immutability policies implement WORM (Write Once, Read Many) protection. A time-based retention policy locks blobs so they cannot be deleted or overwritten until the retention interval expires. This is a compliance-grade feature used in regulated industries. Once locked, even Azure subscription admins cannot delete the data during the retention period.
+  - *Why A is incorrect:* Soft delete protects against accidental deletion by retaining deleted blobs for a configured period in a hidden state. However, it does not prevent deliberate deletion or overwrite by authorized users with sufficient permissions. It is a recovery mechanism, not an immutability control.
+  - *Why B is incorrect:* A read-only SAS token prevents the holder of that token from writing or deleting. However, anyone with the storage account key or Owner/Contributor RBAC can still delete blobs. SAS tokens restrict specific access credentials but do not enforce system-wide immutability.
+  - *Why D is incorrect:* A Lifecycle Management delete rule would automatically delete blobs after 30 days — the opposite of what is needed. The requirement is to prevent deletion for 30 days, not to delete after 30 days.
+
+---
+
+### Question 17 (5 points)
+
+An organization runs Azure Files to host a shared department drive. Users mounting the share from home report that they cannot connect to the file share on port 445. What is the most likely cause, and what is the recommended workaround for remote users?
+
+- A) Azure Files requires a Premium SKU for remote access; upgrade the storage account
+- B) Port 445 (SMB) is commonly blocked by ISPs and home routers; the workaround is to use Azure VPN Gateway with Point-to-Site VPN to access the share over a secure tunnel
+- C) Azure Files is only accessible from within Azure VNets and cannot be reached from on-premises
+- D) The file share quota has been reached; increase the quota to allow new connections
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Many ISPs and home/corporate firewalls block outbound TCP port 445 (SMB) due to historical security concerns. Azure Files uses SMB over port 445. The recommended workaround for remote users who cannot use port 445 is to connect via Azure VPN Gateway (Point-to-Site VPN), which tunnels the SMB traffic over HTTPS (port 443). Alternatively, Azure Files REST API access works over HTTPS port 443.
+  - *Why A is incorrect:* Azure Files is accessible remotely on both Standard and Premium SKUs. The SKU affects performance (HDD vs. SSD) and features, not whether remote access is possible. Port 445 blocking is an ISP/firewall issue unrelated to the storage SKU.
+  - *Why C is incorrect:* Azure Files is accessible from outside Azure VNets — it has a public endpoint at `<account>.file.core.windows.net`. The connectivity issue is the ISP blocking port 445, not a VNet restriction.
+  - *Why D is incorrect:* File share quota limits affect how much data can be stored, not how many connections can be made. A full quota would prevent uploads, not initial SMB connection establishment.
+
+---
+
+### Question 18 (5 points)
+
+A storage administrator needs to generate a URL that gives a contractor read-only access to a single blob for exactly 48 hours, using the least privileged access mechanism. Which approach generates the most appropriate URL?
+
+- A) Make the blob container public (anonymous access) and share the blob URL
+- B) Share the storage account key and let the contractor use Azure Storage Explorer
+- C) Generate a Service SAS token with read permission scoped to the specific blob and a 48-hour expiry, then append it to the blob URL
+- D) Add the contractor's email address as a Storage Blob Data Owner on the storage account
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - *Why C is correct:* A Service SAS token can be scoped to a single blob, limited to read permission, and set to expire after exactly 48 hours. The resulting URL (`https://account.blob.core.windows.net/container/blob?sv=...&se=...&sp=r&sig=...`) is self-contained — the contractor uses it directly with no other credentials. After 48 hours the URL is automatically invalid.
+  - *Why A is incorrect:* Enabling public container access allows anonymous access to all blobs in the container by anyone with the URL — not just this contractor, and not just for 48 hours. This violates least privilege and the time-limited requirement.
+  - *Why B is incorrect:* Storage account keys grant full administrative access to the entire storage account — all containers, all blobs, all services. They cannot be scoped to a single blob or limited to a time window. Sharing a key with a contractor is a major security risk.
+  - *Why D is incorrect:* Storage Blob Data Owner is an RBAC role that persists until manually revoked. It does not expire automatically after 48 hours and grants read, write, and delete access to all blobs in the account — far exceeding least privilege for read-only access to a single blob.
+
+---
+
+### Question 19 (5 points)
+
+A company's application uses Azure Queue Storage messages with a default visibility timeout of 30 seconds. A background worker dequeues a message and begins processing. The processing takes 45 seconds to complete. What happens after 30 seconds if the worker has not yet completed processing?
+
+- A) The message is permanently deleted from the queue after the timeout expires
+- B) The message becomes visible again in the queue and can be dequeued by another worker, potentially causing duplicate processing
+- C) The queue locks all other workers until the original worker finishes processing
+- D) The message is moved to a dead-letter queue for manual inspection
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Azure Queue Storage visibility timeout makes a message invisible to other consumers for the duration of the timeout after it is dequeued. If the consumer does not delete the message (confirming successful processing) before the timeout expires, the message becomes visible again and can be picked up by any other worker. This protects against message loss if a worker fails — but it means applications must handle idempotency (processing the same message twice must be safe).
+  - *Why A is incorrect:* Messages are not automatically deleted when the visibility timeout expires. Only explicit calls to `DeleteMessage` (after successful processing) remove a message. Expiring timeout simply makes the message visible again.
+  - *Why C is incorrect:* Queue Storage does not lock other workers when one worker is processing a message. The visibility timeout mechanism is per-message — other messages in the queue remain accessible to other workers. Only the specific message being processed is invisible during its timeout window.
+  - *Why D is incorrect:* Azure Queue Storage does not have a built-in dead-letter queue. Messages that are dequeued and returned to the queue repeatedly (exceeding the dequeue count threshold) can be detected by the application, but there is no automatic dead-lettering. Azure Service Bus (a different messaging service) provides dead-letter queues.
+
+---
+
+### Question 20 (5 points)
+
+A company evaluates whether to use Azure Storage Account keys or Azure AD (Entra ID) authentication for an application that reads blobs. The security team recommends Entra ID. Which statement correctly describes a security advantage of Entra ID authentication over storage account keys for this scenario?
+
+- A) Entra ID authentication is faster than key-based authentication because it skips the HMAC signature computation
+- B) Entra ID authentication uses short-lived tokens and integrates with Conditional Access and MFA policies; storage account keys are long-lived shared secrets that cannot be scoped to a specific service or user
+- C) Storage account keys support key rotation; Entra ID tokens cannot be revoked once issued
+- D) Entra ID authentication requires Premium storage accounts; standard accounts must use storage account keys
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Entra ID (Azure AD) authentication for Azure Storage uses OAuth 2.0 bearer tokens. These tokens are short-lived (typically 1 hour), scoped to specific roles via RBAC, and subject to Conditional Access policies (including MFA, location restrictions, and device compliance). Storage account keys are full-access shared secrets with no expiry by default, no scope restriction, and no integration with identity governance policies.
+  - *Why A is incorrect:* Authentication mechanism performance (speed) is not the primary security distinction. Both methods involve cryptographic operations. HMAC and token validation are both fast. Performance is not a security argument for choosing Entra ID over keys.
+  - *Why C is incorrect:* This reverses the truth. Storage account key rotation is possible (via key regeneration) but requires updating all applications using the key. Entra ID tokens can be effectively revoked by changing RBAC role assignments or by Conditional Access policy enforcement. Token revocation in Entra ID is faster than coordinating key rotation across all consumers.
+  - *Why D is incorrect:* Entra ID (Azure AD) authentication for Azure Storage is available on all storage account SKUs — Standard and Premium. There is no SKU restriction for using Entra ID authentication.

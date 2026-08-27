@@ -379,4 +379,20 @@ Before attending Lab 14, complete the following:
 
 *End of Reading Guide — Module 14*
 
+---
+
+## 9. Supplemental Resources
+
+**1. Salesforce Trailhead — Reports and Dashboards for Lightning Experience**
+<https://trailhead.salesforce.com/content/learn/modules/lex_implementation_reports_dashboards>
+Official Salesforce learning module covering all four report types (Tabular, Summary, Matrix, Joined), dashboard components, dynamic dashboards, cross-filters, and conditional highlighting. Maps directly to the Salesforce reporting concepts tested in this module's quiz and Lab 14.
+
+**2. SAP Learning — Analytics and Intelligence with SAP Analytics Cloud**
+<https://learning.sap.com/learning-journeys/discover-sap-analytics-cloud>
+Official SAP learning journey for SAP Analytics Cloud. Covers connecting to SAP S/4HANA and BW, building stories and dashboards, KPI design, and the difference between live connections and data imports. Relevant to the SAC vs. BEx Analyzer content and the cross-system reporting scenarios covered in this module.
+
+**3. Tableau — Visual Analysis Best Practices**
+<https://www.tableau.com/learn/whitepapers/tableau-visual-guidebook>
+Tableau's visual analysis guidebook covers chart type selection, cognitive load reduction, dashboard design for executive audiences, and data storytelling principles — the theoretical foundation for the dashboard design principles in Section 7 of this Reading Guide. Applicable to Salesforce dashboards, SAC stories, and any BI platform.
+
 **Certification Alignment:** Salesforce Administrator / SAP S/4HANA Essentials

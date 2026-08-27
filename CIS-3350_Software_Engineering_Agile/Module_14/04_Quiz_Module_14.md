@@ -199,3 +199,173 @@ Distractor Analysis:
 - Why D is incorrect: While SAFe adoption does have a learning curve, coordination overhead that exceeds pre-SAFe levels after multiple PIs is a structural signal, not a temporary adoption cost.
 
 ---
+
+### Question 11 (5 points)
+
+In LeSS, what is the purpose of the Overall Retrospective, and who participates?
+
+- A) It is the Retrospective held by each individual team at the end of a Sprint to improve their own working practices
+- B) It is a cross-team event held after all team Retrospectives, where representatives from all teams and the Product Owner discuss systemic impediments that cannot be resolved within a single team
+- C) It is a SAFe-equivalent Inspect and Adapt event held at the end of each Program Increment
+- D) It is an optional event where the Product Owner reviews all team backlogs to ensure alignment before the next Sprint
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: Individual team Retrospectives are held by each team separately and are not called the Overall Retrospective; they address team-level improvement, not systemic cross-team issues.
+  - Why C is incorrect: The Inspect and Adapt is a SAFe event; it is not part of the LeSS structure. LeSS uses an Overall Retrospective for cross-team systemic improvement.
+  - Why D is incorrect: Backlog review is a refinement activity, not a Retrospective purpose. The Overall Retrospective is about process and organizational improvement, not backlog management.
+
+---
+
+### Question 12 (5 points)
+
+A SAFe organization has a Program Backlog with 40 Features. The Product Manager asks: "Who breaks these Features into Stories for the teams?" Who is responsible?
+
+- A) The Release Train Engineer breaks Features into Stories during ART Sync meetings
+- B) Each Team Product Owner breaks Features into Stories for their team's Team Backlog
+- C) The System Architect breaks Features into Stories during the IP Iteration
+- D) The development teams collectively break Features into Stories during PI Planning
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: The Release Train Engineer facilitates ART-level events and removes impediments; story decomposition is not an RTE responsibility.
+  - Why C is incorrect: The System Architect guides technical decisions and architectural alignment, not backlog decomposition.
+  - Why D is incorrect: Development teams provide effort estimates and identify dependencies during PI Planning, but the formal responsibility for decomposing features into stories for a team's backlog belongs to the Team Product Owner.
+
+---
+
+### Question 13 (5 points)
+
+An organization is choosing between SAFe and LeSS. Their primary concern is minimizing organizational disruption while adding multi-team coordination. Which framework is more appropriate and why?
+
+- A) LeSS — because it adds fewer roles and ceremonies and preserves the existing organizational structure
+- B) SAFe — because it provides a complete organizational blueprint that fits within existing hierarchies and adds coordination roles without eliminating component team structures
+- C) LeSS — because it requires the fewest changes to Product Ownership and team structure
+- D) SAFe — because it is the only framework that supports more than eight teams
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: LeSS actually causes higher organizational disruption because it requires converting component teams to feature teams and consolidating Product Ownership, which challenges existing structures significantly.
+  - Why C is incorrect: LeSS requires substantial changes — specifically converting component teams and centralizing Product Ownership — which is organizationally disruptive.
+  - Why D is incorrect: LeSS Huge supports organizations larger than eight teams through Requirement Areas; the framework's scale ceiling is not a reason to choose SAFe.
+
+---
+
+### Question 14 (5 points)
+
+In a LeSS Sprint Planning Part 1, what is the Product Owner's role?
+
+- A) To assign Stories to specific teams based on their technical specializations
+- B) To clarify the highest-priority items on the shared Product Backlog so all teams can understand the work and self-select items
+- C) To split the Product Backlog into team-specific segments before the meeting
+- D) To approve each team's Sprint Goal after Part 1 and before Part 2 begins
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: Assigning stories based on specialization implies component team thinking; in LeSS, teams are feature teams that self-select based on capacity and the whole-product perspective, not technical specialty.
+  - Why C is incorrect: There is one shared Product Backlog in LeSS — it is not split into team-specific segments. All teams pull from the same backlog.
+  - Why D is incorrect: Sprint Goals in LeSS are set by teams during Part 2; the Product Owner does not approve them in a formal gate between Part 1 and Part 2.
+
+---
+
+### Question 15 (5 points)
+
+In SAFe, what does ROAM stand for and when is it used?
+
+- A) Review, Order, Assign, Manage — a backlog prioritization technique used after PI Planning
+- B) Resolved, Owned, Accepted, Mitigated — a risk management tool used during PI Planning to categorize and assign ART risks
+- C) Release, Optimize, Align, Monitor — a deployment strategy for managing production releases after each PI
+- D) Retrospect, Observe, Adapt, Measure — the Inspect and Adapt framework used at the end of each PI
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: ROAM is about risk management, not backlog prioritization; the letters do not stand for Review, Order, Assign, Manage.
+  - Why C is incorrect: ROAM is a planning-time risk tool, not a deployment strategy. Production release decisions are made separately from PI Planning risk categorization.
+  - Why D is incorrect: The Inspect and Adapt is a separate SAFe event; ROAM is specifically a risk categorization tool used during PI Planning.
+
+---
+
+### Question 16 (5 points)
+
+A Scrum team within a SAFe ART discovers a blocker on Day 3 of Iteration 2 that requires a design decision from the System Architect. The next System Demo is six weeks away. What is the most appropriate immediate action?
+
+- A) Raise the blocker at the Inspect and Adapt event in six weeks
+- B) Move the story to the next Iteration and continue working on other items without escalating
+- C) Raise the blocker through the Scrum Master to the Release Train Engineer who can engage the System Architect before the next ART Sync
+- D) The Product Owner should change the PI Objective to remove the blocked story from scope
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why A is incorrect: Waiting six weeks to surface a blocker violates CI principles and the Scrum value of transparency. Blockers should be escalated immediately.
+  - Why B is incorrect: Moving a blocked story to the next Iteration without escalation may cascade into PI Objective failures and does not resolve the architectural question that will recur.
+  - Why D is incorrect: Changing PI Objectives is possible but is a last resort, not an immediate response to a Day 3 blocker. The first action is to resolve the blocker, not to change the commitment.
+
+---
+
+### Question 17 (5 points)
+
+Which of the following correctly describes the relationship between a LeSS Sprint and a SAFe Program Increment?
+
+- A) They are the same concept; SAFe renamed the Sprint to Program Increment to signal organizational maturity
+- B) A LeSS Sprint is a single two-week iteration across all teams; a SAFe Program Increment is a multi-iteration timebox of 10–12 weeks containing multiple Sprints
+- C) A SAFe Program Increment contains one Sprint; a LeSS Sprint contains multiple Iterations
+- D) Both are timeboxes of the same duration but with different numbers of teams
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: Sprint and Program Increment are not synonymous. A PI spans multiple Sprints and includes planning, coordination, and IP Iteration events that a single Sprint does not.
+  - Why C is incorrect: The relationship is reversed — a PI contains multiple Sprints (Iterations), not the other way around.
+  - Why D is incorrect: Sprint and Program Increment have different durations by definition; this answer is factually incorrect.
+
+---
+
+### Question 18 (5 points)
+
+An Agile coach observes that in a SAFe organization, teams complete their Team Backlog Items each Iteration but the System Demo consistently reveals that teams built pieces that do not fit together. What is the most likely structural cause?
+
+- A) The teams are not following the Definition of Done
+- B) The teams planned their Iterations independently without identifying cross-team dependencies during PI Planning
+- C) The Release Train Engineer is not facilitating Daily Scrums for each team
+- D) The Product Manager's Program Backlog contains too many Features for the PI
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: Individual stories meeting the DoD does not guarantee that stories from different teams integrate correctly. The DoD addresses completeness at the story level, not integration at the ART level.
+  - Why C is incorrect: Daily Scrum facilitation is the Scrum Master's role; the RTE facilitates ART-level events. Individual team Daily Scrums address team-level blockers, not cross-team integration alignment.
+  - Why D is incorrect: A full Program Backlog may indicate scope management issues, but the integration failure symptom specifically indicates dependency identification failure during PI Planning, not overall backlog size.
+
+---
+
+### Question 19 (5 points)
+
+The Scrum Guide states that Scrum is designed for single Scrum Teams. Which Scrum Guide principle does both SAFe and LeSS attempt to preserve when scaling to many teams?
+
+- A) The Product Owner must have final authority over the Sprint Backlog
+- B) Empiricism — inspection, adaptation, and transparency must remain the foundation for decision-making across all teams and organizational layers
+- C) Sprints must be two weeks long regardless of team size or product complexity
+- D) The Scrum Master must protect the team from all external interruptions
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: The Product Owner has authority over the Product Backlog ordering, not the Sprint Backlog. The Sprint Backlog is owned by the Developers. This is not the scaling principle at stake.
+  - Why C is incorrect: The Scrum Guide allows Sprint lengths of one to four weeks; it does not mandate two weeks. Sprint length is also not the preservation principle tested by scaling frameworks.
+  - Why D is incorrect: Protecting the team from external interference is a Scrum Master behavior; it is not the foundational Scrum principle that scaling frameworks are designed to preserve.
+
+---
+
+### Question 20 (5 points)
+
+A company has 120 developers building a single enterprise product. They adopt LeSS Huge. How does LeSS Huge differ from standard LeSS in its Product Backlog structure?
+
+- A) LeSS Huge creates a separate Product Backlog for each team, eliminating the shared backlog to manage complexity
+- B) LeSS Huge divides the Product Backlog into Requirement Areas — large customer-domain slices — each managed by an Area Product Owner, while one overall Product Owner coordinates all areas
+- C) LeSS Huge creates a Program Backlog above the Product Backlog, equivalent to SAFe's two-level ownership structure
+- D) LeSS Huge eliminates the Product Backlog entirely and replaces it with PI Planning boards
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: Separate team backlogs would fragment Product Ownership — the exact problem LeSS is designed to solve. LeSS Huge does not abandon the shared backlog; it organizes it into Requirement Areas.
+  - Why C is incorrect: Adding a Program Backlog layer above the Product Backlog describes SAFe's structure, not LeSS. LeSS Huge uses Requirement Areas within the single Product Backlog framework.
+  - Why D is incorrect: PI Planning boards are a SAFe tool. LeSS does not use PI Planning or replace the Product Backlog with planning boards.
+
+---

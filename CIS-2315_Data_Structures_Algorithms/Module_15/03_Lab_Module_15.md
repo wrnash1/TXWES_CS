@@ -440,3 +440,21 @@ Submit to Canvas:
 | Minimum window substring | `formed == required` triggers shrink phase |
 | Expand-around-center | Both `expand(i,i)` and `expand(i,i+1)` required |
 | Valid palindrome | Two pointers skip non-alphanumeric, compare case-insensitive |
+
+---
+
+## Part 9 — Challenge Exercise
+
+These steps are **optional** and ungraded. They are designed for students who want to deepen their understanding beyond the core lab.
+
+### 9.1 — Word Search II (LeetCode #212)
+
+Given an m×n board of characters and a list of words, find all words in the board. The naive approach — calling `exist()` (LeetCode #79) for each word — is O(words × m × n × 4^L) and too slow for large inputs. The optimal solution builds a Trie from all words, then runs a single DFS over the board — at each cell, follow the Trie branch for the current character. When `is_end = True` is reached, record the word and mark it found. Implement this solution, verify it finds `['eat', 'oath']` in the standard test board, and explain why using a Trie reduces the time complexity compared to calling `exist()` once per word.
+
+### 9.2 — Rabin-Karp Rolling Hash for Substring Search
+
+The naive substring search (check every position) is O(n×m) where n=text length, m=pattern length. Rabin-Karp uses a rolling hash: compute the hash of the pattern and the first window; then slide the window by removing the leftmost character and adding the new rightmost — each slide is O(1) arithmetic. Implement `rabin_karp(text, pattern)` using polynomial hashing with a prime base and modulus. Verify it finds the correct starting index for `rabin_karp('abcxabcdabcdabcy', 'abcdabcy')`. Handle hash collisions by doing a character-by-character confirmation when hashes match. State the average case O(n+m) complexity and the worst case O(n×m) (many hash collisions).
+
+### 9.3 — Trie Delete and Prefix Count
+
+Extend your `Trie` class with two new methods: `delete(word)` removes a word from the Trie, cleaning up nodes that are no longer needed (a node can be deleted if it has no children and `is_end = False` after removing the word). Implement deletion recursively. Then add `count_words_with_prefix(prefix)` — which counts how many stored words begin with the given prefix using a DFS from the prefix node. Verify: insert ['app','apple','apply','ape','banana'], delete 'app', then `search('app')=False`, `starts_with('app')=True` (because 'apple' and 'apply' still exist), and `count_words_with_prefix('app')=2`. Explain why deleting 'app' does not remove the 'a'→'p'→'p' path.

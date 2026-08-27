@@ -417,7 +417,31 @@ Watch the OOP episodes of the [Python for Everybody Course Playlist](https://www
 
 ---
 
-## 7. Study Checklist
+## 7. Supplemental Resources
+
+**1. Official Python 3 Docs — Inheritance**
+[https://docs.python.org/3/tutorial/classes.html#inheritance](https://docs.python.org/3/tutorial/classes.html#inheritance)
+The authoritative tutorial section on inheritance and multiple inheritance, including the Method Resolution Order (MRO), `super()`, and the `isinstance()` / `issubclass()` built-ins. This section is the primary source for PCAP exam questions on OOP inheritance.
+
+**2. Official Python 3 Docs — abc — Abstract Base Classes**
+[https://docs.python.org/3/library/abc.html](https://docs.python.org/3/library/abc.html)
+Documents the `ABC` base class and `@abstractmethod` decorator. Understanding abstract base classes explains how Python enforces interface contracts and why `isinstance()` returns `True` for built-in abstract base classes like `Sequence` and `Mapping`.
+
+**3. Python for Everybody — Chapter 14: Object-Oriented Programming**
+[https://www.py4e.com/html3/14-objects](https://www.py4e.com/html3/14-objects)
+Free textbook chapter with inheritance examples showing parent and child classes. Covers method overriding and using parent class methods from child classes.
+
+**4. Real Python — Inheritance and Composition: A Python OOP Guide**
+[https://realpython.com/inheritance-composition-python/](https://realpython.com/inheritance-composition-python/)
+A comprehensive free article comparing inheritance and composition with real-world design examples. Covers `super()`, MRO, multiple inheritance, mixins, and abstract base classes. The section on when to use inheritance versus composition is highly practical.
+
+**5. Real Python — Python's super() Considered Super!**
+[https://realpython.com/python-super/](https://realpython.com/python-super/)
+A focused deep-dive into Python's `super()` function — how it uses the MRO, how it handles multiple inheritance via cooperative multiple inheritance, and common mistakes. Essential reading for understanding why `super()` does what it does.
+
+---
+
+## 8. Study Checklist
 
 - [ ] Watch the Module 15 video lecture by Professor Nash.
 - [ ] Draw the Animal → Dog/Cat/Duck hierarchy on paper and trace method calls for each.

@@ -198,3 +198,21 @@ Submit the following as a single PDF or zipped package:
 | Part 3: Forecasting | 30 | Three EAC methods correct; plain-language translation |
 | Part 4: Status Report | 20 | Five required points; professional tone; actionable recommendation |
 | **Total** | **100** | |
+
+---
+
+## Part 9 — Challenge Exercise
+
+This section is optional for students seeking additional depth and exam preparation. It is not graded as part of the standard 100-point lab but may be used for extra credit at the instructor's discretion.
+
+### Challenge Step 1: CPI Stability Projection
+
+The empirical research on EVM shows that CPI tends to stabilize after approximately 20% project completion and rarely improves by more than 0.10 for the remainder. Using the current CPI from your Part 2 spreadsheet, project the final CPI range as: Optimistic = current CPI + 0.05; Most Likely = current CPI; Pessimistic = current CPI - 0.05. Calculate EAC for all three scenarios and present the results in a table. Explain in three sentences what this range means for the sponsor's budget expectations.
+
+### Challenge Step 2: Trend Analysis Chart
+
+Using the phase-by-phase data from Part 1 of the lab, create a trend line by calculating CPI and SPI for each individual phase (not cumulative). Plot the values in a simple table with phase labels. Identify whether the indices are improving, degrading, or stable over time, and write a paragraph interpreting the trend for the project manager's corrective action plan.
+
+### Challenge Step 3: Re-Baseline Decision Memo
+
+The current EAC from your Part 3 calculations exceeds the original BAC by more than 15%. Write a one-page Re-Baseline Decision Memo to the project sponsor that presents: the original BAC, the current EAC, the estimated VAC, the root causes of the overrun (draw from the lab scenario), and a formal recommendation to either (a) re-baseline the budget or (b) reduce scope to remain within BAC. Justify your recommendation and list the governance steps required to execute it under PMI's Integrated Change Control process.

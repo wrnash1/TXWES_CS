@@ -412,3 +412,130 @@ Submit through the course LMS:
 1. Completed Packet Tracer .pka file
 2. Screenshots of: OSPF neighbor table, routing table showing all prefixes, NAT translation table, DHCP binding table, and port security output
 3. A 200-word reflection describing which part of the capstone was most challenging and why
+
+---
+
+## Part 9 — Challenge Extension
+
+This optional extension adds exam-difficulty scenarios to the capstone lab. Complete all steps for up to 20 bonus points.
+
+### Challenge Step 1: Implement IPv6 Dual-Stack on the Campus Topology
+
+Add IPv6 addressing to the existing IPv4 campus topology. Configure dual-stack (simultaneous IPv4 and IPv6) on SW-CORE and R-HQ using the 2001:DB8:CCNA::/48 prefix space.
+
+```ios
+SW-CORE(config)# ipv6 unicast-routing
+
+SW-CORE(config)# interface vlan 10
+SW-CORE(config-if)# ipv6 address 2001:DB8:CCNA:10::1/64
+SW-CORE(config-if)# ipv6 ospf 1 area 0
+
+SW-CORE(config)# interface vlan 20
+SW-CORE(config-if)# ipv6 address 2001:DB8:CCNA:20::1/64
+SW-CORE(config-if)# ipv6 ospf 1 area 0
+
+SW-CORE(config)# ipv6 router ospf 1
+SW-CORE(config-rtr)# router-id 1.1.1.1
+```
+
+Configure PC clients to use SLAAC for IPv6 address assignment (Packet Tracer: set to DHCP6/SLAAC on the PC). Verify IPv6 reachability with `ping 2001:DB8:CCNA:20::11` from a VLAN 10 host. Use `show ipv6 route` and `show ipv6 ospf neighbor` on SW-CORE to verify OSPFv3 operation. Document the auto-configured PC IPv6 addresses and confirm they use the correct /64 prefix with an EUI-64-derived interface identifier.
+
+### Challenge Step 2: Add NAT64 Awareness — Analyze Legacy IPv4 Connectivity
+
+Research and document the NAT64 transition mechanism. In a written analysis (300–400 words) address the following:
+
+Using the existing campus topology as context, explain what changes would be required if the R-HQ PAT configuration (IPv4 internet access) needed to also provide outbound internet access for IPv6-only hosts on the campus network. Cover:
+
+1. What is the role of NAT64 in this scenario and how does it differ from the existing IPv4 PAT?
+2. What is DNS64 and why is it required alongside NAT64 for name resolution to work for IPv6-only clients?
+3. What Cisco IOS commands would be used to configure a basic stateful NAT64 policy on R-HQ?
+4. What are the limitations of NAT64 compared to a full dual-stack deployment?
+
+Include at least two specific Cisco IOS NAT64 configuration commands in your answer (you do not need to implement them in Packet Tracer — this is a design analysis exercise).
+
+### Challenge Step 3: Extend the Branch with SD-WAN Concepts Analysis
+
+The R-BRANCH router currently connects to the campus via OSPF over a simulated WAN link. Write a technical design proposal (400–500 words) for migrating the branch WAN from the current point-to-point OSPF design to a Cisco SD-WAN architecture. Your proposal must address:
+
+1. **Current limitations**: What are the specific operational limitations of the current single-link OSPF WAN design for the branch? Address reliability, visibility, and scalability.
+2. **SD-WAN component roles**: Identify which Cisco SD-WAN components (vManage, vSmart, vBond, vEdge) would be deployed and where. Which component replaces R-BRANCH?
+3. **Multi-transport design**: Describe how you would configure the branch with two WAN transports (existing WAN link + 4G LTE backup) and what SD-WAN capability ensures voice traffic always uses the better-quality link.
+4. **Zero-touch provisioning**: Describe the sequence of events when a new vEdge router is shipped to a new branch and powered on for the first time. Which SD-WAN component does it contact first and what happens?
+5. **Migration risk**: Identify one significant operational risk during migration from OSPF to SD-WAN and describe how you would mitigate it.
+
+Attach your written proposal as a separate document in addition to the Packet Tracer file.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Tune OSPF for Faster Convergence and Summarize Branch Routes
+
+Extend the OSPF deployment by adjusting hello/dead timers for faster failure detection and configuring manual route summarization on SW-CORE to reduce LSA flooding across the campus/branch boundary.
+
+1. On SW-CORE and R-HQ, reduce the OSPF hello interval to 5 seconds and the dead interval to 15 seconds on the inter-router link (Gi0/0 on each device). Both ends must match or the adjacency will drop.
+
+```ios
+SW-CORE(config)# interface gigabitethernet 0/0
+SW-CORE(config-if)# ip ospf hello-interval 5
+SW-CORE(config-if)# ip ospf dead-interval 15
+
+R-HQ(config)# interface gigabitethernet 0/1
+R-HQ(config-if)# ip ospf hello-interval 5
+R-HQ(config-if)# ip ospf dead-interval 15
+```
+
+1. On SW-CORE, configure an OSPF summary route to advertise the three campus VLANs (192.168.10.0, 192.168.20.0, 192.168.30.0) as a single aggregate toward R-HQ and R-BRANCH.
+
+```ios
+SW-CORE(config)# router ospf 1
+SW-CORE(config-router)# summary-address 192.168.0.0 255.255.0.0
+```
+
+1. Verify that the adjacency re-establishes using the new timers and that R-HQ and R-BRANCH now see 192.168.0.0/16 instead of three individual /24 routes.
+
+```ios
+SW-CORE# show ip ospf neighbor
+R-HQ# show ip route ospf
+R-BRANCH# show ip route ospf
+```
+
+1. Record how many OSPF routes appear in R-BRANCH's routing table before and after summarization: Before: ______ After: ______
+
+---
+
+### Challenge 2: Implement a Named ACL to Restrict Inter-VLAN Traffic
+
+Create a named extended ACL on SW-CORE that permits the Engineering VLAN (192.168.20.0/24) to reach all destinations but explicitly denies the Sales VLAN (192.168.10.0/24) from connecting to VLAN 30 Management hosts. All other traffic between VLANs should continue to flow.
+
+1. Define the named extended ACL on SW-CORE.
+
+```ios
+SW-CORE(config)# ip access-list extended VLAN-POLICY
+SW-CORE(config-ext-nacl)# deny ip 192.168.10.0 0.0.0.255 192.168.30.0 0.0.0.255
+SW-CORE(config-ext-nacl)# permit ip any any
+SW-CORE(config-ext-nacl)# exit
+```
+
+1. Apply the ACL inbound on the VLAN 10 SVI so packets from Sales are filtered before being routed.
+
+```ios
+SW-CORE(config)# interface vlan 10
+SW-CORE(config-if)# ip access-group VLAN-POLICY in
+SW-CORE(config-if)# exit
+```
+
+1. Test the policy: from a VLAN 10 PC, attempt to ping a VLAN 30 address (e.g., 192.168.30.11) — the ping should fail. Then ping a VLAN 20 address (e.g., 192.168.20.11) — the ping should succeed.
+
+```ios
+SW-CORE# show ip access-lists VLAN-POLICY
+```
+
+1. Record the match count on the deny statement after testing: ______
+
+---
+
+### Reflection Questions
+
+1. When you reduced the OSPF hello/dead timers, what is the trade-off between faster failure detection and network stability in a high-traffic campus environment? Under what conditions would the default 10/40-second timers still be preferable?
+2. An enterprise security architect argues that inbound ACLs applied to SVIs are insufficient on their own to secure inter-VLAN traffic at scale. What additional security controls — such as 802.1X, private VLANs, or a next-generation firewall in the routing path — would a production campus network use alongside ACLs to enforce consistent segmentation policy?

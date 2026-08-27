@@ -360,6 +360,96 @@ gcloud compute snapshots delete $(gcloud compute snapshots list \
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Canary Deployment with a MIG
+
+Extend the rolling update from Part 3 to perform a canary deployment. Deploy
+a new template version to only 1 instance while the remaining instances stay
+on the current version, observe both versions serving traffic, then complete
+the rollout.
+
+1. Create a third startup script version that outputs `VERSION 3 — CANARY`:
+
+```bash
+cat > startup-canary.sh << 'EOF'
+#!/bin/bash
+apt-get update -y && apt-get install -y apache2
+systemctl enable apache2 && systemctl start apache2
+echo "<h1>$(hostname) — VERSION 3 CANARY</h1>" > /var/www/html/index.html
+EOF
+
+gcloud compute instance-templates create lab03-web-template-canary \
+  --machine-type=e2-medium \
+  --image-family=debian-11 \
+  --image-project=debian-cloud \
+  --tags=http-server \
+  --metadata-from-file=startup-script=startup-canary.sh
+```
+
+1. Start a canary update targeting only 1 instance, with the rest pinned to v2:
+
+```bash
+gcloud compute instance-groups managed rolling-action start-update lab03-web-mig \
+  --region=us-central1 \
+  --version=template=lab03-web-template-v2,name=stable \
+  --canary-version=template=lab03-web-template-canary,name=canary,target-size=1
+```
+
+1. List instances and confirm one canary and one stable instance are running:
+
+```bash
+gcloud compute instance-groups managed list-instances lab03-web-mig \
+  --region=us-central1 \
+  --format="table(name,instance,version.instanceTemplate,currentAction,lastAttempt.errors)"
+```
+
+1. Complete the canary rollout by updating all instances to the canary template:
+
+```bash
+gcloud compute instance-groups managed rolling-action start-update lab03-web-mig \
+  --region=us-central1 \
+  --version=template=lab03-web-template-canary
+```
+
+### Challenge 2: Autohealing Simulation
+
+Force the autohealer to detect and replace an unhealthy instance by manually
+breaking the health check endpoint on one VM.
+
+1. SSH into one of the MIG instances and stop Apache:
+
+```bash
+# Identify an instance name
+INSTANCE=$(gcloud compute instance-groups managed list-instances lab03-web-mig \
+  --region=us-central1 --format="value(instance)" | head -1 | sed 's|.*/||')
+ZONE=$(gcloud compute instances list --filter="name=$INSTANCE" \
+  --format="value(zone)")
+
+gcloud compute ssh $INSTANCE --zone=$ZONE --command="sudo systemctl stop apache2"
+```
+
+1. Watch Cloud Monitoring or poll the MIG status until the unhealthy instance is
+   recreated (this may take 2–5 minutes based on health check thresholds):
+
+```bash
+watch -n 10 "gcloud compute instance-groups managed list-instances lab03-web-mig \
+  --region=us-central1 --format='table(name,currentAction,instanceStatus)'"
+```
+
+### Reflection Questions
+
+1. During the canary deployment you had one instance on the canary template and
+   one on the stable template. If a load balancer were routing traffic to this
+   MIG, approximately what percentage of requests would reach the canary
+   instance? How does this controlled exposure help reduce risk when deploying
+   new versions?
+2. The autohealing initial delay is set to `120` seconds in this lab. If you set
+   it to `10` seconds instead, what failure mode could occur immediately after
+   a new instance is created by the MIG autoscaler?
+
+---
+
 End of Lab — Module 03
 
 Course: CIS-4329 Google Cloud Computing | Texas Wesleyan University | Professor Nash

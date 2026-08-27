@@ -264,3 +264,17 @@ Key rule: You cannot use an aggregate function (SUM, COUNT, AVG, etc.) in a WHER
 
 - Official exam objectives: comptia.org (search "Data+ DA0-001 exam objectives")
 - Professor Messer's free study guides: professormesser.com
+
+## 9. Supplemental Resources
+
+**1. Mode Analytics SQL Tutorial — Advanced SQL**
+<https://mode.com/sql-tutorial/sql-window-functions>
+Covers window functions (ROW_NUMBER, RANK, LAG, LEAD, NTILE) with interactive exercises using real datasets. Directly supports the window function section of this module.
+
+**2. Use The Index, Luke — SQL Performance for Developers**
+<https://use-the-index-luke.com>
+A free, database-agnostic guide to writing efficient SQL queries. Covers index usage, JOIN optimization, and execution plans — essential context for analysts who need to write queries that run on large production datasets.
+
+**3. SQLZoo — Interactive SQL Exercises**
+<https://sqlzoo.net>
+Browser-based SQL practice covering SELECT, JOIN, GROUP BY, subqueries, and window functions. Immediate feedback with no setup required — ideal for drilling SQL syntax before the lab and quiz.

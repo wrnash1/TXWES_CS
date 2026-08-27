@@ -194,4 +194,174 @@ D. WHERE → FROM → GROUP BY → SELECT → HAVING → ORDER BY
 
 ---
 
+## Question 11 (5 points)
+
+An analyst wants to calculate a 3-month rolling average of revenue. Which SQL window frame clause achieves this when ordered by month?
+
+A. `ROWS BETWEEN CURRENT ROW AND 2 FOLLOWING`
+
+B. `ROWS BETWEEN 2 PRECEDING AND CURRENT ROW`
+
+C. `ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW`
+
+D. `ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING`
+
+**Correct Answer:** B — `ROWS BETWEEN 2 PRECEDING AND CURRENT ROW` includes the current row and the two rows before it — a 3-row (3-month) window ending at the current period. Option A looks forward, not backward. Option C is an expanding cumulative window (all rows from the start). Option D is a centered 3-row window that includes a future row, which is inappropriate for a trailing moving average.
+
+---
+
+## Question 12 (5 points)
+
+A query uses `LEFT JOIN` to combine a `customers` table with an `orders` table. What rows appear in the result for customers who have placed no orders?
+
+A. Those customers are excluded from the result entirely
+
+B. Those customers appear with NULL values in all columns from the `orders` table
+
+C. Those customers appear only if they have at least one cancelled order
+
+D. The query returns an error because a customer without orders violates referential integrity
+
+**Correct Answer:** B — A LEFT JOIN returns all rows from the left table (customers) regardless of whether a match exists in the right table (orders). For unmatched rows, all columns from the right table are populated with NULL. Option A describes an INNER JOIN. Options C and D are incorrect.
+
+---
+
+## Question 13 (5 points)
+
+Which SQL function would you use to replace NULL values in a `discount_rate` column with 0 for display in a report?
+
+A. `ISNULL(discount_rate)`
+
+B. `COALESCE(discount_rate, 0)`
+
+C. `NVL2(discount_rate, 0)`
+
+D. `NULLIF(discount_rate, 0)`
+
+**Correct Answer:** B — `COALESCE(discount_rate, 0)` returns the first non-NULL expression in the list — `discount_rate` if it has a value, otherwise 0. It is ANSI SQL standard and works across databases. `ISNULL()` in some databases requires two arguments (A). `NVL2` returns the second argument when the first is NOT NULL — the reverse of what is needed (C). `NULLIF(discount_rate, 0)` returns NULL when `discount_rate = 0`, which is the opposite of the goal (D).
+
+---
+
+## Question 14 (5 points)
+
+What does the `NTILE(4)` window function do when applied to a column of sales values ordered descending?
+
+A. It returns the 4th highest sales value in the dataset
+
+B. It divides rows into 4 equal-sized buckets (quartiles) and assigns each row a bucket number 1–4
+
+C. It computes the 4th percentile of the sales distribution
+
+D. It returns the running total after every 4th row
+
+**Correct Answer:** B — `NTILE(4)` distributes rows as evenly as possible into 4 groups and assigns each row a group number (1 = top quartile if ordered descending). This is used to create quartile or percentile groupings in SQL. It does not return the 4th value (A), compute percentiles as a scalar (C), or produce running totals (D).
+
+---
+
+## Question 15 (5 points)
+
+An analyst runs the following query but it returns no rows despite the table having records. What is the most likely cause?
+
+```sql
+SELECT product_id, category
+FROM products
+WHERE category = NULL;
+```
+
+A. The WHERE clause syntax is correct but the column has no NULL values
+
+B. NULL cannot be compared using `=`; the correct syntax is `IS NULL`
+
+C. The query is missing a GROUP BY clause, which prevents the WHERE filter from executing
+
+D. NULL comparison with `=` returns 1 (true) only for exact string matches
+
+**Correct Answer:** B — In SQL, NULL represents an unknown value. Comparing NULL with `=` always evaluates to UNKNOWN (neither TRUE nor FALSE), so no rows are returned. The correct syntax to find NULL values is `WHERE category IS NULL`. The GROUP BY clause has nothing to do with this issue (C). NULL comparisons never return 1/true (D).
+
+---
+
+## Question 16 (5 points)
+
+A table of 1,000 employee records needs to be joined to a table of 500 department records. Which join type returns only the rows where an employee has a matching department AND the department has at least one employee?
+
+A. LEFT JOIN
+
+B. RIGHT JOIN
+
+C. FULL OUTER JOIN
+
+D. INNER JOIN
+
+**Correct Answer:** D — An INNER JOIN returns only rows where a match exists in both tables. Employees without a department and departments without employees are both excluded. LEFT JOIN includes all employees regardless of match (A). RIGHT JOIN includes all departments regardless of match (B). FULL OUTER JOIN includes all rows from both tables with NULLs for non-matching sides (C).
+
+---
+
+## Question 17 (5 points)
+
+Which window function would you use to calculate the percentage contribution of each order to the total sales for the entire dataset (not partitioned)?
+
+A. `SUM(amount) OVER (PARTITION BY order_id)`
+
+B. `amount / SUM(amount) OVER () * 100`
+
+C. `PERCENT_RANK() OVER (ORDER BY amount)`
+
+D. `CUME_DIST() OVER (ORDER BY amount)`
+
+**Correct Answer:** B — `SUM(amount) OVER ()` with an empty OVER clause computes the grand total across all rows, making it possible to divide each row's amount by that total and multiply by 100. `PARTITION BY order_id` computes a sum per order, not the grand total (A). `PERCENT_RANK()` computes a rank-based relative position between 0 and 1, not a revenue contribution percentage (C). `CUME_DIST()` computes the cumulative distribution of a value, not contribution to total (D).
+
+---
+
+## Question 18 (5 points)
+
+An analyst needs to retrieve all products that appear in the `inventory` table but do NOT appear in the `sales` table. Which approach is correct?
+
+A. `INNER JOIN inventory ON inventory.product_id = sales.product_id WHERE sales.product_id IS NULL`
+
+B. `LEFT JOIN sales ON sales.product_id = inventory.product_id WHERE sales.product_id IS NULL`
+
+C. `RIGHT JOIN inventory ON inventory.product_id = sales.product_id`
+
+D. `FULL OUTER JOIN inventory ON inventory.product_id = sales.product_id WHERE inventory.product_id IS NOT NULL`
+
+**Correct Answer:** B — A LEFT JOIN from `inventory` to `sales` returns all inventory products. Where no matching sales record exists, the `sales.product_id` will be NULL. Filtering on `WHERE sales.product_id IS NULL` isolates products in inventory but not in sales. An INNER JOIN (A) would only return matching products. Right JOIN and FULL OUTER JOIN (C, D) do not correctly isolate inventory-only products.
+
+---
+
+## Question 19 (5 points)
+
+What is the output of the following SQL expression for a row where `unit_price = 100` and `discount = NULL`?
+
+```sql
+SELECT unit_price * (1 - discount) AS final_price
+```
+
+A. 100
+
+B. 0
+
+C. NULL
+
+D. An error — arithmetic operations cannot include NULL values
+
+**Correct Answer:** C — In SQL, any arithmetic operation involving NULL propagates NULL as the result. `1 - NULL = NULL`, and `100 * NULL = NULL`. This is a common source of unintended NULLs in calculated columns. To handle this correctly, use `COALESCE(discount, 0)`. The result is not 100 (A), 0 (B), or an error (D).
+
+---
+
+## Question 20 (5 points)
+
+A query uses `GROUP BY customer_id, region` and the SELECT clause includes `customer_id, region, COUNT(*) AS order_count`. A colleague suggests adding `product_name` to the SELECT clause without adding it to GROUP BY. What will happen?
+
+A. The query will run successfully and show the most recent product_name for each group
+
+B. The query will return an error because every non-aggregate column in SELECT must appear in GROUP BY
+
+C. The query will run successfully and show the product_name of the first row inserted in each group
+
+D. The database will automatically aggregate product_name as a concatenated string
+
+**Correct Answer:** B — Standard SQL requires that every non-aggregated column in the SELECT clause appear in the GROUP BY clause. Adding `product_name` to SELECT without including it in GROUP BY violates this rule and will cause a syntax or semantic error in most databases (PostgreSQL, MySQL strict mode, SQL Server). Some databases (like MySQL in non-strict mode) allow it but return unpredictable values (C), which is not the correct standard behavior (A and D are both incorrect).
+
+---
+
 End of Module 11 Quiz

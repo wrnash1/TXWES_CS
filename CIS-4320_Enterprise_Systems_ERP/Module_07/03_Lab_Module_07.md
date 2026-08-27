@@ -181,3 +181,29 @@ Three months after the Salesforce-SAP integration goes live, the implementation 
 2. Name your file: `Lab07_LastName_FirstName.pdf`
 3. Upload to Canvas under "Lab 07 -- Customer Relationship Management Modules."
 4. Deadline: See course schedule in Canvas. Late submissions lose 10 points per day.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Full Sales Process Configuration Design
+
+You are the Salesforce administrator for a commercial real estate firm. The firm has two distinct sales processes: (1) Tenant Representation (helping businesses find office space — 9-month average cycle) and (2) Investment Sales (selling commercial properties — 18-month average cycle). Each requires different stages, required fields, and reporting.
+
+1. Design the Stage picklist values for each Sales Process. Include at minimum 6 stages per process, with a probability percentage for each stage. Explain why the probabilities differ between the two processes at equivalent points in the cycle.
+2. Define the Key Fields and Guidance for Success content (2-3 bullet points) for two stages in each Sales Process that would be configured in the Salesforce Path component.
+3. Design the Record Types and Page Layouts required to support both processes simultaneously in one Salesforce org. Specify which fields appear on each layout and which are exclusive to each transaction type.
+4. Build a Matrix Report specification (not the actual report — just the design) showing: rows = Stage, columns = Agent Name, values = SUM of Opportunity Amount. Describe how a sales manager would use this report in a weekly pipeline review call.
+
+### Challenge 2: CRM-ERP Order-to-Cash Integration Failure Analysis
+
+A manufacturing company has Salesforce Sales Cloud integrated with SAP S/4HANA via MuleSoft. When a rep marks an Opportunity as Closed Won in Salesforce, an SAP Sales Order should be automatically created within 5 minutes. Over the past two weeks, 15% of Closed Won Opportunities have failed to create an SAP Sales Order, causing order fulfillment delays of 2-5 days.
+
+1. Identify five possible root causes for the integration failure, categorized as: Salesforce-side data quality issues, MuleSoft middleware failures, and SAP-side rejection reasons. For each cause, specify what data or log you would examine to confirm or rule it out.
+2. Design a monitoring solution using Salesforce Reports and Dashboards that would detect this failure pattern within 1 hour of it occurring. Specify the report type, filters, grouping, and the alert mechanism.
+3. Write the data mapping specification for the three most critical fields that must be correctly translated from Salesforce to SAP for the Sales Order to be created successfully: specify the Salesforce field name, the SAP field/table, the data type in each system, and a transformation rule if the formats differ.
+
+### Reflection Questions
+
+1. In the sales process design challenge, you created separate stages for Tenant Representation and Investment Sales. What happens to pipeline forecasting accuracy when salespeople skip stages in Salesforce versus when the stage sequence is enforced by the system — and what is the right balance between process enforcement and sales rep autonomy?
+2. The integration failure analysis revealed that a 15% failure rate was going undetected for two weeks. What organizational process failure allowed this to persist, and what monitoring governance should have been in place at the time of the integration go-live?

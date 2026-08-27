@@ -133,3 +133,42 @@ Part 3 Total: 30 points
 ## Submission Instructions
 
 Combine all three parts into one document with clearly labeled sections. Submit to the Canvas Module 04 Lab assignment by the due date shown in the course calendar.
+
+---
+
+## Part 9 — Challenge Exercise
+
+This section is optional and not separately graded. It extends the lab into advanced requirements analysis practice aligned with ECBA exam competencies.
+
+### Challenge Step 1: Full Requirements Specification Section
+
+Using the Valley Ridge Credit Union case study, write a complete formal requirements specification section covering the Loan Application Submission function. Your section must include:
+
+- One business requirement (the organizational goal this function supports)
+- Three functional requirements (specific system behaviors, numbered FR-001 through FR-003)
+- Two non-functional requirements — one performance, one security (numbered NFR-001, NFR-002)
+- One business rule that constrains the loan application process
+- One transition requirement if applicable
+
+Format each requirement using: ID, Priority (MoSCoW), Statement, and Rationale. Ensure every requirement passes all eight BABOK quality criteria. This exercise produces a fragment of a real Software Requirements Specification (SRS) and mirrors the KA 5 "Specify and Model Requirements" task.
+
+### Challenge Step 2: Requirements Impact Analysis
+
+Choose any one of the improved requirements you wrote in Part 2 of the lab. Assume that after baseline approval, the credit union's compliance team requests a change: the loan application must now also capture the applicant's employer name and employment duration. Perform a formal requirements impact analysis covering:
+
+- Which other requirements in the Part 2 set might be affected by this addition
+- What new test cases would need to be written
+- Whether any UI screen layouts or database fields described in requirements would change
+- What the risk is if this change is accepted without governance review
+
+Present your analysis as a one-page structured memo addressed to the project sponsor. This exercise practices BABOK KA 6 Requirements Life Cycle Management impact assessment.
+
+### Challenge Step 3: Acceptance Criteria Writing Workshop
+
+For each of the following three requirements, write two specific, measurable acceptance criteria that a QA analyst could use to write a definitive pass/fail test case:
+
+1. "The system shall send a loan decision notification to the applicant."
+2. "The system shall prevent submission of incomplete loan applications."
+3. "The system shall maintain application response time under peak load."
+
+Each acceptance criterion should follow the Given-When-Then format (e.g., "Given a submitted application where all required fields are populated, When the underwriting engine completes review, Then the system shall send an email notification to the applicant's registered email address within 60 seconds"). This exercise develops the BABOK skill of translating abstract requirements into testable acceptance criteria.

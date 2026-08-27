@@ -307,3 +307,31 @@ Submit a single document to the course LMS by the posted deadline containing:
 | D — Azure Service Matching | 20 | Correct service and valid one-sentence explanation |
 | E — Maturity Analysis | 15 | Correct stage with evidence; gaps named with specific MLOps terms; actions tied to Level 3 requirements |
 | **Total** | **100** | |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Build-vs-Buy Decision Matrix Analysis
+
+1. Select five real AI business scenarios from public case studies (search company AI press releases, AWS/Azure/Google customer stories, or McKinsey AI case studies). For each scenario, write a 2–3 sentence summary of the business need, the AI system deployed, and the reported outcome.
+2. For each scenario, apply the build-versus-buy decision framework from the reading guide. Record your analysis in a table with columns: Scenario, Task Type (standard/proprietary), Training Data Available (yes/no), Timeline Sensitivity (high/low), ML Resources (available/unavailable), and Recommended Approach (prebuilt/custom).
+3. Identify which of the four AI value categories (Automation, Enhancement, Insights, New Products) each scenario represents. Write one sentence per scenario explaining your classification.
+4. Write a 3–4 sentence reflection: In what types of industries did you find the most custom model deployments? What pattern emerges between industry type, data availability, and the build-vs-buy decision? Does the evidence support the framework, or did you find cases where the recommended approach was surprising?
+
+### Challenge 2: AI ROI Model for a Real Organization
+
+1. Select a publicly known organization that has announced an AI deployment (news articles, earnings calls, case studies, or company blog posts are acceptable sources). Document the organization name, the AI system deployed, and the source URL.
+2. Identify or estimate each ROI cost component: (a) model development or licensing cost, (b) data preparation cost, (c) integration cost, (d) training and change management cost, (e) ongoing operational cost. Use actual figures where reported and reasonable estimates where not. Document your sources and assumptions for each figure.
+3. Identify or estimate each value component: labor cost savings, revenue increase, cost avoidance, and speed improvement. Calculate or estimate first-year ROI using the formula: (Value - Cost) / Cost × 100.
+4. Identify the AI maturity stage you would assign to this organization based on publicly available evidence about their AI program breadth, governance, and infrastructure. Write 2–3 sentences justifying your maturity stage assignment.
+
+### Reflection Questions
+
+1. After completing Challenge 1, explain why the "proprietary categories" factor is the single most decisive factor in the build-versus-buy decision. What would happen to a prebuilt sentiment analysis model if it were applied to a task requiring classification into firm-specific risk tiers — and why would the output be unreliable even if the model was technically capable of producing a label?
+
+2. Based on Challenge 2, explain why the first-year ROI figure is often a misleading measure of an AI investment's true value. What time horizon and what additional factors beyond the ROI percentage should an executive consider when evaluating whether to approve an AI investment?
+
+---
+
+End of Lab — Module 12

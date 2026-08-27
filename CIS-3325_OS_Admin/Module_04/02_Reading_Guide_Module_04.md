@@ -270,3 +270,35 @@ application files.
 
 Read chapters 9 and 10 of The Linux Command Line by William Shotts (linuxcommand.org/tlcl.php)
 covering user identity, permissions, and process ownership in the context of Linux security.
+
+---
+
+## 9. Supplemental Resources
+
+**1. Linux man pages — useradd(8), usermod(8), userdel(8), chage(1)**
+URL: https://man7.org/linux/man-pages/man8/useradd.8.html
+Coverage: Authoritative reference for all user management commands. Pay special attention
+to the FLAGS section of useradd for -r, -m, -s, -e, and -G, and to chage for -d, -E, -M,
+and -l. These flags are directly tested on CompTIA Linux+.
+
+**2. TLDP — Linux System Administrator's Guide: User Management**
+URL: https://tldp.org/LDP/sag/html/users.html
+Coverage: Explains /etc/passwd, /etc/shadow, and /etc/group field-by-field. Covers the
+history of shadow passwords and why splitting the password hash from the user database
+was a critical security improvement.
+
+**3. Red Hat Documentation — Configuring sudo access**
+URL: https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/configuring_basic_system_settings/managing-sudo-access_configuring-basic-system-settings
+Coverage: Step-by-step guide to granting sudo access, using visudo safely, writing sudoers
+rules with host, user, and command restrictions, and understanding the NOPASSWD directive.
+
+**4. Ubuntu Documentation — sudoers file**
+URL: https://help.ubuntu.com/community/Sudoers
+Coverage: Ubuntu-specific sudoers documentation covering the sudo group, Defaults entries,
+per-command NOPASSWD rules, and the difference between Ubuntu and RHEL sudo group conventions.
+
+**5. Linux man pages — pam_pwquality(8)**
+URL: https://man7.org/linux/man-pages/man8/pam_pwquality.8.html
+Coverage: Documents all password quality parameters including minlen, dcredit, ucredit,
+lcredit, and ocredit. Essential for understanding how to enforce enterprise password
+complexity policies using PAM on both Debian and Red Hat family systems.

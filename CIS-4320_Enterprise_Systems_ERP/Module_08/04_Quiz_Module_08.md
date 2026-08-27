@@ -205,3 +205,203 @@ Which of the following best describes the primary purpose of the Salesforce Serv
 - *Why A is incorrect:* The Service Console is a browser-based desktop interface, not a mobile-only tool. Salesforce has a separate mobile app. The Service Console requires a stable internet connection like any Salesforce browser-based experience.
 - *Why C is incorrect:* The Service Console uses the same standard Salesforce objects (Cases, Accounts, Contacts, Knowledge) as the standard app. It is a different visual layout and app configuration, not a separate set of objects.
 - *Why D is incorrect:* The Service Console is designed for support agents handling customer Cases — not for administrators configuring Salesforce. Admins configure queues and assignment rules in Setup, which is accessed through any Salesforce app or the gear icon, not through the Service Console.
+
+---
+
+### Question 11
+
+(5 points)
+
+A customer submits a support request through a company's website contact form, and a Case is automatically created in Salesforce. Which feature enables this automatic Case creation from a website form, and what is the correct Origin value?
+
+- A) Email-to-Case; Origin = Email
+- B) Web-to-Case; Origin = Web
+- C) Omni-Channel; Origin = Web
+- D) Live Agent; Origin = Chat
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Web-to-Case generates an HTML form that companies embed on their website. When a visitor submits the form, Salesforce automatically creates a Case record with Origin = Web. This is the standard mechanism for converting website form submissions into service Cases.
+  - *Why A is incorrect:* Email-to-Case converts inbound emails into Cases and sets Origin = Email. Website forms are not the same as email submissions.
+  - *Why C is incorrect:* Omni-Channel is a routing tool that assigns existing Cases to agents; it does not create Cases from website forms.
+  - *Why D is incorrect:* Live Agent (now Messaging) handles real-time chat sessions; it creates Cases with Origin = Chat for chat interactions, not website form submissions.
+
+---
+
+### Question 12
+
+(5 points)
+
+An agent resolves a Case and wants to submit the solution as a Knowledge Article so future agents can reference it. Which Knowledge workflow describes this process in Salesforce?
+
+- A) The agent publishes the article directly from the Case detail page without any review
+- B) The agent creates a Draft article from the Case, which is submitted for review to a Knowledge Manager who approves and publishes it
+- C) The agent emails the solution to the Knowledge Manager, who creates the article manually in the Knowledge setup menu
+- D) The system automatically creates a Knowledge Article from any Case that is marked Closed
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Salesforce Knowledge supports a content lifecycle: Draft → In Review → Published. Agents can create Draft articles directly from Cases using the "Create Article" action. The draft enters the approval workflow before a Knowledge Manager publishes it, ensuring quality control.
+  - *Why A is incorrect:* Agents without Knowledge Manager permissions cannot publish articles directly. The In Review status exists specifically to enforce a manager review before articles become visible to other agents and customers.
+  - *Why C is incorrect:* While manual article creation by a Knowledge Manager is possible, the integrated Case-to-article workflow exists within Salesforce as a standard feature that does not require external email communication.
+  - *Why D is incorrect:* Salesforce does not automatically generate Knowledge Articles from closed Cases. Article creation requires a deliberate action by the agent or an administrator-configured automation.
+
+---
+
+### Question 13
+
+(5 points)
+
+A company's support team uses Salesforce Omni-Channel with a Skills-Based Routing model. A Case tagged with "Spanish Language" and "Network Hardware" skills arrives in the queue. Which agent will Omni-Channel route the Case to?
+
+- A) The agent who has been waiting the longest in any available presence status
+- B) The available agent whose assigned skills best match the Case's required skills and who has available capacity based on their routing configuration
+- C) The agent with the highest Case closure rate in the previous 30 days
+- D) The Case Assignment Rule owner, which overrides Omni-Channel routing for skill-tagged Cases
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Skills-Based Routing matches work items to agents by comparing the required skills on the work item to the skills assigned to each available agent. Only agents with both "Spanish Language" and "Network Hardware" skills and available capacity are eligible, and the best match is selected from those candidates.
+  - *Why A is incorrect:* Longest-wait routing is a different routing model (Queue-Based routing) that does not consider skill matching. Skills-Based Routing prioritizes skill alignment over wait time.
+  - *Why C is incorrect:* Historical performance metrics (closure rate) are not inputs into Omni-Channel routing decisions; routing is based on current availability and skill match, not past performance.
+  - *Why D is incorrect:* Case Assignment Rules and Omni-Channel are separate features that can be configured to work together. Assignment Rules can set queue ownership; Omni-Channel then routes from the queue to an agent. Assignment Rules do not "override" Omni-Channel routing.
+
+---
+
+### Question 14
+
+(5 points)
+
+A Salesforce administrator wants to allow customers to search the company's published Knowledge Articles, view Case status updates, and submit new Cases — all without speaking to an agent. Which Salesforce capability enables this self-service experience?
+
+- A) Service Console — configured with a customer-facing tab
+- B) Experience Cloud (Customer Portal / Community) — a branded self-service site connected to Salesforce data
+- C) Omni-Channel — configured with a customer-facing routing queue
+- D) Einstein Activity Capture — set to log customer interactions automatically
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Salesforce Experience Cloud (formerly Community Cloud) allows companies to build branded, customer-facing self-service portals. Customers can log in, search Knowledge Articles, view their Cases, update Case status, and submit new Cases — all without agent involvement.
+  - *Why A is incorrect:* The Service Console is an internal agent-facing workspace. It is not designed for or accessible by customers. Exposing internal agent tooling to customers is a security and UX anti-pattern.
+  - *Why C is incorrect:* Omni-Channel is a routing and capacity management tool for internal agents. It does not provide a customer-facing interface.
+  - *Why D is incorrect:* Einstein Activity Capture syncs internal employee email and calendar events to Salesforce records. It is an internal productivity tool with no customer-facing component.
+
+---
+
+### Question 15
+
+(5 points)
+
+A service manager wants a Salesforce report that shows: total Cases by Priority (rows), broken down by Agent Name (columns), with the count of Cases at each Priority-Agent intersection. Which report type is required?
+
+- A) Tabular — because the report lists individual Cases grouped by agent
+- B) Summary — because the report groups Cases by Priority with subtotals per row
+- C) Matrix — because the report groups by two dimensions (Priority as rows, Agent as columns) with counts at each intersection
+- D) Joined — because the report combines Cases from multiple queues into one view
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - *Why C is correct:* A Matrix report provides cross-tabulation with row groupings (Priority), column groupings (Agent Name), and aggregated values (count of Cases) at each intersection. This is the exact use case that differentiates Matrix from Summary reports.
+  - *Why A is incorrect:* Tabular reports are flat lists with no grouping or aggregation. They cannot provide grouped counts by Priority and Agent simultaneously.
+  - *Why B is incorrect:* Summary reports group by rows only (Priority) with subtotals. They cannot simultaneously group by columns (Agent). To show both dimensions, a Matrix report is required.
+  - *Why D is incorrect:* Joined reports combine multiple report blocks with different source objects or criteria. The scenario involves one object (Cases) grouped by two fields — this is a Matrix report, not a Joined report.
+
+---
+
+### Question 16
+
+(5 points)
+
+An Escalation Rule is configured to fire after a Case has been open for 2 hours without update. The rule changes Case Priority to "High" and reassigns it to the Tier 2 queue. A Priority 2 Case was created at 8:00 AM and has had no updates. It is now 10:15 AM. Which statement is accurate?
+
+- A) The Escalation Rule has not fired because Priority 2 Cases are exempt from time-based escalation
+- B) The Escalation Rule fired at 10:00 AM (2 hours after creation), changing the Priority to High and reassigning to Tier 2
+- C) The Escalation Rule fires only when an agent manually triggers it by clicking "Escalate"
+- D) The Escalation Rule will not fire until a manager reviews and approves the escalation
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Escalation Rules are fully automated time-based rules. They fire when the specified time criteria are met — in this case, 2 hours after Case creation with no update. At 10:00 AM, the rule fires automatically, changing Priority to High and reassigning to Tier 2 without any manual intervention.
+  - *Why A is incorrect:* Escalation Rules can be configured for any priority level. Unless the rule criteria specifically exclude Priority 2, it applies. The question does not indicate any Priority exclusion in the rule.
+  - *Why C is incorrect:* Escalation Rules are fully automated — they do not require manual triggering. The agent does not need to click anything for the rule to fire.
+  - *Why D is incorrect:* Escalation Rules do not require manager approval. They execute automatically when the time and criteria conditions are met. An Approval Process would require human authorization; Escalation Rules do not.
+
+---
+
+### Question 17
+
+(5 points)
+
+Which statement accurately describes the relationship between a **Case** and a **Contact** in Salesforce Service Cloud?
+
+- A) A Case can only be associated with one Contact, and that Contact must be the Account's primary billing contact
+- B) A Case is typically associated with a Contact (the person who reported the issue) and an Account (the company), allowing agents to see the full customer relationship context while working the Case
+- C) Cases are standalone records in Salesforce with no relationship to Contacts or Accounts
+- D) A Contact can only be associated with one Case at a time; subsequent Cases must use a different Contact record
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* The standard Salesforce Service Cloud data model links a Case to both a Contact (the individual who reported the issue) and an Account (their company). This relationship gives agents immediate context — the customer's history, account tier, open cases, and entitlements — while working on the Case.
+  - *Why A is incorrect:* The Contact on a Case is whoever submitted or is associated with the issue — it is not restricted to the billing contact. Any Contact can be related to a Case.
+  - *Why C is incorrect:* Cases have standard lookup relationships to both Contacts and Accounts in the Salesforce data model. These relationships are fundamental to Service Cloud functionality, not optional.
+  - *Why D is incorrect:* A Contact can be associated with an unlimited number of Cases simultaneously. There is no limit on the number of Cases related to a single Contact.
+
+---
+
+### Question 18
+
+(5 points)
+
+A Salesforce administrator is configuring an Entitlement Process with two Milestones: "First Response" (2 hours) and "Resolution" (24 hours). The "First Response" Milestone has a Warning Action configured to fire at 90 minutes. What does the Warning Action do?
+
+- A) It automatically closes the Case and creates a new one with a higher priority
+- B) It fires 30 minutes before the Milestone deadline — at 90 minutes elapsed — and executes configured actions (e.g., sends a notification email to the supervisor) to prompt action before the SLA is breached
+- C) It marks the Case as "SLA Breached" and removes it from the active queue
+- D) It cancels the Milestone timer and resets the clock to give the agent additional time
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Milestone Warning Actions fire at a configurable time before the Milestone deadline. At 90 minutes (30 minutes before the 2-hour deadline), the Warning Action can send an email alert to the supervisor, change the Case priority, or trigger other automated steps — giving the team a chance to respond before the SLA is breached.
+  - *Why A is incorrect:* Warning Actions do not close Cases or create new ones. They are notification and alerting actions designed to prompt human attention.
+  - *Why C is incorrect:* Marking a Case as "SLA Breached" and removing it from queue describes a Milestone Violation Action (which fires after the deadline is missed), not a Warning Action (which fires before the deadline).
+  - *Why D is incorrect:* Warning Actions cannot reset Milestone timers. Once started, a Milestone timer runs until either the Milestone is completed (agent action) or the Violation Action fires. Warning Actions are read-only alerts, not timer controls.
+
+---
+
+### Question 19
+
+(5 points)
+
+A company wants to measure its Service Cloud team's performance on first contact resolution. Which metric definition is most accurate for this KPI?
+
+- A) The percentage of Cases closed by the same agent who originally created them
+- B) The percentage of Cases resolved during the first contact with the customer, without requiring the customer to contact support again for the same issue
+- C) The average number of Knowledge Articles attached to a Case before it is closed
+- D) The percentage of Cases that receive a customer satisfaction survey response within 24 hours
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* First Contact Resolution (FCR) measures the percentage of customer service issues fully resolved during the customer's first interaction — without callbacks, follow-up cases, or repeat contacts for the same issue. It is a primary service quality metric that Salesforce Service Cloud supports through Case data analysis.
+  - *Why A is incorrect:* Whether the same agent who created the Case also closes it measures agent continuity or case ownership, not first contact resolution.
+  - *Why C is incorrect:* Average Knowledge Articles per Case measures knowledge utilization, not whether the customer's issue was resolved in a single contact.
+  - *Why D is incorrect:* Survey response rate within 24 hours measures CSAT survey collection efficiency, not whether the customer's issue was resolved without requiring repeat contact.
+
+---
+
+### Question 20
+
+(5 points)
+
+A company deploys Salesforce Service Cloud with Email-to-Case, Web-to-Case, Chat, and Phone (via CTI). An administrator wants to ensure that when an agent is on a phone call via CTI, they cannot simultaneously receive a new Chat session, but can still receive a new Case from the queue. Which Omni-Channel configuration controls this?
+
+- A) Presence Statuses with different channel availability settings for "On Call" versus "Available"
+- B) Escalation Rules that pause Chat routing during active phone calls
+- C) Validation Rules on the Case that block creation during active CTI sessions
+- D) Case Assignment Rules that exclude agents with active phone sessions from Case routing
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - *Why A is correct:* Presence Statuses in Omni-Channel can be configured to make an agent available for specific channels. An "On Call" status can be set to allow Cases (low capacity consumption) but exclude Chat (high capacity/attention requirement). When the CTI integration sets the agent to "On Call," Omni-Channel respects the channel availability defined for that status.
+  - *Why B is incorrect:* Escalation Rules are time-based SLA tools for open Cases. They have no function in managing real-time agent channel availability or pausing Chat routing.
+  - *Why C is incorrect:* Validation Rules operate on record saves for data quality enforcement. They cannot detect active CTI sessions or block Omni-Channel routing decisions.
+  - *Why D is incorrect:* Case Assignment Rules determine queue ownership at Case creation based on field criteria. They do not monitor real-time agent session states or integrate with CTI activity.

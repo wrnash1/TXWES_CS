@@ -355,5 +355,21 @@ The `terraform state` subcommands give you surgical control over state content, 
 
 ---
 
+## 9. Supplemental Resources
+
+**1. Terraform State Documentation**
+<https://developer.hashicorp.com/terraform/language/state>
+The official overview of Terraform state: why it exists, what it contains, the risks of sensitive data in state, and the case for remote backends. Maps directly to the exam's state management domain.
+
+**2. Terraform S3 Backend Reference**
+<https://developer.hashicorp.com/terraform/language/settings/backends/s3>
+Complete reference for the S3 backend including all arguments, the DynamoDB locking table requirements (exact `LockID` attribute), partial configuration via `-backend-config`, and KMS encryption setup.
+
+**3. Terraform `state` Command Reference**
+<https://developer.hashicorp.com/terraform/cli/commands/state>
+Documents all `terraform state` subcommands: `list`, `show`, `mv`, `rm`, `pull`, `push`. Each subcommand page includes flags, examples, and guidance on when to use each command safely.
+
+---
+
 *Texas Wesleyan University — CIS-4337 Infrastructure Automation*
 *Proprietary and Confidential. Not for disclosure outside of authorized course participants.*

@@ -304,4 +304,22 @@ Submit all content as a single PDF or ZIP file to the Canvas assignment portal.
 
 ---
 
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Cross-Platform Privilege Escalation Comparison
+
+Using your authorized lab targets from Module 12 (Linux and Windows hosts), document a side-by-side comparison of the privilege escalation process on both platforms. For each platform, record: the enumeration tool used (LinPEAS/WinPEAS), the top three escalation vectors discovered ranked by exploitability, the specific exploitation command or technique for the highest-priority vector, the resulting privilege level achieved, and the MITRE ATT&CK technique ID for each vector. Format your comparison as a structured table with both platforms as columns. Then write a one-paragraph analysis explaining which platform presented a wider attack surface in your lab environment and what organizational security controls would most effectively reduce the privilege escalation exposure on each platform.
+
+### Challenge 2: Credential Reuse Impact Demonstration
+
+After achieving SYSTEM/root access on your authorized lab target, perform a structured credential reuse analysis. Extract all available local account hashes (SAM database on Windows via Mimikatz, or `/etc/shadow` on Linux). For each hash, document: the account name, hash format (NTLM, SHA-512, MD5-crypt), whether the account is enabled, and an estimated crack difficulty assessment based on the hash algorithm alone (without actually cracking). Using CrackMapExec (Windows) or SSH key testing (Linux), test whether any discovered credentials authenticate to a second authorized lab host. Document the complete lateral movement chain: which credentials moved from Host A to Host B, what access level was achieved on Host B, and what further escalation would be possible from that access. Write your chain as an attack narrative in professional report format.
+
+### Reflection Questions
+
+1. During the lab you used an automated tool (LinPEAS or WinPEAS) to enumerate privilege escalation vectors. Automated tools can produce false positives (flagging items that are not actually exploitable) and false negatives (missing vectors the tool does not check for). Describe one specific finding from your lab output that required manual verification to confirm it was truly exploitable, explain what manual step you performed to confirm it, and explain why relying solely on automated tool output without manual verification produces lower-quality penetration test findings.
+
+2. The Windows lab target had `SeImpersonatePrivilege` enabled for the service account. A colleague argues that this privilege should simply be removed from all service accounts to prevent Potato/PrintSpoofer attacks. Using your understanding of how Windows services function, explain why this remediation approach may break legitimate service functionality, and propose a more balanced defensive approach that addresses the privilege escalation risk without disrupting operations.
+
 *End of Module 12 Lab Activity*

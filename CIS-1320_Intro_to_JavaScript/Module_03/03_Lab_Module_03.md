@@ -410,6 +410,63 @@ Submit the following to the Module 03 Lab assignment in Canvas:
 
 ---
 
+## Part 9 — Challenge Exercise
+
+**This section is optional but strongly recommended.** These steps deepen your understanding of type coercion edge cases that frequently appear on the JSE exam and in technical interviews.
+
+### Challenge Step 9.1 — Build a Full Coercion Truth Table
+
+Create `coercion_table.js`. Use `console.table()` to output a structured table showing how JavaScript coerces each of the six falsy values when operated on by `+`, `-`, `*`, and `/` with the number `1`. Structure it as an array of objects:
+
+```javascript
+const falsyValues = [false, 0, '', null, undefined, NaN];
+const rows = falsyValues.map(val => ({
+  value: String(val === '' ? '""' : val),
+  'val + 1': val + 1,
+  'val - 1': val - 1,
+  'val * 1': val * 1,
+  'val / 1': val / 1
+}));
+console.table(rows);
+```
+
+Observe which falsy values produce `NaN` under arithmetic and which coerce to `0`. Write a comment explaining the pattern.
+
+### Challenge Step 9.2 — Nullish Coalescing vs. Logical OR
+
+The nullish coalescing operator `??` (ES2020) is stricter than `||`. It only falls back to the right-hand side when the left side is `null` or `undefined` — not for other falsy values like `0` or `''`. Create `nullish_demo.js` and compare the two:
+
+```javascript
+const score = 0;
+const displayScore1 = score || 'No score';   // '||' treats 0 as falsy
+const displayScore2 = score ?? 'No score';   // '??' treats 0 as a valid value
+
+console.log('Using ||:', displayScore1);   // 'No score' — bug!
+console.log('Using ??:', displayScore2);   // 0 — correct
+
+const name = null;
+console.log('null || "Guest":', name || 'Guest');   // 'Guest'
+console.log('null ?? "Guest":', name ?? 'Guest');   // 'Guest'
+```
+
+Write a comment describing when you would prefer `??` over `||`.
+
+### Challenge Step 9.3 — Explore `Object.is()` for Edge Cases
+
+`Object.is()` is more precise than `===` in two edge cases: `NaN` and `-0`. Create `object_is_demo.js` and test:
+
+```javascript
+console.log(NaN === NaN);          // false
+console.log(Object.is(NaN, NaN));  // true
+
+console.log(0 === -0);             // true
+console.log(Object.is(0, -0));     // false
+```
+
+Explain in comments why `Object.is()` was introduced and in what real-world scenario distinguishing `0` from `-0` could matter.
+
+---
+
 ## Reflection Questions
 
 Answer in the Canvas text box (two to three sentences each):

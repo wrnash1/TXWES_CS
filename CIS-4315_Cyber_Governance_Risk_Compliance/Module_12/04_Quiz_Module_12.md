@@ -244,6 +244,236 @@ D) Incorrect. The SIEM captured Event ID 1102 (the log clearing event itself) be
 
 ---
 
+## Question 11
+
+(5 points) A forensic investigator is acquiring a disk image from a Windows workstation using FTK Imager. After the acquisition completes, the investigator computes an MD5 hash of the image file on the forensic workstation and records it on the chain of custody form. Three days later, a second investigator re-hashes the image before beginning analysis and finds that the MD5 value matches. What does this comparison confirm, and what does it NOT confirm?
+
+A) It confirms the image is identical to the original drive and that the chain of custody was unbroken.
+B) It confirms the image has not been altered since the first hash was recorded, but it does not confirm that the image is an accurate copy of the original drive at the time of acquisition.
+C) It confirms the chain of custody was properly maintained but does not confirm data integrity.
+D) It confirms that SHA-256 verification is unnecessary if MD5 hashes match.
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+A) Incorrect. The matching hashes confirm that the image file has not changed between the two measurement points. They do not confirm that the original acquisition was accurate — that comparison requires a hash taken of both the original drive and the image at the time of acquisition and recording that pair on the chain of custody form.
+
+B) Correct. Hash matching between two points in time proves that the file has not been altered in between. However, this comparison is between the image at creation time and the image at analysis time — not between the original drive and the image. To confirm forensic accuracy, the investigator must have recorded the hash of the original drive at acquisition time and verified it matched the image hash then.
+
+C) Incorrect. Hash matching is precisely how data integrity is confirmed. Chain of custody documentation is the separate process that confirms handling procedures were followed; both are required and serve different purposes.
+
+D) Incorrect. SHA-256 is the recommended standard for forensic work due to its stronger collision resistance. MD5 is still useful for integrity verification in a forensic context, but this answer incorrectly dismisses SHA-256 as unnecessary. The comparison described does not speak to which algorithm should be used.
+
+---
+
+## Question 12
+
+(5 points) During a forensic investigation of a Linux server, an investigator uses the `dd` command to create a bit-for-bit image of the server's hard drive. After imaging, the investigator runs `md5sum` on both the original device and the image file and receives matching hash values. What does this simultaneous comparison confirm?
+
+A) The server's operating system has not been modified by the attacker.
+B) The forensic image is a complete and accurate bit-for-bit copy of the original device at the time of acquisition.
+C) The evidence has been preserved in accordance with legal hold requirements.
+D) The chain of custody documentation is complete and admissible in court.
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+A) Incorrect. Hashing an entire disk image confirms data integrity of the copy — it does not analyze whether any specific files or operating system components were modified by an attacker. That analysis requires examination tools applied to the image content.
+
+B) Correct. When the MD5 hash of the source device matches the MD5 hash of the image file immediately after acquisition, this confirms that the `dd` imaging process produced a bit-for-bit accurate copy with no data loss or alteration during the transfer. This is the standard forensic acquisition verification step.
+
+C) Incorrect. Hash verification confirms data integrity. Legal hold compliance is a separate governance process involving retention of evidence in response to legal counsel's directive. Hash matching does not demonstrate legal hold compliance.
+
+D) Incorrect. Chain of custody documentation is maintained through written transfer records and procedural compliance — not through hash comparison. Hash matching provides technical integrity verification; the chain of custody form provides legal admissibility documentation. Both are required, and neither alone is sufficient.
+
+---
+
+## Question 13
+
+(5 points) An organization's CISO is asked by the board whether the organization is "forensically ready." Which combination of capabilities most accurately demonstrates forensic readiness?
+
+A) Possession of licensed forensic software such as FTK and Volatility, and a trained forensic investigator on staff.
+B) An ability to activate the incident response plan within one hour of detection, supported by documented escalation procedures.
+C) Comprehensive logging with defined retention periods, documented evidence handling procedures, trained personnel, a legal hold process, and secure evidence storage — all established before any incident occurs.
+D) Membership in an industry information sharing and analysis center (ISAC) providing access to threat intelligence and forensic support on demand.
+
+**Correct Answer: C**
+
+**Distractor Analysis:**
+
+A) Incorrect. Tool possession and a trained investigator are components of forensic readiness, but they alone do not constitute full readiness. Without logging infrastructure, retention policies, legal hold processes, and documented procedures, the tools cannot be used effectively when needed.
+
+B) Incorrect. Rapid incident response activation describes incident response readiness, not forensic readiness specifically. Forensic readiness focuses on the ability to collect and preserve legally defensible evidence — which requires infrastructure, policy, and process established proactively.
+
+C) Correct. ISACA's definition of forensic readiness encompasses the organizational state of being prepared to conduct digital investigations before incidents occur. The complete combination — logging, retention, procedures, trained people, legal hold process, and secure storage — is the recognized comprehensive definition.
+
+D) Incorrect. ISAC membership provides threat intelligence and peer support, which are valuable security capabilities, but ISAC membership does not constitute forensic readiness. Forensic readiness requires internal organizational capabilities, not external membership.
+
+---
+
+## Question 14
+
+(5 points) A security analyst is reviewing an after-action report from a phishing-triggered malware incident. The report contains an executive summary, a detailed timeline, and a root cause analysis. The analyst notes that the root cause section identifies three contributing factors but the report does not include any recommendations. From a CISM governance perspective, what is the primary problem with this finding?
+
+A) Three contributing factors are insufficient; the root cause section must identify at least five factors to be acceptable.
+B) Without recommendations, the documented root causes cannot produce organizational improvement or risk register updates, defeating the purpose of the after-action process.
+C) Contributing factors should not be documented without evidence — the root cause section needs citations to be acceptable.
+D) The executive summary section should contain the recommendations; a separate recommendations section is redundant.
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+A) Incorrect. There is no prescribed minimum number of contributing factors in an after-action report. The quality of the analysis matters more than the quantity. This answer focuses on a nonexistent requirement and misses the actual governance deficiency.
+
+B) Correct. The governance purpose of an after-action report is to convert incident experience into organizational improvement. If root causes are identified but no recommendations are generated, the organization has documented what is broken without establishing what will be done to fix it. This is a fundamental governance failure — findings without recommendations create no accountability and produce no change.
+
+C) Incorrect. While evidence-based analysis is best practice, the absence of citations is a quality issue, not the primary governance deficiency. The absence of any recommendations is a more fundamental failure than citation practices.
+
+D) Incorrect. Recommendations typically appear in their own section and are often referenced in the executive summary, but the two sections serve different audiences and levels of detail. The primary problem in this scenario is the complete absence of recommendations, not their placement.
+
+---
+
+## Question 15
+
+(5 points) An organization suspects that an employee has been exfiltrating intellectual property via personal email. Legal counsel authorizes a forensic investigation of the employee's company-issued laptop. The forensic investigator finds a deleted folder containing hundreds of proprietary design documents in the unallocated space of the drive. What forensic technique was used to locate these files, and what does this finding demonstrate about deleted data on Windows systems?
+
+A) Log correlation; deleted files are permanently removed from the drive but their names remain visible in event logs.
+B) File carving applied to unallocated disk space; deletion on Windows typically removes file system pointers but does not immediately overwrite the data, leaving recoverable file content in unallocated space.
+C) Memory forensics; the deleted files were recovered from the RAM of the powered-on laptop.
+D) Network forensics; the files were intercepted before being deleted from the email server.
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+A) Incorrect. Event logs record file system activity metadata but do not contain recoverable file content. Log correlation is a detection and timeline reconstruction technique, not a method for recovering deleted file contents from disk.
+
+B) Correct. When a file is deleted in Windows, the operating system marks the clusters as available for reuse but does not immediately zero out the data. File carving tools scan unallocated disk space for file headers and footers matching known file formats, recovering file content even without intact file system metadata. This is a fundamental concept in disk forensics and directly relevant to insider threat investigations.
+
+C) Incorrect. Memory forensics analyzes RAM contents, which would contain currently running processes and recently accessed data — not historically deleted files. Recovering deleted files from disk unallocated space requires disk forensic techniques, not memory analysis.
+
+D) Incorrect. Network forensics involves capturing and analyzing network traffic. While network forensics might reveal exfiltration attempts, the scenario describes recovering deleted files from the physical hard drive — a disk forensics operation, not a network investigation.
+
+---
+
+## Question 16
+
+(5 points) During a post-incident review, the team uses the fault tree analysis method to analyze a ransomware outbreak that encrypted 200 servers. The analysis reveals that the outbreak required three simultaneous failures: a user clicking a malicious link, the email gateway failing to quarantine the attachment, and EDR software not detecting the payload. Which statement best describes the value of fault tree analysis compared to the Five Whys technique for this scenario?
+
+A) Fault tree analysis is less appropriate because it requires specialized software that most organizations do not own.
+B) Fault tree analysis is more appropriate because it models how multiple simultaneous contributing failures combine using Boolean logic, revealing that all three failures were required for the outbreak — something the Five Whys linear approach cannot capture.
+C) The Five Whys is more appropriate because ransomware incidents always have a single root cause.
+D) Fault tree analysis applies only to hardware failures; the Five Whys is always preferred for cybersecurity incidents.
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+A) Incorrect. Fault tree analysis can be performed using diagramming tools, whiteboards, or even paper — specialized software is useful but not required. The appropriateness of the method depends on the nature of the incident, not on tool availability.
+
+B) Correct. Fault tree analysis uses AND gates and OR gates to model how combinations of failures must coexist to produce an outcome. In this scenario, the ransomware required all three failures simultaneously — an AND gate condition. The Five Whys is a linear technique that follows a single causal chain; it may miss contributing factor combinations. Fault tree analysis is specifically designed for multi-factor incident scenarios.
+
+C) Incorrect. Ransomware incidents rarely have a single root cause — they typically involve a combination of technical, process, and human factors. Assuming a single cause leads to incomplete remediation and future recurrence.
+
+D) Incorrect. Fault tree analysis is applicable to any complex system failure, including cybersecurity incidents. It originated in safety engineering but has been widely adopted in information security risk and incident analysis. There is no domain restriction to hardware failures.
+
+---
+
+## Question 17
+
+(5 points) An insider threat investigator must acquire email evidence from a Microsoft Exchange server without alerting the suspect employee. The investigator requests that IT perform a targeted mailbox export and deliver the PST file via USB to the investigation team. Which forensic principle is most at risk if the IT administrator accesses the mailbox content during the export?
+
+A) Order of volatility — accessing the mailbox modifies its volatility level.
+B) Confidentiality of investigation — unauthorized review of mailbox content during export may constitute a separate legal exposure.
+C) Chain of custody — any access to evidence by an unauthorized party without documentation breaks the chain of custody.
+D) Hash verification — the PST file hash will be invalidated if the administrator reads the email content.
+
+**Correct Answer: C**
+
+**Distractor Analysis:**
+
+A) Incorrect. Order of volatility refers to the sequence in which evidence should be collected based on how quickly it may be lost. Email stored on an Exchange server is persistent evidence; the administrator accessing the mailbox does not change its volatility classification.
+
+B) Incorrect. While confidentiality of the investigation is an important operational concern, the primary forensic principle at risk from an undocumented access is chain of custody integrity. Investigation confidentiality is a process concern; chain of custody is the legal admissibility concern.
+
+C) Correct. Chain of custody requires that every access to evidence be documented, authorized, and recorded. If the IT administrator accesses mailbox content beyond the scope of their authorized role — and that access is not documented — it creates a gap in the chain of custody that opposing counsel can use to challenge admissibility. All access to evidence must be recorded regardless of who performs it.
+
+D) Incorrect. The hash of a PST export file would be computed after the export is complete. Reading an email client does not alter the underlying PST file bytes. Hash verification confirms that the file itself has not changed — it is not affected by whether someone views the content through an email client interface.
+
+---
+
+## Question 18
+
+(5 points) An organization's legal counsel issues a litigation hold covering all email, network logs, and files related to a specific project. Six months later, the records management system automatically deleted 90 days' worth of network logs covered by the hold because the records management team was not notified of the hold's scope. What is the correct characterization of this event?
+
+A) This is a minor administrative error with no legal consequence because automated deletions are system-generated, not intentional.
+B) This constitutes potential spoliation of evidence — the destruction of information covered by a legal hold, regardless of intent, may result in adverse court sanctions.
+C) This is acceptable because network logs have a 90-day retention period and retention schedules always override legal holds.
+D) This event only creates legal risk if the deleted logs contained evidence material to the litigation — no risk exists if the logs were irrelevant.
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+A) Incorrect. Courts have held that spoliation can occur through negligence as well as intentional destruction. The fact that an automated process caused the deletion does not eliminate the organization's culpability if it failed to properly communicate and enforce the legal hold across all relevant systems and custodians.
+
+B) Correct. A legal hold suspends all normal retention and deletion schedules for covered data. Failing to communicate the hold to all relevant parties — including records management — is an organizational failure that can result in spoliation findings. Courts may impose adverse inference instructions, evidence exclusion, or financial sanctions even when destruction was unintentional, if the organization failed to take reasonable steps to preserve evidence.
+
+C) Incorrect. Legal holds explicitly override normal retention schedules. This is the entire purpose of a legal hold — to preserve data that would otherwise be routinely deleted. Retention schedules do not supersede a valid litigation hold.
+
+D) Incorrect. Materiality is typically assessed after the fact, but organizations cannot unilaterally decide that covered evidence is irrelevant as a basis for not preserving it. The opposing party and the court determine materiality. Allowing covered data to be destroyed based on the holder's own materiality judgment creates serious legal risk regardless of the eventual determination.
+
+---
+
+## Question 19
+
+(5 points) A security operations team is preparing for a forensic investigation and must decide between using Autopsy and Volatility as the primary analysis tool. The investigation involves a suspected compromise where the attacker may have injected malicious code into a legitimate running process. Which tool selection is correct, and why?
+
+A) Autopsy, because it is the gold standard for all forensic investigations and can analyze any evidence type.
+B) Volatility, because detecting injected code in a running process requires memory forensics — analysis of a RAM image in which the process's memory space can be inspected for indicators of code injection.
+C) Wireshark, because injected code communicates over the network, and packet capture will reveal the malicious activity.
+D) EnCase, because it is the only commercial tool approved for use in legal proceedings.
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+A) Incorrect. Autopsy is a disk forensics platform built on The Sleuth Kit. While it is excellent for file system analysis, artifact extraction, and timeline reconstruction, it cannot analyze running process memory or detect code injection in RAM. It is not a universal tool for all forensic evidence types.
+
+B) Correct. Code injection — techniques such as process hollowing, DLL injection, and reflective DLL loading — leaves evidence primarily in memory. The injected code typically resides in the process's memory space without being written to disk. Volatility's `malfind`, `dlllist`, and `pslist` plugins can identify anomalous memory regions, unsigned executable segments in process memory, and discrepancies between on-disk and in-memory process images that indicate injection.
+
+C) Incorrect. While injected code may generate network traffic, network forensics via Wireshark captures packets at the network layer and cannot inspect the internal memory structure of a process to identify code injection. Network evidence is complementary to memory forensics, not a substitute.
+
+D) Incorrect. EnCase is a reputable commercial disk forensics platform, but it is not the only tool approved for legal proceedings. Properly documented open-source tools including Volatility, Autopsy, and dd are routinely accepted in legal and regulatory proceedings when evidence handling procedures are followed correctly.
+
+---
+
+## Question 20
+
+(5 points) An organization's security incident response policy requires that all post-incident after-action reports for severity-1 incidents be completed and distributed to the board within ten business days. Following a major ransomware incident, the security team delivers the after-action report on day fifteen, citing the complexity of the root cause analysis. From a CISM governance perspective, what is the most significant concern?
+
+A) The root cause analysis was too thorough; it should be abbreviated to meet the timeline requirement.
+B) The after-action report delivery exceeded the policy-mandated timeline, creating a governance gap and potentially delaying board-level risk response decisions.
+C) The board does not need to review after-action reports; the CISO is the appropriate final recipient.
+D) The ten-business-day policy is unrealistic for ransomware incidents and should be revised to thirty days.
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+A) Incorrect. Abbreviating root cause analysis to meet a timeline is counterproductive — a superficial root cause analysis produces poor findings and ineffective remediation. The solution is policy compliance or a documented policy exception, not reduced analytical quality.
+
+B) Correct. The CISM governance principle is that incident response policies — including reporting timelines — exist to ensure timely governance oversight and accountability. A fifteen-day delivery for a ten-day policy requirement means the board received critical risk information five days late, potentially delaying risk-informed decisions about additional investment, regulatory notification timing, or stakeholder communication. The delay is a policy compliance failure and should be documented and addressed.
+
+C) Incorrect. Board oversight of significant incidents is a core governance responsibility. Major incidents — particularly those with financial, regulatory, or reputational impact — require board-level visibility because they affect organizational risk posture at a strategic level. The CISO cannot be the final recipient for severity-1 incidents in a well-governed organization.
+
+D) Incorrect. While policy revision may ultimately be appropriate if the timeline is consistently unachievable, the correct immediate response is to document the deviation, understand why it occurred, and address the root cause. Retroactively revising policies to match actual performance without analysis converts compliance failures into the new standard and undermines governance accountability.
+
+---
+
 ## Quiz Answer Key
 
 | Question | Correct Answer | Topic |
@@ -258,3 +488,13 @@ D) Incorrect. The SIEM captured Event ID 1102 (the log clearing event itself) be
 | 8 | C | Fishbone diagram categories |
 | 9 | B | Forensic readiness |
 | 10 | B | Anti-forensic activity recognition |
+| 11 | B | Hash comparison scope and limitations |
+| 12 | B | Forensic acquisition verification |
+| 13 | C | Forensic readiness components |
+| 14 | B | After-action report recommendations |
+| 15 | B | File carving and deleted data recovery |
+| 16 | B | Fault tree analysis vs Five Whys |
+| 17 | C | Chain of custody in insider investigations |
+| 18 | B | Spoliation and litigation hold compliance |
+| 19 | B | Memory forensics tool selection |
+| 20 | B | After-action report governance timeline |

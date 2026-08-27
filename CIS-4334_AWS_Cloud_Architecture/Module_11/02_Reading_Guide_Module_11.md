@@ -414,4 +414,20 @@ aws guardduty create-detector \
 
 All AWS certification study materials and exam registration: aws.amazon.com/certification
 
+---
+
+## 9. Supplemental Resources
+
+**1. AWS Documentation — IAM User Guide: Policy Evaluation Logic**
+https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_evaluation-logic.html
+Authoritative reference for the IAM policy evaluation order — explicit Deny, SCP, permission boundary, identity-based, resource-based — with decision flowcharts and worked examples directly aligned to the policy evaluation questions in Module 11 and on the SAA-C03 exam.
+
+**2. AWS Skill Builder — Security Learning Plan**
+https://skillbuilder.aws/learn/learning_plan/view/91/security-learning-plan
+Curated AWS learning path covering IAM, KMS, GuardDuty, Security Hub, WAF, Shield, and CloudTrail — supporting the full Module 11 security architecture curriculum and SAA-C03 Security domain exam objectives.
+
+**3. AWS Documentation — AWS KMS Developer Guide: How Key Rotation Works**
+https://docs.aws.amazon.com/kms/latest/developerguide/rotate-keys.html
+Detailed explanation of automatic and on-demand KMS key rotation, how previous key material is retained for decryption, and the difference between CMK rotation and key deletion — the definitive reference for KMS questions in this module and on the exam.
+
 *Proprietary and Confidential. Not for disclosure outside of Texas Wesleyan University.*

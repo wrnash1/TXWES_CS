@@ -259,3 +259,34 @@ Submit written answers to all three questions. Label each answer with the questi
 ## Submission Instructions
 
 Combine all four parts into a single document. Label each part clearly. Include your name, date, course number (CIS-4350), and module number (10) at the top. Submit via the Canvas LMS assignment portal before the due date shown in Canvas.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Run Prowler Against a Live AWS Account and Triage Findings
+
+Use Prowler to perform a CIS AWS Foundations Benchmark Level 1 assessment and apply the finding triage process from this module.
+
+1. Authenticate to a free-tier AWS account and run Prowler with the CIS Level 1 profile: `prowler aws --compliance cis_level1_aws --output-formats html,json --output-filename prowler-cis-l1`
+2. Open the HTML report and identify all CRITICAL and HIGH findings. Record a count of findings by severity tier.
+3. Select three HIGH findings. For each, document: the check ID, the finding description, whether you would remediate or accept the risk, and — if accepting — what compensating control you would apply.
+4. For one of the three findings, write a formal exception register entry containing: finding ID, business justification, named risk owner (your name for this exercise), compensating control, and expiry date (set to 90 days from today).
+
+### Challenge 2: Implement an AWS Config Rule with Auto-Remediation
+
+Deploy a Config Rule that detects and automatically remediates S3 buckets without server-side encryption.
+
+1. In the AWS console (or via Terraform), deploy the managed Config Rule `s3-bucket-server-side-encryption-enabled` to your AWS account.
+2. Create an S3 bucket without encryption to trigger a NON_COMPLIANT finding.
+3. Configure auto-remediation using the `AWS-EnableS3BucketEncryption` SSM Automation document. Set `MaximumAutomaticAttempts: 3` and `RetryAttemptSeconds: 60`.
+4. Verify the bucket becomes compliant after auto-remediation runs. Take a screenshot showing the Config Rule evaluation result changing from NON_COMPLIANT to COMPLIANT.
+
+### Reflection Questions
+
+1. You ran Prowler and found 847 findings across all severity levels. Your security manager asks you to commit to remediating all of them within 30 days. Explain why this is not a realistic goal and describe the severity-based SLA framework you would propose instead, including specific remediation timeframes for each severity tier and the process for exceptions.
+2. You implemented auto-remediation for S3 encryption, and it accidentally encrypted a bucket with the wrong KMS key, breaking an application. Describe the three steps you should take before enabling auto-remediation in a production environment to prevent this outcome, and explain which CSPM control type (preventive, detective, reactive) each step represents.
+
+---
+
+Lab 10 | CIS-4350 | Texas Wesleyan University | Professor Nash

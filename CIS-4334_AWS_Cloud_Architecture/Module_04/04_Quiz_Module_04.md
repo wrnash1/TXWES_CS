@@ -223,3 +223,223 @@ Correct Answer: C
 - B is incorrect: S3 Standard-IA charges a retrieval fee per GB. For objects accessed thousands of times per day, the retrieval costs would far exceed the storage savings, making Standard-IA more expensive than Standard for high-access objects.
 - C is correct: S3 Intelligent-Tiering is designed precisely for unpredictable access patterns. It automatically moves objects between Frequent Access, Infrequent Access, and Archive tiers based on actual access history with no retrieval fees between tiers. Frequently accessed objects stay in the Frequent Access tier at Standard pricing; rarely accessed objects move to cheaper tiers automatically.
 - D is incorrect: Glacier Flexible Retrieval is appropriate only when all objects have very infrequent access and retrieval delays of hours are acceptable. It is completely wrong for objects accessed thousands of times per day.
+
+---
+
+## Question 11
+
+A developer wants to allow an external partner to upload a single file to a specific S3 object path without providing the partner with AWS credentials or changing the bucket policy. The upload link should expire after 2 hours. Which S3 feature satisfies this requirement?
+
+- A) S3 Transfer Acceleration enabled on the bucket with a custom upload URL provided to the partner
+- B) A presigned URL for s3:PutObject generated using the developer's IAM credentials with a 7200-second expiry
+- C) A public S3 bucket with the partner's IP address allowed in the bucket policy
+- D) An S3 Access Point with a policy allowing PutObject for the partner's AWS account ID
+
+### Answer 11
+
+Correct Answer: B
+
+### Explanation 11
+
+- A is incorrect: S3 Transfer Acceleration speeds up uploads over long distances by routing through CloudFront edge locations. It does not provide time-limited upload access without credentials. It is also not a mechanism for partner access control.
+- B is correct: A presigned URL embeds temporary, time-limited authorization for a specific action on a specific S3 object. Generating a presigned URL for `s3:PutObject` on the exact object path and setting the expiry to 7200 seconds (2 hours) allows the partner to upload the file without AWS credentials. No bucket policy change is required.
+- C is incorrect: Making the bucket public introduces significant security risk by exposing all objects to the internet. IP-based bucket policy restrictions require knowing the partner's exact IP range, which may change, and expose the bucket to the public internet.
+- D is incorrect: S3 Access Points are useful for simplifying access management for shared datasets, but they require the partner to have their own AWS account and use AWS IAM credentials to access the access point. This is not a credential-free access solution.
+
+---
+
+## Question 12
+
+A company needs to ensure that S3 objects stored in a compliance archive cannot be deleted or overwritten for 10 years, even by the AWS account root user. Which S3 configuration achieves this?
+
+- A) Enable S3 Versioning and configure MFA Delete requiring root account MFA for permanent deletion
+- B) Enable S3 Object Lock in Compliance mode with a retention period of 10 years on the bucket
+- C) Enable S3 Object Lock in Governance mode with a retention period of 10 years and remove all s3:BypassGovernanceRetention IAM permissions
+- D) Apply a bucket policy with a Deny for s3:DeleteObject and s3:PutObject for all principals including root
+
+### Answer 12
+
+Correct Answer: B
+
+### Explanation 12
+
+- A is incorrect: MFA Delete adds an authentication requirement for permanent deletions but can be disabled by a user with root account credentials. It does not provide true WORM immutability against the root user.
+- B is correct: S3 Object Lock in Compliance mode creates a WORM (Write Once, Read Many) retention lock that no user — including the account root user — can remove or shorten during the retention period. This is the only mechanism that provides true immutability against all principals for the full retention duration. It is designed for regulatory compliance requirements like SEC Rule 17a-4(f) and FINRA.
+- C is incorrect: Governance mode can be bypassed by users with the `s3:BypassGovernanceRetention` IAM permission. Even if this permission is removed from all current IAM identities, an administrator could create a new role with this permission. Governance mode does not provide the same level of protection as Compliance mode.
+- D is incorrect: Bucket policies can be modified or deleted by any IAM principal with `s3:PutBucketPolicy` permission, including the account root user. Bucket policies do not provide immutable protection.
+
+---
+
+## Question 13
+
+An application generates 1,000 S3 PUT requests per second to a single S3 bucket prefix. A developer notices increased latency and some request failures. What is the root cause, and what is the correct solution?
+
+- A) S3 cannot handle more than 100 requests per second; shard the workload across multiple buckets
+- B) The application is hitting S3's per-prefix request rate limit of 3,500 PUT/COPY/POST/DELETE requests per second; distribute objects across multiple key prefixes using hash prefixes
+- C) The bucket policy is blocking requests above a rate threshold; increase the throttle limit in the bucket policy
+- D) The application should enable S3 Transfer Acceleration to increase the PUT request throughput limit
+
+### Answer 13
+
+Correct Answer: B
+
+### Explanation 13
+
+- A is incorrect: S3 can handle thousands of requests per second per prefix and scales automatically beyond those rates with key prefix diversification. The limit is per prefix, not per bucket, and the solution is prefix diversification, not multiple buckets.
+- B is correct: S3 supports up to 3,500 PUT/COPY/POST/DELETE and 5,500 GET/HEAD requests per second per prefix. At 1,000 PUT requests per second, the application is approaching but may not have exceeded the limit. If the key names are sequential or use a common prefix pattern, S3's internal partitioning may not spread the load. The solution is to use random hash prefixes (first 4-8 characters of a hash of the object name) to distribute objects across multiple S3 internal partitions, increasing throughput.
+- C is incorrect: S3 bucket policies do not have rate throttling settings. Rate limits are an S3 service-level control, not a policy configuration.
+- D is incorrect: S3 Transfer Acceleration speeds up data transfer from client to S3 by routing through CloudFront edge locations. It does not increase the per-prefix request rate limit.
+
+---
+
+## Question 14
+
+A company uses S3 Cross-Region Replication to copy objects from a source bucket in us-east-1 to a destination bucket in ap-southeast-1 for disaster recovery. The security team requires that replicated objects in the destination bucket use a customer-managed KMS key that is different from the key used in the source Region. Which configuration is required?
+
+- A) Enable S3 Transfer Acceleration on the destination bucket and specify the destination KMS key
+- B) Configure the CRR replication rule to re-encrypt objects with the destination Region's KMS key; grant the S3 replication role kms:GenerateDataKey and kms:Decrypt permissions on both keys
+- C) Enable S3 Intelligent-Tiering on the destination bucket, which automatically re-encrypts objects during tier transitions
+- D) Use AWS DataSync instead of S3 CRR to support cross-Region KMS key re-encryption
+
+### Answer 14
+
+Correct Answer: B
+
+### Explanation 14
+
+- A is incorrect: S3 Transfer Acceleration is a data transfer performance feature, not an encryption configuration. It has no interaction with CRR or KMS key selection.
+- B is correct: S3 CRR supports encryption with a different KMS key in the destination Region. The replication configuration specifies the destination KMS key ARN for re-encryption. The IAM role used for replication must have `kms:Decrypt` permission on the source key (to decrypt objects before replication) and `kms:GenerateDataKey` permission on the destination key (to re-encrypt objects in the destination Region).
+- C is incorrect: S3 Intelligent-Tiering automatically moves objects between storage cost tiers. It does not re-encrypt objects with a different KMS key. Encryption is a separate configuration from storage tiering.
+- D is incorrect: AWS DataSync is a data transfer service for migrating data to AWS or between storage services. It does not have a feature advantage over CRR for cross-Region KMS key re-encryption. CRR natively supports this use case.
+
+---
+
+## Question 15
+
+A static website is hosted on Amazon S3 with static website hosting enabled. The website owner wants to serve the site over HTTPS with a custom domain name (e.g., www.example.com). Which combination achieves this?
+
+- A) Enable S3 Transfer Acceleration and configure the acceleration endpoint with the custom domain in Route 53
+- B) Create a CloudFront distribution with the S3 bucket as the origin, configure an SSL/TLS certificate in ACM, and create a Route 53 alias record pointing to the CloudFront distribution
+- C) Enable S3 static website hosting with HTTPS on the S3 bucket website endpoint and create a Route 53 CNAME to the website endpoint
+- D) Attach an Application Load Balancer to the S3 bucket and configure ACM SSL on the ALB listener
+
+### Answer 15
+
+Correct Answer: B
+
+### Explanation 15
+
+- A is incorrect: S3 Transfer Acceleration uses an acceleration endpoint that is not the same as a custom domain. Transfer Acceleration is for speeding up uploads from distant locations, not for HTTPS hosting with custom domains. S3 website endpoints do not support HTTPS.
+- B is correct: S3 static website endpoints support HTTP only. To serve over HTTPS with a custom domain, place a CloudFront distribution in front of the S3 bucket. ACM provides a free SSL/TLS certificate for the custom domain attached to the CloudFront distribution. Route 53 alias record points the custom domain to the CloudFront distribution's domain name.
+- C is incorrect: S3 static website hosting endpoints support HTTP only, not HTTPS. There is no built-in option to enable HTTPS directly on the S3 website endpoint. A CNAME to the HTTP endpoint would still serve HTTP, not HTTPS.
+- D is incorrect: Application Load Balancers cannot be directly attached to S3 buckets. ALBs route traffic to EC2 instances, ECS tasks, Lambda functions, or IP addresses — not S3 objects.
+
+---
+
+## Question 16
+
+A company stores audit log files in S3 that accumulate at 50 GB per day. After 30 days, logs are rarely accessed. After 1 year, they must be retained for 6 more years for legal compliance but will never be accessed. Which lifecycle policy minimizes cost while meeting the access and retention requirements?
+
+- A) S3 Standard for 30 days → transition to S3 Glacier Deep Archive after 30 days → expire after 7 years
+- B) S3 Standard for 30 days → transition to S3 Standard-IA after 30 days → transition to S3 Glacier Deep Archive after 365 days → expire after 2,555 days (7 years)
+- C) S3 Standard for 30 days → transition to S3 Glacier Instant Retrieval after 30 days → expire after 7 years
+- D) S3 Intelligent-Tiering for the full retention period with archiving activated
+
+### Answer 16
+
+Correct Answer: B
+
+### Explanation 16
+
+- A is incorrect: Transitioning directly to Glacier Deep Archive after only 30 days would place logs that are "rarely but still sometimes accessed" in a storage class with 12-48 hour retrieval times. The question states logs are rarely accessed after 30 days — not never accessed — so Standard-IA is more appropriate for the 30-365 day window before moving to Deep Archive.
+- B is correct: Standard-IA is appropriate for infrequently accessed data that still needs occasional access (retrieval fees apply per access, acceptable for rare access). After 1 year, logs are never accessed and can move to Glacier Deep Archive (the lowest-cost S3 storage at $0.00099/GB/month) for the remaining 6 years. Expiration after 7 years satisfies the legal retention deadline.
+- C is incorrect: Glacier Instant Retrieval is appropriate for data accessed a few times per year with instant retrieval needed. It is more expensive than Standard-IA for data accessed more than that, and more expensive than Glacier Deep Archive for long-term never-accessed compliance storage.
+- D is incorrect: S3 Intelligent-Tiering is designed for unpredictable access patterns. For data with a known pattern (frequent for 30 days, rare for 11 months, never for 6 years), a lifecycle policy with explicit transitions is more cost-effective and predictable than Intelligent-Tiering's per-object monitoring fee.
+
+---
+
+## Question 17
+
+A development team accidentally deleted a critical S3 object. The S3 bucket has versioning enabled. Which statement correctly describes the outcome and the recovery process?
+
+- A) The object is permanently deleted because deletion operations bypass versioning
+- B) A delete marker is placed on the current version; the previous version is still present and can be restored by deleting the delete marker
+- C) The object is moved to the S3 Recycle Bin automatically and can be recovered within 30 days
+- D) The deleted object can be recovered from the most recent S3 lifecycle policy backup
+
+### Answer 17
+
+Correct Answer: B
+
+### Explanation 17
+
+- A is incorrect: When S3 versioning is enabled, a simple DELETE request (without specifying a version ID) does not permanently delete any version. It only creates a delete marker, which hides all previous versions.
+- B is correct: With versioning enabled, a DELETE request without a version ID creates a delete marker as the latest version. The previous object version is still stored in S3. To restore the object, a developer deletes the delete marker (by specifying the delete marker's version ID in a DELETE request), which makes the previous version the current version again.
+- C is incorrect: S3 does not have a built-in "Recycle Bin" for versioned objects. AWS Backup and S3 Glacier are the archive and backup mechanisms. S3 Versioning itself is the accidental deletion protection mechanism.
+- D is incorrect: S3 lifecycle policies manage object transitions between storage classes and object expiration. They do not create backups or provide a recovery mechanism. Versioning is the feature that enables recovery from accidental deletion.
+
+---
+
+## Question 18
+
+A solutions architect needs to configure S3 event notifications to trigger a Lambda function whenever a new object is uploaded to a specific prefix in a bucket. Which combination is correct?
+
+- A) Configure an S3 bucket policy with an SNS notification target and subscribe Lambda to the SNS topic
+- B) Configure an S3 event notification on the bucket with event type s3:ObjectCreated:* filtered by the prefix, with Lambda as the destination
+- C) Create an EventBridge rule with a schedule trigger and a Lambda target that polls S3 for new objects
+- D) Enable S3 Transfer Acceleration and configure a callback URL to invoke Lambda on each upload
+
+### Answer 18
+
+Correct Answer: B
+
+### Explanation 18
+
+- A is incorrect: While SNS can be an S3 event notification destination (and Lambda can subscribe to SNS), the question asks for a direct S3-to-Lambda integration. S3 supports Lambda as a direct event notification destination without the need for an SNS intermediary. The bucket policy is not the mechanism for configuring event notifications.
+- B is correct: S3 event notifications can be configured directly to invoke Lambda functions. The event type `s3:ObjectCreated:*` triggers on all create events (Put, Post, Copy, CompleteMultipartUpload). A prefix filter limits the notification to objects uploaded to the specific path. Lambda must have a resource-based policy allowing S3 to invoke it.
+- C is incorrect: EventBridge can receive S3 events via EventBridge notifications (a separate configuration from S3 event notifications), but a scheduled poll pattern is inefficient and adds latency. For real-time S3 event processing, direct S3 event notifications to Lambda are the standard approach.
+- D is incorrect: S3 Transfer Acceleration is a data transfer performance feature. It has no callback URL or Lambda invocation mechanism.
+
+---
+
+## Question 19
+
+A company's S3 bucket contains objects encrypted with SSE-KMS using a customer-managed key. The security team wants to ensure that all API calls that use the KMS key are logged for compliance purposes. Which AWS service automatically captures these key usage events?
+
+- A) Amazon Macie
+- B) AWS CloudTrail
+- C) S3 Server Access Logging
+- D) AWS Config
+
+### Answer 19
+
+Correct Answer: B
+
+### Explanation 19
+
+- A is incorrect: Amazon Macie analyzes S3 object content using machine learning to discover sensitive data such as PII and financial information. It does not log KMS key usage events.
+- B is correct: AWS CloudTrail automatically records API calls to AWS KMS, including every Decrypt, GenerateDataKey, and Encrypt operation. When S3 uses SSE-KMS to encrypt or decrypt an object, KMS records the event in CloudTrail with details including the principal that initiated the operation, the key ARN, the timestamp, and the request context. This audit trail satisfies compliance logging requirements.
+- C is incorrect: S3 Server Access Logging records requests made to the S3 bucket (such as GET, PUT, DELETE operations on S3 objects). It does not record KMS key usage events because KMS is a separate service with its own API call logging.
+- D is incorrect: AWS Config records the configuration of AWS resources over time and evaluates them against compliance rules. It does not log real-time API call activity or KMS key usage events.
+
+---
+
+## Question 20
+
+An architect is designing an S3-based data lake. Raw data is uploaded in Parquet format to a prefix `s3://datalake/raw/`. After processing by an ETL pipeline, curated data is written to `s3://datalake/curated/`. The architect wants to ensure that only the ETL pipeline role can write to the `raw/` prefix, and only data scientists can read from the `curated/` prefix. Which S3 feature simplifies managing these distinct access patterns for different prefixes within the same bucket?
+
+- A) S3 Versioning with separate access policies applied to each version ID
+- B) S3 Access Points — create one access point for the ETL role with write permissions on the raw prefix, and one for data scientists with read permissions on the curated prefix
+- C) S3 Lifecycle policies that automatically enforce access control transitions when objects age
+- D) S3 Requester Pays, which shifts authentication responsibility to the requesting party
+
+### Answer 20
+
+Correct Answer: B
+
+### Explanation 20
+
+- A is incorrect: S3 Versioning tracks object history by maintaining multiple versions of the same key. It does not provide access control differentiation by prefix and version ID is not an access control mechanism.
+- B is correct: S3 Access Points allow architects to create named endpoints for an S3 bucket, each with its own IAM access policy. An access point policy for the ETL role can allow PutObject only on the `raw/` prefix; a separate access point policy for data scientists can allow GetObject only on the `curated/` prefix. This simplifies permission management by separating access policies per use case rather than combining all rules into one complex bucket policy.
+- C is incorrect: S3 Lifecycle policies manage object transitions between storage classes and object expiration based on age or date. They do not enforce or modify access control permissions.
+- D is incorrect: S3 Requester Pays is a billing feature that charges the requester rather than the bucket owner for data transfer and API request costs. It has no effect on access control or who can read or write to specific prefixes.

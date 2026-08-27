@@ -293,4 +293,26 @@ parameters are correct.
 
 ---
 
+## 9. Supplemental Resources
+
+The following free, open-access resources go deeper on Module 07 topics:
+
+**1. Microsoft Learn — Manage AD DS users and groups**
+<https://learn.microsoft.com/en-us/training/modules/manage-active-directory-domain-services-users-groups-computers/>
+Interactive module covering user account creation, group scopes, AGDLP implementation, and bulk provisioning techniques with sandbox labs aligned to AZ-800.
+
+**2. Microsoft Docs — Default Active Directory security groups**
+<https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/understand-security-groups>
+Full reference for every built-in AD security group, their default rights and memberships. Understanding which built-in groups exist (like Account Operators) is tested on the exam and relevant to Questions 8, 18.
+
+**3. Microsoft Docs — Redirect the Users and Computers default containers**
+<https://learn.microsoft.com/en-us/troubleshoot/windows-server/active-directory/redirect-users-computers-default-cn>
+Explains how to use `redirusr.exe` and `redircmp.exe` to change the default container for new user and computer accounts — a production best practice that prevents objects from being created in `CN=Users` without OU-level GPO coverage.
+
+**4. Microsoft Docs — Active Directory Recycle Bin step-by-step guide**
+<https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/get-started/adac/introduction-to-active-directory-administrative-center-enhancements--level-100->
+Covers enabling the AD Recycle Bin, restoring deleted objects with `Restore-ADObject`, and understanding what attributes are preserved — directly relevant to Question 20.
+
+---
+
 *Review all sections before beginning Lab 07, Quiz 07, and Discussion 07.*

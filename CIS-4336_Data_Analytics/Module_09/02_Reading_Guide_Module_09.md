@@ -253,4 +253,20 @@ The kappa architecture eliminates the batch layer and replays the stream for his
 
 ---
 
+## 9. Supplemental Resources
+
+**1. Apache Spark Official Documentation — Getting Started**
+<https://spark.apache.org/docs/latest/quick-start.html>
+The official Apache Spark quickstart guide covering RDDs, DataFrames, and Spark SQL with hands-on Python (PySpark) examples. Essential reading for understanding in-memory distributed processing and the Spark ecosystem components covered in Module 09.
+
+**2. Databricks Glossary — Data Lakehouse Architecture**
+<https://www.databricks.com/glossary/data-lakehouse>
+A concise explanation of the data lakehouse pattern — combining data lake flexibility with warehouse-style ACID transactions and governance. Clarifies how lakehouse relates to Lambda/Kappa architectures and why organizations are moving beyond pure data lakes.
+
+**3. Confluent — What is Apache Kafka?**
+<https://www.confluent.io/what-is-apache-kafka>
+A comprehensive introduction to Apache Kafka covering topics, partitions, consumer groups, and the publish-subscribe model. Directly supports understanding real-time streaming pipelines and the speed layer in Lambda architecture discussed in Module 09.
+
+---
+
 End of Module 09 Reading Guide

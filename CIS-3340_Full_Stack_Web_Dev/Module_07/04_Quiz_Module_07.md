@@ -222,3 +222,183 @@ An AWS Lambda function written in Node.js is deployed behind API Gateway. The fu
 - Why B is correct: The `502` in API Gateway integrations is the standard symptom of a malformed Lambda response object — always the first thing to check.
 - Why C is incorrect: An IAM permission error produces a `403 Forbidden` from API Gateway — not a `502`.
 - Why D is incorrect: `console.log()` writes to CloudWatch Logs and does not affect the HTTP response — it never causes a `502`.
+
+---
+
+### Question 11 (5 points)
+
+What does `app.use(express.static('public'))` do in an Express application?
+
+- A) It registers a middleware that redirects all requests to files in the `public` folder to a CDN.
+- B) It registers a middleware that serves files in the `public` directory as static assets, allowing browsers to request HTML, CSS, JS, and image files directly.
+- C) It marks the `public` folder as read-only to prevent Express route handlers from modifying files in it.
+- D) It serves a static API documentation page generated from the route definitions.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: `express.static` does not redirect to a CDN — it serves files directly from the local filesystem.
+  - Why B is correct: `express.static('public')` serves any file inside the `public` directory. A request to `/logo.png` would serve `public/logo.png`.
+  - Why C is incorrect: `express.static` has no effect on filesystem permissions — it is a read operation only.
+  - Why D is incorrect: `express.static` serves arbitrary files from a directory — it does not generate API documentation.
+
+---
+
+### Question 12 (5 points)
+
+A developer calls `next()` inside a route handler after already calling `res.json()`. What is the likely outcome?
+
+- A) The subsequent middleware runs and may attempt to send a second response, causing a "Cannot set headers after they are sent" error.
+- B) The `next()` call is silently ignored because `res.json()` locks the response object.
+- C) Express automatically cancels the first response and sends only the response from the next middleware.
+- D) The server throws an `ECONNRESET` error and terminates the connection.
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - Why A is correct: Calling `next()` after `res.json()` passes control to the next middleware, which may attempt to write headers on an already-finished response, producing an `ERR_HTTP_HEADERS_SENT` error.
+  - Why B is incorrect: Express does not lock the response object — `next()` will execute regardless of whether a response has been sent.
+  - Why C is incorrect: Express does not cancel previously sent responses — once headers are sent, they cannot be unsent.
+  - Why D is incorrect: `ECONNRESET` is a network-level error for a broken connection — it is not caused by double-sending a response.
+
+---
+
+### Question 13 (5 points)
+
+Which Express pattern correctly reads an integer path parameter and returns `400` if it is not a valid number?
+
+- A) `const id = req.query.id; if (!id) return res.status(400).json({ error: 'Invalid ID' });`
+- B) `const id = parseInt(req.params.id); if (isNaN(id)) return res.status(400).json({ error: 'ID must be a number' });`
+- C) `const id = req.body.id; if (typeof id !== 'number') return res.status(400).json({ error: 'Invalid ID' });`
+- D) `const id = req.params.id; if (id > 0) return res.status(400).json({ error: 'ID must be positive' });`
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: Path parameters come from `req.params`, not `req.query`. Query parameters are from the URL query string (`?id=5`).
+  - Why B is correct: `req.params.id` is always a string. `parseInt()` converts it to a number, and `isNaN()` detects non-numeric strings like `"abc"`.
+  - Why C is incorrect: Path parameters are never in `req.body` — the body contains the parsed request body, not URL segments.
+  - Why D is incorrect: `req.params.id` is a string — comparing a string with `> 0` does not reliably detect non-numeric values.
+
+---
+
+### Question 14 (5 points)
+
+What is the purpose of the `dotenv` package in a Node.js project?
+
+- A) It automatically encrypts `.env` files before committing them to Git.
+- B) It loads environment variables from a `.env` file into `process.env` so secrets can be kept out of source code during local development.
+- C) It validates that all required environment variables are defined before the server starts.
+- D) It synchronizes environment variables between the local `.env` file and AWS Lambda function configuration.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: `dotenv` does not encrypt — the `.env` file must be excluded from version control via `.gitignore`.
+  - Why B is correct: `require('dotenv').config()` reads the `.env` file and injects each key-value pair into `process.env`, making them available throughout the application without hard-coding secrets.
+  - Why C is incorrect: `dotenv` does not validate — packages like `envalid` or manual startup checks perform validation.
+  - Why D is incorrect: `dotenv` is purely a local development tool — Lambda reads environment variables from its own configuration, not from a `.env` file.
+
+---
+
+### Question 15 (5 points)
+
+A developer registers a middleware function with `app.use('/api/admin', adminOnly)`. On which requests does this middleware execute?
+
+- A) Only on `GET /api/admin` requests.
+- B) On all requests to any path that begins with `/api/admin`, regardless of HTTP method.
+- C) On all requests to the application, because `app.use()` always applies globally.
+- D) Only if `adminOnly` calls `next()` with a path argument matching `/api/admin`.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: `app.use()` is not method-specific — it matches all HTTP methods on the given path prefix.
+  - Why B is correct: When a path prefix is provided to `app.use()`, the middleware runs for any request whose URL starts with that prefix, regardless of HTTP method.
+  - Why C is incorrect: A path-prefixed `app.use()` only runs for matching paths — it does not apply globally to all routes.
+  - Why D is incorrect: The path argument is checked by Express when routing the request — `next()` does not perform path matching.
+
+---
+
+### Question 16 (5 points)
+
+What is `EADDRINUSE` and how is it resolved?
+
+- A) It is an Express validation error thrown when `app.use()` receives an undefined middleware function. Resolve it by checking the middleware import.
+- B) It is a Node.js network error indicating the specified port is already in use by another process. Resolve it by terminating the existing process or changing the port.
+- C) It is a file system error thrown when `require()` cannot find the specified module. Resolve it by running `npm install`.
+- D) It is a database connection error indicating the address of the database server is unreachable. Resolve it by checking the `DATABASE_URL` environment variable.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: `EADDRINUSE` is a network error, not an Express middleware validation error.
+  - Why B is correct: `EADDRINUSE` (Error: Address In Use) means `app.listen()` tried to bind a port that is already claimed by another process. Terminating the conflicting process or switching to a different port resolves it.
+  - Why C is incorrect: A missing module produces a `MODULE_NOT_FOUND` error — not `EADDRINUSE`.
+  - Why D is incorrect: Database connection errors have their own error codes (e.g., `ECONNREFUSED`) — `EADDRINUSE` is specifically about port binding.
+
+---
+
+### Question 17 (5 points)
+
+A developer wants to add a PATCH route to partially update a book's title. Which implementation is correct?
+
+- A) `app.patch('/api/books/:id', (req, res) => { res.status(200).json(req.body); });`
+- B) Using `app.put()` with the same handler, because PATCH and PUT are interchangeable in Express.
+- C) `app.patch('/api/books/:id', (req, res) => { /* find book, apply only provided fields, return 200 */ });`
+- D) PATCH is not supported by Express — partial updates must use POST with a custom action URL.
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why A is incorrect: Returning `req.body` directly without finding and updating the book does not implement a PATCH — it just echoes the request body.
+  - Why B is incorrect: `app.put()` registers a PUT route handler — calling it does not also register a PATCH handler. PUT and PATCH have distinct semantic meanings.
+  - Why C is correct: A PATCH handler should read the existing resource, merge only the provided fields from `req.body`, persist the change, and return the updated resource with status `200`.
+  - Why D is incorrect: Express fully supports `app.patch()` — PATCH is a standard HTTP method supported by all major frameworks.
+
+---
+
+### Question 18 (5 points)
+
+Which of the following correctly describes how `next(err)` interacts with Express error handling middleware?
+
+- A) `next(err)` re-runs all previously executed middleware with the error injected as the first argument.
+- B) `next(err)` skips all remaining regular middleware and route handlers, jumping directly to the first registered error-handling middleware with the four-parameter `(err, req, res, next)` signature.
+- C) `next(err)` sends a default `500 Internal Server Error` response immediately without invoking any custom error handler.
+- D) `next(err)` only works when called inside the global error handler — calling it from a route handler has no effect.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: `next(err)` does not re-run previous middleware — it skips forward to the error handler.
+  - Why B is correct: Passing a truthy argument to `next()` signals an error. Express skips all remaining regular middleware and routes and invokes the next error-handling middleware in the stack.
+  - Why C is incorrect: Express does not automatically send a 500 response — the custom error handler (if registered) receives the error and decides the response.
+  - Why D is incorrect: `next(err)` can and should be called from route handlers and regular middleware — that is its primary use case.
+
+---
+
+### Question 19 (5 points)
+
+An Express server uses in-memory arrays to store data. After a production deployment, users report that data added by one request is missing in the next. What is the most likely cause?
+
+- A) Express clears all variables on each request to prevent memory leaks.
+- B) The server is running as multiple instances (e.g., behind a load balancer), and each instance has its own separate in-memory array — requests to different instances do not share state.
+- C) In-memory arrays are read-only in production Node.js environments.
+- D) The `require()` cache invalidates module-level variables between requests.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: Express does not clear module-level variables between requests — they persist for the lifetime of the process.
+  - Why B is correct: Horizontal scaling means multiple server processes run simultaneously, each with independent memory. In-memory state is not shared — this is why databases are required for persistent, shared data in production.
+  - Why C is incorrect: In-memory arrays are fully mutable in Node.js — there is no production read-only restriction.
+  - Why D is incorrect: The `require()` cache persists module-level variables for the lifetime of the process — it does not invalidate between requests.
+
+---
+
+### Question 20 (5 points)
+
+What is the correct way to read an optional query parameter `limit` from the URL `GET /api/books?limit=5`, defaulting to `10` if not provided?
+
+- A) `const limit = req.body.limit || 10;`
+- B) `const limit = parseInt(req.query.limit) || 10;`
+- C) `const limit = req.params.limit || 10;`
+- D) `const limit = req.headers['limit'] || 10;`
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: `req.body` contains the parsed request body — query string parameters are on `req.query`.
+  - Why B is correct: `req.query.limit` is the string `'5'` or `undefined`. `parseInt()` converts it to `5`, and `|| 10` provides the default when the parameter is absent or `NaN`.
+  - Why C is incorrect: `req.params` contains path parameters defined with `:name` in the route pattern — not query string parameters.
+  - Why D is incorrect: HTTP headers contain request metadata like `Authorization` and `Content-Type` — query string values are not headers.

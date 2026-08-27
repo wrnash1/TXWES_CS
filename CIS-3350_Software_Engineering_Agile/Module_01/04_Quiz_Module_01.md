@@ -196,3 +196,171 @@ Distractor Analysis:
 - Why D is incorrect: Sprints have a fixed timebox — their duration is never extended to accommodate additional scope.
 
 ---
+
+### Question 11 (5 points)
+
+Which of the following best describes a "non-functional requirement"?
+
+- A) A requirement that has not yet been formally approved by the product owner
+- B) A quality attribute the system must exhibit, such as performance, security, or scalability
+- C) A feature that will be deferred to a future release and is therefore not currently functional
+- D) A requirement written by a stakeholder who is not a developer and therefore lacks technical precision
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Incorrect — Approval status is a workflow concept; non-functional refers to the type of requirement, not its approval state.
+  - C) Incorrect — Deferred features are backlog items, not non-functional requirements.
+  - D) Incorrect — Non-functional is a technical classification (performance, reliability, etc.), not a description of who wrote the requirement.
+
+---
+
+### Question 12 (5 points)
+
+The Rational Unified Process (RUP) is best classified as which type of SDLC model?
+
+- A) Waterfall, because it defines sequential phase gates
+- B) Agile, because it uses short Sprints with defined roles
+- C) Iterative, because it organizes development into repeated cycles within four lifecycle phases
+- D) Spiral, because it performs formal risk analysis before each phase
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) Incorrect — RUP does not require each phase to be fully completed before the next; iterations can overlap across phases.
+  - B) Incorrect — RUP does not use Sprints or Scrum roles; it predates the Scrum Guide and is more heavyweight than Agile.
+  - D) Incorrect — Formal risk quadrant analysis is the distinguishing feature of the Spiral model, not RUP.
+
+---
+
+### Question 13 (5 points)
+
+According to the 2020 Scrum Guide, who is responsible for ordering the Product Backlog?
+
+- A) The Scrum Master, as the servant-leader of the Scrum Team
+- B) The Developers, because they understand the technical complexity of each item
+- C) The Product Owner, who is accountable for maximizing the value of the product
+- D) The stakeholders, because they represent the business interests driving priority
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) Incorrect — The Scrum Master serves and coaches the team but does not own or order the Product Backlog.
+  - B) Incorrect — Developers provide effort estimates and technical input but do not order the Product Backlog.
+  - D) Incorrect — Stakeholders provide input to the Product Owner, but the Product Owner has sole accountability for backlog ordering.
+
+---
+
+### Question 14 (5 points)
+
+A software team follows a process where they release a new version of their product every two weeks, gather user feedback, and use that feedback to adjust the next version's scope. Which SDLC principle does this most directly exemplify?
+
+- A) Defined process control — because each two-week cycle follows a defined set of steps
+- B) Empirical process control — because the team inspects outcomes and adapts based on real evidence
+- C) Waterfall phase-gate management — because each two-week block ends with a formal review
+- D) Spiral risk management — because releasing to users is a form of risk mitigation
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Incorrect — Defined process control assumes predictable outputs from repeatable inputs; gathering feedback to change direction is empirical, not defined.
+  - C) Incorrect — Waterfall phase-gate reviews approve a phase before the next begins; they do not involve shipping to real users for feedback.
+  - D) Incorrect — Although releasing early can reduce market risk, this scenario describes empirical inspection and adaptation, not Spiral's formal risk quadrant process.
+
+---
+
+### Question 15 (5 points)
+
+Winston Royce's 1970 paper on managing large software development is historically ironic because:
+
+- A) He argued that software engineering was impossible and should be abandoned
+- B) He actually advocated iterative prototyping, but later readers ignored that recommendation and adopted only the sequential diagram
+- C) He invented the Agile Manifesto values twenty years before they were formally published
+- D) He proved that Waterfall always delivers on time and within budget when followed correctly
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Incorrect — Royce made no such argument; his paper was about improving management of large software projects.
+  - C) Incorrect — Royce did not write the Agile Manifesto values; those were authored collectively in 2001.
+  - D) Incorrect — Royce explicitly warned that the sequential model was risky; he did not claim it always succeeds.
+
+---
+
+### Question 16 (5 points)
+
+Which Agile Manifesto value most directly challenges the traditional Waterfall practice of requiring a fully signed-off requirements specification before design begins?
+
+- A) Individuals and interactions over processes and tools
+- B) Working software over comprehensive documentation
+- C) Customer collaboration over contract negotiation
+- D) Responding to change over following a plan
+
+- **Correct Answer:** D
+- **Distractor Analysis:**
+  - A) Incorrect — This value addresses team dynamics and communication style, not the timing of requirements lock-in.
+  - B) Incorrect — This value prioritizes a working product over documents, but does not directly address locking requirements before design.
+  - C) Incorrect — This value concerns how agreements with customers are formed, not sequential phase structure.
+
+---
+
+### Question 17 (5 points)
+
+In the Scrum framework, the Sprint is described as the "container for all other Scrum events." What does this mean?
+
+- A) All Scrum events — Sprint Planning, Daily Scrum, Sprint Review, and Sprint Retrospective — occur within the fixed timebox of a single Sprint
+- B) The Sprint is the longest Scrum event and all other events are nested inside it as sub-Sprints
+- C) The Sprint Backlog contains all other Scrum artifacts as nested documents
+- D) Sprints replace all other planning events, which are only held quarterly
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - B) Incorrect — There are no sub-Sprints in Scrum; Sprint Planning, Daily Scrum, Review, and Retrospective are distinct events, not nested Sprints.
+  - C) Incorrect — The Sprint Backlog is an artifact, not a container for other artifacts; and events are distinct from artifacts.
+  - D) Incorrect — All four Scrum events occur every Sprint; none are quarterly.
+
+---
+
+### Question 18 (5 points)
+
+Which of the following project characteristics makes the Spiral model a better choice than Agile/Scrum?
+
+- A) The project has uncertain requirements and needs frequent customer feedback
+- B) The project is a large government contract requiring formal, documented risk mitigation reports at each development milestone
+- C) The project team is co-located and prefers daily stand-up meetings over formal documentation
+- D) The project has a three-week deadline and must be completed with minimal process overhead
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Incorrect — Frequent customer feedback and uncertain requirements describe conditions where Agile/Scrum excels, not Spiral.
+  - C) Incorrect — Co-located teams preferring daily stand-ups describe Scrum team dynamics, not Spiral's heavyweight risk-driven approach.
+  - D) Incorrect — A three-week deadline with minimal overhead favors a lightweight Agile approach, not the heavyweight Spiral model.
+
+---
+
+### Question 19 (5 points)
+
+The concept of "Definition of Done" in Scrum most directly supports which empirical pillar?
+
+- A) Adaptation — because the team changes the definition after each Sprint
+- B) Transparency — because it provides a shared, visible standard for what "complete" means
+- C) Inspection — because the Definition of Done is reviewed at every Daily Scrum
+- D) Planning — because it defines the scope for the next Sprint
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Incorrect — The Definition of Done can be updated over time, but its primary purpose is to create a shared understanding, not to drive adaptation.
+  - C) Incorrect — The Definition of Done is not reviewed at the Daily Scrum; it is applied when evaluating whether an increment is complete.
+  - D) Incorrect — Sprint scope is set during Sprint Planning based on the Product Backlog; the Definition of Done defines quality criteria, not scope.
+
+---
+
+### Question 20 (5 points)
+
+A team is debating whether to use a Kanban board or a Scrum Sprint to manage an ongoing customer support queue with no fixed end date and unpredictable incoming requests. Which is the better choice and why?
+
+- A) Scrum, because two-week Sprints create accountability and regular review points
+- B) Kanban, because it is designed for continuous flow work where items arrive unpredictably and there is no definable Sprint Goal
+- C) Waterfall, because support work requires formal phase gates before each issue is closed
+- D) Spiral, because each support ticket represents a risk that must be formally analyzed before resolution
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Incorrect — Scrum requires a Sprint Goal — a single objective the team commits to each Sprint; an unpredictable support queue rarely fits a coherent Sprint Goal.
+  - C) Incorrect — Waterfall's sequential phase-gate structure is incompatible with a continuous stream of independent support tickets.
+  - D) Incorrect — The Spiral model is used for large software development projects, not for managing operational support queues.

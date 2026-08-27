@@ -372,3 +372,25 @@ DOMAIN: corp.local
 - [gpresult command reference](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/gpresult)
 - [Invoke-GPUpdate cmdlet reference](https://learn.microsoft.com/en-us/powershell/module/grouppolicy/invoke-gpupdate)
 - [Loopback Processing reference](https://learn.microsoft.com/en-us/troubleshoot/windows-server/group-policy/loopback-processing-of-group-policy)
+
+---
+
+## 9. Supplemental Resources
+
+The following free, open-access resources go deeper on Module 05 topics:
+
+**1. Microsoft Learn — Implement Group Policy**
+<https://learn.microsoft.com/en-us/training/modules/implement-group-policy/>
+Hands-on module covering GPO creation, linking, Security Filtering, WMI Filters, and Loopback Processing with sandbox exercises aligned directly to AZ-800 Group Policy scenarios.
+
+**2. Microsoft Docs — Group Policy overview for Windows Server**
+<https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/group-policy/group-policy-overview>
+Comprehensive reference covering all aspects of Group Policy architecture, processing order, inheritance rules, and troubleshooting. Use this alongside the Reading Guide as a verification source.
+
+**3. Microsoft Docs — Troubleshoot Group Policy using Windows events**
+<https://learn.microsoft.com/en-us/troubleshoot/windows-server/group-policy/using-group-policy-events-to-troubleshoot>
+Covers how to interpret Event Viewer Group Policy operational log entries — the advanced method for diagnosing GPO failures that `gpresult` alone cannot explain.
+
+**4. Microsoft Docs — Back up and restore Group Policy Objects**
+<https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-r2-and-2012/jj717227(v=ws.11)>
+Official guidance on `Backup-GPO`, `Restore-GPO`, and the `dcgpofix` utility for recovering default domain policies — directly relevant to Question 19 and safe change-management practices.

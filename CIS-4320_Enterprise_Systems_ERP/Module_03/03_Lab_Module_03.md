@@ -184,3 +184,28 @@ Write a 250-300 word executive memo addressed to Cornerstone's CEO recommending 
 2. Name your file: `Lab03_LastName_FirstName.pdf`
 3. Upload to Canvas under "Lab 03 — ERP Selection and Vendor Landscape."
 4. Deadline: See course schedule in Canvas. Late submissions lose 10 points per day.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Build-vs-Buy-vs-Extend Decision Tree
+
+A rapidly growing e-commerce company (250 employees, $40M revenue, projecting 3x growth in 3 years) currently uses QuickBooks Online for finance, Shopify for storefront, and a custom-built inventory spreadsheet. The CEO wants a unified system but is unsure whether to (a) implement a full ERP like NetSuite, (b) extend their current tools with integrations, or (c) build a custom system.
+
+1. Create a structured decision framework with at least five evaluation questions that determine which path is most appropriate (e.g., "Will the company outgrow the system within 3 years?", "Does the company have in-house development capacity?"). For each question, define which answer points toward which option.
+2. Apply your framework to the company described above and document your recommendation with reasoning for each decision point.
+3. Identify three specific risks of the "build custom" option that an ERP implementation would avoid, with one concrete example of how each risk could manifest for this company.
+4. Research one real ERP vendor (NetSuite, SAP Business One, Microsoft Dynamics 365 Business Central, or Odoo) appropriate for this company's size and summarize its pricing model, implementation timeline, and top three functional strengths.
+
+### Challenge 2: Vendor Contract Risk Analysis
+
+You are advising a client who has received a 150-page software license and services agreement from an ERP vendor. The client's legal team has flagged three clauses but does not understand their business implications.
+
+1. For each of the following clause descriptions, explain the business risk in plain language and suggest one negotiation position the client should take: (a) "Vendor may modify pricing upon 90-day written notice" — (b) "Customer data may be used by vendor for product improvement purposes in anonymized form" — (c) "Service level credits shall not exceed 10% of monthly subscription fees regardless of downtime duration."
+2. Write a short checklist (minimum 6 items) of contract provisions that any ERP buyer should review before signing, with a one-sentence explanation of why each matters.
+
+### Reflection Questions
+
+1. In the build-vs-buy-vs-extend decision, what company characteristic most strongly tips the decision toward buying a commercial ERP rather than building custom software? Would your answer change if the company operated in a highly specialized niche industry with no ERP vendor offering relevant functionality?
+2. ERP vendor contracts are notoriously one-sided. What is the most important leverage point a buyer has during contract negotiation, and at what point in the procurement process should negotiation strategy be developed?

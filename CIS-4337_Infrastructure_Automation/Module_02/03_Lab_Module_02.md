@@ -303,4 +303,39 @@ Your formatting was already correct. This is expected behavior. `terraform fmt` 
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Full CI/CD-Style Plan-and-Apply Pipeline
+
+Simulate a production CI/CD workflow by separating the plan and apply steps with a manual review gate. Add a third resource `null_resource.server_c` with a unique trigger, then practice the saved-plan workflow.
+
+```hcl
+resource "null_resource" "server_c" {
+  triggers = {
+    server_name = "db-01"
+    environment = "prod"
+    managed_by  = "terraform"
+  }
+}
+```
+
+1. Run `terraform plan -out=tfplan` to save the plan. Run `terraform show tfplan` and review the output carefully — this simulates the human approval review step.
+2. Run `terraform apply tfplan` to execute the saved plan. Confirm in the apply output that exactly one resource was added (`server_c`) and none were changed or destroyed.
+3. Now make a second change: update `server_c`'s `environment` trigger to `"staging"`. Run `terraform plan -out=tfplan2` and `terraform show tfplan2`. Identify the plan symbol for `server_c` and explain in `lab_notes.txt` why it shows `-/+` instead of `~`.
+
+### Challenge 2: Version Constraint Experimentation
+
+Modify the `required_providers` block to use different version constraint operators and observe how `terraform init` responds.
+
+1. Change the `null` provider constraint to `= 3.1.0` (exact version pin) and run `terraform init -upgrade`. Confirm in the lock file that version `3.1.0` is selected.
+2. Change the constraint to `~> 3.0` and run `terraform init -upgrade`. Record which version is now selected and explain why it may differ from step 1.
+3. Attempt to set the constraint to `>= 4.0` (a version that does not exist for the null provider) and run `terraform init`. Record the error message in `lab_notes.txt`.
+
+### Reflection Questions
+
+1. In the saved-plan workflow, you ran `terraform show tfplan` before applying. What specific information in that output would cause a responsible engineer to reject the plan and not proceed with apply?
+2. You observed that changing a `null_resource` trigger always causes `-/+` (forced replacement) rather than `~` (in-place update). Describe a real-world AWS resource where this same forced-replacement behavior would have significant operational impact, and explain how you would plan for it.
+
+---
+
 Module 02 Lab — CIS-4337 Infrastructure Automation — Texas Wesleyan University

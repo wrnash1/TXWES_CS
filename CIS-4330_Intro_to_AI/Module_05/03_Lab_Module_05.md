@@ -305,3 +305,24 @@ Scenario 23: Prebuilt. Language detection is a prebuilt Language Service capabil
 ## Deliverable
 
 Submit a single document (PDF or Word) containing all answers and justifications. Include your name, course section, and date at the top. For Part C, include the full text of your responses alongside the relevant JSON excerpt from the question. Upload to the Module 05 Lab Assignment in Canvas by the posted due date.
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: NLP Pipeline with NLTK and scikit-learn
+
+1. Using Python, install `nltk` and download `punkt`, `stopwords`, and `wordnet`. Write a function that accepts a string of text and returns: (a) a list of tokens, (b) the tokens with stopwords removed, and (c) the lemmatized form of each remaining token using `WordNetLemmatizer`.
+2. Apply your function to three sentences of your choice that express positive, negative, and neutral sentiment respectively. Display the output of each preprocessing step side by side.
+3. Using scikit-learn's `TfidfVectorizer`, fit it on a list of at least 10 short sentences you write yourself (mix of positive and negative). Print the vocabulary and identify which 5 terms received the highest average TF-IDF weight.
+4. Explain in two sentences why TF-IDF down-weights common words and how this property makes it useful for tasks like key phrase extraction.
+
+### Challenge 2: Bias Audit of a Sentiment Classifier
+
+1. Using scikit-learn, train a `LogisticRegression` sentiment classifier on the `movie_reviews` corpus from NLTK (`nltk.corpus.movie_reviews`). Split 80/20 train/test and report accuracy.
+2. Write 6 test sentences of your own — 3 describing the same positive experience using male-coded language (e.g., "led," "decisive," "drove results") and 3 using female-coded language (e.g., "collaborated," "nurturing," "supportive"). Run all 6 through the classifier and record the predicted sentiment and confidence score.
+3. Compare the results. Do the male-coded and female-coded sentences receive the same or different sentiment scores for equivalent content?
+4. Write a 3-4 sentence reflection explaining what this experiment reveals about NLP model bias and which responsible AI principle it relates to.
+
+### Reflection Questions
+
+1. Based on Challenge 1, what would happen to classification accuracy if you skipped the tokenization and stopword removal steps and fed raw sentence strings directly to the TF-IDF vectorizer? Why?
+2. Based on Challenge 2, propose one concrete step a team could take during NLP model development to detect and mitigate gender-coded language bias before the model is deployed.

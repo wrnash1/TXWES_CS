@@ -208,4 +208,204 @@ A CISO needs to present the cybersecurity risk of an unpatched critical server t
 
 ---
 
-*End of Module 03 Quiz*
+End of Module 03 Quiz
+
+---
+
+### Question 11
+
+The NIST Risk Management Framework Step 3 is "Select." What is the primary output of this step?
+
+- A) A completed risk assessment identifying all threats and vulnerabilities affecting the system
+- B) A set of security controls chosen from NIST SP 800-53 that are tailored to the system's impact level and organizational requirements
+- C) A formal authorization to operate (ATO) signed by the authorizing official
+- D) A system security plan describing the overall security posture of the system
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- Why B is correct: Step 3 Select involves choosing the appropriate security controls from the NIST SP 800-53 catalog based on the system's FIPS 199 impact level (Low, Moderate, High), applying organization-defined parameters, and documenting the selection in a System Security Plan. The output is the tailored control set, not the plan itself.
+- Why A is incorrect: Risk assessment occurs in Step 5 (Assess), after controls are selected and implemented. The Assess step evaluates whether the selected controls are operating as intended.
+- Why C is incorrect: The ATO is the output of Step 5 (Authorize), the culminating governance decision made after controls are assessed and risk is evaluated by the authorizing official.
+- Why D is incorrect: The System Security Plan is the documentation artifact that records the control selections, but it is initiated during Step 2 (Categorize) and finalized in Step 3. The plan itself is not the "primary output" — the tailored control selection documented within it is.
+
+---
+
+### Question 12
+
+ISO 31000:2018 describes risk as the "effect of uncertainty on objectives." Which statement best reflects the implications of this definition for information security risk management?
+
+- A) Risk is defined solely by the probability of a negative event occurring, independent of the organization's objectives
+- B) Risk must be understood in the context of what the organization is trying to achieve — controls and risk decisions should be calibrated to protect those objectives specifically
+- C) All uncertainty represents risk; therefore organizations should eliminate all uncertain conditions before proceeding with business activities
+- D) ISO 31000 defines risk only in terms of negative consequences and does not account for the possibility that uncertainty may produce positive outcomes
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- Why B is correct: ISO 31000's definition ties risk directly to objectives. This means the same threat event may be high-risk to one organization (if it threatens a core objective) and low-risk to another (if the threatened function is not critical). Security risk management must start with understanding organizational objectives, not just threat lists.
+- Why A is incorrect: ISO 31000 explicitly links risk to objectives, not just probability. The definition is not a pure probability statement.
+- Why C is incorrect: ISO 31000 does not advocate eliminating all uncertainty. Risk management involves making conscious decisions about which uncertainties to accept, treat, transfer, or avoid based on their potential effect on objectives.
+- Why D is incorrect: ISO 31000 explicitly acknowledges that uncertainty can have positive as well as negative effects on objectives. The "effect of uncertainty" can include upside risk (opportunities) as well as downside risk (threats).
+
+---
+
+### Question 13
+
+An information security analyst is using OCTAVE Allegro to assess risks for a university's student records system. During Phase 1, the team creates an information asset profile. What is the purpose of this profile?
+
+- A) To identify all threat actors who have historically targeted university systems
+- B) To document the asset's value, security requirements, and the containers in which it resides, creating the foundation for threat scenario development
+- C) To select the security controls that will protect the asset from identified threats
+- D) To calculate the probability and financial impact of each identified risk scenario
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- Why B is correct: OCTAVE Allegro Phase 1 establishes information asset profiles that capture what the asset is, why it matters, what security properties are most important (confidentiality, integrity, availability), and where the asset exists across technical and non-technical environments (containers). This profile is the foundation from which threat scenarios are built in Phase 2.
+- Why A is incorrect: Historical threat actor identification is threat intelligence work, not part of Phase 1 asset profiling. OCTAVE Allegro Phase 2 develops threat scenarios that may reference threat actors, but the Phase 1 activity is asset-focused.
+- Why C is incorrect: Control selection is not part of OCTAVE Allegro's methodology. OCTAVE is a risk assessment framework, not a control selection framework. Control selection follows the risk assessment.
+- Why D is incorrect: Financial impact calculation is characteristic of FAIR, not OCTAVE Allegro. OCTAVE uses a qualitative risk scoring approach, not quantitative financial impact calculation.
+
+---
+
+### Question 14
+
+FAIR (Factor Analysis of Information Risk) decomposes risk into two top-level components. What are they?
+
+- A) Threat likelihood and vulnerability severity
+- B) Loss Event Frequency and Loss Magnitude
+- C) Inherent risk and residual risk
+- D) Probability of occurrence and impact rating
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- Why B is correct: FAIR's foundational decomposition separates risk into Loss Event Frequency (how often a loss event is likely to occur) and Loss Magnitude (how much loss results when it does). Each top-level factor is further decomposed — frequency into threat event frequency and vulnerability; magnitude into primary and secondary loss. This decomposition enables quantitative financial estimation.
+- Why A is incorrect: Threat likelihood and vulnerability severity are components of qualitative risk matrices, not FAIR's specific decomposition. FAIR uses more precisely defined terms derived from its ontology.
+- Why C is incorrect: Inherent risk versus residual risk is a risk treatment concept describing the before-control and after-control risk states. It is not FAIR's primary decomposition.
+- Why D is incorrect: Probability and impact are generic qualitative risk matrix terms. FAIR uses specific terms (Loss Event Frequency and Loss Magnitude) to enable quantitative, financially expressed risk analysis.
+
+---
+
+### Question 15
+
+A federal agency uses NIST RMF for its information systems. The agency's authorizing official reviews the security assessment report and finds that three moderate-severity control deficiencies exist but decides to grant an ATO with conditions rather than deny authorization. Which NIST RMF concept does this decision illustrate?
+
+- A) That NIST RMF requires all controls to be fully effective before an ATO can be granted
+- B) Risk acceptance — the authorizing official acknowledges the residual risk from the deficiencies and accepts it as within acceptable limits for mission purposes
+- C) Risk avoidance — the authorizing official has chosen to avoid the risk by requiring the system to operate under restricted conditions
+- D) That the security assessment was conducted incorrectly because deficiencies should have been remediated before assessment
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- Why B is correct: The ATO with conditions is one of the three possible Step 6 (Authorize) outcomes in NIST RMF. It reflects a formal risk acceptance decision by the authorizing official — an acknowledgment that the residual risk from the identified deficiencies is acceptable for the system's mission context and operational period. Risk acceptance under NIST RMF requires documentation and periodic review.
+- Why A is incorrect: NIST RMF does not require all controls to be fully effective before an ATO can be issued. The framework explicitly recognizes that real operational systems have deficiencies and provides the ATO-with-conditions mechanism for exactly this scenario.
+- Why C is incorrect: Risk avoidance would mean not operating the system at all. Granting an ATO — even with conditions — means accepting that the system will operate, which is acceptance, not avoidance.
+- Why D is incorrect: Assessment is not dependent on prior remediation. The assessment reveals the current control state, which may include deficiencies. The authorizing official then decides whether to authorize, conditionally authorize, or deny — the process does not require pre-assessment remediation.
+
+---
+
+### Question 16
+
+An organization uses ISO 31000:2018 as its enterprise risk management framework. A business unit manager argues that because a new product launch has only a 15% probability of triggering a regulatory penalty, it does not constitute a significant risk. The risk manager disagrees. Which ISO 31000 principle best supports the risk manager's position?
+
+- A) Risk management should be transparent and inclusive of all stakeholder views
+- B) Risk is the effect of uncertainty on objectives — a 15% probability of a regulatory penalty may represent a significant effect on the organization's strategic and financial objectives regardless of its likelihood
+- C) Risk management should create value, and low-probability events do not create value concerns
+- D) Risk management should be dynamic, iterative, and responsive to change
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- Why B is correct: ISO 31000 defines risk as the "effect of uncertainty on objectives," not as a function of probability alone. A 15% chance of a material regulatory penalty — with its associated financial, reputational, and operational consequences — may represent a significant effect on objectives depending on the penalty's magnitude. Risk significance is determined by the combined consideration of likelihood and consequence relative to organizational objectives, not by likelihood alone.
+- Why A is incorrect: Stakeholder inclusivity is an ISO 31000 principle, but it does not directly address the question of how to evaluate the significance of a low-probability event. The argument being made is about how to define and measure risk magnitude, not about who participates in the process.
+- Why C is incorrect: This statement misrepresents the ISO 31000 value principle. ISO 31000 states that risk management should create and protect value — it does not suggest that low-probability events are exempt from risk management consideration.
+- Why D is incorrect: The dynamic and iterative principle addresses how risk management should respond to changing conditions over time. While relevant to ongoing risk monitoring, it does not resolve the dispute about whether a 15% probability event is significant.
+
+---
+
+### Question 17
+
+A cybersecurity analyst at a defense contractor is using the NIST RMF. The system being assessed processes Controlled Unclassified Information (CUI). During the Categorize step, the team must determine the system's impact level. Which NIST publication provides the authoritative impact level determination methodology used in Step 2 of the RMF?
+
+- A) NIST SP 800-53, which provides the security control catalog organized by impact level
+- B) NIST SP 800-137, which defines continuous monitoring strategies for federal information systems
+- C) FIPS 199, which establishes security categories based on the potential impact to confidentiality, integrity, and availability across three levels: Low, Moderate, and High
+- D) NIST SP 800-30, which provides guidance for conducting risk assessments
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- Why C is correct: FIPS Publication 199, "Standards for Security Categorization of Federal Information and Information Systems," is the authoritative standard for the Categorize step. It defines impact levels (Low, Moderate, High) for confidentiality, integrity, and availability, and the overall system category is determined by the "high-water mark" — the highest impact level across all three security objectives.
+- Why A is incorrect: NIST SP 800-53 is the security control catalog used in the Select step (Step 3). It references impact levels determined by FIPS 199 to guide control baseline selection, but it does not define the impact level determination methodology used in the Categorize step.
+- Why B is incorrect: NIST SP 800-137 addresses Information Security Continuous Monitoring (ISCM) — it supports the Monitor step of the RMF, not the Categorize step. It has no role in impact level determination.
+- Why D is incorrect: NIST SP 800-30 provides risk assessment guidance used in the Assess step and as a companion to the broader RMF process. It does not define the security categorization methodology used in the Categorize step; that function belongs to FIPS 199.
+
+---
+
+### Question 18
+
+A financial services company is adopting FAIR to improve its communication of cybersecurity risk to the board. The initial FAIR analysis of a third-party data breach scenario produces a range of $1.2M to $8.4M in expected annual loss. The board treasurer asks why FAIR produces a range rather than a single number. Which explanation is most accurate?
+
+- A) FAIR has not been calibrated for financial services organizations, so the wide range reflects framework immaturity
+- B) FAIR uses Monte Carlo simulation to model the probability distributions of its input variables, producing a range of probable outcomes that reflects the genuine uncertainty in the underlying estimates rather than false precision
+- C) The range indicates that the FAIR analysis was performed incorrectly and needs to be rerun with more precise input data
+- D) FAIR ranges are generated by averaging the results of multiple separate risk assessment teams
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- Why B is correct: FAIR's quantitative approach intentionally uses probability distributions rather than point estimates for key input variables (threat event frequency, vulnerability, primary loss magnitude, secondary loss). These distributions are then processed through Monte Carlo simulation to produce a range of probable loss outcomes — typically expressed as a 10th to 90th percentile range. This range is a feature, not a defect; it accurately represents the inherent uncertainty in risk estimation rather than implying false precision through a single number.
+- Why A is incorrect: FAIR is specifically well-suited to financial services organizations and is widely adopted by banks and insurers. The range does not reflect framework immaturity — it reflects the correct application of probabilistic modeling.
+- Why C is incorrect: A wide range does not indicate incorrect analysis. FAIR analyses produce wide ranges when the underlying input variables have high uncertainty, which is common in cybersecurity risk scenarios. A narrow range with limited data would actually be more suspect, not less.
+- Why D is incorrect: Monte Carlo simulation is a mathematical modeling technique, not an averaging process across multiple teams. FAIR does not require parallel teams to generate its output range.
+
+---
+
+### Question 19
+
+An organization is selecting a risk management framework for its information security program. The security director lists the following requirements: the framework must be internationally recognized, applicable across all risk types (not only cybersecurity), non-prescriptive (providing principles and guidelines rather than mandatory steps), and suitable for integration with the organization's existing ISO 9001 quality management system. Which framework best satisfies all four requirements?
+
+- A) NIST SP 800-37 RMF
+- B) OCTAVE Allegro
+- C) ISO 31000:2018
+- D) FAIR
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- Why C is correct: ISO 31000:2018 is an international standard (ISO), applicable to all risk types across all sectors, explicitly non-prescriptive (it provides principles, a framework, and a process — not a mandatory step sequence), and designed to integrate with other ISO management system standards including ISO 9001. It satisfies all four stated requirements simultaneously.
+- Why A is incorrect: NIST SP 800-37 RMF is a prescriptive, step-based framework designed for U.S. federal information systems. It is specific to information systems risk, not enterprise-wide risk management, and is not designed for integration with ISO management systems.
+- Why B is incorrect: OCTAVE Allegro is a self-directed information asset risk assessment methodology, not an enterprise risk framework. It addresses only information security risk, not all risk types, and is not internationally standardized in the same way as ISO 31000.
+- Why D is incorrect: FAIR is a quantitative risk analysis model for information and operational risk in financial terms. It is not a risk management framework providing governance principles and process guidance, and it does not address non-information risk types or ISO management system integration.
+
+---
+
+### Question 20
+
+A healthcare network has completed its first enterprise risk assessment using OCTAVE Allegro. The risk team has developed 23 threat scenarios across 8 critical information assets and scored each using the OCTAVE Allegro risk scoring criteria. The CISO now needs to determine which risks to address first. Which OCTAVE Allegro output directly supports this prioritization decision?
+
+- A) The asset-based threat profiles created in Phase 1, which describe the assets' security requirements
+- B) The risk scores calculated for each threat scenario, ranked against the organization's risk measurement criteria to identify which scenarios require immediate treatment
+- C) The list of threat actors and their capabilities identified during the threat community analysis
+- D) The containers (technical and non-technical environments) where each asset resides
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- Why B is correct: OCTAVE Allegro produces a risk score for each threat scenario based on the organization's risk measurement criteria — a set of weighted impact areas (financial, reputation, productivity, safety, legal/regulatory, etc.) that the organization defines at the start of the assessment. Scenarios are ranked by total score, providing the prioritization order for risk treatment decisions. The ranked risk scores are the direct output that answers the question "which risks should we address first?"
+- Why A is incorrect: Asset-based threat profiles (Phase 1 output) describe what assets exist, why they matter, and their security requirements. They are inputs to the threat scenario development phase, not the prioritization output. They tell the team what to protect, not which scenarios are most urgent.
+- Why C is incorrect: Threat actor and community analysis is an intermediate analytical step that informs threat scenario development. It identifies who could threaten the assets, but it does not produce prioritized risk scores — the output needed for treatment prioritization.
+- Why D is incorrect: Container analysis identifies the environments where assets reside (databases, servers, portable media, people, etc.) and is used to develop threat scenarios grounded in realistic attack paths. Like threat actor analysis, it is an input to scenario development, not a prioritization output.

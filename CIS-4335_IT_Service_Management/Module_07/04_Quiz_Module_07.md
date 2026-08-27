@@ -271,4 +271,198 @@ which activity?
 
 ---
 
+---
+
+### Question 11 (5 points)
+
+A multinational retailer is preparing to deploy a new point-of-sale system across 200 stores. The IT team completes vendor selection, procures the hardware, installs the software, integrates it with the inventory management system, and runs parallel testing before the first store goes live.
+
+Which TWO SVC activities are the primary focus of the installation, integration, and testing steps?
+
+- A) Plan and Engage
+- B) Deliver and Support and Improve
+- C) Obtain/Build and Design and Transition
+- D) Engage and Design and Transition
+
+#### Q11 Correct Answer: C — Obtain/Build and Design and Transition
+
+#### Q11 Distractor Analysis
+
+- A is incorrect. Plan provides direction and Engage gathers requirements, but neither directly covers hardware installation, software configuration, or pre-launch testing.
+- B is incorrect. Deliver and Support operates the live service after deployment. Improve identifies patterns for enhancement. Neither describes the pre-live integration and testing work.
+- D is incorrect. While Engage may have gathered requirements earlier, the installation, integration, and testing steps described here fall within Obtain/Build (procurement and component preparation) and Design and Transition (validation before go-live).
+
+---
+
+### Question 12 (5 points)
+
+An IT organization issues a quarterly "SVC Health Report" that measures how effectively each of the six SVC activities is performing and identifies which activities have unresolved bottlenecks. Which SVC activity is producing this report?
+
+- A) Plan
+- B) Deliver and Support
+- C) Improve
+- D) Engage
+
+#### Q12 Correct Answer: C — Improve
+
+#### Q12 Distractor Analysis
+
+- A is incorrect. Plan produces strategic direction and organizational vision. A performance report on SVC activity health is an improvement measurement output, not a planning artifact.
+- B is incorrect. Deliver and Support generates operational service data, but the synthesis of that data into a cross-SVC health report and bottleneck identification is an Improve activity.
+- D is incorrect. Engage manages stakeholder relationships and demand intake. Producing an internal SVC performance report is not a stakeholder engagement output.
+
+---
+
+### Question 13 (5 points)
+
+ITIL 4 states that the Service Value Chain is a flexible operating model. What does "flexible" mean in this context?
+
+- A) Organizations may omit any SVC activity permanently if they have no immediate need for it.
+- B) SVC activities can be combined in different sequences and patterns to create value streams for different scenarios.
+- C) Each SVC activity can be replaced by a commercial software tool of the organization's choosing.
+- D) Organizations with mature ITSM programs graduate to a simplified SVC with only three activities.
+
+#### Q13 Correct Answer: B
+
+#### Q13 Distractor Analysis
+
+- A is incorrect. Flexibility refers to sequencing and combination, not permanent omission. Each activity serves a purpose and will be needed across different scenarios.
+- C is incorrect. Flexibility describes how activities are combined, not how they are replaced by technology. Tools support activities; they do not replace them.
+- D is incorrect. ITIL 4 does not define a simplified or graduated version of the SVC for mature organizations. All six activities remain relevant regardless of organizational maturity.
+
+---
+
+### Question 14 (5 points)
+
+A healthcare organization's IT team is responding to a critical outage of the patient scheduling system. The team restores the service in 45 minutes, then opens a problem record to investigate why the outage occurred and begins redesigning the failover architecture to prevent recurrence. Which sequence of SVC activities correctly maps this scenario?
+
+- A) Deliver and Support → Plan
+- B) Engage → Obtain/Build → Design and Transition
+- C) Deliver and Support → Improve
+- D) Design and Transition → Deliver and Support → Engage
+
+#### Q14 Correct Answer: C — Deliver and Support → Improve
+
+#### Q14 Distractor Analysis
+
+- A is incorrect. Plan provides strategic direction — it is not the activity responsible for investigating a recurring outage and redesigning failover architecture.
+- B is incorrect. Engage, Obtain/Build, and Design and Transition are involved in building new services, not in post-incident investigation and architectural improvement.
+- D is incorrect. Design and Transition validates new services before deployment; it does not initiate an improvement investigation after an operational outage.
+
+---
+
+### Question 15 (5 points)
+
+An IT manager states: "Our value streams are fixed — we have one defined workflow for every service type, and all teams follow it without deviation." Which ITIL 4 concept does this statement most directly contradict?
+
+- A) The definition of a practice as a set of organizational resources
+- B) The SVC's nature as a flexible, non-prescriptive operating model
+- C) The Governance component's role in directing the organization
+- D) The Continual Improvement practice's seven-step model
+
+#### Q15 Correct Answer: B
+
+#### Q15 Distractor Analysis
+
+- A is incorrect. The definition of a practice relates to organizational resources and capabilities, not the flexibility of value streams.
+- C is incorrect. Governance establishes direction and policy; this statement does not contradict governance — it may even reflect governance overreach, but the specific contradiction is with the SVC's flexibility.
+- D is incorrect. The Continual Improvement model defines steps for improvement cycles, not the design philosophy of value streams.
+
+---
+
+### Question 16 (5 points)
+
+During the annual IT planning cycle, the ITSM office maps all services against the six SVC activities to identify where the organization consistently under-invests. They discover that Design and Transition activities are often rushed, leading to repeated rework after deployments. Which Guiding Principle most directly explains why fixing this gap should be prioritized?
+
+- A) Keep It Simple and Practical
+- B) Optimize and Automate
+- C) Focus on Value
+- D) Start Where You Are
+
+#### Q16 Correct Answer: C — Focus on Value
+
+#### Q16 Distractor Analysis
+
+- A is incorrect. Keep It Simple and Practical addresses eliminating unnecessary complexity, not prioritizing investment in a deficient activity.
+- B is incorrect. Optimize and Automate focuses on efficiency through automation, not on prioritizing strategic investment in a specific SVC activity.
+- D is incorrect. Start Where You Are is about assessing current capability before redesigning — the assessment has already been done; the principle for prioritizing the fix is Focus on Value.
+
+---
+
+### Question 17 (5 points)
+
+Which of the following correctly describes the primary input to the Obtain/Build activity?
+
+- A) Stakeholder feedback collected from users after service delivery
+- B) Designs, specifications, and improvement initiatives from other SVC activities
+- C) Governance policies set by the organization's board of directors
+- D) Performance reports generated by the Deliver and Support activity
+
+#### Q17 Correct Answer: B
+
+#### Q17 Distractor Analysis
+
+- A is incorrect. Stakeholder feedback is collected through the Engage activity and fed to Improve, not to Obtain/Build.
+- C is incorrect. Governance policies provide organizational direction but are not the operational inputs that drive Obtain/Build work. Those inputs come from specifications and designs.
+- D is incorrect. Performance reports from Deliver and Support flow to Improve, not to Obtain/Build. Obtain/Build requires specifications and designs, not operational performance data.
+
+---
+
+### Question 18 (5 points)
+
+Which of the following best illustrates how the Engage activity differs from the Deliver and Support activity in handling customer contact?
+
+- A) Engage handles only new customers; Deliver and Support handles existing customers.
+- B) Engage focuses on understanding needs, building relationships, and routing requirements to the right SVC activities; Deliver and Support fulfills agreed services for customers already in operation.
+- C) Engage handles technical escalations; Deliver and Support handles administrative requests.
+- D) They perform identical functions; the distinction is purely organizational.
+
+#### Q18 Correct Answer: B
+
+#### Q18 Distractor Analysis
+
+- A is incorrect. Both Engage and Deliver and Support interact with existing customers. The distinction is about the nature of the interaction, not customer tenure.
+- C is incorrect. Technical escalations are handled within Deliver and Support. Engage is not defined by escalation handling.
+- D is incorrect. ITIL 4 clearly distinguishes these activities by purpose — Engage is about relationship management and requirements capture; Deliver and Support is about operational service delivery and incident resolution.
+
+---
+
+### Question 19 (5 points)
+
+An organization adds a new SVC activity step in which IT leadership reviews all ongoing service initiatives quarterly against strategic priorities and reallocates resources accordingly. Which existing SVC activity does this most closely represent?
+
+- A) Engage
+- B) Plan
+- C) Improve
+- D) Design and Transition
+
+#### Q19 Correct Answer: B — Plan
+
+#### Q19 Distractor Analysis
+
+- A is incorrect. Engage manages stakeholder relationships and demand intake, not strategic portfolio reviews or resource reallocation.
+- C is incorrect. Improve focuses on identifying and executing improvement initiatives based on performance data. Reviewing strategic priorities and reallocating resources is a planning function.
+- D is incorrect. Design and Transition handles the design and pre-production testing of specific services, not portfolio-level resource allocation decisions.
+
+---
+
+### Question 20 (5 points)
+
+An IT organization is evaluating whether to build a custom integration between its ITSM platform and its HR system, or to purchase a commercial connector. The team analyzes total cost of ownership, maintenance burden, and time-to-value for both options. Which SVC activity encompasses this evaluation?
+
+- A) Deliver and Support
+- B) Engage
+- C) Improve
+- D) Obtain/Build
+
+#### Q20 Correct Answer: D — Obtain/Build
+
+#### Q20 Distractor Analysis
+
+- A is incorrect. Deliver and Support handles live operational services, not pre-acquisition analysis of build-versus-buy options.
+- B is incorrect. Engage captures requirements and manages stakeholder relationships. The technical and financial evaluation of how to source a component is an Obtain/Build decision.
+- C is incorrect. Improve processes performance data and generates improvement initiatives. A build-versus-buy evaluation for a new component is not an improvement of an existing capability; it is a sourcing decision.
+
+---
+
 Module 07 Quiz | CIS-4335 IT Service Management | Texas Wesleyan University

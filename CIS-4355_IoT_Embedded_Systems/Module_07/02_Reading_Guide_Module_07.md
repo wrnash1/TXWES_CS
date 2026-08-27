@@ -353,3 +353,19 @@ START
 6. Why should you never use port 1883 for production IoT devices?
 7. Calculate the bandwidth savings over 24 hours if switching from 95-byte JSON to 55-byte CBOR for a device publishing every 10 seconds.
 8. A web browser dashboard needs to display sensor data updated once per second. Compare HTTP polling, WebSocket, and MQTT WebSocket bridge as solutions. Which would you recommend and why?
+
+---
+
+## 9. Supplemental Resources
+
+**1. OASIS MQTT Version 5.0 Specification**
+[https://docs.oasis-open.org/mqtt/mqtt/v5.0/mqtt-v5.0.html](https://docs.oasis-open.org/mqtt/mqtt/v5.0/mqtt-v5.0.html)
+The authoritative MQTT specification from OASIS. MQTT 5.0 adds reason codes, user properties, shared subscriptions, and message expiry intervals to the MQTT 3.1.1 baseline. The Section 3 packet format tables are essential for understanding QoS handshakes, LWT, and session management.
+
+**2. IETF RFC 7252 — The Constrained Application Protocol (CoAP)**
+[https://www.rfc-editor.org/rfc/rfc7252](https://www.rfc-editor.org/rfc/rfc7252)
+The CoAP specification. Sections 4 (message format), 5 (request-response semantics), and 7 (CoAP URIs) provide the technical depth behind Module 07 CoAP content. RFC 7641 (Observe) and RFC 7959 (Block-Wise Transfer) are companion documents.
+
+**3. Eclipse Mosquitto Broker Documentation**
+[https://mosquitto.org/documentation/](https://mosquitto.org/documentation/)
+Configuration reference for the Mosquitto broker used in the Module 07 lab. Covers `listener`, `allow_anonymous`, `password_file`, `acl_file`, `max_keepalive`, `max_queued_messages`, and TLS configuration. The `mosquitto_pub` and `mosquitto_sub` command-line tools are documented here.

@@ -184,4 +184,52 @@ Before submitting, verify that your document includes:
 
 ---
 
+---
+
+## Part 9 — Challenge Exercise
+
+This section is optional and not separately graded. It extends the lab into advanced
+normalization practice aligned with ECBA exam competencies.
+
+### Challenge Step 1: Boyce-Codd Normal Form Analysis
+
+After completing your 3NF decomposition of the hospital appointments data, select the
+Appointments table (with ApptID as the single primary key) and the Providers table
+(with ProviderID as the primary key). For each table, determine whether it satisfies
+Boyce-Codd Normal Form (BCNF). BCNF requires that for every functional dependency
+X → Y, X must be a superkey — that is, X must uniquely identify every row in the table.
+Identify any BCNF violations you find, describe the decomposition required to fix each
+one, and explain in one paragraph the practical difference between 3NF and BCNF from a
+business analyst perspective. When would you stop at 3NF versus continue to BCNF, and
+what are the trade-offs?
+
+### Challenge Step 2: Functional Dependency Discovery Interview Simulation
+
+Design a set of ten elicitation questions a BA could ask a hospital front desk supervisor
+to uncover the functional dependencies in the appointments spreadsheet. Format your
+questions using the elicitation pattern from Section 2.3 of the reading guide: "If I give
+you a [X], can you always tell me exactly one [Y]?" For each question, write the
+functional dependency it is designed to uncover and classify it as a direct dependency
+on the primary key, a partial dependency, or a transitive dependency. Then write a one-
+paragraph reflection on how this questioning approach connects the elicitation techniques
+from Module 03 to the data modeling work in this module — specifically, how does structured
+elicitation produce a more reliable set of functional dependencies than reading a
+spreadsheet alone?
+
+### Challenge Step 3: Normalization Impact Assessment
+
+The hospital project sponsor reviews your normalized schema and expresses concern: "We
+went from one table to seven tables. How does this help us? Aren't joins expensive?"
+Write a one-page business-facing impact assessment that addresses the sponsor's concern.
+Your assessment must include: a table comparing the unnormalized structure against the
+normalized structure on four dimensions (anomaly risk, query complexity, storage
+efficiency, and data consistency); a concrete example of each of the three data anomalies
+(update, insertion, deletion) that could occur in the original flat table; and a plain-
+language explanation of why eliminating anomalies reduces long-term operational costs
+more than the short-term join overhead. Close with a recommendation on whether any
+specific denormalization should be approved for the daily appointment roster report,
+supported by the trade-off analysis from Part 5 of the main lab.
+
+---
+
 *Module 12 Lab | CIS-3312 Systems Analysis and Design | Texas Wesleyan University*

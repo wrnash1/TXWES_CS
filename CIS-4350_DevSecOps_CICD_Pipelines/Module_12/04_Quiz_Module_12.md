@@ -223,3 +223,217 @@ B — `soft_fail: false` causes Checkov to exit with a non-zero code when any ch
 - *Why A is incorrect:* With `soft_fail: true`, Checkov always exits with code 0 regardless of findings. The pipeline would never fail. Adding a separate step to parse the SARIF file is unnecessarily complex when `soft_fail: false` provides the correct behavior directly.
 - *Why C is incorrect:* Without a SARIF upload, findings are only visible in raw job logs. GitHub Code Scanning provides structured finding tracking, PR annotations, and dismissal workflows that are lost without the upload step.
 - *Why D is incorrect:* With `soft_fail: true`, the Checkov step always succeeds, so `if: always()` is not needed to preserve the upload. But `soft_fail: true` also means the pipeline never fails on violations, which defeats the purpose of a security gate.
+
+---
+
+#### Q11
+
+A Kubernetes NetworkPolicy is applied to the `payments` namespace with a `podSelector: {}` and no ingress or egress rules. What is the effect of this policy?
+
+- A) The policy has no effect because it selects no specific pods
+- B) All pods in the `payments` namespace are denied all ingress and egress traffic by default
+- C) All pods in the cluster are denied all ingress and egress traffic
+- D) Pods in the `payments` namespace can receive traffic but cannot initiate outbound connections
+
+#### Q11 Correct Answer
+
+B — A `podSelector: {}` (empty selector) selects all pods in the namespace where the policy is applied. A NetworkPolicy with no ingress rules denies all ingress traffic to selected pods, and a policy with no egress rules denies all egress traffic. This is the standard default-deny pattern. It applies only within the namespace where the policy is created, not cluster-wide.
+
+#### Q11 Distractor Analysis
+
+- *Why A is incorrect:* An empty `podSelector: {}` does not mean "no pods" — it means "all pods in this namespace." This is the standard Kubernetes selector behavior where an empty selector matches everything in scope.
+- *Why C is incorrect:* NetworkPolicies are namespace-scoped. A policy in the `payments` namespace only affects pods in that namespace, not pods in other namespaces.
+- *Why D is incorrect:* If no egress rules are specified in a NetworkPolicy that selects pods, egress is also denied (not permitted). The default-deny applies to both ingress and egress when the respective rule sets are absent.
+
+---
+
+#### Q12
+
+A developer creates a ServiceAccount named `ci-deployer` for a GitHub Actions pipeline. The pipeline needs to `kubectl apply` manifests to a specific namespace. Which RBAC manifest correctly implements least-privilege access?
+
+- A) A ClusterRoleBinding binding `ci-deployer` to `cluster-admin`
+- B) A RoleBinding in the target namespace binding `ci-deployer` to a Role that grants `create`, `update`, `patch`, and `delete` on `deployments`, `services`, and `configmaps`
+- C) A ClusterRole with `verbs: ["*"]` bound to `ci-deployer` via a RoleBinding in the target namespace
+- D) A RoleBinding in `kube-system` granting `ci-deployer` the built-in `admin` ClusterRole
+
+#### Q12 Correct Answer
+
+B — Least-privilege RBAC for a CI/CD deployer means scoping permissions to the specific namespace, specific resources, and specific verbs required. A namespace-scoped Role with explicit verbs on the required resource types, bound via a RoleBinding in the target namespace, is the correct pattern. No cluster-wide permissions are needed for a namespace-scoped deployment.
+
+#### Q12 Distractor Analysis
+
+- *Why A is incorrect:* `cluster-admin` grants unrestricted access to all resources in all namespaces. Binding a CI/CD pipeline service account to `cluster-admin` violates least privilege and creates a high-impact compromise path if the pipeline is exploited.
+- *Why C is incorrect:* A ClusterRole with `verbs: ["*"]` grants all verbs on the specified resources. Using wildcard verbs is an overpermission — the role should enumerate only the verbs actually needed.
+- *Why D is incorrect:* Binding in `kube-system` grants elevated permissions in the control plane namespace. RoleBindings must be in the namespace where the permissions are needed — the target application namespace, not `kube-system`.
+
+---
+
+#### Q13
+
+A pod specification sets `securityContext.runAsNonRoot: true` but does not set `runAsUser`. The container image's `USER` instruction sets `USER 0` (root). What happens when Kubernetes admits this pod?
+
+- A) Kubernetes ignores `runAsNonRoot` if the image has a `USER` instruction — the image USER directive takes precedence
+- B) Kubernetes admission fails with an error because `runAsNonRoot: true` requires the container to run as a non-root user, but the image's `USER 0` specifies root
+- C) The container starts as root but Kubernetes restricts its system calls at runtime
+- D) `runAsNonRoot: true` only applies if `runAsUser` is explicitly set in the pod spec — without `runAsUser`, it has no effect
+
+#### Q13 Correct Answer
+
+B — `runAsNonRoot: true` causes the Kubernetes admission controller to check the effective user ID of the container. If the image's `USER` directive specifies UID 0 (root) and no `runAsUser` override is provided in the pod spec, the pod will be rejected at admission with a message indicating the container must not run as root.
+
+#### Q13 Distractor Analysis
+
+- *Why A is incorrect:* The pod security context overrides or constrains the image's USER directive. `runAsNonRoot: true` is a hard constraint that is enforced by the admission controller regardless of what the Dockerfile specifies.
+- *Why C is incorrect:* `runAsNonRoot` is an admission-time enforcement, not a runtime syscall filter. It prevents the pod from starting rather than restricting system calls after startup. Syscall restrictions are handled by seccomp profiles.
+- *Why D is incorrect:* `runAsNonRoot: true` is effective without an explicit `runAsUser`. It instructs Kubernetes to verify that the effective UID is not 0, using the image's USER instruction as the source if `runAsUser` is absent.
+
+---
+
+#### Q14
+
+Which PodSecurity admission mode should be applied first when migrating an existing cluster to the `restricted` profile, and why?
+
+- A) `enforce` — immediately rejecting non-compliant pods ensures the migration is complete before any new deployments
+- B) `warn` — the admission controller logs warnings for non-compliant pods without rejecting them, allowing teams to identify and fix violations without causing outages
+- C) `audit` — the admission controller records violations in the audit log only, with no user-visible warnings, providing the most non-disruptive first pass
+- D) Either `warn` or `audit` must be combined with `enforce` from the start — using either alone is not a valid migration strategy
+
+#### Q14 Correct Answer
+
+B — The recommended PodSecurity migration pattern is to start with `warn` mode so that violations surface as visible warnings in `kubectl apply` output without blocking deployments. This lets teams see which workloads need remediation without causing production outages. After fixing violations, switch to `enforce`. `audit` mode is also useful but produces no user-visible output.
+
+#### Q14 Distractor Analysis
+
+- *Why A is incorrect:* Starting with `enforce` on an existing cluster will immediately reject all non-compliant pods, potentially blocking deployments and causing service disruptions before teams have had a chance to remediate violations.
+- *Why C is incorrect:* While `audit` is non-disruptive, it only writes to audit logs that many teams do not actively monitor. `warn` mode produces visible warnings in `kubectl apply` output that developers encounter in their normal workflow, making violations harder to miss.
+- *Why D is incorrect:* Using `warn` or `audit` alone is a valid first step in the migration strategy. Combining them with `enforce` from the start would create the same disruption risk as starting with `enforce` directly.
+
+---
+
+#### Q15
+
+A Checkov scan of a Kubernetes Deployment manifest fails with check `CKV_K8S_30`. This check ID corresponds to which security context configuration?
+
+- A) The container is running with `privileged: true`
+- B) The container has not set `readOnlyRootFilesystem: true`
+- C) The container is missing `allowPrivilegeEscalation: false`
+- D) The container is missing resource limits for CPU and memory
+
+#### Q15 Correct Answer
+
+C — `CKV_K8S_30` checks that `securityContext.allowPrivilegeEscalation` is explicitly set to `false`. Without this setting, a container process could gain additional privileges via setuid binaries or kernel mechanisms. This is a key Kubernetes security context hardening requirement.
+
+#### Q15 Distractor Analysis
+
+- *Why A is incorrect:* Privileged container checks use a different Checkov check ID. `CKV_K8S_16` checks for `privileged: true` specifically.
+- *Why B is incorrect:* Read-only root filesystem is checked by `CKV_K8S_22`. Each security context attribute maps to its own check ID in Checkov.
+- *Why D is incorrect:* Resource limits checks use `CKV_K8S_11` (CPU limits) and `CKV_K8S_13` (memory limits). Checkov maps each distinct misconfiguration to a unique check ID.
+
+---
+
+#### Q16
+
+A Kubernetes cluster uses Flannel as the CNI plugin. A security engineer applies a NetworkPolicy requiring that the `frontend` pods can only communicate with the `backend` pods on port 8080. After applying the policy, the `frontend` pods can still reach all pods in the cluster. What is the most likely cause?
+
+- A) The NetworkPolicy YAML has a syntax error that caused it to be silently ignored
+- B) Flannel does not enforce NetworkPolicies — it is a CNI plugin focused on overlay networking rather than policy enforcement
+- C) NetworkPolicies require a PodSecurityPolicy to be active before they are enforced
+- D) The NetworkPolicy was applied to the wrong namespace
+
+#### Q16 Correct Answer
+
+B — Flannel is a CNI plugin that provides overlay networking but does not implement the Kubernetes NetworkPolicy enforcement API. NetworkPolicies are only enforced when a CNI plugin with policy support is installed — such as Calico, Cilium, or Weave Net. With Flannel, NetworkPolicy objects can be created but are silently ignored, giving a false sense of security.
+
+#### Q16 Distractor Analysis
+
+- *Why A is incorrect:* Kubernetes validates NetworkPolicy YAML at admission time and will reject manifests with syntax errors. A silently accepted but syntactically invalid policy is not the typical failure mode.
+- *Why C is incorrect:* NetworkPolicy enforcement has no dependency on PodSecurityPolicy. These are independent Kubernetes security mechanisms.
+- *Why D is incorrect:* While a namespace mismatch would also cause a policy to have no effect on the target pods, the scenario specifies the policy was applied correctly and the described behavior matches the known behavior of Flannel specifically.
+
+---
+
+#### Q17
+
+A Kubernetes Deployment runs a web application container. The security team wants to prevent the container from writing to its own filesystem at runtime (except for a specific `/tmp` directory needed by the application). Which combination of security context settings achieves this?
+
+- A) Set `readOnlyRootFilesystem: true` on the container and mount an `emptyDir` volume at `/tmp`
+- B) Set `privileged: false` and `allowPrivilegeEscalation: false` — these settings prevent all filesystem writes
+- C) Set `runAsNonRoot: true` — non-root processes cannot write to system directories
+- D) Apply a NetworkPolicy restricting egress to prevent data exfiltration via the filesystem
+
+#### Q17 Correct Answer
+
+A — `readOnlyRootFilesystem: true` makes the container's root filesystem read-only. Applications that require a writable temporary directory can mount an `emptyDir` volume at `/tmp`, which provides a writable in-memory or ephemeral disk location without making the entire filesystem writable.
+
+#### Q17 Distractor Analysis
+
+- *Why B is incorrect:* `privileged: false` and `allowPrivilegeEscalation: false` restrict privilege escalation but do not make the filesystem read-only. A non-privileged process can still write to the container filesystem unless `readOnlyRootFilesystem: true` is set.
+- *Why C is incorrect:* `runAsNonRoot: true` prevents running as UID 0 but does not prevent writes to directories that are writable by the application's UID. Many application-owned directories would still be writable.
+- *Why D is incorrect:* NetworkPolicies control network traffic, not filesystem access. They do not prevent processes inside the container from writing to the local filesystem.
+
+---
+
+#### Q18
+
+A team is writing Kubernetes RBAC manifests for three service accounts: `ci-deploy` (needs to deploy to `staging` namespace), `monitoring` (needs to read pods and metrics across all namespaces), and `log-shipper` (needs to read pod logs in all namespaces). Which combination of Role/ClusterRole resources is correct?
+
+- A) Three Roles — all in the `staging` namespace
+- B) A Role for `ci-deploy` in `staging`; ClusterRoles for `monitoring` and `log-shipper` because they need cross-namespace read access
+- C) Three ClusterRoles — ClusterRoles can be bound to specific namespaces using RoleBindings
+- D) A ClusterRole for all three, bound via ClusterRoleBindings to grant the broadest access
+
+#### Q18 Correct Answer
+
+B — `ci-deploy` only needs namespace-scoped access in `staging`, so a Role in that namespace with a RoleBinding is correct. `monitoring` and `log-shipper` need to read resources across all namespaces, which requires ClusterRoles. These ClusterRoles can be bound via ClusterRoleBindings for cluster-wide access.
+
+#### Q18 Distractor Analysis
+
+- *Why A is incorrect:* Roles in the `staging` namespace cannot grant access to pods in other namespaces. `monitoring` and `log-shipper` have cluster-wide read requirements that cannot be satisfied by namespace-scoped Roles.
+- *Why C is incorrect:* While ClusterRoles can be bound in a specific namespace via RoleBindings, using ClusterRoles for all three introduces unnecessary cluster-wide permission definitions. For `ci-deploy`, a namespace-scoped Role is the correct least-privilege choice and is simpler to audit.
+- *Why D is incorrect:* ClusterRoleBindings grant cluster-wide access. Using ClusterRoleBindings for all three service accounts would grant `ci-deploy` the ability to deploy across all namespaces, violating least privilege.
+
+---
+
+#### Q19
+
+A security engineer runs `kube-bench` against a cluster control plane node and sees FAIL results for benchmark 1.2.1 (`--anonymous-auth=false`) and 1.2.7 (`--authorization-mode` not including RBAC). What risk do these two findings represent?
+
+- A) Anonymous access to the API server allows unauthenticated requests to reach the Kubernetes API, and a missing RBAC authorization mode means all authenticated requests may be permitted without policy checks
+- B) These findings indicate the cluster nodes cannot communicate with each other over the network
+- C) Anonymous auth is only a risk if the cluster is internet-exposed; authorization mode findings only apply to worker nodes
+- D) These are informational findings — kube-bench CIS checks are advisory only and do not represent real attack vectors
+
+#### Q19 Correct Answer
+
+A — `--anonymous-auth=false` is required to prevent unauthenticated requests to the Kubernetes API server. Without this setting, anonymous users can make API calls that may be permitted by RBAC if the `system:anonymous` or `system:unauthenticated` groups have any bound roles. Without RBAC in the authorization chain, the API server may fall back to AlwaysAllow mode, granting every authenticated request unrestricted access.
+
+#### Q19 Distractor Analysis
+
+- *Why B is incorrect:* These flags control authentication and authorization for the API server, not network connectivity between nodes. Node-to-node communication is handled by the CNI plugin and is unrelated to these API server flags.
+- *Why C is incorrect:* Anonymous auth is a risk regardless of whether the cluster is internet-exposed — internal attackers or compromised pods could exploit anonymous API access. Authorization mode findings apply to the control plane API server, not worker nodes specifically.
+- *Why D is incorrect:* kube-bench implements the CIS Kubernetes Benchmark, which is the industry-standard security baseline for Kubernetes clusters. These findings represent real attack vectors that have been exploited in cloud environment compromises.
+
+---
+
+#### Q20
+
+A developer argues that setting resource limits (`resources.limits.cpu` and `resources.limits.memory`) on Kubernetes pods is a performance concern, not a security concern, and therefore should not be enforced by a security gate. What is the DevSecOps counterargument?
+
+- A) Resource limits have no security value — the developer is correct that this is purely a performance and availability concern
+- B) Resource limits prevent a compromised or misbehaving container from consuming all node resources (CPU and memory), which is a denial-of-service attack vector that can make other workloads on the node unavailable
+- C) Resource limits prevent containers from writing to persistent volumes, which is a security concern
+- D) Resource limits are required by the Kubernetes NetworkPolicy API and must be set before NetworkPolicies are enforced
+
+#### Q20 Correct Answer
+
+B — Resource limits are a security control because they bound the blast radius of a compromised container. Without limits, a single container can consume all available CPU and memory on a node, starving other pods and potentially causing node instability. This is a denial-of-service risk that an attacker with container execution can exploit intentionally. The CIS Kubernetes Benchmark and Checkov both flag missing resource limits as security misconfigurations.
+
+#### Q20 Distractor Analysis
+
+- *Why A is incorrect:* Resource limits have clear security value beyond performance. The CIS Kubernetes Benchmark specifically requires resource limits as a security control, which is why Checkov maps `CKV_K8S_11` and `CKV_K8S_13` to resource limit enforcement.
+- *Why C is incorrect:* Resource limits govern CPU and memory allocation, not filesystem access. Persistent volume write access is controlled by volume permissions and security contexts, not resource limits.
+- *Why D is incorrect:* NetworkPolicy enforcement depends on the CNI plugin, not on resource limits. These are completely independent Kubernetes features with no dependency relationship.
+
+---
+
+Quiz — Module 12 | CIS-4350 | Texas Wesleyan University | Professor Nash

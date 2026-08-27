@@ -275,4 +275,20 @@ As you prepare for the quiz, be sure you can:
 
 ---
 
+## 9. Supplemental Resources
+
+**1. NIST Cybersecurity Framework 2.0 — Official Publication**
+[https://www.nist.gov/cyberframework](https://www.nist.gov/cyberframework)
+The official NIST CSF 2.0 homepage provides the full framework document, implementation guides, and quick-start guides for different organization types. CSF 2.0 added the Govern function and is directly tested on the Security+ SY0-701 exam.
+
+**2. GDPR Full Text — EUR-Lex Official Journal**
+[https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A32016R0679](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A32016R0679)
+The complete text of the General Data Protection Regulation. For exam and professional purposes, focus on Articles 5 (data processing principles), 25 (privacy by design), 32 (security of processing), and 33–34 (breach notification timelines). Essential reference for any scenario question involving EU personal data.
+
+**3. PCI Security Standards Council — PCI DSS v4.0 Resource Hub**
+[https://www.pcisecuritystandards.org/document_library](https://www.pcisecuritystandards.org/document_library)
+The PCI SSC document library provides the full PCI DSS v4.0 standard, a summary of changes from v3.2.1, and supporting guidance documents. Review the "At a Glance" summary for the 12 requirements — this is the level of detail tested on Security+.
+
+---
+
 End of Reading Guide — Module 14

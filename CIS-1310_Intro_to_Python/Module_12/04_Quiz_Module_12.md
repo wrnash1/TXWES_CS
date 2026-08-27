@@ -259,3 +259,250 @@ except ValueError as e:
 - *Why B is correct:* `check(5)` succeeds → prints `10`. `check(-3)` raises `ValueError` → the `print` of the result is abandoned, `check(4)` is skipped, and the `except` clause runs → prints `Error: negative: -3`.
 - *Why C is incorrect:* `check(5)` is called first and succeeds. `10` is printed before the exception occurs.
 - *Why D is incorrect:* `check(-3)` raises `ValueError` — it does not return `-6`. The `raise` statement stops execution of the function and the `try` block.
+
+---
+
+### Question 11
+
+What is the output of this code?
+
+```python
+try:
+    x = int('5')
+except ValueError:
+    print('error')
+else:
+    print('ok:', x)
+finally:
+    print('done')
+```
+
+- A) `ok: 5` then `done`
+- B) `error` then `done`
+- C) `ok: 5`
+- D) `done` only
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- *Why A is correct:* `int('5')` succeeds — no exception. `except` is skipped. `else` runs (no exception occurred) → `ok: 5`. `finally` always runs → `done`.
+- *Why B is incorrect:* `'5'` is a valid integer string. No `ValueError` is raised. `except` and its print are skipped entirely.
+- *Why C is incorrect:* `finally` always runs, even when the `try` block succeeds. `done` will always print.
+- *Why D is incorrect:* Both `else` and `finally` run when no exception occurs. Only `except` is skipped on success.
+
+---
+
+### Question 12
+
+What is the output of this code?
+
+```python
+try:
+    raise ValueError('first')
+except ValueError:
+    raise ValueError('second')
+except Exception:
+    print('caught')
+```
+
+- A) `caught`
+- B) `ValueError: second` is propagated — program terminates
+- C) `ValueError: first` then `ValueError: second`
+- D) The two exceptions cancel out and nothing happens
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* The second `raise ValueError('second')` occurs inside an `except` block, not inside the `try` block. The `except Exception:` clause only catches exceptions from the `try` block — not exceptions raised inside another `except` block.
+- *Why B is correct:* `raise ValueError('first')` is caught by `except ValueError:`. Inside that handler, `raise ValueError('second')` raises a new exception. Since this new raise is not inside a `try` block, it propagates uncaught and terminates the program with a traceback showing `ValueError: second`.
+- *Why C is incorrect:* When `ValueError('second')` is raised, execution does not continue to print both messages. The new exception propagates immediately.
+- *Why D is incorrect:* Python exceptions do not cancel each other out. The second raise propagates normally.
+
+---
+
+### Question 13
+
+Which statement about exception handling performance is correct?
+
+- A) `try` blocks are significantly slower than `if` statements even when no exception occurs
+- B) `try` blocks have near-zero overhead when no exception is raised
+- C) `except` clauses run even when no exception occurs, adding overhead
+- D) `finally` blocks execute before `try`, adding startup cost
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* In CPython, the overhead of a `try` block itself (with no exception) is minimal — typically a few nanoseconds. The EAFP (Easier to Ask Forgiveness than Permission) pattern is considered Pythonic partly because `try` is cheap when exceptions are rare.
+- *Why B is correct:* When no exception occurs, `try` blocks have near-zero overhead compared to `if` checks. The cost is only incurred when an exception is actually raised and the handler executes. This makes `try/except` efficient for the happy path.
+- *Why C is incorrect:* `except` clauses are only entered when an exception matches. They do not execute on every `try` block entry.
+- *Why D is incorrect:* `finally` blocks execute after `try` (and `except`/`else` if present). They never run before `try`.
+
+---
+
+### Question 14
+
+What is the output of this code?
+
+```python
+def risky():
+    try:
+        return 1
+    except Exception:
+        return 2
+    finally:
+        return 3
+
+print(risky())
+```
+
+- A) `1`
+- B) `2`
+- C) `3`
+- D) `1` then `3`
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* The `finally` block contains `return 3`, which overrides the `return 1` in the `try` block. When `finally` returns a value, that value replaces any pending return from `try` or `except`.
+- *Why B is incorrect:* No exception is raised, so `except` is never entered. The `return 2` is never reached.
+- *Why C is correct:* The `try` block prepares `return 1`, but `finally` always runs — and its `return 3` overrides the pending return. The caller receives `3`. This is a well-known Python gotcha: a `return` in `finally` silently discards the `try` block's return value.
+- *Why D is incorrect:* Only one value is returned. The `return 3` in `finally` replaces, not appends to, the return from `try`.
+
+---
+
+### Question 15
+
+What is the output of this code?
+
+```python
+class AppError(Exception):
+    pass
+
+class DatabaseError(AppError):
+    pass
+
+try:
+    raise DatabaseError('connection failed')
+except AppError as e:
+    print(f'App error: {e}')
+except DatabaseError as e:
+    print(f'DB error: {e}')
+```
+
+- A) `DB error: connection failed`
+- B) `App error: connection failed`
+- C) Both clauses run — `App error:` then `DB error:`
+- D) `TypeError` — `DatabaseError` is not a valid exception type
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `except AppError:` appears before `except DatabaseError:`. Since `DatabaseError` is a subclass of `AppError`, the first `except` clause matches. The `except DatabaseError:` clause is never reached.
+- *Why B is correct:* Python tests `except` clauses top to bottom and uses the first match. `DatabaseError` IS-A `AppError` (by inheritance), so `except AppError:` matches first and handles the exception.
+- *Why C is incorrect:* Only one `except` clause runs per exception, always the first match found.
+- *Why D is incorrect:* Any class that inherits from `BaseException` is a valid exception type. `DatabaseError` inherits from `AppError`, which inherits from `Exception`, which inherits from `BaseException` — fully valid.
+
+---
+
+### Question 16
+
+What does `except (ValueError, TypeError) as e:` do?
+
+- A) Catches only exceptions that are both `ValueError` and `TypeError` simultaneously
+- B) Catches `ValueError` and stores it in `e`; catches `TypeError` separately
+- C) Catches either `ValueError` or `TypeError` and binds the caught exception to `e`
+- D) `SyntaxError` — you cannot use `as` with a tuple of exception types
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* A single exception can only be one type at a time. The tuple syntax means "either of these types" — not "both simultaneously."
+- *Why B is incorrect:* The `as e` binding applies to whichever exception was actually caught. There is one `except` clause that handles both types — not two separate clauses.
+- *Why C is correct:* `except (ValueError, TypeError) as e:` catches either exception type and binds the caught instance to `e`. This is equivalent to two separate `except` clauses that share the same handler body.
+- *Why D is incorrect:* Using `as` with a tuple of exception types is valid syntax. `except (TypeError, ValueError) as e:` is a standard Python pattern.
+
+---
+
+### Question 17
+
+What does `assert x > 0, 'x must be positive'` do when `x = -1`?
+
+- A) Raises `ValueError: x must be positive`
+- B) Raises `AssertionError: x must be positive`
+- C) Prints `x must be positive` and continues
+- D) Raises `RuntimeError: assertion failed`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `assert` raises `AssertionError`, not `ValueError`. The type of exception is always `AssertionError` — the message you provide is passed as the error message.
+- *Why B is correct:* `assert condition, message` raises `AssertionError(message)` when `condition` is falsy. `x = -1` makes `x > 0` false, so `AssertionError: x must be positive` is raised.
+- *Why C is incorrect:* `assert` does not print a message and continue. It raises an exception when the condition is false.
+- *Why D is incorrect:* `RuntimeError` is not raised by `assert`. Python's assert statement specifically raises `AssertionError`.
+
+---
+
+### Question 18
+
+In Python, what is the difference between `raise` and `raise e` inside an `except` block?
+
+- A) No difference — both re-raise the caught exception
+- B) `raise` re-raises with the original traceback; `raise e` creates a new traceback starting at the current line
+- C) `raise e` is the correct syntax; bare `raise` is a `SyntaxError`
+- D) `raise` raises a new `RuntimeError`; `raise e` re-raises the original
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* There is an important difference. Bare `raise` preserves the original traceback completely. `raise e` creates a chained exception — the traceback shows the current `raise` line as the new raise point, with the original exception attached as context.
+- *Why B is correct:* Bare `raise` propagates the caught exception unchanged, preserving its original traceback for debugging. `raise e` (raising the bound variable) creates a new exception context, which can complicate tracebacks. For re-raising, bare `raise` is preferred.
+- *Why C is incorrect:* Both forms are valid Python syntax. Bare `raise` inside an `except` block is specifically documented as the idiom for re-raising.
+- *Why D is incorrect:* Bare `raise` does not create a new `RuntimeError`. It re-raises the same caught exception, preserving its type and message.
+
+---
+
+### Question 19
+
+What exception is raised by `'hello'[10]`?
+
+- A) `ValueError`
+- B) `TypeError`
+- C) `IndexError`
+- D) `KeyError`
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `ValueError` is for wrong values of the correct type — for example, `int('abc')`. Accessing an out-of-range index is not a value error.
+- *Why B is incorrect:* `TypeError` is for operations on incompatible types — for example, `'hello' + 5`. Indexing a string with an integer is a valid operation; the problem is the out-of-range position.
+- *Why C is correct:* `IndexError: string index out of range` is raised for any sequence (string, list, tuple) when the index is out of bounds. `'hello'` has indices 0–4; index 10 is out of range.
+- *Why D is incorrect:* `KeyError` is the dictionary equivalent — raised for missing dictionary keys. Strings and lists use indices, not keys.
+
+---
+
+### Question 20
+
+What is the purpose of defining a custom exception class?
+
+- A) To bypass Python's exception hierarchy and raise any object
+- B) To provide a specific, named exception type that callers can catch selectively and that carries domain-specific context
+- C) To replace the standard exception hierarchy with your own
+- D) Custom exceptions are only needed for performance optimization
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Custom exceptions must still inherit from `BaseException`. You cannot raise arbitrary objects as exceptions — `raise "oops"` is a `TypeError`.
+- *Why B is correct:* Custom exceptions allow callers to distinguish between your application's specific error conditions. `except DatabaseConnectionError:` is more precise and informative than `except Exception:`. They can also carry extra attributes (port numbers, query text, etc.) as domain context.
+- *Why C is incorrect:* Custom exceptions extend the standard hierarchy — they do not replace it. `class MyError(Exception): pass` inherits all of `Exception`'s behavior.
+- *Why D is incorrect:* Custom exceptions have nothing to do with performance. They are a design tool for expressing domain-specific error conditions clearly.

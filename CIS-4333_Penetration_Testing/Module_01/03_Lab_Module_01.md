@@ -188,3 +188,17 @@ Submit the following to the Canvas LMS assignment portal:
 ---
 
 *This lab is for authorized educational purposes only. All organizations and IP addresses are fictional. No actual systems are tested.*
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Scope Gap Analysis
+Review the fictional Lone Star Financial Services scenario. Identify at least three potential scope ambiguities or gaps in the scenario description — items that are not explicitly in scope or out of scope but could create confusion during testing. For each gap, write a one-sentence clarifying amendment that would be added to the RoE to resolve the ambiguity. Document your findings in a short table with columns: Ambiguity Identified, Risk if Unresolved, Proposed RoE Amendment.
+
+### Challenge 2: Third-Party Authorization Checklist
+The client later reveals that their web application at `api.lonestarfinancial.example` is hosted on a major cloud provider and uses a third-party CDN for static assets. Draft a short third-party authorization checklist — a structured list of steps the client must complete before testing of those components can begin. The checklist should address: identifying the third party, locating their penetration testing policy, the notification or approval process, and how authorization confirmation is documented in the RoE.
+
+### Reflection Questions
+1. How does the principle of explicit written authorization protect both the penetration tester and the client organization when an out-of-scope system is inadvertently contacted during testing?
+2. If a client insists that a verbal agreement is sufficient and refuses to sign an RoE, what ethical and legal obligations does the penetration tester have, and what is the correct professional response?

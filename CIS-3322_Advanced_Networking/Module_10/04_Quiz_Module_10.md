@@ -247,3 +247,220 @@ What is the most likely cause of the failure?
 - B is incorrect: NAT does not restrict translations based on whether the destination is a private or public address. The NAT rule translates the source address regardless of the destination. If routing exists to 172.20.5.5, the translation will occur.
 - C is correct: After PAT translates the source address, the router must route the packet to the destination 172.20.5.5. If no route exists (no default route and no specific route to 172.20.5.5), the router drops the packet. The translation table would show no entry because the NAT process depends on the packet being successfully routable after translation. Adding a default route or a specific route to the 172.20.0.0 network would resolve this.
 - D is incorrect: PAT does not have a practical translation limit for a single active host connection. The overload mechanism supports tens of thousands of simultaneous connections per public IP. A single host at 10.1.1.15 would not exhaust the table.
+
+---
+
+## Question 11
+
+A router has a static NAT entry: `ip nat inside source static 192.168.1.100 203.0.113.50`. An external host initiates a TCP connection to 203.0.113.50. What address does the router forward this packet to?
+
+- A) 203.0.113.50
+- B) 192.168.1.100
+- C) The router's inside interface IP address
+- D) The router drops the packet because static NAT only supports outbound traffic
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A is incorrect: 203.0.113.50 is the inside global (public) address. The purpose of static NAT is to translate inbound connections destined for the public address to the corresponding private address. The router does not forward to 203.0.113.50 internally.
+- B is correct: Static NAT creates a permanent bidirectional mapping. When an external host sends traffic to 203.0.113.50, the NAT router rewrites the destination to 192.168.1.100 (the inside local address) and forwards the packet to the internal host. This is what makes static NAT suitable for hosting servers.
+- C is incorrect: The inside interface IP is the router's own LAN address, not a translated destination. The router does not redirect inbound NAT traffic to itself.
+- D is incorrect: Static NAT is explicitly bidirectional. Unlike PAT (which only allows inside-initiated outbound sessions), static NAT allows external hosts to initiate connections to the mapped public IP.
+
+---
+
+## Question 12
+
+Which command displays the current NAT translation table including port numbers for PAT sessions?
+
+- A) `show ip nat statistics`
+- B) `show ip nat translations verbose`
+- C) `show ip nat translations`
+- D) `debug ip nat`
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- A is incorrect: `show ip nat statistics` shows summary counters — total active translations, hit/miss counts, and interface markings. It does not display individual translation entries with port numbers.
+- B is incorrect: Adding the `verbose` keyword to `show ip nat translations` provides additional detail about translation aging timers, but the standard command without verbose already shows port numbers in PAT entries.
+- C is correct: `show ip nat translations` displays the full translation table including protocol, inside local address with port, inside global address with port, outside local address, and outside global address for all active NAT and PAT sessions. This is the primary verification command for NAT troubleshooting.
+- D is incorrect: `debug ip nat` generates real-time translation event output to the console. It is a diagnostic tool, not a display command. Using it on a busy router generates enormous output and is not suitable for reading the translation table.
+
+---
+
+## Question 13
+
+A router performs PAT using a pool named INTERNET_POOL containing addresses 198.51.100.5 through 198.51.100.8 with the `overload` keyword. Currently 10,000 simultaneous sessions are active through 198.51.100.5. A new inside host initiates a connection. How does the router handle the new session?
+
+- A) The router drops the new connection because 198.51.100.5 is fully utilized
+- B) The router assigns the next pool address (198.51.100.6) and begins using it
+- C) The router continues using 198.51.100.5 and assigns a new unique port number to the new session
+- D) The router sends an ICMP Destination Unreachable message to the inside host
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A is incorrect: With PAT using a pool, the router does not abandon a pool address unless its port space is truly exhausted (all 65,535 ports in use simultaneously, which is extremely rare). But in standard pool-based PAT operation, when one address fills up, the router moves to the next address in the pool.
+- B is correct: PAT with a pool exhausts addresses sequentially. After the current address's port space becomes full, the router begins allocating from the next address in the pool (198.51.100.6). Each pool address can support tens of thousands of simultaneous sessions before the router advances.
+- C is incorrect: The router would continue using .5 if port space remains available on it. However, if .5 is truly saturated, it advances to .6. The exact behavior depends on implementation, but the defined pool behavior is to move to the next address when needed.
+- D is incorrect: NAT/PAT does not send ICMP Unreachable messages when a pool address is in use. The router either continues with the current address or moves to the next pool address.
+
+---
+
+## Question 14
+
+Which RFC 1918 private address range can be subnetted to provide subnets with up to 65,534 host addresses each?
+
+- A) 10.0.0.0/8
+- B) 172.16.0.0/12
+- C) 192.168.0.0/16
+- D) All three RFC 1918 ranges support subnets of this size
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- A is correct: 10.0.0.0/8 is a single Class A private block providing 16,777,216 total addresses. Subnetting it to /16 (for example) provides 256 subnets each with 65,534 usable host addresses. The /8 prefix length gives the most flexibility for creating large subnets.
+- B is incorrect: 172.16.0.0/12 spans 172.16.0.0 through 172.31.255.255 and provides 1,048,576 addresses. Subnetting to /17 or larger would approach but not exceed 65,534 hosts per subnet from within this block.
+- C is incorrect: 192.168.0.0/16 spans 192.168.0.0 through 192.168.255.255. Each natural /24 provides 254 hosts. A /16 subnet of this range provides 65,534 hosts but uses the entire RFC 1918 192.168.0.0/16 block — leaving no address space for additional subnets in that range.
+- D is incorrect: Only 10.0.0.0/8 is large enough to contain multiple subnets each with 65,534 hosts. The other ranges are too small to support multiple such large subnets.
+
+---
+
+## Question 15
+
+An engineer configures NAT with the following commands. After configuration, inside hosts can reach some internet destinations but not others. `show ip nat translations` shows entries being created correctly.
+
+```text
+ip route 0.0.0.0 0.0.0.0 203.0.113.254
+ip nat inside source list 1 interface Serial0/0/0 overload
+```
+
+What is the most likely cause of the partial connectivity?
+
+- A) The ACL is blocking some destinations but not others
+- B) The inside interface is missing the ip nat inside command
+- C) The ISP is rejecting translated packets because the source IP is a private address
+- D) Some destination servers are blocking PAT-translated source addresses
+
+**Correct Answer:** D
+
+**Distractor Analysis:**
+
+- A is incorrect: The ACL used in NAT identifies inside hosts eligible for translation — it is not a destination filter. All inside hosts permitted by ACL 1 are translated regardless of destination. A NAT ACL cannot selectively block some internet destinations.
+- B is incorrect: If the inside interface were missing `ip nat inside`, no translations would be created at all. The question states that `show ip nat translations` confirms entries are being created correctly, which means interface markings are working.
+- C is incorrect: The purpose of PAT is to replace the private source address with the public interface address. ISPs see the translated public IP as the source, not the RFC 1918 address. If the inside global address were private, this would cause routing issues — but the command uses the serial interface which presumably has a public IP from the ISP.
+- D is correct: Some destination servers apply IP reputation filtering, geographic blocks, or antispoofing rules that may block certain source addresses. If translations are confirmed working but specific destinations fail, the most likely cause is destination-side filtering. This is a real-world scenario where NAT is working correctly but some services block the source IP.
+
+---
+
+## Question 16
+
+A network engineer wants to verify which interfaces are marked as NAT inside and NAT outside on a router. Which command provides this information?
+
+- A) `show ip interface brief`
+- B) `show ip nat statistics`
+- C) `show running-config | section nat`
+- D) `show ip nat translations`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A is incorrect: `show ip interface brief` displays interface IP addresses and line protocol status. It does not indicate NAT inside/outside interface markings.
+- B is correct: `show ip nat statistics` displays summary information including the explicit lists of interfaces marked as inside and outside. The output includes an "Inside interfaces:" line and an "Outside interfaces:" line listing each marked interface by name. This is the fastest way to confirm NAT interface markings.
+- C is incorrect: While `show running-config | section nat` would show the `ip nat inside` and `ip nat outside` commands embedded in each interface stanza, it requires parsing the full output. `show ip nat statistics` is the direct command that lists interface markings in one place.
+- D is incorrect: `show ip nat translations` displays the active translation table entries. It shows address and port mappings but does not indicate which interfaces are marked inside or outside.
+
+---
+
+## Question 17
+
+When PAT is in use and an internal host at 10.0.0.5:52200 connects to a web server, the router creates a translation entry. The same router also has an internal host at 10.0.0.8 that happens to use source port 52200 for a different web connection. How does the router differentiate the two sessions in its translation table?
+
+- A) The router assigns different inside global port numbers to each session even if the inside local port numbers match
+- B) The router can only handle one session per source port number and drops the second connection
+- C) The router changes the destination port of one session to differentiate them
+- D) The router uses a different inside global IP address for each session
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- A is correct: PAT tracks sessions using the combination of inside local IP address, inside local port, inside global IP address, and inside global port. Even if two inside hosts happen to choose the same source port, the router assigns different inside global port numbers in the translation table to distinguish the sessions. This is the core mechanism that allows thousands of simultaneous connections through a single public IP.
+- B is incorrect: PAT does not limit one session per source port. Port uniqueness is maintained on the inside global (public) side, not the inside local (private) side. Multiple inside hosts can use the same source port simultaneously.
+- C is incorrect: PAT never modifies the destination port. Changing the destination port would break the connection because the server would receive traffic on the wrong port and reject it.
+- D is incorrect: Standard PAT uses a single inside global IP address (or a pool). Assigning different public IPs per session would be dynamic NAT, not PAT. PAT multiplexes sessions through the same public IP using port differentiation.
+
+---
+
+## Question 18
+
+A Cisco router has the following configuration. Which of the following statements correctly describes the behavior when host 192.168.10.50 sends traffic to 8.8.8.8?
+
+```text
+access-list 10 permit 192.168.10.0 0.0.0.255
+ip nat inside source list 10 pool PUBLIC overload
+ip nat pool PUBLIC 203.0.113.20 203.0.113.25 netmask 255.255.255.248
+interface GigabitEthernet0/0
+  ip nat inside
+interface GigabitEthernet0/1
+  ip nat outside
+```
+
+- A) The host's source address is translated to an address between 203.0.113.20 and 203.0.113.25 with a unique port number
+- B) The host's traffic is dropped because it does not have a static mapping
+- C) The host's source address is translated to 203.0.113.20 only, regardless of other active sessions
+- D) The pool addresses are added to the host's traffic as additional source addresses
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- A is correct: The configuration uses PAT (`overload`) with a named pool containing addresses 203.0.113.20 through 203.0.113.25. The router selects an address from the pool and assigns a unique source port, creating a PAT entry in the translation table. Multiple inside hosts share pool addresses with port differentiation.
+- B is incorrect: Static mappings are required only for static NAT. This configuration uses dynamic PAT with an ACL that matches the 192.168.10.0/24 subnet. Host .50 matches ACL 10 and is eligible for translation.
+- C is incorrect: The pool contains six addresses (.20 through .25). The router uses them sequentially as needed. It does not restrict all sessions to .20 unless only one address were in the pool.
+- D is incorrect: NAT translates (replaces) the source address — it does not add addresses. The original inside local address is replaced by the inside global address in the outbound packet header.
+
+---
+
+## Question 19
+
+What is the primary limitation of dynamic NAT (without overload) compared to PAT?
+
+- A) Dynamic NAT does not support TCP connections — only UDP
+- B) Dynamic NAT requires a public IP address for each simultaneous inside connection
+- C) Dynamic NAT cannot translate RFC 1918 addresses from the 10.0.0.0/8 range
+- D) Dynamic NAT only works with static routing and is incompatible with OSPF
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A is incorrect: Dynamic NAT supports TCP, UDP, ICMP, and other protocols. Protocol support is not the distinguishing factor between NAT types.
+- B is correct: Dynamic NAT creates one-to-one address translations from a pool. Each simultaneous inside connection consumes one public IP address from the pool. If the pool has 10 addresses, only 10 inside hosts can be translated at the same time. The 11th host must wait for a pool address to become available. PAT solves this by multiplexing thousands of connections onto each pool address using port tracking.
+- C is incorrect: Dynamic NAT translates any private address that matches the ACL criteria, including all RFC 1918 ranges (10.x.x.x, 172.16-31.x.x, 192.168.x.x). There is no restriction on which private range is used.
+- D is incorrect: NAT is independent of the routing protocol in use. Whether the router uses OSPF, EIGRP, static routes, or BGP has no bearing on NAT functionality.
+
+---
+
+## Question 20
+
+An engineer runs `show ip nat translations` and notices that translation entries for active sessions disappear after a few minutes, then reappear when new traffic is generated. What is the normal explanation for this behavior?
+
+- A) The NAT process is malfunctioning and needs to be restarted
+- B) NAT translation entries have idle timers and are removed after a configurable period of inactivity
+- C) The router is running low on memory and is purging translation entries to free resources
+- D) The ACL is periodically removing and reapplying itself, causing translations to reset
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A is incorrect: Translation entries timing out and being recreated when traffic resumes is normal NAT behavior, not a malfunction. The NAT process is working correctly.
+- B is correct: NAT and PAT translation entries have aging timers. Dynamic UDP translations typically expire after 5 minutes of inactivity. Dynamic TCP translations after 24 hours (configurable). Once a translation expires, the entry is removed from the table. When the inside host generates new traffic, a new translation is created. This is expected behavior and does not indicate a problem.
+- C is incorrect: Low memory would cause different symptoms — potentially affecting routing table maintenance or causing IOS instability. NAT aging is a design feature, not a memory management behavior.
+- D is incorrect: ACLs do not periodically reapply themselves. ACLs are static configuration entries that evaluate packets — they do not cause translations to reset.

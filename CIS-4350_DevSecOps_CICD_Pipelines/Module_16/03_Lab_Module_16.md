@@ -425,3 +425,34 @@ Submit all four deliverables as a single PDF or document via Canvas LMS before t
 | Kubernetes security (Part 3) | 30 | Security Context fully hardened; NetworkPolicy correct; OPA policy rejects non-compliant pod |
 | Pipeline design exam exercise (Part 4) | 25 | Two-step elimination applied; correct answers with justified analysis for all three scenarios |
 | **Total** | **100** | |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: End-to-End Pipeline Security Audit
+
+Conduct a security audit of your completed capstone pipeline from Lab Parts 1–4 and produce a gap analysis report.
+
+1. Review your full pipeline workflow YAML and list every security control present. For each control, record: the tool name, the pipeline stage, the STRIDE threat category it addresses, and whether it is a preventive gate (blocks merge/deploy) or a detective alert (reports but does not block).
+2. Cross-reference your control list against the DSOE exam domain map from Module 16 Reading Guide Section 1. Identify any exam domains that have no corresponding control in your pipeline.
+3. For each identified gap, write a remediation recommendation: the specific tool or configuration change needed, which pipeline stage it belongs in, and which compliance framework requirement it addresses (SOC 2, PCI-DSS, or HIPAA).
+4. Produce a one-page executive summary that characterizes your pipeline's current DSOMM maturity level with evidence, identifies the top three gaps, and proposes a prioritized 30-day remediation roadmap.
+
+### Challenge 2: Full-Stack Threat Model to Pipeline Traceability
+
+Produce a complete threat model to pipeline control traceability document for the Flask application from Lab Parts 1–4.
+
+1. Draw a DFD for the full system: developer workstation → GitHub → GitHub Actions CI → container registry → Kubernetes production cluster → end user browser. Include all external entities, processes, data stores, data flows, and trust boundaries.
+2. Apply STRIDE to each trust boundary. Document at least 12 threats (minimum 2 per STRIDE category).
+3. For each threat, map it to a specific control in your pipeline or cluster configuration. Use the format: Threat ID | STRIDE Category | Threat Title | Control | Control Stage | Control Type (preventive/detective/corrective).
+4. Identify any threats for which no control exists in your current pipeline. Write a GitHub issue title and description for each gap that could be used to track the remediation as a backlog item.
+
+### Reflection Questions
+
+1. You have built and audited a complete DevSecOps pipeline across all sixteen modules of this course. Looking back at the full control suite — pre-commit hooks, SAST, SCA, container scanning, secrets scanning, IaC scanning, artifact signing, admission control, runtime monitoring — describe the single most important architectural principle that unifies all of these controls, and explain how each control layer would fail in the absence of that principle.
+2. A colleague who has not taken this course asks: "We already have a firewall and run annual penetration tests. Why do we need all of these pipeline tools?" Write a 200-word response that explains the shift-left DevSecOps argument using concrete cost-of-defect data, and describe the specific class of attack that each module's primary tool is designed to prevent that a firewall and annual pen test cannot.
+
+---
+
+Lab 16 | CIS-4350 | Texas Wesleyan University | Professor Nash

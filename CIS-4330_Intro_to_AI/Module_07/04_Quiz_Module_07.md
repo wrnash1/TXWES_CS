@@ -254,4 +254,246 @@ A. Azure AI Vision — Spatial Analysis
 
 ---
 
+---
+
+## Question 11 (5 points)
+
+A developer calls the Azure AI Vision Analyze Image API with the `objects` feature enabled. How does the output of the `objects` feature differ from the `tags` feature?
+
+A. The `objects` feature returns bounding box coordinates for each detected item; the `tags` feature returns a list of keyword labels with no location information.
+
+B. The `objects` feature lists the dominant colors in the image; the `tags` feature counts the total number of objects.
+
+C. The `objects` feature applies sentiment analysis to the image; the `tags` feature identifies the image type.
+
+D. There is no difference — both features return identical results.
+
+### Q11 — Correct Answer
+
+A. The `objects` feature returns bounding box coordinates for each detected item; the `tags` feature returns a list of keyword labels with no location information.
+
+### Q11 — Distractor Analysis
+
+- B is incorrect: Dominant color analysis is a separate feature (`color`). Neither `objects` nor `tags` counts items or analyzes colors.
+- C is incorrect: Azure AI Vision does not perform sentiment analysis on images. The `tags` feature identifies objects and concepts, not image type.
+- D is incorrect: The two features return different data structures. `tags` gives keyword-confidence pairs; `objects` gives label-bounding-box-confidence structures.
+
+---
+
+## Question 12 (5 points)
+
+A developer trains a Custom Vision object detection model and notices that the model's Recall is much lower than its Precision. Which action is most likely to improve Recall without retraining the model?
+
+A. Add more training images to the dataset and retrain.
+
+B. Lower the probability threshold so the model flags more predictions as positive.
+
+C. Raise the probability threshold so only high-confidence detections are accepted.
+
+D. Switch from an object detection project to a classification project.
+
+### Q12 — Correct Answer
+
+B. Lower the probability threshold so the model flags more predictions as positive.
+
+### Q12 — Distractor Analysis
+
+- A is incorrect: Adding images requires retraining, which the question explicitly excludes from the solution.
+- C is incorrect: Raising the threshold further increases Precision but reduces Recall — the opposite of what is needed.
+- D is incorrect: Switching project types would discard all annotated bounding box training data and does not address the threshold issue.
+
+---
+
+## Question 13 (5 points)
+
+Which of the following scenarios requires the Azure AI Document Intelligence Layout model rather than the Read model?
+
+A. Extracting all words and lines from a single-page handwritten letter.
+
+B. Extracting table structure, reading order of multi-column text, and paragraph positions from a complex multi-page annual report.
+
+C. Converting an audio recording of a speech into a transcript.
+
+D. Classifying a scanned document as either an invoice or a contract.
+
+### Q13 — Correct Answer
+
+B. Extracting table structure, reading order of multi-column text, and paragraph positions from a complex multi-page annual report.
+
+### Q13 — Distractor Analysis
+
+- A is incorrect: Simple full-text extraction from a single page is well-served by the Read model; the Layout model's structural analysis is not needed.
+- C is incorrect: Audio transcription is handled by Azure AI Speech Service, not Document Intelligence.
+- D is incorrect: Document classification is handled by the Document Intelligence Custom Classification model, not the Layout model.
+
+---
+
+## Question 14 (5 points)
+
+A security system needs to determine whether a face presented to a camera is a real person physically present or a printed photograph being held up. Which Azure Face API capability addresses this?
+
+A. Face Identification
+
+B. Liveness Detection
+
+C. Face Grouping
+
+D. Attribute Analysis (age, emotion)
+
+### Q14 — Correct Answer
+
+B. Liveness Detection
+
+### Q14 — Distractor Analysis
+
+- A is incorrect: Face Identification matches a face to a database of enrolled individuals. It does not determine whether the face is physically present or a photo.
+- C is incorrect: Face Grouping organizes detected faces into clusters of similar appearance. It does not verify physical presence.
+- D is incorrect: Attribute analysis (age, smile, glasses) describes facial characteristics. It does not detect whether the face is physically real or a spoofed image.
+
+---
+
+## Question 15 (5 points)
+
+An e-commerce platform wants to automatically generate alt-text descriptions for all product images to comply with accessibility standards. Which Azure AI Vision feature generates a human-readable sentence describing the content of an image?
+
+A. Tags — returns keyword labels like "chair," "wood," "indoor."
+
+B. Objects — returns bounding boxes for detected items.
+
+C. Captions — returns a natural language sentence such as "a wooden rocking chair on a white background."
+
+D. Read — returns any text printed on the image.
+
+### Q15 — Correct Answer
+
+C. Captions — returns a natural language sentence such as "a wooden rocking chair on a white background."
+
+### Q15 — Distractor Analysis
+
+- A is incorrect: Tags return keyword-confidence pairs that are not grammatically structured sentences suitable for alt-text.
+- B is incorrect: Objects return detection results with coordinates — useful for locating items but not for generating readable descriptions.
+- D is incorrect: The Read feature extracts text printed in the image. If a product photo has no printed text, the Read feature returns nothing useful.
+
+---
+
+## Question 16 (5 points)
+
+A fashion retailer wants to enable shoppers to search for products by uploading a photo of a similar item they already own. The retailer has a catalog of 50,000 product images. Which Azure AI Vision feature is most appropriate for this use case?
+
+A. Image Captioning — generate a text description of the uploaded photo and use it as a search query.
+
+B. Image Embeddings / Visual Search — compare the embedding of the uploaded photo against catalog image embeddings to find similar items.
+
+C. Face API Liveness Detection — verify the shopper is a real person before allowing the search.
+
+D. Custom Vision Classification — classify the uploaded photo into one of 50,000 individual product categories.
+
+### Q16 — Correct Answer
+
+B. Image Embeddings / Visual Search — compare the embedding of the uploaded photo against catalog image embeddings to find similar items.
+
+### Q16 — Distractor Analysis
+
+- A is incorrect: Text-based search after captioning loses the visual nuances (color, texture, shape) that make visual similarity search valuable and would produce imprecise results.
+- C is incorrect: Liveness Detection checks whether a face is real. It has no relevance to product similarity search.
+- D is incorrect: Training 50,000 separate Custom Vision categories (one per product) is not a scalable or practical approach. Similarity search via embeddings does not require per-product classification.
+
+---
+
+## Question 17 (5 points)
+
+A city traffic management department deploys an AI Vision system to count vehicles by type (car, truck, bus, motorcycle) at major intersections. After six months, the city discovers the system undercounts motorcycles by 40% compared to manual counts. What is the most likely cause?
+
+A. The Azure AI Vision API has a known bug that skips every fifth vehicle detection.
+
+B. The training or prebuilt model data contained fewer motorcycle examples, resulting in lower recall for that class.
+
+C. Motorcycles travel faster than other vehicles, and the API cannot process moving objects.
+
+D. The Free pricing tier limits motorcycle detection to 100 vehicles per month.
+
+### Q17 — Correct Answer
+
+B. The training or prebuilt model data contained fewer motorcycle examples, resulting in lower recall for that class.
+
+### Q17 — Distractor Analysis
+
+- A is incorrect: There is no documented bug causing periodic skips in Azure AI Vision detection results.
+- C is incorrect: Computer vision object detection analyzes individual video frames or still images. The speed of objects does not prevent detection — image blur from motion can affect quality, but the scenario points to a systematic 40% undercount suggestive of training data imbalance.
+- D is incorrect: Pricing tier affects transaction throughput and quota, not per-class detection accuracy.
+
+---
+
+## Question 18 (5 points)
+
+An Azure Custom Vision model is trained to classify satellite images as one of three land-cover types: forest, urban, and water. A developer publishes the model and calls the prediction endpoint with a new satellite image. The response shows: `forest: 0.62, urban: 0.31, water: 0.07`. How should the developer interpret this result?
+
+A. The image contains 62% forest, 31% urban areas, and 7% water by pixel area.
+
+B. The model predicts forest as the most likely land-cover type with 62% confidence; the image is assigned the "forest" label when the threshold is set to 0.5 or below 0.62.
+
+C. The model is defective because the three scores should each equal exactly 0.33.
+
+D. The image must be retaken because scores below 0.70 are invalid.
+
+### Q18 — Correct Answer
+
+B. The model predicts forest as the most likely land-cover type with 62% confidence; the image is assigned the "forest" label when the threshold is set to 0.5 or below 0.62.
+
+### Q18 — Distractor Analysis
+
+- A is incorrect: Classification scores are class probabilities, not pixel area percentages. Segmentation would be needed for pixel-level land-cover proportions.
+- C is incorrect: Scores only equal 1/N when the model has equal confidence across all classes, which is rare. Softmax distributes probability mass based on the model's learned patterns.
+- D is incorrect: There is no 0.70 validity threshold. The developer sets a threshold based on the application's precision-recall trade-off requirements.
+
+---
+
+## Question 19 (5 points)
+
+Which of the following is a responsible AI concern specific to deploying Azure AI Vision Spatial Analysis in a workplace environment?
+
+A. Spatial Analysis requires a minimum of 100 cameras before it can produce accurate results.
+
+B. Continuous video monitoring of employees raises privacy concerns about consent, data retention, and potential discriminatory use of behavioral analytics data.
+
+C. Spatial Analysis is only accurate in outdoor environments with natural lighting.
+
+D. Spatial Analysis requires Custom Vision training before it can detect people in a space.
+
+### Q19 — Correct Answer
+
+B. Continuous video monitoring of employees raises privacy concerns about consent, data retention, and potential discriminatory use of behavioral analytics data.
+
+### Q19 — Distractor Analysis
+
+- A is incorrect: Spatial Analysis can operate with a single camera. There is no 100-camera minimum requirement.
+- C is incorrect: Spatial Analysis is designed for indoor environments such as retail stores, offices, and warehouses, as well as outdoor spaces. Lighting conditions affect accuracy but are not a blanket limitation.
+- D is incorrect: Spatial Analysis is a prebuilt capability that detects and tracks people without requiring Custom Vision training.
+
+---
+
+## Question 20 (5 points)
+
+A developer needs to read text from a receipt image taken with a smartphone. The receipt has slightly tilted text and some areas are smudged. Which Azure AI Vision feature handles this scenario, and what is a realistic expectation about output quality?
+
+A. The Image Analysis `tags` feature; it will label the receipt as a document type.
+
+B. The Read API; it is designed for real-world image OCR including tilted and low-quality text, but accuracy may be reduced in heavily smudged areas.
+
+C. The Face API `attributes` feature; it will extract numbers and dates from the image.
+
+D. Custom Vision classification; it will categorize the image as a receipt versus non-receipt.
+
+### Q20 — Correct Answer
+
+B. The Read API; it is designed for real-world image OCR including tilted and low-quality text, but accuracy may be reduced in heavily smudged areas.
+
+### Q20 — Distractor Analysis
+
+- A is incorrect: The `tags` feature identifies objects and concepts in images. It does not extract text content from receipts.
+- C is incorrect: The Face API is for analyzing human faces. It has no text extraction capability.
+- D is incorrect: Custom Vision classification categorizes the whole image into predefined classes. It does not extract text content.
+
+---
+
 End of Quiz — Module 07

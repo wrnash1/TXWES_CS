@@ -439,3 +439,211 @@ Submit all of the following through the course LMS:
 | Analysis Question 4 (/etc/hosts override) | 10 |
 | Analysis Question 5 (seven-layer methodology) | 15 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+**Challenge Step 1 — Static routing between two network namespaces**
+
+Linux network namespaces allow you to simulate multiple isolated network stacks on a single
+machine. Create two namespaces connected by a virtual Ethernet pair and configure static
+routing between them:
+
+```bash
+sudo ip netns add ns_left
+sudo ip netns add ns_right
+
+sudo ip link add veth_left type veth peer name veth_right
+
+sudo ip link set veth_left netns ns_left
+sudo ip link set veth_right netns ns_right
+
+sudo ip netns exec ns_left ip link set lo up
+sudo ip netns exec ns_right ip link set lo up
+sudo ip netns exec ns_left ip link set veth_left up
+sudo ip netns exec ns_right ip link set veth_right up
+
+sudo ip netns exec ns_left  ip addr add 192.168.10.1/24 dev veth_left
+sudo ip netns exec ns_right ip addr add 192.168.20.1/24 dev veth_right
+
+sudo ip netns exec ns_left  ip route show
+sudo ip netns exec ns_right ip route show
+```
+
+Now attempt to ping across namespaces — this will fail because there is no route between
+the two /24 subnets:
+
+```bash
+sudo ip netns exec ns_left ping -c 2 192.168.20.1
+```
+
+Add static routes so each namespace knows how to reach the other's subnet via the veth
+peer address:
+
+```bash
+sudo ip netns exec ns_left  ip route add 192.168.20.0/24 via 192.168.10.1 dev veth_left
+sudo ip netns exec ns_right ip route add 192.168.10.0/24 via 192.168.20.1 dev veth_right
+
+sudo ip netns exec ns_left  ip route show
+sudo ip netns exec ns_right ip route show
+
+sudo ip netns exec ns_left ping -c 4 192.168.20.1
+sudo ip netns exec ns_right ping -c 4 192.168.10.1
+```
+
+Clean up:
+
+```bash
+sudo ip netns del ns_left
+sudo ip netns del ns_right
+```
+
+Document the routing table in each namespace before and after adding the routes, and the
+ping output after the routes are added. Explain in two sentences why the first ping attempt
+failed and what the kernel does when it receives a packet destined for a network that has
+no matching route entry.
+
+**Challenge Step 2 — DNS resolution tracing and cache inspection**
+
+Perform a detailed analysis of the full DNS resolution chain on your system, from the
+resolver library through the stub resolver to the upstream server:
+
+```bash
+resolvectl status
+resolvectl dns
+cat /etc/resolv.conf
+cat /etc/nsswitch.conf | grep hosts
+```
+
+Trace a full DNS lookup from first principles using dig with increasing verbosity:
+
+```bash
+dig +short google.com
+dig google.com
+dig +noall +answer +authority google.com
+dig +trace google.com 2>&1 | head -40
+```
+
+Compare stub resolver behavior versus direct query:
+
+```bash
+dig @127.0.0.53 google.com
+dig @8.8.8.8 google.com
+dig @1.1.1.1 google.com
+```
+
+Inspect the TTL countdown — query the same record twice and observe the TTL decreasing
+as the cached record ages:
+
+```bash
+dig +noall +answer google.com
+sleep 5
+dig +noall +answer google.com
+```
+
+Test reverse DNS lookup (PTR record):
+
+```bash
+dig -x 8.8.8.8
+dig -x $(dig +short google.com | head -1)
+```
+
+Flush the systemd-resolved cache and observe the TTL reset:
+
+```bash
+sudo resolvectl flush-caches
+resolvectl statistics
+dig +noall +answer google.com
+sleep 3
+dig +noall +answer google.com
+```
+
+Document: (1) the TTL value from the first and second queries before cache flush, (2) the
+TTL value from the first query after cache flush. Explain in three sentences how DNS TTL
+caching reduces query volume, why setting TTL too low causes performance problems, and why
+setting TTL too high causes problems when IP addresses change.
+
+**Challenge Step 3 — Network performance measurement and interface statistics**
+
+Measure network throughput between your VM and a remote host, and build a baseline
+monitoring script that tracks interface statistics over time:
+
+```bash
+ip -s link show ens33
+cat /proc/net/dev
+ss -s
+```
+
+Install iperf3 for controlled throughput testing:
+
+```bash
+sudo apt install -y iperf3
+iperf3 -s -D
+iperf3 -c 127.0.0.1 -t 10
+iperf3 -c 127.0.0.1 -t 10 -u -b 100M
+pkill iperf3
+```
+
+Write a script that samples interface statistics every 5 seconds and reports throughput:
+
+```bash
+cat > ~/lab09/netmon.sh << 'EOF'
+#!/usr/bin/env bash
+set -euo pipefail
+
+IFACE="${1:-ens33}"
+INTERVAL=5
+SAMPLES=6
+
+if ! ip link show "$IFACE" &>/dev/null; then
+    echo "Interface $IFACE not found. Available interfaces:" >&2
+    ip -o link show | awk -F': ' '{print $2}' >&2
+    exit 1
+fi
+
+get_bytes() {
+    local dir="$1"
+    cat /proc/net/dev | awk -v iface="${IFACE}:" -v dir="$dir" '
+        $1 == iface {
+            if (dir == "rx") print $2
+            else print $10
+        }'
+}
+
+echo "Monitoring $IFACE — sampling every ${INTERVAL}s for $((SAMPLES * INTERVAL))s"
+printf "%-20s %12s %12s\n" "Timestamp" "RX KB/s" "TX KB/s"
+
+prev_rx=$(get_bytes rx)
+prev_tx=$(get_bytes tx)
+
+for (( i=1; i<=SAMPLES; i++ )); do
+    sleep "$INTERVAL"
+    curr_rx=$(get_bytes rx)
+    curr_tx=$(get_bytes tx)
+    rx_rate=$(( (curr_rx - prev_rx) / INTERVAL / 1024 ))
+    tx_rate=$(( (curr_tx - prev_tx) / INTERVAL / 1024 ))
+    printf "%-20s %12s %12s\n" "$(date +%H:%M:%S)" "${rx_rate}" "${tx_rate}"
+    prev_rx=$curr_rx
+    prev_tx=$curr_tx
+done
+EOF
+chmod +x ~/lab09/netmon.sh
+mkdir -p ~/lab09
+chmod +x ~/lab09/netmon.sh
+```
+
+Run the monitor while generating traffic in the background:
+
+```bash
+~/lab09/netmon.sh ens33 &
+MONITOR_PID=$!
+dd if=/dev/urandom bs=1M count=50 | nc -q 1 127.0.0.1 9999 2>/dev/null || true
+sleep 20
+wait $MONITOR_PID
+```
+
+Document the RX and TX KB/s readings during the dd traffic generation versus idle periods.
+Explain in two sentences what /proc/net/dev contains, why it is preferable to parsing ip -s
+link output in a script, and what the difference between RX errors and RX dropped counters
+indicates about network health.

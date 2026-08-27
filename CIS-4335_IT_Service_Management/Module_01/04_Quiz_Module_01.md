@@ -160,3 +160,153 @@ An organization is considering outsourcing its server maintenance to a cloud pro
 Correct answer: C
 
 Distractor analysis: C is correct because the Partners and Suppliers dimension covers relationships with external parties, including contracts, SLA commitments, and vendor evaluation. A is incorrect because Organizations and People focuses on internal roles, culture, and accountability, not external vendor relationships. B is incorrect because Information and Technology covers technical tools and data infrastructure, not the contractual aspects of a cloud provider. D is incorrect because Value Streams and Processes covers internal workflow design, not supplier relationship management.
+
+---
+
+## Question 11 (5 points)
+
+Which of the following is the correct definition of "outcome" in ITIL 4?
+
+* A) A tangible deliverable produced by a specific service activity
+* B) A result for a stakeholder enabled by one or more outputs
+* C) The financial return generated from a service investment
+* D) A documented requirement agreed upon in a service level agreement
+
+Correct answer: B
+
+Distractor analysis: B is correct because ITIL 4 distinguishes "outputs" (tangible deliverables of activities) from "outcomes" (results achieved by stakeholders because of those outputs). A is incorrect because that describes an output, not an outcome. C is incorrect because ITIL 4 defines outcomes in terms of stakeholder results, not financial metrics specifically. D is incorrect because that describes a requirement or SLA commitment, not the definition of an outcome.
+
+---
+
+## Question 12 (5 points)
+
+The ITIL 4 Guiding Principle "Progress Iteratively with Feedback" is most closely aligned with which modern work practice?
+
+* A) Waterfall software development
+* B) Formal change advisory board reviews
+* C) Agile sprint-and-review cycles
+* D) Annual IT strategy planning sessions
+
+Correct answer: C
+
+Distractor analysis: C is correct because Agile sprint cycles embody iterative progress with regular retrospectives and stakeholder feedback between increments — exactly what the principle prescribes. A is incorrect because waterfall development completes phases sequentially before gathering feedback at the end, which contradicts iterative progress. B is incorrect because formal CAB reviews are a governance control mechanism, not an iterative feedback loop. D is incorrect because annual planning is a single large increment with no intermediate feedback cycles.
+
+---
+
+## Question 13 (5 points)
+
+An organization discovers that its end users frequently bypass the official service portal and contact IT staff directly, preventing consistent ticket tracking. Which ITIL 4 Guiding Principle is most being violated?
+
+* A) Keep It Simple and Practical
+* B) Collaborate and Promote Visibility
+* C) Optimize and Automate
+* D) Think and Work Holistically
+
+Correct answer: B
+
+Distractor analysis: B is correct because bypassing the official channel hides work, creates information silos, and prevents visibility into service demand — all violations of the "Collaborate and Promote Visibility" principle. A is incorrect because Keep It Simple is about eliminating complexity, not about transparency of information. C is incorrect because Optimize and Automate concerns efficiency, not the visibility or communication breakdowns described. D is incorrect because Think and Work Holistically addresses considering the whole system, not specifically the transparency and collaboration failure in this scenario.
+
+---
+
+## Question 14 (5 points)
+
+Which of the following statements about the ITIL 4 Service Value System is accurate?
+
+* A) The SVS was introduced in ITIL v3 and updated in ITIL 4 with two new components.
+* B) The SVS can only be applied to large enterprises with dedicated IT departments.
+* C) The SVS takes opportunity and demand as inputs and produces value as its output.
+* D) The SVS replaces all previous IT frameworks including COBIT and ISO/IEC 20000.
+
+Correct answer: C
+
+Distractor analysis: C is correct and is a core SVS fact: inputs are opportunity and demand; the output is value. A is incorrect because the SVS is a new ITIL 4 construct, not an update of an ITIL v3 model. B is incorrect because ITIL 4 and the SVS apply to organizations of any size. D is incorrect because ITIL 4 complements and integrates with other frameworks; it does not replace them.
+
+---
+
+## Question 15 (5 points)
+
+An IT service manager states: "Our backup service stores and restores data perfectly, but it only runs during business hours, so users have lost work from overnight system failures." Which ITIL 4 concept does this scenario best illustrate?
+
+* A) A service that has warranty but lacks utility
+* B) A service that has utility but lacks adequate warranty
+* C) A service that has both utility and warranty
+* D) A service that lacks both utility and warranty
+
+Correct answer: B
+
+Distractor analysis: B is correct because the backup service functions correctly (stores and restores data = utility, fit for purpose) but does not provide coverage when it is needed most — overnight hours — demonstrating a warranty failure (not fit for use at all required times). A is incorrect because the service clearly has utility. C is incorrect because adequate warranty requires the service to be available when needed. D is incorrect because utility is present.
+
+---
+
+## Question 16 (5 points)
+
+Which of the seven ITIL 4 Guiding Principles best describes an organization's decision to automate repetitive password-reset tickets so that IT staff can focus on complex problem-solving?
+
+* A) Focus on Value
+* B) Keep It Simple and Practical
+* C) Start Where You Are
+* D) Optimize and Automate
+
+Correct answer: D
+
+Distractor analysis: D is correct because the principle explicitly calls for using automation for repetitive tasks and reserving human judgment for work where it adds the most value. A is incorrect because Focus on Value is about ensuring all actions contribute to stakeholder value, not specifically about automation. B is incorrect because Keep It Simple addresses eliminating unnecessary complexity, not automating repetitive work. C is incorrect because Start Where You Are is about assessing current capability before redesigning, not about automation decisions.
+
+---
+
+## Question 17 (5 points)
+
+A university's IT department manages its own servers, develops custom software for admissions, and contracts a third party for network monitoring. In ITIL 4, which term describes the university's IT department in relation to the admissions office?
+
+* A) Service consumer
+* B) Sponsor
+* C) Internal service provider
+* D) External service provider
+
+Correct answer: C
+
+Distractor analysis: C is correct because the IT department operates within the same organization as the admissions office and delivers services to it — making it an internal service provider. A is incorrect because the IT department delivers the service rather than consuming it. B is incorrect because a sponsor authorizes funding; that role belongs to the budget-holder, not the IT department. D is incorrect because an external service provider exists outside the consumer's organization; the IT department is part of the same university.
+
+---
+
+## Question 18 (5 points)
+
+The ITIL 4 practice category that includes Incident Management, Problem Management, and Service Desk is called:
+
+* A) General Management Practices
+* B) Technical Management Practices
+* C) Service Management Practices
+* D) Operational Management Practices
+
+Correct answer: C
+
+Distractor analysis: C is correct because ITIL 4 classifies Incident Management, Problem Management, and Service Desk under Service Management Practices — the largest group with 17 practices. A is incorrect because General Management Practices include broader business-oriented practices such as Risk Management and Knowledge Management. B is incorrect because Technical Management Practices cover infrastructure, software development, and deployment — not service desk operations. D is incorrect because "Operational Management Practices" is not an ITIL 4 category name.
+
+---
+
+## Question 19 (5 points)
+
+Which external factor category in the PESTLE model would most directly influence an IT organization's decision to change its data retention policies due to new national privacy legislation?
+
+* A) Political
+* B) Economic
+* C) Legal
+* D) Environmental
+
+Correct answer: C
+
+Distractor analysis: C is correct because national privacy legislation is a legal factor — it imposes legally binding compliance requirements on data retention and handling. A is incorrect because political factors relate to government stability, policy preferences, and regulatory priorities but are distinct from enacted legislation itself. B is incorrect because economic factors relate to financial conditions, market dynamics, and cost pressures. D is incorrect because environmental factors concern sustainability, energy use, and ecological considerations.
+
+---
+
+## Question 20 (5 points)
+
+An organization's IT team is designing a new cloud migration service. During planning, they discuss governance structures, service workflow automation, vendor SLA requirements, and team training programs. Which statement best reflects ITIL 4 best practice?
+
+* A) The team should focus exclusively on the technical migration steps before addressing people and processes.
+* B) Governance should be designed last so it reflects actual operational experience.
+* C) All four dimensions should be considered together to avoid gaps and risk in the service design.
+* D) Vendor SLAs are irrelevant until the service is in production.
+
+Correct answer: C
+
+Distractor analysis: C is correct because ITIL 4's Four Dimensions framework requires simultaneous consideration of Organizations and People, Information and Technology, Partners and Suppliers, and Value Streams and Processes in every service design. A is incorrect because neglecting people, process, and vendor dimensions during planning is a root cause of failed service deployments. B is incorrect because governance must be planned before deployment, not after. D is incorrect because SLA terms must be agreed before service go-live; negotiating them post-launch creates operational and legal risk.

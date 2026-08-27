@@ -166,6 +166,179 @@ In Ansible, what is the purpose of a **handler**?
 
 ---
 
+**Question 11** (5 points)
+
+An administrator needs to run a command on 20 servers simultaneously using a bash loop and SSH. The private key for all servers is at `~/.ssh/fleet.key`. Which loop correctly connects without host key prompts for previously unknown hosts?
+
+- A) `for h in "${HOSTS[@]}"; do ssh -i ~/.ssh/fleet.key $h "uptime"; done`
+- B) `for h in "${HOSTS[@]}"; do ssh -i ~/.ssh/fleet.key -o StrictHostKeyChecking=accept-new $h "uptime"; done`
+- C) `for h in "${HOSTS[@]}"; do ssh -i ~/.ssh/fleet.key -o StrictHostKeyChecking=no $h "uptime"; done`
+- D) `for h in "${HOSTS[@]}"; do ssh -i ~/.ssh/fleet.key --no-verify $h "uptime"; done`
+
+**Correct Answer: B**
+
+*Explanation: `StrictHostKeyChecking=accept-new` automatically accepts and saves new host keys (for hosts not yet in `known_hosts`) but still rejects changed keys — protecting against MITM attacks on known hosts. `StrictHostKeyChecking=no` accepts ALL key changes including potentially malicious ones, which is a security risk. Option A would prompt interactively for unknown hosts. Option D is invalid syntax.*
+
+---
+
+**Question 12** (5 points)
+
+Which `rsync` option preserves file permissions, timestamps, symbolic links, and ownership in a single flag?
+
+- A) `-r` (recursive)
+- B) `-p` (preserve permissions)
+- C) `-a` (archive mode)
+- D) `-z` (compress during transfer)
+
+**Correct Answer: C**
+
+*Explanation: The `-a` (archive) flag is equivalent to `-rlptgoD`: recursive, symlinks, permissions, timestamps, group, owner, and device files. It is the standard flag for backup-style copies where you want the destination to be an exact replica. `-r` alone is recursive but does not preserve metadata. `-p` preserves permissions only. `-z` compresses data in transit.*
+
+---
+
+**Question 13** (5 points)
+
+What does `ssh-copy-id -i ~/.ssh/id_ed25519.pub user@remote-server` accomplish?
+
+- A) It copies the private key to the remote server for passwordless sudo.
+- B) It appends the specified public key to the remote user's `~/.ssh/authorized_keys` file.
+- C) It replaces all existing authorized keys with the specified public key.
+- D) It generates a new key pair on the remote server.
+
+**Correct Answer: B**
+
+*Explanation: `ssh-copy-id` appends (not replaces) the specified public key to `~/.ssh/authorized_keys` on the remote host. It connects using the current authentication method (typically password) and then adds the key. This is the safe, standard way to deploy keys without accidentally deleting existing authorized keys. It also sets correct permissions on the `.ssh` directory and `authorized_keys` file.*
+
+---
+
+**Question 14** (5 points)
+
+An administrator uses `ssh -J bastion.corp.com app-server-01` to reach an internal server via a jump host. What is the advantage of this approach over traditional ProxyCommand with netcat?
+
+- A) `-J` is faster because it bypasses encryption on the intermediate hop.
+- B) `-J` creates a fully end-to-end encrypted connection directly to the target — the jump host can only see that a connection passes through it, not the connection's content.
+- C) `-J` allows the jump host to inspect and filter the connection content for security.
+- D) `-J` requires no SSH server running on the jump host.
+
+**Correct Answer: B**
+
+*Explanation: SSH's ProxyJump (`-J`) creates a direct TCP connection through the jump host using SSH's built-in forwarding. The actual SSH session is end-to-end encrypted between the client and the final destination — the jump host cannot read the session content. This differs from traditional approaches where some implementations could expose unencrypted traffic on the intermediate hop.*
+
+---
+
+**Question 15** (5 points)
+
+In an Ansible inventory file, which format correctly defines a group named `webservers` containing two hosts with specific variables?
+
+- A)
+
+```ini
+[webservers]
+web1.example.com http_port=80
+web2.example.com http_port=8080
+```
+
+- B)
+
+```ini
+[webservers]
+web1.example.com
+web2.example.com
+[webservers:vars]
+http_port=80
+```
+
+- C)
+
+```ini
+webservers:
+  - web1.example.com
+  - web2.example.com
+```
+
+- D) Both A and B are valid; they differ only in whether variables are per-host or per-group.
+
+**Correct Answer: D**
+
+*Explanation: Both INI-format approaches are valid. Option A sets variables per host (each host can have a different value). Option B uses the `[group:vars]` section to set the same variable for all hosts in the group. Option C is YAML format syntax (valid but only with the `.yml` inventory extension, not `.ini`). Ansible supports both INI and YAML inventory formats.*
+
+---
+
+**Question 16** (5 points)
+
+Which `sshd_config` directive is the most direct way to prevent brute-force password attacks by limiting the number of authentication attempts per connection?
+
+- A) `MaxAuthTries 3`
+- B) `MaxSessions 1`
+- C) `LoginGraceTime 30`
+- D) `PasswordAuthentication no`
+
+**Correct Answer: A**
+
+*Explanation: `MaxAuthTries` limits the number of authentication attempts per connection. After exceeding half this value, failures are logged; after exceeding the full value, the connection is dropped. Typical hardened values are 3-6. `LoginGraceTime` limits the total time before an unauthenticated connection is dropped. `PasswordAuthentication no` eliminates password attacks entirely (best choice) but the question asks about limiting attempts, not eliminating them.*
+
+---
+
+**Question 17** (5 points)
+
+What is the purpose of `ssh-agent` and the `ssh-add` command?
+
+- A) `ssh-agent` manages sshd process lifecycle; `ssh-add` adds keys to the authorized_keys file.
+- B) `ssh-agent` holds private keys decrypted in memory so the passphrase is not required for every connection; `ssh-add` loads keys into the agent.
+- C) `ssh-agent` rotates SSH host keys periodically; `ssh-add` triggers manual rotation.
+- D) `ssh-agent` provides key management for the `root` account; `ssh-add` distributes keys to managed systems.
+
+**Correct Answer: B**
+
+*Explanation: `ssh-agent` is a background process that holds private keys in decrypted form in memory. Once a key is loaded with `ssh-add`, the agent handles cryptographic operations without prompting for the passphrase on every use. Keys are lost when the agent exits or the session ends. The `SSH_AUTH_SOCK` environment variable points SSH clients to the agent's socket.*
+
+---
+
+**Question 18** (5 points)
+
+An Ansible playbook task uses `when: ansible_os_family == "RedHat"`. What is `ansible_os_family` and where does it come from?
+
+- A) A custom variable defined in the playbook's `vars:` section
+- B) A fact gathered automatically by Ansible from the managed node during the setup/gather_facts phase
+- C) A variable passed from the inventory file that identifies the host type
+- D) A built-in Ansible constant that must be manually defined in `ansible.cfg`
+
+**Correct Answer: B**
+
+*Explanation: Ansible facts are variables collected automatically about managed nodes at the start of each play by the `setup` module (also called gather_facts). `ansible_os_family` is one of hundreds of facts that includes OS family, distribution name, version, architecture, IP addresses, and more. These facts allow conditional task execution based on the target system's properties without requiring the operator to pre-configure variables.*
+
+---
+
+**Question 19** (5 points)
+
+An administrator wants to use `rsync` to synchronize a local directory to a remote server, ensuring that files deleted locally are also deleted from the remote destination. Which flag enables this behavior?
+
+- A) `--remove-deleted`
+- B) `--delete`
+- C) `--sync`
+- D) `--mirror`
+
+**Correct Answer: B**
+
+*Explanation: `rsync --delete` removes files from the destination that no longer exist in the source. Without this flag, rsync only copies new and changed files but never removes destination files. The complete flag for a mirror-style sync is `rsync -a --delete source/ dest/`. Be cautious: if source and destination arguments are swapped, `--delete` will delete from what was intended to be the source.*
+
+---
+
+**Question 20** (5 points)
+
+Which directive in `~/.ssh/config` causes all SSH connections through a bastion host to be multiplexed over a single TCP connection, improving speed for repeated connections?
+
+- A) `Compression yes`
+- B) `ControlMaster auto` combined with `ControlPath ~/.ssh/sockets/%h_%p_%r`
+- C) `ServerAliveInterval 30`
+- D) `TCPKeepAlive yes`
+
+**Correct Answer: B**
+
+*Explanation: SSH multiplexing (`ControlMaster auto` + `ControlPath`) allows multiple SSH sessions to share a single underlying TCP connection and authentication. The first connection creates the master socket; subsequent connections reuse it without re-authenticating. This dramatically speeds up tools like Ansible that make many SSH connections to the same hosts. `Compression yes` compresses data; `ServerAliveInterval` sends keepalive packets; `TCPKeepAlive` enables OS-level TCP keepalives — none of these are multiplexing.*
+
+---
+
 ### Answer Key
 
 | Question | Answer |
@@ -180,3 +353,13 @@ In Ansible, what is the purpose of a **handler**?
 | 8 | C |
 | 9 | B |
 | 10 | B |
+| 11 | B |
+| 12 | C |
+| 13 | B |
+| 14 | B |
+| 15 | D |
+| 16 | A |
+| 17 | B |
+| 18 | B |
+| 19 | B |
+| 20 | B |

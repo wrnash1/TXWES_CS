@@ -181,3 +181,24 @@ Submit your completed lab document to the Canvas assignment portal before the mo
 | Part 3: Shared Responsibility | 30 | Responsibility matrix complete and accurate; EC2 vs. RDS boundary correctly explained; PCI DSS actions specific and actionable |
 | Part 4: Architecture Plan | 20 | Region selection justified using all four criteria; HA vs. DR distinction accurate and clearly stated |
 | **Total** | **100** | |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Cross-Account AZ ID Verification
+Using the AWS CLI, retrieve the AZ IDs for `us-east-1` in your account. If you have access to a second AWS account (or a peer in class has one), compare the AZ name-to-ID mapping between the two accounts.
+1. Run `aws ec2 describe-availability-zones --region us-east-1 --query "AvailabilityZones[*].{Name:ZoneName,ID:ZoneId}" --output table` in your account.
+2. Record the mapping of AZ names to AZ IDs.
+3. Compare your mapping to a classmate's output. Document whether `us-east-1a` maps to the same physical AZ ID in both accounts.
+4. Write a two-sentence explanation of why AWS randomizes AZ name assignments per account and when an architect must use AZ IDs instead of AZ names.
+
+### Challenge 2: Service Availability Comparison Across Regions
+Using the AWS Regional Services List and the AWS CLI, compare service availability between `us-east-1` and a less common Region such as `ap-east-1` (Hong Kong).
+1. Navigate to https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services/ and identify three services available in `us-east-1` that are NOT available in `ap-east-1`.
+2. For each missing service, describe an alternative architecture pattern that would allow a workload deployed in `ap-east-1` to still leverage that service (for example, cross-region API calls, service proxies, or alternative AWS services).
+3. Run `aws ec2 describe-availability-zones --region ap-east-1 --output table` and record the number of AZs available. Compare to `us-east-1`.
+
+### Reflection Questions
+1. After completing both challenges, explain in your own words why a solutions architect must verify service availability in a target Region *before* finalizing an architecture design. Provide one concrete example of how missing a service availability check could cause a project delay.
+2. How does the AWS Well-Architected Framework Reliability pillar principle of "use fault isolation boundaries" apply to the AZ and Region concepts you explored in this lab? Which fault isolation boundaries did you work with, and what failure scenarios does each one protect against?

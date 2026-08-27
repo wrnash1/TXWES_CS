@@ -4,7 +4,7 @@
 
 **Certification Alignment:** JSE — Certified Associate in JavaScript Programming (OpenEDG / JS Institute)
 
-**Instructions:** This quiz covers Module 01 material. Choose the single best answer for each question.
+**Instructions:** This quiz covers Module 01 material. Choose the single best answer for each question. Each question is worth 5 points (20 questions × 5 points = 100 points).
 
 ---
 
@@ -211,3 +211,216 @@ What is an **expression** in JavaScript?
 - *Why B is correct:* An expression is any syntactically valid unit of code that resolves to a value. Examples: `42`, `'hello'`, `x + 1`, `Math.sqrt(9)`, `a > b`. Expressions can appear inside statements.
 - *Why C is incorrect:* That describes a function declaration, which is a specific type of statement.
 - *Why D is incorrect:* That describes a comment. Comments are not code — they are ignored by the engine entirely and produce no value.
+
+---
+
+### Question 11
+
+Which of the following is a valid way to write a **multi-line comment** in JavaScript?
+
+- A) `// This is line 1 // This is line 2`
+- B) `<!-- This is a comment -->`
+- C) `/* This spans multiple lines */`
+- D) `** This is a block comment **`
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `//` starts a single-line comment that runs only to the end of that line. Using `//` again on the same line does not extend a comment; it just adds another `//` inside an already-commented line.
+- *Why B is incorrect:* `<!-- -->` is an HTML comment. The JavaScript engine does not recognize this syntax as a comment; it will produce a syntax error in a `.js` file.
+- *Why C is correct:* `/* ... */` is the multi-line block comment syntax in JavaScript. Everything between `/*` and `*/` is ignored by the engine, regardless of how many lines it spans.
+- *Why D is incorrect:* `** ... **` has no special meaning in JavaScript. Asterisks are the exponentiation operator (`**`) and part of the multiplication operator (`*`), not comment delimiters.
+
+---
+
+### Question 12
+
+What is the correct JavaScript engine used in **Google Chrome** and **Node.js**?
+
+- A) SpiderMonkey
+- B) JavaScriptCore
+- C) Chakra
+- D) V8
+
+**Correct Answer:** D
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* SpiderMonkey is the JavaScript engine developed by Mozilla and used in Firefox, not Chrome.
+- *Why B is incorrect:* JavaScriptCore (also called Nitro) is Apple's engine, used in Safari and WebKit-based browsers.
+- *Why C is incorrect:* Chakra was Microsoft's engine used in the legacy (pre-Chromium) Edge browser. Modern Edge uses V8 via the Chromium project.
+- *Why D is correct:* V8 is Google's open-source JavaScript engine, used in Chrome, Microsoft Edge (Chromium), Opera, and the Node.js server-side runtime.
+
+---
+
+### Question 13
+
+A developer writes `type="text/javascript"` on their `<script>` tag in an HTML5 document. What is the effect?
+
+- A) It enables strict mode for that script
+- B) It makes the script execute faster
+- C) It has no effect; `type="text/javascript"` is the default and is unnecessary in HTML5
+- D) It causes the browser to interpret the content as plain text rather than executing it
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Strict mode is enabled by writing `'use strict';` as the first statement inside a script or function. The `type` attribute does not control strict mode.
+- *Why B is incorrect:* The `type` attribute has no impact on engine optimization or execution speed.
+- *Why C is correct:* In HTML5, `text/javascript` is the default MIME type for script elements. Writing `type="text/javascript"` is perfectly valid but entirely redundant. Most style guides and linters flag it as unnecessary.
+- *Why D is incorrect:* `type="text/plain"` would prevent execution by telling the browser to treat the content as plain text. `type="text/javascript"` is the opposite — it explicitly declares the content as JavaScript, which is also the default.
+
+---
+
+### Question 14
+
+What happens when a JavaScript runtime encounters a **syntax error** during the parsing phase?
+
+- A) The engine skips the malformed line and continues executing the rest of the script
+- B) The engine logs a warning and replaces the syntax error with a no-op
+- C) The engine throws a `SyntaxError` and the entire script fails to execute
+- D) The engine attempts to auto-correct the error using ASI before failing
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* JavaScript does not skip syntax errors. A syntax error in any part of a script prevents the entire script from being parsed and executed.
+- *Why B is incorrect:* The engine does not substitute no-ops for invalid syntax. A syntax error is fatal to the script.
+- *Why C is correct:* Parsing happens before any code runs. If the parser finds a syntax error — a piece of code that violates the grammatical rules of the language — it throws a `SyntaxError`. Because parsing must succeed before execution begins, no part of that script runs.
+- *Why D is incorrect:* Automatic Semicolon Insertion (ASI) handles only missing semicolons in specific locations defined by the grammar. It does not correct arbitrary syntax errors such as mismatched braces, invalid operator sequences, or malformed expressions.
+
+---
+
+### Question 15
+
+Which statement correctly describes **Node.js**?
+
+- A) A browser plugin that extends Chrome's JavaScript capabilities
+- B) A server-side JavaScript runtime built on the V8 engine
+- C) A JavaScript testing framework for unit tests
+- D) An alternative to HTML and CSS for building web pages
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Node.js is not a browser plugin. It is a standalone runtime installed on a server or developer machine, completely separate from any browser.
+- *Why B is correct:* Node.js is an open-source runtime environment that runs JavaScript outside the browser, on servers or desktop machines. It is built on Chrome's V8 engine and provides APIs for file system access, networking, and more — capabilities unavailable to in-browser JavaScript.
+- *Why C is incorrect:* While test frameworks like Jest run on Node.js, Node.js itself is a general-purpose runtime, not a testing framework.
+- *Why D is incorrect:* Node.js is a JavaScript runtime, not a markup or styling technology. It has no relationship to HTML or CSS.
+
+---
+
+### Question 16
+
+Consider the following code. What is the output in the browser console?
+
+```javascript
+console.log(typeof 42);
+console.log(typeof 'hello');
+console.log(typeof true);
+```
+
+- A) `number` then `string` then `boolean`
+- B) `Number` then `String` then `Boolean`
+- C) `int` then `char` then `bool`
+- D) `42` then `hello` then `true`
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- *Why A is correct:* The `typeof` operator returns a lowercase string identifying the type of its operand. `typeof 42` returns `"number"`, `typeof 'hello'` returns `"string"`, and `typeof true` returns `"boolean"`. These are the exact string values defined by the ECMAScript specification.
+- *Why B is incorrect:* JavaScript type names returned by `typeof` are all lowercase. `"Number"`, `"String"`, and `"Boolean"` (capitalized) are the constructor function names, not the `typeof` result strings.
+- *Why C is incorrect:* `int`, `char`, and `bool` are type names from languages like C or Java. JavaScript does not use these names.
+- *Why D is incorrect:* `typeof` returns the type name, not the value itself.
+
+---
+
+### Question 17
+
+What is **Automatic Semicolon Insertion (ASI)** in JavaScript?
+
+- A) A feature that rewrites your code to follow a specific style guide automatically
+- B) A mechanism where the parser inserts semicolons at certain line endings if they are missing
+- C) An IDE feature in VS Code that adds semicolons when you press the Tab key
+- D) A runtime process that adds semicolons to prevent stack overflow errors
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* ASI has nothing to do with code style or formatting. It is a grammatical rule in the language specification, not a linter or formatter.
+- *Why B is correct:* ASI is a rule defined in the ECMAScript specification that instructs the parser to insert a semicolon automatically when a line ending is reached under specific conditions — typically when the parser would otherwise produce a syntax error. While ASI works correctly in most cases, it has well-known edge cases that can cause bugs, which is why explicit semicolons are recommended.
+- *Why C is incorrect:* IDE code completion is separate from ASI. VS Code extensions and formatters may auto-insert semicolons, but that is not what the term "ASI" refers to.
+- *Why D is incorrect:* ASI is a parse-time grammar rule, not a runtime mechanism, and has no relationship to stack overflow prevention.
+
+---
+
+### Question 18
+
+Which browser tool is used to interactively type and evaluate JavaScript expressions without editing any file?
+
+- A) The Elements panel in DevTools
+- B) The Sources panel in DevTools
+- C) The Console tab in DevTools
+- D) The Network panel in DevTools
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* The Elements panel shows the live DOM tree and CSS styles. It allows you to inspect and edit HTML/CSS visually but does not execute JavaScript expressions.
+- *Why B is incorrect:* The Sources panel displays the JavaScript source files, allows setting breakpoints, and stepping through code — but it is for reading and debugging files, not for evaluating ad-hoc expressions.
+- *Why C is correct:* The Console tab contains a REPL (Read-Eval-Print Loop) input prompt. Any JavaScript expression you type and press Enter is immediately evaluated by the V8 engine and the result is displayed. Variables declared here persist in the console's global scope for the rest of the session.
+- *Why D is incorrect:* The Network panel shows HTTP request and response traffic. It is used for performance analysis and API debugging, not for executing JavaScript.
+
+---
+
+### Question 19
+
+What does the **Abstract Syntax Tree (AST)** represent during JavaScript parsing?
+
+- A) The visual hierarchy of HTML elements on the page
+- B) A tree data structure representing the syntactic structure of the source code
+- C) A list of all variables declared in the program sorted alphabetically
+- D) The call stack state at a given point during execution
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* The DOM (Document Object Model) represents the hierarchy of HTML elements. The AST is a separate concept that represents the structure of JavaScript code, not HTML elements.
+- *Why B is correct:* The AST is a tree-shaped data structure the parser builds by analyzing JavaScript source code. Each node in the tree represents a syntactic construct — a variable declaration, a function call, a binary expression, etc. The engine uses the AST to generate machine code during JIT compilation.
+- *Why C is incorrect:* Variable names are captured in scope records and symbol tables during compilation, not in the AST directly. The AST represents the full program structure, not just a list of variables.
+- *Why D is incorrect:* The call stack is a runtime concept — a record of which function contexts are currently active during execution. The AST is a compile-time concept created before any code runs.
+
+---
+
+### Question 20
+
+A developer links two external scripts in the `<head>` of their HTML, both with the `defer` attribute:
+
+```html
+<script src="utility.js" defer></script>
+<script src="main.js" defer></script>
+```
+
+In what order will these scripts execute relative to each other?
+
+- A) `main.js` first, then `utility.js` — `defer` reverses document order
+- B) Whichever finishes downloading first executes first — order is unpredictable
+- C) `utility.js` first, then `main.js` — `defer` preserves document order
+- D) Both execute simultaneously in parallel threads
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `defer` does not reverse order. It explicitly preserves the document order of execution.
+- *Why B is incorrect:* That describes the behavior of `async`, not `defer`. With `async`, scripts execute as soon as they download regardless of order. With `defer`, the browser waits until all deferred scripts have downloaded and the HTML is fully parsed, then executes them in document order.
+- *Why C is correct:* The ECMAScript and HTML specifications guarantee that multiple `defer` scripts execute in the order they appear in the document. `utility.js` appears first and will execute first; `main.js` executes second. This is why `defer` is preferred when one script depends on another.
+- *Why D is incorrect:* JavaScript is single-threaded. Scripts cannot execute simultaneously. Even if two scripts download in parallel (network requests are concurrent), their execution happens sequentially on the single JavaScript thread.

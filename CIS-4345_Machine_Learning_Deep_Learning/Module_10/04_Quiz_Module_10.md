@@ -215,3 +215,183 @@ D. A dataset split into 30 training folds for cross-validation with one held-out
 ---
 
 *End of Quiz — Module 10*
+
+---
+
+### Question 11 (5 points)
+
+An LSTM layer is configured as `LSTM(128, dropout=0.2, recurrent_dropout=0.1)`. What do the `dropout` and `recurrent_dropout` parameters control?
+
+- A) `dropout` randomly drops input connections; `recurrent_dropout` randomly drops connections between LSTM layers in a stacked architecture.
+- B) `dropout` drops a fraction of the input-to-hidden connections at each time step; `recurrent_dropout` drops a fraction of the hidden-to-hidden (recurrent) connections at each time step.
+- C) `dropout` removes entire time steps from the input sequence; `recurrent_dropout` removes entire hidden state dimensions.
+- D) Both parameters are equivalent and either can be used independently to achieve the same regularization effect.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* In Keras LSTM layers, `dropout` applies a dropout mask to the input-to-hidden weight matrix `W_x` connections, while `recurrent_dropout` applies a separate mask to the hidden-to-hidden weight matrix `W_h` connections. Crucially, in Keras the same mask is applied across all time steps within a sequence (not re-sampled each step), which is the "variational dropout" approach that improves regularization quality.
+  - *Why A is incorrect:* `recurrent_dropout` affects the recurrent connection within a single LSTM cell (hidden state to hidden state), not connections between stacked LSTM layers. Inter-layer dropout is handled by a separate `Dropout` layer placed between the two LSTM layers.
+  - *Why C is incorrect:* Neither parameter removes entire time steps or hidden dimensions. They apply a fractional binary mask to the weight connections, zeroing a random subset of the corresponding values at each forward pass during training.
+  - *Why D is incorrect:* The two parameters regularize different weight matrices. `dropout` addresses input-to-hidden overfitting; `recurrent_dropout` addresses recurrent weight overfitting. They have complementary but distinct effects on the model.
+
+---
+
+### Question 12 (5 points)
+
+For a univariate time series with 5,000 daily observations, a developer creates windows of size 60 with a horizon of 1. After windowing, what is the shape of the `X` array (before batching)?
+
+- A) `(5000, 60)`
+- B) `(4940, 60, 1)`
+- C) `(4940, 60)`
+- D) `(60, 5000, 1)`
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - *Why C is correct:* For each starting position `i` from `0` to `4939`, the window `series[i:i+60]` becomes one row of `X`, and `series[i+60]` becomes the corresponding label. This produces `5000 - 60 = 4940` windows. Each window contains 60 time steps of scalar values, giving shape `(4940, 60)`.
+  - *Why A is incorrect:* `(5000, 60)` would imply all 5,000 observations can start a window of length 60, which is impossible — the last valid window start is at index 4939 (requiring observations up to index 4999).
+  - *Why B is incorrect:* `(4940, 60, 1)` is the correct shape for the expanded 3D tensor needed by LSTM (which expects `(batch, timesteps, features)`). The raw `X` array from windowing is 2D `(4940, 60)` for a univariate series. You must call `X = X.reshape(-1, 60, 1)` before passing to LSTM.
+  - *Why D is incorrect:* `(60, 5000, 1)` transposes the intended dimensions. The first axis should be the number of samples (4940), not the window size.
+
+---
+
+### Question 13 (5 points)
+
+Which statement about the GRU's reset gate is correct?
+
+- A) The reset gate controls how much of the previous hidden state to forget before computing the candidate hidden state.
+- B) The reset gate controls whether to update the hidden state with the new candidate or retain the old hidden state.
+- C) The reset gate replaces the cell state from LSTM, providing a separate long-term memory pathway.
+- D) The reset gate is applied to the input, filtering out irrelevant input features before they enter the recurrent computation.
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - *Why A is correct:* The GRU reset gate `r_t = sigmoid(W_r * [h_(t-1), x_t])` modulates how much of the previous hidden state `h_(t-1)` influences the computation of the candidate hidden state `h~_t`. When `r_t` is close to 0, the candidate hidden state is computed largely from the current input alone, effectively "resetting" the memory contribution of the past.
+  - *Why B is incorrect:* The behavior described (deciding whether to update or retain) is the function of the **update gate** `z_t`, not the reset gate. The update gate determines how much the new candidate state replaces the old hidden state.
+  - *Why C is incorrect:* The GRU has no separate cell state — that is an LSTM concept. The GRU merges cell and hidden state into a single hidden state, which is one of its architectural simplifications compared to LSTM.
+  - *Why D is incorrect:* The reset gate operates on the hidden state, not the input. The input `x_t` is incorporated directly into both gate computations without a pre-filtering step.
+
+---
+
+### Question 14 (5 points)
+
+A developer trains a stacked LSTM model and observes that the training loss decreases steadily but the validation loss increases after epoch 5. What is the most appropriate response?
+
+- A) Increase the number of LSTM layers from 2 to 4 to give the model more capacity to generalize.
+- B) Apply `recurrent_dropout` and `dropout` in each LSTM layer, and use `EarlyStopping(patience=5, restore_best_weights=True)`.
+- C) Reduce the sequence window size from 60 to 10 to make the problem easier.
+- D) Switch from Adam to SGD with no momentum to slow down training and prevent overfitting.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Diverging training and validation loss is the signature of overfitting. For recurrent networks, `recurrent_dropout` regularizes the hidden-to-hidden connections (the primary source of overfitting in LSTMs), while `dropout` regularizes the input connections. `EarlyStopping` with `restore_best_weights=True` stops training at the best generalization point (epoch 5 in this case) and restores those weights.
+  - *Why A is incorrect:* Adding more LSTM layers increases model capacity, which will worsen overfitting for a model that is already overfitting. More layers should only be added if the model is currently underfitting.
+  - *Why C is incorrect:* Reducing the window size throws away temporal context that may be valuable for the prediction task. It addresses the symptom by reducing problem complexity, not the root cause (model overfitting). Also, it may simply cause underfitting.
+  - *Why D is incorrect:* SGD without momentum is generally slower and less effective than Adam for LSTM training. Slowing training does not address overfitting — it just extends the time before the overfitting becomes apparent. Regularization is the appropriate intervention.
+
+---
+
+### Question 15 (5 points)
+
+What is the output shape of `Bidirectional(LSTM(64, return_sequences=True))` given an input shape of `(32, 100, 1)`?
+
+- A) `(32, 64)`
+- B) `(32, 100, 64)`
+- C) `(32, 100, 128)`
+- D) `(32, 200, 64)`
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - *Why C is correct:* `Bidirectional` concatenates the forward and backward LSTM outputs. Each LSTM has 64 units, so each direction produces shape `(32, 100, 64)`. Concatenating along the last axis (units dimension) gives `(32, 100, 128)`. The sequence length (100) and batch size (32) are preserved by `return_sequences=True`.
+  - *Why A is incorrect:* `(32, 64)` would be the output of a non-bidirectional `LSTM(64)` with `return_sequences=False`. Bidirectional doubles the output dimension, and `return_sequences=True` preserves the time axis.
+  - *Why B is incorrect:* `(32, 100, 64)` would be the output of a non-bidirectional `LSTM(64, return_sequences=True)`. The `Bidirectional` wrapper doubles the last dimension from 64 to 128.
+  - *Why D is incorrect:* `(32, 200, 64)` incorrectly doubles the sequence length. `Bidirectional` doubles the hidden state dimension, not the number of time steps. The temporal dimension remains 100.
+
+---
+
+### Question 16 (5 points)
+
+When evaluating a time series forecasting model, why is Mean Absolute Error (MAE) often preferred over Mean Squared Error (MSE)?
+
+- A) MAE is differentiable everywhere, making it more compatible with gradient-based optimizers than MSE.
+- B) MAE penalizes errors in the original units of the prediction (e.g., dollars, degrees) making it directly interpretable, while MSE penalizes squared units and disproportionately punishes large errors.
+- C) MAE automatically handles class imbalance in the time series by weighting rare extreme values more heavily.
+- D) MAE is lower-bounded at zero and therefore cannot produce negative values, unlike MSE which can produce negative values.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* MAE measures the average absolute deviation in the original scale of the series. If you are predicting daily temperature in degrees Fahrenheit, an MAE of 2.5 means predictions are on average 2.5°F off — directly interpretable. MSE yields squared units (°F²), which are difficult to interpret intuitively. Additionally, MSE gives more weight to outliers by squaring the error, which may or may not be desirable depending on the application.
+  - *Why A is incorrect:* MAE is actually NOT differentiable at zero (it has a kink). MSE is smooth everywhere, which makes it mathematically more convenient for gradient descent. Despite this, MAE is still used in practice because its interpretability outweighs the non-differentiability concern at zero.
+  - *Why C is incorrect:* Neither MAE nor MSE provides automatic class-imbalance handling for time series. Addressing rare extreme events in time series requires domain-specific weighting, not a choice of error metric.
+  - *Why D is incorrect:* Both MAE and MSE are lower-bounded at zero for any real-valued predictions. Neither can produce negative values. The zero lower bound is a property of both metrics, not a distinguishing factor.
+
+---
+
+### Question 17 (5 points)
+
+A developer wants to make multi-step forecasts — predicting the next 7 days from a window of 30 days. Which output layer configuration is correct?
+
+- A) `Dense(1, activation='linear')` — the model predicts one step at a time and is called 7 times.
+- B) `Dense(7, activation='linear')` — the model predicts all 7 future steps in a single forward pass.
+- C) `Dense(7, activation='softmax')` — softmax distributes probability mass across the 7 future time steps.
+- D) `LSTM(7, return_sequences=True)` — the LSTM's 7 hidden states serve as the 7-step forecast.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* For a direct multi-step forecast, a `Dense(7)` output layer predicts all 7 future values simultaneously in a single forward pass. The target `y` is a vector of 7 consecutive values. The loss is typically MAE or MSE computed over all 7 predictions at once. This is the most common approach for fixed-horizon multi-step forecasting.
+  - *Why A is incorrect:* While iterative single-step forecasting (option A) is a valid approach, it compounds errors — each prediction uses the previous (potentially erroneous) prediction as input. The question asks for an output layer configuration for a model that makes all 7 predictions at once, which is option B.
+  - *Why C is incorrect:* `softmax` normalizes outputs to a probability distribution summing to 1. Future time step values are continuous real numbers, not probabilities. Using softmax on a regression target is incorrect.
+  - *Why D is incorrect:* Using `LSTM(7, return_sequences=True)` would require 7 input time steps (not 30) and would output the hidden state at each of those 7 steps — not a forecast. The LSTM's hidden states are not directly interpretable as future values.
+
+---
+
+### Question 18 (5 points)
+
+When using `tf.data.Dataset.window()` to create training windows, what does the `shift` parameter control?
+
+- A) The number of time steps predicted into the future (the forecast horizon).
+- B) The step size between consecutive window start positions — a `shift=1` creates maximally overlapping windows.
+- C) The proportion of data reserved for the validation window at the end of the series.
+- D) The number of time steps to skip between the input window and the target label.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* In `tf.data.Dataset.window(size=window_size+1, shift=1)`, the `shift` parameter controls how many positions the window slides forward between consecutive windows. With `shift=1`, the window moves one step at a time, creating the maximum number of overlapping windows from the dataset. With `shift=window_size`, windows are non-overlapping. For most time series training pipelines, `shift=1` is standard.
+  - *Why A is incorrect:* The forecast horizon (how many steps ahead to predict) is determined by how the window is split into input and target after creation — typically taking `window[:-1]` as input and `window[-1:]` as the target. It is not controlled by `shift`.
+  - *Why C is incorrect:* Train/validation splitting for time series is done by slicing the series at a specific index (temporal split), not by the `shift` parameter of the window function.
+  - *Why D is incorrect:* The gap between the last input time step and the target is determined by how the window array is indexed into `X` and `y` components. The `shift` parameter only controls window start position spacing.
+
+---
+
+### Question 19 (5 points)
+
+What is the difference between `stateful=False` (default) and `stateful=True` LSTM layers in Keras?
+
+- A) `stateful=True` enables the LSTM to use attention mechanisms, while `stateful=False` uses standard recurrent connections.
+- B) With `stateful=False`, the hidden state is reset to zero at the start of each batch; with `stateful=True`, the hidden state from the last batch is passed as the initial state for the next batch.
+- C) `stateful=True` causes the LSTM to share weights across all batches, reducing the parameter count to the size of a single batch.
+- D) `stateful=False` uses MAE as the loss function, while `stateful=True` uses MSE for better gradient flow.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* In the default stateless mode (`stateful=False`), each new batch is treated independently — the hidden state is zeroed before processing each batch. In `stateful=True` mode, the hidden and cell states from the end of batch N are used as the initial states for batch N+1. This is useful when sequences are too long to fit in a single window and must be split across multiple batches, but it requires careful data ordering and manual state resetting between epochs.
+  - *Why A is incorrect:* Attention mechanisms are a separate architectural component, unrelated to the `stateful` parameter. Both stateful and stateless LSTMs can be combined with attention mechanisms.
+  - *Why C is incorrect:* `stateful` has no effect on weight sharing or parameter count. LSTM weights are shared across time steps regardless of the `stateful` setting — that is standard parameter sharing in recurrent layers.
+  - *Why D is incorrect:* The `stateful` parameter has no effect on the loss function. Loss functions are configured in `model.compile()` independently of the LSTM's state management mode.
+
+---
+
+### Question 20 (5 points)
+
+A developer normalizes a time series using a `MinMaxScaler` fitted on the training set. After training and generating predictions, they reverse the normalization on the predictions. What is the correct tool for reversing the transformation?
+
+- A) `scaler.inverse_fit(predictions)` — re-fits the scaler to the prediction range and reverses scaling.
+- B) `scaler.inverse_transform(predictions.reshape(-1, 1))` — applies the inverse of the min-max transformation using the training statistics.
+- C) `predictions * 255.0` — multiplies by the inverse of the standard normalization divisor.
+- D) `predictions + scaler.mean_` — adds back the mean that was subtracted during normalization.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* `MinMaxScaler.inverse_transform()` applies the inverse scaling formula: `x_original = x_scaled * (max - min) + min`, where `max` and `min` are the training set statistics captured when `.fit()` was called. The `reshape(-1, 1)` is required because `inverse_transform` expects a 2D array `(n_samples, n_features)`.
+  - *Why A is incorrect:* `inverse_fit()` is not a method of scikit-learn scalers. The correct method name is `inverse_transform()`. Calling a non-existent method raises an `AttributeError`.
+  - *Why C is incorrect:* Multiplying by 255.0 is the inverse of dividing by 255 for image pixel normalization. `MinMaxScaler` uses the min and max of the training data, not a fixed constant like 255. Applying an image normalization inverse to time series predictions would produce meaningless values.
+  - *Why D is incorrect:* `scaler.mean_` is an attribute of `StandardScaler`, not `MinMaxScaler`. The inverse of z-score normalization is `x = x_scaled * scale_ + mean_`, which requires both the standard deviation and the mean. `MinMaxScaler` uses `data_min_` and `data_max_` attributes, not `mean_`.

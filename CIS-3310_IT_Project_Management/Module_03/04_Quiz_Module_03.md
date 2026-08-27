@@ -203,3 +203,203 @@ Distractor Analysis:
 - *Why A is incorrect:* Connecting risk events to owners and mitigations describes the Risk Register, not an RTM.
 - *Why C is incorrect:* Connecting stakeholders to communication channels describes the Communications Management Plan or the Stakeholder Register.
 - *Why D is incorrect:* Connecting work packages to responsible team members describes a responsibility assignment matrix (RAM) or RACI chart, not an RTM.
+
+---
+
+## Question 11
+
+What is the "100% Rule" as it applies to a Work Breakdown Structure?
+
+- A) All work packages must be completed within 100 business days.
+- B) The WBS must capture 100% of the project scope — no more and no less — with each lower level representing the complete decomposition of its parent.
+- C) Every work package must have exactly 100 hours of estimated effort.
+- D) 100% of team members must approve the WBS before it is baselined.
+
+**Correct Answer:** B) The WBS must capture 100% of the project scope — no more and no less — with each lower level representing the complete decomposition of its parent.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* The 100% Rule is a foundational WBS principle. Every parent element must be fully decomposed into its child elements so that when all children are added together they equal exactly the parent — no work is missing, and no work outside the charter scope is included.
+- *Why A is incorrect:* The 100% Rule has nothing to do with duration. Work packages have individual duration estimates, but those are unrelated to the 100% Rule.
+- *Why C is incorrect:* The 8/80 rule addresses work package size (no smaller than 8 hours, no larger than 80 hours) — not the 100% Rule.
+- *Why D is incorrect:* Approval is a governance step, not a rule about scope coverage. The 100% Rule is about completeness of decomposition, not headcount approval.
+
+---
+
+## Question 12
+
+Which of the following is the BEST example of gold plating?
+
+- A) A developer adds an animated dashboard feature not in the approved scope because she thinks users will like it.
+- B) A stakeholder submits a formal change request to add a new reporting module.
+- C) The project manager adjusts the schedule baseline after the sponsor approves an extension.
+- D) The team tests all deliverables against the acceptance criteria defined in the WBS dictionary.
+
+**Correct Answer:** A) A developer adds an animated dashboard feature not in the approved scope because she thinks users will like it.
+
+**Distractor Analysis:**
+
+- *Why A is correct:* Gold plating is adding features or functionality beyond the approved scope without authorization — even with good intentions. It consumes budget, schedule, and testing resources without sponsor approval.
+- *Why B is incorrect:* A formal change request is the correct way to add scope. This is authorized scope change, not gold plating.
+- *Why C is incorrect:* Adjusting the schedule baseline after sponsor approval is proper change control — the opposite of unauthorized gold plating.
+- *Why D is incorrect:* Testing against acceptance criteria is quality assurance — a required part of scope validation, not gold plating.
+
+---
+
+## Question 13
+
+The Scope Baseline consists of which three documents?
+
+- A) Project Charter, Risk Register, and Stakeholder Register
+- B) Project Scope Statement, WBS, and WBS Dictionary
+- C) Project Management Plan, Schedule Baseline, and Cost Baseline
+- D) Requirements Documentation, Activity List, and Resource Breakdown Structure
+
+**Correct Answer:** B) Project Scope Statement, WBS, and WBS Dictionary
+
+**Distractor Analysis:**
+
+- *Why B is correct:* The Scope Baseline is formally composed of three documents: the approved Project Scope Statement, the WBS that decomposes it, and the WBS Dictionary that defines each element. Together they define what work is included and how it is structured.
+- *Why A is incorrect:* The charter, risk register, and stakeholder register are important project documents but are not part of the Scope Baseline.
+- *Why C is incorrect:* The Project Management Plan, Schedule Baseline, and Cost Baseline are related baselines but describe the overall project plan and financial/time performance baselines — not specifically scope.
+- *Why D is incorrect:* Requirements documentation, activity lists, and the resource breakdown structure are planning outputs but are not the three formal components of the Scope Baseline.
+
+---
+
+## Question 14
+
+A project manager notices that users have been directly requesting enhancements from the development team, and the team has been implementing them without going through change control. What is this called, and what should the PM do?
+
+- A) Progressive elaboration; encourage the team to continue because user feedback improves the product.
+- B) Scope creep; the PM should enforce the change control process and require all enhancements to be submitted as formal change requests.
+- C) Gold plating; the PM should reward the team for showing initiative.
+- D) Fast tracking; the PM should document the changes and update the baseline retroactively.
+
+**Correct Answer:** B) Scope creep; the PM should enforce the change control process and require all enhancements to be submitted as formal change requests.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* Unauthorized scope additions driven by user requests bypassing formal review is the definition of scope creep. The PM's responsibility is to enforce integrated change control — all scope changes must be formally submitted, evaluated, and approved before implementation.
+- *Why A is incorrect:* Progressive elaboration is the planned refinement of project details, not the uncontrolled addition of new features outside the baseline.
+- *Why C is incorrect:* Gold plating is when the team adds features on their own initiative without user request. Scope creep is the correct term here because users initiated the requests. In either case, the response is the same: enforce change control.
+- *Why D is incorrect:* Fast tracking is a schedule compression technique — it has nothing to do with unauthorized scope additions.
+
+---
+
+## Question 15
+
+What is the lowest level of decomposition in a WBS called?
+
+- A) Deliverable
+- B) Control Account
+- C) Work Package
+- D) Activity
+
+**Correct Answer:** C) Work Package
+
+**Distractor Analysis:**
+
+- *Why C is correct:* The work package is the lowest level of the WBS. It is the element from which activities are defined during schedule planning. Work packages are small enough to be reliably estimated and assigned to one person or team.
+- *Why A is incorrect:* Deliverable is a higher-level WBS element — a product or result expected from the project or phase. It is typically a Level 2 element, above work packages.
+- *Why B is incorrect:* A control account is a WBS element above work packages where cost and schedule performance are measured. It is a management control point, not the lowest level.
+- *Why D is incorrect:* Activities are derived FROM work packages during the Define Activities process in Schedule Management. They appear on the schedule, not in the WBS itself.
+
+---
+
+## Question 16
+
+During a client review of a network upgrade project, the client formally accepts three completed deliverables and rejects one due to performance deficiencies. What PMI process is this review an example of?
+
+- A) Control Quality
+- B) Validate Scope
+- C) Control Scope
+- D) Define Scope
+
+**Correct Answer:** B) Validate Scope
+
+**Distractor Analysis:**
+
+- *Why B is correct:* Validate Scope is the process of formally receiving acceptance of completed project deliverables from the customer or sponsor. The client's acceptance of three deliverables and rejection of one (triggering a change request for rework) is a textbook Validate Scope scenario.
+- *Why A is incorrect:* Control Quality is the internal process of inspecting work for defects before presenting it to the customer. The client review described here is external — Validate Scope.
+- *Why C is incorrect:* Control Scope monitors the status of the project scope and manages changes to the scope baseline. It does not involve the customer inspecting deliverables.
+- *Why D is incorrect:* Define Scope is a Planning activity that produces the Scope Statement. It occurs before any deliverables are built.
+
+---
+
+## Question 17
+
+In a WBS, what does the term "decomposition" mean?
+
+- A) Breaking down the project budget into cost categories by work package
+- B) Subdividing project deliverables and project work into smaller, more manageable components until work packages are reached
+- C) Assigning team members to specific activities on the project schedule
+- D) Translating stakeholder requirements into testable acceptance criteria
+
+**Correct Answer:** B) Subdividing project deliverables and project work into smaller, more manageable components until work packages are reached.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* Decomposition is the technique used to build the WBS by progressively subdividing major deliverables into phases, components, and ultimately work packages. It is the core technique of the Create WBS process.
+- *Why A is incorrect:* Breaking down the budget by work package describes cost estimating and cost baseline development — related but not the definition of WBS decomposition.
+- *Why C is incorrect:* Assigning team members to activities is a Resource Management function (Acquire Resources, Develop Team) — not WBS decomposition.
+- *Why D is incorrect:* Translating requirements into acceptance criteria is a scope definition activity that feeds the WBS dictionary — not decomposition itself.
+
+---
+
+## Question 18
+
+Which of the following statements about the Requirements Traceability Matrix (RTM) is TRUE?
+
+- A) The RTM is created during the Closing Process Group to document which requirements were met.
+- B) The RTM is a scope planning tool that traces each requirement from its source through the WBS element that delivers it and the test that validates it.
+- C) The RTM replaces the WBS dictionary for large IT projects.
+- D) The RTM is only used in software development projects, not general IT project management.
+
+**Correct Answer:** B) The RTM is a scope planning tool that traces each requirement from its source through the WBS element that delivers it and the test that validates it.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* The RTM ensures full requirement coverage. It is created during the Collect Requirements and Define Scope processes and updated throughout the project. It provides traceability from business need to delivery to validation.
+- *Why A is incorrect:* The RTM is created during Planning, not Closing. It is used throughout the project to verify requirement coverage, not only summarized at the end.
+- *Why C is incorrect:* The RTM and the WBS Dictionary serve different purposes and are used together. The RTM does not replace the WBS Dictionary.
+- *Why D is incorrect:* The RTM is applicable to any project type where requirements management is important — infrastructure, ERP, cybersecurity, and beyond. It is not limited to software development.
+
+---
+
+## Question 19
+
+A project manager receives a request from a department head to add a new data export feature to the enterprise system under development. The PM evaluates the request and determines it would require two additional weeks and $8,000 in extra cost. What should the PM do NEXT?
+
+- A) Add the feature immediately since the department head is a key stakeholder.
+- B) Reject the request because it will impact the schedule and budget.
+- C) Submit the change request through the Integrated Change Control process for formal evaluation and approval.
+- D) Ask the development team to complete the feature during overtime without adjusting the baseline.
+
+**Correct Answer:** C) Submit the change request through the Integrated Change Control process for formal evaluation and approval.
+
+**Distractor Analysis:**
+
+- *Why C is correct:* All scope changes — regardless of source — must go through Integrated Change Control. The PM's role is to evaluate the impact and present it to the Change Control Board (or sponsor) for a formal decision. The PM does not unilaterally approve or reject scope changes.
+- *Why A is incorrect:* A key stakeholder's importance does not authorize bypassing change control. Adding the feature without approval is scope creep.
+- *Why B is incorrect:* The PM cannot unilaterally reject a change request. Impact evaluation and CCB review are required. The PM's role is to surface the trade-off, not make the final call alone.
+- *Why D is incorrect:* Using overtime without adjusting baselines hides the true cost and schedule impact — a governance failure that misrepresents project performance.
+
+---
+
+## Question 20
+
+What distinguishes "product scope" from "project scope"?
+
+- A) Product scope describes the work to be done; project scope describes the features and functions of the deliverable.
+- B) Product scope describes the features and functions of the deliverable; project scope describes the work required to deliver it.
+- C) They are synonyms — PMI uses both terms interchangeably.
+- D) Product scope is managed by the customer; project scope is managed by the PM.
+
+**Correct Answer:** B) Product scope describes the features and functions of the deliverable; project scope describes the work required to deliver it.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* This is a commonly tested distinction. Product scope = what the product does (features, functions, specifications). Project scope = the work the team must perform to produce the product. Both must be complete for the project to be done.
+- *Why A is incorrect:* This reverses the definitions. Work to be done is project scope; features and functions are product scope.
+- *Why C is incorrect:* PMI distinguishes these two terms deliberately. Treating them as synonyms will lead to incorrect answers on the exam.
+- *Why D is incorrect:* Both scopes are managed in coordination. The PM manages project scope; product scope is defined with input from the customer but is not "owned" or "managed" exclusively by the customer.

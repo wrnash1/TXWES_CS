@@ -308,4 +308,22 @@ Metasploitable's FTP may not have credentials matching the wordlist. This is exp
 
 ---
 
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Exploitation Documentation and Impact Analysis
+
+Using your successful vsftpd 2.3.4 and Samba exploitation sessions from the Module 07 lab, write a professional exploitation findings section as it would appear in a real penetration test report. For each exploit, complete the following structured narrative: (1) the vulnerability description and CVE identifier, (2) the exploitation steps taken including exact Metasploit module and payload used, (3) the level of access obtained and evidence (session output screenshot), (4) the business impact — what data could be accessed, what lateral movement would be possible, what a real attacker could do with this access, and (5) specific remediation recommendations with version numbers or configuration changes. Format your findings section to be understandable to a non-technical client who needs to understand why this finding matters and what they should do immediately.
+
+### Challenge 2: Payload Architecture Comparison
+
+Using msfvenom, generate four payload variants against your authorized lab target and document the technical differences. Generate: a stageless Windows EXE (`windows/meterpreter_reverse_tcp`), a staged Windows EXE (`windows/meterpreter/reverse_tcp`), a stageless Linux ELF (`linux/x86/meterpreter_reverse_tcp`), and a staged Python payload (`python/meterpreter/reverse_tcp`). For each payload, record the file size, the command used to generate it, and whether it would work in an environment where direct callback connections are filtered. Write a one-paragraph analysis explaining when you would choose each payload type based on target operating system, network egress restrictions, and detection avoidance requirements. This exercise develops the payload selection judgment required in real engagements.
+
+### Reflection Questions
+
+1. During the lab you exploited vsftpd 2.3.4 using a publicly documented backdoor that was intentionally inserted into the source code in 2011. The CVE is over a decade old. What does the continued presence of this vulnerability in real-world systems tell you about the gap between vulnerability publication and remediation in organizational environments? What would you include in the executive summary of your report to communicate the business urgency of patching this specific finding?
+
+2. You have completed exploitation and have an active Meterpreter session with SYSTEM privileges on a target. The RoE authorizes "post-exploitation enumeration to demonstrate the extent of access" but does not explicitly mention password hash extraction. Using the legal and ethical framework from Module 01–02, explain how you would determine whether `hashdump` is within scope, what risk the ambiguity creates for you as the tester, and what language you would recommend including in future RoE documents to prevent this ambiguity.
+
 **Proprietary and Confidential. Not for disclosure outside of Texas Wesleyan University course use.**

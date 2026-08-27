@@ -174,3 +174,19 @@ and debrief audience segmentation.
 - [ ] Complete the required reading and video segments
 - [ ] Review the lab instructions before starting the hands-on exercise
 - [ ] Proceed to the weekly quiz on Canvas
+
+---
+
+## 9. Supplemental Resources
+
+**1. FIRST — CVSS v3.1 Specification Document**
+https://www.first.org/cvss/v3.1/specification-document
+The authoritative specification for CVSS 3.1 published by the Forum of Incident Response and Security Teams (FIRST). Covers the definition of every Base, Temporal, and Environmental metric with decision trees and worked examples. Essential reference for understanding why specific metric values are selected and how scores are calculated.
+
+**2. OWASP Testing Guide — Reporting Chapter**
+https://owasp.org/www-project-web-security-testing-guide/
+The OWASP Web Security Testing Guide includes a dedicated reporting chapter covering finding structure, evidence requirements, and risk rating methodology. As an open standard widely referenced in professional penetration testing, it provides a vendor-neutral benchmark for report quality that complements the CompTIA PenTest+ exam objectives.
+
+**3. TCM Security — Writing a Pentest Report (Free Course Sample)**
+https://tcm-sec.com/practical-ethical-hacking-course/
+TCM Security's Practical Ethical Hacking course includes a well-regarded module on professional report writing, covering executive summary tone, finding format, and client communication. The course is frequently recommended by working penetration testers as a practical supplement to certification study materials.

@@ -329,4 +329,20 @@ This documentation becomes the evidence base for the penetration test report.
 
 ---
 
+---
+
+## 10. Supplemental Resources
+
+**1. Metasploit Unleashed — Free Offensive Security Course**
+[https://www.metasploitunleashed.com/](https://www.metasploitunleashed.com/)
+Offensive Security's free Metasploit Unleashed course is the most comprehensive free reference for the Metasploit Framework, covering module types, payload selection, post-exploitation, pivoting, and Meterpreter in depth. It directly reinforces all Module 07 content and provides hands-on exercises that extend the lab material.
+
+**2. Rapid7 Metasploit Documentation — Module Reference**
+[https://docs.metasploit.com/](https://docs.metasploit.com/)
+The official Metasploit documentation from Rapid7 includes module development guides, payload architecture explanations, and API references. The staged vs. stageless payload documentation and msfvenom reference are directly applicable to PT0-002 Domain 3 (Exploitation) exam objectives covered in Module 07.
+
+**3. TryHackMe — Metasploit Room Series**
+[https://tryhackme.com/room/metasploitintro](https://tryhackme.com/room/metasploitintro)
+TryHackMe's Metasploit introduction room provides guided hands-on practice with the Metasploit console, module configuration, payload delivery, and Meterpreter commands against live vulnerable machines. Completing the room series reinforces all Module 07 lab skills in a safe, pre-authorized environment.
+
 **Proprietary and Confidential. Not for disclosure outside of Texas Wesleyan University course use.**

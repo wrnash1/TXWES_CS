@@ -196,3 +196,171 @@ Distractor Analysis:
 - Why D is incorrect: "Working on features" describes activity, not an outcome. It is vague, not testable, and gives no indication of what success looks like at the Sprint Review.
 
 ---
+
+### Question 11 (5 points)
+
+During Sprint Planning, who is responsible for decomposing Product Backlog items into tasks of one day or less?
+
+- A) The Product Owner, who knows the requirements in the most detail
+- B) The Scrum Master, who is accountable for event facilitation
+- C) The Developers, who plan the technical work required to achieve the Sprint Goal
+- D) An external architect who reviews designs before implementation begins
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) Incorrect — The Product Owner clarifies requirements but does not own technical decomposition; Developers decide how the work is done.
+  - B) Incorrect — The Scrum Master facilitates the event's process but does not create technical task breakdowns.
+  - D) Incorrect — External architects are not Scrum roles; Scrum teams are self-managing and do not require external approval to plan their work.
+
+---
+
+### Question 12 (5 points)
+
+A Scrum Team consistently finishes Sprint Planning in only 45 minutes for a two-week Sprint, even though the timebox allows four hours. What is the most likely explanation for this?
+
+- A) The team is highly efficient and experienced
+- B) The team is skipping the Sprint Goal definition, accepting a task list as a plan
+- C) The Product Backlog items are not sufficiently refined, forcing the team to surface unknowns during the Sprint
+- D) The Scrum Master is cutting the event short to save time
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) Incorrect — Efficiency is possible, but consistently completing in 45 minutes of a 4-hour event most often signals the team is not doing enough refinement, not that they are simply fast.
+  - B) Incorrect — Skipping the Sprint Goal is a failure mode, but if the team has a task list they can discuss, the event would still take more than 45 minutes.
+  - D) Incorrect — The Scrum Master may timebox the event but does not cut it short; a fully productive Sprint Planning uses as much of the timebox as needed.
+
+---
+
+### Question 13 (5 points)
+
+Halfway through a Sprint, the Product Owner learns that a regulatory change requires immediate work that was not in the Sprint Backlog. What is the correct Scrum response?
+
+- A) Add the work to the Sprint Backlog immediately because the Product Owner has authority over the Sprint
+- B) Cancel the Sprint and start a new Sprint with the regulatory work as the top priority
+- C) The Product Owner discusses the situation with the Developers; if the regulatory work is urgent enough to invalidate the Sprint Goal, the Sprint may be cancelled; otherwise it is added to the Product Backlog for the next Sprint
+- D) The Scrum Master decides whether the Sprint Goal is still valid and authorizes the change
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) Incorrect — The Product Owner cannot unilaterally add work to the Sprint Backlog mid-Sprint; the Sprint Goal must be protected.
+  - B) Incorrect — Sprint cancellation is an option only if the Sprint Goal becomes obsolete; it is not the default response to any mid-Sprint disruption.
+  - D) Incorrect — The Scrum Master does not make product decisions; Sprint cancellation authority belongs to the Product Owner alone.
+
+---
+
+### Question 14 (5 points)
+
+What does "velocity" mean in the context of Scrum Sprint Planning?
+
+- A) A contractual commitment the team makes to the Product Owner for every Sprint
+- B) The number of story points the organization requires the team to complete each Sprint
+- C) A historical measure of work completed in past Sprints, used as a guide (not a guarantee) for Sprint capacity
+- D) The speed in hours at which a single Developer completes individual tasks
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) Incorrect — Velocity is a planning guide, not a contractual commitment; using it as a commitment creates pressure that undermines sustainable pace.
+  - B) Incorrect — Management cannot set a required velocity; Developers determine their own capacity based on actual performance.
+  - D) Incorrect — Velocity measures team-level output in story points across a Sprint, not an individual's hourly rate.
+
+---
+
+### Question 15 (5 points)
+
+A Developer mentions at the Daily Scrum that a critical dependency on an external API is blocking progress on two Sprint Backlog items. What is the Scrum Master's immediate responsibility?
+
+- A) Resolve the API dependency personally before the next Daily Scrum
+- B) Remove the blocked items from the Sprint Backlog and return them to the Product Backlog
+- C) Acknowledge the impediment, take action to remove it or escalate it, and update the team on progress
+- D) Direct the Developers to skip the blocked items and work on lower-priority backlog items instead
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) Incorrect — The Scrum Master may help resolve the impediment but is not personally responsible for fixing API issues; their role is to facilitate removal, not to be the solver.
+  - B) Incorrect — Removing items from the Sprint Backlog is a scope negotiation with the Product Owner, not an automatic consequence of an impediment.
+  - D) Incorrect — Directing Developers to different work violates self-management; the Scrum Master coaches, does not assign tasks.
+
+---
+
+### Question 16 (5 points)
+
+The Product Owner wants to attend the Daily Scrum every day and ask the Developers clarifying questions about their technical approach. Is this appropriate?
+
+- A) Yes — the Product Owner's attendance ensures business alignment and supports Value 3 of the Agile Manifesto
+- B) Yes — the Product Owner is part of the Scrum Team and may attend, but should not turn the Daily Scrum into a requirements clarification session
+- C) No — the Product Owner is never permitted to attend the Daily Scrum under any circumstances
+- D) No — the Daily Scrum is a private Developer meeting and no Scrum Team members outside of Developers may observe
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Incorrect — While attendance is permitted, using the Daily Scrum for requirements clarification changes the event's purpose from Developer inspection to Q&A.
+  - C) Incorrect — The Scrum Guide does not prohibit the Product Owner from attending; it specifies that the Daily Scrum is for Developers but does not bar others from observing.
+  - D) Incorrect — The Scrum Guide does not restrict attendance to Developers only; it defines Developers as the mandatory participants, not the only permitted attendees.
+
+---
+
+### Question 17 (5 points)
+
+A team's Sprint Planning consistently exceeds its timebox. What is the most likely root cause?
+
+- A) The Scrum Master is not enforcing the timebox strictly enough
+- B) The Product Backlog items arriving at Sprint Planning are too large and insufficiently refined
+- C) The Product Owner is spending too much time explaining business context
+- D) The Developers are gold-plating their task decomposition with unnecessary detail
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Incorrect — Timebox enforcement is a symptom fix; the root cause is why the team needs so much time, which is typically unrefined backlog items.
+  - C) Incorrect — Business context is a necessary part of Sprint Planning Topic 1; excessive business explanation is less common than unrefined items as a root cause.
+  - D) Incorrect — Over-detailed task decomposition can add time, but the most common root cause of Sprint Planning overrun is large, un-refined backlog items that require discovery discussions.
+
+---
+
+### Question 18 (5 points)
+
+Which of the following Daily Scrum updates most clearly demonstrates a team member focusing on the Sprint Goal rather than just task completion?
+
+- A) "Yesterday I finished task 14 and task 15. Today I will start task 16."
+- B) "I reviewed the PR from Marcos. Today I will write unit tests."
+- C) "I finished the login API endpoint. That completes the authentication piece we need for the Sprint Goal. Today I start the user profile endpoint — if it's done by tomorrow we're on track."
+- D) "I worked on the backend most of the day. Today more of the same."
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) Incorrect — Reporting task numbers with no reference to the Sprint Goal is a task-completion update, not a Sprint Goal-focused update.
+  - B) Incorrect — PR review and unit tests are activities; there is no connection drawn to Sprint Goal progress.
+  - D) Incorrect — "More of the same" provides no information about Sprint Goal progress, impediments, or collaboration needs.
+
+---
+
+### Question 19 (5 points)
+
+The Sprint Backlog is described in the Scrum Guide as belonging to the Developers. What does "belonging to the Developers" mean in practice?
+
+- A) Developers can change the Sprint Goal whenever they need to adapt to new information
+- B) Only Developers can add work to or remove work from the Sprint Backlog; no one outside the team can inject or remove items unilaterally
+- C) The Sprint Backlog is stored in the Developers' local systems and is not shared with the Product Owner
+- D) Developers own the backlog items and receive bonuses based on how many points they individually complete
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Incorrect — The Sprint Goal is fixed during the Sprint; Developers own the Sprint Backlog plan, not the Sprint Goal itself.
+  - C) Incorrect — The Sprint Backlog must be transparent to the entire Scrum Team and stakeholders; it is not a private Developer document.
+  - D) Incorrect — Individual ownership and bonuses per point are not Scrum concepts; Scrum teams are collectively accountable.
+
+---
+
+### Question 20 (5 points)
+
+At the end of Sprint Planning, the Developers are uncertain whether they can complete all selected items but do not want to appear unconfident in front of the Product Owner. They commit to the full backlog anyway. According to Scrum values, which value is being violated?
+
+- A) Respect — because the Developers are not respecting the Product Owner's priorities
+- B) Focus — because the Developers are thinking about appearances rather than the Sprint Goal
+- C) Courage — because the Developers lack the courage to honestly communicate their capacity
+- D) Commitment — because the Developers are committing to more than they should
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) Incorrect — Respect involves treating people as capable individuals; the issue here is honest communication, not disrespect.
+  - B) Incorrect — Focus is about directing energy toward the Sprint Goal; the root problem here is fear of honest communication, which maps to Courage.
+  - D) Incorrect — Commitment involves dedication to goals; the problem is not the act of committing but the dishonesty in making a commitment both sides know is unrealistic.

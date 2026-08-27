@@ -297,3 +297,45 @@ Verify normalization was applied — check that `x_train.max()` returns `1.0`, n
 **Training is extremely slow**
 
 Switch to Google Colab (Runtime > Change runtime type > GPU). CPU training for 40 epochs on CIFAR-10 takes approximately 6–10 minutes, which is acceptable.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Depthwise Separable Convolutions vs Standard Convolutions
+
+Replace each standard `Conv2D` block in your trained model with a depthwise separable equivalent using Keras's `SeparableConv2D` layer, then compare parameter counts and accuracy.
+
+1. Create a second model `model_sep` by replacing every `Conv2D` call with `keras.layers.SeparableConv2D` using identical filter counts, kernel sizes, and padding. Keep BatchNorm, ReLU, MaxPooling, and Dropout unchanged.
+2. Call `model_sep.summary()` and record the total parameter count. Compare it to your original model's parameter count — separable convolutions should reduce parameters by roughly 8–9x per layer.
+3. Train `model_sep` with the same hyperparameters and callbacks. Record the final validation accuracy and training time. Plot the accuracy curves for both models on the same axes.
+4. In a Markdown cell, explain why `SeparableConv2D` uses fewer parameters and discuss the accuracy/efficiency tradeoff you observed.
+
+```python
+# Hint: replace Conv2D blocks with SeparableConv2D
+keras.layers.SeparableConv2D(32, (3, 3), padding='same', use_bias=False),
+keras.layers.BatchNormalization(),
+keras.layers.Activation('relu'),
+keras.layers.MaxPooling2D((2, 2)),
+keras.layers.Dropout(0.25),
+```
+
+### Challenge 2: Visualizing Filters and Maximally Activating Inputs
+
+Instead of only visualizing feature maps (what a filter produces), directly inspect what each filter has learned by visualizing the filter weights themselves.
+
+1. Extract the weights of the first `Conv2D` layer using `weights, biases = model.layers[0].get_weights()`. The `weights` array has shape `(3, 3, 3, 32)` — 32 filters of shape `(3, 3, 3)`.
+2. Normalize each filter to `[0, 1]` for display: `f = (f - f.min()) / (f.max() - f.min() + 1e-8)`. Display all 32 filters in a `4x8` grid using `plt.imshow(filter_weights[:,:,:])` (RGB filters display as color patches).
+3. Compare the filter visualization from an untrained (randomly initialized) model vs your trained model. Run the following before training a fresh model:
+
+```python
+untrained_model = build_cifar_cnn()
+untrained_weights = untrained_model.layers[0].get_weights()[0]
+```
+
+4. Identify at least two filters in the trained model that appear to detect specific visual patterns (e.g., edges in a particular direction, color blobs). Annotate your grid with titles describing what each selected filter appears to detect.
+
+### Reflection Questions
+
+1. After replacing `Conv2D` with `SeparableConv2D`, did your model's validation accuracy drop, stay the same, or improve? What does this suggest about the original model's parameter efficiency, and in what deployment scenario would you choose separable convolutions despite any accuracy tradeoff?
+2. Comparing the filter visualizations of the untrained vs trained model, describe the structural change you observe. What does this tell you about what gradient descent "teaches" a convolutional filter, and why do trained filters often resemble Gabor filters or color-opponent detectors found in the biological visual system?

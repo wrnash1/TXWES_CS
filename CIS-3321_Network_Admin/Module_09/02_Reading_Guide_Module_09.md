@@ -222,4 +222,30 @@ Before moving to the next module, confirm you can do each of the following:
 
 ---
 
-CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash
+## 9. Supplemental Resources
+
+The following free resources extend Module 09 content on DNS, DHCP, and NTP.
+
+**1. Professor Messer — DNS, DHCP, and Network Services Free Videos**
+URL: https://www.professormesser.com/network-plus/n10-008/n10-008-video/
+Relevance: Professor Messer covers DNS record types, DHCP DORA, ip helper-address, NTP stratum hierarchy, and NAT types in videos directly aligned to Network+ exam objectives.
+
+**2. RFC 1034 and RFC 1035 — DNS Specification (Free)**
+URL: https://datatracker.ietf.org/doc/html/rfc1034 and https://datatracker.ietf.org/doc/html/rfc1035
+Relevance: The authoritative original DNS specifications. RFC 1034 covers DNS concepts and the resolution hierarchy; RFC 1035 covers DNS message format and record types. Reading sections 3.1–3.5 of RFC 1034 provides definitive clarity on recursive vs. iterative queries.
+
+**3. RFC 2131 — DHCP Specification (Free)**
+URL: https://datatracker.ietf.org/doc/html/rfc2131
+Relevance: The authoritative DHCP protocol specification defining the DORA exchange, relay agent behavior (giaddr field), lease renewal timers (T1 at 50%, T2 at 87.5%), and option codes. Section 3 (operational model) directly maps to exam content.
+
+**4. Cisco — Understanding and Configuring DHCP in Catalyst Switches**
+URL: https://www.cisco.com/c/en/us/support/docs/switches/catalyst-6500-series-switches/10040-1.html
+Relevance: Cisco's free documentation covering ip helper-address configuration, DHCP relay agent operation, and scope selection — directly applicable to Packet Tracer DHCP relay exercises in this module.
+
+**5. NTP.org — How NTP Works (Free)**
+URL: https://www.ntp.org/documentation/4.2.8-series/ntpd/
+Relevance: The official NTP project documentation explaining stratum hierarchy, reference clocks (stratum 0/1), accuracy and precision, and NTP security (authentication). Essential for understanding NTP stratum questions on the Network+ exam.
+
+---
+
+*CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash*

@@ -210,6 +210,33 @@ Both adjusted balances should agree. Show your arithmetic.
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Multi-Company Financial Close Simulation
+
+A holding company (ParentCo, Company Code 1000) has two subsidiaries: ManufactureCo (Company Code 1100, Germany) and DistributeCo (Company Code 1200, US). During June, the following intercompany transactions occurred: ManufactureCo sold $180,000 of finished goods to DistributeCo; DistributeCo has not yet paid. Both companies share the same Chart of Accounts (INT).
+
+1. Write the journal entry for ManufactureCo (Company Code 1100) recording the intercompany sale. Specify the G/L accounts (use account number ranges from the Reading Guide), the SAP transaction code used, and whether the posting creates an open item.
+2. Write the journal entry for DistributeCo (Company Code 1200) recording the intercompany purchase receipt. Specify accounts, transaction code, and the resulting open item status.
+3. Explain the two steps required at month-end consolidation to eliminate this intercompany transaction from ParentCo's consolidated financial statements. Name the specific accounts eliminated and the eliminating journal entry.
+4. Identify which SAP tool (FI-LC or SAP Group Reporting) would automate step 3 and describe what configuration would be needed to identify this transaction as intercompany at the time of posting.
+
+### Challenge 2: AP Process Audit and Control Assessment
+
+A company's internal audit team is reviewing the Accounts Payable process for Segregation of Duties (SOD) compliance. The AP team of four people currently operates as follows: Person A creates vendor master records AND enters invoices. Person B approves invoices AND runs the F110 payment program. Person C handles bank reconciliation AND also has access to FB60. Person D has view-only access to all AP transactions.
+
+1. Identify every SOD conflict in the described process. For each conflict, explain the specific fraud scenario it enables (what could go wrong if one person controls both functions).
+2. Redesign the role assignments for the four-person team to eliminate all SOD conflicts while keeping the team at four people. Specify exactly which SAP transactions each person should be authorized to run in your redesigned model.
+3. Define two automated preventive controls (system-enforced) and two detective controls (monitoring/reporting) that SAP FI can provide to strengthen AP fraud prevention beyond role separation alone.
+4. Write a one-paragraph risk assessment memo (75-100 words) for the CFO summarizing the highest-risk SOD violation you identified and the business impact if it went undetected for 12 months.
+
+### Reflection Questions
+
+1. In the multi-company scenario, the intercompany sale created an AR in ManufactureCo and an AP in DistributeCo — both legitimate postings at the entity level. Why does consolidation require eliminating both, and what would the consolidated income statement show if the elimination was not performed?
+2. The SOD redesign required you to separate vendor master creation from invoice entry. In a company with only two AP staff, this separation may not be feasible. What compensating controls could a two-person AP team implement to reduce fraud risk without full role separation?
+
+---
+
 ## Grading Rubric
 
 | Section | Points | Criteria |

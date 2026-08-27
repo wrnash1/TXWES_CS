@@ -410,3 +410,108 @@ Submit a zip of your Express project folder (excluding `node_modules`) and a zip
 | React sends `Authorization: Bearer` header on all book API calls | 10 |
 | Token persists across page reload; logout clears localStorage | 10 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Token Refresh and Expiry Simulation
+
+Add a `/api/auth/refresh` endpoint and test token expiry behavior end-to-end.
+
+1. Add `JWT_EXPIRES_IN=24h` and `JWT_SHORT_EXPIRES_IN=10s` to your `.env` file.
+
+1. Add a `POST /api/auth/refresh` route to `routes/auth.js`. It must require a valid Bearer token (reuse the `authenticate` middleware) and issue a new token:
+
+```javascript
+router.post('/refresh', authenticate, (req, res) => {
+  const { userId, email } = req.user;
+  const token = jwt.sign(
+    { userId, email },
+    process.env.JWT_SECRET,
+    { expiresIn: process.env.JWT_EXPIRES_IN || '24h' }
+  );
+  res.json({ token });
+});
+```
+
+1. Temporarily change the `expiresIn` value in your login route to `process.env.JWT_SHORT_EXPIRES_IN`. Register a new user, log in, and copy the token. Wait 11 seconds, then run:
+
+```bash
+curl -H "Authorization: Bearer TOKEN" http://localhost:3000/api/books
+# Expected: 401 { "error": "Token expired" }
+```
+
+1. Before the token expires, call `POST /api/auth/refresh` with the valid token in the header. Paste both the original and refreshed tokens into `https://jwt.io` and confirm the `iat` and `exp` claims differ. Revert the login route back to `JWT_EXPIRES_IN` when done.
+
+### Challenge 2: Role-Based Access Control
+
+Add a `role` column to the database and an admin-only delete endpoint.
+
+1. Add a `role` column to the `users` table and update the register route:
+
+```sql
+ALTER TABLE users ADD COLUMN role VARCHAR(50) DEFAULT 'user' NOT NULL;
+```
+
+Update `routes/auth.js` — include `role` in the JWT payload when signing:
+
+```javascript
+const token = jwt.sign(
+  { userId: user.id, email: user.email, role: user.role },
+  process.env.JWT_SECRET,
+  { expiresIn: process.env.JWT_EXPIRES_IN || '24h' }
+);
+```
+
+1. Create `middleware/requireRole.js`:
+
+```javascript
+const { ForbiddenError } = require('../utils/errors');
+
+function requireRole(...allowedRoles) {
+  return (req, res, next) => {
+    if (!req.user) {
+      return res.status(401).json({ error: 'Not authenticated' });
+    }
+    if (!allowedRoles.includes(req.user.role)) {
+      return next(new ForbiddenError(
+        `Requires one of: ${allowedRoles.join(', ')}`
+      ));
+    }
+    next();
+  };
+}
+
+module.exports = requireRole;
+```
+
+1. In `routes/books.js`, protect the DELETE endpoint with both `authenticate` and `requireRole('admin')`:
+
+```javascript
+const authenticate  = require('../middleware/authenticate');
+const requireRole   = require('../middleware/requireRole');
+
+// DELETE /api/books/:id — admin only
+router.delete(
+  '/:id',
+  authenticate,
+  requireRole('admin'),
+  async (req, res, next) => {
+    // existing delete handler
+  }
+);
+```
+
+1. In psql, manually set one user to `admin`:
+
+```sql
+UPDATE users SET role = 'admin' WHERE email = 'alice@example.com';
+```
+
+Log in as Alice and confirm `DELETE /api/books/1` returns `200`. Log in as a regular user and confirm `DELETE /api/books/1` returns `403 Forbidden`.
+
+### Reflection Questions
+
+1. The refresh endpoint in Challenge 1 requires a valid (non-expired) token to issue a new one. This means a user with an expired token must log in again. The OAuth 2.0 specification solves this with a separate long-lived refresh token that is never used for API calls. Why is it safer to use a dedicated refresh token rather than accepting expired access tokens for refresh?
+1. Challenge 2 embeds the user's `role` directly in the JWT payload. If an admin demotes a user in the database, the user's token still carries `role: 'admin'` until it expires. Describe two strategies that mitigate this stale-role problem — one that keeps JWTs fully stateless and one that introduces a small amount of server-side state.

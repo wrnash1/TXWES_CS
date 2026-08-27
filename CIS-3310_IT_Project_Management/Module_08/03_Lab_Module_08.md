@@ -213,3 +213,21 @@ Submit as a single PDF or Word document to the Canvas Module 08 Lab assignment.
 | Part 2: Method Classification | 35 | Correct push/pull/interactive; correct formality; accurate justification |
 | Part 3: Communications Plan | 40 | Register complete for 6+ stakeholders; three specific barriers with mitigations |
 | **Total** | **100** | |
+
+---
+
+## Part 9 — Challenge Exercise
+
+This section is optional for students seeking additional depth and exam preparation. It is not graded as part of the standard 100-point lab but may be used for extra credit at the instructor's discretion.
+
+### Challenge Step 1: Stakeholder Engagement Gap Analysis
+
+Using the stakeholders from your Part 3 register, build a Stakeholder Engagement Assessment Matrix. Assign each stakeholder a current engagement level (Unaware, Resistant, Neutral, Supportive, or Leading) and a desired engagement level. Identify the three stakeholders with the largest engagement gap and write one sentence per stakeholder describing the specific communication or engagement action the PM should take to close the gap.
+
+### Challenge Step 2: Communication Escalation Protocol
+
+Design a brief escalation protocol (6–8 bullet points) for the MedConnect EHR integration project that describes what happens when a stakeholder does not respond to a required communication within the defined response window. The protocol should specify: the initial follow-up action, the escalation path if no response after a second attempt, and the documentation required for each step. This protocol would be an appendix to the Communications Management Plan.
+
+### Challenge Step 3: Cross-Cultural Communication Risk Assessment
+
+The MedConnect project involves a vendor team located in a different time zone with different communication norms around directness, hierarchy, and meeting formality. Write a 5–7 sentence Cross-Cultural Communication Risk Assessment that identifies two specific cultural communication risks, rates their probability and impact (high/medium/low), and proposes one mitigation action for each. This exercise maps to the Communication Barriers section of the Project+ exam and the risk management domains introduced in Module 10.

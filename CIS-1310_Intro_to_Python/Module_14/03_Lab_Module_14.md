@@ -674,6 +674,257 @@ Zip all 5 screenshots and upload to the Canvas Module 14 Lab Assignment.
 
 ---
 
+## Part 9 — Challenge Exercise
+
+These steps are optional and ungraded. They extend OOP basics to production-relevant class design patterns.
+
+### Step 9.1 — Implement All Comparison Dunder Methods
+
+Python's `functools.total_ordering` decorator can fill in comparison methods automatically, but understanding the underlying dunders is essential. Implement a `Temperature` class with `__lt__`, `__eq__`, and the complete comparison suite by hand.
+
+```bash
+nano temperature.py
+```
+
+```python
+# temperature.py
+# Temperature class with full comparison support
+
+
+class Temperature:
+    '''Represents a temperature with unit conversion.'''
+
+    def __init__(self, celsius):
+        if celsius < -273.15:
+            raise ValueError(f'Temperature below absolute zero: {celsius}°C')
+        self._celsius = float(celsius)
+
+    @property
+    def celsius(self):
+        return self._celsius
+
+    @property
+    def fahrenheit(self):
+        return self._celsius * 9 / 5 + 32
+
+    @property
+    def kelvin(self):
+        return self._celsius + 273.15
+
+    def __str__(self):
+        return f'{self._celsius:.1f}°C'
+
+    def __repr__(self):
+        return f'Temperature({self._celsius})'
+
+    def __eq__(self, other):
+        if isinstance(other, Temperature):
+            return self._celsius == other._celsius
+        return NotImplemented
+
+    def __lt__(self, other):
+        if isinstance(other, Temperature):
+            return self._celsius < other._celsius
+        return NotImplemented
+
+    def __le__(self, other):
+        return self == other or self < other
+
+    def __gt__(self, other):
+        if isinstance(other, Temperature):
+            return self._celsius > other._celsius
+        return NotImplemented
+
+    def __ge__(self, other):
+        return self == other or self > other
+
+    def __add__(self, degrees):
+        '''Add degrees Celsius to temperature.'''
+        return Temperature(self._celsius + degrees)
+
+    def __sub__(self, other):
+        '''Subtract Temperature or degrees.'''
+        if isinstance(other, Temperature):
+            return self._celsius - other._celsius  # difference in degrees
+        return Temperature(self._celsius - other)
+
+
+# Test all comparisons
+freezing = Temperature(0)
+boiling = Temperature(100)
+body = Temperature(37)
+
+temps = [boiling, freezing, body, Temperature(-40)]
+print('Sorted temperatures:', sorted(temps))
+
+print(f'\nFreezing: {freezing} = {freezing.fahrenheit:.1f}°F = {freezing.kelvin:.2f}K')
+print(f'Boiling:  {boiling} = {boiling.fahrenheit:.1f}°F = {boiling.kelvin:.2f}K')
+
+print(f'\nfreezing < boiling: {freezing < boiling}')
+print(f'boiling == boiling: {boiling == Temperature(100)}')
+print(f'boiling is Temperature(100): {boiling is Temperature(100)}')
+print(f'body between freezing and boiling: {freezing < body < boiling}')
+
+print(f'\nfreezing + 15: {freezing + 15}')
+print(f'boiling - freezing: {boiling - freezing} degrees')
+
+try:
+    bad = Temperature(-300)
+except ValueError as e:
+    print(f'Caught: {e}')
+```
+
+```bash
+python3 temperature.py
+```
+
+### Step 9.2 — Class with `@classmethod` and `@staticmethod` Factory Methods
+
+Factory methods (`@classmethod`) are commonly used to provide alternative constructors. Build a `Date` class that can be created from a string or from the current date.
+
+```bash
+nano date_class.py
+```
+
+```python
+# date_class.py
+# Date class with classmethod factory methods and staticmethod utilities
+import datetime
+
+
+class Date:
+    '''A date with alternative constructors.'''
+
+    MONTH_NAMES = [
+        '', 'January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'
+    ]
+
+    def __init__(self, year, month, day):
+        if not (1 <= month <= 12):
+            raise ValueError(f'Invalid month: {month}')
+        if not (1 <= day <= 31):
+            raise ValueError(f'Invalid day: {day}')
+        self.year = year
+        self.month = month
+        self.day = day
+
+    @classmethod
+    def from_string(cls, date_string):
+        '''Create Date from "YYYY-MM-DD" string.'''
+        parts = date_string.split('-')
+        if len(parts) != 3:
+            raise ValueError(f'Expected YYYY-MM-DD format, got: {date_string!r}')
+        return cls(int(parts[0]), int(parts[1]), int(parts[2]))
+
+    @classmethod
+    def today(cls):
+        '''Create Date from today\'s actual date.'''
+        t = datetime.date.today()
+        return cls(t.year, t.month, t.day)
+
+    @staticmethod
+    def is_leap_year(year):
+        '''Return True if year is a leap year.'''
+        return (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)
+
+    def __str__(self):
+        return f'{self.MONTH_NAMES[self.month]} {self.day}, {self.year}'
+
+    def __repr__(self):
+        return f'Date({self.year}, {self.month}, {self.day})'
+
+    def __eq__(self, other):
+        if isinstance(other, Date):
+            return (self.year, self.month, self.day) == (other.year, other.month, other.day)
+        return NotImplemented
+
+
+# Test
+d1 = Date(2025, 7, 4)
+d2 = Date.from_string('2025-07-04')
+d3 = Date.today()
+
+print(f'd1: {d1}  repr: {repr(d1)}')
+print(f'd2: {d2}')
+print(f'd1 == d2: {d1 == d2}')
+print(f'Today: {d3}')
+print(f'2024 leap year: {Date.is_leap_year(2024)}')
+print(f'2025 leap year: {Date.is_leap_year(2025)}')
+```
+
+```bash
+python3 date_class.py
+```
+
+### Step 9.3 — `__slots__` for Memory-Efficient Classes
+
+When creating millions of small objects, `__slots__` eliminates the per-instance `__dict__`, reducing memory significantly. Demonstrate the memory difference between a standard class and a slotted class.
+
+```bash
+nano slots_demo.py
+```
+
+```python
+# slots_demo.py
+# Compare memory usage: regular class vs __slots__
+import sys
+
+
+class Point:
+    '''Regular class — has __dict__ per instance.'''
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+
+class PointSlots:
+    '''Slotted class — no __dict__, fixed attributes only.'''
+    __slots__ = ('x', 'y')
+
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+
+# Measure per-instance size
+p = Point(1, 2)
+ps = PointSlots(1, 2)
+
+print(f'Point instance size:       {sys.getsizeof(p)} bytes')
+print(f'PointSlots instance size:  {sys.getsizeof(ps)} bytes')
+
+# Regular instances have __dict__
+print(f'\nPoint.__dict__ exists:      {hasattr(p, "__dict__")}')
+print(f'PointSlots.__dict__ exists: {hasattr(ps, "__dict__")}')
+print(f'PointSlots.__slots__:       {PointSlots.__slots__}')
+
+# Demonstrate that __slots__ prevents dynamic attribute creation
+try:
+    ps.z = 99    # not in __slots__
+except AttributeError as e:
+    print(f'\nCannot add dynamic attribute: {e}')
+
+# Regular class allows dynamic attributes
+p.z = 99
+print(f'Regular class allows p.z = 99: p.z = {p.z}')
+
+# Bulk comparison
+n = 100_000
+regular = [Point(i, i) for i in range(n)]
+slotted = [PointSlots(i, i) for i in range(n)]
+print(f'\n{n:,} regular Point objects:      ~{sys.getsizeof(regular):,} bytes (list overhead only)')
+print(f'{n:,} PointSlots objects:  ~{sys.getsizeof(slotted):,} bytes (list overhead only)')
+```
+
+```bash
+python3 slots_demo.py
+```
+
+Observe that slotted instances are smaller and that `__slots__` prevents adding arbitrary new attributes — a useful constraint that catches typos in attribute names at the cost of flexibility.
+
+---
+
 ## Troubleshooting Guide
 
 **`TypeError: method() takes 0 positional arguments but 1 was given`**

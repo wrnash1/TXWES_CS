@@ -312,3 +312,13 @@ az monitor metrics alert list \
 ---
 
 Module 13 Reading Guide | CIS-4331 Azure Cloud | Texas Wesleyan University
+
+---
+
+## 9. Supplemental Resources
+
+1. Azure Monitor overview — platform architecture, Metrics vs. Logs, and the relationship between Azure Monitor and its sub-services: https://learn.microsoft.com/en-us/azure/azure-monitor/overview
+
+2. Application Insights overview — application performance monitoring, telemetry types, dependency tracking, and availability tests: https://learn.microsoft.com/en-us/azure/azure-monitor/app/app-insights-overview
+
+3. Azure Service Health documentation — service issue notifications, planned maintenance alerts, health history, and health advisories: https://learn.microsoft.com/en-us/azure/service-health/overview

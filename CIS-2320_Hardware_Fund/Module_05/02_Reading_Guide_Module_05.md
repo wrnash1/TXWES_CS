@@ -154,3 +154,27 @@ Complete the Reading Guide glossary review before beginning the lab.
 - [ ] Watch the storage device videos in Professor Messer's free A+ Core 1 course
 - [ ] Complete Lab 05 and submit via Canvas before the deadline
 - [ ] Post your Discussion 05 initial response by Wednesday at 11:59 PM
+
+---
+
+## 9. Supplemental Resources
+
+1. **Professor Messer — Storage Devices (220-1101 Free Video)**
+   URL: [https://www.professormesser.com/free-a-plus-training/220-1101/220-1101-video/](https://www.professormesser.com/free-a-plus-training/220-1101/220-1101-video/)
+   Relevance: Free video covering HDD vs. SSD vs. NVMe, M.2 form factors, SATA connectors, RAID levels, and interface speeds — all Module 05 exam objectives.
+
+2. **CrystalDiskInfo (Free HDD/SSD Health Monitor)**
+   URL: [https://crystalmark.info/en/software/crystaldiskinfo/](https://crystalmark.info/en/software/crystaldiskinfo/)
+   Relevance: Free Windows utility that reads SMART data from HDDs and SSDs to report drive health, temperature, power-on hours, and reallocated sector counts. Use in the challenge exercise to inspect drive health on any available system.
+
+3. **CrystalDiskMark (Free Storage Benchmark)**
+   URL: [https://crystalmark.info/en/software/crystaldiskmark/](https://crystalmark.info/en/software/crystaldiskmark/)
+   Relevance: Free sequential and random read/write benchmark for all storage types. Allows direct comparison of HDD, SATA SSD, and NVMe SSD performance on real hardware — directly reinforces the speed comparison table in the reading guide.
+
+4. **StorageReview.com — RAID Fundamentals Guide (Free)**
+   URL: [https://www.storagereview.com/review/raid-levels-explained](https://www.storagereview.com/review/raid-levels-explained)
+   Relevance: Free reference covering RAID 0, 1, 5, 6, and 10 with diagrams showing how data and parity are distributed. Supplements the RAID section of the reading guide with visual representations useful for exam scenario questions.
+
+5. **Backblaze Hard Drive Stats (Free Open Data)**
+   URL: [https://www.backblaze.com/cloud-storage/resources/hard-drive-test-data](https://www.backblaze.com/cloud-storage/resources/hard-drive-test-data)
+   Relevance: Real-world HDD failure rate data from a cloud storage provider operating tens of thousands of drives. Provides data-driven context for understanding HDD vs. SSD reliability differences discussed in the reading guide.

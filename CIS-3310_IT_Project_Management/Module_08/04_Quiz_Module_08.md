@@ -203,3 +203,203 @@ Distractor Analysis:
 - *Why A is incorrect:* Push email is one-directional and asynchronous. If the requirement is already ambiguous, sending another email risks creating further misinterpretation without the feedback loop needed to confirm understanding.
 - *Why B is incorrect:* Pull communication provides access to reference materials — it does not facilitate discussion or resolve conflicting interpretations. Posting the document again would not address the underlying disagreement.
 - *Why D is incorrect:* A formal memo documenting both interpretations does not resolve the ambiguity — it only records it. The team needs a resolution, not a documentation of the conflict.
+
+---
+
+## Question 11
+
+A project team of 10 members adds 5 new members. How many additional communication channels are created?
+
+- A) 25 additional channels
+- B) 55 additional channels
+- C) 60 additional channels
+- D) 35 additional channels
+
+**Correct Answer:** C) 60 additional channels
+
+**Distractor Analysis:**
+
+- *Why C is correct:* Original channels = 10(9)/2 = 45. New channels with 15 members = 15(14)/2 = 105. Additional channels = 105 - 45 = 60.
+- *Why A is incorrect:* 25 would be 5(4)/2 = 10 — the channels within only the 5 new members, ignoring the 50 new channels between the new members and the original 10.
+- *Why B is incorrect:* 55 = 11(10)/2 — this applies the formula to 11 members total, not 15.
+- *Why D is incorrect:* 35 = 15 × (15-1)/2 subtracted incorrectly; no standard calculation produces 35 from these inputs.
+
+---
+
+## Question 12
+
+Which of the following is an example of PULL communication?
+
+- A) A PM sends a weekly status email to all stakeholders every Friday.
+- B) A PM calls a stakeholder to discuss a scope change decision.
+- C) A PM posts updated project plans to a shared SharePoint site and notifies the team that they can access the files when needed.
+- D) A PM presents the project dashboard at the monthly steering committee meeting.
+
+**Correct Answer:** C) A PM posts updated project plans to a shared SharePoint site and notifies the team that they can access the files when needed.
+
+**Distractor Analysis:**
+
+- *Why C is correct:* Pull communication places information in a repository that recipients can access at their own convenience. The recipient must take action to retrieve the information. SharePoint, project portals, and document libraries are classic pull channels.
+- *Why A is incorrect:* Sending a weekly status email is push communication — the information is actively delivered (pushed) to recipients without them having to request it.
+- *Why B is incorrect:* A phone call involves real-time two-way exchange — that is interactive communication.
+- *Why D is incorrect:* Presenting at a steering committee meeting is interactive communication — participants are present and can respond in real time.
+
+---
+
+## Question 13
+
+According to the PMI communication model, what is "noise" in the context of project communications?
+
+- A) Loud background sounds during a video conference call
+- B) Any factor that interferes with the accurate transmission or reception of a message — including technical, cultural, language, or environmental barriers
+- C) Informal gossip or rumors circulating among the project team
+- D) Excessive email volume that overwhelms the stakeholder's inbox
+
+**Correct Answer:** B) Any factor that interferes with the accurate transmission or reception of a message — including technical, cultural, language, or environmental barriers.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* In PMI's communication model, noise refers broadly to anything that distorts or interferes with message transmission. It includes physical noise (sound), but also language differences, cultural interpretations, technical jargon, emotional state, and medium limitations.
+- *Why A is incorrect:* Loud background sounds are one specific type of physical noise, but the PMI definition is much broader. Answering only with physical sound misses the full scope of the term.
+- *Why C is incorrect:* Informal rumors are a communication challenge but are not specifically defined as "noise" in the PMI communication model. They are more accurately described as informal communication channels.
+- *Why D is incorrect:* Email volume overload is a communication issue and a potential barrier, but it is not the PMI definition of noise in the sender-message-receiver model.
+
+---
+
+## Question 14
+
+The Communications Management Plan should include which of the following components?
+
+- A) The project risk register and probability-impact matrix
+- B) Stakeholder information needs, communication method, format, frequency, and responsible sender for each stakeholder or group
+- C) The project budget for communication tools and software licenses
+- D) The RACI matrix showing responsibility assignments for each WBS work package
+
+**Correct Answer:** B) Stakeholder information needs, communication method, format, frequency, and responsible sender for each stakeholder or group.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* The Communications Management Plan documents who needs what information, in what format, through which channel, how often, and who sends it. These five components are the standard structure of a communications register within the plan.
+- *Why A is incorrect:* The risk register belongs to Risk Management, not the Communications Management Plan.
+- *Why C is incorrect:* Communication tool budgeting is a cost management concern. While communication tools have costs, they are not a Communications Management Plan component.
+- *Why D is incorrect:* The RACI matrix is a resource/responsibility document in the Resource Management Plan — not part of the Communications Management Plan.
+
+---
+
+## Question 15
+
+A project manager is sending a status report to the VP of Operations summarizing the project's EVM performance metrics. What type of communication is this?
+
+- A) Informal verbal
+- B) Formal written
+- C) Informal written
+- D) Interactive verbal
+
+**Correct Answer:** B) Formal written
+
+**Distractor Analysis:**
+
+- *Why B is correct:* A status report is a structured, documented communication sent through an official channel to an executive stakeholder. It is formal (follows a defined format and serves an official purpose) and written (a document rather than a spoken exchange).
+- *Why A is incorrect:* Informal verbal describes spontaneous unplanned spoken communication — a hallway conversation or a quick phone check-in.
+- *Why C is incorrect:* Informal written describes non-structured written communication — a quick chat message or informal email, not an official status report.
+- *Why D is incorrect:* Interactive verbal requires real-time two-way spoken exchange — a meeting or phone call, not a report document.
+
+---
+
+## Question 16
+
+Which of the following statements about the Stakeholder Engagement Assessment Matrix is TRUE?
+
+- A) It replaces the Stakeholder Register and is only created once at project initiation.
+- B) It maps each stakeholder's current engagement level against their desired engagement level to identify gaps requiring PM action.
+- C) It is used to assign RACI designations to each stakeholder for project activities.
+- D) It documents each stakeholder's communication channel preferences and availability.
+
+**Correct Answer:** B) It maps each stakeholder's current engagement level against their desired engagement level to identify gaps requiring PM action.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* The Stakeholder Engagement Assessment Matrix plots where each stakeholder currently sits (Unaware, Resistant, Neutral, Supportive, Leading) and where the PM needs them to be. Gaps between current and desired levels drive the stakeholder engagement strategy.
+- *Why A is incorrect:* It does not replace the Stakeholder Register. Both documents coexist — the Register records attributes; the matrix tracks engagement levels.
+- *Why C is incorrect:* RACI designations are part of the RAM/RACI chart in the Resource Management Plan, not the engagement matrix.
+- *Why D is incorrect:* Communication preferences and availability are documented in the Communications Management Plan or the Stakeholder Register — not the engagement assessment matrix.
+
+---
+
+## Question 17
+
+A stakeholder is categorized as "Resistant" on the Stakeholder Engagement Assessment Matrix. What does this mean?
+
+- A) The stakeholder is unaware the project exists.
+- B) The stakeholder knows about the project but actively opposes the change it will bring.
+- C) The stakeholder is neutral and neither supports nor opposes the project.
+- D) The stakeholder supports the project but is not actively helping move it forward.
+
+**Correct Answer:** B) The stakeholder knows about the project but actively opposes the change it will bring.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* The five engagement levels are: Unaware, Resistant, Neutral, Supportive, Leading. Resistant means the stakeholder is aware of the project but opposes its objectives or the changes it requires. The PM must develop targeted engagement actions to move this stakeholder toward Supportive.
+- *Why A is incorrect:* An unaware stakeholder does not know the project exists. The Resistant level requires awareness — the stakeholder opposes what they know about.
+- *Why C is incorrect:* Neutral describes a stakeholder who knows about the project but has no strong positive or negative reaction.
+- *Why D is incorrect:* A stakeholder who supports but is not actively championing the effort is described as Supportive — not Resistant.
+
+---
+
+## Question 18
+
+During a project retrospective, a team member says, "I sent you that email three days ago — why didn't you act on it?" The recipient says, "I never saw it; it went to my spam folder." Which communication barrier does this illustrate?
+
+- A) Cultural differences
+- B) Language barriers
+- C) Technical breakdown
+- D) Information overload
+
+**Correct Answer:** C) Technical breakdown
+
+**Distractor Analysis:**
+
+- *Why C is correct:* A message routed to the spam folder is a technology-related delivery failure — the communication infrastructure (email filtering) prevented the message from reaching the intended recipient. This is a technical communication barrier.
+- *Why A is incorrect:* Cultural differences involve differing norms, values, or communication style expectations between sender and receiver — not a technology failure.
+- *Why B is incorrect:* Language barriers involve vocabulary, grammar, or technical jargon creating misunderstanding — not a delivery failure.
+- *Why D is incorrect:* Information overload occurs when a recipient receives more communication than they can process. The issue here is non-delivery, not volume.
+
+---
+
+## Question 19
+
+What is the PRIMARY purpose of the "Monitor Communications" process?
+
+- A) To send status reports to all stakeholders on a weekly schedule
+- B) To ensure that the communications management plan is being followed and that information needs of stakeholders are being met throughout the project
+- C) To identify new stakeholders added to the project during execution
+- D) To document all verbal communications in writing to create an audit trail
+
+**Correct Answer:** B) To ensure that the communications management plan is being followed and that information needs of stakeholders are being met throughout the project.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* Monitor Communications is the Monitoring and Controlling process that reviews whether the current communication approach is working. It checks plan adherence, stakeholder feedback, and whether communications are achieving their intended effect.
+- *Why A is incorrect:* Sending status reports is a Manage Communications (Executing) activity — it is the delivery of communications, not the monitoring of their effectiveness.
+- *Why C is incorrect:* Identifying new stakeholders is part of the Identify Stakeholders process, which can recur throughout the project but is a distinct process from Monitor Communications.
+- *Why D is incorrect:* Documenting verbal communications may be good practice in some contexts but is not the purpose of the Monitor Communications process.
+
+---
+
+## Question 20
+
+A project manager is planning communications for an IT infrastructure project with 18 stakeholders. She groups them into four stakeholder categories and creates one communication approach for each group. How does this strategy affect communication management complexity?
+
+- A) It has no effect — the number of channels is determined solely by the total number of individuals.
+- B) It reduces the effective communication complexity by treating groups as single communication units, significantly reducing the number of individual communication threads to manage.
+- C) It increases complexity because each group requires a separate Communication Management Plan.
+- D) It violates PMI standards because each stakeholder must have an individual communication entry.
+
+**Correct Answer:** B) It reduces the effective communication complexity by treating groups as single communication units, significantly reducing the number of individual communication threads to manage.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* Grouping stakeholders by category is a standard and recommended practice in the Communications Management Plan. It reduces the complexity of managing 18 individual communication threads to managing 4 group-level strategies — a practical and PMI-supported approach.
+- *Why A is incorrect:* Grouping does affect management complexity even though the mathematical channel formula (N(N-1)/2) counts individual people. The PM manages communication strategy at the group level, not by calculating channels for every individual interaction.
+- *Why C is incorrect:* One Communications Management Plan covers all stakeholder groups. Creating a separate plan per group would be unnecessary overhead.
+- *Why D is incorrect:* PMI does not prohibit grouping stakeholders. The Stakeholder Register may include individuals, but the communications register commonly groups stakeholders with similar information needs.

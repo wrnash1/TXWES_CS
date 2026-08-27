@@ -261,7 +261,28 @@ We spend O(n) memory to reduce time from O(n²) to O(n). In interviews, this opt
 
 ---
 
-## 9. Study Checklist
+## 9. Supplemental Resources
+
+The following free, openly licensed resources reinforce the concepts in this module. All are zero-cost and require no account to access.
+
+1. **Big-O Cheat Sheet** — [https://www.bigocheatsheet.com/](https://www.bigocheatsheet.com/)
+   A one-page reference card listing time and space complexities of common data structures and sorting algorithms. Keep this open during labs.
+
+2. **OpenDSA — Algorithm Analysis Chapter** — [https://opendsa-server.cs.vt.edu/ODSA/Books/Everything/html/AnalChap.html](https://opendsa-server.cs.vt.edu/ODSA/Books/Everything/html/AnalChap.html)
+   Interactive textbook chapter with embedded exercises on Big-O, Omega, and Theta notation. Includes visualizations of growth rate comparisons.
+
+3. **CS50 — Week 3 Algorithms (Harvard OpenCourseWare)** — [https://cs50.harvard.edu/x/2024/weeks/3/](https://cs50.harvard.edu/x/2024/weeks/3/)
+   Free lecture covering search, sort, and Big-O analysis with visual demonstrations. Ideal for reinforcing the complexity ordering table.
+
+4. **VisuAlgo — Sorting Visualizations** — [https://visualgo.net/en/sorting](https://visualgo.net/en/sorting)
+   Animated step-by-step visualization of sorting algorithms. Observe how O(n²) bubble sort compares to O(n log n) merge sort in real time.
+
+5. **MIT OpenCourseWare — 6.006 Lecture 1: Algorithmic Thinking** — [https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/](https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/)
+   Full MIT lecture notes and problem sets on algorithm analysis, freely available. Lecture 1 covers the peak-finding problem as a concrete introduction to complexity reasoning.
+
+---
+
+## 10. Study Checklist
 
 - [ ] Watch the Module 01 video lecture by Professor Nash.
 - [ ] Read the Big-O Cheat Sheet and memorize the complexity class ordering.

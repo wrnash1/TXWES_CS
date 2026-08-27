@@ -371,3 +371,205 @@ D. The server-level option overrides reservation-level options
 ---
 
 *Submit answers to Canvas by the due date shown in the course schedule.*
+
+---
+
+### Question 11 (5 points)
+
+You need to create a reverse lookup zone for the subnet `192.168.20.0/24` on DC1.
+Which PowerShell command creates the correct AD-Integrated reverse lookup zone?
+
+- A) `Add-DnsServerPrimaryZone -Name "20.168.192.in-addr.arpa" -ReplicationScope Domain`
+- B) `Add-DnsServerPrimaryZone -Name "192.168.20.in-addr.arpa" -ReplicationScope Domain`
+- C) `Add-DnsServerSecondaryZone -Name "20.168.192.in-addr.arpa" -ZoneFile "20.168.192.in-addr.arpa.dns"`
+- D) `Add-DnsServerPrimaryZone -NetworkId "192.168.20.0/24" -ZoneFile "reverse.dns"`
+
+- **Correct Answer: A**
+- **Distractor Analysis:**
+  - **A** — Correct. Reverse lookup zones follow the octets in reverse order. For `192.168.20.0/24`, the zone name is `20.168.192.in-addr.arpa`. `-ReplicationScope Domain` creates an AD-Integrated zone replicated to all DCs.
+  - **B** — The octets are not reversed. `192.168.20.in-addr.arpa` is not a valid reverse zone name for this subnet.
+  - **C** — A Secondary zone requires a master server and uses file-based storage, not AD integration. The zone name is correct but the zone type and storage are wrong.
+  - **D** — `-NetworkId` is a valid parameter that auto-generates the zone name, but `-ZoneFile` creates a file-backed zone, not an AD-Integrated zone. Use `-ReplicationScope` for AD integration.
+
+---
+
+### Question 12 (5 points)
+
+A technician runs `nslookup` to verify that DC1 has registered its SRV records after
+domain promotion. Which `nslookup` command confirms that the LDAP SRV record for
+`txwes.edu` exists?
+
+- A) `nslookup -type=SRV _ldap._tcp.dc._msdcs.txwes.edu`
+- B) `nslookup -type=A dc1.txwes.edu`
+- C) `nslookup -type=MX txwes.edu`
+- D) `nslookup -type=PTR 192.168.10.10`
+
+- **Correct Answer: A**
+- **Distractor Analysis:**
+  - **A** — Correct. LDAP SRV records are stored under `_ldap._tcp.dc._msdcs.<domain>`. Using `-type=SRV` queries the DNS server for that service locator record, which domain clients use to find domain controllers.
+  - **B** — `-type=A` queries for a host address record. It confirms DC1 has an A record but does not verify SRV record registration.
+  - **C** — `-type=MX` queries for mail exchanger records, which are unrelated to domain controller location.
+  - **D** — `-type=PTR` queries a reverse lookup zone for a hostname. It verifies pointer records, not SRV records.
+
+---
+
+### Question 13 (5 points)
+
+Your organization has two separate subnets: `10.1.0.0/24` (Building A) and
+`10.2.0.0/24` (Building B). A single DHCP server services both subnets via relay
+agents. You create two separate scopes. Which DHCP feature lets you manage both
+scopes as a single administrative unit and activate/deactivate them together?
+
+- A) DHCP Failover
+- B) Split Scope
+- C) Superscope
+- D) Multicast Scope
+
+- **Correct Answer: C**
+- **Distractor Analysis:**
+  - **A** — DHCP Failover provides redundancy between two DHCP servers for the same scope. It does not group separate scopes for administrative management.
+  - **B** — Split Scope divides a single scope across two DHCP servers for redundancy. It does not group distinct subnets.
+  - **C** — Correct. A Superscope is an administrative grouping of multiple child scopes. It allows an administrator to activate, deactivate, and manage multiple scopes together — useful when a single server handles multiple subnets.
+  - **D** — A Multicast Scope assigns multicast IP addresses (Class D range 224.0.0.0–239.255.255.255) to multicast applications. It is unrelated to unicast subnet management.
+
+---
+
+### Question 14 (5 points)
+
+A Windows client has cached a DNS record for `server1.txwes.edu` that now points
+to an old IP address. The DNS administrator has already updated the A record on
+the DNS server. Which command on the client clears the local DNS resolver cache
+so the next query retrieves the updated record?
+
+- A) `ipconfig /release`
+- B) `ipconfig /flushdns`
+- C) `ipconfig /registerdns`
+- D) `Clear-DnsServerCache`
+
+- **Correct Answer: B**
+- **Distractor Analysis:**
+  - **A** — `ipconfig /release` releases the DHCP-assigned IP address. It does not affect the DNS resolver cache.
+  - **B** — Correct. `ipconfig /flushdns` clears the client-side DNS resolver cache. The next query for `server1.txwes.edu` goes to the DNS server and retrieves the updated record.
+  - **C** — `ipconfig /registerdns` triggers the client to re-register its own A and PTR records in DNS. It does not flush cached records.
+  - **D** — `Clear-DnsServerCache` clears the DNS server's cache on the server side. It has no effect on a client's local resolver cache.
+
+---
+
+### Question 15 (5 points)
+
+You examine the DHCP audit log on DC1 and find Event ID 11 repeated multiple
+times for the same MAC address within one minute. What does Event ID 11 indicate
+in a DHCP audit log?
+
+- A) A new lease was successfully issued
+- B) A lease was renewed by a client
+- C) A request was declined because the address is already in use
+- D) The DHCP service was paused
+
+- **Correct Answer: C**
+- **Distractor Analysis:**
+  - **A** — Event ID 10 indicates a new lease was issued. Event ID 11 indicates a different condition.
+  - **B** — Event ID 12 indicates a lease renewal. Renewals are expected and occur periodically.
+  - **C** — Correct. Event ID 11 is "Decline" — the client sent a DHCPDECLINE message because it detected the offered address is already in use on the network (conflict detected via ARP probe). Repeated declines for the same MAC may indicate IP address conflicts or a rogue device.
+  - **D** — DHCP service pause events use different log entries. Event ID 11 is specifically a client decline event.
+
+---
+
+### Question 16 (5 points)
+
+An administrator needs to add a conditional forwarder for `lab.internal` pointing
+to `172.16.0.1` so that DNS queries for that domain route to the lab's DNS server.
+Which PowerShell command accomplishes this?
+
+- A) `Add-DnsServerForwarder -IPAddress 172.16.0.1 -PassThru`
+- B) `Add-DnsServerConditionalForwarderZone -Name "lab.internal" -MasterServers 172.16.0.1`
+- C) `New-DnsServerZone -Name "lab.internal" -ReplicationScope Domain`
+- D) `Set-DnsServerForwarder -IPAddress 172.16.0.1 -UseRootHint $false`
+
+- **Correct Answer: B**
+- **Distractor Analysis:**
+  - **A** — `Add-DnsServerForwarder` adds a standard forwarder that handles all unresolved queries. It does not restrict forwarding to a specific domain name.
+  - **B** — Correct. `Add-DnsServerConditionalForwarderZone` creates a zone of type conditional forwarder. `-Name` specifies the domain whose queries should be forwarded, and `-MasterServers` specifies the target DNS server IP.
+  - **C** — `New-DnsServerZone` creates a primary or secondary zone, making the server authoritative for that domain — not appropriate for forwarding to another server.
+  - **D** — `Set-DnsServerForwarder` modifies global forwarder settings. It does not create domain-specific conditional forwarding rules.
+
+---
+
+### Question 17 (5 points)
+
+A DNS zone has aging enabled with a no-refresh interval of 7 days and a refresh
+interval of 7 days. A client workstation's A record has a timestamp of 08:00 on
+Day 1. The workstation successfully renews its DHCP lease at 10:00 on Day 3 and
+again at 08:00 on Day 10. Will the DNS record timestamp be updated on Day 3?
+
+- A) Yes — any DHCP renewal triggers a DNS record refresh
+- B) No — the record is within the no-refresh interval and cannot be updated yet
+- C) Yes — secure dynamic updates always refresh the timestamp on renewal
+- D) No — dynamic updates are only accepted from domain controllers
+
+- **Correct Answer: B**
+- **Distractor Analysis:**
+  - **A** — DHCP renewal does attempt to refresh DNS, but the DNS server rejects refresh requests during the no-refresh interval to reduce replication traffic.
+  - **B** — Correct. The no-refresh interval (7 days here) prevents DNS from updating a record's timestamp before it expires. Day 3 is within the no-refresh interval, so the refresh attempt at Day 3 is rejected. The record can first be refreshed after Day 8 (Day 1 + 7 days).
+  - **C** — Secure dynamic updates restrict who can update records but do not bypass the no-refresh interval.
+  - **D** — Domain-joined computers with Secure Only updates can register and refresh their own records. Clients — not only DCs — are authorized to update their own A records.
+
+---
+
+### Question 18 (5 points)
+
+You run `Get-DhcpServerv4ScopeStatistics -ScopeId 192.168.10.0` and notice the
+`PercentageInUse` is 97%. Which action best addresses the risk of address
+exhaustion while minimizing disruption?
+
+- A) Reduce the lease duration from 8 days to 1 day to reclaim addresses faster
+- B) Extend the scope range by modifying the end address with `Set-DhcpServerv4Scope`
+- C) Enable DHCP Failover in Load Balance mode with a second DHCP server
+- D) Delete all existing leases to free the address pool immediately
+
+- **Correct Answer: B**
+- **Distractor Analysis:**
+  - **A** — Reducing lease duration causes more frequent renewals and increases DHCP server load. It does not add addresses to the pool; it only reclaims expired leases faster.
+  - **B** — Correct. `Set-DhcpServerv4Scope -ScopeId 192.168.10.0 -EndRange <new end>` expands the scope's assignable range, directly increasing the number of available addresses. This is the most direct solution to address exhaustion.
+  - **C** — DHCP Failover distributes leases across two servers but does not increase the total number of addresses in the scope. Both servers share the same pool.
+  - **D** — Deleting all leases forces all clients to request new leases simultaneously, causing network disruption. It does not increase the pool size.
+
+---
+
+### Question 19 (5 points)
+
+You need to verify that DC1's DNS server is successfully resolving external names
+using its configured forwarder (`8.8.8.8`). Which PowerShell command tests name
+resolution from the perspective of the DNS server itself (not the local client resolver)?
+
+- A) `Resolve-DnsName -Name "microsoft.com"`
+- B) `Test-NetConnection -ComputerName "microsoft.com" -Port 443`
+- C) `Resolve-DnsName -Name "microsoft.com" -Server 127.0.0.1`
+- D) `nslookup microsoft.com 8.8.8.8`
+
+- **Correct Answer: C**
+- **Distractor Analysis:**
+  - **A** — `Resolve-DnsName` without `-Server` uses the client's configured DNS server, which may not be DC1. This tests client resolution, not the server's forwarder configuration.
+  - **B** — `Test-NetConnection` tests TCP connectivity to port 443. It does not test DNS resolution behavior.
+  - **C** — Correct. `-Server 127.0.0.1` directs the query to the local DNS service on DC1. If the result resolves correctly, DC1's forwarder is working. This tests the server's resolution chain including its forwarder.
+  - **D** — `nslookup microsoft.com 8.8.8.8` queries `8.8.8.8` directly, bypassing DC1's DNS service. This tests Google's resolver, not DC1's forwarder configuration.
+
+---
+
+### Question 20 (5 points)
+
+A DNS administrator creates a delegation in the `txwes.edu` zone pointing
+`lab.txwes.edu` to a separate DNS server at `10.50.0.5`. A client queries DC1
+for `fileserver.lab.txwes.edu`. How does DC1 resolve this query?
+
+- A) DC1 checks its local zone file for `fileserver.lab.txwes.edu` and returns NXDOMAIN
+- B) DC1 recognizes the delegation and refers the client to `10.50.0.5` to complete the query
+- C) DC1 forwards the query to its configured standard forwarder
+- D) DC1 returns the NS record for `lab.txwes.edu` and caches the delegation
+
+- **Correct Answer: B**
+- **Distractor Analysis:**
+  - **A** — DC1 is not authoritative for `lab.txwes.edu` — it delegated that namespace. It does not search its own zone file for records in the delegated subdomain.
+  - **B** — Correct. A DNS delegation creates an NS record in the parent zone pointing to the child zone's authoritative server. DC1 follows the delegation and refers the query to `10.50.0.5`, which is authoritative for `lab.txwes.edu`. The client receives the answer from the delegated server.
+  - **C** — Standard forwarders handle queries for domains the server has no zone information about. Because DC1 has a delegation record for `lab.txwes.edu`, it follows the delegation rather than forwarding to an external server.
+  - **D** — Returning only the NS record and caching is recursive resolution behavior. DC1, as a recursive resolver, pursues the full answer on behalf of the client rather than returning a referral to the client directly.

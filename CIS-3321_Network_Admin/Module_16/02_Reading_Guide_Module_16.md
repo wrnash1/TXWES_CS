@@ -420,4 +420,32 @@ Performance-based questions (PBQs) appear at the beginning. Many candidates skip
 
 ---
 
+---
+
+## 9. Supplemental Resources
+
+The following free resources support final exam preparation and CompTIA Network+ N10-008 certification study across all five exam domains.
+
+**1. Professor Messer — CompTIA Network+ N10-008 Full Course (Free)**
+URL: https://www.professormesser.com/network-plus/n10-008/n10-008-video/
+Relevance: Professor Messer provides a complete free video course covering all five Network+ N10-008 exam domains — Networking Concepts, Infrastructure, Network Operations, Network Security, and Network Troubleshooting. His practice exams and study groups are highly rated by certification candidates. Essential final review resource.
+
+**2. CompTIA Network+ N10-008 Official Exam Objectives (Free PDF)**
+URL: https://www.comptia.org/training/resources/exam-objectives
+Relevance: CompTIA's free published exam objectives document is the definitive checklist of every topic that can appear on the N10-008 exam. Use it as a final self-assessment: go through each objective and confirm you can explain or demonstrate it. Any objective you cannot confidently explain is a study gap.
+
+**3. Jason Dion — Network+ Practice Questions (Free samples)**
+URL: https://diontraining.com/
+Relevance: Jason Dion (CompTIA-certified trainer) provides free sample practice questions and study resources for Network+. His performance-based question (PBQ) walkthroughs are particularly useful for the simulation questions that appear at the start of the real exam.
+
+**4. SubnettingPractice.com — Subnetting Drills (Free)**
+URL: https://www.subnettingpractice.com/
+Relevance: Subnetting is consistently one of the most common failure points on the Network+ exam. This free tool provides unlimited subnetting practice with instant feedback, covering CIDR notation, host counts, network addresses, broadcast addresses, and VLSM — directly mapped to the exam's subnetting question types.
+
+**5. Wireshark — Free Protocol Analysis and Sample Captures**
+URL: https://www.wireshark.org/
+Relevance: Wireshark provides hands-on familiarity with protocol behavior tested on the exam — DNS queries, DHCP DORA, TCP handshakes, ARP requests, ICMP, and RTP. The free sample capture library at wiki.wireshark.org/SampleCaptures provides pre-captured traces for every protocol covered in this course.
+
+---
+
 CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash

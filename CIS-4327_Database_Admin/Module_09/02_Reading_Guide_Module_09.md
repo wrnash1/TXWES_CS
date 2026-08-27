@@ -331,3 +331,21 @@ patronictl -c /etc/patroni.yml edit-config
 - [ ] Patroni: DCS-based leader election, HAProxy for connection routing
 - [ ] Connection string must use instance name not IP for transparent HA failover
 - [ ] `synchronous_standby_names` controls which standbys must ack before commit
+
+---
+
+## 9. Supplemental Resources
+
+The following free, open-access resources support Module 09 topics:
+
+**1. [PostgreSQL Documentation — High Availability, Load Balancing, and Replication](https://www.postgresql.org/docs/current/high-availability.html)**
+Covers streaming replication configuration, replication slots, hot standby, synchronous commit levels, and Patroni integration patterns.
+
+**2. [PostgreSQL Documentation — Monitoring Replication (pg_stat_replication)](https://www.postgresql.org/docs/current/monitoring-stats.html#MONITORING-PG-STAT-REPLICATION-VIEW)**
+Reference for all columns in `pg_stat_replication` including LSN fields, lag bytes, and standby state values used in monitoring.
+
+**3. [MySQL 8.0 Reference Manual — Group Replication](https://dev.mysql.com/doc/refman/8.0/en/group-replication.html)**
+Complete reference for MySQL Group Replication, including single-primary mode, Paxos consensus, table requirements, and member management commands.
+
+**4. [Google Cloud — Cloud SQL High Availability Overview](https://cloud.google.com/sql/docs/postgres/high-availability)**
+Official documentation for Cloud SQL HA architecture, failover behavior, regional persistent disk replication, and RTO/RPO characteristics.

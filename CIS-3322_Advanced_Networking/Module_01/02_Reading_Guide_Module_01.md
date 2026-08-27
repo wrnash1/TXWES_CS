@@ -173,3 +173,19 @@ Work through each item before taking the quiz.
 - Cisco CCNA certification training information: cisco.com/c/en/us/training-events/training-certifications
 - Free CCNA study notes and video summaries: professormesser.com
 - Cisco Packet Tracer (free download through Cisco Networking Academy): used for all lab exercises in this course
+
+---
+
+## 9. Supplemental Resources
+
+The following open educational resources extend the concepts covered in this module and align directly with CCNA 200-301 exam objectives. All resources are freely available.
+
+1. **Cisco Networking Academy — Network Fundamentals** (skillsforall.com): The "Networking Basics" and "CCNA: Introduction to Networks" courses provide interactive labs and visual animations for three-tier design, spine-leaf architecture, and topology types. These courses are completely free and include built-in Packet Tracer activities.
+
+2. **Jeremy's IT Lab — Free CCNA Course, Day 1–3 (YouTube)**: The opening modules of this CCNA course cover network devices, topology models, and the OSI/TCP-IP models with exam-focused notation. Playlist: youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ
+
+3. **Cisco Learning Network — CCNA Study Group and Exam Topics** (learningnetwork.cisco.com): The Cisco Learning Network provides the official CCNA 200-301 exam topic list, study group discussion threads, and sample questions aligned to Domain 1: Network Fundamentals.
+
+4. **Professor Messer — CompTIA and Cisco Free Study Guides** (professormesser.com): While primarily CompTIA-focused, Professor Messer's networking fundamentals notes on topology types, OSI model, and physical vs. logical topology are directly applicable to CCNA Domain 1 content.
+
+5. **Cisco Packet Tracer Tutorials — Network Topologies Lab** (skillsforall.com/course/getting-started-cisco-packet-tracer): This beginner tutorial guides you through building star, mesh, and three-tier topologies in Packet Tracer and is a strong companion to the Module 01 lab activity.

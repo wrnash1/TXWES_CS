@@ -183,4 +183,20 @@ This objective explicitly tests: persistence mechanisms, pivoting, tunneling, la
 
 ---
 
+## 9. Supplemental Resources
+
+**1. MITRE ATT&CK — Persistence Tactic (TA0003)**
+https://attack.mitre.org/tactics/TA0003/
+The MITRE ATT&CK framework's full catalog of persistence techniques used by real threat actors, including registry Run keys, scheduled tasks, cron jobs, and SSH authorized keys. Each technique page includes detection guidance, data sources, and real-world usage by named threat groups.
+
+**2. HackTricks — Tunneling and Port Forwarding**
+https://book.hacktricks.xyz/generic-methodologies-and-resources/tunneling-and-port-forwarding
+A comprehensive reference covering SSH tunneling, Metasploit pivoting, proxychains, and alternative pivoting tools (Chisel, ligolo-ng, socat). Includes command syntax and common troubleshooting steps for each method — useful as a quick reference during labs.
+
+**3. OffSec — Introduction to Pivoting and Tunneling (PEN-200 Module)**
+https://www.offsec.com/courses/pen-200/
+The Offensive Security PEN-200 (OSCP) course covers pivoting extensively as a core skill. The publicly available course outline and free introductory materials describe the pivoting methodology and tool selection process used in professional penetration testing and the OSCP exam, which closely aligns with PenTest+ objectives.
+
+---
+
 *End of Module 13 Reading Guide*

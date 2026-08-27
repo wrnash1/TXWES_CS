@@ -218,3 +218,185 @@ resources within that GCP environment.
 End of Quiz — Module 01
 
 Course: CIS-4329 Google Cloud Computing | Texas Wesleyan University | Professor Nash
+
+---
+
+### Question 11 (5 points)
+
+Which GCP CLI tool is the current recommended way to interact with Cloud Storage
+buckets and objects, and what is its legacy predecessor?
+
+- A) `bq` is current; `gsutil` is legacy
+- B) `gcloud storage` is current; `gsutil` is legacy
+- C) `kubectl` is current; `gcloud storage` is legacy
+- D) `gsutil` is current; `gcloud` is legacy
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) `bq` is the BigQuery command-line tool, not a Cloud Storage tool at all.
+  - C) `kubectl` manages Kubernetes workloads and has no role in Cloud Storage operations.
+  - D) `gsutil` is the legacy tool; `gcloud storage` is the modern replacement with improved performance and scripting support.
+
+---
+
+### Question 12 (5 points)
+
+Your organization wants to prevent any GCP project from disabling audit logs,
+regardless of who administers the project. Which mechanism enforces this at
+the organizational level?
+
+- A) A billing budget alert targeting all projects
+- B) An Organization Policy constraint that prevents disabling Cloud Audit Logs
+- C) A VPC firewall rule that blocks outbound log export traffic
+- D) Granting `roles/viewer` to all principals at the Organization level
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Budget alerts send notifications about spending; they cannot enforce resource configuration or prevent operational changes.
+  - C) Firewall rules govern network traffic; they cannot prevent a user from toggling audit log settings in the IAM console.
+  - D) `roles/viewer` is read-only IAM and does not stop other principals with higher permissions from changing audit configurations.
+
+---
+
+### Question 13 (5 points)
+
+A GCP project is accidentally deleted. What is the default recovery window
+before the project and all its resources are permanently destroyed?
+
+- A) 24 hours
+- B) 7 days
+- C) 30 days
+- D) Projects cannot be recovered once deleted
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) 24 hours is far too short; GCP intentionally provides a longer grace period to protect against mistakes.
+  - B) 7 days is the recovery window for some individual resources (such as certain database backups) but not for projects.
+  - D) During the 30-day soft-delete window an Organization Admin can use the Resource Manager API to undelete the project.
+
+---
+
+### Question 14 (5 points)
+
+Before deploying a new multi-tier GCP architecture, an architect wants to
+estimate the monthly cost. Which tool is specifically designed for this purpose?
+
+- A) Cloud Billing export to BigQuery
+- B) Cloud Monitoring cost dashboards
+- C) Google Cloud Pricing Calculator at cloud.google.com/products/calculator
+- D) `gcloud billing accounts describe`
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) Billing export analyzes historical spending on existing resources, not hypothetical future architectures.
+  - B) Cloud Monitoring cost metrics report on costs already incurred, not forward-looking estimates.
+  - D) `gcloud billing accounts describe` returns billing account metadata such as name and currency; it does not model projected costs.
+
+---
+
+### Question 15 (5 points)
+
+At which level of the GCP resource hierarchy is a billing account directly
+linked in order to track resource charges?
+
+- A) Organization
+- B) Folder
+- C) Project
+- D) Individual resource (e.g., a single VM)
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) The Organization node governs policy and hierarchy but is not itself the unit that links to a billing account; projects are.
+  - B) Folders are organizational containers; billing accounts are associated with projects inside folders, not the folders themselves.
+  - D) Individual resources are billed through their parent project's linked billing account; you cannot attach a billing account to a single VM.
+
+---
+
+### Question 16 (5 points)
+
+A Cloud Shell session is left idle for more than one hour. What happens?
+
+- A) The 5 GB persistent home directory is deleted immediately
+- B) The session is disconnected and the ephemeral VM is recycled, but the
+   persistent home directory is preserved for the next session
+- C) All gcloud CLI configurations are reset to factory defaults
+- D) The user's Google account is permanently suspended
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) The 5 GB home directory is persistent storage; it is only deleted after approximately 120 days of complete inactivity, not after an idle session.
+  - C) gcloud configurations are stored in the persistent home directory (`~/.config/gcloud`) and survive session disconnections.
+  - D) An idle Cloud Shell timeout has no effect on the Google account; it only terminates the terminal session.
+
+---
+
+### Question 17 (5 points)
+
+An engineer frequently switches between a development project in `us-central1`
+and a production project in `europe-west1`. Which gcloud feature allows them
+to switch all defaults at once without re-entering each setting individually?
+
+- A) `gcloud projects switch`
+- B) Named gcloud configurations (`gcloud config configurations`)
+- C) `gcloud auth switch-account`
+- D) Setting `CLOUDSDK_CORE_PROJECT` environment variable only
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) There is no `gcloud projects switch` command; projects are changed via `gcloud config set project` or named configurations.
+  - C) `gcloud auth switch-account` changes the authenticated user, not the project or region defaults.
+  - D) Environment variables can override one setting but cannot bundle multiple defaults (project, region, zone, account) into a named, switchable profile.
+
+---
+
+### Question 18 (5 points)
+
+Which of the following is a valid GCP multi-region storage location identifier?
+
+- A) `us-central1`
+- B) `us-east1-b`
+- C) `us`
+- D) `northamerica`
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) `us-central1` identifies a single region (Iowa), not a multi-region location.
+  - B) `us-east1-b` is a zone — one level below a region — and is not a multi-region designator.
+  - D) `northamerica` is not a valid GCP location identifier; the three supported multi-region designators are `us`, `eu`, and `asia`.
+
+---
+
+### Question 19 (5 points)
+
+You hold `roles/resourcemanager.organizationViewer` at the Organization level.
+Which of the following actions are you permitted to perform?
+
+- A) Create new folders within the organization
+- B) Delete projects anywhere in the organization
+- C) View the resource hierarchy and list folders and projects
+- D) Modify IAM policies on projects within the organization
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) Creating folders requires `roles/resourcemanager.folderCreator` or a higher role; the Viewer role is strictly read-only.
+  - B) Deleting projects requires `roles/resourcemanager.projectDeleter` or `roles/owner` on the specific project.
+  - D) Modifying IAM policies requires `roles/resourcemanager.projectIamAdmin` or `roles/owner`; Viewer grants no write permissions.
+
+---
+
+### Question 20 (5 points)
+
+A startup runs variable workloads and wants no upfront commitment while
+still benefiting from automatic discounts for VMs that run continuously
+through the month. Which combination of GCP pricing features applies?
+
+- A) Committed Use Discounts (1-year) applied automatically at month end
+- B) Pay-as-you-go billing with automatic Sustained Use Discounts
+- C) Spot VMs with manual discount request forms
+- D) Flat-rate monthly prepaid billing
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Committed Use Discounts require signing a 1- or 3-year contract upfront, which contradicts the no-commitment requirement.
+  - C) Spot VMs are interruptible; the scenario implies stable, continuously running workloads that need automatic discounts, not a separate low-cost VM class.
+  - D) GCP does not offer flat-rate monthly prepaid billing for general compute; pricing is usage-based with automatic discounts applied.

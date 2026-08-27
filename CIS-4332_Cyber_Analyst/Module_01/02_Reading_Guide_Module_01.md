@@ -289,3 +289,19 @@ Module 02 covers MITRE ATT&CK in full depth. For now, understand that these fram
 - [ ] Complete the Module 01 Lab activity
 - [ ] Complete the Module 01 Quiz
 - [ ] Post your initial response to the Module 01 Discussion board by Wednesday at 11:59 PM
+
+---
+
+## 9. Supplemental Resources
+
+**1. SANS Internet Storm Center — Daily Threat Intelligence Diary**
+<https://isc.sans.edu/diary.html>
+A free, practitioner-written daily diary of emerging threats, IOCs, and attack techniques observed in the wild. Reading a few entries illustrates how real SOC analysts document and communicate threat observations — directly relevant to Sections 3–5 of this guide.
+
+**2. MITRE ATT&CK Framework — Enterprise Matrix**
+<https://attack.mitre.org/matrices/enterprise/>
+The authoritative public knowledge base of adversary tactics and techniques. Browsing the top-level tactic categories (Reconnaissance through Exfiltration) reinforces the Pyramid of Pain concept and gives concrete examples of TTPs referenced throughout Module 01 and the rest of the course.
+
+**3. CISA — Free Cybersecurity Services and Tools**
+<https://www.cisa.gov/resources-tools/resources/free-cybersecurity-services-and-tools>
+A curated list of no-cost tools recommended by the Cybersecurity and Infrastructure Security Agency, including threat feeds, vulnerability scanners, and log analysis tools. Reviewing this page builds familiarity with the operational toolset that real SOC teams use alongside their SIEM platforms.

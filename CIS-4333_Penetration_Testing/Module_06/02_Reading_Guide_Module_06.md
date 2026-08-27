@@ -357,4 +357,20 @@ Document All Findings --> Attack Surface Map
 
 ---
 
+---
+
+## 9. Supplemental Resources
+
+**1. Nmap Network Scanning — Official Reference Guide**
+[https://nmap.org/book/](https://nmap.org/book/)
+The complete online edition of Gordon "Fyodor" Lyon's Nmap Network Scanning book covers every scan type, NSE scripting, output format, and firewall evasion technique in depth. It is the authoritative reference for all Nmap flags tested in PT0-002 Domain 2 and directly supplements the scanning workflow covered in Module 06.
+
+**2. enum4linux — Tool Documentation and Usage Guide**
+[https://github.com/CiscoCXSecurity/enum4linux](https://github.com/CiscoCXSecurity/enum4linux)
+The official enum4linux repository includes usage documentation, flag reference, and output interpretation guidance. Understanding enum4linux's null session enumeration capabilities and output format is directly applicable to the SMB enumeration steps in the Module 06 lab and to PT0-002 questions on Windows enumeration techniques.
+
+**3. SNMP Best Practices — SANS Reading Room**
+[https://www.sans.org/reading-room/whitepapers/networkdevs/paper/1050](https://www.sans.org/reading-room/whitepapers/networkdevs/paper/1050)
+This SANS white paper on SNMP security covers community string vulnerabilities, SNMPv3 configuration, and enumeration risks. It provides the defensive context for understanding why SNMP misconfigurations (default community strings, SNMPv1/v2c exposure) are high-priority findings during a scanning phase.
+
 **Proprietary and Confidential. Not for disclosure outside of Texas Wesleyan University course use.**

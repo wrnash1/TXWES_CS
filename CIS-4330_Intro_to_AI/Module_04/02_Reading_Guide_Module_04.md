@@ -217,3 +217,17 @@ Covers the Azure ML workspace, compute, experiments, and deployment — the oper
 - [ ] Complete the Module 04 quiz.
 - [ ] Complete the Module 04 lab (manual forward pass trace).
 - [ ] Post initial discussion by Wednesday 11:59 PM and respond to two peers by Sunday 11:59 PM.
+
+## 9. Supplemental Resources
+
+**1. 3Blue1Brown — Neural Networks (YouTube series)**
+<https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi>
+A visually stunning free YouTube series explaining neural networks, gradient descent, and backpropagation with animated intuition-building visualizations. Widely regarded as the most accessible introduction to how neural networks actually learn — strongly recommended before or alongside the Module 04 reading.
+
+**2. PyTorch — Deep Learning with PyTorch: A 60 Minute Blitz**
+<https://pytorch.org/tutorials/beginner/deep_learning_60min_blitz.html>
+The official PyTorch beginner tutorial covering tensors, autograd, neural network construction, and training a simple CNN. Provides hands-on experience with the dominant deep learning framework used in research and industry.
+
+**3. Distill.pub — A Neural Network Playground (TensorFlow Playground)**
+<https://playground.tensorflow.org/>
+An interactive browser-based tool for experimenting with neural network architectures, activation functions, learning rates, and regularization on toy datasets in real time. Ideal for building intuition about how architectural choices affect learning without writing any code.

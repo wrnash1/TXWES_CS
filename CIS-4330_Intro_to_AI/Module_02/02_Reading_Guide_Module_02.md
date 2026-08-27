@@ -226,3 +226,17 @@ Covers K-means clustering, evaluation metrics for unsupervised learning, and Azu
 - [ ] Complete the Module 02 quiz.
 - [ ] Complete the Module 02 lab.
 - [ ] Post initial discussion by Wednesday 11:59 PM and respond to two peers by Sunday 11:59 PM.
+
+## 9. Supplemental Resources
+
+**1. Scikit-learn Documentation — Supervised Learning User Guide**
+<https://scikit-learn.org/stable/supervised_learning.html>
+The official scikit-learn user guide covering all major supervised learning algorithms with code examples, parameter explanations, and guidance on when to use each method. Essential reference for the Python-based labs throughout this course.
+
+**2. StatQuest with Josh Starmer — Machine Learning Playlist (YouTube)**
+<https://www.youtube.com/playlist?list=PLblh5JKOoLUICTaGLRoHQDuF_7q2GfuJF>
+A free YouTube series that explains supervised learning concepts — decision trees, random forests, gradient boosting, cross-validation, and evaluation metrics — using clear visuals and minimal jargon. Particularly useful for building intuition about bias-variance tradeoff.
+
+**3. Towards Data Science — Understanding the Bias-Variance Tradeoff**
+<https://towardsdatascience.com/understanding-the-bias-variance-tradeoff-165e6942b229>
+An accessible article explaining overfitting, underfitting, and the bias-variance tradeoff with diagrams. Supplements the Module 02 reading guide section on model evaluation and directly supports the quiz and lab content on interpreting training vs. validation performance.

@@ -254,4 +254,204 @@ Why D is incorrect: PortFast does not permanently ignore BPDUs. PortFast simply 
 
 ---
 
-CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash
+### Question 11
+
+An administrator runs `show vlan brief` on a Cisco switch and sees a port listed under VLAN 1 that was never explicitly configured. What is the default VLAN assignment for all switch ports that have not been manually configured?
+
+- A) VLAN 0 (management VLAN)
+- B) VLAN 1 (default VLAN)
+- C) VLAN 1001 (reserved VLAN)
+- D) VLAN 4094 (maximum VLAN ID)
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* VLAN 0 is reserved for 802.1p priority tagging and does not exist as a configurable data VLAN on Cisco switches.
+- *Why B is correct:* VLAN 1 is the default VLAN on Cisco switches. All switch ports that have not been explicitly assigned to another VLAN are members of VLAN 1. VLAN 1 is also the default native VLAN on trunk ports. Best practice recommends creating a dedicated management VLAN (other than VLAN 1) and moving ports away from VLAN 1.
+- *Why C is incorrect:* VLANs 1001–1005 are reserved in Cisco IOS for Token Ring and FDDI (legacy protocols). They cannot be deleted or assigned to regular ports.
+- *Why D is incorrect:* VLAN 4094 is near the maximum valid VLAN ID range (1–4094 in 802.1Q), not the default. VLAN 4095 is reserved.
+
+---
+
+### Question 12
+
+A network administrator configures a Cisco switch port as a trunk and runs `show interfaces fa0/1 trunk`. The output shows the port is in "auto" desirable mode. Which Dynamic Trunking Protocol (DTP) mode combination between two connected ports will NOT form a trunk?
+
+- A) Dynamic Auto + Dynamic Desirable
+- B) Dynamic Auto + Trunk
+- C) Dynamic Auto + Dynamic Auto
+- D) Dynamic Desirable + Dynamic Desirable
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Dynamic Auto + Dynamic Desirable will form a trunk — one side is willing (Desirable initiates), and the other side (Auto) accepts.
+- *Why B is incorrect:* Dynamic Auto + Trunk will form a trunk — a hard-coded trunk side forces the negotiation regardless of the other side's mode.
+- *Why C is correct:* Two ports both set to Dynamic Auto will NOT form a trunk. Auto means "I will become a trunk if the other side initiates." When both sides are passively waiting for the other to initiate, neither side does — no trunk forms.
+- *Why D is incorrect:* Two Dynamic Desirable ports will form a trunk — both sides are actively trying to negotiate a trunk, so they succeed.
+
+---
+
+### Question 13
+
+On a Cisco switch, which STP port state processes received BPDUs but does not forward user traffic or populate the MAC address table?
+
+- A) Forwarding
+- B) Learning
+- C) Listening
+- D) Blocking
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* The Forwarding state processes BPDUs, populates the MAC address table, AND forwards user traffic. This is the fully operational state.
+- *Why B is incorrect:* The Learning state processes BPDUs, populates the MAC address table (learning MAC addresses from received frames), but does NOT yet forward user traffic. Learning is one step below Forwarding.
+- *Why C is correct:* The Listening state processes BPDUs and participates in the Root Bridge election and port role determination. It does NOT forward user frames and does NOT populate the MAC address table. Listening lasts 15 seconds (Forward Delay timer).
+- *Why D is incorrect:* The Blocking state receives BPDUs (to maintain loop awareness) but does not send BPDUs, forward user frames, or populate the MAC address table. A port enters Blocking when it is not the Designated or Root Port.
+
+---
+
+### Question 14
+
+What is the primary security risk associated with leaving a switch port in its default Dynamic Auto or Dynamic Desirable DTP mode?
+
+- A) DTP allows unauthorized users to assign arbitrary VLAN IDs to traffic.
+- B) An attacker can send a DTP frame to negotiate a trunk, gaining access to all VLANs and enabling VLAN hopping.
+- C) Dynamic DTP mode prevents PortFast from functioning on the same port.
+- D) DTP advertisement frames consume excessive bandwidth and can cause congestion.
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* DTP is a trunking negotiation protocol — it does not directly allow arbitrary VLAN assignment by users. VLAN assignment is controlled separately via 802.1Q tagging rules.
+- *Why B is correct:* A VLAN hopping attack using DTP involves an attacker connecting a device that sends DTP negotiation frames to trick the switch into forming a trunk link. Once a trunk is established, the attacker's device can send and receive traffic tagged for any VLAN — bypassing VLAN segmentation. The countermeasure is `switchport nonegotiate` and `switchport mode access` on all non-trunk ports.
+- *Why C is incorrect:* DTP and PortFast are independent features. PortFast is applied per-port regardless of DTP mode.
+- *Why D is incorrect:* DTP frames are extremely small and infrequent (one every 30 seconds by default). They do not cause meaningful bandwidth consumption.
+
+---
+
+### Question 15
+
+An administrator configures EtherChannel between two switches using LACP. One switch is configured with `channel-group 1 mode active` and the other is configured with `channel-group 1 mode passive`. What happens?
+
+- A) The EtherChannel will not form because both sides must be Active for LACP to work.
+- B) The EtherChannel will form — Active initiates the LACP negotiation and Passive responds.
+- C) The EtherChannel will form but will use PAgP instead of LACP because one side is Passive.
+- D) The EtherChannel will form but with reduced bandwidth — Passive ports only use 50% of the link capacity.
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* LACP does not require both sides to be Active. Active + Passive is a valid combination — Active initiates the LACP protocol exchange, and Passive responds to LACP negotiation requests.
+- *Why B is correct:* LACP has two modes: Active (actively sends LACP PDUs to initiate bundling) and Passive (waits for LACP PDUs before responding). Active + Passive forms a working EtherChannel. Active + Active also works. Passive + Passive does not work (neither side initiates).
+- *Why C is incorrect:* PAgP is a Cisco proprietary protocol completely separate from LACP. An LACP negotiation cannot fall back to PAgP — they are different protocols with different PDU formats.
+- *Why D is incorrect:* EtherChannel load balancing distributes traffic across all member links — it does not differentiate link capacity based on the negotiation mode of each end.
+
+---
+
+### Question 16
+
+Which of the following best describes the purpose of the RSTP (Rapid Spanning Tree Protocol) Alternate Port?
+
+- A) It is a port in Forwarding state that carries user traffic as a backup to the Root Port.
+- B) It is a port in Discarding state that serves as an immediate backup to the Root Port — it can transition to Forwarding very quickly if the Root Port fails, without waiting for the full convergence timers.
+- C) It replaces the PortFast feature by enabling instant convergence on all ports without BPDU Guard requirements.
+- D) It is a VLAN trunk port that carries traffic only when the primary trunk fails.
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* The Alternate Port is in Discarding (blocking) state — it does not carry user traffic during normal operation. It is a standby port.
+- *Why B is correct:* The RSTP Alternate Port maintains a pre-calculated alternative path to the root bridge. When the Root Port fails, RSTP can immediately transition the Alternate Port to Forwarding state (within seconds) without re-running the full STP election. This is the primary convergence improvement of RSTP over 802.1D.
+- *Why C is incorrect:* PortFast and BPDU Guard are separate features that remain in RSTP. The Alternate Port is a port role, not a replacement for PortFast.
+- *Why D is incorrect:* VLAN trunk failover is handled through EtherChannel or redundant uplinks with STP — not by a specific port type called "Alternate Port." The Alternate Port is specifically an RSTP concept for STP redundancy.
+
+---
+
+### Question 17
+
+A workstation on VLAN 10 needs to communicate with a server on VLAN 20. Both VLANs exist on the same switch. Which device is required to forward this traffic?
+
+- A) No additional device is needed — the switch can forward frames between VLANs using the MAC address table.
+- B) A router or Layer 3 switch with inter-VLAN routing configured (router-on-a-stick or SVIs).
+- C) A hub connected to both VLAN 10 and VLAN 20 ports to bridge the traffic.
+- D) A second switch with VLAN 10 and VLAN 20 configured, connected to the first switch via a trunk.
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* VLANs create separate Layer 2 broadcast domains. A Layer 2 switch cannot forward frames between VLANs — doing so would violate the isolation that VLANs provide. Layer 3 routing is required to move packets between VLANs.
+- *Why B is correct:* A router (router-on-a-stick using a trunk subinterface) or a Layer 3 switch (using SVIs — Switched Virtual Interfaces) is required to route packets between VLAN 10 and VLAN 20. The router or L3 switch has an interface in each VLAN, performs Layer 3 routing, and forwards the packet to the destination VLAN.
+- *Why C is incorrect:* A hub is a Layer 1 device that repeats signals — it cannot bridge between VLANs and would cause collision issues. Hubs have no VLAN awareness.
+- *Why D is incorrect:* Adding a second switch with the same VLANs and a trunk extends the VLANs to more ports but does not enable routing between them. Both VLANs would remain isolated at Layer 2 even with two switches.
+
+---
+
+### Question 18
+
+Port Security is configured on a Cisco access port with a maximum MAC address count of 2 and a violation mode of "Restrict." A third device connects to the port. What happens?
+
+- A) The port is immediately error-disabled (shut down) and must be manually re-enabled.
+- B) The new device's traffic is dropped, an SNMP trap is sent, and the port remains active for the previously learned MAC addresses.
+- C) All three devices lose connectivity because the port is reset to allow only one MAC address.
+- D) The oldest MAC address entry is deleted to make room for the new device's MAC address.
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Error-disabling the port describes the "Shutdown" violation mode, not "Restrict." In Restrict mode, the port stays up.
+- *Why B is correct:* In Restrict mode, frames from the violating MAC address are dropped, a log message and SNMP trap are generated as security alerts, and the port continues to forward traffic for the allowed MAC addresses. The security violation counter increments.
+- *Why C is incorrect:* Restrict mode does not reset the allowed MAC count or drop existing allowed devices. Only the new (exceeding) device is affected.
+- *Why D is incorrect:* "Sticky" aging can be configured to remove old dynamic MAC entries, but this is not the behavior described for the Restrict violation mode. Restrict simply drops the violating device's frames without affecting existing learned entries.
+
+---
+
+### Question 19
+
+A switch administrator runs `show spanning-tree vlan 10` and sees that the switch's BID (Bridge ID) contains a priority of 28682. What does this priority value indicate?
+
+- A) The administrator manually set the priority to 28682 using the `spanning-tree vlan 10 priority 28682` command.
+- B) The priority is the default 32768 combined with the VLAN ID (32768 - 10 × 1000 + 10 = 28682 is an approximation using PVST+ extended system ID).
+- C) The priority is a system-calculated value equal to the default priority (32768) plus the VLAN ID (10), indicating PVST+ is using the extended system ID.
+- D) The priority has been reduced by STP to reflect the number of active hosts in VLAN 10.
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* STP priorities must be in multiples of 4096. 28682 is not a multiple of 4096 and cannot be manually set as a priority value in that form.
+- *Why B is incorrect:* The formula is wrong. PVST+ extended system ID = base priority + VLAN ID. Default priority is 32768. 32768 + 10 = 32778. To get 28682: 28672 + 10 = 28682. 28672 = 4096 × 7, so a priority of 28672 was set with VLAN 10 added.
+- *Why C is correct:* Cisco's PVST+ uses the extended system ID, which appends the VLAN ID to the bridge priority. The full Bridge ID priority field = configured priority + VLAN ID. A value of 28682 = 28672 (a multiple of 4096, probably manually set) + VLAN 10. This is normal PVST+ behavior.
+- *Why D is incorrect:* STP does not dynamically adjust bridge priority based on the number of hosts. Priority is either manually configured or uses the default (32768 + VLAN ID).
+
+---
+
+### Question 20
+
+Which VTP mode allows a switch to create, modify, and delete VLANs AND propagate those changes to other switches in the VTP domain?
+
+- A) VTP Client mode
+- B) VTP Transparent mode
+- C) VTP Server mode
+- D) VTP Off mode
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* VTP Client mode allows a switch to receive and use VLAN information from VTP Server switches, but clients cannot create, modify, or delete VLANs locally. Changes are not permitted on client switches.
+- *Why B is incorrect:* VTP Transparent mode allows local VLAN creation and modification, but those changes are NOT propagated to other switches — Transparent mode switches forward VTP advertisements but do not participate in VTP synchronization.
+- *Why C is correct:* VTP Server mode is the default mode on Cisco switches. Server switches can create, modify, and delete VLANs, and those changes are propagated via VTP advertisements to all VTP Client switches in the same VTP domain.
+- *Why D is incorrect:* VTP Off mode completely disables VTP — no advertisements are sent or processed, and changes are not propagated. It is effectively the same as Transparent mode in terms of local VLAN management but does not even forward VTP advertisements.
+
+---
+
+*CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash*

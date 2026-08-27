@@ -353,4 +353,49 @@ Submit the following on Canvas:
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Generate and Attest a Container SBOM
+
+Produce a signed Software Bill of Materials for your hardened image using Syft and cosign, then verify the attestation.
+
+1. Install Syft: `curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin`
+2. Generate an SBOM in CycloneDX JSON format: `syft app:latest -o cyclonedx-json > sbom.cdx.json`
+3. Install cosign and perform a keyless attestation of the SBOM against the image pushed to a registry (GitHub Container Registry or Docker Hub):
+
+```bash
+cosign attest --predicate sbom.cdx.json \
+  --type cyclonedx \
+  ghcr.io/YOUR_USERNAME/lab04-app:latest
+```
+
+1. Verify the attestation: `cosign verify-attestation --type cyclonedx ghcr.io/YOUR_USERNAME/lab04-app:latest`
+2. Add a CI pipeline step that fails if the image in the registry does not have a valid cosign attestation before it is deployed.
+
+### Challenge 2: Scan a Running Container with Falco
+
+Use Falco to detect a suspicious command executed inside a running container.
+
+1. Run Falco in a Docker container alongside your application container using the Docker socket:
+
+```bash
+docker run --rm -it \
+  --privileged \
+  -v /var/run/docker.sock:/host/var/run/docker.sock \
+  -v /dev:/host/dev \
+  -v /proc:/host/proc:ro \
+  falcosecurity/falco:latest
+```
+
+1. In a separate terminal, exec into your running application container and run a command that Falco's default rules consider suspicious (e.g., `cat /etc/shadow` or `apt-get`): `docker exec -it <container_id> cat /etc/shadow`
+2. Observe Falco's alert output in the first terminal. Record the rule name, priority, and output fields.
+3. Write a custom Falco rule in a `falco_rules.local.yaml` file that generates a CRITICAL alert when any process named `wget` or `curl` runs inside a container whose image name starts with `lab04-app`.
+
+### Reflection Questions
+
+1. Your hardened image uses `gcr.io/distroless/python3` as the runtime base. A security engineer flags that distroless images make it impossible to exec into a running container for incident investigation. How would you design a production debugging workflow that maintains security hardening while still allowing authorized engineers to investigate live containers?
+2. You generated an SBOM and cosign attestation for image `app:v1.2.3`. Three months later, a new CVE is disclosed that affects a library in that image. The attestation is still valid. Explain why a valid cosign attestation does not mean the image is currently secure, and describe the ongoing scanning process required after attestation.
+
+---
+
 Lab 04 | CIS-4350 | Texas Wesleyan University | Professor Nash

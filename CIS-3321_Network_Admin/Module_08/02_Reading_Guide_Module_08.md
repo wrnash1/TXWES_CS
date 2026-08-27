@@ -233,4 +233,30 @@ Supplemental Reference: CompTIA official N10-008 exam objectives — Domain 4.0 
 
 ---
 
-CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash
+## 9. Supplemental Resources
+
+The following free resources extend Module 08 content on network security concepts, attacks, and defenses.
+
+**1. Professor Messer — Network Security Domain Free Videos (N10-008)**
+URL: https://www.professormesser.com/network-plus/n10-008/n10-008-video/
+Relevance: Professor Messer's Domain 4 security videos cover all attack types (DoS, DDoS, MITM, ARP poisoning, VLAN hopping), firewall types, IDS/IPS, AAA, and network hardening tested on the Network+ exam.
+
+**2. NIST SP 800-41 Rev 1 — Guidelines on Firewalls and Firewall Policy (Free)**
+URL: https://csrc.nist.gov/publications/detail/sp/800-41/rev-1/final
+Relevance: NIST's free authoritative guidance on firewall technologies, types (stateless, stateful, application-layer), and deployment architectures including DMZ design. The definitive U.S. government reference for firewall policy.
+
+**3. CISA — Understanding Denial-of-Service Attacks**
+URL: https://www.cisa.gov/news-events/news/understanding-denial-service-attacks
+Relevance: The Cybersecurity and Infrastructure Security Agency provides free plain-language explanations of DoS and DDoS attack types, mitigation strategies, and incident response guidance — directly aligned with the attack classification content in this module.
+
+**4. OWASP — Common Attack Patterns (Free)**
+URL: https://owasp.org/www-community/attacks/
+Relevance: OWASP's free catalog of common network and application attack patterns including SYN floods, ARP spoofing, and social engineering. Each entry includes description, risk level, and countermeasures — supporting the attack analysis skills required for Network+.
+
+**5. Cisco — Network Security Design Guide (Free)**
+URL: https://www.cisco.com/c/en/us/td/docs/solutions/Enterprise/Security/SAFE_RG/SAFE_rg.html
+Relevance: Cisco's free SAFE (Secure Architecture for Enterprise) reference guide covers DMZ architecture, firewall placement, IPS deployment, and AAA infrastructure design from an industry practitioner perspective.
+
+---
+
+*CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash*

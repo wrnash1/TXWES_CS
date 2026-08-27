@@ -376,3 +376,79 @@ AWS Free Tier provides 12 months of limited free usage. To avoid charges after t
 - RDS: Stop the instance (it auto-restarts after 7 days — delete it to prevent charges)
 - CloudFront: Disable the distribution (distributions are free while disabled)
 - S3: The first 5 GB of storage is free — no action needed for the lab data
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: CI/CD Deployment Pipeline with AWS CLI
+
+Automate the React deployment so that a single shell script builds, syncs to S3, and invalidates CloudFront.
+
+1. Install the AWS CLI and configure your credentials:
+
+```bash
+aws configure
+# Enter: Access Key ID, Secret Access Key, default region (us-east-1), output format (json)
+```
+
+1. Create a file named `deploy.sh` in the React project root:
+
+```bash
+#!/usr/bin/env bash
+set -euo pipefail
+
+BUCKET="lab14-bookstore-<your-initials>"
+DISTRIBUTION_ID="<your-cloudfront-distribution-id>"
+
+echo "Building production bundle..."
+npm run build
+
+echo "Syncing to S3..."
+aws s3 sync dist/ "s3://${BUCKET}" --delete
+
+echo "Creating CloudFront invalidation..."
+aws cloudfront create-invalidation \
+  --distribution-id "${DISTRIBUTION_ID}" \
+  --paths "/*"
+
+echo "Deployment complete."
+```
+
+Make it executable and run it:
+
+```bash
+chmod +x deploy.sh
+./deploy.sh
+```
+
+1. Verify the deployment by visiting the CloudFront URL. Open DevTools → Network, hard-reload (`Ctrl+Shift+R`), and confirm the `index.html` response has `Cache-Control: no-cache` or returns a fresh `ETag`.
+
+1. Modify one visible string in the React UI (e.g., change the page title), rebuild with `./deploy.sh`, and confirm the change appears at the CloudFront URL within 30 seconds of the invalidation completing.
+
+### Challenge 2: Custom Domain and HTTPS with ACM
+
+Configure a custom subdomain for the bookstore using AWS Certificate Manager and Route 53.
+
+1. In the AWS Certificate Manager console (us-east-1 — ACM certificates for CloudFront must be in us-east-1), request a public certificate for `bookstore.<your-domain>.com`. Choose DNS validation, then add the CNAME validation record to your domain's DNS. Wait for the status to show "Issued."
+
+1. In the CloudFront distribution → General → Edit, add the alternate domain name `bookstore.<your-domain>.com` and select the ACM certificate you just created. Save.
+
+1. In Route 53 (or your DNS provider), add an `A` record aliased to the CloudFront distribution domain:
+
+```text
+Name:  bookstore.<your-domain>.com
+Type:  A
+Value: Alias to CloudFront distribution -> d1abc123.cloudfront.net
+```
+
+1. After DNS propagates (up to 10 minutes), visit `https://bookstore.<your-domain>.com`. Verify:
+   - The browser shows a valid HTTPS certificate issued by Amazon.
+   - All API calls still succeed (the CORS `ALLOWED_ORIGIN` on Elastic Beanstalk must be updated to the new domain).
+
+Screenshot: browser showing `https://bookstore.<your-domain>.com` with a valid lock icon.
+
+### Reflection Questions
+
+1. The `deploy.sh` script in Challenge 1 uses `aws s3 sync dist/ s3://bucket --delete`. The `--delete` flag removes files from S3 that no longer exist in `dist/`. Why is this flag important for content-hashed deployments — and what is the one risk you should consider before using it in a high-traffic production environment?
+1. Challenge 2 requires the ACM certificate to be created in `us-east-1` even if your other resources are in a different region. Explain why CloudFront requires this region-specific certificate placement, and describe what happens if you create the certificate in the wrong region and try to attach it to the CloudFront distribution.

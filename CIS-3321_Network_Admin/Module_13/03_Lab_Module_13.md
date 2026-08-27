@@ -285,3 +285,81 @@ Submit a PDF report containing:
 | Part 4 — Wireshark RTP analysis and quality assessment | 25 |
 | Reflection paragraph | 10 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+These advanced steps extend the Module 13 lab with advanced VoIP QoS configuration, SIP analysis, and bandwidth planning.
+
+### Challenge Step 1: Configure a Complete QoS Policy on a Cisco Router in Packet Tracer
+
+In Packet Tracer, configure a Cisco router interface with a full QoS policy using MQC (Modular QoS CLI):
+
+1. Create class maps to identify voice RTP and data traffic:
+   ```
+   class-map match-all VOICE-RTP
+    match dscp ef
+   class-map match-all SIGNALING
+    match dscp cs3
+   class-map match-all DATA
+    match any
+   ```
+2. Create a policy map implementing LLQ:
+   ```
+   policy-map WAN-QOS
+    class VOICE-RTP
+     priority 2000
+    class SIGNALING
+     bandwidth 128
+    class DATA
+     fair-queue
+   ```
+3. Apply the policy to the WAN-facing interface (outbound):
+   ```
+   interface serial0/0/0
+    service-policy output WAN-QOS
+   ```
+4. Verify with `show policy-map interface serial0/0/0`.
+
+**Challenge Question 1:** In the policy map, the VOICE-RTP class uses `priority 2000` (2000 Kbps = 2 Mbps). This allocates a strict priority queue policed to 2 Mbps. How many concurrent G.711 calls (87 Kbps each with overhead) does this 2 Mbps voice priority queue support? What happens to the call quality if the number of concurrent calls exceeds this limit — and what feature should be configured on the IP PBX to prevent this from happening?
+
+### Challenge Step 2: Perform Advanced Wireshark VoIP Stream Analysis
+
+Using the VoIP PCAP sample from Part 4 of the base lab (or a new sample from wiki.wireshark.org/SampleCaptures):
+
+1. Open the capture in Wireshark.
+2. Navigate to Telephony > VoIP Calls.
+3. Select a call and click "Flow Sequence" to view the complete SIP signaling flow.
+4. Record the full SIP message sequence (INVITE, 100 Trying, 180 Ringing, 200 OK, ACK, RTP media, BYE, 200 OK).
+5. Click on the INVITE packet and expand the SDP body.
+6. Record: offered codecs (m= line), RTP port offered, and IP address in the c= line.
+7. Click on the 200 OK (answer) and expand the SDP body in the response.
+8. Record: accepted codec, accepted RTP port, and IP address.
+
+**Challenge Question 2:** Compare the SDP bodies in the INVITE (offer) and the 200 OK (answer). Did the callee accept all codecs offered, or only a subset? What is the SDP offer/answer model, and why does it matter for codec negotiation? What would happen if the callee's 200 OK SDP listed a codec that was not in the INVITE's offer?
+
+### Challenge Step 3: Design a Full VoIP Deployment for a Multi-Site Enterprise
+
+A company has three sites:
+- HQ: 200 employees, 40% concurrent usage rate
+- Branch-A: 50 employees, 30% concurrent usage rate
+- Branch-B: 25 employees, 25% concurrent usage rate
+
+The WAN links are:
+- HQ to Branch-A: 10 Mbps
+- HQ to Branch-B: 5 Mbps
+
+Design a VoIP deployment plan. For each WAN link, calculate:
+1. Number of concurrent calls (employees × usage rate)
+2. Bandwidth per call using G.729 (8 Kbps + 20% overhead = 9.6 Kbps)
+3. Total voice bandwidth required
+4. Percentage of total WAN link consumed by voice
+5. Recommended LLQ priority queue size (voice bandwidth + 20% headroom)
+6. Maximum calls before CAC should reject new calls
+
+**Challenge Question 3:** Present your complete bandwidth calculations in table format. Based on your analysis, is the 5 Mbps link to Branch-B at risk of voice quality degradation if Branch-B grows to 40 concurrent calls? What would be the minimum link upgrade needed? What DSCP markings would you configure for voice RTP, SIP signaling, and interactive video on these WAN links?
+
+---
+
+*CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash*

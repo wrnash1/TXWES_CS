@@ -205,3 +205,203 @@ A problem asks: "Given weights and values of n items and a knapsack capacity W, 
 - *Why B is incorrect:* BFS could enumerate all 2^n subsets level by level, but this is exponential time. BFS has no mechanism for the "optimal substructure" needed to prune the search. It would work for tiny n but is not the correct algorithm.
 - *Why C is correct:* The 0/1 Knapsack DP runs in O(n×W). The subproblem `dp[i][w]` captures the essential structure: using a subset of the first i items with capacity w. The recurrence `dp[i][w] = max(dp[i-1][w], dp[i-1][w-weight_i]+value_i)` considers both options (take or skip item i) and picks the best — correctly handling the interaction between items that greedy misses.
 - *Why D is incorrect:* Greedy by total value ignores weight. Taking the highest-value item might consume all capacity with a single heavy item, missing a better combination of lighter items with higher combined value.
+
+---
+
+### Question 11
+
+A graph has 5 nodes and 4 undirected edges. The graph is connected. What type of graph structure must this be?
+
+- A) A cycle — connected graphs with equal nodes and edges always contain a cycle
+- B) A tree — a connected graph with n nodes and n−1 edges is always a tree
+- C) A complete graph — all nodes are connected to all others
+- D) A bipartite graph — equal nodes and edges imply two-colorability
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* A connected graph with n nodes and n−1 edges cannot have a cycle. Adding any edge to a tree creates exactly one cycle — so a tree has no cycles. The structure described is a tree.
+- *Why B is correct:* A tree is defined as a connected acyclic graph. It has exactly n−1 edges for n nodes. This is a fundamental theorem: a connected graph with n nodes and n−1 edges is always a tree (and vice versa). With 5 nodes and 4 edges, connectivity confirms it is a tree.
+- *Why C is incorrect:* A complete graph K₅ has 5×4/2 = 10 edges, not 4. The graph described has far fewer edges than a complete graph.
+- *Why D is incorrect:* Bipartiteness is about graph colorability (two-colorable = no odd cycles), not about edge count. A graph with n nodes and n−1 edges can be bipartite or not — for a tree (which is always acyclic), it is always bipartite. But the primary classification is "tree," not "bipartite graph."
+
+---
+
+### Question 12
+
+You must find the K-th largest element in an unsorted array of n numbers without sorting the full array. What is the optimal time complexity and approach?
+
+- A) O(n log n) — full sort, then index at position n-K
+- B) O(n log K) — maintain a min-heap of size K; final heap top is the K-th largest
+- C) O(K log n) — pop from a max-heap K times
+- D) O(n) — linear scan comparing each element to the current K-th candidate
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* O(n log n) full sort works and is correct, but it is not optimal for finding just the K-th largest. When K << n, there are faster approaches.
+- *Why B is correct:* Maintain a min-heap of size K. For each element: if the heap has fewer than K elements, push it. If the new element is larger than the heap minimum (top), pop the minimum and push the new element. After processing all n elements, the heap top is the K-th largest. Time: O(n log K) — n elements, each heap operation O(log K). Space: O(K).
+- *Why C is incorrect:* Converting the array to a max-heap (`heapify`) takes O(n), and popping K times takes O(K log n). Total: O(n + K log n). For large K, this is worse than the min-heap approach. For K=1 (maximum), it is just O(n) — efficient but only for small K.
+- *Why D is incorrect:* A single linear scan can find the maximum in O(n), but finding the K-th largest with a single pass requires maintaining a sorted structure of size K — which brings us back to the heap approach. Pure linear O(n) is achievable only with QuickSelect (average case), not a simple scan.
+
+---
+
+### Question 13
+
+Which recurrence and Master Theorem case applies to merge sort, and what is the resulting complexity?
+
+- A) T(n) = T(n/2) + O(1); Case 2; O(log n)
+- B) T(n) = 2T(n/2) + O(n); Case 2; O(n log n)
+- C) T(n) = 2T(n/2) + O(n²); Case 3; O(n²)
+- D) T(n) = 4T(n/2) + O(n); Case 1; O(n²)
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* T(n) = T(n/2) + O(1) is the recurrence for binary search (one subproblem of half size, O(1) combination). c = log₂(1) = 0; f(n)=O(1)=Θ(n⁰); Case 2 gives O(log n). This is binary search, not merge sort.
+- *Why B is correct:* Merge sort splits into 2 subproblems of size n/2 and merges in O(n). So a=2, b=2, c=log₂(2)=1. f(n)=O(n)=Θ(n^1)=Θ(n^c) — Case 2 applies. T(n)=Θ(n log n). This is the definitive merge sort analysis.
+- *Why C is incorrect:* T(n)=2T(n/2)+O(n²): c=log₂(2)=1; f(n)=O(n²)=Ω(n^(1+1)) — Case 3 applies (combine dominates), giving T(n)=Θ(n²). This describes an algorithm that splits in two but does O(n²) combination work — not merge sort.
+- *Why D is incorrect:* T(n)=4T(n/2)+O(n): a=4, b=2, c=log₂(4)=2; f(n)=O(n)=O(n^(2-1)) — Case 1 applies (recursion dominates), giving T(n)=Θ(n²). This describes naive matrix multiplication, not merge sort.
+
+---
+
+### Question 14
+
+A problem says: "Given a string, find the length of the longest contiguous substring containing at most 2 distinct characters." Which algorithm pattern solves this optimally?
+
+- A) Dynamic programming — define dp[i] as the longest such substring ending at index i
+- B) Sliding window — maintain a window [left, right] with a character count map; shrink from the left when distinct count exceeds 2
+- C) Divide and conquer — split the string at the midpoint and combine palindromic halves
+- D) Greedy — always extend the window by the character with the highest frequency
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* DP is not the optimal pattern here. Defining dp[i] as the longest valid substring ending at i would require looking back at all previous positions — O(n²). The sliding window solves this in O(n) by maintaining the current valid window without restarting.
+- *Why B is correct:* Sliding window is the canonical pattern for "longest/shortest contiguous substring satisfying a constraint." Maintain a window `[left, right]` and a character count map. Expand `right` always; when `len(count) > 2`, shrink from `left` until the count drops to ≤ 2. Current window length `right - left + 1` is a candidate for the answer. O(n) time.
+- *Why C is incorrect:* Divide and conquer splits the problem into halves and combines results — suited for problems where the answer can span the midpoint (like merge sort's inversion count or "longest palindromic substring" with Manacher's). A contiguous substring with a character count constraint does not naturally split this way.
+- *Why D is incorrect:* Greedy by highest frequency would not maintain the "at most 2 distinct characters" constraint correctly. The sliding window's shrink-from-left mechanism is what enforces the constraint — not a frequency-based selection criterion.
+
+---
+
+### Question 15
+
+`lcs('AGGTAB', 'GXTXAYB')` returns 4. Which of the following is a valid LCS of these two strings?
+
+- A) 'GTAB'
+- B) 'AGAB'
+- C) 'GXTB'
+- D) 'AGTB'
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- *Why A is correct:* 'GTAB' is a valid LCS of length 4. Verify it is a subsequence of 'AGGTAB': A**G**G**T**A**B** — G at index 1 (or 2), T at index 3, A at index 4, B at index 5. Check 'GXTXAYB': **G**XT**X**A**Y**... wait — 'GTAB' in 'GXTXAYB': G(0), T(3), A(4), B(6). In order — valid. Length 4.
+- *Why B is incorrect:* 'AGAB' — check in 'AGGTAB': A(0),G(1 or 2),A(4),B(5) — valid subsequence. Check in 'GXTXAYB': A(4),G(?)... G does not appear after index 0. So A must come after G in 'GXTXAYB'. G is at index 0; A is at index 4. A(4) then G(?) — G at 0 is before 4. 'AGAB' is not a subsequence of 'GXTXAYB' in order (need A before G, but A=4 > G=0). Invalid.
+- *Why C is incorrect:* 'GXTB' — check in 'AGGTAB': G(1),X(?)... 'X' does not appear in 'AGGTAB'. Invalid subsequence of 'AGGTAB'.
+- *Why D is incorrect:* 'AGTB' — check in 'GXTXAYB': A(4),G(?)... G appears at index 0, which is before A at index 4. Need G after A. No G appears after index 4 in 'GXTXAYB'. Invalid subsequence.
+
+---
+
+### Question 16
+
+What is the key difference between BFS cycle detection in an undirected graph (track parent) and directed graph cycle detection (three-color DFS)?
+
+- A) BFS works for both directed and undirected cycle detection; three-color is only needed for weighted graphs
+- B) In undirected graphs, revisiting the immediate parent is not a cycle (it is the same edge traversed backward); in directed graphs, any back edge to an ancestor on the current path is a cycle regardless of parent
+- C) Three-color DFS uses more memory than BFS and is therefore avoided for undirected graphs
+- D) Undirected cycle detection requires sorting edges by weight first; directed cycle detection does not
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* BFS is not the standard approach for directed cycle detection. For directed graphs, three-color DFS (or Kahn's topological sort) is the standard. BFS with parent tracking works for undirected graphs, but not directly for directed ones.
+- *Why B is correct:* In an undirected graph, when DFS visits node B from A and then sees A from B, that is just the bidirectional edge — not a cycle. The parent check (`neighbor != parent`) excludes this. A true cycle requires a visited node that is not the immediate parent. In a directed graph, every edge is one-directional, so a back edge (reaching an ancestor on the current recursion stack, color=1) is always a genuine cycle — no parent exception is needed.
+- *Why C is incorrect:* Memory usage is O(V) for both approaches. Three-color DFS is not avoided for memory reasons — it is simply unnecessary for undirected graphs where parent tracking is sufficient.
+- *Why D is incorrect:* Neither approach requires edge sorting. Cycle detection is purely structural — edge weights are irrelevant.
+
+---
+
+### Question 17
+
+Which of the following statements about hash tables is correct?
+
+- A) Hash tables guarantee O(1) worst-case lookup
+- B) Hash tables support prefix queries in O(L) where L is the key length
+- C) Hash tables have O(1) average-case lookup but O(n) worst-case (all keys hash to the same bucket)
+- D) Hash tables maintain keys in sorted order for efficient range queries
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Hash tables guarantee O(1) average-case, not worst-case. In the worst case (all keys collide to the same bucket), lookup degrades to O(n) — traversing a chain of n elements.
+- *Why B is incorrect:* Hash tables do not support prefix queries. Checking whether any stored key starts with 'pre' requires scanning all keys — O(n). The Trie is the data structure purpose-built for O(L) prefix queries.
+- *Why C is correct:* The expected/average case for a hash table with a good hash function and low load factor is O(1) for insert, lookup, and delete. The worst case is O(n) when all keys collide. Python's dict uses a very good hash function that makes worst-case collisions extremely rare in practice.
+- *Why D is incorrect:* Hash tables have no ordering guarantee — keys are stored by hash value, not alphabetically or numerically. Sorted order and range queries are provided by BSTs, sorted arrays, or balanced BSTs (like Python's `sortedcontainers.SortedList`).
+
+---
+
+### Question 18
+
+You need to implement `can_complete_circuit` (LeetCode #134). After running the greedy loop, `total_tank = 0` and `start = 3`. What does this mean?
+
+- A) The circuit is impossible — total_tank must be positive for a valid start
+- B) The circuit is exactly feasible and station 3 is the valid starting point
+- C) Station 3 cannot be the start — total_tank = 0 means the circuit barely completes and the answer is always 0
+- D) The function should return -1 because total_tank = 0 is treated as negative
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* The feasibility condition is `total_tank >= 0`, not `total_tank > 0`. A total_tank of 0 means the total fuel exactly equals the total cost — the circuit is completable with no surplus. This is valid.
+- *Why B is correct:* `total_tank >= 0` confirms the circuit is feasible. The greedy reset logic identified station 3 as the candidate starting point — all stations 0–2 were eliminated because starting there led to a negative running tank. Station 3 is the answer. `return start if total_tank >= 0 else -1` returns 3.
+- *Why C is incorrect:* There is no rule that forces the answer to be 0 when total_tank=0. The greedy reset dynamically identifies the start based on where the running tank went negative — the result can be any station index.
+- *Why D is incorrect:* The code explicitly checks `total_tank >= 0`. A total of 0 satisfies `>= 0` and returns `start`. Only negative total_tank returns -1.
+
+---
+
+### Question 19
+
+For LeetCode #207 (Course Schedule), you are given `numCourses=2` and `prerequisites=[[1,0],[0,1]]`. What does the three-color DFS algorithm return, and why?
+
+- A) True — both courses are reachable from each other, so all courses can be finished
+- B) False — there is a cycle: course 0 requires course 1, and course 1 requires course 0
+- C) True — cycles in prerequisites are allowed as long as not all courses are in the cycle
+- D) False — two-course cycles always prevent completion regardless of structure
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Mutual reachability means a cycle exists, not that courses can be completed. A cycle in prerequisites means you cannot start either course — each requires the other first. This is a deadlock.
+- *Why B is correct:* `prerequisites=[[1,0],[0,1]]` means: to take course 1, you need course 0; and to take course 0, you need course 1. This is a direct cycle of length 2. The three-color DFS detects this: from node 0, mark color=1; go to node 1, mark color=1; follow edge back to node 0 which is still color=1 — cycle detected. Return False. The answer to "can you finish all courses?" is False.
+- *Why C is incorrect:* Any cycle in the prerequisite graph makes it impossible to start the courses in that cycle. If courses 0 and 1 are in a cycle, neither can be taken — at least one course cannot be finished. Return False.
+- *Why D is incorrect:* Two-course cycles always form a deadlock (answer False), but the claim "regardless of structure" is too general. If the two courses are isolated from all others, only those two fail. The question states only 2 courses total, so all courses fail.
+
+---
+
+### Question 20
+
+What is the correct order of data structure choices from most space-efficient to least for storing n integers?
+
+- A) Hash set → sorted array → binary heap → doubly linked list
+- B) Sorted array → binary heap → doubly linked list → hash set
+- C) Binary heap ≈ sorted array ≈ doubly linked list < hash set
+- D) Sorted array < binary heap < doubly linked list < hash set
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* A hash set typically uses more space than a sorted array or heap because it requires extra space for the hash table's load factor and collision handling. A sorted array, heap, and linked list all store exactly n elements with constant overhead per element.
+- *Why B is incorrect:* This ordering misidentifies the space costs. A sorted array and binary heap both store exactly n elements as a contiguous array — they have identical space footprints. Neither is inherently smaller than the other.
+- *Why C is correct:* A sorted array, binary heap, and array-based doubly linked list all store n elements with O(n) space and minimal constant overhead (one pointer/value per element). A hash set stores the same n elements but requires extra space: the hash table is sized larger than n (load factor typically ~2/3 in Python's dict), and collision handling adds overhead. In Python specifically, sets use approximately 4× the memory of a bare list for the same number of elements.
+- *Why D is incorrect:* A sorted array and binary heap have essentially identical space usage (both are n-element arrays). Ranking them as `sorted array < binary heap` with strict inequality misrepresents their actual space cost, which is the same.

@@ -388,3 +388,19 @@ aws iam simulate-principal-policy \
 ## References
 
 All certification study materials and exam registration: <aws.amazon.com/certification>
+
+---
+
+## 9. Supplemental Resources
+
+**1. AWS Documentation — IAM Policy Evaluation Logic**
+https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_evaluation-logic.html
+The definitive reference for how AWS evaluates IAM policies — covering the evaluation order of SCPs, permission boundaries, identity policies, and resource policies with flowchart diagrams.
+
+**2. AWS Skill Builder — Security Learning Plan**
+https://skillbuilder.aws/learn/public/learning_plan/view/91/security-learning-plan
+Curated AWS Skill Builder learning plan covering IAM, access management, and security architecture — directly aligned to the SAA-C03 security domain and the topics in this module.
+
+**3. AWS Documentation — IAM Best Practices**
+https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html
+Official AWS IAM best practices guide covering least privilege, role usage, MFA enforcement, permission boundaries, and credential management — essential reading for both the exam and production IAM configuration.

@@ -207,4 +207,186 @@ A Raspberry Pi GPIO pin is connected directly to the output of a 5V sensor. The 
 
 ---
 
+---
+
+### Question 11 (5 points)
+
+A developer needs to read a 12-bit ADC with a 3.3 V reference voltage. What is the voltage resolution (voltage represented by one LSB step)?
+
+- A) Approximately 4.9 mV
+- B) Approximately 0.8 mV
+- C) Approximately 3.2 mV
+- D) Approximately 1.6 mV
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) 4.9 mV is the resolution of a 10-bit ADC with a 5 V reference (5 V / 1024 ≈ 4.88 mV). This answer describes the Arduino Uno configuration, not a 12-bit/3.3 V system.
+  - B) For a 12-bit ADC: 2^12 = 4096 steps. Resolution = 3.3 V / 4096 ≈ 0.000806 V ≈ 0.8 mV. More bits and a lower reference voltage both reduce the per-step voltage, giving finer analog resolution.
+  - C) 3.2 mV would correspond to 3.3 V / 1024, which applies a 10-bit step count to a 3.3 V reference — incorrect for a 12-bit converter.
+  - D) 1.6 mV is not the result of any standard ADC bit-width and reference combination. It has no derivation from the given parameters.
+
+---
+
+### Question 12 (5 points)
+
+Which of the following correctly describes the SPI communication protocol's method for selecting a specific slave device when multiple slaves share the same MOSI, MISO, and SCK lines?
+
+- A) Each slave is assigned a unique 7-bit address, and the master broadcasts the target address before transmitting data.
+- B) The master pulls the dedicated chip-select (CS) pin LOW for the intended slave while keeping all other slaves' CS pins HIGH.
+- C) Slaves take turns transmitting using a token-passing scheme controlled by the SCK frequency.
+- D) The master sends a preamble byte equal to the slave's factory-programmed 64-bit ROM ID before each transaction.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) 7-bit addressing is the I2C mechanism. SPI has no bus address concept — device selection is purely hardware-controlled via the CS pin.
+  - B) SPI slave selection works by asserting (pulling LOW) the CS line dedicated to the target slave. All unselected slaves ignore MOSI and do not drive MISO, effectively disconnecting themselves from the bus.
+  - C) SPI has no token-passing mechanism. The master always controls the clock and drives all transactions. There is no arbitration or turn-taking among slaves.
+  - D) 64-bit ROM ID addressing describes the 1-Wire protocol used by Dallas/Maxim devices such as the DS18B20 temperature sensor — not SPI.
+
+---
+
+### Question 13 (5 points)
+
+An Arduino sketch uses `delay(1000)` to pause execution for one second between sensor readings. What is the primary limitation of this approach for a production IoT device?
+
+- A) `delay()` is not available on the ATmega328P and will cause a compile error.
+- B) The processor is completely blocked during the delay, preventing it from responding to interrupts, processing serial input, or performing any other task.
+- C) Using `delay()` with a value over 255 will cause an integer overflow and reset the board.
+- D) `delay()` consumes 100 mA of additional current because the CPU runs at maximum clock speed while waiting.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) `delay()` is a core Arduino function available on all AVR-based boards. It compiles and runs correctly on the ATmega328P.
+  - B) `delay()` is a blocking call — it spins the CPU in a busy-wait loop, preventing any other code from executing during the wait period. For production devices that need to poll buttons, service UART input, or manage watchdogs, non-blocking timing using `millis()` is the correct pattern.
+  - C) `delay()` accepts an `unsigned long` parameter (32 bits), so values up to 4,294,967,295 milliseconds are valid. There is no overflow at 1000.
+  - D) The ATmega328P does not increase its current draw based on the value passed to `delay()`. Power consumption is roughly constant during normal execution at a given clock speed.
+
+---
+
+### Question 14 (5 points)
+
+What pull-up resistors are required for I2C operation, and what happens if they are omitted?
+
+- A) Pull-down resistors on SDA and SCL are required; without them the bus remains at logic HIGH continuously.
+- B) Pull-up resistors on SDA and SCL are required; without them both lines float and devices cannot establish a defined logic HIGH, causing unreliable communication.
+- C) No external resistors are needed because I2C devices include internal pull-ups rated for all cable lengths.
+- D) A single pull-up resistor on SCL is required; SDA is internally driven by the master at all times.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) I2C is an open-drain bus — devices can only pull lines LOW; they cannot drive them HIGH. Therefore pull-up resistors (not pull-down) are required to return lines to HIGH when no device is driving.
+  - B) I2C is an open-drain protocol. Both SDA and SCL must be connected to VCC through pull-up resistors (typically 4.7 kΩ for 100 kHz, 2.2 kΩ for 400 kHz). Without pull-ups, the lines float indeterminate when released, causing bus errors and missed bits.
+  - C) While some I2C slave devices include weak internal pull-ups, they are typically insufficient for long traces or multiple devices. External pull-ups matched to the bus capacitance are required in any reliable design.
+  - D) Both SDA and SCL require pull-ups because both are open-drain. The master drives SCL low to clock pulses, then releases it; the pull-up returns it to HIGH. Omitting either pull-up causes bus failure.
+
+---
+
+### Question 15 (5 points)
+
+A Raspberry Pi GPIO pin is configured as `GPIO.IN` and connected to a pushbutton that connects the pin to 3.3 V when pressed. The other end of the button is not connected to anything. When the button is released, what logic level will the pin read?
+
+- A) Reliably LOW, because the button is disconnected.
+- B) Reliably HIGH, because the pin defaults to a pull-up state.
+- C) An indeterminate floating value — the pin may read HIGH or LOW randomly.
+- D) Always 0 V because the GPIO input has a built-in pull-down resistor enabled by default.
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) "Disconnected" does not produce a defined LOW. A floating pin has no path to ground either, so it does not produce a stable LOW.
+  - B) Raspberry Pi GPIO pins do not have pull resistors enabled by default. Unless `GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)` is explicitly called, no pull-up is active.
+  - C) Without a pull-up or pull-down resistor (software or external), the input pin floats. The pin will pick up electrical noise, power-supply coupling, and adjacent signal crosstalk, producing unpredictable HIGH/LOW readings. This is a common beginner mistake.
+  - D) There is no default pull-down on Raspberry Pi GPIO. Default state is floating (no pull resistor), not pulled down.
+
+---
+
+### Question 16 (5 points)
+
+Which Arduino function reads the state of a digital input pin and returns either HIGH (1) or LOW (0)?
+
+- A) `analogRead(pin)`
+- B) `pinMode(pin, INPUT)`
+- C) `digitalRead(pin)`
+- D) `Serial.read()`
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) `analogRead()` reads an analog voltage from an ADC pin (A0–A5) and returns a 10-bit integer (0–1023). It does not return HIGH or LOW.
+  - B) `pinMode()` configures the direction of a GPIO pin (INPUT or OUTPUT). It does not read the pin's current state.
+  - C) `digitalRead(pin)` samples the digital logic level of the specified pin and returns either the constant `HIGH` (1) or `LOW` (0). The pin must first be configured as `INPUT` using `pinMode()`.
+  - D) `Serial.read()` reads one byte from the hardware UART receive buffer. It is unrelated to GPIO pin state reading.
+
+---
+
+### Question 17 (5 points)
+
+An ESP32 microcontroller communicates with both a BME280 environmental sensor over I2C and an SD card module over SPI. Both buses are active simultaneously. Which statement is correct?
+
+- A) The ESP32 cannot use I2C and SPI simultaneously — only one bus can be active at a time.
+- B) I2C and SPI are independent hardware peripherals on the ESP32; they operate concurrently on separate pins with no interference.
+- C) The SD card must be connected to the I2C bus because SPI is reserved for display interfaces on the ESP32.
+- D) The BME280 must switch to SPI mode to share the bus with the SD card since both devices cannot use different protocols simultaneously.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Modern microcontrollers including the ESP32 have separate hardware peripheral blocks for I2C and SPI. They use different pins and operate independently and concurrently.
+  - B) The ESP32 includes two I2C controllers and two SPI host controllers as separate hardware peripherals. The BME280 on I2C (SDA/SCL pins) and the SD card on SPI (MOSI/MISO/SCK/CS pins) operate on completely independent signal lines with no interaction.
+  - C) There is no such restriction. SPI is a general-purpose interface for any peripheral device. SD cards universally use SPI or SDIO, not I2C.
+  - D) Devices on different buses (I2C vs. SPI) never share bus lines and cannot interfere with each other. No mode switching is required or possible in this configuration.
+
+---
+
+### Question 18 (5 points)
+
+What is the correct order of operations when initializing a Raspberry Pi Python GPIO script?
+
+- A) `GPIO.setup()` → `GPIO.setmode()` → `GPIO.input()` or `GPIO.output()`
+- B) `GPIO.setmode()` → `GPIO.setup()` → `GPIO.input()` or `GPIO.output()`
+- C) `GPIO.input()` or `GPIO.output()` → `GPIO.setmode()` → `GPIO.setup()`
+- D) `GPIO.setup()` → `GPIO.input()` or `GPIO.output()` → `GPIO.setmode()`
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) `GPIO.setup()` cannot be called before `GPIO.setmode()`. The library must first know which pin numbering scheme to use (BCM or BOARD) before it can map pin numbers to GPIO hardware. Calling `setup()` first raises a RuntimeError.
+  - B) The correct sequence is: (1) `GPIO.setmode()` to establish pin numbering, (2) `GPIO.setup()` to configure individual pin direction and initial state, (3) then read or write operations with `GPIO.input()` or `GPIO.output()`.
+  - C) Calling read/write operations before setup will raise an exception because pin mode is undefined.
+  - D) Same problem as option A — `setup()` requires `setmode()` to already be called.
+
+---
+
+### Question 19 (5 points)
+
+A hardware security auditor discovers that an IoT gateway running embedded Linux has TCP port 23 (Telnet) open and accessible from the local network, returning a login prompt. Which OWASP IoT Top 10 item does this represent, and what is the recommended remediation?
+
+- A) OWASP IoT #10 – Lack of Physical Hardening; remediation is to apply tamper-evident tape over the Ethernet port.
+- B) OWASP IoT #2 – Insecure Network Services; remediation is to disable the Telnet service and use SSH with key-based authentication if remote access is required.
+- C) OWASP IoT #6 – Insufficient Privacy Protection; remediation is to encrypt all data stored on the device.
+- D) OWASP IoT #4 – Lack of Secure Update Mechanism; remediation is to enable automatic firmware updates.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Physical hardening addresses debug ports and tamper detection — hardware-level access controls. An open TCP port is a network service vulnerability, not a physical one.
+  - B) OWASP IoT #2 specifically targets unnecessary or insecure network services running on IoT devices. Telnet transmits all data including credentials in plaintext. The correct remediation is to disable Telnet and, if remote shell access is needed, enable SSH with key-based authentication and disable password authentication.
+  - C) Privacy protection addresses data collection and storage practices, not open network ports.
+  - D) Secure update mechanism addresses firmware delivery and signature verification, unrelated to an open Telnet port.
+
+---
+
+### Question 20 (5 points)
+
+On the Raspberry Pi 40-pin GPIO header, what is the relationship between BCM GPIO 17 and the physical pin number?
+
+- A) BCM GPIO 17 is physical pin 17 — BCM numbers always match physical pin positions.
+- B) BCM GPIO 17 is physical pin 11 on the 40-pin header — BCM numbers refer to the Broadcom SoC signal name, not the header position.
+- C) BCM GPIO 17 does not exist on the Raspberry Pi 4 because pins above GPIO 15 are reserved for internal use.
+- D) BCM GPIO 17 is physical pin 34 because BCM numbers are doubled for the physical mapping.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) BCM and physical pin numbers are entirely different numbering systems. BCM GPIO 17 is physical pin 11, not pin 17. They coincide only by accident for a few pins.
+  - B) BCM GPIO 17 refers to the GPIO17 signal on the Broadcom SoC. On the Raspberry Pi 40-pin header layout, this signal appears at physical pin 11. The BCM number is derived from the chip design, completely independent of connector position.
+  - C) All 27 programmable GPIO pins (GPIO 0–27) are accessible on the 40-pin header of the Raspberry Pi 4. GPIO 17 is a standard, available general-purpose I/O pin.
+  - D) There is no doubling relationship. BCM and physical pin numbers have an irregular, hardware-determined mapping documented in the official pinout at raspberrypi.com/documentation.
+
+---
+
 End of Quiz – Module 02

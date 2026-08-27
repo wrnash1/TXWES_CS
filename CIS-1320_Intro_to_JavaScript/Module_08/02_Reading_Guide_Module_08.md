@@ -390,7 +390,28 @@ console.log(a, b);   // 2, 1
 
 ---
 
-## 9. Study Checklist
+## 9. Supplemental Resources
+
+The following free, openly available resources extend and reinforce the topics covered in this module.
+
+- **[Eloquent JavaScript — Chapter 4: Data Structures](https://eloquentjavascript.net/04_data.html)**
+  The primary OER textbook. Covers arrays, the array methods `push`, `pop`, `shift`, `unshift`, `indexOf`, and introduces higher-order functions in the context of arrays.
+
+- **[MDN Web Docs — Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)**
+  Complete reference for all built-in array methods with signatures, descriptions, return values, and runnable examples. Use this as a reference while working through the lab.
+
+- **[javascript.info — Arrays](https://javascript.info/array)**
+  Introduction to array creation, access, modification, and common patterns. Covers `push`, `pop`, `shift`, `unshift`, `splice`, `slice`, and the difference between mutating and non-mutating methods.
+
+- **[javascript.info — Array methods](https://javascript.info/array-methods)**
+  Deep dive into `map`, `filter`, `reduce`, `find`, `findIndex`, `every`, `some`, `flat`, `flatMap`, `sort`, and chaining. Includes interactive exercises for each method.
+
+- **[MDN Web Docs — Array.prototype.reduce()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce)**
+  Full reference for `reduce` with multiple worked examples including summing, grouping by category, and composing functions — all patterns used in the Module 08 lab.
+
+---
+
+## 10. Study Checklist
 
 - [ ] Watch the Module 08 video lecture by Professor Nash.
 - [ ] Read Chapter 4 (Data Structures) of [Eloquent JavaScript](https://eloquentjavascript.net/04_data.html).

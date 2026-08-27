@@ -409,3 +409,16 @@ val_ds = (val_ds
 Texas Wesleyan University — CIS-4345 Machine Learning and Deep Learning
 
 Proprietary and Confidential. Not for disclosure outside of Texas Wesleyan University.
+
+---
+
+## 9. Supplemental Resources
+
+**1. [TensorFlow Data Augmentation Tutorial](https://www.tensorflow.org/tutorials/images/data_augmentation)**
+Official TensorFlow tutorial covering both the `tf.data` pipeline approach and the Keras preprocessing layers approach to image augmentation. Includes working code for `RandomFlip`, `RandomRotation`, `RandomZoom`, and `RandomContrast` with side-by-side output visualizations.
+
+**2. [tf.data: Build TensorFlow input pipelines](https://www.tensorflow.org/guide/data)**
+Comprehensive TensorFlow guide to building performant data pipelines. Covers `map`, `batch`, `cache`, `shuffle`, `prefetch`, `AUTOTUNE`, and interleaved parallel reads — essential background for all four TF Developer Certificate task categories.
+
+**3. [Papers With Code — Image Data Augmentation Survey](https://paperswithcode.com/task/data-augmentation)**
+Curated list of state-of-the-art augmentation papers and benchmarks, including CutMix, MixUp, AutoAugment, and RandAugment. Useful for understanding how modern augmentation strategies extend beyond basic flips and rotations to achieve significant accuracy gains.

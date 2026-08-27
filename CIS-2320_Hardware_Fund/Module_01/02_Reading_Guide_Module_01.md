@@ -210,3 +210,29 @@ The A+ exam presents images of connectors and asks you to identify them. Study t
 
 - [Professor Messer's CompTIA A+ 220-1101 Course — Safety Procedures](https://www.professormesser.com/free-a-plus-training/220-1101/)
 - [CompTIA A+ Core 1 (220-1101) Exam Objectives](https://www.comptia.org/certifications/a)
+
+---
+
+## 9. Supplemental Resources
+
+The following free, openly licensed resources extend your understanding of Module 01 topics. Each is suitable for exam preparation and independent study.
+
+1. **Professor Messer — CompTIA A+ 220-1101 Full Course (Free Video Playlist)**
+   URL: [https://www.professormesser.com/free-a-plus-training/220-1101/220-1101-video/](https://www.professormesser.com/free-a-plus-training/220-1101/220-1101-video/)
+   Relevance: Video lectures covering safety procedures, ESD concepts, internal component identification, and connector types — directly aligned to Domain 3 objectives tested in Module 01.
+
+2. **PC Part Picker — PC Build Guides (Free Component Reference)**
+   URL: [https://pcpartpicker.com/guide/](https://pcpartpicker.com/guide/)
+   Relevance: Visual walkthroughs of complete PC builds that reinforce motherboard layout, PSU connector routing, and physical component placement. Useful for students who lack access to a physical lab machine.
+
+3. **iFixit — Free Repair Manuals and Component Photos**
+   URL: [https://www.ifixit.com/Guide](https://www.ifixit.com/Guide)
+   Relevance: High-resolution, step-by-step teardown guides with annotated photos of internal components. Excellent supplement to Part 1 of the lab when a physical machine is unavailable.
+
+4. **Khan Academy — Electricity and Circuits (Free OER Course)**
+   URL: [https://www.khanacademy.org/science/physics/circuits-topic](https://www.khanacademy.org/science/physics/circuits-topic)
+   Relevance: Background reading for understanding electrical grounding, capacitors, and the physics behind ESD. Helps students build intuition for why the safety procedures work as described.
+
+5. **CompTIA A+ CertMike — Free Study Notes (OER)**
+   URL: [https://www.certmike.com/](https://www.certmike.com/)
+   Relevance: Free objective-by-objective study notes aligned to the 220-1101 exam blueprint. Useful as a rapid review tool before quizzes and as a cross-reference for any concept in the reading guide.

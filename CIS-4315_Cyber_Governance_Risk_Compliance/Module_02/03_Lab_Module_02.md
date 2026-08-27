@@ -225,3 +225,44 @@ All work submitted must be your own original writing. Use of AI-generated text s
 ---
 
 Lab Activity — Module 02 | CIS-4315 | Texas Wesleyan University
+
+---
+
+## Part 9 — Challenge Exercise
+
+These challenges extend the Module 02 lab into advanced strategy scenarios. Complete both challenges and the reflection questions for up to 15 bonus points.
+
+---
+
+### Challenge 1: Strategy Pivot Analysis
+
+**Scenario**: Pinnacle Financial Services has just announced it will acquire a regional bank in six months. The acquired bank operates on-premises infrastructure, uses a different core banking platform, and is subject to additional state banking regulations that Pinnacle currently does not face. The current three-year security strategy you developed in Part 3 did not account for this acquisition.
+
+**Step 1**: Identify at least four specific security strategy elements that must be updated or revisited in light of the acquisition. For each element, explain what information about the acquired bank you would need to gather before updating the strategy (e.g., their current state assessment data, regulatory obligations, technology inventory).
+
+**Step 2**: Draft a one-paragraph "strategy amendment brief" that the CISO would send to the steering committee explaining why the security strategy requires revision and what the timeline for revision should be.
+
+**Step 3**: Describe the process for integrating the acquired bank's security program into Pinnacle's. What governance steps must occur first, and what is the security manager's role in the integration workstream?
+
+---
+
+### Challenge 2: Regulatory Mapping Expansion
+
+Pinnacle Financial Services is considering offering a new digital banking service to customers in Germany and Japan. Research the primary data protection and financial services cybersecurity regulations in each country and complete the following table.
+
+| Jurisdiction | Primary Regulation | Governing Body | Key Security Requirement | Breach Notification Deadline | Implication for Pinnacle's Strategy |
+|---|---|---|---|---|---|
+| Germany / EU | | | | | |
+| Japan | | | | | |
+
+After completing the table, write a two to three sentence summary explaining how security strategy must adapt when an organization expands into jurisdictions with materially different regulatory requirements than its home country.
+
+---
+
+### Reflection Questions
+
+Answer each reflection question in four to six sentences.
+
+1. A colleague argues that security strategy is just a longer-term version of security planning — the same activities on a bigger timescale. Using the concepts from this module, explain why security strategy is fundamentally different from operational security planning, and why conflating the two creates governance risk.
+
+2. The Module 02 Reading Guide states that security strategy must be aligned with business strategy, not the reverse. Describe a scenario in which a security team that failed to align with business strategy created a friction point that damaged the organization's competitive position or ability to execute its business plan.

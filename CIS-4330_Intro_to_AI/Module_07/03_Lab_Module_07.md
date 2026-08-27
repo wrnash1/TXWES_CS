@@ -322,4 +322,27 @@ Custom Vision resources within the group will also be deleted.
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Confidence Threshold Calibration
+
+1. Using your trained Custom Vision model from Part D, go to the Performance tab in customvision.ai and locate the Precision-Recall curve for your best-performing tag.
+2. Identify the probability threshold values at which: (a) Precision first exceeds 0.90, and (b) Recall first exceeds 0.80. Record both threshold values.
+3. Construct a table with columns: Threshold, Precision, Recall, F1-Score. Populate rows for threshold values 0.3, 0.5, 0.7, and 0.9 by reading values from the curve (or using Quick Tests at different thresholds).
+4. Write a recommendation: if this model were deployed in a hospital to detect abnormal X-rays, which threshold would you set and why? Reference the specific precision and recall values from your table.
+
+### Challenge 2: OCR Pipeline with Post-Processing
+
+1. Using Python and the `azure-cognitiveservices-vision-computervision` SDK (or the REST API directly), submit a publicly available image that contains both printed and handwritten text to the Read API.
+2. Parse the JSON response to extract only the text lines (not individual words) and print them in order. Calculate the average confidence score across all recognized words.
+3. Apply basic post-processing: write a Python function that takes the extracted text and counts the total number of words, the number of unique words, and identifies any line where the average word confidence falls below 0.80.
+4. Document one real-world scenario where low-confidence OCR lines would need to be routed to a human reviewer rather than processed automatically, and identify which responsible AI principle this human-in-the-loop design addresses.
+
+### Reflection Questions
+
+1. After calibrating the threshold in Challenge 1, explain the fundamental trade-off a product manager must make when choosing a threshold for a consumer product. What business factors (not just accuracy metrics) should influence the decision?
+2. In Challenge 2, the OCR API returns both the extracted text and a confidence score per word. What does it indicate about the API's design philosophy that it provides confidence scores alongside predictions rather than just returning the predicted text?
+
+---
+
 End of Lab 07

@@ -199,3 +199,171 @@ Distractor Analysis:
 - Why D is incorrect: Scrumban is a recognized, legitimate hybrid configuration used by many mature teams. It is not a failure mode or a pejorative term.
 
 ---
+
+### Question 11 (5 points)
+
+A software team measures an average cycle time of 14 days for a typical feature request. They reduce their WIP from 12 items to 6 items without changing team size. According to Little's Law, what should happen to their average cycle time?
+
+- A) Cycle time doubles to 28 days because there is less work in progress
+- B) Cycle time is cut approximately in half because WIP was halved while throughput remained constant
+- C) Cycle time is unaffected because cycle time depends on team skill, not WIP
+- D) Cycle time increases slightly because the team has fewer items to work on in parallel
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Incorrect — Reducing WIP decreases cycle time; WIP and cycle time are directly proportional (CT = WIP/Throughput), so halving WIP halves cycle time when throughput is constant.
+  - C) Incorrect — Little's Law mathematically demonstrates that cycle time is directly affected by WIP level, not just team skill.
+  - D) Incorrect — Parallelism (multitasking) increases cycle time through context switching overhead; reducing WIP reduces multitasking and therefore reduces cycle time.
+
+---
+
+### Question 12 (5 points)
+
+Which of the seven Lean software wastes is most directly addressed by a Scrum team's practice of demonstrating only fully "Done" Increments at the Sprint Review?
+
+- A) Relearning
+- B) Defects
+- C) Partially done work
+- D) Extra features
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) Incorrect — Relearning waste is about solving the same problem multiple times due to knowledge loss; the Sprint Review addresses completeness, not knowledge transfer.
+  - B) Incorrect — While quality gates can reduce defects, the specific practice of showing only Done items directly targets the partially done work waste.
+  - D) Incorrect — Extra features waste is about building unrequested functionality; demonstrating Done items is about completeness, not feature scope.
+
+---
+
+### Question 13 (5 points)
+
+What is the primary purpose of making policies explicit as a Kanban practice?
+
+- A) To satisfy regulatory compliance requirements for the team's industry
+- B) To create shared, documented rules that govern how work moves through the board, reducing inconsistency and management overhead
+- C) To give management visibility into the team's internal decision-making process
+- D) To replace the need for a Definition of Done in teams that use Kanban
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Incorrect — Explicit policies in Kanban are a team-efficiency practice, not a regulatory compliance mechanism.
+  - C) Incorrect — Explicit policies are for the team's own consistency, not for management reporting purposes.
+  - D) Incorrect — Explicit policies in Kanban serve a similar purpose to Definitions of Done and Ready, but they do not replace them — they formalize the team's equivalent standards.
+
+---
+
+### Question 14 (5 points)
+
+Lead time and cycle time are both Kanban flow metrics. What is the key difference between them?
+
+- A) Lead time measures story points; cycle time measures hours
+- B) Lead time starts when a request is made (including wait time before work begins); cycle time starts when work actively begins on the item
+- C) Lead time measures time per team member; cycle time measures time per item
+- D) Cycle time is measured from Sprint Planning; lead time is measured from the Sprint Review
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Incorrect — Both metrics are measured in time units (hours, days), not in story points.
+  - C) Incorrect — Both metrics are per-item measurements, not per-team-member calculations.
+  - D) Incorrect — Lead time and cycle time are Kanban metrics that are not tied to Scrum events; they are measured from specific moments in an item's workflow journey.
+
+---
+
+### Question 15 (5 points)
+
+A Scrum Team using a Sprint board wants to add WIP limits to their in-Sprint task board. Is this compatible with Scrum?
+
+- A) No — adding WIP limits to a Sprint board violates the Scrum Guide's rules about Sprint Backlog management
+- B) Yes — the Scrum Guide is a framework that permits teams to use Kanban practices such as WIP limits within a Sprint to improve their process
+- C) No — WIP limits require Kanban roles that conflict with Scrum accountabilities
+- D) Yes — but only if the Scrum Master approves the WIP limit numbers before each Sprint
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Incorrect — The Scrum Guide does not prohibit WIP limits; it defines what Scrum is, not every technique a team may not use within it.
+  - C) Incorrect — Kanban prescribes no roles; there are no "Kanban roles" to conflict with Scrum accountabilities.
+  - D) Incorrect — WIP limit decisions are a team-level practice; the Scrum Master coaches and facilitates but does not need to approve specific WIP numbers.
+
+---
+
+### Question 16 (5 points)
+
+Lean Principle 2 — Map the Value Stream — classifies process steps as value-adding, non-value-adding but necessary, or pure waste. Which of the following software development steps would most likely be classified as "non-value-adding but necessary"?
+
+- A) Coding the core algorithm that solves the user's problem
+- B) A mandatory security compliance audit required by the organization before any production deployment
+- C) A five-day wait for a committee to approve requirements that have already been agreed upon by the Product Owner and team
+- D) Building a feature that no user has requested
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Incorrect — Coding the solution directly adds value; the customer benefits from this step.
+  - C) Incorrect — A five-day bureaucratic delay that adds no new information or value is pure waste (Delays waste category), not necessary overhead.
+  - D) Incorrect — Building unrequested features is the "Extra Features" waste category — pure waste with no customer value.
+
+---
+
+### Question 17 (5 points)
+
+A Kanban team's cumulative flow diagram shows that the "In Testing" band has been growing steadily wider for three Sprints while all other bands remain stable. What is the most likely interpretation?
+
+- A) The team's test coverage is improving because more items are being tested
+- B) Testing is a bottleneck — items are accumulating in the Testing stage faster than testers can process them
+- C) The team has successfully reduced WIP in all other stages, pushing more work to Testing
+- D) Lead time is decreasing because items are spending more time in the Testing stage
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Incorrect — A widening band means accumulation, not improved coverage; coverage is a quality metric, not a flow metric.
+  - C) Incorrect — If other bands are stable, the issue is capacity in Testing, not a redistribution caused by WIP reductions elsewhere.
+  - D) Incorrect — Items spending more time in Testing increases lead time; more time in a stage always lengthens the overall cycle.
+
+---
+
+### Question 18 (5 points)
+
+Which Lean waste category best describes a development team that rebuilds the same authentication library from scratch for the third consecutive project because no shared library exists?
+
+- A) Partially done work — the authentication code from previous projects was never finished
+- B) Extra features — the team is building authentication functionality that was not requested
+- C) Relearning — the team is solving the same problem multiple times due to poor knowledge transfer and lack of reuse
+- D) Defects — the repeated rebuilds indicate the previous versions contained bugs
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) Incorrect — The code from previous projects was presumably completed; the issue is failure to reuse, not incompleteness.
+  - B) Incorrect — Authentication is a legitimate requirement; "extra features" refers to unrequested functionality, not legitimate repeated work.
+  - D) Incorrect — The scenario describes redundant effort from lack of reuse, not defects requiring rework.
+
+---
+
+### Question 19 (5 points)
+
+A Scrum Team is considering adopting Scrumban. Which of the following is the most accurate description of how they would implement it?
+
+- A) They replace their Sprint Planning and Sprint Review with Kanban's continuous replenishment meetings
+- B) They retain Scrum's events and accountabilities while adding Kanban practices such as WIP limits, cycle time tracking, and cumulative flow diagrams to improve flow within Sprints
+- C) They remove the Sprint Goal and replace it with a Kanban service level agreement for each card
+- D) They merge the Scrum Master and Product Owner accountabilities into a single "Flow Manager" role
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Incorrect — In Scrumban, teams typically retain Scrum events; replacing Sprint Planning and Review with Kanban replenishment meetings would be a full Kanban adoption, not Scrumban.
+  - C) Incorrect — Replacing the Sprint Goal removes a key Scrum commitment mechanism; Scrumban adds Kanban metrics alongside Scrum, it does not replace Scrum artifacts.
+  - D) Incorrect — Scrumban does not merge or eliminate Scrum accountabilities; it adds flow management techniques, not role changes.
+
+---
+
+### Question 20 (5 points)
+
+Lean's "Establish Pull" principle requires that work enters a system only when there is capacity. Which scenario best illustrates a violation of this principle in a software team?
+
+- A) Developers select their own Sprint Backlog items during Sprint Planning based on their assessed capacity
+- B) A manager assigns five new features to a Developer who already has three unfinished features in progress
+- C) The Product Owner orders the Product Backlog based on customer value
+- D) The Scrum Master removes an impediment so the team can continue working
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Incorrect — Developers self-selecting work based on capacity is the pull principle in action, not a violation.
+  - C) Incorrect — Product Backlog ordering supports value identification (Lean Principle 1), not a violation of pull; items are not pushed onto the team by the ordering.
+  - D) Incorrect — Removing impediments supports flow (Lean Principle 3) and enables pull; it is not a push violation.

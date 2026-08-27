@@ -321,3 +321,29 @@ Only 31 of 87 Tier 2 escalations (35.6%) were resolved within 4 hours. Suggest t
 ## Academic Integrity Notice
 
 All work submitted must be your own. The scenarios in this lab are educational simulations. Do not use real organizational data. Do not share your answers with classmates before the submission deadline. Reference the CySA+ CS0-003 exam objectives at comptia.org and study materials at professormesser.com for additional context.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Multi-Source Alert Correlation
+
+An overnight SIEM alert shows a successful authentication to the VPN from a user account at 1:47 AM, followed by an internal RDP connection to a finance server 4 minutes later, followed by 3.2 GB of data written to a USB-connected device at 1:58 AM. No SIEM rule fired for the data transfer.
+
+1. List all three log source types (authentication, network, endpoint) and identify which specific log would surface each event in the sequence.
+2. Write a brief analyst note classifying the combined event chain as a true positive or false positive, citing at least three corroborating evidence items.
+3. Identify the specific false negative in this scenario — which event was missed by the SIEM — and explain what correlation rule change would close this detection gap.
+4. Map each of the three events to the appropriate Pyramid of Pain indicator level and explain which level provides the most durable detection for this attack pattern.
+
+### Challenge 2: SOC Metrics Trend Analysis
+
+You are given two consecutive months of SOC metrics. Month 1: MTTD = 18h, MTTR = 6h, FPR = 94%, dwell time = 16h. Month 2: MTTD = 4h, MTTR = 22h, FPR = 61%, dwell time = 3h.
+
+1. Identify which metrics improved and which degraded between Month 1 and Month 2.
+2. Propose a specific operational explanation for why MTTR increased even as MTTD improved significantly — what operational bottleneck does this suggest?
+3. The FPR dropped from 94% to 61% — describe the SIEM tuning action most likely responsible for this improvement and identify one risk that aggressive tuning introduces.
+
+### Reflection Questions
+
+1. Based on the triage scenario in Exercise 1, describe one piece of contextual information that — if it had been different — would have changed your true positive classification to a false positive. What does this tell you about the importance of asset inventory and account documentation in a SOC?
+2. A colleague argues that blocking file hashes is sufficient IOC-based defense because it stops known malware immediately. Using the Pyramid of Pain, construct a two-sentence counter-argument explaining why a TTP-based detection strategy provides longer-lasting protection.

@@ -396,6 +396,95 @@ gcloud container images delete gcr.io/$PROJECT_ID/lab07-app:v1 --quiet
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Cloud Run Minimum Instances and Cold Start Comparison
+
+Measure the latency difference between a Cloud Run service with zero minimum
+instances versus one with `min-instances=1`.
+
+1. Deploy a second revision of `lab07-service` with `--min-instances=0` and
+   wait for it to scale to zero (stop sending traffic for 5 minutes):
+
+```bash
+gcloud run services update lab07-service \
+  --region=$REGION \
+  --min-instances=0 \
+  --tag=cold
+```
+
+1. Record the response time for the first request after scale-to-zero (cold
+   start):
+
+```bash
+COLD_URL=$(gcloud run services describe lab07-service \
+  --region=$REGION --format='value(status.url)')
+time curl -s $COLD_URL > /dev/null
+```
+
+1. Update the service to keep at least 1 warm instance and compare:
+
+```bash
+gcloud run services update lab07-service \
+  --region=$REGION \
+  --min-instances=1
+sleep 10
+time curl -s $COLD_URL > /dev/null
+```
+
+1. Record both latency measurements and the cost implication of each
+   configuration in your lab report.
+
+### Challenge 2: Cloud Tasks Rate-Limited Queue
+
+Create a Cloud Tasks queue that dispatches tasks at a controlled rate and
+observe how rate limiting protects the target Cloud Run service.
+
+1. Create a queue limited to 2 dispatches per second with a 3-retry backoff:
+
+```bash
+gcloud tasks queues create lab07-rate-queue \
+  --location=$REGION \
+  --max-dispatches-per-second=2 \
+  --max-concurrent-dispatches=5 \
+  --max-attempts=3 \
+  --min-backoff=5s \
+  --max-backoff=60s
+```
+
+1. Enqueue 10 tasks targeting the Cloud Run service URL:
+
+```bash
+SERVICE_URL=$(gcloud run services describe lab07-service \
+  --region=$REGION --format='value(status.url)')
+for i in $(seq 1 10); do
+  gcloud tasks create-http-task \
+    --queue=lab07-rate-queue \
+    --location=$REGION \
+    --url="$SERVICE_URL" \
+    --body-content="{\"task_id\": $i}"
+done
+```
+
+1. Monitor the queue and confirm tasks dispatch at no more than 2 per second:
+
+```bash
+gcloud tasks queues describe lab07-rate-queue --location=$REGION
+```
+
+### Reflection Questions
+
+1. You measured a latency difference between cold-start and warm-instance Cloud
+   Run requests. Given this tradeoff, describe a real-world scenario where
+   paying for `min-instances=1` is justified, and a scenario where
+   `min-instances=0` with cold starts is acceptable.
+2. The Cloud Tasks queue you created dispatches at 2 requests per second even
+   when 10 tasks are enqueued at once. How does this rate limiting protect the
+   downstream Cloud Run service, and what would happen without it if 10,000
+   tasks were enqueued simultaneously?
+
+---
+
 End of Lab — Module 07
 
 Course: CIS-4329 Google Cloud Computing | Texas Wesleyan University | Professor Nash

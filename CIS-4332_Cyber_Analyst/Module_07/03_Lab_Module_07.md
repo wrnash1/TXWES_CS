@@ -343,3 +343,29 @@ TLP Marking: state the TLP level and justify your choice
 ## Academic Integrity Notice
 
 All sandbox report data in this lab is fabricated for educational purposes. All work must be your own. Reference professormesser.com and comptia.org for additional study context.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Static Analysis Triage
+
+You receive a file named `Microsoft_Security_Update_KB5031455.exe` (SHA-256: `a3f8b2...truncated`). PE analysis shows: 3 sections — `.text` (entropy 6.2), `.rsrc` (entropy 7.9), `.pack` (entropy 7.97); Import Address Table contains only 4 imports: `LoadLibraryA`, `GetProcAddress`, `VirtualAlloc`, `VirtualProtect`; file size is 48 KB but claims to be a Microsoft security update; no valid digital signature.
+
+1. Identify three static analysis findings that indicate this file is suspicious and explain what each finding suggests about the malware's construction.
+2. Explain what the 4-import IAT tells you about the malware's likely execution approach (hint: consider what `LoadLibraryA` and `GetProcAddress` enable at runtime).
+3. Write two specific YARA rule conditions (not a full rule) that could detect this sample based on static characteristics: one based on the section name and one based on a high-entropy section threshold.
+4. Explain why submitting this file to VirusTotal before sandbox analysis could expose operational security (OPSEC) risks if this were a real investigation.
+
+### Challenge 2: Behavioral IOC Extraction and Detection Mapping
+
+The sandbox report for a second sample shows the following behavioral observations: creates `C:\ProgramData\Windows\svchost.exe`; injects code into `explorer.exe` using `OpenProcess` + `WriteProcessMemory` + `CreateRemoteThread`; queries `HKLM\SYSTEM\CurrentControlSet\Services\` to enumerate services; makes outbound TLS connections to `94.102.49.190:443` every 120 seconds; creates scheduled task `\Microsoft\Windows\Power Efficiency Diagnostics\AnalyzeSystem` pointing to `C:\ProgramData\Windows\svchost.exe`.
+
+1. Extract all host-based and network-based IOCs from the observations above and organize them in a structured table with columns: IOC Value, IOC Type, Pyramid of Pain Level.
+2. Map each of the five behavioral observations to the most specific ATT&CK technique (provide technique ID and name).
+3. Write a one-sentence SIEM detection rule description (not SPL/KQL syntax, just the logic) for the process injection behavior that would be durable even if the injector binary changes.
+
+### Reflection Questions
+
+1. A security team relies entirely on antivirus software for malware detection. Using the concepts of static vs. dynamic analysis and packing/obfuscation, explain why a sophisticated attacker could likely bypass this control and what additional detection capability would close the gap.
+2. The malware in Challenge 2 uses a scheduled task name (`AnalyzeSystem`) that mimics a legitimate Windows diagnostic task. Explain what type of ATT&CK technique this is (provide the technique name), and describe how a SOC analyst would distinguish the malicious task from the legitimate one during investigation.

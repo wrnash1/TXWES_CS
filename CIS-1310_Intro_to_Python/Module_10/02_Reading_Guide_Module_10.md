@@ -386,7 +386,31 @@ Watch Episodes 9 and 10 of the [Python for Everybody Course Playlist](https://ww
 
 ---
 
-## 7. Study Checklist
+## 7. Supplemental Resources
+
+**1. Official Python 3 Docs — Mapping Types: dict**
+[https://docs.python.org/3/library/stdtypes.html#mapping-types-dict](https://docs.python.org/3/library/stdtypes.html#mapping-types-dict)
+The complete reference for all dictionary methods with signatures, return types, and exception behavior. Covers `.get()`, `.pop()`, `.setdefault()`, `.update()`, `.items()`, `.keys()`, `.values()`, and the merge/update operators `|` and `|=` added in Python 3.9.
+
+**2. Official Python 3 Docs — Data Structures: Dictionaries**
+[https://docs.python.org/3/tutorial/datastructures.html#dictionaries](https://docs.python.org/3/tutorial/datastructures.html#dictionaries)
+The tutorial section on dictionaries with examples of all three iteration patterns, dictionary comprehensions, and `dict()` constructor usage. Written for new Python programmers and directly aligned with PCAP exam content.
+
+**3. Python for Everybody — Chapter 9: Dictionaries**
+[https://www.py4e.com/html3/09-dictionaries](https://www.py4e.com/html3/09-dictionaries)
+Free textbook chapter with step-by-step word-frequency counter examples, histogram construction, and loop-based patterns. Includes self-check exercises. The word-counter pattern in this chapter matches the classic PCAP exam question format exactly.
+
+**4. Real Python — Dictionaries in Python**
+[https://realpython.com/python-dicts/](https://realpython.com/python-dicts/)
+A comprehensive free article covering dict creation, all methods, iteration, comprehensions, nested dictionaries, and `OrderedDict`/`Counter`/`defaultdict` from `collections`. The sections on `.setdefault()` and dict comprehensions are particularly relevant to PCAP exam preparation.
+
+**5. Real Python — How to Iterate Through a Dictionary in Python**
+[https://realpython.com/iterate-through-dictionary-python/](https://realpython.com/iterate-through-dictionary-python/)
+Focused article on all iteration patterns: keys, values, `.items()`, filtered iteration, and dictionary comprehensions. Includes comparison tables and performance notes. Directly relevant to the three PCAP-tested iteration patterns.
+
+---
+
+## 8. Study Checklist
 
 - [ ] Watch the Module 10 video lecture by Professor Nash.
 - [ ] Read the High-Yield Glossary — especially `.get()` vs bracket access, iteration patterns, and `in` membership testing.

@@ -211,3 +211,205 @@ Which of the following correctly explains why BFS finds shortest paths in an **u
 - *Why B is correct:* In an unweighted graph, every edge has implicit cost 1. BFS processes nodes in FIFO order, which is the same as distance order (nodes at distance d before d+1). In a weighted graph, a 2-hop path might cost 3 while a 1-hop path costs 10. BFS would incorrectly finalize the 1-hop node first. Dijkstra's min-heap ensures the node with the smallest total cost is always processed next, regardless of hop count.
 - *Why C is incorrect:* Both BFS and Dijkstra work on both directed and undirected graphs. The distinction is weight handling, not direction.
 - *Why D is incorrect:* The log factor describes complexity, not capability. An O(n²) algorithm can be "more powerful" than an O(n) one if it solves a harder problem. Dijkstra handles weighted graphs because of its priority-queue property, not because it is slower.
+
+---
+
+### Question 11
+
+**Each question is worth 5 points.**
+
+In Dijkstra's algorithm, why is the check `if d > dist[node]: continue` necessary?
+
+- A) To prevent the algorithm from processing the same node twice
+- B) To skip stale heap entries where a shorter path has already been found and recorded since this entry was pushed
+- C) To ensure the algorithm terminates within O(V + E) operations
+- D) To handle disconnected graph components
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* A `visited` set would prevent processing a node twice. The stale check `d > dist[node]` is specifically for heap entries, not for preventing double processing. A node CAN be in the heap multiple times with different distances — the stale check identifies and discards old entries.
+- *Why B is correct:* When a node's distance is updated (relaxed), the new `(dist, node)` tuple is pushed to the heap, but the old entry with the larger distance remains in the heap. When the old entry is eventually popped, `d` (the popped distance) is greater than `dist[node]` (the current best distance). The `continue` skips processing this outdated entry, which would otherwise cause incorrect relaxations.
+- *Why C is incorrect:* The stale check does reduce unnecessary work, but the time complexity bound O((V+E) log V) accounts for the heap operations including stale entries. The stale check is about correctness, not primarily about the asymptotic complexity bound.
+- *Why D is incorrect:* Disconnected nodes simply remain at `float('inf')` in the distance array. The stale entry check is unrelated to connectivity handling.
+
+---
+
+### Question 12
+
+Dijkstra's algorithm fails when a graph has negative edge weights. What goes wrong specifically?
+
+- A) The algorithm raises a `ValueError` when a negative weight is encountered
+- B) The heap becomes corrupted and produces wrong orderings
+- C) A node finalized early (extracted from the heap) may later receive a shorter path via a negative edge from a not-yet-processed node, violating the algorithm's greedy assumption
+- D) The algorithm runs forever because distances keep decreasing
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Python's `heapq` handles negative numbers without error. Dijkstra will run to completion without raising exceptions — it just produces wrong answers.
+- *Why B is incorrect:* The heap correctly orders `(distance, node)` tuples numerically. Negative distances are valid for heap comparisons. The bug is logical, not mechanical.
+- *Why C is correct:* Dijkstra's greedy proof relies on the assumption that once a node is extracted (finalized), no shorter path to it can exist. This holds when all edge weights are non-negative — no later discovery can improve on the current best. With a negative edge, a later node may have a negative-weight edge to an already-finalized node, providing a shorter path. The algorithm misses this update because it never revisits finalized nodes.
+- *Why D is incorrect:* Dijkstra terminates after processing each node at most once. With negative weights, it terminates and produces a result — just an incorrect one. Infinite loops only occur with negative cycles in Bellman-Ford if not detected.
+
+---
+
+### Question 13
+
+What is the time complexity of Dijkstra's algorithm implemented with a binary min-heap?
+
+- A) O(V²)
+- B) O(V + E)
+- C) O((V + E) log V)
+- D) O(E log E)
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* O(V²) is the complexity of Dijkstra with a simple unsorted array (scan all vertices to find the minimum at each step). Using a binary heap improves this to O((V+E) log V) for sparse graphs.
+- *Why B is incorrect:* O(V + E) is the complexity of BFS, which does no heap operations. Dijkstra's heap operations (push and pop) each cost O(log V), contributing the log factor.
+- *Why C is correct:* With a binary heap: each vertex is extracted once — O(V log V) for V extractions. Each edge may cause a heap push when a shorter path is found — O(E log V) for E potential pushes. Total: O((V + E) log V). For sparse graphs (E ≈ V), this is O(V log V).
+- *Why D is incorrect:* O(E log E) is equivalent to O(E log V) for simple graphs (since E ≤ V² implies log E ≤ 2 log V), but the canonical expression is O((V+E) log V), which is more precise and standard.
+
+---
+
+### Question 14
+
+In Dijkstra's algorithm, what does `dist[v] = float('inf')` represent at initialization?
+
+- A) The vertex v is unreachable and will never be updated
+- B) No known path from the source to v has been found yet — `float('inf')` will be replaced by the actual shortest distance when v is first reached
+- C) The algorithm will skip vertex v during processing
+- D) Vertex v is the source node
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `float('inf')` does not mean permanently unreachable. It means "not yet reached." If v is reachable, its distance will be updated when a neighbor is processed. Only if v remains `float('inf')` at algorithm completion is it truly unreachable.
+- *Why B is correct:* Dijkstra initializes all distances to infinity to represent "no known path." Any real path found during the algorithm will have finite cost < infinity, so the first update always improves the distance. The infinity initialization ensures the edge relaxation condition `if dist[u] + w < dist[v]` correctly triggers for any finite path found.
+- *Why C is incorrect:* Vertices with `float('inf')` distance are not skipped — they are simply not in the heap yet. They will be added to the heap when a neighbor discovers them for the first time.
+- *Why D is incorrect:* The source node is initialized with `dist[source] = 0`, not `float('inf')`.
+
+---
+
+### Question 15
+
+Network Delay Time (LeetCode #743): after running Dijkstra from node k, the answer is `max(dist.values())`. What does this maximum represent?
+
+- A) The longest path in the graph
+- B) The time at which the last node receives the signal — the minimum time for all nodes to receive a signal from k
+- C) The total cost of all paths from k
+- D) The number of nodes reachable from k
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* The maximum shortest distance is not the longest path. The longest path problem is NP-hard for general graphs; this is a shortest path problem. The maximum is taken over shortest distances, not arbitrary paths.
+- *Why B is correct:* The problem asks: if a signal is sent from node k, when does the last node receive it? Dijkstra computes the minimum time to reach each node. The signal propagates along the fastest routes simultaneously. The last node to receive the signal is the one with the maximum shortest-path distance from k. If any node is unreachable (distance remains infinity), return -1.
+- *Why C is incorrect:* Total cost would be the sum of all distances, not the maximum. The problem asks for the time of the last arrival, not aggregate cost.
+- *Why D is incorrect:* The count of reachable nodes would be `sum(1 for d in dist.values() if d < float('inf'))`. The answer is a distance value, not a count.
+
+---
+
+### Question 16
+
+In which scenario should you use Bellman-Ford instead of Dijkstra?
+
+- A) When the graph is very large and Dijkstra would be too slow
+- B) When the graph has negative edge weights (but no negative cycles)
+- C) When the graph is unweighted and BFS is not available
+- D) When you need to find all-pairs shortest paths
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Bellman-Ford is O(V × E) — significantly slower than Dijkstra's O((V+E) log V) for sparse graphs. For large graphs with non-negative weights, Dijkstra is preferred. Bellman-Ford is chosen for correctness (negative weights), not speed.
+- *Why B is correct:* Bellman-Ford correctly handles negative-weight edges by iterating V−1 rounds over all edges. Dijkstra's greedy assumption breaks with negative weights; Bellman-Ford makes no such assumption. Bellman-Ford also detects negative cycles (if distances can still be improved after V−1 rounds).
+- *Why C is incorrect:* For unweighted graphs, BFS is the preferred O(V+E) algorithm. Both Dijkstra and Bellman-Ford can handle unweighted graphs but are overkill. Neither replaces BFS.
+- *Why D is incorrect:* All-pairs shortest paths uses Floyd-Warshall (O(V³)) or repeated Dijkstra/Bellman-Ford from each vertex. The choice between Dijkstra and Bellman-Ford for all-pairs still depends on whether negative weights are present.
+
+---
+
+### Question 17
+
+What is the purpose of the `prev` dictionary in Dijkstra's path reconstruction?
+
+- A) To store all previously computed shortest distances for backtracking
+- B) To record, for each node, which node was its predecessor on the shortest path — enabling path reconstruction by walking backwards from destination to source
+- C) To store the previous iteration's distances for detecting convergence
+- D) To track which nodes have been extracted from the heap
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* The `dist` dictionary stores shortest distances, not `prev`. The `prev` dictionary stores parent pointers — a qualitatively different kind of information.
+- *Why B is correct:* During edge relaxation: when `dist[u] + w < dist[v]`, both `dist[v]` is updated AND `prev[v] = u` is recorded. This means "on the current best path to v, the previous node is u." To reconstruct the path from source to target, walk backwards: start at target, follow `prev` pointers until reaching the source, then reverse the collected sequence.
+- *Why C is incorrect:* Dijkstra does not iterate to convergence like Bellman-Ford. It terminates after processing each node once. There is no previous-iteration tracking.
+- *Why D is incorrect:* Tracking extracted nodes is the role of a `visited` set or the stale-entry check. The `prev` dictionary maps destinations to their predecessor, not to whether they've been processed.
+
+---
+
+### Question 18
+
+A graph has 5 nodes with the edges and weights: A→B(4), A→C(2), C→B(1), B→D(5), C→D(8). What is the shortest path cost from A to D?
+
+- A) `9` (A→B→D)
+- B) `8` (A→C→D)
+- C) `8` (A→B→D via another path)
+- D) `10` (A→C→B→D)
+
+**Correct Answer:** D
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* A→B costs 4, B→D costs 5. Total: 4+5 = 9. This is not the shortest — A→C→B→D is cheaper.
+- *Why B is incorrect:* A→C costs 2, C→D costs 8. Total: 2+8 = 10. Not the shortest.
+- *Why C is incorrect:* There is no other A→B→D path in this graph. The two paths using B are A→B→D (cost 9) and A→C→B→D (cost 2+1+5=8).
+- *Why D is correct:* A→C costs 2, C→B costs 1, B→D costs 5. Total: 2+1+5 = 8. Dijkstra would discover: dist[A]=0, dist[C]=2 (via A→C), dist[B]=3 (via A→C→B, cheaper than A→B=4), dist[D]=8 (via A→C→B→D). The shortest path cost is 8.
+
+---
+
+### Question 19
+
+After running Dijkstra on a connected graph from source `s`, a vertex `v` has `dist[v] = float('inf')`. What can be concluded?
+
+- A) Vertex v has no outgoing edges
+- B) Vertex v has a negative-weight edge to s
+- C) Vertex v is not reachable from s in this directed graph
+- D) Dijkstra has not finished processing — the algorithm is incomplete
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Dijkstra computes shortest distances from source to all reachable nodes — outgoing edges from v are irrelevant to whether v is reachable from s. Even if v has many outgoing edges, it may still be unreachable from s in a directed graph.
+- *Why B is incorrect:* Negative-weight edges cause Dijkstra to produce incorrect results for graphs with them — but the result would be a wrong finite distance, not necessarily infinity. Infinity means v was never reached via any path.
+- *Why C is correct:* After Dijkstra completes on a connected undirected graph, all vertices have finite distances. In a directed graph, some vertices may be unreachable from s (no directed path from s to v). These vertices remain at `float('inf')` because no relaxation ever updates them. Remaining at infinity is Dijkstra's way of indicating "no path found."
+- *Why D is incorrect:* The premise states "after running Dijkstra" — the algorithm has completed. Remaining `float('inf')` is the algorithm's result, not an incomplete state.
+
+---
+
+### Question 20
+
+What Python data structure is pushed into the min-heap in Dijkstra's implementation, and why is distance stored first?
+
+- A) `(node, dist)` — node first so nodes are processed in graph order
+- B) `(dist, node)` — distance first so Python's `heapq` min-heap orders by shortest distance
+- C) `{node: dist}` — a dictionary enables O(1) distance update
+- D) `(dist, node, prev)` — all three fields are required for heap ordering
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* If `(node, dist)` is pushed, Python's `heapq` would order tuples by the first element — the node identifier. This would process nodes in node-name/number order rather than shortest-distance order, completely defeating the purpose of Dijkstra's priority queue.
+- *Why B is correct:* Python's `heapq` orders tuples lexicographically — comparing first elements first. By storing `(dist, node)`, the heap always extracts the tuple with the smallest distance. This is the correct Dijkstra behavior: always process the unfinalized node with the current smallest known distance.
+- *Why C is incorrect:* Dictionaries are not valid heap elements — `heapq` expects comparable elements. Also, pushing a dict to a heap is semantically incorrect and would raise TypeError.
+- *Why D is incorrect:* The `prev` dictionary for path reconstruction is maintained separately, not inside each heap entry. Storing `prev` inside the heap tuple is redundant — you only need the final prev value when a distance is confirmed, not for each heap push.

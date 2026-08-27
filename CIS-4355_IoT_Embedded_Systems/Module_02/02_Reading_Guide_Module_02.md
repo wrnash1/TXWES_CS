@@ -191,4 +191,20 @@ Embedded microcontrollers in industrial IoT map to Level 0 and Level 1. Raspberr
 
 ---
 
+## 9. Supplemental Resources
+
+**1. Arduino Language Reference**
+[https://www.arduino.cc/reference/en/](https://www.arduino.cc/reference/en/)
+The complete official reference for all Arduino built-in functions, data types, and operators. Covers `setup()`, `loop()`, `analogRead()`, `digitalWrite()`, `millis()`, and every other core function. Bookmark this and use it as your primary lookup during labs.
+
+**2. Raspberry Pi GPIO Pinout — pinout.xyz**
+[https://pinout.xyz/](https://pinout.xyz/)
+An interactive visual reference for the Raspberry Pi 40-pin GPIO header showing BCM numbers, physical pin positions, and alternate functions (I2C, SPI, UART, PWM) for every pin. Essential when wiring circuits to confirm BCM-to-physical mappings.
+
+**3. RPi.GPIO Python Library Documentation**
+[https://sourceforge.net/p/raspberry-gpio-python/wiki/BasicUsage/](https://sourceforge.net/p/raspberry-gpio-python/wiki/BasicUsage/)
+The official usage guide for the RPi.GPIO Python library covering `setmode()`, `setup()`, `input()`, `output()`, `cleanup()`, and event detection. Directly relevant to Part 2 of the Module 02 lab.
+
+---
+
 End of Reading Guide – Module 02

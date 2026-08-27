@@ -252,4 +252,22 @@ Management it may be addressing symptoms rather than root causes.
 
 ---
 
+---
+
+## Supplemental Resources
+
+**1. AXELOS — ITIL 4 Problem Management Practice**
+<https://www.axelos.com/resource-hub/blog/itil-4-problem-management>
+Official AXELOS description of the Problem Management practice including reactive and proactive modes, the problem lifecycle, and the Known Error Database. Core reference for Foundation exam preparation on this practice.
+
+**2. AXELOS — ITIL 4 Change Enablement Practice**
+<https://www.axelos.com/resource-hub/blog/itil-4-change-enablement>
+Official AXELOS guidance on change types (standard, normal, emergency), CAB structure, the Change Schedule, and how change enablement integrates with DevOps continuous delivery. Essential for the change management exam section.
+
+**3. Atlassian — Root Cause Analysis Techniques**
+<https://www.atlassian.com/incident-management/incident-response/root-cause-analysis>
+A practitioner guide covering the 5 Whys, fishbone diagram, and fault tree analysis techniques used in Problem Management. Includes worked examples from IT incident scenarios that directly apply to this module's RCA exercises.
+
+---
+
 Module 09 Reading Guide | CIS-4335 IT Service Management | Texas Wesleyan University

@@ -333,4 +333,17 @@ release-with-sbom:
 
 ---
 
+## 9. Supplemental Resources
+
+**1. [OWASP ZAP Automation Framework documentation](https://www.zaproxy.org/docs/automate/automation-framework/)**
+The official guide for ZAP's Automation Framework, which replaces the legacy CLI scripts for production CI/CD use. Covers plan files, job configuration, alert thresholds, authentication, and passive vs. active scan modes.
+
+**2. [Semgrep rule registry and writing custom rules](https://semgrep.dev/docs/writing-rules/overview/)**
+Documentation for writing Semgrep YAML rules, including pattern syntax, metavariables, taint analysis, and publishing rules to the registry. Essential for teams that need custom SAST rules beyond the community rulesets.
+
+**3. [CISA SBOM guidance and US Executive Order 14028 resources](https://www.cisa.gov/sbom)**
+CISA's official SBOM resources page, including minimum element guidance, VEX documentation, and links to the software supply chain security requirements from US Executive Order 14028. Relevant for understanding regulatory drivers behind SBOM adoption.
+
+---
+
 Reading Guide — Module 07 | CIS-4350 | Texas Wesleyan University | Professor Nash

@@ -325,3 +325,17 @@ Submit the following to the course LMS:
 ---
 
 *Texas Wesleyan University — CIS-4331 Azure Cloud Computing — Module 14 Lab*
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Reserved Instance Savings Analysis
+Using the Azure Pricing Calculator, build two separate estimates for the same workload: (1) three Standard_D4s_v3 Windows Server VMs running 24/7 in East US at pay-as-you-go rates, and (2) the same three VMs using 1-year Reserved Instance pricing with Azure Hybrid Benefit applied (assuming the organization has Software Assurance). Record the monthly and annual cost for each estimate. Calculate the dollar savings and percentage savings from combining reservations with Hybrid Benefit compared to pay-as-you-go. Export both estimates to Excel and include them in your submission. Then write a 3–4 sentence recommendation memo addressed to a fictional CFO explaining whether the organization should purchase reservations for these VMs, referencing the specific savings figures, the break-even timeline, and the flexibility risk if the workload changes.
+
+### Challenge 2: Cost Anomaly Detection and Budget Automation
+In the Azure Portal, navigate to Cost Management + Billing > Cost Alerts and review the Anomaly Alerts tab (if your subscription has generated any spending). Then create a new Budget for your lab resource group with a $50 monthly limit and three alert thresholds: 25% forecasted, 75% actual, and 100% actual. For the 100% threshold, configure the Action Group to send an email AND trigger an Azure Automation webhook URL (use a placeholder URL if no Automation account exists). Document screenshots of the budget configuration, all three threshold settings, and the Action Group configuration. Write a 2–3 sentence explanation of why configuring the Action Group to trigger automation (rather than just sending email) is important for controlling cloud spend in a large organization where individual engineers may not respond quickly to budget notifications.
+
+### Reflection Questions
+1. Azure Advisor shows five pillars: Cost, Security, Reliability, Performance, and Operational Excellence. A team receives three Advisor recommendations simultaneously: (a) rightsize an underutilized VM (Cost), (b) enable soft delete on a storage account (Reliability), and (c) add a health probe to a load balancer (Reliability). If the team can only act on one recommendation today, describe the framework they should use to prioritize between cost savings and reliability improvements. Include in your answer: the business context variables that would shift the priority toward cost vs. reliability, and a specific example of when implementing a cost recommendation before a reliability recommendation would be the wrong decision.
+2. A company uses pay-as-you-go pricing and their Azure bill has grown from $15,000/month to $42,000/month over 18 months as new teams adopted Azure. The CFO asks the cloud team to reduce costs by 25% without decommissioning any production workloads. Describe a step-by-step cost optimization process using Azure Cost Management, Azure Advisor, Reserved Instances, Blob Lifecycle Management, and tags. For each tool in the process, specify what action it enables and what information it provides that the next step in the process depends on.

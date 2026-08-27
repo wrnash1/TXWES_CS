@@ -241,3 +241,183 @@ D. Basic (B1)
 ---
 
 *Quiz 07 — Module 07: Azure Compute Services | CIS-4331 | Texas Wesleyan University*
+
+---
+
+### Question 11 (5 points)
+
+A media company runs a video transcoding workload that processes uploaded videos in large parallel batches. The workload is CPU-bound, requires no persistent storage on the compute nodes, and runs only when a batch is queued. Which Azure VM series is optimized for this high-throughput CPU-bound workload?
+
+- A) B-series (burstable)
+- B) F-series (compute optimized)
+- C) M-series (memory optimized)
+- D) N-series (GPU enabled)
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* The F-series is compute-optimized with a high CPU-to-memory ratio, making it ideal for CPU-bound workloads like video transcoding, batch processing, and web servers with high request rates. It delivers more CPU performance per dollar than general-purpose D-series for compute-heavy work.
+  - *Why A is incorrect:* B-series VMs have a low baseline CPU with the ability to burst to full CPU for short periods using accumulated credits. Sustained high-CPU transcoding workloads would exhaust CPU credits quickly, causing the VM to throttle back to its low baseline — exactly the wrong choice for continuous high-CPU batch work.
+  - *Why C is incorrect:* M-series is memory-optimized for workloads requiring very large amounts of RAM (SAP HANA, in-memory databases). Video transcoding is CPU-bound and does not require the extremely high memory-to-CPU ratio of M-series.
+  - *Why D is incorrect:* N-series provides GPU acceleration, which benefits machine learning inference, 3D rendering, and GPU-accelerated video encoding (NVENC). Standard CPU-based transcoding pipelines do not use GPU hardware and would not benefit from N-series.
+
+---
+
+### Question 12 (5 points)
+
+An Azure Functions app on the Consumption plan processes messages from an Azure Service Bus queue. During off-hours the queue is empty and no messages arrive. What is the billing behavior during these idle periods?
+
+- A) The function app is billed at a reduced idle rate of 50% of the execution rate
+- B) The function app incurs no charges — the Consumption plan bills only when functions execute
+- C) The function app is billed at a minimum of one execution per minute to maintain warm state
+- D) The function app must be manually paused to stop billing during idle periods
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* The Azure Functions Consumption plan charges only for actual function executions — billed per execution and per GB-second of memory used during execution. When no messages arrive and no functions execute, there are zero charges. The platform scales to zero automatically.
+  - *Why A is incorrect:* There is no "reduced idle rate" in the Consumption plan. The plan has no concept of an idle billing state — either a function executes (and is billed) or it does not (and is not billed).
+  - *Why C is incorrect:* There is no minimum execution charge in the Consumption plan. The platform does maintain warm instances internally, but this does not translate to a minimum billing charge to the customer.
+  - *Why D is incorrect:* The Consumption plan requires no manual intervention to pause or stop billing. Scale-to-zero is automatic — the customer does not need to manage the idle state.
+
+---
+
+### Question 13 (5 points)
+
+A developer deploys an Azure App Service web app on a Free (F1) tier plan and later discovers that the app cannot use custom domains or TLS/SSL certificates. What is the minimum tier required to add a custom domain?
+
+- A) Free (F1)
+- B) Shared (D1)
+- C) Basic (B1)
+- D) Standard (S1)
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - *Why C is correct:* Custom domain binding is supported starting at the Basic tier (B1) and above. The Free and Shared tiers only support the default `*.azurewebsites.net` subdomain. Basic tier also includes 10 GB storage and up to 3 deployment slots.
+  - *Why A is incorrect:* The Free tier (F1) does not support custom domain names. It is limited to the `*.azurewebsites.net` subdomain and has significant compute and storage restrictions.
+  - *Why B is incorrect:* The Shared (D1) tier allows custom domain names but does not include custom SSL/TLS certificate binding. It is a partial improvement over Free but still insufficient for HTTPS on a custom domain.
+  - *Why D is incorrect:* Standard (S1) does support custom domains and SSL, but it is not the minimum tier required. Basic (B1) already supports custom domains. Standard adds auto-scaling and deployment slots beyond what Basic provides.
+
+---
+
+### Question 14 (5 points)
+
+A company runs a stateful .NET web application on Azure App Service. Sessions store shopping cart data in application memory. The team enables auto-scaling to add instances during peak traffic. What problem will users experience, and what is the correct solution?
+
+- A) No problem — App Service automatically synchronizes in-memory session state across all instances
+- B) Users may lose their shopping cart data when requests are routed to a different instance; use Azure Cache for Redis to store session state externally
+- C) Auto-scaling is not supported for stateful applications — use a single large VM instead
+- D) The application must be rewritten as stateless before deploying to App Service
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* When multiple App Service instances run the same app, in-memory session state is local to each instance. If a user's request is routed to a different instance (which happens with load balancing), that instance has no knowledge of the previous instance's memory state — the shopping cart is lost. The solution is to externalize session state to a shared store like Azure Cache for Redis, where all instances can read and write session data.
+  - *Why A is incorrect:* App Service does not automatically synchronize in-memory state between instances. Each instance maintains its own separate memory space. Azure provides ARR Affinity (sticky sessions) as a workaround, but this reduces the effectiveness of load balancing and is not recommended for production.
+  - *Why C is incorrect:* Auto-scaling is fully supported for stateful applications — however, the stateful components must be moved out of instance memory to an external store. The auto-scaling capability itself is not the constraint.
+  - *Why D is incorrect:* The application does not need to be rewritten as fully stateless — it needs its state externalized. Many existing stateful applications can be updated to use Redis for session storage without a full rewrite.
+
+---
+
+### Question 15 (5 points)
+
+Which orchestration mode for Azure Virtual Machine Scale Sets allows each VM instance to have a unique configuration and does not require all instances to be identical, enabling mixed workloads within a single Scale Set?
+
+- A) Uniform orchestration mode
+- B) Flexible orchestration mode
+- C) Manual orchestration mode
+- D) Stateful orchestration mode
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Flexible orchestration mode allows each VM instance in a Scale Set to have a different configuration — different VM sizes, different images, different extensions. It supports up to 1,000 VMs and enables heterogeneous workloads. It also provides integration with Availability Zones and supports mixing Spot and regular VMs.
+  - *Why A is incorrect:* Uniform orchestration mode requires all instances to be identical — same VM size, same image, same configuration. This is optimal for stateless, homogeneous workloads like web servers where every instance is equivalent.
+  - *Why C is incorrect:* "Manual orchestration mode" is not a real Azure Scale Set mode. This is a distractor.
+  - *Why D is incorrect:* "Stateful orchestration mode" is not a real Azure Scale Set mode. This is a distractor.
+
+---
+
+### Question 16 (5 points)
+
+A team deploys an Azure Function on the Premium plan. After deployment, they notice the function responds to the first request of the day with a 10-15 second delay, but subsequent requests respond in milliseconds. What is the cause of this cold start, and how does the Premium plan address it?
+
+- A) The Premium plan does not address cold starts — they are inherent to all serverless functions
+- B) Cold starts occur when no warm instance is available; the Premium plan maintains at least one pre-warmed instance to eliminate cold starts
+- C) Cold starts are caused by network latency to the Azure region; the Premium plan uses CDN to cache function code globally
+- D) Cold starts only occur in the Consumption plan; the Premium plan uses dedicated VMs that never cold start
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* A cold start occurs when a function request arrives and no warm (initialized) instance is available — the runtime must load the function app, restore dependencies, and initialize the execution environment before handling the request. The Premium plan's "pre-warmed instances" feature keeps at least one instance always ready to handle requests, eliminating cold starts for incoming traffic.
+  - *Why A is incorrect:* The Premium plan specifically advertises "no cold starts" as a key feature over the Consumption plan. Pre-warmed instances are the mechanism that eliminates cold starts.
+  - *Why C is incorrect:* CDN caches static content (web assets), not serverless function execution environments. Cold starts are not caused by network latency — they are caused by instance initialization time.
+  - *Why D is incorrect:* Cold starts can occur in both Consumption and Premium plans without pre-warming. However, the Premium plan's pre-warmed instances feature eliminates them. The Premium plan does not use "dedicated VMs" in the same sense as IaaS — it uses pre-allocated managed compute.
+
+---
+
+### Question 17 (5 points)
+
+An organization wants to deploy a web application to Azure App Service and enable deployment slots for staging. They also require auto-scaling based on CPU utilization. What is the minimum App Service plan tier that supports both deployment slots and auto-scaling?
+
+- A) Basic (B1)
+- B) Standard (S1)
+- C) Premium (P1v3)
+- D) Isolated (I1v2)
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* The Standard tier (S1) is the minimum tier that supports both auto-scaling (scale out based on metrics) and deployment slots (up to 5 slots). Basic supports custom domains but does not include auto-scaling or deployment slots. Standard is the entry point for production-grade App Service features.
+  - *Why A is incorrect:* The Basic tier supports up to 3 instances via manual scale-out but does not support automatic metric-based scaling rules. It also does not include deployment slots.
+  - *Why C is incorrect:* Premium tier does support both features (with up to 20 slots and more scale-out options), but it is not the minimum tier. Standard already provides both capabilities at lower cost.
+  - *Why D is incorrect:* Isolated tier (App Service Environment) provides the highest isolation and supports all features, but it is the most expensive option and far exceeds the minimum requirement.
+
+---
+
+### Question 18 (5 points)
+
+What is the key architectural difference between Azure Functions Durable Functions and standard Azure Functions triggers?
+
+- A) Durable Functions support only HTTP triggers; standard Functions support all trigger types
+- B) Durable Functions enable stateful workflows that can wait for external events, fan-out/fan-in, and chain function calls; standard Functions are stateless and short-lived
+- C) Durable Functions run on dedicated VMs; standard Functions run on shared serverless infrastructure
+- D) Durable Functions are limited to 5-minute execution timeouts; standard Functions have no timeout
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Azure Durable Functions extend standard Functions by providing durable, stateful orchestration patterns. An orchestrator function can call activity functions in sequence (chaining), run them in parallel and wait for all results (fan-out/fan-in), and pause execution waiting for an external event (human approval workflows). The state is persisted automatically in Azure Storage between executions.
+  - *Why A is incorrect:* Standard Azure Functions support many trigger types (HTTP, Timer, Queue, Blob, Service Bus, Event Hub, etc.) — they are not limited to HTTP. Durable Functions use an orchestration trigger, not exclusively HTTP.
+  - *Why C is incorrect:* Both standard Functions and Durable Functions run on the same underlying serverless infrastructure when using Consumption or Premium plans. Durable Functions do not require dedicated VMs.
+  - *Why D is incorrect:* Standard Functions on the Consumption plan have a default 5-minute timeout (maximum 10 minutes). Durable Functions can run for days or months because they persist state between executions — the orchestrator itself yields while waiting. This is the opposite of the statement in option D.
+
+---
+
+### Question 19 (5 points)
+
+A company is evaluating whether to use Azure App Service or Azure Kubernetes Service for a new microservices application with eight services. Each service is independently deployed and scaled, communicates via REST APIs, and requires zero-downtime rolling updates. Which service is the better fit and why?
+
+- A) App Service — it supports multiple apps and is simpler to configure than AKS
+- B) AKS — it provides per-service independent scaling, rolling update deployments, and service mesh capabilities suitable for microservices
+- C) App Service — deployment slots provide zero-downtime updates equivalent to Kubernetes rolling updates
+- D) AKS — it is always cheaper than running eight separate App Service plans
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* AKS is purpose-built for microservices orchestration. Each service runs as a separate Kubernetes Deployment with its own replica count, resource limits, and scaling rules. Kubernetes rolling updates replace pods incrementally with zero downtime. Service-to-service communication, network policies, and health checks are all native features of Kubernetes.
+  - *Why A is incorrect:* While multiple App Service apps can be deployed to the same plan, App Service does not have native service discovery, inter-service network policies, or per-service independent scaling that microservices require. Managing eight separate App Service deployments with coordination is operationally complex compared to AKS.
+  - *Why C is incorrect:* App Service deployment slots perform blue/green swaps — the traffic switches instantly from one slot to another. This is different from Kubernetes rolling updates that gradually replace pods one at a time. Both achieve zero-downtime, but deployment slots are designed for single-service deployments, not eight independent microservices.
+  - *Why D is incorrect:* AKS may or may not be cheaper than eight separate App Service plans — the cost comparison depends on traffic volume, instance sizes, and usage patterns. Cost is not the primary reason to choose AKS for microservices; architectural fit is.
+
+---
+
+### Question 20 (5 points)
+
+A development team wants to test whether their Azure App Service application handles production traffic correctly before releasing it to all users. They deploy a new version to a staging slot and want to send 10% of production traffic to the staging slot while 90% continues going to the production slot. Which App Service feature enables this traffic distribution?
+
+- A) Azure Front Door with weighted routing
+- B) App Service deployment slot traffic splitting (Traffic %setting)
+- C) Azure Load Balancer with weighted backend pool
+- D) Azure Traffic Manager with weighted routing profiles
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Azure App Service deployment slots support traffic splitting natively. In the Azure Portal (or via CLI with `az webapp traffic-routing set`), you can configure what percentage of traffic routes to each slot. Setting staging to 10% and production to 90% allows gradual testing (also called canary deployments) without any external routing service.
+  - *Why A is incorrect:* Azure Front Door can perform weighted routing across backends, but it is an external CDN/load balancing service that would require additional configuration and cost. App Service has this capability built-in at no additional charge via slot traffic splitting.
+  - *Why C is incorrect:* Azure Load Balancer is a Layer 4 (TCP/UDP) load balancer for VMs and scale sets. App Service deployments do not use Azure Load Balancer directly — they use the App Service built-in routing infrastructure. Load Balancer also does not understand App Service deployment slots.
+  - *Why D is incorrect:* Azure Traffic Manager is a DNS-based global traffic manager for routing between Azure regions or endpoints. It is not designed for splitting traffic between two slots of the same App Service application in the same region.

@@ -193,3 +193,36 @@ Submit the following to Canvas by the Module 04 lab deadline:
 | **Total**                                                               | **100** |
 
 Partial credit is awarded for answers that show correct reasoning with minor errors. No credit is awarded for blank responses.
+
+---
+
+## Part 9 — Challenge Exercise
+
+These advanced steps are optional and are not included in the standard grading rubric.
+
+### Challenge Step 1 — RAM Identification with CPU-Z
+
+On any available Windows system, download and run CPU-Z (free at [https://www.cpuid.com/softwares/cpu-z.html](https://www.cpuid.com/softwares/cpu-z.html)):
+
+1. Open the **Memory** tab. Record: Type (DDR4/DDR5), Channel # (Single/Dual/Quad), DRAM Frequency, and CAS Latency.
+1. Open the **SPD** tab. Select each memory slot from the drop-down. For each populated slot record: Module Size, Max Bandwidth (the PC notation), Manufacturer, Part Number, and Week/Year of manufacture.
+1. Calculate the advertised data rate from the PC notation: divide the PC bandwidth number by 8 to get MT/s (e.g., PC4-25600 ÷ 8 = 3200 MT/s = DDR4-3200).
+1. Compare the DRAM Frequency reported in the Memory tab (which shows the actual running frequency, half the data rate) with the SPD max bandwidth. Is the RAM running at its rated XMP speed or at JEDEC base speed? If JEDEC, explain in 2–3 sentences what change would need to be made in BIOS to run the RAM at its rated speed.
+
+### Challenge Step 2 — MemTest86 Diagnostic Run
+
+Download MemTest86 (free at [https://www.memtest86.com/](https://www.memtest86.com/)) and create a bootable USB drive:
+
+1. Boot the system from the MemTest86 USB drive.
+1. Allow at least one full test pass (pass 0) to complete. Record the total pass count, error count, and test duration.
+1. Note any errors (even a single error in one pass is significant). If errors are found, document the failing memory address range and the test number that found the error.
+1. In your lab report, explain: what does a "PASS" result tell you about the physical DRAM cells, what does a single error indicate, and why is running multiple passes (not just one) important for detecting intermittent failures?
+
+### Challenge Step 3 — Memory Bandwidth Benchmark
+
+Using AIDA64 Free Trial ([https://www.aida64.com/downloads](https://www.aida64.com/downloads)) or the free SiSoftware Sandra Lite ([https://www.sisoftware.net/](https://www.sisoftware.net/)):
+
+1. Run a memory bandwidth benchmark with the current RAM configuration (note whether it is single-channel or dual-channel from CPU-Z).
+1. If you have access to a system where you can physically move a module to force single-channel mode, run the benchmark again after the change.
+1. Record both bandwidth results and calculate the ratio (dual-channel / single-channel).
+1. Write a 3–4 sentence analysis: how close is the dual-channel bandwidth to exactly double the single-channel result, why might it not be exactly 2×, and which type of workload (gaming with integrated graphics, video encoding, general office use) benefits most from the dual-channel bandwidth increase?

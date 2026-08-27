@@ -653,6 +653,271 @@ Zip all 5 screenshots and upload to the Canvas Module 15 Lab Assignment.
 
 ---
 
+## Part 9 — Challenge Exercise
+
+These steps are optional and ungraded. They extend inheritance and polymorphism to design patterns used in professional Python code.
+
+### Step 9.1 — Abstract Base Class with `@abstractmethod`
+
+Use Python's `abc` module to define an interface that child classes must implement. Any child that does not implement all abstract methods cannot be instantiated.
+
+```bash
+nano abstract_shape.py
+```
+
+```python
+# abstract_shape.py
+# Abstract base class enforcing a shape interface
+from abc import ABC, abstractmethod
+import math
+
+
+class Shape(ABC):
+    '''Abstract base class for all shapes.'''
+
+    @abstractmethod
+    def area(self):
+        '''Return the area of the shape.'''
+
+    @abstractmethod
+    def perimeter(self):
+        '''Return the perimeter of the shape.'''
+
+    def describe(self):
+        '''Template method using the abstract methods.'''
+        return (f'{type(self).__name__}: '
+                f'area={self.area():.4f}, '
+                f'perimeter={self.perimeter():.4f}')
+
+
+class Circle(Shape):
+    def __init__(self, radius):
+        self.radius = radius
+
+    def area(self):
+        return math.pi * self.radius ** 2
+
+    def perimeter(self):
+        return 2 * math.pi * self.radius
+
+
+class Rectangle(Shape):
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+
+    def area(self):
+        return self.width * self.height
+
+    def perimeter(self):
+        return 2 * (self.width + self.height)
+
+
+class Triangle(Shape):
+    def __init__(self, a, b, c):
+        self.a, self.b, self.c = a, b, c
+
+    def area(self):
+        s = (self.a + self.b + self.c) / 2
+        return math.sqrt(s * (s - self.a) * (s - self.b) * (s - self.c))
+
+    def perimeter(self):
+        return self.a + self.b + self.c
+
+
+# Attempt to instantiate abstract class
+try:
+    s = Shape()
+except TypeError as e:
+    print(f'Cannot instantiate abstract class: {e}')
+
+# Valid instances
+shapes = [Circle(5), Rectangle(4, 6), Triangle(3, 4, 5)]
+for shape in shapes:
+    print(shape.describe())
+
+# Sorting shapes by area using polymorphism
+print('\nSorted by area (smallest first):')
+for shape in sorted(shapes, key=lambda s: s.area()):
+    print(f'  {shape.describe()}')
+```
+
+```bash
+python3 abstract_shape.py
+```
+
+### Step 9.2 — Mixin Classes for Reusable Behavior
+
+Mixins add capability to classes without requiring them to share a common ancestor. Build `LogMixin` and `SerializeMixin` that can be combined with any domain class.
+
+```bash
+nano mixin_demo.py
+```
+
+```python
+# mixin_demo.py
+# Mixin classes for cross-cutting behavior
+import json
+
+
+class LogMixin:
+    '''Adds a log() method that prefixes messages with the class name.'''
+    _log_entries = None
+
+    def _ensure_log(self):
+        if self._log_entries is None:
+            self._log_entries = []
+
+    def log(self, message):
+        self._ensure_log()
+        entry = f'[{type(self).__name__}] {message}'
+        self._log_entries.append(entry)
+        print(entry)
+
+    def get_log(self):
+        self._ensure_log()
+        return list(self._log_entries)
+
+
+class SerializeMixin:
+    '''Adds to_json() and from_dict() class method.'''
+
+    def to_json(self):
+        return json.dumps({
+            k: v for k, v in self.__dict__.items()
+            if not k.startswith('_')
+        }, indent=2)
+
+
+class User(LogMixin, SerializeMixin):
+    def __init__(self, name, email):
+        self.name = name
+        self.email = email
+        self.log(f'Created user {name!r}')
+
+    def update_email(self, new_email):
+        old = self.email
+        self.email = new_email
+        self.log(f'Email changed from {old!r} to {new_email!r}')
+
+
+class Product(LogMixin, SerializeMixin):
+    def __init__(self, name, price):
+        self.name = name
+        self.price = price
+        self.log(f'Created product {name!r} at ${price}')
+
+    def apply_discount(self, pct):
+        self.price = round(self.price * (1 - pct / 100), 2)
+        self.log(f'Applied {pct}% discount → ${self.price}')
+
+
+u = User('Alice', 'alice@example.com')
+u.update_email('alice@newdomain.com')
+print('\nUser JSON:')
+print(u.to_json())
+print('\nUser log:', u.get_log())
+
+p = Product('Widget', 29.99)
+p.apply_discount(10)
+print('\nProduct JSON:')
+print(p.to_json())
+```
+
+```bash
+python3 mixin_demo.py
+```
+
+### Step 9.3 — Observer Pattern Using Inheritance and Polymorphism
+
+The Observer pattern lets objects subscribe to events and be notified automatically. Implement it using a base `Publisher` class and polymorphic `Subscriber` subclasses.
+
+```bash
+nano observer_pattern.py
+```
+
+```python
+# observer_pattern.py
+# Observer pattern: publisher/subscriber using OOP
+
+
+class Publisher:
+    '''Base publisher that can notify subscribers.'''
+
+    def __init__(self, name):
+        self.name = name
+        self._subscribers = []
+
+    def subscribe(self, subscriber):
+        self._subscribers.append(subscriber)
+        return self  # allow chaining
+
+    def notify(self, event, data=None):
+        for sub in self._subscribers:
+            sub.update(event, data, source=self.name)
+
+
+class Subscriber:
+    '''Abstract subscriber — subclasses must implement update().'''
+
+    def __init__(self, name):
+        self.name = name
+
+    def update(self, event, data, source):
+        raise NotImplementedError(f'{type(self).__name__} must implement update()')
+
+
+class EmailSubscriber(Subscriber):
+    def update(self, event, data, source):
+        print(f'  [EMAIL to {self.name}] {source} → {event}: {data}')
+
+
+class LogSubscriber(Subscriber):
+    def __init__(self, name):
+        super().__init__(name)
+        self.history = []
+
+    def update(self, event, data, source):
+        entry = f'{source}:{event}:{data}'
+        self.history.append(entry)
+        print(f'  [LOG by {self.name}] recorded: {entry}')
+
+
+class StockMarket(Publisher):
+    def __init__(self):
+        super().__init__('StockMarket')
+        self._prices = {}
+
+    def update_price(self, symbol, price):
+        old = self._prices.get(symbol)
+        self._prices[symbol] = price
+        if old is not None and abs(price - old) / old > 0.05:
+            self.notify('price_alert', f'{symbol}: {old} → {price}')
+        else:
+            self.notify('price_update', f'{symbol}: {price}')
+
+
+market = StockMarket()
+email_user = EmailSubscriber('alice@example.com')
+logger = LogSubscriber('AuditLog')
+
+market.subscribe(email_user).subscribe(logger)
+
+market.update_price('AAPL', 150)
+market.update_price('AAPL', 162)    # >5% change — triggers price_alert
+market.update_price('GOOG', 2800)
+
+print(f'\nAudit log entries: {len(logger.history)}')
+for entry in logger.history:
+    print(f'  {entry}')
+```
+
+```bash
+python3 observer_pattern.py
+```
+
+---
+
 ## Troubleshooting Guide
 
 **`AttributeError: 'ChildClass' object has no attribute 'parent_attr'`**

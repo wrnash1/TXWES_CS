@@ -211,3 +211,203 @@ Distractor Analysis:
 - B is incorrect. Security awareness training updates are a post-incident activity that may follow from the lessons-learned review — they are not part of the eradication checklist and do not affect whether the threat has been removed from the affected system.
 - C is incorrect. Sharing threat intelligence is a valuable community contribution but is not a required eradication step. Delaying eradication to share intelligence would extend the incident unnecessarily.
 - D is incorrect. Reimaging is one recovery approach — the highest-confidence approach — but in-place remediation (manual removal) is a legitimate recovery method when eradication is thorough and verified. The question identifies what was omitted from the eradication process, not what recovery method to use.
+
+---
+
+## Question 11 (5 points)
+
+A ransomware incident has encrypted 80% of a file server's data. The IR team identifies the ransomware strain and confirms that no decryptor is publicly available. Backups exist from 72 hours ago. Which sequence correctly reflects the proper IR response order before restoring from backup?
+
+- A) Restore from backup → identify the initial access vector → eradicate malware → resume normal operations
+- B) Contain the affected systems → eradicate all malware and persistence mechanisms → validate backup integrity → restore from backup → verify restoration → resume operations
+- C) Restore from backup first to minimize downtime → then investigate how the attack occurred → eradicate remaining threats
+- D) Pay the ransom to receive the decryptor → then eradicate the malware → report to management
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A is incorrect. Restoring from backup before eradicating the malware and identifying the initial access vector is the most common ransomware recovery mistake. If the attacker's persistence mechanisms are still present or the entry point is not closed, the restored data will be re-encrypted within hours.
+- B is correct. The correct sequence is: contain (stop ongoing damage) → eradicate (remove all malware, persistence, and credentials used by the attacker) → verify backup integrity (confirm the backup is uninfected) → restore → validate → resume. Each step is a prerequisite for the next.
+- C is incorrect. Restoring before eradication is a critical error. The attacker's foothold remains active and will re-encrypt the restored data. This sequence has been observed in real-world incidents causing organizations to pay ransom twice.
+- D is incorrect. Paying ransom is not a recommended response by CISA, FBI, or any major IR framework. It does not guarantee decryption, funds criminal organizations, and does not eliminate the attacker's presence in the environment.
+
+---
+
+## Question 12 (5 points)
+
+During a ransomware IR engagement, the IR team discovers that Volume Shadow Copies (VSS) on all affected servers were deleted. What does this finding indicate about the attacker's sophistication and how does it affect the recovery options?
+
+- A) VSS deletion is automatic behavior by Windows during ransomware; it does not indicate attacker sophistication
+- B) VSS deletion is a deliberate attacker action designed to eliminate the fastest recovery path — it forces the organization to rely on offline backup copies and indicates a more sophisticated adversary who researched Windows recovery mechanisms before deploying ransomware
+- C) VSS deletion means no recovery is possible without paying the ransom
+- D) VSS deletion only affects desktop systems; server data can still be recovered from VSS on domain controllers
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A is incorrect. VSS deletion is not automatic Windows behavior. It is a deliberate attacker action executed via `vssadmin delete shadows /all /quiet`, `wmic shadowcopy delete`, or similar commands. Ransomware families explicitly include this step to eliminate easy recovery paths.
+- B is correct. Deleting VSS copies before encryption is a well-documented ransomware pre-encryption step (ATT&CK T1490 — Inhibit System Recovery). It demonstrates the attacker understood Windows recovery mechanisms and deliberately removed the fastest recovery option. The organization must now rely on offline backup copies, which extends recovery time.
+- C is incorrect. VSS deletion eliminates one recovery path but does not eliminate recovery entirely. Offline backups, cloud backups, and in some cases vendor-provided decryptors remain viable options.
+- D is incorrect. VSS is a per-volume service and is not limited to domain controllers. Servers and workstations all maintain their own VSS snapshot stores which can all be deleted by a privileged attacker.
+
+---
+
+## Question 13 (5 points)
+
+An IR team is responding to a confirmed intrusion on a hospital's network. The affected hosts include an employee workstation and a patient data server. Which containment approach is most appropriate given the criticality of the patient data server?
+
+- A) Shut down the patient data server immediately to prevent further compromise
+- B) Apply short-term network-based containment (block the server at the switch/firewall level) while preserving its availability for authorized clinical operations, and pursue long-term containment through isolation and credential rotation
+- C) Do nothing to the patient data server — HIPAA prohibits security teams from interrupting access to patient records systems
+- D) Restore the patient data server from backup immediately before investigating whether it is compromised
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A is incorrect. Shutting down a patient data server in a hospital environment could disrupt clinical operations and patient care. IR decisions in healthcare must balance security response with patient safety — immediate shutdown is rarely appropriate for critical clinical systems.
+- B is correct. Network-based containment isolates the server from the threat while preserving its ability to serve authorized clinical users on isolated segments. This is the standard approach for critical infrastructure during IR — contain the threat without eliminating availability. Long-term containment follows after clinical impact is assessed.
+- C is incorrect. HIPAA does not prohibit security response to active threats — it requires protection of patient data, which includes active incident response. Security teams have both the authority and obligation to respond to active intrusions affecting PHI.
+- D is incorrect. Restoring from backup before investigation destroys forensic evidence and assumes the current system is fully compromised without verification. Investigation must precede restoration decisions.
+
+---
+
+## Question 14 (5 points)
+
+Which of the following actions during the containment phase most effectively prevents an attacker with compromised service account credentials from pivoting to additional systems?
+
+- A) Blocking the attacker's source IP at the perimeter firewall
+- B) Resetting the compromised service account password, revoking active sessions, and temporarily disabling the account until investigation is complete
+- C) Running a full vulnerability scan on all servers to identify what CVEs the attacker may have exploited
+- D) Reimaging the initially compromised endpoint
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A is incorrect. Blocking the external source IP may stop inbound communication but does not invalidate the compromised credential. An attacker using valid credentials through legitimate services (VPN, cloud portal) can continue lateral movement even if the original entry IP is blocked.
+- B is correct. If the attacker has valid credentials for a service account, the credential is the attack vector — not a specific IP or system. Resetting the password, revoking all active sessions using those credentials, and disabling the account eliminates the attacker's authentication capability across the entire environment.
+- C is incorrect. Running a vulnerability scan during active containment adds network noise, may alert the attacker to increased detection activity, and does not prevent the attacker from using valid credentials to move laterally right now.
+- D is incorrect. Reimaging the initially compromised endpoint addresses persistence on that system but does not invalidate the compromised credentials that the attacker can use from any other compromised host or external access point.
+
+---
+
+## Question 15 (5 points)
+
+A lessons-learned review following a successful phishing incident identifies that the initial phishing email bypassed the email gateway because the malicious attachment was a password-protected ZIP file. The password was included in the email body. Which remediation recommendation addresses the root cause of the gateway bypass?
+
+- A) Train users to never open ZIP files received by email
+- B) Configure the email gateway to quarantine or flag password-protected archive attachments when the password appears in the same email message body
+- C) Upgrade the email gateway software to the latest version
+- D) Require all employees to use MFA on their email accounts
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A is incorrect. Training users to never open ZIP files would block legitimate business use of ZIP archives. User training alone is also the lowest-effectiveness control for technical bypass techniques.
+- B is correct. The root cause is that password-protected archives bypass content inspection, and attackers include the password in the email body to enable the victim to decrypt the payload themselves. Gateway rules that detect password-protected archives containing a password in the email body text — or that quarantine all encrypted archives — directly address this bypass technique.
+- C is incorrect. The bypass technique works by design against all email gateways that cannot inspect encrypted archive content. A software version update does not change the fundamental limitation of encrypted archive inspection.
+- D is incorrect. MFA protects account access but does not prevent the initial phishing email from being delivered or the user from opening the attachment. The root cause is email gateway bypass, not account credential theft.
+
+---
+
+## Question 16 (5 points)
+
+An organization experiences a data breach affecting 75,000 customer records containing names, email addresses, and hashed passwords. Which regulatory notification requirement is most relevant and what is the typical notification timeline?
+
+- A) No notification is required since only hashed passwords were exposed, not plaintext credentials
+- B) HIPAA requires notification within 72 hours since the breach involves customer records
+- C) Depending on applicable state breach notification laws and potentially GDPR (if EU subjects are involved), notification to affected individuals and regulators is required — GDPR mandates supervisory authority notification within 72 hours of discovery
+- D) Notification is only required if the organization is a publicly traded company filing with the SEC
+
+Correct Answer: C
+
+Distractor Analysis:
+
+- A is incorrect. Hashed passwords can be cracked, especially if weak hashing algorithms (MD5, SHA-1 without salting) were used. Most breach notification laws define personal data broadly — names and email addresses combined with hashed passwords typically trigger notification requirements regardless of encryption state.
+- B is incorrect. HIPAA applies to protected health information (PHI) held by covered entities — healthcare providers, health plans, and their business associates. Customer records from a general organization that do not contain health information are not subject to HIPAA.
+- C is correct. State breach notification laws (all 50 U.S. states have enacted them) and GDPR (if EU residents' data is involved) apply to this breach. GDPR specifically requires notification to the supervisory authority within 72 hours of discovery and to affected data subjects without undue delay when high risk to rights and freedoms is established.
+- D is incorrect. Breach notification laws are not limited to publicly traded companies. All organizations handling personal data may have notification obligations depending on jurisdiction, regardless of public listing status.
+
+---
+
+## Question 17 (5 points)
+
+During post-incident recovery, a system administrator restores a file server from a backup taken 5 days before the intrusion was detected. The intruder had been active in the environment for 11 days before detection. What significant risk does this recovery approach introduce?
+
+- A) The restored backup may be infected because the backup was taken 5 days before detection but the attacker may have been present for 11 days — meaning the backup was created during active attacker dwell time
+- B) Restoring from a 5-day-old backup violates NIST SP 800-61 requirements for 24-hour recovery
+- C) The restored files will have incorrect timestamps because backup restoration modifies file metadata
+- D) Backup restoration always reintroduces the ransomware payload that encrypted the original files
+
+Correct Answer: A
+
+Distractor Analysis:
+
+- A is correct. If the attacker was active for 11 days before detection but the backup is only 5 days old, the backup was created 6 days into the attack. The attacker may have already planted persistence mechanisms, backdoors, or modified files before the backup was taken. Restoring from this backup does not guarantee a clean system — it may restore an already-compromised state. This is why backup integrity verification (checking for tampering, checking backup dates against earliest-known attacker activity) is critical before restoration.
+- B is incorrect. NIST SP 800-61 does not mandate a 24-hour recovery requirement. Recovery timelines are organization-defined based on RTO and are not specified in the NIST guide.
+- C is incorrect. Backup restoration processes typically preserve original file timestamps as part of the restore operation. Timestamp modification is not a systematic risk of the restoration process itself.
+- D is incorrect. Backup restoration reintroduces the state of files at backup time — not the ransomware payload. If the backup predates ransomware encryption, the restored files should be their original unencrypted versions (though they may still contain attacker-planted malware if the backup was taken during attacker dwell time).
+
+---
+
+## Question 18 (5 points)
+
+An organization's IR playbook specifies that all confirmed ransomware incidents must be reported to the FBI's Internet Crime Complaint Center (IC3) within 72 hours. This reporting obligation is best classified as which type of requirement?
+
+- A) A regulatory requirement mandated by federal law
+- B) An organizational policy requirement documented in the IR playbook — voluntary reporting aligned with federal guidance but not legally mandated for all private sector organizations
+- C) A HIPAA requirement applicable to any organization regardless of industry
+- D) A PCI DSS requirement applicable only to organizations that process payment cards
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A is incorrect. IC3 reporting is not universally legally mandated for all private sector organizations. CISA and FBI strongly encourage reporting, and certain industries (critical infrastructure) have reporting requirements under CIRCIA, but IC3 reporting is generally voluntary for most private sector entities.
+- B is correct. If the organization's IR playbook specifies IC3 reporting within 72 hours, that is an internal policy commitment. It reflects best-practice alignment with federal guidance and may support law enforcement investigation, but it is an organizational policy requirement, not a universal federal legal mandate.
+- C is incorrect. HIPAA applies specifically to covered entities and business associates handling protected health information. It does not extend to all organizations experiencing ransomware.
+- D is incorrect. PCI DSS has its own incident reporting requirements (notification to card brands and acquiring bank), but these are specific to payment card data compromise — not ransomware incidents generally.
+
+---
+
+## Question 19 (5 points)
+
+After completing eradication of a Cobalt Strike beacon infection, the IR team confirms: the malware binary was deleted, the C2 IP was blocked, the compromised service account password was reset, and the registry run key was removed. What additional verification step is most important before declaring eradication complete?
+
+- A) Verify that the antivirus software is updated and running on the affected system
+- B) Run a full vulnerability scan to identify what CVE enabled the initial compromise
+- C) Perform a comprehensive persistence mechanism audit — check scheduled tasks, services, WMI subscriptions, startup folders, and any remaining Cobalt Strike-specific artifacts (named pipes, injected processes) — and verify no lateral movement occurred to additional systems
+- D) Submit the file hash to VirusTotal to confirm it is classified as malicious by multiple AV engines
+
+Correct Answer: C
+
+Distractor Analysis:
+
+- A is incorrect. Antivirus running and updated is a good health check but does not verify that all persistence mechanisms were removed. Many Cobalt Strike artifacts are not detected by traditional antivirus.
+- B is incorrect. Vulnerability scanning identifies configuration weaknesses, not active attacker persistence mechanisms. It is a useful post-incident hygiene step but does not verify eradication completeness.
+- C is correct. Cobalt Strike and similar post-exploitation frameworks commonly create multiple persistence layers and may have enabled lateral movement before detection. A thorough persistence audit checking all persistence mechanism categories and a lateral movement assessment of adjacent systems is the critical eradication verification step before declaring the incident resolved.
+- D is incorrect. VirusTotal detection rates confirm the file is malicious after the fact. Confirming the file is classified as malicious serves no verification purpose after it has already been deleted.
+
+---
+
+## Question 20 (5 points)
+
+Which metric most directly measures the effectiveness of an organization's incident containment capability?
+
+- A) Mean Time to Detect (MTTD)
+- B) Number of incidents escalated to Tier 2 per month
+- C) Mean Time to Contain (MTTC) — the average time from detection to successful isolation of the threat
+- D) Number of security awareness training sessions completed per quarter
+
+Correct Answer: C
+
+Distractor Analysis:
+
+- A is incorrect. MTTD measures detection speed — how quickly the SOC identifies a threat after it enters the environment. It measures detection capability, not containment capability.
+- B is incorrect. Escalation volume measures SOC workflow activity and triage accuracy, not how quickly threats are contained after escalation.
+- C is correct. Mean Time to Contain (MTTC) is the specific metric that measures containment effectiveness — how much time elapses between when an incident is detected and when the threat is successfully isolated and stopped from causing further damage. A low MTTC indicates effective containment processes and tooling.
+- D is incorrect. Security awareness training metrics measure training program activity, not incident response speed or effectiveness.

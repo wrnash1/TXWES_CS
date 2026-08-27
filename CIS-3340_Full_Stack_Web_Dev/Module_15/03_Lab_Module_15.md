@@ -330,3 +330,107 @@ Submit your project zip (excluding `node_modules`). Required files:
 | Status badge reflects live/offline state | 5 |
 | Two-window screenshot demonstrates real-time delivery | 5 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Typing Indicators
+
+Add a real-time "User is typing..." indicator to the notification panel, demonstrating bidirectional communication from client to server.
+
+1. On the server, add two new event handlers inside `io.on('connection', ...)`:
+
+```js
+socket.on('typing_start', ({ roomId }) => {
+  socket.to(roomId).emit('user_typing', {
+    userId: socket.data.user.userId,
+    email: socket.data.user.email,
+  });
+});
+
+socket.on('typing_stop', ({ roomId }) => {
+  socket.to(roomId).emit('user_stopped_typing', {
+    userId: socket.data.user.userId,
+  });
+});
+```
+
+1. In the React `NotificationPanel` (or a new `TypingIndicator` component), add state and listeners:
+
+```jsx
+const [typingUsers, setTypingUsers] = useState([]);
+
+// In useEffect, after socket.connect():
+socket.on('user_typing', ({ userId, email }) => {
+  setTypingUsers(prev =>
+    prev.find(u => u.userId === userId) ? prev : [...prev, { userId, email }]
+  );
+});
+
+socket.on('user_stopped_typing', ({ userId }) => {
+  setTypingUsers(prev => prev.filter(u => u.userId !== userId));
+});
+
+// Clean up in return:
+socket.off('user_typing');
+socket.off('user_stopped_typing');
+```
+
+1. Add a text input with `onFocus` and `onBlur` handlers that emit `typing_start` and `typing_stop`:
+
+```jsx
+<input
+  type="text"
+  placeholder="Type a message..."
+  onFocus={() => socket.emit('typing_start', { roomId: `project:${projectId}` })}
+  onBlur={() => socket.emit('typing_stop', { roomId: `project:${projectId}` })}
+/>
+```
+
+1. Open two browser windows. Click into the input in one window and verify the typing indicator appears in the other window within 500 ms. Click away and confirm the indicator disappears.
+
+### Challenge 2: Unread Notification Badge with Acknowledgements
+
+Track unread notifications with a badge count and mark them as read using Socket.io acknowledgements.
+
+1. In `NotificationPanel`, add an `unreadCount` state variable. Increment it each time a `'new_notification'` event arrives. Render a badge next to the panel header:
+
+```jsx
+const [unreadCount, setUnreadCount] = useState(0);
+
+// In the new_notification listener:
+socket.on('new_notification', (data) => {
+  setNotifications(prev => [data, ...prev]);
+  setUnreadCount(prev => prev + 1);
+});
+```
+
+1. Add a "Mark all read" button that emits a `mark_read` event with a Socket.io acknowledgement callback:
+
+```jsx
+<button onClick={() => {
+  socket.emit('mark_read', {}, (response) => {
+    if (response.ok) setUnreadCount(0);
+  });
+}}>
+  Mark all read ({unreadCount})
+</button>
+```
+
+1. On the server, handle the `mark_read` event with an acknowledgement:
+
+```js
+socket.on('mark_read', (data, callback) => {
+  // In a real app, update the database here
+  console.log(`${socket.data.user.email} marked notifications as read`);
+  callback({ ok: true });
+});
+```
+
+1. Test: receive 3 notifications (trigger 3 POST requests). Confirm the badge shows `3`. Click "Mark all read" and confirm the badge resets to `0` immediately — demonstrating the round-trip acknowledgement pattern.
+
+### Reflection Questions
+
+1. The typing indicator in Challenge 1 emits a separate `typing_stop` event when the user blurs the input. What problem would occur if the user closes the browser tab while typing (without blurring), and how would you add a timeout on the receiver side to auto-clear stale typing indicators?
+1. Socket.io acknowledgements in Challenge 2 provide a request-response pattern over WebSocket. Compare this to a REST API call for the same "mark read" operation — list two scenarios where the Socket.io acknowledgement pattern is preferable and two where a REST call would be better.

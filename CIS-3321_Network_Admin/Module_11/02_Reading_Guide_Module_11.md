@@ -222,4 +222,30 @@ Before moving to the next module, confirm you can do each of the following:
 
 ---
 
-CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash
+## 9. Supplemental Resources
+
+The following free resources extend Module 11 content on VLANs, STP, and EtherChannel.
+
+**1. Professor Messer — VLANs, STP, and EtherChannel Free Videos**
+URL: https://www.professormesser.com/network-plus/n10-008/n10-008-video/
+Relevance: Professor Messer covers 802.1Q VLAN tagging, STP operation (root bridge election, port roles, RSTP), PortFast, BPDU Guard, and EtherChannel/LACP in videos directly aligned to Network+ exam objectives.
+
+**2. Cisco — Understanding Rapid Spanning Tree Protocol (802.1w)**
+URL: https://www.cisco.com/c/en/us/support/docs/lan-switching/spanning-tree-protocol/24062-146.html
+Relevance: Cisco's authoritative free documentation on RSTP (802.1w), covering port roles (Root, Designated, Alternate, Backup), port states (Discarding, Learning, Forwarding), and the convergence improvements over 802.1D.
+
+**3. Cisco — Configuring VLANs and Trunking**
+URL: https://www.cisco.com/c/en/us/td/docs/switches/lan/catalyst2960/software/release/12-2_53_se/configuration/guide/2960scg/swvlan.html
+Relevance: Cisco's free Catalyst switch VLAN configuration guide covering VLAN creation, access port assignment, trunk configuration (802.1Q), native VLAN, and the `show vlan brief` / `show interfaces trunk` verification commands used in the lab.
+
+**4. IEEE 802.1Q-2018 Standard Overview**
+URL: https://standards.ieee.org/ieee/802.1Q/6844/
+Relevance: The official IEEE 802.1Q standard page provides a free summary of the VLAN tagging specification. The standard defines the 4-byte 802.1Q tag structure (TPID, PCP, DEI, VID) referenced in exam questions about VLAN frame tagging.
+
+**5. Cisco — Understanding EtherChannel Load Balancing**
+URL: https://www.cisco.com/c/en/us/support/docs/lan-switching/etherchannel/12023-4.html
+Relevance: Cisco's free documentation on EtherChannel LACP/PAgP configuration and load-balancing algorithm selection (src-mac, dst-mac, src-dst-ip, etc.). Understanding per-flow vs. per-packet load balancing is an exam objective covered in this resource.
+
+---
+
+*CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash*

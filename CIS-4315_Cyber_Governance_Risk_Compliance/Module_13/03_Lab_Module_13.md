@@ -229,3 +229,33 @@ For each scheduled exercise, specify:
 **Common error — MTPD less than RTO:** MTPD must always be greater than or equal to RTO. If your table shows an MTPD shorter than the RTO, the logic is inverted. Revisit your impact timeline to recalibrate.
 
 **Common error — Strategy misalignment:** If you assign a cold site to a system with a two-hour RTO, the strategy cannot achieve the objective. Verify that every strategy recommendation is technically capable of meeting its associated RTO.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: BIA Sensitivity Analysis — What If the RTO Changes?
+
+The hospital's executive team is reviewing your BIA deliverables and proposes cutting the IT budget by 25%, which would require relaxing the EHR system's RTO from two hours to eight hours and eliminating the planned hot standby architecture in favor of a warm site.
+
+1. Recalculate the financial impact of an eight-hour EHR outage using the revenue and regulatory penalty data from your original BIA (Part 1). Build a comparison table showing total impact at two hours, four hours, six hours, and eight hours of downtime. Include direct revenue loss, estimated regulatory penalty exposure, and an estimated reputational impact category (Low / Moderate / High / Severe).
+2. Evaluate whether a warm site architecture is technically capable of achieving an eight-hour RTO for the EHR system. Reference specific warm site characteristics — activation time, data currency, staffing requirements — and identify at least two assumptions the organization must validate before finalizing this strategy change.
+3. Draft a one-page executive briefing (150–200 words) addressed to the CFO explaining the risk trade-off of relaxing the EHR RTO from two hours to eight hours. Use business language — do not cite technical specifications. Conclude with a clear recommendation.
+4. Identify one compensating control the organization could implement to reduce financial exposure during the extended eight-hour recovery window (for example: manual paper-based workflows, pre-negotiated mutual aid with a neighboring hospital, or temporary contracted EHR support). Describe the control, its limitations, and its cost relative to the hot standby alternative.
+
+### Challenge 2: BCP Maintenance Trigger Analysis
+
+Six months after the BCP is finalized and approved, the following five changes occur at Meridian Regional Hospital. For each change, determine whether it constitutes an immediate BCP review trigger, a scheduled review item, or no review action required.
+
+1. The hospital signs a contract with a new cloud-based telehealth platform that will host patient visit records for approximately 12,000 patients per year. The platform operates under a shared-responsibility model for data availability.
+2. The IT Director named as the BCP Recovery Coordinator accepts a position at another hospital and gives two weeks' notice.
+3. The hospital replaces its aging network switches with new hardware from a different vendor, upgrading from 1 Gbps to 10 Gbps backbone capacity.
+4. A regional tornado causes the hospital to activate its emergency management plan for the first time, but the data center (in the basement) sustains no damage and systems remain online throughout.
+5. The federal government issues a new HIPAA Security Rule amendment requiring that covered entities document recovery time objectives for all electronic PHI systems and test those objectives annually.
+
+For each of the five items: state your trigger classification, provide a one-paragraph justification, and describe the specific BCP section or sections that would require review or update.
+
+### Reflection Questions
+
+1. A security manager argues that the BIA is a one-time exercise that should be conducted when the BCP is first created, and that subsequent updates are unnecessary unless a major incident occurs. Using specific BIA methodology concepts from this module, explain why this position is incorrect and describe two organizational changes that would require BIA reassessment even without a triggering incident.
+2. An organization's RTO for its payment processing system is four hours, but the most cost-effective recovery architecture available achieves a six-hour recovery. Management asks the security manager to simply revise the RTO to six hours to match available resources. Explain why revising the RTO to match technical capability rather than business impact is a governance failure, and describe the correct process for making an informed risk acceptance decision in this situation.

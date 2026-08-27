@@ -271,3 +271,19 @@ The following principles synthesize requirements from GDPR, professional ethics 
 * **California CCPA official resource** — [oag.ca.gov/privacy/ccpa](https://oag.ca.gov/privacy/ccpa)
 * **HHS HIPAA guidance** — [hhs.gov/hipaa](https://www.hhs.gov/hipaa/index.html)
 * **AI Fairness 360 — IBM bias detection toolkit** — [aif360.res.ibm.com](https://aif360.res.ibm.com/)
+
+---
+
+## 9. Supplemental Resources
+
+**1. NIST Privacy Framework — Overview**
+<https://www.nist.gov/privacy-framework>
+The U.S. National Institute of Standards and Technology Privacy Framework provides a structured approach to managing privacy risk across identify, govern, control, communicate, and protect functions. Complements the GDPR and HIPAA content in Module 15 by showing how a US government framework approaches data privacy obligations.
+
+**2. Google Model Cards — Research Overview**
+<https://modelcards.withml.googl.github.io/about.html>
+The original Google research page introducing model cards as a tool for ethical AI documentation. Covers the standardized format for reporting model purpose, training data, performance metrics across demographic groups, and known limitations — directly relevant to the AI fairness and responsible analytics content in Module 15.
+
+**3. FTC — Understanding the Fair Credit Reporting Act (for Data Analysts)**
+<https://www.ftc.gov/business-guidance/privacy-security/credit-reporting>
+The FTC's guidance on FCRA obligations for organizations that use consumer data in decisions about credit, employment, housing, and insurance. Directly relevant to the bias-in-algorithmic-decision-making and regulatory compliance topics covered in Module 15.

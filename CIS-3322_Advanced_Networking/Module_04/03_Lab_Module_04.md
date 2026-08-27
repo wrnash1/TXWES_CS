@@ -329,3 +329,41 @@ Submit the following as a single PDF or Word document in Canvas:
 | Troubleshooting Scenarios | 15 | Correct analysis for all three scenarios (5 pts each) |
 
 Partial credit awarded for demonstrably attempted but incomplete work.
+
+---
+
+## Part 9 — Challenge Exercise
+
+This optional challenge extends the lab to CCNA exam difficulty. Complete all steps and include deliverables in your submission for up to 20 bonus points.
+
+### Challenge Step 1: Implement and Verify VTP Transparent Mode
+
+Change both switches to VTP transparent mode to prevent uncontrolled VLAN database propagation. Add a third VLAN (VLAN 40, name MANAGEMENT) on SW1 only, without VTP propagating it to SW2:
+
+```ios
+SW1(config)# vtp mode transparent
+SW2(config)# vtp mode transparent
+SW1(config)# vlan 40
+SW1(config-vlan)# name MANAGEMENT
+```
+
+Verify that VLAN 40 exists on SW1 but NOT on SW2. Run `show vtp status` on both switches and document the VTP mode and revision number. Explain in 2–3 sentences why VTP transparent mode is considered safer than VTP server mode in production networks.
+
+### Challenge Step 2: Configure and Test a Voice VLAN
+
+On SW1, configure FastEthernet0/3 as an access port in VLAN 10 with a voice VLAN of VLAN 50 (simulating a port that supports both a data PC and a VoIP phone):
+
+```ios
+SW1(config)# vlan 50
+SW1(config-vlan)# name VOICE
+SW1(config)# interface FastEthernet0/3
+SW1(config-if)# switchport mode access
+SW1(config-if)# switchport access vlan 10
+SW1(config-if)# switchport voice vlan 50
+```
+
+Verify the configuration with `show interfaces FastEthernet0/3 switchport` and confirm that the output shows both the access VLAN (10) and the voice VLAN (50). In your deliverable, explain in 2–3 sentences how 802.1Q tagging handles the coexistence of data and voice traffic on a single physical port.
+
+### Challenge Step 3: Simulate and Diagnose a VLAN Mismatch Troubleshooting Scenario
+
+Intentionally misconfigure the native VLAN on SW1's trunk port to VLAN 5 while leaving SW2's native VLAN at VLAN 99. Connect a PC to SW1 in VLAN 10 and attempt to ping a PC in VLAN 10 on SW2. Document the CDP native VLAN mismatch warning message from `show cdp neighbors detail`. Restore the correct native VLAN and verify connectivity is restored. Submit before-and-after screenshots of `show interfaces trunk` from SW1 showing the native VLAN change and restoration.

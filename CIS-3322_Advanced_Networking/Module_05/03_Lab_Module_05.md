@@ -256,3 +256,37 @@ Submit the following as a single PDF or Word document in Canvas:
 | Troubleshooting Scenarios | 25 | Correct analysis for all three scenarios (A=8, B=8, C=9) |
 
 Partial credit awarded for demonstrably attempted but incomplete work.
+
+---
+
+## Part 9 — Challenge Exercise
+
+This optional challenge extends the lab to CCNA exam difficulty. Complete all steps and include deliverables in your submission for up to 20 bonus points.
+
+### Challenge Step 1: Configure PVST+ Load Balancing Across Two VLANs
+
+Extend your three-switch triangle topology to carry two VLANs: VLAN 10 and VLAN 20. Configure PVST+ so that SW1 is the root bridge for VLAN 10 and SW2 is the root bridge for VLAN 20. This allows traffic from both VLANs to use different paths through the triangle, load-balancing bandwidth across the redundant links:
+
+```ios
+SW1(config)# spanning-tree vlan 10 root primary
+SW1(config)# spanning-tree vlan 20 root secondary
+SW2(config)# spanning-tree vlan 20 root primary
+SW2(config)# spanning-tree vlan 10 root secondary
+```
+
+Run `show spanning-tree vlan 10` and `show spanning-tree vlan 20` on all three switches. In your deliverable, draw a topology diagram for each VLAN showing which ports are Root, Designated, and Alternate, and explain why the blocking ports differ between the two VLANs.
+
+### Challenge Step 2: Simulate and Recover from a Root Bridge Failure
+
+With SW1 configured as the VLAN 10 root bridge, disconnect SW1 from the topology (right-click the switch in Packet Tracer and select "Suspend"). Observe STP convergence by periodically running `show spanning-tree vlan 10` on SW2 and SW3. Document the time it takes for VLAN 10 to converge to the new root and identify which switch becomes the new root. Reconnect SW1 and verify whether it reclaims the root role. In your deliverable, explain in 3–4 sentences what would need to be configured on SW1 for it to automatically reclaim the root role after recovering.
+
+### Challenge Step 3: Configure Root Guard and Test Its Behavior
+
+On SW3's port that connects toward the access layer (simulating the uplink from an access switch), enable Root Guard:
+
+```ios
+SW3(config)# interface FastEthernet0/10
+SW3(config-if)# spanning-tree guard root
+```
+
+Connect a switch to that port and configure the new switch with a very low bridge priority (e.g., 4096) to simulate an unauthorized device attempting to become the root bridge. Document the log message that appears and verify with `show spanning-tree inconsistentports`. Explain in 2–3 sentences how Root Guard differs from BPDU Guard in its purpose and operational behavior.

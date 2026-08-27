@@ -175,4 +175,20 @@ For practice exams, official documentation, and study resources: <aws.amazon.com
 
 ---
 
+## 9. Supplemental Resources
+
+**1. AWS Documentation — Amazon SQS Developer Guide**
+https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html
+Complete reference for SQS queue types, visibility timeout, long polling, dead-letter queues, and message attributes — directly aligned to the SQS concepts tested in Module 10 and on the SAA-C03 exam.
+
+**2. AWS Skill Builder — Amazon SNS: Getting Started**
+https://skillbuilder.aws/learn/course/external/view/elearning/882/amazon-sns-getting-started
+Free course covering SNS topic creation, subscription types, fan-out patterns with SQS, message filtering, and delivery retry policies — supporting the SNS and fan-out architecture topics in this module.
+
+**3. AWS Documentation — Amazon EventBridge User Guide**
+https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-what-is.html
+Comprehensive guide to EventBridge event buses, rules, targets, and event patterns — the definitive reference for understanding when to choose EventBridge over SQS/SNS and how to wire AWS service events to downstream consumers.
+
+---
+
 *Proprietary and Confidential. Not for disclosure outside of Texas Wesleyan University.*

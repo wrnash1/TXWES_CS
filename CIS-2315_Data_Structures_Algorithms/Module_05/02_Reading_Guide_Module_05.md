@@ -276,6 +276,27 @@ LCA in a BST: if both targets are smaller, go left; if both are larger, go right
 
 ---
 
+## 9. Supplemental Resources
+
+The following free, openly licensed resources reinforce the concepts in this module. All are zero-cost and require no account to access.
+
+1. **VisuAlgo — Binary Search Tree Visualizations** — [https://visualgo.net/en/bst](https://visualgo.net/en/bst)
+   Animated step-by-step visualization of BST insert, search, delete, and all four traversals. Watch the inorder successor algorithm play out during deletion of a two-child node.
+
+2. **OpenDSA — Binary Trees Chapter** — [https://opendsa-server.cs.vt.edu/ODSA/Books/Everything/html/BinTree.html](https://opendsa-server.cs.vt.edu/ODSA/Books/Everything/html/BinTree.html)
+   Free interactive OER textbook covering binary tree definitions, traversals, and the BST property with embedded exercises and complexity proofs.
+
+3. **NeetCode — Trees Playlist (YouTube)** — [https://www.youtube.com/playlist?list=PLot-Xpze53ldg4pN6PfzoJY7KsKcxF1jg](https://www.youtube.com/playlist?list=PLot-Xpze53ldg4pN6PfzoJY7KsKcxF1jg)
+   Free video solutions for the most frequently asked tree interview problems including Max Depth, Invert Binary Tree, Level Order Traversal, and Validate BST, each with a visual explanation of the recursive structure.
+
+4. **MIT OCW 6.006 — Binary Search Trees (Lecture 5)** — [https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/](https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/)
+   MIT lecture notes and video on BST operations, augmented BSTs, and the relationship between BST height and operation complexity. Free with no account required.
+
+5. **LeetCode Explore: Binary Tree** — [https://leetcode.com/explore/learn/card/data-structure-tree/](https://leetcode.com/explore/learn/card/data-structure-tree/)
+   Free LeetCode learning card covering tree traversal, recursion patterns, and BST operations with guided examples and practice problems. No premium subscription required.
+
+---
+
 ## 7. Study Checklist
 
 - [ ] Watch the Module 05 video lecture by Professor Nash.

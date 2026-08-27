@@ -421,4 +421,45 @@ Submit the following on Canvas:
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Implement a Default-Deny Network Policy with Targeted Exceptions
+
+Starting from a namespace with no NetworkPolicy, implement a complete default-deny posture and then add targeted exceptions.
+
+1. Create a namespace `challenge-05` and deploy two pods: `frontend` (label `app: frontend`) and `backend` (label `app: backend`).
+2. Apply a default-deny-all policy (both Ingress and Egress) to the namespace:
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-all
+  namespace: challenge-05
+spec:
+  podSelector: {}
+  policyTypes:
+    - Ingress
+    - Egress
+```
+
+1. Verify that the frontend pod cannot reach the backend pod (and DNS is broken).
+2. Add a targeted NetworkPolicy that allows: the frontend pod to reach the backend pod on port 8080, and both pods to reach the cluster DNS (kube-dns) on UDP port 53. Verify both connections work after applying the policies.
+
+### Challenge 2: Write and Deploy a Custom OPA Gatekeeper Policy
+
+Create a Gatekeeper policy that requires all pods to have both CPU and memory resource limits defined.
+
+1. Write a `ConstraintTemplate` named `K8sRequiredResourceLimits` with a Rego rule that produces a violation when any container in a pod spec is missing `resources.limits.cpu` or `resources.limits.memory`.
+2. Create a corresponding `Constraint` that enforces the template in the `challenge-05` namespace.
+3. Attempt to deploy a pod without resource limits — verify the admission webhook rejects it and record the violation message.
+4. Deploy a pod with valid resource limits — verify it is admitted successfully.
+
+### Reflection Questions
+
+1. You applied a default-deny-all NetworkPolicy and immediately broke DNS for all pods in the namespace. This is a common mistake in production. Design a safe rollout procedure for applying a default-deny policy to a production namespace that already has running workloads — what testing steps, monitoring checks, and rollback procedures would you include?
+2. Your OPA Gatekeeper policy requires resource limits on all containers. A data science team argues their workloads need flexible resource allocation and the policy blocks their pods. How would you balance consistent security policy enforcement with legitimate workload exceptions — what Gatekeeper features or organizational processes would you use?
+
+---
+
 Lab 05 | CIS-4350 | Texas Wesleyan University | Professor Nash

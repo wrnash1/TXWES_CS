@@ -209,3 +209,183 @@ A dataset of test scores has a mean of 74 and a standard deviation of 8. A stude
 - **Why A is incorrect:** 1.0 standard deviation above the mean would be 74 + 8 = 82, not 90.
 - **Why B is incorrect:** 1.5 standard deviations above the mean would be 74 + (1.5 × 8) = 74 + 12 = 86, not 90.
 - **Why D is incorrect:** 2.5 standard deviations above the mean would be 74 + (2.5 × 8) = 74 + 20 = 94, not 90.
+
+---
+
+### Question 11 (5 points)
+
+A dataset has a mean of 50 and a standard deviation of 10. What percentage of values fall within two standard deviations of the mean, assuming the data is approximately normally distributed?
+
+- A) 68%
+- B) 95%
+- C) 99.7%
+- D) 50%
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - **Why B is correct:** The empirical rule (68-95-99.7 rule) states that approximately 95% of values in a normal distribution fall within two standard deviations of the mean (between 30 and 70 in this case).
+  - **Why A is incorrect:** 68% corresponds to one standard deviation from the mean (between 40 and 60), not two.
+  - **Why C is incorrect:** 99.7% corresponds to three standard deviations from the mean (between 20 and 80), not two.
+  - **Why D is incorrect:** 50% would describe the proportion below the median (or mean in a symmetric distribution), not a range defined by standard deviations.
+
+---
+
+### Question 12 (5 points)
+
+Two datasets have the same mean of 100. Dataset A has a standard deviation of 5; Dataset B has a standard deviation of 30. What does this comparison reveal?
+
+- A) Dataset B has more total values than Dataset A
+- B) Dataset A has a higher median than Dataset B
+- C) Dataset B has much greater variability around the mean than Dataset A
+- D) Dataset A is right-skewed and Dataset B is left-skewed
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - **Why C is correct:** Standard deviation measures the average distance of values from the mean. A standard deviation of 30 in Dataset B means values are typically spread 30 units from 100 (ranging roughly 70–130), while Dataset A's values cluster much tighter (roughly 95–105). Dataset B is far more variable.
+  - **Why A is incorrect:** Standard deviation describes spread, not sample size. The number of data points is unrelated to standard deviation.
+  - **Why B is incorrect:** Both datasets have the same mean of 100. Without additional information about skewness, you cannot conclude that Dataset A has a higher median.
+  - **Why D is incorrect:** Standard deviation alone does not indicate skewness direction. Skewness is determined by the relationship between mean and median, not by the magnitude of the standard deviation.
+
+---
+
+### Question 13 (5 points)
+
+For a dataset with Q1 = 40, Q3 = 80, and IQR = 40, which two values are the outlier detection bounds?
+
+- A) Lower = 20, Upper = 100
+- B) Lower = -20, Upper = 140
+- C) Lower = 0, Upper = 120
+- D) Lower = 10, Upper = 130
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - **Why B is correct:** Lower bound = Q1 − 1.5 × IQR = 40 − (1.5 × 40) = 40 − 60 = −20. Upper bound = Q3 + 1.5 × IQR = 80 + 60 = 140.
+  - **Why A is incorrect:** These values would result from using 0.5 × IQR instead of 1.5 × IQR.
+  - **Why C is incorrect:** These values would result from using 1.0 × IQR: Q1 − 40 = 0 and Q3 + 40 = 120.
+  - **Why D is incorrect:** These values do not correspond to any standard multiplier of IQR (they would require approximately 0.75 × IQR).
+
+---
+
+### Question 14 (5 points)
+
+A dataset has the following sorted values: 10, 12, 14, 16, 18, 20, 22. What is the median?
+
+- A) 14
+- B) 15
+- C) 16
+- D) 18
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - **Why C is correct:** There are 7 values (odd n). The median is the value at position (7 + 1) / 2 = 4. Counting from 1: position 4 is the value 16.
+  - **Why A is incorrect:** 14 is the value at position 3, not the middle position.
+  - **Why B is incorrect:** 15 would be the average of the 3rd and 4th values (14 and 16), which is the median formula for an even-numbered dataset. This dataset has 7 values (odd), so no averaging is needed.
+  - **Why D is incorrect:** 18 is the value at position 5, not the middle position.
+
+---
+
+### Question 15 (5 points)
+
+An analyst calculates `df["revenue"].std()` in pandas and gets $15,420. What does this value represent?
+
+- A) The maximum revenue in the dataset minus the minimum revenue
+- B) The average squared deviation from the mean revenue
+- C) The typical distance of individual revenue values from the mean revenue, expressed in dollars
+- D) The revenue value at the 50th percentile
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - **Why C is correct:** Standard deviation measures how far, on average, individual values deviate from the mean. Because it is expressed in the same units as the original data (dollars), it provides an intuitive sense of spread: a typical revenue value is roughly $15,420 away from the mean.
+  - **Why A is incorrect:** Maximum minus minimum is the range, not the standard deviation. The range would be a single subtraction, not a statistical calculation across all values.
+  - **Why B is incorrect:** The average squared deviation is the variance, not the standard deviation. The standard deviation is the square root of variance, which converts it back to original units.
+  - **Why D is incorrect:** The 50th percentile is the median, obtained with `df["revenue"].median()`, not with `.std()`.
+
+---
+
+### Question 16 (5 points)
+
+A histogram of customer ages shows a tall bar around age 25–35 on the left side, with the bars gradually decreasing and tapering off toward age 80 on the right side. Which statement correctly describes this distribution?
+
+- A) The distribution is left-skewed, with most values concentrated at higher ages
+- B) The distribution is right-skewed, with most values concentrated at lower ages and a tail extending toward higher ages
+- C) The distribution is symmetric with a peak in the center
+- D) The distribution is bimodal because it has two visible peaks
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - **Why B is correct:** Most values are at the low end (25–35), and the tail extends to the right (toward age 80). This pattern is right skew (positive skew) — the tail points in the positive direction.
+  - **Why A is incorrect:** Left skew would show most values concentrated at higher ages with a tail extending toward lower (younger) ages.
+  - **Why C is incorrect:** A symmetric distribution would show the peak in the middle of the age range, with equal tapering on both sides. The described pattern clearly concentrates at the low end.
+  - **Why D is incorrect:** Bimodal means two distinct peaks. The scenario describes one peak on the left with a gradually tapering tail — unimodal right skew.
+
+---
+
+### Question 17 (5 points)
+
+Which Python pandas method returns a dataset's skewness as a single numeric value?
+
+- A) `df["col"].var()`
+- B) `df["col"].kurt()`
+- C) `df["col"].skew()`
+- D) `df["col"].describe()`
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - **Why C is correct:** `.skew()` returns the third standardized moment of the distribution, which measures asymmetry. A positive value indicates right skew; negative indicates left skew; near zero indicates approximate symmetry.
+  - **Why A is incorrect:** `.var()` returns the sample variance — a measure of spread, not asymmetry.
+  - **Why B is incorrect:** `.kurt()` returns kurtosis, which measures the heaviness of distribution tails (peakedness), not the direction of skew.
+  - **Why D is incorrect:** `.describe()` returns a summary table of count, mean, std, min, quartiles, and max. It does not include skewness directly.
+
+---
+
+### Question 18 (5 points)
+
+A box plot shows a very long upper whisker and several outlier points well above the box. The median line is positioned close to Q1. What is the most accurate interpretation?
+
+- A) The data is normally distributed with a few data entry errors
+- B) The data is right-skewed with a long upper tail and most values concentrated in the lower range
+- C) The data is left-skewed with most values at the high end
+- D) The IQR is very large, indicating high variability in the middle 50%
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - **Why B is correct:** A long upper whisker plus outliers above the box, combined with the median line near Q1 (bottom of box), are the visual signatures of right skew: the majority of values are low, with a tail of high values pulling the distribution upward.
+  - **Why A is incorrect:** A normal distribution produces a box plot with the median centered in the box and symmetric whiskers of approximately equal length. Data entry errors would produce isolated outlier points, not a consistently long upper whisker.
+  - **Why C is incorrect:** Left skew produces a long lower whisker and median near Q3 (top of box) — the opposite of what is described.
+  - **Why D is incorrect:** A large IQR would mean a wide box (large distance between Q1 and Q3), not a long whisker. The described pattern has the median close to Q1, suggesting the box itself is not necessarily wide.
+
+---
+
+### Question 19 (5 points)
+
+An analyst reports the 90th percentile of customer order values is $847. What does this mean?
+
+- A) 90% of orders are above $847
+- B) The average order value is $847
+- C) 90% of orders are at or below $847
+- D) The top 10 customers spent $847 each
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - **Why C is correct:** The p-th percentile is the value below which p percent of the data falls. The 90th percentile of $847 means 90% of orders are at or below $847, and 10% exceed it.
+  - **Why A is incorrect:** This reverses the definition. 10% of orders are above $847, not 90%.
+  - **Why B is incorrect:** The average (mean) order value is a separate calculation. A percentile value and a mean are different statistics and will differ unless the distribution is very specific.
+  - **Why D is incorrect:** Percentiles describe distribution positions for all data points, not the spending of a fixed number of customers. The 90th percentile is a threshold, not a customer count.
+
+---
+
+### Question 20 (5 points)
+
+A call center dataset shows that Agent A resolved a mean of 38 tickets per day with a standard deviation of 2.1, while Agent B resolved a mean of 38 tickets per day with a standard deviation of 11.4. A manager wants to assign the most reliable agent to a high-stakes client. Which agent should be chosen, and why?
+
+- A) Agent B, because the higher standard deviation means they occasionally resolve far more tickets
+- B) Agent A, because the lower standard deviation means their daily performance is consistent and predictable
+- C) Neither — the agents are equivalent because they have identical means
+- D) Agent B, because a higher standard deviation indicates a more skilled agent
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - **Why B is correct:** Standard deviation measures consistency. Agent A's small standard deviation (2.1) means their daily output rarely deviates far from 38 — predictable and reliable. For high-stakes work requiring consistent output, Agent A is the correct choice.
+  - **Why A is incorrect:** While Agent B occasionally resolves more tickets, they also occasionally resolve far fewer. Unpredictability is a liability for high-stakes client work.
+  - **Why C is incorrect:** Identical means do not make agents equivalent when their performance variability differs significantly. The manager's concern is reliability, not just average output.
+  - **Why D is incorrect:** Higher standard deviation reflects inconsistency, not skill. A highly variable agent is less reliable, not more skilled in a predictable-performance context.

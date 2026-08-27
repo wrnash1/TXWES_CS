@@ -195,3 +195,212 @@ Distractor Analysis:
 - Why A is incorrect: renice -n -10 sets the nice value to -10, which is a higher (better) scheduling priority than the default 0. This would make the process more aggressive in consuming CPU, the opposite of the goal. Only root can set negative nice values.
 - Why C is incorrect: nice is used to start a new process with a specified nice value. It cannot be applied to an already-running process by PID. renice is the correct tool for modifying a running process's priority.
 - Why D is incorrect: renice -n 0 sets the nice value back to 0 (the default), which is no change from the current value. This does not lower the priority.
+
+---
+
+Questions 11-20 — 5 pts each
+
+---
+
+**Question 11**
+
+An administrator notices a process with STAT code D in ps aux output. What does this state
+indicate, and why can it not be killed with SIGKILL?
+
+- A) The process is stopped (paused) by a debugger. SIGKILL is blocked by the debugging subsystem.
+- B) The process is in uninterruptible sleep, waiting for I/O to complete. The kernel ignores all signals, including SIGKILL, until the I/O operation finishes.
+- C) The process is a zombie that has already exited. SIGKILL cannot affect already-dead processes.
+- D) The process is a daemon started by systemd. systemd intercepts SIGKILL before it reaches the process.
+
+Correct Answer: B) The process is in uninterruptible sleep, waiting for I/O to complete. The kernel ignores all signals, including SIGKILL, until the I/O operation finishes.
+
+Distractor Analysis:
+
+- Why A is incorrect: A process stopped by a debugger shows STAT code T (traced), not D. Debugging uses SIGSTOP/SIGCONT, not uninterruptible sleep.
+- Why C is incorrect: Zombie processes show STAT code Z, not D. A zombie has already completed execution and cannot be killed because it no longer has a running process body.
+- Why D is incorrect: systemd does not intercept signals to managed processes. The D state is a kernel-level scheduling state that makes the process unresponsive to signals regardless of who started it.
+
+---
+
+**Question 12**
+
+Which command displays a real-time, continuously updating view of processes sorted by CPU
+usage, with the ability to send signals interactively?
+
+- A) ps aux --sort=-%cpu | head -20
+- B) top
+- C) htop
+- D) Both B and C
+
+Correct Answer: D) Both B and C
+
+Distractor Analysis:
+
+- Why A is incorrect: ps aux is a static snapshot that executes once and exits. It does not continuously update. It cannot send signals interactively.
+- Why B alone is partially correct: top provides real-time continuous updates and allows sending signals by pressing k (kill) then entering a PID and signal number. It is available on all Linux systems by default.
+- Why C alone is partially correct: htop is an enhanced version of top with a more visual interface and mouse support. Both provide real-time updates and interactive signal sending, making D the most complete answer.
+
+---
+
+**Question 13**
+
+An administrator runs kill -l and wants to understand what signal number 15 is. Which
+statement is correct?
+
+- A) Signal 15 is SIGKILL, which immediately terminates a process and cannot be caught or ignored.
+- B) Signal 15 is SIGTERM, which requests graceful termination and can be caught by a process to perform cleanup.
+- C) Signal 15 is SIGHUP, which causes daemons to reload their configuration files.
+- D) Signal 15 is SIGSTOP, which pauses process execution.
+
+Correct Answer: B) Signal 15 is SIGTERM, which requests graceful termination and can be caught by a process to perform cleanup.
+
+Distractor Analysis:
+
+- Why A is incorrect: SIGKILL is signal number 9, not 15. SIGKILL cannot be caught or ignored. SIGTERM (15) can be caught, allowing a process to clean up before exiting.
+- Why C is incorrect: SIGHUP is signal number 1. While SIGHUP does cause many daemons to reload configuration, it is not signal 15.
+- Why D is incorrect: SIGSTOP is signal number 19. Like SIGKILL, SIGSTOP cannot be caught or ignored. It pauses a process, which can be resumed with SIGCONT (signal 18).
+
+---
+
+**Question 14**
+
+A systems administrator runs jobs and sees:
+
+[1]+  Stopped    vim /etc/nginx/nginx.conf
+[2]-  Running    ./backup.sh &
+
+The administrator wants to bring job 1 back to the foreground. Which command is correct?
+
+- A) bg 1
+- B) fg %1
+- C) resume 1
+- D) kill -SIGCONT %1
+
+Correct Answer: B) fg %1
+
+Distractor Analysis:
+
+- Why A is incorrect: bg 1 resumes job 1 in the background (as if it had been started with &). It does not bring it to the foreground where keyboard input can be sent to it.
+- Why C is incorrect: resume is not a valid shell built-in command. The correct shell built-ins for job control are fg and bg.
+- Why D is incorrect: kill -SIGCONT %1 sends the continue signal to the job, which resumes it. However, it resumes in the background, not the foreground, and does not reconnect it to the terminal's stdin/stdout in the same way fg does.
+
+---
+
+**Question 15**
+
+An administrator uses systemctl to manage the nginx service on Ubuntu 22.04. They run
+systemctl reload nginx instead of systemctl restart nginx. What is the key operational
+difference?
+
+- A) reload completely stops and restarts the nginx process, resetting all active connections.
+- B) reload sends SIGHUP to nginx, causing it to re-read its configuration without dropping active connections, while restart stops and starts the process, briefly interrupting all connections.
+- C) reload only works when nginx has a syntax error in its configuration. restart is used for normal configuration changes.
+- D) reload updates the systemd unit file. restart applies new configuration inside nginx.
+
+Correct Answer: B) reload sends SIGHUP to nginx, causing it to re-read its configuration without dropping active connections, while restart stops and starts the process, briefly interrupting all connections.
+
+Distractor Analysis:
+
+- Why A is incorrect: This describes restart, not reload. reload is specifically designed to avoid dropping connections by signaling the process to re-read its config while continuing to serve requests.
+- Why C is incorrect: reload is the preferred method for applying configuration changes in production. It is not specific to error scenarios. nginx --test should be run before reload to verify syntax, but reload itself is for normal config updates.
+- Why D is incorrect: systemctl daemon-reload updates systemd's in-memory view of unit files. systemctl reload sends a signal to the service process itself. The two concepts are separate and D conflates them.
+
+---
+
+**Question 16**
+
+An administrator wants to find all processes belonging to the user www-data using a single
+command. Which command is most appropriate?
+
+- A) ps -u www-data
+- B) pgrep -u www-data
+- C) pidof www-data
+- D) Both A and B
+
+Correct Answer: D) Both A and B
+
+Distractor Analysis:
+
+- Why A alone is partially correct: ps -u www-data lists all processes owned by www-data in a formatted table showing PID, TTY, CPU time, and command name.
+- Why B alone is partially correct: pgrep -u www-data lists only the PIDs of processes owned by www-data, one per line, which is useful for scripting.
+- Why C is incorrect: pidof finds processes by exact program name, not by user. pidof www-data would look for a program named "www-data", which does not exist. It would return nothing.
+
+---
+
+**Question 17**
+
+After modifying a systemd unit file at /etc/systemd/system/myapp.service, which command
+must be run before the changes take effect when restarting the service?
+
+- A) systemctl update myapp
+- B) systemctl daemon-reload
+- C) systemctl refresh myapp
+- D) systemctl reload myapp
+
+Correct Answer: B) systemctl daemon-reload
+
+Distractor Analysis:
+
+- Why A is incorrect: systemctl update is not a valid subcommand. systemctl does not have an update command for unit files.
+- Why C is incorrect: systemctl refresh is not a valid subcommand. There is no refresh command in systemctl.
+- Why D is incorrect: systemctl reload myapp sends a signal to the running myapp process to re-read its own application configuration. It does not tell systemd to re-read the unit file from disk. daemon-reload is what tells the systemd manager itself to rescan and reload unit files.
+
+---
+
+**Question 18**
+
+An administrator runs ps aux and sees a process with the STAT code Z. What is the correct
+resolution for this zombie process?
+
+- A) Send SIGKILL to the zombie process PID.
+- B) Run kill -9 on the zombie's parent process (PPID) or wait for the parent to call wait().
+- C) Renice the zombie to priority 19 to let the scheduler clean it up.
+- D) Run systemctl daemon-reexec to force systemd to reap all zombie processes.
+
+Correct Answer: B) Run kill -9 on the zombie's parent process (PPID) or wait for the parent to call wait().
+
+Distractor Analysis:
+
+- Why A is incorrect: A zombie process has already exited. It has no running process to kill. SIGKILL sent to a zombie PID has no effect because there is no active process body to receive it.
+- Why C is incorrect: renice affects the scheduler priority of running processes. A zombie is not running and cannot be reniced. The scheduler does not reap zombie entries.
+- Why D is incorrect: systemctl daemon-reexec re-executes the systemd manager binary in place for upgrades. It does not specifically reap zombie processes. Only the zombie's parent can reap it by calling the wait() system call, or the parent can be terminated so init (PID 1) adopts and reaps the zombie.
+
+---
+
+**Question 19**
+
+An administrator starts a long-running script with nohup ./backup.sh > /tmp/backup.log 2>&1 &
+and then closes the terminal. What happens to the script?
+
+- A) The script is terminated when the terminal closes because it is a child process of the shell.
+- B) The script continues running because nohup makes it immune to the SIGHUP signal sent when the terminal closes.
+- C) The script is paused until the administrator opens a new terminal and runs fg.
+- D) The script runs in a new virtual console (tty) automatically created by nohup.
+
+Correct Answer: B) The script continues running because nohup makes it immune to the SIGHUP signal sent when the terminal closes.
+
+Distractor Analysis:
+
+- Why A is incorrect: Without nohup, closing the terminal sends SIGHUP to child processes, which normally terminates them. nohup specifically prevents this by ignoring SIGHUP and redirecting output so the process can continue after the terminal disconnects.
+- Why C is incorrect: nohup does not pause the process. The & at the end of the command backgrounds it immediately. nohup only handles the SIGHUP signal; it does not pause or suspend the process.
+- Why D is incorrect: nohup does not create virtual consoles. The process continues running under its original process group, now adopted by init or systemd after the parent shell exits.
+
+---
+
+**Question 20**
+
+Which command displays the parent-child process hierarchy in a tree format, showing which
+processes spawned which child processes?
+
+- A) ps aux --forest
+- B) pstree
+- C) ps -ejH
+- D) All of the above show process hierarchy
+
+Correct Answer: D) All of the above show process hierarchy
+
+Distractor Analysis:
+
+- Why A alone is partially correct: ps aux --forest (or ps auxf) displays an ASCII tree of process parent-child relationships directly in ps output.
+- Why B alone is partially correct: pstree is a dedicated tool that displays the complete process tree with branch symbols, optionally showing PIDs and user names with -p and -u flags.
+- Why C alone is partially correct: ps -ejH displays all processes in a hierarchical (indented) format showing the tree structure. All three commands reveal parent-child process relationships.

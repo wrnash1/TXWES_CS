@@ -211,3 +211,240 @@ Distractor Analysis:
 - Why A is incorrect: firewalld does not combine rules from multiple zones for a single packet. Each packet is processed by exactly one zone — the most specific match (source address before interface assignment).
 - Why C is incorrect: While SSH is allowed in the public zone, the source-based zone assignment overrides the interface-based zone. The packet from 10.1.1.50 goes to the trusted zone, where all traffic is permitted regardless of the public zone's SSH rule.
 - Why D is incorrect: firewalld uses IP address-based matching, not DNS resolution, for zone assignment. DNS lookups would be too slow and unreliable for firewall packet classification.
+
+---
+
+**Question 11**
+
+An administrator runs `ufw status` and sees the following output:
+
+```
+Status: active
+
+To                         Action      From
+--                         ------      ----
+22/tcp                     ALLOW       Anywhere
+80/tcp                     ALLOW       Anywhere
+443/tcp                    ALLOW       Anywhere
+22/tcp (v6)                ALLOW       Anywhere (v6)
+80/tcp (v6)                ALLOW       Anywhere (v6)
+443/tcp (v6)               ALLOW       Anywhere (v6)
+```
+
+The server should only accept SSH from the management network 10.0.0.0/24. Which command
+sequence correctly restricts SSH while leaving web traffic unrestricted?
+
+- A) ufw delete allow 22/tcp && ufw allow from 10.0.0.0/24 to any port 22
+- B) ufw insert 1 deny 22/tcp && ufw allow from 10.0.0.0/24 to any port 22
+- C) ufw allow from 10.0.0.0/24 to any port 22 && ufw deny 22/tcp
+- D) ufw limit 22/tcp from 10.0.0.0/24
+
+Correct Answer: A) ufw delete allow 22/tcp && ufw allow from 10.0.0.0/24 to any port 22
+
+Distractor Analysis:
+
+- Why B is incorrect: Inserting a deny rule at position 1 before adding the allow rule would cause all SSH to be denied immediately, including from the management network. The specific allow rule must come before the broad deny rule.
+- Why C is incorrect: This appears correct in order (allow specific source first, then deny all others), but ufw does not guarantee that previously existing rules are evaluated after newly added rules. The existing "ALLOW Anywhere" rule for 22/tcp would match before the new deny rule. The correct approach is to first delete the broad allow rule, then add the restricted one.
+- Why D is incorrect: ufw limit enables rate limiting (connection throttling to prevent brute force), not source IP restriction. The from 10.0.0.0/24 syntax is not valid with the limit subcommand in standard ufw.
+
+---
+
+**Question 12**
+
+Which `iptables` command inserts a rule at the **beginning** of the INPUT chain to accept
+established and related connections (required for stateful firewall operation)?
+
+- A) iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+- B) iptables -I INPUT 1 -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+- C) iptables -R INPUT 1 -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+- D) iptables -P INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+
+Correct Answer: B) iptables -I INPUT 1 -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+
+Distractor Analysis:
+
+- Why A is incorrect: The -A flag appends the rule to the end of the chain. On a chain with existing rules, an appended rule may never be reached if earlier rules match first. For a stateful connection rule that must always be evaluated early, insertion at position 1 is required.
+- Why C is incorrect: The -R flag replaces an existing rule at a specified position. If the INPUT chain is empty or has different rules at position 1, this would either fail or overwrite an important existing rule. For adding a new rule at position 1, the -I (insert) flag is correct.
+- Why D is incorrect: The -P flag sets the default policy for a chain (e.g., ACCEPT or DROP). It does not accept match expressions or jump targets in the same syntax as a rule. Default policies apply only when no rule in the chain matches.
+
+---
+
+**Question 13**
+
+An administrator wants to log and drop all packets from a specific IP address 203.0.113.50
+using iptables. They need two rules. Which pair accomplishes this correctly?
+
+- A) iptables -A INPUT -s 203.0.113.50 -j LOG --log-prefix "BLOCKED: " && iptables -A INPUT -s 203.0.113.50 -j DROP
+- B) iptables -A INPUT -s 203.0.113.50 -j DROP && iptables -A INPUT -s 203.0.113.50 -j LOG
+- C) iptables -A INPUT -s 203.0.113.50 -j LOG,DROP
+- D) iptables -A INPUT -s 203.0.113.50 -j LOG --log-prefix "BLOCKED: " -j DROP
+
+Correct Answer: A) iptables -A INPUT -s 203.0.113.50 -j LOG --log-prefix "BLOCKED: " && iptables -A INPUT -s 203.0.113.50 -j DROP
+
+Distractor Analysis:
+
+- Why B is incorrect: Rules are evaluated in order. If the DROP rule comes first, the packet is immediately discarded and the LOG rule is never reached. For log-and-drop, the LOG rule must always precede the DROP rule.
+- Why C is incorrect: iptables does not support comma-separated targets in a single -j flag. Each rule has exactly one target (LOG, DROP, ACCEPT, REJECT, etc.). Logging and dropping are always implemented as two separate sequential rules.
+- Why D is incorrect: A single iptables rule can only have one -j (jump) target. Specifying -j twice in the same rule is invalid syntax; the second -j would either be ignored or cause a parse error. This is a common misconception about iptables syntax.
+
+---
+
+**Question 14**
+
+An administrator successfully adds a firewalld rule to open port 8080 with:
+
+```
+firewall-cmd --add-port=8080/tcp
+```
+
+After rebooting the server, port 8080 is blocked again. What was missing from the command?
+
+- A) The --zone flag was not specified; firewalld discards rules without an explicit zone.
+- B) The --permanent flag was not used; without it, the rule is added only to the runtime configuration and is lost on reboot or reload.
+- C) The --reload flag must be run immediately after adding any rule to save it.
+- D) Port rules require the service name instead of the port number to persist.
+
+Correct Answer: B) The --permanent flag was not used; without it, the rule is added only to the runtime configuration and is lost on reboot or reload.
+
+Distractor Analysis:
+
+- Why A is incorrect: If no --zone flag is specified, firewalld applies the rule to the default zone. The rule does take effect — it simply does not persist. The missing element is --permanent, not --zone.
+- Why C is incorrect: firewall-cmd --reload applies permanent configuration to the runtime. It does not save runtime rules to the permanent configuration. Running --reload after a runtime rule would actually remove that runtime rule, not save it.
+- Why D is incorrect: firewalld supports both service names (--add-service=http) and port numbers (--add-port=8080/tcp) for permanent rules. There is no requirement to use service names for persistence.
+
+---
+
+**Question 15**
+
+What is the functional difference between iptables `-j DROP` and `-j REJECT` when applied
+to an incoming packet?
+
+- A) DROP silently discards the packet; the sender receives no response. REJECT discards the packet and sends an ICMP error (port-unreachable by default) back to the sender.
+- B) DROP sends a TCP RST to the sender. REJECT sends an ICMP unreachable message.
+- C) DROP applies to UDP traffic only. REJECT applies to TCP traffic only.
+- D) There is no functional difference; both discard the packet silently.
+
+Correct Answer: A) DROP silently discards the packet; the sender receives no response. REJECT discards the packet and sends an ICMP error (port-unreachable by default) back to the sender.
+
+Distractor Analysis:
+
+- Why B is incorrect: DROP does not send any response. It discards the packet with no notification. A TCP RST response is sent by REJECT with the --reject-with tcp-reset option, not by DROP.
+- Why C is incorrect: Both DROP and REJECT apply to all IP traffic regardless of transport protocol (TCP, UDP, ICMP). The choice between them is about response behavior, not protocol applicability.
+- Why D is incorrect: There is a significant functional difference. DROP causes the sender's connection to time out silently (which takes longer to detect and can slow down legitimate error handling). REJECT gives the sender an immediate error, which speeds up failure detection. The operational security preference for DROP is to avoid revealing firewall presence to attackers.
+
+---
+
+**Question 16**
+
+An administrator runs `iptables-save > /etc/iptables/rules.v4` after configuring their
+firewall rules. After a reboot, all rules are gone. What additional step is required on
+Ubuntu to restore rules automatically at boot?
+
+- A) Add iptables-restore < /etc/iptables/rules.v4 to /etc/rc.local.
+- B) Install the netfilter-persistent package and run systemctl enable netfilter-persistent. The saved rules in /etc/iptables/rules.v4 are automatically restored at boot.
+- C) Set the IPTABLES_SAVE_ON_STOP variable in /etc/default/iptables.
+- D) Create a systemd timer that runs iptables-restore every 5 minutes.
+
+Correct Answer: B) Install the netfilter-persistent package and run systemctl enable netfilter-persistent. The saved rules in /etc/iptables/rules.v4 are automatically restored at boot.
+
+Distractor Analysis:
+
+- Why A is incorrect: While /etc/rc.local would technically work, it is a legacy mechanism and is not the correct approach on modern Ubuntu systems using systemd. The netfilter-persistent service is the correct and supported method.
+- Why C is incorrect: /etc/default/iptables is not a standard Ubuntu configuration file. This setting exists on some RHEL/CentOS distributions (in /etc/sysconfig/iptables-config) but is not applicable to Ubuntu's netfilter-persistent mechanism.
+- Why D is incorrect: A timer running iptables-restore every 5 minutes would apply the saved rules repeatedly, which is inefficient and unnecessary. Rules should be restored once at boot, not on a recurring timer.
+
+---
+
+**Question 17**
+
+An administrator runs `firewall-cmd --list-all` and sees:
+
+```
+public (active)
+  target: default
+  icmp-block-inversion: no
+  interfaces: ens33
+  sources:
+  services: cockpit dhcpv6-client ssh
+  ports:
+  ...
+```
+
+They want to add a permanent rule to allow HTTP and HTTPS, then apply it immediately without
+rebooting. Which command sequence is correct?
+
+- A) firewall-cmd --permanent --add-service=http --add-service=https && firewall-cmd --reload
+- B) firewall-cmd --add-service=http --add-service=https && firewall-cmd --permanent --reload
+- C) firewall-cmd --permanent --add-service={http,https} && systemctl restart firewalld
+- D) firewall-cmd --zone=public --add-service=http && firewall-cmd --zone=public --add-service=https
+
+Correct Answer: A) firewall-cmd --permanent --add-service=http --add-service=https && firewall-cmd --reload
+
+Distractor Analysis:
+
+- Why B is incorrect: Adding the service without --permanent applies only to the runtime. The subsequent --permanent --reload is not valid syntax (--reload does not take --permanent). The rules would not be saved persistently.
+- Why C is incorrect: systemctl restart firewalld reloads the firewall service entirely, which is more disruptive than --reload. More importantly, brace expansion {http,https} is a shell feature that is not supported by firewall-cmd itself. The --add-service flag must be specified twice or used as two separate commands.
+- Why D is incorrect: Without --permanent, these rules apply only to the runtime configuration and will be lost on the next reload or reboot. Runtime-only rules are useful for testing but not for permanent service exposure.
+
+---
+
+**Question 18**
+
+A Linux server runs both a web application on port 8443 and an SSH service. The security
+team requires that port 8443 be accessible only from the corporate network 192.168.100.0/22.
+Using `ufw`, which pair of commands implements this requirement?
+
+- A) ufw allow 8443/tcp && ufw deny from 0.0.0.0/0 to any port 8443
+- B) ufw allow from 192.168.100.0/22 to any port 8443 && ufw deny 8443/tcp
+- C) ufw allow proto tcp from 192.168.100.0/22 port 8443
+- D) ufw allow 8443/tcp from 192.168.100.0/22
+
+Correct Answer: B) ufw allow from 192.168.100.0/22 to any port 8443 && ufw deny 8443/tcp
+
+Distractor Analysis:
+
+- Why A is incorrect: Adding a broad allow rule first and then a deny rule after it does not work. ufw processes rules in order and would match the first ALLOW rule before reaching the DENY rule, allowing all connections.
+- Why C is incorrect: The ufw allow proto syntax specifies the source port, not the destination port. The correct syntax for destination port restriction uses the to any port form: ufw allow proto tcp from 192.168.100.0/22 to any port 8443.
+- Why D is incorrect: ufw does not support the allow PORT from SOURCE syntax in that order. The correct syntax for source-restricted rules is: ufw allow from SOURCE to any port PORT.
+
+---
+
+**Question 19**
+
+An administrator wants all outgoing traffic from the server to be allowed by default in
+iptables but all incoming traffic to be dropped by default unless explicitly permitted.
+Which commands set the correct default policies?
+
+- A) iptables -P INPUT DROP && iptables -P OUTPUT ACCEPT && iptables -P FORWARD DROP
+- B) iptables -P INPUT DENY && iptables -P OUTPUT ALLOW
+- C) iptables -D INPUT DROP && iptables -D OUTPUT ACCEPT
+- D) iptables --default INPUT DROP && iptables --default OUTPUT ACCEPT
+
+Correct Answer: A) iptables -P INPUT DROP && iptables -P OUTPUT ACCEPT && iptables -P FORWARD DROP
+
+Distractor Analysis:
+
+- Why B is incorrect: The valid iptables default policy targets are ACCEPT and DROP. DENY and ALLOW are not valid iptables policy targets. This syntax would produce an error.
+- Why C is incorrect: The -D flag deletes a specific rule from a chain. It is not used to set default policies. Attempting to delete a rule named "DROP" would fail because that is a target value, not a rule specification.
+- Why D is incorrect: There is no --default flag in iptables. The correct flag for setting chain default policies is -P (policy). This tests whether students know the correct flag syntax versus a logical-sounding but non-existent alternative.
+
+---
+
+**Question 20**
+
+An administrator configures ufw on a server that also has Docker installed. After enabling
+ufw with default deny incoming, containers can still receive incoming connections from the
+internet. What is the most likely explanation?
+
+- A) ufw rules do not apply to IPv6 traffic, and Docker uses IPv6 by default.
+- B) Docker modifies iptables directly to create ACCEPT rules in the DOCKER chain, bypassing ufw's rules in the INPUT chain.
+- C) Container traffic is encrypted and ufw cannot inspect it.
+- D) ufw only filters traffic on the loopback interface; physical interface traffic bypasses ufw.
+
+Correct Answer: B) Docker modifies iptables directly to create ACCEPT rules in the DOCKER chain, bypassing ufw's rules in the INPUT chain.
+
+Distractor Analysis:
+
+- Why A is incorrect: ufw manages both IPv4 (iptables) and IPv6 (ip6tables) rules. Default deny policies apply to both protocol families when ufw is enabled with the default configuration.
+- Why C is incorrect: ufw and iptables filter at the network layer (Layer 3/4) based on IP addresses and ports. Container traffic is not inherently encrypted at the network layer, and iptables can filter it regardless of application-layer protocols.
+- Why D is incorrect: ufw manages rules for all network interfaces, not just the loopback. The INPUT chain applies to all incoming traffic. The specific issue with Docker is that it bypasses the INPUT chain by inserting rules in the DOCKER and FORWARD chains with direct iptables calls, not that ufw filters the wrong interface.

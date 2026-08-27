@@ -210,4 +210,186 @@ Distractor Analysis:
 
 ---
 
+---
+
+### Question 11 (5 points)
+
+Which Terraform CLI command should always be run first when working in a new or cloned configuration directory?
+
+- A) `terraform plan`
+- B) `terraform validate`
+- C) `terraform init`
+- D) `terraform apply`
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why C is correct: `terraform init` downloads provider plugins, initializes the backend, and prepares the working directory. Without it, no other command can succeed because the required plugins are absent.
+  - Why A is incorrect: `terraform plan` will fail if `terraform init` has not been run, because there are no provider plugins available to contact APIs or validate resource types.
+  - Why B is incorrect: `terraform validate` checks HCL syntax but also requires that `terraform init` has been run so the provider schemas are available for type checking.
+  - Why D is incorrect: `terraform apply` requires both initialized plugins and a valid plan. Running it first in an uninitialized directory will produce an error.
+
+---
+
+### Question 12 (5 points)
+
+A team stores their `terraform.tfstate` file in a public GitHub repository alongside their `.tf` files. What is the primary security risk of this practice?
+
+- A) The state file will cause merge conflicts that corrupt the HCL configuration files.
+- B) GitHub will automatically delete state files larger than 1 MB.
+- C) Sensitive values such as database passwords and private keys written to state by providers may be exposed to anyone with repository access.
+- D) Terraform will refuse to read a state file that originated from a Git repository.
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why C is correct: Many providers store sensitive resource attributes — RDS master passwords, IAM access keys, TLS private keys — in plain text within the state file. Committing it to a public (or even private) repository creates an unacceptable credential exposure risk.
+  - Why A is incorrect: The state file is a separate JSON artifact from HCL files. Merge conflicts are a workflow concern, not a security risk, and do not corrupt configuration files.
+  - Why B is incorrect: GitHub has no special behavior that deletes state files based on size. This is a fabricated constraint.
+  - Why D is incorrect: Terraform reads state files from wherever the backend is configured to store them. It does not inspect file origin or reject files based on source location.
+
+---
+
+### Question 13 (5 points)
+
+What is the purpose of the `terraform fmt` command?
+
+- A) It formats and reformats cloud resource names to comply with provider naming conventions.
+- B) It applies canonical HCL indentation and style to `.tf` files without changing their logic.
+- C) It compresses the state file to reduce storage size on the backend.
+- D) It validates that all provider API calls will succeed before running `terraform apply`.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why B is correct: `terraform fmt` is a code formatting tool. It rewrites `.tf` files to use consistent indentation, alignment, and spacing according to the canonical HCL style guide. It makes no logical changes to resource declarations.
+  - Why A is incorrect: `terraform fmt` does not modify resource names or interact with provider naming conventions. Resource names are defined by the author and cannot be automatically changed without altering semantics.
+  - Why C is incorrect: `terraform fmt` operates only on `.tf` source files, not on the state file. State file management is handled by backend configuration.
+  - Why D is incorrect: Pre-flight API validation is not a function of `terraform fmt`. `terraform validate` checks configuration syntax, and `terraform plan` contacts provider APIs to compute diffs.
+
+---
+
+### Question 14 (5 points)
+
+In Terraform HCL, what is the correct way to reference the `arn` attribute of a resource named `main_bucket` of type `aws_s3_bucket` within the same configuration?
+
+- A) `var.main_bucket.arn`
+- B) `aws_s3_bucket.main_bucket.arn`
+- C) `output.main_bucket.arn`
+- D) `data.aws_s3_bucket.main_bucket.arn`
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why B is correct: Terraform resource references follow the pattern `<resource_type>.<local_name>.<attribute>`. For a resource declared as `resource "aws_s3_bucket" "main_bucket"`, the ARN is referenced as `aws_s3_bucket.main_bucket.arn`.
+  - Why A is incorrect: The `var.` prefix is used to reference input variables declared with a `variable` block, not managed resource attributes.
+  - Why C is incorrect: The `output.` prefix does not exist as a first-class reference type within configurations. Outputs from child modules are accessed via `module.<name>.<output_name>`.
+  - Why D is incorrect: The `data.` prefix is used for data source blocks, which read existing infrastructure. A `resource` block is not a data source.
+
+---
+
+### Question 15 (5 points)
+
+Which of the following best describes a Terraform provider?
+
+- A) A cloud region setting that determines where resources are deployed.
+- B) A plugin that translates Terraform resource declarations into API calls for a specific platform or service.
+- C) A reusable group of resource blocks that can be instantiated multiple times.
+- D) An encrypted vault that stores provider credentials securely within the state file.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why B is correct: A provider is a plugin distributed by HashiCorp or third parties that knows how to communicate with a specific API (AWS, Azure, GitHub, etc.). It exposes resource types and data sources, and translates Terraform operations into the appropriate API calls.
+  - Why A is incorrect: The deployment region is an attribute configured within the provider block, not the definition of a provider itself.
+  - Why C is incorrect: A reusable group of resource blocks is called a module, not a provider.
+  - Why D is incorrect: Providers do not serve as credential vaults. Credentials are supplied to providers through environment variables, provider block arguments, or secrets managers — but that is the configuration of a provider, not the definition of what a provider is.
+
+---
+
+### Question 16 (5 points)
+
+A `terraform apply` completes successfully and provisions five resources. A team member then deletes two of those resources directly in the cloud console. What happens on the next `terraform apply` without any changes to the `.tf` files?
+
+- A) Terraform ignores the deletion because no `.tf` files changed.
+- B) Terraform detects the missing resources during the plan phase and recreates them to match the declared configuration.
+- C) Terraform automatically removes the deleted resources from the state file and reports success.
+- D) Terraform aborts with a fatal error and requires `terraform destroy` before any further applies can proceed.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why B is correct: During `terraform plan`, Terraform queries provider APIs to refresh the current state of all managed resources. When it finds that two resources no longer exist, it plans to recreate them so that the live infrastructure matches the `.tf` configuration.
+  - Why A is incorrect: Terraform does not condition its behavior solely on whether `.tf` files changed. It compares declared state to live infrastructure state on every run.
+  - Why C is incorrect: Terraform does not silently remove managed resources from state because they were deleted externally. That would cause it to lose track of those resources entirely. It plans to recreate them instead.
+  - Why D is incorrect: Missing resources are a recoverable drift condition that Terraform handles by planning recreations. It does not abort or require a destroy.
+
+---
+
+### Question 17 (5 points)
+
+Which of the following is the correct definition of a Terraform module?
+
+- A) A single `.tf` file that contains one `resource` block and one `variable` block.
+- B) Any directory containing Terraform configuration files, which can be called from another configuration to encapsulate and reuse infrastructure patterns.
+- C) The compiled binary artifact that Terraform produces after running `terraform init`.
+- D) A cloud-provider-specific API wrapper that replaces the need for a provider plugin.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why B is correct: In Terraform, any directory with `.tf` files is a module. The root module is the directory where you run Terraform commands. Child modules are directories called using `module` blocks. Modules encapsulate and enable reuse of infrastructure patterns.
+  - Why A is incorrect: A module is not restricted to a single file or a specific combination of block types. It is defined by directory structure, not file content limits.
+  - Why C is incorrect: Terraform does not produce compiled binary artifacts. `terraform init` downloads provider plugins, but the configuration itself remains as human-readable HCL files.
+  - Why D is incorrect: Modules do not replace providers. Providers handle API communication; modules organize and reuse resource configurations that use those providers.
+
+---
+
+### Question 18 (5 points)
+
+What is the significance of the `required_version` constraint in a Terraform settings block?
+
+- A) It specifies the minimum version of the cloud provider CLI that must be installed on the workstation.
+- B) It restricts which versions of the Terraform CLI are permitted to execute the configuration, ensuring consistency across teams and CI/CD pipelines.
+- C) It defines the maximum number of resources that can be created in a single `terraform apply`.
+- D) It sets the expiration date after which the configuration must be reviewed and re-approved.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why B is correct: `required_version` specifies a version constraint (e.g., `">= 1.6.0"`) for the Terraform CLI binary itself. If a team member or CI/CD runner uses a Terraform version that does not satisfy the constraint, the run is rejected. This prevents behavior differences caused by CLI version mismatches.
+  - Why A is incorrect: `required_version` applies to the Terraform CLI, not to any cloud provider's own CLI tool (such as `aws` or `az`).
+  - Why C is incorrect: There is no built-in resource count limit in Terraform. `required_version` has nothing to do with resource quantities.
+  - Why D is incorrect: Terraform has no concept of configuration expiration dates. `required_version` is strictly a version compatibility constraint.
+
+---
+
+### Question 19 (5 points)
+
+Which of the following actions correctly removes a resource from Terraform state management without destroying the actual cloud resource?
+
+- A) Delete the resource block from the `.tf` file and run `terraform apply`.
+- B) Run `terraform state rm <resource_address>`.
+- C) Run `terraform destroy -target=<resource_address>`.
+- D) Delete the `terraform.tfstate` file and run `terraform init`.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why B is correct: `terraform state rm` removes a resource from the state file while leaving the actual cloud resource intact. This is useful when you want to stop managing a resource with Terraform (e.g., handing it off to another configuration) without deleting it.
+  - Why A is incorrect: Deleting a resource block from `.tf` files and running `terraform apply` will cause Terraform to destroy the corresponding cloud resource, because it concludes the resource should no longer exist.
+  - Why C is incorrect: `terraform destroy -target` destroys the actual cloud resource. It does not simply untrack it; it deletes it.
+  - Why D is incorrect: Deleting the entire state file causes Terraform to lose track of all managed resources and will attempt to recreate everything on the next apply, potentially creating duplicate resources.
+
+---
+
+### Question 20 (5 points)
+
+In the context of IaC and GitOps, why is it important to treat infrastructure changes with the same code-review process as application source code?
+
+- A) Cloud providers require a Git commit hash before processing any infrastructure API requests.
+- B) Code review enables peer validation of infrastructure changes, creating an audit trail, catching misconfigurations before deployment, and enforcing organizational policies.
+- C) Terraform will not execute a plan unless the `.tf` files have been reviewed and approved in a pull request.
+- D) Application source code and infrastructure code use identical syntax, making them interchangeable in the same review pipeline.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why B is correct: Applying a GitOps workflow to infrastructure code creates multiple benefits: peer review catches logic errors and security misconfigurations before they reach production; the Git log provides a complete audit trail of who changed what and why; branch protection rules enforce approval policies; and automated CI/CD can run `terraform plan` on pull requests so reviewers see exactly what will change.
+  - Why A is incorrect: Cloud provider APIs do not require or validate Git commit hashes. Terraform communicates directly with provider APIs without any Git integration at the API level.
+  - Why C is incorrect: Terraform has no built-in awareness of Git or pull request approval status. It executes plans based on configuration files and credentials, not on repository workflow state.
+  - Why D is incorrect: Application code and HCL have entirely different syntax and semantics. The rationale for unified code review is process consistency and governance, not syntactic similarity.
+
+---
+
 Module 01 Quiz — CIS-4337 Infrastructure Automation — Texas Wesleyan University

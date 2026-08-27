@@ -311,7 +311,28 @@ In practice, `element.textContent = 'Hello, world!'` achieves the same result wi
 
 ---
 
-## 8. JSE Certification Exam Tips
+## 8. Supplemental Resources
+
+The following free, openly available resources extend and reinforce the topics covered in this module.
+
+- **[Eloquent JavaScript — Chapter 14: The Document Object Model](https://eloquentjavascript.net/14_dom.html)**
+  The primary OER textbook chapter for this module. Covers creating and inserting nodes with `createElement` and `appendChild`, modifying the tree, removing elements, and the `createTextNode` API with worked exercises.
+
+- **[MDN Web Docs — Document.createElement()](https://developer.mozilla.org/en-US/docs/Web/API/Document/createElement)**
+  Full reference for `createElement` including the element name string, custom element support, and a complete example showing the create-configure-insert pipeline.
+
+- **[MDN Web Docs — Element.insertAdjacentHTML()](https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentHTML)**
+  Complete reference for all four `insertAdjacentHTML` position values with diagrams and runnable examples. Also covers the safer alternatives `insertAdjacentText` and `insertAdjacentElement`.
+
+- **[MDN Web Docs — Node.cloneNode()](https://developer.mozilla.org/en-US/docs/Web/API/Node/cloneNode)**
+  Full reference for `cloneNode` explaining the `deep` parameter, what is and is not copied (notably: event listeners are not copied), and common use cases such as template-based rendering.
+
+- **[javascript.info — Modifying the document](https://javascript.info/modifying-document)**
+  Comprehensive tutorial on creating, inserting, removing, and cloning DOM nodes. Includes comparison of all insertion methods (`append`, `prepend`, `before`, `after`, `replaceWith`), the `DocumentFragment` pattern for batch insertion, and the security implications of `innerHTML`.
+
+---
+
+## 9. JSE Certification Exam Tips
 
 1. **The three steps of safe node creation** — create with `createElement`, configure with `textContent`/`classList`/`setAttribute`, insert with `appendChild`. Know the order.
 
@@ -335,7 +356,7 @@ In practice, `element.textContent = 'Hello, world!'` achieves the same result wi
 
 ---
 
-## 9. Study Checklist
+## 10. Study Checklist
 
 - [ ] Watch the Module 11 video lecture by Professor Nash.
 - [ ] Read Chapter 14 (The Document Object Model) of [Eloquent JavaScript](https://eloquentjavascript.net/14_dom.html) — focus on the node creation section.

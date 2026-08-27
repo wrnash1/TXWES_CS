@@ -253,3 +253,19 @@ AWS responsibility: physical data centers for both AZs, fiber connection between
 ## References
 
 All certification study materials and exam registration: <aws.amazon.com/certification>
+
+---
+
+## 9. Supplemental Resources
+
+**1. AWS Documentation — AWS Global Infrastructure**
+https://docs.aws.amazon.com/whitepapers/latest/aws-overview/global-infrastructure.html
+AWS Overview whitepaper section covering Regions, Availability Zones, and edge locations with authoritative definitions and current infrastructure counts.
+
+**2. AWS Skill Builder — AWS Cloud Practitioner Essentials (Free)**
+https://skillbuilder.aws/learn/course/external/view/elearning/134/aws-cloud-practitioner-essentials
+Free foundational course covering AWS global infrastructure, the Shared Responsibility Model, and core service categories — directly aligned to the topics in this module and serving as exam preparation groundwork.
+
+**3. AWS Well-Architected Framework — Reliability Pillar Whitepaper**
+https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/welcome.html
+Official AWS whitepaper on the Reliability pillar, including multi-AZ and multi-Region design patterns, fault isolation boundaries, and recovery objectives — essential background for applying Module 01 infrastructure concepts to real architectural decisions.

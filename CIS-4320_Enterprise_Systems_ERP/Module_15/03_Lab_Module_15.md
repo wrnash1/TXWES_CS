@@ -163,6 +163,41 @@ Before submitting, verify your document contains:
 
 ---
 
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Implementation Failure Post-Mortem Analysis
+
+A regional grocery chain (320 stores, $2.1 billion revenue) attempted to implement SAP S/4HANA with integrated warehouse management, supply chain planning, and financial accounting. After 22 months of implementation, the project was abandoned with $47 million spent and no go-live. A post-mortem identified the following facts:
+
+- The original timeline was 14 months; it expanded to 22 months with two scope additions approved without formal change control
+- UAT was compressed from the planned 8 weeks to 3 weeks due to timeline pressure
+- The cutover was attempted in November — the highest-volume period of the year
+- Key business stakeholders stopped attending design workshops in month 8, delegating to junior staff who lacked decision authority
+- The fit-gap log identified 73 gaps; 28 were resolved with custom development that was never fully tested end-to-end
+- No mock cutovers were conducted; the production cutover was the first full rehearsal
+- When the live system showed critical inventory errors 6 hours after go-live, the team had no documented cutback plan and spent 14 hours attempting fixes before abandoning the go-live
+
+1. Apply the ASAP/SAP Activate methodology framework to categorize each of the seven identified failure factors by the phase in which the failure originated (Prepare, Explore/Blueprint, Realize, Final Preparation, Deploy/Go-Live). For each factor, explain which specific phase deliverable or practice was missing or inadequate.
+2. The 28 custom developments that were never fully tested end-to-end represent a testing governance failure. Design a testing governance framework for this project that would have prevented this outcome. Include: the testing types required (unit, integration, regression, UAT), who is responsible for each, what the acceptance criteria are, and what "done" looks like for each type before the project can advance to the next phase.
+3. The project team had no documented cutback plan. Construct the key elements of a cutback plan for a grocery chain go-live: what triggers the cutback decision, who has authority to call the cutback, what are the technical steps to restore the legacy system, what data needs to be reconciled, and what is the communication plan for store operations if a cutback is executed on a Sunday morning.
+4. Write a lessons-learned executive summary (200–250 words) addressed to the grocery chain's Board of Directors. Summarize the three highest-impact failures, quantify the estimated cost of each failure (use reasonable estimates), and recommend three specific governance changes that must be implemented before any future ERP attempt is authorized.
+
+### Challenge 2: Phased Salesforce Implementation Design for a Professional Services Firm
+
+A 600-person consulting firm is implementing Salesforce for the first time. Currently: sales tracks opportunities in spreadsheets, service delivery tracks project hours in a separate time-tracking tool, HR manages headcount in a third system, and finance invoices clients from a legacy billing system. The CIO wants to implement Salesforce Sales Cloud, Service Cloud, and a Salesforce-to-accounting integration in 18 months.
+
+1. Design a phased implementation plan. Divide the 18 months into phases, specifying: what is implemented in each phase, why that sequence is correct (what dependencies exist between phases), and what the go-live definition is for each phase. Address why Sales Cloud should or should not be implemented before Service Cloud in this firm's context.
+2. The ADKAR model predicts that consultants — knowledge workers who are highly self-directed — will experience a specific pattern of resistance. Predict which ADKAR element is most likely to be the gap for three different user groups: (a) senior partners who generate most of the firm's revenue, (b) junior associates who will use Salesforce daily for time entry, and (c) the finance team who will lose direct control of the invoicing system. For each group, recommend a specific change management intervention.
+3. The firm's CIO wants to measure implementation success. Design a success metrics framework with two types of metrics: (a) implementation health metrics tracked weekly during the project (at least four metrics), and (b) business outcome metrics tracked monthly for 12 months post-go-live (at least four metrics). For each metric, specify the data source, the target, and the escalation threshold.
+4. Six months after Salesforce Sales Cloud goes live, a senior partner reports that her team still uses their personal spreadsheets for opportunity tracking and only enters deals into Salesforce after they close. This is adoption regression. Write a three-step intervention plan that addresses the ADKAR Desire and Reinforcement gaps for this group — including specific actions, who owns each action, and the timeline.
+
+### Reflection Questions
+
+1. Both challenges involve situations where executive engagement declined during the implementation — the grocery chain's stakeholders stopped attending workshops, and the consulting firm's senior partners bypassed the system. In both cases, the project team had technical solutions ready but lacked organizational authority to enforce adoption. What structural governance mechanism (beyond the change management team) should be designed into an ERP implementation from the start to ensure that business stakeholders remain accountable for their participation commitments throughout the project lifecycle?
+2. The grocery chain's post-mortem revealed that the project team knew about the testing gaps and the missing cutback plan but proceeded anyway under schedule pressure. This describes a failure of project escalation — the team did not stop or escalate despite knowing the go-live was unsafe. Design an escalation decision tree for an ERP implementation that defines: what conditions require escalation to the steering committee, what conditions require a mandatory go-live pause, and what conditions require the project sponsor to make a formal go/no-go decision in writing at least 30 days before go-live.
+
 *End of Lab — Module 15*
 
 **Certification Alignment:** Salesforce Administrator / SAP S/4HANA Essentials

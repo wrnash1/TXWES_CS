@@ -237,3 +237,21 @@ Submit the following as a single PDF or zipped package:
 | Part 3: Vendor Evaluation | 30 | Calculations correct, recommendation defensible, criteria framework applied |
 | Part 4: SOW Draft | 15 | Components specific, deliverables measurable, compliance requirement included |
 | **Total** | **100** | |
+
+---
+
+## Part 9 — Challenge Exercise
+
+This section is optional for students seeking additional depth and exam preparation. It is not graded as part of the standard 100-point lab but may be used for extra credit at the instructor's discretion.
+
+### Challenge Step 1: Contract Type Risk Shift Analysis
+
+The MedRecord Health System CIO is reviewing two competing contract proposals for the EHR implementation: a Firm Fixed Price (FFP) contract at $2.4M, and a Cost-Plus-Fixed-Fee (CPFF) contract with an estimated cost of $1.9M plus a fixed fee of $180,000. Write a 6–8 sentence risk analysis memo to the CIO that: explains which contract type places more cost risk on MedRecord and why, identifies two scenarios where the CPFF contract could end up costing more than the FFP proposal, describes what contractual protections (ceiling price clause, audit rights, NTE clause) the CIO should require if choosing CPFF, and states which contract type you recommend given that the EHR implementation scope includes significant customization work with uncertain requirements.
+
+### Challenge Step 2: Vendor Evaluation Criteria Weighting Debate
+
+Your procurement team is debating the weighting of the vendor scoring matrix criteria for the EHR RFP. Two team members disagree: the IT Director wants to weight Technical Capability at 50% because the implementation is technically complex; the CFO wants to weight Cost at 50% because the project is over budget. Using the scenario data and procurement best practices, write a 5–7 sentence recommendation that: identifies the risk of over-weighting either single criterion, proposes a balanced weighting model with at least four criteria and a rationale for each weight, and explains how a Technical Evaluation Panel with independent scoring reduces scoring bias. Reference the best-value vs. lowest-cost award distinction from the reading guide.
+
+### Challenge Step 3: Procurement Closure Checklist
+
+The EHR implementation project is approaching its contracted completion date. Draft a Procurement Closure Checklist containing at least eight line items that the project manager must verify before formally closing the vendor contract. For each item, specify: the responsible party (PM, Sponsor, Legal, Vendor), the verification method (document review, sign-off, system test, audit), and the consequence of skipping it. Include items covering final deliverable acceptance, warranty activation, HIPAA Business Associate Agreement status, payment release, lessons learned capture, and archiving of contract documentation. This exercise maps directly to the Close Procurements process and the Project+ procurement closure domain.

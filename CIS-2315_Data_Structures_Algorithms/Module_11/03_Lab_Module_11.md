@@ -385,3 +385,21 @@ Submit to Canvas:
 | Negative weights | Dijkstra fails — use Bellman-Ford instead |
 | Network Delay Time | `max(dist.values())` after Dijkstra from source k |
 | Disconnected nodes | Remain `float('inf')` — return -1 if any unreachable |
+
+---
+
+## Part 9 — Challenge Exercise
+
+These steps are **optional** and ungraded. They are designed for students who want to deepen their understanding beyond the core lab.
+
+### 9.1 — Bellman-Ford Algorithm
+
+Dijkstra fails on graphs with negative-weight edges. Implement the Bellman-Ford algorithm: initialize `dist[source] = 0`, `dist[v] = infinity` for all others. Then repeat V−1 times: for every edge (u, v, w), if `dist[u] + w < dist[v]`, update `dist[v]`. After V−1 rounds, do one final pass — if any distance can still be relaxed, a negative cycle exists. Test your implementation on: (1) a graph with no negative edges (compare results with Dijkstra), (2) a graph with a negative edge but no negative cycle (show Dijkstra gives wrong answer), and (3) a graph with a negative cycle (show detection). State the time complexity O(V × E) and explain when Bellman-Ford is preferred over Dijkstra.
+
+### 9.2 — Minimum Path Sum in a Grid (LeetCode #64)
+
+Given an m×n grid of non-negative integers, find the path from the top-left to the bottom-right that minimizes the sum of all values on the path (you can only move right or down). This can be solved with Dijkstra (treating grid cells as nodes) or with dynamic programming. Implement both approaches, verify they produce the same result, and compare their time complexities: Dijkstra is O(mn log(mn)) with a heap; DP is O(mn) without one. Explain why DP is preferred here and under what conditions a Dijkstra-like approach would be necessary (hint: if movement is not restricted to right/down).
+
+### 9.3 — Cheapest Flights Within K Stops (LeetCode #787)
+
+Find the cheapest flight from `src` to `dst` with at most K stops. This is a variant of Dijkstra where the state is `(cost, node, stops_remaining)`. Standard Dijkstra without the stops constraint would work, but here you must track stops. Implement the modified Dijkstra using a min-heap of `(cost, node, stops)` tuples. Note that unlike standard Dijkstra, you should NOT use a simple `visited` set because reaching the same node with different remaining stops constitutes different states. Verify on the standard test case and explain in a comment why the stops dimension makes this a different algorithm from standard Dijkstra.

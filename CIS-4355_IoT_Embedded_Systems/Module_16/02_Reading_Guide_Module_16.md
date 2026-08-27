@@ -251,3 +251,17 @@ The capstone project must demonstrate a complete, working four-tier IoT system:
 10. A graduate completes this course and wants to pursue AWS IoT Specialty certification. They feel strong on security and fleet management but unfamiliar with AWS-specific services. What three-phase study plan would you recommend, and what resource would you use in each phase?
 
 ---
+
+## 9. Supplemental Resources
+
+**1. AWS IoT Specialty Certification — Exam Guide and Official Study Path**
+[https://aws.amazon.com/certification/certified-iot-specialty/](https://aws.amazon.com/certification/certified-iot-specialty/)
+The official AWS IoT Specialty exam guide documents the five domain weights (Architecture Design 24%, Device Connectivity 17%, Processing and Acting 20%, Security 22%, Device Management 17%), the skills assessed in each domain, and links to the official AWS skill builder learning paths and practice exam questions. This resource is the authoritative reference for mapping course module content to exam domains — Domain 4 (Security) aligns with Module 12, Domain 5 (Device Management) aligns with Module 15, and Domain 1 (Architecture Design) aligns directly with the four-tier architecture model in this module.
+
+**2. Microsoft Learn — AZ-220 Azure IoT Developer Study Guide**
+[https://learn.microsoft.com/en-us/credentials/certifications/azure-iot-developer-specialty/](https://learn.microsoft.com/en-us/credentials/certifications/azure-iot-developer-specialty/)
+Microsoft's official AZ-220 study guide on Microsoft Learn provides the skills measured outline, maps to Azure documentation for each skill area (IoT Hub configuration, DPS enrollment groups, IoT Edge module development, Stream Analytics window functions), and includes free hands-on labs in Azure sandbox environments. The Device Provisioning Service content directly parallels Module 15's JITP material, and the IoT Hub device twin documentation is the Azure equivalent of the shadow synchronization pattern implemented in the Module 15 lab — making this resource highly efficient for course graduates filling the Azure-specific knowledge gap.
+
+**3. CompTIA IoT+ Certification Exam Objectives (CY0-001)**
+[https://www.comptia.org/certifications/iot](https://www.comptia.org/certifications/iot)
+CompTIA's official IoT+ exam objectives page lists the four exam domains (IoT Hardware and Devices, IoT Networking and Connectivity, IoT Data Management, and IoT Security), each sub-objective with percentage weight, and links to the official study guide and practice exam resources. Reviewing the objectives against course modules confirms which areas require targeted review versus areas where course content already exceeds the exam baseline — particularly useful for students who want to take the IoT+ exam quickly as an early credential before specializing in an AWS or Azure certification track.

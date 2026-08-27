@@ -353,3 +353,33 @@ Annual testing is standard. Mission-critical systems should test more frequently
 9. Name three technical controls that network administrators implement to enforce AUP provisions.
 
 10. What is the purpose of a tabletop exercise in disaster recovery testing, and what are its limitations compared to a full interruption test?
+
+---
+
+## 9. Supplemental Resources
+
+The following free resources extend Module 15 content on network documentation, change management, IPAM, and disaster recovery planning.
+
+**1. Professor Messer — Network Management and Documentation Free Videos (N10-008)**
+URL: https://www.professormesser.com/network-plus/n10-008/n10-008-video/
+Relevance: Professor Messer covers network documentation (logical/physical diagrams, baseline), change management procedures, IPAM concepts, and disaster recovery terminology (RTO, RPO, hot/warm/cold sites) in videos directly aligned to Network+ Domain 3.0 and Domain 4.0 exam objectives.
+
+**2. NIST SP 800-34 Rev. 1 — Contingency Planning Guide for Federal Information Systems (Free)**
+URL: https://csrc.nist.gov/publications/detail/sp/800-34/rev-1/final
+Relevance: NIST's free authoritative guide on IT contingency planning covers BIA methodology, RTO/RPO target-setting, DR site types, backup strategies, and DR testing methods. Directly applicable to the disaster recovery content in this module and frequently referenced in enterprise DR planning.
+
+**3. ITIL Foundation — Change Management Overview (Free Summary)**
+URL: https://www.axelos.com/certifications/itil-service-management/itil-4-foundation
+Relevance: ITIL (IT Infrastructure Library) defines the industry-standard change management framework used by enterprise IT organizations — normal, standard, and emergency change types, CAB structure, and change request documentation requirements match Module 15 change management content.
+
+**4. Men & Mice — IPAM Best Practices Guide (Free)**
+URL: https://www.menandmice.com/resources/
+Relevance: Men & Mice (now part of BlueCat) provides free IPAM educational resources covering subnet allocation planning, address utilization monitoring, DDI integration (DNS+DHCP+IPAM), and IPAM database design — directly applicable to the IPAM spreadsheet and management concepts in this module.
+
+**5. draw.io — Free Network Diagramming Tool**
+URL: https://app.diagrams.net/
+Relevance: draw.io is a completely free, browser-based diagramming tool with built-in network shape libraries (Cisco, AWS, Azure icons). It can export to PNG, PDF, and Visio formats — the recommended free alternative for creating the logical and physical network diagrams required in the Module 15 lab.
+
+---
+
+*CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash*

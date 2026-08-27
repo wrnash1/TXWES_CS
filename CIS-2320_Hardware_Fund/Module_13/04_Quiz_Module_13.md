@@ -186,3 +186,183 @@ Correct Answer: B
 - Why A is incorrect: LCD panels are not adhesive-sealed. They are held by retaining screws and brackets. Applying adhesive sealant would prevent future service, trap heat, and is not a recognized procedure for any laptop display installation.
 - Why C is incorrect: Modern operating systems (Windows 10/11, macOS) do not require a separate driver installation for a replacement LCD panel of the same type. The display interface (eDP or LVDS) is handled by the integrated graphics driver already present in the system. The panel will output an image immediately after connection without any additional driver steps.
 - Why D is incorrect: Electrical tape is not an appropriate material for protecting the video cable in the hinge. The hinge area is precisely engineered, and adding tape bulk can prevent the hinge from seating correctly or cause cable pinching. The video cable is already routed and protected by the hinge mechanism's design.
+
+---
+
+### Question 11
+
+A technician is upgrading the RAM in a laptop. The laptop's service manual specifies SO-DIMM DDR4-3200. The technician has a spare stick of desktop DDR4-3200 RAM available. Can this stick be used?
+
+- A) Yes — DDR4-3200 is DDR4-3200 regardless of physical form factor; the desktop DIMM will fit in the laptop's SO-DIMM slot with a standard adapter
+- B) No — desktop RAM uses full-size DIMM modules (typically 288 pins) while laptop RAM uses SO-DIMM modules (typically 260 pins for DDR4); these are different physical sizes and pin counts and are not interchangeable even with an adapter
+- C) Yes — SO-DIMM and full-size DIMM share identical dimensions; the only difference is the label, which is a marketing distinction applied by manufacturers
+- D) No — desktop DDR4 operates at 1.5V while laptop DDR4 (SO-DIMM) operates at 1.35V; using the higher-voltage desktop RAM will damage the laptop's memory controller permanently
+
+Correct Answer: B
+
+- Why B is correct: SO-DIMM (Small Outline DIMM) modules used in laptops are physically smaller (67.6mm long) and have 260 pins for DDR4, compared to full-size DIMMs (133.35mm long, 288 pins for DDR4 desktop). They cannot be physically inserted into each other's slots, and no passive adapter exists to make them compatible. The correct replacement must be a DDR4 SO-DIMM module.
+- Why A is incorrect: No standard adapter exists that allows a full-size DIMM to be used in a SO-DIMM slot. Even if such an adapter were created, the physical dimensions of the DIMM would not fit within a laptop's chassis.
+- Why C is incorrect: SO-DIMM and DIMM are physically distinct module formats with different PCB dimensions, different notch positions, and different pin counts. The size and pin differences are real hardware differences, not marketing labels.
+- Why D is incorrect: Both desktop DDR4 DIMMs and laptop DDR4 SO-DIMMs operate at the same 1.2V standard voltage (DDR4 standard). While DDR3L (low-voltage) runs at 1.35V compared to standard DDR3's 1.5V, no such voltage difference exists between SO-DIMM and DIMM variants of DDR4 at the same speed grade.
+
+---
+
+### Question 12
+
+During a laptop keyboard replacement, a technician notices that the new keyboard's ribbon cable is 0.5 mm narrower than the original cable but the number of conductors is the same. The technician forces the ribbon cable into the ZIF (Zero Insertion Force) connector. After assembly, several keys in the middle of the keyboard do not respond. What is the most likely cause?
+
+- A) The keyboard firmware requires a reset procedure after replacement; the non-responsive keys are in sleep mode and will activate after the first system reboot
+- B) The mismatched ribbon cable width caused some conductors to misalign with the ZIF connector contacts, resulting in intermittent or open connections to the affected key matrix rows or columns
+- C) The operating system's keyboard driver cached the old keyboard's hardware ID; uninstalling and reinstalling the keyboard driver will restore full key functionality
+- D) The keyboard controller chip on the motherboard was damaged by ESD during the replacement because no wrist strap was used, and the non-responsive keys indicate partial controller failure
+
+Correct Answer: B
+
+- Why B is correct: ZIF connectors rely on the ribbon cable making precise contact with each conductor pad in the connector housing. A cable that is a different width will misalign the conductor traces relative to the connector contacts, leaving some conductors making partial or no contact. The specific keys affected correspond to the matrix rows or columns whose conductors are misaligned.
+- Why A is incorrect: Laptop keyboards do not have independent firmware or sleep modes for individual keys. Key responsiveness is determined entirely by the physical electrical contact between the ribbon cable conductors and the controller.
+- Why C is incorrect: The keyboard driver communicates with the keyboard controller via HID (Human Interface Device) protocol. The driver does not cache per-key hardware IDs, and key matrix scanning is a hardware function independent of driver state.
+- Why D is incorrect: ESD damage to the keyboard controller would more likely result in complete keyboard failure or random key generation rather than a consistent pattern of non-responsive keys aligned with a physical misalignment. The root cause described (mismatched cable width) directly explains the symptom pattern.
+
+---
+
+### Question 13
+
+A laptop that is three years old can no longer hold a charge for more than 45 minutes despite the battery health indicator showing 78% capacity. The AC adapter is functioning correctly. Which of the following best explains the situation?
+
+- A) The laptop's power management firmware is reporting an incorrect capacity; the battery is actually at 30% health, which is why runtime is so short despite the displayed percentage
+- B) Lithium-ion battery capacity degrades as the number of charge cycles accumulates; at 78% capacity, the battery can only deliver 78% of its original energy storage, resulting in proportionally shorter runtime — a 4-hour original battery now provides approximately 3.1 hours (0.78 × 4h), and further degradation will continue
+- C) The 45-minute runtime indicates a battery fault that is unrelated to health percentage; lithium-ion batteries should maintain full original runtime until they reach exactly 0% health
+- D) The battery health indicator measures voltage, not capacity; a reading of 78% means the battery's maximum voltage has dropped to 78% of rated voltage, reducing current output and causing the shorter runtime
+
+Correct Answer: B
+
+- Why B is correct: Lithium-ion batteries degrade through charge cycles, each cycle causing a small reduction in maximum charge capacity. The battery health percentage reflects the ratio of current maximum capacity to original capacity. At 78%, the battery holds 78% of its original energy, resulting in 78% of the original runtime. This is expected and normal behavior for a three-year-old laptop battery. Replacement is appropriate when capacity drops below 50-60% depending on user needs.
+- Why A is incorrect: While battery management system calibration errors exist, a displayed 78% capacity with only 45 minutes of runtime is plausible for many laptop batteries depending on their original runtime. Assuming the indicator is wrong is not the most likely explanation without additional evidence.
+- Why C is incorrect: Lithium-ion battery capacity degrades continuously and gradually with each charge cycle. There is no "cliff" at 0% health — runtime shortens progressively as capacity decreases. The claim that batteries should maintain full runtime until exactly 0% health contradicts the known electrochemical degradation behavior of lithium-ion cells.
+- Why D is incorrect: Battery health percentage in laptop management systems reflects charge capacity (mAh or Wh), not voltage. The nominal voltage of a lithium-ion cell remains relatively stable throughout most of its capacity range, dropping significantly only near depletion. Capacity and voltage are related but distinct measurements.
+
+---
+
+### Question 14
+
+A technician removes a laptop's bottom cover and identifies a battery connected to the motherboard via a small multi-pin connector. The battery also has a thin adhesive strip holding it to the chassis. What is the correct procedure for removing the battery?
+
+- A) Disconnect the battery connector from the motherboard first, then carefully lift the battery by inserting a spudger or plastic pry tool under the edge to release the adhesive — do not use metal tools that could puncture the battery pouch
+- B) Remove the adhesive strip first by pulling sharply upward, then disconnect the battery connector — the order does not matter because disconnecting the connector last prevents the battery from discharging into the motherboard during removal
+- C) Cut the battery connector cable with flush-cut pliers close to the battery to avoid disturbing the motherboard connector, then peel the battery out — the connector is replaceable and the cable cut allows safe removal
+- D) Heat the battery with a heat gun at 150°C to soften the adhesive before attempting removal — this is the manufacturer-recommended procedure for adhesive-mounted laptop batteries
+
+Correct Answer: A
+
+- Why A is correct: The correct order is to disconnect the battery connector from the motherboard first (disconnecting power from the circuit before handling the battery), then use a plastic pry tool or spudger to gently work under the battery and release the adhesive. Plastic tools are critical because a metal tool puncturing the lithium-ion pouch can cause a thermal runaway reaction. This procedure is consistent with iFixit and manufacturer repair guides.
+- Why B is incorrect: Pulling the adhesive strip sharply before disconnecting the connector increases the risk of damaging internal components if the battery shifts suddenly. The order should always be to electrically disconnect the battery first.
+- Why C is incorrect: Cutting the battery cable is destructive and unnecessary. The connector is designed to be removed intact, and cutting the cable would require soldering a new connector — adding significant labor and cost to a standard battery replacement.
+- Why D is incorrect: Applying 150°C heat directly to a lithium-ion battery is dangerous. While gentle heat (30-40°C from a heat pad or iOpener tool) can soften adhesive on glued batteries, excessive heat can cause thermal runaway in lithium cells. 150°C far exceeds safe handling temperatures for lithium-ion batteries.
+
+---
+
+### Question 15
+
+A laptop is brought in for service with the complaint that the built-in webcam is not detected in Device Manager. The camera functioned correctly one week ago. No software or driver changes were made. What should the technician check first?
+
+- A) Update Windows to the latest version, as Microsoft periodically removes camera driver support for older integrated webcams through Windows Update
+- B) Check whether the webcam has a physical privacy shutter that has been accidentally slid to the closed position, which on some laptop models also disconnects the camera electrically rather than just blocking the optical path
+- C) Replace the webcam module, as an integrated webcam that stops appearing in Device Manager has definitively failed and requires a hardware replacement
+- D) Check the laptop's BIOS/UEFI settings — the webcam being absent from Device Manager always indicates the camera has been disabled in BIOS firmware and must be re-enabled there
+
+Correct Answer: B
+
+- Why B is correct: Many modern laptops have a physical webcam privacy shutter. On some models (particularly privacy-focused business laptops), sliding the shutter to the closed position also triggers a hardware disconnect that removes the device from Device Manager entirely. This is a commonly overlooked cause of sudden "camera not detected" reports and requires no disassembly to check.
+- Why A is incorrect: Windows Update does not remove driver support for existing integrated webcams. Camera disappearance from Device Manager after a Windows Update is a documented issue in some cases, but the scenario states no software changes were made.
+- Why C is incorrect: Jumping directly to hardware replacement without checking simpler causes violates the A+ troubleshooting methodology. The camera could be disabled in BIOS, have a loose internal connector, or have a hardware privacy switch in the off position — all of which are easier to check than replacing the module.
+- Why D is incorrect: While BIOS/UEFI firmware can disable the webcam on some laptops, this is not the most common cause of sudden disappearance. Additionally, the BIOS setting typically requires deliberate user action to change. The physical privacy shutter is a more commonly encountered first cause that should be checked before accessing BIOS settings.
+
+---
+
+### Question 16
+
+A technician needs to upgrade a laptop's storage from a 2.5-inch SATA SSD to an NVMe SSD. After checking the laptop's service manual, the technician confirms the laptop has a single M.2 slot. What two pieces of information are critical to verify before purchasing an NVMe M.2 SSD?
+
+- A) The SSD's color and the laptop's total USB port count — color determines thermal compatibility and USB ports determine whether the SSD will enumerate correctly
+- B) The M.2 slot key type (M-key or B+M-key) and the M.2 slot length (2242, 2260, or 2280) — the SSD must use the compatible key and physically fit within the slot's supported length
+- C) The NVMe SSD's operating temperature range and the laptop's maximum processor TDP — the SSD will throttle if the CPU generates more heat than the SSD's rated maximum
+- D) The SSD brand and the laptop brand — only same-brand SSDs are guaranteed compatible, as different manufacturers use proprietary M.2 slot connector pinouts
+
+Correct Answer: B
+
+- Why B is correct: M.2 slots have defined key types — M-key supports PCIe NVMe (and SATA), while B-key supports SATA only. The SSD must use a key that the slot accepts. The slot also has a physical length limit (most laptops support 2280, some support 2242 only) and the SSD module must fit. Purchasing a 2280 NVMe SSD for a slot that only supports 2242 length will result in a drive that cannot be fully seated or secured.
+- Why A is incorrect: SSD color has no technical significance. USB port count has no relationship to M.2 NVMe storage installation or compatibility.
+- Why C is incorrect: While NVMe SSDs do generate more heat than SATA SSDs, the operating temperature comparison to CPU TDP is not a standard compatibility criterion for storage selection. SSD thermal throttling is managed by the drive's own firmware and the laptop's cooling design, not by a pre-purchase compatibility check.
+- Why D is incorrect: M.2 is a standardized connector specification. The M.2 slot pinout is identical across all manufacturers for the defined key types. There are no proprietary M.2 pinouts that restrict SSD purchases to matching brands.
+
+---
+
+### Question 17
+
+A user reports that their laptop screen image is correct and clear when the lid is fully open, but the image flickers when the lid is tilted to approximately 30 degrees (nearly closed). The external monitor connected to the laptop's HDMI port shows no flicker. What is the most likely cause?
+
+- A) The laptop's GPU is overheating and throttling when the lid restricts airflow from the rear vents, causing the integrated display to flicker at lid angles that block the exhaust path
+- B) The display video cable (eDP or LVDS) routing through the hinge has developed a stress fracture or intermittent connection from repeated opening and closing — bending the cable at the hinge point at certain lid angles breaks continuity
+- C) The LCD panel itself has a manufacturing defect where the pixel array loses synchronization at specific backlight brightness levels; the 30-degree position causes the ambient light sensor to reduce brightness to a level that triggers the defect
+- D) The wireless antenna cables routed through the display assembly are interfering with the video cable signal when the lid is at 30 degrees, because the antenna transmit power is highest at this angle
+
+Correct Answer: B
+
+- Why B is correct: The display video cable (eDP on modern laptops or LVDS on older laptops) is routed from the motherboard through the hinge into the display panel. Repeated opening and closing stresses the cable at the hinge flex point. A stress fracture or loose connection in this cable produces a symptom that is position-dependent — the cable makes intermittent contact at some lid angles but not others. The external monitor working normally confirms the GPU and display controller are functioning correctly; the fault is in the internal cable path.
+- Why A is incorrect: GPU thermal throttling affects rendering performance and frame rate across all display outputs simultaneously. It would not produce a position-dependent flicker limited to the internal display while the external monitor remains stable.
+- Why C is incorrect: LCD panel defects correlated with backlight brightness would manifest as a brightness-triggered event, not a lid-angle-triggered event. The ambient light sensor changes brightness based on room lighting conditions, not lid angle.
+- Why D is incorrect: Wireless antenna cables carry RF signals and use shielded coaxial construction specifically to prevent interference with adjacent cables. Antenna-to-video cable interference is not a recognized failure mode for laptop display flickering.
+
+---
+
+### Question 18
+
+A technician is preparing to replace a failed trackpad on a laptop. After removing the bottom cover, the technician sees that the trackpad is connected to the motherboard via a very thin ribbon cable terminated in a ZIF connector. The ZIF connector on the motherboard has a small brown flip-locking bar. What must the technician do before pulling the ribbon cable out of the connector?
+
+- A) Slide the flip-locking bar toward the connector body (lock it further) to compress the contacts and allow the cable to pull free with reduced friction
+- B) Flip the locking bar up (away from the connector body) to release the tension clamp on the ribbon cable, then slide the cable straight out horizontally without any downward force
+- C) Cut the ribbon cable close to the ZIF connector to release it from the motherboard, then solder a new cable section to the connector pads during the trackpad installation
+- D) Heat the ZIF connector with a heat gun for 10 seconds to soften the locking mechanism, which is permanently bonded at the factory and cannot be released without thermal treatment
+
+Correct Answer: B
+
+- Why B is correct: ZIF (Zero Insertion Force) connectors use a cam-actuated locking mechanism. The locking bar (or flip-lock, actuator, or retainer) must be flipped upward to release the tension on the cable conductors. Only after the locking bar is in the released (open) position can the ribbon cable slide straight out with zero force required. Attempting to pull the cable while the locking bar is closed will tear the cable or rip the connector from the PCB.
+- Why A is incorrect: Sliding the locking bar further closed would increase clamping force on the cable, making it impossible to remove and risking cable and connector damage if force is applied.
+- Why C is incorrect: Cutting and resoldering ribbon cables is a destructive and unnecessary procedure for ZIF-connected components. ZIF connectors are specifically designed to allow non-destructive cable removal and reinsertion.
+- Why D is incorrect: ZIF connectors are plastic and metal mechanical connectors — they are not bonded with adhesive and do not require heat to release. Applying a heat gun to a ZIF connector would melt the plastic housing and permanently damage the connector.
+
+---
+
+### Question 19
+
+A laptop is returned to a technician after a display replacement with the complaint that the laptop makes a continuous low hum and the fan is running at maximum speed, but the CPU temperature is only 45°C (normal operating temperature). What is the most likely cause?
+
+- A) The fan tachometer wire was disconnected or damaged during the display replacement; the motherboard is not receiving RPM feedback from the fan and is running it at maximum speed as a failsafe
+- B) The CPU thermal paste dried out during the display replacement and the temperature sensor is reading incorrectly, showing 45°C while actual temperature is 95°C
+- C) The display replacement introduced a short circuit in the power delivery circuit, causing the voltage regulators to run at maximum power and generate excess heat that the fan is compensating for
+- D) The new display panel draws significantly more current than the original, overloading the motherboard's display controller and causing the system to throttle by running the fan at maximum to dissipate the additional heat
+
+Correct Answer: A
+
+- Why A is correct: Laptop motherboards use the CPU fan tachometer signal (a pulse signal proportional to RPM) to verify the fan is spinning. If the tachometer wire is disconnected or damaged during service, the motherboard receives no speed feedback and assumes the fan is not spinning. The failsafe response is to run the fan at maximum duty cycle. The CPU temperature being normal confirms the thermal path is fine — the issue is the missing tachometer feedback.
+- Why B is incorrect: If thermal paste had dried out and the actual temperature were 95°C, the system would likely be throttling the CPU, shutting down automatically, or showing high temperatures in monitoring utilities. A reported temperature of 45°C with high fan speed is inconsistent with thermal paste failure.
+- Why C is incorrect: A short circuit in the power delivery circuit would typically trigger overcurrent protection, cause the system to shut down, or generate localized heat measurable by the power management IC's thermal sensors — not simply cause maximum fan speed with normal CPU temperatures.
+- Why D is incorrect: LCD panels are passive display devices that draw current from a regulated backlight power circuit. A replacement panel of the same type does not draw significantly more current than the original. Display current does not affect CPU fan speed control logic.
+
+---
+
+### Question 20
+
+A technician is servicing a laptop with a cracked screen. Before ordering a replacement panel, which information must the technician identify to ensure the correct panel is ordered?
+
+- A) The laptop's color and the user's preferred screen resolution — the panel is ordered based on aesthetics and user preference rather than hardware compatibility specifications
+- B) The panel resolution, size (measured diagonally in inches), connector type (eDP or LVDS), backlight type (LED or CCFL), and ideally the original panel part number from the manufacturer label on the rear of the panel
+- C) The operating system version and the GPU driver version — these determine which panel protocols the motherboard supports and which panels are compatible
+- D) The laptop's age and the user's warranty status — newer laptops use eDP automatically and older laptops use LVDS automatically, so age alone determines which panel to order
+
+Correct Answer: B
+
+- Why B is correct: Correct panel replacement requires matching the physical size, resolution, connector type (eDP for modern panels, LVDS for older panels), backlight type (LED for most post-2010 laptops, CCFL for pre-2010), and ideally the full panel part number from the label on the rear of the existing panel. An incorrect connector type physically will not fit, and an LVDS panel cannot be substituted for an eDP panel even if dimensions match.
+- Why A is incorrect: Panel compatibility is a hardware specification matter, not an aesthetic or preference matter. Ordering a panel based on color or user preferences without verifying hardware specifications will likely result in an incompatible part.
+- Why C is incorrect: Operating system version and GPU driver version are software attributes that have no bearing on which physical LCD panel the laptop's display connector supports. Panel compatibility is determined by the hardware interface on the motherboard.
+- Why D is incorrect: While there is a general correlation between laptop age and display interface type (eDP vs. LVDS), the transition period from LVDS to eDP spans several years and varies by manufacturer and model. Assuming panel type based solely on age is unreliable and can result in ordering the wrong part.

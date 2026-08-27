@@ -138,6 +138,33 @@ Submit to the Canvas assignment portal by the module due date.
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Pattern Catalog Design
+
+You are a senior developer onboarding a new team member who has never encountered design patterns. Create a personal pattern reference card for the five patterns covered in this module (Singleton, Factory Method, Adapter, Decorator, Observer, Strategy — pick five):
+
+1. For each pattern, write a one-sentence "elevator pitch" that explains what problem it solves in plain language (no technical jargon — pretend you are explaining to a non-developer product manager).
+2. For each pattern, invent a real-world non-software analogy that captures its structure (e.g., Singleton = the one official timekeeping clock in a building — everyone checks the same clock).
+3. For each pattern, write one "smell" — a code or design symptom that signals this pattern is needed (e.g., for Adapter: "We have two components that both work perfectly but cannot talk to each other because their interfaces don't match").
+4. For each pattern, write one "misuse warning" — a situation where teams incorrectly apply this pattern and the consequence (e.g., Singleton misuse: using Singleton for objects that should actually have multiple instances, creating hidden global state).
+
+### Challenge 2: Technical Debt Sprint Planning
+
+The CampusTech team from Part 2 has agreed that the ProjectManager God Object must be refactored. The team has 40 story points of capacity per Sprint. The refactoring work has been estimated at 60 story points total. New feature requests from the Product Owner total 80 story points for the next three Sprints.
+
+1. Design a three-Sprint refactoring plan that delivers both new features and incremental refactoring each Sprint. For each Sprint: list which refactoring work (from your Part 2 decomposition) will be done, which new features will be included, and the total story point allocation. Ensure each Sprint stays at or below 40 points.
+2. For the first Sprint of refactoring, write a Sprint Goal that acknowledges both the refactoring work and the feature delivery — the goal should be business-facing, not purely technical.
+3. The Product Owner objects: "These refactoring stories have no user-visible value. I want to order them to the bottom of the backlog." Write a two-paragraph response from the Scrum Master that explains why refactoring PBIs have indirect business value and how they should be ordered relative to features that depend on them. Reference the velocity data from the scenario (drop from 40 to 18 points).
+4. After the refactoring is complete, what metric would you propose tracking over the next three Sprints to confirm that the refactoring achieved its intended business outcome? Define the metric, describe how it is measured, and state the threshold that would indicate success.
+
+### Reflection Questions
+
+1. The Gang of Four wrote Design Patterns in 1994 — before Agile, before cloud computing, and before modern language features like lambdas and generics. Some patterns (like Strategy) can now be implemented with a single function pointer or lambda instead of a class hierarchy. Does this make the pattern obsolete, or is the pattern still conceptually valuable even if the implementation changes? Defend your position with a specific example.
+2. The God Object anti-pattern is rarely created maliciously — teams fall into it because adding to an existing class is faster than designing a new one. This is an example of short-term thinking creating long-term technical debt. Identify two other software development shortcuts that follow the same pattern: fast now, painful later. For each, describe the short-term benefit, the long-term cost, and the design practice that prevents it.
+
+---
+
 ## Rubric Summary
 
 | Component | Points |

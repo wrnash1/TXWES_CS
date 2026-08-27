@@ -234,3 +234,233 @@ Distractor Analysis:
 - Why C is incorrect: This describes a postcondition — a state that is true after the use case completes, not before it begins.
 - Why D is incorrect: This also describes a postcondition or a step in the main scenario — the confirmation message is a result, not a prerequisite.
 - Why A is correct: A precondition describes what must already be true before the use case can begin. The customer being logged in and having two accounts with available balances are conditions that must exist before the Transfer Funds use case can execute.
+
+---
+
+## Question 11
+
+In a use case diagram for a university library system, the "Search Catalog" use case and the "Reserve Book" use case both require the user to be authenticated. A BA creates a separate "Authenticate User" use case and connects it to both with include relationships. What design principle does this represent?
+
+A) Extend — authentication is optional and only triggered under certain conditions
+
+B) Factoring out shared mandatory sub-flows into an included use case to avoid repetition
+
+C) Generalization — the Authenticate User use case inherits from both parent use cases
+
+D) Actor multiplicity — the same actor performs both the base and included use cases
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- Why A is incorrect: Include, not extend, is used when a sub-flow is always mandatory; extend is for optional, conditional behavior.
+- Why C is incorrect: Generalization is an inheritance relationship between actors or between use cases with similar behavior; the scenario describes a shared sub-flow, not inheritance.
+- Why D is incorrect: Actor multiplicity is not a UML use case concept; the scenario describes a structural relationship between use cases.
+- Why B is correct: When multiple use cases share an identical mandatory sub-flow, BABOK and UML recommend factoring it out into a separate included use case. This reduces duplication and ensures consistent behavior across all use cases that require authentication.
+
+---
+
+## Question 12
+
+A development team receives a user story: "As an admin, I want to delete user accounts." After one sprint, the team delivers the feature. During the sprint review, the product owner rejects the story saying "I needed soft-delete that archives the account, not hard-delete that permanently removes the data." Which INVEST criterion was violated?
+
+A) Independent — the story depended on an account archival feature not yet built
+
+B) Negotiable — the team assumed the implementation without discussing it with the product owner
+
+C) Valuable — the delivered feature does not provide business value to the organization
+
+D) Testable — the story had no acceptance criteria to distinguish soft-delete from hard-delete
+
+Correct Answer: D
+
+Distractor Analysis:
+
+- Why A is incorrect: The story's independence is not the issue; the problem is the ambiguity about what "delete" means.
+- Why B is incorrect: While Negotiable is partially relevant, the root cause here is missing acceptance criteria that would have resolved the ambiguity before development began.
+- Why C is incorrect: The feature is valuable — the product owner needs account deletion; the issue is the wrong implementation, not lack of value.
+- Why D is correct: The absence of acceptance criteria left "delete" undefined, allowing the team to implement hard-delete while the product owner expected soft-delete. Testable acceptance criteria — specifying exactly what the delete function must and must not do — would have caught this before the sprint started.
+
+---
+
+## Question 13
+
+A BA is writing a use case specification for "Process Insurance Claim." One alternate flow reads: "If the claim amount exceeds $50,000, the system routes the claim to senior underwriting review and suspends automatic processing." Which type of scenario does this alternate flow represent?
+
+A) Exception flow — because the system encounters an error condition
+
+B) Alternate flow — because the system follows a different but valid path based on a business condition
+
+C) Main success scenario — because large-claim processing is a core business function
+
+D) Precondition — because the $50,000 threshold must be true before the use case can begin
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- Why A is incorrect: An exception flow handles error or failure conditions; routing a valid high-value claim to senior review is a normal business rule, not an error.
+- Why C is incorrect: The main success scenario is the most common path (standard-value claims); the large-claim route is a variation, not the default.
+- Why D is incorrect: The $50,000 threshold is checked mid-process, not before the use case begins; it is not a precondition.
+- Why B is correct: An alternate flow describes a different but valid sequence triggered by a specific condition. A business rule routing large claims to senior review is a valid alternate path that still achieves the goal of processing the claim.
+
+---
+
+## Question 14
+
+Which of the following user stories best demonstrates the "Valuable" criterion of INVEST?
+
+A) "As a developer, I want to refactor the database connection pool so that the code is cleaner."
+
+B) "As a customer, I want to view my order history so that I can track past purchases and request returns without calling support."
+
+C) "As a tester, I want to write automated test scripts so that regression testing is faster."
+
+D) "As a database administrator, I want to index the transactions table so that query performance improves."
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- Why A is incorrect: Code refactoring may be technically necessary but the business value to end users or stakeholders is not articulated; the "so that" clause is an internal developer concern, not a stakeholder benefit.
+- Why C is incorrect: Faster regression testing benefits the development team, not the business stakeholders or end users; it is a technical story, not a business-value story.
+- Why D is incorrect: Database indexing is a technical improvement; the business value to stakeholders is indirect and unstated.
+- Why B is correct: This story clearly identifies a customer benefit (tracking purchases and requesting returns without support calls) — a concrete, articulated business value that directly satisfies a user need.
+
+---
+
+## Question 15
+
+In a use case diagram for an ATM system, the "Bank Customer" actor and the "Bank System" actor are both associated with the "Withdraw Cash" use case. What does the "Bank System" actor's association represent?
+
+A) The Bank System is a human actor who must approve each withdrawal
+
+B) The Bank System is a secondary actor — an external system that the use case interacts with to complete its goal
+
+C) The Bank System is the system under design and should be shown inside the system boundary, not as an actor
+
+D) The Bank System is a generalization of the Bank Customer actor
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- Why A is incorrect: An external banking system is not a human approver; it is an automated external system.
+- Why C is incorrect: The system under design (the ATM) is represented by the system boundary rectangle; external systems that interact with it are shown as actors outside the boundary.
+- Why D is incorrect: Generalization is an inheritance relationship between actors of the same type; a bank system and a customer are entirely different types of actors.
+- Why B is correct: In use case modeling, any external system that interacts with the system under design is modeled as an actor outside the system boundary. The Bank System is a secondary actor — it responds to requests from the ATM system during withdrawal processing.
+
+---
+
+## Question 16
+
+A Scrum team is refining the backlog before sprint planning. One story is estimated at 40 story points. The team's average sprint velocity is 30 story points. What should the product owner do with this story?
+
+A) Schedule it as the only story in an extended sprint to accommodate its size
+
+B) Accept it as-is since story point estimates are relative and can be adjusted during the sprint
+
+C) Split the story into two or more smaller stories that can fit within a sprint
+
+D) Assign it to the senior developer who can complete it faster than the estimate suggests
+
+Correct Answer: C
+
+Distractor Analysis:
+
+- Why A is incorrect: Extending sprint duration undermines sprint cadence and disrupts the team's planning rhythm; it is not standard Scrum practice.
+- Why B is incorrect: Relative estimates do not change the fact that a 40-point story exceeds the team's capacity; accepting oversized stories leads to incomplete sprint goals.
+- Why D is incorrect: Story point estimates are team-level capacity measures, not individual developer assignments; assigning to one person does not resolve the capacity mismatch.
+- Why C is correct: When a story exceeds the team's sprint velocity, it should be split into smaller, independently deliverable stories that each fit within a sprint. This is standard backlog refinement practice and directly satisfies the Small criterion of INVEST.
+
+---
+
+## Question 17
+
+A BA is modeling a library system. The use case "Renew Book" includes the use case "Verify Account Standing" because overdue fines or blocks must always be checked before a renewal is processed. What would happen to the "Verify Account Standing" use case if the include relationship is removed?
+
+A) The Renew Book use case would still function correctly because include relationships are optional
+
+B) The Renew Book use case would skip account verification, potentially allowing blocked patrons to renew books — a business rule violation
+
+C) The Verify Account Standing use case would become an extend of Renew Book instead
+
+D) The system would automatically perform verification without the relationship being modeled
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- Why A is incorrect: Include relationships are mandatory, not optional; removing an include means the included behavior will no longer be executed.
+- Why C is incorrect: Include and extend are fundamentally different relationships; removing include does not automatically convert it to extend.
+- Why D is incorrect: The model drives the implementation specification; removing the relationship from the model communicates that verification is not required, and developers would implement accordingly.
+- Why B is correct: The include relationship is mandatory; it documents that account verification must always occur during renewal. Removing it would communicate to the development team that verification is not required, enabling blocked patrons to renew — a business rule violation.
+
+---
+
+## Question 18
+
+Which of the following correctly illustrates a well-formed Given/When/Then acceptance criterion for a user story about bill payment?
+
+A) "The system shall process bill payments within 3 seconds."
+
+B) "As a customer, I want to pay my bill online so that I avoid late fees."
+
+C) "Given the customer has a saved payment method and a balance due, When the customer confirms the payment, Then the system shall process the payment and display a confirmation number within 5 seconds."
+
+D) "Bill payment must be implemented in Sprint 3 and tested by QA before release."
+
+Correct Answer: C
+
+Distractor Analysis:
+
+- Why A is incorrect: This is a non-functional requirement written in "shall" format, not an acceptance criterion in Given/When/Then format.
+- Why B is incorrect: This is the user story itself in the "As a / I want / So that" format, not an acceptance criterion.
+- Why D is incorrect: This is sprint scheduling and QA process information, not a behavioral acceptance criterion.
+- Why C is correct: Given/When/Then format correctly specifies: the starting context (Given), the trigger action (When), and the expected system outcome (Then) with a measurable standard (5 seconds, confirmation number). This is a complete, testable acceptance criterion.
+
+---
+
+## Question 19
+
+A BA reviews a use case diagram and notices that a "Generate Report" use case extends a "View Dashboard" use case. A developer asks: "Does the system always generate a report when the user views the dashboard?" What is the correct answer?
+
+A) Yes — extend means the behavior always executes as part of the base use case
+
+B) No — extend means the report generation is optional and only occurs when a specific extension point condition is met
+
+C) It depends — the BA must check the actor association to determine whether it is mandatory
+
+D) Yes — unless the user explicitly opts out using the suppress relationship
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- Why A is incorrect: This describes the include relationship; extend is specifically used for optional, conditional behavior.
+- Why C is incorrect: Actor associations do not determine whether extend is mandatory or optional; the extend relationship itself defines conditionality.
+- Why D is incorrect: There is no "suppress relationship" in UML use case notation.
+- Why B is correct: Extend models optional behavior that executes only when a specific condition is met at an extension point. Report generation only occurs if the user triggers that extension (e.g., clicks "Export Report") — it is not automatic on every dashboard view.
+
+---
+
+## Question 20
+
+A BA is using use cases to model a subscription management system. Which artifact should the BA create first before drawing individual use case diagrams?
+
+A) A state transition diagram showing all subscription lifecycle states
+
+B) A context diagram or use case boundary diagram identifying all actors and the overall system scope
+
+C) A data flow diagram showing how subscription data moves between processes
+
+D) A class diagram showing the attributes of the Subscription entity
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- Why A is incorrect: A state transition diagram models object lifecycle states; it is useful but not the first step in use case modeling.
+- Why C is incorrect: A DFD models data movement and is a separate process-modeling technique; use case modeling begins with scope and actor identification, not data flows.
+- Why D is incorrect: Class diagrams are object-oriented design artifacts; they are created after requirements have been modeled, not before.
+- Why B is correct: Before detailing individual use cases, the BA must establish scope by identifying all actors (primary and secondary) and drawing a high-level use case boundary or context diagram. Without knowing who the actors are and what system they interact with, individual use cases cannot be defined correctly.

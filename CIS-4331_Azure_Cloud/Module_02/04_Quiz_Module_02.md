@@ -204,3 +204,183 @@ Which of the following correctly describes the relationship between Resource Gro
 - *Why A is incorrect:* Resource groups cannot span subscriptions. Each resource group exists entirely within one subscription. Cross-subscription resource sharing requires explicit peering or linking, not a shared resource group.
 - *Why C is incorrect:* A subscription can contain an unlimited number of resource groups (subject to subscription quotas). Most organizations create many resource groups per subscription to organize workloads, environments, and teams.
 - *Why D is incorrect:* Resource groups and subscriptions are distinct hierarchy levels with different purposes. Subscriptions handle billing and top-level access control; resource groups handle lifecycle and operational grouping of related resources.
+
+---
+
+### Question 11 (5 points)
+
+An organization deploys all of its virtual machines without any explicit availability configuration in East US. Azure silently places VMs on whichever physical host has capacity. A rack-level power failure takes down one physical rack. Which Azure feature, if the team had used it, would have protected against this specific failure?
+
+- A) Azure Availability Zones
+- B) Azure Availability Sets
+- C) Azure Region Pairs
+- D) Azure Resource Locks
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Availability Sets distribute VMs across fault domains (separate physical racks with independent power) and update domains. A rack-level power failure affects one fault domain; VMs in other fault domains remain operational. Availability Sets were specifically designed for rack-level hardware failure protection within a single datacenter.
+  - *Why A is incorrect:* Availability Zones protect against entire datacenter failures, not rack-level failures. They are a stronger (and more expensive) option, but the specific failure described — a single rack losing power — is exactly what fault domains in an Availability Set address.
+  - *Why C is incorrect:* Region Pairs protect against entire regional failures. A rack-level outage is far below the regional failure scale that region pairs address.
+  - *Why D is incorrect:* Resource Locks prevent accidental deletion or modification of Azure resources. They have no relationship to physical fault tolerance or hardware failure protection.
+
+---
+
+### Question 12 (5 points)
+
+Which statement accurately describes how Azure assigns physical datacenters to Availability Zone numbers (Zone 1, Zone 2, Zone 3) across different subscriptions?
+
+- A) All Azure customers in a region see the same physical datacenter as Zone 1
+- B) Zone numbers are randomly shuffled each time a subscription is created and may not map to the same physical datacenter across subscriptions
+- C) Zone numbering is fixed globally — Zone 1 always maps to the oldest datacenter in the region
+- D) Zones are only assigned when a resource is deployed; empty subscriptions have no zone mapping
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Microsoft maps physical datacenters to logical zone numbers differently across subscriptions to distribute load evenly across physical infrastructure. Your Zone 1 may be a different physical building than another customer's Zone 1 in the same region. This is intentional load balancing across Azure's physical footprint.
+  - *Why A is incorrect:* Zone numbers are not consistent across subscriptions. Two different Azure customers both deploying to "East US Zone 1" may be using different physical buildings.
+  - *Why C is incorrect:* Zone numbering is not based on datacenter age or any fixed global mapping. The per-subscription randomization is the documented Microsoft behavior.
+  - *Why D is incorrect:* Zone mappings are assigned at the subscription level when the subscription is created and registered in a region, not at resource deployment time.
+
+---
+
+### Question 13 (5 points)
+
+A company wants to move its primary business application from East US to West Europe for latency reasons. The application uses Azure Storage with GRS redundancy. When the storage account is in East US, data is automatically replicated to which secondary region?
+
+- A) East US 2
+- B) West US
+- C) North Europe
+- D) West Europe
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* The Azure region pair for East US is West US. GRS replicates data to the paired region, which for East US is West US. This is one of the foundational region pair facts tested on AZ-900.
+  - *Why A is incorrect:* East US 2 is paired with Central US, not East US. East US and East US 2 are separate regions with separate pairs.
+  - *Why C is incorrect:* North Europe is paired with West Europe. They are both European regions. East US is in the Americas geography and pairs within that geography.
+  - *Why D is incorrect:* West Europe is paired with North Europe. It is in a different geography (Europe) from East US (Americas). GRS keeps data within the same geography except for the Brazil South exception.
+
+---
+
+### Question 14 (5 points)
+
+An Azure subscription has the following policy applied at the Root Management Group: "Allowed locations = East US, West US." A developer in a child resource group tries to create a virtual machine in North Europe. What happens?
+
+- A) The VM is created in North Europe and the policy logs a compliance warning
+- B) The VM creation is blocked because the policy restricts allowed locations
+- C) The policy does not apply to resource groups — only to subscriptions
+- D) The developer can override the policy by assigning themselves the Owner role
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Azure Policy with a Deny effect blocks resource creation in non-allowed locations. Policies applied at the Root Management Group cascade to all child management groups, subscriptions, resource groups, and resources. North Europe is not in the allowed list, so the VM creation fails with a policy violation error.
+  - *Why A is incorrect:* That describes the Audit effect, not Deny. An Audit policy would allow the creation and flag it as non-compliant. A Deny policy blocks the creation entirely.
+  - *Why C is incorrect:* Policies cascade downward through the entire management hierarchy. A policy at the Root Management Group applies to all subscriptions, all resource groups, and all individual resources beneath it.
+  - *Why D is incorrect:* Azure RBAC (including Owner role) and Azure Policy are independent evaluation systems. Having Owner role authorizes the action; Policy determines whether the resulting configuration is permitted. A Deny policy blocks the operation regardless of the user's role.
+
+---
+
+### Question 15 (5 points)
+
+What is the maximum depth of management groups beneath the Root Management Group in an Azure tenant?
+
+- A) Two levels
+- B) Four levels
+- C) Six levels
+- D) Ten levels
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - *Why C is correct:* Azure Management Groups support a maximum of six levels of depth beneath the Root Management Group (not counting the root itself or the subscription level). This is a specific fact that appears on AZ-900.
+  - *Why A is incorrect:* Two levels would severely limit enterprise hierarchy modeling. Azure supports significantly more depth.
+  - *Why B is incorrect:* Four levels is below the actual maximum of six. This is a plausible-sounding distractor but is not the documented limit.
+  - *Why D is incorrect:* Ten levels exceeds the documented maximum. Azure also limits total management group count to 10,000 per tenant, but depth is capped at six beneath the root.
+
+---
+
+### Question 16 (5 points)
+
+An architect is designing a storage solution that must survive a complete zone failure in the primary region. The data does not need geographic redundancy. Which Azure Storage redundancy option is most cost-effective for this requirement?
+
+- A) LRS (Locally Redundant Storage)
+- B) ZRS (Zone-Redundant Storage)
+- C) GRS (Geo-Redundant Storage)
+- D) GZRS (Geo-Zone-Redundant Storage)
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* ZRS replicates data synchronously across three Availability Zones within the same region. If one entire zone (datacenter) fails, data remains available from the other two zones. ZRS provides zone-level protection without the additional cost of geo-replication.
+  - *Why A is incorrect:* LRS stores three copies within a single datacenter. A zone failure (meaning that entire datacenter goes offline) would make all three LRS copies unavailable simultaneously.
+  - *Why C is incorrect:* GRS adds geo-replication to a paired region, providing regional failure protection. This exceeds the stated requirement (zone failure only) and costs more than ZRS.
+  - *Why D is incorrect:* GZRS combines zone redundancy with geo-replication — the most durable and most expensive option. It exceeds what is needed when geographic redundancy is explicitly not required.
+
+---
+
+### Question 17 (5 points)
+
+A company with operations in the European Union deploys all Azure resources in the West Europe region. They are concerned about GDPR data residency requirements. Which Azure feature ensures that geo-redundant storage keeps EU customer data within the EU geography?
+
+- A) Azure Sovereign Regions
+- B) Azure Geographies with same-geography region pairs
+- C) Azure Management Groups with location policies
+- D) Azure Resource Locks
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Azure Geographies preserve data residency boundaries. West Europe is paired with North Europe — both are within the EU geography. GRS replication stays within the same geography, ensuring EU data never leaves the EU to satisfy GDPR data residency requirements.
+  - *Why A is incorrect:* Azure Sovereign Regions (Azure Government, Azure China) are for specific government/regulated cloud instances, not for standard EU commercial data residency. The company's scenario does not require a sovereign cloud.
+  - *Why C is incorrect:* Management Groups with location policies can restrict which regions resources are deployed in, but they do not govern where geo-redundant storage replication sends data. Region pairs determine GRS replication destinations.
+  - *Why D is incorrect:* Resource Locks prevent deletion or modification of resources. They have no relationship to data replication geography or GDPR data residency compliance.
+
+---
+
+### Question 18 (5 points)
+
+A resource group named "WebApp-RG" contains a VM, a storage account, and a virtual network. An administrator deletes "WebApp-RG." Which resources are deleted?
+
+- A) Only the resource group container is removed; the VM, storage account, and VNet remain as orphaned resources
+- B) The VM and storage account are deleted, but the VNet is preserved as it may be used by other resource groups
+- C) All three resources — VM, storage account, and VNet — are deleted along with the resource group
+- D) Only empty resource groups can be deleted; the operation fails because the group contains resources
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - *Why C is correct:* Deleting a resource group is a cascading delete operation that destroys all resources contained within it simultaneously. The Azure Portal and CLI both warn users and require confirmation precisely because all contained resources will be permanently deleted.
+  - *Why A is incorrect:* Resources cannot be orphaned in Azure — every resource must belong to exactly one resource group. When the resource group is deleted, its contents are deleted with it; they cannot persist as orphaned objects.
+  - *Why B is incorrect:* Azure does not selectively preserve networking resources during a resource group deletion. All resources in the group are deleted equally, regardless of type.
+  - *Why D is incorrect:* Azure does not require a resource group to be empty before deletion. The deletion cascade removes all contents automatically after the user confirms the operation.
+
+---
+
+### Question 19 (5 points)
+
+Which of the following correctly describes the purpose of an Azure geography?
+
+- A) A geography is another name for an Azure region and the terms are interchangeable
+- B) A geography is a discrete market, typically a country or group of countries, that defines data residency and compliance boundaries containing two or more Azure regions
+- C) A geography is the physical building within a region that houses Azure servers
+- D) A geography defines the maximum distance allowed between two paired regions
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* An Azure geography is a market-level boundary — typically a country or closely related group of countries — that preserves data residency and compliance. Each geography contains multiple Azure regions, ensuring data can be geo-replicated while staying within the same regulatory jurisdiction.
+  - *Why A is incorrect:* Geographies and regions are different levels of the Azure physical hierarchy. A geography contains multiple regions; they are not interchangeable terms.
+  - *Why C is incorrect:* That description applies to a datacenter or an Availability Zone. A geography is a much larger, market-level concept that spans multiple cities and regions.
+  - *Why D is incorrect:* The minimum distance between paired regions (at least 300 miles) is a region pair characteristic, not a geography definition. Geographies define compliance and data residency boundaries, not distance constraints.
+
+---
+
+### Question 20 (5 points)
+
+A university IT team is planning their first Azure deployment. They need to ensure that student lab resources, faculty research resources, and administrative systems each have separate billing reports and can be managed by separate teams. What is the recommended Azure hierarchy structure?
+
+- A) One subscription with three resource groups named for each area
+- B) Three subscriptions (one per area), organized under a Management Group, with appropriate resource groups inside each subscription
+- C) Three separate Azure tenants — one per area
+- D) One subscription with resource tags to identify each area, relying on tag-based cost filtering
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Separate subscriptions provide separate billing boundaries (each subscription generates its own invoice/cost report) and separate access control boundaries (each team manages their own subscription). A Management Group organizes all three subscriptions for shared university-level governance policies. This is the standard Azure landing zone pattern for multi-team environments.
+  - *Why A is incorrect:* A single subscription with three resource groups shares one billing boundary — there is no automatic per-area invoice separation. Cost filtering by resource group is possible but is not as clean or enforceable as a subscription boundary.
+  - *Why C is incorrect:* Separate Azure tenants would be entirely separate Azure environments with completely separate Entra ID directories. This creates extreme complexity for any shared services (shared VNets, shared identity) and is not the correct architecture for departments within the same university.
+  - *Why D is incorrect:* Tag-based cost filtering requires that all resources be consistently tagged. It provides cost reporting but not billing boundary separation. Tags can be omitted or incorrect; subscription boundaries are structural and always enforced.

@@ -313,3 +313,19 @@ Exam Tip 8: Flow data provides scalable monitoring at low storage cost. Full pac
 - [ ] Complete the Module 05 Lab
 - [ ] Complete the Module 05 Quiz
 - [ ] Post initial response to the Module 05 Discussion board by Wednesday at 11:59 PM
+
+---
+
+## 9. Supplemental Resources
+
+**1. Wireshark — Sample Capture Files (Wireshark Wiki)**
+<https://wiki.wireshark.org/SampleCaptures>
+A large collection of real-world and educational PCAP files covering protocols and attack types including port scans, ARP poisoning, malware traffic, and protocol anomalies. Downloading and opening these captures in Wireshark is the best hands-on way to practice the display filter writing and traffic pattern recognition skills covered in Sections 2 and 3 of this guide.
+
+**2. SANS — Malware Traffic Analysis Practice PCAPs**
+<https://www.malware-traffic-analysis.net/>
+A practitioner-maintained repository of real malware infection traffic captures used for analyst training. Each entry includes the PCAP, associated IOCs, and a write-up identifying the malware family. Reviewing these captures reinforces C2 beaconing, DNS tunneling, and anomalous traffic pattern identification covered in Section 4.
+
+**3. Suricata — Open-Source IDS/IPS Rule Writing Guide**
+<https://docs.suricata.io/en/latest/rules/index.html>
+The official Suricata rule documentation, covering rule syntax, options, and writing detection rules for network traffic. Reading through the rule structure examples — especially for content matching, threshold settings, and flowbits — directly reinforces the IDS/IPS detection and rule design concepts in Sections 5 and 6 of this guide.

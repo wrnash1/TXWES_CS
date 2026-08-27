@@ -435,3 +435,16 @@ When choosing a deployment strategy, evaluate these axes:
 ## Next Module Preview
 
 Module 15 covers generative models and the Transformer architecture: autoencoders, variational autoencoders, GANs, attention mechanisms, and an introduction to BERT. These are among the most exciting and rapidly evolving areas of deep learning.
+
+---
+
+## 9. Supplemental Resources
+
+**1. [TensorFlow Serving — Docker Quickstart](https://www.tensorflow.org/tfx/serving/docker)**
+Official TF Serving Docker deployment guide covering model directory structure, container launch commands, REST and gRPC endpoint testing, and hot model reload. The primary reference for production Keras model serving and directly aligned with the deployment content in this module.
+
+**2. [TFLite Guide — Post-Training Quantization](https://www.tensorflow.org/lite/performance/post_training_quantization)**
+Comprehensive official guide comparing all four TFLite quantization strategies (dynamic range, full integer, float16, 16x8) with accuracy benchmarks, conversion code, and `representative_dataset` examples. Essential for understanding quantization tradeoffs in edge deployment.
+
+**3. [FastAPI — Build APIs with Python](https://fastapi.tiangolo.com/)**
+FastAPI is the modern alternative to Flask for ML model serving, offering automatic OpenAPI documentation, type validation with Pydantic, and async request handling. Widely used in production ML systems and increasingly preferred over Flask for new projects.

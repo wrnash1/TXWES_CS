@@ -228,3 +228,203 @@ A problem requires finding the minimum number of coins to make change for a give
 - *Why B is correct:* With {1,3,4} and target 6: greedy picks 4 (largest ≤ 6, leaving 2), then 1 (largest ≤ 2, leaving 1), then 1 — total 3 coins. Optimal is 3+3 = 2 coins. The local choice of 4 blocks the globally better pair. US denominations have the "canonical" property (each denomination is approximately a multiple of the previous), which makes greedy work; {1,3,4} lacks this.
 - *Why C is incorrect:* Divisibility of the target by the coin value is irrelevant to greedy correctness. The failure is due to the relationship between denominations, not the specific target value.
 - *Why D is incorrect:* Greedy gives 3 coins (4+1+1), not 2. The example is correct — it is a well-known counterexample to greedy coin change.
+
+---
+
+### Question 11
+
+What is the time complexity of `activity_selection` on n activities, and what step dominates the runtime?
+
+- A) O(n) — the single-pass selection loop is the bottleneck
+- B) O(n log n) — sorting by finish time dominates; the selection pass is O(n)
+- C) O(n²) — each activity is compared with all others
+- D) O(log n) — binary search is used to find compatible activities
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* O(n) describes only the selection loop after sorting. The full algorithm includes a sort step, which costs O(n log n). Because O(n log n) > O(n), the sort dominates.
+- *Why B is correct:* Sorting n activities by finish time costs O(n log n) using comparison sort. The subsequent greedy selection pass makes a single left-to-right scan in O(n). Total: O(n log n) + O(n) = O(n log n). This is tight — you cannot avoid the sort when activities are given in arbitrary order.
+- *Why C is incorrect:* O(n²) would arise from a nested loop comparing every pair of activities. The greedy selection avoids this by using the sorted order — at each step only one comparison (start ≥ last_finish) is needed.
+- *Why D is incorrect:* There is no binary search in the standard activity selection algorithm. All compatibility checks are sequential against a single `last_finish` value.
+
+---
+
+### Question 12
+
+For `jump([1,1,1,1])`, what is the minimum number of jumps returned by the Jump Game II greedy algorithm?
+
+- A) 1
+- B) 2
+- C) 3
+- D) 4
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* With `nums[0]=1`, the farthest reachable from index 0 is index 1. One jump reaches index 1, not the last index (3). At least 3 jumps are required.
+- *Why B is incorrect:* Two jumps can reach at most index 2 (jump from 0→1→2). The last index is 3. Two jumps are insufficient.
+- *Why C is correct:* Trace: i=0, farthest=1, i==current_end(0) → jumps=1, current_end=1. i=1, farthest=2, i==current_end(1) → jumps=2, current_end=2. i=2, farthest=3, i==current_end(2) → jumps=3, current_end=3. Loop ends at len-2=2. Return 3. Each step advances one index; three jumps are needed.
+- *Why D is incorrect:* 4 jumps would be needed if we also jumped from the last index, but the loop runs to `range(len(nums)-1)` = `range(3)`, so i goes 0,1,2 — the last index is never jumped from. The answer is 3, not 4.
+
+---
+
+### Question 13
+
+In `can_complete_circuit`, what is the value of `start` returned for `gas=[2,3,4], cost=[3,4,3]`?
+
+- A) 0
+- B) -1
+- C) 2
+- D) 1
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Starting at station 0: diff = 2−3 = −1. current_tank = −1 < 0 immediately. Station 0 is invalid. Additionally, total_tank = (2−3)+(3−4)+(4−3) = −1+−1+1 = −1 < 0. No circuit is possible.
+- *Why B is correct:* total_tank = sum(gas) − sum(cost) = (2+3+4) − (3+4+3) = 9 − 10 = −1 < 0. The total fuel deficit means no starting station can complete the circuit. The function returns −1 regardless of where `start` ended up during the loop.
+- *Why C is incorrect:* Station 2 has a surplus (4−3=+1) but the circuit cannot be completed because there is not enough total gas. The global feasibility check (total_tank ≥ 0) fails, so −1 is returned.
+- *Why D is incorrect:* `start` may advance to 1 or 2 during the loop (due to resets), but the final return value is determined by `total_tank >= 0`, which is False. Return value is −1.
+
+---
+
+### Question 14
+
+Which statement correctly describes the `erase_overlap_intervals` algorithm (LeetCode #435)?
+
+- A) It uses earliest-start greedy and counts activities that start before the previous activity ends
+- B) It sorts by finish time, keeps the earliest-finishing activity when overlap occurs, and counts the removed (overlapping) intervals
+- C) It sorts by interval length and removes the longest intervals first
+- D) It uses a stack to detect and remove nested intervals
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Earliest-start is not the correct greedy criterion here. The algorithm sorts by finish time. If sorted by start time, an activity that starts early but ends late could incorrectly be kept over one that starts later but ends sooner — blocking more future activities.
+- *Why B is correct:* After sorting by finish time, the algorithm iterates through intervals. When an overlap is detected (`start < last_finish`), the current interval is removed (it overlaps with an earlier-finishing one that was already kept). `last_finish` is not updated — effectively keeping the interval that finishes earlier. The count of removals equals `n − max_non_overlapping_set_size`.
+- *Why C is incorrect:* Removing the longest intervals first is not optimal. A single long interval might not overlap anything, while several shorter ones could all overlap each other. Duration is irrelevant; finish time is the correct sort key.
+- *Why D is incorrect:* There is no stack involved. The algorithm uses a single variable `last_finish` and a counter `removals` — it is O(1) extra space (beyond the sort).
+
+---
+
+### Question 15
+
+In the fractional knapsack with `items=[(60,10),(100,20),(120,30)]` and `capacity=50`, what is the maximum total value?
+
+- A) 160.0 — take items A and B (greedy by ratio, only 30 kg used)
+- B) 220.0 — take items B and C (optimal for 0/1 knapsack)
+- C) 240.0 — take A, B, and a fraction of C
+- D) 200.0 — take B and half of C
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* 160 is the greedy 0/1 knapsack result (items A + B = 30 kg), which fails because C doesn't fit in the remaining 20 kg. In the fractional knapsack, you can take a fraction of C — there is no reason to stop at 30 kg when 20 kg of capacity remain.
+- *Why B is correct for 0/1 but wrong here:* 220 is the optimal 0/1 knapsack answer (B+C = 50 kg, value=220). But the fractional knapsack allows splitting, so we can do better: take A (ratio 6/kg), B (ratio 5/kg), and 20/30 of C (ratio 4/kg), giving 60+100+80 = 240.
+- *Why C is correct:* Fractional knapsack sorts by ratio: A(6/kg), B(5/kg), C(4/kg). Take A (10 kg, value 60, cap left=40). Take B (20 kg, value 100, cap left=20). Take 20/30 of C (value = 120 × 20/30 = 80, cap left=0). Total = 60+100+80 = 240.
+- *Why D is incorrect:* Taking B(20 kg=100) + half of C(15 kg=60) = 35 kg and value=160 — this does not fill capacity and ignores A which has a higher ratio than C.
+
+---
+
+### Question 16
+
+What does the exchange argument prove about the activity selection algorithm, and what structural property of the problem does it rely on?
+
+- A) It proves the algorithm runs in O(n log n) by showing the sort is unavoidable
+- B) It proves correctness by showing any optimal solution that does not start with the earliest-finishing activity can be modified to do so, since the earliest-finishing activity is compatible with at least as many future activities as any alternative
+- C) It proves the algorithm is stable by showing equal finish times are broken by start time
+- D) It proves the algorithm terminates in at most n iterations without revisiting any activity
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* The exchange argument proves correctness, not time complexity. The O(n log n) bound comes from the sorting analysis, which is separate from the exchange argument.
+- *Why B is correct:* The exchange argument for activity selection: take any optimal set O. If O does not begin with the earliest-finishing activity A, identify the first activity X in O that conflicts with A. Replace X with A — since A finishes no later than X, every activity that was compatible with X is also compatible with A. The modified solution has the same count, so it is still optimal. Repeating this transformation yields the greedy solution, proving it is optimal.
+- *Why C is incorrect:* Stability is a property of sorting algorithms, not greedy correctness. The exchange argument does not address tie-breaking. Activity selection with equal finish times still works correctly regardless of tie-breaking order.
+- *Why D is incorrect:* Termination is guaranteed by the finite loop — it does not need a separate proof. The exchange argument specifically addresses optimality (solution quality), not termination.
+
+---
+
+### Question 17
+
+What would `can_jump([0, 1])` return, and why?
+
+- A) True — index 0 is the starting position, which is always reachable
+- B) False — `max_reach` starts at 0, and `nums[0]=0` means we can only stay at index 0; index 1 is unreachable
+- C) True — a jump of 0 at index 0 reaches the adjacent cell
+- D) True — the last index is always reachable from the first
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Index 0 being reachable is trivially true, but that is not sufficient to reach the last index. `can_jump` must determine whether the *last* index is reachable. Starting at index 0 with `nums[0]=0` means no forward movement is possible.
+- *Why B is correct:* Trace: i=0, jump=0, `max_reach = max(0, 0+0) = 0`. i=1: `1 > max_reach(0)` → return False. With a jump of 0, you cannot advance from index 0. Index 1 is unreachable.
+- *Why C is incorrect:* A jump of 0 means zero steps forward — you remain at the same position. It does not reach any adjacent cell.
+- *Why D is incorrect:* This is false as a general claim. `[3,2,1,0,4]` is a standard counterexample. Reachability depends entirely on the array values.
+
+---
+
+### Question 18
+
+Why is greedy by earliest finish time correct for activity selection, but greedy by earliest start time incorrect?
+
+- A) Both strategies give the same result; earliest-start is just slower to implement
+- B) Earliest-start may select a long activity that blocks many compatible ones; earliest-finish guarantees the selected activity frees the resource as soon as possible, leaving the maximum time for future selections
+- C) Earliest-start fails only when activities have equal start times; earliest-finish handles ties correctly
+- D) Earliest-start is O(n²) while earliest-finish is O(n log n), so finish-time greedy is preferred for performance
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Earliest-start gives a different and suboptimal result in many cases. Consider A=(0,10) and B=(1,2), C=(3,4). Earliest-start picks A (start=0), blocking B and C — only 1 activity. Earliest-finish picks B then C — 2 activities.
+- *Why B is correct:* The key invariant is that we want to free the resource (finish the current activity) as early as possible. Early finish leaves the longest contiguous remaining window for future activities. An early-starting but late-finishing activity monopolizes the resource, blocking alternatives. The exchange argument formalizes this: earliest-finish leaves at least as many options as any other choice.
+- *Why C is incorrect:* Earliest-start fails on basic examples regardless of tie-breaking. The fundamental problem is not about ties — it is that start time has no bearing on when the resource becomes available.
+- *Why D is incorrect:* Both strategies sort — either by start or finish time — costing O(n log n). The selection pass is O(n) for either. The difference is correctness, not performance.
+
+---
+
+### Question 19
+
+Given `gas=[5,1,2,3,4]` and `cost=[4,4,1,5,1]`, what does `can_complete_circuit` return?
+
+- A) 0
+- B) 4
+- C) -1
+- D) 3
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* At station 0: diff=5−4=+1, current_tank=1. Station 1: diff=1−4=−3, current_tank=−2 < 0 → start=2, current_tank=0. Station 0 is eliminated as a valid start.
+- *Why B is correct:* Trace: i=0: diff=1, total=1, curr=1. i=1: diff=−3, total=−2, curr=−2<0 → start=2, curr=0. i=2: diff=1, total=−1, curr=1. i=3: diff=−2, total=−3, curr=−1<0 → start=4, curr=0. i=4: diff=3, total=0, curr=3. total=0 ≥ 0 → return start=4. Starting at station 4: surplus 3, go to 0 (surplus+1=4), to 1 (4−3=1), to 2 (1+1=2), to 3 (2−2=0→fails?). Verify: 4(5−1=+4)→0(+1=5)→1(−3=2)→2(+1=3)→3(−2=1)→4 — completes! Answer is 4.
+- *Why C is incorrect:* total_tank = (5+1+2+3+4)−(4+4+1+5+1) = 15−15 = 0 ≥ 0, so a valid circuit exists. The function does not return −1.
+- *Why D is incorrect:* Station 3 is eliminated at i=3 when current_tank goes negative there, causing start to advance to 4. Station 3 cannot be the answer.
+
+---
+
+### Question 20
+
+In Jump Game II, why does the loop run to `range(len(nums) - 1)` rather than `range(len(nums))`?
+
+- A) To avoid an index-out-of-bounds error when accessing `nums[i+1]`
+- B) Because once you reach the last index, no further jump is needed — the loop only needs to decide when to jump, not whether to jump from the end
+- C) To handle the edge case where `nums` has only one element
+- D) Because `farthest` always equals `len(nums) - 1` before the loop would reach the last index
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* The loop body accesses `nums[i]` (not `nums[i+1]`), so there is no out-of-bounds risk even if iterating to `len(nums)`. The bound `len(nums)-1` is a logical choice, not a safety check.
+- *Why B is correct:* The purpose of the loop is to count the number of jumps needed to reach the last index. If you are already at or past the last index, no more jumps are needed. Jumping "from" the last index is never counted — you stop when you arrive. Running to `len(nums)-1` excludes the last element from consideration as a jump source, which correctly avoids counting an unnecessary extra jump.
+- *Why C is incorrect:* The single-element edge case is handled naturally: `range(len([x]) - 1) = range(0)` — the loop body never executes, and `jumps=0` is returned. This is correct (already at the last index). But this is a consequence of the bound, not the reason for it.
+- *Why D is incorrect:* `farthest` may or may not equal `len(nums)-1` before the loop ends. The loop terminates when `i` reaches `len(nums)-2`, not when `farthest` hits any particular value. The claim is not generally true.

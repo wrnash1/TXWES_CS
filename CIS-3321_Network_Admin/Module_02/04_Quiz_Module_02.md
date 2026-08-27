@@ -215,4 +215,204 @@ D) FTP on port 21
 
 ---
 
+### Question 11
+
+A technician uses the `nslookup` command and receives a response indicating the DNS server's IP address and the resolved hostname. Which TCP/IP model layer does DNS primarily operate at?
+
+- A) Network Access
+- B) Internet
+- C) Transport
+- D) Application
+
+**Correct Answer:** D
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Network Access covers Layers 1–2 (Ethernet, MAC addressing) — DNS is not a framing or physical protocol.
+- *Why B is incorrect:* The Internet layer handles IP addressing and routing (Layer 3) — DNS provides name resolution services above the transport layer.
+- *Why C is incorrect:* The Transport layer handles TCP/UDP segmentation and port addressing — DNS uses these services but operates above them.
+- *Why D is correct:* DNS is an Application layer protocol in the TCP/IP model, corresponding to OSI Layers 5–7. It uses UDP port 53 (and TCP port 53 for zone transfers) to resolve hostnames to IP addresses.
+
+---
+
+### Question 12
+
+Which of the following ICMP message types is sent by a router when it drops a packet because the TTL (Time to Live) field has been decremented to zero?
+
+- A) Type 0 – Echo Reply
+- B) Type 3 – Destination Unreachable
+- C) Type 8 – Echo Request
+- D) Type 11 – Time Exceeded
+
+**Correct Answer:** D
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* ICMP Type 0 is the Echo Reply — the response to a ping request. It is not related to TTL expiration.
+- *Why B is incorrect:* ICMP Type 3 (Destination Unreachable) is sent when a packet cannot reach its destination due to reasons such as a closed port, no route, or fragmentation needed.
+- *Why C is incorrect:* ICMP Type 8 is the Echo Request — the outbound ping. It is sent by the source, not by a router dropping a packet.
+- *Why D is correct:* ICMP Type 11 (Time Exceeded) is generated when a router decrements the TTL to zero and discards the packet. This is the mechanism `traceroute` exploits to map each hop.
+
+---
+
+### Question 13
+
+A network engineer captures traffic and observes that a client sends a DHCP message to the broadcast address 255.255.255.255 with source IP 0.0.0.0. Which step of the DHCP DORA process does this represent?
+
+- A) DHCP Offer
+- B) DHCP Request
+- C) DHCP Discover
+- D) DHCP Acknowledgement
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* The DHCP Offer is sent from the DHCP server to the client, offering an IP address — the server sends this, not the client with source IP 0.0.0.0.
+- *Why B is incorrect:* The DHCP Request is sent by the client after receiving an Offer, formally requesting the offered IP. At this stage the client still uses 0.0.0.0 as source, but the Discover (initial broadcast) precedes this step.
+- *Why C is correct:* The DHCP Discover is the very first message — the client has no IP address yet (source: 0.0.0.0) and broadcasts to 255.255.255.255 seeking any available DHCP server.
+- *Why D is incorrect:* The DHCP Acknowledgement is the server's final confirmation to the client that the IP address lease has been granted.
+
+---
+
+### Question 14
+
+Which of the following correctly explains why UDP is preferred over TCP for real-time voice (VoIP) traffic?
+
+- A) UDP provides built-in encryption for voice payloads, whereas TCP does not.
+- B) UDP eliminates the overhead of connection setup and retransmission, making it faster and more suitable for latency-sensitive applications.
+- C) UDP guarantees delivery of voice packets in order, which is essential for call quality.
+- D) UDP operates at Layer 3, allowing VoIP packets to bypass router queues.
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Neither UDP nor TCP provides built-in encryption. TLS (at the Presentation/Application layer) is used for encryption, regardless of whether TCP or UDP is the transport.
+- *Why B is correct:* UDP has no connection handshake, no retransmission, and no sequencing overhead. In VoIP, a small amount of packet loss is tolerable, but delay caused by TCP retransmission would severely degrade call quality.
+- *Why C is incorrect:* UDP does not guarantee delivery or ordering — that is TCP's responsibility. VoIP applications handle minor out-of-order delivery at the application layer using jitter buffers.
+- *Why D is incorrect:* UDP operates at Layer 4 (Transport), not Layer 3. Transport layer protocol selection does not bypass router queuing.
+
+---
+
+### Question 15
+
+An administrator wants to securely transfer a configuration file between two Linux servers. Which protocol should be used as a replacement for FTP that provides encrypted file transfer?
+
+- A) TFTP (port 69)
+- B) HTTP (port 80)
+- C) SFTP (port 22)
+- D) SMTP (port 25)
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* TFTP (Trivial File Transfer Protocol) uses UDP and provides no authentication or encryption — it is less secure than standard FTP, not more.
+- *Why B is incorrect:* HTTP is a web protocol, not a file transfer protocol, and transmits data in cleartext without authentication for file transfers.
+- *Why C is correct:* SFTP (SSH File Transfer Protocol) runs over SSH on port 22 and provides encrypted, authenticated file transfer between systems — it is the standard FTP replacement in secure environments.
+- *Why D is incorrect:* SMTP is an email sending protocol and has no capability for interactive file transfer between servers.
+
+---
+
+### Question 16
+
+A DNS record query returns the IP address associated with the hostname `www.example.com`. Which DNS record type was queried?
+
+- A) MX record
+- B) A record
+- C) PTR record
+- D) CNAME record
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* An MX (Mail Exchange) record maps a domain to the mail server responsible for receiving email, not to a web server's IP address.
+- *Why B is correct:* An A (Address) record maps a hostname to an IPv4 address. Querying `www.example.com` and receiving an IP address is the standard function of a DNS A record lookup.
+- *Why C is incorrect:* A PTR (Pointer) record performs reverse DNS lookup — mapping an IP address back to a hostname, which is the opposite of what was described.
+- *Why D is incorrect:* A CNAME (Canonical Name) record creates an alias from one hostname to another hostname, not directly to an IP address.
+
+---
+
+### Question 17
+
+Which of the following port numbers is used by HTTPS to provide encrypted web traffic?
+
+- A) 80
+- B) 443
+- C) 8080
+- D) 22
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Port 80 is used by HTTP (unencrypted web traffic). HTTPS encrypts the connection using TLS and uses a different port.
+- *Why B is correct:* HTTPS (HTTP Secure) uses TCP port 443. The TLS handshake occurs before any HTTP data is exchanged, encrypting the entire session.
+- *Why C is incorrect:* Port 8080 is a common alternate HTTP port used for development servers and proxies — it is not the standard HTTPS port.
+- *Why D is incorrect:* Port 22 is used by SSH (Secure Shell) for encrypted terminal access, not web traffic.
+
+---
+
+### Question 18
+
+A network administrator needs to synchronize the clocks of all network devices to a single authoritative time source. Which protocol is used for this purpose?
+
+- A) SNMP
+- B) LDAP
+- C) NTP
+- D) TFTP
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* SNMP (Simple Network Management Protocol) is used for monitoring and managing network devices, not for clock synchronization.
+- *Why B is incorrect:* LDAP (Lightweight Directory Access Protocol) is used for directory services and authentication, not time synchronization.
+- *Why C is correct:* NTP (Network Time Protocol) on UDP port 123 is the standard protocol for synchronizing clocks across network devices. Accurate timestamps are essential for log correlation, Kerberos authentication, and certificate validation.
+- *Why D is incorrect:* TFTP (Trivial File Transfer Protocol) is used for simple, unauthenticated file transfers (e.g., firmware uploads to switches), not for time synchronization.
+
+---
+
+### Question 19
+
+A network administrator configures a server to listen on TCP port 3389. Which service is most likely running on this port?
+
+- A) SSH
+- B) HTTP
+- C) SNMP
+- D) RDP
+
+**Correct Answer:** D
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* SSH uses TCP port 22 for encrypted remote terminal sessions — not port 3389.
+- *Why B is incorrect:* HTTP uses TCP port 80 for unencrypted web traffic — not port 3389.
+- *Why C is incorrect:* SNMP uses UDP port 161 for device management queries — not TCP port 3389.
+- *Why D is correct:* RDP (Remote Desktop Protocol) uses TCP port 3389 by default. It provides a graphical remote desktop session between Windows clients and servers.
+
+---
+
+### Question 20
+
+Which of the following describes the primary difference between TCP and UDP at the Transport layer?
+
+- A) TCP uses IP addresses; UDP uses MAC addresses.
+- B) TCP is connection-oriented and provides reliability through acknowledgements and retransmission; UDP is connectionless with no delivery guarantee.
+- C) TCP operates at Layer 3; UDP operates at Layer 4.
+- D) UDP supports larger payloads than TCP because it does not use port numbers.
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Both TCP and UDP use IP addresses (Layer 3). Neither protocol uses MAC addresses — MAC addressing is a Layer 2 (Data Link) function.
+- *Why B is correct:* This is the definitive distinction. TCP uses a three-way handshake, sequence numbers, acknowledgements, and retransmission to guarantee ordered, reliable delivery. UDP omits all of these mechanisms in favor of low-overhead, low-latency transmission.
+- *Why C is incorrect:* Both TCP and UDP are Layer 4 (Transport) protocols. Neither operates at Layer 3.
+- *Why D is incorrect:* UDP does use port numbers — ports are a Layer 4 feature shared by both TCP and UDP. UDP headers include source and destination port fields.
+
+---
+
 *CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash*

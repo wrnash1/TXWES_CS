@@ -323,3 +323,42 @@ Submit a ZIP file containing:
 ## Extension Challenge (Optional)
 
 Add a fourth pattern: implement a `NotificationFacade` class that provides a single `notifyEvent(eventName, status, channels)` method that internally handles factory creation, observer subscription, and command scheduling. This is the Facade pattern: one simple call replacing the multi-step process in the integration demo.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Pattern Test Coverage Analysis
+
+After completing the lab's implementation, perform a test coverage analysis:
+
+1. For each pattern you implemented (Factory, Observer, Command), list all the "paths" through the code — every distinct execution scenario. For example, Factory paths include: valid type email, valid type sms, valid type push, unknown type. Count the total number of distinct execution paths across all three patterns.
+2. Review the tests you wrote. For each execution path, mark whether it is covered by an existing test. Calculate your path coverage percentage.
+3. For any uncovered paths, write the missing test cases. Focus specifically on: negative paths (what happens when something goes wrong), boundary conditions (empty subscriber lists, empty command history), and concurrent scenarios (two channels subscribed then both unsubscribed).
+4. After adding missing tests, run the full test suite. Document any bugs that the new tests revealed — describe each bug, the test that caught it, and the fix applied.
+
+### Challenge 2: Pattern Refactoring — From Scattered Conditionals to Strategy
+
+The following pseudocode represents a common real-world code smell — a method with expanding if/else blocks for variant behavior:
+
+```python
+function calculateShippingCost(order, method):
+    if method == "standard":
+        return order.weight * 0.50 + 3.00
+    elif method == "express":
+        return order.weight * 1.25 + 8.00
+    elif method == "overnight":
+        return order.weight * 2.00 + 15.00
+    else:
+        raise Error("Unknown method")
+```
+
+1. Refactor this function to use the Strategy pattern. Write the Strategy interface, three Concrete Strategy classes (Standard, Express, Overnight), and a ShippingCalculator context class that holds a strategy reference. Show the complete implementation in your chosen language.
+2. Write a test that verifies: each strategy calculates correctly for a 5-pound order, the context can have its strategy swapped at runtime and produces different results, and an invalid strategy injection is handled gracefully.
+3. The product team wants to add "international" shipping in the next Sprint. Show exactly what code changes are required to add this variant with the Strategy pattern versus what changes would be required if the original if/else version were still in use.
+4. Write a one-paragraph explanation connecting this refactoring to Agile Manifesto Principle 9 and to the team's ability to deliver the "international shipping" feature in a single Sprint without regression risk.
+
+### Reflection Questions
+
+1. The module covers nine design patterns. In professional practice, experienced developers often say: "I use three patterns constantly and the other six rarely." Based on the patterns covered, which three do you predict are most commonly used in modern web application development? Justify your selection by identifying a specific use case in a modern web app (front-end, back-end, or API) for each of your chosen three.
+2. The Gang of Four patterns were designed for statically typed, class-based object-oriented languages like C++ and Java. Modern JavaScript, Python, and other dynamic languages have features (first-class functions, duck typing, closures) that can implement pattern intent without creating full class hierarchies. For one pattern of your choice, describe how the intent of the pattern can be implemented in a dynamic language without the class structure — and whether this makes the pattern obsolete or just differently expressed.

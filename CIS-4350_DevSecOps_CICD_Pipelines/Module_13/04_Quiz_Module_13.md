@@ -193,6 +193,209 @@ Distractor Analysis:
 
 ---
 
+### Question 11
+
+A Rego policy uses the rule `deny[msg] { container := input.spec.containers[_]; not container.securityContext; msg := "Container must have a securityContext" }`. A manifest has a container with `securityContext: {}` (an empty object). Does this rule fire?
+
+- A) Yes — `not container.securityContext` is true when `securityContext` is an empty object because empty objects are falsy in Rego
+- B) No — `not container.securityContext` is false when `securityContext` is present as a key, even if the value is an empty object `{}`
+- C) Yes — `not container.securityContext` only fires when the key is absent; since the key is present, it evaluates to true
+- D) The rule causes an OPA evaluation error because it cannot evaluate `not` on an object
+
+Correct Answer: B — In Rego, `not expr` is true only when `expr` is undefined or false. An empty object `{}` is a defined value and evaluates as truthy — it is not undefined. Therefore `not container.securityContext` is false when the key exists with an empty object value. The rule would only fire if the `securityContext` key is entirely absent from the container spec.
+
+Distractor Analysis:
+
+- Why A is incorrect: Rego does not have the concept of "falsy" empty objects as JavaScript does. In Rego, any defined value — including `{}`, `[]`, `0`, `""` — is truthy. Undefinedness is the only condition that makes `not` evaluate to true.
+- Why C is incorrect: This answer contradicts itself. The correct behavior is that when the key is present, `not container.securityContext` is false — not true. The key's presence makes the expression defined and therefore truthy.
+- Why D is incorrect: OPA evaluates `not` on object-valued expressions without error. `not obj` is simply false when `obj` is a defined non-null value. No evaluation error occurs.
+
+---
+
+### Question 12
+
+A ConstraintTemplate named `K8sRequireLabels` has been deployed to a cluster. A developer creates a Constraint resource with `enforcementAction: warn` that requires a `team` label on all Deployments. A new Deployment is submitted without the `team` label. What is the admission outcome?
+
+- A) The Deployment is rejected with an admission error listing the missing label
+- B) The Deployment is admitted and a warning is returned to the `kubectl apply` caller indicating the label is missing
+- C) The Deployment is admitted silently — warnings are only recorded in the audit log
+- D) The Constraint is ignored because `enforcementAction: warn` requires OPA Gatekeeper v3.9 or later
+
+Correct Answer: B — `enforcementAction: warn` causes Gatekeeper to admit the resource but return a warning message to the submitter. The warning appears in the output of `kubectl apply` (or equivalent tooling). Unlike `deny`, the resource is not rejected — it is created despite the policy violation. Warnings are also recorded in the audit log.
+
+Distractor Analysis:
+
+- Why A is incorrect: Rejection only occurs with `enforcementAction: deny`. With `warn`, the admission webhook returns a non-blocking warning that allows the resource to be created.
+- Why C is incorrect: In Kubernetes admission webhook responses, warnings are returned to the caller (the kubectl client or CI tool), not silently to the audit log only. The submitter sees the warning in their terminal output.
+- Why D is incorrect: `enforcementAction: warn` has been available in OPA Gatekeeper since version 3.4. Version constraints are not a factor for any Gatekeeper release in current use.
+
+---
+
+### Question 13
+
+A security engineer wants to write a Rego policy that requires every container in a Kubernetes pod to have both `memory` and `cpu` limits defined. Which Rego expression correctly checks that a CPU limit is missing?
+
+- A) `container.resources.limits.cpu == null`
+- B) `not container.resources.limits.cpu`
+- C) `container.resources.limits.cpu != ""`
+- D) `container.resources.limits.cpu == false`
+
+Correct Answer: B — In Rego, `not container.resources.limits.cpu` evaluates to true when the `cpu` field is undefined — which happens when the field is absent from the manifest. Missing resource limits appear as absent keys in the JSON input document, not as `null` or `false`. The `not` operator tests for undefinedness, which is the correct test for absent optional fields.
+
+Distractor Analysis:
+
+- Why A is incorrect: `cpu == null` would only match if the field is explicitly set to the JSON `null` value. An absent field is not the same as a `null` field in Rego — absent fields are undefined, not null. This comparison would not fire when the limit is simply not specified.
+- Why C is incorrect: `cpu != ""` tests whether the cpu value is not an empty string. A missing field is undefined, not an empty string. This expression would cause an OPA evaluation to produce no result (undefined) rather than true.
+- Why D is incorrect: `cpu == false` tests whether the cpu value is the boolean false. Resource limit values are strings (like `"500m"`) or absent. Comparing to boolean false will never match a real manifest.
+
+---
+
+### Question 14
+
+Which of the following best describes the difference between OPA Gatekeeper and Conftest in a DevSecOps pipeline?
+
+- A) Gatekeeper uses Rego; Conftest uses YAML configuration files — they enforce the same policies in different syntax
+- B) Gatekeeper enforces policy at the Kubernetes admission layer (runtime), blocking non-compliant resources from being created; Conftest enforces the same Rego policies in CI pipelines (pre-deployment), blocking non-compliant manifests before they reach the cluster
+- C) Gatekeeper is only for Kubernetes resources; Conftest can only test Terraform and Dockerfile configurations
+- D) Conftest is the open-source version of Gatekeeper — they are the same tool with different licensing
+
+Correct Answer: B — Gatekeeper and Conftest use the same Rego policy language, which is the key architectural advantage. Gatekeeper runs as a Kubernetes admission webhook and enforces at the API server level when resources are submitted to the cluster. Conftest runs in CI pipelines as a command-line tool and evaluates manifests before deployment. The same Rego file can be used in both contexts, providing consistent enforcement across development and runtime.
+
+Distractor Analysis:
+
+- Why A is incorrect: Both Gatekeeper and Conftest use Rego for policy definitions. They are not differentiated by policy language syntax.
+- Why C is incorrect: Conftest is not limited to Terraform and Dockerfiles — it evaluates any structured data format (YAML, JSON, HCL, Dockerfile, etc.) against Rego policies. It is commonly used for Kubernetes manifests.
+- Why D is incorrect: Gatekeeper and Conftest are distinct tools with different purposes and different maintainers. Conftest is maintained by the Conftest project (originally Thoughtworks); Gatekeeper is maintained by the OPA project under CNCF. Neither is a "version" of the other.
+
+---
+
+### Question 15
+
+A Gatekeeper `dryrun` Constraint has been deployed to a production cluster with a policy requiring all pods to have resource limits. After one week, the team inspects the `.status.violations` field of the Constraint object. What does this field contain?
+
+- A) A list of all resources that were admitted despite violating the policy — because `dryrun` does not block admission, all violations since deployment are recorded here
+- B) An empty list — `dryrun` mode does not record any violations; it only prevents false positives
+- C) A list of only the most recent violation, because the violations field is overwritten on each evaluation cycle
+- D) A count of violations by resource type, not the specific violating resources
+
+Correct Answer: A — In Gatekeeper `dryrun` mode, non-compliant resources are admitted without rejection, but the admission controller records all violations in the `.status.violations` field of the Constraint object. This allows teams to audit the backlog of non-compliant existing resources before switching to `warn` or `deny`. The violations list includes the namespace, name, and kind of each violating resource.
+
+Distractor Analysis:
+
+- Why B is incorrect: `dryrun` mode specifically exists to surface violations without blocking admission. Recording violations is its primary value. An empty violations list would make `dryrun` useless as a migration assessment tool.
+- Why C is incorrect: Gatekeeper accumulates violations in `.status.violations` across evaluation cycles, not just the most recent. The list reflects all currently non-compliant resources in the cluster, up to the configured violation limit.
+- Why D is incorrect: The `.status.violations` field contains an array of violation objects, each with `kind`, `name`, `namespace`, and `message`. It provides specific resource identities, not aggregated counts.
+
+---
+
+### Question 16
+
+A Rego policy contains the following rule:
+
+```rego
+deny[msg] {
+  input.spec.hostNetwork == true
+  msg := "SOC 2 CC6.6: hostNetwork must be false"
+}
+```
+
+A manifest has `spec.hostNetwork: false`. Does this rule fire?
+
+- A) Yes — the rule fires for all pods because the `hostNetwork` field is present
+- B) No — `input.spec.hostNetwork == true` is false when the value is `false`, so the rule body does not evaluate to true and no denial is produced
+- C) Yes — Rego treats `false` values as undefined, so the rule fires when the field exists with any value
+- D) The rule causes an error because a Rego rule cannot compare boolean values with `==`
+
+Correct Answer: B — In Rego, a rule body is a conjunction of conditions. All conditions must be true for the rule to produce a result. `input.spec.hostNetwork == true` evaluates to `false` when `hostNetwork` is `false`. Since this condition is false, the rule body fails to evaluate and no denial message is added to the `deny` set. The pod is admitted without a violation.
+
+Distractor Analysis:
+
+- Why A is incorrect: The rule only fires when `input.spec.hostNetwork == true`. The presence of the `hostNetwork` field alone is not sufficient — the value must equal `true`.
+- Why C is incorrect: Rego does not treat `false` values as undefined. The boolean value `false` is a defined value that evaluates as false in a boolean context. Undefinedness in Rego is when a key is absent entirely, not when it has the value `false`.
+- Why D is incorrect: Rego fully supports equality comparisons (`==`) on boolean values. Boolean comparison is a standard operation in Rego policy conditions.
+
+---
+
+### Question 17
+
+A team has written Rego policies and corresponding `_test.rego` files. Running `opa test policies/` reports `FAIL: 1/5`. What is the correct next step?
+
+- A) Delete the failing test — a failing test indicates the test was written incorrectly and should be removed
+- B) Run `opa eval --data policies/ --input <test-input.json> "data.k8s.pci.deny"` to inspect what the `deny` set actually contains for the failing test's input, then fix either the policy logic or the test assertion based on findings
+- C) Add `soft_fail: true` to the Conftest command to allow the pipeline to continue despite the failing test
+- D) Switch from `opa test` to running Conftest directly — Conftest does not report test failures
+
+Correct Answer: B — The `opa eval` command with explicit input and a query against the policy's `deny` set reveals what the policy actually produces for a given input. This allows the engineer to determine whether the policy has a logic error (producing the wrong output) or the test has an incorrect assertion (expecting the wrong output). Fix the root cause — either policy or test — based on what `opa eval` reveals.
+
+Distractor Analysis:
+
+- Why A is incorrect: Deleting a failing test removes a quality assurance signal. A failing test means there is a discrepancy between the policy's actual behavior and the expected behavior. The correct response is to investigate and resolve the discrepancy, not suppress it.
+- Why C is incorrect: `soft_fail` is a Checkov flag, not an OPA or Conftest flag. More importantly, `opa test` runs unit tests of the Rego logic — bypassing a failing unit test would mean deploying a policy with unverified or incorrect behavior.
+- Why D is incorrect: Conftest evaluates structured input files against Rego policies; it does not run Rego unit test files (`_test.rego`). The `opa test` command is the correct tool for running Rego unit tests.
+
+---
+
+### Question 18
+
+A SOC 2 audit requires evidence that the organization's Kubernetes admission controls are enforced and that violations are logged with traceability to specific compliance criteria. How does embedding the compliance reference in the Rego `deny` message satisfy this requirement?
+
+- A) It does not satisfy the requirement — Rego deny messages are only visible to engineers running `kubectl apply` and are not stored in any audit trail
+- B) The deny message text is included in the Kubernetes audit log entry for the rejected admission request and in the Gatekeeper audit violation list, providing a searchable, attributable record linking the specific resource to the specific compliance control
+- C) It satisfies the requirement only if the Gatekeeper audit log is exported to a SIEM — without SIEM integration, the evidence is not admissible
+- D) The compliance reference in the message is cosmetic — SOC 2 auditors require separate documentation; the Rego message content has no evidentiary value
+
+Correct Answer: B — When Gatekeeper rejects an admission request, the denial message is recorded in the Kubernetes API server audit log as part of the admission webhook response. The `.status.violations` field of the Constraint object also records violations with the full message text. Embedding the SOC 2 criteria ID (e.g., `CC6.6`) in the message makes these log entries directly traceable to the compliance control during an audit, without requiring separate manual documentation.
+
+Distractor Analysis:
+
+- Why A is incorrect: Kubernetes admission webhook responses — including denial messages — are captured in the API server audit log when audit logging is enabled. Gatekeeper also maintains its own violation records. The messages are not ephemeral.
+- Why C is incorrect: SIEM integration enhances searchability and alerting but is not a prerequisite for the audit log evidence to be valid. The Kubernetes audit log and Gatekeeper violation records are themselves evidence-grade records for a SOC 2 audit.
+- Why D is incorrect: SOC 2 auditors do accept system-generated logs as evidence of control operation. A Kubernetes audit log entry showing a rejected admission with a message referencing `SOC 2 CC6.6` directly demonstrates that the control is operational and enforced. This is stronger evidence than static documentation.
+
+---
+
+### Question 19
+
+A developer wants to test a Rego policy locally before committing it. They run `conftest test deployment.yaml --policy policies/` and receive the output `PASS - deployment.yaml - data.k8s.pci - No failures`. The same manifest is later rejected by Gatekeeper in the staging cluster. What is the most likely explanation for the discrepancy?
+
+- A) Conftest and Gatekeeper use different versions of the Rego language and the policy evaluates differently in each runtime
+- B) The Conftest policy bundle in `policies/` is out of date and does not include the policy that Gatekeeper is enforcing in the cluster
+- C) Conftest evaluated a cached version of the manifest — the actual submitted manifest has different field values
+- D) `conftest test` only checks the `data.main` package by default and does not evaluate packages namespaced under `data.k8s.pci` unless the `--all-namespaces` flag is used, causing Conftest to miss violations that Gatekeeper's deployed policy catches
+
+Correct Answer: D — Conftest evaluates the `main` package by default. Rego policies in namespaced packages (like `package k8s.pci`) are not evaluated unless `--all-namespaces` is passed or the package is explicitly referenced. If the developer ran Conftest without `--all-namespaces`, it would report no failures because it did not evaluate the PCI policy at all — not because the manifest is compliant.
+
+Distractor Analysis:
+
+- Why A is incorrect: Both Conftest and Gatekeeper use the same OPA Rego evaluation engine. There are no language version differences between them when using the same policy source.
+- Why B is incorrect: This is a plausible scenario, but it describes a policy version mismatch rather than the more common mistake of missing the `--all-namespaces` flag. The question's phrasing points to a configuration oversight rather than a drift scenario.
+- Why C is incorrect: Conftest reads the manifest file directly from disk — it does not cache manifest content. If the file contents differ between the local test and the cluster submission, that is a source control issue, not a Conftest caching issue.
+
+---
+
+### Question 20
+
+A Rego policy file contains `package k8s.security_baseline`. A test file for this policy begins with `package k8s.security_baseline_test`. The test file references `security_baseline.deny`. When running `opa test policies/`, the test fails with `undefined`. What is missing?
+
+- A) The test file must be in a separate directory from the policy file
+- B) The test file is missing `import data.k8s.security_baseline` — without this import, the reference to `security_baseline.deny` is undefined
+- C) The policy file must be named `security_baseline_test.rego` for OPA to automatically discover the test file
+- D) `opa test` requires the `--bundle` flag to load multiple Rego files together
+
+Correct Answer: B — In Rego test files, policies from other packages must be explicitly imported using `import data.<package.path>`. Without `import data.k8s.security_baseline`, the reference `security_baseline.deny` is an undefined identifier because the test file has no declaration that brings the policy's package into scope.
+
+Distractor Analysis:
+
+- Why A is incorrect: OPA test files can be in the same directory as the policy files they test. OPA discovers all `*_test.rego` files under the specified directory regardless of subdirectory organization.
+- Why C is incorrect: OPA discovers test files by the `_test` suffix in the package name, not by the filename convention. The filename does not need to match the package path for test discovery.
+- Why D is incorrect: `opa test policies/` loads all Rego files in the `policies/` directory without requiring the `--bundle` flag. The `--bundle` flag is used when policies are packaged as OPA bundles (tar archives), not for simple directory evaluation.
+
+---
+
+Quiz — Module 13 | CIS-4350 | Texas Wesleyan University | Professor Nash
+
+---
+
 ### Question 10
 
 A DevSecOps team wants to add a Rego policy that enforces PCI-DSS 6.3.3 by requiring container images to be pinned to a specific digest rather than a mutable tag. Which Rego rule correctly implements this requirement?

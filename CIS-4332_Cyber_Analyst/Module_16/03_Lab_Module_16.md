@@ -322,3 +322,74 @@ Submit your answers before reviewing this section.
 For each incorrect answer: record the question number, the domain, and the topic in a study log. Return to the relevant module's reading guide section for that topic and re-read it. Then re-read this question and understand why the correct answer is right and why your answer was wrong.
 
 Target: 16 correct or higher before taking the actual CySA+ exam.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Cross-Domain Integration Scenario
+
+The following scenario spans all four CySA+ exam domains. Read the full scenario, then answer all questions.
+
+**Scenario**: At 03:47 AM on a Tuesday, a SIEM correlation rule fires on the following events occurring within 8 minutes:
+
+- Event A: Successful VPN authentication from `rsmith@corp.local` sourced from an IP in Malaysia (last known login was from Texas, 6 hours prior)
+- Event B: Process creation on `PAYROLL-SRV-02` — `powershell.exe -enc [300-character base64 string]` with parent `wmiprvse.exe`
+- Event C: 14 Event ID 4624 Type 3 logons to `PAYROLL-SRV-02` from the VPN IP within 4 minutes
+- Event D: `PAYROLL-SRV-02` generating outbound HTTPS connections to `185.44.77.210:443` — 847 KB transferred outbound in 6 minutes
+
+A CISA advisory published 3 days ago identified `185.44.77.210` as a known C2 IP for threat actor group TA-PAY, which targets payroll processing systems for financial fraud.
+
+**Domain 1 Questions (Security Operations):**
+
+1. Map each of the four events (A, B, C, D) to the most specific MITRE ATT&CK technique and tactic. For Event B, explain what `wmiprvse.exe` as a parent process indicates (reference T1047). For Event D, explain what the outbound byte volume suggests about the direction of data flow.
+2. Write the SIEM correlation rule logic (in plain language, not SPL or KQL syntax) that would have detected this attack chain as a single correlated incident rather than four independent alerts. Specify the time window, the required event types, and the field correlations (e.g., same source IP, same destination hostname) required.
+3. Design a SOAR playbook (enrichment-first, decision-gated) for this alert type. List at minimum five automated enrichment steps, the decision logic for automatic escalation vs. analyst review, and the specific high-impact actions that require analyst approval before execution.
+
+**Domain 2 Questions (Vulnerability Management):**
+
+4. The post-incident investigation reveals that the attacker's WMI-based lateral movement (Event B) was possible because `PAYROLL-SRV-02` had an unpatched vulnerability (CVE-2023-XXXX, CVSS 8.8) that allowed WMI remote command execution without authentication. The CVE was published 47 days ago with a 30-day Critical/High SLA. Calculate the SLA breach duration and classify the vulnerability management program failure — was it a scanning failure (vulnerability never discovered), a prioritization failure (discovered but deprioritized), or a remediation execution failure (prioritized but not completed)?
+5. Propose three specific process improvements to prevent this specific SLA failure pattern from recurring. For each, specify the process gap it addresses and which team (security, IT operations, change management) is responsible.
+
+**Domain 3 Questions (Incident Response and Forensics):**
+
+6. Using NIST 800-61 phases, document the correct sequence of analyst actions from the moment the SIEM alert fires through eradication completion. Include at minimum: the triage actions, the containment decision (what to isolate, when, and why), evidence preservation considerations (volatile evidence must be captured before isolation), notification requirements (legal, HR, executive), and the eradication steps.
+7. For forensic analysis of `PAYROLL-SRV-02`, you have 15 minutes before the server must be isolated. List the volatile evidence you will collect in priority order, the tool you will use for each, and what each artifact would prove about the attacker's activity.
+
+**Domain 4 Questions (Reporting and Communication):**
+
+8. Write a 90-second verbal escalation script for handing this incident from the Tier 1 analyst who received the SIEM alert to the Tier 2 analyst. The script must cover: what the alert shows, what enrichment has been done, what the confirmed indicators are, what immediate containment you recommend, and what the Tier 2 analyst should investigate first.
+9. Write an executive summary paragraph (5–7 sentences) for the CISO describing this incident, its potential business impact (payroll data compromise, regulatory exposure), what has been done in the first 30 minutes, and what decisions the CISO needs to make in the next hour.
+
+### Challenge 2: Comprehensive Exam Skills Self-Assessment
+
+Answer each of the following 10 rapid-response questions without referring to notes. These questions cover the highest-frequency topics across all four CySA+ domains. After answering, evaluate your responses against the answer key below.
+
+1. Name the four NIST 800-61 IR phases in order.
+2. What does MTTD stand for and what does a 30-day MTTD indicate about the Detection function?
+3. Name the Volatility plugin that detects process injection and describe what signature it looks for.
+4. What is the difference between CVSS Base Score and CVSS Environmental Score?
+5. Define "chain of custody" and name one action that breaks it.
+6. What does TLP:RED mean and who may receive TLP:RED-marked intelligence?
+7. Name three Windows artifacts that prove a program executed, even after the executable is deleted.
+8. What is the primary functional difference between a SIEM and a SOAR?
+9. In the Pyramid of Pain, which indicator type is at the top and why is it at the top?
+10. Name the MITRE ATT&CK technique for using `certutil.exe` to decode malicious payloads and explain why this is classified as Defense Evasion.
+
+**Self-Assessment Answer Key:**
+
+1. Preparation → Detection and Analysis → Containment, Eradication, and Recovery → Post-Incident Activity
+2. Mean Time to Detect — a 30-day MTTD means the attacker was undetected for 30 days after gaining access; this represents a critical Detection phase failure
+3. `malfind` — looks for memory regions with PAGE_EXECUTE_READWRITE permissions that contain an MZ header (PE executable code signature), indicating process injection
+4. CVSS Base Score measures the inherent technical severity of the vulnerability in isolation; Environmental Score adjusts the base score based on the specific deployment context (asset criticality, compensating controls, exploit maturity in the environment)
+5. Chain of custody is the documented, unbroken record of every person who handled a piece of evidence; broken by: analyzing evidence without logging access, failing to hash evidence at collection, transferring evidence without documentation, or allowing unauthorized access
+6. TLP:RED means the information is restricted to the specific individuals (not organizations) to whom it was shared in the original disclosure; it may not be forwarded beyond the original recipients
+7. Prefetch files (`C:\Windows\Prefetch\`), Windows Registry ShimCache/AppCompatCache, Amcache.hve
+8. A SIEM collects and correlates log data to generate alerts; a SOAR receives those alerts, enriches them with external intelligence, executes automated decision logic, and triggers response actions across integrated tools
+9. TTPs (Tactics, Techniques, and Procedures) — at the top because they represent the attacker's behavior and operational habits, which are the hardest attributes to change; forcing an attacker to change their TTPs requires significant re-tooling and retraining
+10. T1140 (Deobfuscate/Decode Files or Information) — certutil is a trusted, signed Windows binary; using it to decode malicious content bypasses application control tools that whitelist Microsoft-signed binaries, making it a defense evasion technique
+
+### Reflection Questions
+
+1. Having completed all 16 modules of CIS-4332, identify the two topic areas where you feel least confident and describe a specific study plan (resources to review, practice activities, time allocation) for each area that you will complete before taking the CySA+ CS0-003 exam. Be specific about which modules, which sections, and which practice questions you will prioritize.
+2. The CySA+ exam uses scenario-based questions that often include a "most appropriate" or "best first step" qualifier. Describe the reasoning framework you will use when all four answer choices appear plausible — what criteria do you apply to eliminate distractors, and how do NIST frameworks and ATT&CK help you select the correct answer in ambiguous scenarios?

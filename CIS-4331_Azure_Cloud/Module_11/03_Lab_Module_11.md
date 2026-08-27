@@ -315,3 +315,17 @@ Submit the following to Canvas:
 ---
 
 *Lab 11 — Module 11: Azure Identity, Security, and Governance | CIS-4331 | Texas Wesleyan University*
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Azure Policy Custom Initiative
+Create a custom Azure Policy initiative (policy set) that bundles two built-in policies: "Require a tag on resources" (for the "Environment" tag) and "Allowed locations" restricted to East US and West US. Use `az policy set-definition create` with a JSON parameters file. Assign the initiative to your lab resource group with `az policy assignment create`. Create a new resource group in North Europe and verify it is flagged as non-compliant in the compliance dashboard. Document all CLI commands, the initiative definition JSON, and the compliance report output. Explain in 2–3 sentences why grouping related policies into initiatives simplifies governance compared to assigning each policy individually across multiple subscriptions.
+
+### Challenge 2: Key Vault Managed Identity Integration
+Create a new App Service plan and web app (Free tier is sufficient). Enable a System-assigned Managed Identity on the web app using `az webapp identity assign`. Grant the managed identity the "Key Vault Secrets User" role on your lab Key Vault using `az role assignment create --assignee <principal-id> --role "Key Vault Secrets User"`. Use the Azure Cloud Shell to call the App Service's Kudu REST API to verify the managed identity token can be obtained. Document the managed identity's principal ID, the role assignment confirmation output, and explain in 2–3 sentences why using a Managed Identity to access Key Vault is more secure than storing a Key Vault access key in the app's configuration settings.
+
+### Reflection Questions
+1. In the lab you assigned the Reader role to a user at the resource group scope. A colleague suggests it would be simpler to assign Reader at the subscription scope so the user can see all resources. Describe two specific security risks of granting broader scope access than required, and explain how the principle of least privilege applies to RBAC scope selection in a production environment with multiple teams sharing a subscription.
+2. Azure Key Vault provides soft delete and purge protection features. Soft delete retains deleted secrets for 7–90 days, and purge protection prevents permanent deletion during that period even by administrators. A developer argues these features are unnecessary because "if we deleted it, we meant to delete it." Describe a realistic incident scenario where soft delete and purge protection would prevent a major outage or data loss, and explain why regulated industries (banking, healthcare) specifically require purge protection to be enabled.

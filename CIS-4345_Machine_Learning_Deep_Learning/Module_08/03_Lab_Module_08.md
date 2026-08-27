@@ -394,3 +394,52 @@ Submit the following to Canvas:
 Texas Wesleyan University — CIS-4345 Machine Learning and Deep Learning
 
 Proprietary and Confidential. Not for disclosure outside of Texas Wesleyan University.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: MixUp Augmentation from Scratch
+
+Implement MixUp augmentation manually inside the `tf.data` pipeline and compare it against standard augmentation.
+
+1. Build a MixUp function that operates on a batched dataset. After calling `.batch(32)`, apply the following map function. Use `ds_train = ds_train.batch(32).map(mixup)`. Since MixUp produces soft labels, set `loss=tf.keras.losses.BinaryCrossentropy(label_smoothing=0.0)`.
+
+   ```python
+   def mixup(images, labels, alpha=0.2):
+       batch_size = tf.shape(images)[0]
+       lam = tf.random.uniform(shape=[], minval=0.0, maxval=alpha)
+       indices = tf.random.shuffle(tf.range(batch_size))
+       images_mixed = lam * images + (1 - lam) * tf.gather(images, indices)
+       labels_a = tf.cast(labels, tf.float32)
+       labels_b = tf.cast(tf.gather(labels, indices), tf.float32)
+       labels_mixed = lam * labels_a + (1 - lam) * labels_b
+       return images_mixed, labels_mixed
+   ```
+
+2. Train the MixUp model for 20 epochs and record validation accuracy. Plot its accuracy curve alongside the standard augmentation model from Part 2.
+3. In a Markdown cell, explain why MixUp can improve generalization even when the model never sees a "pure" image during training.
+
+### Challenge 2: Learning Rate Finder
+
+Implement a manual learning rate range test to identify the optimal learning rate for your CNN.
+
+1. Train a freshly initialized model for 100 steps while exponentially increasing the learning rate from `1e-7` to `1e-1` using a `LearningRateScheduler` callback. Record the loss at each step using a custom callback or by inspecting `history.history['loss']`.
+
+   ```python
+   import numpy as np
+
+   def lr_schedule(epoch, lr):
+       return 1e-7 * (1e6 ** (epoch / 100))
+
+   lr_finder_cb = tf.keras.callbacks.LearningRateScheduler(lr_schedule)
+   ```
+
+2. Plot learning rate (log scale on x-axis) vs. training loss (y-axis). The optimal learning rate is typically just before the loss reaches its minimum — the steepest descent region.
+3. Retrain your augmented model using the identified optimal learning rate and compare final validation accuracy to the model trained with `lr=1e-3`.
+4. In a Markdown cell, explain the concept of the "loss landscape" and why finding the right learning rate matters more for small datasets than for large ones.
+
+### Reflection Questions
+
+1. After applying MixUp augmentation, did your model's validation accuracy improve, stay the same, or decrease compared to standard augmentation? Propose a hypothesis for why MixUp may or may not be well-suited for binary image classification with a small dataset.
+2. Based on your learning rate range test, what visual signal in the loss-vs-LR plot tells you the learning rate is too large? What does a too-small learning rate look like in the same plot, and why does this matter for choosing a starting point for training?

@@ -167,3 +167,27 @@ Storage interfaces:
 
 - [Professor Messer CompTIA A+ Core 1 (220-1101) Free Course — Motherboards and Form Factors](https://www.professormesser.com/free-a-plus-training/220-1101/220-1101-video/)
 - [CompTIA A+ Certification Official Page and Exam Objectives](https://www.comptia.org/certifications/a)
+
+---
+
+## 9. Supplemental Resources
+
+1. **Professor Messer — Motherboards (220-1101 Free Video)**
+   URL: [https://www.professormesser.com/free-a-plus-training/220-1101/220-1101-video/](https://www.professormesser.com/free-a-plus-training/220-1101/220-1101-video/)
+   Relevance: Free video lecture walking through ATX/mATX/Mini-ITX form factors, PCIe slot identification, BIOS/UEFI, and CMOS — all exam objectives covered in Module 02.
+
+2. **Open Educational Resource — "How Computers Work" (OpenStax-aligned)**
+   URL: [https://openstax.org/books/introduction-computer-science/pages/1-introduction](https://openstax.org/books/introduction-computer-science/pages/1-introduction)
+   Relevance: Free OpenStax content providing academic context for motherboard architecture and data bus concepts discussed in the chipset section of this guide.
+
+3. **Logical Increments — PC Build Guides (Free Reference)**
+   URL: [https://www.logicalincrements.com/](https://www.logicalincrements.com/)
+   Relevance: Curated build guides with clear motherboard form factor annotations. Useful for visually confirming how ATX, Micro-ATX, and Mini-ITX boards are selected and installed in real-world builds.
+
+4. **Intel ARK Product Database (Free)**
+   URL: [https://ark.intel.com/](https://ark.intel.com/)
+   Relevance: Intel's official searchable database of all CPU and chipset specifications. Use it to verify socket type, PCIe lane count, and chipset compatibility for any Intel processor — directly applicable to chipset research scenarios in the lab.
+
+5. **AMD Product Specifications (Free)**
+   URL: [https://www.amd.com/en/products/specifications](https://www.amd.com/en/products/specifications)
+   Relevance: AMD's official specification lookup for CPUs and APUs. Use alongside the Intel ARK to practice verifying socket compatibility (AM4 vs. AM5) and chipset support — a skill tested in A+ scenario questions.

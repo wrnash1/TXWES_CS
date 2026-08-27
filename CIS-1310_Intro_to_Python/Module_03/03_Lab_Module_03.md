@@ -626,6 +626,69 @@ Zip all 5 screenshots and upload to the Canvas Module 03 Lab Assignment.
 
 ---
 
+## Part 9 — Challenge Exercise
+
+These steps are optional and ungraded. They push beyond basic I/O into more sophisticated formatting and input validation patterns.
+
+### Challenge 9.1 — Build a Multi-Field Formatted Receipt
+
+Create `~/cis1310/module03/receipt.py` that prompts the user for three item names and prices, then prints a formatted receipt with:
+
+- A header and footer border made of `=` characters, 40 wide
+- Each item left-aligned in a 25-character field with price right-aligned in a 10-character field, formatted to 2 decimal places
+- A subtotal, tax (8.25%), and grand total line, each aligned consistently
+- All numeric values formatted with the `:>10.2f` format spec
+
+The target output should look like:
+
+```text
+========================================
+       TEXAS WESLEYAN BOOKSTORE
+========================================
+Python Textbook              $    49.99
+USB Flash Drive              $     8.95
+Notebook                     $     3.50
+----------------------------------------
+Subtotal:                    $    62.44
+Tax (8.25%):                 $     5.15
+TOTAL:                       $    67.59
+========================================
+```
+
+Use f-strings exclusively — no old-style `%` formatting or `str.format()`.
+
+---
+
+### Challenge 9.2 — Safe Integer Input Function
+
+Python's `int(input(...))` will crash with `ValueError` if the user types a non-numeric value. Write a script `~/cis1310/module03/safe_input.py` that implements a loop-based safe integer reader:
+
+```python
+def get_int(prompt):
+    while True:
+        raw = input(prompt)
+        if raw.lstrip('-').isdigit():
+            return int(raw)
+        print(f'  Error: "{raw}" is not a valid integer. Try again.')
+```
+
+Test it by calling `get_int('Enter a number: ')` and entering invalid inputs (letters, floats, empty string) before finally entering a valid integer. Add a second function `get_float(prompt)` using the same pattern. This pattern previews the exception-handling techniques covered in Module 12.
+
+---
+
+### Challenge 9.3 — Variable Swap Without a Temporary Variable
+
+Python's tuple assignment makes variable swapping elegant. Write a script `~/cis1310/module03/swap_demo.py` that:
+
+1. Demonstrates the traditional three-variable swap (using a `temp` variable) for two integers
+2. Demonstrates the Pythonic one-line swap with tuple unpacking
+3. Extends the pattern to swap three variables simultaneously: `a, b, c = c, a, b`
+4. Prints the values before and after each swap with clear labels
+
+Add a comment explaining why the Pythonic swap works without corruption — specifically that Python evaluates the entire right-hand side as a tuple before performing any assignment, so there is no moment where both names point to the same value unintentionally.
+
+---
+
 ## Troubleshooting Guide
 
 **`SyntaxError` when using a keyword as a variable name.**

@@ -209,3 +209,173 @@ D) `Test-ADServiceAccount -Identity PDCEmulator`
   - Why A is incorrect: `Get-ADForest` returns the two forest-wide FSMO roles (Schema Master and Domain Naming Master), not the domain-wide roles including PDC Emulator.
   - Why C is incorrect: While `Get-ADDomainController` can filter on properties, `IsPDCEmulator` is not a valid filter property for this cmdlet. The correct property is returned by `Get-ADDomain`.
   - Why D is incorrect: `Test-ADServiceAccount` tests a Managed Service Account, not an FSMO role holder.
+
+---
+
+### Question 11 (5 points)
+
+An administrator needs to create a new child domain `west.corp.local` in an existing forest. Which FSMO role holder must be reachable for this operation to succeed?
+
+- A) PDC Emulator of the parent domain
+- B) Schema Master of the forest
+- C) Domain Naming Master of the forest
+- D) Infrastructure Master of the parent domain
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why A is incorrect: The PDC Emulator handles time synchronization, password changes, and account lockouts within its domain. It plays no role in adding new domains to the forest.
+  - Why B is incorrect: The Schema Master controls schema extensions (new object classes and attributes). Creating a new child domain does not require a schema modification.
+  - Why D is incorrect: The Infrastructure Master maintains cross-domain object references within its domain. It does not control whether new domains can be added to the forest.
+
+---
+
+### Question 12 (5 points)
+
+A user in a multi-domain forest reports that their group memberships appear incomplete after being moved from one domain to another. Which FSMO role is responsible for maintaining these cross-domain object references?
+
+- A) Schema Master
+- B) RID Master
+- C) Infrastructure Master
+- D) Domain Naming Master
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why A is incorrect: The Schema Master controls changes to the directory schema definition. It has no role in tracking cross-domain object references after objects move.
+  - Why B is incorrect: The RID Master allocates Relative Identifier pools to Domain Controllers for creating new security principals. It does not track cross-domain references.
+  - Why D is incorrect: The Domain Naming Master controls the addition and removal of domains from the forest. It does not resolve or maintain cross-domain group membership references.
+
+---
+
+### Question 13 (5 points)
+
+Which PowerShell command correctly creates a new Organizational Unit named "Marketing" as a child of the "Departments" OU in the `corp.local` domain?
+
+- A) `New-ADOrganizationalUnit -Name "Marketing" -Path "OU=Departments,DC=corp,DC=local"`
+- B) `Add-ADOrganizationalUnit -Name "Marketing" -Parent "Departments"`
+- C) `New-ADObject -Type OU -Name "Marketing" -Container "Departments"`
+- D) `Set-ADOrganizationalUnit -Name "Marketing" -Path "Departments,corp.local"`
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - Why B is incorrect: `Add-ADOrganizationalUnit` is not a valid PowerShell cmdlet in the Active Directory module. The correct cmdlet is `New-ADOrganizationalUnit`.
+  - Why C is incorrect: While `New-ADObject` can technically create objects of any type, using it to create an OU without specifying the `-Path` in LDAP distinguished name format would fail. The dedicated `New-ADOrganizationalUnit` cmdlet with a proper `-Path` is the correct approach.
+  - Why D is incorrect: `Set-ADOrganizationalUnit` modifies an existing OU; it does not create a new one. Additionally, the `-Path` value is not in valid LDAP distinguished name format.
+
+---
+
+### Question 14 (5 points)
+
+What is the name and default file path of the Active Directory domain database on a Windows Server Domain Controller?
+
+- A) `AD.mdb` located at `C:\Windows\System32\`
+- B) `NTDS.dit` located at `C:\Windows\NTDS\`
+- C) `ActiveDirectory.db` located at `C:\AD\Database\`
+- D) `Domain.mdf` located at `C:\Program Files\AD DS\`
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: `AD.mdb` is not the name of the Active Directory database. The file is named `NTDS.dit` (NT Directory Services Directory Information Tree).
+  - Why C is incorrect: `ActiveDirectory.db` is not the name or location of the AD database. The correct file is `NTDS.dit` in `C:\Windows\NTDS\`.
+  - Why D is incorrect: The AD database is not stored in Program Files. The standard location is `C:\Windows\NTDS\`, and the file is not a SQL Server `.mdf` file.
+
+---
+
+### Question 15 (5 points)
+
+A technician runs `dcdiag /test:replications` and finds replication errors between two Domain Controllers. Which tool should the administrator use next to view the detailed Active Directory replication topology and check the status of inbound replication partners?
+
+- A) `repadmin /showrepl`
+- B) `netdom query dc`
+- C) `Get-ADDomainController -Filter *`
+- D) `nltest /dsgetdc`
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - Why B is incorrect: `netdom query dc` lists Domain Controllers in the domain but provides no replication topology or error detail.
+  - Why C is incorrect: `Get-ADDomainController -Filter *` lists DC properties including site membership but does not display replication topology or partner replication status.
+  - Why D is incorrect: `nltest /dsgetdc` locates a Domain Controller for a specified domain (like a DC locator tool) and does not display replication status or topology.
+
+---
+
+### Question 16 (5 points)
+
+In Active Directory, which port does LDAP use by default for unencrypted directory queries?
+
+- A) 443
+- B) 636
+- C) 389
+- D) 3268
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why A is incorrect: Port 443 is HTTPS. It is not used by standard LDAP queries. Active Directory Web Services uses port 9389 for PowerShell remoting.
+  - Why B is incorrect: Port 636 is LDAPS (LDAP over SSL/TLS) — the encrypted version of LDAP. The question asks for the unencrypted default.
+  - Why D is incorrect: Port 3268 is the Global Catalog port for LDAP queries that span all domains in the forest. It is not the standard single-domain LDAP port.
+
+---
+
+### Question 17 (5 points)
+
+An administrator runs `Install-ADDSForest` and is prompted for the Safe Mode Administrator Password. What is this password used for?
+
+- A) It sets the initial password for the domain Administrator account used for normal domain logins
+- B) It is the recovery password used to log into Directory Services Restore Mode (DSRM) when the AD database needs to be repaired
+- C) It encrypts the NTDS.dit database at rest using BitLocker
+- D) It authenticates the Schema Master before allowing the forest creation to proceed
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: The DSRM password is separate from the domain Administrator account password. The domain Administrator password is set when the first user account is created or inherited from the local Administrator account during promotion.
+  - Why C is incorrect: The DSRM password has no relationship to BitLocker encryption of the NTDS.dit database. BitLocker is configured separately if at-rest encryption is required.
+  - Why D is incorrect: The Schema Master authentication is handled by Active Directory's own Kerberos/LDAP authentication, not by the DSRM password.
+
+---
+
+### Question 18 (5 points)
+
+A user reports they cannot log on to the domain and receives a "time difference" error. Other users logging on through the same Domain Controller are unaffected. What is the most likely cause?
+
+- A) The user's account has expired in Active Directory
+- B) The user's workstation clock is more than 5 minutes out of sync with the domain time
+- C) The Domain Controller's RID pool has been exhausted
+- D) The user's account is in an OU with a GPO that blocks interactive logon
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: An expired account produces an "account has expired" error, not a "time difference" error. Kerberos clock skew errors are specifically tied to clock synchronization, not account expiration.
+  - Why C is incorrect: An exhausted RID pool prevents new security principals from being created. It does not prevent existing user accounts from authenticating.
+  - Why D is incorrect: A GPO blocking interactive logon would produce an access denied or policy restriction error, not a "time difference" message. Time difference errors are explicitly related to Kerberos clock skew.
+
+---
+
+### Question 19 (5 points)
+
+Which of the following is the correct Distinguished Name (DN) format for a user account named "jsmith" in the IT OU under Departments in the `corp.local` domain?
+
+- A) `corp.local/Departments/IT/jsmith`
+- B) `CN=jsmith,OU=IT,OU=Departments,DC=corp,DC=local`
+- C) `jsmith@IT.Departments.corp.local`
+- D) `CORP\jsmith\OU=IT`
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: This format resembles a file system path and is not valid LDAP Distinguished Name syntax. DN uses attribute=value pairs separated by commas.
+  - Why C is incorrect: This resembles a UPN (User Principal Name) format but is not a valid UPN or DN. UPNs use `@` with the domain suffix, not the OU path.
+  - Why D is incorrect: `CORP\jsmith` is a down-level logon name (SAM account name format), not a Distinguished Name. DNs use the LDAP attribute=value format.
+
+---
+
+### Question 20 (5 points)
+
+An administrator wants to delegate the ability to reset passwords for users in the `HR` OU to a help desk group, without granting them Domain Admin rights. Which AD DS feature enables this?
+
+- A) Fine-Grained Password Policy applied to the HR OU
+- B) Delegation of control on the OU using the Delegation of Control Wizard or `dsacls`
+- C) Assigning the help desk group to the Account Operators built-in group
+- D) Modifying the Default Domain Policy GPO to include the help desk group in the password reset permission
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: Fine-Grained Password Policies define different password complexity or lockout rules for specific users or groups. They do not grant administrative permissions to other accounts.
+  - Why C is incorrect: Account Operators is a built-in group with domain-wide permissions to manage most user accounts. Assigning the help desk to Account Operators gives broader permissions than the targeted OU-level delegation required here.
+  - Why D is incorrect: The Default Domain Policy GPO controls password and account lockout policies for the domain. It does not contain permission settings that grant one group the ability to reset another group's passwords.

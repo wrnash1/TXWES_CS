@@ -220,4 +220,204 @@ D) RADIUS on UDP 1812 with syslog on UDP 514 — RADIUS handles authentication w
 
 ---
 
-CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash
+### Question 11
+
+Which component of the CIA triad is violated when a DDoS attack makes a web server unavailable to legitimate users?
+
+- A) Confidentiality
+- B) Integrity
+- C) Availability
+- D) Authentication
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Confidentiality is violated when unauthorized parties access sensitive data. A DDoS attack floods the server to make it unreachable — it does not expose data to unauthorized access.
+- *Why B is incorrect:* Integrity is violated when data is modified without authorization. A DDoS attack does not alter data — it prevents the server from serving requests.
+- *Why C is correct:* Availability means that authorized users can access systems and data when needed. A DDoS attack exhausts server resources (bandwidth, connections, CPU) to deny service to legitimate users — a direct violation of Availability.
+- *Why D is incorrect:* Authentication is the process of verifying identity — it is not one of the three CIA triad components. The CIA triad consists of Confidentiality, Integrity, and Availability.
+
+---
+
+### Question 12
+
+A penetration tester performs reconnaissance on a target network and discovers that a web server responds to SYN packets with SYN-ACK but never receives an ACK in return — the tester sends thousands of these incomplete handshakes. Which attack technique is the tester simulating?
+
+- A) UDP flood
+- B) Ping of death
+- C) TCP SYN flood
+- D) Smurf attack
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* A UDP flood sends large volumes of UDP packets to overwhelm the target — it does not involve the TCP three-way handshake or incomplete SYN-SYN-ACK exchanges.
+- *Why B is incorrect:* A ping of death sends malformed, oversized ICMP packets to crash the target system by exploiting buffer overflow vulnerabilities. It is distinct from the SYN-based connection exhaustion described.
+- *Why C is correct:* A TCP SYN flood sends large numbers of SYN packets and intentionally never completes the handshake by withholding the final ACK. The server allocates a transmission control block (TCB) for each half-open connection and holds it until the timeout, exhausting the server's connection table.
+- *Why D is incorrect:* A Smurf attack sends ICMP Echo Requests to a network's broadcast address with the source spoofed as the victim's IP, causing all hosts on the network to send Echo Replies to the victim — flooding it with amplified traffic. It does not involve TCP or SYN flooding.
+
+---
+
+### Question 13
+
+An attacker intercepts traffic between a workstation and a server by corrupting both devices' ARP caches so that traffic intended for the server flows through the attacker's machine. Which attack is described?
+
+- A) DNS poisoning
+- B) IP spoofing
+- C) ARP poisoning (ARP cache poisoning) / Man-in-the-Middle
+- D) VLAN hopping
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* DNS poisoning corrupts DNS resolver caches to redirect domain name lookups to attacker-controlled IP addresses. It operates at the application layer and does not directly manipulate ARP tables.
+- *Why B is incorrect:* IP spoofing involves forging the source IP address in packets to impersonate another host or bypass ACLs. It does not corrupt ARP caches or intercept bidirectional traffic flows.
+- *Why C is correct:* ARP poisoning sends gratuitous ARP replies that associate the attacker's MAC address with the IP address of the gateway (or any target). When both sides of a communication update their ARP caches with the attacker's MAC, all traffic flows through the attacker — a classic Man-in-the-Middle (MITM) attack.
+- *Why D is incorrect:* VLAN hopping exploits 802.1Q tagging or trunk negotiation to gain access to traffic on a different VLAN. It does not involve ARP manipulation or intercepting traffic between two specific hosts.
+
+---
+
+### Question 14
+
+An enterprise network deploys a device that inspects all inbound and outbound traffic and, upon detecting a known attack signature, immediately drops the malicious packets and resets the connection. Which security device is described?
+
+- A) Intrusion Detection System (IDS)
+- B) Intrusion Prevention System (IPS)
+- C) Stateful firewall
+- D) Proxy server
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* An IDS (Intrusion Detection System) detects attacks and generates alerts but does not block traffic. It is typically deployed out-of-band (mirrored traffic) and cannot drop packets in real time.
+- *Why B is correct:* An IPS (Intrusion Prevention System) is deployed inline — all traffic passes through it. When an attack signature is matched, the IPS can drop the packet, reset the connection, and alert administrators. The ability to take active blocking action is the key distinction from IDS.
+- *Why C is incorrect:* A stateful firewall tracks connection states and enforces ACL-based permit/deny rules, but it does not perform deep payload inspection for attack signatures. Stateful firewalls allow or deny based on port/protocol/state, not content matching.
+- *Why D is incorrect:* A proxy server acts as an intermediary for client requests (web proxying, caching, content filtering) but does not perform signature-based attack detection and blocking.
+
+---
+
+### Question 15
+
+Which security principle dictates that a user should be granted only the minimum permissions required to perform their assigned job function, and nothing beyond that?
+
+- A) Defense in depth
+- B) Least privilege
+- C) Separation of duties
+- D) Need to know
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Defense in depth is the security strategy of layering multiple independent security controls so that the failure of one does not result in full system compromise. It is a design philosophy, not a permission-assignment principle.
+- *Why B is correct:* The principle of least privilege states that every user, process, and system component should operate with only the minimum set of permissions needed for its defined purpose. This limits the damage that can result from compromised accounts or misconfigured applications.
+- *Why C is incorrect:* Separation of duties divides critical tasks across multiple people so no single person can complete a sensitive action alone (e.g., requiring two approvals for a financial transfer). This prevents insider fraud — it is distinct from least privilege.
+- *Why D is incorrect:* Need to know is an information classification principle limiting access to sensitive data based on operational necessity. While related to least privilege, it specifically refers to data classification levels, not general permission assignment.
+
+---
+
+### Question 16
+
+A company places its public web server and email gateway in a separate network segment between two firewalls — one firewall faces the internet and another faces the internal LAN. What is this network architecture called, and what security benefit does it provide?
+
+- A) A VLAN, which prevents internet traffic from reaching the internal LAN by tagging frames
+- B) A DMZ (Demilitarized Zone), which isolates internet-facing servers so that a compromised server cannot directly access the internal LAN
+- C) A honeypot network, which attracts attackers away from production servers
+- D) A network NAT zone, which hides the web server's real IP address behind a public IP
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* A VLAN segments traffic within a switching domain but does not inherently provide the two-firewall isolation of a DMZ architecture. A VLAN can be part of a DMZ implementation but is not itself the architectural concept.
+- *Why B is correct:* A DMZ is a network segment between an external firewall (internet-facing) and an internal firewall (LAN-facing). Internet users can access public servers in the DMZ, but even if a DMZ server is compromised, the internal firewall blocks the attacker from pivoting to the internal LAN.
+- *Why C is incorrect:* A honeypot is a deliberately vulnerable decoy system used to attract and observe attackers — it is a detection tool, not a production server protection architecture.
+- *Why D is incorrect:* NAT translates private IP addresses to public addresses at the network border. While NAT can hide internal IPs, it is not a security architecture term for the two-firewall server isolation described.
+
+---
+
+### Question 17
+
+Which protocol is designed to prevent unauthorized devices from using DHCP to poison the binding table and includes a feature called DHCP Snooping?
+
+- A) 802.1X NAC
+- B) Dynamic ARP Inspection (DAI)
+- C) DHCP Snooping — a Cisco Layer 2 switch feature
+- D) IPAM (IP Address Management)
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* 802.1X NAC controls which devices are allowed onto the network via port-based authentication — it does not specifically inspect DHCP transactions or maintain a binding table.
+- *Why B is incorrect:* DAI (Dynamic ARP Inspection) uses the DHCP snooping binding table to validate ARP packets — but DAI itself is an ARP protection mechanism, not the DHCP protection mechanism.
+- *Why C is correct:* DHCP Snooping is a Cisco Layer 2 switch security feature that classifies switch ports as trusted (connected to DHCP servers) or untrusted (connected to client devices). Only trusted ports are allowed to send DHCP Offer and Acknowledgement messages. It also builds a binding table (IP-to-MAC-to-port) that DAI uses for ARP validation.
+- *Why D is incorrect:* IPAM is an administrative system for tracking and managing IP address assignments across an organization. It is a management tool, not a network security enforcement mechanism.
+
+---
+
+### Question 18
+
+An administrator configures a Cisco switch to use DHCP Snooping. Which port should be configured as "trusted" in this deployment?
+
+- A) All access ports connected to workstations
+- B) The port connected to the legitimate DHCP server or the uplink to the router providing DHCP service
+- C) All trunk ports connecting to other access switches
+- D) Only the port with the lowest interface number on the switch
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Access ports connected to workstations should be "untrusted" — end-user devices should never be permitted to send DHCP Offers. Making them trusted would allow a rogue DHCP server on a workstation to function, defeating the purpose of DHCP Snooping.
+- *Why B is correct:* The trusted port is the port connected to the legitimate DHCP server or the uplink toward the router that provides DHCP relay service. Only this port is allowed to receive and forward DHCP Offer and Acknowledgement messages.
+- *Why C is incorrect:* Trunk ports to downstream access switches may need to be trusted if DHCP traffic from legitimate servers must pass through them. However, blindly trusting all trunk ports can create security gaps — the decision should be based on whether legitimate DHCP server traffic flows through the trunk.
+- *Why D is incorrect:* Interface number has no relationship to DHCP trust configuration. Trusted/untrusted status is a deliberate security design decision based on network topology.
+
+---
+
+### Question 19
+
+Which type of firewall inspects packets only based on source/destination IP addresses, source/destination port numbers, and protocol, without tracking the state of TCP connections?
+
+- A) Stateful inspection firewall
+- B) Next-generation firewall (NGFW)
+- C) Application-layer proxy firewall
+- D) Stateless (packet-filtering) firewall
+
+**Correct Answer:** D
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* A stateful inspection firewall tracks the state of all active TCP/UDP connections in a state table and can automatically permit return traffic for established sessions — this is the key capability that distinguishes it from a stateless firewall.
+- *Why B is incorrect:* An NGFW (Next-Generation Firewall) includes all stateful firewall capabilities plus deep packet inspection, application identification, intrusion prevention, SSL decryption, and user identity awareness — far beyond stateless packet filtering.
+- *Why C is incorrect:* An application-layer proxy firewall terminates connections on behalf of clients, inspects application-level content (HTTP, FTP, etc.), and re-originates connections to the destination. It operates at Layer 7 — the opposite of stateless filtering.
+- *Why D is correct:* A stateless (packet-filtering) firewall evaluates each packet independently based only on header fields (source IP, destination IP, source port, destination port, protocol). It does not track connection state and cannot automatically permit established session return traffic.
+
+---
+
+### Question 20
+
+A social engineering attack involves an attacker calling an employee, pretending to be from the IT helpdesk, and asking the employee to provide their network password to "verify their account." What type of attack is this?
+
+- A) Phishing
+- B) Vishing
+- C) Pharming
+- D) Spear phishing
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Phishing uses fraudulent emails to deceive victims into revealing credentials or clicking malicious links. The attack described uses a phone call, not email.
+- *Why B is correct:* Vishing (Voice Phishing) is a social engineering attack conducted via telephone. The attacker impersonates a trusted entity (IT helpdesk, bank, vendor) to manipulate the victim into disclosing sensitive information verbally.
+- *Why C is incorrect:* Pharming redirects users from legitimate websites to malicious sites by corrupting DNS resolution (DNS poisoning) or modifying hosts files. It is a technical attack, not a phone-based social engineering attack.
+- *Why D is incorrect:* Spear phishing is a targeted email-based phishing attack directed at a specific individual or organization using personalized information. It is email-based, not telephone-based.
+
+---
+
+*CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash*

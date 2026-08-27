@@ -363,3 +363,42 @@ Submit a single Jupyter notebook (.ipynb) containing all cells above, executed w
 ---
 
 *End of Lab — Module 10*
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Multi-Step Forecasting
+
+Extend your single-step LSTM model to forecast the next 7 days simultaneously using a direct multi-output approach.
+
+1. Rebuild the windowing function to produce multi-step targets. For each window of size 60, the target `y` should be the next 7 values: `y[i] = series[i+60:i+67]`. This gives `X` shape `(n, 60, 1)` and `y` shape `(n, 7)`.
+2. Change the model's output layer from `Dense(1)` to `Dense(7, activation='linear')` and retrain with `loss='mae'`.
+3. Plot the 7-day forecast as a connected line segment for 10 different starting positions scattered through the test set. Overlay the true values on the same axes.
+4. Compute both overall MAE and per-horizon MAE — the error at horizon 1, 2, 3, ..., 7 separately. Verify whether error increases with forecast horizon (as expected for most time series).
+
+### Challenge 2: Comparing LSTM, GRU, and 1D CNN
+
+Implement a 1D Convolutional Neural Network for time series forecasting and compare it against your LSTM and GRU models.
+
+1. Build a 1D CNN model using `Conv1D` and `MaxPooling1D` followed by a `Dense` output:
+
+   ```python
+   model_cnn = tf.keras.Sequential([
+       tf.keras.layers.Conv1D(64, kernel_size=5, activation='relu',
+                              input_shape=(60, 1)),
+       tf.keras.layers.MaxPooling1D(pool_size=2),
+       tf.keras.layers.Conv1D(128, kernel_size=3, activation='relu'),
+       tf.keras.layers.GlobalAveragePooling1D(),
+       tf.keras.layers.Dense(1)
+   ])
+   ```
+
+2. Train all three models (LSTM, GRU, Conv1D) using identical hyperparameters: `optimizer='adam'`, `loss='mae'`, `batch_size=32`, `epochs=30`, same `EarlyStopping` callback.
+3. Create a comparison table with four columns: Model, Total Parameters, Final Val MAE, Training Time (seconds).
+4. In a Markdown cell, explain which model you would recommend for deployment on a resource-constrained device (e.g., a microcontroller running TFLite) and justify your reasoning using the numbers from your comparison table.
+
+### Reflection Questions
+
+1. In your multi-step forecast, did the per-horizon MAE increase steadily from horizon 1 to horizon 7, or did it plateau or decrease at some horizons? What property of the underlying time series would cause a non-monotonic error increase across horizons?
+2. Based on your LSTM vs. GRU vs. Conv1D comparison, which architecture achieved the best validation MAE, and which had the best MAE-per-parameter efficiency? In what scenario would you choose the less accurate but more efficient model over the most accurate one?

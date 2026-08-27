@@ -321,3 +321,33 @@ Diagnosis: `nslookup` to test name resolution. `ipconfig /all` to verify DNS ser
 9. Describe the divide-and-conquer troubleshooting approach and when it is most effective.
 
 10. A switch port shows the following: Speed 10Mb/s, Duplex Half, Input errors: 45,000, CRC: 12,000. What are the likely causes?
+
+---
+
+## 9. Supplemental Resources
+
+The following free resources extend Module 14 content on network troubleshooting methodology, cable testing, and diagnostic tools.
+
+**1. Professor Messer — Network Troubleshooting Free Videos (N10-008)**
+URL: https://www.professormesser.com/network-plus/n10-008/n10-008-video/
+Relevance: Professor Messer covers the CompTIA seven-step troubleshooting methodology, cable testing tools (TDR, OTDR, tone generator, cable certifier), and common troubleshooting scenarios (APIPA, duplex mismatch, DNS failure) in videos directly aligned to Network+ Domain 5.0 exam objectives.
+
+**2. Cisco — Network Troubleshooting Guide (Free)**
+URL: https://www.cisco.com/c/en/us/support/docs/ip/routing-information-protocol-rip/13730-estab.html
+Relevance: Cisco's free troubleshooting documentation covers the OSI-layer systematic approach, interpretation of `show interfaces` output (input errors, CRC, late collisions, duplex mismatch), and structured diagnostic procedures used in real enterprise networks.
+
+**3. Wireshark — Sample Captures for Troubleshooting (Free)**
+URL: https://wiki.wireshark.org/SampleCaptures
+Relevance: Wireshark's free sample capture library provides real protocol traces for TCP retransmissions, DHCP failures, DNS errors, and ARP conflicts — directly applicable to the protocol-layer troubleshooting scenarios in this module.
+
+**4. CompTIA — Network+ Troubleshooting Exam Objectives (Free)**
+URL: https://www.comptia.org/training/resources/exam-objectives
+Relevance: CompTIA's free published exam objectives for N10-008/N10-009 list all Domain 5.0 troubleshooting skills and tool knowledge tested on the certification exam — the authoritative checklist for Module 14 study.
+
+**5. Fluke Networks — Cable Testing and Certification Guide (Free)**
+URL: https://www.flukenetworks.com/knowledge-base
+Relevance: Fluke Networks provides free application notes on cable testing concepts — TDR operation, OTDR trace interpretation, cable certifier parameters (attenuation, NEXT, return loss), and troubleshooting fiber optic installations — directly applicable to the cable testing tool content in this module.
+
+---
+
+*CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash*

@@ -190,3 +190,21 @@ Submit as a single PDF or Word document to the Canvas Module 04 Lab assignment. 
 | Part 2: Forward and Backward Pass | 40 | All 10 rows calculated correctly; float questions answered |
 | Part 3: Schedule Compression | 30 | Correct duration math; trade-off analysis; justified recommendation |
 | **Total** | **100** | |
+
+---
+
+## Part 9 — Challenge Exercise
+
+This section is optional for students seeking additional depth and exam preparation. It is not graded as part of the standard 100-point lab but may be used for extra credit at the instructor's discretion.
+
+### Challenge Step 1: PERT Uncertainty Analysis
+
+For three of the activities in the Part 1 network diagram, assign your own Optimistic, Most Likely, and Pessimistic estimates (within realistic bounds for IT deployment tasks). Calculate the PERT expected duration and the standard deviation (σ = (P - O) / 6) for each. Then calculate the 95% confidence interval (Expected ± 2σ) for the overall critical path duration. Explain in two to three sentences how this range affects the project manager's communication to the sponsor about the go-live date.
+
+### Challenge Step 2: Compression Decision Memo
+
+The project sponsor has requested that the critical path be shortened by 4 days. Using the network diagram from Part 1, identify which specific activity (or activities) you would target for crashing and why. Write a 6–8 sentence compression decision memo that includes: the selected activity, the crashing cost (assume $1,500 per day saved), the fast-tracking alternative and its rework risk, and your final recommendation. Format it as a professional memo.
+
+### Challenge Step 3: Float Sensitivity Analysis
+
+Identify the two activities with the highest total float in your Part 2 backward pass table. For each one, explain what would happen to project schedule risk if a team member were out sick for a week and that activity slipped by its full float amount. Would any other path become critical as a result? This analysis simulates the type of what-if scenario a PM performs using scheduling software such as MS Project or Primavera.

@@ -186,3 +186,183 @@ Correct Answer: B
 - Why A is incorrect: Placing the router before the firewall puts routing and NAT processing ahead of security inspection, which means unfiltered internet traffic reaches the router directly. The firewall should inspect traffic before it reaches the internal routing layer.
 - Why C is incorrect: The patch panel is passive and belongs at the distribution layer closest to end devices — not at the perimeter between the modem and firewall. The cable modem also cannot be placed after the router; the modem is always the first device from the ISP.
 - Why D is incorrect: A patch panel does not have a built-in DHCP server — it is entirely passive with no electronics, no processor, and no network intelligence of any kind.
+
+---
+
+### Question 11
+
+A small office uses a single consumer wireless router that combines modem, router, switch, and wireless access point functions into one device. An employee connects a second consumer wireless router to one of the LAN ports of the first router to extend coverage to the back office. Users connected to the second router can reach the internet but cannot communicate with users on the first router's LAN. What is the most likely cause?
+
+- A) The second router's wireless radio is transmitting on the same channel as the first router, causing RF interference that blocks inter-router wired communication
+- B) The second router is performing NAT and DHCP independently, creating a double-NAT configuration that places users on the second router in a separate private network unable to reach devices on the first router's subnet
+- C) The LAN port on the first router that connects to the second router is administratively disabled by default for security reasons and requires a managed switch interface to re-enable it
+- D) The second router's MAC address has been blocked by the first router's built-in MAC filtering, which prevents all traffic from the second router from passing to the first router's LAN
+
+Correct Answer: B
+
+- Why B is correct: When a second router (with its own NAT and DHCP) is connected to a LAN port of the first router, it creates a double-NAT topology. Devices behind the second router receive private IP addresses from the second router's DHCP server on a different subnet. NAT on the second router hides these addresses from the first router's LAN, making direct communication between the two subnets impossible without explicit routing configuration.
+- Why A is incorrect: RF channel interference affects wireless throughput and reliability but does not block wired communication between a LAN port and a WAN/LAN connection. The symptom describes a routing or NAT issue, not a wireless interference issue.
+- Why C is incorrect: Consumer routers do not administratively disable LAN ports by default. All LAN ports on a consumer router are active and switchable by default.
+- Why D is incorrect: MAC filtering on consumer routers is typically applied to wireless clients only, not to wired LAN ports. MAC filtering also only blocks specific addresses if explicitly configured — it is not active by default.
+
+---
+
+### Question 12
+
+A network administrator configures a managed switch with VLAN 10 for the finance department and VLAN 20 for the general staff. Finance workstations can communicate with each other, and general staff workstations can communicate with each other, but no communication is possible between VLANs. What device and configuration would allow inter-VLAN communication?
+
+- A) A second managed switch configured as a VLAN bridge — connecting the two switches with an access port on each allows VLANs to communicate across the link
+- B) A router (or Layer 3 switch) with sub-interfaces or SVIs configured for each VLAN — the router performs inter-VLAN routing by routing packets between the two VLAN subnets at Layer 3
+- C) A wireless access point configured in bridge mode — placing the AP between the two VLAN segments allows it to forward frames between VLANs using its built-in Layer 2 bridging
+- D) Enabling VLAN trunking on all access ports — trunking on access ports automatically enables inter-VLAN routing within the switch without requiring an external router
+
+Correct Answer: B
+
+- Why B is correct: VLANs are separate Layer 2 broadcast domains. Communication between VLANs requires a Layer 3 routing decision. A router with sub-interfaces on a trunk port (router-on-a-stick configuration) or a Layer 3 switch with Switched Virtual Interfaces (SVIs) routes packets between the VLAN subnets, enabling inter-VLAN communication.
+- Why A is incorrect: A trunk link between two managed switches allows both VLANs to traverse the inter-switch link but does not route between them. Each VLAN remains an isolated broadcast domain across both switches. Connecting switches does not enable inter-VLAN communication.
+- Why C is incorrect: A wireless access point in bridge mode forwards Layer 2 frames between wireless and wired segments. It does not perform Layer 3 routing and cannot route between VLANs. Access points have no VLAN routing capability.
+- Why D is incorrect: Trunk ports carry multiple VLANs on a single link between switches and routers — they do not enable routing between VLANs. Routing between VLANs requires a Layer 3 device regardless of trunk port configuration.
+
+---
+
+### Question 13
+
+A technician configures a SOHO router for a home office. The external IP address assigned by the ISP is 203.0.113.47. Internal devices receive addresses in the 192.168.1.0/24 range. A user on the internet cannot connect directly to the user's home PC using the 192.168.1.x address. What technology makes internal private addresses inaccessible from the internet, and what configuration would allow an inbound connection?
+
+- A) The private addresses are blocked by the ISP's router, which filters RFC 1918 address space at the network edge. Adding a static route on the ISP's router would allow inbound connections.
+- B) Network Address Translation (NAT) on the SOHO router maps the single public IP to multiple private IPs for outbound traffic. Inbound connections require a port forwarding rule that maps a specific external port to the target internal device's IP and port.
+- C) The SOHO router's built-in firewall inspects every packet for malware signatures and blocks all inbound connections by default. Disabling the firewall entirely allows inbound connections.
+- D) Private IP addresses use a different routing protocol (RIPv2) that is incompatible with the internet's BGP routing. Reconfiguring the SOHO router to use BGP enables inbound connections from the internet.
+
+Correct Answer: B
+
+- Why B is correct: NAT (Network Address Translation) allows multiple devices with RFC 1918 private addresses to share a single public IP for outbound internet communication. The router rewrites source addresses on outbound packets and tracks connections in a translation table. For inbound connections to reach a specific internal device, a port forwarding rule must be configured — mapping an external port on the public IP to the internal device's private IP and port.
+- Why A is incorrect: ISPs do filter RFC 1918 address space from internet routing tables, but this is a separate issue. The 192.168.1.x addresses are inaccessible from the internet because NAT on the SOHO router hides them — not because the ISP's router has a static route issue. Adding a static route on the ISP's router would not resolve the NAT translation problem.
+- Why C is incorrect: While SOHO router firewalls do block unsolicited inbound connections, the primary mechanism preventing direct access to 192.168.1.x addresses from the internet is NAT, not firewall signature inspection. Disabling the firewall entirely would be a security risk and is not the correct targeted solution.
+- Why D is incorrect: NAT is the correct explanation, not routing protocol compatibility. RFC 1918 private addresses are deliberately non-routable on the public internet; this is enforced by BGP filtering at ISP border routers, but the mechanism preventing inbound connections to a home PC is the NAT translation table on the SOHO router, not a routing protocol mismatch.
+
+---
+
+### Question 14
+
+A network administrator needs to provide wireless coverage in a large warehouse with metal shelving. A single wireless router at the office end of the warehouse provides no signal in the far half of the building. Which solution is most appropriate?
+
+- A) Replace the wireless router with a higher-power consumer router — increasing transmit power will overcome the RF attenuation from metal shelving regardless of distance
+- B) Deploy wireless access points at multiple locations throughout the warehouse, connected to the wired network via Ethernet, and configure them with the same SSID and overlapping channels to ensure seamless roaming
+- C) Install a wired Ethernet hub at the center of the warehouse and connect a second wireless router to it — the second router will automatically extend the first router's signal using wireless mesh protocol
+- D) Configure the existing router to use the 2.4 GHz band exclusively, as 2.4 GHz penetrates metal shelving without any signal degradation
+
+Correct Answer: B
+
+- Why B is correct: For large or obstructed spaces, deploying multiple access points connected to the wired network (a controller-based or standalone WAP deployment) is the correct enterprise solution. Same SSID with proper channel planning allows clients to roam between APs. This approach provides reliable coverage without the double-NAT and signal degradation issues of consumer wireless extenders.
+- Why A is incorrect: Increasing transmit power helps marginally with distance but does not overcome the reflection and absorption caused by metal shelving. Metal is a significant RF obstacle that requires physical placement of additional APs, not just power increases.
+- Why C is incorrect: An Ethernet hub at the center of the warehouse would work for wired connectivity, but consumer routers do not automatically extend a first router's signal using wireless mesh protocol — they would create a double-NAT configuration as described in Question 11. A second consumer router connected to an unmanaged hub is not a wireless mesh solution.
+- Why D is incorrect: While 2.4 GHz does penetrate solid obstacles better than 5 GHz due to its longer wavelength, it still suffers significant attenuation through metal shelving. Metal reflects RF energy rather than allowing it to pass through, and this effect applies to both 2.4 GHz and 5 GHz bands.
+
+---
+
+### Question 15
+
+A technician is configuring a new managed switch and needs to ensure that a specific PC connected to port 3 always receives the same IP address from the DHCP server. The DHCP server is a separate device on the network. Which configuration should the technician apply?
+
+- A) Configure a static IP address directly on the PC's network adapter settings and ensure it is outside the DHCP pool range — this eliminates the need for any switch or DHCP server configuration
+- B) Configure a DHCP reservation on the DHCP server that maps the PC's MAC address to a specific IP address — the server will always assign this IP to the device with that MAC address
+- C) Configure the switch port 3 as a DHCP static port in the switch's management interface — the switch will intercept the DHCP request and inject the configured IP address into the response
+- D) Configure a VLAN on port 3 with the desired IP address as the VLAN's gateway IP — the PC will always receive this IP address as its DHCP-assigned address from the VLAN gateway
+
+Correct Answer: B
+
+- Why B is correct: A DHCP reservation (also called a DHCP static mapping or address reservation) is configured on the DHCP server and ties a specific IP address to a specific MAC address. When the device with that MAC address sends a DHCP request, the server always responds with the reserved IP. This is the standard method for ensuring consistent IP assignment without manually configuring static IPs on the client.
+- Why A is incorrect: Configuring a static IP directly on the PC is a valid alternative but it bypasses DHCP entirely. The question asks about a DHCP-based solution. Additionally, static IPs require manual management on each device and are more difficult to track in large environments.
+- Why C is incorrect: Managed switches do not have a "DHCP static port" configuration feature that injects IP addresses into DHCP responses. Switches do have DHCP snooping (which filters malicious DHCP responses) but this is a security feature, not an IP assignment mechanism.
+- Why D is incorrect: VLAN gateway IPs are default gateway addresses for routing, not DHCP assignment mechanisms. A VLAN's gateway IP is the router interface address that clients use to reach other networks — it is not related to what IP address a DHCP server assigns to a client on that VLAN.
+
+---
+
+### Question 16
+
+A company's network has a hub connecting four workstations. One workstation is infected with malware that sends continuous broadcast packets. Which of the following accurately describes the impact on the other three workstations?
+
+- A) The other three workstations are unaffected because a hub's MAC address table identifies the infected workstation and blocks its traffic from being forwarded to the other ports
+- B) All four workstations experience degraded performance because a hub repeats every received signal to all ports — every broadcast packet from the infected workstation is transmitted to all other connected workstations simultaneously
+- C) Only the workstation directly adjacent to the infected machine is affected, because hubs use a linear bus topology that forwards signals in only one direction
+- D) The hub isolates the infected workstation automatically using its built-in port security feature after detecting abnormal broadcast traffic
+
+Correct Answer: B
+
+- Why B is correct: A hub is a Layer 1 device that electrically repeats every signal received on any port to all other ports — it has no MAC address table, no filtering, and no intelligence. Every packet transmitted by the infected workstation, including broadcast floods, is repeated to all three other workstations. The shared collision domain means all workstations compete for the same bandwidth and all receive every packet.
+- Why A is incorrect: Hubs have no MAC address table. MAC address learning and selective frame forwarding are Layer 2 switch features. A hub cannot identify source addresses or block traffic from specific ports.
+- Why C is incorrect: Modern Ethernet hubs use a star physical topology — all devices connect to a central hub. Signals are repeated to all ports simultaneously, not in one direction around a linear bus.
+- Why D is incorrect: Hubs have no processing capability, firmware, or port security features. Auto-isolation of misbehaving ports is a feature found on managed switches (port security, dynamic ARP inspection, DHCP snooping), not on passive hub hardware.
+
+---
+
+### Question 17
+
+A technician sets up a wireless network in a small office using a single 802.11ac (Wi-Fi 5) access point. Users report acceptable performance near the AP but unusable speeds in a conference room 25 meters away with two concrete walls between the AP and the room. Which of the following is the most technically accurate explanation?
+
+- A) 802.11ac operates exclusively on the 5 GHz band, which has shorter wavelengths that attenuate more rapidly through solid barriers than 2.4 GHz signals — the concrete walls are absorbing and reflecting most of the RF energy before it reaches the conference room
+- B) 802.11ac has a maximum range of exactly 15 meters indoors regardless of obstacles, so the 25-meter distance alone is the sole cause of the signal failure
+- C) The conference room is in a signal shadow created by the access point's directional antenna, which only transmits RF energy in a single beam toward the nearest wall
+- D) The 5 GHz channel width of 802.11ac is too narrow to carry enough signal energy through concrete, and switching to a 20 MHz channel width would resolve the attenuation issue
+
+Correct Answer: A
+
+- Why A is correct: 802.11ac operates only on the 5 GHz band. Higher-frequency signals (5 GHz) have shorter wavelengths that are more susceptible to absorption and reflection by dense materials such as concrete compared to 2.4 GHz signals. Each concrete wall causes significant RF attenuation. Two concrete walls at 25 meters on 5 GHz is a common scenario that produces near-zero usable signal.
+- Why B is incorrect: 802.11ac does not have a hard 15-meter indoor range limit. Indoor range varies significantly based on obstacles, antenna gain, transmit power, and interference. In open spaces, 5 GHz 802.11ac can reach 30-50 meters or more.
+- Why C is incorrect: Consumer and enterprise access points use omnidirectional antennas that radiate RF energy in all directions horizontally (and to some extent vertically). They do not transmit in a single directional beam that would create a signal shadow behind the AP.
+- Why D is incorrect: Channel width (20/40/80/160 MHz) affects the amount of spectrum used and the theoretical maximum throughput — it does not affect RF penetration through walls. Narrowing channel width reduces capacity but does not meaningfully improve signal range through solid obstacles.
+
+---
+
+### Question 18
+
+A technician is reviewing a packet capture from a network where a rogue device is sending ARP replies claiming that the gateway's IP address (192.168.1.1) maps to the rogue device's MAC address. What type of attack is this, and which managed switch feature can prevent it?
+
+- A) This is a DNS poisoning attack; the switch feature that prevents it is DHCP snooping, which validates DNS query responses against the switch's trusted port list
+- B) This is an ARP poisoning (ARP spoofing) attack; the switch feature that prevents it is Dynamic ARP Inspection (DAI), which validates ARP packets against a trusted DHCP snooping binding table and drops ARP replies that contain incorrect MAC-to-IP mappings
+- C) This is a MAC flooding attack; the switch feature that prevents it is port security, which limits the number of MAC addresses that can be learned on a single port
+- D) This is a VLAN hopping attack; the switch feature that prevents it is disabling DTP (Dynamic Trunking Protocol) on all access ports so that rogue devices cannot negotiate trunk links
+
+Correct Answer: B
+
+- Why B is correct: ARP poisoning (also called ARP spoofing) involves sending unsolicited ARP replies that associate the attacker's MAC address with a legitimate IP (such as the default gateway), causing traffic intended for the gateway to be sent to the attacker instead. Dynamic ARP Inspection (DAI) on managed switches validates ARP packets against the DHCP snooping binding table (which maps trusted IP-to-MAC associations) and drops ARP replies containing spoofed mappings.
+- Why A is incorrect: DNS poisoning involves injecting false DNS responses to redirect domain name lookups to incorrect IP addresses. ARP operates at Layer 2 with no involvement from DNS. DHCP snooping validates DHCP server responses, not DNS query responses.
+- Why C is incorrect: MAC flooding involves sending a large number of frames with random source MAC addresses to exhaust the switch's MAC address table, causing the switch to flood traffic to all ports. Port security limits MAC addresses per port to prevent this. This is a different attack from the scenario described, which involves crafted ARP replies rather than MAC address exhaustion.
+- Why D is incorrect: VLAN hopping involves an attacker using double-tagging or DTP negotiation to send traffic into a VLAN other than their access VLAN. Disabling DTP prevents rogue trunk negotiation. This is a different attack from ARP poisoning.
+
+---
+
+### Question 19
+
+A company purchases an 8-port unmanaged switch and a 24-port managed switch for a small office. Which statement correctly identifies a capability that the managed switch has and the unmanaged switch does not?
+
+- A) The managed switch can forward Ethernet frames using MAC addresses, while the unmanaged switch can only broadcast all incoming frames to every port simultaneously
+- B) The managed switch supports VLAN configuration, port mirroring, SNMP monitoring, QoS, and port security — features that require software configuration through a management interface not present on unmanaged switches
+- C) The managed switch operates at Layer 3 (Network layer) and can route between IP subnets, while the unmanaged switch operates at Layer 1 and repeats signals to all ports
+- D) The managed switch uses faster Cat7 cables due to its higher processing power, while the unmanaged switch is limited to Cat5e or Cat6 cable
+
+Correct Answer: B
+
+- Why B is correct: Managed switches provide a configuration interface (web GUI, CLI, or SNMP) that allows administrators to configure VLANs, QoS priority queuing, port mirroring for monitoring, SNMP traps for network management systems, and port security features. None of these features are available on unmanaged switches, which operate with fixed factory settings and no configuration interface.
+- Why A is incorrect: Both managed and unmanaged switches are Layer 2 devices that forward frames based on MAC addresses learned through the MAC address learning process. An unmanaged switch is not a hub — it does not broadcast all frames to all ports. Both switch types perform selective forwarding based on MAC addresses.
+- Why C is incorrect: Unmanaged switches are Layer 2 devices, not Layer 1 devices. Layer 1 devices are hubs and repeaters. Basic Layer 3 routing capability is found on Layer 3 switches, which are a subset of managed switches — not all managed switches route at Layer 3.
+- Why D is incorrect: Cable category selection (Cat5e, Cat6, Cat6a, Cat7) depends on the network speed requirements and installation standards — not on whether the switch is managed or unmanaged. Both managed and unmanaged switches connect via standard Ethernet cables regardless of the switch's feature set.
+
+---
+
+### Question 20
+
+A technician installs a cable modem provided by the ISP and connects it directly to a PC with no router in between. The PC receives a public IP address (67.45.22.198) and can browse the internet normally. The company then adds three more PCs. Which device must be added to allow all four PCs to share the single public IP address, and what technology on that device enables sharing?
+
+- A) A network hub — hubs split the available bandwidth equally across all connected ports, allowing four PCs to each use one-quarter of the available bandwidth on the single public IP
+- B) A router with NAT (Network Address Translation) — NAT allows the router to assign private IP addresses to all four PCs and translate their private addresses to the single public IP for all outbound internet connections
+- C) A managed switch with DHCP enabled — the managed switch assigns private IP addresses to all four PCs and uses VLAN tagging to multiplex their traffic onto the single public IP
+- D) A second cable modem — connecting two modems doubles the available public IP addresses, providing one public IP per two PCs
+
+Correct Answer: B
+
+- Why B is correct: NAT (Network Address Translation) on a router allows multiple devices with private RFC 1918 IP addresses to share a single public IP address. The router maintains a NAT translation table that tracks each device's outbound connections by private IP and source port, and rewrites packet headers so all outbound traffic appears to originate from the single public IP. This is the fundamental technology used in nearly every home and small office internet connection.
+- Why A is incorrect: A hub is a Layer 1 repeater that has no IP awareness, no DHCP capability, and no NAT function. Connecting four PCs to a hub and a modem would result in all four PCs competing for the single public IP assignment through DHCP — at most one PC would receive the IP address, and the others would get no connectivity.
+- Why C is incorrect: A managed switch is a Layer 2 device. While some managed switches include a DHCP server feature, they do not perform NAT. Without NAT, four PCs with private addresses cannot share a single public IP. VLAN tagging is a traffic segmentation mechanism, not a NAT replacement.
+- Why D is incorrect: A second cable modem would require a second ISP subscriber account and would provide a second public IP address — it would not allow the original single public IP to serve all four PCs. ISPs assign one IP per modem connection unless a business account with a static IP block is purchased.

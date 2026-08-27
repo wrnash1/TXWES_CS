@@ -286,3 +286,19 @@ Residual risk should never be silently left unaddressed. Every assessed risk mus
 - [ ] Work through a cost-benefit analysis calculation: given ALE before and after, and annual control cost, determine net benefit
 - [ ] Define residual risk and explain who must formally accept it
 - [ ] Proceed to the Module 05 Lab Activity
+
+---
+
+## 9. Supplemental Resources
+
+**NIST SP 800-39 — Managing Information Security Risk**
+URL: https://csrc.nist.gov/publications/detail/sp/800-39/final
+Description: Free NIST publication providing authoritative guidance on the risk response step of the risk management process, including framing, assessing, responding to, and monitoring risk across the organization, mission/business process, and information system tiers. Chapter 3 covers risk response options (accept, avoid, mitigate, share/transfer) and the governance structures that authorize treatment decisions — directly aligned with Module 05 content on formal risk acceptance and treatment documentation.
+
+**ISACA — Risk IT Framework**
+URL: https://www.isaca.org/resources/risk-it-framework
+Description: ISACA's free Risk IT framework publication that bridges IT risk management with enterprise risk management, providing guidance on risk governance, risk evaluation, and risk response. The framework's Risk Response domain covers risk treatment option selection, control identification, and residual risk acceptance in language directly aligned with CISM Domain 2 exam objectives.
+
+**NIST SP 800-53 Rev. 5 — Security and Privacy Controls Catalog**
+URL: https://csrc.nist.gov/publications/detail/sp/800-53/rev-5/final
+Description: Free NIST publication providing the most comprehensive catalog of security and privacy controls available, organized into 20 control families. Each control entry includes a description, supplemental guidance, and control enhancements. Essential reference for understanding how controls are categorized, selected, and documented in the risk treatment process covered in Module 05.

@@ -339,6 +339,80 @@ gcloud iam service-accounts delete $SA_EMAIL
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Workload Identity Federation Simulation
+
+Simulate the Workload Identity Federation setup for a GitHub Actions pipeline.
+You will not run an actual GitHub workflow, but you will create the GCP-side
+components and verify them.
+
+1. Create a Workload Identity Pool named `lab02-challenge-pool`:
+
+```bash
+gcloud iam workload-identity-pools create lab02-challenge-pool \
+  --location=global \
+  --display-name="Lab02 Challenge Pool"
+```
+
+1. Create an OIDC provider for GitHub Actions within that pool:
+
+```bash
+gcloud iam workload-identity-pools providers create-oidc lab02-github-provider \
+  --location=global \
+  --workload-identity-pool=lab02-challenge-pool \
+  --issuer-uri="https://token.actions.githubusercontent.com" \
+  --attribute-mapping="google.subject=assertion.sub,attribute.repository=assertion.repository"
+```
+
+1. Describe the pool and provider to confirm creation:
+
+```bash
+gcloud iam workload-identity-pools describe lab02-challenge-pool --location=global
+gcloud iam workload-identity-pools providers describe lab02-github-provider \
+  --location=global \
+  --workload-identity-pool=lab02-challenge-pool
+```
+
+1. Clean up when done:
+
+```bash
+gcloud iam workload-identity-pools delete lab02-challenge-pool --location=global --quiet
+```
+
+### Challenge 2: IAM Policy Analyzer
+
+Use the IAM Policy Analyzer to investigate permissions on your project.
+
+1. In the Cloud Console, navigate to **IAM & Admin > Policy Analyzer**.
+1. Create a new analysis query asking: "What roles does [your email] have on
+   this project?"
+1. Run the analysis and capture a screenshot of the results showing your
+   effective permissions, including any inherited from folder or organization
+   level.
+1. Create a second query: "Who has `storage.objects.delete` permission on this
+   project?" and run the analysis.
+
+```bash
+# Equivalent CLI approach using gcloud
+gcloud policy-intelligence query-activity \
+  --project=$PROJECT_ID \
+  --activity-type=serviceAccountLastAuthentication \
+  --limit=5
+```
+
+### Reflection Questions
+
+1. When you created the Workload Identity Pool provider with the GitHub OIDC
+   issuer URI, what trust relationship did you establish? Why does this eliminate
+   the need for a service account key file?
+2. The IAM Policy Analyzer shows both direct bindings and inherited permissions.
+   If you wanted to grant a contractor temporary access that automatically expires
+   in 14 days, which IAM feature would you use, and what CEL expression would
+   you write for the condition?
+
+---
+
 End of Lab — Module 02
 
 Course: CIS-4329 Google Cloud Computing | Texas Wesleyan University | Professor Nash

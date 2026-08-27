@@ -494,3 +494,255 @@ Submit all of the following through the course LMS:
 | Analysis Question 4 (while read correction) | 10 |
 | Analysis Question 5 (disk space check script) | 15 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+**Challenge Step 1 — Argument parsing with getopts**
+
+Rewrite the backup script from Part 5 to accept options using getopts instead of positional
+parameters. The new interface should accept:
+
+- `-s SOURCE` — the source directory to back up
+- `-d DEST` — the destination backup directory
+- `-r DAYS` — retention period in days (default: 7)
+- `-v` — verbose mode (print each file as it is archived)
+- `-h` — print usage and exit 0
+
+```bash
+cat > ~/lab07/backup_opts.sh << 'EOF'
+#!/usr/bin/env bash
+set -euo pipefail
+
+VERBOSE=false
+RETENTION=7
+SOURCE=""
+DEST=""
+
+usage() {
+    echo "Usage: $0 -s SOURCE -d DEST [-r DAYS] [-v] [-h]"
+    exit "${1:-0}"
+}
+
+while getopts ":s:d:r:vh" opt; do
+    case "$opt" in
+        s) SOURCE="$OPTARG" ;;
+        d) DEST="$OPTARG" ;;
+        r) RETENTION="$OPTARG" ;;
+        v) VERBOSE=true ;;
+        h) usage 0 ;;
+        :) echo "Option -$OPTARG requires an argument." >&2; usage 1 ;;
+        \?) echo "Unknown option: -$OPTARG" >&2; usage 1 ;;
+    esac
+done
+
+[[ -z "$SOURCE" || -z "$DEST" ]] && { echo "Error: -s and -d are required." >&2; usage 1; }
+[[ -d "$SOURCE" ]] || { echo "Error: source directory does not exist: $SOURCE" >&2; exit 1; }
+
+mkdir -p "$DEST"
+STAMP=$(date +%Y%m%d_%H%M%S)
+ARCHIVE="$DEST/backup_${STAMP}.tar.gz"
+TAR_OPTS="-czf"
+$VERBOSE && TAR_OPTS="-czvf"
+tar $TAR_OPTS "$ARCHIVE" "$SOURCE"
+echo "Archive created: $ARCHIVE ($(du -sh "$ARCHIVE" | cut -f1))"
+
+find "$DEST" -name "backup_*.tar.gz" -mtime +"$RETENTION" -print -delete \
+    | wc -l | xargs -I{} echo "Removed {} old archive(s)"
+EOF
+chmod +x ~/lab07/backup_opts.sh
+```
+
+Test all option combinations:
+
+```bash
+~/lab07/backup_opts.sh -s /etc -d /tmp/lab07_opts -r 30 -v
+~/lab07/backup_opts.sh -h
+~/lab07/backup_opts.sh -s /etc
+~/lab07/backup_opts.sh -s /nonexistent -d /tmp/lab07_opts
+```
+
+Document the exit code for each invocation. Explain in two sentences why getopts is preferred
+over manual `$1`/`$2` positional parsing when a script has more than two configurable options.
+
+**Challenge Step 2 — Automated multi-host report script**
+
+Write a script that generates a structured system report for the local machine, formats it into
+sections, and saves both a plain-text version and a CSV summary:
+
+```bash
+cat > ~/lab07/sysreport.sh << 'EOF'
+#!/usr/bin/env bash
+set -euo pipefail
+
+REPORT_DIR="${1:-/tmp/sysreport}"
+HOSTNAME_SHORT=$(hostname -s)
+STAMP=$(date +%Y%m%d_%H%M%S)
+REPORT_FILE="$REPORT_DIR/${HOSTNAME_SHORT}_${STAMP}.txt"
+CSV_FILE="$REPORT_DIR/summary.csv"
+
+mkdir -p "$REPORT_DIR"
+
+section() {
+    local title="$1"
+    printf '\n=== %s ===\n' "$title"
+}
+
+{
+    echo "System Report: $HOSTNAME_SHORT"
+    echo "Generated: $(date)"
+    echo "---"
+
+    section "OS RELEASE"
+    grep -E "^(NAME|VERSION)=" /etc/os-release
+
+    section "UPTIME AND LOAD"
+    uptime
+
+    section "MEMORY (MB)"
+    free -m | awk 'NR<=2 {print}'
+
+    section "DISK USAGE"
+    df -h --output=target,pcent,size,avail | grep -v "tmpfs\|udev"
+
+    section "TOP 5 CPU PROCESSES"
+    ps aux --sort=-%cpu | awk 'NR>=2 && NR<=6 {printf "%-10s %-6s %-6s %s\n", $1, $2, $3, $11}'
+
+    section "LISTENING PORTS"
+    ss -tlnp | awk 'NR>1 {print $4, $6}' | head -10
+
+    section "LAST 5 LOGINS"
+    last -n 5 -a | head -5
+
+    section "FAILED LOGIN ATTEMPTS (last 10)"
+    journalctl -u ssh --since "24 hours ago" --no-pager 2>/dev/null \
+        | grep -i "failed\|invalid" | tail -10 || echo "None"
+} | tee "$REPORT_FILE"
+
+CPU_IDLE=$(top -bn1 | grep "Cpu(s)" | awk '{print $8}' | tr -d '%id,')
+MEM_FREE=$(free -m | awk '/^Mem:/{print $4}')
+DISK_PCT=$(df / --output=pcent | tail -1 | tr -d ' %')
+
+CSV_HEADER="hostname,timestamp,cpu_idle_pct,mem_free_mb,root_disk_pct"
+CSV_ROW="$HOSTNAME_SHORT,$(date +%Y-%m-%dT%H:%M:%S),$CPU_IDLE,$MEM_FREE,$DISK_PCT"
+
+if [[ ! -f "$CSV_FILE" ]]; then
+    echo "$CSV_HEADER" > "$CSV_FILE"
+fi
+echo "$CSV_ROW" >> "$CSV_FILE"
+
+echo ""
+echo "Report saved to: $REPORT_FILE"
+echo "CSV summary appended to: $CSV_FILE"
+EOF
+chmod +x ~/lab07/sysreport.sh
+```
+
+Run the report twice with a short delay and examine the CSV:
+
+```bash
+~/lab07/sysreport.sh /tmp/sysreport
+sleep 5
+~/lab07/sysreport.sh /tmp/sysreport
+cat /tmp/sysreport/summary.csv
+ls -lh /tmp/sysreport/
+```
+
+Explain in two sentences how you would modify this script to run on multiple remote hosts by
+replacing the report generation block with an SSH call and collecting results back to a central
+summary CSV on the administrator's workstation.
+
+**Challenge Step 3 — CI-style test harness for shell scripts**
+
+Write a minimal test harness that validates functions in a target script without running the
+full script. This pattern is used in CI pipelines to unit-test shell functions:
+
+```bash
+cat > ~/lab07/lib_validators.sh << 'EOF'
+#!/usr/bin/env bash
+
+is_valid_ip() {
+    local ip="$1"
+    local regex='^([0-9]{1,3}\.){3}[0-9]{1,3}$'
+    if [[ ! "$ip" =~ $regex ]]; then return 1; fi
+    IFS='.' read -r -a octets <<< "$ip"
+    for octet in "${octets[@]}"; do
+        (( octet >= 0 && octet <= 255 )) || return 1
+    done
+    return 0
+}
+
+is_positive_int() {
+    local val="$1"
+    [[ "$val" =~ ^[0-9]+$ ]] && (( val > 0 ))
+}
+
+bytes_to_human() {
+    local bytes="$1"
+    if   (( bytes >= 1073741824 )); then printf "%.1fG\n" "$(echo "scale=1; $bytes/1073741824" | bc)"
+    elif (( bytes >= 1048576 ));    then printf "%.1fM\n" "$(echo "scale=1; $bytes/1048576" | bc)"
+    elif (( bytes >= 1024 ));       then printf "%.1fK\n" "$(echo "scale=1; $bytes/1024" | bc)"
+    else echo "${bytes}B"
+    fi
+}
+EOF
+
+cat > ~/lab07/test_validators.sh << 'EOF'
+#!/usr/bin/env bash
+set -uo pipefail
+source ~/lab07/lib_validators.sh
+
+PASS=0; FAIL=0
+
+assert_true()  { local desc="$1"; shift; "$@" && { echo "PASS: $desc"; (( PASS++ )); } || { echo "FAIL: $desc"; (( FAIL++ )); }; }
+assert_false() { local desc="$1"; shift; "$@" && { echo "FAIL: $desc (expected false)"; (( FAIL++ )); } || { echo "PASS: $desc"; (( PASS++ )); }; }
+assert_eq()    { local desc="$1" expected="$2" actual="$3"
+    [[ "$actual" == "$expected" ]] && { echo "PASS: $desc"; (( PASS++ )); } \
+                                   || { echo "FAIL: $desc — expected '$expected', got '$actual'"; (( FAIL++ )); }; }
+
+assert_true  "valid IP 192.168.1.1"     is_valid_ip "192.168.1.1"
+assert_true  "valid IP 10.0.0.1"        is_valid_ip "10.0.0.1"
+assert_false "invalid IP 256.1.1.1"     is_valid_ip "256.1.1.1"
+assert_false "invalid IP not-an-ip"     is_valid_ip "not-an-ip"
+assert_false "invalid IP empty string"  is_valid_ip ""
+
+assert_true  "positive int 42"          is_positive_int "42"
+assert_true  "positive int 1"           is_positive_int "1"
+assert_false "zero is not positive"     is_positive_int "0"
+assert_false "negative not positive"    is_positive_int "-5"
+assert_false "string not positive int"  is_positive_int "abc"
+
+assert_eq "1023 bytes"      "1023B" "$(bytes_to_human 1023)"
+assert_eq "1024 bytes = 1K" "1.0K"  "$(bytes_to_human 1024)"
+assert_eq "1MB"             "1.0M"  "$(bytes_to_human 1048576)"
+assert_eq "1GB"             "1.0G"  "$(bytes_to_human 1073741824)"
+
+echo ""
+echo "Results: $PASS passed, $FAIL failed"
+(( FAIL == 0 )) && exit 0 || exit 1
+EOF
+chmod +x ~/lab07/test_validators.sh
+```
+
+Run the test harness and observe the output:
+
+```bash
+~/lab07/test_validators.sh
+echo "Harness exit code: $?"
+```
+
+Deliberately break one function (change the octet range check) and re-run to see a FAIL:
+
+```bash
+sed -i 's/octet <= 255/octet <= 200/' ~/lab07/lib_validators.sh
+~/lab07/test_validators.sh
+echo "Exit code after regression: $?"
+sed -i 's/octet <= 200/octet <= 255/' ~/lab07/lib_validators.sh
+~/lab07/test_validators.sh
+```
+
+Document the PASS/FAIL counts before and after the deliberate regression. Explain in three
+sentences: (1) why sourcing a library file in a test harness is preferable to copy-pasting
+functions, (2) why the harness exits with code 1 on any failure, and (3) how this pattern
+enables shell scripts to be tested in a CI pipeline the same way compiled code is tested.

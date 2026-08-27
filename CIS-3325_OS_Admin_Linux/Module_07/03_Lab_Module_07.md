@@ -445,3 +445,28 @@ Prepare a short lab report (can be notes or screenshots) covering:
 | `passwd: Authentication token manipulation error` | Try `sudo passwd username` as root |
 | `userdel: user X is currently used by process Y` | Use `sudo pkill -u X` first, then retry |
 | `chage: command not found` | Install with `sudo apt install login` or `sudo dnf install shadow-utils` |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Automated Account Provisioning Script
+
+Write a shell script that provisions a complete user account from a single command invocation.
+
+1. Create a script `~/provision_user.sh` that accepts three arguments: `$1` = username, `$2` = full name (quoted), `$3` = primary group. The script should: create the group if it does not exist, create the user with `-m`, set the full name as the GECOS field, set the shell to `/bin/bash`, force a password change at first login (`chage -d 0`), and print a summary of the created account using `id` and `chage -l`.
+2. Make the script executable and test it: `sudo ./provision_user.sh testprovision "Test User" testgroup`. Verify by running `id testprovision` and `sudo chage -l testprovision`.
+3. Add error handling: if the username already exists, the script should print an error message and exit with code 1 rather than attempting to create a duplicate. Test this by running the script twice with the same username.
+
+### Challenge 2: User Audit Report
+
+Generate a comprehensive security audit of user accounts using only standard Linux tools.
+
+1. Write a pipeline that produces a formatted report listing every account in `/etc/passwd` with UID >= 1000, showing their username, UID, primary group name, shell, and whether their account is locked (check `/etc/shadow` for a leading `!`). Output to `~/user_audit.txt`.
+2. Add a section to the report that lists any accounts with UID 0 that are not named `root`: `awk -F: '($3 == 0 && $1 != "root") {print "ALERT: UID 0 account:", $1}' /etc/passwd`.
+3. Add a final section showing files with no valid owner: `find /home -nouser 2>/dev/null`. If any are found, list them with `ls -la`.
+
+### Reflection Questions
+
+1. The `usermod -G` flag (without `-a`) replaces all supplementary groups. Describe a real production scenario where accidentally running `usermod -G somegroup username` on a service account could cause an immediate application outage, and what specific groups might be lost that would break functionality.
+2. PAM's `requisite` control flag stops evaluation immediately on failure while `required` continues and fails at the end. From a security perspective, why might you prefer `required` over `requisite` for an authentication failure condition — what information does `required` deny to an attacker that `requisite` reveals?

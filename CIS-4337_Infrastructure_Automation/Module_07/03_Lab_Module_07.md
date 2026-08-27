@@ -424,5 +424,62 @@ Submit the following to the course LMS:
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Structured Object Variable with Conditional Local
+
+Extend the configuration with a structured `server_config` variable using `type = object` that drives multiple resource behaviors through conditional local values.
+
+**Step A.** Add the following variable to `variables.tf`:
+
+```hcl
+variable "server_config" {
+  type = object({
+    tier         = string
+    replica_count = number
+    cache_enabled = bool
+  })
+  default = {
+    tier          = "standard"
+    replica_count = 1
+    cache_enabled = false
+  }
+
+  validation {
+    condition     = contains(["basic", "standard", "premium"], var.server_config.tier)
+    error_message = "tier must be basic, standard, or premium."
+  }
+}
+```
+
+**Step B.** Add the following locals to `locals.tf`:
+
+```hcl
+  max_workers   = var.server_config.tier == "premium" ? 16 : (var.server_config.tier == "standard" ? 4 : 1)
+  cache_ttl     = var.server_config.cache_enabled ? 3600 : 0
+  tier_label    = upper(var.server_config.tier)
+```
+
+1. Add a `local_file` resource named `server_spec` that writes a JSON file combining `local.max_workers`, `local.cache_ttl`, `local.tier_label`, and `var.server_config.replica_count` using `jsonencode()`.
+2. Add an output `server_spec_summary` that exposes `{ tier = local.tier_label, workers = local.max_workers, cache_ttl = local.cache_ttl }`.
+3. Apply with `-var='server_config={"tier":"premium","replica_count":3,"cache_enabled":true}'` and verify the generated file and output values.
+
+### Challenge 2: Variable Precedence Race
+
+Demonstrate all levels of variable precedence by configuring the same variable `app_name` from five different sources simultaneously.
+
+1. Ensure `app_name` has a default of `"default-app"` in `variables.tf`.
+2. Set `app_name = "tfvars-app"` in `terraform.tfvars` and `app_name = "auto-app"` in a new file `override.auto.tfvars`.
+3. Export `TF_VAR_app_name=env-app` in the shell.
+4. Run `terraform plan -var-file="dev.tfvars" -var="app_name=cli-app"` and record which value wins.
+5. Remove the `-var="app_name=cli-app"` flag and re-run. Record which value now wins and explain the precedence chain in `lab_notes.txt` from lowest to highest for all five sources you configured.
+
+### Reflection Questions
+
+1. The lab used `sensitive = true` on `var.secret_api_key` to hide it from CLI output. Given that the value is still stored in plaintext in `terraform.tfstate`, describe two additional controls you would implement in a production environment to protect secrets flowing through Terraform.
+2. You built separate `dev.tfvars` and `prod.tfvars` files to drive different configurations from one codebase. Compare this pattern to using Terraform workspaces for environment separation. What are the advantages and disadvantages of each approach?
+
+---
+
 *Texas Wesleyan University — CIS-4337 Infrastructure Automation*
 *Proprietary and Confidential. Not for disclosure outside of authorized course participants.*

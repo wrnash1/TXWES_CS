@@ -202,5 +202,177 @@ D. In an environment variable that persists across shell sessions
 
 ---
 
+---
+
+### Question 11 (5 points)
+
+A Terraform Cloud workspace has a VCS integration configured to trigger runs on pushes to the `main` branch. A developer pushes a commit that modifies only a `README.md` file. What happens?
+
+- A) Terraform Cloud triggers a full plan and apply because any push to the configured branch triggers a run.
+- B) Terraform Cloud skips the run because no `.tf` files were modified.
+- C) Terraform Cloud triggers a speculative plan only, not a full apply.
+- D) Terraform Cloud triggers a plan but cancels it automatically when it detects no infrastructure changes.
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - B is incorrect — Terraform Cloud does not inspect file types before queuing a run; any push to the configured branch triggers a run regardless of which files changed.
+  - C is incorrect — speculative plans are triggered by pull requests, not pushes to the configured apply branch; a push to `main` triggers a full plan-and-apply workflow.
+  - D is incorrect — Terraform Cloud queues and runs the plan; the plan may show "No changes" but it is not automatically cancelled before running.
+
+---
+
+### Question 12 (5 points)
+
+Which environment variable is used to authenticate the Terraform CLI with Terraform Cloud in a CI/CD pipeline where `terraform login` cannot be run interactively?
+
+- A) `TF_CLOUD_TOKEN`
+- B) `TF_API_TOKEN`
+- C) `TF_TOKEN_app_terraform_io`
+- D) `TERRAFORM_CLOUD_CREDENTIALS`
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A is incorrect — `TF_CLOUD_TOKEN` is not a recognized Terraform environment variable.
+  - B is incorrect — `TF_API_TOKEN` is not the standard environment variable format; Terraform uses `TF_TOKEN_` followed by the hostname with dots replaced by underscores.
+  - D is incorrect — `TERRAFORM_CLOUD_CREDENTIALS` is not a valid Terraform environment variable.
+
+---
+
+### Question 13 (5 points)
+
+A team uses Terraform Cloud with the free tier. They want to write a policy that blocks any apply unless all `aws_instance` resources have a `CostCenter` tag. Which Terraform Cloud feature would they use, and is it available on the free tier?
+
+- A) Run triggers — available on the free tier
+- B) Sentinel policies — requires the Team tier or above; not available on the free tier
+- C) Variable sets — available on the free tier
+- D) Workspace notifications — available on the free tier
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A is incorrect — run triggers control when one workspace triggers another workspace's run; they do not enforce infrastructure policies.
+  - C is incorrect — variable sets share variable values across workspaces; they do not enforce policy rules on infrastructure content.
+  - D is incorrect — workspace notifications send alerts on run events; they do not block applies or evaluate resource attributes.
+
+---
+
+### Question 14 (5 points)
+
+A Terraform Cloud workspace is set to **remote** execution mode. A developer runs `terraform apply` from their local machine. Where does the actual Terraform execution occur?
+
+- A) On the developer's local machine, with state saved to Terraform Cloud
+- B) On Terraform Cloud's managed infrastructure, with output streamed to the developer's terminal
+- C) Partly on the developer's machine (plan phase) and partly in Terraform Cloud (apply phase)
+- D) On the developer's machine only; remote execution mode refers to the state backend, not execution
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A is incorrect — in remote execution mode, Terraform uploads the configuration and executes entirely in Terraform Cloud; local machine runs only the CLI wrapper.
+  - C is incorrect — both plan and apply phases execute in Terraform Cloud; the local CLI only streams the output.
+  - D is incorrect — remote execution mode means execution happens in Terraform Cloud, not on the local machine. Local execution mode is when only state is remote.
+
+---
+
+### Question 15 (5 points)
+
+An organization has 50 Terraform Cloud workspaces spread across three teams (network, compute, security). They want each team to have Write access to their own workspaces and Read access to all other workspaces. What is the most maintainable way to configure this in Terraform Cloud?
+
+- A) Manually add each engineer to each workspace with the appropriate permission level.
+- B) Create three teams in Terraform Cloud, assign workspaces to each team with the appropriate permissions, and add engineers to their team.
+- C) Use variable sets to define team membership and permission levels.
+- D) Create a Sentinel policy that enforces team-based access by evaluating the username of the person triggering the run.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A is incorrect — manually managing 50 workspaces per-person is error-prone and does not scale; team-based access is the designed mechanism.
+  - C is incorrect — variable sets manage configuration values, not access permissions.
+  - D is incorrect — Sentinel policies evaluate infrastructure plan content; they cannot enforce or grant team-level workspace access permissions.
+
+---
+
+### Question 16 (5 points)
+
+A Terraform Cloud workspace stores an AWS secret access key as a sensitive environment variable (`AWS_SECRET_ACCESS_KEY`). After the variable is saved, what can a workspace administrator do with the stored value?
+
+- A) Read the value back from the Terraform Cloud UI at any time by clicking the variable row.
+- B) Read the value via the Terraform Cloud API using an admin token.
+- C) Neither read nor retrieve the value — sensitive variables can only be overwritten or deleted, never read back.
+- D) Read the value only during an active run by inspecting run logs.
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A is incorrect — the Terraform Cloud UI hides sensitive variable values after saving; they cannot be revealed through the UI.
+  - B is incorrect — the Terraform Cloud API also prevents retrieval of sensitive variable values; the API returns a masked placeholder.
+  - D is incorrect — sensitive variable values are intentionally excluded from run logs; Terraform Cloud ensures they do not appear in streamed output.
+
+---
+
+### Question 17 (5 points)
+
+What is the difference between a **Terraform Cloud workspace** and a **Terraform CLI workspace**?
+
+- A) They are identical; CLI workspaces and Cloud workspaces are the same concept at different abstraction levels.
+- B) Terraform Cloud workspaces are full environments with state, variables, access controls, run history, and VCS integration; CLI workspaces only provide state isolation within a single backend configuration.
+- C) Terraform Cloud workspaces are for production only; CLI workspaces are for development.
+- D) CLI workspaces support variable sets; Terraform Cloud workspaces do not.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A is incorrect — the two workspace concepts are different in scope and capability; equating them leads to misconfiguration.
+  - C is incorrect — both types can be used in any environment; production vs. development is not what distinguishes them.
+  - D is incorrect — variable sets are a Terraform Cloud feature; CLI workspaces have no equivalent variable set mechanism.
+
+---
+
+### Question 18 (5 points)
+
+A run in Terraform Cloud passes all Sentinel policy checks but a team member rejects the apply during the manual confirmation step. What is the state of the infrastructure?
+
+- A) The infrastructure was partially applied up to the point where the team member intervened.
+- B) The infrastructure is unchanged; the rejection prevents the apply from executing.
+- C) The resources are created in a "pending" state and must be manually cleaned up.
+- D) The plan is automatically re-queued after a 30-minute delay.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A is incorrect — Terraform Cloud applies atomically at the run level; if the apply is not confirmed, no changes are made.
+  - C is incorrect — Terraform Cloud does not create "pending" resources; the apply either executes fully or not at all.
+  - D is incorrect — Terraform Cloud does not automatically re-queue rejected runs; the developer must trigger a new run.
+
+---
+
+### Question 19 (5 points)
+
+A team configures a **global variable set** in their Terraform Cloud organization. Which workspaces receive the variables defined in this set?
+
+- A) Only workspaces explicitly listed in the variable set's workspace assignments
+- B) Only workspaces belonging to the team that owns the variable set
+- C) All workspaces in the organization automatically
+- D) All workspaces tagged with `global = true`
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A is incorrect — a globally applied variable set is automatically applied to all workspaces; no explicit assignment per workspace is needed.
+  - B is incorrect — variable sets are an organization-level feature; there is no concept of a team "owning" a variable set in the way described.
+  - D is incorrect — global application does not require workspace tags; the scope is configured on the variable set itself.
+
+---
+
+### Question 20 (5 points)
+
+A Terraform Cloud workspace has `terraform_version = "1.4.6"` set in workspace settings. A developer's local Terraform CLI is version `1.6.0`. The developer runs `terraform plan`. Which version of Terraform executes the plan?
+
+- A) `1.6.0` — the developer's local version, because the CLI initiates the run
+- B) `1.4.6` — the workspace-configured version runs on Terraform Cloud's managed agent
+- C) The latest available version in Terraform Cloud's agent fleet, regardless of workspace settings
+- D) Both versions run in parallel; the workspace setting only applies to the apply phase
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A is incorrect — in remote execution mode, the CLI only streams output; the plan runs on Terraform Cloud using the workspace-specified version.
+  - C is incorrect — Terraform Cloud honors the workspace-configured version; it does not default to latest unless no version is specified.
+  - D is incorrect — there is no parallel execution; a single version is used for the entire run lifecycle as determined by the workspace setting.
+
+---
+
 *Texas Wesleyan University — CIS-4337 Infrastructure Automation*
 *Proprietary and Confidential. Not for disclosure outside of authorized course participants.*

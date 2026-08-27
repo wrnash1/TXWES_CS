@@ -350,3 +350,62 @@ Before submitting, confirm your notebook contains:
 | Flask handler with error handling tested | 15 |
 | Written deployment summary | 20 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: FastAPI Serving with Input Validation
+
+Replace the Flask prediction handler with a FastAPI endpoint that includes Pydantic input validation and automatic OpenAPI documentation.
+
+1. Install FastAPI and Uvicorn: `pip install fastapi uvicorn pydantic`. Define a Pydantic request schema and a FastAPI app that loads the model at startup:
+
+   ```python
+   from fastapi import FastAPI
+   from pydantic import BaseModel
+   import numpy as np
+   import tensorflow as tf
+
+   class PredictionRequest(BaseModel):
+       instances: list[list[float]]
+
+   app = FastAPI()
+   model = tf.keras.models.load_model('mnist_model')
+
+   @app.post('/predict')
+   def predict(req: PredictionRequest):
+       x = np.array(req.instances, dtype=np.float32)
+       preds = model.predict(x)
+       return {'predictions': preds.tolist()}
+   ```
+
+2. Launch with `uvicorn app:app --reload` and test with `curl -X POST http://localhost:8000/predict -H "Content-Type: application/json" -d '{"instances": [[...]]}'`.
+3. Navigate to `http://localhost:8000/docs` to view the auto-generated Swagger UI. Verify that the endpoint accepts the correct schema and rejects malformed requests with a descriptive error message.
+4. Add a second endpoint `GET /model_info` that returns the model's input/output shape and the model's `summary()` output as a string. Use `io.StringIO` to capture the summary.
+
+### Challenge 2: TF Serving with Docker and Version Management
+
+Deploy two versions of your model to TF Serving and observe automatic version switching.
+
+1. Save two slightly different models (e.g., the base model as version 1 and a retrained model with an extra Dense layer as version 2) in the required directory structure:
+
+   ```text
+   serving_models/
+   └── mnist_model/
+       ├── 1/     ← SavedModel version 1
+       │   ├── saved_model.pb
+       │   └── variables/
+       └── 2/     ← SavedModel version 2
+           ├── saved_model.pb
+           └── variables/
+   ```
+
+2. Launch TF Serving with Docker mounting the `serving_models` directory. Send REST predictions to version 1 by appending `/versions/1` to the URL: `http://localhost:8501/v1/models/mnist_model/versions/1:predict`. Verify the response is different from the version 2 endpoint.
+3. Delete the version 1 directory from the mounted volume while the container is running. Observe that TF Serving automatically unloads version 1 and continues serving version 2 — verify this by checking the `http://localhost:8501/v1/models/mnist_model` status endpoint.
+4. In a Markdown cell, describe the TF Serving "model freshness" policy and explain how automatic version detection enables zero-downtime model updates in production.
+
+### Reflection Questions
+
+1. Compare the developer experience of Flask vs. FastAPI for ML serving: what specific FastAPI features (automatic validation, async support, OpenAPI docs) would have the most impact in a team environment where multiple engineers consume the prediction API?
+2. In your TF Serving Docker experiment, what happened to in-flight requests when you deleted version 1 while the server was running? How does TF Serving's configurable grace period (`model_server_config_file` with `version_policy`) protect against request failures during a model update in a production environment?

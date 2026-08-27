@@ -384,4 +384,41 @@ Work through each item before attempting the quiz.
 
 ---
 
+## 10. Supplemental Resources
+
+The following open educational resources extend module content on entity-relationship
+modeling and data modeling. All are freely accessible without login or purchase.
+
+1. **Crow's Foot Notation ERD Guide — Lucidchart**
+   <https://www.lucidchart.com/pages/er-diagrams>
+   Focus: Illustrated walkthrough of Crow's Foot notation symbols, cardinality combinations,
+   and step-by-step ERD construction. Directly supports lab Tasks 2 and 3 and reinforces the
+   symbol reference tables in this reading guide.
+
+2. **Database Design — Normalization and ERDs — Khan Academy Computing**
+   <https://www.khanacademy.org/computing/computer-programming/sql>
+   Focus: Free SQL and relational database fundamentals course covering tables, primary keys,
+   foreign keys, joins, and referential integrity. Supports understanding of how logical ERD
+   decisions translate into relational database structures.
+
+3. **Entity-Relationship Modeling Technique — BABOK Guide Techniques Summary**
+   <https://www.iiba.org/standards-and-resources/babok/>
+   Focus: Official IIBA BABOK Guide listing of data modeling as a Requirements Analysis and
+   Design Definition technique. Reviewing the technique summary reinforces ECBA exam alignment
+   and the analyst's role in data modeling versus the database designer's role.
+
+4. **ERD Tutorial with Crow's Foot Notation — Visual Paradigm**
+   <https://www.visual-paradigm.com/guide/data-modeling/what-is-entity-relationship-diagram/>
+   Focus: Comprehensive guide to ERD concepts including entities, attributes, relationships,
+   associative entities, weak entities, and Crow's Foot vs. Chen notation comparisons.
+   Supplements all sections of this reading guide with additional worked examples.
+
+5. **Introduction to Databases — Stanford Online (free audit)**
+   <https://online.stanford.edu/courses/soe-ydatabases0005-databases-relational-databases-and-sql>
+   Focus: University-level introduction to relational database theory including the relational
+   model, entity integrity, referential integrity, and normal forms. Provides the conceptual
+   foundation for understanding why ERD design decisions matter at implementation time.
+
+---
+
 *Reading Guide — Module 11 | CIS-3312 Systems Analysis and Design | Texas Wesleyan University*

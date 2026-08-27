@@ -291,3 +291,19 @@ The CISM exam frequently presents scenarios and asks which framework is most app
 - [ ] Complete the framework selection decision matrix without notes
 - [ ] Review the glossary and define each term without looking
 - [ ] Proceed to the Module 03 Lab Activity
+
+---
+
+## 9. Supplemental Resources
+
+**NIST SP 800-37 Rev. 2 — Risk Management Framework for Information Systems**
+URL: https://csrc.nist.gov/publications/detail/sp/800-37/rev-2/final
+Description: The authoritative NIST RMF document, freely available from NIST. Focus on Chapter 2 (Fundamentals) for the conceptual overview and the task tables for each of the seven steps. This is essential reading for understanding how RMF operates in federal and non-federal contexts.
+
+**FAIR Institute — Introduction to FAIR**
+URL: https://www.fairinstitute.org/what-is-fair
+Description: The FAIR Institute's free introductory resource explaining the Factor Analysis of Information Risk ontology, the Loss Event Frequency / Loss Magnitude decomposition, and how FAIR enables quantitative risk analysis. Includes case studies showing FAIR outputs in financial terms suitable for executive communication.
+
+**ISO 31000:2018 — Risk Management Guidelines Overview**
+URL: https://www.iso.org/iso-31000-risk-management.html
+Description: The official ISO page for ISO 31000:2018, including a free overview of the standard's principles, framework, and process. The standard itself requires purchase, but the overview and accompanying guidance documents explain the principles-based approach and universal applicability across domains and organization sizes.

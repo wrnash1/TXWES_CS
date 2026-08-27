@@ -248,3 +248,19 @@ Solution: Navigate to Compute Engine → VM instances → Recommendations tab an
 **4.** A team stores 10 TB of application logs in Cloud Storage Standard class. The logs are accessed frequently for the first 30 days, rarely for the next 60 days, and never accessed after 90 days but must be retained for 7 years for compliance. Design the Object Lifecycle Management policy.
 
 **5.** An organization wants to identify which GCP services are driving the highest costs and allocate charges to individual engineering teams. They have no existing cost management infrastructure. List the three configuration steps required to enable team-level cost allocation.
+
+---
+
+## 9. Supplemental Resources
+
+**1. Google Cloud Documentation — Cloud Billing Budgets and Alerts**
+<https://cloud.google.com/billing/docs/how-to/budgets>
+Complete reference for creating and managing billing budgets: threshold rule configuration, Pub/Sub notification setup for programmatic cost enforcement, the distinction between notification-only behavior and the Cloud Function pattern required to actually stop resources, and budget scope options (billing account vs. individual project).
+
+**2. Google Cloud Documentation — Object Lifecycle Management**
+<https://cloud.google.com/storage/docs/lifecycle>
+Full reference for Cloud Storage Object Lifecycle Management rules including all supported conditions (age, storage class, created before, number of newer versions) and actions (SetStorageClass, Delete, AbortIncompleteMultipartUpload), minimum storage duration requirements per storage class, and interaction with object versioning.
+
+**3. Google Cloud Documentation — GCP Recommender Overview**
+<https://cloud.google.com/recommender/docs/overview>
+Overview of all Recommender types available in GCP including VM Rightsizing, Idle VM, Unattached Disk, Idle IP Address, CUD Recommender, and IAM Recommender — covering how recommendations are generated from utilization data, how to access them via gcloud CLI and Cloud Console, and the mark-claimed/mark-dismissed workflow for tracking recommendation actions.

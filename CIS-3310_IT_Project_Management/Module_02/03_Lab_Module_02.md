@@ -218,3 +218,21 @@ Submit as a single PDF or Word document to the Canvas Module 02 Lab assignment.
 | Part 2: Project Charter | 50 | SMART objectives, realistic scope, milestones, 5+ stakeholders, 3 risks |
 | Part 3: Stakeholder Register | 20 | 7+ stakeholders, engagement levels, Power/Interest analysis paragraph |
 | **Total** | **100** | |
+
+---
+
+## Part 9 — Challenge Exercise
+
+This section is optional for students seeking additional depth and exam preparation. It is not graded as part of the standard 100-point lab but may be used for extra credit at the instructor's discretion.
+
+### Challenge Step 1: Phase Gate Decision Memo
+
+Imagine that Phase 1 (Planning) of the Smart Campus IoT project is complete. The project is two weeks behind schedule but within budget. Using the phase gate concept from the Module 02 reading, write a one-page Go/No-Go decision memo addressed to the project sponsor. The memo must address: current status, variance from baseline, risk summary, and your recommendation to proceed, pause, or terminate Phase 2. Format it as a professional business memo with a subject line, date, and clear recommendation statement.
+
+### Challenge Step 2: Lifecycle Model Justification
+
+The IoT rollout scenario in this lab used a predictive lifecycle. Identify two scenarios where an adaptive (Agile) lifecycle would be a better fit for a smart campus technology project. For each scenario, write two to three sentences explaining what characteristic of that scenario makes Agile the more appropriate choice. Reference at least one Project+ PK0-005 domain in your justification.
+
+### Challenge Step 3: Stakeholder Conflict Resolution Plan
+
+Identify two stakeholders from your Part 3 register who have conflicting interests (e.g., IT Security wants access controls that Facilities Management finds burdensome). Write a brief conflict resolution plan (5–8 sentences) that describes: the nature of the conflict, the PM's facilitation approach, and the proposed resolution. Align your approach to the "Keep Satisfied," "Manage Closely," or "Keep Informed" engagement strategies from the Power/Interest Grid.

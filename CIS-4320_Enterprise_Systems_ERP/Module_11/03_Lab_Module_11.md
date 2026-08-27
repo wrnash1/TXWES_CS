@@ -274,3 +274,35 @@ Trace the PP-to-MM-to-FI integration for the PAC FG-AILERON-200 production run. 
 2. Name your file: `Lab11_LastName_FirstName.pdf`
 3. Upload to Canvas under "Lab 11 -- SAP Production Planning."
 4. Deadline: See course schedule in Canvas. Late submissions lose 10 points per day.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Multi-Level MRP Planning Scenario with Capacity Constraint
+
+Pacific Aerospace Components (PAC) manufactures a new product: the FG-RUDDER-400 (finished rudder assembly). Its two-level BOM is as follows:
+
+- FG-RUDDER-400 (1 EA) requires: SA-RUDDER-FRAME (1 EA, in-house) + ALU-SHEET-3MM (4.5 kg, purchased) + BOLT-M8-TI (12 EA, purchased)
+- SA-RUDDER-FRAME (1 EA) requires: ALU-TUBE-25MM (2 m, purchased) + WELD-WIRE-ER4043 (0.3 kg, purchased)
+
+MRP data as of July 1, 2026: Demand for FG-RUDDER-400 = 30 units due July 21. Current stock: FG-RUDDER-400 = 0, SA-RUDDER-FRAME = 5, ALU-SHEET-3MM = 40 kg, BOLT-M8-TI = 80 EA, ALU-TUBE-25MM = 20 m, WELD-WIRE-ER4043 = 2 kg. Safety stock: all materials = 0. Production lead time for SA-RUDDER-FRAME = 5 working days. Lot size for all materials: EX (exact).
+
+1. Perform the complete two-level MRP netting calculation. For each material at each BOM level, show: Gross Requirement, Current Stock, Net Requirement, and the resulting procurement proposal type (Planned Order or Purchase Requisition) with quantity. Show all arithmetic.
+2. The SA-RUDDER-FRAME Planned Order requires Work Center WC-WELD-01. That Work Center has a capacity of 6 hours/day (5 days/week). Each SA-RUDDER-FRAME takes 0.4 hours to weld. Calculate whether WC-WELD-01 can complete the required 25 SA-RUDDER-FRAME units within the 5-day production lead time. If not, identify the overload and propose two options the production scheduler could use to resolve it without missing the July 21 due date.
+3. The production planner wants to firm the SA-RUDDER-FRAME Planned Order before running MRP again. Explain what firming does, identify which SAP transaction the planner would use to firm the order, and describe what would happen to the firmed order if MRP is re-run without firming.
+4. After production of FG-RUDDER-400 is complete, KO88 settles the Production Order. Actual costs totaled $28,400 for 30 units; standard cost per unit is $920. Write the complete KO88 settlement journal entry showing all accounts, amounts, and whether each line is favorable or unfavorable. Confirm the entry balances.
+
+### Challenge 2: Production Order Quality Exception and Rework Process Design
+
+PAC's quality inspector finds that 8 of the 30 FG-RUDDER-400 units produced have a weld defect. The original Production Order has status TECO. The 8 defective units must be reworked (re-welded) before they can be delivered.
+
+1. Explain why the original Production Order cannot be used for the rework posting. What SAP status blocks further goods movements, and what is the correct SAP approach to handle the rework — describe the two options PAC has (reversing TECO vs. creating a separate rework order) and state the pros and cons of each.
+2. PAC decides to create a separate rework Production Order for the 8 units. The rework BOM uses only WELD-WIRE-ER4043 (0.15 kg per unit reworked) and no additional aluminum. Write the journal entries for: (a) the Goods Issue of WELD-WIRE-ER4043 to the rework order at standard cost $4.20/kg; (b) the Goods Receipt of the 8 reworked units at the original standard cost of $920/unit; and (c) a rework settlement entry assuming actual rework cost was $320 (labor only, no additional material variance).
+3. After rework, 2 of the 8 units are still defective and must be scrapped. Describe the SAP transaction and movement type used to post a scrap Goods Issue. Write the journal entry, assuming scrap is posted at standard cost with no salvage value. Identify the GL account that absorbs the scrap cost and what type of account it is.
+4. PAC's controller wants to prevent recurring weld defects by implementing an in-process quality inspection point on the SA-RUDDER-FRAME Routing operation. Describe how an Inspection Lot is integrated with the Production Order Routing in SAP QM, and explain what happens to the Production Order if the inspection lot result is "Rejected" — can the Goods Receipt of finished goods be blocked automatically?
+
+### Reflection Questions
+
+1. In Challenge 1, the MRP netting calculation at Level 1 (SA-RUDDER-FRAME) used current stock of 5 units to reduce the gross requirement from 30 to 25. If PAC had set a safety stock of 5 units for SA-RUDDER-FRAME, the net requirement would have been 30 instead of 25 — requiring 30 production units despite having 5 in stock. Under what business conditions is it appropriate to carry safety stock for a semi-finished sub-assembly, and what trade-off does this create with WIP inventory carrying costs?
+2. The rework scenario in Challenge 2 created additional production costs that were not in the original standard cost. If PAC uses standard costing and the rework orders consistently generate unfavorable variances, what signal does this send to the cost accounting team, and how should the standard cost be adjusted at the next annual cost estimate review to reflect the true cost of production including expected rework rates?

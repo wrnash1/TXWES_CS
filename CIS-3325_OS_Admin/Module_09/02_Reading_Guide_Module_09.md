@@ -218,3 +218,43 @@ Before the quiz and lab, confirm you can do all of the following without looking
 - Use ping to test connectivity at each layer (loopback, gateway, internet, DNS)
 - Use traceroute to identify where a network path fails
 - Set a hostname persistently with hostnamectl
+
+---
+
+## 9. Supplemental Resources
+
+**1. iproute2 Documentation — ip(8) Man Page**
+URL: https://man7.org/linux/man-pages/man8/ip.8.html
+Coverage: The authoritative reference for the ip command covering ip addr, ip link, ip route,
+ip neigh, and ip rule subcommands. Includes all flags and options for managing interfaces,
+addresses, and routes. The ip-address(8) and ip-route(8) sub-pages provide more detailed
+coverage of those specific subcommands. Essential for understanding all interface and routing
+commands used in this module.
+
+**2. NetworkManager nmcli Manual — Red Hat Enterprise Linux 9**
+URL: https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/configuring_and_managing_networking/index
+Coverage: Red Hat's networking administration guide covering nmcli connection management,
+static IP configuration, DNS settings, routing, and interface bonding/bridging. Includes
+the complete nmcli cheat sheet and worked examples for common tasks. Directly maps to the
+nmcli commands used in this module for persistent network configuration.
+
+**3. ss(8) and netstat(8) Man Pages — man7.org**
+URL: https://man7.org/linux/man-pages/man8/ss.8.html
+Coverage: The ss man page documents all socket state filtering options including -t (TCP),
+-u (UDP), -l (listening), -n (numeric), -p (process). Explains the output columns including
+local/peer address:port and the users:() process field. Covers state filters for established,
+listen, time-wait, and close-wait connections. Essential for port and connection inspection.
+
+**4. DNS Tools — dig(1) and resolvectl(1) Man Pages**
+URL: https://linux.die.net/man/1/dig
+Coverage: The dig man page explains all query types (A, AAAA, MX, NS, PTR, SOA, TXT), the
+@server syntax for querying specific resolvers, +short for terse output, and -x for reverse
+lookups. Complements the resolvectl man page for systemd-resolved DNS query testing and
+cache inspection. Together these tools cover all DNS diagnostic scenarios in this module.
+
+**5. Arch Wiki — Network Configuration and NetworkManager**
+URL: https://wiki.archlinux.org/title/Network_configuration
+Coverage: Comprehensive network configuration reference covering interface naming, ip command
+usage, static and dynamic addressing, DNS configuration, and routing. The companion
+NetworkManager article covers nmcli, nmtui, and connection profiles. Both are kept current
+and include troubleshooting sections for common configuration problems encountered in labs.

@@ -195,3 +195,193 @@ Distractor Analysis:
 - Why A is incorrect: There is no HDMI color-coding standard. Cable color is a manufacturer aesthetic choice and does not indicate HDMI version.
 - Why C is incorrect: All HDMI versions use the same physical connector shape for the full-size Type A connector. The connector profile does not change between HDMI 1.4, 2.0, and 2.1.
 - Why D is incorrect: Cable construction and certification do vary by HDMI version. An HDMI 1.4 cable physically cannot carry an HDMI 2.1 signal at full bandwidth because the internal wire gauge, shielding, and certification tolerances differ between versions. Version matters for both the device port and the cable.
+
+---
+
+### Question 11
+
+A monitor advertised as "144Hz" is connected to a GPU via a DisplayPort 1.2 cable. The monitor supports up to 1440p resolution. What is the maximum resolution and refresh rate this connection can deliver?
+
+- A) 1440p@144Hz — DisplayPort 1.2 supports this combination
+- B) 1080p@144Hz — DisplayPort 1.2 cannot carry 1440p at high refresh rates
+- C) 1440p@60Hz — DisplayPort 1.2 bandwidth is insufficient for 1440p@144Hz
+- D) 4K@60Hz — DisplayPort 1.2 automatically upscales to the maximum supported resolution
+
+Correct Answer: A — DisplayPort 1.2 provides approximately 17.28 Gbps of usable bandwidth, which is sufficient for 1440p@144Hz (requiring approximately 7.9 Gbps uncompressed). Both the resolution and refresh rate are achievable on this connection.
+
+Distractor Analysis:
+
+- Why B is incorrect: DisplayPort 1.2 has ample bandwidth for 1440p@144Hz. The 1080p limitation would apply to much older interfaces like HDMI 1.4 at very high refresh rates.
+- Why C is incorrect: 1440p@60Hz requires only ~3.96 Gbps — well within DisplayPort 1.2 capability. Limiting to 60Hz is unnecessary; the bandwidth supports 144Hz at this resolution.
+- Why D is incorrect: DisplayPort does not automatically upscale to a resolution the monitor does not natively support. Resolution output is configured by the OS and GPU driver based on the monitor's EDID data.
+
+---
+
+### Question 12
+
+What is Multi-Stream Transport (MST) in the context of DisplayPort, and which older display interface does NOT support it?
+
+- A) MST allows a single DisplayPort output to drive multiple monitors via a daisy-chain or hub; HDMI does not natively support MST
+- B) MST is an audio multichannel feature for surround sound over DisplayPort; VGA does not support audio at all
+- C) MST enables a monitor to display multiple input sources simultaneously in picture-in-picture mode; DVI does not support this
+- D) MST is a refresh rate synchronization protocol that DisplayPort uses to eliminate screen tearing; VGA does not support synchronization
+
+Correct Answer: A — MST (Multi-Stream Transport) is a DisplayPort feature that allows multiple independent video streams to share a single cable or daisy-chained monitor connection. A single DisplayPort 1.2+ output can drive two or more monitors simultaneously. HDMI does not natively support MST; multiple HDMI monitors each require their own dedicated output port.
+
+Distractor Analysis:
+
+- Why B is incorrect: MST refers to multi-monitor video streams, not audio multichannel. While DisplayPort does carry audio, MST specifically describes the multi-monitor capability.
+- Why C is incorrect: MST drives multiple independent external monitors, not picture-in-picture on one monitor. PiP is a monitor feature unrelated to DisplayPort MST.
+- Why D is incorrect: Screen tearing synchronization is addressed by adaptive sync technologies (AMD FreeSync, NVIDIA G-Sync), not by MST. MST is a multi-monitor connection protocol, not a sync protocol.
+
+---
+
+### Question 13
+
+A DVI-D Single Link port is the only available output on an older GPU. A technician needs to connect a monitor that only has a VGA input. Which adapter will work?
+
+- A) A DVI-D to VGA passive adapter, which converts the digital DVI-D signal to the analog VGA signal
+- B) An active DVI-D to VGA adapter with a built-in DAC that converts digital DVI-D to analog VGA
+- C) No adapter will work; DVI-D to VGA connection is impossible because digital and analog signals are incompatible
+- D) A DVI-I to VGA passive adapter, which adds VGA pins to the DVI connector
+
+Correct Answer: B — DVI-D is a digital-only signal. Converting digital DVI-D to analog VGA requires an active adapter with a Digital-to-Analog Converter (DAC) chip. Passive adapters work only from DVI-I, which carries an analog signal alongside the digital signal in the connector.
+
+Distractor Analysis:
+
+- Why A is incorrect: A passive DVI-D to VGA adapter will not work because DVI-D carries no analog signal. Passive adapters simply reroute the existing pins — they cannot convert digital to analog without active electronics.
+- Why C is incorrect: DVI-D to VGA conversion is possible using an active adapter with a DAC chip. The statement that it is impossible is incorrect.
+- Why D is incorrect: A DVI-I to VGA passive adapter works from a DVI-I port (which carries the analog signal). However, the scenario specifies a DVI-D port, which lacks the analog pins DVI-I carries. Applying a DVI-I adapter description to a DVI-D port situation is incorrect.
+
+---
+
+### Question 14
+
+A user connects a new 4K OLED monitor to a laptop using HDMI. The monitor displays only at 1080p@60Hz even though the monitor is rated for 4K@120Hz. The HDMI cable is labeled "High Speed HDMI." What should the technician investigate first?
+
+- A) The laptop GPU driver is outdated and limiting the maximum resolution
+- B) The HDMI cable may be High Speed (v1.4, 10.2 Gbps) rather than Ultra High Speed (v2.1, 48 Gbps); replacing with an HDMI 2.1 cable is the first step
+- C) OLED monitors cannot display 4K through HDMI; a DisplayPort cable is required for 4K OLED
+- D) The monitor's EDID data is corrupted and must be reset before 4K output is available
+
+Correct Answer: B — HDMI "High Speed" certification corresponds to HDMI 1.4 (10.2 Gbps) — sufficient for 1080p@60Hz but insufficient for 4K@120Hz (which requires ~42.7 Gbps). "Ultra High Speed HDMI" (HDMI 2.1) is required for 4K@120Hz. Replacing the cable with a certified HDMI 2.1 cable (48 Gbps) is the first diagnostic step.
+
+Distractor Analysis:
+
+- Why A is incorrect: GPU driver updates can affect features and stability but do not fundamentally change which resolutions/refresh rates are supported — that is determined by the GPU hardware's HDMI version. Additionally, the cable is the most likely bottleneck given the "High Speed" label indicating v1.4.
+- Why C is incorrect: HDMI can carry 4K signals. The limitation is HDMI version, not the display technology (OLED vs. LCD). Many OLED TVs and monitors operate natively over HDMI.
+- Why D is incorrect: EDID corruption can cause resolution misdetection, but it is an uncommon issue. The simpler and more likely explanation given the cable label is an HDMI version mismatch.
+
+---
+
+### Question 15
+
+Which display panel technology offers true infinite contrast ratio (true blacks) because individual pixels can be completely turned off?
+
+- A) TN (Twisted Nematic)
+- B) IPS (In-Plane Switching)
+- C) VA (Vertical Alignment)
+- D) OLED (Organic Light-Emitting Diode)
+
+Correct Answer: D — OLED panels are emissive displays: each pixel is its own light source and can be individually turned off, producing true black (zero light emission). This results in an infinite contrast ratio. LCD subtypes (TN, IPS, VA) all require a backlight that cannot be completely blocked on a per-pixel basis.
+
+Distractor Analysis:
+
+- Why A is incorrect: TN panels use a backlight that cannot be turned off per pixel. Black levels on TN displays are limited by backlight bleed-through, resulting in a grayish black.
+- Why B is incorrect: IPS panels have excellent color accuracy and wide viewing angles, but they require a backlight. IPS panels are known for "IPS glow" — light bleed at screen corners — which limits contrast ratio.
+- Why C is incorrect: VA panels have the best contrast ratio among LCD subtypes (typically 2,000:1–6,000:1 vs. TN/IPS at ~1,000:1) due to better light blocking in the aligned crystal state. However, they still have a backlight and cannot achieve true black.
+
+---
+
+### Question 16
+
+A graphic designer complains that colors on their new IPS monitor look slightly different than on the older monitor they are replacing. Both monitors are set to the same brightness. What is the MOST appropriate first step to address this issue?
+
+- A) Replace the HDMI cable with a DisplayPort cable, as HDMI compresses color data
+- B) Calibrate the new monitor using a hardware colorimeter or the OS color management tool to create a correct ICC profile
+- C) Set the monitor's color temperature to "Cool" mode to match the standard color balance
+- D) Increase the monitor's contrast setting until the colors match the old monitor visually
+
+Correct Answer: B — Color accuracy differences between monitors are addressed through calibration. A hardware colorimeter measures actual color output and creates an ICC profile that the OS color management system uses to correct colors for that specific monitor. For professional work, hardware calibration tools provide the most accurate result; the OS's built-in color calibration wizard provides a reasonable free alternative.
+
+Distractor Analysis:
+
+- Why A is incorrect: HDMI 2.0 and DisplayPort both support 10-bit color depth and full-range color. The connector type does not cause the color difference described; monitor panel variation and display settings do.
+- Why C is incorrect: Setting the color temperature to "Cool" applies a blue-biased color shift that makes the display appear cooler, not more accurate. This is a subjective aesthetic adjustment, not calibration.
+- Why D is incorrect: Adjusting contrast to visually match another uncalibrated monitor compounds the problem. Both monitors may be uncalibrated, and visual matching between two incorrect references does not produce accurate color output.
+
+---
+
+### Question 17
+
+Which of the following correctly describes the function of EDID in a monitor connection?
+
+- A) EDID is the encryption protocol that prevents unauthorized copying of HDMI video signals
+- B) EDID is a data block stored in the monitor that identifies the monitor's supported resolutions, refresh rates, and color capabilities to the GPU
+- C) EDID is the firmware update mechanism that upgrades a monitor's panel firmware over HDMI or DisplayPort
+- D) EDID is the synchronization signal embedded in the HDMI stream that prevents screen tearing
+
+Correct Answer: B — EDID (Extended Display Identification Data) is a standardized data block stored in the monitor's ROM. When connected, the GPU reads the EDID over the display cable (using the DDC channel) to learn the monitor's native resolution, maximum refresh rate, supported resolutions, color depth, and audio capabilities. The GPU then offers only compatible modes to the OS.
+
+Distractor Analysis:
+
+- Why A is incorrect: HDCP (High-bandwidth Digital Content Protection) is the copy protection mechanism for HDMI/DisplayPort signals. EDID is entirely separate and has nothing to do with encryption or content protection.
+- Why C is incorrect: Monitor firmware updates are typically performed via proprietary tools or USB connections provided by the manufacturer — not through EDID. EDID is a read-only identification data block, not a firmware update channel.
+- Why D is incorrect: Screen tearing prevention is addressed by adaptive sync (FreeSync/G-Sync) or VSync in the GPU driver. EDID is identification data, not a synchronization signal.
+
+---
+
+### Question 18
+
+A presentation room has a projector that only accepts VGA input. A presenter's laptop has only HDMI and USB-C outputs. Which solution is MOST appropriate?
+
+- A) Purchase a DVI-D to VGA passive adapter and connect it to the HDMI port
+- B) Use an active HDMI-to-VGA adapter with a built-in DAC, connecting HDMI out to the adapter, then VGA cable to the projector
+- C) Use a USB-C to VGA direct passive adapter, connecting USB-C out to the adapter, then VGA cable to the projector
+- D) Replace the projector because VGA is no longer supported by modern operating systems
+
+Correct Answer: B — HDMI is a digital signal; VGA is an analog signal. Converting HDMI to VGA requires an active adapter with a DAC (Digital-to-Analog Converter) chip. Passive adapters cannot perform digital-to-analog conversion. Active HDMI-to-VGA adapters are widely available and inexpensive.
+
+Distractor Analysis:
+
+- Why A is incorrect: A DVI-D to VGA passive adapter connects to a DVI-D port, not an HDMI port. Additionally, passive DVI-D to VGA adapters still require the DVI-I analog pins — they would not work from a DVI-D port and are entirely wrong for an HDMI port.
+- Why C is incorrect: USB-C carries DisplayPort Alt Mode (a digital signal), not native analog VGA. A USB-C to VGA adapter must also be active (containing a DAC); a purely passive USB-C to VGA adapter does not exist because the signal conversion requires active electronics.
+- Why D is incorrect: VGA support in operating systems exists for legacy compatibility; Windows supports VGA output through drivers. The projector does not need replacement — a signal converter adapter is the practical solution.
+
+---
+
+### Question 19
+
+A user reports that their display shows a faint "ghost" image of a previous application permanently burned into the screen. The monitor uses OLED technology. What is the correct term for this phenomenon?
+
+- A) Screen flickering
+- B) Image persistence (burn-in)
+- C) Dead pixel cluster
+- D) Backlight bleeding
+
+Correct Answer: B — Image persistence, commonly called burn-in, occurs on OLED displays when static high-brightness elements remain on screen for extended periods. The organic compounds in OLED pixels degrade at different rates depending on usage, causing the over-used pixels to emit less light than surrounding pixels — resulting in a permanent faint ghost image.
+
+Distractor Analysis:
+
+- Why A is incorrect: Screen flickering describes rapid oscillation in display brightness or image stability, often caused by an incorrect refresh rate setting or a failing cable. It is not related to permanent image retention.
+- Why C is incorrect: A dead pixel is a pixel that no longer emits any light, appearing as a permanent black or colored dot. A dead pixel cluster is visible at all times, not only when viewing specific content like a ghost of a previous image.
+- Why D is incorrect: Backlight bleeding is a physical artifact on LCD displays where the backlight is not fully blocked by the liquid crystal layer, causing bright patches near screen edges in dark scenes. OLED displays have no backlight; this term does not apply.
+
+---
+
+### Question 20
+
+A technician needs to select a display cable for a video production workstation that requires 4K@60Hz output with 10-bit color depth. The GPU has one HDMI 2.0 port and one DisplayPort 1.4 port available. Which cable should be used?
+
+- A) HDMI 2.0 — it supports 4K@60Hz with 10-bit color
+- B) DisplayPort 1.4 — it provides more bandwidth and is required for 4K@60Hz with 10-bit color
+- C) Either cable works equally well for this specification; choose based on which port the monitor has
+- D) DisplayPort 1.2 is required; neither HDMI 2.0 nor DisplayPort 1.4 supports 10-bit color at 4K@60Hz
+
+Correct Answer: C — Both HDMI 2.0 and DisplayPort 1.4 support 4K@60Hz with 10-bit color. HDMI 2.0 provides 18 Gbps, which is sufficient for 4K@60Hz 10-bit HDR. DisplayPort 1.4 provides 25.92 Gbps with additional headroom. Either works for this specification — the practical choice depends on which input the monitor provides.
+
+Distractor Analysis:
+
+- Why A is incorrect: While HDMI 2.0 does support 4K@60Hz with 10-bit color, stating it as the single choice ignores that DisplayPort 1.4 is equally or more capable. The question asks which to choose given both options, and the correct answer is that either works.
+- Why B is incorrect: DisplayPort 1.4 is more capable, but HDMI 2.0 is not insufficient for this specification. Claiming DisplayPort 1.4 is "required" is incorrect when HDMI 2.0 meets the stated requirements.
+- Why D is incorrect: Both HDMI 2.0 and DisplayPort 1.4 fully support 4K@60Hz with 10-bit color depth. This answer incorrectly states that neither works and introduces DisplayPort 1.2 (which supports 4K@60Hz 8-bit natively, with 10-bit requiring DSC) as the required cable.

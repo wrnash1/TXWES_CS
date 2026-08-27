@@ -263,3 +263,19 @@ Complete before attempting the quiz:
 - Complete Lab 08.
 - Post to Discussion Forum 08 by Wednesday at 11:59 PM.
 - Complete Quiz 08 (10 questions).
+
+---
+
+## 9. Supplemental Resources
+
+**1. SAP SuccessFactors — Learning Path: HCM Overview**
+<https://learning.sap.com/learning-journeys/explore-sap-successfactors-hxm-suite>
+Official SAP learning journey for the SuccessFactors HXM Suite. Covers Employee Central, Recruiting, Onboarding, Performance and Goals, Learning, and Compensation — the full module set covered in this module's Reading Guide and tested on the SAP Associate exam.
+
+**2. SHRM — HR Technology and Human Capital Management Systems**
+<https://www.shrm.org/topics-tools/topics/hr-technology>
+The Society for Human Resource Management's HR Technology resource hub. Provides practitioner perspective on HCM system selection, implementation, and the business processes that SuccessFactors automates — useful context for the Lab 08 gap analysis activity.
+
+**3. openSAP — Introduction to SAP SuccessFactors**
+<https://open.sap.com/courses/sfsf1>
+Free openSAP course introducing SuccessFactors modules, integration with SAP S/4HANA, and the Employee Central data model. Directly relevant to the payroll integration and cross-module data flow content in this module.

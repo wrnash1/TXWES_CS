@@ -153,3 +153,132 @@ Explain the purpose of the 802.1Q **native VLAN** and describe a specific securi
 A campus switch running Rapid PVST+ has a port connected to an IP phone. The IP phone itself has an internal switch that connects to a PC. What STP configuration should be applied to the switch port connected to the phone, and what risk exists if PortFast is incorrectly applied to a trunk port connecting two switches? (3–4 sentences)
 
 **Model Answer:** The port connecting to an IP phone should be configured as an **access port** with the voice VLAN and data VLAN properly tagged (`switchport voice vlan X`), and `spanning-tree portfast` should be enabled because the phone and PC are end devices — they will never be root bridges. PortFast allows the port to immediately transition to Forwarding, eliminating the 30-second STP delay that would otherwise prevent IP phone boot from completing. However, if PortFast is incorrectly applied to a **trunk port connecting two switches**, and that trunk port receives a BPDU from the downstream switch, the local switch may enter a Topology Change state improperly and cause network disruptions. More critically, if BPDU Guard is also enabled globally via `spanning-tree portfast bpduguard default`, the trunk port would be placed in `err-disabled` state the moment a BPDU is received — taking down the inter-switch link entirely.
+
+---
+
+> **Instructor Note — Questions 11–20:** These 10 questions are worth **5 pts each** (50 pts total). Append to the existing quiz or enter as a separate section.
+
+---
+
+### Question 11 (Multiple Choice — 5 pts)
+A network engineer runs `show spanning-tree vlan 10` on a distribution switch and sees the following in the output:
+```
+Role: Desg  State: BLK  Cost: 4  Prio.Nbr: 128.1
+```
+What does the `Desg` role combined with `BLK` state indicate?
+
+- A) This port is the Designated port but is currently in Blocking state due to a topology change in progress — RSTP rapid convergence has not yet completed. ✅
+- B) This port is blocked permanently and will never transition to forwarding.
+- C) This port lost the root port election and is in Blocking state as an Alternate port.
+- D) This port is in err-disabled state from a BPDU Guard violation.
+
+**Answer:** A — In RSTP (Rapid PVST+), a port can temporarily be Designated but in Discarding/Blocking state while the proposal/agreement handshake completes. Once the downstream switch sends an Agreement BPDU, the Designated port transitions immediately to Forwarding. This brief Blocking state is normal during RSTP convergence and should clear within milliseconds on a healthy network.
+
+**Distractor Analysis:**
+- B: A permanently blocked port would be an Alternate or Backup role, not Designated.
+- C: A port that lost root election is an Alternate port, not Designated.
+- D: Err-disabled shows as "err-disabled" status, not as a role/state combination.
+
+---
+
+### Question 12 (Multiple Choice — 5 pts)
+An engineer is migrating a campus network from Rapid PVST+ (120 VLANs) to MST. Which statement BEST describes why MST reduces switch CPU and memory utilization compared to Rapid PVST+?
+
+- A) MST eliminates all STP instances, so no BPDU processing occurs. ❌
+- B) MST maps multiple VLANs to a single STP instance, so instead of 120 separate STP calculations and BPDU streams, the switch runs only the configured number of MST instances (plus IST). ✅
+- C) MST uses a faster BPDU format that consumes less processing time per BPDU. ❌
+- D) MST disables STP on all non-root switches, reducing overall CPU load. ❌
+
+**Answer:** B — Rapid PVST+ runs a complete, independent STP instance per VLAN — 120 VLANs means 120 simultaneous STP calculations, 120 sets of BPDUs, and 120 topology databases. MST maps VLANs to instances (e.g., instance 1 = VLANs 1–60, instance 2 = VLANs 61–120), reducing this to two STP calculations regardless of VLAN count.
+
+---
+
+### Question 13 (Scenario — 5 pts)
+A junior engineer runs `show interfaces trunk` and sees the following on a distribution switch uplink:
+```
+Port        Mode         Encapsulation  Status        Native vlan
+Gi0/1       auto         negotiate      not-trunking  1
+```
+The same port on the access switch is configured with `switchport mode trunk`. Why is the trunk not forming?
+
+- A) The access switch is using 802.1Q; the distribution switch is using ISL. ❌
+- B) One side is set to `auto` (DTP passive) and the other to `trunk` (DTP active). DTP requires at least one side to be active (`desirable` or `trunk`). The `auto` side will not initiate trunking. ✅
+- C) The native VLAN (1) is not allowed on the trunk. ❌
+- D) Both switches must be set to `switchport mode dynamic desirable` to form a trunk. ❌
+
+**Answer:** B — `switchport mode auto` puts the port in DTP passive mode — it will respond to DTP requests but will not initiate. However, `switchport mode trunk` sends DTP frames soliciting a trunk from the other side. In practice, with one side `trunk` and one side `auto`, a trunk SHOULD form because `trunk` mode sends DTP actively. If status still shows `not-trunking`, the DTP frames may be blocked or the port may need `switchport mode trunk` explicitly on both sides with `switchport nonegotiate` to disable DTP negotiation entirely.
+
+---
+
+### Question 14 (Multiple Choice — 5 pts)
+Which two conditions MUST match between all switches in an MST region for them to be considered part of the same MST region? (Select two)
+
+- A) MST region name ✅
+- B) MST revision number ✅
+- C) VLAN names (not just VLAN numbers) ❌
+- D) The bridge priority of the MST root for each instance ❌
+- E) The number of active ports on each switch ❌
+
+**Answer:** A and B — Three parameters must match for MST region membership: (1) region name, (2) revision number, and (3) the VLAN-to-instance mapping table. If any of these three differ between switches, they are treated as separate MST regions separated by a virtual Boundary port — which significantly complicates the STP topology.
+
+---
+
+### Question 15 (Multiple Choice — 5 pts)
+A campus network engineer wants to prevent a specific access switch port from ever transitioning to the STP root port role, while still allowing it to participate in STP normally for its designated role. Which feature should be applied?
+
+- A) BPDU Guard — shuts down the port when a BPDU is received. ❌
+- B) Root Guard — prevents the port from becoming a root port; if a superior BPDU is received, the port enters root-inconsistent state instead. ✅
+- C) Loop Guard — prevents forwarding when BPDUs stop arriving on a non-designated port. ❌
+- D) PortFast — immediately transitions the port to forwarding, bypassing STP elections. ❌
+
+**Answer:** B — Root Guard is applied on ports where an access or distribution device should NEVER become the STP root, typically on downlink ports from the core/distribution layer. If a device connected to that port advertises a superior BPDU (lower bridge ID), Root Guard blocks the port and places it in root-inconsistent state rather than allowing the topology to change.
+
+---
+
+### Question 16 (Scenario — 5 pts)
+An engineer configures EtherChannel between two switches using PAgP. SW1 has `channel-group 1 mode desirable` and SW2 has `channel-group 1 mode on`. Both ports are up/up but the EtherChannel shows `I` (stand-alone). What is the cause?
+
+- A) PAgP and static mode (`on`) are incompatible — `on` mode disables PAgP negotiation entirely, while `desirable` expects PAgP exchanges. ✅
+- B) The channel-group number must be the same on both switches for PAgP to work. ❌
+- C) `desirable` mode requires both sides to use `active` mode instead. ❌
+- D) PAgP requires explicit `channel-protocol pagp` configuration on both interfaces. ❌
+
+**Answer:** A — `mode on` uses a static (unconditional) EtherChannel with no negotiation protocol. `mode desirable` uses PAgP. These two modes cannot interoperate — `on` mode does not send or process PAgP PDUs. For a successful static EtherChannel, both sides must use `on`. For PAgP, both sides must use `desirable` or one `desirable` and one `auto`.
+
+---
+
+### Question 17 (Multiple Choice — 5 pts)
+Inter-VLAN routing is configured on a multilayer switch using SVIs. A host in VLAN 10 (10.10.10.100/24) can ping its default gateway (10.10.10.1 — DS1 SVI) but cannot ping a host in VLAN 20 (10.10.20.50). `show ip route` on DS1 shows connected routes for both VLAN 10 and VLAN 20. What is the most likely cause?
+
+- A) `ip routing` is not enabled on DS1. ❌ (routes would not appear without `ip routing`)
+- B) The VLAN 20 SVI on DS1 is in a down/down state, likely because no active access or trunk port is assigned to VLAN 20. ✅
+- C) The 10.10.20.50 host has the wrong default gateway. ❌ (would cause return traffic failure, not initial ping failure if host has valid gateway)
+- D) ACLs are blocking ICMP between VLANs. ❌ (could be true but "most likely" is SVI state)
+
+**Answer:** B — An SVI is only up/up if at least one port in that VLAN is active and in forwarding state. If VLAN 20 exists in the VLAN database but no active port carries VLAN 20 traffic (e.g., no trunk allows it or no access port is assigned), the VLAN 20 SVI goes down/down and the connected route disappears or becomes unreachable. Verify with `show interfaces vlan 20` and `show vlan brief`.
+
+---
+
+### Question 18 (Multiple Choice — 5 pts)
+A network engineer is troubleshooting a VTP domain issue. After checking `show vtp status` on all switches, they find one switch has VTP mode set to "Transparent" while all others are "Server" or "Client." Which statement BEST describes the behavior of the Transparent switch?
+
+- A) The Transparent switch will override the VTP Server's database because Transparent mode has the highest authority. ❌
+- B) The Transparent switch maintains its own local VLAN database independently, ignores VTP advertisements it receives, but forwards VTP advertisements from other switches through its trunk ports unchanged. ✅
+- C) The Transparent switch cannot create VLANs locally — it can only use VLANs received from the VTP Server. ❌
+- D) The Transparent switch will cause all VTP clients to lose their VLAN databases if its revision number is higher. ❌
+
+**Answer:** B — VTP Transparent mode is a "pass-through" mode. The switch does not participate in VTP domain synchronization, stores its VLAN database locally (not affected by VTP advertisements), but does forward VTP frames through trunk ports so that VTP Servers and Clients on either side of the Transparent switch can still synchronize with each other.
+
+---
+
+### Question 19 (Short Answer — 5 pts)
+Explain what a **Topology Change Notification (TCN)** BPDU is in Spanning Tree, what triggers it, and what effect it has on the MAC address table. Why can a high rate of TCNs degrade network performance? (2–3 sentences)
+
+**Model Answer:** A TCN BPDU is sent by a non-root switch toward the root bridge when a port that was in Forwarding state transitions to a different state (e.g., a link goes down or a PortFast port goes up/down), signaling that the Layer 2 topology has changed. Upon receiving acknowledgment from the root, all switches in the STP domain age out their MAC address tables much faster than normal (reducing the MAC aging timer from 300 seconds to the Forward Delay of 15 seconds), forcing them to re-learn MAC addresses by flooding unknown unicast frames. A high rate of TCNs — commonly caused by unstable access ports, PortFast not being enabled on end-device ports, or flapping uplinks — causes repeated MAC table flushes and flooding storms that degrade network performance for all connected devices, as every flooded frame consumes bandwidth on every switch port in the affected VLAN.
+
+---
+
+### Question 20 (Short Answer — 5 pts)
+A network architect proposes replacing all Layer 2 EtherChannel links in the campus distribution layer with routed Layer 3 point-to-point links running OSPF. What are two specific advantages of this design over Layer 2 EtherChannel, and what is one trade-off that must be considered? (3–4 sentences)
+
+**Model Answer:** Two advantages of routed Layer 3 links over Layer 2 EtherChannel are: (1) **STP elimination** — Layer 3 links do not participate in Spanning Tree, removing the risk of STP topology changes, loops, and convergence delays from the distribution layer entirely; and (2) **per-destination load balancing** — OSPF equal-cost multi-path (ECMP) load balances on a per-flow or per-destination basis without the hash-based constraints of EtherChannel, which can cause uneven distribution when flows are skewed. The primary trade-off is **VLAN transport** — Layer 3 point-to-point links cannot carry trunk traffic between distribution switches, meaning VLANs that need to span multiple distribution switches must be re-routed at Layer 3 rather than bridged at Layer 2, which requires careful SVI design and may increase routing complexity for applications that depend on Layer 2 adjacency.

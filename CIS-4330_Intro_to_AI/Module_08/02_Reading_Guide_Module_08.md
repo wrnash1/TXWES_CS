@@ -306,4 +306,20 @@ Work through this checklist before taking the quiz.
 
 ---
 
+## 10. Supplemental Resources
+
+**1. Microsoft Learn — Analyze text with Azure AI Language (hands-on module)**
+<https://learn.microsoft.com/en-us/training/modules/analyze-text-with-text-analytics-service/>
+The primary Microsoft Learn module for Azure AI Language covering sentiment analysis, NER, key phrase extraction, and language detection with sandboxed Azure exercises. Essential preparation for the Module 08 lab.
+
+**2. Hugging Face — Course Chapter on Token Classification (NER)**
+<https://huggingface.co/learn/nlp-course/chapter7/2>
+A free deep-dive into how token classification (the basis of NER) works in modern transformer models. Covers how models like BERT are fine-tuned for entity recognition and explains the BIO tagging scheme used under the hood by services like Azure AI Language.
+
+**3. Stanford NLP Group — CoreNLP Online Demo**
+<https://corenlp.run/>
+A free web-based demo of Stanford's CoreNLP pipeline showing tokenization, POS tagging, NER, dependency parsing, and coreference resolution in real time on any text you enter. Excellent for building intuition about what each NLP pipeline stage produces before implementing with Azure AI Language.
+
+---
+
 End of Reading Guide — Module 08

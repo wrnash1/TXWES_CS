@@ -408,6 +408,22 @@ az storage share create \
 
 ---
 
+## 9. Supplemental Resources
+
+**1. Microsoft Learn — Azure Blob Storage access tiers**
+https://learn.microsoft.com/en-us/azure/storage/blobs/access-tiers-overview
+Deep dive into Hot, Cool, Cold, and Archive tier pricing models, rehydration options (standard vs. high priority), early deletion fees, and lifecycle management policy configuration — the most-tested storage topic on AZ-900.
+
+**2. Microsoft Learn — Blob Storage lifecycle management**
+https://learn.microsoft.com/en-us/azure/storage/blobs/lifecycle-management-overview
+Covers the policy JSON schema, rule conditions (daysAfterCreationGreaterThan, daysAfterLastAccessTimeGreaterThan), tier transition and delete actions, and access time tracking configuration required for access-based policies.
+
+**3. Microsoft Learn — Azure Data Box documentation**
+https://learn.microsoft.com/en-us/azure/databox/data-box-overview
+Overview of the Data Box product family (Data Box Disk, Data Box, Data Box Heavy), capacity options, the end-to-end import workflow, security (NIST 800-88 wipe), and guidance for choosing between Data Box and online transfer methods.
+
+---
+
 ## Required Reading Resources
 
 - Azure Storage overview: learn.microsoft.com/en-us/azure/storage/common/storage-introduction

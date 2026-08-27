@@ -361,3 +361,93 @@ Submit all of the following through the course LMS:
 | Analysis Question 4 (update vs upgrade) | 5 |
 | Analysis Question 5 (dpkg vs apt security) | 10 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+**Challenge Step 1 — Hold, unhold, and pin package versions**
+
+Practice controlling exactly which version of a package is installed and preventing
+unintended upgrades:
+
+```bash
+sudo apt install -y curl
+apt-cache policy curl
+apt-mark showhold
+sudo apt-mark hold curl
+apt-mark showhold
+sudo apt-get upgrade --simulate | grep curl
+sudo apt-mark unhold curl
+apt-mark showhold
+```
+
+Next, create an apt preferences pin file to prefer a specific version:
+
+```bash
+sudo tee /etc/apt/preferences.d/curl-pin << 'EOF'
+Package: curl
+Pin: release a=jammy-updates
+Pin-Priority: 1001
+EOF
+apt-cache policy curl
+sudo rm /etc/apt/preferences.d/curl-pin
+```
+
+Explain in two sentences the difference between apt-mark hold (which prevents upgrades
+within apt) and a preferences pin with priority 1001 (which forces a specific version
+even if a newer one exists).
+
+**Challenge Step 2 — Offline package download and transfer**
+
+Simulate deploying a package to an air-gapped server by downloading it and its
+dependencies to a staging directory:
+
+```bash
+mkdir -p ~/pkg-staging
+cd ~/pkg-staging
+apt-get download nginx
+apt-cache depends --recurse --no-recommends --no-suggests \
+  --no-conflicts --no-breaks --no-replaces --no-enhances nginx \
+  | grep "^\w" | sort -u > deps.txt
+cat deps.txt
+xargs apt-get download < deps.txt 2>/dev/null
+ls -lh ~/pkg-staging/
+```
+
+Count how many .deb files were downloaded. Then simulate installation from the local
+directory:
+
+```bash
+sudo dpkg -i ~/pkg-staging/*.deb 2>&1 | head -20
+sudo apt install -f
+```
+
+Document the process and explain in three sentences why understanding offline package
+deployment is essential for hardened or air-gapped enterprise Linux environments.
+
+**Challenge Step 3 — RPM database verification on a RHEL-compatible system**
+
+If you have access to a Rocky Linux or AlmaLinux VM (or a RHEL container), perform a
+full RPM database integrity audit:
+
+```bash
+rpm -Va 2>/dev/null | grep -v "^......G" | head -40
+rpm -Va 2>/dev/null | grep "^S" | head -20
+rpm -Va 2>/dev/null | awk '$1 ~ /5/ {print $0}' | head -20
+rpm -qa --last | head -20
+dnf history list | head -20
+dnf history info 1
+```
+
+If only an Ubuntu system is available, simulate the equivalent using dpkg:
+
+```bash
+sudo dpkg --verify 2>/dev/null | head -40
+cat /var/log/apt/history.log | grep "^Start-Date" | head -10
+cat /var/log/dpkg.log | grep " install " | tail -20
+```
+
+Compare the two approaches. Explain in three sentences which package manager provides
+richer transaction history and why that matters for incident response and forensic
+investigation after a suspected compromise.

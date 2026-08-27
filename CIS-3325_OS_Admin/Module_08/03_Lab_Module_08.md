@@ -373,3 +373,188 @@ Submit all of the following through the course LMS:
 | Analysis Question 4 (RAID comparison) | 10 |
 | Analysis Question 5 (RAID recovery) | 15 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+**Challenge Step 1 — LVM snapshot, rollback, and thin provisioning exploration**
+
+Create a logical volume, populate it with test data, take a snapshot, modify the data, and
+then roll back to the snapshot state:
+
+```bash
+sudo lvcreate -L 500M -n lv_snap_demo vg_lab
+sudo mkfs.ext4 /dev/vg_lab/lv_snap_demo
+sudo mkdir -p /mnt/snap_demo
+sudo mount /dev/vg_lab/lv_snap_demo /mnt/snap_demo
+
+sudo bash -c 'for i in {1..5}; do echo "original file $i" > /mnt/snap_demo/file_$i.txt; done'
+ls /mnt/snap_demo/
+cat /mnt/snap_demo/file_1.txt
+
+sudo lvcreate -s -n lv_snap_demo_snap -L 200M /dev/vg_lab/lv_snap_demo
+sudo lvs
+```
+
+Modify the original volume to simulate data changes:
+
+```bash
+sudo bash -c 'echo "MODIFIED" > /mnt/snap_demo/file_1.txt'
+sudo bash -c 'echo "new unwanted file" > /mnt/snap_demo/file_new.txt'
+cat /mnt/snap_demo/file_1.txt
+ls /mnt/snap_demo/
+```
+
+Mount the snapshot read-only to verify the original state is preserved:
+
+```bash
+sudo mkdir -p /mnt/snap_verify
+sudo mount -o ro /dev/vg_lab/lv_snap_demo_snap /mnt/snap_verify
+cat /mnt/snap_verify/file_1.txt
+ls /mnt/snap_verify/
+sudo umount /mnt/snap_verify
+```
+
+Perform a merge (rollback) to restore the original volume from the snapshot:
+
+```bash
+sudo umount /mnt/snap_demo
+sudo lvconvert --merge /dev/vg_lab/lv_snap_demo_snap
+sudo lvs
+sudo mount /dev/vg_lab/lv_snap_demo /mnt/snap_demo
+cat /mnt/snap_demo/file_1.txt
+ls /mnt/snap_demo/
+```
+
+Document whether file_1.txt shows "original file 1" and whether file_new.txt is absent after
+the merge. Explain in two sentences why LVM snapshots are useful for pre-upgrade checkpoints
+and why snapshot size must be monitored — what happens if a snapshot runs out of space before
+the merge is performed.
+
+**Challenge Step 2 — Disk performance benchmarking and I/O scheduler inspection**
+
+Measure raw disk throughput and I/O latency on your VM disks and compare different I/O
+schedulers:
+
+```bash
+lsblk -d -o NAME,ROTA,SCHED
+cat /sys/block/sdb/queue/scheduler
+
+ls /sys/block/sdb/queue/
+cat /sys/block/sdb/queue/rotational
+cat /sys/block/sdb/queue/nr_requests
+```
+
+Run a sequential write benchmark using dd to measure raw throughput:
+
+```bash
+sudo dd if=/dev/zero of=/dev/sdb bs=1M count=512 oflag=direct 2>&1
+```
+
+Run a sequential read benchmark:
+
+```bash
+sudo dd if=/dev/sdb of=/dev/null bs=1M count=512 iflag=direct 2>&1
+```
+
+If hdparm is available, run an additional read benchmark:
+
+```bash
+sudo apt install -y hdparm 2>/dev/null
+sudo hdparm -tT /dev/sdb
+```
+
+Now inspect whether changing the I/O scheduler affects throughput on a virtual disk:
+
+```bash
+cat /sys/block/sdb/queue/scheduler
+echo mq-deadline | sudo tee /sys/block/sdb/queue/scheduler
+cat /sys/block/sdb/queue/scheduler
+sudo dd if=/dev/zero of=/dev/sdb bs=1M count=512 oflag=direct 2>&1
+echo none | sudo tee /sys/block/sdb/queue/scheduler
+sudo dd if=/dev/zero of=/dev/sdb bs=1M count=512 oflag=direct 2>&1
+```
+
+Document the throughput in MB/s for each scheduler. Explain in two sentences why the I/O
+scheduler matters more on spinning hard disks than on SSDs, and why virtual machine disks
+often show less scheduler variation than physical hardware.
+
+**Challenge Step 3 — RAID array monitoring, scrubbing, and failure simulation**
+
+Build a RAID 5 array from loop devices (no additional physical disks required) and simulate
+a drive failure and recovery:
+
+```bash
+for i in 1 2 3 4; do
+    sudo dd if=/dev/zero of=/tmp/raid_disk_$i.img bs=1M count=256
+    sudo losetup /dev/loop$i /tmp/raid_disk_$i.img
+done
+sudo losetup -l | grep raid
+
+sudo mdadm --create /dev/md10 --level=5 --raid-devices=3 \
+    /dev/loop1 /dev/loop2 /dev/loop3 --spare-devices=1 \
+    --spare /dev/loop4 --run
+
+watch -n 2 cat /proc/mdstat
+```
+
+Wait for the initial sync to complete (watch until [===] shows 100%), then inspect the array:
+
+```bash
+sudo mdadm --detail /dev/md10
+cat /proc/mdstat
+```
+
+Create a filesystem and test data:
+
+```bash
+sudo mkfs.ext4 /dev/md10
+sudo mkdir /mnt/raid10_test
+sudo mount /dev/md10 /mnt/raid10_test
+sudo bash -c 'for i in {1..10}; do echo "raid test data $i" > /mnt/raid10_test/data_$i.txt; done'
+ls /mnt/raid10_test/
+```
+
+Simulate a drive failure by marking loop1 as failed:
+
+```bash
+sudo mdadm --fail /dev/md10 /dev/loop1
+cat /proc/mdstat
+sudo mdadm --detail /dev/md10
+ls /mnt/raid10_test/
+cat /mnt/raid10_test/data_1.txt
+```
+
+Observe that the hot spare (loop4) automatically begins rebuilding. Then remove the failed
+device and confirm final state:
+
+```bash
+sudo mdadm --remove /dev/md10 /dev/loop1
+sudo mdadm --detail /dev/md10
+cat /proc/mdstat
+```
+
+Trigger a manual scrub and check for errors:
+
+```bash
+echo check | sudo tee /sys/block/md10/md/sync_action
+cat /sys/block/md10/md/sync_action
+cat /proc/mdstat
+sudo mdadm --detail /dev/md10 | grep "Checksum Errors\|Mismatch"
+```
+
+Clean up after the lab:
+
+```bash
+sudo umount /mnt/raid10_test
+sudo mdadm --stop /dev/md10
+for i in 1 2 3 4; do sudo losetup -d /dev/loop$i; done
+sudo rm /tmp/raid_disk_*.img
+```
+
+Document: (1) the array state shown in /proc/mdstat immediately after marking loop1 as failed,
+(2) whether the hot spare started rebuilding automatically, and (3) the final state after the
+rebuild completed. Explain in three sentences why RAID is not a substitute for backups, why
+scheduled scrubs are important for data integrity, and what "RAID write hole" means for RAID 5
+arrays without a write-intent bitmap.

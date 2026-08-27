@@ -487,4 +487,26 @@ Challenge tasks are extra credit (up to 15 points).
 
 ---
 
-*End of Module 05 Lab*
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Process Priority Stress Test
+
+Demonstrate the real-world impact of nice values on CPU scheduling by running competing processes.
+
+1. Open two terminals. In terminal 1, start a CPU-bound loop at the default nice value and redirect output to `/dev/null`: `while true; do :; done &`. Record its PID. In terminal 2, start an identical loop at nice value 19: `nice -n 19 bash -c 'while true; do :; done' &`. Record its PID.
+2. Run `top` and press `1` to show per-CPU usage. Observe how CPU time is divided between the two processes. Then use `renice -n -5 -p <PID of nice-19 process>` (requires sudo) to raise its priority. Record the CPU distribution change you observe.
+3. Kill both background loops with `kill <PID1> <PID2>`. Then run `ps -eo pid,ni,cmd | grep "bash\|while"` to confirm they are gone.
+4. Write two sentences explaining what you observed: did the higher-priority process actually receive more CPU time, and what does this imply for running batch jobs on a shared server?
+
+### Challenge 2: Cron-Based Log Rotation Simulation
+
+Build a cron-controlled log management system from scratch using only shell and cron.
+
+1. Create a script `~/rotate_logs.sh` that: checks if `~/app_sim.log` exists and is larger than 10KB, and if so, renames it to `~/app_sim.log.$(date +%Y%m%d%H%M%S)` and creates a new empty `~/app_sim.log`. Add a log entry with the current timestamp whether rotation occurred or not.
+2. Create a companion script `~/generate_log.sh` that appends 100 lines of fake log data (use a loop with `echo "$(date) INFO Simulated event $i"`) to `~/app_sim.log` each time it runs.
+3. Add both scripts to your crontab: run `generate_log.sh` every minute (`* * * * *`) and run `rotate_logs.sh` every 2 minutes (`*/2 * * * *`). Wait at least 6 minutes, then examine `~/` to see how many rotated log files were created. Remove both cron entries when done.
+
+### Reflection Questions
+
+1. You observed that `kill -9` cannot be blocked by a process while `kill -15` can. Describe a real production scenario where using SIGKILL instead of SIGTERM could cause data loss or leave the system in a degraded state.
+2. Load average is a lagging indicator — the 15-minute average changes slowly. Describe a monitoring strategy that uses all three load average values (1, 5, 15 minutes) together to distinguish between a sudden spike and a sustained overload condition.

@@ -169,4 +169,20 @@ Before moving on, confirm you can do each of the following without referring to 
 
 ---
 
+## 9. Supplemental Resources
+
+**1. NIST SP 800-137 — Information Security Continuous Monitoring (ISCM)**
+[https://csrc.nist.gov/publications/detail/sp/800-137/final](https://csrc.nist.gov/publications/detail/sp/800-137/final)
+The foundational NIST guide for building and operating a continuous monitoring program. Covers how to define a monitoring strategy, select security metrics, implement automated collection, and integrate monitoring results into risk management decisions. Directly supports the SOC operations, SIEM, and metrics topics in this module.
+
+**2. MITRE ATT&CK Enterprise Matrix**
+[https://attack.mitre.org/matrices/enterprise/](https://attack.mitre.org/matrices/enterprise/)
+The ATT&CK framework documents adversary tactics, techniques, and procedures (TTPs) used in real-world attacks. For security operations, ATT&CK is the standard reference for writing SIEM detection rules, threat hunting hypotheses, and incident classification. Review the Tactics column and correlate each tactic to SIEM correlation rule categories.
+
+**3. SANS Institute — Critical Security Controls (CIS Controls) Implementation Guide**
+[https://www.sans.org/critical-security-controls/](https://www.sans.org/critical-security-controls/)
+SANS provides implementation guidance for the CIS Controls, including Controls 7 (Continuous Vulnerability Management) and 8 (Audit Log Management) — the two most directly relevant to this module. The implementation guides include specific tool recommendations, metrics, and automation strategies for operationalizing each control.
+
+---
+
 End of Reading Guide — Module 15

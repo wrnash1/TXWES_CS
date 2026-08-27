@@ -293,3 +293,45 @@ Submit the following in Canvas as a single PDF or Word document:
 | Reflection | 10 | Accurate layer identification and explanation for all 8 devices |
 
 Partial credit is awarded for incomplete but demonstrably attempted work. No credit is awarded for screenshots that appear fabricated or do not match the described topology.
+
+---
+
+## Part 9 — Challenge Exercise
+
+This optional challenge extends the lab to CCNA exam difficulty. Complete all steps and include deliverables in your submission for up to 20 bonus points.
+
+### Challenge Step 1: Implement Redundant Uplinks and Verify STP Behavior
+
+Add a second uplink cable from each Access switch to its alternate Distribution switch, creating a redundant triangle between each Access switch, SW-DIST-1, and SW-DIST-2. Verify that Spanning Tree Protocol is automatically blocking one of the redundant links on each Access switch to prevent a Layer 2 loop:
+
+```ios
+SW-ACC-1# show spanning-tree vlan 10
+```
+
+Identify which port on SW-ACC-1 is in Blocking state and explain in 2-3 sentences why STP selected that specific port to block based on port cost and root port selection rules.
+
+### Challenge Step 2: Configure SVIs on Distribution Switches for Inter-VLAN Routing
+
+Upgrade SW-DIST-1 from a Layer 2 switch to a multilayer switch behavior by enabling `ip routing` and creating SVIs for VLAN 10 and VLAN 20. Assign the SVIs the following addresses:
+
+- VLAN 10 SVI: 192.168.10.1/24
+- VLAN 20 SVI: 192.168.20.1/24
+
+Assign PCs in VLAN 10 an address from 192.168.10.0/24 with a default gateway of 192.168.10.1. Assign PCs in VLAN 20 an address from 192.168.20.0/24 with a default gateway of 192.168.20.1. Verify that a PC in VLAN 10 can ping a PC in VLAN 20 through SW-DIST-1:
+
+```ios
+SW-DIST-1# configure terminal
+SW-DIST-1(config)# ip routing
+SW-DIST-1(config)# interface vlan 10
+SW-DIST-1(config-if)# ip address 192.168.10.1 255.255.255.0
+SW-DIST-1(config-if)# no shutdown
+SW-DIST-1(config)# interface vlan 20
+SW-DIST-1(config-if)# ip address 192.168.20.1 255.255.255.0
+SW-DIST-1(config-if)# no shutdown
+```
+
+Capture the successful ping output and include it as a deliverable. If ping fails, run `show ip route` on SW-DIST-1 and troubleshoot using the verification commands from the CLI Command Reference table.
+
+### Challenge Step 3: Verify End-to-End Topology Using show ip route and CDP Depth
+
+From SW-DIST-1, run `show cdp neighbors detail` and confirm you can see both SW-CORE-1 and SW-CORE-2 as neighbors. Then run `show ip route` and verify that routes to VLAN 10 (192.168.10.0/24) and VLAN 20 (192.168.20.0/24) appear as directly connected routes ("C" entries) in the routing table. In your submission, explain in 3-4 sentences why these routes appear as "C" (connected) rather than "O" (OSPF) or "S" (static), and what would need to change for a route learned from another router to appear as "O" in the same table.

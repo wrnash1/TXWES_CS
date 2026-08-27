@@ -399,3 +399,51 @@ Submit a Jupyter notebook (.ipynb) with all cells executed. Your submission must
 ---
 
 *End of Lab — Module 11*
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Gradual Layer Unfreezing
+
+Instead of unfreezing all fine-tuning layers at once (as in Part 2), implement a gradual unfreezing schedule that trains one additional convolutional block per epoch.
+
+1. After completing Phase 1 (feature extraction), unfreeze only the last convolutional block of MobileNetV2. Compile with `optimizer=Adam(1e-5)` and train for 5 epochs. Record validation accuracy.
+2. Unfreeze one additional block (now the last 2 blocks are trainable). Recompile with `Adam(5e-6)` and train 3 more epochs. Record validation accuracy.
+3. Unfreeze one more block (last 3 blocks trainable). Recompile with `Adam(2e-6)` and train 3 more epochs. Record validation accuracy.
+4. Plot validation accuracy across all three unfreezing stages as a single connected curve. Compare the final accuracy against the single-shot unfreezing approach from Part 2 and note whether gradual unfreezing provided a smoother improvement trajectory.
+
+### Challenge 2: Domain Shift Analysis with Grad-CAM
+
+Implement Gradient-weighted Class Activation Mapping (Grad-CAM) to visualize which image regions your transfer-learned model attends to when making predictions.
+
+1. Implement the Grad-CAM computation using the last convolutional layer of your MobileNetV2 model:
+
+   ```python
+   import tensorflow as tf
+   import numpy as np
+
+   def grad_cam(model, img_array, layer_name, class_idx):
+       grad_model = tf.keras.Model(
+           inputs=model.input,
+           outputs=[model.get_layer(layer_name).output, model.output]
+       )
+       with tf.GradientTape() as tape:
+           conv_outputs, predictions = grad_model(img_array)
+           loss = predictions[:, class_idx]
+       grads = tape.gradient(loss, conv_outputs)
+       pooled_grads = tf.reduce_mean(grads, axis=(0, 1, 2))
+       heatmap = conv_outputs[0] @ pooled_grads[..., tf.newaxis]
+       heatmap = tf.squeeze(heatmap)
+       heatmap = tf.maximum(heatmap, 0) / (tf.math.reduce_max(heatmap) + 1e-8)
+       return heatmap.numpy()
+   ```
+
+2. Apply Grad-CAM to 5 correctly classified and 5 incorrectly classified test images. Overlay the heatmap on the original image using `cv2.applyColorMap` or `matplotlib.cm`.
+3. For the incorrectly classified images, identify whether the model attended to background regions, irrelevant objects, or low-contrast areas. Write a short analysis of what each misclassified image's heatmap reveals about the model's failure mode.
+4. Use `layer_name` from `model.get_layer` by iterating over `model.layers` to find the name of the last `Conv2D` layer inside the MobileNetV2 base.
+
+### Reflection Questions
+
+1. In your gradual unfreezing experiment, did releasing earlier (lower-level) convolutional blocks improve validation accuracy, or did performance plateau or degrade after a certain number of unfrozen blocks? What does this tell you about how many layers need to be fine-tuned for your specific target dataset?
+2. From your Grad-CAM visualizations, describe one correctly classified image where the model attended to the correct discriminative region and one misclassified image where it attended to an irrelevant region. What augmentation or training strategy might help correct the misclassification you identified?

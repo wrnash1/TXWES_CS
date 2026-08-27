@@ -195,3 +195,45 @@ Submit to Canvas:
 | Safety checklist — complete, in order, imperative form | 20 |
 | Failure scenario analysis — all four correct | 15 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+These advanced steps are optional for students seeking additional depth. They are not graded but develop skills directly tested in A+ performance-based questions.
+
+### Challenge Step 1 — PSU Voltage Rail Verification
+
+Using a digital multimeter set to DC voltage mode and a PSU tester (or a paperclip ATX bench-start jumper with the PSU completely disconnected from the motherboard):
+
+1. Short pin 16 (PS_ON) to any ground pin on the 24-pin ATX connector to turn on the PSU without a motherboard connected (ATX bench test).
+1. Probe the following pins on the 24-pin connector and record the measured voltages against expected values:
+
+| Rail | Expected | Your Measurement |
+|---|---|---|
+| +12V (yellow wire) | +12V ± 5% | |
+| +5V (red wire) | +5V ± 5% | |
+| +3.3V (orange wire) | +3.3V ± 5% | |
+| −12V (blue wire) | −12V ± 10% | |
+| +5VSB (purple wire, pin 9) | +5V ± 5% | |
+
+1. Document which rails were within tolerance and which (if any) fell outside the acceptable range. A rail more than 5–10% outside spec under no load indicates a failing PSU.
+
+**Safety note:** Perform this only with a decommissioned or lab-designated PSU. Never probe a PSU that is connected to a live motherboard with this method.
+
+### Challenge Step 2 — ESD Strap Resistance Comparison
+
+1. Obtain two wrist straps: one standard ESD strap (with 1 MΩ resistor) and one inexpensive "heel grounder" or strap of unknown quality.
+2. Using a multimeter on the resistance (Ω) setting, measure the end-to-end resistance of each strap cable.
+3. Record both values and determine whether each strap provides adequate protection (acceptable range: 800 kΩ – 1.2 MΩ for the standard strap).
+4. In your lab report, explain why a strap with zero resistance (a simple wire) would be more dangerous to the technician than a strap with 1 MΩ resistance, even though it would drain static faster.
+
+### Challenge Step 3 — Dual-Channel vs. Single-Channel RAM Benchmark
+
+If you have access to a Windows or Linux machine with at least two RAM slots occupied:
+
+1. Install both RAM modules in matching-color (dual-channel) slots per the motherboard manual.
+2. Run a memory bandwidth benchmark using **HWiNFO64** (free, [https://www.hwinfo.com/](https://www.hwinfo.com/)) or the built-in Windows Memory Diagnostic. Record the reported memory clock speed and channel configuration.
+3. Move one RAM module to an adjacent slot to force single-channel mode.
+4. Re-run the benchmark. Record the new values.
+5. Compare the results and write a 3–4 sentence explanation of why dual-channel mode increases memory bandwidth and what real-world performance scenarios benefit most from it (e.g., integrated graphics systems where the GPU shares system RAM bandwidth).

@@ -229,4 +229,37 @@ Question 3: An Arduino Uno in a commercial product ships with default firmware t
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Non-Blocking Blink with millis()
+
+The Arduino `delay()` function blocks the processor entirely. Refactor your Part 1 blink sketch to use `millis()` for non-blocking timing so the sketch can also read and print the potentiometer value continuously, not just once per blink cycle.
+
+1. Remove all `delay()` calls from your sketch. Replace them with a state-machine pattern using `millis()`. Store the last toggle time in an `unsigned long` variable named `lastToggle` and the current LED state in a `bool` named `ledState`.
+2. Inside `loop()`, read the potentiometer on every iteration (not just when blinking) and print the current raw ADC value and blink delay to Serial every 200 ms using a second `millis()` timer named `lastPrint`.
+3. Add the following code snippet and explain in a comment why `unsigned long` is used instead of `int` for the `millis()` return value:
+
+   ```cpp
+   unsigned long now = millis();
+   if (now - lastToggle >= (unsigned long)blinkDelay) { ... }
+   ```
+
+4. Verify that your Serial Monitor now shows ADC readings at approximately 200 ms intervals regardless of the current blink rate.
+
+### Challenge 2: I2C Bus Scanner on Raspberry Pi
+
+Identify all I2C devices connected to your Raspberry Pi (or simulate using a virtual environment) by writing a Python I2C bus scanner.
+
+1. Enable the I2C interface on your Raspberry Pi via `raspi-config` (Interface Options → I2C → Enable). If using simulation, document the steps you would take.
+2. Install the `smbus2` library with `pip install smbus2`. Write a Python script that iterates through I2C addresses 0x03 through 0x77 and attempts to read one byte from each address. Print `Found device at 0x{addr:02X}` for any address that responds without raising an `OSError`.
+3. Connect at least one I2C sensor (BME280, SHT31, BH1750, or similar) and screenshot the scanner output showing the device's address. If no physical hardware is available, document what address the device would appear at and why.
+4. In two sentences, explain why knowing all devices on the I2C bus matters from a security perspective in a shared-bus IoT deployment.
+
+### Reflection Questions
+
+1. After converting from `delay()` to `millis()`, did the behavior of the LED blink change in any observable way? What new capabilities does non-blocking timing enable that blocking delays cannot support?
+2. If two I2C sensors happened to have the same 7-bit address (for example, two BH1750 light sensors both at 0x23), what would happen when the master tried to communicate with them, and how would you resolve the conflict?
+
+---
+
 End of Lab – Module 02

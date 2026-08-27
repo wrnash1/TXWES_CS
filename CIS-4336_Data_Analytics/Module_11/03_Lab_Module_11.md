@@ -426,4 +426,127 @@ Submit in a single ZIP file:
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Sales Rep Performance Dashboard Query
+
+Build a multi-CTE SQL query that produces a complete performance dashboard for sales representatives, combining aggregation, window functions, and conditional logic in a single query.
+
+1. Using the `retail_analytics.db` database from the lab, write a CTE-based query with the following structure: CTE 1 computes total revenue, average order value, and order count per sales rep per region; CTE 2 uses `RANK() OVER (PARTITION BY region ORDER BY total_revenue DESC)` to rank reps within their region; the final SELECT returns all reps ranked 1–3 in their region, adding a `performance_tier` column using CASE: `CASE WHEN rank = 1 THEN 'Top Performer' WHEN rank = 2 THEN 'Strong' ELSE 'Solid' END`. Print the full result sorted by region and rank.
+2. Extend the query to add a fourth column: `revenue_vs_region_avg` — the difference between the rep's total revenue and the average revenue of all reps in their region. Use `AVG(total_revenue) OVER (PARTITION BY region)` inside a CTE or window expression. Write two sentences interpreting which rep has the largest positive gap from their regional average and what this might signal to a sales manager.
+
+```python
+import sqlite3
+import pandas as pd
+
+conn = sqlite3.connect("retail_analytics.db")
+
+query = """
+WITH rep_stats AS (
+    SELECT
+        sales_rep,
+        region,
+        ROUND(SUM(amount), 2)       AS total_revenue,
+        ROUND(AVG(amount), 2)       AS avg_order_value,
+        COUNT(*)                     AS order_count
+    FROM orders
+    GROUP BY sales_rep, region
+),
+rep_ranked AS (
+    SELECT *,
+        RANK() OVER (PARTITION BY region ORDER BY total_revenue DESC) AS region_rank,
+        ROUND(total_revenue - AVG(total_revenue) OVER (PARTITION BY region), 2)
+            AS revenue_vs_region_avg
+    FROM rep_stats
+),
+tiers AS (
+    SELECT *,
+        CASE
+            WHEN region_rank = 1 THEN 'Top Performer'
+            WHEN region_rank = 2 THEN 'Strong'
+            ELSE 'Solid'
+        END AS performance_tier
+    FROM rep_ranked
+    WHERE region_rank <= 3
+)
+SELECT * FROM tiers
+ORDER BY region, region_rank;
+"""
+
+result = pd.read_sql_query(query, conn)
+conn.close()
+print(result.to_string(index=False))
+```
+
+### Challenge 2: Customer Cohort Retention Analysis
+
+Use a date-based cohort analysis to determine what percentage of customers who placed their first order in each month returned to place at least one more order.
+
+1. Write a CTE-based query that: (a) determines each customer's first order month using `MIN(order_date)` grouped by `customer_id`, (b) joins back to the orders table to find all subsequent orders by the same customer, and (c) counts how many customers in each cohort placed at least one return order. Display the cohort month, total customers in the cohort, returning customers, and retention rate as a percentage rounded to one decimal place.
+2. Using `pandas.read_sql_query()`, load the cohort results and plot a bar chart with cohort month on the x-axis and retention rate on the y-axis. Add a horizontal dashed line at 50% for reference. Save as `cohort_retention.png`. Write two sentences explaining what a retention rate below 30% in a cohort would suggest to a business analyst.
+
+```python
+import sqlite3
+import pandas as pd
+import matplotlib.pyplot as plt
+import matplotlib.ticker as mticker
+
+conn = sqlite3.connect("retail_analytics.db")
+
+cohort_query = """
+WITH first_orders AS (
+    SELECT
+        customer_id,
+        strftime('%Y-%m', MIN(order_date)) AS cohort_month
+    FROM orders
+    GROUP BY customer_id
+),
+cohort_sizes AS (
+    SELECT cohort_month, COUNT(*) AS cohort_total
+    FROM first_orders
+    GROUP BY cohort_month
+),
+returnees AS (
+    SELECT fo.cohort_month, COUNT(DISTINCT o.customer_id) AS returning_customers
+    FROM first_orders fo
+    JOIN orders o ON fo.customer_id = o.customer_id
+        AND strftime('%Y-%m', o.order_date) > fo.cohort_month
+    GROUP BY fo.cohort_month
+)
+SELECT
+    cs.cohort_month,
+    cs.cohort_total,
+    COALESCE(r.returning_customers, 0) AS returning_customers,
+    ROUND(COALESCE(r.returning_customers, 0) * 100.0 / cs.cohort_total, 1) AS retention_rate_pct
+FROM cohort_sizes cs
+LEFT JOIN returnees r ON cs.cohort_month = r.cohort_month
+ORDER BY cs.cohort_month;
+"""
+
+cohort_df = pd.read_sql_query(cohort_query, conn)
+conn.close()
+print(cohort_df.to_string(index=False))
+
+fig, ax = plt.subplots(figsize=(9, 5))
+ax.bar(cohort_df["cohort_month"], cohort_df["retention_rate_pct"], color="steelblue")
+ax.axhline(50, color="red", linestyle="--", linewidth=1.5, label="50% reference")
+ax.yaxis.set_major_formatter(mticker.FuncFormatter(lambda x, _: f"{x:.0f}%"))
+ax.set_title("Customer Cohort Retention Rate by First-Order Month",
+             fontsize=13, fontweight="bold")
+ax.set_xlabel("Cohort Month")
+ax.set_ylabel("Retention Rate (%)")
+ax.legend()
+plt.xticks(rotation=30, ha="right")
+plt.tight_layout()
+plt.savefig("cohort_retention.png", dpi=150)
+plt.show()
+```
+
+### Reflection Questions
+
+1. In Challenge 1, the `RANK()` window function is used inside a CTE rather than in the outer SELECT. Why is this necessary? What error would occur if you tried to use `WHERE region_rank <= 3` in the same query block where `RANK()` is first computed?
+2. In Challenge 2, the cohort analysis uses `strftime('%Y-%m', order_date)` to extract the year-month. If the `order_date` column were stored as a text string in `YYYY-MM-DD` format rather than a proper DATE type, would this query still work in SQLite? Explain why or why not, and describe one potential data quality risk with text-stored dates that could silently distort the cohort results.
+
+---
+
 End of Lab 11

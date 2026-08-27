@@ -174,6 +174,24 @@ Tip 8: The Scrum Master's role expands in scaling contexts. In SAFe, the Release
 
 ---
 
+## 8. Supplemental Resources
+
+The following free, open-access resources go deeper on Module 14 topics:
+
+**1. "Scaled Agile Framework (SAFe)" — Scaled Agile, Inc.**
+<https://scaledagileframework.com>
+The official free reference for the SAFe framework. The Big Picture diagram shows the full SAFe structure across all levels. The articles on PI Planning, Agile Release Trains, and PI Objectives are directly relevant to this module's lab. SAFe 6.0 is the current version.
+
+**2. "Large-Scale Scrum (LeSS)" — The LeSS Company**
+<https://less.works>
+The official free reference for the LeSS framework. Covers LeSS Basics, LeSS Huge, feature teams, and the LeSS rules. The site includes Craig Larman and Bas Vodde's free articles on scaling patterns and the coordination mechanisms LeSS prescribes versus SAFe.
+
+**3. "Scaling Agile @ Spotify" — Henrik Kniberg and Anders Ivarsson**
+<https://blog.crisp.se/wp-content/uploads/2012/11/SpotifyScaling.pdf>
+A widely read free white paper describing how Spotify structured their engineering organization into Squads, Tribes, Chapters, and Guilds. While not SAFe or LeSS, it illustrates a real-world scaling approach from a company that explicitly avoided heavy framework adoption. Useful for comparing scaling philosophy with practical implementation.
+
+---
+
 ## 7. Study Checklist
 
 - [ ] Describe the five scaling challenges that single-team Scrum cannot address directly

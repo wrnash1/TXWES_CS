@@ -322,4 +322,27 @@ If your Azure account does not yet have Azure OpenAI access approved, contact Pr
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Systematic Prompt Engineering Comparison
+
+1. Choose a single task: summarize a 3-paragraph news article of your choice into 3 bullet points. Write four versions of the prompt for the same article: (a) zero-shot with only task instructions, (b) few-shot with one example summary, (c) chain-of-thought asking the model to identify key facts before summarizing, and (d) a detailed system prompt defining the role as "a professional news editor."
+2. Submit all four prompts to your Azure OpenAI deployment at the same temperature (0.7). Record the output for each.
+3. Build a comparison table with columns: Technique, Output Quality (1-5 rating), Adherence to 3-bullet format (Yes/No), Notable Differences.
+4. Write a 3-4 sentence recommendation: for a production news summarization pipeline that processes 10,000 articles per day, which prompting technique would you standardize on and why? Consider cost (tokens), consistency, and quality.
+
+### Challenge 2: RAG vs. Base Model Hallucination Test
+
+1. Choose a narrow factual domain that you know well — for example, the course syllabus, your university's financial aid policies, or a technical specification document you have access to.
+2. Identify 5 specific factual questions whose answers appear in your chosen document. Ask all 5 questions to the base GPT model (no document provided in the prompt). Record the answers and evaluate their accuracy.
+3. Now paste the relevant sections of your document directly into the user prompt before each question (simulating manual RAG). Ask the same 5 questions and record the answers.
+4. Compare accuracy. Calculate the percentage of questions answered correctly in each condition. Write a 2-3 sentence explanation of why providing document context reduces hallucination from the model's perspective.
+
+### Reflection Questions
+
+1. Based on Challenge 1, explain why few-shot prompting generally produces more consistent format compliance than zero-shot prompting, even when the zero-shot instructions are very explicit. What does this reveal about how LLMs learn from in-context examples vs. instructions?
+2. Based on Challenge 2, if an organization wanted to deploy a production RAG system for internal policy Q&A, what are the three most important quality and safety checks they should run before going live?
+
+---
+
 End of Lab 10

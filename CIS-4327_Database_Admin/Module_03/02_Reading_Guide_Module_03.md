@@ -208,3 +208,19 @@ Tip 8: IAM database users are the preferred authentication method for service ac
 ---
 
 Reference: cloud.google.com/learn
+
+---
+
+## 9. Supplemental Resources
+
+**1. Cloud SQL for PostgreSQL — Official Documentation**
+https://cloud.google.com/sql/docs/postgres
+The complete reference for Cloud SQL PostgreSQL instance creation, high availability configuration, read replicas, backups, PITR, database flags, and IAM authentication.
+
+**2. Cloud SQL Auth Proxy — GitHub Repository and Setup Guide**
+https://github.com/GoogleCloudPlatform/cloud-sql-proxy
+Source code, release binaries, and detailed setup instructions for the Cloud SQL Auth Proxy, including Kubernetes sidecar deployment patterns and Workload Identity configuration.
+
+**3. PostgreSQL — pg_audit Extension Documentation**
+https://github.com/pgaudit/pgaudit
+Documentation and configuration reference for the pgaudit extension used with Cloud SQL for PostgreSQL, covering log classes, object auditing, and session auditing modes.

@@ -69,7 +69,7 @@ terraform workspace show
 
 **Local backend**: State is stored in `terraform.tfstate.d/<workspace>/terraform.tfstate`. The `default` workspace uses the root `terraform.tfstate` as usual.
 
-```
+```text
 project/
   terraform.tfstate              # default workspace
   terraform.tfstate.d/
@@ -208,7 +208,7 @@ As environments diverge in architecture, the `terraform.workspace` conditional l
 
 The directory-based approach uses a separate directory per environment, each with its own configuration, backend, and variable files:
 
-```
+```text
 infrastructure/
   environments/
     dev/
@@ -317,6 +317,22 @@ max_size      = 10
 Terraform workspaces provide lightweight state isolation within a shared configuration. They are best suited for ephemeral environments and feature-branch testing. For production-grade multi-environment infrastructure, the directory-based isolation pattern provides stronger guarantees: separate state, separate credentials, explicit architecture differences, and lower blast radius.
 
 The two approaches are complementary rather than mutually exclusive — many teams use directory isolation for their major environment tiers and workspaces for ephemeral sub-environments within a tier.
+
+---
+
+## 8. Supplemental Resources
+
+**1. Terraform Workspaces — Language Reference**
+<https://developer.hashicorp.com/terraform/language/state/workspaces>
+The official documentation for Terraform workspaces covering the `terraform.workspace` built-in value, workspace state storage paths for local and remote backends, the use cases where workspaces are appropriate, and the explicit guidance on when directory-based isolation is preferred.
+
+**2. Terraform Workspace CLI Commands**
+<https://developer.hashicorp.com/terraform/cli/commands/workspace>
+Complete CLI reference for all `terraform workspace` subcommands: `list`, `show`, `new`, `select`, and `delete`. Includes behavioral notes such as the requirement that a workspace must have empty state before deletion.
+
+**3. Terraform Recommended Practices — Workspace Usage**
+<https://developer.hashicorp.com/terraform/cloud-docs/recommended-practices/part1>
+HashiCorp's recommended practices guide for structuring Terraform configurations across environments and teams. Covers when to use workspaces versus separate configurations, and how to organize state for multiple environments in a way that scales to large organizations.
 
 ---
 

@@ -302,3 +302,28 @@ Submit a document containing:
 | rm -rf risk explanation | 20 |
 | Lab completed in VM (not just described) | 10 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Filesystem Archaeology
+
+Explore the Linux Filesystem Hierarchy Standard by investigating directories that typical users never visit.
+
+1. Run `ls /proc` and notice that these are not real files — they are kernel data structures exposed as a virtual filesystem. Read `/proc/cpuinfo` with `cat /proc/cpuinfo` and `/proc/meminfo` with `cat /proc/meminfo`. Identify the CPU model name and the total memory in kB.
+2. Run `ls /dev` and then run `file /dev/sda` (or `file /dev/vda` if that is your disk). Note that `file` reports it as a "block special" file. Run `ls -l /dev/null` and `ls -l /dev/zero`. What do the `c` and `b` file type characters mean in those outputs?
+3. Run `stat /etc/passwd` and record the Inode number, number of hard links, and all three timestamps (Access, Modify, Change). Then run `touch /etc/passwd` and `stat /etc/passwd` again. Which timestamp changed and which did not?
+
+### Challenge 2: Efficient Tree Navigation
+
+Build and navigate a complex directory structure using only relative paths from a single starting point.
+
+1. From your home directory, create this entire structure in one `mkdir -p` command: `projects/alpha/src projects/alpha/docs projects/beta/src projects/beta/docs projects/shared/lib`.
+2. Using only relative path navigation (no absolute paths starting with `/`), navigate from `~/projects/alpha/src` to `~/projects/beta/docs` in a single `cd` command. Verify with `pwd`.
+3. From `~/projects/shared/lib`, create a file named `README.txt` in `~/projects/alpha/docs` using a relative path in the `touch` command — without changing your current directory. Verify with `ls ~/projects/alpha/docs`.
+
+### Reflection Questions
+
+1. The `/proc` filesystem contains no actual files on disk — its contents are generated dynamically by the kernel. What does this tell you about the Linux design philosophy of "everything is a file"? Give one practical benefit this approach provides to sysadmins.
+2. You used both `cp -r` and `mv` to handle directories in this lab. In a real backup scenario, when would you choose `cp` over `mv`, and what would be the consequence of accidentally using `mv` instead of `cp` when backing up critical configuration files?

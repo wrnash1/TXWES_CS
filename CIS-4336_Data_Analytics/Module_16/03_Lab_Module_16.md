@@ -228,3 +228,124 @@ Submit all three deliverables to the course LMS by the posted deadline:
 | Capstone: at least one annotated chart highlighting key finding | 5 |
 | Executive summary: follows four-part structure, plain language, one page | 15 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Domain-by-Domain Diagnostic Practice Exam
+
+Build a self-scoring practice exam tool in Python that simulates a timed Data+ domain diagnostic.
+
+1. Create a Python dictionary `exam_bank` with at least 15 questions distributed across all 5 Data+ domains (3 per domain minimum). Each entry should be a dictionary with keys: `domain`, `question`, `options` (list of 4 strings), `answer` (correct letter A/B/C/D), and `explanation`. Write a function `run_exam(questions, time_limit_minutes=20)` that presents each question, accepts user input, tracks time elapsed, and at the end prints a domain-by-domain score breakdown (correct / total per domain) with the explanation for each missed question.
+2. After running the exam (or simulating it with pre-filled answers), produce a radar/spider chart using matplotlib that shows the percentage score per domain as a filled polygon. Save as `domain_radar.png`. Write two sentences identifying which domain your simulated score was weakest in and what specific Module reading guide sections you would revisit based on that result.
+
+```python
+import time
+import matplotlib.pyplot as plt
+import numpy as np
+
+exam_bank = [
+    {"domain": "Domain 1", "question": "Which schema uses a central fact table with denormalized dimensions?",
+     "options": ["A) Snowflake schema","B) Star schema","C) Third normal form","D) Entity-relationship model"],
+     "answer": "B", "explanation": "Star schema: fact table + denormalized dimension tables."},
+    {"domain": "Domain 2", "question": "Which imputation is best for right-skewed salary data with nulls?",
+     "options": ["A) Mean","B) Median","C) Drop rows","D) Zero fill"],
+     "answer": "B", "explanation": "Median is resistant to outlier distortion in skewed distributions."},
+    {"domain": "Domain 3", "question": "A p-value of 0.03 at alpha=0.05 means:",
+     "options": ["A) Accept H0","B) Reject H0","C) Inconclusive","D) 97% certain"],
+     "answer": "B", "explanation": "p < alpha → reject null hypothesis."},
+    {"domain": "Domain 4", "question": "Best chart to show distribution and outliers across regions?",
+     "options": ["A) Pie chart","B) Line chart","C) Box plot","D) Scatter plot"],
+     "answer": "C", "explanation": "Box plots show median, IQR, and outliers per category."},
+    {"domain": "Domain 5", "question": "GDPR right to erasure response window?",
+     "options": ["A) 15 days","B) 30 days","C) 45 days","D) 90 days"],
+     "answer": "B", "explanation": "GDPR requires response within one calendar month."},
+]
+
+def run_exam(questions, time_limit_minutes=20, auto_answers=None):
+    domain_scores = {}
+    missed = []
+    start = time.time()
+
+    for i, q in enumerate(questions):
+        print(f"\nQ{i+1} [{q['domain']}]: {q['question']}")
+        for opt in q["options"]:
+            print(f"  {opt}")
+
+        if auto_answers:
+            answer = auto_answers[i]
+            print(f"  Your answer: {answer}")
+        else:
+            answer = input("  Your answer (A/B/C/D): ").strip().upper()
+
+        elapsed = (time.time() - start) / 60
+        if elapsed > time_limit_minutes:
+            print("\nTime limit reached.")
+            break
+
+        d = q["domain"]
+        domain_scores.setdefault(d, {"correct": 0, "total": 0})
+        domain_scores[d]["total"] += 1
+        if answer == q["answer"]:
+            domain_scores[d]["correct"] += 1
+        else:
+            missed.append(q)
+
+    print("\n=== RESULTS BY DOMAIN ===")
+    for d, s in sorted(domain_scores.items()):
+        pct = s["correct"] / s["total"] * 100 if s["total"] else 0
+        print(f"  {d}: {s['correct']}/{s['total']} ({pct:.0f}%)")
+    if missed:
+        print("\n=== MISSED QUESTIONS ===")
+        for q in missed:
+            print(f"  [{q['domain']}] {q['question']}")
+            print(f"  Explanation: {q['explanation']}")
+
+    return domain_scores
+
+# Simulate with pre-filled answers
+simulated = ["B", "B", "B", "C", "A"]
+scores = run_exam(exam_bank, auto_answers=simulated)
+
+domains = sorted(scores.keys())
+pcts = [scores[d]["correct"] / scores[d]["total"] * 100 for d in domains]
+angles = np.linspace(0, 2 * np.pi, len(domains), endpoint=False).tolist()
+pcts_plot = pcts + [pcts[0]]
+angles += [angles[0]]
+labels = [d.replace("Domain ", "D") for d in domains]
+
+fig, ax = plt.subplots(figsize=(6, 6), subplot_kw=dict(polar=True))
+ax.plot(angles, pcts_plot, "o-", linewidth=2, color="steelblue")
+ax.fill(angles, pcts_plot, alpha=0.25, color="steelblue")
+ax.set_xticks(angles[:-1])
+ax.set_xticklabels(labels)
+ax.set_yticks([20, 40, 60, 80, 100])
+ax.set_title("Data+ Domain Score Radar", size=13, fontweight="bold", pad=15)
+plt.tight_layout()
+plt.savefig("domain_radar.png", dpi=150)
+plt.show()
+```
+
+### Challenge 2: End-to-End Mini Capstone — Dataset Choice
+
+Select one of the following freely available datasets and conduct a complete end-to-end analysis applying all five course skill areas. Submit as a Jupyter notebook.
+
+**Dataset options (choose one):**
+
+* Kaggle — Titanic survival dataset: <https://www.kaggle.com/competitions/titanic/data>
+* UCI ML Repository — Adult income dataset: <https://archive.ics.uci.edu/ml/datasets/adult>
+* Kaggle — NYC Taxi Trips (sample): <https://www.kaggle.com/datasets/elemento/nyc-yellow-taxi-trip-data>
+
+**Required deliverables in your notebook:**
+
+1. **Domain 1/2 — Data Loading and Quality Audit:** Load the dataset, inspect shape and dtypes, compute a completeness scorecard, flag at least two data quality issues (validity, uniqueness, or accuracy), and apply appropriate fixes with written justification.
+2. **Domain 3 — Statistical Analysis:** Compute descriptive statistics for all numeric columns. Identify and describe one significant correlation. Formulate and execute one hypothesis test (t-test or chi-square) answering a question about the data. State H0, H1, alpha, decision, and conclusion.
+3. **Domain 3/4 — Machine Learning:** Train a classification or regression model. Produce a train/test split with stratification if classification. Evaluate with at least two metrics appropriate to the task. Visualize feature importances.
+4. **Domain 4 — Visualization and Storytelling:** Produce three publication-quality charts (appropriate types for the analytical question). Write a four-part data story (Context → Finding → Evidence → Implication) summarizing the most important insight.
+5. **Domain 5 — Ethics and Governance Review:** Identify any PII or quasi-identifiers in the dataset. State which anonymization technique you applied or would apply. Identify any potential bias source in the data and describe how you would address it.
+
+### Reflection Questions
+
+1. After completing Challenge 1's domain radar chart, which domain had your lowest simulated score? For that domain, list three specific terms or concepts from the course where additional study would most improve your confidence on the real Data+ exam.
+2. In Challenge 2, you applied all five Data+ domains to a single dataset. Describe the single most difficult or surprising step in the workflow and explain what knowledge from a specific module reading guide you applied to resolve it. What would you do differently if you were starting the same analysis over?

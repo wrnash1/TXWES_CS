@@ -278,3 +278,29 @@ Complete the following before the final assessment:
 - [ ] Explain the difference between a switch and a router in terms of OSI layer and function.
 - [ ] Complete the Module 16 final lab practical.
 - [ ] Register for or confirm your CompTIA A+ 220-1101 exam appointment at comptia.org.
+
+---
+
+## 9. Supplemental Resources
+
+The following free resources are specifically selected for final exam preparation across all CompTIA A+ Core 1 (220-1101) domains covered in this course.
+
+1. **Professor Messer — CompTIA A+ Core 1 (220-1101) Complete Free Study Course**
+   URL: [https://www.professormesser.com/free-a-plus-training/220-1101/220-1101-video/](https://www.professormesser.com/free-a-plus-training/220-1101/220-1101-video/)
+   Relevance: Professor Messer's free complete video course covers all five A+ Core 1 domains with the same scenario-based approach used on the exam. For final exam preparation, watch every domain segment you have not previously reviewed and use the free course notes PDF as a quick-reference summary during your final study sessions.
+
+1. **CompTIA A+ Certification Official Exam Objectives (220-1101) — Free Download**
+   URL: [https://www.comptia.org/certifications/a](https://www.comptia.org/certifications/a)
+   Relevance: The official exam objectives document is the definitive list of every topic, acronym, and technology that can appear on the exam. Download the free PDF and use it as a checklist — mark every item you can define from memory and prioritize reviewing the unmarked items before your exam date. No preparation resource is more authoritative than the official objectives.
+
+1. **CertMike — Free CompTIA A+ Practice Questions**
+   URL: [https://www.certmike.com/comptia-a-plus/](https://www.certmike.com/comptia-a-plus/)
+   Relevance: CertMike publishes free CompTIA A+ practice questions with explanations. Additional practice questions beyond those in this course reinforce weak areas and build exam-day stamina for answering 90 questions in 90 minutes. Focus on scenario-based questions (PBQ-style) since these typically carry more weight on the actual exam.
+
+1. **Pearson VUE — CompTIA A+ Exam Registration and Exam Day Information**
+   URL: [https://home.pearsonvue.com/comptia](https://home.pearsonvue.com/comptia)
+   Relevance: The official exam registration portal for CompTIA A+ through Pearson VUE. Students should visit this site to locate their nearest testing center, review exam day requirements (government ID, no electronic devices, check-in process), and register for their exam appointment. Online proctoring options are also available for remote testing.
+
+1. **ExamCompass — Free CompTIA A+ Core 1 Practice Exam Simulator**
+   URL: [https://www.examcompass.com/comptia/a-plus-certification/a-plus-core-1-practice-tests](https://www.examcompass.com/comptia/a-plus-certification/a-plus-core-1-practice-tests)
+   Relevance: ExamCompass provides a free browser-based practice exam simulator with timed question sets across all A+ Core 1 domains. Simulating exam conditions (90 questions, 90 minutes, no reference materials) during final preparation is the most effective way to identify remaining knowledge gaps and build confidence with the exam format before test day.

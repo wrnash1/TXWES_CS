@@ -215,3 +215,43 @@ Before the quiz and lab, confirm you can do all of the following without looking
 - Create a RAID 5 array with mdadm
 - Interpret /proc/mdstat output and identify a failed disk
 - Add a replacement disk to a degraded RAID array
+
+---
+
+## 9. Supplemental Resources
+
+**1. Linux man pages — fdisk(8), lsblk(8), blkid(8), mkfs.ext4(8)**
+URL: https://man7.org/linux/man-pages/man8/fdisk.8.html
+Coverage: The fdisk man page covers all interactive commands for MBR partition management.
+The lsblk man page explains output columns including TYPE, FSTYPE, MOUNTPOINT, and UUID. The
+blkid man page describes device attribute scanning. Essential for understanding the disk
+inspection commands used in the lab.
+
+**2. LVM2 Administration — Red Hat Enterprise Linux 9**
+URL: https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/configuring_and_managing_logical_volumes/index
+Coverage: The authoritative LVM administration guide covering pvcreate, vgcreate, lvcreate,
+lvextend, lvreduce, pvmove, vgreduce, and snapshot management. Includes worked examples for
+the full LVM lifecycle, thin provisioning, and cache volumes. Directly maps to all LVM topics
+in this module.
+
+**3. mdadm RAID Administration — Linux RAID Wiki**
+URL: https://raid.wiki.kernel.org/index.php/Linux_Raid
+Coverage: The kernel.org RAID wiki covers software RAID configuration with mdadm, RAID level
+comparison (0, 1, 4, 5, 6, 10), /proc/mdstat interpretation, adding and removing devices,
+growing arrays, and recovering from drive failures. Includes a quick-start guide and a
+troubleshooting section for degraded array recovery.
+
+**4. fstab(5) and mount(8) Man Pages — man7.org**
+URL: https://man7.org/linux/man-pages/man5/fstab.5.html
+Coverage: The fstab man page documents every field including the filesystem type, mount
+options (defaults, noatime, nofail, ro, noexec, nosuid), dump flag, and fsck pass order.
+The mount man page lists all supported options by filesystem type. Required reading for
+understanding persistent mount configuration.
+
+**5. Arch Wiki — LVM and RAID**
+URL: https://wiki.archlinux.org/title/LVM
+Coverage: The Arch Wiki LVM article provides a practical walkthrough of the full LVM stack
+with commands and expected output at each step. The companion RAID article at
+wiki.archlinux.org/title/RAID covers mdadm configuration, monitoring, and scheduled scrubs.
+Both articles are maintained with current kernel and tool versions and include common
+troubleshooting scenarios.

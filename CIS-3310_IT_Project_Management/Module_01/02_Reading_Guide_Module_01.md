@@ -202,3 +202,29 @@ Work through this checklist before submitting the lab and quiz.
 - [ ] Complete the Module 01 Lab activity
 - [ ] Take the Module 01 Quiz
 - [ ] Post your Module 01 Discussion initial response by Wednesday at 11:59 PM
+
+---
+
+## 9. Supplemental Resources
+
+The following free, openly licensed resources extend the concepts in this module. All links are publicly accessible — no account or purchase required.
+
+1. **Project Management Open Textbook — Chapter 1: Introduction to Project Management**
+   *BC Campus OpenEd* — [opentextbc.ca/projectmanagement](https://opentextbc.ca/projectmanagement/chapter/chapter-1-introduction-to-project-management/)
+   Covers the definition of a project, the project lifecycle, and the role of the project manager. Directly aligns with PMI Process Groups and Knowledge Areas introduced in this module.
+
+2. **PMI — What is Project Management?**
+   *Project Management Institute* — [pmi.org/about/learn-about-pmi/what-is-project-management](https://www.pmi.org/about/learn-about-pmi/what-is-project-management)
+   The official PMI definition page. Essential for students preparing for Project+ or CAPM; cites PMBOK language directly.
+
+3. **CompTIA Project+ PK0-005 Exam Objectives (Free PDF)**
+   *CompTIA* — [comptia.org/certifications/project](https://www.comptia.org/certifications/project)
+   Download the official exam objectives document. Section 1.0 maps directly to Module 01 topics: project characteristics, Process Groups, and constraints.
+
+4. **YouTube — "Introduction to Project Management" (Simplilearn)**
+   [youtube.com/watch?v=wHVNUJkxdMU](https://www.youtube.com/watch?v=wHVNUJkxdMU)
+   A concise 10-minute overview of project management fundamentals including the Triple Constraint and PMI framework — useful as a visual review before the quiz.
+
+5. **Khan Academy — "What is Project Management?"**
+   [khanacademy.org — What is Project Management?](https://www.khanacademy.org/computing/computers-and-internet/x1bacd820c5e4194d:program-your-device/x1bacd820c5e4194d:project-management/a/what-is-project-management)
+   Accessible introductory reading with interactive questions. Suitable for students who want additional foundational reinforcement before tackling the PMI framework in depth.

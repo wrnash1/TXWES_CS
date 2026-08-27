@@ -422,3 +422,224 @@ Remove-ADOrganizationalUnit -Identity "OU=CapstoneServers,DC=txwes,DC=edu" `
 # Remove the GPO
 Remove-GPO -Name "CapstonePasswordPolicy" -Domain "txwes.edu"
 ```
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Build a Comprehensive Environment Health Dashboard
+
+Integrate skills from all major course modules into a single script that audits
+AD, DNS, DHCP, file services, and security event data in one execution.
+
+1. Create the multi-domain health collection function. This script queries data
+   from modules 02 (AD), 06 (DNS/DHCP), 10 (file services), and 14 (security events):
+
+   ```powershell
+   function Get-EnvironmentHealthReport {
+       param([string]$DomainController = "DC1")
+
+       $report = [ordered]@{}
+
+       # --- Active Directory Health (Module 02/03) ---
+       try {
+           $fsmo = netdom query fsmo 2>&1
+           $report.PDCEmulator     = ($fsmo | Where-Object {$_ -match "PDC"}) -replace ".*:\s*",""
+           $report.SchemaOwner     = ($fsmo | Where-Object {$_ -match "Schema"}) -replace ".*:\s*",""
+           $report.RIDOwner        = ($fsmo | Where-Object {$_ -match "RID"}) -replace ".*:\s*",""
+       } catch {
+           $report.FSMOError = $_.Exception.Message
+       }
+
+       # --- User Account Summary (Module 07) ---
+       try {
+           $report.TotalUsers          = (Get-ADUser -Filter *).Count
+           $report.DisabledUsers       = (Search-ADAccount -AccountDisabled).Count
+           $report.LockedUsers         = (Search-ADAccount -LockedOut).Count
+       } catch {
+           $report.ADUserError = $_.Exception.Message
+       }
+
+       # --- DNS Health (Module 09) ---
+       try {
+           $zones = Get-DnsServerZone -ComputerName $DomainController -ErrorAction Stop
+           $report.TotalDNSZones       = $zones.Count
+           $report.ADIntegratedZones   = ($zones | Where-Object {$_.ZoneType -eq "Primary" -and $_.IsDsIntegrated}).Count
+       } catch {
+           $report.DNSError = $_.Exception.Message
+       }
+
+       # --- DHCP Health (Module 09) ---
+       try {
+           $scopes = Get-DhcpServerv4Scope -ComputerName $DomainController -ErrorAction Stop
+           $report.DHCPScopes          = $scopes.Count
+           $stats  = Get-DhcpServerv4ScopeStatistics -ScopeId $scopes[0].ScopeId `
+                         -ComputerName $DomainController -ErrorAction Stop
+           $report.DHCPFirstScopeUsed  = "$($stats.PercentageInUse)%"
+       } catch {
+           $report.DHCPError = $_.Exception.Message
+       }
+
+       # --- Security Events (Module 14) ---
+       try {
+           $report.FailedLogons24h = (Get-WinEvent -ComputerName $DomainController -ErrorAction Stop `
+               -FilterHashtable @{LogName='Security'; Id=4625; StartTime=(Get-Date).AddDays(-1)}).Count
+           $report.Lockouts24h     = (Get-WinEvent -ComputerName $DomainController -ErrorAction Stop `
+               -FilterHashtable @{LogName='Security'; Id=4740; StartTime=(Get-Date).AddDays(-1)}).Count
+       } catch {
+           $report.SecurityError = $_.Exception.Message
+       }
+
+       $report.ReportTime = (Get-Date).ToString("yyyy-MM-dd HH:mm")
+       [PSCustomObject]$report
+   }
+   ```
+
+2. Run the health report and display results:
+
+   ```powershell
+   $health = Get-EnvironmentHealthReport -DomainController "DC1"
+   $health | Format-List *
+   ```
+
+3. Export to CSV and generate a risk summary:
+
+   ```powershell
+   $health | Export-Csv "C:\CapstoneReports\EnvHealth_$(Get-Date -Format yyyyMMdd).csv" `
+       -NoTypeInformation
+
+   # Risk flags
+   if ($health.LockedUsers -gt 5) {
+       Write-Warning "HIGH: $($health.LockedUsers) locked accounts — possible brute force"
+   }
+   if ($health.FailedLogons24h -gt 100) {
+       Write-Warning "HIGH: $($health.FailedLogons24h) failed logons in 24h — investigate"
+   }
+   if ([double]($health.DHCPFirstScopeUsed -replace '%','') -gt 90) {
+       Write-Warning "HIGH: DHCP scope utilization at $($health.DHCPFirstScopeUsed)"
+   }
+   ```
+
+4. Save a baseline and compare against a future run:
+
+   ```powershell
+   $baseline = $health
+   # [Simulate time passing — re-run the health report]
+   $current  = Get-EnvironmentHealthReport -DomainController "DC1"
+
+   Write-Host "Baseline failed logons: $($baseline.FailedLogons24h)"
+   Write-Host "Current failed logons:  $($current.FailedLogons24h)"
+   $delta = [int]$current.FailedLogons24h - [int]$baseline.FailedLogons24h
+   if ($delta -gt 50) {
+       Write-Warning "Failed logon SPIKE: +$delta since last baseline"
+   }
+   ```
+
+   In your lab notes, identify which module skills are represented by each section
+   of this script, and describe how you would schedule this report to run hourly
+   and email the security team when any risk flag triggers.
+
+### Challenge 2: Design a Disaster Recovery Runbook Scenario
+
+Apply knowledge from all modules to document and test a recovery procedure
+for a simulated failure scenario.
+
+1. Simulate an accidental GPO deletion and verify the impact:
+
+   ```powershell
+   # Create a test GPO to delete
+   New-GPO -Name "DR_Test_Policy" -Domain "txwes.edu"
+   New-GPLink -Name "DR_Test_Policy" -Target "DC=txwes,DC=edu" -LinkEnabled No
+
+   # Record the GPO GUID before deletion
+   $gpo = Get-GPO -Name "DR_Test_Policy"
+   Write-Host "GPO GUID: $($gpo.Id)"
+
+   # Delete the GPO (simulating an accident)
+   Remove-GPO -Name "DR_Test_Policy" -Domain "txwes.edu" -Confirm:$false
+
+   # Verify it is gone
+   Get-GPO -Name "DR_Test_Policy" -ErrorAction SilentlyContinue
+   ```
+
+2. Restore the GPO from a backup (requires a prior backup to exist — create one
+   first in a real scenario):
+
+   ```powershell
+   # Backup all GPOs first (should be done regularly)
+   Backup-GPO -All -Path "C:\GPOBackups" -Domain "txwes.edu"
+
+   # List available backups
+   Get-ChildItem "C:\GPOBackups" | Select-Object Name, CreationTime
+
+   # Restore the deleted GPO by name from the most recent backup
+   Restore-GPO -Name "DR_Test_Policy" -Path "C:\GPOBackups" -Domain "txwes.edu"
+
+   # Verify restoration
+   Get-GPO -Name "DR_Test_Policy" | Select-Object DisplayName, GpoStatus, CreationTime
+   ```
+
+3. Simulate an AD user account recovery from the Recycle Bin:
+
+   ```powershell
+   # Create a test user to delete
+   New-ADUser -Name "DR Test User" -SamAccountName "drtest" -Enabled $false
+
+   # Delete the user
+   Remove-ADUser -Identity "drtest" -Confirm:$false
+
+   # Recover from Recycle Bin
+   Get-ADObject -Filter {SamAccountName -eq "drtest"} -IncludeDeletedObjects |
+       Restore-ADObject
+
+   # Verify recovery
+   Get-ADUser -Identity "drtest" | Select-Object Name, SamAccountName, DistinguishedName
+
+   # Cleanup
+   Remove-ADUser -Identity "drtest" -Confirm:$false
+   ```
+
+4. Document the recovery procedures as a runbook entry:
+
+   ```powershell
+   $runbook = @"
+   TXWES Domain Recovery Runbook — Entry 001
+   ==========================================
+   Scenario:   Accidental GPO deletion
+   Detection:  User reports policy no longer applying; Get-GPO returns empty
+   RTO Target: 30 minutes
+   Steps:
+     1. Identify missing GPO name from ticket or audit log
+     2. Run: Backup-GPO -All -Path C:\GPOBackups (if not done today)
+     3. Run: Restore-GPO -Name "<GPOName>" -Path C:\GPOBackups
+     4. Verify: Get-GPO -Name "<GPOName>" shows active status
+     5. Force policy refresh on affected systems: Invoke-GPUpdate -Computer <targets>
+   Prevention: Backup-GPO scheduled daily; GPO creation requires change ticket
+   "@
+
+   $runbook | Out-File "C:\CapstoneReports\Runbook_GPO_Recovery.txt"
+   Get-Content "C:\CapstoneReports\Runbook_GPO_Recovery.txt"
+   ```
+
+   In your lab notes, add a second runbook entry for AD user recovery, following
+   the same format. Include the detection method, RTO target, step-by-step recovery
+   commands, and prevention controls.
+
+### Reflection Questions
+
+1. You have completed a Windows Server Administration course covering installation,
+   Active Directory, DNS, DHCP, GPO, file services, security, PowerShell,
+   storage, monitoring, and hybrid identity. A hiring manager asks you to describe
+   the single most important operational practice that applies across all of these
+   areas. Drawing on at least three specific module topics, construct a cohesive
+   answer that demonstrates how the practice you choose connects the skills from
+   this course into a unified professional competency.
+
+2. A critical production domain controller fails completely and cannot be restarted.
+   The organization has no hot standby DC, no recent AD backup, but they do have
+   a second domain controller (DC2) that is a replica of DC1. Describe the complete
+   recovery sequence — including which FSMO roles need to be seized (vs. transferred),
+   how DNS service would be restored, which event log entries on DC2 would confirm
+   successful AD replication before the failure, and what monitoring you would
+   implement going forward to detect DC failure within 5 minutes rather than
+   discovering it through user complaints.

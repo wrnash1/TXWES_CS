@@ -167,3 +167,20 @@ Module 14 covers threat modeling — the design-phase security activity that sys
 - [ ] Explain where threat modeling belongs in the SDLC relative to SAST and SCA.
 - [ ] Complete the Module 14 lab activity.
 - [ ] Attempt all 10 quiz questions and review distractor analysis for any incorrect answers.
+
+---
+
+## 9. Supplemental Resources
+
+**1. [OWASP Threat Dragon documentation](https://owasp.org/www-project-threat-dragon/)**
+The official OWASP Threat Dragon project page and documentation, covering installation (desktop app and web application modes), DFD symbol types, STRIDE threat annotation, JSON export format, and integration with DevSecOps workflows. Includes tutorial walkthroughs and example threat models.
+
+**2. [Microsoft STRIDE threat modeling framework — Security Development Lifecycle](https://learn.microsoft.com/en-us/azure/security/develop/threat-modeling-tool-threats)**
+Microsoft's authoritative documentation of the STRIDE framework and the Microsoft Threat Modeling Tool. Covers each STRIDE category with examples, the relationship between STRIDE categories and violated security properties, and how to apply STRIDE systematically to data flow diagrams. The foundational reference for STRIDE as used in the DSOE certification.
+
+**3. [OWASP Application Threat Modeling Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html)**
+The OWASP cheat sheet covering threat modeling process steps, DFD construction guidelines, trust boundary identification, STRIDE and PASTA framework comparison, risk rating methodologies (DREAD, CVSS), and integration of threat modeling into Agile sprints. Includes decision trees for when to threat model and how to scope a threat modeling session.
+
+---
+
+Reading Guide — Module 14 | CIS-4350 | Texas Wesleyan University | Professor Nash

@@ -344,3 +344,27 @@ Due date: See course calendar. Late submissions lose 10 points per day.
 *End of Lab — Module 15*
 
 *Texas Wesleyan University — CIS-3310 IT Project Management*
+
+---
+
+## Part 9 — Challenge Exercise
+
+This section is optional for students seeking additional depth and exam preparation. It is not graded as part of the standard 100-point lab but may be used for extra credit at the instructor's discretion.
+
+### Challenge Step 1: Release Forecasting Under Uncertainty
+
+The CivicTrack product backlog currently contains 310 story points. The team's sprint velocities over the past five sprints have been: 28, 34, 31, 27, 35. The city council has set a hard go-live deadline of 26 weeks from today, and each sprint is two weeks long.
+
+Calculate: (a) the team's average velocity; (b) the number of sprints needed to complete the backlog at average velocity; (c) the total calendar weeks required; and (d) whether the team can meet the council's deadline. Then write a 4–6 sentence recommendation to the Product Owner addressing whether the backlog should be refined (stories removed, de-scoped, or deferred) and what risk reserve the team should build into its release plan. Reference the concept of sustainable pace and the risk of artificially inflating velocity estimates.
+
+### Challenge Step 2: Hybrid Project Design
+
+The city parks department has a companion project running alongside CivicTrack: a physical kiosk installation at 12 park locations requiring city procurement, vendor contracts, and site preparation. The kiosk software will run the CivicTrack app, but the hardware must pass a city inspection before go-live.
+
+Design a hybrid project structure for the combined initiative. Write a 5–7 sentence description that: identifies which components should use predictive (waterfall) management and why, identifies which components should use Agile management and why, describes how the two streams will be synchronized at key integration points, specifies what the PM must monitor to prevent the waterfall stream from blocking the Agile delivery, and identifies the governance artifact (charter amendment, integrated milestone schedule, or joint CCB) needed to manage the two streams as a unified program.
+
+### Challenge Step 3: Scrum Values Scenario Analysis
+
+A newly formed Scrum team is experiencing dysfunction. The following behaviors have been observed: (1) developers are not attending the Daily Scrum consistently; (2) the Product Owner changed sprint backlog items mid-sprint without informing the team; (3) the Scrum Master is assigning tasks to individual developers instead of allowing self-assignment; (4) the team avoided raising a quality concern during the Sprint Review because the sponsor was present.
+
+For each of the four behaviors, identify which Scrum value it violates (Commitment, Focus, Openness, Respect, or Courage), explain the harm the behavior causes to sprint outcomes, and propose one specific corrective action the Scrum Master should take. Write your analysis in a structured table with columns: Behavior, Scrum Value Violated, Harm Caused, Corrective Action. This exercise maps to the Project+ exam domain on Agile team dynamics and servant leadership.

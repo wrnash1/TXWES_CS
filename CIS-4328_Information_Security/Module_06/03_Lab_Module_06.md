@@ -186,4 +186,37 @@ Before submitting, verify:
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: SAML vs. OAuth 2.0 vs. OIDC Protocol Comparison and Attack Surface Analysis
+
+Using the Module 06 reading guide and publicly available documentation, complete the following analysis without accessing or testing any live systems.
+
+1. Create a side-by-side comparison table for SAML 2.0, OAuth 2.0, and OIDC covering: primary purpose (authentication vs. authorization vs. both), token format, typical use case, whether the protocol provides identity claims to the client application, and one known attack or misconfiguration risk specific to each protocol.
+2. A SaaS vendor proposes using OAuth 2.0 implicit flow for their new single-page application. Research why the implicit flow is considered deprecated and what the recommended replacement is. Explain the specific security risk that the implicit flow introduces that the replacement addresses.
+3. An enterprise deploys SAML 2.0 SSO federated to their IdP. A security researcher demonstrates that by modifying the SAML assertion XML and re-encoding it in Base64, they can change the username value in the assertion and authenticate as a different user. What class of vulnerability does this represent? What cryptographic control should be in place to prevent it, and why does that control prevent this specific manipulation?
+4. Describe the OIDC Authorization Code Flow with PKCE in four steps, identifying at each step: what data is exchanged, between which parties, and what security property is provided by that exchange.
+
+### Challenge 2: Access Control Model Selection and Privilege Audit
+
+A healthcare organization manages the following three systems and must select the most appropriate access control model for each. Analyze each system and justify your recommendation.
+
+**System A — Electronic Health Record (EHR) system:** 500 physicians, nurses, and administrators need access. Physicians need full read/write to their own patients. Nurses need read access to assigned patients. Administrators need access to billing records but not clinical notes. Access needs change frequently as patients are admitted and discharged.
+
+**System B — Classified research database:** Contains federally funded research with three sensitivity tiers: Unclassified, Sensitive, and Restricted. Users are assigned clearance levels that do not change unless formally reviewed. No user may access data above their clearance level regardless of job function.
+
+**System C — Cloud infrastructure management console:** Access decisions must factor in the user's department, their device compliance posture, time of day, geographic location, and whether the specific resource is tagged as production or development.
+
+1. For each system, recommend one access control model (DAC, MAC, RBAC, or ABAC) and justify your choice with at least two specific reasons drawn from the system's requirements.
+2. For System A, design a simple RBAC role matrix. Define four roles, list the permissions each role holds, and specify which role(s) should exist for the administrator accessing billing but not clinical notes.
+3. The healthcare organization discovers that three employees who were transferred between departments over the past year still retain access from their previous roles. Name this IAM condition using the correct terminology, identify which IAM process failure allowed it to occur, and recommend two specific process or technical controls to prevent it going forward.
+4. The organization wants to implement PAM for the 12 system administrators who manage the EHR infrastructure. Identify three PAM controls from Module 06, describe how each control is implemented for this specific use case, and explain which attack each control directly mitigates.
+
+### Reflection Questions
+
+1. After completing both challenges, explain why an organization that uses SAML 2.0 SSO for all applications has a fundamentally different risk profile for account compromise compared to an organization where each application has its own local accounts. Address both the risk reduction and the risk concentration aspects of centralized identity federation.
+2. In Challenge 2, you analyzed the distinction between RBAC and ABAC. A security manager argues that ABAC is always superior to RBAC because it is more flexible and granular. Identify two specific scenarios where RBAC is the more appropriate choice despite ABAC's flexibility, and explain why adding unnecessary complexity to an access control model can itself create security risk.
+
+---
+
 Module 06 Lab — End

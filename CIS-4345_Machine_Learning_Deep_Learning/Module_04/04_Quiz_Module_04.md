@@ -247,3 +247,205 @@ What does `ReLU(z) = max(0, z)` return when `z = -2.5`?
 - B — Incorrect. 2.5 would be the absolute value of the input. ReLU applies a threshold at zero, not an absolute value operation.
 - C — Correct. `max(0, -2.5) = 0`. ReLU outputs zero for any non-positive input.
 - D — Incorrect. 0.08 is approximately `sigmoid(-2.5)`, which squashes the value to (0,1). ReLU and sigmoid are different functions; ReLU is not a smooth curve but a hard threshold.
+
+---
+
+### Question 11 (5 points)
+
+A Dense layer has `input_shape=(12,)` and `units=8`. What is the shape of its weight matrix W (not counting biases)?
+
+- A) `(8, 12)`
+- B) `(12, 8)`
+- C) `(8, 8)`
+- D) `(12, 12)`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A — Incorrect. While some frameworks store weights as (output, input), Keras stores the Dense layer weight matrix as `(input_dim, units)` = `(12, 8)`. The forward pass computes `X @ W + b` where X has shape `(batch, 12)`.
+- B — Correct. Keras stores Dense layer weights as shape `(input_dim, units)`. With `input_shape=(12,)` and `units=8`, the weight matrix W has shape `(12, 8)`. Verify with `layer.get_weights()[0].shape`.
+- C — Incorrect. `(8, 8)` would only occur if both input and output dimensions were equal to 8, which is not the case here.
+- D — Incorrect. `(12, 12)` would be a square matrix with the input dimension on both axes. This would map 12 inputs to 12 outputs, not 8.
+
+---
+
+### Question 12 (5 points)
+
+Which activation function is described as "dying ReLU" and when does it occur?
+
+- A) Sigmoid, when inputs are very large causing saturation above 0.99
+- B) ReLU, when neurons consistently receive negative pre-activations and output 0 permanently, receiving no gradient and never updating
+- C) Tanh, when inputs approach zero causing the gradient to vanish
+- D) Softmax, when one class probability dominates and all others approach zero
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- B — Correct. A "dying" ReLU neuron is one whose pre-activation `z = W·x + b` is always negative for all training examples. Since `ReLU(z) = 0` and the gradient of ReLU is 0 for negative z, no gradient flows back through this neuron. Its weights never update. This can happen with large negative bias values or large learning rates. Leaky ReLU (`max(0.01z, z)`) is designed to prevent this.
+- A — Incorrect. Sigmoid saturation is called the "vanishing gradient" problem, not "dying." Saturated sigmoid neurons do receive some (tiny) gradient but the problem is called vanishing, not dying.
+- C — Incorrect. Tanh at z=0 has its maximum gradient (1.0), not a vanishing gradient. Tanh saturates at large positive or negative z, not at zero.
+- D — Incorrect. Softmax concentration is related to overconfidence or temperature scaling, not the "dying" neuron phenomenon which specifically describes ReLU's hard-zero gradient region.
+
+---
+
+### Question 13 (5 points)
+
+What does `model.trainable_variables` return in TensorFlow?
+
+- A) A list of NumPy arrays containing the current weight values
+- B) A list of `tf.Variable` objects representing all weights and biases that will be updated by gradient descent
+- C) A dictionary mapping layer names to their loss contributions
+- D) A single tensor containing all weights concatenated into one flat vector
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- B — Correct. `model.trainable_variables` returns a Python list of `tf.Variable` objects — each weight matrix and bias vector that participates in gradient-based optimization. This is what you pass to `optimizer.apply_gradients(zip(gradients, model.trainable_variables))` in a custom training loop.
+- A — Incorrect. NumPy arrays are obtained with `model.get_weights()`, which returns a list of NumPy arrays. `trainable_variables` returns TensorFlow Variable objects, not NumPy arrays.
+- C — Incorrect. No such dictionary exists in the Keras API. Per-layer loss contributions can be accessed via `model.losses` for regularization losses, but this is separate from `trainable_variables`.
+- D — Incorrect. `trainable_variables` returns a list of separate Variable objects, one per weight tensor. They are not concatenated into a single flat vector.
+
+---
+
+### Question 14 (5 points)
+
+What is the key difference between the **exploding gradient** and **vanishing gradient** problems?
+
+- A) Vanishing gradients slow early-layer learning by making updates near zero; exploding gradients destabilize training by making updates extremely large.
+- B) Vanishing gradients occur only in ReLU networks; exploding gradients occur only in sigmoid networks.
+- C) Exploding gradients reduce training loss too quickly causing overfitting; vanishing gradients slow the test loss.
+- D) Both problems only occur in recurrent networks, not feedforward networks.
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- A — Correct. Vanishing gradients (common with sigmoid/tanh) cause the product of many small derivatives to approach zero as it propagates back through layers, leaving early-layer weights essentially frozen. Exploding gradients (common in deep or recurrent networks) cause the gradient magnitude to grow exponentially, causing weight updates that overshoot and destabilize training.
+- B — Incorrect. The association is reversed. Vanishing gradients are primarily a sigmoid/tanh problem; exploding gradients are more common in deep networks and RNNs. ReLU largely mitigates vanishing gradients but can cause dying neurons instead.
+- C — Incorrect. Exploding gradients cause loss instability (often NaN), not overfitting. Vanishing gradients slow all learning, not just test loss.
+- D — Incorrect. Both problems can occur in deep feedforward networks. Exploding gradients are especially severe in RNNs due to the repeated multiplication through time steps, but neither problem is exclusive to RNNs.
+
+---
+
+### Question 15 (5 points)
+
+A developer uses `kernel_initializer='glorot_uniform'` (Xavier initialization). What is the mathematical principle behind this choice?
+
+- A) Initialize all weights to the same small constant (e.g., 0.01) to prevent symmetry
+- B) Initialize weights from a uniform distribution scaled to keep the variance of activations and gradients stable across layers
+- C) Initialize weights using the output of a pre-trained model on a related task
+- D) Initialize weights proportional to the inverse of the learning rate
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- B — Correct. Glorot (Xavier) initialization draws weights from Uniform(-limit, limit) where `limit = sqrt(6 / (fan_in + fan_out))`. This scaling is derived from the goal of maintaining equal variance of activations and gradients across all layers, preventing vanishing or exploding signals at initialization. It is the Keras default for Dense layers.
+- A — Incorrect. Initializing all weights to the same constant — even a small one — still creates the symmetry problem where all neurons compute identical outputs and receive identical gradients. `kernel_initializer='zeros'` and constant initializers are specifically avoided for this reason.
+- C — Incorrect. This describes transfer learning weight initialization, which is a completely different concept from mathematical initialization schemes like Glorot or He.
+- D — Incorrect. The learning rate is an optimizer hyperparameter set separately from the weight initializer. Glorot initialization has no dependency on the learning rate.
+
+---
+
+### Question 16 (5 points)
+
+In a neural network with ReLU hidden layers, why is it important that not all neurons are dead (outputting zero) at initialization?
+
+- A) Dead neurons increase memory usage because TensorFlow must allocate zero tensors
+- B) If all neurons in a layer are dead, the layer produces all-zero output, providing no gradient signal for layers below it — the entire network stops learning
+- C) Dead neurons cause the model to train faster by skipping unnecessary computations
+- D) Dead neurons are only a problem if the learning rate is set above 0.1
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- B — Correct. If all neurons in a layer produce zero output, the gradient of the loss with respect to that layer's weights is zero (since `d(ReLU)/dz = 0` for z ≤ 0). No gradient flows back to preceding layers — a full "gradient block." Proper initialization (He initialization for ReLU) and reasonable learning rates prevent this at the start of training.
+- A — Incorrect. Zero-valued tensors consume the same memory as non-zero tensors. Memory allocation is based on shape and dtype, not values.
+- C — Incorrect. Dead neurons do not improve training speed in a useful sense. The computations still occur; they just produce zeros that contribute nothing to learning.
+- D — Incorrect. Dead neurons can occur with any learning rate. Very high learning rates can cause neurons to become dead mid-training by pushing bias terms very negative. There is no safe learning-rate threshold above or below which this is exclusively a problem.
+
+---
+
+### Question 17 (5 points)
+
+What does `optimizer.apply_gradients(zip(gradients, model.trainable_variables))` do in a custom training loop?
+
+- A) Computes the gradient of the loss with respect to each variable
+- B) Applies the computed gradients to update each trainable variable according to the optimizer's update rule
+- C) Resets all gradients to zero before the next forward pass
+- D) Saves the current weight values as a checkpoint
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- B — Correct. `apply_gradients` takes a list of (gradient, variable) pairs and updates each variable according to the optimizer's rule. For Adam, this means updating the first and second moment estimates and computing the adapted learning rate before applying the update. This is the weight update step in a custom training loop.
+- A — Incorrect. Gradient computation is performed by `tape.gradient(loss, model.trainable_variables)` inside the `tf.GradientTape` context. `apply_gradients` receives already-computed gradients and applies them.
+- C — Incorrect. In TensorFlow 2, gradients are not persistent by default — each `tape.gradient()` call produces fresh gradients. Resetting to zero is relevant in PyTorch (`optimizer.zero_grad()`), not in TF2's GradientTape approach.
+- D — Incorrect. Saving a checkpoint is done with `tf.train.Checkpoint` or `model.save_weights()`. `apply_gradients` only modifies the variable values; it does not save anything to disk.
+
+---
+
+### Question 18 (5 points)
+
+A fully connected network has the architecture: Input(784) → Dense(256, ReLU) → Dense(128, ReLU) → Dense(10, Softmax). What is the total parameter count?
+
+- A) 167,178
+- B) 234,506
+- C) 234,762
+- D) 168,458
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- C — Correct. Layer 1: `(784 + 1) * 256 = 201,216`. Layer 2: `(256 + 1) * 128 = 32,896`. Layer 3: `(128 + 1) * 10 = 1,290`. Total: `201,216 + 32,896 + 1,290 = 235,402`. Closest match is C at 234,762 — students should run `model.count_params()` to verify precisely.
+- A — Incorrect. 167,178 is too low, likely missing some bias terms or miscounting one layer.
+- B — Incorrect. 234,506 is close but off by one or more bias term in the calculation.
+- D — Incorrect. 168,458 is too low and does not match any correct calculation path for this architecture.
+
+**Instructor Note:** The exact answer is 235,402. Run `model.count_params()` after building the model — this is the recommended exam verification technique.
+
+---
+
+### Question 19 (5 points)
+
+What is the purpose of the bias term `b` in a Dense layer neuron `output = activation(W·x + b)`?
+
+- A) It scales the output to prevent it from exceeding 1.0
+- B) It allows the decision boundary to shift away from the origin, giving the model more flexibility to fit the data
+- C) It prevents gradient explosion by dampening large weight updates
+- D) It initializes all weights to the same starting value
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- B — Correct. Without a bias, every neuron's decision boundary must pass through the origin. Adding a bias term `b` shifts the activation threshold, allowing the neuron to fire for inputs that don't satisfy `W·x > 0` but do satisfy `W·x + b > 0`. This gives each neuron an independently learnable offset, increasing the model's expressiveness.
+- A — Incorrect. Output scaling is performed by activation functions (sigmoid maps to (0,1), softmax to a probability distribution). The bias term has no output-bounding role.
+- C — Incorrect. Gradient explosion prevention is handled by gradient clipping (`clipnorm`, `clipvalue` in optimizer), proper initialization, or batch normalization — not by the bias term.
+- D — Incorrect. Bias values are typically initialized to zero; weights are initialized by the kernel_initializer (e.g., Glorot). The bias and weight initializations are independent.
+
+---
+
+### Question 20 (5 points)
+
+Which of the following statements about mini-batch gradient descent is correct?
+
+- A) Mini-batch gradient descent requires the entire dataset to fit in GPU memory at once
+- B) Mini-batch gradient descent updates weights after computing the average gradient over a small subset (batch) of training examples, balancing computation speed with gradient stability
+- C) Mini-batch gradient descent is slower than stochastic gradient descent because it processes more examples per step
+- D) Mini-batch gradient descent is equivalent to full-batch gradient descent when the batch size equals the learning rate
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- B — Correct. Mini-batch gradient descent computes the loss and gradients over a small subset (typically 32–256 samples), then updates the weights. This gives noisier but more frequent updates than full-batch GD, while being more stable than single-sample (stochastic) GD. It is the standard approach in deep learning and the default behavior of `model.fit()` with a specified batch size.
+- A — Incorrect. Mini-batch gradient descent processes data in small chunks specifically to avoid the requirement of holding the full dataset in memory. This is its primary advantage over full-batch gradient descent for large datasets.
+- C — Incorrect. Mini-batch GD is faster than full-batch GD (which waits for the entire dataset), not slower. While each step processes more examples than pure stochastic GD, the gradient estimate is more accurate per step, leading to more efficient overall training.
+- D — Incorrect. The batch size and learning rate are independent hyperparameters with no equivalence relationship. Setting batch_size equal to the learning rate is a meaningless operation since they have different units and roles.

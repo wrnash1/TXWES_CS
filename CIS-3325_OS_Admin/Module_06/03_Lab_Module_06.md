@@ -506,3 +506,111 @@ Submit all of the following through the course LMS:
 | Analysis Question 4 (nice for backup) | 5 |
 | Analysis Question 5 (disable vs stop) | 10 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+**Challenge Step 1 — Simulate and identify a high-load process**
+
+Create a controlled CPU load and observe how the system responds in real time:
+
+```bash
+dd if=/dev/zero of=/dev/null &
+DD_PID=$!
+echo "Started dd with PID $DD_PID"
+ps -p $DD_PID -o pid,ppid,stat,ni,pcpu,comm
+top -b -n 1 | grep dd
+renice -n 15 -p $DD_PID
+ps -p $DD_PID -o pid,ni,pcpu,comm
+kill $DD_PID
+```
+
+While dd is running, open a second terminal and observe the output of:
+
+```bash
+uptime
+cat /proc/loadavg
+vmstat 1 5
+```
+
+Document the load average before and after starting dd. Explain in two sentences how
+the Linux scheduler uses the nice value to decide how much CPU time to allocate between
+competing processes of the same priority class.
+
+**Challenge Step 2 — Write and deploy a custom systemd service unit**
+
+Create a minimal but fully functional systemd service that runs a shell script:
+
+```bash
+sudo tee /usr/local/bin/healthcheck.sh << 'EOF'
+#!/bin/bash
+echo "$(date): Health check OK — uptime: $(uptime -p)" >> /var/log/healthcheck.log
+EOF
+sudo chmod +x /usr/local/bin/healthcheck.sh
+
+sudo tee /etc/systemd/system/healthcheck.service << 'EOF'
+[Unit]
+Description=System Health Check Logger
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/healthcheck.sh
+User=nobody
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+sudo systemctl daemon-reload
+sudo systemctl start healthcheck.service
+sudo systemctl status healthcheck.service
+journalctl -u healthcheck.service -n 20
+cat /var/log/healthcheck.log
+```
+
+Modify the ExecStart line to an invalid path, attempt to start the service, observe the
+failure, and use journalctl to diagnose it:
+
+```bash
+sudo sed -i 's|/usr/local/bin/healthcheck.sh|/usr/local/bin/MISSING.sh|' \
+  /etc/systemd/system/healthcheck.service
+sudo systemctl daemon-reload
+sudo systemctl start healthcheck.service
+journalctl -u healthcheck.service -n 10
+```
+
+Document the exact journal error message. Explain in two sentences why journalctl is
+more useful than /var/log/syslog for diagnosing systemd service failures.
+
+**Challenge Step 3 — Identify and trace zombie and orphan processes**
+
+Create a controlled zombie process using a Python script to observe the condition:
+
+```bash
+python3 - << 'EOF'
+import os, time
+pid = os.fork()
+if pid > 0:
+    print(f"Parent PID: {os.getpid()}, child PID: {pid}")
+    print("Parent sleeping 30s without calling wait()...")
+    time.sleep(30)
+else:
+    print(f"Child PID {os.getpid()} exiting immediately")
+    os._exit(0)
+EOF
+```
+
+In a second terminal, while the Python script is sleeping, run:
+
+```bash
+ps aux | grep -E "Z|zombie|defunct"
+ps -o pid,ppid,stat,comm -p $(pgrep -P $(pgrep python3))
+```
+
+Document the zombie entry. After the parent exits, verify the zombie is reaped. Then
+explain in three sentences: (1) why the zombie exists, (2) why SIGKILL cannot remove it,
+and (3) what the correct resolution is when a parent process refuses to call wait().

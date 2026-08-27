@@ -408,4 +408,26 @@ reporting functions.
 
 ---
 
+## 13. Supplemental Resources
+
+The following free, open-access resources go deeper on Module 12 topics:
+
+**1. Microsoft Learn — Automate Windows Server administration with PowerShell**
+<https://learn.microsoft.com/en-us/training/modules/automate-windows-server-administration-with-powershell/>
+Hands-on module covering pipeline usage, scripting fundamentals, error handling, remoting with `Invoke-Command`, and scheduled task creation with sandbox exercises aligned to AZ-800.
+
+**2. Microsoft Docs — about_Functions_Advanced_Parameters**
+<https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_functions_advanced_parameters>
+Full reference for PowerShell parameter attributes including `Mandatory`, `ValueFromPipeline`, `ValueFromPipelineByPropertyName`, `ValidateSet`, and parameter validation, with examples for building production-quality cmdlet-style functions.
+
+**3. Microsoft Docs — Get-WinEvent**
+<https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.diagnostics/get-winevent>
+Complete documentation for `Get-WinEvent` including `-FilterHashtable` syntax, filtering by event ID, time range, level, and provider, plus comparison with the deprecated `Get-EventLog` cmdlet.
+
+**4. Microsoft Docs — about_Try_Catch_Finally**
+<https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_try_catch_finally>
+Explains PowerShell's structured error handling model: terminating vs. non-terminating errors, the role of `-ErrorAction Stop`, catching specific exception types, and using `$_.Exception.Message` for detailed error reporting in production scripts.
+
+---
+
 *Review all sections before beginning Lab 12, Quiz 12, and Discussion 12.*

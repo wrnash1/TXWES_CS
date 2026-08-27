@@ -350,4 +350,20 @@ aws elasticache create-cache-cluster \
 
 All AWS certification study materials and exam registration: aws.amazon.com/certification
 
+---
+
+## 11. Supplemental Resources
+
+**1. AWS Documentation — Amazon DynamoDB Developer Guide: Best Practices**
+https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/best-practices.html
+AWS best practices for DynamoDB table design covering partition key selection, GSI strategy, capacity planning, and access pattern optimization — directly aligned to the DynamoDB design questions in this module.
+
+**2. AWS Skill Builder — Amazon DynamoDB: Building NoSQL Database-Driven Applications**
+https://skillbuilder.aws/learn/course/external/view/elearning/1304/amazon-dynamodb-building-nosql-database-driven-applications
+Free course covering DynamoDB data modeling, capacity modes, GSIs, DAX, streams, and global tables — supporting Module 09 DynamoDB exam topics and lab exercises.
+
+**3. AWS Documentation — Choosing the Right Database Service**
+https://docs.aws.amazon.com/whitepapers/latest/aws-overview/database.html
+AWS overview of all managed database services (RDS, Aurora, DynamoDB, ElastiCache, Redshift, Neptune, DocumentDB, Keyspaces) with use case guidance — the comprehensive reference for database service selection questions on SAA-C03.
+
 *Proprietary and Confidential. Not for disclosure outside of Texas Wesleyan University.*

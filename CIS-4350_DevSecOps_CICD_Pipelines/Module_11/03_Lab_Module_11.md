@@ -235,3 +235,53 @@ Submit written answers to all three questions. Label each answer with the questi
 ## Submission Instructions
 
 Combine all four parts into a single document. Label each part clearly. Include your name, date, course number (CIS-4350), and module number (11) at the top. Submit via the Canvas LMS assignment portal before the due date shown in Canvas.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Trivy Operator Continuous Scanning in Kubernetes
+
+Deploy the Trivy operator to a local Kubernetes cluster and observe continuous vulnerability reporting on running workloads.
+
+1. Start a local cluster and install the Trivy operator via Helm:
+
+```bash
+helm repo add aqua https://aquasecurity.github.io/helm-charts/
+helm repo update
+helm install trivy-operator aqua/trivy-operator \
+  --namespace trivy-system \
+  --create-namespace \
+  --set="trivy.ignoreUnfixed=true"
+```
+
+1. Deploy a vulnerable image to trigger a scan: `kubectl run vuln-app --image=nginx:1.18 --restart=Never`
+2. Wait 60-90 seconds and then retrieve the VulnerabilityReport: `kubectl get vulnerabilityreports -A` and `kubectl describe vulnerabilityreport <report-name> -n default`
+3. Record the VulnerabilityReport output. Note which CVEs are listed, their severities, and whether fixed versions are shown.
+4. Update the pod to use `nginx:latest` (`kubectl delete pod vuln-app && kubectl run vuln-app --image=nginx:latest`) and observe the operator generating a new VulnerabilityReport for the updated image. Compare the finding counts.
+
+### Challenge 2: Cosign Image Signing and Verification Gate
+
+Sign a container image with cosign and configure a policy that requires a valid signature before deployment.
+
+1. Install cosign (`brew install cosign` or download from GitHub releases) and generate a key pair: `cosign generate-key-pair`
+2. Build and push a test image, then sign it:
+
+```bash
+docker build -t ttl.sh/lab11-signed:1h .
+docker push ttl.sh/lab11-signed:1h
+cosign sign --key cosign.key ttl.sh/lab11-signed:1h
+```
+
+1. Verify the signature: `cosign verify --key cosign.pub ttl.sh/lab11-signed:1h`
+2. Attempt to verify an unsigned image (such as `nginx:latest`) with the same key and record the error output.
+3. Write a GitHub Actions step that runs `cosign verify --key ${{ secrets.COSIGN_PUBLIC_KEY }} $IMAGE` before any deployment step, so unsigned or tampered images fail the pipeline.
+
+### Reflection Questions
+
+1. The Trivy operator generates VulnerabilityReports for running workloads independently of the CI pipeline. A developer argues this creates duplicate work since CI already scans images at build time. Explain two scenarios in which the Trivy operator would detect a CVE that the CI pipeline scan would not, and describe what operational response each scenario requires.
+2. Cosign image signing creates a verifiable chain of custody from build to deployment. However, signing an image does not mean the image is free of vulnerabilities — it only means the image has not been tampered with since it was signed. Describe a complete supply chain security posture that combines cosign signing, SBOM generation, and Trivy scanning, and explain at which pipeline stage each control provides value.
+
+---
+
+Lab 11 | CIS-4350 | Texas Wesleyan University | Professor Nash

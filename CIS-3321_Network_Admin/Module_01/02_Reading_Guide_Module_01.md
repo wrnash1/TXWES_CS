@@ -198,4 +198,30 @@ Complete each item before moving to Module 02.
 
 ---
 
+## 9. Supplemental Resources
+
+The following free, openly available resources provide additional depth and alternative explanations for Module 01 topics. No purchase or account is required.
+
+**1. Professor Messer — CompTIA Network+ N10-008 Free Study Materials**
+URL: https://www.professormesser.com/network-plus/n10-008/n10-008-video/
+Relevance: Professor Messer's free video course covers the OSI model, network topologies, and TCP/IP in dedicated segments. His study notes and practice questions are also free. This is the single most aligned free resource for the Network+ exam.
+
+**2. Computer Networking: Principles, Protocols and Practice (OER Textbook)**
+URL: https://www.computer-networking.info/
+Relevance: Open-access university-level textbook covering OSI/TCP-IP models, encapsulation, and protocol fundamentals at a depth appropriate for this module. Available as a free PDF download.
+
+**3. Cisco Networking Academy — Introduction to Networks (Free)**
+URL: https://www.netacad.com/
+Relevance: Cisco NetAcad offers a free "Introduction to Networks" self-paced course that covers OSI layers, TCP/IP protocols, and Packet Tracer exercises — directly applicable to Module 01 and the lab activity.
+
+**4. CompTIA Network+ Exam Objectives (N10-008) — Official PDF**
+URL: https://www.comptia.org/certifications/network
+Relevance: The official exam objectives document (free download from CompTIA) lists every testable concept. Domain 1.0 Networking Concepts, which covers OSI, is the largest domain at 23% of the exam.
+
+**5. Wireshark — Free Packet Analyzer**
+URL: https://www.wireshark.org/
+Relevance: Wireshark is a free, open-source network protocol analyzer. Capturing live traffic and viewing real encapsulation headers at each OSI layer reinforces the theoretical concepts from this module with real-world observation.
+
+---
+
 *CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash*

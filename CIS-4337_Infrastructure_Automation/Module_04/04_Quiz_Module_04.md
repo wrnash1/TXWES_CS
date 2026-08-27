@@ -210,4 +210,186 @@ Distractor Analysis:
 
 ---
 
+---
+
+### Question 11 (5 points)
+
+What is the purpose of the `serial` field in the Terraform state file?
+
+- A) It records the number of resources currently managed in the configuration.
+- B) It is a counter that increments by one on every state write, used to detect concurrent modification and prevent state corruption.
+- C) It identifies the version of the Terraform CLI binary that last wrote the state file.
+- D) It is a checksum of the state file contents used for integrity verification on read.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why B is correct: The `serial` field is Terraform's optimistic concurrency control mechanism. Each write increments the serial. If two clients try to write state simultaneously, the one with a lower serial than what is already in the backend is rejected, signaling a conflict.
+  - Why A is incorrect: The number of managed resources is reflected by the length of the `resources` array, not the `serial` field.
+  - Why C is incorrect: The Terraform CLI version is recorded in the `terraform_version` field, not `serial`.
+  - Why D is incorrect: The `lineage` UUID and backend-level checksums handle integrity verification. The `serial` is a write counter, not a hash.
+
+---
+
+### Question 12 (5 points)
+
+Which command prints the current remote state to standard output without modifying it?
+
+- A) `terraform state show`
+- B) `terraform state push`
+- C) `terraform state pull`
+- D) `terraform state list`
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why C is correct: `terraform state pull` downloads the remote state and prints it as JSON to stdout. It is read-only and makes no changes. Useful for inspecting or backing up remote state.
+  - Why A is incorrect: `terraform state show <addr>` displays the attributes of a single specific resource, not the entire state.
+  - Why B is incorrect: `terraform state push` uploads a local state file to the remote backend, overwriting whatever is there. It is a write operation, not a read.
+  - Why D is incorrect: `terraform state list` shows only the resource addresses (names), not the full state contents.
+
+---
+
+### Question 13 (5 points)
+
+You need to refactor a Terraform configuration by moving `aws_instance.web` into a module called `app`. Which command updates the state to reflect the new address without destroying and recreating the resource?
+
+- A) `terraform state rm aws_instance.web`
+- B) `terraform state mv aws_instance.web module.app.aws_instance.web`
+- C) `terraform import module.app.aws_instance.web <instance-id>`
+- D) `terraform apply -replace=aws_instance.web`
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why B is correct: `terraform state mv` renames or relocates a resource address in state. Moving from `aws_instance.web` to `module.app.aws_instance.web` updates the state entry to match the new module path, allowing a subsequent `terraform plan` to show no changes.
+  - Why A is incorrect: `terraform state rm` removes the resource from state entirely. The resource would then appear as new in the next plan and Terraform would try to create a duplicate.
+  - Why C is incorrect: `terraform import` is for bringing untracked real-world resources into state. The resource is already in state; it just needs its address updated, not imported from scratch.
+  - Why D is incorrect: `terraform apply -replace` forces destruction and recreation of the resource. This is the opposite of what a refactor should do — the goal is zero resource changes.
+
+---
+
+### Question 14 (5 points)
+
+Why should backend blocks in Terraform not use variable references (e.g., `bucket = var.state_bucket`)?
+
+- A) Backend blocks are evaluated before provider plugins are downloaded, so variable types are not yet known.
+- B) Backend configuration is resolved at `terraform init` time, before the normal variable evaluation cycle, so variable values are not available.
+- C) Using variables in backend blocks causes the state file to be stored under a different path on every run.
+- D) HCL forbids variable references inside any block that starts with `terraform`.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why B is correct: The backend is initialized during `terraform init`, which runs before variables are populated from `.tfvars` files, environment variables, or CLI flags. Because variables are not yet resolved at that stage, Terraform rejects references to them in backend blocks.
+  - Why A is incorrect: Provider plugin downloads happen during init, but the reason variable references are rejected is about evaluation order during init, not about type checking.
+  - Why C is incorrect: Variables in backend blocks are rejected at parse time with a clear error, not silently causing path changes.
+  - Why D is incorrect: The `terraform {}` block does accept variable references in some arguments (like `required_version` expressions), but the backend sub-block specifically cannot use them due to init-time evaluation constraints.
+
+---
+
+### Question 15 (5 points)
+
+A team accidentally deleted the `terraform.tfstate` file from their local working directory before migrating to a remote backend. The cloud resources still exist. What is the correct recovery procedure?
+
+- A) Run `terraform apply` immediately to recreate all resources from scratch.
+- B) Run `terraform destroy` to clean up and start over from a known state.
+- C) Write resource blocks for all existing resources and run `terraform import` for each one to rebuild the state file.
+- D) The state file cannot be recovered; all resources must be deleted and redeployed using Terraform.
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why C is correct: With the state file gone, Terraform treats all declared resources as new and would try to create duplicates. The correct approach is to use `terraform import` (or `import` blocks in Terraform 1.5+) to rebuild the state file by mapping each existing resource's real-world ID to its HCL resource block.
+  - Why A is incorrect: Running `terraform apply` without state would attempt to create all resources again, resulting in duplicate resources or errors when names conflict.
+  - Why B is incorrect: Running `terraform destroy` without state would do nothing, as Terraform has nothing to destroy from its perspective.
+  - Why D is incorrect: Resources are recoverable through the import process. Declaring them lost and redeploying would cause unnecessary downtime and may be impossible for stateful resources like databases.
+
+---
+
+### Question 16 (5 points)
+
+What does enabling S3 bucket versioning provide in the context of Terraform state management?
+
+- A) It allows multiple teams to write to the same state file simultaneously without locking.
+- B) It stores previous versions of the state file, enabling recovery if the current state becomes corrupted or an unintended apply destroys resources.
+- C) It encrypts the state file using S3 server-side encryption keys.
+- D) It automatically syncs state changes to a DynamoDB table for redundancy.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why B is correct: S3 versioning preserves every version of the state file as it changes. If a bad `terraform apply` causes unintended destruction, a previous good state version can be retrieved, allowing operators to understand what changed and potentially restore resources.
+  - Why A is incorrect: Versioning does not provide concurrent write safety. Locking (via DynamoDB) prevents concurrent writes; versioning provides recovery capability.
+  - Why C is incorrect: Encryption is configured via S3 bucket policies, KMS keys, and the `encrypt = true` argument in the backend block. Versioning is a separate feature that manages object history.
+  - Why D is incorrect: DynamoDB is used for locking, not for state replication. Versioning and DynamoDB locking are independent S3 backend features.
+
+---
+
+### Question 17 (5 points)
+
+Which of the following is a valid use case for `terraform workspace`?
+
+- A) Storing provider credentials separately for each team member within a shared configuration.
+- B) Maintaining isolated state files for different environments (dev, staging, prod) within the same backend and configuration.
+- C) Splitting a large configuration into smaller modules for better maintainability.
+- D) Running `terraform apply` in a separate OS process to avoid memory limits.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why B is correct: Terraform workspaces allow the same configuration to manage separate, isolated infrastructure environments by using separate state files. The `terraform.workspace` variable is available to differentiate resource names or configurations by workspace.
+  - Why A is incorrect: Provider credentials are managed through environment variables, IAM roles, or provider block arguments, not workspaces.
+  - Why C is incorrect: Splitting configurations into smaller units is the purpose of modules, not workspaces.
+  - Why D is incorrect: Workspaces are a state isolation feature, not a process management tool.
+
+---
+
+### Question 18 (5 points)
+
+After running `terraform state rm aws_instance.orphan`, what is the status of the corresponding EC2 instance in AWS?
+
+- A) The instance is terminated immediately by Terraform.
+- B) The instance is stopped but not terminated.
+- C) The instance continues to run in AWS, but Terraform no longer tracks or manages it.
+- D) The instance is tagged with `managed_by = "none"` to indicate it is unmanaged.
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why C is correct: `terraform state rm` is purely a state manipulation command. It removes the record from the state file only. The cloud resource is completely unaffected and continues to run.
+  - Why A is incorrect: `terraform state rm` makes no API calls and cannot terminate instances. Only `terraform destroy` (or `terraform apply -destroy`) terminates resources.
+  - Why B is incorrect: `terraform state rm` cannot stop instances. It has no interaction with the AWS API whatsoever.
+  - Why D is incorrect: Terraform does not modify any tags when a resource is removed from state. The resource's metadata in AWS is untouched.
+
+---
+
+### Question 19 (5 points)
+
+What is the `lineage` field in the Terraform state file used for?
+
+- A) It records the list of all Terraform users who have ever applied changes to this state.
+- B) It is a UUID assigned when the state file is first created that prevents accidentally merging state files from different configurations or environments.
+- C) It stores the Git commit hash of the last code change that triggered a Terraform apply.
+- D) It is the encryption key identifier used when `encrypt = true` is set on the S3 backend.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why B is correct: The `lineage` is a UUID generated once when the state file is created. Terraform uses it to detect if a remote backend has been overwritten with state from a different environment. If a push would change the lineage, Terraform warns the operator.
+  - Why A is incorrect: Terraform does not track user history in the state file. Audit trails for who applied changes come from VCS commit history, CI/CD logs, or Terraform Cloud audit logs.
+  - Why C is incorrect: Terraform has no built-in Git integration that would store commit hashes in the state file.
+  - Why D is incorrect: Encryption keys are managed by KMS or S3 bucket settings, not stored inside the state file itself.
+
+---
+
+### Question 20 (5 points)
+
+A team uses partial backend configuration, passing only `bucket` and `key` arguments in the `backend "s3"` block. How do they supply the remaining required arguments (`region`, `dynamodb_table`) without hardcoding them?
+
+- A) By setting `TF_BACKEND_REGION` and `TF_BACKEND_DYNAMODB` environment variables.
+- B) By declaring them as Terraform input variables and referencing them in the backend block.
+- C) By passing a `-backend-config="region=us-east-1"` flag or a `-backend-config=backend.hcl` file when running `terraform init`.
+- D) By creating a `backend_override.tf` file that Terraform automatically reads during init.
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why C is correct: Partial backend configuration allows the backend block to contain only some arguments. Missing arguments are supplied at `terraform init` time via `-backend-config="key=value"` flags or a separate HCL file passed with `-backend-config=filename.hcl`. This separates sensitive backend details from version-controlled configuration.
+  - Why A is incorrect: There are no `TF_BACKEND_*` environment variables for backend configuration. Some backends read provider-level variables (like `AWS_REGION`), but the backend configuration mechanism is the `-backend-config` flag.
+  - Why B is incorrect: Backend blocks cannot reference Terraform variables. This restriction is what makes partial backend configuration necessary.
+  - Why D is incorrect: Terraform does have an `override` file mechanism for some block types, but there is no `backend_override.tf` special file that auto-supplies backend arguments.
+
+---
+
 Module 04 Quiz — CIS-4337 Infrastructure Automation — Texas Wesleyan University

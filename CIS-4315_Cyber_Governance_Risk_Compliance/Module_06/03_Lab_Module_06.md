@@ -175,3 +175,52 @@ Late submissions lose 10 points per day per the course late policy.
 | C | Security Strategy Alignment | 20 |
 | D | ALE Calculation and Business Case | 10 |
 | **Total** | | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+These challenges extend the Module 06 lab into advanced program development scenarios. Complete both challenges and the reflection questions for up to 15 bonus points.
+
+---
+
+### Challenge 1: Security Program Charter Gap Analysis
+
+You have been hired as a consultant to assess the information security program at Meridian Credit Union, a 220-employee financial institution with 14 branch locations. The CISO provides you with the organization's existing "IT Security Policy" document, which functions as the de facto security program governing document. Review the excerpted characteristics below and conduct a gap analysis against the elements required in a proper security program charter.
+
+**Existing Document Characteristics:**
+- Approved by the IT Director (not executive leadership or the board)
+- Covers acceptable use, password requirements, and clean desk standards
+- Does not define the CISO's authority or reporting line
+- Does not reference the organization's risk appetite or tolerance
+- States that all employees "must follow IT security guidelines" without specifying consequences
+- Has not been reviewed or updated in three years
+- Is stored on the internal wiki accessible only to IT staff
+
+**Step 1**: Identify at least five specific gaps between the existing document and what a properly constructed security program charter should contain. For each gap, explain the operational or governance risk created by the deficiency.
+
+**Step 2**: Draft the Authority and Scope section of a new security program charter for Meridian Credit Union. Your draft must include: the authority granted to the CISO, the scope of the program (people, systems, and locations covered), the CISO's reporting relationship, and the consequences of non-compliance with program requirements. Write approximately 200 words.
+
+**Step 3**: Develop a one-page rollout plan for transitioning Meridian from the existing document to the new charter. Your plan must address: who must approve the charter, how existing staff will be notified, how the old document will be retired, and what the first 90-day program priorities will be after charter approval.
+
+---
+
+### Challenge 2: Policy Hierarchy Construction for a New Business Unit
+
+Meridian Credit Union is launching a digital banking division that will offer mobile banking services to customers in five states. The CISO must develop the policy hierarchy for this new business unit, which will process payment card data, store customer PII, and operate a 24/7 customer support function.
+
+**Step 1**: Identify the regulatory requirements that will govern the digital banking division's security program (consider PCI DSS, GLBA, state consumer protection laws, and any applicable federal banking regulations). For each regulatory requirement, identify the corresponding policy tier (Tier 1 through Tier 4) where compliance obligations would primarily be documented.
+
+**Step 2**: Construct a complete policy hierarchy inventory for the digital banking division. For each tier, list at least three specific documents that must exist, provide a one-sentence description of each document's purpose, and identify the approval authority (who must sign it).
+
+**Step 3**: Two of your Tier 1 policies conflict: the Data Retention Policy requires that transaction logs be retained for seven years, while the Customer Privacy Policy states that personal data will be deleted upon customer account closure. Write a 150-200 word conflict resolution memo to the CISO explaining the conflict, identifying the applicable regulatory requirement that governs the resolution (GLBA Safeguards Rule record retention), and recommending how the two policies should be reconciled.
+
+---
+
+### Reflection Questions
+
+Answer each reflection question in four to six sentences.
+
+1. A new CISO argues that the organization already has adequate security controls in place and that developing a formal program charter is unnecessary overhead that consumes time better spent on technical improvements. Construct a response that explains the specific governance functions a charter serves that cannot be provided by technical controls alone, and describe a realistic scenario where the absence of a charter would directly harm the organization.
+
+2. Information security policies are commonly described as "technology-neutral" — they should describe what must be achieved rather than how specific technologies must be configured. Explain the governance rationale for this principle and describe a scenario where a technology-specific policy created a significant organizational problem when the technology changed or was replaced.

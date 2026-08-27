@@ -225,3 +225,37 @@ The IRP components you develop in this lab represent exactly what a CISM-certifi
 When you sit for the CISM exam, questions in Domain 4 will present scenarios similar to Crestview's situation and ask you to identify the most appropriate action. Having built these artifacts from scratch in this lab, you will recognize the correct answer not through memorization but through genuine understanding of why each component exists and what would happen without it.
 
 Keep your completed deliverables. With minor customization, they can serve as professional portfolio samples demonstrating competency in incident response planning.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: IRP Gap Analysis Against NIST SP 800-61
+
+You have been provided with an existing, abbreviated Incident Response Plan excerpt below. Review it and perform a structured gap analysis against the eight required IRP components described in Section 2.1 of the Module 10 Reading Guide.
+
+**Excerpt:** "Crestview IRP v1.0 — This document describes how the IT department will respond to security events. The IT Manager is responsible for all incidents. Events should be reported to IT@crestview-health.org. Systems will be restored from backup as quickly as possible following any disruption."
+
+Step 1: For each of the eight required IRP components, assess whether the excerpt satisfies the requirement (Met / Partially Met / Not Met) and explain your assessment in one sentence.
+
+Step 2: Identify the three most critical gaps — the three missing components whose absence creates the greatest operational risk for a HIPAA-covered entity — and justify your selection using the NIST SP 800-61 framework.
+
+Step 3: Rewrite the "Purpose and Scope" section and the "Policy and Management Authorization" section for Crestview's IRP using the proper structure described in the Reading Guide. Each section should be 4–6 sentences.
+
+Step 4: Identify one additional gap not covered by the eight standard components that is specific to a healthcare organization operating under HIPAA.
+
+### Challenge 2: Multi-Regulation Notification Matrix
+
+Crestview Regional Medical Center has just experienced a confirmed breach. The following facts are known: 2,100 US patients had PHI exposed; 340 of those patients are California residents; 95 of those patients are EU residents who used the telehealth platform; Crestview is not publicly traded; the breach was discovered on March 3.
+
+Step 1: Build a notification matrix table with columns: Recipient, Regulatory Basis, Notification Deadline (calculate the exact calendar date), Required Method, and Priority Order.
+
+Step 2: Identify which notification deadline is most time-sensitive and explain what must happen internally before that notification can be sent.
+
+Step 3: Draft a 60-word media holding statement appropriate for release within 24 hours of the breach becoming public, suitable for Crestview's rural community audience.
+
+### Reflection Questions
+
+1. The Module 10 Reading Guide states that IRP authorization at the executive level is essential because incident response may require disrupting production systems. Describe a specific scenario — realistic for Crestview — in which the absence of executive authorization in the IRP would cause a containment failure, and explain what the IRP authorization language should say to prevent that failure.
+
+2. Many small healthcare organizations treat incident response as an IT function rather than an organizational governance function. Using the CISM principle of security governance alignment, explain why this approach consistently produces poor incident outcomes, and describe the minimum governance structure that a 1,400-employee hospital should have in place before an incident occurs.

@@ -206,3 +206,25 @@ Repeat on DS2 with .2 addresses. Configure PC1 default gateway = 10.10.10.1, PC2
 | SVIs & Inter-VLAN Routing (Part 6) | 15 |
 | End-to-End Verification (Part 7) | 10 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: MST Migration from Rapid PVST+
+Migrate your existing Rapid PVST+ configuration to MST while preserving the same traffic engineering (DS1 preferred for VLANs 10/20, DS2 preferred for VLANs 30/99):
+1. On all six switches, enter `spanning-tree mst configuration` mode and configure: `name CAMPUS-MST`, `revision 1`, `instance 1 vlan 10,20`, `instance 2 vlan 30,99`.
+2. Change the spanning tree mode: `spanning-tree mode mst` on all switches simultaneously (coordinate this — mismatched MST regions during transition cause temporary topology disruption).
+3. Set DS1 as root for MST instance 1 (`spanning-tree mst 1 priority 4096`) and DS2 as root for instance 2 (`spanning-tree mst 2 priority 4096`).
+4. Verify with `show spanning-tree mst 1` — confirm DS1 is root for instance 1 and DS2 is root for instance 2. Confirm all VLANs in each instance follow their expected root.
+
+### Challenge 2: STP Topology Change Simulation and Loop Guard
+Deliberately introduce a STP topology change and observe the MAC table flush behavior:
+1. Connect AS4 to both DS1 and DS2 with two uplinks (creating a redundant path). Verify STP blocks one of the uplinks.
+2. Enable Loop Guard on the blocked port: `spanning-tree guard loop` on the DS1 or DS2 port connecting to AS4's secondary uplink.
+3. Simulate a unidirectional link failure by applying an inbound ACL on the blocked port that drops all incoming frames (simulating BPDUs no longer arriving). Observe: without Loop Guard the port would transition to Forwarding; with Loop Guard it enters loop-inconsistent state instead.
+4. Run `show spanning-tree detail | include transitions` before and after a physical link failure to observe topology change counter increments. Document how many TCN BPDUs are generated.
+
+### Reflection Questions
+1. When migrating a 120-VLAN campus network from Rapid PVST+ to MST, what is the primary operational risk during the cutover window, and what specific pre-migration step would you take to minimize the chance of a broadcast storm during the transition?
+2. An enterprise campus has two distribution switches connected to eight access switches. The network team is debating whether to use Rapid PVST+ (one instance per VLAN) or MST (two instances for 50 VLANs each). What CPU and memory utilization argument would you make for MST, and at what VLAN count threshold does MST become clearly preferable from an operational standpoint?

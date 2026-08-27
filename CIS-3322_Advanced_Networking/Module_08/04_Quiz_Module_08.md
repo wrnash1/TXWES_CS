@@ -204,3 +204,203 @@ An engineer runs `show ip ospf neighbor` and sees the neighbor in Exstart state 
 - B is correct: The Exstart and Exchange states involve the exchange of Database Description (DBD) packets. If MTU sizes differ between two routers, DBD packets from the higher-MTU side may be larger than the lower-MTU side accepts, causing the exchange to stall. The `ip ospf mtu-ignore` command suppresses this check.
 - C is incorrect: Mismatched Hello and Dead timers prevent OSPF neighbors from forming at all — they do not progress past the Init or 2-Way state. They would not cause Exstart stalling.
 - D is incorrect: OSPF process IDs are locally significant and do not need to match. A mismatch has no effect on neighbor formation.
+
+---
+
+## Question 11
+
+An engineer configures OSPF on R1 using the command `network 10.1.0.0 0.0.255.255 area 0`. Which interfaces will participate in OSPF area 0?
+
+- A) Only the interface with IP address exactly 10.1.0.0
+- B) All interfaces with IP addresses in the range 10.1.0.0 through 10.1.255.255
+- C) All interfaces with IP addresses in the range 10.0.0.0 through 10.255.255.255
+- D) Only loopback interfaces in the 10.1.x.x range
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A is incorrect: The wildcard mask 0.0.255.255 does not match only the exact address 10.1.0.0. A wildcard mask of 0.0.0.0 would match only one address. The mask 0.0.255.255 allows the last two octets to vary freely.
+- B is correct: The wildcard mask 0.0.255.255 matches any IP address where the first two octets equal 10.1 (the zero bits are fixed) and the last two octets can be any value (the 255 bits are "don't care"). This encompasses all addresses from 10.1.0.0 through 10.1.255.255.
+- C is incorrect: 10.0.0.0 through 10.255.255.255 would require a wildcard mask of 0.255.255.255. The mask 0.0.255.255 fixes the second octet to 1.
+- D is incorrect: The `network` command applies to all interface types (physical, loopback, SVI) — not only loopbacks. OSPF does not distinguish between interface types in the network statement.
+
+---
+
+## Question 12
+
+A router's OSPF Router ID must be selected. The router has no loopback interfaces and three physical interfaces: Gi0/0 (172.16.1.1/24), Gi0/1 (10.1.1.1/24), Gi0/2 (192.168.1.1/24). All interfaces are up/up. Which address will IOS select as the Router ID?
+
+- A) 10.1.1.1 (lowest IP address)
+- B) 172.16.1.1
+- C) 192.168.1.1 (highest IP address among active interfaces)
+- D) The router generates a random Router ID
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- A is incorrect: When no loopback interfaces exist and no manual Router ID is configured, IOS selects the highest IP address among all up/up physical interfaces, not the lowest.
+- B is incorrect: 172.16.1.1 is higher than 10.1.1.1 but lower than 192.168.1.1. The selection rule uses the highest IP.
+- C is correct: The OSPF Router ID selection priority is: (1) manually configured Router ID, (2) highest loopback IP, (3) highest active physical interface IP. With no loopbacks and no manual configuration, 192.168.1.1 is the highest IP among the three interfaces and becomes the Router ID.
+- D is incorrect: OSPF Router IDs are always deterministic in Cisco IOS. They are selected following the documented priority rules and do not use random generation.
+
+---
+
+## Question 13
+
+On a broadcast multi-access segment (Ethernet) with four OSPF routers, which routers exchange OSPF LSAs with the DR?
+
+- A) Only the BDR exchanges LSAs with the DR; all other routers wait
+- B) All DROther routers exchange LSAs with the DR and BDR using the 224.0.0.6 multicast address
+- C) All four routers exchange LSAs with each other in a full mesh (6 adjacencies)
+- D) Only the router with the highest Router ID exchanges LSAs with the DR
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A is incorrect: The BDR does not exclusively exchange LSAs with the DR. All DROther routers form adjacencies with both the DR and BDR. The BDR listens to all exchanges and maintains a synchronized LSDB, ready to take over if the DR fails.
+- B is correct: On broadcast segments, DROther routers send OSPF LSU updates to the AllDRouters multicast address 224.0.0.6. The DR receives these and floods them to all OSPF routers using the AllSPFRouters multicast address 224.0.0.5. All DROther routers form FULL adjacency with both the DR and BDR.
+- C is incorrect: Full mesh (n(n-1)/2) adjacencies is exactly what the DR/BDR mechanism is designed to avoid. Without DR/BDR, 4 routers would need 6 adjacencies. With DR/BDR, only 3 DROther-to-DR/BDR adjacency pairs are needed.
+- D is incorrect: All DROther routers form adjacencies with the DR, not only the one with the highest Router ID.
+
+---
+
+## Question 14
+
+The OSPF cost on a GigabitEthernet interface using the default reference bandwidth is 1. An engineer changes the reference bandwidth to 10000 (10 Gbps) using `auto-cost reference-bandwidth 10000`. What is the new cost on the GigabitEthernet interface?
+
+- A) 1 (unchanged — cost floors at 1)
+- B) 10
+- C) 100
+- D) 1000
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A is incorrect: After changing the reference bandwidth, the cost is recalculated. With reference bandwidth 10000 Mbps and interface bandwidth 1000 Mbps (GigabitEthernet): cost = 10000/1000 = 10.
+- B is correct: OSPF cost = reference bandwidth / interface bandwidth. With reference bandwidth set to 10000 Mbps and GigabitEthernet at 1000 Mbps: 10000/1000 = 10. This is why the `auto-cost reference-bandwidth` command must be changed on all OSPF routers consistently when introducing 10 Gbps links.
+- C is incorrect: Cost 100 would result from the default reference bandwidth (100 Mbps) applied to a 1 Mbps interface. With 10000/1000, the result is 10.
+- D is incorrect: Cost 1000 would result from reference bandwidth 10000 applied to a 10 Mbps interface (10000/10 = 1000). GigabitEthernet is 1000 Mbps, not 10 Mbps.
+
+---
+
+## Question 15
+
+What does the `passive-interface` command do when applied to an OSPF interface on a Cisco router?
+
+- A) The interface stops sending and receiving all OSPF Hello packets, including from neighbors
+- B) The interface stops sending OSPF Hello packets but still has its connected network advertised into OSPF
+- C) The interface is removed from OSPF entirely and its subnet is no longer advertised
+- D) The interface continues exchanging Hellos but stops forwarding user traffic
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A is incorrect: A passive interface stops sending Hello packets in both directions (it neither sends nor forms adjacencies). However, it still advertises its connected network. The correct statement is that it stops generating Hellos, not that it stops receiving them.
+- B is correct: The `passive-interface` command on an OSPF interface prevents the router from sending OSPF Hello packets out that interface, which means no OSPF adjacency forms on that segment. However, the connected network of that interface is still advertised into OSPF and appears in the routing tables of neighboring routers.
+- C is incorrect: The connected network IS still advertised into OSPF when passive-interface is configured. The interface is excluded from Hello exchange, not from network advertisement.
+- D is incorrect: `passive-interface` controls OSPF Hello packet generation, not user traffic forwarding. The interface still forwards user data normally.
+
+---
+
+## Question 16
+
+Which OSPF neighbor state indicates that two routers have successfully completed the full LSA database synchronization process and are maintaining an active adjacency?
+
+- A) 2-Way
+- B) Exchange
+- C) Loading
+- D) Full
+
+**Correct Answer:** D
+
+**Distractor Analysis:**
+
+- A is incorrect: 2-Way means the two routers have seen each other's Hello packets (bidirectional communication confirmed). On broadcast networks, DROther-to-DROther pairs remain at 2-Way permanently — they do not proceed to Full with each other.
+- B is incorrect: Exchange is a transient state where Database Description (DBD) packets are being exchanged to share LSA summaries. It is not the final stable adjacency state.
+- C is incorrect: Loading is a transient state where one router is requesting LSAs (with LSR) that the other has but it does not. Loading precedes Full but is not the final state.
+- D is correct: Full state indicates that both OSPF routers have identical Link State Databases (LSDBs) and are actively maintaining the adjacency. This is the healthy and expected final state for OSPF adjacencies on point-to-point links, and for DROther-to-DR/BDR adjacencies on broadcast links.
+
+---
+
+## Question 17
+
+An OSPF neighbor appears in `show ip ospf neighbor` in the INIT state for an extended period. What does INIT state indicate and what is the most likely cause?
+
+- A) INIT means the routers are negotiating DR/BDR election; this is normal on Ethernet segments
+- B) INIT means the local router has received a Hello from the neighbor but the neighbor has not yet seen the local router's Router ID in a Hello packet
+- C) INIT means the OSPF process has just started and is loading the routing table
+- D) INIT means the neighbor's IP address is unreachable at Layer 3
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A is incorrect: DR/BDR election occurs during the 2-Way state. INIT is an earlier state that precedes 2-Way and has nothing to do with DR election.
+- B is correct: INIT state means the local router has received a Hello packet from the neighbor, but the local router's own Router ID has not yet appeared in the neighbor's Hello (the neighbor field in OSPF Hellos lists known neighbors). This is a one-way state. Common causes: ACL blocking Hello packets in one direction, a physical problem causing one-way packet loss, or a mismatch in the Hello source address.
+- C is incorrect: OSPF does not use an INIT state to describe the routing table loading process. The Loading state covers LSA download, not routing table initialization.
+- D is incorrect: INIT does not directly indicate a Layer 3 unreachability issue. If Layer 3 were completely unreachable, no Hello would be received at all (the neighbor would not appear in `show ip ospf neighbor` at any state).
+
+---
+
+## Question 18
+
+An OSPF router is configured with `router-id 1.1.1.1` but `show ip protocols` still shows a different Router ID. What must the engineer do to apply the new Router ID?
+
+- A) Save the configuration with `write memory` and the Router ID updates automatically
+- B) Issue `clear ip ospf process` to reset the OSPF process and apply the new Router ID
+- C) Reload the switch — Router ID changes require a full reload
+- D) Remove all `network` statements and re-add them to trigger Router ID re-election
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A is incorrect: Saving the configuration does not cause the OSPF Router ID to update. The running OSPF process must be restarted for the new Router ID to take effect.
+- B is correct: The OSPF Router ID is selected when the OSPF process starts. To change a running Router ID, the OSPF process must be cleared with `clear ip ospf process` (answer yes to the confirmation). This resets all OSPF adjacencies and the process re-selects the Router ID using the new configured value.
+- C is incorrect: A full router reload is not required to change the OSPF Router ID. `clear ip ospf process` is the correct and less disruptive method. A reload would work but would cause unnecessary downtime.
+- D is incorrect: Removing and re-adding network statements does not restart the OSPF process or cause Router ID re-election. The process continues with the same Router ID.
+
+---
+
+## Question 19
+
+A router learns the same network (192.168.5.0/24) from both OSPF (AD 110) and a static route (AD 1). Which route appears in the routing table and why?
+
+- A) The OSPF route because it is dynamically learned and more current
+- B) The static route because it has a lower administrative distance (1 < 110)
+- C) Both routes appear simultaneously in the routing table via equal-cost load balancing
+- D) The OSPF route because OSPF is an interior gateway protocol with higher authority
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A is incorrect: Administrative distance is the tiebreaker when the same prefix is learned from multiple sources. OSPF's AD of 110 is higher than a static route's AD of 1. Higher AD = less trustworthy. The static route wins.
+- B is correct: Administrative distance determines which route is installed in the routing table when the same prefix is learned from multiple sources. Static routes have AD 1; OSPF has AD 110. Since 1 < 110, the static route is more trusted and is installed. The OSPF route is in the topology database but not the routing table.
+- C is incorrect: Load balancing only applies to routes with the same prefix length AND the same administrative distance. A static (AD 1) and OSPF (AD 110) route for the same prefix have different ADs — they do not load balance.
+- D is incorrect: OSPF does not have "higher authority" — it has a higher (less preferred) administrative distance than static routes. IGP designation does not override AD in route selection.
+
+---
+
+## Question 20
+
+An OSPF router loses connectivity to all its neighbors. The `show ip ospf interface` command shows all interfaces as "Passive." What most likely happened?
+
+- A) The OSPF Hello timer expired on all interfaces simultaneously
+- B) An engineer entered `passive-interface default` in OSPF router configuration, making all interfaces passive
+- C) The OSPF router ID changed, forcing all adjacencies to reset
+- D) The OSPF area ID was changed on all interfaces to area 99
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A is incorrect: OSPF Hello timers are per-interface and do not expire "all at once" under normal circumstances. A missed Hello on one interface would cause that specific neighbor to drop, not all neighbors simultaneously.
+- B is correct: The command `passive-interface default` (entered under `router ospf`) makes all interfaces passive simultaneously. This stops Hello packets on all interfaces and drops all OSPF adjacencies. It is a common misconfiguration when an engineer intends to passive individual interfaces but accidentally applies the default keyword.
+- C is incorrect: When a Router ID changes (after `clear ip ospf process`), adjacencies reset but the interfaces are not passive. Hello packets continue to be sent after the process restarts, and adjacencies re-form.
+- D is incorrect: Changing the area ID on interfaces would cause adjacency failures (area ID mismatch), but the interfaces would still send Hellos. The `show ip ospf interface` output would show active interfaces with area mismatch errors, not passive state.

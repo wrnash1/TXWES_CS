@@ -120,3 +120,21 @@ Part 3 Total: 25 points
 ## Submission Instructions
 
 Combine all three parts into one document with clearly labeled sections. Submit to the Canvas Module 05 Lab assignment by the due date shown in the course calendar.
+
+---
+
+## Part 9 — Challenge Exercise
+
+This section is optional and not separately graded. It extends the lab into advanced use case and user story practice aligned with ECBA exam competencies.
+
+### Challenge Step 1: Exception Flow Documentation
+
+Return to the use case specification you wrote in Part 2 for the Pinecrest Bank mobile banking system. Add at least two exception flows for error or failure conditions the main success scenario does not cover. For each exception flow, document: the condition that triggers it, the system's response, whether the use case ends or resumes at a specific step, and the postcondition after the exception. Examples of exception conditions to consider: authentication failure after three attempts, insufficient funds when a transfer is submitted, or network timeout during transaction processing. This exercise practices the complete Cockburn use case specification format.
+
+### Challenge Step 2: Use Case to User Story Decomposition
+
+Select one use case from your diagram in Part 1. Decompose it into a minimum of four sprint-sized user stories that together cover the full behavior of the use case. For each story: write the three-part user story format, assign a MoSCoW priority, write two Given/When/Then acceptance criteria, and estimate relative complexity using T-shirt sizes (S/M/L/XL). Present your decomposition as a structured backlog table. This exercise practices the KA 5 technique of breaking high-level requirements into sprint-deliverable increments.
+
+### Challenge Step 3: Alternate Actor Analysis
+
+Review your use case diagram from Part 1. For each use case, identify whether there could be any secondary actors (external systems, timer-triggered processes, or supporting roles) that are missing from your diagram. Add at least two secondary actors to the diagram if applicable, or justify in writing why no secondary actors are needed for each use case. Then write one paragraph explaining how identifying secondary actors in the use case diagram reduces the risk of integration requirements being missed during the design phase. This exercise connects use case modeling directly to the stakeholder identification work from Module 02.

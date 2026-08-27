@@ -50,3 +50,25 @@ This week's activity is a comprehensive command review: run through the Domain 1
 - [ ] Review the [Linux Essentials Course by LearnLinuxTV](https://www.youtube.com/playlist?list=PLT98CRl2KxEG0QLjR-8t7k3S4I15Z1A78) videos for any topics needing reinforcement.
 - [ ] Download and review the CompTIA Linux+ XK0-005 Exam Objectives from comptia.org.
 - [ ] Complete the final exam practice quiz and review all incorrect answers.
+
+---
+
+## 9. Supplemental Resources
+
+The following free, open-access resources support Module 16 — Linux+ Certification Exam Preparation:
+
+**1. CompTIA Linux+ XK0-005 Exam Objectives (Official)**
+https://www.comptia.org/certifications/linux
+The official CompTIA Linux+ certification page with downloadable exam objectives PDF. Every objective listed is testable — use this as a final checklist before exam day.
+
+**2. The Linux Command Line by William Shotts (Free OER Textbook)**
+https://linuxcommand.org/tlcl.php
+Complete, freely available textbook covering bash, scripting, file management, processes, storage, and networking. Cross-references all four XK0-005 exam domains. The definitive single-volume review resource.
+
+**3. Professor Messer — CompTIA Linux+ Study Resources**
+https://www.professormesser.com/linux-plus/
+Free video study guide covering all XK0-005 exam objectives with short, focused video segments. Includes practice exams and study notes available at no cost.
+
+**4. Linux Foundation — Free Training Courses**
+https://training.linuxfoundation.org/resources/?_sft_content_type=free-course
+The Linux Foundation's catalog of free courses including Introduction to Linux (LFS101x), which provides an excellent comprehensive review of topics spanning all four exam domains.

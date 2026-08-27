@@ -313,3 +313,28 @@ Submit a document containing:
 | find vs. locate explanation | 20 |
 | Lab completed in VM | 10 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Log Analysis Pipeline
+
+Build a multi-stage pipeline to extract and summarize useful data from a live system log file.
+
+1. Run `sudo grep -i "error\|fail\|warn" /var/log/syslog 2>/dev/null | tee ~/log_issues.txt | wc -l`. Record the count of lines matching error, failure, or warning patterns. Then open `~/log_issues.txt` with `less` and identify the most common source process in those lines.
+2. Run `sudo grep -i "error\|fail\|warn" /var/log/syslog 2>/dev/null | awk '{print $5}' | sort | uniq -c | sort -rn | head -10`. This extracts the fifth field (process name), counts occurrences, and shows the top 10. Record which process generates the most warnings or errors.
+3. Run `find /var/log -type f -name "*.log" -size +0c 2>/dev/null -exec wc -l {} \; | sort -rn | head -5`. This finds all non-empty `.log` files and shows the five with the most lines. Record the results.
+
+### Challenge 2: Advanced find with Dangerous-File Hunting
+
+Use `find` with permission predicates to identify potentially risky files on the system.
+
+1. Run `find / -perm -4000 -type f 2>/dev/null`. These are SUID (Set User ID) files — executables that run with the file owner's privileges (often root). List all results and look up one unfamiliar entry using `man` or `file`.
+2. Run `find /tmp /var/tmp -type f -mtime -1 2>/dev/null`. List all files created or modified in the last 24 hours in temporary directories. On a production server, unexpected files here can indicate malicious activity.
+3. Run `find /home -type f -name "*.sh" 2>/dev/null`. List all shell scripts in home directories. For each found, run `head -3 <filename>` to view the first three lines.
+
+### Reflection Questions
+
+1. The `-exec` option in `find` runs a command on every matched file individually, while `| xargs rm` passes all results to `rm` at once. What are the practical tradeoffs between these two approaches for large result sets involving thousands of files?
+2. You used `2>/dev/null` throughout this lab to suppress permission errors. In a real security audit, would suppressing those errors be appropriate? What information might you lose by hiding them, and when would it be better to capture them with `2>errors.txt` instead?

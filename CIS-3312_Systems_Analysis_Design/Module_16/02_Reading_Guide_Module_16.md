@@ -62,3 +62,50 @@ Review these essential definitions carefully. The certification exam expects you
 - [ ] Download and review the IIBA ECBA Exam Blueprint at [https://www.iiba.org/certification/ecba/](https://www.iiba.org/certification/ecba/).
 - [ ] Register for student IIBA membership and access the BABOK® digital edition at [https://www.iiba.org/membership/join/student-membership/](https://www.iiba.org/membership/join/student-membership/).
 - [ ] Complete the course final exam — good luck!
+
+---
+
+## Supplemental Resources
+
+The following open educational resources support your ECBA exam preparation and final course
+review. All are freely accessible without login or purchase unless noted.
+
+1. **IIBA ECBA Certification Overview**
+   <https://www.iiba.org/certification/ecba/>
+   Focus: The official IIBA page for the ECBA credential, including eligibility requirements,
+   the exam blueprint (knowledge area weights), application process, and renewal requirements.
+   This is the single most important reference for any candidate preparing to sit the ECBA
+   exam — download the exam blueprint and use it to guide your final study effort.
+
+2. **BABOK® Guide v3 — IIBA Online Student Edition**
+   <https://www.iiba.org/membership/join/student-membership/>
+   Focus: IIBA student membership provides free access to the BABOK® Guide v3 digital edition.
+   The BABOK® is the primary source document for every ECBA exam question. Use the KA chapter
+   summaries (Chapter 4–11) to review task inputs, outputs, and recommended techniques for all
+   seven knowledge areas tested on the exam.
+
+3. **Business Analysis Core Concept Model — IIBA Reference**
+   <https://www.iiba.org/standards-and-resources/babok/>
+   Focus: The BACCM (Change, Need, Solution, Stakeholder, Value, Context) is the conceptual
+   foundation for all BABOK® v3 content and is explicitly tested on the ECBA. This resource
+   explains how the six core concepts interrelate and how they frame every knowledge area,
+   task, and technique in the BABOK® Guide.
+
+4. **MoSCoW Prioritization Technique — Agile Business Consortium**
+   <https://www.agilebusiness.org/dsdm-project-framework/moscow-prioririsation.html>
+   Focus: Authoritative explanation of the MoSCoW prioritization method — Must Have, Should
+   Have, Could Have, Won't Have — with definitions, usage guidelines, and common mistakes.
+   MoSCoW is a high-frequency technique on the ECBA exam and is used across predictive and
+   Agile project approaches.
+
+5. **Requirements Traceability and Requirements Lifecycle — IIBA Learning Series**
+   <https://www.iiba.org/training-and-events/learning-solutions/>
+   Focus: IIBA's free learning resources covering KA 6 Requirements Life Cycle Management —
+   the knowledge area responsible for tracing, maintaining, prioritizing, and approving
+   requirements. KA 6 accounts for approximately 16% of the ECBA exam and is one of the
+   areas most frequently missed by candidates who conflate lifecycle management tasks with
+   requirements analysis tasks.
+
+---
+
+*Module 16 Reading Guide | CIS-3312 Systems Analysis and Design | Texas Wesleyan University*

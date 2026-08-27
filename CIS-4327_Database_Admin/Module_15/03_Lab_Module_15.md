@@ -423,6 +423,56 @@ Submit a document containing:
 
 ---
 
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Log-Based Metric for Long-Running Transactions
+
+1. In Cloud Logging, create a log-based metric that counts PostgreSQL log entries matching long-running transaction warnings. First, generate a long transaction on your Cloud SQL instance:
+
+   ```sql
+   BEGIN;
+   SELECT pg_sleep(120);
+   -- Leave this transaction open for 2 minutes without committing
+   ```
+
+2. In Cloud Logging, filter for logs from your Cloud SQL instance and find the lock/transaction warning log entries. Note the log entry format and the relevant field.
+
+3. Create a log-based metric named `cloudsql_long_transactions` using the following filter pattern (adjust the resource labels to match your instance):
+
+   ```
+   resource.type="cloudsql_database"
+   resource.labels.database_id="YOUR_PROJECT:YOUR_INSTANCE"
+   textPayload=~"duration:.*ms"
+   ```
+
+4. Create a Cloud Monitoring alerting policy that fires when `cloudsql_long_transactions` exceeds 5 occurrences in 5 minutes, and send a notification to your email.
+
+### Challenge 2: Terraform Drift Detection and Remediation
+
+1. Using your existing Terraform-managed Cloud SQL instance, manually add a database flag through the Cloud Console: set `log_min_duration_statement = 1000` (log queries slower than 1 second).
+
+2. Run `terraform plan` and capture the output showing the planned change. Confirm Terraform detects the drift and plans to revert the manually added flag.
+
+3. Add `log_min_duration_statement = 1000` to your Terraform `database_flags` block:
+
+   ```hcl
+   database_flags {
+     name  = "log_min_duration_statement"
+     value = "1000"
+   }
+   ```
+
+4. Run `terraform apply` and confirm the flag is now managed by Terraform. Then run `terraform plan` again and confirm the output shows `No changes` — the configuration is now in sync.
+
+### Reflection Questions
+
+1. In Challenge 1, you built a log-based metric from PostgreSQL log entries. Explain the architectural difference between this approach and using `pg_stat_statements` for detecting long-running queries. Which approach would you choose for a production alerting system and why?
+2. In Challenge 2, you experienced configuration drift where a manual change conflicted with Terraform-managed state. In a team environment where multiple DBAs have console access, what policy and technical controls would you implement to prevent unauthorized manual changes from creating drift in Terraform-managed infrastructure?
+
+---
+
 Module 15 Lab — CIS-4327 Database Administration
 
 Texas Wesleyan University | Proprietary and Confidential. Not for disclosure outside of course participants.

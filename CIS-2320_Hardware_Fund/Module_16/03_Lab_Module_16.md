@@ -199,3 +199,33 @@ Element 4 — Timeline: State your target exam date and describe a realistic stu
 Compile your complete lab report as a single document with clearly labeled sections for Parts 1, 2, and 3. Include all component identifications, scenario responses structured using the seven troubleshooting steps, and your personal preparation plan. Export as PDF and upload to the Module 16 Lab Assignment in Canvas by the posted deadline.
 
 Written responses must use complete sentences. Lists are acceptable for component identifications and step-by-step documentation but must include explanatory sentences for all analytical questions. Late submissions receive a 10-point deduction per day unless an extension has been approved by Professor Nash before the deadline.
+
+---
+
+## Part 9 — Challenge Exercise
+
+These advanced steps are optional and are not included in the standard grading rubric.
+
+### Challenge Step 1 — Performance-Based Question (PBQ) Simulation
+
+CompTIA A+ Core 1 includes Performance-Based Questions (PBQs) that require clicking, dragging, matching, or ordering answers rather than selecting from a list. Practice the following PBQ-style exercises:
+
+1. Without any reference materials, write out the complete laser EP process in order — all six stages, the responsible component for each stage, and one print quality defect that the failure of each component produces. Time yourself: the goal is to complete this exercise in under 90 seconds. Then check your answers against Module 15 content. Repeat until you can complete it correctly from memory within the time limit.
+1. From memory, draw or write out the T568B pinout for all eight pins of an RJ-45 connector, the IPv4 address classes (A, B, C, D, E) with their default subnet masks and address ranges, and the OSI model seven layers with one protocol or device example at each layer. These three tables collectively cover a significant portion of the A+ Core 1 exam's network content.
+1. Research what types of PBQs appear on the CompTIA A+ Core 1 exam (drag-and-drop network topology, cable matching, BIOS/UEFI navigation simulation) and describe in 2–3 sentences the study strategy that best prepares you for PBQ-style questions compared to the multiple-choice preparation strategy used throughout this course.
+
+### Challenge Step 2 — Timed Mixed-Domain Practice Assessment
+
+Using the ExamCompass free practice exam simulator (examcompass.com) or any available A+ Core 1 practice question bank, complete the following self-assessment:
+
+1. Take a full-length timed practice exam (90 questions, 90 minutes) without reference materials. After completing the exam, record your score by domain and identify which of the five Core 1 domains (Mobile Devices, Networking, Hardware, Virtualization and Cloud, Hardware and Network Troubleshooting) had the lowest accuracy. Document your per-domain scores.
+1. For each question you answered incorrectly, write a one-sentence explanation of why the correct answer is correct and why your chosen answer was incorrect. This active error analysis process is more effective for retention than simply re-reading the correct answer.
+1. Based on your domain accuracy results, create a targeted study schedule for the 14 days before your exam appointment — allocating review time proportionally to your weakest domains. For example, if Hardware Troubleshooting is 60% of your errors and you have 14 study sessions remaining, assign approximately 8-9 sessions to troubleshooting content and distribute the remaining sessions across stronger domains for maintenance review.
+
+### Challenge Step 3 — Hardware Identification Speed Drill
+
+Build fluency with hardware identification by completing the following exercises against a time limit:
+
+1. Using PCPartPicker (pcpartpicker.com), select one complete PC build from the community-submitted completed builds section. For each component in the build, identify: the form factor (ATX/M-ATX/ITX for motherboard, DIMM/SO-DIMM for RAM, 2.5"/3.5"/M.2 for storage), the interface type (SATA/NVMe/PCIe), and the wattage impact on PSU selection. Calculate the total estimated system wattage and verify whether the listed PSU wattage provides at least a 20% headroom margin above the estimated load.
+1. Time yourself identifying the following from memory in under 2 minutes (write or verbalize each answer): (a) the difference between an LGA and PGA CPU socket and which AMD and Intel platforms use each; (b) the number of pins on DDR3, DDR4, and DDR5 DIMMs; (c) the PCIe slot sizes (x1, x4, x8, x16) and their typical use cases; (d) the four RAID levels (0, 1, 5, 10) with minimum drive count and fault tolerance for each. These four topics appear in multiple-choice and scenario questions across the exam.
+1. Write a one-page study summary in your own words (no copy-paste) covering the five topics you found most difficult across the entire 16-module course. This active recall and synthesis exercise is one of the most research-supported methods for consolidating knowledge before a certification exam. Submit this summary as an additional deliverable with your Module 16 lab if you choose to complete this challenge step.

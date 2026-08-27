@@ -283,6 +283,27 @@ print(c1 - c2)    # Counter({'a': 1})
 
 ---
 
+## 9. Supplemental Resources
+
+The following free, openly licensed resources reinforce the concepts in this module. All are zero-cost and require no account to access.
+
+1. **VisuAlgo — Hash Table Visualizations** — [https://visualgo.net/en/hashtable](https://visualgo.net/en/hashtable)
+   Step-by-step animations of hash table insertion with both separate chaining and open addressing (linear probing). Visualizes collisions, bucket growth, and table resize operations.
+
+2. **OpenDSA — Hash Tables Chapter** — [https://opendsa-server.cs.vt.edu/ODSA/Books/Everything/html/HashIntro.html](https://opendsa-server.cs.vt.edu/ODSA/Books/Everything/html/HashIntro.html)
+   Free interactive OER textbook covering hash functions, collision resolution (chaining, probing), load factor analysis, and the mathematical proof of O(1) average performance.
+
+3. **Python `collections` Module Documentation** — [https://docs.python.org/3/library/collections.html](https://docs.python.org/3/library/collections.html)
+   Official Python documentation for `Counter`, `defaultdict`, `OrderedDict`, and `namedtuple`. Includes code examples for all common usage patterns relevant to hash map interview problems.
+
+4. **NeetCode — Arrays & Hashing Playlist (YouTube)** — [https://www.youtube.com/playlist?list=PLot-Xpze53ldVwtstag2TL4HQhAnC8ATf](https://www.youtube.com/playlist?list=PLot-Xpze53ldVwtstag2TL4HQhAnC8ATf)
+   Free video solutions for the most common hash table interview problems including Two Sum, Group Anagrams, Valid Anagram, Contains Duplicate, and Longest Consecutive Sequence — each with clear time and space complexity discussion.
+
+5. **CS50 — Hash Tables Short (Harvard)** — [https://cs50.harvard.edu/x/2024/shorts/hash_tables/](https://cs50.harvard.edu/x/2024/shorts/hash_tables/)
+   5-minute Harvard CS50 video introducing hash tables, hash functions, and separate chaining with clear visual diagrams. An excellent supplement for students wanting a second explanation before the lab.
+
+---
+
 ## 8. Study Checklist
 
 - [ ] Watch the Module 08 video lecture by Professor Nash.

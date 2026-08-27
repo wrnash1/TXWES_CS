@@ -189,3 +189,208 @@ Distractor analysis: B is incorrect because parallel workers are shown in the pl
 ---
 
 Reference: cloud.google.com/learn
+
+---
+
+### Question 11 (5 points)
+
+A developer proposes the following index to support a query that filters on `status = 'active'` and sorts by `last_login DESC` on a `users` table with 20 million rows:
+
+```sql
+CREATE INDEX idx_users_active_login ON users (last_login DESC) WHERE status = 'active';
+```
+
+What are the two benefits of this partial index compared to a full index on `(status, last_login)`?
+
+A) It is smaller (only indexes active users) and the planner can skip the status filter evaluation since it is encoded in the index predicate.
+B) It is faster to create and uses less CPU during query execution.
+C) It prevents duplicate `last_login` values and enforces referential integrity.
+D) It supports queries on all status values, not just active users.
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- B) Creation speed depends on data volume and server resources; a partial index may create faster only because it indexes fewer rows, which is a consequence of being smaller, not a separate benefit. CPU savings are a result of fewer rows, already captured in option A.
+- C) Partial indexes do not enforce uniqueness unless the UNIQUE keyword is included; this index has no uniqueness constraint, and partial indexes are entirely unrelated to referential integrity.
+- D) A partial index with `WHERE status = 'active'` only covers rows where status is active; it cannot be used for queries that need users with other status values, which is the opposite of this option's claim.
+
+---
+
+### Question 12 (5 points)
+
+Cloud SQL Query Insights shows that a normalized query `SELECT * FROM orders WHERE customer_id = $1` has a P99 latency of 4.2 seconds and accounts for 38% of total CPU. The `EXPLAIN ANALYZE` shows an Index Scan on `customer_id`. What is the most likely next diagnostic step?
+
+A) Check the average rows returned per execution in Query Insights; if the index scan returns hundreds of thousands of rows per call, the query may need a more selective filter or result caching.
+B) Drop the index on `customer_id` and add a GIN index instead.
+C) Increase `max_connections` to allow more parallel executions of this query.
+D) Disable the Index Scan by setting `enable_indexscan = off` to force a sequential scan.
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- B) GIN indexes are for JSONB, array, and full-text types; `customer_id` is a scalar identifier where a B-tree index is correct. Replacing it with GIN would be unsupported or less efficient.
+- C) High latency on a single query indicates the query itself is slow, not that there are insufficient connections to run it; adding connections does not make individual query executions faster.
+- D) Disabling the Index Scan forces a sequential scan which would be slower for a selective query; the goal of diagnostics is to understand and fix the root cause, not to artificially worsen the plan.
+
+---
+
+### Question 13 (5 points)
+
+What is the primary advantage of Cloud Spanner's `STORING` clause in a secondary index definition?
+
+A) It stores copies of specified non-key columns in the index so queries can be satisfied from the index without accessing the base table, similar to a covering index in PostgreSQL.
+B) It compresses the indexed column values to reduce storage cost.
+C) It stores the index in a separate region for geographic distribution.
+D) It forces the index to use strongly consistent reads instead of bounded stale reads.
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- B) `STORING` adds columns to the index for query coverage; it does not apply compression to column values and does not reduce individual column storage size.
+- C) Spanner replicates all data (including indexes) across regions based on the instance configuration; `STORING` has no effect on geographic placement.
+- D) Read consistency in Spanner is controlled by the read type (strong vs stale) at query time, not by index definition attributes like `STORING`.
+
+---
+
+### Question 14 (5 points)
+
+A BigQuery analyst writes the following query and is surprised to find it scans the entire `events` table despite date partitioning:
+
+```sql
+SELECT event_type, COUNT(*)
+FROM events
+WHERE DATE(event_timestamp) = '2025-03-15'
+GROUP BY event_type;
+```
+
+What change enables partition pruning?
+
+A) Replace `DATE(event_timestamp) = '2025-03-15'` with `event_timestamp >= '2025-03-15' AND event_timestamp < '2025-03-16'` so BigQuery can evaluate the partition filter without a function call.
+B) Add a clustering key on `event_type` to reduce the scan.
+C) Add a `LIMIT 1000` clause to prevent full table scans.
+D) Convert the table from date partitioning to integer range partitioning.
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- B) Clustering improves block-level pruning within partitions but does not help BigQuery determine which partitions to skip; partition pruning requires a filter on the partition column without a wrapping function.
+- C) `LIMIT` restricts result rows but does not affect which partitions BigQuery opens and scans to find those rows; it does not enable partition pruning.
+- D) Switching to integer range partitioning would require a schema redesign and is unnecessary; the existing date partitioning works correctly when the filter does not wrap the column in a function.
+
+---
+
+### Question 15 (5 points)
+
+A Cloud SQL for PostgreSQL instance has `autovacuum_vacuum_scale_factor = 0.2` (default). A table with 10 million rows accumulates 2 million dead tuples. Will autovacuum trigger on this table?
+
+A) Yes — 2 million dead tuples is 20% of 10 million rows, which equals the 0.2 threshold, triggering autovacuum.
+B) No — autovacuum only triggers when dead tuples exceed 50% of the table.
+C) No — autovacuum is disabled by default on Cloud SQL instances.
+D) Yes — autovacuum always triggers every 5 minutes regardless of the threshold.
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- B) The default threshold is `autovacuum_vacuum_scale_factor = 0.2`, meaning 20% of live rows; 50% is not the threshold.
+- C) Autovacuum is enabled by default on Cloud SQL for PostgreSQL; it runs as a background process and is the primary mechanism for dead tuple reclamation.
+- D) Autovacuum is threshold-driven, not time-driven; it triggers when dead tuple count exceeds `autovacuum_vacuum_threshold + autovacuum_vacuum_scale_factor * reltuples`, not on a fixed interval.
+
+---
+
+### Question 16 (5 points)
+
+A PostgreSQL query uses `LIKE '%invoice%'` to search a `description` column. The DBA adds a standard B-tree index on `description`. EXPLAIN ANALYZE still shows a Seq Scan. Why?
+
+A) B-tree indexes cannot support leading-wildcard LIKE patterns (`%text`); only a GIN index with `pg_trgm` trigram tokenization can accelerate this search pattern.
+B) The index was created CONCURRENTLY and is not yet available.
+C) The `description` column must be cast to `tsvector` before a B-tree index applies.
+D) LIKE patterns require a Hash index, not a B-tree.
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- B) `CREATE INDEX CONCURRENTLY` completes before returning to the prompt (it is not asynchronous in the background); once the command returns, the index is available.
+- C) Casting to `tsvector` enables full-text search with GIN, not B-tree; full-text `@@` and `LIKE '%text%'` are different search mechanisms and neither uses B-tree for leading-wildcard patterns.
+- D) Hash indexes support only equality (`=`) comparisons; they cannot support any form of LIKE pattern matching, including leading-wildcard patterns.
+
+---
+
+### Question 17 (5 points)
+
+Which PgBouncer pooling mode should be used for an OLTP application that uses PostgreSQL features requiring session-level state, such as `SET` variables, prepared statements, and advisory locks?
+
+A) Session pooling — one real database connection is held for the entire client session duration, preserving all session-level state.
+B) Transaction pooling — the connection is returned after each transaction, making it incompatible with session-level state.
+C) Statement pooling — each individual SQL statement gets a different connection, destroying all session context.
+D) Connection pooling — a proprietary PgBouncer mode that caches session state across connections.
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- B) Transaction pooling is the highest-concurrency mode but breaks session-level features like `SET` variables, prepared statements, and advisory locks because the connection changes between transactions.
+- C) Statement pooling reassigns the connection after every single statement, making it incompatible with any multi-statement operation; it is rarely used in production for this reason.
+- D) "Connection pooling" is not a distinct PgBouncer mode name; the three PgBouncer modes are session, transaction, and statement.
+
+---
+
+### Question 18 (5 points)
+
+A DBA runs `VACUUM VERBOSE orders;` and the output includes `index vacuumed: 0 pages removed`. What does this most likely indicate?
+
+A) No dead index tuples were found in the index pages; the index is clean and no index page compaction was needed.
+B) The index was dropped before VACUUM ran.
+C) VACUUM cannot process indexes; a separate `REINDEX` is always required.
+D) The `orders` table has no indexes defined.
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- B) If an index were dropped, the index would simply not appear in the VACUUM output at all; reporting `0 pages removed` specifically means the index was scanned and found no dead entries requiring removal.
+- C) `VACUUM` does process indexes as part of its normal operation; it scans index pages to identify and remove dead index entries pointing to dead heap tuples.
+- D) If the table had no indexes, the index vacuum section of the VERBOSE output would be absent entirely, not show `0 pages removed`.
+
+---
+
+### Question 19 (5 points)
+
+A Cloud SQL for PostgreSQL query reads 500,000 rows, aggregates them, and returns 20 rows. `pg_stat_statements` shows `shared_blks_hit = 480000` and `shared_blks_read = 20000`. What does this cache ratio indicate?
+
+A) A 96% buffer cache hit rate — most data is being served from `shared_buffers` in memory, which is healthy and indicates the working set fits in cache.
+B) A 96% miss rate — the buffer pool is too small and most data is being read from disk.
+C) The table is fragmented; 20,000 blocks were skipped during the scan.
+D) The query is consuming 96% of available shared memory.
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- B) `shared_blks_hit` counts buffer pool hits (found in memory), and `shared_blks_read` counts physical disk reads (not in cache); 480,000 hits vs 20,000 disk reads = 96% hit rate, which is healthy, not a miss rate.
+- C) `shared_blks_read` represents physical I/O operations (reads from disk), not skipped blocks; PostgreSQL does not skip heap blocks during sequential scans.
+- D) `shared_blks_hit` measures hit count in blocks, not percentage of shared memory consumption; shared memory consumption is measured in bytes via `pg_buffercache` or instance memory metrics.
+
+---
+
+### Question 20 (5 points)
+
+A DBA needs to find the queries with the highest ratio of total time to calls in `pg_stat_statements`, identifying candidates for optimization by mean execution time. Which query correctly identifies the top 5?
+
+A) `SELECT query, mean_exec_time FROM pg_stat_statements ORDER BY mean_exec_time DESC LIMIT 5;`
+B) `SELECT query, total_exec_time FROM pg_stat_statements ORDER BY calls ASC LIMIT 5;`
+C) `SELECT query, calls FROM pg_stat_statements ORDER BY total_exec_time DESC LIMIT 5;`
+D) `SELECT query FROM pg_stat_statements WHERE calls > 1000 ORDER BY rows DESC LIMIT 5;`
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- B) Ordering by `calls ASC` finds the least-executed queries, not the slowest per execution; `total_exec_time` without dividing by calls mixes high-frequency fast queries with low-frequency slow ones.
+- C) Ordering by `total_exec_time DESC` finds the queries with the highest cumulative time, which may simply be high-frequency cheap queries; it does not isolate queries that are individually slow.
+- D) Filtering by `calls > 1000` and ordering by `rows` identifies high-row-returning queries, not slow queries by mean execution time; rows returned does not measure latency.

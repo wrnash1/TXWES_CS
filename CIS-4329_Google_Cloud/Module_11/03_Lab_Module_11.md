@@ -348,3 +348,109 @@ gcloud deployment-manager deployments delete lab11-dm-deploy --quiet
 | Reflection questions answered | 20 |
 | Resources cleaned up | 5 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Terraform Remote State with GCS Backend
+
+Migrate the Terraform configuration from the main lab from local state to a
+GCS remote backend with state locking and versioning.
+
+1. Create a GCS bucket for remote state storage and enable object versioning:
+
+```bash
+export PROJECT_ID=$(gcloud config get-value project)
+gsutil mb -l us-central1 gs://${PROJECT_ID}-tf-state
+gsutil versioning set on gs://${PROJECT_ID}-tf-state
+```
+
+1. Add a `backend` block to the existing `main.tf` from the lab to configure GCS
+   as the remote backend:
+
+```bash
+cat > ~/lab11-tf/backend.tf << 'EOF'
+terraform {
+  backend "gcs" {
+    bucket = "YOUR_PROJECT_ID-tf-state"
+    prefix = "lab11/state"
+  }
+}
+EOF
+```
+
+1. Run `terraform init -migrate-state` to migrate the existing local state to the
+   GCS backend:
+
+```bash
+cd ~/lab11-tf
+terraform init -migrate-state
+```
+
+1. Verify the state file was written to GCS:
+
+```bash
+gsutil ls gs://${PROJECT_ID}-tf-state/lab11/state/
+```
+
+1. Run `terraform plan` to confirm everything is working with the remote backend:
+
+```bash
+terraform plan -var="project_id=$PROJECT_ID"
+```
+
+### Challenge 2: Detect and Remediate Terraform Drift
+
+Simulate infrastructure drift by manually modifying a GCP resource created by
+Terraform, then observe how Terraform detects and corrects the drift.
+
+1. Identify the VPC network created by Terraform in the main lab and note its
+   description:
+
+```bash
+gcloud compute networks describe lab11-vpc \
+  --format="value(description)"
+```
+
+1. Manually update the network description via gcloud (simulating out-of-band
+   change):
+
+```bash
+gcloud compute networks update lab11-vpc \
+  --description="manually changed description"
+```
+
+1. Run `terraform plan` and observe that Terraform detects the drift and plans
+   to revert the description to the value in the configuration:
+
+```bash
+cd ~/lab11-tf
+terraform plan -var="project_id=$PROJECT_ID"
+```
+
+1. Apply the plan to remediate the drift and restore the declared state:
+
+```bash
+terraform apply -var="project_id=$PROJECT_ID" -auto-approve
+```
+
+1. Confirm the description has been reverted:
+
+```bash
+gcloud compute networks describe lab11-vpc \
+  --format="value(description)"
+```
+
+### Reflection Questions
+
+1. In Challenge 1, you enabled object versioning on the GCS state bucket. Describe
+   a scenario where state file versioning would be critical for recovering from an
+   operational incident, and explain the steps you would take to roll back to a
+   previous state version using the GCS console or gsutil.
+
+2. In Challenge 2, Terraform reverted the manually applied description change during
+   `terraform apply`. This enforces the IaC configuration as the authoritative source
+   of truth. Discuss the organizational process implications of this behavior: what
+   workflow must teams adopt to prevent Terraform from reverting intentional manual
+   changes, and how does this discipline benefit long-term infrastructure reliability?

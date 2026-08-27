@@ -213,3 +213,217 @@ B — `snyk test` is a point-in-time scan that runs when the pipeline is trigger
 - *Why A is incorrect:* `snyk test` does not monitor the repository in real time. It is a CLI command that runs when explicitly invoked. Real-time alerting is the function of `snyk monitor`.
 - *Why C is incorrect:* Snyk does not delay CVE flagging by 24 hours. A caching delay of this type is not how Snyk operates; `snyk test` checks against Snyk's current vulnerability database at scan time.
 - *Why D is incorrect:* `snyk test` checks the current package versions against the vulnerability database at the time of the scan. It will catch CVEs published after the dependency was declared, as long as the scan runs after the CVE was published.
+
+---
+
+### Question 11 (5 points)
+
+A dependency confusion attack succeeds when a build system pulls a malicious public package instead of a legitimate private internal package with the same name. Which control most directly prevents this attack?
+
+- A) Enabling `snyk monitor` to watch for new CVEs in private packages
+- B) Configuring the package manager to use an internal proxy registry that blocks direct public registry access for private package namespaces
+- C) Running `cosign verify` on all pulled packages before installation
+- D) Pinning all package versions to exact version numbers in the manifest
+
+#### Q11 Correct Answer
+
+B — The most direct defense against dependency confusion is an internal proxy/nexus registry (such as Artifactory or Nexus) that controls name resolution. When a package name matches an internal namespace, the proxy serves the internal version and blocks the public registry version from being fetched. Scope prefixes (e.g., `@company/`) and verified registries also mitigate this attack.
+
+#### Q11 Distractor Analysis
+
+- *Why A is incorrect:* `snyk monitor` detects CVEs in known packages — it does not prevent the build system from pulling from the wrong registry.
+- *Why C is incorrect:* `cosign verify` verifies that an artifact was signed by a trusted key — but the malicious public package in a dependency confusion attack is likely unsigned or signed with a different key. The prevention is registry control, not post-download verification.
+- *Why D is incorrect:* Exact version pinning prevents unexpected version upgrades but does not address which registry the package is pulled from — a dependency confusion attack can supply the exact pinned version from the public registry.
+
+---
+
+### Question 12 (5 points)
+
+What does SLSA (Supply-chain Levels for Software Artifacts) Level 2 require that Level 1 does not?
+
+- A) Every build must be hermetic — no network access allowed during compilation
+- B) The build must use a hosted, version-controlled build service that generates authenticated provenance
+- C) Two-person approval is required for every code change before building
+- D) All dependencies must be locked to commit SHA rather than version tags
+
+#### Q12 Correct Answer
+
+B — SLSA Level 1 requires provenance to exist (any form). SLSA Level 2 adds the requirement that builds use a hosted CI/CD service (not a local developer machine) and that the service generates authenticated, unforgeable provenance attestations. This prevents a compromised developer workstation from producing undetected tampered artifacts.
+
+#### Q12 Distractor Analysis
+
+- *Why A is incorrect:* Hermetic builds are required at SLSA Level 4, not Level 2.
+- *Why C is incorrect:* Two-person review is a code review governance requirement, not a specific SLSA level requirement. SLSA focuses on build process integrity.
+- *Why D is incorrect:* Dependency pinning to commit SHAs is a best practice related to SLSA but is not the defining difference between Level 1 and Level 2.
+
+---
+
+### Question 13 (5 points)
+
+`npm audit` is run against a Node.js project and reports a vulnerability in `lodash@4.17.20` with severity "moderate". The team decides to suppress it. Which command correctly suppresses a specific npm audit advisory without modifying package versions?
+
+- A) `npm audit fix --force`
+- B) Add an `overrides` block to `package.json` pinning lodash to a patched version
+- C) Add the advisory ID to the `auditIgnore` array in an `.nsprc` file or use `npm audit --omit=moderate`
+- D) Remove `lodash` from `package.json` and use a different library
+
+#### Q13 Correct Answer
+
+C — For npm, suppressing specific advisories can be done with an `.nsprc` or `audit-resolve.json` file that lists advisory IDs to ignore, or by using `--omit` flags to exclude severity levels from results. This creates an auditable record of accepted risk.
+
+#### Q13 Distractor Analysis
+
+- *Why A is incorrect:* `npm audit fix --force` attempts to upgrade packages to fixed versions, potentially making breaking changes — it is not a suppression mechanism.
+- *Why B is incorrect:* `overrides` in `package.json` forces a specific version across the dependency tree — this is a remediation approach, not a suppression. It is effective but modifies the dependency, unlike a documented suppression.
+- *Why D is incorrect:* Replacing a library is a remediation action, not a suppression. The question asks specifically about suppression.
+
+---
+
+### Question 14 (5 points)
+
+A GitHub Actions workflow runs `snyk test --severity-threshold=high` on every push to `main`. A developer pushes a commit that introduces `requests==2.6.0` (a Python library with a known HIGH CVE). What is the expected pipeline behavior?
+
+- A) The pipeline passes because `snyk test` only runs on pull requests, not direct pushes to main
+- B) The pipeline fails with a non-zero exit code because a HIGH severity CVE was found
+- C) The pipeline passes because `requests` is a well-known library and Snyk trusts it by default
+- D) The pipeline produces a warning but does not fail — `--severity-threshold=high` only generates reports
+
+#### Q14 Correct Answer
+
+B — `snyk test --severity-threshold=high` exits non-zero when any HIGH or CRITICAL CVE is found. `requests==2.6.0` contains known CVEs above the HIGH threshold. The GitHub Actions job fails, blocking the commit from being used in subsequent deployment stages.
+
+#### Q14 Distractor Analysis
+
+- *Why A is incorrect:* The workflow trigger is `push` to `main` — it runs on direct pushes, not only on pull requests.
+- *Why C is incorrect:* Snyk does not apply trust levels to well-known libraries — it scans all dependencies against the CVE database regardless of library popularity.
+- *Why D is incorrect:* `--severity-threshold=high` is a gate flag that causes a non-zero exit code — it does not produce reports only.
+
+---
+
+### Question 15 (5 points)
+
+Which Sigstore component provides a tamper-evident, publicly auditable log of all artifact signatures, preventing a signer from secretly signing an artifact without it being publicly recorded?
+
+- A) Fulcio
+- B) Cosign
+- C) Rekor
+- D) OIDC
+
+#### Q15 Correct Answer
+
+C — Rekor is Sigstore's transparency log. Every signature produced by cosign is written to Rekor, creating an immutable, publicly auditable record. This prevents silent signing of backdoored artifacts — any signature can be independently verified against the Rekor log.
+
+#### Q15 Distractor Analysis
+
+- *Why A is incorrect:* Fulcio is Sigstore's certificate authority — it issues short-lived code-signing certificates bound to an OIDC identity. It does not serve as the transparency log.
+- *Why B is incorrect:* cosign is the client tool for signing and verifying — it writes to Rekor but is not the log itself.
+- *Why D is incorrect:* OIDC is the identity protocol used to authenticate signers to Fulcio — it is not a Sigstore component and is not a transparency log.
+
+---
+
+### Question 16 (5 points)
+
+A team uses `pip-audit` to scan Python dependencies. The tool reports a vulnerability in `Pillow==8.2.0`. The fix requires upgrading to `Pillow==9.3.0`, which introduced a breaking API change. What is the correct DevSecOps process for handling this situation?
+
+- A) Add `Pillow==8.2.0` to a permanent exception list and never upgrade
+- B) Document the accepted risk with a suppression annotation, set a remediation deadline, and create a tracking ticket for the API migration work
+- C) Immediately force-upgrade to `Pillow==9.3.0` in the same commit that introduces the vulnerability finding
+- D) Disable pip-audit in the pipeline until the team has time to upgrade Pillow
+
+#### Q16 Correct Answer
+
+B — When a fix requires breaking API changes, the appropriate response is to document the accepted risk formally, set a remediation deadline aligned with the CVE severity, and schedule the migration work as a tracked engineering task. This balances security urgency with engineering reality while maintaining visibility and accountability.
+
+#### Q16 Distractor Analysis
+
+- *Why A is incorrect:* A permanent exception with no deadline or remediation plan is a security debt anti-pattern that allows risk to accumulate indefinitely.
+- *Why C is incorrect:* Force-upgrading in the same commit without testing the API changes can break the application — remediation must go through normal development and testing processes.
+- *Why D is incorrect:* Disabling the security tool removes visibility for all findings, not just this one — it is the highest-risk response.
+
+---
+
+### Question 17 (5 points)
+
+What is the purpose of a "lockfile" (e.g., `package-lock.json`, `poetry.lock`, `requirements.txt` with pinned versions) in the context of supply chain security?
+
+- A) Lockfiles prevent any new dependencies from being added to a project without a security review
+- B) Lockfiles record exact dependency versions and hashes, ensuring reproducible builds and detecting unexpected dependency substitution
+- C) Lockfiles are used by Snyk to authenticate with the package registry
+- D) Lockfiles are required by GitHub Actions to enable dependency caching
+
+#### Q17 Correct Answer
+
+B — Lockfiles record the exact resolved version and integrity hash of every dependency (direct and transitive) at the time of `install`. This ensures every build uses the same dependency versions and allows the package manager to verify that downloaded packages match the expected hashes, detecting tampering or substitution attacks.
+
+#### Q17 Distractor Analysis
+
+- *Why A is incorrect:* Lockfiles do not enforce a security review requirement — they record resolved versions. Adding new dependencies is controlled by team process, not lockfiles.
+- *Why C is incorrect:* Lockfiles are not authentication credentials — they are dependency manifests with version and hash data.
+- *Why D is incorrect:* GitHub Actions caching uses the lockfile as a cache key input, but the security value of lockfiles is reproducibility and integrity verification, not enabling caching.
+
+---
+
+### Question 18 (5 points)
+
+`snyk test --json` outputs a JSON report from a CI pipeline run. A developer notices a CVE in `cryptography==38.0.1` is marked as `"isPatched": false` and `"isIgnored": false`. What action is required?
+
+- A) The finding is informational only — `snyk test` flags that do not produce a non-zero exit code require no action
+- B) The team must update `cryptography` to a version without the CVE, or formally accept and document the risk with a suppression
+- C) The developer should re-run `snyk test` without `--json` to get the actionable output
+- D) `isIgnored: false` means Snyk has already reported the CVE to the library maintainer on the team's behalf
+
+#### Q18 Correct Answer
+
+B — `isPatched: false` means no Snyk patch is available; `isIgnored: false` means the team has not explicitly accepted this risk. The required response is either to upgrade the dependency to a fixed version or to formally add it to the Snyk ignore list with a documented justification and expiration date.
+
+#### Q18 Distractor Analysis
+
+- *Why A is incorrect:* Whether the finding is informational depends on the exit code — if `--severity-threshold` was set and the CVE meets it, the exit code will be non-zero. Regardless, an unpatched, unignored finding requires a decision.
+- *Why C is incorrect:* The JSON output contains the same information as the text output — the format does not affect what action is required.
+- *Why D is incorrect:* Snyk does not report CVEs to maintainers on a team's behalf — vulnerability disclosure is a manual process separate from scanning.
+
+---
+
+### Question 19 (5 points)
+
+The `--all-projects` flag in `snyk test` is useful in which scenario?
+
+- A) Scanning a monorepo that contains multiple projects with different package managers (Node.js, Python, Java) in subdirectories
+- B) Scanning all public repositories in a GitHub organization simultaneously
+- C) Running SAST analysis on all source files, not just dependency manifests
+- D) Enabling reachability analysis for all dependencies in a single package manifest
+
+#### Q19 Correct Answer
+
+A — `--all-projects` instructs Snyk to auto-detect and scan all supported project manifests in the current directory tree. This is essential for monorepos that contain multiple services with different languages and package managers, ensuring no project is missed.
+
+#### Q19 Distractor Analysis
+
+- *Why B is incorrect:* Scanning multiple GitHub organization repositories requires the Snyk GitHub integration or the Snyk CLI with repository iteration — `--all-projects` operates on the local directory.
+- *Why C is incorrect:* `--all-projects` is a dependency scanning flag — Snyk SAST (Code) analysis is a separate product and is not enabled by this flag.
+- *Why D is incorrect:* Reachability analysis is enabled separately (via Snyk's platform settings) — `--all-projects` only controls which project manifests are scanned.
+
+---
+
+### Question 20 (5 points)
+
+US Executive Order 14028 (2021) created a federal requirement for SBOMs in software sold to the US government. What practical implication does this have for software vendors?
+
+- A) All software sold to the US government must be open source so SBOMs can be generated
+- B) Vendors must provide a machine-readable SBOM for any software sold to federal agencies, documenting all components and dependencies
+- C) SBOMs must be filed with NIST before software can be licensed for government use
+- D) The executive order requires SBOMs only for software running on classified government networks
+
+#### Q20 Correct Answer
+
+B — EO 14028 requires software vendors selling to the federal government to provide SBOMs so agencies can understand the software supply chain, identify exposure to CVEs, and make informed procurement decisions. This has driven broad industry adoption of SBOM tooling even outside the government sector.
+
+#### Q20 Distractor Analysis
+
+- *Why A is incorrect:* EO 14028 does not require open-source software — it requires transparency through SBOMs, which can be generated for proprietary software as well.
+- *Why C is incorrect:* There is no NIST SBOM filing requirement — SBOMs are provided to customers/agencies, not submitted to a registry.
+- *Why D is incorrect:* The requirement applies to all software sold to federal agencies, not specifically classified network environments.
+
+---
+
+Quiz — Module 08 | CIS-4350 | Texas Wesleyan University | Professor Nash

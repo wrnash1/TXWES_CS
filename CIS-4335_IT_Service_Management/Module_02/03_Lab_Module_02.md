@@ -125,3 +125,27 @@ Situations to address:
 ## Submission Instructions
 
 Compile all four exercises into a single document with clear headings. Label each numbered item before your response. Submit to the Module 02 Lab assignment in Canvas by the posted deadline.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Value Stream Design
+
+Using the Meridian Financial scenario, design a value stream for the following situation: a new hire in the compliance department needs a laptop, network access, and access to the regulatory filing system on their first day.
+
+1. List the SVC activities (from the six available: Plan, Improve, Engage, Design and Transition, Obtain/Build, Deliver and Support) that your value stream uses and arrange them in the sequence you would apply them for this scenario. You do not need to use all six.
+2. For each SVC activity you include, write one sentence describing what work happens at that step in this specific onboarding context.
+3. Identify one ITIL 4 practice (from any of the three categories) that provides capability at each step you selected, and explain in one sentence what that practice contributes.
+
+### Challenge 2: SVS Health Assessment
+
+Dr. Rivera returns for her 90-day review at Meridian Financial and finds that while incident resolution times have improved, the IT team is still not capturing lessons learned and improvement ideas are being lost because there is no formal register. Additionally, the board has still not approved a formal IT security policy.
+
+1. Identify which two SVS components are most clearly deficient based on these findings. Name each component and write two sentences explaining what is missing.
+2. Draft a 100-word written recommendation (as if you were Dr. Rivera's consultant) that addresses both deficiencies using correct ITIL 4 terminology for the SVS components involved.
+
+### Reflection Questions
+
+1. Think about an organization you have interacted with (a business, school, or government agency). Describe one interaction that felt like a well-designed value stream — the steps were smooth, you got what you needed efficiently. Which SVC activities do you think were operating well, and why?
+2. The ITIL 4 SVS embeds Continual Improvement throughout all components rather than treating it as a separate phase (as ITIL v3 did). In your own words, explain why this architectural decision matters for real organizations that are constantly changing their services.

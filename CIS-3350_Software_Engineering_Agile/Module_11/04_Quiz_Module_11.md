@@ -199,3 +199,173 @@ Distractor Analysis:
 - Why D is incorrect: Performance metrics observation is a Scrum Master coaching concern. The Observer pattern is a software design structure, not a management tool.
 
 ---
+
+### Question 11 (5 points)
+
+A team is building a UI component library that needs to support dark mode, large-text mode, and high-contrast mode. Each mode adds styling behavior on top of the base component, and modes must be combinable. Which pattern is most appropriate?
+
+- A) Singleton — ensure only one theme instance is active per session
+- B) Factory Method — create different component types for each mode
+- C) Decorator — wrap the base component with each mode's styling behavior, stackably
+- D) Adapter — convert the component's interface to match the theme system's expectations
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why A is incorrect: Singleton controls instance creation, not behavior stacking or visual styling composition.
+  - Why B is incorrect: Factory Method creates different object types at construction time; it does not enable runtime-composable behavior layering on an existing object.
+  - Why D is incorrect: Adapter resolves interface incompatibility between two existing systems; it does not add new behavior to an object dynamically.
+
+---
+
+### Question 12 (5 points)
+
+The Gang of Four's Factory Method pattern adheres to which SOLID principle?
+
+- A) Single Responsibility Principle — the factory has one job: creating objects
+- B) Liskov Substitution Principle — factory subclasses must be substitutable for the parent factory
+- C) Open/Closed Principle — new product types can be added by extending the factory without modifying existing client code
+- D) Interface Segregation Principle — clients depend only on the narrow factory interface they use
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why A is incorrect: While factories do focus on creation, the primary SOLID connection for Factory Method is extensibility without modification — the Open/Closed Principle.
+  - Why B is incorrect: Liskov Substitution governs inheritance substitutability in general; it is not the defining principle embodied by Factory Method's design benefit.
+  - Why D is incorrect: Interface Segregation concerns splitting large interfaces into smaller, focused ones — not the factory extension mechanism.
+
+---
+
+### Question 13 (5 points)
+
+A Scrum team notices that their test suite runs for 45 minutes and that most of the time is spent setting up the God Object class for each test. Which technical consequence of the God Object does this illustrate?
+
+- A) Thread-safety violations — the God Object creates race conditions in the test runner
+- B) Poor testability — testing any small behavior requires constructing the entire class with all its dependencies
+- C) Observer overloading — the God Object publishes too many events during test execution
+- D) Adapter failure — the God Object cannot be adapted to the testing framework's interface
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: Thread safety is a concern for Singleton in concurrent environments; the scenario describes slow test setup, not race conditions.
+  - Why C is incorrect: Observer pattern overloading is not a property of the God Object anti-pattern; the God Object accumulates responsibilities, not event subscriptions.
+  - Why D is incorrect: Adapter incompatibility is about interface mismatches between components, not the cost of setting up a large class for testing.
+
+---
+
+### Question 14 (5 points)
+
+Which statement best describes the Facade pattern's relationship to the Scrum principle of simplicity?
+
+- A) Facade eliminates all complexity in the subsystem, making simple code even simpler
+- B) Facade hides complex subsystem interactions behind a simple interface, reducing cognitive load for callers without removing the underlying complexity
+- C) Facade replaces the subsystem with a simpler implementation in every Sprint
+- D) Facade is a behavioral pattern that simplifies communication between observers and subjects
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: Facade does not eliminate subsystem complexity — the subsystem remains fully intact. It only provides a simpler access point.
+  - Why C is incorrect: Facade does not replace or rewrite the subsystem each Sprint; it wraps existing complexity with a stable interface.
+  - Why D is incorrect: Facade is a structural pattern, not a behavioral one; it concerns composition and interface exposure, not object communication.
+
+---
+
+### Question 15 (5 points)
+
+A developer proposes adding a new sort algorithm as an additional `else if` branch inside an existing 200-line `sortData()` method. A colleague suggests using the Strategy pattern instead. What is the primary advantage of the Strategy approach?
+
+- A) Strategy prevents other developers from calling `sortData()` directly, enforcing encapsulation
+- B) Strategy extracts each algorithm into its own class, so new algorithms are added without modifying existing code, reducing regression risk
+- C) Strategy ensures only one sorting algorithm can be active per application session
+- D) Strategy automatically selects the best algorithm at compile time based on data size
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: Strategy does not restrict access to methods; it is about algorithm interchangeability, not access control.
+  - Why C is incorrect: Restricting to one instance is Singleton's concern; Strategy allows any algorithm to be active and swapped at runtime.
+  - Why D is incorrect: Strategy is a runtime pattern that requires explicit selection by the context; it does not perform automatic compile-time optimization.
+
+---
+
+### Question 16 (5 points)
+
+In the Observer pattern, what is the purpose of the `update()` method on the Observer interface?
+
+- A) It allows the Subject to push new state data to each Observer when the Subject's state changes
+- B) It allows the Observer to change the Subject's state on behalf of the user
+- C) It creates a new Observer instance whenever the Subject receives an update
+- D) It removes the Observer from the Subject's subscriber list after it receives a notification
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - Why B is incorrect: Observers react to Subject state changes; they do not modify the Subject's state (doing so would create circular coupling).
+  - Why C is incorrect: `update()` is called on existing Observer instances; it does not instantiate new objects.
+  - Why D is incorrect: `update()` delivers the notification; removal from the subscriber list is a separate operation (typically `unsubscribe()` or `removeObserver()`).
+
+---
+
+### Question 17 (5 points)
+
+Which of the following is a valid Scrum team action when a design pattern refactoring task is identified as necessary for the next Sprint's features?
+
+- A) Defer the refactoring indefinitely because design work should be completed before Sprint 1 in a dedicated design Sprint
+- B) Add the refactoring as a Product Backlog Item, let the Product Owner order it relative to other items, and include it in Sprint Planning when the team agrees it unblocks upcoming work
+- C) Have developers refactor the code after Sprint hours to avoid using Sprint capacity
+- D) Require the Scrum Master to approve all design pattern changes before implementation begins
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: The Scrum Guide does not prescribe a design Sprint. All work — including technical refactoring — is managed through the Product Backlog and Sprint cycle.
+  - Why C is incorrect: Asking developers to work after hours violates sustainable pace, one of Scrum's implicit values. Technical work is legitimate Sprint work.
+  - Why D is incorrect: The Scrum Master facilitates but does not approve or disapprove technical decisions; that authority belongs to the Developers.
+
+---
+
+### Question 18 (5 points)
+
+A Singleton class in a multi-threaded web application creates a new instance for each user request because the `getInstance()` method is not synchronized. Which Singleton characteristic is violated?
+
+- A) Single responsibility — the class is doing more than managing its own instance
+- B) Thread safety — simultaneous calls to `getInstance()` bypass the null check and create multiple instances
+- C) Open/Closed — adding new users requires modifying the Singleton class
+- D) Substitutability — subclasses of the Singleton cannot be used in place of the parent class
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: Single Responsibility relates to what a class does, not how many instances are created; this scenario is about concurrency, not scope of responsibility.
+  - Why C is incorrect: Open/Closed governs class modification for new behavior; adding users to a web application does not require modifying the Singleton class.
+  - Why D is incorrect: Liskov Substitution concerns subclass behavior compatibility; Singleton classically restricts subclassing, but the issue here is concurrent instance creation.
+
+---
+
+### Question 19 (5 points)
+
+Which of the following scenarios best demonstrates the Adapter pattern rather than the Decorator pattern?
+
+- A) Adding caching behavior to an existing database query object without modifying its class
+- B) Wrapping a legacy SOAP web service client with a method signature that the modern REST-based application expects
+- C) Stacking compression, encryption, and buffering on a network output stream
+- D) Providing a single startup method that initializes a complex set of interdependent services
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: Adding caching to an existing object without modifying it describes Decorator — new behavior wrapping an existing interface.
+  - Why C is incorrect: Stacking multiple behaviors on a stream object describes Decorator — composable, stackable behavioral additions.
+  - Why D is incorrect: A single startup method hiding internal complexity describes Facade — simplifying access to a complex subsystem.
+
+---
+
+### Question 20 (5 points)
+
+A Scrum Master says: "Our design patterns directly support the Agile Manifesto." Which Manifesto principle provides the strongest direct support for this claim?
+
+- A) Principle 1 — our highest priority is to satisfy the customer through early and continuous delivery of valuable software
+- B) Principle 6 — the most efficient method of conveying information is face-to-face conversation
+- C) Principle 9 — continuous attention to technical excellence and good design enhances agility
+- D) Principle 12 — at regular intervals, the team reflects on how to become more effective
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why A is incorrect: Principle 1 is about delivery cadence and customer satisfaction — it supports Agile broadly but does not specifically mention design quality or technical practices.
+  - Why B is incorrect: Principle 6 concerns communication methods within the team — it is unrelated to software design quality or patterns.
+  - Why D is incorrect: Principle 12 supports the Retrospective as an improvement mechanism — it relates to process improvement, not specifically to the technical quality of design choices.
+
+---

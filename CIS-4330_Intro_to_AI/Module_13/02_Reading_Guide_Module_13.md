@@ -178,3 +178,23 @@ learn.microsoft.com/en-us/training/modules/introduction-to-data-for-machine-lear
 - [ ] Complete the Module 13 quiz.
 - [ ] Complete the Module 13 lab.
 - [ ] Post initial discussion by Wednesday 11:59 PM and respond to two peers by Sunday 11:59 PM.
+
+---
+
+## Section 7: Supplemental Resources
+
+**1. scikit-learn User Guide — Preprocessing data**
+<https://scikit-learn.org/stable/modules/preprocessing.html>
+The official scikit-learn documentation for StandardScaler, MinMaxScaler, OneHotEncoder, and imputation strategies. Provides runnable Python examples for every technique covered in Module 13 and is directly applicable to the lab's feature engineering exercises.
+
+**2. Towards Data Science — A Comprehensive Guide to Data Preprocessing**
+<https://towardsdatascience.com/a-comprehensive-guide-to-data-preprocessing-3bfbb4b0c6c7>
+A practical walkthrough of handling missing values, encoding categorical variables, scaling, and detecting leakage with pandas and scikit-learn. Bridges the conceptual framework in the reading guide to working code patterns.
+
+**3. Kaggle Learn — Feature Engineering**
+<https://www.kaggle.com/learn/feature-engineering>
+Kaggle's free micro-course on feature engineering, covering mutual information, creating interaction features, target encoding, and PCA for feature construction. Includes interactive notebooks executable in the browser — no local setup required.
+
+---
+
+End of Reading Guide — Module 13

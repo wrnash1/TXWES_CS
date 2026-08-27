@@ -42,7 +42,7 @@ A web API is called "RESTful" when it follows the REST constraints:
 
 ### URL Design Rules
 
-```
+```text
 # GOOD: plural nouns, hierarchical, clean
 GET  /api/users
 POST /api/users
@@ -58,7 +58,7 @@ POST /api/deleteUser/42
 GET  /api/user       (should be /users)
 GET  /api/user/42    (should be /users/42)
 
-# Filtering and pagination — use query parameters, not new paths
+# Filtering and pagination -- use query parameters, not new paths
 GET  /api/products?category=electronics&sort=price&order=asc
 GET  /api/posts?page=3&limit=25&author=42
 GET  /api/orders?status=pending&from=2025-01-01
@@ -82,18 +82,18 @@ GET  /api/orders?status=pending&from=2025-01-01
 
 A method is safe if it does not modify server state. A method is idempotent if calling it N times produces the same server state as calling it once.
 
-```
-POST /api/orders — creates a new order each call → NOT idempotent
+```text
+POST /api/orders -- creates a new order each call -> NOT idempotent
                    calling twice creates two orders
 
-PUT /api/orders/42 — replaces order 42 with the request body
-                     calling twice produces the same final state → IDEMPOTENT
+PUT /api/orders/42 -- replaces order 42 with the request body
+                     calling twice produces the same final state -> IDEMPOTENT
 
-DELETE /api/users/7 — removes user 7
+DELETE /api/users/7 -- removes user 7
                       first call removes the user; subsequent calls find nothing
-                      the final state (user 7 is gone) is the same → IDEMPOTENT
+                      the final state (user 7 is gone) is the same -> IDEMPOTENT
 
-GET /api/users — reads data without changing it → SAFE AND IDEMPOTENT
+GET /api/users -- reads data without changing it -> SAFE AND IDEMPOTENT
 ```
 
 ---
@@ -212,7 +212,7 @@ On the server, the idempotency key is stored with the result. If the same key ar
 
 APIs change over time. Versioning allows clients to use a stable contract while new versions are developed.
 
-```
+```text
 # URL versioning (most common)
 GET /api/v1/users
 GET /api/v2/users
@@ -244,7 +244,7 @@ URL versioning is recommended for REST APIs because it is explicit, visible, and
 
 ## 9. REST API Design Checklist
 
-```
+```text
 Resource naming:
   [ ] URLs use plural nouns (not verbs)
   [ ] IDs are in the path, not the query string
@@ -303,3 +303,25 @@ Error responses:
 - [ ] Know the six REST architectural constraints
 - [ ] Understand idempotency keys and when to use them
 - [ ] Complete Lab 06 and Discussion 06 before the module deadline
+
+---
+
+## 12. Supplemental Resources
+
+The following free, open-access resources go deeper on Module 06 topics:
+
+**1. MDN Web Docs — HTTP response status codes**
+[https://developer.mozilla.org/en-US/docs/Web/HTTP/Status](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status)
+The complete reference for every HTTP status code grouped by class (1xx–5xx), with descriptions of when each code should be used — essential for implementing correct status codes in Express (Module 07) and API Gateway (Module 14).
+
+**2. REST API Tutorial — RESTful resource naming**
+[https://restfulapi.net/resource-naming/](https://restfulapi.net/resource-naming/)
+A concise guide covering noun-based URL design, plural vs. singular conventions, nested resource patterns, and the anti-patterns (verbs in URLs, RPC-style endpoints) that are tested in Lab 06 and REST design interviews.
+
+**3. HTTP Methods — Roy Fielding's dissertation (Chapter 5)**
+[https://ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm](https://ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm)
+The original academic source defining the six REST architectural constraints. Reading Chapter 5 provides the authoritative context for the stateless, cacheable, and uniform interface constraints covered in this module.
+
+**4. Stripe API Reference — Idempotency Keys**
+[https://stripe.com/docs/api/idempotent_requests](https://stripe.com/docs/api/idempotent_requests)
+Stripe's production documentation for idempotency keys — the real-world implementation of the POST idempotency pattern discussed in Section 6 of this reading guide, with code examples in multiple languages.

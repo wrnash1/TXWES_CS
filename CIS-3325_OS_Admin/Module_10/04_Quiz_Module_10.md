@@ -220,3 +220,235 @@ Distractor Analysis:
 - Why A is incorrect: The -N flag prevents executing a remote command, so no interactive shell is started. The -f flag runs the SSH process in the background. This command is specifically designed for tunnel-only operation.
 - Why C is incorrect: This SSH command is run from the local administrator's machine and connects outbound to jump.example.com. It does not configure or start any daemon on the remote server.
 - Why D is incorrect: The -L flag creates a local port forward, not a port scan. The tunnel forwards traffic; it does not scan or probe ports. Port scanning is done with tools like nmap, not SSH -L.
+
+---
+
+**Question 11**
+
+An administrator generates a new SSH key pair with:
+
+```
+ssh-keygen -t ed25519 -C "admin@corp.example.com"
+```
+
+They accept all defaults. Where are the private and public key files stored, and which file
+must be copied to the remote server?
+
+- A) Private key: /etc/ssh/id_ed25519 | Public key: /etc/ssh/id_ed25519.pub | Copy the private key.
+- B) Private key: ~/.ssh/id_ed25519 | Public key: ~/.ssh/id_ed25519.pub | Copy the public key (id_ed25519.pub).
+- C) Both keys are stored in ~/.ssh/id_ed25519 as a combined file | Copy the entire file.
+- D) Private key: ~/.ssh/id_ed25519 | Public key: ~/.ssh/id_ed25519.pub | Copy the private key.
+
+Correct Answer: B) Private key: ~/.ssh/id_ed25519 | Public key: ~/.ssh/id_ed25519.pub | Copy the public key (id_ed25519.pub).
+
+Distractor Analysis:
+
+- Why A is incorrect: /etc/ssh/ stores the host key pairs (used to identify the server), not user key pairs. User key pairs generated with ssh-keygen are stored in the user's home directory under ~/.ssh/ by default. Additionally, the private key must never be copied to a remote server.
+- Why C is incorrect: ssh-keygen always creates two separate files. The file without the .pub extension is the private key; the .pub file is the public key. They are never combined into a single file.
+- Why D is incorrect: The private key must remain on the client machine and must never be shared or copied to a remote server. Only the public key (id_ed25519.pub) is copied to the remote server's ~/.ssh/authorized_keys file.
+
+---
+
+**Question 12**
+
+A new junior administrator sets the permissions on their `~/.ssh/` directory as follows:
+
+```
+chmod 777 ~/.ssh/
+chmod 644 ~/.ssh/id_ed25519
+chmod 644 ~/.ssh/authorized_keys
+```
+
+SSH key authentication fails with "Permission denied (publickey)." What are the two
+permission errors and what are the correct values?
+
+- A) ~/.ssh/ must be 755 and id_ed25519 must be 600. authorized_keys at 644 is acceptable.
+- B) ~/.ssh/ must be 700, id_ed25519 must be 600, and authorized_keys must be 600 or 644.
+- C) ~/.ssh/ must be 700 and id_ed25519 must be 400. authorized_keys permissions do not matter.
+- D) All three files should be 600. SSH ignores directory permissions entirely.
+
+Correct Answer: B) ~/.ssh/ must be 700, id_ed25519 must be 600, and authorized_keys must be 600 or 644.
+
+Distractor Analysis:
+
+- Why A is incorrect: ~/.ssh/ at 755 allows group and others to read the directory listing. SSH enforces strict permission checks and will reject connections if the .ssh directory is accessible by group or other. The directory must be 700 (owner only).
+- Why C is incorrect: While 400 (read-only) is more restrictive than 600, the key requirement is that no group or world permissions are set on private keys. SSH accepts both 400 and 600 for private keys. However, authorized_keys permissions do matter — SSH will reject an authorized_keys file that is group-writable.
+- Why D is incorrect: SSH does not ignore directory permissions. The sshd daemon explicitly checks that ~/.ssh/ is not writable by group or other, and that the authorized_keys file is not world-writable. These checks are a core security feature of SSH.
+
+---
+
+**Question 13**
+
+An administrator adds the following to `~/.ssh/config`:
+
+```
+Host webprod
+    HostName 10.50.1.100
+    User deploy
+    Port 2222
+    IdentityFile ~/.ssh/deploy_ed25519
+```
+
+Which command uses this configuration block to connect?
+
+- A) ssh -i ~/.ssh/deploy_ed25519 deploy@10.50.1.100 -p 2222
+- B) ssh webprod
+- C) ssh -F ~/.ssh/config webprod
+- D) ssh --config webprod
+
+Correct Answer: B) ssh webprod
+
+Distractor Analysis:
+
+- Why A is incorrect: This command would work, but it does not use the config file. The question asks which command uses the configuration block. Option B is shorter and does use the config file, making it the correct answer to the specific question asked.
+- Why C is incorrect: The -F flag specifies an alternate config file location. ~/.ssh/config is already the default location, so -F is redundant but would technically work. However, the simplest and correct answer for using the default config is option B without any flags.
+- Why D is incorrect: There is no --config flag in the ssh command. The long-form equivalent of -F is not --config. This is a distractor testing whether students know the actual ssh flag syntax.
+
+---
+
+**Question 14**
+
+After adding a server to `~/.ssh/known_hosts`, an administrator reinstalls the operating
+system on that server and tries to SSH to it. They receive a warning:
+
+```
+WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!
+```
+
+What is the correct interpretation and action?
+
+- A) The server's IP address has changed. Update /etc/hosts to reflect the new address.
+- B) The server's host key changed because the OS was reinstalled. Remove the old entry from known_hosts with ssh-keygen -R hostname, then reconnect.
+- C) The SSH client has been compromised. Reinstall the SSH client package.
+- D) The warning is cosmetic and can be safely dismissed by pressing Enter.
+
+Correct Answer: B) The server's host key changed because the OS was reinstalled. Remove the old entry from known_hosts with ssh-keygen -R hostname, then reconnect.
+
+Distractor Analysis:
+
+- Why A is incorrect: The host identification warning is about the host key (a cryptographic key the server presents to prove its identity), not about the IP address. An IP address change alone does not generate this warning; only a changed host key does.
+- Why C is incorrect: The warning originates from the SSH client detecting a mismatch between the stored host key and the key presented by the server. This is an expected and normal event after an OS reinstall. It does not indicate that the SSH client itself is compromised.
+- Why D is incorrect: This warning is a critical security notice. If the host key changed unexpectedly (not due to a known reinstall), it could indicate a man-in-the-middle attack. The warning must not be dismissed without verifying the cause. The correct action is to remove the stale entry and verify the new key fingerprint.
+
+---
+
+**Question 15**
+
+Which `sshd_config` directive and value combination provides the highest security benefit
+for a server that uses only key-based authentication?
+
+- A) PermitRootLogin yes
+- B) PasswordAuthentication no
+- C) MaxAuthTries 6
+- D) X11Forwarding yes
+
+Correct Answer: B) PasswordAuthentication no
+
+Distractor Analysis:
+
+- Why A is incorrect: PermitRootLogin yes allows the root account to log in via SSH, which is a significant security risk. If an attacker compromises the root credential, they gain full unrestricted access. Best practice is to set PermitRootLogin no or PermitRootLogin prohibit-password.
+- Why C is incorrect: MaxAuthTries 6 allows six authentication attempts before disconnecting, which is the default value. Reducing it (e.g., to 3) improves security marginally, but setting it to 6 provides no improvement over the default. The highest single-directive security benefit comes from disabling password authentication entirely.
+- Why D is incorrect: X11Forwarding yes enables forwarding of X11 (graphical) sessions over SSH, which increases the attack surface. On a server with no GUI, this option should be set to no. Enabling it does not improve security.
+
+---
+
+**Question 16**
+
+An administrator runs `ssh-copy-id -i ~/.ssh/id_ed25519.pub labuser@192.168.1.50` and
+receives "Permission denied (publickey)." The remote server currently requires password
+authentication but the administrator's password is correct. What is the most likely cause?
+
+- A) The remote server already has a key in authorized_keys and is rejecting new keys.
+- B) PasswordAuthentication is set to no in the remote sshd_config, preventing ssh-copy-id from using a password to log in and write the key.
+- C) ssh-copy-id requires the -o StrictHostKeyChecking=no flag on first connection.
+- D) The key file id_ed25519.pub is corrupted. Regenerate the key pair.
+
+Correct Answer: B) PasswordAuthentication is set to no in the remote sshd_config, preventing ssh-copy-id from using a password to log in and write the key.
+
+Distractor Analysis:
+
+- Why A is incorrect: Having existing keys in authorized_keys does not prevent adding new keys. authorized_keys is an append-only file where each line is an independent authorized key. Multiple keys can coexist.
+- Why C is incorrect: -o StrictHostKeyChecking=no suppresses the host key verification prompt on first connection. It is not required for ssh-copy-id to function and does not affect the authentication method used to log in. The error here is about the login credential method, not host verification.
+- Why D is incorrect: A corrupted public key would produce a different error during key loading, not a "Permission denied (publickey)" message during login. The error described occurs before any key is processed, during the initial authentication step.
+
+---
+
+**Question 17**
+
+An administrator wants to use SSH agent forwarding to connect from their laptop through
+a jump server to an internal server without copying their private key to the jump server.
+Which combination of settings and flags is required?
+
+- A) Set ForwardAgent yes in ~/.ssh/config (or use ssh -A) on the initial connection to the jump server.
+- B) Copy the private key to the jump server's ~/.ssh/ directory and set permissions to 600.
+- C) Set AllowAgentForwarding no in the jump server's sshd_config to enable forwarding.
+- D) Use ssh -X to enable X11 forwarding, which also enables key forwarding.
+
+Correct Answer: A) Set ForwardAgent yes in ~/.ssh/config (or use ssh -A) on the initial connection to the jump server.
+
+Distractor Analysis:
+
+- Why B is incorrect: Copying the private key to the jump server defeats the purpose of agent forwarding and introduces a significant security risk. If the jump server is compromised, the private key is exposed. Agent forwarding was specifically designed to avoid this requirement.
+- Why C is incorrect: AllowAgentForwarding no in sshd_config disables agent forwarding on the server side. Setting it to no would prevent agent forwarding from working. The correct sshd_config setting to enable agent forwarding is AllowAgentForwarding yes (the default on most distributions).
+- Why D is incorrect: X11 forwarding (ssh -X) forwards graphical display connections. It is a completely separate mechanism from SSH agent forwarding and has no relationship to key forwarding. Enabling X11 forwarding does not enable or affect SSH agent forwarding.
+
+---
+
+**Question 18**
+
+An administrator runs `rsync -avz /var/www/html/ deploy@webserver:/var/www/html/` and
+notices that files deleted locally still exist on the remote server after the sync. What
+flag must be added to mirror deletions?
+
+- A) rsync -avz --remove-source-files
+- B) rsync -avz --delete
+- C) rsync -avz --force
+- D) rsync -avz --checksum
+
+Correct Answer: B) rsync -avz --delete
+
+Distractor Analysis:
+
+- Why A is incorrect: --remove-source-files deletes the source files after they have been successfully transferred. This is used for moving files, not for keeping a remote destination in sync with a local source. It would delete your local files, not mirror deletions to the remote.
+- Why C is incorrect: --force in rsync forces deletion of non-empty directories when used with --delete, but it does not by itself enable deletion of files on the destination. It is a modifier for --delete, not a standalone deletion flag.
+- Why D is incorrect: --checksum changes how rsync determines which files have changed, using MD5 checksums instead of file size and timestamp. It affects the file comparison algorithm, not whether deleted files on the source are removed from the destination.
+
+---
+
+**Question 19**
+
+A system administrator needs to copy an entire directory `/opt/backups/` from a remote
+server `backup01` to the local machine. Which `scp` command accomplishes this?
+
+- A) scp backup01:/opt/backups/ /local/destination/
+- B) scp -r backup01:/opt/backups/ /local/destination/
+- C) scp -R backup01:/opt/backups/ /local/destination/
+- D) scp --recursive backup01:/opt/backups/ /local/destination/
+
+Correct Answer: B) scp -r backup01:/opt/backups/ /local/destination/
+
+Distractor Analysis:
+
+- Why A is incorrect: Without the -r flag, scp only copies individual files. Attempting to copy a directory without -r will fail with an error such as "not a regular file."
+- Why C is incorrect: scp does not have a -R flag (capital R). The recursive flag is lowercase -r. This is a common mistake for users familiar with cp -R. Using an unrecognized flag would produce an error.
+- Why D is incorrect: scp does not support GNU-style long options like --recursive. The correct syntax uses short flags. This tests whether students know the actual scp flag syntax rather than assuming it matches other tools.
+
+---
+
+**Question 20**
+
+An administrator sets `PermitRootLogin prohibit-password` in `sshd_config`. What does
+this directive allow and prohibit?
+
+- A) Root login is completely disabled — neither password nor key-based root login is allowed.
+- B) Root login with a public key is permitted, but root login with a password is prohibited.
+- C) Root login with a password is permitted, but root login with a public key is prohibited.
+- D) Root login is allowed only from the localhost (127.0.0.1) network.
+
+Correct Answer: B) Root login with a public key is permitted, but root login with a password is prohibited.
+
+Distractor Analysis:
+
+- Why A is incorrect: PermitRootLogin no completely disables root login via SSH. PermitRootLogin prohibit-password is a middle ground that still allows key-based root authentication for emergency administrative use cases while preventing brute-force password attacks against the root account.
+- Why C is incorrect: The directive name prohibit-password makes clear that it is the password authentication method that is prohibited. Key-based authentication for root is still allowed. This is the intended use case for automated deployment systems that must SSH as root using keys.
+- Why D is incorrect: Restricting SSH by source IP address is done through AllowUsers with an @ restriction, /etc/hosts.allow (TCP Wrappers), or firewall rules — not through PermitRootLogin. The prohibit-password value has no effect on the source IP of the connection.

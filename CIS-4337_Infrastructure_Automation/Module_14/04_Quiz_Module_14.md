@@ -176,6 +176,166 @@ Why the distractors are wrong: **A** is wrong because active-active deploys the 
 
 ---
 
+### Question 11 — Answer: C
+
+A Terraform configuration has `required_providers` declaring the `aws` provider with `version = "~> 5.12.3"`. The current lock file records version `5.12.5`. A developer runs `terraform init`. What is the result?
+
+A. Terraform downloads version 5.12.3 because the constraint specifies that exact patch starting point.
+
+B. Terraform downloads the newest available 5.x version regardless of the lock file.
+
+C. Terraform uses version 5.12.5 as recorded in the lock file because `~> 5.12.3` allows `5.12.5` and the lock file version satisfies the constraint.
+
+D. Terraform fails because `5.12.5` is higher than `5.12.3` and does not exactly match.
+
+Why the distractors are wrong: **A** is wrong because `~>` is a range operator, not an exact match — `5.12.5` satisfies `~> 5.12.3`. **B** is wrong because `terraform init` without `-upgrade` does not override the lock file. **D** is wrong because `~> 5.12.3` means >= 5.12.3, < 5.13.0; version 5.12.5 is within this range and is valid.
+
+---
+
+### Question 12 — Answer: D
+
+A root module uses two aliased AWS providers: `aws` (default, us-east-1) and `aws.west` (us-west-2). A child module `module "app"` is called with `providers = { aws = aws.west }`. Inside the child module, all resource blocks reference only the default `aws` provider (no explicit `provider` meta-argument). What region do the child module's resources deploy to?
+
+A. us-east-1, because child modules always use the root module's default provider.
+
+B. Both us-east-1 and us-west-2, because the module inherits the parent's default and receives the aliased provider.
+
+C. Neither — the configuration fails because the child module does not declare a `required_providers` block.
+
+D. us-west-2, because the `providers` map remaps the child module's `aws` to `aws.west` from the parent, so all `aws` resources in the child use us-west-2.
+
+Why the distractors are wrong: **A** is wrong because the `providers` map overrides which provider instance the child module uses; child modules do not automatically inherit the parent's default. **B** is wrong because each resource has exactly one provider; the `providers` map replaces the child's default with the specified alias. **C** is wrong because child modules do not need their own `required_providers` — they inherit provider requirements from the calling configuration.
+
+---
+
+### Question 13 — Answer: B
+
+You have a Terraform configuration managing both AWS and Azure resources. The Azure `azurerm_virtual_network` resource needs to use a CIDR block that was determined as an output of an `aws_vpc` resource. Without any explicit `depends_on`, how does Terraform handle the ordering?
+
+A. Terraform creates both resources simultaneously because they belong to different providers.
+
+B. Terraform automatically creates the `aws_vpc` first because the `azurerm_virtual_network` references its output; the reference creates an implicit dependency.
+
+C. Terraform creates the `azurerm_virtual_network` first because Azure resources are alphabetically before AWS.
+
+D. Terraform requires an explicit `depends_on = [aws_vpc.main]` in the Azure resource because cross-provider dependencies are not tracked automatically.
+
+Why the distractors are wrong: **A** is wrong because Terraform evaluates dependencies across all providers in the same configuration; a reference between resources of different providers creates an implicit dependency. **C** is wrong because alphabetical order plays no role in Terraform's resource creation ordering — the dependency graph determines order. **D** is wrong because implicit dependencies from attribute references work across providers; `depends_on` is only needed when the dependency cannot be expressed as a reference.
+
+---
+
+### Question 14 — Answer: A
+
+`terraform init -upgrade` is run in a directory where `.terraform.lock.hcl` records `aws` version `5.8.0` and `required_providers` specifies `~> 5.0`. The newest available version satisfying `~> 5.0` is `5.15.2`. What does `-upgrade` do?
+
+A. It downloads version 5.15.2 and updates the lock file to record this new version and its content hashes.
+
+B. It downloads version 5.15.2 but does not change the lock file to preserve reproducibility.
+
+C. It fails because the lock file version and the constraint conflict.
+
+D. It upgrades the Terraform CLI to the latest version before downloading providers.
+
+Why the distractors are wrong: **B** is wrong because the entire purpose of `-upgrade` is to update both the downloaded provider AND the lock file to the new version. **C** is wrong because there is no conflict — `5.8.0` satisfies `~> 5.0` and so does `5.15.2`; `-upgrade` simply selects the newer one. **D** is wrong because `terraform init -upgrade` operates on provider plugins, not the Terraform CLI binary.
+
+---
+
+### Question 15 — Answer: C
+
+A team wants their Terraform configuration to use an exact provider version in CI to guarantee identical builds across all environments and prevent any automatic updates. Which constraint pattern achieves this?
+
+A. `version = "~> 5.12"` — prevents major and minor updates
+
+B. `version = ">= 5.12.0"` — allows any version 5.12.0 and above
+
+C. `version = "= 5.12.3"` — pins to exactly one version
+
+D. Committing `.terraform.lock.hcl` — the lock file guarantees the exact version without needing a pinned constraint
+
+Why the distractors are wrong: **A** is wrong because `~> 5.12` still allows patch updates (5.12.1, 5.12.5, etc.) and could return different provider binaries in different environments if the lock file is absent. **B** is wrong because `>= 5.12.0` allows any future version including major versions with breaking changes. **D** is partially correct but incomplete — without a pinned constraint, `terraform init -upgrade` can still update the lock file to a newer version, breaking the guarantee.
+
+---
+
+### Question 16 — Answer: B
+
+A Terraform plan output shows the resource address `module.west_app.aws_s3_bucket.main`. What does this address indicate?
+
+A. The resource was created with `count` and the index `west_app` references the second instance.
+
+B. The resource `aws_s3_bucket.main` was created by the child module called `west_app` in the root configuration.
+
+C. The resource is an aliased provider reference using the `west_app` alias.
+
+D. The resource is managed by Terraform Cloud workspace `west_app`.
+
+Why the distractors are wrong: **A** is wrong because count indices are numeric (e.g., `module.app[1]`), not string labels — `module.west_app` uses the module block name, not a count index. **C** is wrong because provider aliases appear in the provider block, not in resource addresses. **D** is wrong because Terraform Cloud workspace names do not appear in resource addresses.
+
+---
+
+### Question 17 — Answer: D
+
+Your organization prohibits deploying cloud resources to any region other than `us-east-2` due to data residency requirements. You are building a new Terraform module used by 15 different teams. What is the best way to enforce this constraint in the module itself?
+
+A. Add a comment in `variables.tf` warning engineers not to change the region.
+
+B. Set `default = "us-east-2"` on the `region` variable so it defaults correctly.
+
+C. Hard-code the region inside the provider block in the module.
+
+D. Add a `validation` block to the region input variable that enforces `var.region == "us-east-2"`.
+
+Why the distractors are wrong: **A** is wrong because comments are not enforced — they rely on engineers reading and following guidance. **B** is wrong because a default can be overridden with `-var` or `.tfvars` files; it does not prevent a different value from being passed. **C** is wrong because hard-coding provider configuration inside a module makes the module inflexible and couples it to a specific account credential model — provider configuration should be passed in from the calling configuration.
+
+---
+
+### Question 18 — Answer: A
+
+A company is evaluating multi-cloud to achieve "cloud provider independence" and avoid vendor lock-in. Their primary workload uses AWS Lambda, AWS Aurora Serverless, and CloudFront. What is the most accurate assessment of this strategy?
+
+A. The workloads are already deeply cloud-specific; achieving true portability would require replacing them with generic compute, open-source databases, and generic CDN services — which would sacrifice the features that make them valuable.
+
+B. Terraform's cloud-agnostic HCL syntax means the code is already portable and can be applied to any cloud provider.
+
+C. The multi-cloud strategy is unnecessary because AWS guarantees service availability.
+
+D. Switching to Azure would achieve the same functionality with equivalent managed services at lower cost.
+
+Why the distractors are wrong: **B** is wrong because HCL is syntactically portable but the resource types (`aws_lambda_function`, `aws_rds_cluster`) are cloud-specific; changing clouds requires rewriting the Terraform code and the application. **C** is wrong because provider availability concerns are a legitimate driver for multi-cloud consideration — this distractor avoids the real question of whether the strategy achieves portability. **D** is wrong because equivalent managed services exist but the migration cost is high and the result is still vendor lock-in, just on a different vendor.
+
+---
+
+### Question 19 — Answer: C
+
+A Terraform configuration has three providers: `aws`, `azurerm`, and `google`. Running `terraform init` downloads provider plugins. Where are these plugins stored?
+
+A. In the system-wide Terraform binary directory alongside the `terraform` executable.
+
+B. In `~/.terraform.d/plugins/` in the user's home directory, shared across all configurations.
+
+C. In `.terraform/providers/` within the current working directory, specific to this configuration.
+
+D. In the operating system's package manager cache (e.g., `/usr/lib/terraform-providers/`).
+
+Why the distractors are wrong: **A** is wrong because provider plugins are not stored alongside the CLI binary; they are downloaded per-project. **B** is wrong because `.terraform.d/plugins/` is a legacy caching location from older Terraform versions; current Terraform downloads providers to `.terraform/providers/` in the project directory. **D** is wrong because Terraform manages its own plugin downloads independently of the OS package manager.
+
+---
+
+### Question 20 — Answer: B
+
+An enterprise Terraform configuration assumes different IAM roles for a networking account (111111111111) and a workloads account (222222222222). The pipeline runner's initial identity has permission to assume both roles. When Terraform provisions an `aws_vpc` that uses `provider = aws.networking` and an `aws_instance` that uses `provider = aws.workloads`, what AWS API calls happen at apply time?
+
+A. A single STS AssumeRole call with both role ARNs combined into one request.
+
+B. Two separate STS AssumeRole calls — one per provider instance — with each provider receiving its own temporary credentials scoped to its respective role.
+
+C. No STS calls — `assume_role` in the provider block is evaluated during plan only and credentials are cached.
+
+D. STS calls happen only for the first provider block defined in the configuration; subsequent provider blocks reuse the same credentials.
+
+Why the distractors are wrong: **A** is wrong because AWS STS does not support multi-role assumption in a single API call; each `AssumeRole` call targets exactly one role ARN. **C** is wrong because temporary credentials from STS have a TTL; new credentials are obtained as needed during apply. **D** is wrong because each aliased provider instance maintains its own authentication state and independently assumes its configured role.
+
+---
+
 ## Answer Key
 
 | Question | Answer |
@@ -190,6 +350,16 @@ Why the distractors are wrong: **A** is wrong because active-active deploys the 
 | 8 | B |
 | 9 | D |
 | 10 | C |
+| 11 | C |
+| 12 | D |
+| 13 | B |
+| 14 | A |
+| 15 | C |
+| 16 | B |
+| 17 | D |
+| 18 | A |
+| 19 | C |
+| 20 | B |
 
 ---
 

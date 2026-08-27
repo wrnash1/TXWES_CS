@@ -394,3 +394,16 @@ Answer these before taking the quiz:
 - firewalld zones provide a clean abstraction over iptables; always reload after permanent changes.
 - SSH client configuration in `~/.ssh/config` improves both productivity and security posture.
 - Systematic layered troubleshooting (physical → application) is the most efficient diagnostic approach.
+
+---
+
+## 9. Supplemental Resources
+
+**1. [Red Hat — Getting Started with NetworkManager and nmcli](https://www.redhat.com/sysadmin/nmcli-linux-networking)**
+A practical Red Hat sysadmin article walking through the most common NetworkManager and nmcli workflows: creating and modifying connection profiles, configuring static IPs, adding DNS servers, and managing bonds and VLANs. Directly supports the Module 11 lab tasks and provides the persistent-configuration context that `ip addr add` (temporary) commands cannot.
+
+**2. [Arch Linux Wiki — firewalld](https://wiki.archlinux.org/title/firewalld)**
+A comprehensive reference for firewalld zones, services, ports, and rich rules. Covers runtime vs. permanent rule management, the zone-to-interface assignment model, masquerading for NAT, and the `direct` interface for raw iptables rules. The Arch Wiki is distribution-agnostic and explains concepts more deeply than vendor-specific docs — useful for understanding why firewalld is designed the way it is.
+
+**3. [SSH Config File for Client — ssh.com Documentation](https://www.ssh.com/academy/ssh/config)**
+A detailed reference for the `~/.ssh/config` and `/etc/ssh/ssh_config` client configuration files. Covers all commonly used directives: `Host`, `HostName`, `User`, `IdentityFile`, `IdentitiesOnly`, `ProxyJump`, `ForwardAgent`, `StrictHostKeyChecking`, and `ServerAliveInterval`. Understanding the SSH config file is essential for both the lab exercises and real-world sysadmin work involving multi-server environments.

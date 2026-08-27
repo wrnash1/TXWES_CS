@@ -265,3 +265,19 @@ The Foundation exam focuses most heavily on Service Management Practices and a s
 * [ ] Take the Module 01 Quiz.
 * [ ] Post your initial response in the Module 01 Discussion by Wednesday at 11:59 PM.
 * [ ] Respond to at least two classmates by Sunday at 11:59 PM.
+
+---
+
+## 14. Supplemental Resources
+
+**1. AXELOS — ITIL 4 Foundation Guidance**
+<https://www.axelos.com/certifications/itil-service-management/itil-4-foundation>
+The official AXELOS page for the ITIL 4 Foundation certification. Includes the official syllabus, exam format details, and links to the ITIL 4 glossary. Useful for verifying exact terminology before exams.
+
+**2. ITIL 4 Official Glossary (PDF)**
+<https://www.axelos.com/resource-hub/blog/itil-4-glossary>
+A downloadable reference of all ITIL 4 terms and their official definitions. Use this alongside the module reading guide to check definitions and confirm the exact ITIL 4 wording for utility, warranty, outcome, output, and service.
+
+**3. ServiceNow — What Is ITSM?**
+<https://www.servicenow.com/products/itsm/what-is-itsm.html>
+A practitioner-focused introduction to IT service management from the industry's leading ITSM platform vendor. Bridges the gap between framework theory (ITIL 4) and how ITSM concepts are implemented in real enterprise software tools.

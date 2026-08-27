@@ -478,7 +478,31 @@ Watch Episode 4 of the [Python for Everybody Course Playlist](https://www.youtub
 
 ---
 
-## 8. Study Checklist
+## 8. Supplemental Resources
+
+**1. Official Python 3 Docs — Python Scopes and Namespaces**
+[https://docs.python.org/3/tutorial/classes.html#python-scopes-and-namespaces](https://docs.python.org/3/tutorial/classes.html#python-scopes-and-namespaces)
+The authoritative description of LEGB, the `global` and `nonlocal` keywords, and namespace lifetimes. This section is used directly in PCAP exam question construction — every scope rule tested on the exam is described here.
+
+**2. Official Python 3 Docs — sys.getrecursionlimit()**
+[https://docs.python.org/3/library/sys.html#sys.getrecursionlimit](https://docs.python.org/3/library/sys.html#sys.getrecursionlimit)
+Documents the default recursion limit (1000), how to check it with `sys.getrecursionlimit()`, and how to change it with `sys.setrecursionlimit(n)`. Includes a warning about CPython's lack of tail-call optimization.
+
+**3. Real Python — Understanding Scope in Python (LEGB Rule)**
+[https://realpython.com/python-scope-legb-rule/](https://realpython.com/python-scope-legb-rule/)
+A comprehensive free article walking through all four LEGB levels with diagrams, the `global` and `nonlocal` keywords, and closure capture semantics. The section on the closure-in-loop trap is directly PCAP-relevant.
+
+**4. Python for Everybody — Chapter 4: Functions**
+[https://www.py4e.com/html3/04-functions](https://www.py4e.com/html3/04-functions)
+Free textbook chapter covering function definitions, scope, and variable lifetime with worked examples and self-check exercises.
+
+**5. Real Python — Thinking Recursively in Python**
+[https://realpython.com/python-thinking-recursively/](https://realpython.com/python-thinking-recursively/)
+A free article explaining how to decompose problems into base case and recursive case, with examples including factorial, Fibonacci, and binary search. Includes a discussion of Python's recursion limit and when to prefer iteration.
+
+---
+
+## 9. Study Checklist
 
 - [ ] Watch the Module 09 video lecture by Professor Nash.
 - [ ] Read the High-Yield Glossary — especially LEGB, nonlocal, closures, recursion, and RecursionError.

@@ -436,3 +436,19 @@ Application uses secret to connect to Azure SQL Database
 - Management Groups: learn.microsoft.com/en-us/azure/governance/management-groups/overview
 - Microsoft Defender for Cloud: learn.microsoft.com/en-us/azure/defender-for-cloud/defender-for-cloud-introduction
 - Azure Key Vault: learn.microsoft.com/en-us/azure/key-vault/general/overview
+
+---
+
+## 9. Supplemental Resources
+
+**1. Microsoft Learn — Azure role-based access control (RBAC) documentation**
+https://learn.microsoft.com/en-us/azure/role-based-access-control/overview
+Complete RBAC reference including built-in role definitions, scope hierarchy, additive permissions model, deny assignments, and the difference between Azure RBAC and Microsoft Entra ID roles — the most tested identity topic on AZ-900 and AZ-104.
+
+**2. Microsoft Learn — Azure Policy overview**
+https://learn.microsoft.com/en-us/azure/governance/policy/overview
+Covers all policy effects (Audit, Deny, Append, Modify, DeployIfNotExists, AuditIfNotExists), initiative definitions (policy sets), compliance reporting, remediation tasks, and policy inheritance through Management Groups.
+
+**3. Microsoft Learn — Microsoft Entra Conditional Access documentation**
+https://learn.microsoft.com/en-us/entra/identity/conditional-access/overview
+Explains the Conditional Access policy structure (Assignments: users/apps/conditions; Access controls: grant/session), named locations, sign-in risk conditions, device compliance requirements, and the relationship between Security Defaults and Conditional Access policies.

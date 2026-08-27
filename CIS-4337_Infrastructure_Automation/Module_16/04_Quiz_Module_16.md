@@ -176,22 +176,6 @@ Why the distractors are wrong: **A** is wrong because while `terraform taint` ac
 
 ---
 
-### Question 11 — Answer: D
-
-A module block in a Terraform configuration has `for_each = var.environments`. How is the module instance for the key `"prod"` addressed in outputs and other references?
-
-A. `module.environments.prod`
-
-B. `module.environments["prod"].output_name`
-
-C. `module.prod.output_name`
-
-D. `module.environments["prod"].output_name`
-
-Why the distractors are wrong: **A** is wrong because module outputs require specifying the output name — `module.environments.prod` is incomplete and would not reference any value. **B** is the same as D and is correct. (Note: Both B and D are correct — this is intentional to test recognition of the full address syntax.) **C** is wrong because the module block is named `environments`, not `prod` — `for_each` keys do not become part of the module name, they become the index.
-
-Wait — reviewing this question: B and D are identical. Let me distinguish them properly.
-
 ### Question 11 — Answer: B
 
 A module block named `app` in a Terraform configuration has `for_each = var.environments`. The module has an output named `endpoint`. How do you reference the endpoint output for the `"prod"` environment from the root module?

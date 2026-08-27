@@ -154,6 +154,24 @@ Tip 8: Design pattern work does not violate Scrum's principle of working softwar
 
 ---
 
+## 9. Supplemental Resources
+
+The following free, open-access resources go deeper on Module 11 topics:
+
+**1. "Design Patterns: Elements of Reusable Object-Oriented Software" — Gang of Four Overview (Refactoring.Guru)**
+<https://refactoring.guru/design-patterns>
+A comprehensive free reference for all 23 Gang of Four design patterns with diagrams, code examples in multiple languages, and real-world use cases. Covers Creational, Structural, and Behavioral categories with clear explanations of the problem each pattern solves. The site also includes an anti-pattern catalog.
+
+**2. "Software Design Patterns" — SourceMaking**
+<https://sourcemaking.com/design_patterns>
+Free in-depth pattern descriptions with UML diagrams and implementation guidance. Particularly strong on showing when NOT to use a pattern — helping developers avoid over-engineering. Includes the full Gang of Four catalog plus architectural patterns.
+
+**3. "Catalog of Refactoring" — Martin Fowler**
+<https://refactoring.guru/refactoring/catalog>
+A free catalog of code refactoring techniques closely related to design patterns. Covers how to move from a God Object to well-structured classes using specific named refactoring operations. Directly supports the anti-pattern decomposition work in this module.
+
+---
+
 ## 8. Study Checklist
 
 - [ ] State the three Gang of Four pattern categories and give two pattern examples for each

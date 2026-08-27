@@ -179,3 +179,17 @@ Use ELT when:
 
 - Official exam objectives: comptia.org (search "Data+ DA0-001 exam objectives")
 - Professor Messer's free study guides: professormesser.com
+
+## 9. Supplemental Resources
+
+**1. Mode Analytics SQL Tutorial — Intermediate SQL**
+<https://mode.com/sql-tutorial/introduction-to-sql>
+A free, browser-based SQL course covering JOINs, GROUP BY, HAVING, and subqueries with real datasets. Directly reinforces the relational database and ETL concepts in this module.
+
+**2. dbt (data build tool) — What is ELT? (Official Documentation)**
+<https://docs.getdbt.com/terms/elt>
+The team behind the most widely used ELT transformation tool explains the ELT pattern, its advantages over ETL, and when to use each. Practical and concise.
+
+**3. Kimball Group — Star Schema in Depth**
+<https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/>
+Ralph Kimball's dimensional modeling techniques are the industry standard for data warehouse design. This page covers star schema, snowflake schema, fact tables, and dimension tables with authoritative depth.

@@ -235,26 +235,26 @@ router.post('/', requireFields(['name', 'email']), async (req, res, next) => {
 
 ### 4.3 Middleware Execution Order
 
-```
+```text
 Request arrives
      |
-     ▼
-app.use(helmet())          ← Security headers added to res
+     v
+app.use(helmet())          <- Security headers added to res
      |
-     ▼
-app.use(cors())            ← CORS headers added
+     v
+app.use(cors())            <- CORS headers added
      |
-     ▼
-app.use(express.json())    ← req.body populated
+     v
+app.use(express.json())    <- req.body populated
      |
-     ▼
-app.use('/api', router)    ← route matched; handler runs
+     v
+app.use('/api', router)    <- route matched; handler runs
      |
-     ▼
-app.use(notFound)          ← runs if no route matched
+     v
+app.use(notFound)          <- runs if no route matched
      |
-     ▼
-app.use(errorHandler)      ← runs if any middleware called next(err)
+     v
+app.use(errorHandler)      <- runs if any middleware called next(err)
 ```
 
 ---
@@ -346,18 +346,18 @@ router.get('/:id', asyncHandler(async (req, res) => {
 
 ### 6.1 Recommended Folder Layout
 
-```
+```text
 project-root/
-├── app.js              ← Express setup; export app; no listen()
-├── server.js           ← require('./app').listen(PORT)
-├── routes/             ← Router files; define route handlers
-├── controllers/        ← Handler logic (optional for larger apps)
-├── middleware/         ← Custom middleware functions
-├── utils/              ← Shared utilities; error classes; async wrapper
-├── models/             ← Database interaction layer
-├── tests/              ← API and unit tests
-├── .env                ← Local config; never commit
-├── .env.example        ← Template with placeholder values; commit this
+├── app.js              <- Express setup; export app; no listen()
+├── server.js           <- require('./app').listen(PORT)
+├── routes/             <- Router files; define route handlers
+├── controllers/        <- Handler logic (optional for larger apps)
+├── middleware/         <- Custom middleware functions
+├── utils/              <- Shared utilities; error classes; async wrapper
+├── models/             <- Database interaction layer
+├── tests/              <- API and unit tests
+├── .env                <- Local config; never commit
+├── .env.example        <- Template with placeholder values; commit this
 ├── .gitignore
 └── package.json
 ```
@@ -438,3 +438,25 @@ exports.handler = async (event, context) => {
 - [ ] Separate `app.js` (setup) from `server.js` (listen)
 - [ ] Configure `cors`, `helmet`, and `morgan` middleware
 - [ ] Explain the relationship between Express route handlers and AWS Lambda handlers
+
+---
+
+## 9. Supplemental Resources
+
+The following free, open-access resources go deeper on Module 11 topics:
+
+**1. Node.js Official Documentation — `path` module**
+[https://nodejs.org/api/path.html](https://nodejs.org/api/path.html)
+The complete `path` module API reference covering `path.join`, `path.resolve`, `path.dirname`, `path.basename`, and cross-platform path separator handling — directly aligned to the `path.join(__dirname, ...)` pattern used throughout Lab 11.
+
+**2. Express.js Official Guide — Error Handling**
+[https://expressjs.com/en/guide/error-handling.html](https://expressjs.com/en/guide/error-handling.html)
+The authoritative Express documentation on writing error-handling middleware, the four-parameter `(err, req, res, next)` signature, forwarding errors with `next(err)`, and the async error handling pattern — covers all concepts in Section 5 of this guide.
+
+**3. npm — helmet documentation**
+[https://www.npmjs.com/package/helmet](https://www.npmjs.com/package/helmet)
+The official `helmet` package documentation listing all security headers it sets by default and the configuration options for each — directly relevant to the `app.use(helmet())` call in `app.js` and the security header concepts tested in the quiz.
+
+**4. npm — morgan documentation**
+[https://www.npmjs.com/package/morgan](https://www.npmjs.com/package/morgan)
+The official `morgan` HTTP request logger documentation covering predefined formats (`dev`, `combined`, `tiny`), custom token definitions, and writing to a file stream — aligns to the `morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev')` pattern in the lab.

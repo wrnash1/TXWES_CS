@@ -268,3 +268,25 @@ When semantic HTML elements are not sufficient, ARIA (Accessible Rich Internet A
 - [ ] Understand why Open Graph image URLs must be absolute paths
 - [ ] Complete Lab 01 and pass W3C Nu HTML Checker with zero errors
 - [ ] Complete Quiz 01 and Discussion 01 before the module deadline
+
+---
+
+## 11. Supplemental Resources
+
+The following free, open-access resources go deeper on Module 01 topics:
+
+**1. MDN Web Docs — HTML elements reference**
+[https://developer.mozilla.org/en-US/docs/Web/HTML/Element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element)
+The complete reference for every HTML5 element, including permitted content models, accessibility roles, and usage examples. Bookmark this — it is the authoritative source for element semantics.
+
+**2. MDN Web Docs — Semantics in HTML**
+[https://developer.mozilla.org/en-US/docs/Glossary/Semantics#semantics_in_html](https://developer.mozilla.org/en-US/docs/Glossary/Semantics#semantics_in_html)
+A focused explainer on why semantic markup matters, with comparisons between semantic and non-semantic approaches and their impact on accessibility and SEO.
+
+**3. W3C Web Content Accessibility Guidelines (WCAG) 2.1 — Quick Reference**
+[https://www.w3.org/WAI/WCAG21/quickref/](https://www.w3.org/WAI/WCAG21/quickref/)
+The official WCAG 2.1 quick reference filterable by principle (POUR) and conformance level. Use this when auditing pages for Level AA compliance requirements covered in this module.
+
+**4. Google Search Central — Beginner's Guide to SEO**
+[https://developers.google.com/search/docs/fundamentals/seo-starter-guide](https://developers.google.com/search/docs/fundamentals/seo-starter-guide)
+Google's official starter guide covering title tags, meta descriptions, structured data, and how Googlebot crawls and indexes HTML pages — directly applicable to the SEO concepts in this module.

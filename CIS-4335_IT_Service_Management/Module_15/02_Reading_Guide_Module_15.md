@@ -236,3 +236,19 @@ SRE connects to ITIL 4 in several ways. SLOs map to ITIL 4's Service Level Manag
 6. Why do organizational silos create delivery problems, and how do DevOps and ITIL 4 both address this?
 
 7. What is the value-added ratio, and why is it typically much lower than organizations expect?
+
+---
+
+## Supplemental Resources
+
+**1. DORA — State of DevOps Report (Annual)**
+<https://dora.dev/research/>
+The primary source for DevOps research, including the DORA Four Keys metrics and the Elite/High/Medium/Low performance tiers. Published annually by the DORA research program (now part of Google). Essential reading for understanding how Deployment Frequency, Lead Time for Changes, Change Failure Rate, and Time to Restore Service are defined, measured, and used for organizational benchmarking.
+
+**2. Google SRE Book — Service Level Objectives**
+<https://sre.google/sre-book/service-level-objectives/>
+The foundational text on SLOs and error budgets from Google's Site Reliability Engineering book, freely available online. Covers how to define SLOs, calculate error budgets, and use error budget policy to govern the trade-off between deployment velocity and service reliability — directly relevant to this module's error budget concepts.
+
+**3. Mik Kersten — Project to Product: Value Stream Mapping in Technology**
+<https://projecttoproduct.org>
+Companion resource to the Project to Product book, which applies Value Stream Mapping to technology delivery. Covers flow metrics, value stream identification, and the transition from project-centric to product-centric IT delivery models. Provides practical context for the VSM and flow concepts covered in this module.

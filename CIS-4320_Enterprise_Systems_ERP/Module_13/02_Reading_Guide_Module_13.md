@@ -282,3 +282,19 @@ Complete before attempting the quiz:
 - Complete Lab 13.
 - Post to Discussion Forum 13 by Wednesday at 11:59 PM.
 - Complete Quiz 13 (10 questions).
+
+---
+
+## 9. Supplemental Resources
+
+**1. Salesforce Trailhead — Data Security**
+<https://trailhead.salesforce.com/content/learn/modules/data_security>
+Official Salesforce learning module covering the four-layer security model: Profiles, Organization-Wide Defaults, Role Hierarchy, and Sharing Rules. Directly maps to the Salesforce security configuration concepts tested in this module's quiz and Lab 13, including OWD settings, Permission Sets, and Field-Level Security.
+
+**2. SAP Learning — Security and Authorization in SAP S/4HANA**
+<https://learning.sap.com/learning-journeys/administrate-sap-s-4hana>
+Official SAP learning journey covering SAP S/4HANA security fundamentals: user administration (SU01), role management (PFCG), authorization objects, the Security Audit Log (SM20), and the Transport Management System. Relevant to the SAP SoD conflict scenarios and audit trail concepts covered in this module.
+
+**3. ISACA — COBIT 2019 Framework: IT General Controls and Access Management**
+<https://www.isaca.org/resources/cobit>
+ISACA's COBIT framework provides the governance and control objectives for IT systems including ERP security. Covers Separation of Duties principles, access control design, audit trail requirements, and SOX ITGC compliance — the conceptual foundation for the security principles applied to both SAP and Salesforce in this module.

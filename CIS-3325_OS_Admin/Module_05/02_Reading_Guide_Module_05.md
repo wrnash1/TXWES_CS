@@ -249,3 +249,37 @@ disables signature verification - a security risk. The exam tests awareness of t
 
 Read chapter 14 of The Linux Command Line by William Shotts (linuxcommand.org/tlcl.php)
 covering package management across both Debian and Red Hat ecosystems.
+
+---
+
+## 9. Supplemental Resources
+
+**1. Ubuntu Documentation — apt command reference**
+URL: https://manpages.ubuntu.com/manpages/jammy/en/man8/apt.8.html
+Coverage: Complete apt man page for Ubuntu 22.04 including all subcommands (install, remove,
+purge, autoremove, search, show, list), flags (--simulate, --fix-broken, --no-install-recommends),
+and the difference between apt and apt-get. Primary reference for all Ubuntu package operations.
+
+**2. Red Hat Documentation — Managing software with dnf**
+URL: https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/managing_software_with_the_dnf_tool/index
+Coverage: Comprehensive dnf guide covering installation, removal, history, repository management,
+and module streams on RHEL 9. Covers dnf history undo for transaction rollback, a powerful
+feature not available in apt.
+
+**3. Linux man pages — rpm(8)**
+URL: https://man7.org/linux/man-pages/man8/rpm.8.html
+Coverage: Full rpm reference including all query (-q) and verify (-V) flags. The verify output
+codes section (S, M, 5, D, L, U, G, T, P) is essential exam knowledge. Study the -V output
+format table carefully.
+
+**4. Debian Wiki — Apt**
+URL: https://wiki.debian.org/Apt
+Coverage: Explains apt sources.list format, GPG key management, pinning with
+/etc/apt/preferences, and the relationship between apt, apt-get, and dpkg. Covers the
+DEB822 format used in modern Ubuntu repository definitions.
+
+**5. TLDP — RPM HOWTO**
+URL: https://tldp.org/HOWTO/RPM-HOWTO/
+Coverage: Classic introduction to RPM package management covering package building,
+querying, verifying, and dependency resolution. Useful background for understanding
+why rpm -V output codes exist and what each attribute means.

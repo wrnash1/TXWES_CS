@@ -161,3 +161,29 @@ Supplemental reading:
 - [ ] Watch the Module 03 video lecture.
 - [ ] Complete the Module 03 lab activity.
 - [ ] Post your initial discussion response by Wednesday at 11:59 PM.
+
+---
+
+## 11. Supplemental Resources
+
+The following open educational resources extend module content on elicitation techniques. All are freely accessible without login or purchase.
+
+1. **BABOK Guide v3 — Elicitation and Collaboration (KA 4) Overview**
+   <https://www.iiba.org/career-resources/a-business-analysis-professionals-foundation-for-success/babok/>
+   Focus: Official IIBA reference for all five KA 4 tasks and the full elicitation technique catalog. Review the technique entries for Interviews, Workshops, Observation, and Prototyping specifically.
+
+2. **Requirements Elicitation Techniques — Visual Paradigm**
+   <https://www.visual-paradigm.com/guide/requirements-gathering/requirements-elicitation-techniques/>
+   Focus: Illustrated summary of ten elicitation techniques with use-case descriptions and selection guidance. Useful as a quick-reference guide when working through the lab technique-selection exercise.
+
+3. **Joint Application Development (JAD) Sessions Explained — TechTarget**
+   <https://www.techtarget.com/searchsoftwarequality/definition/Joint-Application-Design>
+   Focus: History, structure, and facilitation guidance for JAD sessions. Directly supports the workshop agenda section of the lab and the JAD definition in Section 1.3 of this guide.
+
+4. **The Hawthorne Effect and Observation Research — Simply Psychology**
+   <https://www.simplypsychology.org/hawthorne-effect.html>
+   Focus: Accessible academic explanation of the Hawthorne Effect with original study context. Reinforces the observation technique limitation discussed in Module 03 and tested on the ECBA exam.
+
+5. **Writing Effective Interview Questions for Requirements Gathering — Bridging the Gap**
+   <https://www.bridging-the-gap.com/elicitation-questions/>
+   Focus: Practical guide to open-ended, closed-ended, and probing question design for stakeholder interviews. Directly supports Part 2 of the lab (Interview Question Design).

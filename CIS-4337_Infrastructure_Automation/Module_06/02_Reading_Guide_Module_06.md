@@ -275,4 +275,20 @@ resource "aws_security_group" "app" {
 
 ---
 
+## 9. Supplemental Resources
+
+**1. Terraform Built-in Functions Reference**
+<https://developer.hashicorp.com/terraform/language/functions>
+The complete A–Z reference for all built-in Terraform functions organized by category: string, collection, encoding, filesystem, date/time, hash, IP network, type conversion, and more. Use this alongside `terraform console` when experimenting with functions in this lab.
+
+**2. Terraform Data Sources Documentation**
+<https://developer.hashicorp.com/terraform/language/data-sources>
+Explains data source lifecycle, the `depends_on` argument in data blocks, and the difference between data sources evaluated during plan versus apply. Directly supports the data source sequencing concepts tested in this module.
+
+**3. Terraform Dynamic Blocks Reference**
+<https://developer.hashicorp.com/terraform/language/expressions/dynamic-blocks>
+Covers dynamic block syntax, the `iterator` argument, `for_each` behavior inside dynamic blocks, and best practices for avoiding over-use of dynamic blocks. Includes examples of nested dynamic blocks.
+
+---
+
 Module 06 Reading Guide — CIS-4337 Infrastructure Automation — Texas Wesleyan University

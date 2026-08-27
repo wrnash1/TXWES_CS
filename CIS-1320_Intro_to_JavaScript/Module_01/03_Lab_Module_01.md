@@ -315,6 +315,47 @@ Submit the following to the Module 01 Lab assignment in Canvas:
 
 ---
 
+## Part 9 — Challenge Exercise
+
+**This section is optional but strongly recommended.** These steps go beyond the required lab content and introduce concepts from upcoming modules. No screenshot submission is required for this part, but you are welcome to include your work for extra-credit discussion.
+
+### Challenge Step 9.1 — Measure Script Load Timing with the `performance` API
+
+The browser exposes a built-in `performance` object that lets you measure how long things take. In your `app.js` file, add the following at the very top (first line) and at the very bottom (last line):
+
+```javascript
+const startTime = performance.now();
+
+// ... your existing code in between ...
+
+const endTime = performance.now();
+console.log(`Script execution time: ${endTime - startTime} milliseconds`);
+```
+
+Open DevTools and observe how few milliseconds your script takes. This introduces you to the `performance.now()` API used in production for benchmarking, and also previews template literal syntax (backtick strings) covered in Module 03.
+
+### Challenge Step 9.2 — Explore `console.table()` with Structured Data
+
+At the bottom of `app.js`, add the following block:
+
+```javascript
+const jsEngines = [
+  { browser: 'Chrome',  engine: 'V8',             organization: 'Google' },
+  { browser: 'Firefox', engine: 'SpiderMonkey',    organization: 'Mozilla' },
+  { browser: 'Safari',  engine: 'JavaScriptCore',  organization: 'Apple' },
+  { browser: 'Edge',    engine: 'V8',              organization: 'Microsoft' }
+];
+console.table(jsEngines);
+```
+
+Open DevTools and observe the tabular display of the array. `console.table()` renders arrays of objects as formatted tables with sortable columns. This also previews the object and array concepts covered in Modules 07 and 08.
+
+### Challenge Step 9.3 — Experiment with `async` vs. `defer` Timing
+
+Create a new file `timing-test.html`. Add three script tags pointing to three tiny placeholder JS files (`a.js`, `b.js`, `c.js`) — one with no attribute, one with `defer`, one with `async`. In each `.js` file, write a single `console.log()` identifying which file ran and when. Observe the order in which each script executes. Write a short comment block at the top of each file describing what you observed and why it matches the behavior described in the reading guide. This hands-on experiment will cement your understanding of the `defer`/`async` execution model before the Module 01 quiz.
+
+---
+
 ## Reflection Questions
 
 Answer these in the text box on the Canvas submission page (two to three sentences each):

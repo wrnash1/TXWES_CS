@@ -323,4 +323,20 @@ WHERE c.state_code != r.expected_state_code;
 
 ---
 
+## 9. Supplemental Resources
+
+**1. DAMA International — DMBOK Overview**
+<https://www.dama.org/cpages/body-of-knowledge>
+The official DAMA Data Management Body of Knowledge overview page, describing all 11 knowledge areas in the DMBOK framework. Essential background for understanding the governance structures, roles (data owner, steward, custodian), and how data quality fits within a broader data management program.
+
+**2. Collibra Data Intelligence — What is a Data Catalog?**
+<https://www.collibra.com/us/en/blog/what-is-a-data-catalog>
+A practitioner-oriented explanation of data catalogs, data dictionaries, and business glossaries — clarifying when each tool is appropriate and how they work together. Directly supports the Module 10 governance artifact comparisons tested on the Data+ exam.
+
+**3. IBM — Data Quality Dimensions Explained**
+<https://www.ibm.com/think/topics/data-quality>
+IBM's reference guide covering the six core data quality dimensions (accuracy, completeness, consistency, timeliness, validity, uniqueness) with real-world business examples for each. Useful as a study reference for mapping exam scenarios to the correct dimension.
+
+---
+
 End of Module 10 Reading Guide

@@ -254,4 +254,247 @@ B. To enable multi-turn conversations by linking answers to related follow-up qu
 
 ---
 
+---
+
+## Question 11 (5 points)
+
+What is Active Learning in the context of Azure AI Language Question Answering?
+
+A. A feature that automatically retrains the entire QA model on a weekly schedule.
+
+B. A feature that analyzes real user queries that did not match existing Q&A pairs and suggests new pairs the developer can review and add to the knowledge base.
+
+C. A feature that dynamically adjusts the confidence threshold based on user feedback ratings.
+
+D. A feature that uses reinforcement learning to improve bot responses over time without human review.
+
+### Q11 — Correct Answer
+
+B. A feature that analyzes real user queries that did not match existing Q&A pairs and suggests new pairs the developer can review and add to the knowledge base.
+
+### Q11 — Distractor Analysis
+
+- A is incorrect: Active Learning does not automatically retrain the model on a schedule. It surfaces suggestions for human review; the developer decides whether to add them.
+- C is incorrect: The confidence threshold is configured manually by the developer. Active Learning influences Q&A pair coverage, not threshold values.
+- D is incorrect: Active Learning involves human review of suggestions before additions to the knowledge base. It is not an autonomous reinforcement learning process.
+
+---
+
+## Question 12 (5 points)
+
+A company builds an internal IT helpdesk bot. When users ask "How do I reset my password?" the bot should search the IT knowledge base. When users say "Submit a ticket for a broken printer," the bot should start a ticketing workflow. Which Azure AI Language configuration enables both behaviors through a single classifier?
+
+A. Two separate CLU projects connected by an Azure Logic App.
+
+B. Orchestration Workflow — a meta-project that routes inputs to the appropriate CLU or QA sub-project.
+
+C. A single Question Answering knowledge base with ticket-submission answers stored as Q&A pairs.
+
+D. Custom Text Classification with two categories: Informational and Transactional.
+
+### Q12 — Correct Answer
+
+B. Orchestration Workflow — a meta-project that routes inputs to the appropriate CLU or QA sub-project.
+
+### Q12 — Distractor Analysis
+
+- A is incorrect: Connecting separate CLU projects via Logic Apps is a valid integration approach but is not the built-in Azure AI Language feature designed for this routing pattern.
+- C is incorrect: Storing ticket-submission workflows as Q&A pairs is an antipattern. QA retrieves answers; it cannot trigger workflows. CLU is needed for task-oriented commands.
+- D is incorrect: Custom Text Classification assigns category labels to documents. It is not a routing mechanism for conversational bots and does not connect to CLU or QA projects.
+
+---
+
+## Question 13 (5 points)
+
+In Azure Bot Service, what is the difference between the Web Chat channel and the Direct Line channel?
+
+A. Web Chat is for mobile apps; Direct Line is for desktop web browsers.
+
+B. Web Chat provides a pre-styled embeddable chat widget for websites; Direct Line is a REST API for custom application integration where the developer builds the UI.
+
+C. Web Chat supports audio messages; Direct Line supports only text.
+
+D. Web Chat is for internal employee tools; Direct Line is for external customer-facing deployments.
+
+### Q13 — Correct Answer
+
+B. Web Chat provides a pre-styled embeddable chat widget for websites; Direct Line is a REST API for custom application integration where the developer builds the UI.
+
+### Q13 — Distractor Analysis
+
+- A is incorrect: Both channels can serve mobile and desktop users. The distinction is not about device type but about how the UI is provided.
+- C is incorrect: Supported message types depend on the bot implementation and channel configuration, not on an inherent audio/text split between Web Chat and Direct Line.
+- D is incorrect: Both channels can serve internal or external users. The distinction is about the integration pattern and UI ownership, not the audience type.
+
+---
+
+## Question 14 (5 points)
+
+A banking chatbot receives the user input: "Can I move $500 to my savings account?" Which CLU design elements are needed to correctly process this request?
+
+A. Intent: TransferFunds. Entities: Amount ($500), DestinationAccount (savings).
+
+B. Intent: None. This request should be escalated to a human immediately.
+
+C. Intent: CheckBalance. Entity: AccountType (savings).
+
+D. No CLU is needed — this is a FAQ question handled by Question Answering.
+
+### Q14 — Correct Answer
+
+A. Intent: TransferFunds. Entities: Amount ($500), DestinationAccount (savings).
+
+### Q14 — Distractor Analysis
+
+- A is correct: The user's goal (intent) is to transfer money. The specific pieces of information needed (amount, destination) are entities the bot must extract to complete the transfer.
+- B is incorrect: Fund transfers are a routine banking bot task, not a reason for immediate human escalation. The None intent handles unrecognized inputs, not complex tasks.
+- C is incorrect: CheckBalance is for querying account status. The user explicitly wants to move money, which is a distinct intent.
+- D is incorrect: "Move $500 to savings" is a task command, not an informational question. It requires CLU intent classification and entity extraction to trigger the correct workflow.
+
+---
+
+## Question 15 (5 points)
+
+What does the Bot Framework Emulator allow a developer to do during bot development?
+
+A. Deploy the bot directly to Azure without requiring an Azure subscription.
+
+B. Test bot conversations locally, inspect the activity JSON for each turn, and debug the dialog logic before deploying to channels.
+
+C. Train CLU intent models without writing code.
+
+D. Monitor live production bot conversations in real time.
+
+### Q15 — Correct Answer
+
+B. Test bot conversations locally, inspect the activity JSON for each turn, and debug the dialog logic before deploying to channels.
+
+### Q15 — Distractor Analysis
+
+- A is incorrect: The Emulator is a local development tool, not a deployment mechanism. Deploying to Azure requires an Azure subscription and deployment commands.
+- C is incorrect: CLU model training is performed in Azure Language Studio or via the Azure AI Language SDK. The Bot Framework Emulator is for testing bot behavior, not for NLP model training.
+- D is incorrect: Live production monitoring uses Azure Application Insights or Bot Analytics. The Emulator operates locally against a running bot service on the developer's machine.
+
+---
+
+## Question 16 (5 points)
+
+A multinational company wants to deploy a customer support bot in 15 languages. The same intents and dialog logic apply in all languages. What is the recommended approach?
+
+A. Build 15 separate CLU projects — one per language — and 15 separate bots.
+
+B. Use a single CLU project with multilingual training enabled, and handle translation at the channel level using Azure AI Translator if needed.
+
+C. Build one English CLU project and require all users to interact in English.
+
+D. Use Copilot Studio's offline translation feature to auto-translate all bot responses.
+
+### Q16 — Correct Answer
+
+B. Use a single CLU project with multilingual training enabled, and handle translation at the channel level using Azure AI Translator if needed.
+
+### Q16 — Distractor Analysis
+
+- A is incorrect: Building 15 separate projects creates enormous maintenance overhead. CLU supports multilingual models that can detect and understand multiple languages from a single trained project.
+- C is incorrect: Requiring all users to interact in English is an inclusiveness violation and would significantly degrade user experience for non-English speakers.
+- D is incorrect: Copilot Studio does not have a built-in offline translation feature that auto-translates all bot responses without additional configuration.
+
+---
+
+## Question 17 (5 points)
+
+A bot designed for a healthcare provider receives the message: "I think I'm having a heart attack." The bot's intent recognition maps this to a CheckAppointment intent with low confidence. What responsible AI design principle is most important for handling this scenario?
+
+A. The bot should ask the user to clarify whether they mean they have a scheduled heart health checkup.
+
+B. The bot must immediately provide a human escalation path or emergency service contact information when life-threatening phrases are detected, regardless of intent confidence.
+
+C. The bot should log the message for later review but respond with the next menu prompt.
+
+D. The bot should increase its confidence threshold to 0.99 to avoid false positives on medical phrases.
+
+### Q17 — Correct Answer
+
+B. The bot must immediately provide a human escalation path or emergency service contact information when life-threatening phrases are detected, regardless of intent confidence.
+
+### Q17 — Distractor Analysis
+
+- A is incorrect: Asking for clarification in a potential medical emergency delays help and treats a life-threatening situation as a navigation problem.
+- C is incorrect: Logging and continuing the regular dialog flow could result in the user not receiving emergency assistance. This violates the Reliability and Safety principle.
+- D is incorrect: Raising the confidence threshold does not address the emergency response design gap. Safety-critical responses must be triggered independently of standard intent confidence scoring.
+
+---
+
+## Question 18 (5 points)
+
+In a Copilot Studio bot, what is a "topic"?
+
+A. A list of all the users who have interacted with the bot during a session.
+
+B. A self-contained conversation flow triggered by specific user phrases, containing the bot's questions, responses, and branching logic for one area of functionality.
+
+C. A category label assigned to user messages by the bot's intent classifier.
+
+D. A type of Azure Bot Service channel that connects the bot to SharePoint topic pages.
+
+### Q18 — Correct Answer
+
+B. A self-contained conversation flow triggered by specific user phrases, containing the bot's questions, responses, and branching logic for one area of functionality.
+
+### Q18 — Distractor Analysis
+
+- A is incorrect: User session participants are tracked in conversation state, not in topics. Topics define the bot's dialog flows, not user rosters.
+- C is incorrect: In Copilot Studio, topics are the authoring units for conversation flows, not classifier labels. Copilot Studio's trigger phrases are conceptually similar to CLU intents but are managed within the Copilot Studio canvas.
+- D is incorrect: SharePoint integration is a separate connector configuration. Topics are a core Copilot Studio authoring concept, not a channel type.
+
+---
+
+## Question 19 (5 points)
+
+What is the primary benefit of configuring a fallback response (also called a "no match" response) in a Question Answering knowledge base?
+
+A. It prevents the bot from being deployed until all possible user questions are answered.
+
+B. It provides a graceful user experience when a question cannot be matched, offering guidance or a human handoff instead of silence or an error.
+
+C. It automatically generates a new Q&A pair whenever a fallback is triggered.
+
+D. It increases the confidence threshold for all existing Q&A pairs.
+
+### Q19 — Correct Answer
+
+B. It provides a graceful user experience when a question cannot be matched, offering guidance or a human handoff instead of silence or an error.
+
+### Q19 — Distractor Analysis
+
+- A is incorrect: The fallback response is deployed alongside the knowledge base to handle unmatched questions during live use. It is not a gate that prevents deployment.
+- C is incorrect: The fallback response is a static message defined by the developer. Automatically generating new Q&A pairs is the Active Learning feature, not the fallback response.
+- D is incorrect: The fallback response is independent of the confidence threshold. The threshold controls when to display the fallback; the fallback itself is the message shown.
+
+---
+
+## Question 20 (5 points)
+
+A company's bot is being audited for transparency compliance. The audit requires that users always know they are interacting with an automated system and not a human. Which design practice directly addresses this requirement?
+
+A. Configure the bot to use the company's brand colors in the Web Chat widget.
+
+B. Include a clear disclosure in the bot's greeting message and ensure the bot does not claim to be human if asked.
+
+C. Add all conversation logs to a compliance archive database.
+
+D. Enable Active Learning so the bot improves over time.
+
+### Q20 — Correct Answer
+
+B. Include a clear disclosure in the bot's greeting message and ensure the bot does not claim to be human if asked.
+
+### Q20 — Distractor Analysis
+
+- A is incorrect: Branding the chat widget with company colors is a UI customization, not a transparency disclosure. Visual branding does not inform users they are interacting with an AI.
+- C is incorrect: Archiving conversations supports compliance and privacy accountability but does not address the user-facing transparency requirement of disclosing automation.
+- D is incorrect: Active Learning improves knowledge base coverage over time. It does not communicate to users that the system is automated.
+
+---
+
 End of Quiz — Module 09

@@ -384,3 +384,21 @@ Submit to Canvas:
 | Connectivity | BFS/DFS from start; visited count == vertex count |
 | Cycle (undirected) | Back edge to visited node that is not parent |
 | `defaultdict` advantage | No `KeyError` for nodes with no outgoing edges |
+
+---
+
+## Part 9 — Challenge Exercise
+
+These steps are **optional** and ungraded. They are designed for students who want to deepen their understanding beyond the core lab.
+
+### 9.1 — Graph Transpose
+
+Given a directed graph as an adjacency list, implement `transpose(graph)` that returns a new graph where every edge direction is reversed (i.e., for every edge u→v in the original, the transpose has v→u). The transpose is used in Kosaraju's algorithm for finding strongly connected components. Verify your implementation on a directed graph with at least 5 nodes and confirm that `transpose(transpose(graph)) == graph` (the double transpose equals the original). State the time and space complexity of your implementation.
+
+### 9.2 — Clone Graph (LeetCode #133)
+
+Given a reference to a node in a connected undirected graph where each node has a `val` and a `neighbors` list, return a deep copy (clone) of the graph. Use BFS or DFS: maintain a `cloned = {}` hash map from original nodes to their clones. When visiting a node, create its clone if not already in the map, then recursively clone all neighbors. Implement both a DFS and BFS version, verify they produce identical results, and state why the hash map is essential (what happens without it in a cyclic graph).
+
+### 9.3 — Build a Weighted Graph with Dijkstra Preparation
+
+Extend your adjacency list implementation to support weighted directed edges, where each entry is a `(neighbor, weight)` tuple. Then, using only data from this module (no Dijkstra algorithm yet), implement `find_all_paths(graph, start, end)` that returns all paths from `start` to `end` using DFS with backtracking. For each path, compute its total weight. On a graph with 6 nodes and 8 weighted edges of your design, find all paths from node 0 to node 5 and identify the minimum-weight path manually. This exercise prepares you for Module 11 (Dijkstra's algorithm), where finding the minimum-weight path is done efficiently in O((V+E) log V).

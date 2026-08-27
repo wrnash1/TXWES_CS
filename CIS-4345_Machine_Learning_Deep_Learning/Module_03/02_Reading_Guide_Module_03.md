@@ -54,3 +54,19 @@ In this week's hands-on lab, you will perform the following steps to apply these
 *   [ ] Watch the regression module in the [Machine Learning with Python & TensorFlow Course](https://www.youtube.com/watch?v=cKzgMFG5HpU).
 *   [ ] Complete the Module 03 lab: linear and logistic regression with Keras.
 *   [ ] Proceed to the Module 03 quiz.
+
+---
+
+## 9. Supplemental Resources
+
+**1. fast.ai Practical Deep Learning for Coders — Lesson 1**
+<https://course.fast.ai/Lessons/lesson1.html>
+Free hands-on course that covers logistic regression, binary crossentropy, and the connection between classical regression and neural network output layers. Lesson 1 directly maps to the regression and classification tasks tested on the TF Developer Certificate exam.
+
+**2. Keras Loss Functions API Reference**
+<https://www.tensorflow.org/api_docs/python/tf/keras/losses>
+Official TensorFlow documentation listing every built-in loss function with mathematical definitions and usage examples. Essential for correctly pairing output activations with loss functions across regression, binary classification, and multi-class classification tasks.
+
+**3. StatQuest: Logistic Regression (YouTube)**
+<https://www.youtube.com/watch?v=yIYKR4sgzI8>
+Clear visual explanation of the sigmoid function, log-odds, and binary crossentropy from first principles. Covers why MSE is a poor choice for classification and how the logistic loss surface ensures convexity — the conceptual foundation behind Module 03's key exam tips.

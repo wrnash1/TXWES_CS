@@ -267,3 +267,30 @@ The outline does not need full procedure text, but each section must include:
 **Common error — Confusing RPO and backup frequency:** If your backup captures data every four hours and the RPO is one hour, you have a three-hour gap. Backup frequency must be equal to or shorter than the RPO target. The RPO is the ceiling, not the target.
 
 **Common error — Omitting failback from the DR test plan:** A DR test is not complete without confirming the ability to return to the primary site. Ensure your test plan includes failback procedures for the full cutover test.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Ransomware DR Scenario — End-to-End Recovery Analysis
+
+Apex Logistics discovers at 6:00 AM on a Tuesday that ransomware has encrypted its primary ERP system and three supporting application servers. The DR team declares an incident and initiates the DR plan. Using the DR architecture you designed in the main lab exercises, complete the following tasks.
+
+1. Write a step-by-step failover execution checklist (minimum eight steps) covering the sequence from incident declaration through production traffic redirection to the DR site. For each step include: the action, the responsible role, the expected outcome, the estimated time to complete, and the go/no-go validation criterion before proceeding to the next step.
+2. Identify three decisions during the failover sequence that require escalation to a named authority (CISO, CTO, or CEO) rather than being made by the recovery team alone. For each, explain why that specific decision requires executive authorization rather than team-level judgment, and what information the executive needs to make the decision.
+3. After forty-eight hours operating from the DR site, the primary environment has been rebuilt. Draft a failback readiness checklist of at least six items that must be verified before traffic is returned to the primary site. Include at least one security validation item (confirming the attack vector is closed), one data integrity item, and one operational validation item.
+4. Write a 150-word post-recovery executive briefing summarizing what happened, how long the organization operated from the DR site, what data loss (if any) occurred relative to the RPO, whether the RTO was met, and two lessons learned that will improve the DR program.
+
+### Challenge 2: 3-2-1-1 Backup Architecture Design
+
+Apex Logistics currently backs up all systems to a single NAS device in the primary data center. Following the ransomware incident, the CISO mandates implementation of the 3-2-1-1 backup rule within sixty days.
+
+1. Design a compliant backup architecture for Apex's three most critical systems (ERP, financial reporting, customer database). For each system create a table specifying: backup type (full/incremental/differential), backup frequency, backup medium (disk/tape/cloud), storage location (on-site/off-site/cloud), immutability mechanism, and estimated restoration time.
+2. Identify two specific ransomware attack scenarios and explain how the 3-2-1-1 architecture you designed would prevent or limit data loss in each scenario. Be specific about which copies survive each attack vector and why.
+3. Calculate the RPO gap for each system's current backup architecture (single NAS, daily full backup at midnight) versus your proposed 3-2-1-1 architecture. Present results in a comparison table showing current RPO exposure, proposed RPO target, and the gap closed by each change.
+4. Draft a one-paragraph memo to the CFO justifying the investment in the 3-2-1-1 architecture by quantifying the cost of a full data loss event versus the annual cost of the proposed backup architecture.
+
+### Reflection Questions
+
+1. During a DR test, the recovery team successfully fails over to the warm standby site in ninety minutes — well within the two-hour RTO. The CISO declares the test a complete success and closes the test report. A junior analyst notes that the failback procedure was never executed and that three of the application tier connection strings were updated manually rather than by the documented automated script. Explain why the CISO's declaration of complete success is a governance error, and describe what a properly closed DR test report must contain.
+2. An organization operates a hot site for its Tier 1 payment processing system at an annual cost of $400,000. A new CFO proposes replacing the hot site with a warm site costing $80,000 per year to save $320,000 annually. The payment processing system generates $600,000 per hour in revenue and has an RTO of thirty minutes. Using the cost-benefit framework from this module, build the financial argument for or against the CFO's proposal, and describe what governance process should be used to make this risk acceptance decision.

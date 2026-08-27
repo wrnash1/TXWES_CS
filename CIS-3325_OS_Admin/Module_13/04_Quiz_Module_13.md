@@ -195,3 +195,209 @@ Distractor Analysis:
 * Why A is incorrect: Both cron and anacron run system jobs as root. User crontabs run as the owning user. The distinction is not about privilege level — it is about behavior when a scheduled time is missed.
 * Why B is incorrect: Neither cron nor anacron requires a graphical desktop. Both are background daemons designed for headless server operation.
 * Why D is incorrect: This is backwards. Cron supports the full five-field syntax with arbitrary minute/hour/day specifications. Anacron's schedule is defined only in days (1=daily, 7=weekly, 30=monthly) and cannot schedule jobs at a specific time of day.
+
+---
+
+*Questions 11–20 — 5 pts each*
+
+---
+
+### Question 11 (5 points)
+
+An administrator needs a script to run at 6:30 PM every Friday. Which crontab entry is correct?
+
+* A: `30 6 * * 5 /usr/local/bin/weekly.sh`
+* B: `30 18 * * 5 /usr/local/bin/weekly.sh`
+* C: `18 30 * * 5 /usr/local/bin/weekly.sh`
+* D: `30 18 * * 7 /usr/local/bin/weekly.sh`
+
+Correct Answer: B
+
+Distractor Analysis:
+
+* Why A is incorrect: `30 6` schedules the job at 6:30 AM (hour 6), not 6:30 PM. Cron uses a 24-hour clock. 6:30 PM is hour 18, minute 30.
+* Why C is incorrect: The crontab field order is minute then hour. `18 30` puts 18 in the minute position and 30 in the hour position — minute 18 of hour 30, which is invalid (hours range 0–23). This would be rejected or never fire.
+* Why D is incorrect: In the day-of-week field, 5 is Friday and 7 is also Sunday (0 and 7 are both Sunday). Using 7 targets Sunday, not Friday.
+
+---
+
+### Question 12 (5 points)
+
+An administrator uses `crontab -r` by mistake instead of `crontab -e`. What is the result?
+
+* A: The crontab is opened in read-only mode and no edits are possible.
+* B: The current user's entire crontab is permanently deleted without confirmation.
+* C: The crontab is reset to the system default values from `/etc/crontab`.
+* D: The crontab daemon is restarted, causing all pending jobs to be skipped.
+
+Correct Answer: B
+
+Distractor Analysis:
+
+* Why A is incorrect: Read-only listing is done with `crontab -l`. The `-r` flag has no read-only mode — it removes the crontab entirely.
+* Why C is incorrect: There is no mechanism to "reset" a user crontab to system defaults. User crontabs are independent of `/etc/crontab`. After `crontab -r`, the user's crontab is simply gone — an empty file would need to be created from scratch with `crontab -e`.
+* Why D is incorrect: `crontab -r` affects only the file on disk for that user. It has no effect on the running cron daemon or on jobs belonging to other users. The cron daemon continues running and executes other users' jobs normally.
+
+---
+
+### Question 13 (5 points)
+
+Which file records the last time each anacron job was executed, allowing anacron to determine whether a missed job needs to run?
+
+* A: `/etc/anacrontab`
+* B: `/var/spool/anacron/`
+* C: `/var/log/anacron.log`
+* D: `/etc/cron.d/anacron`
+
+Correct Answer: B
+
+Distractor Analysis:
+
+* Why A is incorrect: `/etc/anacrontab` is the configuration file that defines the jobs, periods, delays, and commands. It does not store execution timestamps — it is static configuration, not runtime state.
+* Why C is incorrect: `/var/log/anacron.log` is a log file written by some distributions to record anacron activity. It is not the mechanism anacron uses to determine when a job last ran — that determination is based on the timestamp files in `/var/spool/anacron/`.
+* Why D is incorrect: `/etc/cron.d/` contains cron fragment files for system jobs. There is no anacron job file there — anacron reads only `/etc/anacrontab` for its job list and writes last-run timestamps only to `/var/spool/anacron/`.
+
+---
+
+### Question 14 (5 points)
+
+A systemd timer unit contains `OnCalendar=Mon..Fri *-*-* 07:00:00` and `Persistent=true`. The server is shut down for a weekend maintenance window Friday evening and restarted Monday morning at 9 AM. What happens at 9 AM Monday?
+
+* A: Nothing — the timer waits until the next scheduled 7 AM Tuesday because the Monday 7 AM window has passed.
+* B: The associated service fires immediately at 9 AM because `Persistent=true` detects that the Monday 7:00 AM run was missed and triggers it at startup.
+* C: The timer fires three times — once for each missed run (Friday, Saturday, Sunday).
+* D: The service fails with a "missed deadline" error and requires manual intervention with `systemctl reset-failed`.
+
+Correct Answer: B
+
+Distractor Analysis:
+
+* Why A is incorrect: `Persistent=true` specifically exists to prevent this behavior. Without `Persistent=true`, option A would describe the behavior — the timer would simply wait for the next scheduled time. With `Persistent=true`, the missed run triggers at startup.
+* Why C is incorrect: `Persistent=true` causes the timer to fire once for the most recent missed activation, not once per missed run. It does not replay every skipped occurrence. For Saturday and Sunday, the `Mon..Fri` restriction means those were not scheduled runs at all.
+* Why D is incorrect: There is no "missed deadline" error state in systemd timers. A missed `OnCalendar` activation does not cause the unit to enter a failed state. The `reset-failed` command clears error states from service units that exited with a non-zero status, not from timers that missed their schedule.
+
+---
+
+### Question 15 (5 points)
+
+An administrator adds a new cron fragment at `/etc/cron.d/app-backup` containing:
+
+```
+0 2 * * * root /usr/local/bin/app_backup.sh
+```
+
+The script does not run. No errors appear in the cron log. What is the most likely cause?
+
+* A: Files in `/etc/cron.d/` must have the `.cron` extension to be recognized by the cron daemon.
+* B: The script `/usr/local/bin/app_backup.sh` does not have execute permission.
+* C: The cron daemon must be reloaded with `systemctl reload cron` before it reads new files from `/etc/cron.d/`.
+* D: The file `/etc/cron.d/app-backup` contains a period in the filename, which is invalid for cron.d fragments on Debian-based systems.
+
+Correct Answer: B
+
+Distractor Analysis:
+
+* Why A is incorrect: Files in `/etc/cron.d/` have no extension requirement. The cron daemon reads all valid files in that directory regardless of extension. The naming restriction (no dots, no extensions) applies only to scripts executed by `run-parts` in `/etc/cron.daily/` and similar directories, not to `/etc/cron.d/` fragments.
+* Why C is incorrect: The cron daemon automatically re-reads `/etc/cron.d/` periodically (typically every minute) without requiring a daemon reload. Adding a file to `/etc/cron.d/` takes effect on the next cron wakeup cycle with no manual intervention.
+* Why D is incorrect: `/etc/cron.d/` fragments are read directly by the cron daemon, not by `run-parts`. The no-dot naming rule applies only to `run-parts`-executed directories (cron.daily, cron.hourly, etc.). A hyphen in the filename `app-backup` is valid; the hyphen is not a period.
+
+---
+
+### Question 16 (5 points)
+
+An administrator validates a systemd `OnCalendar` expression before deploying a timer. Which command correctly tests whether the expression `Mon..Fri *-*-* 08:30:00` is valid and shows the next scheduled activation time?
+
+* A: `systemctl verify OnCalendar="Mon..Fri *-*-* 08:30:00"`
+* B: `systemd-analyze calendar "Mon..Fri *-*-* 08:30:00"`
+* C: `journalctl --calendar "Mon..Fri *-*-* 08:30:00"`
+* D: `crontab --verify "Mon..Fri *-*-* 08:30:00"`
+
+Correct Answer: B
+
+Distractor Analysis:
+
+* Why A is incorrect: `systemctl verify` checks the syntax of unit files on disk, not calendar expressions. It takes a unit file path as its argument, not an `OnCalendar` string.
+* Why C is incorrect: `journalctl` is a log viewing tool. It has no `--calendar` flag and cannot validate systemd calendar expressions. The journal reads entries from the systemd journal binary store.
+* Why D is incorrect: `crontab` is a cron management tool. It has no `--verify` flag and understands only the five-field cron syntax, not systemd's `OnCalendar` format. Systemd calendar expressions are entirely separate from cron expressions.
+
+---
+
+### Question 17 (5 points)
+
+An administrator wants to ensure a cron job's output — both stdout and stderr — is written to a log file instead of being mailed to the user. Which redirect appended to the crontab command line achieves this?
+
+* A: `> /var/log/job.log`
+* B: `>> /var/log/job.log 2>&1`
+* C: `2> /var/log/job.log`
+* D: `| tee /var/log/job.log`
+
+Correct Answer: B
+
+Distractor Analysis:
+
+* Why A is incorrect: `>` redirects stdout only and truncates the file on each run, deleting all previous output. The correct approach appends (`>>`) and also captures stderr (`2>&1`). Without `2>&1`, error messages are still mailed to the user.
+* Why C is incorrect: `2>` redirects only stderr to the file. Stdout is still delivered to the cron mail system. To capture both streams in one file, stderr must be merged into stdout with `2>&1` after redirecting stdout.
+* Why D is incorrect: `| tee` pipes stdout to both the terminal and the file. In a cron context there is no interactive terminal, and stderr is still not captured — errors would still be mailed. The canonical cron output capture uses `>> /log 2>&1`.
+
+---
+
+### Question 18 (5 points)
+
+A cron job entry reads `0 0 1 1 * /usr/local/bin/new_year.sh`. How often does this job execute?
+
+* A: At midnight on the 1st day of every month.
+* B: At midnight on January 1st each year.
+* C: At midnight every Monday in January.
+* D: Every minute on January 1st.
+
+Correct Answer: B
+
+Distractor Analysis:
+
+* Why A is incorrect: The MON (month) field is `1`, which restricts execution to January only. A job running on the 1st of every month would have a wildcard `*` in the month field: `0 0 1 * *`.
+* Why C is incorrect: The DOW (day-of-week) field is `*` (every day of the week). The job is restricted to a specific day of the month (DOM=1) and specific month (MON=1), not to a specific weekday. Restricting to Mondays would require `1` in the DOW field.
+* Why D is incorrect: The minute field is `0` and the hour field is `0`, meaning the job fires once at midnight (00:00). The `0 0` combination is a single daily trigger time — not a per-minute trigger (which would require `* * 1 1 *`).
+
+---
+
+### Question 19 (5 points)
+
+An administrator runs `atq` and sees the following output:
+
+```
+7   2026-08-28 03:00 a student
+```
+
+What does this tell them?
+
+* A: Job 7 is a recurring cron job running as `student` every day at 3 AM.
+* B: Job 7 is a one-time at job scheduled to run at 3:00 AM on August 28, 2026, submitted by user `student`, in the default `a` queue.
+* C: Job 7 has already run at 3:00 AM and is waiting to be acknowledged by the `student` user.
+* D: Job 7 is paused. Run `at -r 7` to resume it.
+
+Correct Answer: B
+
+Distractor Analysis:
+
+* Why A is incorrect: `at` jobs are one-time only. The `atq` output never shows recurring jobs — recurring tasks are managed by cron, not `at`. Once an `at` job executes, it is removed from the queue automatically.
+* Why C is incorrect: Jobs that have already run are removed from the `atq` queue. A job visible in `atq` output is always pending — it has not yet executed. There is no acknowledgment mechanism in the `at` system.
+* Why D is incorrect: There is no pause state for `at` jobs. Jobs in the queue are either pending (awaiting their scheduled time) or gone (after execution). `at -r` (or `atrm`) removes a job; it does not pause or resume it.
+
+---
+
+### Question 20 (5 points)
+
+A junior administrator wants to prevent all regular users except `alice` and `bob` from scheduling cron jobs. They create `/etc/cron.deny` listing all other usernames. A senior administrator says this approach is fragile and suggests a better method. What should the senior administrator recommend?
+
+* A: Delete `/etc/cron.deny` and create `/etc/cron.allow` containing only `alice` and `bob`.
+* B: Set the permissions on `crontab` binary to `chmod 700` so only root can run it.
+* C: Create `/etc/cron.allow` listing all users including `alice` and `bob`, and leave `/etc/cron.deny` in place.
+* D: Add `alice` and `bob` to the `cron` system group and remove all others from it.
+
+Correct Answer: A
+
+Distractor Analysis:
+
+* Why B is incorrect: Changing the permissions on the `crontab` binary would prevent all non-root users from scheduling jobs, including `alice` and `bob`. It is also likely to break system tools that depend on the standard `crontab` binary permissions and is not a supported method for controlling user access.
+* Why C is incorrect: When `/etc/cron.allow` exists, it is the sole arbiter of access — `/etc/cron.deny` is completely ignored. Having both files is not harmful, but it is redundant and potentially confusing. The correct approach is to use `cron.allow` alone and remove or not create `cron.deny`.
+* Why D is incorrect: On standard Linux systems, membership in the `cron` group does not control access to the `crontab` command. Access is controlled exclusively by `/etc/cron.allow` and `/etc/cron.deny`. Group-based cron access control is not part of the standard cron implementation.

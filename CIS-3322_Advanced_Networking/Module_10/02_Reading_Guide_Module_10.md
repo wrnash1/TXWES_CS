@@ -290,3 +290,19 @@ Work through each item before taking the Module 10 quiz.
 - Cisco CCNA certification training information: cisco.com/c/en/us/training-events/training-certifications
 - Free CCNA study notes and practice questions: professormesser.com
 - Cisco IOS NAT configuration guide: cisco.com/c/en/us/support/docs/ip/network-address-translation-nat/13772-12.html
+
+---
+
+## 13. Supplemental Resources
+
+The following open educational resources extend NAT and PAT concepts to CCNA exam depth. All resources are freely available.
+
+1. **Cisco Networking Academy — CCNA: Enterprise Networking, Security, and Automation, Chapter 6 (NAT for IPv4)** (skillsforall.com): This free chapter covers static NAT, dynamic NAT, and PAT configuration with Packet Tracer activities, translation table interpretation, and troubleshooting using `show ip nat translations` and `show ip nat statistics`.
+
+2. **Jeremy's IT Lab — NAT (Day 44)** (youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ): A comprehensive video covering all four NAT address types, static NAT, dynamic NAT, PAT with interface and pool methods, and translation table analysis. Jeremy's walkthrough includes exam-style scenarios for identifying the inside local and inside global addresses.
+
+3. **Cisco Learning Network — NAT/PAT Study Group** (learningnetwork.cisco.com): Community threads on NAT troubleshooting scenarios, pool exhaustion behavior, ACL-in-NAT configuration pitfalls, and CCNA exam question patterns. The interface marking requirement (`ip nat inside`/`ip nat outside`) is a frequently discussed topic with multiple scenario examples.
+
+4. **Cisco IOS IP Addressing Services Configuration Guide — NAT** (cisco.com): Cisco's official configuration guide covering static NAT, dynamic NAT with pools, PAT, hairpinning, NAT virtual interface, and `debug ip nat` output interpretation with full CLI examples.
+
+5. **Packet Tracer Skills Integration Challenge — NAT** (Cisco Networking Academy): Free Packet Tracer activity files from the Networking Academy that include pre-built NAT topologies for configuring static NAT for a DMZ server, PAT for LAN users, and verifying connectivity from a simulated internet host.

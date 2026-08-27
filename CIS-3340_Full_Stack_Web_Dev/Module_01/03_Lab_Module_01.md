@@ -270,3 +270,74 @@ Submit the following to the Canvas assignment portal:
 | W3C Nu HTML Checker passes with zero errors (screenshot required) | 10 |
 | Browser DevTools accessibility roles verified (screenshot required) | 5 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Structured Data with JSON-LD
+
+Extend your page's `<head>` block with a JSON-LD script block that adds machine-readable structured data for the organization.
+
+1. Inside `<head>`, after your Open Graph tags, add the following script block and fill in the placeholder values with your fictional college's details:
+
+```html
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollegeOrUniversity",
+  "name": "Ramsey College of Technology",
+  "url": "https://university.edu/rct",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1234 University Boulevard",
+    "addressLocality": "Fort Worth",
+    "addressRegion": "TX",
+    "postalCode": "76105"
+  },
+  "telephone": "+1-817-555-0100",
+  "description": "Degree programs in computer science, cybersecurity, and data analytics."
+}
+</script>
+```
+
+1. Paste your completed HTML into Google's Rich Results Test at [https://search.google.com/test/rich-results](https://search.google.com/test/rich-results) and confirm the tool detects the structured data without errors.
+1. Take a screenshot of the Rich Results Test output showing the detected item type and zero errors.
+
+### Challenge 2: Skip Navigation Link for Keyboard Accessibility
+
+Add a visually-hidden skip navigation link that becomes visible on keyboard focus, allowing keyboard users to bypass the navigation and jump directly to main content.
+
+1. As the very first element inside `<body>` (before `<header>`), add:
+
+```html
+<a href="#main-content" class="skip-link">Skip to main content</a>
+```
+
+1. Add `id="main-content"` to your `<main>` element so the skip link has a valid target.
+1. Add the following `<style>` block inside `<head>` to hide the link until focused:
+
+```html
+<style>
+  .skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: #000;
+    color: #fff;
+    padding: 8px 16px;
+    z-index: 9999;
+    text-decoration: none;
+  }
+  .skip-link:focus {
+    top: 0;
+  }
+</style>
+```
+
+1. Open the page in Chrome, press Tab once, and verify the skip link appears at the top of the viewport. Press Enter and confirm focus moves to the `<main>` element (check via DevTools Accessibility panel).
+
+### Reflection Questions
+
+1. After adding JSON-LD structured data, what advantage does a search engine have when rendering your page in search results compared to a page with only standard meta tags?
+2. The skip navigation link is hidden visually but present in the DOM. Why is this pattern preferred over using `display:none` or `visibility:hidden` to hide the link?

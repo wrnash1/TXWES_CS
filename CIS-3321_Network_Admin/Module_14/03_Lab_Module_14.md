@@ -260,3 +260,74 @@ Submit a PDF containing:
 | Part 4 — Written scenario seven-step worksheet | 30 |
 | Reflection paragraph | 10 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+These advanced steps extend the Module 14 lab with complex fault scenarios, advanced diagnostic command interpretation, and a structured escalation decision exercise.
+
+### Challenge Step 1: Diagnose a Multi-Layer Fault Using `show` Commands
+
+In Packet Tracer, introduce the following simultaneous faults into your existing topology (from Parts 1–2):
+
+1. Set one switch port to half-duplex manually:
+   ```
+   interface FastEthernet0/3
+    duplex half
+   ```
+2. Assign the wrong VLAN to one port:
+   ```
+   interface FastEthernet0/4
+    switchport access vlan 99
+   ```
+   (VLAN 99 does not exist or has no IP routing.)
+3. Remove the default gateway from one PC.
+
+Now, without looking at the configurations you just applied, perform a systematic diagnosis from the affected PC:
+
+1. Run `ipconfig` on the affected PC — record the full output.
+2. Attempt to ping the default gateway — record the result.
+3. Attempt to ping the DNS server — record the result.
+4. On the switch, run `show interfaces FastEthernet0/3` — record the duplex and speed fields plus input error counts.
+5. On the switch, run `show vlan brief` — identify any ports assigned to non-existent VLANs.
+6. Apply the seven-step methodology: document your identification, hypothesis, test, and fix for each of the three faults.
+
+**Challenge Question 1:** In a real enterprise network, these three faults (duplex mismatch, VLAN misconfiguration, missing gateway) could each cause different user symptoms. Match each fault to its most likely user symptom: (a) "I can't get to the internet but can reach local servers," (b) "The network is very slow," (c) "I can't reach anything on the network at all." Explain the diagnostic command that would confirm each fault before any configuration change is made.
+
+### Challenge Step 2: OTDR Trace Interpretation Exercise
+
+Review the following OTDR trace description and answer the analysis questions in your lab report:
+
+An OTDR test was performed on a 500-meter single-mode fiber run between two buildings. The trace shows:
+
+- 0–5 meters: High back-reflection spike (launch condition)
+- 5–320 meters: Gradual uniform slope of −0.35 dB/km attenuation
+- 320 meters: Sharp spike followed by a 3.2 dB loss event
+- 320–490 meters: Gradual slope resumes at −0.35 dB/km
+- 490 meters: End of fiber back-reflection
+
+Answer the following in your lab report:
+
+1. What does the high back-reflection spike at 0–5 meters represent, and is it expected?
+2. What does the 3.2 dB loss event at 320 meters most likely indicate? List three possible physical causes at that location.
+3. The fiber run is designed to support 10GBase-LR (10 Gbps, 1310 nm, maximum attenuation budget: 6.7 dB). Calculate the total attenuation from 5 meters to 490 meters including the 320-meter event. Does the link meet the power budget?
+4. If the technician finds the 320-meter point is inside a conduit junction box, what should be physically inspected and in what order?
+
+**Challenge Question 2:** What is the difference between back-reflection (Fresnel reflection) and insertion loss (attenuation) on an OTDR trace? Which type of event does each indicate, and how does a technician distinguish between a dirty connector and a physical break when both produce a loss event on the OTDR?
+
+### Challenge Step 3: Escalation Decision Framework
+
+A network technician encounters the following five trouble scenarios. For each scenario, decide whether to: (a) resolve independently, (b) escalate to Tier 2 network engineering, or (c) escalate to the carrier/vendor. Justify each decision.
+
+1. A user's workstation is assigned 169.254.x.x — the DHCP server is reachable and the scope shows available addresses; the port shows up/up.
+2. A T1 WAN circuit between HQ and Branch-A has been down for 20 minutes; the CSU/DSU shows no signal from the carrier; a ticket was opened with the carrier 10 minutes ago.
+3. An MPLS VPN route is missing from the routing table; the PE router configuration looks correct; the carrier's NOC says the circuit is up on their end.
+4. A switch port shows "err-disabled" status — Port Security has shut it down due to a MAC violation; the technician does not have change authorization for production switches.
+5. Six concurrent users are reporting intermittent packet loss; Wireshark shows TCP retransmissions; the WAN interface utilization shows 98% for the past 30 minutes.
+
+**Challenge Question 3:** For scenario 5 (98% WAN utilization causing packet loss), describe the complete escalation documentation a Tier 1 technician should prepare before handing off to Tier 2. What specific data (commands, outputs, timestamps, user impact) should be captured, and why does thorough documentation at handoff reduce total resolution time?
+
+---
+
+*CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash*

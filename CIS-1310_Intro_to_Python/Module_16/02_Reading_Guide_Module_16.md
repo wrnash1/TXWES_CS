@@ -412,7 +412,31 @@ class Dog(Animal):
 
 ---
 
-## 14. Study Checklist
+## 14. Supplemental Resources
+
+**1. Python Institute — PCAP Exam Syllabus**
+[https://pythoninstitute.org/pcap](https://pythoninstitute.org/pcap)
+The official PCAP exam page listing all tested topics, exam format (40 questions, 65 minutes, 70% passing score), and scheduling options. Review the full syllabus to confirm your coverage before sitting the exam. This is the authoritative source for what is and is not on the certification.
+
+**2. Official Python 3 Tutorial — Full Index**
+[https://docs.python.org/3/tutorial/index.html](https://docs.python.org/3/tutorial/index.html)
+The complete official Python tutorial covers every topic in this course: data structures, functions, classes, modules, exceptions, and the standard library. Skim the table of contents to identify any gaps in your understanding and read those sections before your exam.
+
+**3. Python for Everybody — Full Textbook (Free)**
+[https://www.py4e.com/book](https://www.py4e.com/book)
+Dr. Charles Severance's free textbook covering Chapters 1–14, which align with Modules 1–15 of this course. Use this as a second explanation for any concept that is unclear — Dr. Severance's explanations are beginner-friendly and complement the PCAP-focused material in this course.
+
+**4. Real Python — Python Tutorials (Free Articles)**
+[https://realpython.com/](https://realpython.com/)
+A comprehensive library of free Python tutorials. Search for any concept you want reinforced — for example: "Real Python list comprehensions," "Real Python OOP inheritance," or "Real Python exceptions." The articles include runnable examples and cover both beginner and advanced topics at PCAP level.
+
+**5. PCAP Practice Questions — Python Institute Open EdX**
+[https://edube.org/](https://edube.org/)
+The Python Institute's free OpenEDG Education Platform offers the "Python Essentials" courses (PE1 and PE2) that map directly to PCAP content. The courses include quizzes, labs, and self-assessment tests covering the same topics as this course. Creating a free account gives you access to hundreds of practice questions aligned to the PCAP exam.
+
+---
+
+## 15. Study Checklist
 
 - [ ] Watch the Module 16 video lecture by Professor Nash.
 - [ ] Write out the 15 exam traps from memory — check against the list above.

@@ -457,3 +457,21 @@ Submit to Canvas:
 | BST delete case 3 | Replace with inorder successor (leftmost of right subtree) |
 | Validate BST | Pass min/max bounds down — local check is not sufficient |
 | Max depth | `1 + max(depth(left), depth(right))` — base case is None → 0 |
+
+---
+
+## Part 9 — Challenge Exercise
+
+These steps are **optional** and ungraded. They are designed for students who want to deepen their understanding beyond the core lab.
+
+### 9.1 — Lowest Common Ancestor of a BST (LeetCode #235)
+
+Given two nodes `p` and `q` in a BST, find their lowest common ancestor (LCA) — the deepest node that is an ancestor of both. Because of the BST property, the LCA can be found in O(h) time without traversing the entire tree: if both `p.val` and `q.val` are less than `root.val`, recurse left; if both are greater, recurse right; otherwise, the current root is the LCA. Implement both iterative and recursive versions, verify on a hand-drawn BST of at least 7 nodes, and add a comment explaining why the BST property makes this O(h) rather than the O(n) LCA needed for a general binary tree.
+
+### 9.2 — Serialize and Deserialize a Binary Tree (LeetCode #297)
+
+Implement two functions: `serialize(root)` that converts a binary tree to a comma-separated string of values using preorder traversal (using `"null"` for `None` nodes), and `deserialize(data)` that reconstructs the original tree from the string. Use an index pointer (via a list `[0]` or `collections.deque`) to track the current position during deserialization. Verify that `deserialize(serialize(root))` reconstructs the original tree exactly, and state why preorder (Root-L-R) is used rather than inorder for serialization.
+
+### 9.3 — BST Iterator (LeetCode #173)
+
+Implement a `BSTIterator` class that supports `next()` (return the next smallest value) and `hasNext()` (return True if more values exist), both in O(1) average time and O(h) space. The key insight is to simulate inorder traversal lazily using an explicit stack: initially push all leftmost nodes onto the stack. `next()` pops the top, then pushes all leftmost nodes of its right subtree. This amortizes the cost of pushing across all calls. Implement the class, verify it produces sorted output on a test BST, and explain in comments why the space is O(h) rather than O(n).

@@ -383,3 +383,169 @@ Answer the following in your lab report:
 **LAPS schema update fails**: You must run `Update-LapsADSchema` as a Domain Admin. Enterprise Admin rights are required to extend the AD schema.
 
 **Event 4625 not appearing**: Ensure logon auditing is enabled (`auditpol /get /subcategory:"Logon"` shows Success and Failure). The Security event log may require elevated rights to read.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Build a Multi-Role JEA Endpoint with Parameter Constraints
+
+A well-designed JEA endpoint grants different capabilities to different teams.
+Build a JEA endpoint that supports two roles: HelpDesk (service management) and
+NetworkOps (DNS management), with parameter restrictions to prevent misuse.
+
+1. Create the HelpDesk role capability file that allows service status queries
+   and restarts, but restricts `Restart-Service` to only specific safe services:
+
+   ```powershell
+   $helpDeskDir = "C:\JEA\RoleCapabilities"
+   New-Item -ItemType Directory -Path $helpDeskDir -Force
+
+   New-PSRoleCapabilityFile -Path "$helpDeskDir\HelpDesk.psrc" `
+       -VisibleCmdlets @(
+           "Get-Service",
+           "Get-Process",
+           @{ Name = "Restart-Service"; Parameters = @{ Name = "Name"; ValidateSet = "Spooler","W32Time","DNS" } }
+       ) `
+       -VisibleExternalCommands @("C:\Windows\System32\ipconfig.exe")
+   ```
+
+2. Create the NetworkOps role capability file permitting DNS record management:
+
+   ```powershell
+   New-PSRoleCapabilityFile -Path "$helpDeskDir\NetworkOps.psrc" `
+       -VisibleCmdlets @(
+           "Get-DnsServerResourceRecord",
+           "Add-DnsServerResourceRecordA",
+           "Remove-DnsServerResourceRecord",
+           "Resolve-DnsName"
+       ) `
+       -ModulesToImport @("DnsServer")
+   ```
+
+3. Create the session configuration file mapping AD groups to roles:
+
+   ```powershell
+   $sessionDir = "C:\Program Files\WindowsPowerShell\Modules\JEA_LabEndpoint"
+   New-Item -ItemType Directory -Path $sessionDir -Force
+
+   New-PSSessionConfigurationFile -Path "C:\JEA\LabEndpoint.pssc" `
+       -SessionType RestrictedRemoteServer `
+       -RunAsVirtualAccount `
+       -RoleDefinitions @{
+           "txwes\HelpDesk"    = @{ RoleCapabilityFiles = "$helpDeskDir\HelpDesk.psrc" }
+           "txwes\NetworkOps"  = @{ RoleCapabilityFiles = "$helpDeskDir\NetworkOps.psrc" }
+       } `
+       -TranscriptDirectory "C:\JEA\Transcripts" `
+       -LanguageMode NoLanguage
+
+   Test-PSSessionConfigurationFile -Path "C:\JEA\LabEndpoint.pssc"
+   ```
+
+4. Register the endpoint and test that parameter validation works correctly:
+
+   ```powershell
+   Register-PSSessionConfiguration -Name "LabEndpoint" `
+       -Path "C:\JEA\LabEndpoint.pssc" -Force
+
+   # Test — attempt to restart an unauthorized service (should fail)
+   $session = New-PSSession -ComputerName localhost -ConfigurationName LabEndpoint
+   Invoke-Command -Session $session -ScriptBlock {
+       Restart-Service -Name "EventLog"   # Should be blocked by ValidateSet
+   }
+   Remove-PSSession $session
+   ```
+
+   In your lab notes, record the exact error message when `Restart-Service -Name EventLog` is blocked, and explain the difference between blocking the cmdlet entirely versus restricting its parameters with `ValidateSet`.
+
+### Challenge 2: Create an Automated Security Posture Report
+
+Build a PowerShell script that collects key security indicators from a server
+and generates a structured HTML report.
+
+1. Create the security data collection function:
+
+   ```powershell
+   function Get-SecurityPosture {
+       param([string]$ComputerName = "localhost")
+
+       $avStatus  = Get-MpComputerStatus
+       $fwDomain  = Get-NetFirewallProfile -Profile Domain
+       $failedLogons = (Get-WinEvent -FilterHashtable @{
+           LogName='Security'; Id=4625
+           StartTime=(Get-Date).AddDays(-1)
+       } -ErrorAction SilentlyContinue).Count
+       $lockouts  = (Get-WinEvent -FilterHashtable @{
+           LogName='Security'; Id=4740
+           StartTime=(Get-Date).AddDays(-1)
+       } -ErrorAction SilentlyContinue).Count
+
+       [PSCustomObject]@{
+           Computer           = $ComputerName
+           AVEnabled          = $avStatus.AntivirusEnabled
+           AVSignatureAge     = $avStatus.AntivirusSignatureAge
+           FWDomainEnabled    = $fwDomain.Enabled
+           FWDefaultInbound   = $fwDomain.DefaultInboundAction
+           FailedLogons24h    = $failedLogons
+           Lockouts24h        = $lockouts
+           ReportTime         = (Get-Date).ToString("yyyy-MM-dd HH:mm")
+       }
+   }
+   ```
+
+2. Run the function and display the report:
+
+   ```powershell
+   $report = Get-SecurityPosture -ComputerName "DC1"
+   $report | Format-List *
+   ```
+
+3. Export the report as both CSV and an HTML file for documentation:
+
+   ```powershell
+   $report | Export-Csv "C:\Reports\SecurityPosture_$(Get-Date -Format yyyyMMdd).csv" `
+       -NoTypeInformation
+
+   $report | ConvertTo-Html -Title "Security Posture Report" `
+       -PreContent "<h1>DC1 Security Posture — $(Get-Date -Format 'yyyy-MM-dd')</h1>" |
+       Out-File "C:\Reports\SecurityPosture_$(Get-Date -Format yyyyMMdd).html"
+
+   # Open the HTML report
+   Start-Process "C:\Reports\SecurityPosture_$(Get-Date -Format yyyyMMdd).html"
+   ```
+
+4. Add a risk flag that highlights servers with antivirus signatures older than
+   3 days or more than 50 failed logons in 24 hours:
+
+   ```powershell
+   if ($report.AVSignatureAge -gt 3) {
+       Write-Warning "AV signatures on $($report.Computer) are $($report.AVSignatureAge) days old — update required"
+   }
+
+   if ($report.FailedLogons24h -gt 50) {
+       Write-Warning "$($report.FailedLogons24h) failed logons in 24h on $($report.Computer) — investigate brute force"
+   }
+   ```
+
+   In your lab notes, record the values for `AVSignatureAge` and `FailedLogons24h`
+   from your report, and describe how this script could be extended to run daily
+   via a scheduled task and email alerts to the security team.
+
+### Reflection Questions
+
+1. Just Enough Administration reduces administrative attack surface by granting
+   only the minimum required permissions. However, a JEA endpoint requires
+   significant upfront design: defining roles, testing capabilities, and
+   maintaining capability files as the environment changes. Describe the process
+   you would follow to onboard a new "StorageOps" role to an existing JEA
+   endpoint, including how you would determine the minimum necessary cmdlets,
+   test the role without disrupting existing roles, and maintain the configuration
+   over time as PowerShell modules are updated.
+
+2. LAPS solves the lateral movement risk of shared local administrator passwords.
+   However, a security auditor notes that LAPS passwords are stored in Active
+   Directory and any user with Read permission on the `msLAPS-Password` attribute
+   can retrieve them. Describe the access control model you would implement for
+   LAPS password retrieval — including which groups need read access, how you
+   would audit password retrievals, and what additional control Windows LAPS
+   (built-in) provides over legacy LAPS to protect the stored password.

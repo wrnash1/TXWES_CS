@@ -177,6 +177,24 @@ Tip 8: The Sprint Review is for the product Increment — only Done items are sh
 
 ---
 
+## 8. Supplemental Resources
+
+The following free, open-access resources go deeper on Module 05 topics:
+
+**1. "Sprint Review" — Scrum.org Resources**
+<https://www.scrum.org/resources/what-is-a-sprint-review>
+Scrum.org's official resource page for the Sprint Review. Addresses common misconceptions (demo vs. collaborative working session), the Product Owner's role in inviting stakeholders, and how the Product Backlog should change as a result of the event.
+
+**2. "Improving Retrospectives" — Agile Alliance**
+<https://www.agilealliance.org/glossary/heartbeatretro/>
+The Agile Alliance glossary entry on retrospectives (called "Heartbeat Retrospective"), including format variations, facilitation guidance, and the critical distinction between identifying improvements and committing to them. Free access.
+
+**3. "Retromat — Retrospective Plan Generator"**
+<https://retromat.org>
+A free, open-source tool that generates structured retrospective plans using over 100 activities organized into five phases: Set the Stage, Gather Data, Generate Insights, Decide What to Do, and Close. Useful for Scrum Masters learning facilitation techniques and for students designing Retrospective simulations.
+
+---
+
 ## 7. Study Checklist
 
 - [ ] State the distinct purpose of the Sprint Review versus the Sprint Retrospective in one sentence each

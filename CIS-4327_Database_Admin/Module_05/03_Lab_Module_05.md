@@ -232,3 +232,53 @@ gcloud bigtable instances delete txwes-bigtable-lab --quiet
 ---
 
 Reference: cloud.google.com/learn
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Designing and Testing a Secondary Lookup Table
+
+Bigtable has no native secondary indexes. Implement an application-managed secondary index using a second table to support cross-key queries.
+
+Create a second table called `sensor_by_type` with the row key `sensorType#reverseTimestamp#sensorId`:
+
+```bash
+cbt createtable sensor_by_type
+cbt createfamily sensor_by_type cf_ref
+```
+
+Then complete the following steps:
+
+1. Insert 10 rows into `sensor_by_type` that mirror the sensor readings in your primary table, using the new key format. The cell value in `cf_ref:primary_key` should store the corresponding primary table row key.
+2. Perform a range scan on `sensor_by_type` for `sensorType = temperature` using prefix `temperature#` and record the result. Verify that the returned `cf_ref:primary_key` values map back to valid rows in the primary table.
+3. Write a two-paragraph analysis: the first paragraph explains the consistency risk of maintaining two tables (what happens if a write to the primary table succeeds but the secondary lookup write fails); the second paragraph describes how a compensating transaction or application retry strategy mitigates this risk.
+
+### Challenge 2: GC Policy Impact on Storage and Read Latency
+
+Modify the GC policy on a column family and observe the effect on storage.
+
+Start by writing 20 versions of a cell value to a single row:
+
+```bash
+for i in $(seq 1 20); do
+  cbt set sensors sensor_001 "cf_raw:temperature=reading_v${i}"
+  sleep 0.1
+done
+```
+
+Then complete the following steps:
+
+1. Read the row with `cbt read sensors sensor_001` and count how many versions are returned. Record the output.
+2. Change the GC policy to `maxversions=3`:
+
+```bash
+cbt setgcpolicy sensors cf_raw maxversions=3
+```
+
+3. Wait 2–3 minutes for compaction to run (or trigger it by reading the row repeatedly), then re-read the row and record how many versions remain. Note whether the change took effect immediately or after a delay, and explain why.
+
+### Reflection Questions
+
+1. In Challenge 1, if the application crashes after writing to the primary table but before writing to the secondary lookup table, how would a subsequent read from the secondary index return incorrect or missing results, and what operational procedure would you use to detect and repair this inconsistency?
+2. In Challenge 2, why does a GC policy change not take effect immediately upon setting it, and what does this reveal about the underlying LSM (log-structured merge tree) storage architecture that Bigtable uses?

@@ -187,6 +187,24 @@ Tip 8: PSM I questions about "what the Scrum Master should do" at the Daily Scru
 
 ---
 
+## 8. Supplemental Resources
+
+The following free, open-access resources go deeper on Module 04 topics:
+
+**1. "Sprint Planning" — Scrum.org Resources**
+<https://www.scrum.org/resources/what-is-sprint-planning>
+A concise, authoritative overview of Sprint Planning directly from Scrum.org. Covers the three topics, attendees, and outputs. Useful as a quick-reference companion to the Scrum Guide section on Sprint Planning.
+
+**2. "The Daily Scrum" — Scrum.org Resources**
+<https://www.scrum.org/resources/what-is-a-daily-scrum>
+Scrum.org's official resource page for the Daily Scrum event. Addresses the 2020 format changes, common misconceptions, and the distinction between the Daily Scrum and a status meeting. Includes a short video overview.
+
+**3. "Sprint Goals: Why, What, How" — Roman Pichler**
+<https://www.romanpichler.com/blog/sprint-goals/>
+A practitioner-focused blog post by a leading Scrum trainer on how to write effective Sprint Goals. Pichler covers the characteristics of a good Sprint Goal, common mistakes, and worked examples. Free access on romanpichler.com.
+
+---
+
 ## 7. Study Checklist
 
 - [ ] State the three topics of Sprint Planning and what each produces

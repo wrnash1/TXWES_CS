@@ -234,4 +234,226 @@ Distractor Analysis:
 
 ---
 
+---
+
+## Question 11
+
+An engineer runs `show port-security interface GigabitEthernet0/3` and sees the violation count is 47, but the port is still operational. Which violation mode is configured?
+
+A. Shutdown
+
+B. Protect
+
+C. Restrict
+
+D. Err-disabled
+
+Correct Answer: C — In restrict mode, the port remains operational, frames from unknown MACs are dropped, and the violation counter increments with each offending frame. A count of 47 confirms many violations have occurred while the port stayed up. In shutdown mode, the first violation drops the port to err-disabled. In protect mode, the port also stays up but the counter does not increment.
+
+Distractor Analysis:
+
+* A — Shutdown mode would have placed the port in err-disabled after the very first violation, so a count of 47 would never accumulate while the port remained up.
+* B — Protect mode drops frames silently and does not increment the violation counter.
+* D — Err-disabled is a port state, not a violation mode. It results from shutdown mode being triggered.
+
+---
+
+## Question 12
+
+An organization wants to authenticate network users using their Active Directory credentials when they connect to the corporate wireless network. Which combination of technologies accomplishes this?
+
+A. Port security with sticky MAC and TACACS+ for device administration
+
+B. 802.1X with PEAP and a RADIUS server integrated with Active Directory
+
+C. DHCP snooping with an ARP ACL mapped to Active Directory user objects
+
+D. TACACS+ with command authorization applied to the wireless controller
+
+Correct Answer: B — 802.1X is the IEEE standard for port-based (and wireless) network access control. PEAP (Protected EAP) allows users to authenticate with username/password credentials (Active Directory accounts) without requiring client-side certificates. A RADIUS server (such as Cisco ISE or Windows NPS) integrates with Active Directory to validate the credentials. This is the standard enterprise wireless authentication design.
+
+Distractor Analysis:
+
+* A — Port security with sticky MAC is a Layer 2 protection feature for switch ports. It does not authenticate users and has no integration with Active Directory.
+* C — DHCP snooping and ARP ACLs protect against Layer 2 attacks but have no user identity or Active Directory integration capability.
+* D — TACACS+ command authorization controls what IOS commands administrators can run on network devices. It is not used for end-user wireless authentication.
+
+---
+
+## Question 13
+
+Which statement correctly describes the difference between the `protect` and `restrict` port-security violation modes?
+
+A. Protect drops frames and sends a syslog message; restrict drops frames silently.
+
+B. Restrict drops frames and sends a syslog message; protect drops frames silently without logging.
+
+C. Both modes send syslog messages, but only restrict shuts down the port.
+
+D. Protect increments the violation counter; restrict does not.
+
+Correct Answer: B — Restrict mode drops violating frames, increments the violation counter, and generates a syslog message. Protect mode drops violating frames silently — no syslog message is generated and the violation counter does not increment. This makes protect the quieter of the two modes. Shutdown is the third mode and places the port in err-disabled state.
+
+Distractor Analysis:
+
+* A — This reverses the behaviors of protect and restrict.
+* C — Protect mode does not send syslog messages, and neither mode shuts down the port. Shutdown is the mode that err-disables the port.
+* D — It is restrict that increments the violation counter, not protect. Protect provides no counter feedback.
+
+---
+
+## Question 14
+
+A network engineer configures `aaa authentication login default group tacacs+ local` on a Cisco router. The TACACS+ server is unreachable at login time. What happens when an administrator tries to log in?
+
+A. Login is denied because TACACS+ is the only configured authentication method.
+
+B. The router falls back to local username/password authentication.
+
+C. The router prompts for the enable password instead of a username.
+
+D. The router enters a lockout mode and must be recovered from the console.
+
+Correct Answer: B — The AAA method list `group tacacs+ local` defines a fallback sequence. The router first attempts TACACS+ authentication. If the TACACS+ server is unreachable (not just returning a reject), the router falls back to the local username database. This ensures administrators can still log in during TACACS+ outages using locally defined credentials. Note: if the server returns an explicit reject, the local fallback is NOT used — fallback only triggers on server unreachability.
+
+Distractor Analysis:
+
+* A — Login would only be denied if TACACS+ were the sole method and no fallback were configured (e.g., `group tacacs+ none`).
+* C — The enable password is not part of the AAA login authentication process. It applies to privilege escalation (level 15), not initial login.
+* D — Cisco AAA does not enter a lockout mode due to TACACS+ unavailability. The fallback mechanism prevents this scenario.
+
+---
+
+## Question 15
+
+Which port-security command causes the switch to store dynamically learned MAC addresses in the running-configuration so they survive a reboot if saved?
+
+A. `switchport port-security mac-address sticky`
+
+B. `switchport port-security mac-address dynamic`
+
+C. `switchport port-security mac-address persistent`
+
+D. `ip dhcp snooping binding sticky`
+
+Correct Answer: A — The `switchport port-security mac-address sticky` command enables sticky learning. The switch dynamically learns MAC addresses from incoming frames and immediately writes them as static entries to the running-configuration. Issuing `copy running-config startup-config` saves them to NVRAM so they persist through reboots. Without this, dynamically learned MACs are lost when the switch reloads.
+
+Distractor Analysis:
+
+* B — `mac-address dynamic` is not a valid port-security keyword. Dynamic learning is the default when sticky is not configured, but there is no explicit `dynamic` keyword in this command.
+* C — `mac-address persistent` is not a valid Cisco IOS command. Persistence is achieved through the sticky keyword combined with saving the configuration.
+* D — `ip dhcp snooping binding sticky` is not a valid command. DHCP snooping has its own binding database separate from port-security MAC learning.
+
+---
+
+## Question 16
+
+An attacker sends a flood of forged DHCP Discover packets to exhaust the DHCP server's address pool. What attack type is this, and which Cisco security feature mitigates it?
+
+A. ARP poisoning; mitigated by Dynamic ARP Inspection
+
+B. DHCP starvation attack; mitigated by DHCP snooping rate limiting
+
+C. MAC flooding; mitigated by port security maximum MAC count
+
+D. Rogue DHCP server attack; mitigated by DHCP snooping trust ports
+
+Correct Answer: B — A DHCP starvation attack sends thousands of DHCP Discover packets with spoofed source MAC addresses, consuming all available addresses in the DHCP pool. Legitimate clients then receive no IP addresses. DHCP snooping with rate limiting (`ip dhcp snooping limit rate`) on untrusted ports restricts the number of DHCP packets per second from any single port, preventing a single attacker from flooding the server.
+
+Distractor Analysis:
+
+* A — ARP poisoning exploits the ARP protocol to redirect traffic, not to exhaust the DHCP pool. DAI protects against ARP attacks, not DHCP starvation.
+* C — MAC flooding targets the switch's CAM table to cause it to broadcast traffic, not the DHCP server's address pool. Port security mitigates MAC flooding.
+* D — A rogue DHCP server attack involves an unauthorized server handing out incorrect IP configuration. The scenario describes an address exhaustion attack, not a rogue server attack.
+
+---
+
+## Question 17
+
+An organization deploys 802.1X on all switch access ports. A network printer does not support 802.1X. Which feature allows the printer to access the network without disabling 802.1X on its port?
+
+A. VLAN hopping using double-tagging bypass
+
+B. MAC Authentication Bypass (MAB)
+
+C. Force-authorized mode on the printer port only
+
+D. Sticky MAC learning with the printer's MAC pre-configured
+
+Correct Answer: B — MAC Authentication Bypass (MAB) allows non-802.1X-capable devices (printers, IP phones, IoT devices) to authenticate using their MAC address. When the switch detects that a device is not responding to EAP identity requests, it falls back to MAB and sends the device's MAC address to the RADIUS server for validation. The RADIUS server can then permit or deny access based on the MAC, and optionally assign a VLAN.
+
+Distractor Analysis:
+
+* A — VLAN hopping is an attack technique, not a legitimate access method for non-802.1X devices.
+* C — Setting a port to force-authorized bypasses 802.1X entirely, granting network access to any device connected to that port. This removes security rather than providing controlled access for the printer.
+* D — Pre-configuring the sticky MAC address controls which MAC can connect but still blocks the printer if 802.1X is required before the port opens. Sticky MAC is a port security feature, not an 802.1X bypass mechanism.
+
+---
+
+## Question 18
+
+A Cisco switch has `ip arp inspection vlan 10` configured. A host in VLAN 10 has a statically assigned IP of 10.10.10.100 and MAC address 0011.2233.4455. No DHCP binding exists for this host. An ARP request from this host is dropped by DAI. What is the correct fix?
+
+A. Add `ip dhcp snooping trust` to the port the static host is connected to.
+
+B. Create an ARP ACL permitting the host's IP-MAC binding and apply it to VLAN 10 with `ip arp inspection filter`.
+
+C. Assign the static host a DHCP reservation so a binding table entry is created.
+
+D. Disable DAI on VLAN 10 to allow static hosts to use ARP normally.
+
+Correct Answer: B — For hosts with static IP addresses, no DHCP binding exists in the snooping database. DAI cannot validate their ARP packets against the binding table, so they are dropped. The correct solution is to create an explicit ARP ACL: `arp access-list STATIC_HOSTS` with `permit ip host 10.10.10.100 mac host 0011.2233.4455`, then apply it with `ip arp inspection filter STATIC_HOSTS vlan 10`. This tells DAI to use the ACL as the authoritative source for that host.
+
+Distractor Analysis:
+
+* A — Trusting the port would bypass DAI for all devices on that port — including potential attackers. The correct approach preserves DAI's protection while creating a specific exemption for the known static host.
+* C — Adding a DHCP reservation would create a binding only when the host requests an address via DHCP. A host with a static IP never sends a DHCP Discover, so no binding is ever created.
+* D — Disabling DAI on the VLAN removes ARP inspection protection for all hosts on the VLAN, not just the static host. This eliminates the security feature entirely.
+
+---
+
+## Question 19
+
+After enabling DHCP snooping on a Cisco switch, DHCP clients on VLAN 20 start receiving DHCP Offers with Option 82 (relay agent information) that the DHCP server is rejecting. What is the most likely cause and fix?
+
+A. The DHCP server does not support Option 82 — disable DHCP snooping on VLAN 20.
+
+B. DHCP snooping is inserting Option 82 on a switch without a relay agent present — add `no ip dhcp snooping information option` to suppress Option 82 insertion.
+
+C. The DHCP server is a rogue server that does not understand Option 82 — configure a trusted port toward the legitimate server.
+
+D. Option 82 requires the switch to be the DHCP relay — configure `ip helper-address` on the SVI.
+
+Correct Answer: B — When DHCP snooping is enabled, Cisco switches insert Option 82 (relay agent information) into all DHCP packets by default — even when the switch is not acting as a DHCP relay agent. Many DHCP servers are configured to reject packets with Option 82 if they did not expect a relay agent. The fix is `no ip dhcp snooping information option` in global configuration, which prevents the switch from inserting Option 82. This is a common "first day" issue when deploying DHCP snooping.
+
+Distractor Analysis:
+
+* A — Disabling snooping removes the entire security protection. The correct fix is suppressing Option 82 insertion while keeping snooping active.
+* C — The presence of Option 82 is caused by the switch itself, not by a rogue server. The rogue server issue is a separate scenario solved by trust port configuration.
+* D — Option 82 is automatically inserted by snooping regardless of whether a helper-address is configured. Adding `ip helper-address` would make the switch a relay agent but does not fix the Option 82 rejection issue.
+
+---
+
+## Question 20
+
+A network administrator wants to verify that 802.1X authentication is actively enforcing access control on a specific switch port. Which command provides the current authentication state of the port including whether the client is authenticated?
+
+A. `show interfaces GigabitEthernet0/5`
+
+B. `show authentication sessions interface GigabitEthernet0/5 detail`
+
+C. `show dot1x interface GigabitEthernet0/5`
+
+D. `show port-security interface GigabitEthernet0/5`
+
+Correct Answer: B — `show authentication sessions interface GigabitEthernet0/5 detail` provides a comprehensive view of the authentication state for a specific port including: the client MAC address, the assigned VLAN, the authentication method used (802.1X, MAB, or WebAuth), the current session status (Authz Success, Authz Failed), and the applied policies from the RADIUS server. This is the primary troubleshooting command for 802.1X issues.
+
+Distractor Analysis:
+
+* A — `show interfaces` displays physical layer statistics, speed, duplex, and error counters. It has no awareness of 802.1X authentication state.
+* C — `show dot1x interface` shows 802.1X-specific information for the port, but `show authentication sessions` provides a more complete view that also covers MAB and other authentication methods.
+* D — `show port-security interface` displays port-security MAC address information and violation counts. It is not related to 802.1X authentication state.
+
+---
+
 End of Quiz — Module 13

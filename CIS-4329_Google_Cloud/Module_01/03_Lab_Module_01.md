@@ -304,6 +304,60 @@ The project itself can remain; the free tier and budget alert protect you.
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Enforce a Resource Location Restriction
+
+Using the Cloud Console or gcloud CLI, attempt to view the
+`constraints/gcp.resourceLocations` Organization Policy constraint on your
+project. If you have Organization access, set the allowed values list to
+`us-central1` and `us-east1` only. Document what the constraint does and
+explain what would happen if a team member tried to deploy a VM in
+`europe-west1` after the policy is applied.
+
+If Organization access is unavailable, use the following command to describe
+the constraint and record its description and default behavior:
+
+```bash
+gcloud org-policies describe constraints/gcp.resourceLocations \
+  --project=$(gcloud config get-value project)
+```
+
+### Challenge 2: Multi-Configuration Workflow
+
+Create two named gcloud configurations — one for a "development" scenario
+pointed at `us-central1` and one for a "production" scenario pointed at
+`us-east1`. Switch between them and confirm the active region changes by
+running `gcloud config get-value compute/region` after each switch.
+
+```bash
+gcloud config configurations create development
+gcloud config set compute/region us-central1
+gcloud config set project $(gcloud config get-value project)
+
+gcloud config configurations create production
+gcloud config set compute/region us-east1
+
+gcloud config configurations activate development
+gcloud config get-value compute/region
+
+gcloud config configurations activate production
+gcloud config get-value compute/region
+```
+
+### Reflection Questions
+
+1. After applying the `gcp.resourceLocations` constraint, you attempt to create
+   a VM in `asia-east1`. The operation fails. Which layer of GCP is blocking
+   this — IAM or Organization Policy — and what is the difference between
+   the two enforcement mechanisms?
+2. In a real organization with dozens of teams and environments, how would you
+   use named gcloud configurations and the GCP resource hierarchy together to
+   minimize the risk of accidentally deploying resources to the wrong project
+   or region?
+
+---
+
 End of Lab — Module 01
 
 Course: CIS-4329 Google Cloud Computing | Texas Wesleyan University | Professor Nash

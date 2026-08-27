@@ -325,4 +325,30 @@ Work through each item before attempting the quiz.
 
 ---
 
+---
+
+## 9. Supplemental Resources
+
+The following open educational resources extend module content on BPMN and process modeling. All are freely accessible without login or purchase.
+
+1. **BPMN 2.0 Specification — Object Management Group (OMG)**
+   <https://www.omg.org/spec/BPMN/2.0/>
+   Focus: The authoritative BPMN 2.0 specification. Review the element reference tables for gateway types, event types, and flow types to confirm notation details tested on the ECBA exam.
+
+2. **BPMN Quick Reference Guide — BPMNQuickGuide.com**
+   <https://www.bpmnquickguide.com/view-bpmn-quick-guide/>
+   Focus: One-page visual reference card covering all standard BPMN 2.0 symbols with shape descriptions. Use this alongside the lab to ensure you are using correct BPMN shapes, not generic flowchart shapes.
+
+3. **Introduction to Business Process Modeling — Coursera (free audit)**
+   <https://www.coursera.org/learn/business-process-management>
+   Focus: University-level course covering BPMN fundamentals, As-Is and To-Be modeling, and process improvement analysis. Supplements the process modeling content of this module.
+
+4. **Process Improvement with BPMN — Camunda Academy (free)**
+   <https://academy.camunda.com/>
+   Focus: Free short courses on BPMN 2.0 notation and process modeling best practices from the makers of a leading open-source BPMN engine. Includes interactive exercises and quizzes.
+
+5. **Draw.io BPMN Shape Library Tutorial — draw.io Blog**
+   <https://www.drawio.com/blog/bpmn-2-0>
+   Focus: Step-by-step guide to using draw.io's built-in BPMN shape library to create compliant BPMN diagrams. Directly supports the lab requirement to use BPMN-specific shapes rather than generic flowchart shapes.
+
 *Reading Guide — Module 09 | CIS-3312 Systems Analysis and Design | Texas Wesleyan University*

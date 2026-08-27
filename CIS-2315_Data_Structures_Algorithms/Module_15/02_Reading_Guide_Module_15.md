@@ -280,7 +280,28 @@ def is_valid(s):
 
 ---
 
-## 8. Study Checklist
+## 8. Supplemental Resources
+
+The following free, openly licensed resources reinforce the concepts in this module. All are zero-cost and require no account to access.
+
+1. **VisuAlgo — Trie Visualization** — [https://visualgo.net/en/suffixtree](https://visualgo.net/en/suffixtree)
+   VisuAlgo's trie and suffix tree visualizer shows the character-by-character construction of a Trie. Step through insertions to see node creation, `is_end` marking, and shared prefix paths. Useful for verifying that `search` and `starts_with` traverse the same path with different terminal conditions.
+
+2. **NeetCode — Sliding Window & Trie Playlists (YouTube)** — [https://www.youtube.com/c/NeetCode](https://www.youtube.com/c/NeetCode)
+   Free video walkthroughs for LeetCode #3 (Longest Substring Without Repeating Characters), #76 (Minimum Window Substring), #5 (Longest Palindromic Substring), and #208 (Implement Trie). Each video includes a whiteboard trace of the algorithm before coding.
+
+3. **OpenDSA — String Matching and Tries** — [https://opendsa-server.cs.vt.edu/ODSA/Books/Everything/html/Trie.html](https://opendsa-server.cs.vt.edu/ODSA/Books/Everything/html/Trie.html)
+   Free interactive OER textbook coverage of Trie structure, insertion, and search with embedded exercises. Includes a discussion of Trie space complexity and comparison with hash maps for prefix queries.
+
+4. **Python `collections.Counter` Documentation** — [https://docs.python.org/3/library/collections.html#collections.Counter](https://docs.python.org/3/library/collections.html#collections.Counter)
+   Official Python documentation for `Counter` — the hash map used in Minimum Window Substring and Find Anagrams. Covers `Counter` arithmetic, `most_common()`, set operations, and the `==` comparison used in the fixed-window anagram check.
+
+5. **CP-Algorithms — String Hashing and Z-Function** — [https://cp-algorithms.com/string/string-hashing.html](https://cp-algorithms.com/string/string-hashing.html)
+   Free competitive programming reference covering polynomial rolling hash for O(n) string comparison — the technique behind Rabin-Karp substring search. Also covers the Z-function (linear-time prefix match) as an alternative to the Trie for pattern matching. Both are interview-adjacent topics that appear in advanced string problems.
+
+---
+
+## 9. Study Checklist
 
 - [ ] Watch the Module 15 video lecture by Professor Nash.
 - [ ] Implement `Trie` with `insert`, `search`, `starts_with` from scratch.

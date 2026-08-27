@@ -266,3 +266,209 @@ merged = tf.keras.layers.Add()([branch_a, branch_b])
 - B — Incorrect. While `input_a` and `input_b` have different input shapes (16 and 32), both branches produce 64-dimensional output because both Dense layers specify `units=64`. The `Add()` layer sees two tensors of shape `(None, 64)` — compatible for element-wise addition.
 - C — Correct. Both branches output shape `(None, 64)`. The `Add()` layer performs element-wise addition on matching-shape tensors. This is valid Functional API code that will compile and run without error.
 - D — Incorrect. Both `Add()` and `Concatenate()` are valid merge layers in the Functional API. `Add()` performs element-wise summation; `Concatenate()` stacks tensors along an axis. Both are supported.
+
+---
+
+### Question 11 (5 points)
+
+What is the output shape of `tf.keras.layers.Concatenate(axis=-1)([a, b])` when `a` has shape `(None, 32)` and `b` has shape `(None, 16)`?
+
+- A) `(None, 48)`
+- B) `(None, 32)`
+- C) `(None, 16)`
+- D) `(None, 512)`
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- A — Correct. `Concatenate(axis=-1)` stacks tensors along the last axis. For inputs of shapes `(None, 32)` and `(None, 16)`, the last dimensions are added: `32 + 16 = 48`. The result is `(None, 48)`.
+- B — Incorrect. `(None, 32)` is the shape of the first input only. Concatenation always produces a tensor larger than either input along the concatenation axis.
+- C — Incorrect. `(None, 16)` is the shape of the second input only. No concatenation operation would shrink the output below the larger of the two inputs.
+- D — Incorrect. `(None, 512)` does not correspond to any standard operation on these two inputs. It might result from misapplying a Dense layer, not a Concatenate operation.
+
+---
+
+### Question 12 (5 points)
+
+A developer calls `model.predict(X_test)` on a classification model. The output has shape `(200, 10)`. What does each row represent?
+
+- A) The 10 most important feature weights for that sample
+- B) A probability distribution over 10 classes for that sample, produced by the softmax output layer
+- C) The 10 gradient values for that sample during the last training step
+- D) The 10 nearest training examples to that test sample
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- B — Correct. When a model has a `Dense(10, activation='softmax')` output layer, `model.predict()` returns a 2D array of shape `(n_samples, 10)`. Each row sums to 1.0 and represents the model's probability estimate for each of the 10 classes. To get the predicted class, use `np.argmax(predictions, axis=1)`.
+- A — Incorrect. Feature importance is a model interpretation concept, not what `predict()` returns. Feature importance is computed separately using tools like SHAP or sklearn's feature_importances_.
+- C — Incorrect. Gradients are internal to the training process and are computed by `tf.GradientTape`. `model.predict()` runs a forward pass in inference mode with no gradient computation.
+- D — Incorrect. k-nearest-neighbor retrieval is a separate algorithm. Neural network `predict()` returns model output values, not references to training examples.
+
+---
+
+### Question 13 (5 points)
+
+What is the behavior of `tf.keras.layers.Dropout(rate=0.3)` during inference (prediction)?
+
+- A) It randomly drops 30% of neurons during inference to prevent overconfident predictions
+- B) It scales all activations by 0.7 during inference to compensate for dropout during training
+- C) It is a no-op during inference — all neurons are active and no scaling is applied
+- D) It replaces 30% of activations with the layer mean to stabilize predictions
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- C — Correct. Dropout is only active during training (when `training=True`). During inference (`model.predict()` or `model(x, training=False)`), all neurons are fully active. Keras automatically handles this distinction — the `training` flag is passed internally. The inverted dropout technique scales activations during training (divides by `keep_rate`) so that no scaling is needed at inference time.
+- A — Incorrect. Dropping neurons during inference would make predictions non-deterministic and unreliable. Dropout is strictly a training-time regularization technique.
+- B — Incorrect. In Keras's inverted dropout implementation, the scaling by `1/(1-rate)` happens during training, not inference. This ensures that the expected value of activations is the same at both training and inference time.
+- D — Incorrect. Replacing activations with the layer mean is not how dropout works. Dropout zeros out randomly selected activations; it does not replace them with mean values.
+
+---
+
+### Question 14 (5 points)
+
+Which of the following correctly uses the `EarlyStopping` callback in Keras?
+
+- A) `tf.keras.callbacks.EarlyStopping(monitor='val_accuracy', patience=5, restore_best_weights=True)`
+- B) `tf.keras.callbacks.EarlyStopping(monitor='train_loss', patience=-1)`
+- C) `tf.keras.callbacks.EarlyStopping(epochs=10, learning_rate=0.001)`
+- D) `tf.keras.callbacks.EarlyStopping(monitor='val_loss', stop_at=0.1)`
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- A — Correct. `EarlyStopping` monitors a validation metric (`val_accuracy` or `val_loss`), waits `patience` epochs without improvement, then stops training. `restore_best_weights=True` reverts the model to the weights from the best epoch — essential for getting the optimal model, not the overfit one at the stopping epoch.
+- B — Incorrect. `patience=-1` is not valid — patience must be a non-negative integer. Also, monitoring `train_loss` for early stopping defeats the purpose: training loss always decreases. Early stopping should monitor a validation metric.
+- C — Incorrect. `EarlyStopping` does not accept `epochs` or `learning_rate` parameters. The `monitor` parameter specifying which metric to watch is required.
+- D — Incorrect. There is no `stop_at` parameter in `EarlyStopping`. The callback stops when the monitored metric fails to improve by more than `min_delta` for `patience` consecutive epochs.
+
+---
+
+### Question 15 (5 points)
+
+A developer creates this tensor operation. What is the final value of `result`?
+
+```python
+a = tf.constant([[1.0, 2.0], [3.0, 4.0]])
+b = tf.constant([[5.0, 6.0], [7.0, 8.0]])
+result = tf.reduce_sum(a * b)
+```
+
+- A) 70.0
+- B) 50.0
+- C) 100.0
+- D) 26.0
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- A — Correct. `a * b` performs element-wise multiplication: `[[1*5, 2*6], [3*7, 4*8]] = [[5, 12], [21, 32]]`. `tf.reduce_sum` then sums all elements: `5 + 12 + 21 + 32 = 70`.
+- B — Incorrect. 50 would result from summing only the diagonal elements or a partial computation. The full element-wise product sums to 70.
+- C — Incorrect. 100 might result from adding the two matrices before summing: `[[6, 8], [10, 12]]` → sum = 36. This does not equal 100 either.
+- D — Incorrect. 26 would be the result of summing only the elements of `a` (1+2+3+4=10) and `b` separately, or from some other incorrect combination.
+
+---
+
+### Question 16 (5 points)
+
+When saving a Keras model with `model.save('my_model.keras')`, what is preserved?
+
+- A) Only the model's weights — the architecture must be reconstructed manually before loading
+- B) The model architecture, weights, optimizer state, and compilation configuration — the full model can be restored with `tf.keras.models.load_model()`
+- C) Only the model's architecture as a JSON string — weights must be saved separately
+- D) The training history including loss and accuracy values for each epoch
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- B — Correct. The `.keras` format (and the older SavedModel format) saves the complete model: architecture (layer configs), weight values, optimizer state, and the compilation settings (loss, metrics). After loading with `tf.keras.models.load_model('my_model.keras')`, the model can immediately be used for prediction or continued training without any reconstruction.
+- A — Incorrect. This describes `model.save_weights('weights.h5')`, which saves only weights. `model.save()` saves the full model.
+- C — Incorrect. This describes `model.to_json()` + `model.save_weights()`, which is an older pattern. The `.keras` format saves everything together.
+- D — Incorrect. Training history is stored in the `History` object returned by `model.fit()`, not in the saved model file. The saved model has no memory of its training history.
+
+---
+
+### Question 17 (5 points)
+
+What does `model.summary()` display that is most useful for detecting architecture mistakes before training?
+
+- A) The training and validation loss curves from the most recent `model.fit()` call
+- B) Each layer's name, output shape, and parameter count — making it easy to spot shape mismatches and unexpected parameter counts
+- C) The gradient magnitudes flowing through each layer
+- D) A comparison of the model's predictions against the training labels
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- B — Correct. `model.summary()` prints a table showing each layer's name, output shape (with `None` for the batch dimension), and the number of trainable parameters. This is the primary tool for verifying that shapes flow correctly through the network and that parameter counts match expectations before any training begins.
+- A — Incorrect. Loss curves are displayed during or after `model.fit()`. `model.summary()` is called before training to inspect the architecture.
+- C — Incorrect. Gradient magnitudes are only available during training, accessed through callbacks or `tf.GradientTape`. They are not part of `model.summary()`.
+- D — Incorrect. Comparing predictions to labels requires `model.predict()` and actual data. `model.summary()` only describes the static architecture.
+
+---
+
+### Question 18 (5 points)
+
+Which statement correctly describes the difference between `model(x, training=True)` and `model(x, training=False)` (or equivalently `model.predict(x)`)?
+
+- A) `training=True` uses the GPU; `training=False` uses the CPU
+- B) `training=True` activates stochastic layers like Dropout and BatchNormalization in training mode; `training=False` deactivates them for deterministic inference
+- C) `training=True` computes gradients automatically; `training=False` skips gradient computation
+- D) `training=True` normalizes inputs; `training=False` passes inputs unchanged
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- B — Correct. The `training` flag controls behavior of stateful layers. Dropout is active (randomly zeros activations) when `training=True` and inactive when `training=False`. BatchNormalization uses batch statistics when `training=True` and stored running statistics when `training=False`. Forgetting to pass `training=False` during evaluation produces incorrect results for models with these layers.
+- A — Incorrect. Device placement (GPU vs CPU) is controlled by device context managers and TensorFlow's automatic placement — not by the `training` flag.
+- C — Incorrect. Gradient computation is controlled by `tf.GradientTape`, not the `training` flag. You can compute gradients in either training mode by wrapping the call in a tape context.
+- D — Incorrect. Input normalization is a preprocessing step that occurs before the model call. The `training` flag controls layer behavior inside the model, not how inputs are preprocessed.
+
+---
+
+### Question 19 (5 points)
+
+A developer wants to inspect the output of an intermediate layer in a trained Keras model without rebuilding the model. Which approach is correct?
+
+- A) `intermediate_output = model.layers[2].output` then call `model.predict(X)`
+- B) Create a new model: `extractor = tf.keras.Model(inputs=model.input, outputs=model.layers[2].output)` then call `extractor.predict(X)`
+- C) `model.get_layer(index=2).predict(X)` — individual layers have their own predict method
+- D) `tf.keras.backend.get_value(model.layers[2])` returns the intermediate activations for X
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- B — Correct. The Functional API allows creating a new model that shares the same weights but has an intermediate layer as its output. `tf.keras.Model(inputs=model.input, outputs=model.layers[2].output)` creates a feature extractor. Calling `extractor.predict(X)` returns the activations of layer 2 for inputs X.
+- A — Incorrect. `model.layers[2].output` is a symbolic tensor that represents the layer's output in the graph, not actual values for a given input. Calling `model.predict(X)` still returns the final output, not the intermediate layer's output.
+- C — Incorrect. Individual Keras layers do not have a `predict()` method — that method belongs to `tf.keras.Model` objects. Layers have `__call__` but require explicit inputs and do not handle batching and inference mode automatically.
+- D — Incorrect. `tf.keras.backend.get_value()` retrieves the current value of a variable, not activations for a specific input. It is used for reading weight values, not computing intermediate activations.
+
+---
+
+### Question 20 (5 points)
+
+A developer wants to add L2 regularization to a Dense layer in Keras. Which code is correct?
+
+- A) `Dense(64, activation='relu', regularization=0.01)`
+- B) `Dense(64, activation='relu', kernel_regularizer=tf.keras.regularizers.L2(0.01))`
+- C) `Dense(64, activation='relu', l2_penalty=0.01)`
+- D) `Dense(64, activation='relu', weight_decay=0.01)`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- B — Correct. The `kernel_regularizer` parameter accepts a regularizer object. `tf.keras.regularizers.L2(0.01)` creates an L2 regularizer with strength λ=0.01. You can also use the string shorthand `kernel_regularizer='l2'` for the default strength, or `tf.keras.regularizers.l2(0.01)` (lowercase alias).
+- A — Incorrect. There is no `regularization` parameter on `tf.keras.layers.Dense`. Using an unrecognized keyword argument raises a `TypeError`.
+- C — Incorrect. `l2_penalty` is not a valid Keras Dense layer parameter. The correct parameter name is `kernel_regularizer`.
+- D — Incorrect. `weight_decay` is a PyTorch optimizer concept (e.g., `torch.optim.Adam(weight_decay=0.01)`). It is not a Keras Dense layer parameter name.

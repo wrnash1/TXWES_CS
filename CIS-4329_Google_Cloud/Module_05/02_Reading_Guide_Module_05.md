@@ -392,3 +392,22 @@ gcloud compute security-policies rules update 2147483647 \
 - Cloud VPN: cloud.google.com/network-connectivity/docs/vpn
 - Load balancing overview: cloud.google.com/load-balancing/docs/load-balancing-overview
 - Cloud Armor: cloud.google.com/armor/docs
+
+## 9. Supplemental Resources
+
+**1. Google Cloud Documentation — VPC Network Overview**
+<https://cloud.google.com/vpc/docs/vpc>
+Authoritative reference covering VPC architecture, subnet modes, firewall
+rule evaluation, routes, and Private Google Access. The primary study resource
+for all VPC networking questions on the ACE exam.
+
+**2. Google Cloud Skills Boost — VPC Networking Fundamentals**
+<https://www.cloudskillsboost.google/focuses/1229>
+Hands-on lab covering custom VPC creation, subnet configuration, firewall
+rules, and VM connectivity testing using the gcloud CLI and Cloud Console.
+
+**3. Google Cloud Documentation — Cloud Load Balancing Overview**
+<https://cloud.google.com/load-balancing/docs/load-balancing-overview>
+Comprehensive guide to all GCP load balancer types with a feature comparison
+table, decision tree for selecting the right load balancer, and component
+architecture diagrams for the Global HTTP(S) Load Balancer.

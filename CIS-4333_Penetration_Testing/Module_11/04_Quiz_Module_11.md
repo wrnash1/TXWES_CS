@@ -208,4 +208,206 @@ A penetration tester conducts wireless reconnaissance and identifies a target ne
 
 ---
 
+---
+
+**Question 11**
+
+A tester captures a WPA2-Personal four-way handshake using airodump-ng. They attempt to crack it with `aircrack-ng -w /usr/share/wordlists/rockyou.txt handshake.cap` but the passphrase is not in the wordlist. What is the next appropriate step?
+
+- A) Attempt a WPS PIN attack since WPA2 handshakes cannot be cracked without the correct wordlist
+- B) Use hashcat with rule-based mutations on the wordlist to expand the search space: `hashcat -m 22000 handshake.hc22000 rockyou.txt -r best64.rule`
+- C) The assessment is complete — if rockyou.txt fails, the passphrase is uncrackable
+- D) Perform a deauthentication flood to force the client to use a weaker handshake
+
+**Correct Answer:** B) Use hashcat with rule-based mutations on the wordlist to expand the search space: `hashcat -m 22000 handshake.hc22000 rockyou.txt -r best64.rule`
+
+**Distractor Analysis:**
+
+- *Why B is correct:* Rule-based attacks apply character substitutions and mutations (adding numbers, capitalizing letters, appending symbols) to each wordlist entry, dramatically expanding coverage beyond the raw wordlist. Common rules like `best64.rule` cover typical password patterns (`Password1`, `password!`, `p@ssword`). Hashcat is significantly faster than aircrack-ng for offline cracking due to GPU acceleration. This is the standard professional escalation path after wordlist failure.
+- *Why A is incorrect:* WPS PIN attacks are used to recover the PSK from WPS-enabled APs — they are a separate attack path from handshake cracking. If WPS is disabled on the target AP, this approach fails. WPA2 handshakes can be cracked without WPS if the wordlist or ruleset covers the passphrase.
+- *Why C is incorrect:* Rockyou.txt contains approximately 14 million entries — a large but finite set. Many organizational passphrases are not in rockyou.txt but can be recovered with rule-based mutations, custom wordlists, or brute force against shorter passphrases.
+- *Why D is incorrect:* Deauthentication sends management frames to force clients to disconnect and reconnect. It is used to capture a handshake when no authentication is occurring — not to weaken the cryptographic strength of the handshake. WPA2 handshakes always use the same PBKDF2 derivation regardless of how they are captured.
+
+---
+
+**Question 12**
+
+What is the primary distinction between a rogue AP (evil twin) attack and a standard deauthentication attack against a WPA2 network?
+
+- A) Deauthentication attacks require root privileges on Linux; rogue AP attacks do not
+- B) A deauthentication attack forces clients to disconnect to capture handshakes or perform DoS; a rogue AP mimics the legitimate network's SSID and BSSID to lure clients into connecting to the attacker's AP, enabling credential capture or man-in-the-middle interception of decrypted traffic
+- C) Rogue AP attacks only work against WEP networks; deauthentication works against WPA2
+- D) Deauthentication attacks require physical proximity to the AP; rogue AP attacks can be conducted remotely
+
+**Correct Answer:** B) A deauthentication attack forces clients to disconnect to capture handshakes or perform DoS; a rogue AP mimics the legitimate network's SSID and BSSID to lure clients into connecting to the attacker's AP, enabling credential capture or man-in-the-middle interception of decrypted traffic
+
+**Distractor Analysis:**
+
+- *Why B is correct:* These are complementary but distinct techniques. Deauthentication is active interference (sending forged 802.11 management frames) to disrupt client connectivity or force handshake capture. A rogue AP creates a new access point with the same SSID (and optionally BSSID) as the legitimate network, hoping clients auto-connect and either submit credentials (captive portal) or have their traffic intercepted.
+- *Why A is incorrect:* Both attacks typically require root/admin privileges on Linux for raw 802.11 frame injection. Neither has a privilege distinction over the other.
+- *Why C is incorrect:* Both deauthentication attacks and rogue AP attacks work against WPA2 networks. In fact, WEP networks are rarely deployed in modern environments. Rogue APs are especially useful against WPA2-Enterprise environments where credential capture is possible.
+- *Why D is incorrect:* Both attacks require physical proximity to the target wireless network. Wireless signals have limited range — both techniques require the attacker to be within the target's RF coverage area.
+
+---
+
+**Question 13**
+
+During a wireless assessment, a tester identifies an open network (no encryption) at a target organization. A client device is connected and browsing HTTP sites. Which tool and technique enables the tester to intercept and read the cleartext HTTP traffic?
+
+- A) aircrack-ng — it decrypts WPA2 traffic after capturing the four-way handshake
+- B) Wireshark in monitor mode on the appropriate channel — open networks transmit all frames unencrypted and Wireshark can decode HTTP content from captured 802.11 data frames
+- C) Nmap — it passively captures HTTP sessions on wireless interfaces without frame injection
+- D) Metasploit's `auxiliary/sniff/psnuffle` — it requires WPA2-Enterprise credentials to access the captured frames
+
+**Correct Answer:** B) Wireshark in monitor mode on the appropriate channel — open networks transmit all frames unencrypted and Wireshark can decode HTTP content from captured 802.11 data frames
+
+**Distractor Analysis:**
+
+- *Why B is correct:* Open networks (no authentication, no encryption) transmit all 802.11 data frames in plaintext. An attacker in monitor mode on the same channel can passively capture all frames. Wireshark can decode HTTP sessions from captured 802.11 data, revealing URLs, cookies, form data, and plaintext HTTP content without any active injection.
+- *Why A is incorrect:* aircrack-ng is used to crack WPA/WPA2 PSKs from captured handshakes. Open networks have no encryption — there is no handshake to capture and nothing to crack. The traffic is already unencrypted.
+- *Why C is incorrect:* Nmap is a port scanner and enumeration tool — it does not passively capture wireless frames or reconstruct HTTP sessions. Network traffic capture is performed by tools like Wireshark, tcpdump, or airodump-ng.
+- *Why D is incorrect:* `psnuffle` is a network credential sniffer, but it does not require WPA2-Enterprise credentials to capture frames. It operates on already-accessible network traffic. The description is inaccurate.
+
+---
+
+**Question 14**
+
+A tester discovers a Bluetooth device in discovery mode near a target facility. They use `btlejuice` or `hciconfig hci0 up` and `hcitool scan` to enumerate nearby devices. Which additional tool is specifically designed for Bluetooth Low Energy (BLE) GATT attribute enumeration?
+
+- A) `airodump-ng` — it captures Bluetooth advertising frames on the 2.4 GHz spectrum
+- B) `gatttool` or `bettercap`'s BLE module — these tools connect to BLE devices and enumerate GATT services, characteristics, and descriptors that may expose device configuration, sensor data, or control interfaces
+- C) `reaver` — it performs GATT PIN brute force against BLE pairing
+- D) `hashcat` — it cracks BLE device PINs from captured pairing handshakes
+
+**Correct Answer:** B) `gatttool` or `bettercap`'s BLE module — these tools connect to BLE devices and enumerate GATT services, characteristics, and descriptors that may expose device configuration, sensor data, or control interfaces
+
+**Distractor Analysis:**
+
+- *Why B is correct:* GATT (Generic Attribute Profile) defines how BLE devices expose data and functionality through services and characteristics. `gatttool` and bettercap's BLE module specifically enumerate GATT hierarchies: `gatttool -b <MAC> --primary` lists services, `--characteristics` lists characteristics, and `--char-read` reads values. Unprotected GATT characteristics can expose sensitive data, device control commands, or misconfigured authentication bypass.
+- *Why A is incorrect:* airodump-ng captures 802.11 Wi-Fi frames, not Bluetooth. While both operate on the 2.4 GHz spectrum, they use incompatible protocols and different capture mechanisms.
+- *Why C is incorrect:* `reaver` performs WPS PIN brute force against Wi-Fi access points. It has no functionality for Bluetooth or BLE pairing attacks.
+- *Why D is incorrect:* Hashcat is an offline password hash cracking tool. BLE pairing PIN attacks involve live protocol interactions, not hash cracking. Classic Bluetooth pairing PINs can be attacked with specialized tools but hashcat is not designed for this purpose.
+
+---
+
+**Question 15**
+
+Which legal requirement differentiates wireless penetration testing from wired network testing in most U.S. jurisdictions?
+
+- A) Wireless testing requires a Federal Communications Commission (FCC) license for every test
+- B) Wireless testing requires the tester to notify all other wireless users on adjacent channels before beginning
+- C) Wireless signals propagate beyond physical boundaries — a tester must confirm that their authorized test network does not bleed into adjacent properties where testing is unauthorized, and must ensure scope authorization explicitly covers the wireless medium
+- D) Wireless testing is exempt from CFAA requirements because wireless networks are publicly accessible by design
+
+**Correct Answer:** C) Wireless signals propagate beyond physical boundaries — a tester must confirm that their authorized test network does not bleed into adjacent properties where testing is unauthorized, and must ensure scope authorization explicitly covers the wireless medium
+
+**Distractor Analysis:**
+
+- *Why C is correct:* Unlike wired testing where physical cable access can be controlled, wireless signals radiate through walls and may reach neighboring businesses or residences that have not authorized testing. A tester who captures packets from or sends deauthentication frames toward unauthorized networks (even accidentally) may violate the CFAA and the Electronic Communications Privacy Act. Scope authorization must explicitly include wireless and specify which SSIDs and BSSIDs are in scope.
+- *Why A is incorrect:* Penetration testers do not require FCC licenses for standard wireless testing tools on unlicensed spectrum (2.4 GHz, 5 GHz). FCC licensing requirements apply to radio transmission equipment operators in licensed bands.
+- *Why B is incorrect:* No legal requirement mandates notifying other wireless users before testing. The requirement is to have proper authorization from the target network owner, not to notify third parties on adjacent channels.
+- *Why D is incorrect:* CFAA applies to wireless networks. Publicly accessible transmission does not grant authorization to intercept, disrupt, or attack wireless networks. The ECPA and CFAA explicitly cover unauthorized interception of radio communications.
+
+---
+
+**Question 16**
+
+A tester captures a WPA2-Personal handshake and converts it for Hashcat processing using `hcxpcapngtool`. The resulting file is in `.hc22000` format. What does Hashcat mode `22000` specifically target?
+
+- A) WEP 64-bit key cracking using RC4 stream cipher weaknesses
+- B) WPA-PBKDF2-PMKID+EAPOL — mode 22000 handles both PMKID captures and EAPOL four-way handshakes in a unified format for WPA/WPA2 PSK recovery
+- C) WPA2-Enterprise RADIUS shared secret cracking
+- D) Bluetooth PIN brute force from captured BLE pairing handshakes
+
+**Correct Answer:** B) WPA-PBKDF2-PMKID+EAPOL — mode 22000 handles both PMKID captures and EAPOL four-way handshakes in a unified format for WPA/WPA2 PSK recovery
+
+**Distractor Analysis:**
+
+- *Why B is correct:* Hashcat mode 22000 was introduced to replace the older modes 2500 (EAPOL) and 16800 (PMKID) with a single unified format. The `.hc22000` file produced by `hcxpcapngtool` contains both PMKID and EAPOL handshake data. The cracking process uses PBKDF2-SHA1 with the SSID as the salt to derive the PMK and verify it against the captured material.
+- *Why A is incorrect:* WEP cracking uses entirely different Hashcat modes (or aircrack-ng's statistical attack methods). WEP uses RC4 and is not cracked via PBKDF2. Mode 22000 does not apply to WEP.
+- *Why C is incorrect:* WPA2-Enterprise uses 802.1X/EAP authentication with individual user credentials processed by a RADIUS server. There is no PSK to crack. Mode 22000 targets PSK-based WPA/WPA2.
+- *Why D is incorrect:* Hashcat mode 22000 is specifically for WPA/WPA2 PSK. Bluetooth PIN attacks use different tools and attack approaches. Hashcat has no dedicated BLE mode.
+
+---
+
+**Question 17**
+
+During a wireless assessment, the tester's airodump-ng output shows a device with BSSID `AA:BB:CC:DD:EE:FF` transmitting on multiple channels simultaneously and with an abnormally high beacon rate. What does this suggest?
+
+- A) The device is a legitimate dual-band access point operating on both 2.4 GHz and 5 GHz simultaneously
+- B) The device may be a rogue AP or Wi-Fi pineapple broadcasting on multiple channels to respond to probe requests from clients seeking any network, a technique used to intercept auto-connecting devices
+- C) Multi-channel transmission indicates the AP is misconfigured and poses no security risk
+- D) The device is a wired access point with a faulty firmware causing channel instability
+
+**Correct Answer:** B) The device may be a rogue AP or Wi-Fi pineapple broadcasting on multiple channels to respond to probe requests from clients seeking any network, a technique used to intercept auto-connecting devices
+
+**Distractor Analysis:**
+
+- *Why B is correct:* Legitimate APs broadcast on a fixed channel (or two fixed channels for dual-band). A device appearing on multiple channels with a high beacon rate is consistent with a Wi-Fi Pineapple or similar rogue AP device that responds to clients' probe requests by broadcasting SSID beacons across channels. This is the primary indicator of a mass-interception rogue AP in the environment — a significant finding in a wireless assessment.
+- *Why A is incorrect:* Dual-band APs transmit on separate channels for 2.4 GHz and 5 GHz bands, but each band uses a single fixed channel. They do not hop across multiple channels within a single band.
+- *Why C is incorrect:* Multi-channel transmission is not a normal AP behavior. It is a specific indicator of deliberate rogue AP activity, not a harmless misconfiguration.
+- *Why D is incorrect:* A wired AP with faulty firmware would show channel instability on a single channel or drop off the air — it would not systematically appear on all channels simultaneously. Multi-channel presence is characteristic of active rogue AP operation.
+
+---
+
+**Question 18**
+
+A penetration tester successfully cracks a WPA2 PSK and connects to the target wireless network. What is the appropriate next step in a professional engagement?
+
+- A) Immediately attempt to access the internet through the cracked network to confirm connectivity
+- B) Document the recovered PSK and connection success as a finding, then conduct authorized post-connection enumeration per the RoE — such as network scanning for internal hosts, identifying VLAN segmentation, and testing for access to sensitive internal resources
+- C) Share the PSK with all other testers on the engagement to enable simultaneous testing from multiple wireless clients
+- D) The engagement is complete once the PSK is cracked — wireless testing ends at credential recovery
+
+**Correct Answer:** B) Document the recovered PSK and connection success as a finding, then conduct authorized post-connection enumeration per the RoE — such as network scanning for internal hosts, identifying VLAN segmentation, and testing for access to sensitive internal resources
+
+**Distractor Analysis:**
+
+- *Why B is correct:* PSK recovery is the proof of the wireless vulnerability, but its business impact is demonstrated by showing what an attacker can reach once connected. Authorized post-connection enumeration — identifying internal hosts, verifying network segmentation, testing for access to sensitive services — transforms a "cracked password" finding into a "full network access" finding with documented business impact.
+- *Why A is incorrect:* Internet access through a client's corporate network is not the objective of the assessment and may generate external traffic that is out of scope or could create legal liability.
+- *Why C is incorrect:* Sharing credentials within the engagement team may be appropriate for coordination, but wireless credentials from a production client network must be handled per the data handling provisions of the RoE and NDA — not casually distributed.
+- *Why D is incorrect:* PSK recovery demonstrates the vulnerability but not its full impact. A wireless assessment should demonstrate what an unauthorized user can access once connected, not stop at credential recovery.
+
+---
+
+**Question 19**
+
+Which countermeasure most directly prevents offline dictionary attacks against WPA2-Personal handshakes?
+
+- A) Enabling WPS on all access points to force certificate-based authentication
+- B) Implementing a network intrusion detection system (IDS) to detect deauthentication attacks
+- C) Using a long, random, complex passphrase (20+ characters from a mixed character set) that is not present in any known wordlist and cannot be recovered through rule-based mutations
+- D) Disabling SSID broadcast to prevent attackers from discovering the network name
+
+**Correct Answer:** C) Using a long, random, complex passphrase (20+ characters from a mixed character set) that is not present in any known wordlist and cannot be recovered through rule-based mutations
+
+**Distractor Analysis:**
+
+- *Why C is correct:* The WPA2-Personal handshake is always capturable by a passive attacker. The only defense against offline cracking is passphrase strength — a 20+ character random passphrase has a search space that makes brute force computationally infeasible even with GPU clusters. No amount of IDS or SSID hiding protects a weak passphrase once the handshake is captured.
+- *Why A is incorrect:* WPS introduces additional attack surface — the WPS PIN is only 8 digits and is vulnerable to Reaver-style brute force attacks. Enabling WPS makes the network weaker, not stronger. WPS does not enforce certificate-based authentication.
+- *Why B is incorrect:* An IDS detecting deauthentication attacks can alert defenders but does not prevent handshake capture or offline cracking. A passive attacker who simply waits for a legitimate client to authenticate captures the handshake without sending any deauth frames.
+- *Why D is incorrect:* Hidden SSIDs are trivially discoverable — probe requests from connected clients reveal the SSID regardless. SSID hiding provides no meaningful security against a determined attacker and does not affect offline cracking of captured handshakes.
+
+---
+
+**Question 20**
+
+During a wireless engagement, a tester captures probe requests from a client device looking for the SSID `CorpGuest`. The legitimate CorpGuest network is a WPA2 guest network. The tester sets up a rogue AP named `CorpGuest` with open authentication and a captive portal that requests the WPA2 guest password. A user connects and submits the password. What legal and ethical considerations govern this technique?
+
+- A) This technique is always legal because the guest network is publicly accessible and credentials are voluntarily submitted
+- B) Captive portal credential harvesting is legal only if the victim consents to the test by clicking "I agree" on the portal page
+- C) This technique constitutes unauthorized access to user credentials and impersonation of the legitimate network; it must be explicitly authorized in the RoE with informed consent provisions — many engagement contracts prohibit social engineering attacks or require specific authorization separate from the general pentest scope
+- D) The technique is legal because no actual network access is required — only the rogue AP is used
+
+**Correct Answer:** C) This technique constitutes unauthorized access to user credentials and impersonation of the legitimate network; it must be explicitly authorized in the RoE with informed consent provisions — many engagement contracts prohibit social engineering attacks or require specific authorization separate from the general pentest scope
+
+**Distractor Analysis:**
+
+- *Why C is correct:* Capturing user credentials through a rogue AP captive portal is a social engineering technique targeting employees or guests — not just the technical network infrastructure. It may violate ECPA, CFAA, and state fraud statutes if not explicitly authorized. Even if the technical wireless attack (rogue AP setup) is authorized, credential harvesting from users who are not informed test participants requires explicit authorization and careful scoping in the RoE.
+- *Why A is incorrect:* Publicly accessible networks do not grant authorization for credential harvesting attacks. Voluntarily submitting credentials to a fraudulent portal is fraud from the attacker's perspective regardless of the user's voluntary action.
+- *Why B is incorrect:* A "consent" checkbox on an attacker-controlled captive portal does not constitute legal consent to credential collection. Informed consent for security testing must come from the organization's authorized representative, not from victims clicking through a deceptive portal.
+- *Why D is incorrect:* The legal exposure is not determined by whether actual network access occurs — it is determined by whether credential collection and network impersonation are authorized activities under the engagement contract and applicable law.
+
+---
+
 *End of Module 11 Quiz*

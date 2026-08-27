@@ -464,6 +464,127 @@ Answer these questions in a comment block at the bottom of `lab10.js`:
 
 ---
 
+## Part 9 — Challenge Exercise
+
+This section is **optional**. It extends the lab with advanced problems that apply DOM selection, traversal, and class management in more demanding scenarios.
+
+### Step 9.1 — Build a DOM Query Utility
+
+Add a `<script>` section to `lab10.html` (or create `dom_utils.js`) and implement two utility functions that wrap the built-in DOM selection methods:
+
+```javascript
+// Returns the first matching element or throws a descriptive error
+function $$(selector, context = document) {
+  const el = context.querySelector(selector);
+  if (!el) throw new Error(`No element found for selector: "${selector}"`);
+  return el;
+}
+
+// Returns a true Array of all matching elements
+function $$all(selector, context = document) {
+  return Array.from(context.querySelectorAll(selector));
+}
+```
+
+Verify both utilities:
+
+```javascript
+// Should work
+const heading = $$('h1');
+console.log(heading.textContent);
+
+// Should throw — catch and log the error message
+try {
+  $$('#does-not-exist');
+} catch (e) {
+  console.error(e.message);
+}
+
+// Should return an array with map available
+const texts = $$all('li').map(li => li.textContent);
+console.log(texts);
+```
+
+Extend `$$all` to accept an optional `transform` callback: if provided, it should apply the callback to every matched element and return the mapped results (equivalent to `$$all(sel).map(transform)`).
+
+### Step 9.2 — Breadcrumb Trail from DOM Traversal
+
+Add an element `<div id="breadcrumb"></div>` to your HTML. Write a function `buildBreadcrumb(element)` that walks from `element` up to the `<body>` using `parentElement`, collecting each ancestor's tag name and `id` (if present), then renders the trail into `#breadcrumb`:
+
+```javascript
+function buildBreadcrumb(element) {
+  const trail = [];
+  let current = element;
+
+  while (current && current !== document.body.parentElement) {
+    const label = current.id
+      ? `${current.tagName.toLowerCase()}#${current.id}`
+      : current.tagName.toLowerCase();
+    trail.unshift(label);
+    current = current.parentElement;
+  }
+
+  const breadcrumb = document.getElementById('breadcrumb');
+  breadcrumb.textContent = trail.join(' > ');
+}
+```
+
+Call `buildBreadcrumb` on several deeply nested elements (click handlers on your existing elements work well). Observe the path update in `#breadcrumb`. Confirm the output for an `<li>` inside a `<ul id="list">` inside a `<section id="main">` produces something like `html > body > section#main > ul#list > li`.
+
+### Step 9.3 — Class-Based State Machine
+
+Create a small state machine for a UI component that cycles through three visual states: `default` → `loading` → `success` → `default`. Each state should be represented entirely by CSS classes (no inline styles).
+
+Add these CSS rules to your `<style>` tag:
+
+```css
+.state-default  { background: #eee; color: #333; }
+.state-loading  { background: #ffd700; color: #333; }
+.state-success  { background: #28a745; color: #fff; }
+```
+
+Write a `StateMachine` factory function:
+
+```javascript
+function StateMachine(element, states) {
+  let currentIndex = 0;
+
+  function applyState() {
+    // Remove all state classes, then add the current one
+    states.forEach(s => element.classList.remove(s));
+    element.classList.add(states[currentIndex]);
+  }
+
+  applyState();
+
+  return {
+    next() {
+      currentIndex = (currentIndex + 1) % states.length;
+      applyState();
+    },
+    current() {
+      return states[currentIndex];
+    }
+  };
+}
+```
+
+Attach it to a `<button id="stateBtn">` in your HTML:
+
+```javascript
+const btn = document.getElementById('stateBtn');
+const machine = StateMachine(btn, ['state-default', 'state-loading', 'state-success']);
+
+btn.addEventListener('click', () => {
+  machine.next();
+  console.log('Current state:', machine.current());
+});
+```
+
+Click the button three times and confirm the button cycles through all three visual states and returns to `state-default` on the fourth click.
+
+---
+
 ## Lab Completion Checklist
 
 - [ ] `getElementById` and `querySelector('#id')` return the same element object

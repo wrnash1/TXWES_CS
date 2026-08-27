@@ -123,3 +123,29 @@ Part 3 Total: 30 points
 ## Submission Instructions
 
 Combine all three parts into one document. Label each section clearly. Submit to the Canvas Module 03 Lab assignment by the due date shown in the course calendar.
+
+---
+
+## Part 9 — Challenge Exercise
+
+This section is optional and not separately graded. It extends the lab into advanced elicitation practice aligned with ECBA exam competencies.
+
+### Challenge Step 1: Elicitation Plan with Sequenced Techniques
+
+Using the Lakewood Community College case study, design a complete elicitation plan for the first four weeks of the project. Your plan should:
+
+- Identify which stakeholder or stakeholder group will be engaged each week
+- Specify the elicitation technique to be used for each engagement and why it was selected for that group
+- Estimate the approximate time required for each session
+- Identify what information gap each session is intended to close
+- Note any dependencies between sessions (e.g., document analysis should complete before stakeholder interviews so the BA can reference existing policies)
+
+Format your plan as a weekly schedule table. This exercise mirrors the "Prepare for Elicitation" KA 4 task and the approach planning work expected of a professional BA.
+
+### Challenge Step 2: Elicitation Results Confirmation Memo
+
+After conducting a hypothetical interview with LCC's Director of Financial Aid, you have the following unconfirmed notes: "Students on probation cannot add classes. Students with holds cannot register. Financial aid disbursement happens on the 10th of each month and students cannot see their aid status before that date." Write a formal Confirmation Memo addressed to the Director summarizing these captured points in clear, numbered statements and requesting their explicit confirmation or correction before the BA proceeds to requirements analysis. Use professional memo format. This exercise practices the BABOK "Confirm Elicitation Results" task.
+
+### Challenge Step 3: Tacit Knowledge Extraction via Process Narrative
+
+Choose any complex task you perform regularly (cooking a specific dish, setting up a software development environment, completing a multi-step administrative form, etc.). Write a complete step-by-step process narrative as if you were describing it to a colleague who has never done it. Then identify at least three steps you initially omitted on first draft — the steps so automatic that you did not consciously think to write them down. Reflect in one paragraph on what this exercise reveals about why observation is the preferred technique for eliciting tacit knowledge from subject matter experts.

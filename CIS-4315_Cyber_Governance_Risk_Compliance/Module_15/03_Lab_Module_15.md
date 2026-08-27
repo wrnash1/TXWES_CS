@@ -93,7 +93,7 @@ Answer the following questions in complete sentences as part of your Part A subm
 
 ## Part B — Control Gap Analysis
 
-### Instructions
+### Part B Instructions
 
 Using the list of existing controls described in the MedPay Solutions scenario, complete the Control Gap Analysis Worksheet. For each regulatory requirement listed, identify whether MedPay's current controls satisfy the requirement, partially satisfy it, or represent a gap. Provide a brief explanation for each assessment.
 
@@ -131,7 +131,7 @@ Answer the following questions as part of your Part B submission.
 
 ## Part C — Prioritized Remediation Roadmap
 
-### Instructions
+### Part C Instructions
 
 Based on your gap analysis in Part B, create a prioritized remediation roadmap. Prioritization should reflect both regulatory risk (likelihood and severity of regulatory action) and operational security risk. Do not simply list findings in alphabetical order — a prioritized roadmap demonstrates sound risk management judgment.
 
@@ -164,7 +164,7 @@ Answer the following questions as part of your Part C submission.
 
 ## Part D — Unified Control Mapping Exercise
 
-### Instructions
+### Part D Instructions
 
 Select three of the gaps you identified in Part B that appear in multiple frameworks simultaneously. For each gap, complete the unified control mapping table below, showing how a single remediation action would satisfy multiple regulatory obligations.
 
@@ -216,4 +216,38 @@ Format: Submit as a single PDF or Word document. Use the section headings from t
 
 ---
 
-*End of Lab — Module 15*
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Multi-Framework Breach Notification Gap Analysis
+
+HealthBridge Financial is a healthcare lending company that processes patient financing applications. It holds electronic protected health information (ePHI) under HIPAA, payment card data under PCI-DSS, and personal information of approximately 4,200 EU residents under GDPR. On a Tuesday morning at 8:00 AM, the security team confirms a breach: an unencrypted database backup containing all three data types was inadvertently exposed on a public cloud storage bucket for seventeen days before discovery.
+
+1. For each of the three applicable frameworks (HIPAA Breach Notification Rule, GDPR Article 33, and PCI-DSS Incident Response Requirements), complete a notification timeline table with these columns: Framework, Notification Target, Deadline (calculated from the Tuesday 8:00 AM discovery), What Must Be Included in the Notification, and Consequence of Missing the Deadline. Use real regulatory deadlines — do not estimate.
+2. Identify the single notification deadline that poses the greatest immediate compliance risk, and draft a sample notification to the appropriate authority for that framework. The notification must include all elements required by the applicable regulation. Where specific data is not available from the scenario, use plausible placeholder values clearly labeled as such.
+3. The organization's legal counsel argues that because the data was "only" in a cloud storage bucket — not exfiltrated by an attacker — this may not be a "breach" requiring notification under HIPAA. Evaluate this argument by applying the HIPAA Breach Notification Rule's presumption of breach standard and the four-factor risk assessment used to rebut the presumption. Based on your analysis, state whether notification is required and why.
+4. Build a cross-framework notification coordination matrix showing which notifications can be managed with a single communication versus which require separate filings, and propose a notification sequencing schedule for the first 72 hours after discovery.
+
+### Challenge 2: Compliance Control Gap Mapping and Exception Management
+
+The compliance team at HealthBridge Financial has completed an internal control assessment and identified the following five gaps. For each gap, perform a complete compliance analysis.
+
+**Gap 1:** Multi-factor authentication is not enforced for remote access to systems containing cardholder data. (Current state: password-only; Applicable requirement: PCI-DSS v4.0 Requirement 8.4.2)
+
+**Gap 2:** The organization has not conducted a HIPAA Security Rule risk analysis in three years. (Applicable requirement: 45 CFR § 164.308(a)(1))
+
+**Gap 3:** EU resident data subjects have submitted eleven access requests in the past year; the average response time was 47 days. (Applicable requirement: GDPR Article 15 and Article 12(3) — one-month response deadline)
+
+**Gap 4:** The organization's data retention schedule deletes all records at seven years, but EU resident personal data records in the financing database have been retained for nine years without documented justification. (Applicable requirement: GDPR Article 5(1)(e) storage limitation)
+
+**Gap 5:** The disaster recovery plan has not been tested in two years. (Applicable requirement: HIPAA Security Rule 45 CFR § 164.308(a)(7)(ii)(D) and PCI-DSS v4.0 Requirement 12.10.2)
+
+For each gap: identify the specific regulatory citation violated, classify the severity (Critical / High / Medium) with justification, draft a one-paragraph management response suitable for inclusion in an audit finding response, assign an owner role, and set a remediation target date within 90 days that is realistic given the gap's complexity.
+
+### Reflection Questions
+
+1. A compliance manager proposes eliminating the organization's annual SOC 2 Type II audit to reduce costs, arguing that the organization already completes HIPAA and PCI-DSS assessments and that SOC 2 is redundant. From a stakeholder trust and governance perspective, explain what SOC 2 Type II provides that HIPAA and PCI-DSS assessments do not, and identify at least two business contexts in which the absence of a SOC 2 report would create a material disadvantage.
+2. An organization operating under both GDPR and CCPA receives a deletion request from a California resident who is also an EU citizen. The organization's legal team argues that it only needs to honor the request once since both laws require deletion. Identify at least two ways in which the GDPR right to erasure (Article 17) and the CCPA right to delete differ in their scope, exceptions, or procedural requirements — and explain why a legally compliant response must address both frameworks independently rather than treating them as identical obligations.
+
+End of Lab — Module 15

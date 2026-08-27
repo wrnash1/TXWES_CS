@@ -214,4 +214,204 @@ D) Layer 4 – Transport
 
 ---
 
+### Question 11
+
+Which of the following protocols operates at OSI Layer 5 and is responsible for establishing and managing communication sessions between applications on separate hosts?
+
+- A) TCP
+- B) NetBIOS
+- C) IP
+- D) Ethernet
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* TCP operates at Layer 4 (Transport) and provides reliable delivery — it does not manage session-layer dialog control.
+- *Why B is correct:* NetBIOS is a Session layer protocol that establishes, manages, and terminates communication sessions between networked applications.
+- *Why C is incorrect:* IP is a Layer 3 (Network) protocol responsible for logical addressing and packet routing.
+- *Why D is incorrect:* Ethernet is a Layer 1/2 (Physical/Data Link) standard for framing and physical transmission.
+
+---
+
+### Question 12
+
+An administrator needs to identify the manufacturer of a network device based solely on its MAC address. Which portion of the MAC address contains the manufacturer identifier?
+
+- A) The last 24 bits (last three octets)
+- B) The first 24 bits (first three octets), known as the OUI
+- C) Bits 25–48 (middle two octets)
+- D) The entire 48-bit address must be looked up in an ARP table
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* The last 24 bits are the device-specific portion assigned by the manufacturer, not the manufacturer identifier.
+- *Why B is correct:* The Organizationally Unique Identifier (OUI) occupies the first 24 bits (first three octets) of a MAC address and is assigned by IEEE to uniquely identify each manufacturer.
+- *Why C is incorrect:* There is no defined "middle" manufacturer field in a MAC address — the split is precisely at the 24-bit boundary.
+- *Why D is incorrect:* An ARP table maps IP addresses to MAC addresses on a local network; it is not used to identify manufacturers.
+
+---
+
+### Question 13
+
+Which OSI layer is responsible for data encryption and decryption, ensuring that data is presented in a format the application layer can use?
+
+- A) Layer 4 – Transport
+- B) Layer 5 – Session
+- C) Layer 6 – Presentation
+- D) Layer 7 – Application
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Layer 4 handles segmentation, port addressing, and reliable delivery — not format translation or encryption at the presentation level.
+- *Why B is incorrect:* Layer 5 manages session establishment and termination between communicating applications, not data format conversion.
+- *Why C is correct:* The Presentation layer handles data formatting, encoding (ASCII, Unicode), compression, and encryption/decryption (TLS operates here conceptually).
+- *Why D is incorrect:* Layer 7 provides the application-facing interface (HTTP, SMTP, etc.) but relies on Layer 6 for data format translation.
+
+---
+
+### Question 14
+
+A network administrator configures a device that operates only at Layer 1. The device receives an electrical signal on one port and repeats it out all other ports without any filtering or addressing decisions. Which device is described?
+
+- A) Switch
+- B) Router
+- C) Hub
+- D) Bridge
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* A switch operates at Layer 2 — it reads MAC addresses and forwards frames to specific ports rather than flooding all ports with raw signals.
+- *Why B is incorrect:* A router operates at Layer 3 — it reads IP addresses and makes routing decisions between networks.
+- *Why C is correct:* A hub is a Layer 1 device that simply regenerates and broadcasts electrical signals to all ports without any intelligence or addressing awareness.
+- *Why D is incorrect:* A bridge operates at Layer 2 and uses MAC address learning to filter traffic between network segments.
+
+---
+
+### Question 15
+
+During the four-way TCP connection termination, which flag does the initiating side send first to signal it has no more data to send?
+
+- A) RST
+- B) ACK
+- C) SYN
+- D) FIN
+
+**Correct Answer:** D
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* RST (Reset) terminates a TCP connection abruptly due to an error or unexpected condition — it is not the normal graceful termination initiator.
+- *Why B is incorrect:* ACK acknowledges receipt of data or control messages; it is sent in response to FIN but is not the initiating flag.
+- *Why C is incorrect:* SYN is used during connection establishment (three-way handshake), not connection termination.
+- *Why D is correct:* FIN (Finish) is the flag sent by the initiating side during the four-way termination sequence to indicate it has finished sending data and wishes to close its half of the connection.
+
+---
+
+### Question 16
+
+Which of the following best describes the difference between a physical topology and a logical topology?
+
+- A) Physical topology describes the IP addressing scheme; logical topology describes the cable layout.
+- B) Physical topology describes how devices are physically connected; logical topology describes how data actually flows through the network.
+- C) Physical and logical topologies are always identical in modern networks.
+- D) Logical topology refers to the number of devices in a network; physical topology refers to their geographic location.
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* IP addressing is a Layer 3 concern, not a topology definition. Physical topology specifically describes cable and device placement, not addressing.
+- *Why B is correct:* Physical topology is the actual physical layout of cables and devices. Logical topology is the path data takes, which may differ (e.g., a network that is physically a star but logically a ring using token passing).
+- *Why C is incorrect:* Physical and logical topologies can differ. Token Ring networks used a physical star but a logical ring topology.
+- *Why D is incorrect:* Neither definition relates to device count or geographic location.
+
+---
+
+### Question 17
+
+A network engineer is asked to calculate the number of dedicated connections required for a full-mesh topology connecting 6 routers. How many connections are needed?
+
+- A) 6
+- B) 12
+- C) 15
+- D) 30
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* 6 connections would only form a partial ring or star — not a full mesh where every node connects to every other node.
+- *Why B is incorrect:* 12 connections would cover only some pairings. The correct formula is n(n-1)/2.
+- *Why C is correct:* Using the full-mesh formula n(n-1)/2: 6(6-1)/2 = 6(5)/2 = 15 connections. Each router needs a dedicated link to every other router.
+- *Why D is incorrect:* 30 = 6 × 5, which counts each link twice (once from each end). Dividing by 2 gives 15.
+
+---
+
+### Question 18
+
+Which of the following correctly describes what happens during decapsulation at the receiving host?
+
+- A) Each layer adds its own header before passing data up to the next layer.
+- B) The Physical layer reconstructs the original application data directly without any intermediate processing.
+- C) Each layer strips its corresponding header and passes the remaining data up to the next higher layer.
+- D) Only the Transport layer processes headers; all other layers pass data through unchanged.
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Adding headers describes encapsulation (outbound), not decapsulation (inbound).
+- *Why B is incorrect:* The Physical layer only handles raw bit transmission. Higher layers must each process their respective headers before the data reaches the application.
+- *Why C is correct:* Decapsulation is the reverse of encapsulation. Each layer at the receiver reads and removes its corresponding header, then passes the payload up to the next layer, until the original application data is restored.
+- *Why D is incorrect:* Every layer participates in decapsulation — not just Layer 4. Layer 2 strips the Ethernet frame header, Layer 3 strips the IP header, Layer 4 strips the TCP/UDP header, and so on.
+
+---
+
+### Question 19
+
+An ICMP ping is sent from Host A to Host B. At the moment the packet is handed from the Network layer to the Data Link layer for transmission, what is the PDU called?
+
+- A) Segment
+- B) Datagram
+- C) Frame
+- D) Packet
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* A segment is the Layer 4 PDU for TCP — it exists before the IP header is added at Layer 3.
+- *Why B is incorrect:* A datagram is the Layer 4 PDU for UDP. Once the IP header is added at Layer 3, it becomes a packet.
+- *Why C is correct:* When the Network layer (Layer 3) packet is passed down to the Data Link layer (Layer 2), the Data Link layer encapsulates it in an Ethernet frame. The PDU at Layer 2 is called a frame.
+- *Why D is incorrect:* A packet is the Layer 3 PDU — it exists while being processed at the Network layer, before the Data Link layer encapsulates it into a frame.
+
+---
+
+### Question 20
+
+A workstation has an IP address of 192.168.10.50 and a subnet mask of 255.255.255.0. It attempts to communicate with a host at 192.168.20.75. Which device must be involved to route this traffic?
+
+- A) A Layer 2 switch
+- B) A hub
+- C) A router or Layer 3 switch
+- D) A network bridge
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* A Layer 2 switch forwards frames within the same network segment using MAC addresses. It cannot route between different IP subnets.
+- *Why B is incorrect:* A hub is a Layer 1 device that repeats signals; it has no IP or MAC address awareness and cannot perform routing.
+- *Why C is correct:* The two hosts are on different subnets (192.168.10.0/24 vs. 192.168.20.0/24). A router or Layer 3 switch is required to route packets between logically separate networks.
+- *Why D is incorrect:* A bridge operates at Layer 2 to segment collision domains; it cannot route between different IP subnets.
+
+---
+
 *CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash*

@@ -65,3 +65,19 @@ In this module's lab, you will create a budget alert, export billing data to Big
 - [ ] Watch the Cost Management segment of the [ACE Certification Course by freeCodeCamp](https://www.youtube.com/watch?v=UGRDM86MBIQ).
 - [ ] Complete the module lab: create a budget alert and review VM rightsizing recommendations.
 - [ ] Proceed to the weekly quiz.
+
+---
+
+## 9. Supplemental Resources
+
+**1. Google Cloud Documentation — Cloud Billing Budgets and Alerts**
+<https://cloud.google.com/billing/docs/how-to/budgets>
+Complete guide to creating budget alerts including per-project scope, threshold rules, Pub/Sub notification configuration for programmatic enforcement, and the critical distinction between notification-only budgets and actual spending caps.
+
+**2. Google Cloud Documentation — Sustained Use and Committed Use Discounts**
+<https://cloud.google.com/compute/docs/sustained-use-discounts>
+Detailed explanation of how Sustained Use Discounts automatically apply to N1/N2 VMs at 25%/50%/75% monthly thresholds, and how Committed Use Discounts provide larger savings with 1-year or 3-year commitments — both are high-frequency ACE exam topics.
+
+**3. Google Cloud Documentation — Export Billing Data to BigQuery**
+<https://cloud.google.com/billing/docs/how-to/export-data-bigquery>
+Step-by-step setup guide for enabling Cloud Billing export to BigQuery, including the dataset location requirements, the difference between Standard and Detailed usage exports, and example SQL queries for analyzing costs by project, service, and label.

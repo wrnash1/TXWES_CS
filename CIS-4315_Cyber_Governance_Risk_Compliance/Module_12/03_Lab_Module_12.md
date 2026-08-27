@@ -190,3 +190,30 @@ Submit a single document containing all of the following items, clearly labeled.
 | 4B — Incident Timeline | Eight or more entries; timestamps plausible; sources cited | 10 |
 | 4C — Lessons Learned Tracker | Four entries; all fields complete; verification methods specific | 10 |
 | **Total** | | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Forensic Readiness Gap Assessment
+
+You have been engaged as a consultant to assess an organization's forensic readiness. The organization has 400 employees, runs a hybrid cloud environment (on-premises Windows servers plus AWS), and has experienced two security incidents in the past year where evidence was unavailable or incomplete.
+
+1. Review the six forensic readiness requirements listed in the Module 12 Reading Guide (Section 1). For each requirement, draft a one-sentence assessment question the organization must be able to answer affirmatively to be considered ready. Then create a two-column table rating each requirement as Met, Partially Met, or Not Met, based on the following information: logging is enabled on servers but not on cloud workloads; there is no defined evidence custodian role; the IR plan references forensics but contains no evidence handling procedures; legal counsel has never been consulted about a legal hold process; one investigator attended a forensics course two years ago; physical evidence storage consists of a locked filing cabinet with no access log.
+2. Identify the two highest-priority gaps from your assessment and write a one-paragraph remediation recommendation for each, including the assigned owner role and a target completion timeframe of 90 days or less.
+3. Draft a one-page forensic readiness policy statement (100–150 words) that the CISO could present to the board for approval. The policy must address scope, ownership, minimum logging requirements, evidence custodian designation, and annual review frequency.
+4. Estimate the cost-benefit impact of the top two gaps: for each, describe one scenario where the gap would have caused measurable harm (legal sanctions, evidence loss, regulatory penalty), and explain how remediating the gap would reduce that risk.
+
+### Challenge 2: Anti-Forensic Technique Recognition and Documentation
+
+During an investigation of a suspected data theft incident at a financial firm, the forensic team discovers several anomalies: the Windows Security event log on the affected server was cleared at 2:48 AM (Event ID 1102 captured in SIEM); prefetch files are absent despite the system having been running for eight months; a directory named `C:\Windows\Temp\svchost` contains files with .jpg extensions whose headers do not match JPEG format; and the suspect employee's user profile folder has a last-accessed timestamp of exactly midnight — an unlikely precision for normal user activity.
+
+1. For each of the four anomalies, identify the anti-forensic technique being used (log clearing, prefetch disabling, steganography or extension masking, timestamp manipulation) and write two sentences explaining how each technique hinders a forensic investigation.
+2. For each anomaly, identify one forensic countermeasure or investigative technique that can recover or corroborate evidence despite the anti-forensic action.
+3. Document all four findings in an after-action report "Findings and Gaps" table using the format from Section 4 of the Reading Guide. Each finding must include a finding ID, description, category (People / Process / Technology / Policy), severity (Critical / High / Medium), recommended remediation, assigned owner role, and target date.
+4. Write a 75–100 word recommendation to the CISO explaining why centralized, tamper-resistant logging (SIEM with immutable log storage) is the most important single control for defeating anti-forensic log clearing techniques.
+
+### Reflection Questions
+
+1. A forensic investigation produces a complete root cause analysis with five findings, but none of the findings are assigned to owners or given target completion dates. From a CISM governance perspective, explain why this after-action report fails its primary purpose, and describe what governance mechanism would ensure findings are tracked to closure.
+2. An organization's legal counsel tells the CISO that the organization is "practically forensically ready" because it owns EnCase licenses and has a trained investigator. Based on the ISACA definition of forensic readiness covered in this module, evaluate whether this characterization is accurate and identify at least three elements of forensic readiness that tool ownership and a single trained investigator do not address.

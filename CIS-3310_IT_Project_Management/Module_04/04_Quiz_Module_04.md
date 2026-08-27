@@ -203,3 +203,203 @@ Distractor Analysis:
 - *Why A is incorrect:* Neither float type measures project-level delays — both measure activity-level scheduling flexibility. Total float is not a project delay metric.
 - *Why C is incorrect:* Critical path activities have zero total float and zero free float. Both types of float apply to non-critical activities, not the other way around.
 - *Why D is incorrect:* Free float and total float use different formulas and produce equal values only when an activity has a single successor with no other predecessors feeding into it.
+
+---
+
+## Question 11
+
+A project network diagram has the following paths with these durations: Path A = 22 days, Path B = 18 days, Path C = 25 days, Path D = 19 days. What is the minimum project duration and which path is critical?
+
+- A) Minimum duration = 18 days; Path B is critical.
+- B) Minimum duration = 25 days; Path C is critical.
+- C) Minimum duration = 22 days; Path A is critical.
+- D) Minimum duration = 19 days; Path D is critical.
+
+**Correct Answer:** B) Minimum duration = 25 days; Path C is critical.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* The critical path is the LONGEST path through the network, and it determines the earliest the project can finish. The project cannot complete until all paths are complete; therefore the minimum project duration equals the longest path — 25 days on Path C.
+- *Why A is incorrect:* 18 days is the shortest path, which has the most float — the opposite of a critical path.
+- *Why C is incorrect:* Path A at 22 days is longer than B and D but shorter than C. It is not the critical path.
+- *Why D is incorrect:* Path D at 19 days has 6 days of float relative to the critical path (25 - 19 = 6). It is not critical.
+
+---
+
+## Question 12
+
+An activity has an Early Start (ES) of Day 5, Early Finish (EF) of Day 12, Late Start (LS) of Day 9, and Late Finish (LF) of Day 16. What is the total float, and is this activity on the critical path?
+
+- A) Total float = 0; this activity IS on the critical path.
+- B) Total float = 4; this activity is NOT on the critical path.
+- C) Total float = 7; this activity is NOT on the critical path.
+- D) Total float = 3; this activity is NOT on the critical path.
+
+**Correct Answer:** B) Total float = 4; this activity is NOT on the critical path.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* Total float = LS - ES = 9 - 5 = 4 (or equivalently LF - EF = 16 - 12 = 4). Since total float > 0, the activity is not on the critical path. Critical path activities always have zero total float.
+- *Why A is incorrect:* A total float of 0 would require LS = ES, which is not the case here (LS=9, ES=5, difference=4).
+- *Why C is incorrect:* 7 does not match any valid float calculation using the values given.
+- *Why D is incorrect:* 3 does not result from LS - ES (9-5=4) or LF - EF (16-12=4).
+
+---
+
+## Question 13
+
+A project manager needs to compress the schedule by 5 days. Adding two more developers to the critical path activities would cost an additional $12,000 and reduce duration by 5 days. Overlapping the testing phase with the final development phase would save 5 days at no additional cost but increases the risk of rework. What compression techniques are described, respectively?
+
+- A) Fast-tracking; crashing
+- B) Crashing; fast-tracking
+- C) Resource leveling; fast-tracking
+- D) Crashing; resource smoothing
+
+**Correct Answer:** B) Crashing; fast-tracking
+
+**Distractor Analysis:**
+
+- *Why B is correct:* Adding resources (developers) to shorten duration at increased cost = crashing. Overlapping phases that would normally be sequential = fast-tracking. Both are schedule compression techniques; crashing increases cost, fast-tracking increases risk.
+- *Why A is incorrect:* The descriptions are reversed. Adding resources is crashing, not fast-tracking. Overlapping phases is fast-tracking, not crashing.
+- *Why C is incorrect:* Resource leveling resolves resource over-allocation by delaying activities — it does not compress the schedule. It is not described here.
+- *Why D is incorrect:* Resource smoothing adjusts activity timing within float limits to smooth resource demand — it is not a compression technique and does not shorten the critical path.
+
+---
+
+## Question 14
+
+Which type of activity dependency is described by: "The successor activity cannot START until the predecessor activity has FINISHED"?
+
+- A) Start-to-Start (SS)
+- B) Finish-to-Finish (FF)
+- C) Finish-to-Start (FS)
+- D) Start-to-Finish (SF)
+
+**Correct Answer:** C) Finish-to-Start (FS)
+
+**Distractor Analysis:**
+
+- *Why C is correct:* Finish-to-Start (FS) is the most common dependency type. The successor cannot begin until the predecessor is complete. Example: software must be coded (predecessor finishes) before it can be tested (successor starts).
+- *Why A is incorrect:* Start-to-Start means both activities can begin simultaneously or the successor starts after the predecessor starts — the finish of the predecessor is not the trigger.
+- *Why B is incorrect:* Finish-to-Finish means both activities must finish together — the successor cannot finish until the predecessor finishes, but they may overlap.
+- *Why D is incorrect:* Start-to-Finish is the rarest dependency type: the successor cannot finish until the predecessor starts. It is almost never used in standard project management.
+
+---
+
+## Question 15
+
+Which scheduling tool provides a VISUAL representation of project activities against a calendar timeline, showing start and end dates as horizontal bars?
+
+- A) Network Diagram (PDM)
+- B) Resource Breakdown Structure
+- C) Gantt Chart
+- D) PERT Chart
+
+**Correct Answer:** C) Gantt Chart
+
+**Distractor Analysis:**
+
+- *Why C is correct:* A Gantt chart displays activities as horizontal bars on a calendar timeline. It is the most widely used project communication tool and is standard on the Project+ exam.
+- *Why A is incorrect:* A network diagram (PDM) shows activity relationships and dependencies but does not display activities against a calendar. It is used for critical path analysis, not schedule communication.
+- *Why B is incorrect:* A Resource Breakdown Structure is a hierarchical chart showing resource categories — not a schedule tool.
+- *Why D is incorrect:* A PERT chart is a network diagram variation that also shows probabilistic time estimates — not a calendar-based bar chart.
+
+---
+
+## Question 16
+
+Using the PERT three-point estimating formula, calculate the expected duration for an activity with Optimistic = 4 days, Most Likely = 8 days, and Pessimistic = 18 days.
+
+- A) 8.0 days
+- B) 9.0 days
+- C) 8.67 days
+- D) 10.0 days
+
+**Correct Answer:** B) 9.0 days
+
+**Distractor Analysis:**
+
+- *Why B is correct:* Expected Duration = (O + 4M + P) / 6 = (4 + 4×8 + 18) / 6 = (4 + 32 + 18) / 6 = 54 / 6 = 9.0 days.
+- *Why A is incorrect:* 8.0 is the most likely estimate alone, not the PERT weighted average.
+- *Why C is incorrect:* 8.67 would result from a simple triangular average (O + M + P) / 3 = (4 + 8 + 18) / 3 = 30 / 3 = 10 — not even 8.67. This may reflect an arithmetic error in a different formula variant.
+- *Why D is incorrect:* 10.0 is the simple average (O + M + P) / 3 = 30 / 3 = 10. The PERT formula weights M by a factor of 4, producing a different (and more accurate) result.
+
+---
+
+## Question 17
+
+A project manager wants to represent that Activity B can start two days after Activity A starts (not after it finishes). Which dependency type with what modifier should be used?
+
+- A) Finish-to-Start with a 2-day lag
+- B) Start-to-Start with a 2-day lag
+- C) Start-to-Start with a 2-day lead
+- D) Finish-to-Finish with a 2-day lag
+
+**Correct Answer:** B) Start-to-Start with a 2-day lag
+
+**Distractor Analysis:**
+
+- *Why B is correct:* Start-to-Start with a lag means "B can start 2 days AFTER A starts." The lag delays the successor relative to its dependency trigger. SS + 2-day lag = B starts on Day 3 if A starts on Day 1.
+- *Why A is incorrect:* Finish-to-Start means B cannot start until A finishes — a different relationship that requires A to be complete before B begins.
+- *Why C is incorrect:* A lead compresses the schedule (negative lag). A 2-day lead on SS would mean B starts 2 days BEFORE A starts — the opposite direction.
+- *Why D is incorrect:* Finish-to-Finish with lag means B cannot finish until 2 days after A finishes — a completion dependency, not a start dependency.
+
+---
+
+## Question 18
+
+What is the primary risk associated with fast-tracking a project schedule?
+
+- A) Increased labor costs due to overtime pay
+- B) Increased scope because more work is performed in parallel
+- C) Increased probability of rework because activities that would normally be sequential are performed in parallel, and the outputs of earlier activities may change
+- D) Decreased team morale because fast-tracking increases workload
+
+**Correct Answer:** C) Increased probability of rework because activities that would normally be sequential are performed in parallel, and the outputs of earlier activities may change.
+
+**Distractor Analysis:**
+
+- *Why C is correct:* Fast-tracking's primary risk is rework. If Activity A is still in progress when Activity B starts using A's preliminary output, and A's output subsequently changes, B's work may need to be redone. This is the trade-off the PM accepts when fast-tracking.
+- *Why A is incorrect:* Increased labor costs describe crashing, not fast-tracking. Fast-tracking typically does not require additional resources.
+- *Why B is incorrect:* Fast-tracking does not add scope — it changes the timing/sequence of existing scope. The work to be done stays the same.
+- *Why D is incorrect:* Team morale impacts are possible side effects of compression but are not the primary identified risk of fast-tracking in PMI literature.
+
+---
+
+## Question 19
+
+An activity has a duration of 10 days and its predecessor must finish before it can start. The predecessor finishes on Day 15. There is also a 3-day lag requirement between the two activities. On which day does the successor's Early Start fall?
+
+- A) Day 15
+- B) Day 16
+- C) Day 18
+- D) Day 19
+
+**Correct Answer:** D) Day 19
+
+**Distractor Analysis:**
+
+- *Why D is correct:* The successor has a Finish-to-Start dependency with a 3-day lag. The predecessor finishes on Day 15. The lag adds 3 days: Early Start of successor = Day 15 + 3 + 1 = Day 19 (the successor cannot start until Day 19, which is 3 days after the predecessor's finish).
+- *Why A is incorrect:* Day 15 would be the ES with no lag — the immediate next possible start after the predecessor finishes, ignoring the required delay.
+- *Why B is incorrect:* Day 16 would be the ES with a standard FS (no lag) — the day after the predecessor finishes.
+- *Why C is incorrect:* Day 18 applies only a 2-day lag instead of 3.
+
+---
+
+## Question 20
+
+A project manager is told she must deliver the project two weeks earlier than the current schedule allows. She can add contractors to critical path tasks (at $5,000 extra) or overlap the system testing phase with the final build phase (which increases defect risk). What factor should MOST influence her choice between crashing and fast-tracking?
+
+- A) The preference of the development team
+- B) The organization's risk tolerance and the availability of budget for additional contractors
+- C) The number of remaining activities on the critical path
+- D) Whether the project has been approved by the Change Control Board
+
+**Correct Answer:** B) The organization's risk tolerance and the availability of budget for additional contractors.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* Choosing between crashing and fast-tracking is a cost-vs-risk trade-off. If the organization can absorb additional cost, crashing is safer. If budget is constrained, fast-tracking may be necessary despite higher rework risk. The PM must evaluate both factors to make a justified recommendation.
+- *Why A is incorrect:* Team preference is a factor in implementation but should not be the primary decision driver for a compression strategy that affects the project's cost and risk profile.
+- *Why C is incorrect:* The number of remaining critical path activities affects how much compression is possible, but it does not determine which technique to use. The cost/risk trade-off is the primary decision factor.
+- *Why D is incorrect:* CCB approval will be needed to implement either option, but the PM's recommendation must be built on cost and risk analysis first — CCB approval is the outcome of the process, not the input to the decision.

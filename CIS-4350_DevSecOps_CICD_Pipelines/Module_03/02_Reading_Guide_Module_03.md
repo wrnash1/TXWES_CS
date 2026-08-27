@@ -362,4 +362,17 @@ For deployment jobs, use GitHub Environments with protection rules:
 
 ---
 
+## 9. Supplemental Resources
+
+**1. [GitHub Actions security hardening guide](https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions)**
+Official GitHub documentation on hardening CI workflows, covering GITHUB_TOKEN scoping, SHA pinning, `pull_request_target` risks, environment protection rules, and reusable workflow security. Essential reference for the pipeline security section of this module.
+
+**2. [OWASP Dependency-Check documentation](https://jeremylong.github.io/DependencyCheck/)**
+Comprehensive documentation for the OWASP Dependency-Check tool, including Maven/Gradle plugins, CLI usage, CVSS threshold configuration, suppression files, and report format options (HTML, JSON, SARIF).
+
+**3. [SARIF specification and tooling — Microsoft SARIF SDK](https://github.com/microsoft/sarif-sdk)**
+The SARIF (Static Analysis Results Interchange Format) specification and reference implementation. Explains the JSON schema used by all major security scanning tools to produce standardized output consumed by GitHub, GitLab, and Azure DevOps security dashboards.
+
+---
+
 Reading Guide — Module 03 | CIS-4350 | Texas Wesleyan University | Professor Nash

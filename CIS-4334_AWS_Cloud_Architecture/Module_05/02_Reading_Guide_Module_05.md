@@ -332,3 +332,19 @@ aws ec2 describe-network-acls \
 ## References
 
 All certification study materials and exam registration: <aws.amazon.com/certification>
+
+---
+
+## 9. Supplemental Resources
+
+**1. AWS Documentation — Amazon VPC User Guide**
+https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html
+Comprehensive guide covering VPC components, subnets, routing, security groups, NACLs, NAT, VPC endpoints, VPC peering, and Transit Gateway — the authoritative reference for all VPC topics tested on SAA-C03.
+
+**2. AWS Skill Builder — Amazon VPC Networking Fundamentals (Free Digital Course)**
+https://skillbuilder.aws/learn/course/external/view/elearning/798/amazon-vpc-networking-fundamentals
+Free course covering VPC design, subnet architecture, security controls, and connectivity options including Transit Gateway and Direct Connect — directly aligned to this module's exam topics.
+
+**3. AWS Documentation — Security Groups vs Network ACLs Comparison**
+https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Security.html
+Official comparison of Security Groups and Network ACLs covering stateful vs stateless behavior, rule evaluation, and appropriate use cases — essential study material for the security comparison questions on SAA-C03.

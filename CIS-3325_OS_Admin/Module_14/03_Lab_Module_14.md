@@ -408,6 +408,28 @@ Answer these questions in writing after completing the lab. Submit with your lab
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: SELinux Custom Port Context (RHEL)
+A custom web application needs Apache to listen on port 8443 in addition to the standard ports. SELinux blocks Apache from binding to non-standard ports.
+1. Verify the denial by starting httpd with a custom `Listen 8443` directive in `/etc/httpd/conf.d/lab14-port.conf` and checking `ausearch -m avc -ts recent` for the port bind denial.
+2. Use `semanage port -l | grep http` to confirm port 8443 is not currently assigned the `http_port_t` type.
+3. Run the correct `semanage port -a` command to add port 8443 to the `http_port_t` type for TCP.
+4. Restart Apache and confirm it now binds to 8443 with `ss -tuln | grep 8443`. Clean up by removing the port context and the test config file when finished.
+
+### Challenge 2: AppArmor Profile Refinement with aa-logprof (Ubuntu)
+Practice the full AppArmor profile development workflow for a script-based application.
+1. Create a simple shell script at `/usr/local/bin/lab14-reader.sh` that reads `/etc/hostname` and writes output to `/tmp/lab14-out.txt`. Make it executable.
+2. Generate an initial restrictive profile with `sudo aa-genprof /usr/local/bin/lab14-reader.sh` — when prompted, run the script in a second terminal and then press S to scan for events, accepting suggested rules. Finish and save.
+3. Confirm the profile is in enforce mode with `sudo aa-status | grep lab14-reader`.
+4. Add a new write operation to the script (e.g., also write to `/tmp/lab14-out2.txt`) and run it again — the new path will be denied. Run `sudo aa-logprof` to review the denial, accept the suggested rule, and reload the profile with `apparmor_parser -r`. Confirm the script now runs without denial.
+
+### Reflection Questions
+1. Explain why `chcon` changes are overwritten when `restorecon` runs, but `semanage fcontext` changes are not. What is the underlying difference in where each tool stores its information?
+2. A security audit finds that SELinux is in permissive mode on a production RHEL server. The previous administrator left a note saying "needed permissive mode to make the application work." Describe the correct process to identify exactly what SELinux was blocking and implement a targeted fix that allows enforcing mode to be restored.
+
+---
+
 ### Cleanup (Ubuntu)
 
 ```bash

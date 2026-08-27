@@ -187,3 +187,41 @@ Submit a single PDF to Canvas containing:
 4. Part 4 — Reflection question answers
 
 **Grading:** 100 points total. Parts 1 and 2 are worth 30 points each. Part 3 is worth 25 points. Part 4 is worth 15 points.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Multi-Source Automated Triage Pipeline Design
+
+You are the senior analyst at a 50-person SOC. Your team currently handles 800 alerts per day, of which roughly 85% are false positives based on last quarter's data. Each alert takes an average of 12 minutes to manually triage. The SOC director has asked you to design an automated triage pipeline using Python scripting and SOAR to reduce the team's manual alert handling burden by at least 60%.
+
+You have access to the following tools and APIs:
+
+- SIEM (Splunk) — REST API for alert retrieval and case creation
+- VirusTotal API (free tier: 4 requests/min)
+- Shodan API (free tier: 1 request/second)
+- Active Directory — LDAP query via Python `ldap3` library
+- Ticketing system (ServiceNow) — REST API for case creation and status updates
+
+1. Design a Python-based alert triage pipeline that processes incoming SIEM alerts. Your design must include: the alert intake mechanism (how alerts are retrieved from Splunk via API), at least three automated enrichment steps specifying which API is queried and what data is extracted, a decision logic table with at least four conditions that result in automatic closure (false positive), automatic escalation (true positive), or analyst queue (undetermined), and output format (what is written to the ServiceNow ticket automatically).
+2. Calculate the minimum number of API calls per hour your pipeline would generate if processing 800 alerts over an 8-hour shift. Identify which API (VirusTotal, Shodan, or AD) creates the rate-limiting bottleneck and propose a specific caching strategy to reduce redundant API calls.
+3. Your pipeline will automatically close alerts meeting false-positive criteria. Describe the quality-assurance mechanism you would build to ensure the auto-closure logic is performing correctly over time. Include: the metric you would track, the threshold that triggers a pipeline review, and who reviews it.
+4. Write pseudocode (not working Python, but structured logic) for the main processing loop of your pipeline, showing the enrichment sequence, decision branches, and output actions. Pseudocode should be detailed enough that a junior analyst could implement it.
+
+### Challenge 2: SOAR Playbook Failure Analysis
+
+Review the following three SOAR playbook failure scenarios. For each, identify the design principle violated, explain what technical or operational harm resulted, and propose a specific design change that would prevent recurrence.
+
+**Scenario A**: A playbook that automatically resets user passwords when more than 20 failed authentication attempts are detected in 5 minutes. A service account used by a critical database replication process had its password reset automatically at 02:00 AM on a Saturday, causing database replication to fail. The failure was not detected until Monday morning, resulting in 52 hours of data inconsistency.
+
+**Scenario B**: A playbook that enriches phishing alerts with VirusTotal URL reputation data stores the VirusTotal API key as a hardcoded string in the playbook configuration. A playbook export shared with a partner SOC during a joint exercise inadvertently included the API key. The key was subsequently used by an unauthorized party, exhausting the organization's daily API quota.
+
+**Scenario C**: A playbook designed to block malicious IPs at the perimeter firewall was triggered by a threat intelligence feed that marked a Content Delivery Network (CDN) IP as malicious due to a false positive in the feed. The playbook automatically blocked the CDN IP, making the organization's public-facing website inaccessible for 3 hours.
+
+For each scenario provide: (1) the specific SOAR design principle violated, (2) the business harm caused, and (3) the specific playbook design change that would prevent recurrence. Then write a single paragraph summarizing the overarching lesson about SOAR playbook design that all three scenarios share.
+
+### Reflection Questions
+
+1. Security automation creates a tension between speed of response and risk of error. Describe a framework for classifying security actions into tiers (fully automated, analyst-supervised, always manual) and explain what criteria you would use to assign a new proposed automation to the correct tier. Provide one example action at each tier level.
+2. A Python script that works correctly in development fails silently in production — it runs without errors but produces no output. Describe three debugging strategies an analyst should apply in sequence to diagnose the failure, and explain what type of production-specific condition each strategy is designed to detect.

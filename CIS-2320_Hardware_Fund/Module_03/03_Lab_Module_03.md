@@ -194,3 +194,40 @@ Submit the following to Canvas by the Module 03 lab deadline:
 | **Total**                                                              | **100** |
 
 Partial credit is awarded for answers showing correct reasoning with minor inaccuracies. No credit is awarded for blank responses or generic answers that do not engage with the scenario details.
+
+---
+
+## Part 9 — Challenge Exercise
+
+These advanced steps are optional and are not included in the standard grading rubric.
+
+### Challenge Step 1 — Live CPU Temperature and Throttle Observation
+
+Using HWiNFO64 (free download at [https://www.hwinfo.com/](https://www.hwinfo.com/)) on any available Windows system:
+
+1. Launch HWiNFO64 in Sensors-only mode.
+1. Locate the CPU temperature readings for each core and the CPU package temperature.
+1. Record the idle temperatures after the system has been at desktop for 5 minutes.
+1. Open a stress test tool such as Prime95 (free at [https://www.mersenne.org/download/](https://www.mersenne.org/download/)) or run a CPU-intensive task (video encoding, a compilation job).
+1. Record the temperatures under sustained load for 5 minutes.
+1. Observe whether the CPU clock speed drops below base clock during the test (look for "CPU Core Speed" or "CPU Clock" in HWiNFO). If it does, you are observing thermal throttling in real time.
+1. Document: idle temps, load temps, whether throttling occurred, and what that tells you about the system's cooling adequacy.
+
+### Challenge Step 2 — Thermal Paste Spread Pattern Inspection
+
+Apply a pea-sized dot of thermal paste to a clean piece of glass or smooth plastic (not a real CPU — this is a practice exercise):
+
+1. Press a flat object (a glass plate, acrylic sheet, or the base of an unused heat sink) straight down onto the paste dot with even pressure, simulating heat sink mounting.
+1. Carefully lift the top surface. Observe and photograph the spread pattern.
+1. In your notes, describe whether the paste spread evenly from center outward, whether there are any voids (gaps in coverage), and whether any paste reached the edge of the contact area.
+1. Repeat the experiment with a deliberately oversized amount of paste. Observe and document the overflow behavior.
+1. Write a 2–3 sentence conclusion explaining what "proper amount" means in terms of the spread pattern result, and why both too little and too much paste produce suboptimal thermal interfaces.
+
+### Challenge Step 3 — CPU Specification Research and Cooling Recommendation
+
+Select any two desktop CPUs — one with a 65W TDP and one with a 125W TDP — from AMD or Intel's current lineup:
+
+1. Use the manufacturer's ARK (Intel) or product page (AMD) to document: socket type, core count, TDP, boost clock, and release year.
+1. Research one suitable aftermarket air cooler for each CPU using PCPartPicker ([https://pcpartpicker.com/products/cpu-cooler/](https://pcpartpicker.com/products/cpu-cooler/)). The cooler's TDP rating must meet or exceed the CPU's TDP.
+1. Create a comparison table showing the CPU TDP, cooler TDP rating, cooler price, and cooler form factor (tower vs. low-profile vs. AIO).
+1. Write a one-paragraph justification for your cooler selection for each CPU, explaining why you matched that cooler to that processor based on thermal headroom, budget, and form factor considerations.

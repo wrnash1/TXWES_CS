@@ -261,3 +261,82 @@ If repadmin shows errors after promotion, check Event Viewer on both DCs under W
 ```powershell
 Get-EventLog -LogName "Directory Service" -EntryType Error, Warning -Newest 20
 ```
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Raise Domain and Forest Functional Levels
+
+Now that two DCs are running Windows Server 2022, both are eligible for the highest functional level. Practice raising the functional level and verify the change takes effect.
+
+1. Verify both DCs are running Windows Server 2022 by checking their operating system version:
+
+   ```powershell
+   Get-ADDomainController -Filter * | Select-Object Name, OperatingSystem, OperatingSystemVersion
+   ```
+
+2. Check the current domain and forest functional levels:
+
+   ```powershell
+   (Get-ADDomain).DomainMode
+   (Get-ADForest).ForestMode
+   ```
+
+3. If the domain functional level is not already at `Windows2016Domain`, raise it. Note: WinThreshold maps to Windows Server 2016 and later:
+
+   ```powershell
+   Set-ADDomainMode -Identity "corp.local" -DomainMode Windows2016Domain
+   ```
+
+4. After the domain level is confirmed at `Windows2016Domain`, raise the forest functional level:
+
+   ```powershell
+   Set-ADForestMode -Identity "corp.local" -ForestMode Windows2016Forest
+   ```
+
+   Verify the change took effect:
+
+   ```powershell
+   (Get-ADForest).ForestMode
+   ```
+
+   Take a screenshot showing the updated forest functional level. In your lab notes, document which new AD DS feature becomes available at the Windows Server 2016 forest functional level that was not available at 2012 R2.
+
+### Challenge 2: Simulate and Diagnose a Missing SRV Record
+
+SRV record registration failures are a frequent real-world issue. Simulate a missing SRV record scenario and practice the recovery steps.
+
+1. On SRV-CORE-02, stop the Netlogon service and verify that it is stopped:
+
+   ```powershell
+   Stop-Service Netlogon -Force
+   Get-Service Netlogon
+   ```
+
+2. Open DNS Manager on SRV-CORE-01 (or use PowerShell) and check whether the SRV records for SRV-CORE-02 are still present. On SRV-CORE-01, query the records:
+
+   ```powershell
+   Resolve-DnsName -Name _ldap._tcp.corp.local -Type SRV -Server 127.0.0.1
+   ```
+
+   Note which DCs appear. Because AD-integrated DNS replicates zone data to all DCs, the records may persist even with Netlogon stopped.
+
+3. Restart Netlogon on SRV-CORE-02 to re-register SRV records:
+
+   ```powershell
+   Start-Service Netlogon
+   ```
+
+4. Wait 30 seconds, then re-run the SRV query from SRV-CORE-01 to confirm both DC records are present:
+
+   ```powershell
+   Resolve-DnsName -Name _ldap._tcp.corp.local -Type SRV -Server 127.0.0.1
+   ```
+
+   Take a screenshot showing both DCs listed as SRV targets.
+
+### Reflection Questions
+
+1. Functional level changes are irreversible. Describe a scenario where an administrator raises the forest functional level prematurely and explain what problem this creates. What steps should be taken before raising functional levels in a production environment?
+2. SRV records are critical for DC discoverability. If Netlogon is stopped on all DCs simultaneously (e.g., during a domain-wide power outage), clients would fail to locate any DC at startup. Explain how AD-integrated DNS zone replication helps mitigate this risk compared to a file-based primary DNS zone hosted on a single server.

@@ -233,3 +233,233 @@ Distractor Analysis:
 - Why C is incorrect: The underlying business need (scalability) is real and important; the solution is to rewrite the requirement correctly, not to remove it.
 - Why D is incorrect: Deferring a known quality requirement without stakeholder agreement risks building a system that cannot meet future demands; this is not a responsible BA action.
 - Why B is correct: A non-testable non-functional requirement must be rewritten with measurable thresholds. The BA should facilitate a stakeholder session to define what scalability means — for example: "The system shall support a 3x increase in concurrent users above the projected peak load of 500 users without exceeding a 10% degradation in response time." This makes the requirement specific, measurable, and testable.
+
+---
+
+## Question 11
+
+A BA is writing requirements for a payroll processing system. One requirement reads: "The system shall calculate gross pay by multiplying hours worked by the hourly rate." Another reads: "The system shall calculate overtime pay at 1.5x the regular hourly rate for all hours worked beyond 40 per week." These requirements are examples of which BABOK requirement category?
+
+A) Business requirements — they define organizational goals
+
+B) Transition requirements — they are needed only during system cutover
+
+C) Solution requirements (functional) — they describe specific behaviors the system must perform
+
+D) Non-functional requirements — they describe system performance quality
+
+Correct Answer: C
+
+Distractor Analysis:
+
+- Why A is incorrect: Business requirements describe high-level organizational objectives (e.g., "reduce payroll errors by 90%"); calculation rules are specific system behaviors, not organizational goals.
+- Why B is incorrect: Transition requirements address temporary cutover activities; payroll calculation is a permanent core function.
+- Why D is incorrect: Non-functional requirements describe quality attributes (speed, security, availability); these requirements describe specific calculation behaviors.
+- Why C is correct: Functional requirements describe what the system must do — specific behaviors, calculations, and actions. Payroll calculation rules define exactly what the system must compute, making them solution requirements of the functional type.
+
+---
+
+## Question 12
+
+A requirements specification includes the requirement: "The system shall be easy to use." A stakeholder marks this requirement as "Approved" during a requirements review. What is the fundamental problem with approving this requirement?
+
+A) The requirement was not written by the BA — it was proposed by the stakeholder
+
+B) The requirement is approved by the wrong stakeholder; only the project sponsor can approve usability requirements
+
+C) The requirement lacks measurable acceptance criteria, making it impossible to determine whether the system satisfies it during testing
+
+D) The requirement duplicates an existing usability standard referenced elsewhere in the specification
+
+Correct Answer: C
+
+Distractor Analysis:
+
+- Why A is incorrect: Stakeholders commonly provide requirements language; authorship is not the issue here.
+- Why B is incorrect: There is no rule that only the sponsor can approve usability requirements; the approval authority is defined by the governance plan.
+- Why D is incorrect: Duplication is not mentioned in the scenario; the issue is with the requirement's quality, not overlap with another requirement.
+- Why C is correct: "Easy to use" is non-measurable. Even if approved, no test case can definitively prove or disprove this requirement. Requirements must have acceptance criteria that can be objectively evaluated. Approving an untestable requirement creates a false sense of completeness and a dispute risk at UAT.
+
+---
+
+## Question 13
+
+During requirements review, a stakeholder says: "Requirement FR-044 says users can edit a submitted order, but FR-071 says submitted orders are locked and cannot be modified. We need to resolve this." Which quality criterion of requirements has been violated?
+
+A) Completeness
+
+B) Feasibility
+
+C) Consistency
+
+D) Testability
+
+Correct Answer: C
+
+Distractor Analysis:
+
+- Why A is incorrect: Completeness concerns whether a requirement has all the information needed to understand and implement it; this scenario involves two requirements that contradict each other.
+- Why B is incorrect: Feasibility concerns whether a requirement can realistically be implemented; the contradiction is a logical conflict between requirements, not a technology limitation.
+- Why D is incorrect: Each requirement may be individually testable; the problem is they give conflicting instructions that cannot both be true simultaneously.
+- Why C is correct: Consistency requires that no requirement conflict with or contradict another. FR-044 and FR-071 give mutually exclusive instructions about the same system behavior; this is a consistency failure that must be resolved before design begins.
+
+---
+
+## Question 14
+
+A BA creates a requirements document and presents it to the project sponsor for sign-off. The sponsor asks: "How do I know that every requirement in this document can actually be traced back to the project goals?" Which requirements management artifact answers this question directly?
+
+A) The Stakeholder Register, which maps each stakeholder to the requirements they own
+
+B) The Requirements Traceability Matrix, which links each requirement to the business need or objective that justifies it
+
+C) The Project Charter, which defines the project goals and success criteria
+
+D) The Test Plan, which maps test cases to system features
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- Why A is incorrect: The Stakeholder Register maps stakeholders to their roles and engagement strategies, not requirements to business goals.
+- Why C is incorrect: The Project Charter defines project goals but does not map individual requirements to those goals; tracing that linkage is the function of the RTM.
+- Why D is incorrect: The Test Plan maps test cases to requirements; it does not trace requirements back to business objectives.
+- Why B is correct: The RTM's "backward traceability" links each requirement to the business need, stakeholder goal, or project objective that originated it. This answers the sponsor's question directly.
+
+---
+
+## Question 15
+
+A BA discovers that three requirements in the specification all describe the same business rule — they were written by different stakeholders in different workshops without cross-referencing. Which quality criterion is violated, and what is the risk if this is not resolved before design begins?
+
+A) Completeness is violated; the risk is that developers will skip implementing the rule because it appears trivial
+
+B) Testability is violated; the risk is that QA will write three separate test cases and waste testing effort
+
+C) Consistency and Uniqueness are violated; the risk is that developers may implement different interpretations of each version, producing inconsistent system behavior
+
+D) Feasibility is violated; the risk is that the rule cannot be implemented on the target technology platform
+
+Correct Answer: C
+
+Distractor Analysis:
+
+- Why A is incorrect: Completeness is not violated — the rule is described three times, not omitted. The risk described is also implausible; duplication does not reduce developer attention.
+- Why B is incorrect: Testability is not the issue; each version may be individually testable. The risk of duplicated test cases is a minor efficiency concern, not the primary danger.
+- Why D is incorrect: Feasibility concerns whether the requirement can be built; duplication is a documentation quality problem, not a technology limitation.
+- Why C is correct: Duplicate requirements representing the same concept with potentially different wording create consistency and uniqueness violations. Developers reading different sections may implement conflicting versions, resulting in inconsistent system behavior. The fix is to consolidate into one authoritative requirement and cross-reference it.
+
+---
+
+## Question 16
+
+Which BABOK KA 5 task is specifically responsible for defining the criteria that will be used to evaluate whether a proposed solution actually satisfies the requirements?
+
+A) Verify Requirements
+
+B) Validate Requirements
+
+C) Define Design Options
+
+D) Specify and Model Requirements
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- Why A is incorrect: Verify Requirements checks that requirements are well-formed (clear, complete, consistent, testable); it does not define how the solution will be evaluated against business needs.
+- Why C is incorrect: Define Design Options explores and compares alternative approaches to meeting requirements; it does not define acceptance criteria.
+- Why D is incorrect: Specify and Model Requirements structures requirements in formats like use cases, process models, and user stories; it does not specifically define evaluation/acceptance criteria.
+- Why B is correct: Validate Requirements (KA 5) ensures that requirements support the achievement of business goals and includes defining the criteria by which stakeholders will evaluate whether the implemented solution is acceptable — i.e., acceptance criteria.
+
+---
+
+## Question 17
+
+A BA writes a requirement: "The system shall display all products." A developer asks: "All products — does that mean all 1.2 million SKUs on one page?" Which quality criterion does this requirement fail?
+
+A) Consistency
+
+B) Completeness
+
+C) Traceability
+
+D) Feasibility
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- Why A is incorrect: Consistency concerns contradictions between requirements; there is no contradiction here.
+- Why C is incorrect: Traceability concerns linking requirements to their source and to design/tests; the issue here is missing detail within the requirement.
+- Why D is incorrect: The requirement may or may not be technically feasible depending on what "all products" means; the fundamental problem is the requirement is ambiguous and incomplete.
+- Why B is correct: The requirement fails Completeness — it does not provide enough information to implement or test it. A complete requirement would specify pagination rules, filtering options, maximum display count, or a reference to a separately defined product display standard.
+
+---
+
+## Question 18
+
+A BA is using MoSCoW prioritization. Which of the following correctly defines the four MoSCoW categories in order?
+
+A) Must have, Optional, Should have, Could have Won't have
+
+B) Must have, Should have, Could have, Won't have this time
+
+C) Mandatory, Optional, Suggested, Conditional
+
+D) Must have, Often have, Seldom have, Cut
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- Why A is incorrect: "Optional" is not a MoSCoW term; this option garbles the categories.
+- Why C is incorrect: Mandatory/Optional/Suggested/Conditional is not the MoSCoW framework; these are informal terms unrelated to it.
+- Why D is incorrect: "Often have" and "Seldom have" are fabricated terms not part of MoSCoW.
+- Why B is correct: MoSCoW stands for: Must have (non-negotiable for the solution to work), Should have (high priority but not critical for initial launch), Could have (desirable but low impact if omitted), Won't have this time (explicitly deferred to a future phase). The phrase "this time" in "Won't have" is important — it defers rather than permanently excludes.
+
+---
+
+## Question 19
+
+A stakeholder has approved a set of requirements. Two weeks later they send the BA an email requesting a significant change to one of the baselined requirements. According to BABOK KA 6 principles, what is the correct BA response?
+
+A) Accept the change verbally to maintain a positive stakeholder relationship and update the requirements document immediately
+
+B) Reject the change because baselined requirements cannot be modified under any circumstances
+
+C) Route the change through the project's requirements change control process, assess impact, and obtain appropriate approval before updating the baseline
+
+D) Forward the email to the development team and ask them to implement the change without documenting it
+
+Correct Answer: C
+
+Distractor Analysis:
+
+- Why A is incorrect: Accepting changes verbally without formal processing bypasses governance, produces an unapproved baseline, and creates scope creep — a major risk.
+- Why B is incorrect: Baselined requirements can be changed; governance exists to manage changes in a controlled way, not to prevent them entirely.
+- Why D is incorrect: Implementing unapproved changes without documentation violates governance, creates traceability gaps, and will produce test failures because the baseline and the implementation no longer match.
+- Why C is correct: BABOK KA 6 (Requirements Life Cycle Management) requires that changes to baselined requirements follow the established change control process — impact analysis, stakeholder notification, approval by the designated authority, and documentation update. This is the correct and professional BA response.
+
+---
+
+## Question 20
+
+A BA is modeling requirements for an online insurance claim submission workflow. The claim must pass through three states: Submitted, Under Review, and Approved or Rejected. Which requirements modeling technique is best suited to visualize these states and the events that trigger transitions between them?
+
+A) Entity-Relationship Diagram
+
+B) Data Flow Diagram
+
+C) State Transition Diagram
+
+D) Use Case Diagram
+
+Correct Answer: C
+
+Distractor Analysis:
+
+- Why A is incorrect: An ERD models data entities and their relationships; it does not model the lifecycle states of a process or object.
+- Why B is incorrect: A DFD models data flows between processes, stores, and external entities; it does not model states or event-driven transitions.
+- Why D is incorrect: A use case diagram models actors and system interactions at a high level; it does not detail the states and transitions within a single workflow object.
+- Why C is correct: A state transition diagram (also called a state machine diagram) models an object's possible states, the events that trigger transitions between states, and any conditions or actions associated with those transitions — exactly what is needed to model the insurance claim lifecycle.

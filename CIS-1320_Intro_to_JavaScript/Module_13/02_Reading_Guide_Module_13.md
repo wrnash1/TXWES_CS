@@ -330,7 +330,28 @@ async function createTodo(title) {
 
 ---
 
-## 7. JSE Certification Exam Tips
+## 7. Supplemental Resources
+
+The following free, openly available resources extend and reinforce the topics covered in this module.
+
+- **[Eloquent JavaScript — Chapter 11: Asynchronous Programming](https://eloquentjavascript.net/11_async.html)**
+  The primary OER textbook chapter for this module. Covers callbacks, Promises, `async`/`await`, and the event loop with detailed explanations of why asynchronous code is necessary and how it works under the hood.
+
+- **[MDN Web Docs — Using Promises](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)**
+  Comprehensive guide covering Promise creation, chaining, error handling, `Promise.all`, `Promise.allSettled`, `Promise.race`, and common pitfalls. Includes runnable examples and a comparison with callback-based patterns.
+
+- **[MDN Web Docs — async function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)**
+  Full reference for `async`/`await` syntax including how async functions implicitly return Promises, how `await` suspends the function, and how errors in async functions become rejections.
+
+- **[MDN Web Docs — Using the Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch)**
+  Complete guide to the `fetch` API: making GET and POST requests, reading response bodies, checking `response.ok`, handling headers, and working with JSON. Includes the pattern for checking HTTP errors that `fetch` does not throw automatically.
+
+- **[javascript.info — Promises, async/await](https://javascript.info/async)**
+  A structured series covering Promises from the ground up, chaining, error handling, `async`/`await`, and Promise combinators (`all`, `allSettled`, `race`, `any`). Each section includes interactive exercises and clear diagrams of Promise state transitions.
+
+---
+
+## 8. JSE Certification Exam Tips
 
 1. **Event loop execution order** — synchronous code always runs first; callbacks in the queue run after. `setTimeout(..., 0)` still runs after all current synchronous code.
 
@@ -354,7 +375,7 @@ async function createTodo(title) {
 
 ---
 
-## 8. Study Checklist
+## 9. Study Checklist
 
 - [ ] Watch the Module 13 video lecture by Professor Nash.
 - [ ] Read Chapter 11 (Asynchronous Programming) of [Eloquent JavaScript](https://eloquentjavascript.net/11_async.html).

@@ -321,3 +321,19 @@ Trusted Advisor is advisory; it identifies issues and recommends actions but doe
 - Composite Alarms require AND/OR logic across multiple alarms — use them to reduce alert noise
 - Secrets Manager is the answer when automatic rotation of database credentials is required
 - Config Conformance Packs deploy compliance rule sets (PCI, HIPAA) as single deployable units
+
+---
+
+## 10. Supplemental Resources
+
+**1. AWS Documentation — Amazon CloudWatch User Guide**
+https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/WhatIsCloudWatch.html
+Complete reference for CloudWatch metrics, alarms, composite alarms, Logs Insights query syntax, metric filters, and dashboards — the primary reference for the monitoring and alerting topics covered in Module 13 and tested on the SAA-C03 exam.
+
+**2. AWS Skill Builder — Monitoring and Observability on AWS**
+https://skillbuilder.aws/learn/course/external/view/elearning/1955/monitoring-and-observability-on-aws
+Free course covering CloudWatch, X-Ray, CloudTrail, and AWS Config — supporting the full Module 13 observability curriculum and providing hands-on practice with the CLI commands and console workflows used in the lab.
+
+**3. AWS Documentation — AWS CloudTrail User Guide**
+https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-user-guide.html
+Authoritative guide to CloudTrail trail configuration, event types (management, data, Insights), log file integrity validation, and multi-region trail setup — the definitive reference for audit logging requirements and compliance scenarios in this module.

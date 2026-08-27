@@ -212,3 +212,223 @@ In the BST delete operation, when the node to be deleted has two children, which
 - *Why B is incorrect:* BST deletion is deterministic. The standard algorithm always uses the inorder successor (or alternatively the inorder predecessor — but the choice is consistent and documented). The BST property must be maintained after deletion.
 - *Why C is correct:* The inorder successor is the smallest value greater than the deleted node. Replacing the deleted node's value with the successor's value maintains the BST property: the replaced node is still smaller than all right subtree values (since the successor was the smallest of those) and larger than all left subtree values. The successor is then deleted from the right subtree, which has at most one child (no left child), falling into case 1 or 2.
 - *Why D is incorrect:* Replacing with the root's value would require moving the root down and reassigning its children — a much more complex operation that would likely violate the BST property. The inorder successor is chosen specifically because it can slot into the deleted position without disrupting any existing relationships.
+
+---
+
+### Question 11
+
+**Each question is worth 5 points.**
+
+Which traversal order produces a sorted sequence when applied to a valid binary search tree?
+
+- A) Preorder (Root → Left → Right)
+- B) Postorder (Left → Right → Root)
+- C) Inorder (Left → Root → Right)
+- D) Level-order (breadth-first)
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Preorder visits the root before its children. In a BST, this produces the root first, then all left subtree values, then right — not sorted order. For example, BST with root 5, left 3, right 7 produces preorder [5, 3, 7], not sorted.
+- *Why B is incorrect:* Postorder visits both children before the root. This produces all left subtree values, then right subtree values, then the root — the root comes last, which is not sorted order.
+- *Why C is correct:* Inorder visits the left subtree (all values smaller than root), then the root, then the right subtree (all values larger). Because BST property holds recursively, this produces a globally sorted sequence. This is why inorder is used for BST-related problems requiring sorted output.
+- *Why D is incorrect:* Level-order visits nodes top-down, left-to-right within each level. For a BST, this does not produce sorted order — nodes at the same level can have arbitrary values relative to each other.
+
+---
+
+### Question 12
+
+What is the height of a perfectly balanced binary tree with 15 nodes?
+
+- A) 3
+- B) 4
+- C) 5
+- D) 7
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* A perfectly balanced binary tree of height 3 has 2⁰ + 2¹ + 2² + 2³ − 1... actually a tree of height h (where height = number of edges from root to leaf) has 2^(h+1) − 1 nodes. Height 3: 2⁴ − 1 = 15 nodes. So height 3 is actually correct for 15 nodes when height counts edges.
+- *Why B is correct:* This depends on the height convention. If height = number of levels (counting the root as level 1), then 15 nodes in a perfect binary tree occupy levels 1 through 4 (1 + 2 + 4 + 8 = 15 nodes). Height = 4. If height counts edges (root at height 0), height = 3. The most common interview convention counts levels: height = ⌊log₂(15)⌋ + 1 = 4 levels, so height = 4 (using 1-based level count).
+- *Why C is incorrect:* 5 levels would require 2⁵ − 1 = 31 nodes for a perfect binary tree, not 15.
+- *Why D is incorrect:* 7 would be the height if you confused n with height. The relationship is n = 2^(h+1) − 1, so h = log₂(n+1) − 1 = log₂(16) − 1 = 4 − 1 = 3 (edge convention) or 4 (level convention).
+
+---
+
+### Question 13
+
+A BST is constructed by inserting elements in this order: 5, 3, 7, 1, 4. What does the inorder traversal produce?
+
+- A) `[5, 3, 7, 1, 4]`
+- B) `[1, 3, 4, 5, 7]`
+- C) `[1, 4, 3, 7, 5]`
+- D) `[5, 7, 3, 4, 1]`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `[5, 3, 7, 1, 4]` is the insertion order, which is also the preorder traversal of this particular tree (Root, Left subtree preorder, Right subtree preorder).
+- *Why B is correct:* Inorder traversal of a BST always produces a sorted sequence. Regardless of insertion order, the BST property guarantees left < root < right at every node. The five values {5, 3, 7, 1, 4} sorted in ascending order are [1, 3, 4, 5, 7].
+- *Why C is incorrect:* `[1, 4, 3, 7, 5]` is not sorted and does not correspond to any standard traversal of this BST.
+- *Why D is incorrect:* `[5, 7, 3, 4, 1]` visits the root first, then the right subtree, then the left — this is neither a standard traversal nor the sorted output of inorder.
+
+---
+
+### Question 14
+
+Which statement correctly describes the difference between a binary tree and a binary search tree?
+
+- A) A binary tree has at most 2 children per node; a BST has at most 3
+- B) A BST requires that for every node, left subtree values are less than the node and right subtree values are greater, enabling O(log n) search in a balanced BST
+- C) A binary tree stores only integers; a BST can store any comparable type
+- D) A BST always has the same number of nodes on both sides of the root
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Both binary trees and BSTs have at most 2 children per node — that is the definition of "binary" in both cases.
+- *Why B is correct:* A binary tree is any tree with at most 2 children per node, with no constraint on value ordering. A BST adds the ordering invariant: all values in the left subtree are less than the current node's value, and all values in the right subtree are greater. This invariant enables binary search — at each node, compare the target with the current value and recurse to only one subtree. In a balanced BST, this achieves O(log n) search.
+- *Why C is incorrect:* Both binary trees and BSTs can store any comparable data type. The distinction is about structural ordering invariants, not data types.
+- *Why D is incorrect:* This describes a perfectly balanced tree, which is a special case of a BST. An ordinary BST makes no guarantee about equal distribution — inserting sorted data produces a right-skewed BST with all nodes on one side.
+
+---
+
+### Question 15
+
+What is the time complexity of finding the kth smallest element in a BST using inorder traversal?
+
+- A) O(k log n) — BST search at each of k steps
+- B) O(n) — inorder traversal visits all nodes before returning
+- C) O(k) — stop the inorder traversal after k nodes
+- D) O(log n + k) — navigate to the minimum in O(log n), then advance k steps
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* O(k log n) would imply k separate BST searches. Inorder traversal is sequential — it does not search for each element individually.
+- *Why B is incorrect:* O(n) applies if you run inorder traversal fully and collect all values. With early termination — stopping after the kth element is visited — only k nodes are processed.
+- *Why C is correct:* An inorder traversal with a counter stops exactly when the kth element is reached. Using an iterative inorder with an explicit stack, the first k elements are processed in O(k) time (plus O(h) to initialize the stack with leftmost nodes). The tightest bound for the standard recursive approach with early termination via an exception or counter is O(k).
+- *Why D is incorrect:* O(log n + k) is the complexity of the BST Iterator approach (LeetCode #173 challenge) — navigate to the minimum in O(h), then advance k−1 steps. This is a more sophisticated implementation; the simpler inorder traversal approach is O(k) total.
+
+---
+
+### Question 16
+
+In the recursive BST insert function, why does the function return `root` at every level?
+
+```python
+def insert(root, value):
+    if root is None:
+        return TreeNode(value)
+    if value < root.val:
+        root.left = insert(root.left, value)
+    else:
+        root.right = insert(root.right, value)
+    return root
+```
+
+- A) To allow the caller to detect whether a new node was created
+- B) To enable the parent to update its left or right child pointer via the assignment `root.left = insert(root.left, value)`
+- C) To prevent the garbage collector from freeing intermediate nodes
+- D) To return the new node to the original caller
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* The return value is always the `root` of the subtree (possibly unchanged). The caller does not need to detect whether a new node was created — it just reassigns its child pointer.
+- *Why B is correct:* The pattern `root.left = insert(root.left, value)` works because `insert` returns the root of the subtree after modification. When `root.left` is `None` and the recursive call creates a new node and returns it, the assignment `root.left = new_node` correctly links the new node into the tree. For non-None recursion, the same subtree root is returned unchanged, and the assignment is a no-op. This pattern is the standard "return the root" tree modification idiom.
+- *Why C is incorrect:* Python's garbage collector is reference-counting based. As long as the root holds a reference to its children, they will not be freed. The return statement is not needed for this purpose.
+- *Why D is incorrect:* The original caller receives the (possibly updated) root of the entire tree — not the new leaf node. The function returns the root at every level, not the newly inserted node.
+
+---
+
+### Question 17
+
+What is the space complexity of a recursive inorder traversal of a binary tree with height h?
+
+- A) O(n) — all nodes are stored in a result list
+- B) O(h) — the call stack depth equals the tree height
+- C) O(1) — inorder traversal is in-place
+- D) O(n log n) — each node is visited multiple times
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* O(n) space applies if you collect all values in a result list (which `inorder(root, result)` does). But if the question is about call stack depth alone (auxiliary space of the recursion), it is O(h) — one frame per level of the tree.
+- *Why B is correct:* Recursive inorder traversal pushes one frame per level of the tree. The maximum number of simultaneous frames at any moment equals the depth of the current path — which is at most h (tree height). For a balanced tree, h = O(log n); for a skewed tree, h = O(n).
+- *Why C is incorrect:* Recursion is never in-place — each recursive call occupies a stack frame. Even if no data structures are created, the call stack itself consumes O(h) memory.
+- *Why D is incorrect:* Inorder traversal visits each node exactly once — O(n) total node visits. O(n log n) would imply each node is visited log n times, which is incorrect for a single traversal.
+
+---
+
+### Question 18
+
+Given a binary tree, which approach correctly checks if it is a valid BST (LeetCode #98)?
+
+- A) For each node, check that `node.left.val < node.val` and `node.right.val > node.val`
+- B) Run inorder traversal, collect values, verify the resulting list is strictly increasing
+- C) Pass `min_val` and `max_val` bounds down the recursion; a node is valid if `min_val < node.val < max_val`
+- D) Check that the sum of left subtree values equals the sum of right subtree values
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Checking only immediate children is insufficient. A node in the right subtree of the root could have a left child with a value smaller than the root — violating the global BST property even though its local parent-child relationship looks valid.
+- *Why B is correct (but C is the intended answer):* Inorder + sorted check is valid and simple. However, option C is the canonical recursive solution that interviewers expect. It is O(n) time and O(h) space and does not require building a list. Both B and C are correct, but C is the canonical interview answer because it makes the invariant explicit and does not require extra list space.
+- *Why C is correct:* This is the authoritative approach. Every node must satisfy `min_val < node.val < max_val`. Initially, bounds are (-∞, +∞). Going left, the upper bound tightens to the current node's value. Going right, the lower bound tightens. Any violation fails immediately without traversing the full subtree.
+- *Why D is incorrect:* Equal sums of left and right subtrees is not a BST property at all. Many valid BSTs have highly unequal subtree sums. This check would incorrectly reject valid BSTs and incorrectly accept invalid ones.
+
+---
+
+### Question 19
+
+What does the following function compute for a binary tree?
+
+```python
+def count_nodes(root):
+    if root is None:
+        return 0
+    return 1 + count_nodes(root.left) + count_nodes(root.right)
+```
+
+- A) The height of the tree
+- B) The number of leaf nodes
+- C) The total number of nodes in the tree
+- D) The sum of all node values
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Height would use `max(count_nodes(left), count_nodes(right))` instead of addition. Height measures the longest path, not the total count.
+- *Why B is incorrect:* Leaf count would add 1 only when both `root.left is None` and `root.right is None` — at leaf nodes only. This function adds 1 for every node, not just leaves.
+- *Why C is correct:* For each node, 1 is added to represent the current node, and recursive calls count all nodes in the left and right subtrees. The base case `None → 0` correctly handles empty subtrees. Total: every node contributes exactly 1 to the sum = total node count.
+- *Why D is incorrect:* Sum of values would use `root.val + sum(left) + sum(right)`. This function adds the constant 1 for each node regardless of the node's stored value.
+
+---
+
+### Question 20
+
+In level-order traversal using a queue, what must be enqueued for each dequeued node?
+
+- A) All ancestors of the dequeued node
+- B) The dequeued node's left and right children (if they exist)
+- C) All nodes at the same depth as the dequeued node
+- D) The dequeued node's parent and sibling
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Ancestors are nodes that were already processed at earlier levels. There is no reason to re-enqueue them. Level-order traversal moves forward, never backward.
+- *Why B is correct:* Level-order traversal (BFS) processes all nodes at depth d before processing nodes at depth d+1. When a node is dequeued and processed, its children (depth d+1) are enqueued for later processing. This ensures all siblings at depth d are processed before any children at depth d+1.
+- *Why C is incorrect:* Siblings at the same depth are already in the queue before the current node is dequeued — they were enqueued when their parent was processed. Re-enqueueing them would cause nodes to be visited multiple times.
+- *Why D is incorrect:* The parent was already dequeued and processed at the previous level. The sibling is already in the queue. Neither should be re-enqueued.

@@ -344,4 +344,20 @@ Use this checklist to verify your readiness for the Module 15 quiz and the cours
 
 ---
 
-*End of Reading Guide — Module 15*
+---
+
+## 9. Supplemental Resources
+
+**1. IAPP — Introduction to U.S. Privacy Law**
+<https://iapp.org/resources/article/introduction-to-u-s-state-privacy-law/>
+The International Association of Privacy Professionals maintains up-to-date summaries of U.S. state privacy laws including CCPA/CPRA, Virginia CDPA, Colorado CPA, and others. Essential for tracking the evolving U.S. state privacy landscape covered in this module's emerging trends section.
+
+**2. PCI Security Standards Council — PCI-DSS v4.0 Resource Hub**
+<https://www.pcisecuritystandards.org/pci_security/maintaining_payment_security>
+The official PCI SSC resource hub includes the full PCI-DSS v4.0 standard, SAQ forms, ROC templates, and the Summary of Changes document. Free registration provides access to all documents needed for the PCI-DSS compliance content in this module.
+
+**3. NIST Privacy Framework Version 1.0**
+<https://www.nist.gov/privacy-framework>
+NIST's voluntary privacy risk management framework that complements NIST CSF. Provides a structured approach to identifying and managing privacy risks that aligns with GDPR, CCPA, and other privacy regulation requirements covered in this module. Useful for understanding how privacy governance integrates with broader cybersecurity governance.
+
+End of Reading Guide — Module 15

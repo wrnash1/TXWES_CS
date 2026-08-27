@@ -243,3 +243,198 @@ might enable privileged containers inadvertently.
 End of Quiz — Module 06
 
 Course: CIS-4329 Google Cloud Computing | Texas Wesleyan University | Professor Nash
+
+---
+
+### Question 11 (5 points)
+
+You need to upgrade the Kubernetes version on a GKE Standard cluster's node
+pool with zero downtime. What is the correct approach?
+
+- A) Delete the node pool and recreate it with the new version
+- B) Use `gcloud container clusters upgrade` which performs a rolling node
+   upgrade, draining and replacing one node at a time
+- C) Manually SSH into each node and run `apt-get upgrade`
+- D) Upgrade the control plane first, then set the node pool to auto-upgrade
+   and wait for the next maintenance window
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Deleting and recreating the node pool causes all pods on that pool to be evicted simultaneously, causing downtime for workloads that don't have replicas on other pools.
+  - C) Node VMs are managed by GKE and should not be modified manually via SSH; this approach would cause configuration drift and is not supported.
+  - D) While auto-upgrade is a valid long-term strategy, the question asks about performing a node upgrade; `gcloud container clusters upgrade` is the immediate command-driven approach that performs the rolling drain-and-replace.
+
+---
+
+### Question 12 (5 points)
+
+A pod spec sets `resources.limits.memory: 512Mi` but does not set
+`resources.requests.memory`. What value does Kubernetes use for the memory
+request when scheduling this pod?
+
+- A) 0 — the pod has no memory reservation for scheduling purposes
+- B) 512Mi — when only a limit is specified, the request defaults to the
+   same value as the limit
+- C) 256Mi — Kubernetes uses half the limit as the default request
+- D) The pod fails to schedule because requests are mandatory
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Without an explicit request, Kubernetes does not default to 0; it uses the limit value to prevent pods from being scheduled on nodes that cannot satisfy even the limit.
+  - C) Kubernetes does not apply a half-limit heuristic; it uses the exact limit value as the default request when no request is specified.
+  - D) Requests are not mandatory fields; Kubernetes handles missing requests by defaulting them to the limit value (or using LimitRange defaults if configured).
+
+---
+
+### Question 13 (5 points)
+
+Which GKE feature automatically identifies and removes nodes that have
+been consistently underutilized, reducing cluster costs?
+
+- A) Horizontal Pod Autoscaler (HPA)
+- B) Vertical Pod Autoscaler (VPA)
+- C) Cluster Autoscaler scale-down
+- D) Node auto-repair
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) HPA adjusts pod replica counts based on metrics; it does not manage nodes.
+  - B) VPA adjusts the CPU and memory requests/limits of individual pods; it does not remove nodes.
+  - D) Node auto-repair detects and replaces nodes that fail health checks; it addresses node health, not cost optimization through scale-down.
+
+---
+
+### Question 14 (5 points)
+
+A GKE private cluster has `--enable-private-nodes` set. What is the security
+implication for the worker nodes?
+
+- A) Worker nodes have no external IP addresses and cannot be reached directly
+   from the internet
+- B) Worker nodes use private encryption keys that rotate automatically
+- C) Worker nodes can only be managed by users in the same GCP organization
+- D) Worker nodes have no access to the Kubernetes API server
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - B) `--enable-private-nodes` refers to network IP assignment, not encryption key management.
+  - C) Access to manage nodes is controlled by IAM roles, not private cluster status; private clusters restrict network-level reachability, not IAM-based management.
+  - D) Worker nodes in a private cluster still communicate with the API server via private IP through the internal VPC network; they do not lose API access.
+
+---
+
+### Question 15 (5 points)
+
+What does the `kubectl rollout undo deployment/my-app` command do?
+
+- A) Deletes the deployment and all its pods permanently
+- B) Rolls the deployment back to the previous revision, replacing pods
+   with the prior container image and configuration
+- C) Pauses the current rollout and waits for manual approval
+- D) Scales the deployment down to zero replicas
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) `kubectl delete deployment` is the command that removes a deployment; `rollout undo` preserves the deployment and reverts its configuration.
+  - C) `kubectl rollout pause` pauses a rollout; `rollout undo` actively replaces the current revision with the previous one.
+  - D) `kubectl scale deployment my-app --replicas=0` scales to zero; `rollout undo` maintains the current replica count but changes the pod template back to the previous revision.
+
+---
+
+### Question 16 (5 points)
+
+A Kubernetes ConfigMap is updated to change an environment variable that
+a running pod reads at startup. What must happen for the running pod to
+pick up the new value?
+
+- A) The pod automatically restarts and reads the new value within 30 seconds
+- B) The ConfigMap update propagates to running pods instantly via the kubelet
+- C) The pod must be deleted and recreated (or the deployment rolled out) for
+   the new environment variable value to take effect
+- D) Running `kubectl apply -f configmap.yaml` triggers a rolling restart of
+   all pods that reference the ConfigMap
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) Pods do not auto-restart when a ConfigMap changes; environment variable values are injected at pod startup and are not live-reloaded.
+  - B) While ConfigMap data mounted as volumes can update within seconds (the kubelet syncs the volume), environment variables sourced from ConfigMaps are set at container creation time and do not update in running containers.
+  - D) `kubectl apply` updates the ConfigMap resource but does not trigger a rollout; you must explicitly run `kubectl rollout restart deployment/my-app` to cycle pods.
+
+---
+
+### Question 17 (5 points)
+
+You want to run a database pod on GKE that requires a dedicated persistent
+volume. The pod must always be rescheduled to the same volume even if the
+pod is deleted and recreated. Which Kubernetes resource manages this
+persistent storage binding?
+
+- A) ConfigMap
+- B) PersistentVolumeClaim (PVC)
+- C) Secret
+- D) StorageClass only — no claim is needed
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) ConfigMaps store configuration data (key-value pairs, config files); they do not manage persistent block storage volumes.
+  - C) Secrets store sensitive data such as passwords and API keys; they do not manage persistent disk volumes.
+  - D) A StorageClass defines the type and parameters of storage to provision; a PersistentVolumeClaim (PVC) is the actual binding between a pod and a persistent volume — both are needed together.
+
+---
+
+### Question 18 (5 points)
+
+In GKE, what is Workload Identity used for?
+
+- A) Assigning a Kubernetes username to each developer for `kubectl` access
+- B) Allowing pods to authenticate to GCP APIs (such as Cloud Storage or
+   BigQuery) using a GCP IAM service account without storing JSON key files
+   in the cluster
+- C) Enabling pods to communicate with other pods using mTLS certificates
+- D) Creating network identity policies to control pod-to-pod traffic
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Developer kubectl access is managed via `gcloud container clusters get-credentials` and IAM RBAC bindings, not Workload Identity.
+  - C) Mutual TLS for pod-to-pod communication is handled by a service mesh such as Anthos Service Mesh (Istio); Workload Identity is for GCP API authentication.
+  - D) Network policies control pod-to-pod traffic at the IP layer; Workload Identity handles IAM authentication for GCP API calls, not network routing.
+
+---
+
+### Question 19 (5 points)
+
+A GKE Standard cluster node pool is created with `--disk-size=50GB`. After
+several months, application logs fill the node disk to 90% capacity. What
+is the recommended approach to increase disk space without recreating all
+pods?
+
+- A) SSH into each node and resize the disk using the OS disk utility
+- B) Add a new node pool with a larger disk size, migrate pods to the new
+   pool using taints and node selectors, then delete the old pool
+- C) Edit the existing node pool to increase the disk size — GKE supports
+   online node pool disk resizing
+- D) Attach an additional persistent disk to each node via the Compute Engine
+   console
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Node VM disks should not be manually modified; changes would be overwritten during node repairs or upgrades, and manual resizing is not a supported GKE operation.
+  - C) GKE does not support online disk resizing for existing node pool nodes; a new node pool with the desired configuration is the standard migration path.
+  - D) Attaching additional disks to GKE nodes is not a supported mechanism for expanding node disk space; the node disk is a single managed persistent disk configured at pool creation.
+
+---
+
+### Question 20 (5 points)
+
+Which command lists all pods across all namespaces in a GKE cluster?
+
+- A) `kubectl get pods`
+- B) `kubectl get pods --all-namespaces`
+- C) `gcloud container pods list --all`
+- D) `kubectl describe pods --namespace=*`
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) `kubectl get pods` without a namespace flag lists pods only in the current namespace context (usually `default`).
+  - C) `gcloud container` does not have a `pods list` subcommand; pod management is done through `kubectl`, not the gcloud CLI.
+  - D) `--namespace=*` is not valid kubectl syntax; the correct flag for cross-namespace listing is `--all-namespaces` (or its shorthand `-A`).

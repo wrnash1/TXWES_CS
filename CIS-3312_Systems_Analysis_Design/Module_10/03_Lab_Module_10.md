@@ -367,4 +367,33 @@ DFD simply shows the data flows. Keep those two modeling techniques separate.
 
 ---
 
+---
+
+## Part 9 — Challenge Exercise
+
+This section is optional and not separately graded. It extends the lab into advanced DFD and data dictionary practice aligned with ECBA exam competencies.
+
+### Challenge Step 1: Level 2 DFD with Process Specifications
+
+Select the most complex process from your Level 1 DFD. Decompose it into a Level 2 DFD showing its internal sub-processes. Then, for each Level 2 process that has no further decomposition (a primitive process), write a short process specification (minispec) describing the transformation logic in structured English. A minispec should: identify the inputs, describe the processing rules in IF/THEN/ELSE or sequential steps, and identify the outputs. Verify that your Level 2 diagram is balanced with Level 1 — every boundary flow at Level 1 for the decomposed process must appear as a boundary flow at Level 2.
+
+### Challenge Step 2: Data Dictionary Expansion
+
+Review the data flows and data stores in your Level 1 DFD. Create a complete data dictionary with entries for: all five most significant data flows (with composition using +, [], {}, and () notation), all data stores (listing the data elements they contain), and three process specifications for primitive processes. Use the standard data dictionary notation: + means AND, [] means OR (selection), {} means iteration (one or more), () means optional. Your data dictionary should serve as a standalone reference that a developer could use to understand every data element in the system without referring to the DFD diagram.
+
+### Challenge Step 3: DFD Quality Audit Checklist
+
+After completing all lab tasks, perform a systematic quality audit of your own DFD set (context diagram and Level 1) using the following checklist. For each item, mark Pass or Fail and, for any Fail, describe the specific violation found:
+
+- All process names use verb-noun format
+- All data flows are labeled with noun-phrase names
+- No direct external entity to data store connections exist
+- No direct data store to data store connections exist
+- No black hole processes (input with no output)
+- No miracle processes (output with no input)
+- Level 1 boundary flows exactly match context diagram boundary flows
+- All data store names are nouns describing stored content (not process or function names)
+
+Submit the completed audit checklist as an appendix to your lab submission. This exercise develops the self-review habits that professional BAs apply before presenting diagrams to stakeholders.
+
 *Lab Activity — Module 10 | CIS-3312 Systems Analysis and Design | Texas Wesleyan University*

@@ -243,3 +243,29 @@ Initial entries come from identification. Probability and impact scores come fro
 - [ ] Complete the Module 11 Lab risk register activity
 - [ ] Take the Module 11 Quiz (10 questions)
 - [ ] Post Module 11 Discussion initial response by Wednesday at 11:59 PM
+
+---
+
+## 9. Supplemental Resources
+
+The following free, openly licensed resources extend the concepts in this module. All links are publicly accessible — no account or purchase required.
+
+1. **Project Management Open Textbook — Chapter 11: Risk Management (Advanced)**
+   *BC Campus OpenEd* — [opentextbc.ca/projectmanagement — Chapter 11](https://opentextbc.ca/projectmanagement/chapter/chapter-11-project-risk-management/)
+   In-depth coverage of risk identification techniques, quantitative analysis tools (Monte Carlo, EMV), and the full risk response strategy matrix.
+
+2. **PMI — Risk Management Practice Standard (Overview)**
+   *Project Management Institute* — [pmi.org/pmbok-guide-standards/practice-guides/risk-management](https://www.pmi.org/pmbok-guide-standards/practice-guides/risk-management)
+   Official PMI guidance on the Risk Register structure, qualitative vs. quantitative analysis, EMV calculations, and Monte Carlo simulation applications.
+
+3. **EMV and Decision Tree Tutorial — PM Study Circle (Free)**
+   [pmstudycircle.com/expected-monetary-value](https://pmstudycircle.com/expected-monetary-value-emv-in-risk-management/)
+   Step-by-step EMV calculation guide with decision tree examples. Directly supports the Module 11 lab quantitative risk analysis exercise.
+
+4. **YouTube — "Monte Carlo Simulation for Risk" (Practical PM)**
+   [youtube.com/watch?v=GtXJ9kI-pLI](https://www.youtube.com/watch?v=GtXJ9kI-pLI)
+   Clear explanation of how Monte Carlo simulation generates cost probability distributions. Aligned with Module 11 quantitative analysis content.
+
+5. **Risk Register Template — ProjectManager.com (Free Download)**
+   [projectmanager.com/templates/risk-register-template](https://www.projectmanager.com/templates/risk-register-template)
+   Professional Risk Register template with all standard fields: ID, description, probability, impact, score, owner, trigger, response strategy, and status. Usable directly in the Module 11 lab.

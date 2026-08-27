@@ -141,3 +141,43 @@ The compliance dashboard should link to PHP's risk register. Write 75–100 word
 Submit your completed lab document to the Canvas assignment portal by the due date. All four exercises must be substantively completed. Tables must be filled in with specific content, not placeholder text. Written responses must demonstrate understanding of risk and compliance concepts, not just restate the scenario.
 
 **Grading:** Each exercise is worth 25 points distributed across tasks based on completeness, accuracy, and quality of reasoning.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Multi-Framework Compliance Mapping
+
+A regional hospital network is subject to three overlapping compliance requirements: HIPAA (protecting patient health information), PCI-DSS (processing co-pay and billing payments), and a state health department security standard that requires annual penetration testing and 90-day vulnerability remediation timelines.
+
+The CISO has asked you to create a unified compliance program that satisfies all three frameworks without tripling the compliance workload.
+
+1. Identify three specific controls that appear in more than one of these frameworks (HIPAA Security Rule, PCI-DSS, and standard security best practice). For each control, describe how a single implementation can satisfy multiple framework requirements simultaneously — and note any differences in how each framework specifies the control that would require separate documentation or testing.
+
+2. The state health department standard requires penetration testing annually. HIPAA requires periodic evaluation of security safeguards. PCI-DSS requires penetration testing at least annually for systems that store cardholder data. Design a unified penetration testing program that satisfies all three requirements in a single annual exercise. Specify scope, documentation, and reporting requirements that would evidence compliance with each framework independently.
+
+3. The hospital network has 14 open vulnerability findings from the last assessment. Three are in systems that process both ePHI and cardholder data. Under the state standard's 90-day remediation timeline, two of the three overlap findings are already overdue. Design a prioritization matrix for the 14 findings that addresses multi-framework exposure and produces a defensible remediation sequence.
+
+### Challenge 2: Risk Register Development
+
+A 180-person logistics technology company is preparing for its first ISO 27001 certification. The company operates a SaaS platform that manages shipping documentation for enterprise customers. The CISO has completed an asset inventory and threat landscape review, and has asked you to help develop the initial risk register.
+
+The following threats have been identified:
+
+- Ransomware targeting the SaaS platform database
+- Insider threat from privileged database administrators
+- Third-party API provider outage affecting shipping documentation availability
+- Social engineering targeting customer support staff with access to customer data
+- Regulatory change requiring data residency within customer jurisdictions (currently all data is in US data centers)
+
+1. For each of the five threats, complete a risk register entry with: risk description, affected asset(s), likelihood rating (High/Medium/Low with one-sentence justification), impact rating (High/Medium/Low with one-sentence justification), risk score (H×H=Critical, H×M=High, M×M=Medium, M×L=Low, L×L=Low), and proposed risk response strategy (avoid, mitigate, transfer, accept).
+
+2. The CISO proposes accepting the regulatory change risk because "we don't know when or if it will happen." Evaluate this proposal using ISO 27001 and ITIL 4 risk management principles. Is the proposed acceptance appropriate? What conditions would make it appropriate or inappropriate?
+
+3. For the ransomware risk, design a control set of at least three controls that together reduce the residual risk. For each control, classify it as preventive, detective, or corrective, and estimate its effect on likelihood, impact, or both.
+
+### Reflection Questions
+
+1. The Module 14 reading guide states that ITSM ticketing systems generate SOC 2 audit evidence as a byproduct of normal operations. Using two specific examples from the lab scenario or the reading guide, explain how a well-maintained ITSM toolset reduces compliance audit preparation time — and what organizational behavior would cause the same toolset to fail as an evidence source.
+
+2. Risk management and compliance are sometimes treated as interchangeable in IT organizations. Based on this module, explain the key difference between a risk-managed organization and a compliance-managed organization — and identify one scenario where compliance without risk management would leave an organization in a more dangerous position than if it had neither.

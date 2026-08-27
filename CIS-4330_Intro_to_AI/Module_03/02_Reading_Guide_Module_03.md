@@ -247,3 +247,17 @@ Provides practical context for working with the types of datasets used in cluste
 - [ ] Complete the Module 03 quiz.
 - [ ] Complete the Module 03 lab activity.
 - [ ] Post initial discussion by Wednesday 11:59 PM and respond to two peers by Sunday 11:59 PM.
+
+## 10. Supplemental Resources
+
+**1. Scikit-learn Documentation — Clustering User Guide**
+<https://scikit-learn.org/stable/modules/clustering.html>
+The official scikit-learn reference for all clustering algorithms including K-means, DBSCAN, and hierarchical clustering. Includes algorithm comparisons, parameter guidance, and code examples that directly support the Module 03 lab.
+
+**2. Distill.pub — How to Use t-SNE Effectively**
+<https://distill.pub/2016/misread-tsne/>
+An interactive visual essay explaining how t-SNE parameters affect output and the common misinterpretations of t-SNE plots. Essential reading before using t-SNE for data exploration — helps students understand why t-SNE is for visualization only.
+
+**3. Towards Data Science — PCA Explained Visually**
+<https://towardsdatascience.com/a-one-stop-shop-for-principal-component-analysis-5582fb7e0a9c>
+A comprehensive illustrated guide to Principal Component Analysis covering the math, interpretation of components, explained variance, and practical guidelines for choosing how many components to retain. Complements the Module 03 dimensionality reduction content.

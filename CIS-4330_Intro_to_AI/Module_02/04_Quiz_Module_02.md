@@ -204,3 +204,183 @@ Which of the following statements about Principal Component Analysis (PCA) is co
 - *Why A is incorrect:* PCA is an unsupervised technique. It does not use labels. It does not classify.
 - *Why C is incorrect:* PCA reduces dimensions, not increases them. The goal is compression, not expansion.
 - *Why D is incorrect:* PCA applies to any numerical tabular data. It is not limited to time series and is widely used on static feature matrices.
+
+---
+
+### Question 11 (5 points)
+
+A supervised learning model for predicting house prices returns an R-squared (R²) value of 0.42 on the test set. How should this result be interpreted?
+
+- A) The model explains 42% of the variance in house prices; the remaining 58% is unexplained.
+- B) The model is correct on 42% of predictions and incorrect on 58%.
+- C) The model has a mean absolute error of 42 units.
+- D) The model performs 42% better than the baseline random classifier.
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - *Why A is correct:* R² (coefficient of determination) represents the proportion of variance in the target variable that the model explains. An R² of 0.42 means the model accounts for 42% of the variance; 58% is due to factors not captured by the model.
+  - *Why B is incorrect:* R² does not count correct vs. incorrect predictions. That interpretation applies to classification accuracy, not regression R².
+  - *Why C is incorrect:* Mean Absolute Error (MAE) is a separate metric measuring average absolute prediction error in the output's units. R² is a dimensionless proportion.
+  - *Why D is incorrect:* R² measures variance explained, not percentage improvement over a random classifier. A random classifier baseline concept applies to classification, not regression.
+
+---
+
+### Question 12 (5 points)
+
+Which of the following remedies is MOST effective for reducing overfitting in a decision tree classifier?
+
+- A) Increasing the maximum tree depth to allow more complex splits.
+- B) Adding more features to the training dataset.
+- C) Pruning the tree by limiting its maximum depth or minimum samples per leaf.
+- D) Removing the validation set and evaluating only on training data.
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - *Why C is correct:* Pruning constrains the complexity of a decision tree, preventing it from memorizing training examples. Limiting maximum depth or requiring a minimum number of samples in each leaf are standard regularization techniques that reduce overfitting.
+  - *Why A is incorrect:* Increasing tree depth increases model complexity, which worsens overfitting rather than reducing it.
+  - *Why B is incorrect:* Adding irrelevant features can increase overfitting by giving the tree more noise to memorize. Feature selection, not addition, is the appropriate remedy.
+  - *Why D is incorrect:* Removing the validation set eliminates the mechanism for detecting overfitting. It does not reduce overfitting and makes the problem invisible.
+
+---
+
+### Question 13 (5 points)
+
+A classification model is evaluated on a test set of 1,000 samples: 900 are class A and 100 are class B. The model predicts class A for every single sample and achieves 90% accuracy. What does this reveal about using accuracy as the sole metric for this dataset?
+
+- A) The model is genuinely high-performing and accuracy is the correct metric to report.
+- B) Accuracy is misleading on imbalanced datasets; a model that ignores the minority class can appear highly accurate.
+- C) The test set is too small to evaluate the model; more data would fix the accuracy paradox.
+- D) 90% accuracy always indicates a strong model regardless of class distribution.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* This is the accuracy paradox on imbalanced datasets. A trivial model that predicts only the majority class achieves accuracy equal to the majority class proportion. For this dataset, recall for class B is 0% — the model has not learned anything useful about the minority class.
+  - *Why A is incorrect:* The model makes no correct predictions for class B. A 0% recall for the minority class makes this model useless for most practical applications.
+  - *Why C is incorrect:* The issue is not dataset size but class imbalance. More data with the same imbalance would produce the same misleading accuracy.
+  - *Why D is incorrect:* 90% accuracy is meaningless without context. On a 90/10 imbalanced dataset, it signals that the model may have learned nothing.
+
+---
+
+### Question 14 (5 points)
+
+In K-means clustering, what does the value of K represent?
+
+- A) The number of features used to train the clustering model.
+- B) The number of clusters the algorithm will partition the data into.
+- C) The number of iterations the algorithm runs before stopping.
+- D) The distance metric used to measure similarity between data points.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* K in K-means specifies the number of cluster centroids the algorithm initializes and the number of groups the data will be partitioned into. Choosing K is a key hyperparameter decision in unsupervised clustering.
+  - *Why A is incorrect:* The number of features is the dimensionality of the feature space, not K. K-means can run on any number of features regardless of K.
+  - *Why C is incorrect:* The number of iterations is a convergence parameter, sometimes called max_iter in implementations. It is separate from K.
+  - *Why D is incorrect:* The distance metric (commonly Euclidean) is a separate parameter. K-means uses Euclidean distance by default, regardless of the value of K.
+
+---
+
+### Question 15 (5 points)
+
+Which metric would be MOST appropriate to evaluate a cancer screening model where missing a positive case (false negative) is far more costly than a false alarm (false positive)?
+
+- A) Accuracy
+- B) Precision
+- C) Recall (Sensitivity)
+- D) R-squared
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - *Why C is correct:* Recall = TP / (TP + FN). When false negatives are the primary cost — as in cancer screening where a missed diagnosis can be fatal — maximizing recall minimizes the rate of missed positive cases.
+  - *Why A is incorrect:* Accuracy treats all errors equally. On an imbalanced medical dataset, high accuracy can coexist with catastrophically low recall for the positive class.
+  - *Why B is incorrect:* Precision = TP / (TP + FP). High precision minimizes false alarms. This matters when false positives are costly (e.g., unnecessary treatment), not when false negatives are the primary concern.
+  - *Why D is incorrect:* R-squared is a regression metric measuring variance explained. It does not apply to binary classification screening tasks.
+
+---
+
+### Question 16 (5 points)
+
+A data scientist splits a dataset into 70% training, 15% validation, and 15% test subsets. She uses the validation set to select between three candidate models, then reports the test set score as the final performance estimate. Which best practice does this workflow follow?
+
+- A) Data leakage — the test set should have been used to select models.
+- B) Correct separation of concerns — development decisions use the validation set and the test set provides an unbiased final estimate.
+- C) Overfitting — using three subsets always causes the model to overfit.
+- D) Underfitting — 70% training data is insufficient for any practical model.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* The three-way split is a standard best practice. The validation set guides all development decisions (model selection, hyperparameter tuning) without contaminating the test set. The test set is used exactly once for the final unbiased performance estimate.
+  - *Why A is incorrect:* Using the test set for model selection would constitute data leakage. This workflow correctly avoids that by using the validation set for selection.
+  - *Why C is incorrect:* Using three subsets is a regularization and evaluation best practice, not a cause of overfitting. Overfitting results from model complexity relative to data, not from the number of splits.
+  - *Why D is incorrect:* 70% training is standard. Many production models are trained on far less. The adequacy of training data depends on data complexity, not a fixed minimum percentage.
+
+---
+
+### Question 17 (5 points)
+
+Which of the following best describes the silhouette score used to evaluate clustering results?
+
+- A) It measures the accuracy of cluster label predictions compared to ground truth labels.
+- B) It quantifies how similar a data point is to its own cluster compared to other clusters, ranging from -1 (poor) to +1 (ideal).
+- C) It counts the total number of data points correctly assigned to their cluster centroid.
+- D) It measures the percentage of variance explained by the K-means cluster centroids.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* The silhouette score measures intra-cluster cohesion vs. inter-cluster separation for each point, then averages across all points. A score near +1 means points are well-matched to their cluster and poorly matched to neighboring clusters. It is the standard evaluation metric when ground truth labels are unavailable.
+  - *Why A is incorrect:* Ground truth labels are not available in unsupervised learning. Comparing to ground truth would make this a supervised evaluation, not an unsupervised one.
+  - *Why C is incorrect:* This describes counting correctly assigned points, which requires ground truth labels. The silhouette score requires no labels.
+  - *Why D is incorrect:* Percentage of variance explained by centroids is related to inertia (within-cluster sum of squares), not the silhouette score.
+
+---
+
+### Question 18 (5 points)
+
+What is the primary difference between L1 regularization (Lasso) and L2 regularization (Ridge) in linear models?
+
+- A) L1 adds a penalty proportional to the square of the weights; L2 adds a penalty proportional to the absolute value of the weights.
+- B) L1 can shrink coefficients to exactly zero (producing sparse models); L2 shrinks coefficients toward zero but rarely to exactly zero.
+- C) L1 is used only for classification; L2 is used only for regression.
+- D) L1 increases model complexity; L2 reduces model complexity.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* L1 (Lasso) penalizes the sum of absolute values of weights. Its penalty geometry produces sparse solutions where many coefficients become exactly zero, performing implicit feature selection. L2 (Ridge) penalizes the sum of squared weights, which shrinks all coefficients smoothly but rarely to zero.
+  - *Why A is incorrect:* This reverses the definitions. L2 uses squared penalties; L1 uses absolute value penalties.
+  - *Why C is incorrect:* Both L1 and L2 can be applied to regression and classification models. The choice depends on desired sparsity, not task type.
+  - *Why D is incorrect:* Both L1 and L2 are regularization methods that reduce model complexity. Neither increases complexity.
+
+---
+
+### Question 19 (5 points)
+
+A logistics company wants to predict the exact number of days it will take to deliver a package based on origin, destination, package weight, and carrier. Which Azure Machine Learning AutoML task type should be configured?
+
+- A) Classification
+- B) Clustering
+- C) Regression
+- D) Time Series Forecasting
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - *Why C is correct:* Number of delivery days is a continuous numerical value. The labeled historical data maps input features to a specific numeric output. This is a regression task.
+  - *Why A is incorrect:* Classification predicts discrete category labels. Delivery days is a continuous number, not a category.
+  - *Why B is incorrect:* Clustering is unsupervised and discovers groups. Labeled training data is present and the output is a numeric prediction.
+  - *Why D is incorrect:* Time series forecasting is used when the output depends on a temporal sequence of prior observations. Predicting delivery time from package attributes is a standard regression task, not a sequential forecasting problem.
+
+---
+
+### Question 20 (5 points)
+
+Which of the following best describes the purpose of feature scaling (e.g., standardization or min-max normalization) before training a machine learning model?
+
+- A) Feature scaling converts categorical variables into numerical representations.
+- B) Feature scaling ensures that features with large numeric ranges do not dominate distance-based or gradient-based algorithms.
+- C) Feature scaling removes outliers from the training dataset before model fitting.
+- D) Feature scaling increases the number of training examples by interpolating between data points.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Algorithms that use distances (K-nearest neighbors, K-means, SVM) or gradient descent (linear regression, neural networks) are sensitive to feature scales. A feature with values in the range 0–100,000 will dominate one with values in 0–1 unless scaled. Standardization (zero mean, unit variance) or min-max scaling corrects this.
+  - *Why A is incorrect:* Converting categorical variables to numbers is called encoding (e.g., one-hot encoding, label encoding). This is a separate preprocessing step from scaling.
+  - *Why C is incorrect:* Outlier removal is a separate data cleaning step. Scaling transforms the range of existing values; it does not remove any data points.
+  - *Why D is incorrect:* Scaling transforms existing feature values; it does not generate new training examples. Data augmentation or oversampling techniques increase training examples.

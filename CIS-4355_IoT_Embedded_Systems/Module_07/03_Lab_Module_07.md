@@ -391,3 +391,38 @@ Answer these four questions (3–4 sentences each):
 **LWT delay is very long:** The broker detects ungraceful disconnect after the Keep-Alive timer expires (default 60 seconds) plus some broker-side processing time.
 
 **Python not receiving messages:** Confirm `client.subscribe()` is called inside `on_connect`, not in the main script body, to ensure re-subscription after reconnect.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Add MQTT Topic ACL and TLS to the Broker
+
+Harden the local Mosquitto broker used in the lab by adding access controls and encrypted transport.
+
+1. Create a Mosquitto password file by running `mosquitto_passwd -c passwd.txt lab_user` and entering a password. Update `mosquitto.conf` to add `password_file passwd.txt` and `allow_anonymous false`. Restart the broker and confirm the ESP32 can no longer connect without credentials. Update your ESP32 sketch to pass the username and password using `client.setCredentials("lab_user", "yourpassword")` in the PubSubClient setup.
+2. Create a `acl.conf` file with the following rules:
+
+   ```text
+   user lab_user
+   topic readwrite lab07/#
+   topic read lab07/esp32/status
+   ```
+
+   Add `acl_file acl.conf` to `mosquitto.conf`. Test that `lab_user` can publish to `lab07/esp32/reading` but cannot publish to a topic outside the `lab07/` hierarchy (use `mosquitto_pub` to attempt a publish to `other/topic` and confirm it is rejected).
+
+3. Add a second MQTT client on a new topic `lab07/esp32/alert` that the ESP32 publishes to only when the temperature exceeds 28°C. Write a 2–3 sentence explanation of how topic-level ACLs enforce the principle of least privilege — connecting this to OWASP IoT Top 10 item 2 (Insecure Network Services).
+
+### Challenge 2: CBOR Payload Encoding on ESP32
+
+Replace the JSON payload in Part B with a CBOR-encoded binary payload and measure the size difference.
+
+1. Install the `CBOR` Arduino library (by Mike Smith or equivalent) via the Library Manager. Modify your Part B ESP32 sketch to encode the temperature and humidity readings as a CBOR map with integer keys (`0` for temperature, `1` for humidity) instead of a JSON string. Use `client.publish()` with the raw byte buffer and its length.
+2. Print both the JSON byte count and the CBOR byte count to Serial Monitor for each reading. Confirm the CBOR payload is smaller.
+3. On the Python subscriber side, install `pip install cbor2` and decode the incoming binary payload using `cbor2.loads(msg.payload)`. Print the decoded values with the same formatted output as the original JSON subscriber.
+4. Calculate the total bandwidth saved over 24 hours at your measured per-message byte difference assuming one reading per 5 seconds, and include this calculation in your written submission.
+
+### Reflection Questions
+
+1. In Part C you configured a Last Will and Testament before calling `connect()`. Explain what would happen if you attempted to set the LWT after `connect()` had already been called successfully.
+2. Your Part D QoS experiment used a simulated Wi-Fi disconnect to induce packet loss. Describe a scenario in a production IoT deployment where using QoS 0 would be the correct choice despite its unreliable delivery — and one scenario where using QoS 0 would be a serious design mistake.

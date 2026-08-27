@@ -165,3 +165,173 @@ Distractor analysis: B is incorrect because BigQuery fully supports GROUP BY, wi
 ---
 
 Reference: cloud.google.com/learn
+
+---
+
+### Question 11 (5 points)
+
+A Bigtable row key is designed as `reverseTimestamp#sensorId` where reverseTimestamp = `MAX_LONG - currentTimestampMs`. What problem does this design solve?
+
+- A) It prevents write hotspots by distributing new rows across the key space rather than appending to the lexicographic end.
+- B) It ensures rows are sorted by sensor ID, making per-sensor scans more efficient.
+- C) It enables JOINs between Bigtable tables by creating a shared key namespace.
+- D) It reduces storage size because reversed timestamps are shorter than forward timestamps.
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - B) Placing reverseTimestamp as the first key component means rows are sorted by timestamp (reversed), not by sensor ID; per-sensor scans require a full table scan unless the prefix is the sensor ID.
+  - C) Bigtable does not support JOINs between tables regardless of key design; the key format has no effect on cross-table operations.
+  - D) A reversed timestamp is the same byte length as a forward timestamp; no storage reduction occurs.
+
+---
+
+### Question 12 (5 points)
+
+A Bigtable table stores financial transaction records. A compliance audit requires retrieving all transactions for a specific account (account_id = `ACC001`) between 2025-01-01 and 2025-03-31. The row key is `account_id#YYYYMMDD#transaction_id`. Which Bigtable read operation most efficiently retrieves these rows?
+
+- A) A range scan with start key `ACC001#20250101` and end key `ACC001#20250331~` to retrieve only the matching key prefix range.
+- B) A full table scan with a row filter matching `account_id = ACC001` and date between 2025-01-01 and 2025-03-31.
+- C) A SQL SELECT query: `SELECT * FROM transactions WHERE account_id = 'ACC001' AND date BETWEEN '2025-01-01' AND '2025-03-31'`.
+- D) A batch of individual row lookups, one per day in the date range (90 individual reads).
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - B) A full table scan reads every row and applies a filter; with the correct row key design, a range scan reads only the relevant subset without scanning the entire table, making it far more efficient.
+  - C) Bigtable does not support SQL SELECT syntax; all reads use the Bigtable client API with row key lookups and range scans.
+  - D) Individual row lookups for each day would require knowing exact row keys for each day and does not efficiently retrieve transactions within a continuous date range using the natural key ordering.
+
+---
+
+### Question 13 (5 points)
+
+A Bigtable cluster's CPU utilization is at 85%. The team wants to add replication to a second cluster in a different region for disaster recovery. After adding the second cluster, what effect does this have on write throughput capacity?
+
+- A) Write throughput is unchanged; each cluster still processes its own writes, and replication is asynchronous; adding a replication cluster does not increase write throughput for the primary cluster.
+- B) Write throughput doubles because writes are distributed between the two clusters automatically.
+- C) Write throughput decreases slightly because each write must be synchronously replicated to the second cluster before acknowledging.
+- D) Write throughput scales linearly with each new cluster added, identical to adding nodes within a single cluster.
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - B) Writes are not automatically load-balanced between clusters; each cluster processes writes directed to it; a replication cluster for DR is a hot standby, not a write-sharing partner.
+  - C) Bigtable replication is asynchronous; writes are acknowledged before replication completes; there is no synchronous replication overhead.
+  - D) Adding nodes within a cluster scales write throughput linearly; adding a new cluster for replication is a DR measure, not a throughput scaling action for the primary cluster.
+
+---
+
+### Question 14 (5 points)
+
+Which Bigtable feature is used to automatically route read requests to the cluster with the lowest latency for a given client application?
+
+- A) App Profile with multi-cluster routing enabled.
+- B) Cloud Load Balancing configured in front of the Bigtable instance.
+- C) A Bigtable secondary index on the row key field.
+- D) Cloud CDN caching for frequently accessed rows.
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - B) Cloud Load Balancing operates at the HTTP/TCP network layer and is not integrated with the Bigtable API routing; Bigtable routing is controlled through App Profiles.
+  - C) Secondary indexes in Bigtable only exist as application-managed patterns (such as a lookup table); there is no built-in secondary index mechanism, and no index type controls cluster routing.
+  - D) Cloud CDN caches HTTP responses from web applications; it has no integration with the Bigtable RPC API.
+
+---
+
+### Question 15 (5 points)
+
+A Bigtable table uses column qualifier names as dynamic data (for example, storing a user's followed artist IDs as column qualifiers like `cf_follows:artist_12345`). What is the advantage of this pattern over storing the artist IDs as values in separate rows?
+
+- A) It allows retrieving all followed artists for a user in a single row read without scanning multiple rows.
+- B) It enables SQL GROUP BY queries on the qualifier names for analytics.
+- C) It reduces the number of column families required to one per user.
+- D) It allows the GC policy to apply a different maxversions per column qualifier.
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - B) Bigtable does not support SQL GROUP BY; analytical queries on qualifier names require exporting to BigQuery or processing in application code.
+  - C) The number of column families is determined by the schema design, not by how many users exist; all users share the same column families in the same table.
+  - D) GC policies in Bigtable are set at the column family level, not per individual column qualifier; you cannot set different maxversions per qualifier.
+
+---
+
+### Question 16 (5 points)
+
+A Bigtable schema stores web clickstream events with row key `userId#reverseTimestamp`. A new requirement asks for efficient retrieval of all events of a specific event_type (e.g., `purchase`) across all users within the last 24 hours. How should this query be handled?
+
+- A) This access pattern cannot be served efficiently by Bigtable alone with this key design; consider maintaining a secondary lookup table keyed on `event_type#reverseTimestamp#userId` for this query pattern.
+- B) Add a `WHERE event_type = 'purchase'` filter clause to the Bigtable range scan API.
+- C) Create a new column family `cf_purchase` and store only purchase events there; scan the column family.
+- D) Use Bigtable's built-in full-text index on cell values to search for event_type = purchase.
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - B) A value filter on `event_type` requires scanning all rows in the time range across all users; the row key is sorted by userId, not event_type, so Bigtable cannot use the key to skip non-matching rows efficiently.
+  - C) Column families group related columns; they are not queryable in isolation for cross-user scans; a column family scan still reads all rows.
+  - D) Bigtable has no built-in full-text index; all row retrieval is based on the row key or column filters that still require a range scan.
+
+---
+
+### Question 17 (5 points)
+
+What happens to Bigtable storage when a cell value is deleted using the Bigtable `DeleteFromColumn` mutation?
+
+- A) The delete is recorded as a tombstone marker; the actual storage is reclaimed during the next compaction operation.
+- B) The storage is immediately freed and the cell is removed from the tablet.
+- C) The cell value is set to NULL and the storage space is retained for the next write.
+- D) The entire row containing that column qualifier is deleted automatically.
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - B) Bigtable uses a log-structured merge (LSM) storage model; deletes write tombstone markers rather than immediately removing data; physical reclamation happens during compaction.
+  - C) Bigtable does not use NULL as a sentinel value; there is no NULL state for cell values; a deleted cell simply does not exist in subsequent reads.
+  - D) A `DeleteFromColumn` mutation only removes the specified column qualifier from a row; it does not delete the entire row or other column qualifiers.
+
+---
+
+### Question 18 (5 points)
+
+A team is choosing between Cloud Bigtable and Cloud Firestore for a gaming leaderboard application that stores player scores globally with millions of concurrent players. Which statement most accurately guides the selection?
+
+- A) Bigtable is preferred for very high write throughput (millions of writes per second) at petabyte scale; Firestore is preferred for mobile/web client SDKs with real-time sync and offline support.
+- B) Firestore is preferred because it supports SQL JOINs across player and score entities.
+- C) Bigtable is preferred for mobile apps because it includes native iOS and Android client SDKs.
+- D) Both services provide identical capabilities; the choice depends only on cost.
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - B) Firestore does not support SQL JOINs; it is a document database; the statement is factually incorrect.
+  - C) Bigtable does not have native mobile SDKs; it is accessed through server-side client libraries; Firestore is the GCP service with native mobile SDK support.
+  - D) Bigtable and Firestore have meaningfully different capabilities, consistency models, access patterns, and pricing structures; they are not interchangeable.
+
+---
+
+### Question 19 (5 points)
+
+A Bigtable administrator notices that the average read latency has increased from 3ms to 45ms after a recent data load. Key Visualizer shows even distribution across the key space. What is the most likely cause?
+
+- A) The cluster nodes are overloaded; the data-to-node ratio has grown and the cluster needs additional nodes.
+- B) The row key design has a hotspot that Key Visualizer is not detecting.
+- C) Bigtable compaction is running and temporarily blocking all reads.
+- D) The GC policy is set to maxversions=1, causing excessive compaction overhead.
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - B) The question explicitly states Key Visualizer shows even distribution; if distribution were uneven, Key Visualizer would show a bright band; even distribution rules out a hotspot.
+  - C) Bigtable compaction runs in the background and does not block reads; it is a characteristic of the LSM storage model that reads and compaction operate concurrently.
+  - D) maxversions=1 reduces the number of versions to compact, which would decrease compaction work; it would not increase read latency.
+
+---
+
+### Question 20 (5 points)
+
+Which of the following correctly describes the relationship between a Bigtable instance, cluster, and table?
+
+- A) An instance contains one or more clusters; each cluster is a set of nodes in a zone; tables are resources of the instance and their data is distributed across all clusters in the instance.
+- B) An instance contains one table; additional tables require additional instances.
+- C) A cluster contains multiple instances; each instance holds one table partition.
+- D) Tables are defined per cluster; different clusters within the same instance can have different table schemas.
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - B) A single Bigtable instance can contain many tables; instances are not limited to one table.
+  - C) The hierarchy is instance → cluster → nodes; instances are the top-level resource containing clusters, not the other way around.
+  - D) Tables are defined at the instance level and their data is automatically distributed and replicated across all clusters within the instance; clusters do not have independent table schemas.

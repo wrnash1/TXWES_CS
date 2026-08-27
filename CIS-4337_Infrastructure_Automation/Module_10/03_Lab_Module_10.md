@@ -189,7 +189,7 @@ terraform workspace list
 
 Expected output:
 
-```
+```text
   default
   dev
   staging
@@ -442,6 +442,83 @@ rm -rf ~/tf-lab-10/
 | Workspace deletion completed correctly | 10 |
 | Written comparison answer submitted | 5 |
 | **Total** | **100** |
+
+---
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: CI/CD Ephemeral Workspace Simulation
+
+Simulate the CI/CD pattern of creating a per-PR ephemeral workspace, deploying to it, and cleaning it up automatically.
+
+**Step A.** In `~/tf-lab-10/workspace-demo/`, write a shell script `pr_deploy.sh` that accepts a PR number as an argument and performs the full lifecycle: create workspace, apply, output the deployment ID, destroy, and delete the workspace:
+
+```bash
+#!/usr/bin/env bash
+set -euo pipefail
+PR_NUM=${1:?Usage: pr_deploy.sh <pr-number>}
+WS="pr-${PR_NUM}"
+
+terraform workspace new "$WS"
+terraform apply -auto-approve
+echo "Deployed PR ${PR_NUM}: $(terraform output -raw deployment_id)"
+terraform destroy -auto-approve
+terraform workspace select default
+terraform workspace delete "$WS"
+echo "Workspace ${WS} cleaned up."
+```
+
+1. Make the script executable with `chmod +x pr_deploy.sh` and run it with `./pr_deploy.sh 42`.
+2. After the script completes, run `terraform workspace list` and confirm that `pr-42` no longer appears.
+3. Inspect `output/` and confirm a `pr-42-deployment.json` file was created and then deleted by `terraform destroy`.
+4. Record in `lab_notes.txt`: in a real CI/CD system (GitHub Actions, GitLab CI, Jenkins), what environment variable or job metadata would you use as the PR number argument, and how would you ensure the cleanup step runs even if the deploy step fails?
+
+### Challenge 2: Dynamic Workspace Configuration with `lookup()` Fallback
+
+Extend the workspace configuration to handle unknown workspace names gracefully using `lookup()`.
+
+**Step A.** Modify the `locals` block in `main.tf` to replace the direct map index `local.workspace_config[terraform.workspace]` with a `lookup()` call that falls back to the `default` configuration:
+
+```hcl
+locals {
+  workspace_config = {
+    default = {
+      replicas      = 1
+      instance_size = "small"
+      log_level     = "debug"
+    }
+    dev = {
+      replicas      = 1
+      instance_size = "small"
+      log_level     = "debug"
+    }
+    staging = {
+      replicas      = 2
+      instance_size = "medium"
+      log_level     = "info"
+    }
+    prod = {
+      replicas      = 3
+      instance_size = "large"
+      log_level     = "warn"
+    }
+  }
+
+  config = lookup(local.workspace_config, terraform.workspace, local.workspace_config["default"])
+}
+```
+
+1. Create a new workspace named `feature-xyz` with `terraform workspace new feature-xyz`.
+2. Run `terraform apply -auto-approve` and inspect `output/feature-xyz-deployment.json`. Confirm it received the `default` settings (replicas: 1, instance_size: small).
+3. Without `lookup()`, what error would Terraform produce when applying in an unknown workspace? Test by temporarily reverting to the direct index `local.workspace_config[terraform.workspace]` and running `terraform plan` in the `feature-xyz` workspace. Record the error message in `lab_notes.txt`.
+4. Restore `lookup()`, re-apply, and clean up the `feature-xyz` workspace.
+
+### Reflection Questions
+
+1. The lab demonstrated that `terraform workspace list` shows the currently active workspace with a `*` symbol. Describe an operational process (pre-apply checklist, CI/CD guardrail, or wrapper script) that a team could implement to prevent an engineer from accidentally running `terraform apply` in the `prod` workspace when they intended to target `staging`. Your answer should address both human error and automation safety.
+2. You compared workspaces and directory-based isolation in Part 5. A new project is starting with a team of eight engineers, three environments (dev, staging, prod), and a compliance requirement that production infrastructure must be deployable only by a separate service account with restricted IAM permissions. Explain which environment isolation pattern you would recommend and justify your choice with at least two specific technical reasons drawn from the reading guide.
 
 ---
 

@@ -311,3 +311,73 @@ Submit to the Canvas assignment portal before the stated deadline.
 | C | ETL Pipeline Exercise | 25 |
 | D | Python Database Simulation | 30 |
 | **Total** | | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Schema Extension and Integrity Testing
+
+Extend the SQLite database from Part D to test referential integrity and schema design decisions.
+
+1. Add a `PRODUCTS` table with columns `product_id` (INTEGER PRIMARY KEY), `product_name` (TEXT), `category` (TEXT), and `unit_price` (REAL). Add a `product_id` foreign key column to the `orders` table (you may rebuild the table or add the column). Enable foreign key enforcement in SQLite with `PRAGMA foreign_keys = ON;`.
+2. Insert five product rows and update the existing order rows to reference valid product IDs. Then attempt to insert one order row with a non-existent `product_id` and observe whether SQLite raises an error. Document the result and explain what it means for data quality.
+3. Write a SQL query that returns total revenue, average order value, and order count grouped by both `region` and `product category`. Load the result into a pandas DataFrame and print it.
+
+```python
+import sqlite3, pandas as pd
+
+conn = sqlite3.connect(":memory:")
+conn.execute("PRAGMA foreign_keys = ON")
+cur = conn.cursor()
+
+cur.executescript("""
+CREATE TABLE customers (
+    customer_id INTEGER PRIMARY KEY,
+    first_name TEXT, region TEXT, loyalty_tier TEXT
+);
+CREATE TABLE products (
+    product_id INTEGER PRIMARY KEY,
+    product_name TEXT, category TEXT, unit_price REAL
+);
+CREATE TABLE orders (
+    order_id INTEGER PRIMARY KEY,
+    customer_id INTEGER REFERENCES customers(customer_id),
+    product_id  INTEGER REFERENCES products(product_id),
+    order_date TEXT, total_amount REAL
+);
+INSERT INTO customers VALUES (1,'Alice','North','Gold'),(2,'Bob','South','Silver'),
+    (3,'Carol','North','Bronze'),(4,'David','East','Gold'),(5,'Eva','West','Silver');
+INSERT INTO products VALUES (10,'Laptop','Electronics',999.99),(11,'Headphones','Electronics',79.99),
+    (12,'Desk Chair','Furniture',349.00),(13,'Notebook','Office',4.99),(14,'Monitor','Electronics',399.00);
+INSERT INTO orders VALUES (101,1,10,'2024-01-15',999.99),(102,2,11,'2024-01-20',79.99),
+    (103,1,12,'2024-02-01',349.00),(104,3,13,'2024-02-14',4.99),
+    (105,4,14,'2024-03-05',399.00),(106,5,10,'2024-03-18',999.99);
+""")
+
+df = pd.read_sql_query("""
+    SELECT c.region, p.category,
+           COUNT(o.order_id) AS order_count,
+           ROUND(SUM(o.total_amount),2) AS total_revenue,
+           ROUND(AVG(o.total_amount),2) AS avg_order_value
+    FROM orders o
+    JOIN customers c ON o.customer_id = c.customer_id
+    JOIN products p ON o.product_id = p.product_id
+    GROUP BY c.region, p.category
+    ORDER BY total_revenue DESC
+""", conn)
+print(df)
+```
+
+### Challenge 2: Mini ETL Pipeline in Python
+
+Simulate a three-stage ETL pipeline that reads raw data, applies transformations, and loads results into a clean analytical table.
+
+1. Create a raw "source" DataFrame with at least 10 rows simulating a CSV export from an OLTP system. Include intentional quality issues: two duplicate rows, one row with a NULL `region`, and one row with a negative `total_amount`. Print the raw DataFrame and document each issue found.
+2. Write an explicit Transform stage as a Python function `transform(df)` that: removes duplicate rows, fills NULL `region` values with `"Unknown"`, filters out rows where `total_amount` is negative, and adds a `revenue_category` column using `pd.cut()` with bins for Low (<$100), Standard ($100–$500), and High (>$500). Return the cleaned DataFrame.
+3. Write a Load stage function `load(df, conn)` that inserts each cleaned row into a SQLite `orders_clean` table using `df.to_sql()`. Verify the load by querying the table row count and printing the final analytical summary grouped by `revenue_category`.
+
+### Reflection Questions
+
+1. In Challenge 1, when you enabled `PRAGMA foreign_keys = ON` and attempted to insert an order with a non-existent `product_id`, what happened? What would the consequence have been for analytical accuracy if the insert had silently succeeded?
+2. In Challenge 2, your `transform()` function applied four data quality rules. For each rule, name the data quality dimension it addresses (completeness, accuracy, uniqueness, or validity) and explain your reasoning.

@@ -223,4 +223,22 @@ Submit all screenshots and the finding report as a single PDF or ZIP file to the
 
 ---
 
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Wireless Assessment Documentation Report
+
+Using findings from your Module 11 lab activity (either Track A or Track B), produce a complete wireless security assessment report section as it would appear in a professional penetration test deliverable. Your report section must include: an executive summary paragraph (3–4 sentences) describing the overall wireless security posture without technical jargon, a findings table listing each identified issue with severity rating and OWASP/CVSS classification, a detailed finding entry for the WPA2 handshake/PSK recovery finding including proof of concept commands, recovered passphrase, evidence screenshot, business impact, and specific remediation steps, and a findings entry for any secondary wireless issue identified (WPS status, open network presence, rogue AP indicators, or encryption downgrade risk). Format the report section to be understandable to a CTO who has no wireless security background.
+
+### Challenge 2: Attack Surface Comparison — WPA2-Personal vs WPA2-Enterprise
+
+Research the technical differences between WPA2-Personal and WPA2-Enterprise authentication and write a structured comparison analysis covering: the authentication mechanism used by each (PSK vs. 802.1X/EAP), what data is capturable from the air for each type, whether offline cracking is possible for each and why, the infrastructure cost difference between the two, and what attack techniques remain viable against WPA2-Enterprise (evil twin, credential phishing via RADIUS impersonation, client certificate attacks). Conclude with a specific recommendation for which standard an organization with 200 employees and sensitive internal network access should implement, with justification based on the attack surface comparison.
+
+### Reflection Questions
+
+1. You capture a WPA2-Personal handshake during a wireless engagement. You run hashcat overnight and crack the PSK. However, you notice the passphrase is the company's name followed by the founding year: `AcmeCorp2008`. Write the "Finding" section of your penetration test report for this vulnerability — include severity rating, description, evidence, business impact, and remediation — and explain why this passphrase pattern is common in organizations and what specific remediation addresses both the technical weakness and the organizational behavior that created it.
+
+2. During a wireless reconnaissance sweep, your airodump-ng output shows an access point with the same SSID as the client's corporate network but a different BSSID and signal that is stronger near the parking lot. You did not deploy this AP. What does this indicate, what is the immediate action you should take per professional engagement protocol, and what documentation must you create? How does this finding change the scope and urgency of the current engagement?
+
 *End of Module 11 Lab Activity*

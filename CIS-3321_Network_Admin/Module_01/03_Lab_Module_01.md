@@ -186,4 +186,47 @@ Submit the following to the Canvas assignment dropbox:
 
 ---
 
+## Part 9 — Challenge Exercise
+
+These advanced steps extend the base lab for students seeking deeper mastery. Challenge exercises are optional unless your instructor specifies otherwise.
+
+### Challenge Step 1: Add a Router and Create a Second Subnet
+
+Extend your existing Packet Tracer topology to include a router and a second subnet, demonstrating Layer 3 routing between two star segments.
+
+1. Add a Cisco 1841 (or 2901) router to the workspace.
+2. Connect the router's FastEthernet0/0 interface to your existing 2960 switch using a crossover cable.
+3. Add a second 2960 switch to the workspace and connect it to the router's FastEthernet0/1 interface.
+4. Add two new PCs (PC3 and PC4) to the second switch using straight-through cables.
+5. Configure the router interfaces:
+   - FastEthernet0/0: IP 192.168.1.1 / 255.255.255.0 (gateway for the first subnet)
+   - FastEthernet0/1: IP 192.168.2.1 / 255.255.255.0 (gateway for the second subnet)
+6. Configure PC0–PC2 to use 192.168.1.1 as their default gateway.
+7. Assign PC3: 192.168.2.10 / 255.255.255.0 / Gateway 192.168.2.1
+8. Assign PC4: 192.168.2.20 / 255.255.255.0 / Gateway 192.168.2.1
+9. From PC0, ping PC3 (192.168.2.10). Record the result.
+
+**Challenge Question 1:** When PC0 pings PC3 across the router, at which OSI layer does the router make its forwarding decision? What changes at Layer 2 (MAC addresses) as the packet crosses the router compared to how it traveled within the first subnet?
+
+### Challenge Step 2: Use Simulation Mode to Observe Cross-Router Encapsulation Change
+
+1. Switch to Simulation Mode and generate a ping from PC0 to PC3.
+2. Step through the simulation and click the PDU as it arrives at the router's FastEthernet0/0 interface (inbound).
+3. Note the source and destination MAC addresses in the Ethernet frame header.
+4. Continue stepping until the router forwards the packet out FastEthernet0/1. Click the PDU again.
+5. Note the new source and destination MAC addresses in the outbound frame.
+
+**Challenge Question 2:** Explain why the source and destination MAC addresses changed as the packet passed through the router, but the source and destination IP addresses did not change. Which OSI layers were modified at the router, and why?
+
+### Challenge Step 3: Introduce a Deliberate Misconfiguration and Diagnose It
+
+1. Change PC3's default gateway to an incorrect value (e.g., 192.168.2.99).
+2. From PC0, attempt to ping PC3. Record the result.
+3. From PC3, attempt to ping PC0. Record the result.
+4. Restore the correct gateway and re-verify connectivity.
+
+**Challenge Question 3:** Describe the asymmetric behavior you observed — why could PC0 reach PC3 in one direction but not the other (or why both directions failed)? Map each failure to a specific OSI layer and explain the OSI-layer decision that broke down.
+
+---
+
 *CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash*

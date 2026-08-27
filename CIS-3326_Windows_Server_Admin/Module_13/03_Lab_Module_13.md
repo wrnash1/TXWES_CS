@@ -292,3 +292,136 @@ Answer the following questions in your lab report.
 **ReFS format option not shown in GUI**: ReFS is available via PowerShell formatting. The Windows Server GUI (Disk Management) may not list ReFS for all disk types. Use `Format-Volume` in PowerShell.
 
 **BitLocker fails with "no TPM"**: Use `-PasswordProtector` instead of `-TpmProtector` for lab environments without a virtual TPM.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Extend a Virtual Disk and Resize the File System
+
+Storage Spaces virtual disks can be grown non-disruptively while data remains
+online. Practice resizing a virtual disk and extending the file system without
+taking the volume offline.
+
+1. Check the current size of your two-way mirror virtual disk and the available
+   unallocated space in the pool:
+
+   ```powershell
+   Get-VirtualDisk -FriendlyName "MirrorVDisk" |
+       Select-Object FriendlyName, Size, LogicalSectorSize, ResiliencySettingName
+
+   Get-StoragePool -FriendlyName "LabPool" |
+       Select-Object FriendlyName, Size, AllocatedSize, IsReadOnly
+   ```
+
+2. Resize the virtual disk by adding 10 GB of additional capacity:
+
+   ```powershell
+   $currentSize = (Get-VirtualDisk -FriendlyName "MirrorVDisk").Size
+   $newSize     = $currentSize + 10GB
+
+   Resize-VirtualDisk -FriendlyName "MirrorVDisk" -Size $newSize
+
+   Get-VirtualDisk -FriendlyName "MirrorVDisk" |
+       Select-Object FriendlyName, Size
+   ```
+
+3. After resizing the virtual disk, the underlying partition and volume must also
+   be expanded. Find the drive letter and extend the partition to use all
+   available space:
+
+   ```powershell
+   # Identify the partition on the virtual disk
+   Get-Partition | Where-Object {$_.DriveLetter -ne $null} |
+       Select-Object DriveLetter, Size, PartitionNumber, DiskNumber
+
+   # Extend the partition to maximum size (adjust DriveLetter as needed)
+   $drive = "E"
+   $maxSize = (Get-PartitionSupportedSize -DriveLetter $drive).SizeMax
+   Resize-Partition -DriveLetter $drive -Size $maxSize
+   ```
+
+4. Verify the volume now shows the expanded size:
+
+   ```powershell
+   Get-Volume -DriveLetter E | Select-Object DriveLetter, FileSystemLabel, Size, SizeRemaining
+   ```
+
+   In your lab notes, explain why three separate resize operations are needed
+   (virtual disk → partition → volume) and whether any of these steps require
+   taking the volume offline.
+
+### Challenge 2: Configure and Test Data Deduplication
+
+Data Deduplication reduces storage consumption for file server workloads by
+eliminating redundant data chunks. Enable deduplication, generate duplicate
+content, and measure the savings rate.
+
+1. Enable Data Deduplication on a test volume (use the ReFS or NTFS volume
+   from the main lab):
+
+   ```powershell
+   Install-WindowsFeature -Name FS-Data-Deduplication -IncludeManagementTools
+
+   Enable-DedupVolume -Volume "E:" -UsageType Default
+   Get-DedupVolume -Volume "E:"
+   ```
+
+2. Create 50 MB of duplicate content to give deduplication data to work with:
+
+   ```powershell
+   $content = "A" * 1MB
+
+   1..50 | ForEach-Object {
+       $content | Out-File "E:\DedupTest\file_$_.txt" -Encoding ASCII
+   }
+
+   # Verify the files exist and total size before dedup
+   (Get-ChildItem "E:\DedupTest").Count
+   (Get-ChildItem "E:\DedupTest" | Measure-Object -Property Length -Sum).Sum / 1MB
+   ```
+
+3. Run the deduplication optimization job immediately rather than waiting for the
+   scheduled background job:
+
+   ```powershell
+   Start-DedupJob -Volume "E:" -Type Optimization
+   Get-DedupJob -Volume "E:"
+   ```
+
+   Wait for the job to complete (check `Get-DedupJob` until State shows
+   Completed), then check savings:
+
+   ```powershell
+   Get-DedupStatus -Volume "E:" |
+       Select-Object Volume, SavedSpace, SavingsRate, OptimizedFiles
+   ```
+
+4. Generate a deduplication savings report:
+
+   ```powershell
+   Get-DedupStatus -Volume "E:" | Format-List *
+   ```
+
+   In your lab notes, record the `SavingsRate` and `SavedSpace` values. Explain
+   why the savings rate on this test (50 near-identical files) would be much
+   higher than a typical production file server, and identify three workload types
+   where Data Deduplication is most and least effective.
+
+### Reflection Questions
+
+1. A storage administrator creates a Storage Spaces pool with five 4 TB disks and
+   a dual parity virtual disk, expecting maximum capacity with two-failure
+   tolerance. Six months later, two disks fail simultaneously. The pool shows
+   "Degraded" status and data is inaccessible. The administrator is surprised
+   because dual parity should survive two failures. What is the most likely
+   explanation, and what monitoring and alerting practice would have prevented
+   the data loss?
+
+2. An organization runs Storage Replica in synchronous mode between a primary data
+   center and a DR site 50 miles away. During peak transaction hours, users
+   complain about slow application response. A network engineer measures 8ms of
+   round-trip latency between the sites. Explain why synchronous replication causes
+   this performance impact, calculate the maximum I/O throughput achievable at 8ms
+   RTT, and recommend whether the organization should switch to asynchronous mode —
+   including what data loss risk that change introduces.

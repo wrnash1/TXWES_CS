@@ -373,4 +373,20 @@ Microsoft established the **Microsoft AI Red Team** in 2018 and has red-teamed p
 
 ---
 
-*Reading Guide Line Count: 260 | Module 14 — AI Security and Privacy*
+## Supplemental Resources
+
+**1. Microsoft Adversarial ML Threat Matrix**
+<https://learn.microsoft.com/en-us/security/ai-red-team/ai-risk-assessment>
+Microsoft's framework for categorizing adversarial threats to machine learning systems, maintained by the Microsoft AI Red Team. Maps attack techniques (evasion, poisoning, extraction, inversion) to mitigations and directly supplements Section 1 of this reading guide with a practitioner-facing threat taxonomy.
+
+**2. OpenDP — Differential Privacy Library (official documentation)**
+<https://docs.opendp.org/en/stable/>
+The official documentation for OpenDP, the open-source differential privacy library used in the Module 14 lab. Includes tutorials on the Laplace mechanism, sensitivity calculation, and DP-SGD integration with PyTorch — directly supports the lab's Part 4 differential privacy exercises.
+
+**3. NIST — Adversarial Machine Learning: A Taxonomy and Terminology of Attacks and Mitigations (NIST AI 100-2)**
+<https://csrc.nist.gov/pubs/ai/100/2/e2023/final>
+NIST's definitive taxonomy of adversarial ML attacks and mitigations, published in 2023. Covers evasion, poisoning, extraction, and privacy attacks with standardized terminology aligned with what is tested on AI-900 and used throughout Module 14.
+
+---
+
+Reading Guide Line Count: 260 | Module 14 — AI Security and Privacy

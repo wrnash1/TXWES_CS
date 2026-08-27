@@ -399,3 +399,135 @@ certificate on first use.
 # Verify the volume file system before using EFS
 Get-Volume -DriveLetter C | Select-Object DriveLetter, FileSystem
 ```
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Configure and Deploy a Data Recovery Agent via Group Policy
+
+Without a Data Recovery Agent, EFS-encrypted files become permanently inaccessible
+if the encrypting user's certificate is lost. Configure a DRA certificate and
+deploy it via GPO so all new EFS files can be recovered.
+
+1. Generate a DRA certificate key pair using the `cipher` utility. This creates
+   `DRAKey.cer` (public certificate) and `DRAKey.pfx` (private key + certificate):
+
+   ```powershell
+   # Run from an elevated command prompt or PowerShell
+   cipher /r:C:\DRAKey
+   ```
+
+   When prompted, set a strong password to protect the `.pfx` file. Store both
+   files in a secure location (in a lab, use `C:\DRABackup\`).
+
+2. Create a local GPO (or edit the Default Domain Policy) to designate the
+   DRA certificate. In Group Policy Management Editor, navigate to:
+
+   Computer Configuration > Policies > Windows Settings > Security Settings >
+   Public Key Policies > Encrypting File System
+
+   Right-click and choose **Add Data Recovery Agent**, then browse to `DRAKey.cer`.
+
+   Verify the DRA certificate appears in the policy:
+
+   ```powershell
+   gpupdate /force
+   gpresult /r
+   ```
+
+3. Encrypt a new test file as a standard domain user and verify the DRA entry
+   appears in the file's DRF by examining the EFS properties:
+
+   ```powershell
+   # As the domain user, encrypt the test file
+   cipher /e "C:\LabSecure\DRATest.txt"
+
+   # List key protectors on the encrypted file (shows DRF entries)
+   cipher /u /n "C:\LabSecure\DRATest.txt"
+   ```
+
+4. Import the `DRAKey.pfx` to the current user's certificate store and attempt
+   to open the file to verify recovery works:
+
+   ```powershell
+   Import-PfxCertificate -FilePath "C:\DRABackup\DRAKey.pfx" `
+       -CertStoreLocation Cert:\CurrentUser\My `
+       -Password (Read-Host -AsSecureString "PFX Password")
+
+   # Verify you can now read the file encrypted by the other user
+   Get-Content "C:\LabSecure\DRATest.txt"
+   ```
+
+   In your lab notes, explain why the DRA can decrypt the file even though it did
+   not encrypt it, and what would happen if the DRA certificate was configured
+   after the file was already encrypted.
+
+### Challenge 2: Configure a Connection Security Rule Requiring IPsec Authentication
+
+Connection Security Rules enforce IPsec authentication between servers, ensuring
+communication is only permitted with authenticated peers. Configure a rule requiring
+Kerberos authentication for all inbound connections on the Domain profile.
+
+1. Create a Connection Security Rule that requires Kerberos authentication for all
+   inbound connections when on the Domain network profile:
+
+   ```powershell
+   New-NetIPsecRule -DisplayName "Lab11 - Require Kerberos Auth" `
+       -InboundSecurity Require `
+       -OutboundSecurity Request `
+       -Phase1AuthSet COMPUTERKERBEROS `
+       -KeyModule IKEv1
+   ```
+
+   Verify the rule was created:
+
+   ```powershell
+   Get-NetIPsecRule -DisplayName "Lab11 - Require Kerberos Auth" |
+       Select-Object DisplayName, InboundSecurity, OutboundSecurity, Enabled
+   ```
+
+2. Check the current IPsec main mode associations to see if any connections have
+   been authenticated:
+
+   ```powershell
+   Get-NetIPsecMainModeSA | Select-Object LocalAddress, RemoteAddress, AuthenticationMethod
+   ```
+
+3. Export the firewall and IPsec rule configuration to a `.wfw` file as a backup:
+
+   ```powershell
+   netsh advfirewall export "C:\FWBackup_Lab11.wfw"
+   ```
+
+   Verify the file was created and note its size:
+
+   ```powershell
+   Get-Item "C:\FWBackup_Lab11.wfw" | Select-Object Name, Length, LastWriteTime
+   ```
+
+4. Remove the test IPsec rule to restore the lab environment:
+
+   ```powershell
+   Remove-NetIPsecRule -DisplayName "Lab11 - Require Kerberos Auth" -Confirm:$false
+   ```
+
+   In your lab notes, explain the difference between `InboundSecurity: Require`
+   and `InboundSecurity: Request`. Describe a scenario where requiring IPsec
+   authentication for all domain connections could break legitimate communication.
+
+### Reflection Questions
+
+1. A company deploys EFS to protect sensitive HR files but does not configure a
+   Data Recovery Agent. Six months later, an HR manager leaves without backing up
+   their EFS certificate. The manager's files are still on the file server. Describe
+   the complete impact of this situation — what data is affected, what recovery
+   options exist, and what policy and technical controls would have prevented the
+   problem.
+
+2. BitLocker in TPM+PIN mode prevents unauthorized boot access even if a drive is
+   removed. However, in a data center with hundreds of servers, requiring a PIN on
+   every reboot creates operational challenges. Describe two alternative BitLocker
+   configurations that balance security with operational manageability for a data
+   center environment, and explain the security trade-offs of each configuration
+   compared to TPM+PIN.

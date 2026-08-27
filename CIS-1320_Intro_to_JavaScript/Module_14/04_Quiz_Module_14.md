@@ -4,7 +4,7 @@
 
 **Certification Alignment:** JSE — Certified Associate in JavaScript Programming (OpenEDG / JS Institute)
 
-**Instructions:** Choose the single best answer for each question.
+**Instructions:** Choose the single best answer for each question. Each question is worth 5 points (20 questions × 5 points = 100 points).
 
 ---
 
@@ -226,3 +226,239 @@ A developer wants to load three pieces of data where the second and third are in
 - *Why B is incorrect:* Sequential `await` for all three forces fetch 3 to wait for fetch 2, even though they are independent of each other. This is unnecessarily slow.
 - *Why C is correct:* `await` fetch 1 to get its result. Then use the result to build requests 2 and 3, and `Promise.all` to run them in parallel. Fetch 1 completes first (dependency honored); then 2 and 3 run concurrently (independence exploited). This is the optimal pattern.
 - *Why D is incorrect:* `Promise.race` returns only the first result and discards the others. It does not collect all three results needed for the page.
+
+---
+
+### Question 11
+
+What does `JSON.stringify({ a: undefined, b: 1, c: null })` produce?
+
+- A) `'{"a":undefined,"b":1,"c":null}'`
+- B) `'{"a":null,"b":1,"c":null}'`
+- C) `'{"b":1,"c":null}'`
+- D) `TypeError` because `undefined` cannot be serialized
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `undefined` is not a valid JSON value. `JSON.stringify` does not represent it as the literal text `undefined`.
+- *Why B is incorrect:* `undefined` is not converted to `null` for object properties — it is omitted entirely. `null` conversion to `null` applies to array slots and the top-level value, not object property values of `undefined`.
+- *Why C is correct:* `JSON.stringify` silently omits properties whose values are `undefined`, functions, or Symbols. Property `a` is dropped entirely. `null` is valid JSON and is preserved. The result is `'{"b":1,"c":null}'`.
+- *Why D is incorrect:* No error is thrown. Omitting `undefined` properties is the specified, silent behavior of `JSON.stringify`.
+
+---
+
+### Question 12
+
+A developer calls `controller.abort()` while a fetch is in flight. Which code correctly handles both the abort and real network errors?
+
+```javascript
+try {
+  const res = await fetch(url, { signal: controller.signal });
+  return await res.json();
+} catch (err) {
+  // ??? handle here
+}
+```
+
+- A) `if (err.message === 'canceled') return;`
+- B) `if (err.name === 'AbortError') return; throw err;`
+- C) `if (err.status === 0) return;`
+- D) `if (err instanceof DOMException) return;`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Error messages are not standardized across browsers. `err.message` may vary. `err.name` is the stable, specification-defined property to use for identifying `AbortError`.
+- *Why B is correct:* Checking `err.name === 'AbortError'` identifies intentional cancellations. Returning silently (or swallowing the error) is the correct response — the abort was requested on purpose. Re-throwing with `throw err` ensures real network errors (e.g., `TypeError` for no connection) continue to propagate to the caller.
+- *Why C is incorrect:* `err.status` is an HTTP status code from a `Response` object — it is not a property on thrown `Error` objects from a failed fetch.
+- *Why D is incorrect:* While `AbortError` is an instance of `DOMException` in browsers, checking `instanceof DOMException` is too broad. Other `DOMException` types exist that should not be silently swallowed.
+
+---
+
+### Question 13
+
+What does `Promise.any` return when given an array of three Promises that all reject?
+
+- A) A fulfilled Promise with `undefined`
+- B) A rejected Promise with the first rejection reason
+- C) A rejected Promise with an `AggregateError` containing all three rejection reasons
+- D) `null`
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `Promise.any` does not fulfill when all Promises reject. When all reject, the result is itself a rejection.
+- *Why B is incorrect:* `Promise.any` does not simply use the first rejection reason as its rejection value. The specification defines an `AggregateError` containing all rejection reasons, so callers can inspect every failure.
+- *Why C is correct:* When every Promise in the array rejects, `Promise.any` rejects with an `AggregateError`. This special error type has an `.errors` array property containing the rejection reasons from all the Promises in order.
+- *Why D is incorrect:* `Promise.any` never returns `null`. It returns a Promise that resolves or rejects.
+
+---
+
+### Question 14
+
+Which statement about `await` inside a `for...of` loop is correct?
+
+```javascript
+async function loadItems(ids) {
+  for (const id of ids) {
+    const data = await fetchItem(id);
+    console.log(data);
+  }
+}
+```
+
+- A) All `fetchItem` calls fire simultaneously and results are logged as they arrive
+- B) Each `fetchItem` call waits for the previous one to complete before starting
+- C) Using `await` inside a loop causes a `SyntaxError`
+- D) The loop is skipped because `await` returns undefined inside a for loop
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `await` inside a `for...of` loop is sequential — each iteration pauses until the awaited Promise resolves before the loop advances to the next iteration. Use `map` + `Promise.all` for concurrent execution.
+- *Why B is correct:* The `for...of` loop processes one item at a time. When `await fetchItem(id)` is encountered, the loop pauses until the Promise resolves, then continues to the next `id`. Total execution time equals the sum of all individual durations.
+- *Why C is incorrect:* `await` inside a `for...of` loop is perfectly valid syntax within an `async` function. No error is thrown.
+- *Why D is incorrect:* `await` returns the resolved value of the Promise — not `undefined`. The loop runs normally, just sequentially.
+
+---
+
+### Question 15
+
+A developer wants to implement a 3-second timeout on a fetch request. Which code correctly uses `Promise.race` to achieve this?
+
+- A) `fetch(url, { timeout: 3000 })`
+- B) `setTimeout(() => fetch(url), 3000)`
+- C) `Promise.race([fetch(url), new Promise((_, r) => setTimeout(() => r(new Error('Timeout')), 3000))])`
+- D) `Promise.all([fetch(url), new Promise(resolve => setTimeout(resolve, 3000))])`
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* The `fetch` API does not accept a `timeout` option in the standard specification. This option would be silently ignored.
+- *Why B is incorrect:* `setTimeout(() => fetch(url), 3000)` delays the start of the fetch by 3 seconds — it does not impose a timeout on the fetch itself.
+- *Why C is correct:* `Promise.race` settles with whichever Promise settles first. The timeout Promise rejects after 3000ms. If the fetch takes longer than 3 seconds, the timeout wins and the race rejects. If the fetch resolves first, its result wins. This is the standard `Promise.race` timeout pattern.
+- *Why D is incorrect:* `Promise.all` waits for both to fulfill. The timeout Promise resolves (not rejects) after 3 seconds — this would cause a 3-second delay to the result, not a timeout that cancels the fetch.
+
+---
+
+### Question 16
+
+What value does `JSON.parse('null')` return?
+
+- A) The string `'null'`
+- B) `undefined`
+- C) `null`
+- D) `0`
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `JSON.parse` parses the JSON string `'null'` as the JSON null literal, which maps to the JavaScript value `null` — not the string `'null'`.
+- *Why B is incorrect:* `undefined` is not a valid JSON value and is not produced by `JSON.parse`. The JSON null literal maps to the JavaScript `null`, not `undefined`.
+- *Why C is correct:* The JSON specification defines a `null` literal that corresponds to JavaScript's `null` value. `JSON.parse('null')` returns the JavaScript value `null`.
+- *Why D is incorrect:* `0` is unrelated to `null`. JSON `null` maps to JavaScript `null`, not zero.
+
+---
+
+### Question 17
+
+A developer reads from `localStorage` with `localStorage.getItem('missing-key')`. What is returned?
+
+- A) `undefined`
+- B) `null`
+- C) An empty string `''`
+- D) `0`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `getItem` returns `null` (not `undefined`) when the key does not exist. This distinction matters for type checks.
+- *Why B is correct:* `localStorage.getItem(key)` returns `null` when the key has not been set. This is the specification-defined behavior. Always check `if (raw !== null)` before calling `JSON.parse` to avoid `JSON.parse(null)`, which returns `null` rather than your intended default.
+- *Why C is incorrect:* An empty string would be returned if the key was explicitly set to an empty string: `localStorage.setItem('key', '')`. A missing key returns `null`, not `''`.
+- *Why D is incorrect:* `0` would only be returned if the key was set to `'0'` and read back. A missing key always returns `null`.
+
+---
+
+### Question 18
+
+The following code has a bug. What is it?
+
+```javascript
+async function loadDashboard() {
+  const user = await apiFetch('/api/user');
+  const posts = await apiFetch('/api/posts');
+  const settings = await apiFetch('/api/settings');
+  render(user, posts, settings);
+}
+```
+
+- A) `apiFetch` cannot be called with `await` — use `.then` instead
+- B) `render` is called before all three fetches complete
+- C) All three fetches are sequential but they are independent — they should run in parallel with `Promise.all`
+- D) `async` functions cannot contain more than one `await`
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `apiFetch` returns a Promise; using `await` on it is correct. `await` and `.then` are interchangeable approaches — one is not required over the other.
+- *Why B is incorrect:* `render` is called after all three `await` calls have resolved — because each `await` pauses the function. `render` only runs after all three assignments complete.
+- *Why C is correct:* The three fetches (`/api/user`, `/api/posts`, `/api/settings`) are independent — none needs the result of another to start. Running them sequentially wastes time. The fix is `const [user, posts, settings] = await Promise.all([apiFetch('/api/user'), apiFetch('/api/posts'), apiFetch('/api/settings')]);`.
+- *Why D is incorrect:* `async` functions can have any number of `await` expressions. There is no limit.
+
+---
+
+### Question 19
+
+What is the purpose of the second argument `null` in `JSON.stringify(obj, null, 2)`?
+
+- A) It tells `JSON.stringify` to omit `null` values from the output
+- B) It is a placeholder for the replacer argument; `null` means include all properties
+- C) It sets the indent level to null (no indentation)
+- D) It prevents circular reference errors
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* The second argument does not filter `null` values. It is the replacer — a function or array that controls which properties are included. Passing `null` means no filtering: include everything.
+- *Why B is correct:* `JSON.stringify(value, replacer, space)` — the second argument is the `replacer`. When `null`, no filtering occurs and all serializable properties are included. The third argument `2` sets the indentation to 2 spaces for pretty-printing.
+- *Why C is incorrect:* The third argument controls indentation. The second argument `null` means no replacer is applied — it does not affect indentation.
+- *Why D is incorrect:* `null` as the replacer does not provide circular reference protection. A circular reference in the object still throws a `TypeError`. Use a custom replacer function if you need to handle circular structures.
+
+---
+
+### Question 20
+
+An async function makes several API calls. After the first `await`, the function throws an uncaught error. What happens?
+
+```javascript
+async function run() {
+  const data = await fetchData();
+  throw new Error('Something failed');   // no try/catch here
+}
+
+run();   // no .catch at the call site
+```
+
+- A) The error is silently discarded
+- B) The program immediately crashes and stops
+- C) `run()` returns a rejected Promise; browsers log an unhandled rejection warning
+- D) The error is swallowed because it occurred after an `await`
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Errors thrown inside `async` functions are not silently discarded. They cause the function's returned Promise to reject.
+- *Why B is incorrect:* In browsers, unhandled rejections do not stop the program immediately. The browser logs a warning to the console and fires an `unhandledrejection` event. Node.js may terminate the process depending on the version and configuration, but browsers do not crash.
+- *Why C is correct:* A `throw` inside an `async` function causes its returned Promise to reject with the thrown error. Since `run()` is called without `.catch` and there is no `try/catch` around the call, the rejection is unhandled. Modern browsers and Node.js report this as an `UnhandledPromiseRejectionWarning` or `UnhandledRejectionError`.
+- *Why D is incorrect:* Errors thrown after an `await` within an `async` function are not swallowed. They still reject the function's returned Promise, regardless of whether they occur before or after any `await`.

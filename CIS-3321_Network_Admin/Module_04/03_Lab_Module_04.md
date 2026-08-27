@@ -240,4 +240,50 @@ Submit the following to the Canvas assignment dropbox:
 
 ---
 
+## Part 9 — Challenge Exercise
+
+These advanced steps extend Module 04 with IPv6 Packet Tracer routing and NDP observation.
+
+### Challenge Step 1: Configure IPv6 Static Routing in Packet Tracer
+
+Build a Packet Tracer topology with two routers and two IPv6 subnets:
+
+1. Place two routers (R1 and R2) and connect them back-to-back on Gi0/2 using the WAN link.
+2. Attach one PC to each router's Gi0/0 interface via a switch.
+3. Configure the following IPv6 addressing:
+   - R1 Gi0/0: 2001:db8:1::1/64 (LAN gateway for PC1)
+   - R1 Gi0/2: 2001:db8:12::1/64 (WAN toward R2)
+   - R2 Gi0/2: 2001:db8:12::2/64 (WAN toward R1)
+   - R2 Gi0/0: 2001:db8:2::1/64 (LAN gateway for PC2)
+   - PC1: 2001:db8:1::10/64, gateway 2001:db8:1::1
+   - PC2: 2001:db8:2::10/64, gateway 2001:db8:2::1
+4. Enable IPv6 routing on each router: `ipv6 unicast-routing`
+5. Add static IPv6 routes:
+   - On R1: `ipv6 route 2001:db8:2::/64 2001:db8:12::2`
+   - On R2: `ipv6 route 2001:db8:1::/64 2001:db8:12::1`
+6. Verify: From PC1, ping PC2 using its full IPv6 address.
+
+**Challenge Question 1:** Write the full IOS `show ipv6 route` output you would expect to see on R1 after adding the static route. Identify which routes are connected (C) versus static (S) and explain why each appears.
+
+### Challenge Step 2: Observe NDP in Packet Tracer Simulation Mode
+
+1. Switch Packet Tracer to Simulation Mode.
+2. Set event filters to show ICMPv6 and NDP.
+3. From PC1, ping PC2 and step through the simulation.
+4. Observe the NDP Neighbor Solicitation and Neighbor Advertisement exchange that occurs before the ICMPv6 Echo Request is sent.
+
+**Challenge Question 2:** Compare the NDP Neighbor Solicitation/Advertisement exchange you observed with IPv4's ARP Request/Reply. List three specific technical differences between ARP and NDP, including the protocol each uses and the address type (broadcast vs. multicast) used for discovery.
+
+### Challenge Step 3: Enable and Verify SLAAC
+
+1. Add an additional PC (PC3) to R1's LAN switch.
+2. Configure R1's Gi0/0 interface to send Router Advertisements: `ipv6 nd prefix 2001:db8:1::/64`
+3. Configure PC3 to use automatic (SLAAC) IPv6 configuration instead of static.
+4. Observe the IPv6 address that PC3 self-configures.
+5. Verify the EUI-64 interface ID component by comparing PC3's MAC address to its self-assigned IPv6 interface ID.
+
+**Challenge Question 3:** Record PC3's self-assigned IPv6 address and its MAC address. Show the EUI-64 calculation manually (insert FF:FE, flip seventh bit) and confirm it matches the interface ID portion of the SLAAC address. If it does not match, explain why (privacy extensions).
+
+---
+
 *CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash*

@@ -378,6 +378,75 @@ gcloud iam service-accounts delete $SIGNER_SA --quiet
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Locked Retention Policy
+
+Simulate a compliance retention scenario by applying and then locking a
+retention policy on a test bucket.
+
+1. Create a new bucket and set a 60-second retention policy (short duration for
+   testing purposes):
+
+```bash
+export BUCKET_RETAIN="cis4329-retain-$(gcloud config get-value project)"
+gcloud storage buckets create gs://$BUCKET_RETAIN \
+  --location=us-central1 \
+  --default-storage-class=STANDARD
+
+gcloud storage buckets update gs://$BUCKET_RETAIN \
+  --retention-period=60s
+```
+
+1. Upload a test object and attempt to delete it within 60 seconds — observe
+   the error:
+
+```bash
+echo "compliance record" | gcloud storage cp - gs://$BUCKET_RETAIN/record.txt
+gcloud storage rm gs://$BUCKET_RETAIN/record.txt
+```
+
+1. Wait 65 seconds, then delete successfully:
+
+```bash
+sleep 65
+gcloud storage rm gs://$BUCKET_RETAIN/record.txt
+echo "Deleted after retention period elapsed"
+```
+
+1. Clean up the test bucket:
+
+```bash
+gcloud storage rm -r gs://$BUCKET_RETAIN --quiet
+```
+
+### Challenge 2: Cross-Bucket Replication with Storage Transfer Service
+
+Set up a one-time Storage Transfer Service job to copy all objects from your
+main lab bucket to the archive bucket, preserving metadata.
+
+1. In the Cloud Console, navigate to **Storage Transfer Service**.
+1. Click **Create transfer job** and select **Cloud Storage** as both the source
+   and destination.
+1. Set the source bucket to `$BUCKET_MAIN` and the destination to
+   `$BUCKET_ARCHIVE`.
+1. Set the schedule to **Run once** and enable **Delete objects from destination
+   if they don't exist in source** to observe the sync behavior.
+1. Start the job and monitor its progress in the Transfer Jobs list. Record the
+   number of objects transferred and total bytes copied.
+
+### Reflection Questions
+
+1. You attempted to delete an object inside its retention period and received an
+   error. What would happen if you tried to lock the retention policy
+   permanently? What is the key operational risk of locking a retention policy,
+   and under what real-world scenario would locking be required?
+2. The Storage Transfer Service job you created was configured to delete objects
+   from the destination that do not exist in the source. How does this differ
+   from a simple copy, and what use case does this deletion behavior serve?
+
+---
+
 End of Lab — Module 04
 
 Course: CIS-4329 Google Cloud Computing | Texas Wesleyan University | Professor Nash

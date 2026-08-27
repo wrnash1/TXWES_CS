@@ -161,3 +161,203 @@ A forensic analyst acquires a RAM image from a compromised Linux server and reco
 **Correct Answer:** B
 
 **Distractor Analysis:** Why A is incorrect: Listing `/tmp` is a common reconnaissance step but does not indicate privilege escalation. It is worth noting as attacker activity but is not the most significant finding. Why B is correct: `sudo bash -i` spawns an interactive root shell using sudo, and the subsequent `id` output confirming `uid=0(root)` is definitive proof of successful privilege escalation. This maps to MITRE ATT&CK T1548.003 (Abuse Elevation Control Mechanism: Sudo). It is the highest-impact finding in the list because it demonstrates the attacker achieved root access and complete system control. Why C is incorrect: Viewing `/etc/motd` is reconnaissance, not privilege escalation. It confirms the attacker was logged in but does not indicate elevated access. Why D is incorrect: A ping test is network connectivity verification. It has no privilege escalation significance.
+
+---
+
+## Question 11 (5 points)
+
+A forensic analyst uses the Volatility `netscan` plugin on a Windows memory image. The output shows an established TCP connection from the compromised host to 198.51.100.77:4444, with the local process listed as `svchost.exe` (PID 3844). The analyst then runs `pstree` and finds PID 3844's parent process is `cmd.exe` (PID 2201), and PID 2201's parent is `winword.exe` (PID 1744). What is the forensic significance of this process ancestry?
+
+- A) The process tree is normal — svchost.exe frequently spawns from cmd.exe during Windows updates
+- B) The process ancestry reveals an abnormal parent-child chain: Word spawned cmd.exe which spawned a process named svchost.exe connecting to a C2 server — indicating a macro-delivered payload that injected into or impersonated svchost.exe for network communication
+- C) The connection to port 4444 is a standard Windows Update port and requires no investigation
+- D) Volatility's pstree output is unreliable for parent-process analysis and should not be used for attribution
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A is incorrect. The legitimate Windows `svchost.exe` is spawned by `services.exe` — not by `cmd.exe` spawned by `winword.exe`. This parent-child chain is abnormal and indicative of malware.
+- B is correct. The complete chain — `winword.exe → cmd.exe → svchost.exe` with an outbound C2 connection on port 4444 — is a well-known attacker pattern: a malicious Word macro (delivered via phishing) executes cmd.exe which launches a malicious process masquerading as `svchost.exe`. Port 4444 is commonly associated with Meterpreter. The memory-based view provided by Volatility reveals this chain that may not be visible in disk-based analysis if the malicious process avoided writing artifacts.
+- C is incorrect. Port 4444 is not a Windows Update port. Windows Update uses HTTPS (443). Port 4444 has no legitimate Windows service association and is a well-known Meterpreter/Metasploit default listener port.
+- D is incorrect. Volatility's `pstree` plugin parses the Windows kernel's EPROCESS doubly-linked list and is widely validated for parent-process relationship reconstruction. It is a reliable forensic technique.
+
+---
+
+## Question 12 (5 points)
+
+During a disk forensic examination, an analyst finds that a file named `report_final.docx` has a Last Modified timestamp of 2024-03-15 but the NTFS $MFT entry for the same file shows a $FILE_NAME creation timestamp of 2024-11-14 — a date 8 months later. What forensic technique does this discrepancy indicate?
+
+- A) The file was opened in read-only mode, which updates the $MFT entry but not the file's content timestamp
+- B) Timestomping — the attacker modified the $STANDARD_INFORMATION timestamps to make the file appear older, but the $FILE_NAME attribute timestamps were not modified and reveal the true file creation date
+- C) The NTFS $MFT is corrupted, making the timestamps unreliable for forensic purposes
+- D) Microsoft Word automatically changes Last Modified timestamps when a file is moved between folders
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A is incorrect. Read-only access updates access timestamps in some configurations but does not change creation timestamps. More importantly, the discrepancy described (8-month gap between two timestamp fields in the same file) is not explained by read-only access.
+- B is correct. Timestomping (ATT&CK T1070.006) is the technique of modifying a file's $STANDARD_INFORMATION timestamps (which are easily writable with standard tools like `timestomp.exe` or PowerShell) to make the file appear older. However, the $FILE_NAME attribute's timestamps are updated by the NTFS kernel driver on file operations and are more resistant to user-mode modification. A discrepancy between the two timestamp sets is a well-documented indicator of timestomping.
+- C is incorrect. Isolated timestamp inconsistencies between two attributes within the same file record are not evidence of MFT corruption. MFT corruption typically manifests as unreadable records or inconsistent metadata across many files.
+- D is incorrect. Microsoft Word does not automatically modify creation timestamps when files are moved. Moving a file within the same NTFS volume preserves the original timestamps.
+
+---
+
+## Question 13 (5 points)
+
+A forensic examiner is analyzing Windows Prefetch files on a compromised workstation. The examiner finds a Prefetch file for `MIMIKATZ.EXE-AB1234CD.pf` with an embedded last run time of 2024-11-14 03:22:41. The binary `mimikatz.exe` is no longer present on disk. What does this Prefetch finding prove?
+
+- A) Nothing — Prefetch files are unreliable since they can be created without the program actually running
+- B) Mimikatz was executed on this system at 03:22:41 on 2024-11-14, providing execution evidence that persists even after the binary is deleted
+- C) The Prefetch file indicates mimikatz.exe is currently running in memory
+- D) Prefetch files record program installation events, not execution events
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A is incorrect. Windows Prefetch files are created by the OS when a program is executed (loaded into memory for the first time from that path). They cannot be created without execution. They are reliable execution artifacts used in professional forensic investigations.
+- B is correct. Prefetch files record execution evidence — the program name, run count, last run timestamp, and libraries loaded. The deleted binary does not affect the Prefetch file's persistence. This is forensically significant because the attacker deleted the tool but failed to delete the Prefetch artifact, providing evidence of execution time.
+- C is incorrect. Prefetch files record historical execution data. They do not indicate current process state. Checking currently running processes requires live system analysis or memory forensics.
+- D is incorrect. Prefetch files are execution artifacts, not installation artifacts. Installation events may appear in Event Logs or the Windows Installer database — not Prefetch.
+
+---
+
+## Question 14 (5 points)
+
+During a Wireshark analysis of a PCAP captured during an incident, an analyst applies the display filter `tcp.stream eq 14` and uses `Follow TCP Stream`. The reassembled stream content shows plaintext HTTP requests and responses including what appears to be attacker commands issued to a web shell. What is the forensic value of TCP stream reconstruction?
+
+- A) TCP stream reconstruction decrypts TLS-encrypted content to reveal the original plaintext
+- B) TCP stream reconstruction reassembles fragmented TCP segments in sequence to display the complete, bidirectional application-layer content of a single conversation — enabling recovery of commands, responses, and file transfers from unencrypted traffic
+- C) TCP stream reconstruction converts binary packet data to ASCII for human reading regardless of the protocol
+- D) The `Follow TCP Stream` feature only works for HTTP traffic and cannot reconstruct other protocols
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A is incorrect. TCP stream reconstruction does not decrypt TLS-encrypted content — the TLS encryption operates above TCP. Without the private key or session key, stream reconstruction of TLS traffic shows only ciphertext. The scenario specifies the traffic is plaintext HTTP.
+- B is correct. TCP operates at the transport layer and segments application data across multiple packets. Wireshark's `Follow TCP Stream` reassembles these segments in sequence and presents the complete application-layer conversation — in this case, the web shell HTTP requests and responses — in a human-readable format. This is invaluable for extracting commands executed through a web shell.
+- C is incorrect. TCP stream reconstruction reassembles the actual data payload as-is. If the data is binary (e.g., a file transfer), it appears as binary. Wireshark does offer encoding options (hex, ASCII) for display, but it does not convert binary to ASCII automatically.
+- D is incorrect. `Follow TCP Stream` works for any TCP-based protocol — HTTP, SMTP, FTP command channels, telnet, and others — not just HTTP.
+
+---
+
+## Question 15 (5 points)
+
+A Windows forensic examination reveals the following artifact: `HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\RecentDocs\.docx` contains a binary value referencing `2024_Q4_Payroll_Export.docx` with a timestamp of 03:44 AM. No matching file exists anywhere on the disk. What does this artifact prove?
+
+- A) The registry entry is corrupted and has no forensic value
+- B) The user (or an attacker using the user's account) recently accessed a file named `2024_Q4_Payroll_Export.docx` — the file may have been deleted after access, but the registry artifact proves the access occurred
+- C) The file is stored in an encrypted container that the examiner cannot access
+- D) RecentDocs entries are created when files are downloaded, not when they are opened
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A is incorrect. A registry entry referencing a deleted file is expected behavior — RecentDocs entries persist after the referenced file is deleted. This is what makes them forensically valuable. The entry is not corrupted.
+- B is correct. Windows RecentDocs registry entries are written when a user opens a file through Windows Explorer or an application's File > Open dialog. They persist after the file is deleted. The entry for `2024_Q4_Payroll_Export.docx` at 03:44 AM — combined with the absence of the file — suggests the file was accessed then deleted. This is evidence of file access and potential data staging followed by anti-forensic deletion.
+- C is incorrect. Nothing in the RecentDocs entry format indicates encrypted container storage. The absence of the file on disk is more consistent with deletion than encryption.
+- D is incorrect. RecentDocs entries are created on file open, not file download. Download artifacts appear in browser history databases (Chrome History, Firefox places.sqlite) and sometimes in Windows download folders' Zone.Identifier alternate data streams.
+
+---
+
+## Question 16 (5 points)
+
+An anti-forensic technique is detected where an attacker used `wevtutil cl Security` to clear the Windows Security Event Log. Which forensic artifact may still provide evidence of the events that occurred before the log was cleared?
+
+- A) Windows Prefetch files for the security auditing process
+- B) The SIEM, if logs were forwarded to a centralized platform in real time before clearing
+- C) The Windows Event Log file's free space sectors
+- D) Active Directory replication logs on domain controllers
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A is incorrect. Prefetch files record execution of programs, not the content of security events. The Prefetch file for `wevtutil.exe` would show the clearing tool was run but would not contain the deleted security events themselves.
+- B is correct. If the organization configured real-time log forwarding to a SIEM before the clearing occurred, the events that were forwarded before deletion are preserved in the SIEM's indexed storage. This is the primary reason why security best practices emphasize real-time log forwarding — it ensures that local log clearing cannot destroy evidence already captured externally.
+- C is incorrect. When Windows Event Log records are deleted (cleared), the log file is truncated and the sectors are not forensically recoverable in the way that deleted files can sometimes be recovered from unallocated disk space. The log binary format does not leave remnants in free space that standard forensic tools can reconstruct.
+- D is incorrect. Active Directory replication logs record domain replication events, not Windows Security Event Log content. The security events that were cleared would not be found in AD replication data.
+
+---
+
+## Question 17 (5 points)
+
+A forensic examiner is working on a case where the organization suspects data exfiltration. The examiner runs the Volatility `filescan` plugin on a memory image and finds multiple file handles open to files with paths containing the string `\Temp\`. What specific information does `filescan` provide that disk analysis alone cannot?
+
+- A) `filescan` decrypts files that were encrypted on disk at the time of acquisition
+- B) `filescan` identifies file objects currently open in kernel memory — including files that may not exist on disk yet (open handles to newly created files before the write is flushed) or files deleted on disk while still open by a running process
+- C) `filescan` is identical to directory listing and provides no additional value over standard disk enumeration
+- D) `filescan` recovers deleted files from NTFS unallocated clusters
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A is incorrect. Volatility's `filescan` identifies file objects in kernel memory — it does not decrypt encrypted content. Encrypted file data remains encrypted whether found via memory analysis or disk analysis.
+- B is correct. `filescan` enumerates kernel FILE_OBJECT structures in memory, which represent files currently open by running processes. This captures files that may not yet be visible on disk (written but not yet flushed from OS cache), and critically, files that have been "deleted" from disk but whose handles are still open by a running process — a common anti-forensic pattern where malware deletes its own executable after loading it into memory.
+- C is incorrect. `filescan` is not equivalent to directory listing. It operates at the kernel file object level and can find files that are not visible through normal directory enumeration.
+- D is incorrect. File carving from unallocated clusters is performed by tools like Autopsy, FTK, or foremost — not by Volatility's `filescan`. `filescan` works on live memory objects, not disk-level data structures.
+
+---
+
+## Question 18 (5 points)
+
+During a forensic investigation, an analyst must determine whether a specific user account was used to log on interactively to a workstation at 02:00 AM. Which Windows artifact provides the most direct evidence of interactive logon activity?
+
+- A) Windows Security Event Log Event ID 4624 with Logon Type 2 (interactive) and Logon Type 10 (remote interactive/RDP)
+- B) Windows Prefetch files for `explorer.exe`
+- C) NTFS $MFT entry for the user's profile folder
+- D) Windows Registry `LastWrite` time on `HKCU\Software`
+
+Correct Answer: A
+
+Distractor Analysis:
+
+- A is correct. Event ID 4624 is the definitive Windows artifact for logon events. Logon Type 2 confirms local interactive logon (physical keyboard/screen). Logon Type 10 confirms Remote Desktop Protocol logon. These events record the exact timestamp, account name, domain, source IP (for RDP), and logon ID — providing complete, timestamped authentication evidence.
+- B is incorrect. Prefetch for `explorer.exe` would indicate the Windows shell ran, which may correlate with an interactive session, but it does not directly log user account identity, timestamp precision, or logon type. It is a supporting artifact, not primary logon evidence.
+- C is incorrect. The NTFS $MFT creation or access timestamp on the user profile folder may reflect when the profile was created or last accessed but is not a reliable, precise logon timestamp. Profile folder timestamps can be affected by many routine operations.
+- D is incorrect. Registry `LastWrite` times on `HKCU` can indicate when registry modifications occurred but do not specifically record logon events or account identity.
+
+---
+
+## Question 19 (5 points)
+
+An investigator receives a Volatility output showing a process named `svchost.exe` running from the path `C:\Users\Public\Downloads\svchost.exe` (PID 4412). A separate Volatility `dlllist` output for PID 4412 shows unusual DLLs loaded from the same `Downloads` directory. What is the forensic conclusion?
+
+- A) This is the legitimate Windows svchost.exe process — its path variation is a normal Windows update behavior
+- B) This is a masquerading process: legitimate svchost.exe runs from `C:\Windows\System32\` — a process with the same name running from a user's Downloads folder with non-system DLLs is almost certainly malware using the masquerade technique to avoid detection
+- C) The Volatility output is unreliable when processes run from non-system directories
+- D) Processes in the Downloads folder cannot execute because Windows prevents code execution from that location by default
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A is incorrect. The legitimate Windows `svchost.exe` always runs from `C:\Windows\System32\svchost.exe` and is always launched by `services.exe`. Any `svchost.exe` running from a user-writable location like `Downloads` is not the legitimate system binary.
+- B is correct. Running malicious processes with the same name as legitimate system processes is ATT&CK T1036.005 (Masquerading: Match Legitimate Name or Location). The Downloads folder path, non-system DLLs, and the process name combination are definitive indicators of a masquerading malware process. The memory-based Volatility analysis reveals the true path, which disk-based artifact cleaning may have attempted to obscure.
+- C is incorrect. Volatility's process listing and path information are extracted directly from kernel EPROCESS structures — the process path comes from the PE image mapping. The tool is reliable regardless of the process's execution location.
+- D is incorrect. Windows does not block code execution from the Downloads folder by default. While Software Restriction Policies or AppLocker can be configured to block execution from user-writable directories, these are non-default controls not present in most environments.
+
+---
+
+## Question 20 (5 points)
+
+A forensic analysis of a compromised Windows endpoint uses the Volatility `malfind` plugin and identifies a region of memory in the `explorer.exe` process that is marked PAGE_EXECUTE_READWRITE, contains no file-backed mapping, and begins with the MZ header (`4D 5A`). What does this finding indicate?
+
+- A) Normal Windows memory allocation used by the graphics subsystem
+- B) Process hollowing or code injection: an executable has been written directly into explorer.exe's memory space, executing without a corresponding file on disk — a classic indicator of fileless malware or process injection
+- C) The explorer.exe process has loaded a third-party plugin that uses executable memory regions
+- D) The MZ header in memory indicates the file was deleted from disk after being loaded — no further investigation is needed
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A is incorrect. Windows graphics subsystem allocations do not produce MZ headers in executable memory regions. PAGE_EXECUTE_READWRITE with an MZ header and no file backing is not normal memory allocation behavior.
+- B is correct. The combination of PAGE_EXECUTE_READWRITE permissions (writable AND executable — rarely legitimate), no file backing (the memory region does not correspond to a mapped DLL or executable file on disk), and an MZ header (the DOS executable signature) is the definitive Volatility `malfind` signature for injected shellcode or process hollowing. This is ATT&CK T1055 (Process Injection), specifically used by fileless malware to execute code without leaving a binary on disk.
+- C is incorrect. Legitimate third-party plugins (loaded DLLs) appear as file-backed memory mappings and would show a corresponding DLL path in the `dlllist` output. A non-file-backed MZ in an executable region is not consistent with legitimate plugin loading.
+- D is incorrect. A deleted DLL that was loaded before deletion would still show in the memory region as file-backed with a path (even a deleted path notation). A completely non-file-backed region with MZ header indicates injection, not a deleted loaded file.

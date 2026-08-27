@@ -232,4 +232,196 @@ D) Up to 2 hours of data will be lost because the RPO provides automatic backup 
 
 ---
 
+---
+
+## Question 11
+
+A security manager calculates the ALE for a web application vulnerability as $320,000 per year. A web application firewall (WAF) costs $45,000 per year and is expected to reduce the ALE to $80,000. What is the Value of Safeguard for the WAF?
+
+- A) $195,000
+- B) $240,000
+- C) $275,000
+- D) $320,000
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- Why B is incorrect: $240,000 is the ALE reduction ($320,000 − $80,000) without subtracting the annual control cost. The value of safeguard formula requires subtracting the safeguard's cost: $240,000 − $45,000 = $195,000.
+- Why C is incorrect: $275,000 results from subtracting only the post-control ALE from the pre-control ALE without the correct formula application. The annual cost of the safeguard must also be deducted.
+- Why D is incorrect: $320,000 is the pre-control ALE — the baseline risk value before any control is applied. The value of safeguard formula compares the benefit of the control against its cost, not the pre-control ALE in isolation.
+
+---
+
+## Question 12
+
+A CISO presents risk findings to the board and uses descriptive labels such as "High," "Medium," and "Low" to classify risks based on probability and impact. The board asks why the CISO did not provide specific dollar figures for each risk. The CISO explains that the available data does not support precise financial estimates. What analysis method is being used and what is its primary limitation in this context?
+
+- A) Quantitative analysis; the limitation is that it requires too many personnel to complete
+- B) Qualitative analysis; the limitation is that it cannot directly support cost-benefit comparison of specific controls
+- C) Semi-quantitative analysis; the limitation is that it produces too many false positives
+- D) Quantitative analysis; the limitation is that it produces subjective results that vary by analyst
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- Why A is incorrect: The analysis described — descriptive labels without dollar figures — is qualitative, not quantitative. Quantitative analysis produces financial values like ALE.
+- Why C is incorrect: Semi-quantitative analysis assigns numerical scores to qualitative categories to allow limited mathematical operations. The scenario describes pure descriptive ratings without numerical scoring, which is qualitative analysis.
+- Why D is incorrect: Quantitative analysis uses financial data and formulas (AV, EF, ARO) to produce monetary values. The scenario explicitly describes non-financial descriptive labels, which is the defining characteristic of qualitative analysis.
+
+---
+
+## Question 13
+
+An organization's risk appetite statement reads: "We will not accept any residual risk above Medium on our 5×5 matrix for systems containing PHI." A newly identified risk affecting the EMR system scores 16 on the risk matrix and no controls have been applied yet. What must the organization do to comply with its risk appetite statement?
+
+- A) Nothing — a score of 16 is within the acceptable range since it falls below 25
+- B) Apply controls to reduce the risk score to Medium (score 9 or below) before formal risk acceptance
+- C) Transfer the risk to cyber insurance and document the transfer as acceptance
+- D) Formally accept the risk and document it with the CISO's signature
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- Why A is incorrect: A score of 16 on a 5×5 matrix corresponds to a High risk level (typically scores of 12 and above represent High on standard matrices). The organization's risk appetite statement prohibits residual risk above Medium for PHI systems, so a score of 16 requires treatment.
+- Why C is incorrect: Risk transference (insurance) reduces financial exposure but does not eliminate the operational risk. The risk appetite statement restricts residual risk scores — a transferred risk still exists with the same likelihood and impact. Transferring and then accepting still results in residual risk above the stated tolerance.
+- Why D is incorrect: Formal acceptance is only appropriate when residual risk is within tolerance. The risk appetite statement explicitly prohibits accepting residual risk above Medium for PHI systems, making acceptance a compliance violation.
+
+---
+
+## Question 14
+
+A company's BIA identifies that its point-of-sale system has an RTO of 1 hour and an RPO of 15 minutes. Which backup and recovery configuration meets BOTH requirements?
+
+- A) Daily full backups to offsite storage with 24-hour tape delivery
+- B) Continuous database replication to a hot standby with automated failover in under 5 minutes and transaction logs every 10 minutes
+- C) Weekly full backups with 4-hour restoration time and 6-hour transaction log shipping
+- D) Daily incremental backups with 2-hour restoration from last night's backup
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- Why A is incorrect: Daily backups with 24-hour tape delivery fails both requirements. The RPO would be up to 24 hours of data loss (exceeds 15-minute RPO), and the RTO of delivering and restoring from tape far exceeds 1 hour.
+- Why C is incorrect: Weekly full backups with 4-hour restoration fails the 1-hour RTO. Six-hour transaction log shipping also fails the 15-minute RPO, which requires transaction capture intervals of 15 minutes or less.
+- Why D is incorrect: Daily incremental backups fail the 15-minute RPO since up to 24 hours of transactions may be at risk. A 2-hour restoration also fails the 1-hour RTO.
+
+---
+
+## Question 15
+
+An organization discovers a zero-day vulnerability in its ERP system. The vendor has not yet released a patch. The security team implements network segmentation to isolate the ERP system from the rest of the internal network, reducing the attack surface. Which risk response strategy is being applied and why?
+
+- A) Risk avoidance — the organization has stopped using the ERP system
+- B) Risk acceptance — no patch is available so the organization has decided to do nothing
+- C) Risk mitigation — the segmentation reduces the likelihood or impact of exploitation without eliminating the activity
+- D) Risk transference — the organization has contracted with the ERP vendor to assume liability
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- Why A is incorrect: Risk avoidance would require the organization to shut down the ERP system entirely. Implementing network segmentation allows the system to continue operating — the organization has not eliminated the activity.
+- Why B is incorrect: Risk acceptance is a deliberate, documented decision not to apply additional controls. Installing network segmentation is an active control action that reduces exposure — this is mitigation, not acceptance.
+- Why D is incorrect: No contractual transfer to the vendor is described. The organization is implementing an internal technical control. Risk transference requires shifting financial exposure to a third party through insurance or contract.
+
+---
+
+## Question 16
+
+A financial services firm uses MTBF data to plan hardware replacement cycles. A server model has an MTBF of 50,000 hours. The firm has 20 servers of this model in continuous operation. Approximately how many servers would be expected to fail in a given year?
+
+- A) 1
+- B) 2
+- C) 4
+- D) 20
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- Why A is incorrect: One failure per year would correspond to an MTBF of approximately 175,200 hours (8,760 hours/year × 20 servers ÷ 1 failure). The actual MTBF is 50,000 hours, which predicts approximately 3.5 failures per year across 20 servers.
+- Why B is incorrect: Two failures per year would correspond to an MTBF of approximately 87,600 hours per server. The MTBF of 50,000 hours predicts more frequent failures than this.
+- Why D is incorrect: 20 failures per year would mean every server fails annually, requiring an MTBF of 8,760 hours. At 50,000 hours MTBF, each server is expected to fail approximately every 5.7 years, not every year.
+
+---
+
+## Question 17
+
+During a risk assessment, an analyst notes that a critical application server has no redundant power supply and is connected to a single uninterruptible power supply (UPS). The building experiences brief power flickers approximately 12 times per year, each lasting under 2 seconds. The UPS protects the server from these events but has a 15% chance of failing to hold power for the full duration of any given flicker. What is the ARO for a power-related server failure?
+
+- A) 0.15
+- B) 1.8
+- C) 12
+- D) 0.012
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- Why A is incorrect: 0.15 is the probability of UPS failure per individual flicker event. It is not the annual rate of occurrence. The ARO must account for the frequency of flickers multiplied by the probability of UPS failure.
+- Why C is incorrect: 12 is the number of flicker events per year. This would only be the ARO if the UPS provided no protection. Because the UPS fails only 15% of the time, the actual ARO is 12 × 0.15 = 1.8 failures per year.
+- Why D is incorrect: 0.012 is a nonsensical result that does not follow from the given data. It may result from dividing 0.15 by 12 rather than multiplying.
+
+---
+
+## Question 18
+
+A risk manager is constructing a risk register entry for a SQL injection vulnerability in the company's customer portal. The portal stores 500,000 customer records including credit card data. The manager notes that SQL injection is listed on the OWASP Top 10 and that the CVSS score for the specific vulnerability is 9.1. Which risk register field is BEST populated by the CVSS score?
+
+- A) Risk Response
+- B) Risk Owner
+- C) Likelihood
+- D) Impact (or used to inform the combined Risk Score)
+
+**Correct Answer:** D
+
+**Distractor Analysis:**
+
+- Why A is incorrect: Risk Response is the treatment strategy selected (avoid, transfer, mitigate, accept). It is determined after the risk is assessed, not populated with a CVSS score.
+- Why B is incorrect: Risk Owner is the organizational role accountable for the risk. CVSS scores describe vulnerability severity, not organizational accountability.
+- Why C is incorrect: CVSS scores measure the severity of a vulnerability if successfully exploited, with components including Attack Vector, Attack Complexity, and Privileges Required. While CVSS includes exploitability metrics, the score as a whole is more representative of combined severity (impact and exploitability together). A high CVSS score means the vulnerability is severe if exploited — it primarily informs impact assessment rather than independently representing likelihood of exploitation in the organization's specific environment.
+
+---
+
+## Question 19
+
+An organization's security team identifies a risk related to third-party SaaS vendor access to sensitive customer data. The team recommends requiring the vendor to maintain ISO 27001 certification, undergo annual penetration testing, and carry its own cyber liability insurance. Which risk response strategy do these requirements primarily represent?
+
+- A) Risk avoidance
+- B) Risk mitigation through contractual controls
+- C) Risk acceptance
+- D) Risk elimination
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- Why A is incorrect: Risk avoidance would mean not using the SaaS vendor at all. The organization continues to use the vendor but imposes security requirements — this is management of the risk through controls, not elimination of the activity.
+- Why C is incorrect: Risk acceptance means acknowledging a risk and deciding not to apply additional controls. Requiring certifications, penetration testing, and insurance are all active control requirements — the opposite of acceptance.
+- Why D is incorrect: Risk elimination is not a standard NIST risk response category. It is sometimes informally used to describe avoidance, but no standard framework lists it as a distinct strategy. The controls described actively reduce the risk rather than eliminating the vendor relationship.
+
+---
+
+## Question 20
+
+A healthcare organization completes a Business Impact Analysis for its telehealth platform. The BIA finds that if the platform is unavailable, physicians can use telephone consultations as a workaround indefinitely. Patient safety is not compromised by the outage. The revenue impact becomes significant only after 5 days of outage. How should the BIA team set the MTD and RTO for the telehealth platform?
+
+- A) MTD = 1 hour, RTO = 30 minutes because patient-facing systems must always have tight recovery targets
+- B) MTD = 5 business days, RTO = significantly less than 5 days (e.g., 24 to 48 hours) to provide recovery buffer before business viability is threatened
+- C) MTD = unlimited because a telephone workaround exists
+- D) RTO = 0 hours because healthcare systems cannot have any downtime
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- Why A is incorrect: MTD is determined by the actual business and operational impact of the outage, not a generic rule about patient-facing systems. The BIA specifically found that patient safety is not compromised and business impact only occurs after 5 days. Setting MTD at 1 hour is not justified by the findings and would drive unnecessary investment in high-availability infrastructure.
+- Why C is incorrect: MTD is never truly unlimited. Even with a telephone workaround, prolonged outage of the telehealth platform has cumulative impacts on patient experience, physician workflow, and eventually revenue. The BIA establishes that significant business impact begins at 5 days, which is the appropriate basis for MTD.
+- Why D is incorrect: Zero RTO means instantaneous recovery with no downtime — this is technically achievable only with fully redundant active-active architectures and is extremely expensive. The BIA findings do not justify this investment level. RTO must be grounded in actual business requirements from the BIA.
+
+---
+
 *End of Quiz — Module 13*

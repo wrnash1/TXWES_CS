@@ -55,6 +55,7 @@ Read the following organization description and complete the three tasks below.
 CampusTech is a software company building a large-scale campus management platform used by 200 universities. The platform has five major product areas: Student Registration, Financial Aid, Housing, Academic Records, and Campus Events. The platform has been built by five independent teams, each owning one product area. Each team has its own Product Owner and its own backlog. The teams rarely communicate. Dependencies between teams are handled via email and informal conversations.
 
 Current problems:
+
 - Student Registration frequently blocks on Housing because enrollment and room assignments share a database schema that neither team fully controls
 - Financial Aid features require Academic Records data that is not available in the right format until weeks after Financial Aid needs it
 - Campus Events integrates with Student Registration for event capacity management — this integration breaks at least once per Sprint because neither team knows the other's release schedule
@@ -128,6 +129,33 @@ Submit a single document (PDF or Word) containing:
 3. Part 3: Empiricism diagnosis, root cause analysis, and Release Train Engineer communication
 
 Submit to the Canvas assignment portal by the module due date.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: PI Planning Simulation
+
+Your team is preparing for PI Planning for the CampusTech platform from Part 2, assuming the organization has adopted SAFe with five teams on a single ART. The upcoming PI is 10 weeks long (five 2-week Iterations plus one IP Iteration).
+
+1. The Program Backlog has been prioritized by the Product Manager. Design a PI Planning agenda for Day 1 (8 hours). For each agenda block: name the activity, specify the duration, describe who participates, and state the output produced. Your agenda must include at minimum: business context presentation, team breakout planning, and dependency identification.
+2. Team 3 (Academic Records) and Team 5 (Campus Events) have identified a dependency: Team 5 needs Team 3 to expose a new API by Iteration 3. On your team board, draw this dependency using text notation (e.g., "Team 5 → Team 3: Academic Calendar API, needed by Iteration 3, at risk if Team 3 misses Iteration 2 target"). Then write the ROAM entry for this dependency: state whether it is Resolved, Owned, Accepted, or Mitigated, and explain the rationale.
+3. Write three PI Objectives for Team 3 (Academic Records) for this PI. Each objective must be: business-facing (not a technical task), measurable (the team can say yes or no at PI end), and connected to the overall CampusTech platform's value delivery.
+4. At Iteration 3 of the PI, Team 3 reports they cannot deliver the Academic Calendar API because a developer has left the team. Write a two-paragraph communication from the Release Train Engineer to the CPO explaining: what has happened, what the ART-level consequence is for Team 5's PI Objectives, and what options are available (team capacity reallocation, scope negotiation, risk acceptance).
+
+### Challenge 2: Framework Transition Analysis
+
+A healthcare software company, MedRecord Corp, currently has eight component teams using basic multi-team Scrum without a scaling framework. Their architecture splits across: Patient Data, Billing, Clinical Workflows, Lab Results, Scheduling, Reporting, Integration/APIs, and Mobile. The company wants to adopt a scaling framework within the next six months.
+
+1. Write a two-column comparison analyzing MedRecord Corp's situation from both a SAFe perspective and a LeSS perspective. For each framework, address: what structural changes are required to the team organization, what the first three months of adoption look like, what the primary risk of adoption is, and what the anticipated benefit is after 12 months.
+2. The LeSS adoption requires converting eight component teams into feature teams. The Billing team lead objects: "Our billing engineers specialize in financial compliance — they cannot become generalists." Write a 100-word response that acknowledges this concern while explaining what LeSS means by feature team and why specialization is preserved within a feature team structure.
+3. A stakeholder asks: "Could we use SAFe for some teams and LeSS for others in the same organization?" Write a 75-100 word response explaining why this would be problematic from a shared Sprint cadence, Product Ownership, and empiricism perspective.
+4. After 12 months of SAFe adoption, the MedRecord Corp engineering VP reports: "Our velocity per team is the same but we are spending 4 hours per week per developer in ART-level coordination meetings that produce no visible deliverables." Using the concept of value stream efficiency, calculate the cost of this coordination overhead for a 64-developer organization at 4 hours per developer per week. Express the result in person-hours per week and full-time-equivalent developers consumed by coordination. Then write a two-sentence recommendation.
+
+### Reflection Questions
+
+1. The Scrum Guide says that Scrum is intentionally incomplete — it defines the minimum structure needed for empiricism to function. SAFe adds substantial prescriptive structure on top of this minimum. From a Scrum purist perspective, what aspects of SAFe's prescription are most likely to undermine empiricism, and what evidence would you look for in a SAFe organization to determine whether empiricism is functioning?
+2. Both SAFe and LeSS claim to scale Scrum while preserving its values. Yet practitioners in both camps argue the other framework is "not really Scrum." Based on your reading, which framework stays closer to Scrum's foundational principles (empiricism, self-organization, cross-functionality, transparency), and why does the other framework deviate? Support your argument with at least two specific structural differences.
 
 ---
 

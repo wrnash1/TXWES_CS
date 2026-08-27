@@ -213,3 +213,20 @@ Module 15 addresses the organizational and cultural foundation that makes every 
 - **DSOE exam topics from this module**: Security Champion program design and rationale, SANS and OWASP training resources, DORA four metrics and elite performer benchmarks, security KPIs (MTTD, MTTR, escape rate, gate pass rate), OWASP SAMM five business functions, DSOMM four levels, three transformation failure modes.
 - **High-frequency question patterns**: Champion-to-engineer ratio, which DORA metric is most directly improved by security gate automation, SAMM practice area for CI/CD security, DSOMM level for a described program state.
 - **Cross-module connections**: Security Champion authority connects to pipeline governance from Module 3; DORA metrics connect to change failure rate impacted by security incidents from Module 12; SAMM Verification practices connect to DAST from Module 9 and compliance from Module 13.
+
+---
+
+## 9. Supplemental Resources
+
+**1. [OWASP Security Champions Playbook](https://github.com/c0rdis/security-champions-playbook)**
+A community-maintained guide to building and running Security Champion programs, covering champion selection criteria, training curricula, program governance, community building, and common failure modes. Provides practical templates for champion role descriptions, training tracks, and program maturity assessment checklists.
+
+**2. [OWASP Software Assurance Maturity Model (SAMM)](https://owaspsamm.org/)**
+The official OWASP SAMM website providing the complete framework documentation, self-assessment tooling, benchmark data from industry assessments, and roadmap guidance. Covers all five business functions (Governance, Design, Implementation, Verification, Operations) and 15 security practices with maturity levels 1–3 for each.
+
+**3. [DORA State of DevOps Report](https://dora.dev/research/)**
+Google's annual research report on software delivery performance benchmarks, covering the four DORA metrics (Deployment Frequency, Lead Time, Change Failure Rate, MTTR), elite performer thresholds, and the organizational and technical capabilities that drive high performance. The foundational data source for DevSecOps program business case development.
+
+---
+
+Reading Guide — Module 15 | CIS-4350 | Texas Wesleyan University | Professor Nash

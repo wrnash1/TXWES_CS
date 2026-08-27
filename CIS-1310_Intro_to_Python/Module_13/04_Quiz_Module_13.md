@@ -243,3 +243,239 @@ print(math.floor(-4.1))
 - *Why B is correct:* `ceil(4.0)` → `4` (already integer). `ceil(4.1)` → `5` (round up). `floor(4.9)` → `4` (round down). `floor(-4.1)` → `-5` (round toward negative infinity — `-4.1` rounded down is `-5`, not `-4`).
 - *Why C is incorrect:* `math.ceil(4.0)` is `4`, not `5`. An exact integer has no fractional part, so ceiling and floor both return the integer itself.
 - *Why D is incorrect:* `math.ceil` and `math.floor` return Python `int`, not `float`. The results are `4`, `5`, `4`, `-5` — not `4.0`, `5.0`, etc.
+
+---
+
+### Question 11
+
+What is the output of this code?
+
+```python
+import sys
+print(type(sys.argv))
+print(sys.argv[0])
+```
+
+Run as: `python3 script.py`
+
+- A) `<class 'list'>` then `'script.py'`
+- B) `<class 'tuple'>` then `'script.py'`
+- C) `<class 'list'>` then `script.py`
+- D) `<class 'dict'>` then `0`
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `sys.argv` is a `list`, and `print()` outputs the string without surrounding quotes. The printed output is `script.py`, not `'script.py'`.
+- *Why B is incorrect:* `sys.argv` is a `list`, not a `tuple`. It is mutable because it represents command-line arguments that could in theory be modified.
+- *Why C is correct:* `sys.argv` is a list of strings. `sys.argv[0]` is always the name of the script being run. `print()` outputs it without quotes.
+- *Why D is incorrect:* `sys.argv` is not a dict. It is an ordered list where index 0 is the script name and subsequent indices are additional arguments.
+
+---
+
+### Question 12
+
+What is the output of this code?
+
+```python
+from os.path import basename, dirname
+path = '/home/user/projects/script.py'
+print(basename(path))
+print(dirname(path))
+```
+
+- A) `script.py` then `/home/user/projects`
+- B) `/home/user/projects` then `script.py`
+- C) `script` then `/home/user/projects/script.py`
+- D) `script.py` then `/home/user/projects/script.py`
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- *Why A is correct:* `basename()` returns the final component of a path — the filename including extension. `dirname()` returns everything before the final component — the directory path.
+- *Why B is incorrect:* This reverses the two functions. `basename` → filename, `dirname` → directory. The order here is swapped.
+- *Why C is incorrect:* `basename()` returns the full filename with extension (`script.py`), not just the name without extension.
+- *Why D is incorrect:* `dirname()` returns the directory part (`/home/user/projects`), not the full original path.
+
+---
+
+### Question 13
+
+What does `import importlib; importlib.reload(mymodule)` accomplish?
+
+- A) Creates a second independent copy of `mymodule` in memory
+- B) Re-executes the module's code and updates the existing module object
+- C) Deletes `mymodule` from `sys.modules` so it can be freshly imported
+- D) `reload()` is not a valid function in Python 3
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `reload()` does not create a second copy. It updates the existing module object in place by re-running its code.
+- *Why B is correct:* `importlib.reload(module)` re-executes the module's source code and updates the module's namespace. This is useful in interactive sessions when you have edited a file and want to pick up the changes without restarting Python.
+- *Why C is incorrect:* `reload()` does not remove the module from `sys.modules`. It updates it in place.
+- *Why D is incorrect:* `reload()` was moved from the built-in `reload()` in Python 2 to `importlib.reload()` in Python 3. It still exists — just in the `importlib` module.
+
+---
+
+### Question 14
+
+What is the purpose of `__all__` in a module?
+
+- A) Lists all functions that are private and cannot be imported
+- B) Controls which names are exported when `from module import *` is used
+- C) Specifies the module's dependencies for `pip` to install
+- D) Defines the order in which functions are executed when the module loads
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `__all__` defines the public API — names that SHOULD be exported. Private names are conventionally prefixed with `_`, not listed in `__all__`.
+- *Why B is correct:* When `from module import *` is executed, Python imports only the names listed in `__all__` (if defined). Without `__all__`, all names not starting with `_` are imported. `__all__` lets module authors control the public interface.
+- *Why C is incorrect:* Dependencies for pip are specified in `setup.py`, `pyproject.toml`, or `requirements.txt` — not in `__all__`.
+- *Why D is incorrect:* `__all__` has no effect on execution order. Code in a module always executes top to bottom.
+
+---
+
+### Question 15
+
+What does `sys.path` contain?
+
+- A) The system's `PATH` environment variable as a list
+- B) The list of directory paths Python searches when resolving imports
+- C) The path to the Python interpreter executable
+- D) The list of all installed package names
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `sys.path` is Python-specific and separate from the OS `PATH` environment variable. The OS `PATH` is accessed via `os.environ['PATH']`.
+- *Why B is correct:* `sys.path` is a list of directory strings. When you execute `import mymodule`, Python searches each directory in `sys.path` in order until it finds `mymodule.py` (or a package directory named `mymodule`).
+- *Why C is incorrect:* The path to the Python interpreter is `sys.executable`, not `sys.path`.
+- *Why D is incorrect:* Installed packages are tracked by `pip` and accessible via `pip3 list` or `importlib.metadata`. `sys.path` is a list of directories, not package names.
+
+---
+
+### Question 16
+
+What is the output of this code?
+
+```python
+import math
+import math as m
+
+print(math is m)
+```
+
+- A) `False` — two separate module objects were created
+- B) `True` — both names reference the same module object
+- C) `TypeError` — `is` cannot compare module objects
+- D) `False` — `as` creates a copy of the module
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Python caches imported modules in `sys.modules`. The second `import math as m` finds `math` already in `sys.modules` and returns the same object — just bound to a different name.
+- *Why B is correct:* Both `math` and `m` refer to the same module object. Python's import system never loads the same module twice. `math is m` confirms they are the identical object.
+- *Why C is incorrect:* The `is` operator works with any Python object, including modules. It tests object identity.
+- *Why D is incorrect:* `import math as m` is purely a namespace alias. It creates a new name `m` that refers to the same module object — no copying occurs.
+
+---
+
+### Question 17
+
+Which standard library module provides the `Counter` class for frequency counting?
+
+- A) `statistics`
+- B) `itertools`
+- C) `collections`
+- D) `functools`
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `statistics` provides statistical functions like `mean()`, `median()`, and `stdev()`. It does not include `Counter`.
+- *Why B is incorrect:* `itertools` provides iterator building blocks like `chain()`, `product()`, and `combinations()`. It does not include `Counter`.
+- *Why C is correct:* `from collections import Counter` imports the `Counter` class. It is a dict subclass that counts hashable objects. `Counter(words)` builds a frequency dictionary in one call.
+- *Why D is incorrect:* `functools` provides higher-order function tools like `lru_cache`, `reduce`, and `partial`. It does not include `Counter`.
+
+---
+
+### Question 18
+
+What is the output of this code?
+
+```python
+from math import pi, e
+print(round(pi, 4))
+print(round(e, 4))
+```
+
+- A) `3.1416` then `2.7183`
+- B) `3.14159` then `2.71828`
+- C) `3` then `3`
+- D) `3.1416` then `2.718`
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- *Why A is correct:* `math.pi ≈ 3.14159265...`. `round(pi, 4)` → `3.1416` (4 decimal places, rounds the 5th digit). `math.e ≈ 2.71828182...`. `round(e, 4)` → `2.7183` (rounds the 5th digit `8` up).
+- *Why B is incorrect:* `round(pi, 4)` rounds to 4 decimal places, not 5. The result is `3.1416`, not `3.14159`.
+- *Why C is incorrect:* `round(pi, 4)` keeps 4 decimal places. `round(pi, 0)` would give `3.0` and `round(pi)` would give `3` — but 4 decimal places gives `3.1416`.
+- *Why D is incorrect:* `round(e, 4)` → `2.7183` (the 5th digit is `8`, which rounds the 4th digit up from `2` to `3`). `2.718` has only 3 decimal places.
+
+---
+
+### Question 19
+
+What is the minimum file needed to make a directory into a Python package?
+
+- A) A `main.py` file in the directory
+- B) A `__init__.py` file in the directory
+- C) A `setup.py` file in the directory
+- D) No file is needed — any directory is automatically a package
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `main.py` is a common convention for the entry-point script but has no special meaning to the import system. It does not make a directory a package.
+- *Why B is correct:* `__init__.py` (even if empty) signals to Python that the directory is a package. When Python imports `mypackage.module`, it first runs `mypackage/__init__.py`.
+- *Why C is incorrect:* `setup.py` is a packaging/distribution file used with `setuptools` for building installable packages for PyPI. It does not affect the import system directly.
+- *Why D is incorrect:* While Python 3.3+ supports "namespace packages" (directories without `__init__.py`), the traditional and PCAP-tested requirement is that `__init__.py` must be present. The exam expects you to know this rule.
+
+---
+
+### Question 20
+
+What is the output of this code?
+
+```python
+import random
+random.seed(42)
+items = [1, 2, 3, 4, 5]
+random.shuffle(items)
+print(items[0])
+```
+
+- A) An unpredictable value that changes every run
+- B) A specific, reproducible value because the seed is fixed
+- C) `1` — shuffle never changes the first element
+- D) `None` — shuffle returns None, not the list
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `random.seed(42)` makes the random sequence deterministic. The same seed always produces the same shuffle result. The output is reproducible.
+- *Why B is correct:* With `random.seed(42)`, `random.shuffle([1, 2, 3, 4, 5])` produces the same permutation every time. `items[0]` will always be the same specific value — it is not unpredictable.
+- *Why C is incorrect:* `shuffle` randomizes all positions — including the first element. There is no guarantee the first element stays as `1`.
+- *Why D is incorrect:* `random.shuffle(items)` modifies `items` in place and returns `None`, but `print(items[0])` prints from the `items` list — which has been shuffled. The access `items[0]` works correctly.

@@ -385,3 +385,97 @@ Submit to Canvas:
 | All fourteen Thunder Client screenshots captured | 5 |
 | No verbs in URLs; correct status codes throughout | 5 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Role-Based Access Middleware and router.param Pre-Processing
+
+Extend the books API with a role-checking middleware factory and a `router.param` pre-processor that loads a book once for all routes that need it.
+
+1. Add a `requireRole` middleware factory to `middleware/validate.js`:
+
+```javascript
+function requireRole(role) {
+  return (req, res, next) => {
+    const userRole = req.headers['x-user-role'];
+    if (!userRole || userRole !== role) {
+      return res.status(403).json({
+        error: `Role '${role}' required`,
+        code: 'FORBIDDEN'
+      });
+    }
+    next();
+  };
+}
+
+module.exports = { requireFields, requireRole };
+```
+
+1. In `routes/books.js`, add a `router.param` handler that pre-loads the book and attaches it to `req.book`:
+
+```javascript
+router.param('id', (req, res, next, value) => {
+  const id = parseInt(value);
+  if (isNaN(id)) {
+    return res.status(400).json({ error: 'ID must be a number', code: 'INVALID_ID' });
+  }
+  const book = books.find(b => b.id === id);
+  if (!book) {
+    return res.status(404).json({ error: 'Book not found', code: 'BOOK_NOT_FOUND' });
+  }
+  req.book = book;
+  next();
+});
+```
+
+1. Simplify the `GET /api/books/:id`, `PUT /api/books/:id`, and `DELETE /api/books/:id` handlers to use `req.book` instead of re-running `books.find()`.
+1. Apply `requireRole('admin')` to the DELETE route: `router.delete('/:id', requireRole('admin'), (req, res) => { ... })`. Test with Thunder Client by sending `DELETE /api/books/1` with the header `X-User-Role: admin` (expect 204) and without the header (expect 403).
+
+### Challenge 2: Chained Route Handlers and Error Forwarding with next(err)
+
+Refactor the books router to use `router.route()` for grouping and forward all unexpected errors to the global error handler using `next(err)`.
+
+1. Replace the three separate `router.get('/:id')`, `router.put('/:id')`, `router.delete('/:id')` definitions with a single chained block:
+
+```javascript
+router.route('/:id')
+  .get((req, res) => {
+    res.status(200).json(req.book);
+  })
+  .put(requireFields(['title', 'author']), (req, res) => {
+    const index = books.findIndex(b => b.id === req.book.id);
+    const { title, author, year } = req.body;
+    books[index] = { id: req.book.id, title, author, year };
+    res.status(200).json(books[index]);
+  })
+  .delete(requireRole('admin'), (req, res) => {
+    const index = books.findIndex(b => b.id === req.book.id);
+    books.splice(index, 1);
+    res.status(204).send();
+  });
+```
+
+1. Add a `try/catch` wrapper inside the POST handler and forward any unexpected errors:
+
+```javascript
+router.post('/', requireFields(['title', 'author']), (req, res, next) => {
+  try {
+    const { title, author, year } = req.body;
+    const newBook = { id: nextId++, title, author, year: year || null };
+    books.push(newBook);
+    res.status(201).set('Location', `/api/books/${newBook.id}`).json(newBook);
+  } catch (err) {
+    next(err);
+  }
+});
+```
+
+1. Test that the global error handler in `index.js` catches errors by temporarily adding `throw new Error('test error')` inside the POST handler, verifying the response is `500` with `code: 'INTERNAL_ERROR'`, then removing the throw.
+1. Run all fourteen test cases from Part 5 again and confirm all status codes are unchanged.
+
+### Reflection Questions
+
+1. The `router.param` handler runs once per request regardless of how many routes on that router reference `:id`. How does this reduce code duplication, and what is the risk if the `router.param` callback calls `next()` without finding a book?
+2. `requireRole('admin')` reads a role from the `X-User-Role` header, which any client can forge. In a production API, how would you replace this with a tamper-proof authentication check, and which AWS service would you use to enforce role-based access at the API gateway level before the Lambda function executes?

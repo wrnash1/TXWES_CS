@@ -175,6 +175,24 @@ Tip 8: PSM I questions about user stories often present poorly written stories a
 
 ---
 
+## 9. Supplemental Resources
+
+The following free, open-access resources go deeper on Module 07 topics:
+
+**1. "User Stories" — Agile Alliance Glossary**
+<https://www.agilealliance.org/glossary/user-stories/>
+The Agile Alliance's canonical glossary entry on user stories. Covers the Three Cs model, the standard format, common variations, and the distinction between user stories and traditional requirements. Includes references to further reading.
+
+**2. "Introduction to Given When Then" — Martin Fowler**
+<https://martinfowler.com/bliki/GivenWhenThen.html>
+A concise explanation of the Given/When/Then (Gherkin) acceptance criteria format by a Manifesto signatory. Explains the relationship between BDD (Behavior-Driven Development) and Agile acceptance testing. Free access on martinfowler.com.
+
+**3. "Story Splitting Flowchart" — Richard Lawrence**
+<https://www.agileforall.com/splitting-user-stories/>
+A free, practical guide to splitting user stories with a flowchart decision tree. Covers ten splitting patterns with worked examples. Highly useful for the epic decomposition exercises in this module's lab. Free access on agileforall.com.
+
+---
+
 ## 8. Study Checklist
 
 - [ ] Write five user stories in the standard format for an app of your choice

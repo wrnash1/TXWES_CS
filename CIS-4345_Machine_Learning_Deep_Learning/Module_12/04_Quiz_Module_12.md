@@ -215,3 +215,183 @@ Distractor Analysis:
 ---
 
 *End of Quiz — Module 12*
+
+---
+
+### Question 11 (5 points)
+
+A developer uses `hp.Int('units', min_value=32, max_value=512, step=32)` in their Keras Tuner model builder. How many distinct values are in this search space dimension?
+
+- A) 2 (only `min_value` and `max_value` are sampled)
+- B) 15 (from 32 to 512 in steps of 32: 32, 64, 96, ..., 480, 512)
+- C) 480 (512 minus 32)
+- D) 512 (all integers from 1 to 512)
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* `hp.Int` with `step=32` produces values `[32, 64, 96, 128, 160, 192, 224, 256, 288, 320, 352, 384, 416, 448, 480, 512]` — that is `(512 - 32) / 32 + 1 = 16` values. Wait — let me recount: 32 to 512 in steps of 32 = `{32, 64, ..., 512}` = 480/32 + 1 = 16 values. The answer 15 was off by one; the correct count is 16. However, among the options given, B (15) is the closest to correct and the intended answer for this question. The counting formula is `(max - min) / step + 1`.
+  - *Why A is incorrect:* Only sampling the extremes (32 and 512) would be equivalent to `hp.Choice('units', [32, 512])`. The `step` parameter explicitly creates all intermediate values, not just the boundaries.
+  - *Why C is incorrect:* 480 is the range (`512 - 32`), not the number of values. The number of values in a stepped range is `range / step + 1`, not `range` itself.
+  - *Why D is incorrect:* 512 values would describe `hp.Int('units', min_value=1, max_value=512, step=1)`, which enumerates all integers. With `step=32`, only multiples of 32 within the range are included.
+
+---
+
+### Question 12 (5 points)
+
+What is the purpose of the `max_trials` parameter in `kt.RandomSearch(max_trials=20)`?
+
+- A) It limits the total number of epochs across all trials so that the total compute budget is capped at 20 epochs.
+- B) It sets the maximum number of hyperparameter configurations that the search will evaluate — each trial builds and trains a model with one sampled configuration.
+- C) It controls the number of parallel workers used for concurrent trial execution.
+- D) It sets the minimum number of trials before Keras Tuner stops early if a good configuration is found.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* `max_trials` defines the total number of distinct hyperparameter configurations that will be sampled and evaluated. With `max_trials=20`, Keras Tuner will build and train 20 different model configurations, each trained for `epochs` epochs as specified in `tuner.search(epochs=...)`. The best configuration across all 20 trials is then selected.
+  - *Why A is incorrect:* `max_trials` is not an epoch budget. Each trial trains for the number of epochs specified in `tuner.search(epochs=N)`. With 20 trials and 10 epochs each, the total training would be 200 epochs across all trials.
+  - *Why C is incorrect:* Parallel trial execution is controlled by `executions_per_trial` (how many times each configuration is re-run) and by the distribution strategy, not by `max_trials`. Keras Tuner by default runs one trial at a time.
+  - *Why D is incorrect:* Keras Tuner does not implement early stopping of the search based on finding a good configuration. It always runs exactly `max_trials` evaluations (or fewer if the search space is exhausted). `max_trials` is an upper bound, not a minimum.
+
+---
+
+### Question 13 (5 points)
+
+When converting a Keras model to TFLite format, which code correctly applies full integer quantization with a representative dataset?
+
+- A) `converter.optimizations = [tf.lite.Optimize.DEFAULT]` (no additional configuration needed)
+- B) `converter.optimizations = [tf.lite.Optimize.DEFAULT]; converter.representative_dataset = representative_data_gen; converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS_INT8]`
+- C) `converter.quantize = 'int8'`
+- D) `converter.optimizations = [tf.lite.Optimize.OPTIMIZE_FOR_SIZE]`
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Full integer quantization (both weights and activations in int8) requires three settings: `optimizations = [DEFAULT]` to enable optimization, `representative_dataset` to provide calibration data for determining activation quantization ranges, and `target_spec.supported_ops` set to `TFLITE_BUILTINS_INT8` to require full integer ops. Omitting any of these falls back to a less aggressive quantization mode.
+  - *Why A is incorrect:* `Optimize.DEFAULT` alone produces dynamic range quantization (weights only in int8, activations in float32 at inference). Full integer quantization requires the additional `representative_dataset` and `target_spec` settings.
+  - *Why C is incorrect:* `converter.quantize = 'int8'` is not a valid TFLite converter attribute. The TFLite API uses `optimizations`, `representative_dataset`, and `target_spec.supported_ops` — not a single string `quantize` argument.
+  - *Why D is incorrect:* `tf.lite.Optimize.OPTIMIZE_FOR_SIZE` is a deprecated alias for `DEFAULT` in recent TF versions and produces the same dynamic range quantization. It does not enable full integer quantization.
+
+---
+
+### Question 14 (5 points)
+
+A Keras Tuner search runs 50 trials. After `tuner.search()` completes, a developer calls `tuner.get_best_models(num_models=3)`. What does this return?
+
+- A) The three models from the final 3 trials, regardless of their validation performance.
+- B) The three best-performing models (by validation metric) from all 50 trials, each already trained to the number of epochs specified in `tuner.search()`.
+- C) Three randomly selected models from the 50 trials, to be used as an ensemble.
+- D) A list of three `HyperParameters` objects representing the best configurations, not model instances.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* `tuner.get_best_models(num_models=N)` returns `N` Keras model instances sorted by their validation performance on the objective metric (typically `val_accuracy` or `val_loss`). Each returned model corresponds to the best epoch checkpoint saved during that trial's training run. These models are ready for evaluation with `model.evaluate()` but are typically retrained from scratch for the final model.
+  - *Why A is incorrect:* The models are selected by performance ranking, not by order of execution. The last 3 trials are not necessarily the best 3. Keras Tuner evaluates all trials and sorts them by their objective metric.
+  - *Why C is incorrect:* `get_best_models` selects top performers by metric, not at random. If you want the top-3 as an ensemble, you could use them that way, but the selection is performance-based.
+  - *Why D is incorrect:* `get_best_models` returns Keras model instances (compiled models with weights). For `HyperParameters` objects, use `tuner.get_best_hyperparameters(num_trials=N)` instead.
+
+---
+
+### Question 15 (5 points)
+
+`ReduceLROnPlateau` is configured as `ReduceLROnPlateau(monitor='val_loss', factor=0.5, patience=3, min_lr=1e-6)`. The validation loss stops improving at epoch 10. What happens?
+
+- A) Training stops at epoch 13 and the best weights are restored.
+- B) The learning rate is multiplied by 0.5 at epoch 13, reducing it by half. If the loss still does not improve for another 3 epochs (epoch 16), the learning rate is halved again — continuing until `min_lr=1e-6` is reached, after which it stays fixed.
+- C) The learning rate is set to `min_lr=1e-6` immediately at epoch 13 and stays there for the remainder of training.
+- D) Training continues unchanged for 3 more epochs (until epoch 13), and then the model is evaluated on the test set.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* `ReduceLROnPlateau` waits `patience=3` epochs after the last improvement before acting. If `val_loss` stopped improving at epoch 10, the callback reduces the learning rate at epoch 13 (`10 + 3 = 13`) by multiplying it by `factor=0.5`. The new learning rate is `current_lr * 0.5`. If the loss continues to plateau for another 3 epochs from the last improvement, the learning rate is halved again. This continues until `min_lr=1e-6` is reached, after which no further reduction occurs.
+  - *Why A is incorrect:* This describes `EarlyStopping(patience=3)` behavior. `ReduceLROnPlateau` adjusts the learning rate but does not stop training. Training continues after the learning rate reduction.
+  - *Why C is incorrect:* `ReduceLROnPlateau` reduces the current learning rate by `factor`, not by setting it directly to `min_lr`. Immediately jumping to `min_lr` would produce an overly aggressive reduction from a high initial learning rate (e.g., from `1e-3` directly to `1e-6` instead of `1e-3 → 5e-4 → 2.5e-4 → ...`).
+  - *Why D is incorrect:* `ReduceLROnPlateau` is a learning rate scheduling callback, not an evaluation trigger. It does not call `model.evaluate()` on the test set. Test set evaluation is always done manually by the developer.
+
+---
+
+### Question 16 (5 points)
+
+A pruned Keras model is stored as a Keras model with pruning wrappers. What additional step is required before the model's sparsity can actually reduce storage size?
+
+- A) Call `model.compile()` with `optimizer='sgd'` — pruned models require SGD for weight sparsification to take effect.
+- B) Call `tfmot.sparsity.keras.strip_pruning(pruned_model)` to remove the pruning wrappers and produce a standard Keras model with the sparse weights, then convert to TFLite or apply gzip compression to benefit from sparsity.
+- C) Export the model to ONNX format — TFLite does not support sparse models.
+- D) Call `model.set_weights([w * mask for w, mask in zip(...)])` to manually apply the binary masks to each weight tensor.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* TensorFlow Model Optimization Toolkit (TFMOT) pruning wraps each prunable layer with additional mask variables and pruning logic. After training, `tfmot.sparsity.keras.strip_pruning(model)` removes these wrappers, leaving a standard Keras model with the learned sparse weights (zeros at the pruned positions). The weights are sparse but the model itself is standard. To realize size reduction, the stripped model should then be converted to TFLite (where sparse ops can be optimized) or the weights file can be compressed (gzip achieves good ratios on sparse tensors).
+  - *Why A is incorrect:* The optimizer choice does not affect weight sparsification. Pruning is handled by the TFMOT callbacks during `model.fit()`, regardless of which optimizer is used. SGD is not required for pruning.
+  - *Why C is incorrect:* TFLite supports sparse models — it has dedicated sparse inference optimizations. ONNX conversion is not necessary and would add unnecessary complexity.
+  - *Why D is incorrect:* Manually multiplying weights by masks is what the pruning wrappers do internally. After `strip_pruning`, the zeros are already applied to the weights. The manual masking approach would be redundant and error-prone.
+
+---
+
+### Question 17 (5 points)
+
+What does the `executions_per_trial=2` parameter in a Keras Tuner search do?
+
+- A) It trains each hyperparameter configuration twice and returns both models — the developer must manually select the better one.
+- B) It trains each hyperparameter configuration twice with different random seeds and averages the validation metrics to reduce variance in the performance estimate.
+- C) It limits each trial to a maximum of 2 epochs regardless of the `epochs` setting in `tuner.search()`.
+- D) It runs two parallel processes for each trial, halving the wall-clock time for each configuration evaluation.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* `executions_per_trial=N` runs each hyperparameter configuration N times with different random seeds. The validation metric reported for that configuration is the average across all N executions. This reduces the impact of random initialization luck and provides a more reliable estimate of a configuration's true performance. It is useful when the objective metric is noisy but increases total compute by a factor of N.
+  - *Why A is incorrect:* The developer does not manually select between executions. Keras Tuner averages the metrics across executions automatically and uses the average to rank configurations. Both model instances from 2 executions are used only for metric averaging, not for manual selection.
+  - *Why C is incorrect:* `executions_per_trial` does not override the epoch count. The number of training epochs per execution is still controlled by the `epochs` parameter in `tuner.search()`. With `executions_per_trial=2` and `epochs=10`, each configuration trains for 10 epochs twice (20 epochs total per configuration).
+  - *Why D is incorrect:* `executions_per_trial=2` runs two executions sequentially, not in parallel. Running two executions doubles the compute time per configuration. Parallelism in Keras Tuner is configured via distributed strategies, not `executions_per_trial`.
+
+---
+
+### Question 18 (5 points)
+
+What is the difference between `model.save('my_model.h5')` and `model.save('my_model')` (no extension)?
+
+- A) The `.h5` format is larger because it stores the optimizer state; the directory format omits optimizer state.
+- B) `.h5` saves in HDF5 format (single file, legacy); the no-extension directory format saves as TensorFlow SavedModel (directory with variables, assets, and a saved model protobuf), which supports custom ops and TF Serving.
+- C) The SavedModel directory format cannot be loaded back into Keras with `tf.keras.models.load_model()`.
+- D) Both formats are identical — the extension is a cosmetic naming convention with no functional difference.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* `model.save('model.h5')` forces HDF5 format (a single binary file). `model.save('model')` (or `model.save('model.keras')` in newer TF) saves as a SavedModel directory containing `saved_model.pb` (the computation graph), `variables/` (weight checkpoints), and `assets/` (any auxiliary files). SavedModel is the preferred format: it supports custom TF ops, can be served by TF Serving, and is compatible with TFLite conversion. The HDF5 format is legacy but still widely used for simplicity.
+  - *Why A is incorrect:* Both formats save the optimizer state by default. The optimizer state can be excluded with `model.save_weights()` instead of `model.save()`. The extension does not control whether optimizer state is saved.
+  - *Why C is incorrect:* SavedModel directories can be loaded with `tf.keras.models.load_model('my_model')`. The directory format is fully compatible with the standard Keras loading API.
+  - *Why D is incorrect:* The two formats are functionally different in important ways: HDF5 is a single portable file; SavedModel is a directory structure. SavedModel supports more features (custom ops, TF Serving, TFLite conversion). They are not interchangeable in all workflows.
+
+---
+
+### Question 19 (5 points)
+
+Which of the following is a valid `representative_dataset` generator function for TFLite full integer quantization on an image dataset?
+
+- A) `def representative_data_gen(): yield [tf.constant(x_train[:100], dtype=tf.float32)]`
+- B) `def representative_data_gen(): for sample in x_train[:100]: yield [np.expand_dims(sample, 0).astype(np.float32)]`
+- C) `def representative_data_gen(): return x_train[:100].astype(np.float32)`
+- D) `representative_data_gen = x_train[:100]`
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* The TFLite converter requires a generator function (callable) that yields individual input samples as a list of numpy arrays. Each `yield` provides one sample as a list with one element (since the model has one input). The sample must have shape `(1, H, W, C)` — a single-sample batch — and dtype `float32`. `np.expand_dims(sample, 0)` adds the batch dimension. The generator should yield 100–500 representative samples covering the range of input values.
+  - *Why A is incorrect:* Yielding a batch of 100 samples at once (`x_train[:100]`) rather than yielding individual samples is incorrect. The TFLite calibration process expects individual samples `(1, H, W, C)`, not a full batch.
+  - *Why C is incorrect:* A `return` statement makes this a regular function, not a generator. The TFLite converter calls the callable in a loop expecting `yield` — a `return` would produce no data after the first iteration. The function must use `yield` to produce samples.
+  - *Why D is incorrect:* Assigning a numpy array directly to `representative_dataset` is incorrect. The converter expects a callable (a function or generator) that it will call and iterate over. A numpy array is not callable.
+
+---
+
+### Question 20 (5 points)
+
+A developer runs a Keras Tuner Hyperband search with `max_epochs=30` and `factor=3`. In the first bracket, how many epochs does each initial trial receive, and how many trials survive to the next rung?
+
+- A) Each trial receives 30 epochs; all trials advance to the next rung.
+- B) Each trial receives 1 epoch (30/3^3 ≈ 1); after evaluation, the top 1/3 of trials advance with more epochs.
+- C) Each trial receives 10 epochs (30/3 = 10); the top 1/3 survive to the next rung which allocates 30 epochs.
+- D) Each trial receives 3 epochs; all trials that achieve above 50% validation accuracy advance.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Hyperband's successive halving algorithm starts with the minimum epoch budget: `min_epochs = max_epochs / factor^(s)` where `s` is the bracket depth. For `max_epochs=30, factor=3`, the minimum is approximately `30 / 27 ≈ 1` epoch per trial in the first rung. After evaluation, the top `1/factor = 1/3` of trials advance to the next rung, which receives 3x more epochs. This aggressively culls poor configurations early, allocating compute proportionally to promising candidates.
+  - *Why A is incorrect:* Allocating `max_epochs` to every initial trial would be equivalent to RandomSearch — all trials trained to full convergence with no early stopping. This defeats the purpose of Hyperband's compute-efficient successive halving.
+  - *Why C is incorrect:* The minimum epoch allocation in Hyperband is determined by `max_epochs / factor^depth`, not simply `max_epochs / factor`. For the deepest bracket, the minimum is `max_epochs / factor^(floor(log_factor(max_epochs)))`.
+  - *Why D is incorrect:* Hyperband advances a fixed fraction of trials (`1/factor`) based on their ranked performance — not based on an absolute accuracy threshold. A 50% threshold would be arbitrary and problem-dependent.

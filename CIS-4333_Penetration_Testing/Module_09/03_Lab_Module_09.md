@@ -296,4 +296,22 @@ TryHackMe periodically updates room content. If specific tasks differ from the l
 
 ---
 
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Multi-Vulnerability DVWA Exploitation Chain
+
+On your authorized DVWA instance, set the security level to Low and execute a three-stage exploitation chain. First, exploit the SQL Injection module using a union-based injection to extract the names of all database tables: `1 UNION SELECT table_name, null FROM information_schema.tables WHERE table_schema=database()--`. Second, use the File Upload module to upload a PHP webshell (a single-line PHP file: `<?php system($_GET['cmd']); ?>`) and confirm remote code execution by accessing the file with `?cmd=id`. Third, exploit the Command Injection module to confirm OS command execution using a payload that identifies the server's network interfaces. Document each step with a screenshot showing the request in Burp Repeater, the server response, and your interpretation of the result. Write a one-paragraph business impact statement for each finding as it would appear in a professional penetration test report.
+
+### Challenge 2: Burp Suite Intercept and Manipulation Analysis
+
+Configure Burp Suite as your browser proxy and browse through DVWA's IDOR-equivalent functionality (the Insecure CAPTCHA or user management module, or use Burp Repeater to test object ID manipulation on any parameter you identify). For each parameter you test, document: the original parameter value and what resource it references, the modified value you tested and what resource you attempted to access, the server's response code and response body indicating success or failure, and the OWASP Top 10 category and specific risk description. Then write a comparison of which vulnerability class — SQLi, XSS, or IDOR — would have the highest business impact in a real e-commerce application, with justification based on the data accessible through each attack type.
+
+### Reflection Questions
+
+1. During SQL injection testing you discovered that the application returns verbose error messages including stack traces and SQL query fragments when invalid syntax is submitted. Explain how you would document this as a finding in the penetration test report — what is the vulnerability name, the OWASP category, the evidence you would include, and why verbose error messages are a security risk even if direct SQL injection is not confirmed?
+
+2. A colleague argues that web application scanners like OWASP ZAP or Nikto can fully replace manual web application testing because they cover all OWASP Top 10 categories automatically. Using your experience from the Module 09 lab, explain two specific vulnerability classes or test scenarios where automated scanner output would be incomplete or inaccurate without manual verification, and what specific manual technique you would use to complete the testing.
+
 **Proprietary and Confidential. Not for disclosure outside of Texas Wesleyan University course use.**

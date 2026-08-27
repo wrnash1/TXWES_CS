@@ -320,3 +320,25 @@ Enable-ADOptionalFeature -Identity "Recycle Bin Feature" `
 - Know Hyper-V checkpoint types (Standard vs Production)
 - Know the difference between Push and Pull mode DSC
 - Practice reading scenario questions by identifying the constraint first
+
+---
+
+## Supplemental Resources
+
+The following free, open-access resources support capstone review across all modules:
+
+**1. Microsoft Learn — Administer Windows Server hybrid core infrastructure**
+<https://learn.microsoft.com/en-us/training/paths/administer-windows-server-hybrid-core-infrastructure/>
+The full AZ-800 learning path covering all capstone topics: AD DS, Group Policy, DNS, DHCP, Hyper-V, Storage, File Services, and hybrid identity. Recommended for end-of-course review before the certification exam.
+
+**2. Microsoft Docs — Windows Server documentation hub**
+<https://learn.microsoft.com/en-us/windows-server/>
+The central documentation portal for all Windows Server roles and features covered in this course. Use the search and left navigation to quickly locate reference material for any specific topic.
+
+**3. Microsoft Learn — AZ-800 Administering Windows Server Hybrid Core Infrastructure exam skills outline**
+<https://learn.microsoft.com/en-us/certifications/exams/az-800>
+The official exam skills outline listing every tested topic area with relative weighting. Use this to identify which module topics receive the most exam coverage and prioritize study time accordingly.
+
+**4. Microsoft Q&A — Windows Server Administration community**
+<https://learn.microsoft.com/en-us/answers/topics/windows-server.html>
+Community Q&A forum for Windows Server administration questions. Useful for reviewing real-world troubleshooting scenarios that mirror the applied reasoning tested on the AZ-800 exam.

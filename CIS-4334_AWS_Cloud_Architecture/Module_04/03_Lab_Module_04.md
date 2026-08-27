@@ -250,3 +250,25 @@ Compile all deliverables into a single document labeled clearly by task number. 
 | Part 2: Lifecycle Policy | 40 | Valid lifecycle policy JSON applied successfully; minimum four errors identified in the flawed policy; cost calculation shows correct methodology |
 | Part 3: S3 Security | 35 | All four Block Public Access settings enabled; HTTPS enforcement and VPC endpoint restriction correctly implemented in one policy; minimum six security gaps identified with accurate PCI DSS classification |
 | **Total** | **100** | |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: S3 Versioning and Deletion Recovery
+Enable versioning on a test S3 bucket and practice recovering from accidental deletion.
+1. Create a new S3 bucket with a unique name and enable versioning: `aws s3api put-bucket-versioning --bucket <name> --versioning-configuration Status=Enabled`.
+2. Upload a text file: `echo "Version 1 content" > test.txt && aws s3 cp test.txt s3://<name>/test.txt`. Update and upload again: `echo "Version 2 content" > test.txt && aws s3 cp test.txt s3://<name>/test.txt`.
+3. Delete the object: `aws s3 rm s3://<name>/test.txt`. List all versions including delete markers: `aws s3api list-object-versions --bucket <name> --prefix test.txt`. Record the delete marker version ID.
+4. Restore the object by deleting the delete marker: `aws s3api delete-object --bucket <name> --key test.txt --version-id <delete-marker-id>`. Verify recovery: `aws s3 cp s3://<name>/test.txt recovered.txt && cat recovered.txt`.
+
+### Challenge 2: S3 Lifecycle Policy with Expiration
+Configure a lifecycle policy that automatically cleans up incomplete multipart uploads and old object versions.
+1. Create and apply a lifecycle policy to your test bucket that: (a) expires current versions of objects after 30 days, (b) permanently deletes non-current versions after 7 days, and (c) aborts incomplete multipart uploads after 7 days.
+2. Write the lifecycle policy JSON and apply it using: `aws s3api put-bucket-lifecycle-configuration --bucket <name> --lifecycle-configuration file://lifecycle.json`.
+3. Verify the policy was applied: `aws s3api get-bucket-lifecycle-configuration --bucket <name>`.
+4. Calculate the cost impact: if the bucket currently stores 100 GB of objects with 20 GB in non-current versions, estimate the monthly cost savings from the new expiration rules using the S3 Standard pricing for your Region.
+
+### Reflection Questions
+1. After completing Challenge 1, explain the difference between a delete marker and permanent deletion of a versioned object. What specific API call would result in truly permanent, unrecoverable deletion of a versioned object?
+2. How does the S3 versioning and lifecycle policy configuration you built in these challenges align with the AWS Well-Architected Framework's Reliability pillar, specifically the design principle of "automatically recover from failure"? What types of failures does each configuration address?

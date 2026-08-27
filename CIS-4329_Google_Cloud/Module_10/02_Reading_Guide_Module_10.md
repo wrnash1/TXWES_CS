@@ -258,3 +258,19 @@ Before starting Lab 10, confirm you can answer yes to each item:
   `https://cloud.google.com/logging/docs/view/logging-query-language`
 - ACE exam guide:
   `https://cloud.google.com/certification/guides/cloud-engineer`
+
+---
+
+## 9. Supplemental Resources
+
+**1. Google Cloud Documentation — Cloud Monitoring Alerting Policies**
+<https://cloud.google.com/monitoring/alerts>
+Complete guide to creating and managing alerting policies in Cloud Monitoring, including condition types, notification channels, alert duration, and the requirement to verify notification channel email addresses before alerts will fire.
+
+**2. Google Cloud Skills Boost — Cloud Monitoring: Qwik Start**
+<https://www.cloudskillsboost.google/focuses/10599>
+Hands-on lab covering Ops Agent installation on a Compute Engine VM, creating custom dashboards, configuring uptime checks, and setting up alerting policies — all core ACE exam operational topics.
+
+**3. Google Cloud Documentation — Logging Query Language**
+<https://cloud.google.com/logging/docs/view/logging-query-language>
+Reference for the Logging Query Language (LQL) including comparison operators, severity filtering with `>=`, resource type filters, and structured log field extraction — essential for both the ACE exam and the log-based metrics lab exercises.

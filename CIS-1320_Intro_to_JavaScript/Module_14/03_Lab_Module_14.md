@@ -585,6 +585,145 @@ Save both files. Open with Live Server. Test:
 
 ---
 
+## Part 9 — Challenge Exercise
+
+This section is **optional**. It extends the lab with advanced problems that apply Promise combinators, JSON, and async patterns in more demanding scenarios.
+
+### Step 9.1 — Generic `apiFetch` with Timeout and Retry
+
+Extend the `apiFetch` wrapper to support both a configurable timeout and automatic retry with exponential backoff — combining `AbortController`, `Promise.race`, and loop-based retry logic into a single production-grade utility:
+
+```javascript
+async function apiFetch(url, options = {}, { timeout = 5000, retries = 2 } = {}) {
+  let lastError;
+
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), timeout);
+
+    try {
+      const res = await fetch(url, { ...options, signal: controller.signal });
+      clearTimeout(timeoutId);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return await res.json();
+    } catch (err) {
+      clearTimeout(timeoutId);
+
+      if (err.name === 'AbortError') {
+        lastError = new Error(`Request timed out after ${timeout}ms`);
+      } else {
+        lastError = err;
+      }
+
+      if (attempt < retries) {
+        const delay = Math.pow(2, attempt) * 300;
+        await new Promise(r => setTimeout(r, delay));
+      }
+    }
+  }
+
+  throw lastError;
+}
+```
+
+Test it with:
+
+1. A valid URL and a timeout of 10000ms — should succeed on the first attempt.
+2. A valid URL with a timeout of 1ms — should time out and retry twice before failing.
+3. An invalid URL — should fail with an HTTP error after retries.
+
+Log a message before each retry to confirm the backoff delays are increasing.
+
+### Step 9.2 — Multi-Source Data Aggregation with `Promise.allSettled`
+
+Simulate an analytics dashboard that loads data from five independent endpoints. Some may fail. Use `Promise.allSettled` to collect all available results and render what succeeded, while gracefully noting what failed:
+
+```javascript
+const endpoints = [
+  { label: 'Users',        url: `${BASE}/users` },
+  { label: 'Posts',        url: `${BASE}/posts?_limit=5` },
+  { label: 'Comments',     url: `${BASE}/comments?_limit=5` },
+  { label: 'Todos',        url: `${BASE}/todos?_limit=5` },
+  { label: 'Bad Endpoint', url: `${BASE}/nonexistent` },
+];
+
+async function loadDashboard() {
+  const promises = endpoints.map(ep =>
+    apiFetch(ep.url).then(data => ({ label: ep.label, data }))
+  );
+
+  const results = await Promise.allSettled(promises);
+
+  results.forEach(result => {
+    if (result.status === 'fulfilled') {
+      console.log(`✓ ${result.value.label}: ${result.value.data.length} items`);
+    } else {
+      console.warn(`✗ ${result.reason.message}`);
+    }
+  });
+}
+
+loadDashboard();
+```
+
+Observe in the console that 4 of 5 endpoints succeed and the bad endpoint logs a warning. Extend the function to render the successful results to the page and display an error count badge showing how many sources failed.
+
+### Step 9.3 — JSON Schema Validator
+
+Write a `validateSchema(data, schema)` function that validates a parsed JSON object against a simple schema definition. The schema specifies required fields and their expected types:
+
+```javascript
+const userSchema = {
+  id:       'number',
+  name:     'string',
+  email:    'string',
+  active:   'boolean',
+};
+
+function validateSchema(data, schema) {
+  const errors = [];
+
+  for (const [key, expectedType] of Object.entries(schema)) {
+    if (!(key in data)) {
+      errors.push(`Missing required field: "${key}"`);
+    } else if (typeof data[key] !== expectedType) {
+      errors.push(`Field "${key}": expected ${expectedType}, got ${typeof data[key]}`);
+    }
+  }
+
+  return { valid: errors.length === 0, errors };
+}
+```
+
+Fetch a user from the API, run it through the validator, and log whether it conforms to the schema:
+
+```javascript
+async function validateUser(id) {
+  const user = await apiFetch(`${BASE}/users/${id}`);
+  const result = validateSchema(user, userSchema);
+
+  if (result.valid) {
+    console.log(`User ${id} is valid.`);
+  } else {
+    console.warn(`User ${id} has schema errors:`, result.errors);
+  }
+}
+
+validateUser(1);
+```
+
+Then test the validator against a malformed object:
+
+```javascript
+const bad = { id: '1', name: 'Alice', email: null };
+console.log(validateSchema(bad, userSchema));
+// Should show errors for id (string not number), email (null is not string), and missing active
+```
+
+Extend the schema to support `nullable: true` on individual fields — allow the field to be either the expected type or `null`.
+
+---
+
 ## Lab Completion Checklist
 
 - [ ] Sequential run time ≈ sum of all delays; parallel ≈ slowest single delay

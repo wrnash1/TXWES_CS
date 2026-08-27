@@ -340,3 +340,16 @@ Answer these before taking the quiz:
 - Always use UUIDs in `/etc/fstab` entries — device paths change; UUIDs do not.
 - RAID 0 = performance only. RAID 1 = full redundancy. RAID 5 = space-efficient parity. RAID 10 = performance + redundancy.
 - XFS is the RHEL default; ext4 is the Debian/Ubuntu default. Know both.
+
+---
+
+## 9. Supplemental Resources
+
+**1. [Red Hat — A Practical Guide to LVM](https://www.redhat.com/sysadmin/lvm-vs-partitioning)**
+A Red Hat sysadmin article comparing LVM to traditional partitioning with practical guidance on when to use each. Covers the complete LVM creation workflow from `pvcreate` through `lvcreate`, online resize operations for both ext4 and XFS, and real-world use cases for snapshots and `pvmove`. The most direct online resource for the LVM portions of the Module 13 lab.
+
+**2. [Linux RAID Wiki — The Linux MDADM Documentation](https://raid.wiki.kernel.org/index.php/Linux_Raid)**
+The official Linux software RAID documentation. Covers all RAID levels supported by `mdadm`, the creation and management lifecycle of arrays, rebuild monitoring via `/proc/mdstat`, spare disk configuration, and the `/etc/mdadm/mdadm.conf` configuration file. Essential reading for understanding how `mdadm` arrays survive reboots and what happens during degraded operation.
+
+**3. [Arch Linux Wiki — LVM](https://wiki.archlinux.org/title/LVM)**
+A comprehensive, distribution-agnostic LVM reference maintained by the Arch Linux community. Covers advanced topics including thinly provisioned volumes, LVM on top of RAID, LVM cache (SSD caching of HDD volumes), and the `lvs`/`pvs`/`vgs` display attribute columns. The "Snapshots" section is particularly useful for understanding LVM snapshot mechanics and the copy-on-write behavior that makes snapshots efficient.

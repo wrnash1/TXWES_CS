@@ -203,3 +203,203 @@ Distractor Analysis:
 - *Why A is incorrect:* Revising the plan is triggered by M&C findings, but the initial detection and response recommendation happen in M&C, not Planning. Planning created the original baseline being compared against.
 - *Why B is incorrect:* Executing is where the team does the project work. The PM's performance review and variance response are M&C activities, not Executing activities.
 - *Why D is incorrect:* Closing occurs only at the end of the project after deliverables are accepted. A mid-project performance issue has nothing to do with Closing.
+
+---
+
+## Question 11
+
+Which of the following is the FIRST document produced during the Initiating Process Group?
+
+- A) Project Management Plan
+- B) Stakeholder Register
+- C) Project Charter
+- D) Work Breakdown Structure
+
+**Correct Answer:** C) Project Charter
+
+**Distractor Analysis:**
+
+- *Why C is correct:* The Project Charter is the very first formal project document. It is produced by the "Develop Project Charter" process and must exist before any other project planning begins. The Stakeholder Register is also an Initiating output but comes after the charter.
+- *Why A is incorrect:* The Project Management Plan is produced during Planning — the second Process Group. It cannot exist before the project is authorized.
+- *Why B is incorrect:* The Stakeholder Register is also an Initiating output, but it is produced by the "Identify Stakeholders" process, which follows the "Develop Project Charter" process.
+- *Why D is incorrect:* The WBS is a Planning output created to decompose the approved scope — it requires the charter to already exist.
+
+---
+
+## Question 12
+
+What is the PRIMARY purpose of a Business Case in project initiation?
+
+- A) To assign the project manager and define their authority
+- B) To justify the proposed investment by documenting expected benefits, costs, and alternatives
+- C) To define the detailed scope of all project deliverables
+- D) To establish the communication plan for the project sponsor
+
+**Correct Answer:** B) To justify the proposed investment by documenting expected benefits, costs, and alternatives.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* The Business Case is the pre-project document that answers "why should we do this?" It presents the financial and strategic rationale, including ROI analysis, risk summary, and alternative options considered.
+- *Why A is incorrect:* Assigning the PM and defining their authority is the role of the Project Charter, not the Business Case.
+- *Why C is incorrect:* Detailed scope definition happens in the Scope Statement and WBS during Planning — not in the Business Case.
+- *Why D is incorrect:* The Communications Management Plan is a Planning output. The Business Case predates project approval and has nothing to do with communication planning.
+
+---
+
+## Question 13
+
+A project manager is reviewing the project after all deliverables have been accepted by the customer. She is archiving documents, releasing team members, and writing final performance reviews. Which Process Group is she performing?
+
+- A) Monitoring and Controlling
+- B) Executing
+- C) Closing
+- D) Planning
+
+**Correct Answer:** C) Closing
+
+**Distractor Analysis:**
+
+- *Why C is correct:* Archiving documents, releasing resources, and conducting final evaluations are all Closing Process Group activities. Closing formally ends the project and transfers the product to operations or the customer.
+- *Why A is incorrect:* Monitoring and Controlling compares actual performance to baselines during active project work — it does not involve archiving documents or releasing the team.
+- *Why B is incorrect:* Executing is where the project deliverables are built. The work is already done at this point; execution has ended.
+- *Why D is incorrect:* Planning creates the roadmap for project execution. Re-entering Planning at the end of a project is not a standard PMI activity.
+
+---
+
+## Question 14
+
+Which of the following lifecycle models is BEST suited for a project where all requirements can be fully defined upfront and changes are expected to be minimal?
+
+- A) Adaptive (Agile)
+- B) Iterative
+- C) Predictive (Waterfall)
+- D) Incremental
+
+**Correct Answer:** C) Predictive (Waterfall)
+
+**Distractor Analysis:**
+
+- *Why C is correct:* Predictive (waterfall) lifecycles work best when scope is well understood, requirements are stable, and sequential phase-by-phase delivery is appropriate. The entire plan is created before execution begins.
+- *Why A is incorrect:* Adaptive (Agile) is designed for environments where requirements evolve and frequent customer feedback is needed — the opposite of the scenario described.
+- *Why B is incorrect:* Iterative models build the product through repeated cycles, expecting that each cycle will refine the product — implying that requirements are not fully known upfront.
+- *Why D is incorrect:* Incremental delivery splits a project into smaller deliverable chunks, which is useful when some requirements may change — not ideal when all requirements are fully defined and stable.
+
+---
+
+## Question 15
+
+In a multi-phase IT project, what is the purpose of a "phase gate" (also called a stage gate or kill point)?
+
+- A) To terminate the project if the sponsor changes priorities
+- B) To provide a formal review point between phases where the project is evaluated before the next phase is authorized to begin
+- C) To schedule a risk review at the end of the project
+- D) To approve vendor invoices at the end of each billing period
+
+**Correct Answer:** B) To provide a formal review point between phases where the project is evaluated before the next phase is authorized to begin.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* Phase gates are Go/No-Go decision points. At each gate, the project sponsor or steering committee reviews deliverables, performance, and business case validity before authorizing the next phase. This is a governance control mechanism.
+- *Why A is incorrect:* Sponsor priority changes may trigger a phase gate review, but the phase gate itself is a scheduled governance checkpoint — not an event triggered only by sponsor changes.
+- *Why C is incorrect:* Risk reviews can happen at phase gates, but a risk review alone is not the definition of a phase gate. Phase gates are comprehensive go/no-go evaluations.
+- *Why D is incorrect:* Vendor invoice approval is a Procurement Management activity unrelated to phase gate governance.
+
+---
+
+## Question 16
+
+Which of the following best describes the difference between the Project Charter and the Project Management Plan?
+
+- A) The charter is detailed and comprehensive; the plan is a brief summary.
+- B) The charter authorizes the project and names the PM; the plan describes how the project will be executed, monitored, and controlled.
+- C) The charter is created during Planning; the plan is created during Initiating.
+- D) They are essentially the same document produced at different project stages.
+
+**Correct Answer:** B) The charter authorizes the project and names the PM; the plan describes how the project will be executed, monitored, and controlled.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* These two documents have fundamentally different purposes. The charter is a one-to-two page authorization document. The plan is a comprehensive guide covering scope, schedule, cost, quality, risk, communications, resources, and procurement.
+- *Why A is incorrect:* The comparison is backwards. The Project Management Plan is the detailed, comprehensive document; the charter is the brief authorization.
+- *Why C is incorrect:* The process groups are reversed. The charter is created in Initiating; the plan is created in Planning.
+- *Why D is incorrect:* They are distinctly different documents with different purposes, owners, and process group origins.
+
+---
+
+## Question 17
+
+What is the defining characteristic that distinguishes an adaptive (Agile) lifecycle from a predictive (Waterfall) lifecycle?
+
+- A) Agile requires more documentation than Waterfall.
+- B) Agile delivers the complete product only at the end of the project, while Waterfall delivers increments throughout.
+- C) Agile embraces changing requirements through short iterative cycles, while Waterfall plans the full scope upfront before execution begins.
+- D) Agile uses no planning phase; Waterfall plans everything in detail.
+
+**Correct Answer:** C) Agile embraces changing requirements through short iterative cycles, while Waterfall plans the full scope upfront before execution begins.
+
+**Distractor Analysis:**
+
+- *Why C is correct:* This is the core distinction. Agile (adaptive) uses sprints or iterations to deliver value incrementally and welcomes requirement changes. Waterfall (predictive) front-loads all planning and executes in sequential phases with minimal scope change.
+- *Why A is incorrect:* Agile actually de-emphasizes heavy documentation in favor of working software and customer collaboration — the opposite of the statement.
+- *Why B is incorrect:* This reverses the reality. Agile delivers working increments throughout (at the end of each sprint); Waterfall typically delivers the full product at the end of the project.
+- *Why D is incorrect:* Agile does include planning — it uses sprint planning, release planning, and backlog refinement. The absence of planning is a myth about Agile.
+
+---
+
+## Question 18
+
+A project manager learns that two key stakeholders have conflicting requirements: the IT security team wants a strict data encryption standard, while the marketing team wants rapid feature delivery that the security standard would slow down. What is the BEST first step?
+
+- A) Adopt the IT security team's requirements because security always takes priority.
+- B) Adopt the marketing team's requirements to meet business deadlines.
+- C) Facilitate a meeting between both stakeholders to surface the conflict, understand both positions, and work toward a mutually acceptable resolution.
+- D) Escalate to the project sponsor immediately without speaking to either stakeholder first.
+
+**Correct Answer:** C) Facilitate a meeting between both stakeholders to surface the conflict, understand both positions, and work toward a mutually acceptable resolution.
+
+**Distractor Analysis:**
+
+- *Why C is correct:* Stakeholder conflict is best resolved through direct facilitation. The PM's role is to surface issues, ensure all parties understand each other's constraints, and drive consensus. This aligns with the Project+ Communications and Stakeholder Management domain.
+- *Why A is incorrect:* Automatically prioritizing one stakeholder without discussion is a unilateral decision that alienates the other party and may not be the correct trade-off given the full business context.
+- *Why B is incorrect:* Same flaw as A — picking one side without facilitation is poor stakeholder management.
+- *Why D is incorrect:* Escalation is a valid tool but should not be the first step. The PM should attempt direct resolution before escalating, unless the conflict is beyond the PM's authority to resolve.
+
+---
+
+## Question 19
+
+The "Identify Stakeholders" process is performed primarily during which Process Group?
+
+- A) Planning
+- B) Executing
+- C) Initiating
+- D) Closing
+
+**Correct Answer:** C) Initiating
+
+**Distractor Analysis:**
+
+- *Why C is correct:* "Identify Stakeholders" is an Initiating Process Group activity and produces the Stakeholder Register as an output. Identifying who has an interest in the project must happen before planning begins so the PM can incorporate stakeholder needs into the plan.
+- *Why A is incorrect:* While the Stakeholder Register is updated during Planning, the initial identification process is Initiating. Naming Planning as the primary process group misses the earliest identification step.
+- *Why B is incorrect:* Executing focuses on performing the work. Stakeholder identification during Executing would be reactive and late.
+- *Why D is incorrect:* Closing is the end of the project. Identifying stakeholders at Closing is far too late to incorporate their interests into project planning.
+
+---
+
+## Question 20
+
+Which of the following best describes why the Closing Process Group is important even when a project ends early due to cancellation?
+
+- A) Closing is only required for projects that deliver all planned scope; cancelled projects do not require it.
+- B) Closing ensures that all lessons learned are documented, contracts are formally closed, resources are released, and the organization benefits from the experience regardless of outcome.
+- C) Closing is a legal requirement only applicable to government projects.
+- D) Closing updates the project schedule to reflect the cancelled activities.
+
+**Correct Answer:** B) Closing ensures that all lessons learned are documented, contracts are formally closed, resources are released, and the organization benefits from the experience regardless of outcome.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* The Closing Process Group is required for all projects — including cancelled ones. Formal closure ensures contracts are settled, team members are released to other work, and knowledge is captured as OPAs for future reference.
+- *Why A is incorrect:* PMI explicitly requires Closing for projects terminated early. Skipping it leaves contracts open, resources uncommitted, and knowledge lost.
+- *Why C is incorrect:* Closing applies to all projects in all sectors — not only government contracts.
+- *Why D is incorrect:* Updating a schedule to mark cancelled activities is a minor administrative action, not the purpose of the Closing Process Group.

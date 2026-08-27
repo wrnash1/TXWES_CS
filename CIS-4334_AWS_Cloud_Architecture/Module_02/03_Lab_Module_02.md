@@ -218,3 +218,24 @@ Compile all deliverables into a single document. Label each deliverable clearly 
 | Part 2: Over-Permission Analysis | 35 | Minimum five problems identified with specific explanations; corrected policy eliminates all over-permissions; simulation output shows allow then implicitDeny with correct explanation |
 | Part 3: Cross-Account Trust | 25 | Trust policy correctly references Account B role ARN with MFA condition; permissions policy scoped to specific bucket; flow explanation accurate and complete |
 | **Total** | **100** | |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: IAM Policy Simulator Validation
+Use the AWS IAM Policy Simulator to test a policy you have written in this lab against specific API actions.
+1. In the AWS Management Console, navigate to IAM → Policy Simulator (https://policysim.aws.amazon.com/).
+2. Select the IAM role or user you created in Part 1 as the simulation principal.
+3. Select Amazon S3 as the service and test at least four actions: `GetObject`, `PutObject`, `DeleteObject`, and `ListBucket`. For each action, specify the exact resource ARN you used in your policy.
+4. Record the simulation result (allowed / denied) for each action and compare it to your expected results. If any result is unexpected, diagnose the cause and fix the policy.
+
+### Challenge 2: IAM Credential Report Analysis
+Generate an IAM credential report and analyze the security posture of all IAM users in your account.
+1. Run `aws iam generate-credential-report` and then `aws iam get-credential-report --query Content --output text | base64 -d > credential_report.csv` to download the report.
+2. Open the CSV and identify: (a) any IAM users with access keys older than 90 days, (b) any IAM users with console password access but no MFA enabled, and (c) any IAM users who have never used their access key.
+3. For each finding, document the specific IAM best practice being violated and the recommended remediation step (rotate the key, enable MFA, or deactivate the unused key).
+
+### Reflection Questions
+1. After using the IAM Policy Simulator, explain one scenario where the simulation result differed from what you initially expected. What did this reveal about how IAM policy evaluation logic works in practice?
+2. How does the AWS Well-Architected Framework Security pillar's principle of "apply security at all layers" apply to the combination of SCPs, permission boundaries, and identity policies you worked with in this lab? Which layer provides the strongest protection and why?

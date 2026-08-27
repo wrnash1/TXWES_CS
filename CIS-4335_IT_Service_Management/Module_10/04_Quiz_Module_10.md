@@ -285,4 +285,200 @@ tighter than SLA targets?
 
 ---
 
+---
+
+### Question 11 (5 points)
+
+A cloud hosting company signs a contract with a corporate client promising 99.95% monthly availability for the client's e-commerce platform. The hosting company relies on a network provider whose contract guarantees 99.9% uptime. What problem does this arrangement create?
+
+- A) No problem — 99.9% is close enough to 99.95% to be acceptable.
+- B) The underpinning contract does not fully support the SLA; the network provider's allowable downtime exceeds the SLA's allowable downtime.
+- C) The SLA is invalid because it is higher than the OLA target.
+- D) The network provider's contract is an OLA because both companies are IT organizations.
+
+#### Q11 Correct Answer: B
+
+#### Q11 Distractor Analysis
+
+- A is incorrect. The 0.05% gap may seem small but at monthly scale (720 hours) it represents approximately 21 minutes of additional acceptable downtime at the supplier level beyond what the SLA permits. This creates an unhedged risk.
+- C is incorrect. An SLA does not need to match an OLA target. OLAs are internal supporting agreements; the SLA is the external customer commitment.
+- D is incorrect. A UC is defined by the relationship being with an external third-party supplier. The fact that both parties are IT companies is irrelevant — the contract is between two separate organizations, making it a UC.
+
+---
+
+### Question 12 (5 points)
+
+An IT service provider's monthly SLA report shows 99.92% availability for the trading platform — above the 99.9% target. However, a quarterly customer survey gives the service a 2.1 out of 5.0 satisfaction rating. The customer's main complaint is that when outages do occur, they receive no communication until the issue is already resolved.
+
+What does this scenario most directly illustrate?
+
+- A) The SLA is incorrectly drafted and the availability target is too low.
+- B) Technical SLA compliance does not guarantee a positive customer experience — XLAs or experience metrics are needed alongside SLAs.
+- C) The customer satisfaction score is invalid because it conflicts with the technical SLA data.
+- D) The customer's expectations are unreasonable given the 99.92% achieved availability.
+
+#### Q12 Correct Answer: B
+
+#### Q12 Distractor Analysis
+
+- A is incorrect. The SLA target may be appropriate; the problem is communication during outages, not the availability target level.
+- C is incorrect. Customer satisfaction data is a valid and important measurement dimension. Technical compliance and experience quality are independent measurements.
+- D is incorrect. Poor communication during outages is a legitimate service failure regardless of uptime percentage. Customer frustration is not "unreasonable" when the provider fails to communicate.
+
+---
+
+### Question 13 (5 points)
+
+A service desk manager proposes adding the following metric to the monthly SLA report: "Percentage of incidents where users confirmed they could complete their core work task within one hour of resolution." Which XLA measurement method does this represent?
+
+- A) Net Promoter Score
+- B) Customer Effort Score
+- C) Outcome-based measurement
+- D) Post-interaction satisfaction survey
+
+#### Q13 Correct Answer: C — Outcome-based measurement
+
+#### Q13 Distractor Analysis
+
+- A is incorrect. Net Promoter Score asks about likelihood to recommend, not about whether a specific task was completed.
+- B is incorrect. Customer Effort Score measures ease of getting a resolution, not whether the business outcome was achieved.
+- D is incorrect. A post-interaction satisfaction survey measures subjective satisfaction, not the functional outcome of whether work was completed.
+
+---
+
+### Question 14 (5 points)
+
+An organization's SLA with its logistics client defines a P1 resolution target of 2 hours. The infrastructure team's OLA to the service desk defines a 60-minute handback time for escalated P1 tickets. Which statement correctly assesses these targets?
+
+- A) The OLA is correctly set — 60 minutes leaves adequate time for the service desk to manage resolution within the 2-hour SLA.
+- B) The OLA should be tighter — 60 minutes leaves only 60 minutes for the service desk, which is insufficient margin if the escalation path is used twice.
+- C) The SLA target should be 60 minutes to match the OLA.
+- D) OLAs do not need to align with SLA targets.
+
+#### Q14 Correct Answer: A
+
+#### Q14 Distractor Analysis
+
+- A is correct because a 60-minute OLA for infrastructure escalation leaves 60 minutes remaining in the 2-hour SLA window — a reasonable structure if there is only one escalation tier. The targets are aligned.
+- B may be worth considering for complex escalation chains, but as stated for a single escalation path, 60 minutes remaining is a workable margin.
+- C is incorrect. SLA targets are set based on customer needs and business requirements, not adjusted downward to match internal OLAs.
+- D is incorrect. OLAs must support SLA delivery — alignment between OLAs and SLAs is a core Service Level Management principle.
+
+---
+
+### Question 15 (5 points)
+
+Which of the following correctly describes the purpose of a Service Level Requirement (SLR)?
+
+- A) A legally binding document that defines penalty clauses for SLA breaches
+- B) The customer's initial expression of service performance needs before an SLA is negotiated
+- C) A technical specification document produced by the IT infrastructure team
+- D) A synonym for an OLA — used when the agreement is with an internal team
+
+#### Q15 Correct Answer: B
+
+#### Q15 Distractor Analysis
+
+- A is incorrect. An SLR is a pre-negotiation statement of needs, not a binding document with penalties. Penalty clauses belong in the SLA itself or in the commercial contract.
+- C is incorrect. SLRs are produced by the customer (or jointly with the customer) to express business needs, not by the IT infrastructure team.
+- D is incorrect. SLR and OLA are entirely different terms. An SLR is a customer requirement document; an OLA is an internal support agreement between IT teams.
+
+---
+
+### Question 16 (5 points)
+
+An IT department has been measuring and reporting SLA compliance for three years but has never conducted a formal service review meeting with the business. What is the most significant consequence of this omission?
+
+- A) The SLA reports are technically invalid without a review meeting signature.
+- B) The IT department loses the opportunity to understand evolving customer needs, address relationship issues, and collaborate on service improvements.
+- C) The absence of review meetings means SLA targets automatically revert to default values.
+- D) The business is legally entitled to terminate the SLA agreement.
+
+#### Q16 Correct Answer: B
+
+#### Q16 Distractor Analysis
+
+- A is incorrect. SLA reports are not invalidated by the absence of review meetings.
+- C is incorrect. SLA targets do not revert or change automatically based on whether review meetings occur.
+- D is incorrect. While a persistent lack of review meetings may indicate a relationship in poor health, automatic legal termination is not an ITIL 4 consequence.
+
+---
+
+### Question 17 (5 points)
+
+A Service Level Manager proposes introducing watermelon reporting to the board of directors as something to watch out for. What does "watermelon reporting" describe?
+
+- A) Reporting that uses color coding — green on the outside, red on the inside — meaning SLA metrics appear green but underlying customer experience is poor
+- B) A specific XLA measurement tool that measures satisfaction in layers
+- C) A reporting style where only positive metrics are included and breaches are omitted
+- D) A monthly SLA report format that uses three sections: RAG status, trend lines, and corrective actions
+
+#### Q17 Correct Answer: A
+
+#### Q17 Distractor Analysis
+
+- A is correct. "Watermelon reporting" is an industry term describing reports that appear green (passing) on summary metrics while hiding red (failing) experience data underneath — like a watermelon that is green outside but red inside.
+- B is incorrect. Watermelon reporting is not a tool; it is a cautionary term for misleading reporting.
+- C is incorrect. Omitting breach data is dishonest reporting, but watermelon reporting specifically refers to the combination of technical compliance with hidden poor experience — not just omission.
+- D is incorrect. A RAG status report format is a legitimate reporting tool; the watermelon term is a criticism of a specific misleading pattern.
+
+---
+
+### Question 18 (5 points)
+
+An IT organization has agreed to provide a core banking application with 99.8% availability during business hours (8 AM–6 PM, Monday–Friday). In a given month, the application is unavailable for 2 hours during a planned Saturday maintenance window and for 30 minutes on a Tuesday at 9 AM. How much downtime counts toward the SLA?
+
+- A) 2.5 hours total — both the Saturday maintenance and Tuesday outage count.
+- B) 30 minutes — only the Tuesday business-hours outage counts.
+- C) 0 minutes — planned maintenance windows are always excluded from SLA calculations.
+- D) 2 hours — only the Saturday maintenance window counts because it was longer.
+
+#### Q18 Correct Answer: B
+
+#### Q18 Distractor Analysis
+
+- A is incorrect. The SLA covers availability only during agreed service hours (8 AM–6 PM, Monday–Friday). Saturday is outside the service window, so that downtime does not count against the SLA.
+- C is incorrect. Planned maintenance windows are only excluded if they are outside the agreed service hours OR if the SLA explicitly carves them out. The Tuesday outage occurred during business hours and counts regardless of whether it was planned.
+- D is incorrect. The Saturday maintenance window is outside service hours and is not counted. Only the Tuesday business-hours downtime counts.
+
+---
+
+### Question 19 (5 points)
+
+A customer reports that their service desk satisfaction scores have dropped despite the IT team consistently meeting all technical SLA targets. The IT director argues the SLA is fine because all targets are green. An ITSM consultant disagrees. What is the consultant most likely to recommend?
+
+- A) Raise all SLA targets to force IT to work harder.
+- B) Conduct exit interviews with dissatisfied users to identify which aspects of the experience are failing, and introduce XLA measurements alongside the existing SLA metrics.
+- C) Remove the customer satisfaction measurement because it conflicts with objective SLA data.
+- D) Notify the customer that their complaints are invalid because all SLA targets are being met.
+
+#### Q19 Correct Answer: B
+
+#### Q19 Distractor Analysis
+
+- A is incorrect. Raising SLA targets without understanding the experience failure may produce more pressure without addressing the actual gap.
+- C is incorrect. Removing experience measurement because it produces uncomfortable data is the opposite of good service management practice.
+- D is incorrect. Customer satisfaction is a legitimate and important service quality signal. Dismissing it because technical metrics are green reflects a provider-centric view that ITIL 4 explicitly moves away from.
+
+---
+
+### Question 20 (5 points)
+
+An organization's Service Level Manager notices that the SLA for the customer relationship management (CRM) system has not been reviewed in four years. The business has expanded significantly, the user base has tripled, and a new regulatory requirement now mandates 99.9% availability during all business hours. The current SLA requires only 99% availability with no business-hours specification. What action should the Service Level Manager take?
+
+- A) Leave the SLA unchanged — it is still technically valid since both parties signed it.
+- B) Inform the customer that their SLA is no longer relevant and issue a new one without negotiation.
+- C) Initiate a formal SLA review with the customer to update targets to reflect current business requirements, including the regulatory availability mandate.
+- D) Raise an emergency change to update the SLA immediately without customer input.
+
+#### Q20 Correct Answer: C
+
+#### Q20 Distractor Analysis
+
+- A is incorrect. An SLA that no longer reflects the business reality or regulatory requirements fails its purpose regardless of its legal validity. ITIL 4 requires SLAs to be reviewed regularly and kept aligned with current needs.
+- B is incorrect. Issuing a new SLA without customer input violates the collaborative SLA negotiation principle. Customers are co-designers of service commitments.
+- D is incorrect. Emergency change is an incident/problem management tool, not a mechanism for updating customer agreements. SLA revisions follow a negotiated process.
+
+---
+
 Module 10 Quiz | CIS-4335 IT Service Management | Texas Wesleyan University

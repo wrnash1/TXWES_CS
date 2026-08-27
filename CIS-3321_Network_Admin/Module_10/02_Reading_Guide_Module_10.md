@@ -263,4 +263,30 @@ Work through this checklist before the quiz:
 
 ---
 
-CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash
+## 9. Supplemental Resources
+
+The following free resources extend Module 10 content on DHCP, DNS, NTP, and IPAM network services.
+
+**1. Professor Messer — Network Services Free Videos (N10-008)**
+URL: https://www.professormesser.com/network-plus/n10-008/n10-008-video/
+Relevance: Professor Messer covers DHCP DORA, ip helper-address, DNS record types, NTP stratum hierarchy, and NAT types in videos aligned to Network+ objectives.
+
+**2. RFC 2131 — DHCP Protocol Specification**
+URL: https://datatracker.ietf.org/doc/html/rfc2131
+Relevance: The authoritative DHCP standard defining the DORA exchange, relay agent behavior, lease renewal timers (T1 at 50%, T2 at 87.5%), and DHCP options. Section 3 provides the complete operational overview.
+
+**3. Cisco — Configuring DHCP Features**
+URL: https://www.cisco.com/c/en/us/td/docs/ios-xml/ios/ipaddr_dhcp/configuration/xe-16-12/dhcp-xe-16-12-book/config-dhcp-server.html
+Relevance: Cisco's free IOS DHCP configuration guide covering scope creation, DHCP options (3, 6, 15, 43), ip helper-address relay configuration, DHCP reservations, and DHCP Snooping — directly applicable to Packet Tracer lab exercises.
+
+**4. IANA — DHCP Option Codes Registry**
+URL: https://www.iana.org/assignments/bootp-dhcp-parameters/bootp-dhcp-parameters.xhtml
+Relevance: The official IANA registry of all DHCP option codes. Use this to verify any DHCP option number, name, and data type — directly relevant to Network+ exam questions on specific option numbers.
+
+**5. Men & Mice — IPAM Introduction and Best Practices (Free)**
+URL: https://www.menandmice.com/resources
+Relevance: Men & Mice (Micetro) provides free educational resources on IPAM concepts, DNS-DHCP-IPAM integration, and best practices for IP address management in enterprise networks.
+
+---
+
+*CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash*

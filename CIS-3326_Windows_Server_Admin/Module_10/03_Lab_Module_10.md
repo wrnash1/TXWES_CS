@@ -369,3 +369,135 @@ If `Add-PrinterPort` fails because the port already exists, remove it first:
 ```powershell
 Remove-PrinterPort -Name "Campus_LaserJet_Port"
 ```
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Configure and Verify NTFS Auditing on a Shared Folder
+
+NTFS auditing records who accessed or attempted to access files and folders.
+Enable auditing on the Faculty share and verify that access events appear in
+the Security event log.
+
+1. Enable the Object Access audit policy on DC1 so that NTFS audit entries are
+   written to the Security log:
+
+   ```powershell
+   auditpol /set /subcategory:"File System" /success:enable /failure:enable
+   auditpol /get /subcategory:"File System"
+   ```
+
+2. Configure a SACL (System Access Control List) on the Faculty folder to audit
+   all access attempts by Domain Users:
+
+   ```powershell
+   $acl   = Get-Acl -Path "C:\Shares\Departments\Faculty"
+   $audit = New-Object System.Security.AccessControl.FileSystemAuditRule(
+       "Domain Users",
+       "ReadData,WriteData,Delete",
+       "ContainerInherit,ObjectInherit",
+       "None",
+       "Success,Failure"
+   )
+   $acl.AddAuditRule($audit)
+   Set-Acl -Path "C:\Shares\Departments\Faculty" -AclObject $acl
+   ```
+
+3. Simulate access by opening a file in the Faculty folder (you can use
+   `Get-Content` or `notepad` to trigger a read event), then query the Security
+   log for File System audit events:
+
+   ```powershell
+   Get-WinEvent -FilterHashtable @{
+       LogName   = "Security"
+       Id        = 4663
+   } | Select-Object TimeCreated, Message -First 10
+   ```
+
+   In your lab notes, identify the Subject Account Name, Object Name, and
+   Accesses fields from one event. Explain what each field tells you.
+
+4. Verify the audit rule is present on the SACL:
+
+   ```powershell
+   (Get-Acl -Path "C:\Shares\Departments\Faculty" -Audit).Audit |
+       Select-Object IdentityReference, FileSystemRights, AuditFlags
+   ```
+
+### Challenge 2: Configure DFS Replication Between Two Folder Targets
+
+DFS Replication (DFSR) keeps folder targets on multiple servers synchronized.
+Configure replication between DC1 and a second server so that changes on either
+server propagate to the other.
+
+1. Install the DFS Replication role on DC1 and DC2:
+
+   ```powershell
+   Install-WindowsFeature -Name FS-DFS-Replication -IncludeManagementTools -ComputerName DC1
+   Install-WindowsFeature -Name FS-DFS-Replication -IncludeManagementTools -ComputerName DC2
+   ```
+
+2. Create a replication group named `TXWES_Faculty_Replication` with DC1 as the
+   primary member:
+
+   ```powershell
+   New-DfsReplicationGroup -GroupName "TXWES_Faculty_Replication"
+
+   Add-DfsrMember -GroupName "TXWES_Faculty_Replication" -ComputerName DC1
+   Add-DfsrMember -GroupName "TXWES_Faculty_Replication" -ComputerName DC2
+
+   New-DfsReplicatedFolder -GroupName "TXWES_Faculty_Replication" `
+       -FolderName "Faculty"
+
+   Set-DfsrMembership -GroupName   "TXWES_Faculty_Replication" `
+       -FolderName   "Faculty" `
+       -ComputerName DC1 `
+       -ContentPath  "C:\Shares\Departments\Faculty" `
+       -PrimaryMember $true
+
+   Set-DfsrMembership -GroupName   "TXWES_Faculty_Replication" `
+       -FolderName   "Faculty" `
+       -ComputerName DC2 `
+       -ContentPath  "C:\Shares\Departments\Faculty"
+   ```
+
+3. Create a bidirectional replication connection and trigger initial replication:
+
+   ```powershell
+   Add-DfsrConnection -GroupName "TXWES_Faculty_Replication" `
+       -SourceComputerName DC1 `
+       -DestinationComputerName DC2
+
+   Update-DfsrConfigurationFromAD -ComputerName DC1
+   Update-DfsrConfigurationFromAD -ComputerName DC2
+   ```
+
+4. Verify replication health and confirm both members are in a healthy state:
+
+   ```powershell
+   Get-DfsrState -ComputerName DC1 -Verbose
+   Get-DfsrMembership -GroupName "TXWES_Faculty_Replication" |
+       Select-Object ComputerName, FolderName, ContentPath, PrimaryMember, State
+   ```
+
+   In your lab notes, describe what happens to a file created on DC1 after
+   replication completes. What would happen if a user modifies the same file
+   on both servers simultaneously before replication runs?
+
+### Reflection Questions
+
+1. You configured NTFS auditing on the Faculty folder to track Delete events.
+   After a week, a faculty member reports that a file was deleted by an unknown
+   user. Describe the complete process for finding the deletion event in the
+   Security log, including which Event ID to search for, which fields identify
+   the user who deleted the file, and what information would be missing if the
+   Object Access audit policy had not been enabled before the deletion occurred.
+
+2. DFS Replication uses a "last writer wins" conflict resolution model when two
+   members modify the same file before replication synchronizes. A file called
+   `syllabus.docx` is edited on DC1 at 9:00 AM and on DC2 at 9:05 AM before
+   either change replicates. Which version survives, and where does DFSR store
+   the losing version? Describe a workflow policy you would implement for shared
+   documents to prevent simultaneous edit conflicts in a multi-site DFS
+   Replication environment.

@@ -415,3 +415,19 @@ The key mappings for exam preparation are:
 * **seaborn documentation** — [seaborn.pydata.org](https://seaborn.pydata.org/)
 * **Python for Data Analysis (free chapters)** — Wes McKinney, O'Reilly
 * **freeCodeCamp Data Analysis with Python** — [freecodecamp.org/learn](https://www.freecodecamp.org/learn/data-analysis-with-python/)
+
+---
+
+## 9. Supplemental Resources
+
+**1. Kaggle Learn — Pandas (Free Interactive Course)**
+<https://www.kaggle.com/learn/pandas>
+A free, hands-on Kaggle micro-course covering DataFrame creation, indexing, groupby, merging, and data type manipulation with live coding exercises. Directly reinforces the pandas operations covered in Module 12 with immediate feedback in a browser-based environment.
+
+**2. Real Python — Pandas GroupBy: Your Guide to Grouping Data in Python**
+<https://realpython.com/pandas-groupby>
+An in-depth tutorial covering `groupby`, `agg`, `transform`, and `apply` with practical examples. Essential for understanding the full capabilities of grouped aggregations beyond what a single reference page covers, supporting the groupby-heavy analytical techniques in this module.
+
+**3. Towards Data Science — Exploratory Data Analysis with Python (Seaborn and Matplotlib)**
+<https://towardsdatascience.com/exploratory-data-analysis-with-pandas-508a93f8c3c5>
+A walkthrough of a complete EDA workflow using pandas, matplotlib, and seaborn — covering histograms, pairplots, correlation heatmaps, and box plots. Bridges the gap between individual function calls and a full analytical workflow, matching the lab deliverables in Module 12.

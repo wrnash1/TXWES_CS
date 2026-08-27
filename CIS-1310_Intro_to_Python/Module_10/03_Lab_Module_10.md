@@ -582,6 +582,159 @@ Zip all 5 screenshots and upload to the Canvas Module 10 Lab Assignment.
 
 ---
 
+## Part 9 — Challenge Exercise
+
+These steps are optional and ungraded. They extend the core lab concepts to real-world dictionary patterns.
+
+### Step 9.1 — Inverted Index Builder
+
+An inverted index maps each unique word to the list of positions (line numbers) where it appears. This is the core data structure behind search engines and `grep`-style tools.
+
+```bash
+nano inverted_index.py
+```
+
+```python
+# inverted_index.py
+# Build an inverted index from a multi-line text
+
+text = '''the quick brown fox
+the fox jumped high
+a quick brown dog
+the dog and the fox'''
+
+index = {}
+for line_num, line in enumerate(text.strip().split('\n'), start=1):
+    for word in line.split():
+        word = word.lower()
+        if word not in index:
+            index[word] = []
+        index[word].append(line_num)
+
+# Print all entries sorted alphabetically
+print('Inverted Index:')
+for word in sorted(index):
+    print(f'  {word:10s}: lines {index[word]}')
+
+# Look up specific words
+print('\nSearch results:')
+for query in ['fox', 'the', 'cat']:
+    result = index.get(query, [])
+    if result:
+        print(f'  "{query}" found on lines: {result}')
+    else:
+        print(f'  "{query}" not found')
+```
+
+```bash
+python3 inverted_index.py
+```
+
+Observe that `'the'` appears on lines 1, 2, and 4. The `setdefault` method can replace the `if word not in index` guard — rewrite the inner loop using `index.setdefault(word, []).append(line_num)` and verify identical output.
+
+### Step 9.2 — Dictionary-Based Grade Book with Statistics
+
+Build a grade book that computes per-student statistics and class-wide rankings using dictionary methods and `sorted()` with a `key` function.
+
+```bash
+nano gradebook.py
+```
+
+```python
+# gradebook.py
+# Grade book with statistics and ranking
+
+grades = {
+    'Alice':  [88, 92, 95, 79, 84],
+    'Bob':    [72, 68, 75, 80, 70],
+    'Carol':  [95, 98, 92, 96, 99],
+    'Dave':   [60, 55, 63, 58, 65],
+    'Eve':    [85, 88, 82, 90, 87],
+}
+
+
+def average(scores):
+    return sum(scores) / len(scores)
+
+
+# Build summary dict: {name: {'avg': ..., 'high': ..., 'low': ...}}
+summary = {
+    name: {
+        'avg':  round(average(scores), 1),
+        'high': max(scores),
+        'low':  min(scores),
+    }
+    for name, scores in grades.items()
+}
+
+# Print ranked by average (descending)
+print(f'{"Rank":<5} {"Name":<8} {"Avg":>6} {"High":>6} {"Low":>6}')
+print('-' * 35)
+ranked = sorted(summary.items(), key=lambda pair: pair[1]['avg'], reverse=True)
+for rank, (name, stats) in enumerate(ranked, start=1):
+    print(f'{rank:<5} {name:<8} {stats["avg"]:>6} {stats["high"]:>6} {stats["low"]:>6}')
+
+# Class statistics
+all_avgs = [s['avg'] for s in summary.values()]
+print(f'\nClass average: {average(all_avgs):.1f}')
+print(f'Top student:   {ranked[0][0]}')
+print(f'Needs support: {ranked[-1][0]}')
+```
+
+```bash
+python3 gradebook.py
+```
+
+Notice the use of a dictionary comprehension to build the summary and `sorted()` with a nested lambda key (`pair[1]['avg']`) to rank by a field inside a nested dict.
+
+### Step 9.3 — Two-Pass Text Analyzer
+
+Write a program that reads a multi-line string and computes: total words, unique words, top 5 most frequent words, and average word length — all using dictionary operations without importing any additional modules.
+
+```bash
+nano text_analyzer.py
+```
+
+```python
+# text_analyzer.py
+# Two-pass text analysis using only dict operations
+
+passage = '''To be or not to be that is the question
+Whether tis nobler in the mind to suffer
+The slings and arrows of outrageous fortune
+Or to take arms against a sea of troubles
+And by opposing end them to die to sleep'''
+
+words = passage.lower().split()
+
+# Pass 1: build frequency dict
+freq = {}
+for word in words:
+    freq[word] = freq.get(word, 0) + 1
+
+# Pass 2: compute stats
+total_words = len(words)
+unique_words = len(freq)
+avg_length = sum(len(w) for w in words) / total_words
+top5 = sorted(freq.items(), key=lambda p: p[1], reverse=True)[:5]
+
+print(f'Total words:   {total_words}')
+print(f'Unique words:  {unique_words}')
+print(f'Average length: {avg_length:.2f} characters')
+print(f'\nTop 5 most frequent:')
+for word, count in top5:
+    bar = '#' * count
+    print(f'  {word:<12} {count:>3}  {bar}')
+```
+
+```bash
+python3 text_analyzer.py
+```
+
+Extend the program: add a third pass that builds a dictionary mapping word length to a list of unique words of that length, then print all lengths with more than 2 unique words.
+
+---
+
 ## Troubleshooting Guide
 
 **`KeyError` when accessing a dictionary value.**

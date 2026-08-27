@@ -183,6 +183,24 @@ Tip 8: Refinement consumes no more than 10% of Developers' capacity. This is the
 
 ---
 
+## 9. Supplemental Resources
+
+The following free, open-access resources go deeper on Module 06 topics:
+
+**1. "What Is a Product Backlog?" — Scrum.org**
+<https://www.scrum.org/resources/what-is-a-product-backlog>
+Scrum.org's official resource page on the Product Backlog. Covers the emergent nature, ordering principles, relationship to the Product Goal, and the Product Owner's four key accountabilities. Includes a short video.
+
+**2. "User Stories Applied" — Mike Cohn, Mountain Goat Software (excerpt)**
+<https://www.mountaingoatsoftware.com/agile/user-stories>
+A free overview of user story writing from Mountain Goat Software, covering the standard format, the INVEST criteria, and common story-writing mistakes. Cohn is the practitioner who popularized user stories in Agile teams.
+
+**3. "Product Backlog Refinement Explained" — Scrum.org**
+<https://www.scrum.org/resources/blog/product-backlog-refinement-explained-110>
+A detailed Scrum.org blog post explaining when, why, and how refinement should occur. Addresses the 10% capacity guideline, who participates, and how to assess whether a backlog item is ready for Sprint Planning. Free access.
+
+---
+
 ## 9. Study Checklist
 
 - [ ] Define the Product Backlog in the Scrum Guide's exact language and explain what "emergent" means in this context

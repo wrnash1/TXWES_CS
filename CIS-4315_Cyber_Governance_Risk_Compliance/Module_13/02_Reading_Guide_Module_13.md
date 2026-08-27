@@ -311,3 +311,19 @@ Each BCP section must have a named owner accountable for its accuracy. The Busin
 ## Alignment to CISM Exam Domains
 
 This module primarily supports CISM Domain 4: Information Security Incident Management, which includes business continuity and disaster recovery planning as core knowledge areas. Students preparing for the CISM exam should review the ISACA CISM Review Manual sections on BIA methodology, recovery strategy selection, and plan testing requirements.
+
+---
+
+## 9. Supplemental Resources
+
+**1. NIST SP 800-34 Rev. 1: Contingency Planning Guide for Federal Information Systems**
+<https://csrc.nist.gov/publications/detail/sp/800-34/rev-1/final>
+The authoritative NIST guide for IT contingency planning, covering BIA methodology, recovery strategy selection, and plan development for information systems. Required background reading for CISM Domain 4 exam preparation.
+
+**2. ISACA — Business Continuity Management: A Practitioner's Perspective**
+<https://www.isaca.org/resources/isaca-journal/issues/2016/volume-3/business-continuity-management>
+ISACA practitioner article covering BCP program governance, the relationship between BCP and risk management, and how information security managers integrate BCP into the broader organizational risk framework.
+
+**3. DRI International — Professional Practices for Business Continuity Management**
+<https://drii.org/resources/professionalpractices/EN>
+The DRI International Professional Practices document defines the ten subject areas of business continuity management, including BIA, strategy development, plan development, and exercising/testing. Widely recognized as a companion standard to NIST SP 800-34 for CISM candidates.

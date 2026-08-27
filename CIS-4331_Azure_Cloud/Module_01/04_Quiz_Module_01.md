@@ -204,3 +204,183 @@ Which of the following best describes the difference between a private cloud and
 - *Why A is incorrect:* Both private clouds and traditional data centers can use either public internet or private network connections. Network connectivity type is not the distinguishing factor.
 - *Why C is incorrect:* Private cloud can be managed internally (on-premises private cloud) or by a third party (hosted private cloud). Location of management is not the defining characteristic. Some traditional data centers are also managed by external providers.
 - *Why D is incorrect:* Server count is not the distinguishing factor. A private cloud may run on fewer physical servers than a traditional data center while still qualifying as private cloud through software-defined self-service and elasticity capabilities.
+
+---
+
+### Question 11 (5 points)
+
+A retail company's website experiences traffic spikes of 10x normal load every Black Friday. For the remaining 50 weeks of the year, the site runs at low utilization. Which cloud benefit is most valuable for this organization?
+
+- A) High availability
+- B) Geo-redundancy
+- C) Elasticity
+- D) Predictability
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - *Why C is correct:* Elasticity is the ability to automatically scale resources up during demand spikes and release them when demand subsides. This perfectly matches the Black Friday scenario: the site scales to 10x capacity for hours then scales back down, paying only for what was used.
+  - *Why A is incorrect:* High availability addresses uptime guarantees (SLA percentages) and fault tolerance, not the dynamic matching of resource capacity to variable demand.
+  - *Why B is incorrect:* Geo-redundancy means replicating resources across geographic regions for disaster recovery. It does not address the cost-efficiency challenge of variable demand.
+  - *Why D is incorrect:* Predictability refers to consistent performance or forecasting cloud spending. The scenario's core need is responsive scaling, not cost forecasting.
+
+---
+
+### Question 12 (5 points)
+
+A government agency mandates that all classified data must be stored on hardware physically controlled by the agency and never shared with any other organization. Which cloud deployment model satisfies this requirement?
+
+- A) Public cloud
+- B) Private cloud
+- C) Hybrid cloud
+- D) Community cloud
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Private cloud uses dedicated hardware for a single organization. The agency controls the physical hardware, ensuring no other organization shares the infrastructure. This directly satisfies the classified data isolation mandate.
+  - *Why A is incorrect:* Public cloud uses shared multi-tenant physical infrastructure managed by Microsoft. Workloads from different organizations run on the same physical hardware (logically isolated), which does not satisfy the requirement for agency-controlled hardware.
+  - *Why C is incorrect:* Hybrid cloud combines on-premises or private infrastructure with public cloud. The public cloud component would involve Microsoft-managed shared hardware, violating the classified data requirement.
+  - *Why D is incorrect:* Community cloud shares infrastructure among a specific group of organizations with common interests. The scenario requires hardware controlled exclusively by one agency — not shared even within a community.
+
+---
+
+### Question 13 (5 points)
+
+An Azure SLA states 99.95% availability. What is the maximum permitted downtime per month under this agreement?
+
+- A) 4 minutes 22 seconds
+- B) 21 minutes 54 seconds
+- C) 43 minutes 49 seconds
+- D) 8 hours 41 minutes
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* 99.95% availability allows 0.05% downtime per month. A 30-day month has 43,200 minutes. 0.05% of 43,200 = 21.6 minutes, or approximately 21 minutes 54 seconds.
+  - *Why A is incorrect:* 4 minutes 22 seconds corresponds to the maximum monthly downtime for 99.99% availability — a higher SLA tier than 99.95%.
+  - *Why C is incorrect:* 43 minutes 49 seconds corresponds to the maximum monthly downtime for 99.9% availability — a lower SLA tier than 99.95%.
+  - *Why D is incorrect:* 8 hours 41 minutes corresponds to the maximum annual downtime for 99.9% SLA. This is an annual figure, not monthly, and for a different SLA tier.
+
+---
+
+### Question 14 (5 points)
+
+According to the Shared Responsibility Model, which of the following tasks is the customer's responsibility when using a SaaS application?
+
+- A) Patching the application's web server software
+- B) Managing the network switches in the provider's datacenter
+- C) Managing user accounts and access permissions within the application
+- D) Upgrading the database engine used by the application
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - *Why C is correct:* In SaaS, the provider manages the entire application stack. The customer retains responsibility for managing their own users — who has accounts, what roles they are assigned, what data they can access. Identity and access management within the application is always the customer's responsibility.
+  - *Why A is incorrect:* Web server patching in a SaaS application is the provider's responsibility. The customer has no access to the underlying web server layer.
+  - *Why B is incorrect:* Physical datacenter networking, including switches, is always the provider's responsibility across all three service models (IaaS, PaaS, SaaS).
+  - *Why D is incorrect:* Database engine upgrades in a SaaS application are managed by the provider. The customer has no visibility or control over the database infrastructure.
+
+---
+
+### Question 15 (5 points)
+
+A cloud architect explains that two services with individual SLAs of 99.9% each are combined in series so that the application fails if either service fails. What is the composite SLA?
+
+- A) 99.9% (unchanged — the higher SLA governs)
+- B) 99.99% (combining services improves the SLA)
+- C) Approximately 99.8%
+- D) 100% (redundant services guarantee perfect availability)
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - *Why C is correct:* When services are combined in series (the application requires both to function), the composite SLA is calculated by multiplying the individual SLAs: 99.9% × 99.9% = 99.8001%, approximately 99.8%. Each additional dependency reduces the effective SLA.
+  - *Why A is incorrect:* The composite SLA is not governed by the highest individual SLA. Because both services must be available for the application to function, both uptime guarantees must hold simultaneously — which is statistically less likely than either alone.
+  - *Why B is incorrect:* Combining services in series reduces the composite SLA; it does not improve it. Combining services in parallel (redundancy) can improve availability, but this scenario specifies a series dependency.
+  - *Why D is incorrect:* No combination of Azure services achieves a 100% SLA. Chaining services in series mathematically reduces availability below either individual SLA.
+
+---
+
+### Question 16 (5 points)
+
+Which cloud computing characteristic allows a company's developer to provision 20 virtual machines in five minutes through a web portal, without calling a salesperson or submitting a purchase order?
+
+- A) Measured service
+- B) Broad network access
+- C) On-demand self-service
+- D) Resource pooling
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - *Why C is correct:* On-demand self-service is one of the five essential characteristics of cloud computing defined by NIST. It means users can provision computing resources unilaterally, without requiring human interaction with each service provider. The Azure Portal exemplifies this — VMs can be created instantly without procurement workflows.
+  - *Why A is incorrect:* Measured service means usage is monitored and billed based on consumption. It relates to how billing is tracked, not how quickly resources can be provisioned.
+  - *Why B is incorrect:* Broad network access means services are accessible over the network from diverse client devices. It describes connectivity, not the self-service provisioning process.
+  - *Why D is incorrect:* Resource pooling means the provider serves multiple customers from shared physical infrastructure. It describes the multi-tenant architecture, not the user's ability to provision instantly without interaction.
+
+---
+
+### Question 17 (5 points)
+
+An organization has 500 users accessing a cloud-hosted HR application. The application vendor manages all updates, servers, and databases. The organization's IT team only manages employee user accounts and configures which data fields each role can view. What service model is this?
+
+- A) IaaS
+- B) PaaS
+- C) SaaS
+- D) CaaS (Containers as a Service)
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - *Why C is correct:* The organization does not manage any infrastructure, OS, middleware, or application code. The vendor manages the complete stack. The organization only manages its own data and user access — the defining customer responsibilities under SaaS. Cloud HR applications like Workday and SAP SuccessFactors are canonical SaaS examples.
+  - *Why A is incorrect:* IaaS would require the organization's IT team to manage the OS, middleware, and application installation. The scenario explicitly states the vendor handles all servers and software.
+  - *Why B is incorrect:* PaaS would require the organization to deploy and maintain application code. Here, the vendor provides the finished application — the organization is a consumer, not a developer.
+  - *Why D is incorrect:* CaaS is not one of the three AZ-900 service model tiers. AZ-900 recognizes IaaS, PaaS, and SaaS as the three models.
+
+---
+
+### Question 18 (5 points)
+
+A company switches from on-premises servers to Azure Virtual Machines. The finance department asks whether the monthly Azure bill will vary. Which aspect of cloud pricing explains why the bill might differ each month?
+
+- A) Fixed monthly pricing — cloud services have a set monthly fee regardless of usage
+- B) Consumption-based pricing — the bill reflects actual resource usage, which varies with workload demand
+- C) Annual commitment pricing — the total is divided by 12 to produce a fixed monthly figure
+- D) Hardware depreciation — the bill decreases each month as hardware age increases
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Azure uses a consumption-based pricing model. Each month's bill reflects actual usage: how many hours VMs ran, how many gigabytes were stored, how many transactions processed. If demand fluctuates, the bill fluctuates accordingly.
+  - *Why A is incorrect:* Azure does not have a fixed monthly fee model for most services. Pay-as-you-go billing varies with consumption.
+  - *Why C is incorrect:* Annual commitment pricing (Reserved Instances) creates a consistent monthly equivalent payment, but this applies only when reservations are purchased. The default is consumption-based variable billing.
+  - *Why D is incorrect:* Hardware depreciation is an accounting concept for physical asset ownership. In cloud computing, the customer does not own hardware and incurs no depreciation expense.
+
+---
+
+### Question 19 (5 points)
+
+What distinguishes Azure's definition of "reliability" from "high availability"?
+
+- A) Reliability and high availability are identical concepts in Azure
+- B) High availability is expressed as an SLA uptime percentage; reliability refers to the architectural distribution of infrastructure across locations to prevent single points of failure
+- C) Reliability is higher than high availability — it guarantees 100% uptime while high availability only guarantees 99.99%
+- D) High availability applies to VMs; reliability applies only to Azure networking services
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* On AZ-900, high availability is the uptime commitment expressed as a percentage SLA. Reliability is an architectural concept — the infrastructure is designed and distributed globally so that a failure in one location does not cause a system-wide outage. Reliability is achieved through redundancy; high availability is measured and guaranteed through SLAs.
+  - *Why A is incorrect:* These are distinct concepts on AZ-900. High availability is quantitative (an SLA number); reliability is qualitative/architectural (global distribution, fault isolation).
+  - *Why C is incorrect:* No Azure concept guarantees 100% uptime. Reliability is not a higher tier of high availability — it is a different dimension describing architecture rather than uptime percentages.
+  - *Why D is incorrect:* Both high availability and reliability apply across all Azure service types, not just VMs or networking.
+
+---
+
+### Question 20 (5 points)
+
+A financial analyst asks why a company should pay for Azure Reserved Instances when the pay-as-you-go model offers maximum flexibility. Which is the most accurate response?
+
+- A) Reserved Instances offer hardware ownership, providing the same CAPEX benefits as on-premises servers
+- B) Reserved Instances can save up to 72% compared to pay-as-you-go for resources with predictable, continuous usage, while still being classified as OPEX with no hardware to manage
+- C) Reserved Instances are only available for virtual machines and cannot be used for other Azure services
+- D) Reserved Instances require a 5-year commitment and are only cost-effective for workloads running more than 10 years
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Azure Reserved Instances offer discounts up to 72% for 3-year commitments compared to pay-as-you-go pricing. Critically, they remain OPEX — the customer commits to paying for the service but does not purchase hardware. For predictable, long-running workloads, the cost savings far exceed the loss of flexibility.
+  - *Why A is incorrect:* Reserved Instances do not involve hardware ownership. The customer is committing to a cloud service billing arrangement, not buying physical assets. This is still OPEX, not CAPEX.
+  - *Why C is incorrect:* Azure Reservations apply to multiple services beyond VMs — including Azure SQL Database, Cosmos DB, Azure App Service, and more.
+  - *Why D is incorrect:* Azure Reserved Instances are available in 1-year and 3-year terms — not 5 years. The break-even point against pay-as-you-go is typically reached within a few months.

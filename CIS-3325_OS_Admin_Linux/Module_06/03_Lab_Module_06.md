@@ -496,4 +496,25 @@ Challenge tasks are extra credit (up to 15 points).
 
 ---
 
-*End of Module 06 Lab*
+## Part 9 — Challenge Exercise
+
+### Challenge 1: LVM Snapshot and Rollback
+
+Demonstrate LVM's snapshot capability — one of the key advantages of LVM over traditional partitioning.
+
+1. Ensure `lablv` is mounted at `/mnt/lvm_test`. Create a 500MB LVM snapshot of the logical volume: `sudo lvcreate -L 500M -s -n lablv_snap /dev/labvg/lablv`. Verify with `sudo lvs` — note the `Attr` column shows `s` for snapshot origin and `S` for the snapshot itself.
+2. Write new data to the original: `echo "post-snapshot data" | sudo tee /mnt/lvm_test/after_snap.txt`. Mount the snapshot read-only and verify it does NOT contain `after_snap.txt`: `sudo mkdir -p /mnt/snap && sudo mount -o ro /dev/labvg/lablv_snap /mnt/snap && ls /mnt/snap`.
+3. Unmount and remove the snapshot: `sudo umount /mnt/snap && sudo lvremove /dev/labvg/lablv_snap`. Verify the original `lablv` is unaffected and still contains all its data.
+
+### Challenge 2: Disk Space Emergency Response
+
+Simulate and resolve a disk space crisis using only standard Linux tools.
+
+1. Create an artificially large file to fill the `/tmp` filesystem: `dd if=/dev/zero of=/tmp/bigfile bs=1M count=500`. Run `df -h /tmp` to observe the fill level.
+2. Use `du -sh /tmp/* | sort -hr | head -10` to identify the largest file. Then use `find /tmp -type f -size +100M -mtime 0` to confirm it was created recently. Delete it and verify space is recovered with `df -h /tmp`.
+3. Write a one-liner that combines `find`, `xargs`, and `du` to produce a report of the 10 largest files anywhere under `/var` that are older than 30 days: `find /var -type f -mtime +30 2>/dev/null | xargs du -sh 2>/dev/null | sort -hr | head -10`. Record the output.
+
+### Reflection Questions
+
+1. LVM allows resizing logical volumes online without unmounting. What safeguard should always precede an `lvextend` + `resize2fs` operation in a production environment, and why does the online nature of the operation not eliminate that safeguard requirement?
+2. You practiced using UUID in fstab rather than device names like `/dev/sdb1`. Describe a specific real-world scenario on a multi-disk server where using device names in fstab would cause a boot failure, and explain exactly why the UUID avoids that failure.

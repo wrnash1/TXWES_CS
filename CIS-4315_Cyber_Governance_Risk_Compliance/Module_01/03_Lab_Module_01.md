@@ -229,3 +229,59 @@ All work submitted must be your own original writing. Use of AI-generated text s
 ---
 
 Lab Activity — Module 01 | CIS-4315 | Texas Wesleyan University
+
+---
+
+## Part 9 — Challenge Exercise
+
+These challenges extend the core lab into more advanced governance scenarios. They are optional for full credit but are strongly recommended for CISM exam preparation. Complete both challenges and the reflection questions for up to 15 bonus points.
+
+---
+
+### Challenge 1: Governance Failure Analysis
+
+**Scenario**: A mid-sized financial services company experienced a significant data breach that exposed the personal and financial data of 85,000 customers. A post-incident investigation revealed the following facts:
+
+- The CISO reported directly to the CTO, who was focused primarily on product delivery timelines.
+- The board had not received a security program briefing in over two years.
+- The security team had submitted a formal request for multi-factor authentication funding eighteen months prior; the request was denied without documented rationale.
+- No documented risk appetite statement existed. Security investments were approved or denied based on IT budget availability, not risk criteria.
+- The organization had achieved SOC 2 Type I certification six months before the breach.
+
+**Step 1**: Identify at least four specific governance failures present in this scenario. For each failure, name the governance principle being violated and cite the CISM Domain 1 concept that applies.
+
+**Step 2**: Explain how each failure contributed, directly or indirectly, to the breach outcome. Your explanation should demonstrate the chain of consequence — how a governance gap at the strategic level created conditions for a technical failure.
+
+**Step 3**: Redesign the governance structure. Propose a specific corrective action for each failure you identified. Each corrective action should be actionable, assignable to a named role, and achievable within a twelve-month timeframe.
+
+Present your work in a table with columns: Governance Failure | CISM Principle Violated | Contribution to Breach | Corrective Action | Responsible Role.
+
+---
+
+### Challenge 2: CISM Domain 1 Scenario Reasoning
+
+Read each of the following scenarios and select the most CISM-aligned response. For each, write two to three sentences explaining why your chosen answer reflects governance principles rather than technical or operational reasoning.
+
+**Scenario A**: A newly hired CISO discovers that the company's security program has no documented alignment to business objectives. The board asks the CISO to prioritize first actions. What should the CISO do first?
+
+- Option 1: Deploy a vulnerability scanner across all company assets to establish a technical baseline.
+- Option 2: Conduct stakeholder interviews to understand business objectives, regulatory obligations, and risk appetite before making any security investment decisions.
+- Option 3: Issue a new acceptable use policy immediately to demonstrate governance activity to the board.
+- Option 4: Hire three additional security engineers to increase operational capacity.
+
+**Scenario B**: The CEO asks the security steering committee whether the company should acquire a smaller competitor whose security posture is unknown. The CISO is asked to advise. What is the most governance-aligned response?
+
+- Option 1: Decline to advise because security concerns should not influence business decisions.
+- Option 2: Conduct a rapid security due diligence assessment of the target company, quantify the risk exposure of acquisition, and present findings to the steering committee in business risk terms before the acquisition closes.
+- Option 3: Require the acquisition be cancelled until the target achieves ISO 27001 certification.
+- Option 4: Advise the CEO that this is an IT decision, not a security decision.
+
+---
+
+### Reflection Questions
+
+Answer each reflection question in four to six sentences using concepts from the Module 01 Reading Guide.
+
+1. Why is the governance-versus-management distinction more than semantic? Describe a real-world scenario in which confusing the two roles would cause an organizational security failure, and explain which CISM concept it violates.
+
+2. A colleague argues that ISO 27001 certification proves a company is secure. Using what you know about the purpose of an ISMS, write a response that corrects this misconception and explains what certification actually demonstrates.

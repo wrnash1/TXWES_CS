@@ -413,6 +413,107 @@ gcloud container clusters delete $CLUSTER \
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Workload Identity Configuration
+
+Configure Workload Identity on the GKE cluster so a pod can call the Cloud
+Storage API without a JSON key file.
+
+1. Enable Workload Identity on the cluster (if not already enabled):
+
+```bash
+gcloud container clusters update $CLUSTER \
+  --region=$REGION \
+  --workload-pool=$PROJECT_ID.svc.id.goog
+```
+
+1. Create a GCP service account for the workload and grant it Storage Viewer:
+
+```bash
+gcloud iam service-accounts create gke-wi-demo \
+  --display-name="GKE Workload Identity Demo"
+
+gcloud projects add-iam-policy-binding $PROJECT_ID \
+  --member="serviceAccount:gke-wi-demo@$PROJECT_ID.iam.gserviceaccount.com" \
+  --role="roles/storage.objectViewer"
+```
+
+1. Create a Kubernetes service account and bind it to the GCP service account:
+
+```bash
+kubectl create serviceaccount wi-ksa --namespace=default
+
+gcloud iam service-accounts add-iam-policy-binding \
+  gke-wi-demo@$PROJECT_ID.iam.gserviceaccount.com \
+  --role="roles/iam.workloadIdentityUser" \
+  --member="serviceAccount:$PROJECT_ID.svc.id.goog[default/wi-ksa]"
+
+kubectl annotate serviceaccount wi-ksa \
+  --namespace=default \
+  iam.gke.io/gcp-service-account=gke-wi-demo@$PROJECT_ID.iam.gserviceaccount.com
+```
+
+1. Deploy a test pod using the Kubernetes service account and verify it can
+   list Cloud Storage buckets:
+
+```bash
+kubectl run wi-test --image=google/cloud-sdk:slim \
+  --serviceaccount=wi-ksa \
+  --restart=Never \
+  --command -- gcloud storage buckets list
+kubectl logs wi-test
+```
+
+### Challenge 2: PodDisruptionBudget for Zero-Downtime Maintenance
+
+Create a PodDisruptionBudget (PDB) that ensures at least 2 replicas of
+the `hello-app` deployment remain available during a node drain.
+
+1. Create the PDB:
+
+```bash
+cat <<'EOF' | kubectl apply -f -
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: hello-app-pdb
+spec:
+  minAvailable: 2
+  selector:
+    matchLabels:
+      app: hello-app
+EOF
+```
+
+1. Scale the deployment to 3 replicas and drain one node to observe the PDB
+   in action:
+
+```bash
+kubectl scale deployment hello-app --replicas=3
+NODE=$(kubectl get nodes -o name | head -1 | cut -d/ -f2)
+kubectl drain $NODE --ignore-daemonsets --delete-emptydir-data
+```
+
+1. Observe that the drain respects the PDB and only evicts pods when 2+
+   replicas remain available. Uncordon the node afterward:
+
+```bash
+kubectl uncordon $NODE
+```
+
+### Reflection Questions
+
+1. In the Workload Identity setup you annotated a Kubernetes service account
+   with a GCP service account email. Why does this eliminate the need for a
+   JSON key file mounted as a Kubernetes Secret, and what security benefit does
+   that provide?
+2. The PodDisruptionBudget you created specifies `minAvailable: 2`. During the
+   node drain, if all 3 replicas are on the same node, what will happen and why
+   does distributing pods across nodes matter for PDB effectiveness?
+
+---
+
 End of Lab — Module 06
 
 Course: CIS-4329 Google Cloud Computing | Texas Wesleyan University | Professor Nash

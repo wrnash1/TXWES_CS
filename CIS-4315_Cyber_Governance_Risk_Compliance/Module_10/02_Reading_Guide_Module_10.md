@@ -395,3 +395,17 @@ Before attempting the Module 10 quiz, verify:
 - CISA Federal Incident Notification Guidelines
 
 - IBM Cost of a Data Breach Report (current year edition)
+
+## 9. Supplemental Resources
+
+**1. NIST SP 800-61 Rev. 2 — Computer Security Incident Handling Guide**
+https://csrc.nist.gov/publications/detail/sp/800-61/rev-2/final
+The authoritative NIST framework for incident response. Defines the four-phase lifecycle (Preparation, Detection and Analysis, Containment/Eradication/Recovery, Post-Incident Activity) that underpins all IRP development covered in this module. Free download from NIST.
+
+**2. CISA Incident Notification Guidelines for Federal Agencies**
+https://www.cisa.gov/sites/default/files/publications/Federal_Incident_Notification_Guidelines.pdf
+CISA's operational guidance for categorizing and reporting cybersecurity incidents, including severity taxonomy and notification timelines. Applicable to understanding structured escalation design for any organization type.
+
+**3. SANS Institute — Incident Handler's Handbook**
+https://www.sans.org/white-papers/33901/
+A practitioner-level reference describing IRP components, communication planning, and evidence handling procedures. Complements the NIST framework with hands-on field guidance from experienced incident responders.

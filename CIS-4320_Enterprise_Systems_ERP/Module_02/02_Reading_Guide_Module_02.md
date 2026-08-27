@@ -276,3 +276,19 @@ Complete these before attempting the quiz:
 - Complete Lab 02.
 - Post your initial response to Discussion Forum 02 by Wednesday at 11:59 PM.
 - Complete Quiz 02 (10 questions).
+
+---
+
+## 9. Supplemental Resources
+
+**1. openSAP — Business Process Management and Automation with SAP**
+<https://open.sap.com/courses/btp2>
+Free openSAP course covering SAP Business Technology Platform process automation capabilities, including workflow management and decision rules. Directly relevant to BPMN-to-SAP configuration mapping covered in this module.
+
+**2. Object Management Group — BPMN 2.0 Specification and Quick Reference**
+<https://www.omg.org/spec/BPMN/2.0/>
+The official OMG BPMN 2.0 specification page. The quick reference card downloadable from this page is the authoritative symbol guide for all BPMN elements tested on enterprise architecture and certification exams.
+
+**3. Salesforce Trailhead — Flow Builder: Advanced Concepts**
+<https://trailhead.salesforce.com/content/learn/modules/flow-builder>
+Extends the introductory Flow content with subflows, fault paths, and scheduled automation — the Salesforce equivalents of BPMN intermediate events and escalation patterns. Relevant to Questions 6 and 14 in the module quiz.

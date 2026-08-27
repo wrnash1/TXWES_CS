@@ -371,3 +371,17 @@ Submit the following to Canvas:
 ---
 
 *Lab 09 — Module 09: Azure Storage | CIS-4331 | Texas Wesleyan University*
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Blob Immutability Policy
+Enable blob versioning on your storage account with `az storage account blob-service-properties update --enable-versioning true`. Then create a time-based immutability policy on the `lab09-container` container using `az storage container immutability-policy create --period 1` (1-day retention). Attempt to delete a blob in the container and document the error you receive. Lock the policy with `az storage container immutability-policy lock` and attempt the delete again. Document both error messages and explain in 2–3 sentences why a locked immutability policy is required for compliance use cases (such as SEC 17a-4 financial records retention) compared to an unlocked policy.
+
+### Challenge 2: AzCopy Performance Test
+Download the AzCopy tool from the Azure documentation (https://aka.ms/downloadazcopy). Generate a test file of approximately 100 MB using your OS tools. Use `azcopy copy` to upload the file to your storage account blob container, timing the transfer. Then use `azcopy sync` to sync a local directory containing 10 small files (create them with a script) to a blob container. Document the transfer speeds for both operations. Compare these speeds to the theoretical time to transfer 800 TB over a 200 Mbps internet connection (show your calculation) and explain why the Data Box approach used in Question 3 of this module's quiz is justified for large offline migrations.
+
+### Reflection Questions
+1. In the lab you changed the storage account redundancy from LRS to GRS. GRS replicates data asynchronously to a secondary region, meaning there may be a small replication lag (typically seconds). What is the implication of this asynchronous replication for the Recovery Point Objective (RPO) of a storage account if the primary region suffers a sudden complete failure? How does RA-GRS change the Recovery Time Objective (RTO) compared to GRS during a regional failover?
+2. A developer proposes storing all application configuration secrets (API keys, database passwords) in Azure Blob Storage with a private container and a SAS token for access. Describe two specific security weaknesses of this approach compared to storing secrets in Azure Key Vault, and explain what Key Vault features address each weakness.

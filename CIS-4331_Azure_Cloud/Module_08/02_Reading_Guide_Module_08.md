@@ -359,6 +359,22 @@ az network vnet show \
 
 ---
 
+## 9. Supplemental Resources
+
+**1. Microsoft Learn — Azure network security groups overview**
+https://learn.microsoft.com/en-us/azure/virtual-network/network-security-groups-overview
+Complete NSG reference covering default rules, priority evaluation, service tags, application security groups, and effective security rules — the primary reference for all NSG exam questions.
+
+**2. Microsoft Learn — Azure Application Gateway overview**
+https://learn.microsoft.com/en-us/azure/application-gateway/overview
+Covers Application Gateway routing rules (path-based, multi-site), SSL termination, autoscaling, WAF integration, and the difference between v1 and v2 SKUs — essential for understanding Layer 7 load balancing on Azure.
+
+**3. Microsoft Learn — Azure Private Endpoint overview**
+https://learn.microsoft.com/en-us/azure/private-link/private-endpoint-overview
+Explains the difference between Service Endpoints and Private Endpoints, how Private Endpoints assign private IP addresses to PaaS services, and DNS configuration requirements for name resolution to private endpoints.
+
+---
+
 ## Required Reading Resources
 
 - Azure VNet overview: learn.microsoft.com/en-us/azure/virtual-network/virtual-networks-overview

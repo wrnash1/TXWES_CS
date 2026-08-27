@@ -160,3 +160,27 @@ Complete the Reading Guide glossary review before beginning the lab.
 - [ ] Watch the display technology videos in Professor Messer's free A+ Core 1 course
 - [ ] Complete Lab 07 and submit via Canvas before the deadline
 - [ ] Post your Discussion 07 initial response by Wednesday at 11:59 PM
+
+---
+
+## 9. Supplemental Resources
+
+1. **Professor Messer — Display Technologies and Connectors (220-1101 Free Video)**
+   URL: [https://www.professormesser.com/free-a-plus-training/220-1101/220-1101-video/](https://www.professormesser.com/free-a-plus-training/220-1101/220-1101-video/)
+   Relevance: Free video covering TN/IPS/VA/OLED panel types, HDMI, DisplayPort, DVI, and VGA connector identification — all Module 07 exam objectives.
+
+2. **HDMI Forum — HDMI Specifications (Free Reference)**
+   URL: [https://www.hdmi.org/spec/Summary](https://www.hdmi.org/spec/Summary)
+   Relevance: Official HDMI specification summaries for 1.4, 2.0, and 2.1. Use to verify bandwidth, resolution, and refresh rate capabilities for each version when answering compatibility questions in the lab and quiz.
+
+3. **VESA — DisplayPort Standard Overview (Free)**
+   URL: [https://www.displayport.org/displayport-a-technical-primer/](https://www.displayport.org/displayport-a-technical-primer/)
+   Relevance: Official VESA overview of DisplayPort 1.2, 1.4, and 2.0/2.1 bandwidth capabilities, MST support, and comparisons to HDMI. The authoritative source for DisplayPort technical specifications.
+
+4. **Rtings.com — Monitor Panel Type Comparison (Free)**
+   URL: [https://www.rtings.com/monitor/learn/ips-vs-va-vs-tn-vs-oled](https://www.rtings.com/monitor/learn/ips-vs-va-vs-tn-vs-oled)
+   Relevance: Free side-by-side comparison of TN, IPS, VA, and OLED panel characteristics with measured data. Reinforces the panel type comparison table from the reading guide with real-world test data.
+
+5. **DisplayPort Bandwidth Calculator (Free Tool)**
+   URL: [https://www.displayninja.com/displayport-bandwidth-calculator/](https://www.displayninja.com/displayport-bandwidth-calculator/)
+   Relevance: Interactive calculator that shows whether a given resolution, refresh rate, and color depth combination fits within a specific DisplayPort or HDMI version's bandwidth. Useful for the lab challenge exercise on bandwidth calculations.

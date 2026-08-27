@@ -213,3 +213,173 @@ D) `Add-DhcpScope -NetworkId 10.0.5.0 -Mask 255.255.255.0 -Range 10.0.5.50 10.0.
   - Why A is incorrect: `New-DhcpServerv4Scope` is not a valid DHCP PowerShell cmdlet. The correct cmdlet for creating a new scope is `Add-DhcpServerv4Scope`. The `-Network` and `-Range` parameters shown are also not valid for this cmdlet.
   - Why C is incorrect: `Set-DhcpServerv4Scope` modifies an existing scope — it does not create a new one. Using `Set-` on a scope that does not yet exist would produce an error. The `-Activate` parameter is also not valid for this cmdlet.
   - Why D is incorrect: `Add-DhcpScope` is not a valid PowerShell cmdlet. All Windows Server DHCP cmdlets follow the `Add-DhcpServerv4*` / `Get-DhcpServerv4*` / `Set-DhcpServerv4*` naming pattern.
+
+---
+
+### Question 11 (5 points)
+
+An administrator creates a conditional forwarder for `partner.com` pointing to `10.10.1.1`. Queries for `partner.com` are failing. The administrator can ping `10.10.1.1` successfully from the DNS server. What should be checked next?
+
+- A) Whether the DNS Server service needs to be restarted after creating a conditional forwarder
+- B) Whether port 53 (UDP and TCP) is allowed through the firewall between the DNS server and `10.10.1.1`
+- C) Whether the conditional forwarder needs to be set as Enforced in Active Directory
+- D) Whether the corp.local forward lookup zone is configured to allow non-secure dynamic updates
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: DNS conditional forwarders take effect immediately without a service restart. The DNS Server service does not need to be restarted after adding a forwarder.
+  - Why C is incorrect: The "Enforce" option in DNS conditional forwarder settings means the forwarder is authoritative for that zone. It does not relate to firewall or network connectivity issues.
+  - Why D is incorrect: The corp.local dynamic update setting controls which clients can register records in the local zone. It has no effect on outbound forwarding queries to external servers.
+
+---
+
+### Question 12 (5 points)
+
+A company has a main office subnet `10.0.1.0/24` and a branch office subnet `10.0.2.0/24`. Both are served by the same DHCP server. There is a DHCP relay agent on the router between the two subnets. Which DHCP configuration is required to serve both subnets from a single DHCP server?
+
+- A) One DHCP scope with a superscope spanning both subnets
+- B) Two separate DHCP scopes — one for each subnet — because each scope corresponds to one logical network
+- C) One DHCP scope with two exclusion ranges covering the second subnet
+- D) Two DHCP servers — one per subnet — because DHCP cannot serve multiple subnets from one server
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: A superscope is used to logically group multiple scopes when multiple logical IP networks share the same physical segment (multinet scenario). It is not required for serving multiple separate subnets through a relay agent.
+  - Why C is incorrect: Exclusion ranges remove addresses from an existing scope's pool. They cannot extend a scope to serve a different subnet or network.
+  - Why D is incorrect: A single DHCP server can serve multiple subnets. The DHCP relay agent on the router forwards DHCP broadcasts from the remote subnet to the DHCP server, which responds using the scope that matches the relay agent's IP address.
+
+---
+
+### Question 13 (5 points)
+
+Which DNS record type would an administrator create to allow email to be sent to addresses at `corp.local` by directing SMTP traffic to the correct mail server?
+
+- A) A record pointing `mail.corp.local` to the Exchange server IP
+- B) MX record pointing `corp.local` to the mail server hostname with a priority value
+- C) SRV record for `_smtp._tcp.corp.local` pointing to the Exchange server
+- D) CNAME record from `smtp.corp.local` to the Exchange server hostname
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: An A record resolves a hostname to an IP address. While mail servers also have A records, the A record itself does not tell other mail servers where to deliver email for the `corp.local` domain. That is the purpose of the MX record.
+  - Why C is incorrect: An SRV record for `_smtp._tcp` is not a standard email routing mechanism. MX records are the authoritative record type for mail exchanger designation in DNS.
+  - Why D is incorrect: A CNAME is an alias. While it can resolve a name to another hostname, it does not designate a server as a mail exchanger for a domain. RFC standards explicitly prohibit using CNAME records as MX record targets.
+
+---
+
+### Question 14 (5 points)
+
+A DHCP administrator wants to ensure all clients in the `192.168.10.0/24` scope receive `192.168.10.1` as their default gateway and `192.168.10.10` as their DNS server. Where should these values be configured?
+
+- A) As DHCP server-level options that apply to all scopes on the server
+- B) As scope options on the `192.168.10.0/24` scope specifically
+- C) As DHCP reservations for the gateway and DNS server addresses
+- D) As exclusion ranges that reserve those IPs for infrastructure devices
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: Server-level options apply to all scopes on the DHCP server. Configuring them at the server level is appropriate if the same gateway and DNS apply to all scopes, but scope-level options are more targeted when different scopes need different values.
+  - Why C is incorrect: Reservations bind a MAC address to a specific IP address for client devices. The gateway and DNS server addresses are infrastructure values provided to clients — they are not themselves clients receiving leases.
+  - Why D is incorrect: Exclusion ranges remove addresses from the lease pool so DHCP never assigns them. They do not tell clients which gateway or DNS server to use.
+
+---
+
+### Question 15 (5 points)
+
+An administrator needs to find all active DHCP leases on the `192.168.10.0` scope to audit which clients are currently connected. Which PowerShell command retrieves this information?
+
+- A) `Get-DhcpServerv4Lease -ScopeId 192.168.10.0`
+- B) `Get-DhcpServerv4Scope -ScopeId 192.168.10.0 -ShowLeases`
+- C) `Show-DhcpServerv4Lease -Network 192.168.10.0`
+- D) `Get-DhcpServerv4Statistics -ScopeId 192.168.10.0 | Select-Object Leases`
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - Why B is incorrect: `Get-DhcpServerv4Scope` returns scope configuration details such as address range, state, and lease duration. It does not have a `-ShowLeases` parameter and does not return active lease records.
+  - Why C is incorrect: `Show-DhcpServerv4Lease` is not a valid PowerShell cmdlet. The correct verb for retrieving lease data is `Get-`.
+  - Why D is incorrect: `Get-DhcpServerv4Statistics` returns aggregate statistics such as total addresses, addresses in use, and available addresses — not the individual lease records with hostname and MAC information.
+
+---
+
+### Question 16 (5 points)
+
+What is the purpose of enabling DNS Record Scavenging, and what risk does it mitigate?
+
+- A) It compresses DNS zone files to reduce SYSVOL storage usage
+- B) It removes stale DNS records left by computers that were decommissioned or renamed without deregistering their DNS records, preventing resolution of non-existent hosts
+- C) It prevents unauthorized clients from registering DNS records in the zone
+- D) It synchronizes DNS records between primary and secondary zones faster than standard zone transfers
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: DNS scavenging has no effect on file compression or SYSVOL storage. Zone file size is managed through normal record deletion, not scavenging.
+  - Why C is incorrect: Preventing unauthorized DNS registration is controlled by the Dynamic Update setting (Secure Only). Scavenging removes old records; it does not authenticate new registrations.
+  - Why D is incorrect: Zone transfer speed is unrelated to scavenging. Zone transfers are governed by replication schedule settings and the AD replication topology, not scavenging intervals.
+
+---
+
+### Question 17 (5 points)
+
+A DNS server is configured with Root Hints. An administrator adds an external forwarder at `8.8.8.8`. How does the DNS server decide whether to use the forwarder or Root Hints for an external query?
+
+- A) Root Hints are always used first; forwarders are only tried if Root Hints fail
+- B) The DNS server uses the forwarder first; if the forwarder fails or is unavailable, it falls back to Root Hints
+- C) Forwarders and Root Hints are queried simultaneously, and the faster response wins
+- D) Root Hints are disabled automatically once a forwarder is configured
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: Root Hints are the fallback mechanism, not the primary. The DNS server contacts its configured forwarder first. Root Hints are only used if the forwarder does not respond.
+  - Why C is incorrect: DNS does not query both simultaneously. The forwarder is tried first; Root Hints are the sequential fallback.
+  - Why D is incorrect: Configuring a forwarder does not disable Root Hints. They remain available as a fallback. An administrator can explicitly disable Root Hints use (the "Use root hints if no forwarders are available" checkbox), but they are not automatically removed.
+
+---
+
+### Question 18 (5 points)
+
+An administrator sets the DHCP lease duration for the main office scope to 8 days. What is the practical effect of a very long lease duration compared to a very short one?
+
+- A) Long leases reduce network traffic by requiring clients to renew less frequently, but waste IP addresses if clients leave the network without releasing their leases
+- B) Long leases increase DNS scavenging frequency because clients update their DNS records more often
+- C) Short leases reduce DHCP server load because fewer lease records are stored in the database
+- D) Short leases guarantee that clients always receive the same IP address across reboots
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - Why B is incorrect: Lease duration and DNS scavenging are independent configurations. A long DHCP lease does not cause more frequent DNS updates. DNS records are refreshed on their own TTL cycle.
+  - Why C is incorrect: Short leases actually increase DHCP server load because clients must renew more frequently, generating more DHCPREQUEST/DHCPACK traffic and more database writes.
+  - Why D is incorrect: Consistent IP assignment across reboots requires a DHCP reservation tied to the MAC address. Lease duration only affects how long a lease is valid, not whether the same address is reissued.
+
+---
+
+### Question 19 (5 points)
+
+An administrator configures DHCP Failover in Load Balance mode with a 60/40 split between two DHCP servers. What does the 60/40 configuration mean?
+
+- A) Server 1 serves leases for 60% of the time; Server 2 serves leases for the remaining 40%
+- B) 60% of the IP address pool is managed by Server 1 and 40% by Server 2; both servers are always active simultaneously
+- C) Server 1 holds 60 days of lease history; Server 2 holds 40 days
+- D) Server 1 handles renewals and Server 2 handles new leases, split 60/40 by request type
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: Load Balance mode does not mean time-based rotation between servers. Both servers are simultaneously active, each managing a portion of the address pool.
+  - Why C is incorrect: The 60/40 percentage refers to the address pool split, not lease history retention durations.
+  - Why D is incorrect: DHCP Failover Load Balance mode splits the address pool, not the request type. Both servers handle both renewals and new requests for their respective portions of the pool.
+
+---
+
+### Question 20 (5 points)
+
+A client workstation running `ipconfig /all` shows an IPv4 address of `169.254.23.45` with a subnet mask of `255.255.0.0`. What does this address indicate, and what is the most likely cause?
+
+- A) The workstation is using a statically configured APIPA address assigned by the administrator for a test network
+- B) The workstation failed to obtain a DHCP lease and self-assigned an Automatic Private IP Addressing (APIPA) address; the DHCP server is unreachable
+- C) The workstation received a DHCP lease from an unauthorized DHCP server on a different subnet
+- D) The workstation has a duplicate IP conflict with another device and Windows assigned a fallback address
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: APIPA addresses in the `169.254.0.0/16` range are automatically self-assigned by Windows when no DHCP server responds. They are not administratively assigned and are not intended for use as static addresses.
+  - Why C is incorrect: If the workstation received a lease from any DHCP server, it would have a valid routable address, not an APIPA address. APIPA only activates when no DHCP response is received at all.
+  - Why D is incorrect: IP address conflicts in Windows result in the second device losing its address and showing a limited connectivity warning, but the address shown would be the conflicting address, not an APIPA address. APIPA results specifically from DHCP unavailability.

@@ -619,6 +619,201 @@ Zip all 5 screenshots and upload to the Canvas Module 11 Lab Assignment.
 
 ---
 
+## Part 9 — Challenge Exercise
+
+These steps are optional and ungraded. They extend string processing skills to real-world patterns.
+
+### Step 9.1 — Efficient String Builder (List vs. Concatenation)
+
+String concatenation with `+` in a loop rebuilds the entire string on every iteration. For large data, the correct pattern is to accumulate pieces in a list and call `.join()` once at the end.
+
+```bash
+nano string_builder.py
+```
+
+```python
+# string_builder.py
+# Benchmark: + concatenation vs list.join()
+import time
+
+n = 50000
+
+# Method 1: += concatenation (slow)
+start = time.perf_counter()
+s = ''
+for i in range(n):
+    s += str(i) + ','
+concat_time = time.perf_counter() - start
+
+# Method 2: list + join (fast)
+start = time.perf_counter()
+parts = []
+for i in range(n):
+    parts.append(str(i))
+s2 = ','.join(parts)
+join_time = time.perf_counter() - start
+
+# Method 3: generator expression (most Pythonic)
+start = time.perf_counter()
+s3 = ','.join(str(i) for i in range(n))
+gen_time = time.perf_counter() - start
+
+print(f'n = {n} iterations')
+print(f'Concatenation:  {concat_time:.4f} s')
+print(f'List + join:    {join_time:.4f} s')
+print(f'Generator join: {gen_time:.4f} s')
+print(f'Speedup (concat vs generator): {concat_time / gen_time:.1f}x')
+print(f'All results identical: {s.rstrip(",") == s2 == s3}')
+```
+
+```bash
+python3 string_builder.py
+```
+
+Observe the speedup. For 50,000 iterations, the join approach is typically 10–50x faster than concatenation. Increase `n` to 200,000 to make the difference more dramatic.
+
+### Step 9.2 — CSV Line Parser with Validation
+
+Build a reusable CSV parser that handles quoted fields, strips whitespace, validates data types, and reports malformed rows — using only string methods.
+
+```bash
+nano csv_parser.py
+```
+
+```python
+# csv_parser.py
+# Parse and validate CSV-like data using only string methods
+
+csv_data = '''name, age, email
+Alice, 30, alice@example.com
+Bob, abc, bob@example.com
+Carol, 25,
+Dave, 40, dave@example.com
+Eve, -5, not-an-email
+'''
+
+def is_valid_email(s):
+    '''Basic email validation using string methods only.'''
+    s = s.strip()
+    if s.count('@') != 1:
+        return False
+    local, domain = s.split('@')
+    return len(local) > 0 and '.' in domain and len(domain) > 2
+
+errors = []
+records = []
+
+lines = csv_data.strip().split('\n')
+headers = [h.strip() for h in lines[0].split(',')]
+
+for line_num, line in enumerate(lines[1:], start=2):
+    fields = [f.strip() for f in line.split(',')]
+    if len(fields) != len(headers):
+        errors.append(f'Line {line_num}: expected {len(headers)} fields, got {len(fields)}')
+        continue
+    name, age_str, email = fields
+    row_errors = []
+    if not name.replace(' ', '').isalpha():
+        row_errors.append('invalid name')
+    if not age_str.lstrip('-').isdigit():
+        row_errors.append('age is not a number')
+    elif int(age_str) <= 0:
+        row_errors.append('age must be positive')
+    if not is_valid_email(email):
+        row_errors.append('invalid email')
+    if row_errors:
+        errors.append(f'Line {line_num} ({name}): {", ".join(row_errors)}')
+    else:
+        records.append({'name': name, 'age': int(age_str), 'email': email})
+
+print(f'Valid records: {len(records)}')
+for r in records:
+    print(f'  {r["name"]:<10} age={r["age"]} email={r["email"]}')
+
+print(f'\nErrors: {len(errors)}')
+for e in errors:
+    print(f'  {e}')
+```
+
+```bash
+python3 csv_parser.py
+```
+
+### Step 9.3 — Pangram and Anagram Checker
+
+A pangram is a sentence that contains every letter of the alphabet at least once. An anagram is a rearrangement of all letters from one string to form another. Both checks use only string methods and built-in functions.
+
+```bash
+nano string_checks.py
+```
+
+```python
+# string_checks.py
+# Pangram and anagram checks using string methods
+
+import string
+
+
+def is_pangram(sentence):
+    '''Return True if sentence contains every letter a-z.'''
+    letters_used = set(sentence.lower())
+    return set(string.ascii_lowercase).issubset(letters_used)
+
+
+def is_anagram(s1, s2):
+    '''Return True if s1 and s2 are anagrams (same letters, any order).'''
+    clean = lambda s: sorted(s.lower().replace(' ', ''))
+    return clean(s1) == clean(s2)
+
+
+def letter_frequency(s):
+    '''Return sorted list of (letter, count) for letters in s.'''
+    s = s.lower()
+    freq = {}
+    for ch in s:
+        if ch.isalpha():
+            freq[ch] = freq.get(ch, 0) + 1
+    return sorted(freq.items())
+
+
+# Pangram tests
+sentences = [
+    'The quick brown fox jumps over the lazy dog',
+    'Pack my box with five dozen liquor jugs',
+    'Hello world',
+]
+
+print('Pangram tests:')
+for s in sentences:
+    result = 'YES' if is_pangram(s) else 'NO'
+    print(f'  [{result}] {s!r}')
+
+# Anagram tests
+pairs = [
+    ('listen', 'silent'),
+    ('triangle', 'integral'),
+    ('hello', 'world'),
+    ('Astronomer', 'Moon starer'),
+]
+
+print('\nAnagram tests:')
+for a, b in pairs:
+    result = 'YES' if is_anagram(a, b) else 'NO'
+    print(f'  [{result}] {a!r} vs {b!r}')
+
+# Letter frequency
+print('\nLetter frequency for "Mississippi":')
+for letter, count in letter_frequency('Mississippi'):
+    bar = '#' * count
+    print(f'  {letter}: {bar}')
+```
+
+```bash
+python3 string_checks.py
+```
+
+---
+
 ## Troubleshooting Guide
 
 **String method has no visible effect — value is unchanged.**

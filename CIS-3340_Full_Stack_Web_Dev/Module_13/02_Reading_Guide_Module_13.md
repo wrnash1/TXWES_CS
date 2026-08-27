@@ -330,3 +330,25 @@ This pattern is tested directly on the DVA-C02 exam.
 - [ ] Send the JWT from React using the `Authorization: Bearer` header pattern
 - [ ] Explain the difference between 401 and 403 HTTP status codes
 - [ ] Describe the AWS Lambda Authorizer flow and why API Gateway caches the policy
+
+---
+
+## 11. Supplemental Resources
+
+The following free, open-access resources go deeper on Module 13 topics:
+
+**1. OWASP — JSON Web Token Security Cheat Sheet**
+[https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.html](https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.html)
+The OWASP authoritative reference covering JWT attack vectors — `alg: none` bypass, weak secret brute force, claim confusion — and the corresponding defenses including algorithm pinning, secret entropy requirements, and token revocation strategies. Directly reinforces the security concepts in Sections 1 and 5 of this guide.
+
+**2. MDN Web Docs — Cross-Origin Resource Sharing (CORS)**
+[https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)
+Complete reference for the CORS protocol including preflight mechanics, `Access-Control-Allow-Headers`, `Access-Control-Allow-Credentials`, and the browser same-origin enforcement model — directly aligned to Section 7 (CORS for authenticated requests) and the `allowedHeaders: ['Authorization']` pattern in Lab 13.
+
+**3. npm — jsonwebtoken package documentation**
+[https://www.npmjs.com/package/jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)
+The official `jsonwebtoken` package documentation covering `jwt.sign()` options (`expiresIn`, `issuer`, `audience`), `jwt.verify()` error types (`TokenExpiredError`, `JsonWebTokenError`, `NotBeforeError`), algorithm options, and security considerations — the primary reference for all JWT code patterns in this module.
+
+**4. AWS Documentation — API Gateway Lambda Authorizer**
+[https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-use-lambda-authorizer.html](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-use-lambda-authorizer.html)
+The official AWS documentation for Lambda authorizers covering token-based vs request-based authorizers, IAM policy output format, TTL caching of authorization decisions, and the relationship between the authorizer function and the backend Lambda — the production-scale equivalent of the `authenticate` middleware built in Lab 13.

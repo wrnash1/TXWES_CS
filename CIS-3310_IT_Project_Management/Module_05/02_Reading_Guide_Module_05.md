@@ -193,3 +193,29 @@ Complete the following before the lab and quiz:
 - [ ] Complete the Module 05 Lab EVM calculation exercises
 - [ ] Take the Module 05 Quiz
 - [ ] Post Module 05 Discussion initial response by Wednesday at 11:59 PM
+
+---
+
+## 9. Supplemental Resources
+
+The following free, openly licensed resources extend the concepts in this module. All links are publicly accessible — no account or purchase required.
+
+1. **Project Management Open Textbook — Chapter 7: Cost Management**
+   *BC Campus OpenEd* — [opentextbc.ca/projectmanagement — Chapter 7](https://opentextbc.ca/projectmanagement/chapter/chapter-7-project-cost-management/)
+   Covers cost estimating techniques, budget baseline development, and Earned Value Management with step-by-step worked examples.
+
+2. **PMI — Practice Standard for Earned Value Management (Overview)**
+   *Project Management Institute* — [pmi.org/pmbok-guide-standards/practice-guides/evm](https://www.pmi.org/pmbok-guide-standards/practice-guides/earned-value-management)
+   Official PMI EVM guidance covering all nine EVM formulas, including EAC variants and TCPI interpretation.
+
+3. **YouTube — "Earned Value Management in 15 Minutes" (PM PrepCast)**
+   [youtube.com/watch?v=xHLfEY8GFOQ](https://www.youtube.com/watch?v=xHLfEY8GFOQ)
+   Concise video covering CPI, SPI, EAC, ETC, and VAC with numeric examples — highly recommended as a pre-quiz review.
+
+4. **EVM Formula Sheet — PM Study Circle (Free Download)**
+   [pmstudycircle.com/earned-value-management-formulas](https://pmstudycircle.com/earned-value-management-formulas/)
+   One-page reference card with all EVM formulas and their interpretive rules (when values are > 1, < 1, or = 1). Print-friendly.
+
+5. **Cost Estimating Techniques — Simplilearn (Free Article)**
+   [simplilearn.com/cost-estimation-in-project-management](https://www.simplilearn.com/cost-estimation-in-project-management-article)
+   Compares analogous, parametric, and bottom-up estimating with accuracy ranges and use-case guidance aligned to PK0-005 objectives.

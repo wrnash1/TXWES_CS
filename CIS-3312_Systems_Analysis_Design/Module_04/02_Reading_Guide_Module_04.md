@@ -180,3 +180,29 @@ Supplemental reading:
 - [ ] Watch the Module 04 video lecture.
 - [ ] Complete the Module 04 lab activity.
 - [ ] Post your initial discussion response by Wednesday at 11:59 PM.
+
+---
+
+## 11. Supplemental Resources
+
+The following open educational resources extend module content on requirements analysis and documentation. All are freely accessible without login or purchase.
+
+1. **BABOK Guide v3 — Requirements Analysis and Design Definition (KA 5)**
+   <https://www.iiba.org/career-resources/a-business-analysis-professionals-foundation-for-success/babok/>
+   Focus: Official IIBA reference for all six KA 5 tasks. Pay particular attention to the Verify Requirements and Validate Requirements task descriptions, which are directly tested on the ECBA exam.
+
+2. **Writing Good Requirements — Karl Wiegers (Process Impact)**
+   <https://www.processimpact.com/articles/reqtips.html>
+   Focus: Practical, author-level guidance on writing requirements that are complete, consistent, unambiguous, and testable. Directly reinforces the quality characteristics in Section 2 of this guide.
+
+3. **Requirements Traceability — TechTarget Definition and Guide**
+   <https://www.techtarget.com/searchsoftwarequality/definition/requirements-traceability>
+   Focus: Plain-language explanation of forward and backward traceability with RTM examples. Supplements Section 4 of this guide and prepares students for the Part 3 RTM lab exercise.
+
+4. **MoSCoW Prioritization Method — Agile Business**
+   <https://www.agilebusiness.org/dsdm-project-framework/moscow-prioririsation.html>
+   Focus: Official Agile Business Consortium explanation of MoSCoW. Covers all four categories with worked examples and common misapplication pitfalls tested on certification exams.
+
+5. **IEEE 29148:2018 Systems and Software Engineering — Requirements Engineering (Overview)**
+   <https://www.iso.org/standard/72089.html>
+   Focus: ISO/IEEE standard for requirements engineering processes and documentation. Access the standard through your university library proxy. Review the abstract and scope sections to understand how IEEE vocabulary aligns with BABOK terminology used in this module.

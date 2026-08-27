@@ -517,6 +517,131 @@ Open DevTools → Network tab. Confirm three `/users/` requests fire nearly simu
 
 ---
 
+## Part 9 — Challenge Exercise
+
+This section is **optional**. It extends the lab with advanced problems that apply async patterns, Promises, and the event loop in more demanding scenarios.
+
+### Step 9.1 — Retry with Exponential Backoff
+
+Implement a `fetchWithRetry(url, maxRetries)` function that automatically retries a failed request with increasing delays (exponential backoff). This is a common production pattern for handling transient network failures:
+
+```javascript
+async function fetchWithRetry(url, maxRetries = 3) {
+  let lastError;
+
+  for (let attempt = 0; attempt <= maxRetries; attempt++) {
+    try {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return await res.json();
+    } catch (err) {
+      lastError = err;
+
+      if (attempt < maxRetries) {
+        const delay = Math.pow(2, attempt) * 200;   // 200ms, 400ms, 800ms
+        console.log(`Attempt ${attempt + 1} failed. Retrying in ${delay}ms...`);
+        await new Promise(resolve => setTimeout(resolve, delay));
+      }
+    }
+  }
+
+  throw new Error(`All ${maxRetries + 1} attempts failed: ${lastError.message}`);
+}
+```
+
+Test it with a valid URL (should succeed on the first attempt). Then test with a deliberately invalid URL. Observe the retry messages and delay progression in the console. Confirm that after `maxRetries + 1` attempts, it throws a final error you can catch.
+
+### Step 9.2 — Promise Queue (Concurrency Limiter)
+
+Build a `PromiseQueue` class that limits how many Promises run simultaneously. This prevents overloading an API with too many concurrent requests:
+
+```javascript
+class PromiseQueue {
+  constructor(concurrency = 2) {
+    this.concurrency = concurrency;
+    this.running = 0;
+    this.queue = [];
+  }
+
+  add(fn) {
+    return new Promise((resolve, reject) => {
+      this.queue.push({ fn, resolve, reject });
+      this._run();
+    });
+  }
+
+  _run() {
+    while (this.running < this.concurrency && this.queue.length > 0) {
+      const { fn, resolve, reject } = this.queue.shift();
+      this.running++;
+
+      fn()
+        .then(resolve)
+        .catch(reject)
+        .finally(() => {
+          this.running--;
+          this._run();
+        });
+    }
+  }
+}
+```
+
+Test it with 8 simulated async tasks where each task takes a random duration:
+
+```javascript
+const pq = new PromiseQueue(2);   // max 2 concurrent
+
+const tasks = Array.from({ length: 8 }, (_, i) => () =>
+  new Promise(resolve => {
+    const dur = Math.random() * 500 + 200;
+    setTimeout(() => {
+      console.log(`Task ${i + 1} completed after ${dur.toFixed(0)}ms`);
+      resolve(i + 1);
+    }, dur);
+  })
+);
+
+Promise.all(tasks.map(t => pq.add(t))).then(results => {
+  console.log('All tasks done. Results:', results);
+});
+```
+
+Observe in the console that at most 2 tasks run concurrently at any time.
+
+### Step 9.3 — Event Loop Microtask vs Macrotask Order
+
+Create a `timing.js` Node.js script (or browser console demo) that demonstrates the order of execution between: synchronous code, Promise microtasks, and `setTimeout` macrotasks:
+
+```javascript
+console.log('1 — sync start');
+
+setTimeout(() => console.log('4 — macrotask (setTimeout)'), 0);
+
+Promise.resolve()
+  .then(() => console.log('2 — microtask (Promise.then)'))
+  .then(() => console.log('3 — microtask (chained .then)'));
+
+console.log('1b — sync end');
+```
+
+Predict the output order before running the code. Run it and verify. Then extend the demo:
+
+```javascript
+setTimeout(() => {
+  console.log('macrotask A');
+  Promise.resolve().then(() => console.log('microtask inside macrotask A'));
+}, 0);
+
+setTimeout(() => {
+  console.log('macrotask B');
+}, 0);
+```
+
+Observe that the microtask created inside macrotask A runs before macrotask B — demonstrating that the microtask queue drains completely between macrotasks. Write a brief comment in the script explaining the execution order rule you observed.
+
+---
+
 ## Lab Completion Checklist
 
 - [ ] `setTimeout` callbacks run after synchronous code even with 0ms delay

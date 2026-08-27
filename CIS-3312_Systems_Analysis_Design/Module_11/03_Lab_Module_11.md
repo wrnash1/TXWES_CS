@@ -339,4 +339,51 @@ eight business rules before finalizing your diagram.
 
 ---
 
+---
+
+## Part 9 — Challenge Exercise
+
+This section is optional and not separately graded. It extends the lab into advanced data
+modeling practice aligned with ECBA exam competencies.
+
+### Challenge Step 1: Extended ERD with Author and Fine History Entities
+
+The current LMS logical ERD models Author data as a single VARCHAR attribute on the Book
+entity. Extend the model to treat Author as a full entity. Design an Author entity with
+appropriate attributes (AuthorID, FirstName, LastName, Bio, Nationality). Then model the
+relationship between Author and Book correctly, accounting for the fact that a book can
+have multiple co-authors and an author can write multiple books. Identify the correct
+cardinality, determine whether an associative entity is needed, and specify what attributes
+(if any) belong in the associative entity rather than in Author or Book. Draw the updated
+ERD fragment showing Author, BookAuthor (if needed), and Book with full Crow's Foot
+notation. Write two sentences explaining how this change affects the existing Loan and
+Reservation entities — do any foreign keys change?
+
+### Challenge Step 2: Third Normal Form Analysis
+
+Take the logical ERD you produced in Task 3 and perform a third normal form (3NF) analysis
+on two of the entities. For each entity, list all non-key attributes and determine whether
+any non-key attribute depends on another non-key attribute rather than on the primary key.
+If a transitive dependency exists, describe the decomposition required to eliminate it and
+show the resulting entities. Then explain in one paragraph why removing transitive
+dependencies matters from a business analysis perspective — specifically, what data quality
+problems can arise if a logical ERD is implemented with transitive dependencies left in
+place. Use the Member entity (with its address fields) and the Book entity (with its
+PublicationYear and Publisher fields) as your two analysis targets.
+
+### Challenge Step 3: ERD to Data Dictionary Crosswalk
+
+Select four entities from your completed logical ERD (Member, Loan, Book, and one of your
+choice). For each entity, create a data dictionary entry that lists every attribute with:
+the attribute name, data type, whether it is PK or FK, whether null is allowed, the
+business meaning in one sentence, and any validation constraints (value ranges, allowed
+values, format rules). Present the entries in a table. Then write a one-paragraph
+explanation of how the data dictionary and the ERD work together as paired artifacts —
+specifically, what information is conveyed by the ERD that is not in the data dictionary,
+and what information is in the data dictionary that cannot be expressed in the ERD diagram
+itself. This exercise develops the documentation skills that BAs use when handing off data
+requirements to database designers.
+
+---
+
 *Lab Activity — Module 11 | CIS-3312 Systems Analysis and Design | Texas Wesleyan University*

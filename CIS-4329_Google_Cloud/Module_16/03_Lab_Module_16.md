@@ -252,7 +252,7 @@ if __name__ == '__main__':
 
 `hello-api/requirements.txt`:
 
-```
+```text
 flask==2.3.0
 gunicorn==21.2.0
 ```
@@ -414,3 +414,157 @@ Submit all deliverables as a single document via Canvas LMS.
 | Cloud Monitoring (Part 5) | 15 | Uptime check configured; screenshot shows passing status |
 | ACE Exam Scenarios (Part 6) | 15 | Two-constraint method applied; correct answers with justification |
 | **Total** | **100** | |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Shared VPC for Centralized Network Control
+
+Set up a Shared VPC architecture where a host project controls the network and a service project deploys workloads — demonstrating the cross-project IAM and network delegation pattern tested on the ACE exam.
+
+1. Enable the Shared VPC API in both projects:
+
+```bash
+export HOST_PROJECT_ID=YOUR_HOST_PROJECT_ID
+export SERVICE_PROJECT_ID=YOUR_SERVICE_PROJECT_ID
+
+gcloud services enable compute.googleapis.com \
+  --project=${HOST_PROJECT_ID}
+gcloud services enable compute.googleapis.com \
+  --project=${SERVICE_PROJECT_ID}
+```
+
+1. Enable Shared VPC on the host project and attach the service project:
+
+```bash
+# Enable Shared VPC hosting on the host project (requires Organization Admin or Shared VPC Admin)
+gcloud compute shared-vpc enable ${HOST_PROJECT_ID}
+
+# Attach the service project to the host project
+gcloud compute shared-vpc associated-projects add ${SERVICE_PROJECT_ID} \
+  --host-project=${HOST_PROJECT_ID}
+```
+
+1. Grant the service project's Compute Engine default service account the Network User role in the host project so it can use host project subnets:
+
+```bash
+SERVICE_PROJECT_NUMBER=$(gcloud projects describe ${SERVICE_PROJECT_ID} \
+  --format='value(projectNumber)')
+
+gcloud projects add-iam-policy-binding ${HOST_PROJECT_ID} \
+  --member="serviceAccount:${SERVICE_PROJECT_NUMBER}-compute@developer.gserviceaccount.com" \
+  --role="roles/compute.networkUser"
+```
+
+1. Create a VM in the service project that uses the host project's shared subnet:
+
+```bash
+# List shared subnets visible from the service project
+gcloud compute networks subnets list-usable \
+  --project=${SERVICE_PROJECT_ID}
+
+# Create a VM in the service project using the shared VPC subnet
+gcloud compute instances create shared-vpc-vm \
+  --project=${SERVICE_PROJECT_ID} \
+  --zone=us-central1-a \
+  --machine-type=e2-micro \
+  --subnet=projects/${HOST_PROJECT_ID}/regions/us-central1/subnetworks/default \
+  --no-address
+```
+
+1. Verify the VM was created in the service project but uses the host project network:
+
+```bash
+gcloud compute instances describe shared-vpc-vm \
+  --project=${SERVICE_PROJECT_ID} \
+  --zone=us-central1-a \
+  --format="value(networkInterfaces[0].subnetwork)"
+```
+
+The output should show the host project's subnet path.
+
+### Challenge 2: Cloud Armor Security Policy with Geo-Block
+
+Configure a Cloud Armor security policy on an external HTTP(S) load balancer that blocks traffic from a specific country and allows only the corporate IP range — implementing the access control pattern tested on the ACE exam.
+
+1. Create a backend service and external HTTP(S) load balancer (simplified for lab):
+
+```bash
+export PROJECT_ID=$(gcloud config get-value project)
+
+# Create a backend bucket (simpler than a VM backend for this challenge)
+gsutil mb -l us-central1 gs://${PROJECT_ID}-armor-test
+echo "<h1>Cloud Armor Test</h1>" | gsutil cp - gs://${PROJECT_ID}-armor-test/index.html
+gsutil iam ch allUsers:roles/storage.objectViewer gs://${PROJECT_ID}-armor-test
+
+gcloud compute backend-buckets create armor-backend \
+  --gcs-bucket-name=${PROJECT_ID}-armor-test \
+  --enable-cdn
+
+gcloud compute url-maps create armor-url-map \
+  --default-backend-bucket=armor-backend
+
+gcloud compute target-http-proxies create armor-http-proxy \
+  --url-map=armor-url-map
+
+gcloud compute forwarding-rules create armor-forwarding-rule \
+  --global \
+  --target-http-proxy=armor-http-proxy \
+  --ports=80
+```
+
+1. Create a Cloud Armor security policy:
+
+```bash
+gcloud compute security-policies create lab16-armor-policy \
+  --description="Lab 16 geo-block policy"
+```
+
+1. Add a geo-block rule to deny traffic from a specific country (using CN as an example):
+
+```bash
+gcloud compute security-policies rules create 1000 \
+  --security-policy=lab16-armor-policy \
+  --expression="origin.region_code == 'CN'" \
+  --action=deny-403 \
+  --description="Block traffic from CN"
+```
+
+1. Add an allow rule for a specific IP range (simulating a corporate office):
+
+```bash
+gcloud compute security-policies rules create 500 \
+  --security-policy=lab16-armor-policy \
+  --src-ip-ranges="203.0.113.0/24" \
+  --action=allow \
+  --description="Allow corporate office range"
+```
+
+1. Update the default rule to deny all traffic not matched by higher-priority rules:
+
+```bash
+gcloud compute security-policies rules update 2147483647 \
+  --security-policy=lab16-armor-policy \
+  --action=deny-403
+```
+
+1. Attach the security policy to the backend bucket:
+
+```bash
+gcloud compute backend-buckets update armor-backend \
+  --security-policy=lab16-armor-policy
+```
+
+1. List all rules to verify the policy is configured correctly:
+
+```bash
+gcloud compute security-policies describe lab16-armor-policy \
+  --format="table(rules[].priority,rules[].action,rules[].description)"
+```
+
+### Reflection Questions
+
+1. In Challenge 1, the Shared VPC model centralizes network control in the host project while workloads run in service projects. Explain two operational advantages this architecture provides over giving each team their own independent VPC, and describe one trade-off or complexity it introduces compared to fully independent project VPCs.
+
+2. In Challenge 2, the Cloud Armor rules are evaluated in priority order (lower number = higher priority). A request arrives from IP address `203.0.113.50` in China (region code `CN`). Trace the policy evaluation: which rule matches first, what action is taken, and does the geo-block rule (priority 1000) or the allow rule (priority 500) determine the outcome? Explain why Cloud Armor rule priority order is critical to get correct in production security policies.

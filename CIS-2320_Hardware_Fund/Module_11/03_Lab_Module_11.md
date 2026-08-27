@@ -224,3 +224,33 @@ Submit your completed lab responses as a single typed document to the Canvas ass
 - Tables must be complete. Partial rows receive partial credit at the instructor's discretion.
 - Written responses must use correct technical terminology. Vague answers ("the cable was bad") receive no credit.
 - Scenario responses must identify the correct component and explain the technical reasoning, not just state the answer.
+
+---
+
+## Part 9 — Challenge Exercise
+
+These advanced steps are optional and are not included in the standard grading rubric.
+
+### Challenge Step 1 — Cable Termination Practice
+
+Purchase or borrow the following consumables and tools for hands-on cable termination practice (approximate cost: $15–25 for a full practice kit):
+
+1. Using a length of Cat5e or Cat6 bulk cable (at least 2 meters), a crimping tool, RJ-45 plugs, and a wire stripper, terminate both ends of the cable using the T568B pinout. Then use a wire map tester (or a basic continuity tester with a known-good reference) to verify all eight conductors are correctly mapped. Document your results: which pairs passed, whether any pairs were open (missing continuity) or crossed (swapped between pins), and what physical error in termination would cause each failure type (open, crossed, and miswire — describe each in one sentence).
+1. Re-terminate the same cable with T568A on one end and T568B on the other end to create an intentional crossover cable. Verify with the tester that pins 1/2 and 3/6 are crossed as expected. Document the tester output and explain in 2–3 sentences why a crossover cable was historically needed for direct device-to-device connections before auto-MDI/MDIX became standard.
+1. Research and document the differences between a basic wire map tester (continuity only) and a professional cable certifier (Fluke DSX series or equivalent) — specifically which measurements only the certifier can perform (insertion loss, NEXT, return loss, propagation delay skew) and why these measurements are required for a Cat6a installation to be certified compliant with TIA-568-C.2.
+
+### Challenge Step 2 — Network Switch Configuration Research
+
+Using GNS3 (free network simulation software at gns3.com) or Cisco Packet Tracer (free at netacad.com with a free account), or by researching switch documentation:
+
+1. Set up or research the configuration steps to create two VLANs on a managed switch: VLAN 10 for workstations and VLAN 20 for VoIP phones. Document the CLI commands (or menu steps) required to: create each VLAN, assign access ports to each VLAN, and configure a trunk port that carries both VLANs to the router. Explain in 2–3 sentences why separating VoIP traffic into its own VLAN simplifies QoS configuration compared to a flat single-VLAN network.
+1. Research the IEEE 802.1p priority standard and document: the number of priority levels it defines (0–7), which priority level is recommended for VoIP traffic, and how a managed switch uses these priority values to make forwarding decisions when multiple traffic types are queued on the same port simultaneously.
+1. Research PoE (Power over Ethernet) standards — IEEE 802.3af (PoE), 802.3at (PoE+), and 802.3bt (PoE++) — and build a comparison table with columns: Standard, Max Power per Port, Maximum Cable Distance, and Typical Use Case. Explain in one sentence why a PoE budget calculation is required before deploying multiple PoE devices on a single switch.
+
+### Challenge Step 3 — Fiber Optic Research and Connector Identification
+
+Using the Fiber Optic Association free reference guide (thefoa.org) and manufacturer documentation:
+
+1. Build a fiber optic cable comparison table with the following columns: Cable Type, Core Diameter, Jacket Color Convention, Maximum Distance at 1 Gbps, Maximum Distance at 10 Gbps, and Primary Use Case. Include at minimum: OM1, OM2, OM3, OM4, OM5 multimode, and OS1/OS2 single-mode.
+1. Research and document the physical identification characteristics that distinguish LC, SC, and ST connectors from each other (body shape, coupling mechanism, ferrule diameter, whether it is simplex or duplex by default). A field technician identifying an unknown fiber connector on a legacy building installation should be able to determine connector type from these characteristics alone without seeing product documentation.
+1. Calculate the maximum supportable fiber run for a 10GBASE-SR transceiver (supports 10 Gbps over multimode fiber) connecting two data center switches. The existing fiber plant uses OM3 multimode cable. Research the maximum distance for 10GBASE-SR over OM3 and determine whether the 285-meter run between the two buildings can be supported. If not, identify the minimum fiber upgrade (OM4 or single-mode with appropriate transceiver) that would support the distance.

@@ -424,6 +424,137 @@ Save. Two seconds after page load a fourth task appears. Click its text and dele
 
 ---
 
+## Part 9 — Challenge Exercise
+
+This section is **optional**. It extends the lab with advanced problems that apply event handling and delegation in more demanding scenarios.
+
+### Step 9.1 — Keyboard Shortcut Manager
+
+Add a `<div id="shortcut-log"></div>` to your HTML. Implement a keyboard shortcut system that maps key combinations to actions:
+
+```javascript
+const shortcuts = {
+  'ctrl+s':     () => console.log('Save triggered'),
+  'ctrl+z':     () => console.log('Undo triggered'),
+  'ctrl+shift+f': () => console.log('Find triggered'),
+  'escape':     () => console.log('Escape pressed — close modals'),
+};
+
+function getShortcutKey(e) {
+  const parts = [];
+  if (e.ctrlKey)  parts.push('ctrl');
+  if (e.shiftKey) parts.push('shift');
+  if (e.altKey)   parts.push('alt');
+  parts.push(e.key.toLowerCase());
+  return parts.join('+');
+}
+
+document.addEventListener('keydown', e => {
+  const key = getShortcutKey(e);
+  const action = shortcuts[key];
+
+  if (action) {
+    e.preventDefault();
+    action();
+    document.getElementById('shortcut-log').textContent = `Last shortcut: ${key}`;
+  }
+});
+```
+
+Test each shortcut in the browser. Extend the system by allowing dynamic registration:
+
+```javascript
+function registerShortcut(combo, handler) {
+  shortcuts[combo.toLowerCase()] = handler;
+}
+
+registerShortcut('ctrl+b', () => {
+  document.body.style.background =
+    document.body.style.background === 'black' ? '' : 'black';
+});
+```
+
+Verify `Ctrl+B` toggles the background color.
+
+### Step 9.2 — Debounced Input Handler
+
+Add a `<input id="debounced-input" placeholder="Type here...">` and `<p id="debounced-output"></p>`. Implement a `debounce` utility function, then apply it to a live search input so the handler only fires after the user stops typing for 300ms:
+
+```javascript
+function debounce(fn, delay) {
+  let timer;
+  return function(...args) {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn.apply(this, args), delay);
+  };
+}
+
+const handleSearch = debounce(e => {
+  document.getElementById('debounced-output').textContent =
+    `Searching for: "${e.target.value}"`;
+  console.log('Search fired:', e.target.value);
+}, 300);
+
+document.getElementById('debounced-input').addEventListener('input', handleSearch);
+```
+
+Observe the difference: type rapidly and confirm the output only updates after you pause. Compare with an un-debounced version on a second input that fires on every keystroke.
+
+### Step 9.3 — Custom Event System
+
+Implement a minimal event emitter that supports subscribing to, emitting, and unsubscribing from named custom events — without using the DOM:
+
+```javascript
+class EventEmitter {
+  constructor() {
+    this._listeners = {};
+  }
+
+  on(event, handler) {
+    if (!this._listeners[event]) {
+      this._listeners[event] = [];
+    }
+    this._listeners[event].push(handler);
+    return this;   // enable chaining
+  }
+
+  off(event, handler) {
+    if (!this._listeners[event]) return this;
+    this._listeners[event] = this._listeners[event].filter(h => h !== handler);
+    return this;
+  }
+
+  emit(event, ...args) {
+    (this._listeners[event] || []).forEach(h => h(...args));
+    return this;
+  }
+}
+```
+
+Test the emitter with a shopping cart scenario:
+
+```javascript
+const cart = new EventEmitter();
+
+function onItemAdded(item) {
+  console.log(`Added: ${item.name} — $${item.price}`);
+}
+
+cart.on('item:add', onItemAdded);
+cart.on('item:add', item => console.log(`Cart total items: ${item.quantity}`));
+
+cart.emit('item:add', { name: 'Widget', price: 9.99, quantity: 1 });
+cart.emit('item:add', { name: 'Gadget', price: 24.99, quantity: 2 });
+
+cart.off('item:add', onItemAdded);
+cart.emit('item:add', { name: 'Doohickey', price: 4.99, quantity: 3 });
+// After off: only the quantity listener fires
+```
+
+Extend the emitter with an `once(event, handler)` method that auto-removes the handler after it fires once.
+
+---
+
 ## Lab Completion Checklist
 
 - [ ] Three `click` listeners on `multi-btn` all fire independently

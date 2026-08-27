@@ -163,3 +163,39 @@ Submit a single PDF to Canvas containing:
 5. Part 5 — Remediation Roadmap table
 
 **Grading:** 100 points total. Parts 1 and 5 are worth 25 points each. Parts 2, 3, and 4 are worth 17 points each.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Multi-Framework Gap Analysis Under Constraint
+
+You are the sole security analyst at a 200-employee regional accounting firm. The firm processes payment card data for clients and stores health benefit enrollment records for employees. An external auditor has flagged three findings from a recent assessment:
+
+- **Finding A**: Antivirus signatures have not been updated on 40% of endpoints for more than 30 days. No centralized patch status reporting exists.
+- **Finding B**: Privileged administrative accounts share the same password as standard user accounts for the same individuals. No privileged access management (PAM) solution is in place.
+- **Finding C**: No formal vendor risk assessment process exists. Third-party software vendors have not been evaluated for security posture before contract award.
+
+1. For each finding (A, B, C), identify: the applicable CIS Control and Safeguard ID (v8), the NIST CSF function and subcategory code, and whether the finding constitutes a potential PCI DSS or HIPAA violation. Provide the specific PCI DSS requirement number or HIPAA rule reference for each applicable regulatory finding.
+2. The firm's IT team has a budget of $0 for the next 90 days — no new tools can be purchased. For each finding, propose one compensating control that can be implemented using only native OS features, free open-source tools, or administrative processes. Identify what residual risk remains after each compensating control.
+3. Rank the three findings by remediation priority using the CVSS environmental score concept (impact × exploitability × scope). Explain your ranking with at least two factors per finding that influenced the priority decision.
+4. Write a one-paragraph executive summary (4–6 sentences) addressed to the firm's CEO that describes the risk posture without using technical jargon. The summary must convey urgency without causing panic and must include one concrete business impact example for each finding.
+
+### Challenge 2: Audit Evidence Package Construction
+
+You are preparing for a SOC 2 Type II audit covering the 12-month period January–December of the previous year. The auditors have requested evidence for three controls:
+
+- **Control 1**: All privileged user accounts are reviewed quarterly and deprovisioned within 24 hours of employee termination.
+- **Control 2**: Security patches rated Critical or High are applied to production systems within 30 days of release.
+- **Control 3**: Security awareness training is completed by 100% of employees annually, with documented acknowledgment of the acceptable use policy.
+
+For each control:
+
+1. Identify the minimum evidence artifacts required to satisfy a SOC 2 Type II auditor. For each artifact, specify the source system (e.g., Active Directory, ITSM tool, LMS), the format (export, screenshot, log), and the time range that must be covered.
+2. Identify one failure scenario — a realistic situation where your organization might technically have the control but the evidence package would still fail the audit — and explain what documentation gap caused the failure.
+3. Write a one-paragraph management assertion for each control (3–4 sentences) in the format used in actual SOC 2 reports: describe what the control does, how it operates, who is responsible, and how its effectiveness is monitored.
+
+### Reflection Questions
+
+1. The NIST CSF and CIS Controls are both widely used frameworks, but they serve different primary audiences and purposes. Explain the key difference in how each framework is designed to be used, and describe a scenario where an organization should reference both frameworks simultaneously rather than choosing one over the other.
+2. Gap analysis findings are often technically accurate but organizationally ineffective if presented without business context. Describe two techniques an analyst can use to translate a technical control gap into language that motivates a non-technical executive to approve remediation funding, and explain why each technique is effective.

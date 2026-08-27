@@ -288,3 +288,19 @@ Work through each item before taking the Module 14 quiz.
 
 - Cisco CCNA certification training information: cisco.com/c/en/us/training-events/training-certifications
 - Free CCNA study notes and practice questions: professormesser.com
+
+---
+
+## Supplemental Resources
+
+The following open educational resources extend wireless networking concepts to CCNA exam depth. All resources are freely available.
+
+1. **Cisco Networking Academy — CCNA: Enterprise Networking, Security, and Automation, Chapters 8–9 (Wireless Concepts and Wireless Configuration)** (skillsforall.com): Free chapters covering 802.11 standards, WPA2/WPA3 security modes, autonomous vs. controller-based architecture, CAPWAP, FlexConnect, and WLC WLAN configuration with Packet Tracer wireless lab activities.
+
+2. **Jeremy's IT Lab — Wireless Networking (Days 57–60)** (youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ): Four video lessons covering 802.11 standards evolution, SSID and BSS/ESS concepts, infrastructure vs. ad-hoc modes, WPA/WPA2/WPA3 security comparison, WLC split-MAC architecture, CAPWAP ports, and AP discovery methods. Includes a Packet Tracer WLC lab walkthrough.
+
+3. **Cisco Learning Network — Wireless Study Group** (learningnetwork.cisco.com): Community discussions covering CAPWAP port blocking issues, FlexConnect vs Local mode selection, band steering configuration, WLC VLAN interface mapping, and 802.11 channel planning — all at CCNA exam depth with scenario questions.
+
+4. **Cisco Wireless LAN Controller Configuration Guide** (cisco.com): Cisco's official WLC configuration guide covering WLAN creation, AP group configuration, RF profiles, RRM automatic channel selection, and FlexConnect deployment with CLI and GUI configuration examples.
+
+5. **Wi-Fi Alliance — Wi-Fi Certified WPA3 Technology Overview** (wi-fi.org): The Wi-Fi Alliance's public technical overview of WPA3 covering SAE (Simultaneous Authentication of Equals), WPA3-Enterprise 192-bit mode, OWE (Opportunistic Wireless Encryption), and the security improvements over WPA2 — directly aligned to CCNA Security Fundamentals domain questions about wireless security.

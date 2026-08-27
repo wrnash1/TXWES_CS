@@ -198,3 +198,17 @@ The ESP-IDF framework automatically starts the FreeRTOS scheduler and creates th
 10. On the ESP32 dual-core architecture, why is it often advisable to pin time-critical application tasks to APP_CPU (core 1) rather than PRO_CPU (core 0)?
 
 ---
+
+## 9. Supplemental Resources
+
+**1. FreeRTOS Kernel Developer Documentation — Tasks and Scheduling**
+[https://www.freertos.org/Documentation/02-Kernel/02-Kernel-features/01-Tasks-and-co-routines/01-Task-states](https://www.freertos.org/Documentation/02-Kernel/02-Kernel-features/01-Tasks-and-co-routines/01-Task-states)
+The official FreeRTOS kernel documentation for task states, the scheduler algorithm, and preemption behavior. Covers the five task states (Running, Ready, Blocked, Suspended, Deleted), time-slicing at equal priorities, and the context switch mechanism — all directly referenced in Sections 2 and 3 of this guide. The FreeRTOS documentation includes interactive diagrams of state transitions that complement the written descriptions in this module.
+
+**2. ESP-IDF Programming Guide — FreeRTOS SMP and Task Watchdog**
+[https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/system/freertos.html](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/system/freertos.html)
+Espressif's reference for ESP32-specific FreeRTOS extensions, including the dual-core SMP scheduler, `xTaskCreatePinnedToCore()`, the Task Watchdog Timer (`esp_task_wdt_add()`, `esp_task_wdt_reset()`), and cross-core synchronization using `portMUX_TYPE` spinlocks. Essential reading for Section 6 of this guide and for the lab application targeting the ESP32's APP_CPU/PRO_CPU architecture.
+
+**3. Digikey / Richard Barry — "Mastering the FreeRTOS Real Time Kernel" (Free PDF)**
+[https://www.freertos.org/Documentation/RTOS_book.html](https://www.freertos.org/Documentation/RTOS_book.html)
+The definitive free textbook on FreeRTOS authored by the creator of FreeRTOS, Richard Barry, and made available through the FreeRTOS website. Chapters 4 (Queue Management), 7 (Resource Management / Mutexes), and 8 (Event Groups) provide deeper coverage of the queue, semaphore, mutex, and priority inversion topics covered in this module, including worked code examples for all synchronization patterns.

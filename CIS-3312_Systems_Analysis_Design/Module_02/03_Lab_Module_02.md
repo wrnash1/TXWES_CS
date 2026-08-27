@@ -90,3 +90,35 @@ Part 2 Total: 40 points
 ## Submission Instructions
 
 Combine Part 1 (register table and grid diagram) and Part 2 (written recommendation) into one document. Label each section clearly. Submit to the Canvas Module 02 Lab assignment by the due date shown in the course calendar.
+
+---
+
+## Part 9 — Challenge Exercise
+
+This section is optional and not separately graded. It extends the lab into advanced BA planning practice aligned with ECBA exam competencies.
+
+### Challenge Step 1: Stakeholder Resistance Analysis and Mitigation Plan
+
+Review your completed Stakeholder Register from Part 1. Identify any stakeholder you classified as "Resistant" or "Neutral" toward the proposed change. For each such stakeholder, write a brief resistance analysis covering:
+
+- Root cause of resistance (e.g., fear of job change, distrust of technology, past project failures)
+- Potential impact on requirements quality if resistance is not addressed (e.g., withheld information, sabotaged UAT, escalations to leadership)
+- Specific mitigation action the BA should take (e.g., one-on-one briefing, early prototype review, involving them as a named SME, escalating to their manager if resistance is blocking work)
+
+This exercise mirrors BABOK KA 2 stakeholder attitude analysis and is tested on the ECBA exam in scenarios asking what a BA should do when a stakeholder is uncooperative.
+
+### Challenge Step 2: BA Approach Tailoring for a Second Scenario
+
+Imagine HHN is launching a second, simultaneous project: developing a brand-new mobile patient triage chatbot that uses AI to assess symptom severity. Requirements for this product are highly uncertain, the technology is experimental, and clinical staff have never used anything like it. Write a one-paragraph BA approach recommendation for this second project and explain how it differs from your recommendation in Part 2. Address: methodology selection, documentation formality level, stakeholder collaboration frequency, and how requirements will be managed when they inevitably change.
+
+### Challenge Step 3: Information Management Architecture Sketch
+
+Design a simple information management scheme for the HHN patient portal project. Produce a one-page table or diagram that addresses the following questions from BABOK KA 2's "Plan Business Analysis Information Management" task:
+
+- Where will requirements artifacts be stored? (Tool or platform name)
+- What access rights will each stakeholder group have? (Read-only vs. edit vs. approve)
+- How will version history be maintained when a requirement is changed?
+- What naming convention will be used for requirements documents?
+- Who is responsible for archiving approved requirements at baseline?
+
+This exercise develops the information management planning skills tested in ECBA scenarios about requirements traceability, version control, and artifact governance.

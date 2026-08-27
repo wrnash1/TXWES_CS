@@ -51,3 +51,19 @@ In this week's hands-on lab, you will perform the following steps to apply these
 - [ ] Watch the device management sections of [IoT Course & Embedded Systems Tutorials by freeCodeCamp](https://www.youtube.com/watch?v=h0J8f60LdB0).
 - [ ] Review the staged rollout and certificate revocation concepts before the lab.
 - [ ] Proceed to the weekly hands-on lab activity.
+
+---
+
+## 9. Supplemental Resources
+
+**1. AWS IoT Device Defender — Developer Guide**
+[https://docs.aws.amazon.com/iot/latest/developerguide/device-defender.html](https://docs.aws.amazon.com/iot/latest/developerguide/device-defender.html)
+Amazon's official documentation for IoT Device Defender, covering both Audit (configuration checks for overly permissive policies, inactive certificates, shared certificates) and Detect (behavioral anomaly detection for runtime MQTT traffic). Directly supports the device health monitoring and fleet security audit topics in Section 1 of this guide.
+
+**2. Azure Device Update for IoT Hub — Overview**
+[https://learn.microsoft.com/en-us/azure/iot-hub-device-update/understand-device-update](https://learn.microsoft.com/en-us/azure/iot-hub-device-update/understand-device-update)
+Microsoft's documentation for Azure Device Update (ADU), covering staged OTA rollout groups, deployment policies, delta updates, and compliance reporting. Covers the canary/pilot/GA rollout pattern and automatic rollout halt on error thresholds referenced in the certification exam tips.
+
+**3. ESP-IDF OTA Update Guide — esp_https_ota and Secure Boot**
+[https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/system/ota.html](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/system/ota.html)
+Espressif's reference for the ESP32 OTA update framework, including `esp_https_ota()`, A/B partition configuration, rollback on boot failure, and integration with Secure Boot for firmware signature verification. Essential reading for the embedded OTA implementation aspects of this module.

@@ -333,4 +333,20 @@ Work through this checklist before taking the quiz.
 
 ---
 
+## 10. Supplemental Resources
+
+**1. OpenAI Cookbook — Prompt Engineering Guide**
+<https://cookbook.openai.com/articles/related_resources>
+A curated collection of practical prompting techniques, RAG patterns, and code examples maintained by OpenAI. Covers zero-shot, few-shot, chain-of-thought, and system prompt design with runnable Python notebooks directly applicable to Azure OpenAI deployments.
+
+**2. Microsoft — Responsible AI Practices for Generative AI (official guidance)**
+<https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/responsible-ai-overview>
+Microsoft's official responsible AI overview for Azure OpenAI Service covering content filtering, human oversight requirements, use-case restrictions, and transparency disclosures. Directly relevant to the Module 10 lab reflection and AI-900 exam content.
+
+**3. Andrej Karpathy — Intro to Large Language Models (YouTube, 1 hour)**
+<https://www.youtube.com/watch?v=zjkBMFhNj_g>
+A free one-hour conceptual lecture by AI researcher Andrej Karpathy explaining how LLMs work — tokenization, pretraining, RLHF, and emergent capabilities — at an intuitive level without heavy mathematics. One of the most viewed AI education resources available and directly supports the Module 10 conceptual foundations.
+
+---
+
 End of Reading Guide — Module 10

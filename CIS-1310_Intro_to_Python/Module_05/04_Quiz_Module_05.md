@@ -238,3 +238,239 @@ while count < 5:
 - *Why B is incorrect:* `count` is defined before the loop and is visible inside the loop body. `NameError` is not raised.
 - *Why C is correct:* `count` is never incremented inside the loop body. The condition `count < 5` remains `True` forever because `count` stays at 0. The program prints `0` infinitely until interrupted with `Ctrl+C`.
 - *Why D is incorrect:* The loop body is correctly indented on a separate line. Python does not require the body on the same line as the `while` statement (though a single-statement body technically could be).
+
+---
+
+### Question 11
+
+What is the output of this code?
+
+```python
+for i in range(5):
+    if i % 2 == 0:
+        continue
+    print(i, end=' ')
+```
+
+- A) `0 2 4`
+- B) `1 3`
+- C) `0 1 2 3 4`
+- D) `1 3 5`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `0 2 4` are the even numbers (where `i % 2 == 0`). The `continue` statement skips those iterations — only odd numbers print.
+- *Why B is correct:* `continue` skips to the next iteration when the condition is true (even numbers). So only the odd values 1 and 3 reach `print()`. `range(5)` produces 0,1,2,3,4 — odd values are 1 and 3.
+- *Why C is incorrect:* All five values would print if `continue` were removed.
+- *Why D is incorrect:* `5` is not in `range(5)` — the range stops before 5.
+
+---
+
+### Question 12
+
+What does `range(10, 0, -2)` produce?
+
+- A) `10, 8, 6, 4, 2`
+- B) `10, 8, 6, 4, 2, 0`
+- C) `0, 2, 4, 6, 8, 10`
+- D) An empty sequence
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- *Why A is correct:* `range(10, 0, -2)` starts at 10, steps by -2 (counting down), and stops before reaching 0. Values: 10, 8, 6, 4, 2. The stop value 0 is excluded.
+- *Why B is incorrect:* The stop value is always excluded. `range(10, 0, -2)` will not include 0.
+- *Why C is incorrect:* That is ascending order. The step is -2, so the sequence counts down, not up.
+- *Why D is incorrect:* The range is non-empty because the step (-2) moves from start (10) toward stop (0). An empty range would result from a step that moves away from the stop value (e.g., `range(0, 10, -1)`).
+
+---
+
+### Question 13
+
+What is the output of the following code?
+
+```python
+for i in range(3):
+    for j in range(3):
+        if i == j:
+            break
+    print(i, j)
+```
+
+- A) Three lines showing `0 0`, `1 1`, `2 2`
+- B) Three lines showing `0 2`, `1 2`, `2 2`
+- C) One line: `2 2`
+- D) Nine lines showing all combinations
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- *Why A is correct:* For each value of `i`, the inner loop starts at `j=0`. When `i == j`, `break` exits the inner loop. So the inner loop stops as soon as `j` equals `i`. After the inner break, `print(i, j)` runs with the values at the time of break: `i=0,j=0`; `i=1,j=1`; `i=2,j=2`.
+- *Why B is incorrect:* `j=2` after every inner loop would only occur if the inner loop always ran to completion. The `break` stops it early.
+- *Why C is incorrect:* `break` only exits the inner loop, not the outer loop. The outer loop still iterates all three values of `i`.
+- *Why D is incorrect:* Nine lines would result with no `break`. The `break` causes the inner loop to exit early on each outer iteration.
+
+---
+
+### Question 14
+
+Which of the following correctly demonstrates the `for-else` pattern to search a list for a target value?
+
+Consider these four approaches (pseudocode described in each option):
+
+- A) Loop over `numbers`; when `x == target`, print `found`. After the loop (at zero indentation), always print `not found`.
+- B) Loop over `numbers`; when `x == target`, print `found` then `break`. Attach an `else` clause to the `for` that prints `not found`.
+- C) Loop over `numbers`; when `x == target`, print `found` (no `break`). Attach an `else` clause to the `for` that prints `not found`.
+- D) Loop over `numbers`; when `x != target`, `continue`. Otherwise print `found`. After the loop (at zero indentation), always print `not found`.
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `print('not found')` is outside the loop at zero indentation, so it runs unconditionally after every loop — even when the target was found. This always prints `not found`.
+- *Why B is correct:* The `break` exits the loop when the target is found, which causes the `else` clause to be skipped. The `else` only runs when the loop exhausts the iterable without hitting `break` — meaning the target was not found. This is the canonical `for-else` search pattern.
+- *Why C is incorrect:* Without `break`, the loop always runs to completion regardless of whether the target was found. Because `break` never fires, the `else` always executes, printing `not found` even after having printed `found`.
+- *Why D is incorrect:* `print('not found')` is outside the loop at zero indentation and runs unconditionally after the loop completes, regardless of whether the target was found.
+
+---
+
+### Question 15
+
+What is the output of `list(zip('AB', [1, 2, 3]))`?
+
+- A) `[('A', 1), ('B', 2), ('', 3)]`
+- B) `[('A', 1), ('B', 2)]`
+- C) `[('A', 'B'), (1, 2, 3)]`
+- D) `ValueError: iterables must be the same length`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `zip()` does not pad shorter iterables. When the shorter iterable is exhausted, `zip()` stops. No empty strings or `None` values are inserted.
+- *Why B is correct:* The string `'AB'` has 2 characters; the list has 3 elements. `zip()` stops at the shorter one, producing `[('A', 1), ('B', 2)]`. The `3` from the list is silently dropped.
+- *Why C is incorrect:* `zip()` pairs corresponding elements across iterables — it does not group each iterable as a whole. `('A', 'B')` and `(1, 2, 3)` would be the result of a different operation.
+- *Why D is incorrect:* `zip()` does not raise `ValueError` for mismatched lengths. It silently stops at the shortest iterable.
+
+---
+
+### Question 16
+
+How many times does the body of the following `while` loop execute?
+
+```python
+n = 1
+while n < 100:
+    n *= 2
+```
+
+- A) 6
+- B) 7
+- C) 99
+- D) 100
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* After 6 iterations: 1→2→4→8→16→32→64. Since 64 < 100, the condition is still `True` and the loop runs again.
+- *Why B is correct:* Trace: n=1→2→4→8→16→32→64→128. After 7 iterations, n=128. The condition `128 < 100` is `False`, so the loop exits. The body ran 7 times.
+- *Why C is incorrect:* 99 iterations would occur with `n += 1`. Doubling reaches 100+ much faster.
+- *Why D is incorrect:* Same reasoning as C — exponential growth means far fewer iterations than linear counting.
+
+---
+
+### Question 17
+
+What is the output of this code?
+
+```python
+result = 1
+for i in range(1, 6):
+    result *= i
+print(result)
+```
+
+- A) `15`
+- B) `120`
+- C) `5`
+- D) `720`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* 15 is the sum of 1+2+3+4+5. This code uses `*=` (multiplication), not `+=` (addition).
+- *Why B is correct:* `range(1, 6)` produces 1,2,3,4,5. The accumulator multiplies: 1×1=1, 1×2=2, 2×3=6, 6×4=24, 24×5=120. This is `5!` (5 factorial).
+- *Why C is incorrect:* 5 is only the last value in the range, not the accumulated product.
+- *Why D is incorrect:* 720 is `6!` (6 factorial). `range(1, 6)` stops before 6.
+
+---
+
+### Question 18
+
+What does `enumerate(['x', 'y', 'z'], start=1)` yield?
+
+- A) `(0, 'x')`, `(1, 'y')`, `(2, 'z')`
+- B) `(1, 'x')`, `(2, 'y')`, `(3, 'z')`
+- C) `('x', 1)`, `('y', 2)`, `('z', 3)`
+- D) `(1, 2, 3)` — only the indices
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* That is the default `start=0` behavior. The `start=1` argument shifts the index sequence to begin at 1.
+- *Why B is correct:* `enumerate(iterable, start=N)` begins the counter at N. With `start=1`, the pairs are `(1, 'x')`, `(2, 'y')`, `(3, 'z')`. This is useful when you want 1-based numbering in output.
+- *Why C is incorrect:* `enumerate()` always yields `(index, value)` with the index first, then the value. The order is not reversed.
+- *Why D is incorrect:* `enumerate()` yields both the index and the value as a tuple. It never discards the values.
+
+---
+
+### Question 19
+
+What is the minimum number of statements required in a valid Python `while` loop body?
+
+- A) 0 — an empty body is valid
+- B) 1 — at least one statement is required
+- C) 2 — you need the loop logic plus a `break` or increment
+- D) There is no minimum — a `while` with no body is a `SyntaxError`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Python requires at least one statement in any block. A completely empty `while` body causes an `IndentationError`. To intentionally do nothing, use `pass`.
+- *Why B is correct:* Every block in Python needs at least one statement. For an intentionally empty loop, use `pass`: `while condition: pass`. This is the minimal valid `while` loop.
+- *Why C is incorrect:* You only need one statement (even just `pass`). Having a meaningful update or `break` is good practice but not a language requirement.
+- *Why D is incorrect:* A `while` with `pass` as its body IS valid — the `pass` statement is the required placeholder.
+
+---
+
+### Question 20
+
+What is the output of this code?
+
+```python
+for i in range(4):
+    pass
+print(i)
+```
+
+- A) `NameError: name 'i' is not defined`
+- B) `3`
+- C) `4`
+- D) Nothing — `pass` prevents `i` from being assigned
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* In Python, the loop variable `i` retains its last value after the loop ends. It is still accessible in the scope where the loop was defined.
+- *Why B is correct:* `range(4)` produces 0, 1, 2, 3. After the loop completes, `i` holds its last value: `3`. `print(i)` outputs `3`.
+- *Why C is incorrect:* `4` is the `stop` value of the range and is never assigned to `i`. The last value `i` holds is `3`.
+- *Why D is incorrect:* `pass` is a no-op statement — it does nothing and does not prevent any assignments. The loop variable `i` is assigned on every iteration.

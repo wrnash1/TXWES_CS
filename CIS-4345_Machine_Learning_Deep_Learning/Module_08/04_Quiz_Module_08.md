@@ -257,3 +257,183 @@ ds = ds.cache().prefetch(buffer_size=-255)
 Texas Wesleyan University — CIS-4345 Machine Learning and Deep Learning
 
 Proprietary and Confidential. Not for disclosure outside of Texas Wesleyan University.
+
+---
+
+### Question 11 (5 points)
+
+A developer applies `RandomZoom(height_factor=(-0.2, 0.2))` as a Keras preprocessing layer. What range of zoom behavior does this produce?
+
+- A) The image is zoomed in by exactly 20% on every training step.
+- B) The image is randomly zoomed in or out by up to 20% of its height on each training step.
+- C) The image height is randomly cropped to between 80% and 120% of the original, then padded back to the original size.
+- D) The image is always zoomed out (made smaller) with a 20% black border added to fill the remaining space.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* `height_factor=(-0.2, 0.2)` specifies a range: negative values zoom out (the image appears smaller with padding) and positive values zoom in (crop). A random value in `[-0.2, 0.2]` is drawn each time, producing variety in the apparent scale of the subject across training samples.
+  - *Why A is incorrect:* The layer applies a random value within the specified range, not a fixed value. Using a tuple `(-0.2, 0.2)` explicitly defines a range. If a fixed zoom were desired, a scalar would be used, and it would still be random with magnitude up to that scalar.
+  - *Why C is incorrect:* `RandomZoom` does not crop and pad independently for height and width in the manner described. It scales the image in the spatial domain and uses `fill_mode` (e.g., `'reflect'`, `'nearest'`) to handle the border, not explicit padding.
+  - *Why D is incorrect:* The `(-0.2, 0.2)` range includes positive values (zoom in) as well as negative values (zoom out). It is not restricted to zoom-out only. The layer randomly draws from the full specified range.
+
+---
+
+### Question 12 (5 points)
+
+Which of the following is NOT a valid use case for `tf.data.Dataset.cache()`?
+
+- A) Caching a dataset loaded from disk so that images are only decoded once across all epochs.
+- B) Caching after augmentation to ensure the same augmented images are reused across all epochs without re-randomizing.
+- C) Caching in memory when the full dataset fits in RAM to eliminate repeated I/O overhead.
+- D) Caching to a file (`.cache('/tmp/cache')`) when the dataset is too large to fit in memory.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct (i.e., NOT a valid use case):* Caching after augmentation defeats the purpose of augmentation. If augmented images are cached on the first epoch and reused unchanged, the model sees the same transformed version of each image every epoch — eliminating the diversity that makes augmentation effective. Augmentation must run after the cache to produce fresh random transforms each epoch.
+  - *Why A is incorrect (it IS valid):* Caching after decoding/normalization but before augmentation is the recommended pattern. Expensive operations like JPEG decoding are only performed once, while augmentation (placed after cache) remains random.
+  - *Why C is incorrect (it IS valid):* In-memory caching is ideal when the dataset fits in RAM. It completely eliminates disk I/O after the first epoch, often providing significant training speedups.
+  - *Why D is incorrect (it IS valid):* File-based caching writes the dataset to disk after the first epoch. Subsequent epochs read from the cache file rather than the original source, which is faster if the source involves network I/O or complex decoding.
+
+---
+
+### Question 13 (5 points)
+
+A developer has a training directory with 8,000 cat images and 2,000 dog images. Using `sklearn.utils.class_weight.compute_class_weight`, what approximate values are returned?
+
+- A) `{0: 0.625, 1: 2.5}` — inversely proportional to class frequency.
+- B) `{0: 0.8, 1: 0.2}` — proportional to class frequency.
+- C) `{0: 1.0, 1: 1.0}` — equal weights regardless of imbalance.
+- D) `{0: 4.0, 1: 1.0}` — the majority class receives a higher weight.
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - *Why A is correct:* The formula is `total / (n_classes * count)`. Total = 10,000, n_classes = 2. For cats: `10000 / (2 * 8000) = 0.625`. For dogs: `10000 / (2 * 2000) = 2.5`. The minority class (dogs) receives a weight 4x higher than the majority class, balancing their gradient contributions.
+  - *Why B is incorrect:* These values are proportional to class frequency, not inverse frequency. Using them as class weights would amplify the imbalance rather than correct it, making the model even more biased toward the majority class.
+  - *Why C is incorrect:* Equal weights ignore the imbalance entirely. The model still effectively sees 4 cat examples for every 1 dog example in expectation, with no correction. This is the behavior without any class weighting.
+  - *Why D is incorrect:* Class weights should favor the minority class (dogs), not the majority. Giving the majority class a higher weight would make the imbalance catastrophically worse, causing the model to almost entirely ignore dog predictions.
+
+---
+
+### Question 14 (5 points)
+
+What does the `shuffle_buffer_size` parameter control in `tf.data.Dataset.shuffle(buffer_size=1000)`, and what happens if `buffer_size=1`?
+
+- A) It controls the number of epochs over which shuffling is distributed; `buffer_size=1` shuffles after every single batch.
+- B) It controls the size of the in-memory buffer from which elements are randomly drawn; `buffer_size=1` produces no shuffling.
+- C) It controls the random seed used for shuffling; `buffer_size=1` uses the default system random seed.
+- D) It controls the number of CPU threads used for shuffling; `buffer_size=1` uses a single thread.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Shuffling in `tf.data` works by maintaining an in-memory buffer. At each step, one element is randomly drawn from the buffer and emitted, then the next element from the dataset fills the vacated slot. With `buffer_size=1`, the buffer holds only one element at a time — there is no randomness, and the dataset is returned in its original order. For perfect shuffling, `buffer_size` should equal the full dataset size.
+  - *Why A is incorrect:* `buffer_size` is a spatial parameter (how many elements to hold in memory), not a temporal parameter (how many epochs). Shuffling operates element-by-element as data flows through the pipeline.
+  - *Why C is incorrect:* The random seed is controlled by the `seed` parameter (e.g., `.shuffle(1000, seed=42)`), not `buffer_size`. Setting a seed makes shuffling reproducible; the buffer size controls randomization quality.
+  - *Why D is incorrect:* CPU threading is controlled by `num_parallel_calls` in `.map()` and `.interleave()`, not by `.shuffle()`. The shuffle operation is single-threaded and does not support parallel execution.
+
+---
+
+### Question 15 (5 points)
+
+A developer wants to apply MixUp augmentation — blending two training images and their labels. Which `tf.data` method enables this operation on pairs of examples?
+
+- A) `.map(mixup_fn)` applied before batching, processing one example at a time.
+- B) `.batch(batch_size).map(mixup_fn)` applied after batching, where `mixup_fn` operates on tensors of shape `(batch, H, W, C)`.
+- C) `.interleave(mixup_fn)` applied as a flat-map operation that interleaves multiple datasets.
+- D) `.filter(mixup_fn)` applied to select only pairs of images that are visually similar.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* MixUp requires two images: `x_new = lambda * x1 + (1 - lambda) * x2`. To access pairs of images, you must first batch the dataset so that each call to the map function receives a full batch tensor. The `mixup_fn` can then randomly pair examples within the batch: `x_mixed = lam * x[i] + (1 - lam) * x[j]` for random indices i, j within the batch.
+  - *Why A is incorrect:* Applying a map function before batching processes one example at a time. MixUp requires access to at least two examples simultaneously to create the blend. A single-example map cannot perform MixUp.
+  - *Why C is incorrect:* `.interleave()` is used to read from multiple data sources in parallel (e.g., multiple sharded files) and merge them into a single stream. It is not a mechanism for combining pairs of individual examples from the same dataset.
+  - *Why D is incorrect:* `.filter()` selects or rejects individual examples based on a predicate. It cannot create new blended examples — it only keeps or discards existing ones. MixUp creates new synthetic training examples, which is an operation for `.map()`, not `.filter()`.
+
+---
+
+### Question 16 (5 points)
+
+Why is it important to set `seed` in both `ImageDataGenerator` and `flow_from_directory` when creating paired training and validation generators?
+
+- A) The seed ensures that augmentation parameters are identical for training and validation, making the comparison fair.
+- B) The seed ensures that corresponding training and validation generators sample images in the same shuffled order, preventing label/image mismatches when using a single source directory split.
+- C) The seed controls the learning rate schedule of the model trained with the generator, making training deterministic.
+- D) The seed ensures the generator applies the same random crop to all images in a batch, producing uniform batch dimensions.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* When splitting a dataset directory into training and validation using two generators from the same source, both generators must use the same seed so they shuffle images in the same order. This ensures that the files assigned to training and validation are consistent. If seeds differ, the same image could appear in both training and validation sets.
+  - *Why A is incorrect:* Validation generators should NOT apply augmentation at all — only `rescale` is used. Having identical seeds for augmentation parameters would only matter if both generators applied augmentation, which is incorrect practice.
+  - *Why C is incorrect:* Generator seeds have no connection to learning rate schedules. Learning rate is controlled by the optimizer configuration and callbacks like `ReduceLROnPlateau`. Seeds affect random number generation for data ordering.
+  - *Why D is incorrect:* Keras image generators apply independent random crops per image within a batch, not a single shared crop. The seed ensures shuffling order consistency, not crop uniformity.
+
+---
+
+### Question 17 (5 points)
+
+A developer uses `tf.keras.layers.Normalization` (not `Rescaling`) as an in-model preprocessing layer. What additional step is required before training that is NOT needed for `Rescaling`?
+
+- A) Calling `layer.compile()` to register the normalization layer with the optimizer.
+- B) Calling `layer.adapt(training_data)` to compute the mean and variance of the training set before training begins.
+- C) Passing `normalize=True` to `model.compile()` so the loss function knows to expect normalized inputs.
+- D) Adding a corresponding `Denormalization` layer at the model output to recover the original value range.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* `tf.keras.layers.Normalization` computes mean and variance per feature to standardize inputs to zero mean and unit variance (z-score normalization). Unlike `Rescaling` (which uses a fixed user-specified factor), `Normalization` must learn the statistics of the training data by calling `.adapt(x_train)` before training. This is conceptually similar to `StandardScaler.fit()` in scikit-learn.
+  - *Why A is incorrect:* Keras layers do not have individual `compile()` methods. Only `tf.keras.Model` objects are compiled. The `Normalization` layer does not require compilation; it requires `adapt()`.
+  - *Why C is incorrect:* `model.compile()` has no `normalize` argument. The loss function has no awareness of whether inputs are normalized — it only sees model outputs and target labels. Normalization is entirely handled at the input layer.
+  - *Why D is incorrect:* A `Normalization` layer at the input standardizes the model's input distribution. There is no corresponding inverse layer required at the output unless the model is predicting values in the original space (a regression task), and even then the inverse transform would be applied manually, not via a Keras layer.
+
+---
+
+### Question 18 (5 points)
+
+Which code snippet correctly applies random brightness and contrast augmentation using the `tf.image` API inside a `tf.data` pipeline map function?
+
+- A) `tf.image.random_brightness(image, max_delta=0.2); tf.image.random_contrast(image, lower=0.8, upper=1.2)`
+- B) `tf.image.adjust_brightness(image, delta=0.2); tf.image.adjust_contrast(image, contrast_factor=1.2)`
+- C) `image = tf.image.random_brightness(image, max_delta=0.2); image = tf.image.random_contrast(image, lower=0.8, upper=1.2)`
+- D) `tf.augment.brightness(image, 0.2); tf.augment.contrast(image, 0.8, 1.2)`
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - *Why C is correct:* Both `tf.image.random_brightness` and `tf.image.random_contrast` return new tensors — they do not modify tensors in-place. The result must be assigned back to `image` (or a new variable). Both functions apply random transformations within the specified range on each call, which is the correct augmentation behavior.
+  - *Why A is incorrect:* The function calls are correct but the results are discarded — they are not assigned to any variable. In TensorFlow's functional (eager or graph) execution, operations that return new tensors must be captured in a variable; otherwise, the original image tensor is used unchanged.
+  - *Why B is incorrect:* `tf.image.adjust_brightness` and `tf.image.adjust_contrast` apply a fixed (non-random) adjustment. These are deterministic functions used for testing specific transformations, not for augmentation. Augmentation requires the `random_` prefix versions.
+  - *Why D is incorrect:* `tf.augment` is not a valid TensorFlow submodule. The correct namespace for image operations is `tf.image`. Using an invalid namespace raises an `AttributeError` at runtime.
+
+---
+
+### Question 19 (5 points)
+
+After applying data augmentation and achieving 82% validation accuracy on a Cats vs. Dogs classifier, a developer wants to further improve accuracy. Which technique is most appropriate as the next step?
+
+- A) Apply test-time augmentation (TTA) — average predictions across multiple augmented versions of each test image.
+- B) Increase `rotation_range` from 20 to 90 degrees in `ImageDataGenerator` to expose the model to more extreme rotations.
+- C) Remove the `Dropout` layer to allow the model to learn more complex representations without regularization interference.
+- D) Reduce the batch size from 32 to 1 to ensure the model updates weights on every single example.
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - *Why A is correct:* Test-time augmentation applies multiple augmented versions of each test image (e.g., flips, slight crops) and averages the model's predictions. This reduces prediction variance and consistently improves accuracy by 1–3 percentage points with no retraining required. TTA is a powerful, low-cost technique for squeezing additional accuracy from a trained model.
+  - *Why B is incorrect:* Cats and dogs in real photos are rarely rotated more than 30–45 degrees. Increasing `rotation_range` to 90 degrees would expose the model to unrealistic training examples that don't match the test distribution, potentially hurting accuracy rather than helping.
+  - *Why C is incorrect:* At 82% validation accuracy with augmentation, the model is likely still slightly overfitting. Removing Dropout would increase overfitting and reduce generalization. Regularization should be maintained or tuned, not removed.
+  - *Why D is incorrect:* Reducing batch size to 1 (pure SGD) makes training noisier and slower. For small-to-medium CNNs, batch sizes of 16–128 are optimal. Batch size 1 often produces worse final accuracy due to noisy gradient estimates.
+
+---
+
+### Question 20 (5 points)
+
+When using `image_dataset_from_directory` with `label_mode='binary'`, what shape do the label tensors have per batch, and which loss function should be used?
+
+- A) Shape `(batch_size, 2)` — use `categorical_crossentropy`.
+- B) Shape `(batch_size, 1)` — use `binary_crossentropy`.
+- C) Shape `(batch_size,)` — use `sparse_categorical_crossentropy`.
+- D) Shape `(batch_size, num_classes)` — use `categorical_crossentropy`.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* `label_mode='binary'` generates float32 labels with shape `(batch_size, 1)` — a single value of 0.0 or 1.0 per image. This is compatible with a model output of `Dense(1, activation='sigmoid')` and `loss='binary_crossentropy'`. This is the standard configuration for two-class image classification.
+  - *Why A is incorrect:* Shape `(batch_size, 2)` with one-hot encoding corresponds to `label_mode='categorical'`, not `'binary'`. The loss function would be `categorical_crossentropy`, and the output layer would need `Dense(2, activation='softmax')`.
+  - *Why C is incorrect:* Shape `(batch_size,)` with integer labels corresponds to `label_mode='int'`. The loss function for integer labels in multi-class classification is `sparse_categorical_crossentropy`. For binary classification, `label_mode='binary'` is more appropriate.
+  - *Why D is incorrect:* Shape `(batch_size, num_classes)` with one-hot vectors corresponds to `label_mode='categorical'`. This is for multi-class problems. `label_mode='binary'` only produces a single scalar label per image.

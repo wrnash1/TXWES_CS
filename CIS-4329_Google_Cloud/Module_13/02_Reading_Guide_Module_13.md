@@ -248,3 +248,19 @@ Before starting Lab 13, confirm you can answer yes to each item:
   `https://cloud.google.com/deploy/docs`
 - ACE exam guide:
   `https://cloud.google.com/certification/guides/cloud-engineer`
+
+---
+
+## 9. Supplemental Resources
+
+**1. Google Cloud Documentation — Cloud Build Triggers**
+<https://cloud.google.com/build/docs/automating-builds/create-manage-triggers>
+Complete guide to Cloud Build triggers covering GitHub and GitLab repository connections, branch and tag filter patterns using regular expressions, substitution variables, and configuring triggers for pull request events.
+
+**2. Google Cloud Skills Boost — Continuous Delivery Pipelines with Spinnaker and GKE**
+<https://www.cloudskillsboost.google/focuses/552>
+Hands-on lab demonstrating a complete CI/CD pipeline using Cloud Build for the CI phase and a delivery pipeline for staged deployments — applicable to the Cloud Build and Cloud Deploy concepts covered in this module.
+
+**3. Google Cloud Documentation — Artifact Registry Overview**
+<https://cloud.google.com/artifact-registry/docs/overview>
+Overview of Artifact Registry covering supported artifact formats (Docker, Maven, npm, Python), repository creation, cleanup policies, Container Analysis vulnerability scanning integration, and the image URL format used in Cloud Build and Cloud Run deployments.

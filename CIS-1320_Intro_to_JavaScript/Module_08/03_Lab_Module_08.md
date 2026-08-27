@@ -511,6 +511,31 @@ Submit the following to the Module 08 Lab assignment in Canvas:
 
 ---
 
+## Part 9 — Challenge Exercise
+
+**This section is optional but strongly recommended.** These exercises build a deeper understanding of functional array pipelines used in data-processing applications.
+
+### Challenge Step 9.1 — Implement `map`, `filter`, and `reduce` from Scratch
+
+Create `custom_methods.js`. Without using the built-in `Array.prototype.map`, `filter`, or `reduce`, implement three functions `myMap(arr, fn)`, `myFilter(arr, predicate)`, and `myReduce(arr, fn, initialValue)` using a `for...of` loop. Verify each implementation produces the same results as the built-in version by running both on the same data and comparing with `JSON.stringify`. This exercise builds algorithmic intuition and confirms your understanding of what these methods do internally.
+
+### Challenge Step 9.2 — Transducer-Style Pipeline
+
+Create `pipeline.js`. Write a `pipeline(...fns)` utility function that composes array transformations. Then use it to build a data pipeline that:
+
+1. Filters a list of employee objects to active employees only
+2. Maps to extract their department and salary
+3. Groups by department using `reduce`
+4. Computes average salary per department
+
+Use `console.table()` to display the final grouped result. This pattern is used in data analytics tools and ETL pipelines.
+
+### Challenge Step 9.3 — Recursive Flatten
+
+Create `flatten.js`. Implement `deepFlatten(arr)` — a recursive function that flattens an array of arbitrary depth without using `Array.prototype.flat`. Test it on a heavily nested structure like `[1, [2, [3, [4, [5]]]]]` and verify the output is `[1, 2, 3, 4, 5]`. Then compare your implementation's output to `arr.flat(Infinity)` to confirm they match.
+
+---
+
 ## Reflection Questions
 
 Answer in the Canvas text box (two to three sentences each):

@@ -161,3 +161,153 @@ An analyst completes a 4-hour threat hunt and finds no evidence supporting their
 **Correct Answer:** B
 
 **Distractor Analysis:** Why A is incorrect: Repeating the exact same hunt immediately with the same queries against the same data will produce the same result. If the first hunt was properly executed, re-running it adds no value. A refined query, a different data source, or a different time range might yield different results — but that is a refinement, not a repetition. Why B is correct: A negative finding has documentation and planning value. Documenting what was covered (data sources, time range, queries) creates a baseline and prevents redundant future work. Proposing a related hypothesis or a refined version of the original hypothesis keeps the hunt cycle productive. The hunting loop explicitly continues with a new or refined hypothesis after each hunt completes. Why C is incorrect: A negative result in one hunt covering one technique over one time window absolutely does not mean the organization has no active threats. It means no evidence of the specific hypothesized technique was found in the searched data during the covered time period. Drawing conclusions beyond that is a significant overreach. Why D is incorrect: Adversary techniques evolve. A technique that was not observed last month may be actively used next month against updated infrastructure. ATT&CK techniques are never permanently excluded from future hunt consideration.
+
+---
+
+## Question 11
+
+A threat hunter develops the following hypothesis: "We hypothesize that threat actors may be present on our network." What is the primary weakness of this hypothesis and how should it be corrected?
+
+- A) The hypothesis is too short; a minimum of three sentences is required for a valid hunt hypothesis
+- B) The hypothesis lacks specificity — it does not identify a technique, expected evidence, data source, or time boundary; it should be rewritten to reference a specific ATT&CK technique with observable indicators
+- C) The hypothesis is valid but should be reviewed by management before being executed
+- D) The hypothesis is acceptable for an initial exploratory hunt; specific hypotheses are only needed for advanced hunts
+
+**Correct Answer:** B
+
+**Distractor Analysis:** Why A is incorrect: Hypothesis quality is measured by precision and testability, not sentence count. A one-sentence hypothesis that is precisely formed is superior to a three-sentence hypothesis that is vague. Why B is correct: A valid threat hunting hypothesis must specify: what technique or behavior is being hunted (ATT&CK technique preferred), what observable evidence would confirm or refute the hypothesis, which data source will be queried, and the time range. "Threat actors may be present" defines none of these. Without them, there is no defined search query, no success criteria, and no repeatable methodology. The corrected hypothesis would reference a specific technique, its expected telemetry signature, and the data source. Why C is incorrect: Management review may be a good practice for resource allocation but is not a component of hypothesis quality. The flaw is methodological, not governance-related. Why D is incorrect: All hunts — exploratory or targeted — benefit from a structured hypothesis. An "exploratory" hunt without a hypothesis is not a hunt; it is undirected log browsing, which produces inconsistent and undocumentable results.
+
+---
+
+## Question 12
+
+A threat hunter observes that `mshta.exe` on a workstation spawned `powershell.exe`, which then spawned `cmd.exe`. `mshta.exe` is a legitimate Windows utility for running HTML Applications (.HTA files). Which MITRE ATT&CK technique does `mshta.exe` being used as a parent process for code execution represent?
+
+- A) T1059.001 (PowerShell) — because PowerShell is the child process executing code
+- B) T1218.005 (System Binary Proxy Execution: Mshta) — a living-off-the-land binary used to execute malicious code while bypassing application control restrictions
+- C) T1053.005 (Scheduled Task/Job: Scheduled Task) — the HTA file was likely launched by a scheduled task
+- D) T1134 (Access Token Manipulation) — mshta.exe uses token manipulation to escalate to the child process
+
+**Correct Answer:** B
+
+**Distractor Analysis:** Why A is incorrect: T1059.001 describes the use of PowerShell for execution. While PowerShell is being used, the technique being exploited here is the use of `mshta.exe` as the execution proxy. The question asks what technique `mshta.exe` being the parent process represents, not what the child process does. Why B is correct: T1218.005 describes attackers using `mshta.exe` to execute arbitrary code (JScript, VBScript, or PowerShell via COM objects in an HTA file) while evading application control tools that whitelist signed Microsoft binaries. `mshta.exe` is a trusted, signed Windows binary and is often not blocked by application control. Using it as a launcher for malicious PowerShell is the definition of living-off-the-land proxy execution. Why C is incorrect: Scheduled tasks are a persistence mechanism. The parent-child relationship described does not indicate scheduled task involvement; it indicates interactive or triggered HTA execution. Why D is incorrect: Access Token Manipulation (T1134) involves modifying security tokens to elevate privileges. The described parent-child process relationship is an execution technique, not a privilege escalation mechanism.
+
+---
+
+## Question 13
+
+A threat hunt for lateral movement using stolen credentials produces no results when searching for `net use` commands in process telemetry. The hunter concludes the hunt result is negative. A senior analyst suggests the hunt was incomplete. What alternative data source would provide additional coverage for credential-based lateral movement that process telemetry alone might miss?
+
+- A) HTTP proxy logs showing outbound web requests
+- B) Windows Security Event Log Event ID 4648 (logon with explicit credentials) and Event ID 4624 Type 3 (network logon) on the target systems, which would record successful lateral authentication even if no net commands were used
+- C) DNS query logs showing domain resolution for internal hostnames
+- D) Firewall egress logs showing outbound connections to external IPs
+
+**Correct Answer:** B
+
+**Distractor Analysis:** Why A is incorrect: HTTP proxy logs record web browsing and outbound HTTP/HTTPS traffic. Lateral movement using stolen credentials to access internal systems does not produce web proxy log entries. Why B is correct: Credential-based lateral movement using tools like `wmiexec`, `psexec`, or direct RDP does not necessarily involve `net use` commands. The authentication events are recorded in Windows Security Event Logs: EID 4648 records when a process explicitly uses credentials (pass-the-hash style), and EID 4624 Type 3 records network logons to a system. Looking for these events on target systems for the compromised source account provides coverage for lateral movement without relying on specific command-line artifacts. This multi-source approach is precisely why process telemetry alone produces incomplete lateral movement coverage. Why C is incorrect: DNS query logs record domain name resolution. Lateral movement using IP addresses directly would not generate DNS queries. Even if hostnames are used, DNS logs would not show that the connection was successful or malicious. Why D is incorrect: Firewall egress logs record outbound connections to external IPs. Lateral movement between internal hosts is east-west traffic that does not traverse the perimeter firewall.
+
+---
+
+## Question 14
+
+A threat hunter reviewing Windows endpoint telemetry notices that `svchost.exe` (PID 3412) has an unusual parent process: `cmd.exe` (PID 3188). In a legitimate Windows environment, `svchost.exe` is always spawned by `services.exe`. What does this parent process anomaly indicate and what action should the hunter take?
+
+- A) This is normal — svchost.exe can have various parent processes depending on the Windows version
+- B) This indicates process masquerading: a malicious process named `svchost.exe` was launched from `cmd.exe` to blend in with legitimate svchost processes; the hunter should investigate the executable path, check the file hash, and correlate with network connections for this PID
+- C) This indicates a scheduled task ran svchost.exe on a custom schedule; no investigation is needed
+- D) This indicates a Windows update is in progress; svchost.exe parents change during update cycles
+
+**Correct Answer:** B
+
+**Distractor Analysis:** Why A is incorrect: In a legitimate Windows environment, all `svchost.exe` instances are spawned by `services.exe`. There is no legitimate scenario where `cmd.exe` is the parent of `svchost.exe`. This is a universal indicator of either process masquerading (a malicious binary named svchost.exe) or process injection that altered the process lineage. Why B is correct: Malicious actors commonly name their malware `svchost.exe` to blend in with the dozens of legitimate svchost instances visible in Task Manager. A legitimate svchost.exe running from `C:\Windows\System32\` with a parent of `services.exe` is normal. A process named `svchost.exe` with a parent of `cmd.exe` is not. The investigation steps are correct: check the full path (malware often runs from `C:\Temp\` or `C:\Users\`), check the file hash against known-good, and correlate with network connections to identify any C2 communication from this PID. Why C is incorrect: Scheduled tasks are managed by the Task Scheduler service, which runs as a svchost service. Scheduled tasks do not change the parent process of svchost.exe. Why D is incorrect: Windows updates are delivered through the Windows Update service (also hosted in svchost), but the update process does not change the parent of svchost.exe from services.exe to cmd.exe.
+
+---
+
+## Question 15
+
+Which of the following best describes the difference between threat intelligence-led hunting and IOC-based hunting?
+
+- A) Threat intelligence-led hunting uses paid intelligence sources; IOC-based hunting uses free sources
+- B) IOC-based hunting searches for specific known artifacts (IP addresses, file hashes, domains); threat intelligence-led hunting uses adversary behavior profiles and TTPs to develop hypotheses and hunt for patterns that may not yet have associated IOCs
+- C) IOC-based hunting is performed by Tier 1 analysts; threat intelligence-led hunting is performed only by red teams
+- D) Both approaches are identical — threat intelligence is just a source of IOCs
+
+**Correct Answer:** B
+
+**Distractor Analysis:** Why A is incorrect: The distinction between the two hunt types is methodological, not budget-related. Both approaches can use paid or free intelligence sources. Why B is correct: IOC-based hunting is reactive — it searches for specific known bad indicators (a hash, an IP, a domain) that have been extracted from previous incidents or threat intelligence reports. If the attacker changes their infrastructure, the IOCs become stale and the hunt misses them. TTP-based hunting searches for attacker behaviors and techniques regardless of the specific tools or infrastructure used. A hunt for "Excel spawning PowerShell with base64 arguments" will detect macro-based attacks whether the C2 IP is known or not. TTP-based hunting is more durable and more likely to detect novel or adapted attacks. Why C is incorrect: Threat hunting is performed by defensive security analysts across all experience levels. It is not a red team function. Red teams simulate attacks; hunters detect them. Why D is incorrect: Threat intelligence produces both IOCs and behavioral intelligence (actor profiles, TTPs, campaign narratives). Treating intelligence only as an IOC source discards the behavioral and strategic value that enables TTP-based hunting.
+
+---
+
+## Question 16
+
+During a threat hunt, an analyst discovers a PowerShell script saved to `C:\ProgramData\Microsoft\Crypto\RSA\trusted_update.ps1`. The script contains obfuscated code. The analyst confirms it is malicious. At what point in the MITRE ATT&CK lifecycle does saving a malicious script to a trusted-looking directory represent an example?
+
+- A) Initial Access — the script was delivered via phishing
+- B) Defense Evasion — specifically T1564 (Hide Artifacts) combined with T1027 (Obfuscated Files or Information): storing malicious code in a path associated with legitimate Windows cryptographic services reduces the likelihood of detection by path-based monitoring tools
+- C) Persistence — the script is stored on disk so it survives reboots
+- D) Collection — the script is gathering data for exfiltration
+
+**Correct Answer:** B
+
+**Distractor Analysis:** Why A is incorrect: Initial Access describes how the attacker first entered the network. Placing a script in a trusted-looking path is a post-access activity. Why B is correct: Storing a malicious file in a directory associated with legitimate Windows functionality (`C:\ProgramData\Microsoft\Crypto\RSA\`) is a classic defense evasion technique. Many security monitoring tools and analysts are conditioned to treat paths under `C:\ProgramData\Microsoft\` as trustworthy. This is T1564 (Hide Artifacts) — concealing malicious content in locations where it blends with legitimate content. Combining this with obfuscation (T1027) makes the file difficult both to locate and to analyze. Why C is incorrect: While a file on disk does survive reboots, persistence requires a mechanism that causes the file to execute after restart — a registry run key, scheduled task, or service. Simply storing a file on disk does not create persistence. Why D is incorrect: Collection (T1005, T1074) involves gathering data for exfiltration. The scenario describes a script being stored, with no indication it is collecting data. The storage method and file path are defense evasion indicators, not collection indicators.
+
+---
+
+## Question 17
+
+A threat hunter wants to evaluate whether their organization's current SIEM detection rules would have detected the TA-FREIGHT attack chain described in the module lab scenario. Which process is the most systematic approach to this evaluation?
+
+- A) Ask the IR team whether they have received any TA-FREIGHT-related incidents
+- B) Run the TA-FREIGHT attack chain in a production environment and observe whether alerts fire
+- C) Map TA-FREIGHT's known TTPs to MITRE ATT&CK technique IDs, open the ATT&CK Navigator, apply the organization's current detection coverage layer, and identify which TA-FREIGHT techniques fall in uncovered (red) areas
+- D) Request a penetration test focused on TA-FREIGHT techniques from an external vendor
+
+**Correct Answer:** C
+
+**Distractor Analysis:** Why A is incorrect: The absence of reported TA-FREIGHT incidents does not indicate detection capability — it could mean the attacker has not targeted the organization, the attack succeeded but was not detected, or incidents were classified differently. This approach provides no systematic coverage assessment. Why B is incorrect: Running an attack chain in a production environment (as opposed to an isolated lab) risks causing real harm, triggering real incident response, and destroying evidence. Even if controlled, production testing is operationally disruptive and legally problematic without formal authorization. Why C is correct: The ATT&CK Navigator's layering function allows analysts to apply multiple coverage layers to the same matrix. By mapping TA-FREIGHT's TTPs to ATT&CK technique IDs (from the group profile if available, or from incident reports) and overlaying the organization's current detection coverage, uncovered techniques appear immediately. This produces a gap list that directly informs hunt priorities and detection engineering work without requiring any active attack simulation. Why D is incorrect: A penetration test provides detection evaluation but is expensive, time-consuming, and typically not available on demand. The ATT&CK Navigator approach is free, immediate, and provides an equally systematic coverage gap assessment for planning purposes.
+
+---
+
+## Question 18
+
+An analyst reviewing process telemetry identifies `certutil.exe` executing with the argument `-decode base64_payload.txt decoded.exe`. What technique does this represent and why is it significant for threat hunting?
+
+- A) T1140 (Deobfuscate/Decode Files or Information) — certutil.exe is a legitimate Windows binary being used to decode a base64-encoded malicious payload, bypassing security tools that block PowerShell base64 decoding
+- B) T1003 (OS Credential Dumping) — certutil.exe is accessing the certificate store to extract credentials
+- C) T1071.001 (Web Protocols) — certutil.exe is making an HTTP request to download a file
+- D) T1036 (Masquerading) — the analyst should look for certutil.exe running from an unusual path
+
+**Correct Answer:** A
+
+**Distractor Analysis:** Why A is correct: `certutil.exe` is a legitimate Windows binary for managing certificates, but it has well-documented abuse as a living-off-the-land binary. The `-decode` argument is not a certificate management function — it decodes base64-encoded content to a file. Attackers use this to deliver encoded payloads that evade signature-based tools focused on PowerShell or `certutil -urlcache -f` (download). The resulting `decoded.exe` is the actual malicious payload. This is T1140 — using a trusted system binary to deobfuscate malicious content, which is precisely why it is significant for hunting: the process is signed, trusted, and unlikely to trigger antivirus, but the specific argument combination is a high-fidelity hunting indicator. Why B is incorrect: OS Credential Dumping involves accessing LSASS memory or credential stores. The described `certutil.exe` activity is file decoding, not credential access. Why C is incorrect: T1071.001 involves using HTTP for C2 communication. `certutil.exe -decode` is a local file decoding operation, not a network request. `certutil -urlcache -f` would be the network download variant. Why D is incorrect: T1036 masquerading involves naming malware after legitimate binaries. The scenario describes legitimate `certutil.exe` being abused for its built-in functionality, not a file named certutil.exe from an unusual path.
+
+---
+
+## Question 19
+
+A threat hunter wants to create a detection rule in the SIEM based on hunt findings. The hunt identified that `excel.exe` spawning `powershell.exe` with a `-enc` argument is a high-confidence malicious behavior. Which approach produces the most operationally useful detection rule?
+
+- A) Alert on any process creation event where the parent is `excel.exe`
+- B) Alert when `excel.exe` spawns `powershell.exe` with a CommandLine argument containing `-enc` or `-EncodedCommand`, and correlate with any outbound network connection from the same PowerShell PID within 5 minutes
+- C) Alert on any use of the `-enc` PowerShell argument regardless of parent process
+- D) Alert on all PowerShell executions and have analysts manually review each one
+
+**Correct Answer:** B
+
+**Distractor Analysis:** Why A is incorrect: Many legitimate Excel processes spawn children — Excel spawns `dw20.exe` (crash reporting), `splwow64.exe` (print), and other utility processes. Alerting on any Excel child process would produce enormous false-positive volume and suppress analyst attention through alert fatigue. Why B is correct: The compound condition dramatically improves precision. `excel.exe` spawning `powershell.exe` is already suspicious; adding the `-enc` argument filter targets the specific encoded execution pattern; correlating with an outbound network connection from the same PID confirms active C2 — turning a suspicious event into a high-confidence malicious indicator. This multi-condition approach produces fewer alerts with higher fidelity, which is the design goal for production SIEM rules derived from hunt findings. Why C is incorrect: PowerShell with `-enc` is used by many legitimate applications, administrative scripts, and management tools. Alerting on any `-enc` usage without a suspicious parent process context produces significant false-positive volume. Why D is incorrect: Alerting on all PowerShell executions and manually reviewing each one is not operationally sustainable in any environment with more than a handful of endpoints. Modern environments generate hundreds of legitimate PowerShell executions per day.
+
+---
+
+## Question 20
+
+A threat hunt for DGA (Domain Generation Algorithm) activity in DNS logs involves computing the entropy of queried domain names. Which characteristic of DGA-generated domains makes entropy analysis an effective detection technique?
+
+- A) DGA domains are always longer than 20 characters, making length-based detection reliable
+- B) DGA algorithms generate pseudo-random character strings that have high Shannon entropy — they lack the natural language patterns (low entropy) that characterize legitimate domain names like company names, product names, or common words
+- C) DGA domains always use uncommon top-level domains (.xyz, .info) which are blocked by most firewalls
+- D) DGA activity always produces NXDOMAIN responses, so entropy analysis is unnecessary — NXDOMAIN filtering alone is sufficient
+
+**Correct Answer:** B
+
+**Distractor Analysis:** Why A is incorrect: DGA domain length varies by algorithm. Some DGAs generate 8-character domains; others generate 30+ characters. Length alone is not a reliable detector because many legitimate short domains and many legitimate long domains exist. Why B is correct: Shannon entropy measures the unpredictability of character sequences. Human-generated domain names (company names, product names) have low entropy because they use recognizable word patterns with predictable character distributions. DGA-generated domains use pseudo-random character sequences derived from date seeds or cryptographic functions — producing character distributions that approach random, resulting in high Shannon entropy. A domain like `facebook.com` has low entropy; a domain like `xkqrtmbsz.net` has high entropy. Entropy scoring across DNS query volumes enables statistical identification of DGA domains that evade signature-based tools. Why C is incorrect: While some DGA malware uses uncommon TLDs, modern DGA implementations use common TLDs (.com, .net, .org) specifically to avoid TLD-based blocking. TLD filtering is not a reliable DGA detection method. Why D is incorrect: While NXDOMAIN responses are a DGA indicator when the C2 infrastructure is offline, DGA malware that successfully connects to active C2 infrastructure produces NOERROR responses. NXDOMAIN filtering alone misses all active DGA C2 sessions.

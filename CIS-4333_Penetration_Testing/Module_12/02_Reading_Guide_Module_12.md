@@ -183,4 +183,20 @@ Post-exploitation is explicitly tested including: privilege escalation (Linux an
 
 ---
 
+---
+
+## 9. Supplemental Resources
+
+**1. GTFOBins — Unix Binary Privilege Escalation Reference**
+[https://gtfobins.github.io/](https://gtfobins.github.io/)
+GTFOBins is the authoritative reference for Unix binary privilege escalation, documenting SUID, sudo, capabilities, and file read/write abuse techniques for hundreds of binaries. It is directly applicable to Module 12 Linux privilege escalation exercises and is the standard field reference for PT0-002 Domain 3 post-exploitation questions.
+
+**2. PEASS-ng — Privilege Escalation Awesome Scripts Suite**
+[https://github.com/carlospolop/PEASS-ng](https://github.com/carlospolop/PEASS-ng)
+PEASS-ng provides LinPEAS and WinPEAS — automated privilege escalation enumeration scripts for Linux and Windows. Understanding their output is a core skill for Module 12. The GitHub repository includes output interpretation guides and color-coding explanations that directly support reading and analyzing enumeration results in the lab.
+
+**3. HackTricks — Linux and Windows Privilege Escalation**
+[https://book.hacktricks.xyz/linux-hardening/privilege-escalation](https://book.hacktricks.xyz/linux-hardening/privilege-escalation)
+HackTricks provides comprehensive methodology for both Linux and Windows privilege escalation, covering SUID, sudo, cron jobs, capabilities, token impersonation, service misconfigurations, and kernel exploits. It is organized as a field reference for active engagements and supplements all Module 12 privilege escalation techniques with real-world payload examples.
+
 *End of Module 12 Reading Guide*

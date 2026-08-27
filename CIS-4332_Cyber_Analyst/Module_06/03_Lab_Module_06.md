@@ -311,3 +311,28 @@ Classification and justification:
 ## Academic Integrity Notice
 
 All log data and alert examples in this lab are fabricated for educational purposes. All work must be your own. Do not share query solutions in public forums. Reference `comptia.org` and `professormesser.com` for additional study context.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: SOAR Playbook Design
+
+A SIEM alert fires for Rule: `Malicious IP Outbound Connection` when any internal host connects to an IP in the threat intelligence feed. Design a SOAR playbook to handle this alert type.
+
+1. List the automated enrichment steps the playbook should perform before human review, including at least four data collection actions (e.g., host lookup, TI reputation check, process responsible for the connection, recent user login history for the host).
+2. Define the decision branch: what combination of enrichment results should trigger automatic containment (isolate host), and what combination should route to Tier 1 for manual review? Write these as explicit conditional logic (if/then statements).
+3. Identify two scenarios where the automated containment branch could cause operational harm and explain how the playbook design should account for these exceptions.
+
+### Challenge 2: Alert Tuning Analysis
+
+Your SIEM's `Brute Force Login Attempt` rule fired 3,400 times last month. After reviewing a sample of 50 alerts, you find: 31 from a network vulnerability scanner (authorized, documented), 11 from a legacy application that reports normal login retries as failures, 4 from actual external brute-force attempts (true positives), and 4 that require further investigation.
+
+1. Calculate the observed false positive rate for your sample. Based on this sample, estimate how many of the 3,400 monthly alerts are likely true positives.
+2. Describe three specific tuning actions to reduce the false positive rate. For each action, specify what change you would make to the rule and what documentation you would create.
+3. Write the revised Splunk SPL query for the brute-force rule that adds exceptions for the scanner's IP range (192.168.20.0/24) and the legacy application's source hostname (`legacy-app-01`).
+
+### Reflection Questions
+
+1. Explain why documenting SIEM tuning exceptions is as important as documenting the original rule. What organizational risk is created when exception rationale is not recorded?
+2. Your SIEM's MTTD is 4 hours but your MTTR is 26 hours. Based on what you learned in this module, identify the most likely operational bottleneck causing the high MTTR and suggest one specific process or tooling improvement that would reduce it.

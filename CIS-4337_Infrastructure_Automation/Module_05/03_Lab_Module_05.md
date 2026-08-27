@@ -375,4 +375,66 @@ Registry modules are downloaded from GitHub. If your network is slow, allow extr
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Module Composition with Output Chaining
+
+Extend the lab by creating a second module `modules/compute` that accepts the VPC and subnet IDs exported by `modules/vpc` as inputs and provisions EC2 instances.
+
+**Step A.** Create `modules/compute/variables.tf` with variables `vpc_id` (string), `subnet_ids` (list of string), `environment` (string), and `instance_count` (number, default 1).
+
+**Step B.** Create `modules/compute/main.tf` with the following content — it creates a security group and EC2 instances:
+
+```hcl
+resource "aws_security_group" "app" {
+  name   = "${var.environment}-app-sg"
+  vpc_id = var.vpc_id
+
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+resource "aws_instance" "app" {
+  count         = var.instance_count
+  ami           = "ami-0c55b159cbfafe1f0"
+  instance_type = "t2.micro"
+  subnet_id     = var.subnet_ids[count.index % length(var.subnet_ids)]
+
+  tags = {
+    Name        = "${var.environment}-app-${count.index}"
+    Environment = var.environment
+  }
+}
+```
+
+1. Create `modules/compute/outputs.tf` exporting `instance_ids` (a list using `aws_instance.app[*].id`) and `security_group_id`.
+2. Add a `module "compute"` block to the root `main.tf` that passes `module.network.vpc_id`, `module.network.public_subnet_ids`, the environment variable, and `instance_count = 2`.
+3. Run `terraform init && terraform plan`. In `lab_notes.txt`, identify the full state addresses for both EC2 instances and the security group. Confirm that the compute module's security group references the VPC from the network module.
+
+### Challenge 2: Rename a Module Resource Using `terraform state mv`
+
+Rename the `aws_vpc.this` resource inside the `network` module to `aws_vpc.main` in `modules/vpc/main.tf`, and use `terraform state mv` to update the state address without destroying the VPC.
+
+1. Edit `modules/vpc/main.tf`: change `resource "aws_vpc" "this"` to `resource "aws_vpc" "main"` and update all internal references from `aws_vpc.this.id` to `aws_vpc.main.id`.
+2. Before running `terraform plan`, execute the state move: `terraform state mv module.network.aws_vpc.this module.network.aws_vpc.main`.
+3. Run `terraform plan` and confirm the plan shows zero changes. Record in `lab_notes.txt`: what would have happened if you had run `terraform plan` without the `state mv` step?
+
+### Reflection Questions
+
+1. In Challenge 1 you chained module outputs — the compute module received inputs directly from the network module's outputs. What are the advantages of this pattern over having the root module hard-code VPC IDs and subnet IDs directly in the compute module call?
+2. Module versioning becomes critical in a team environment where multiple squads share a common infrastructure module library. Describe a governance policy (branching strategy, version pinning rules, changelog requirements) that would allow safe module updates without breaking dependent configurations.
+
+---
+
 Module 05 Lab — CIS-4337 Infrastructure Automation — Texas Wesleyan University

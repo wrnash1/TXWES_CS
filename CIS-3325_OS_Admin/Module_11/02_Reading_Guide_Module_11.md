@@ -208,3 +208,44 @@ Before the quiz and lab, confirm you can do all of the following without looking
 - Move a network interface to a specific firewalld zone
 - Add a source address to a trusted zone in firewalld
 - Explain the firewalld zones and their default trust levels
+
+---
+
+## 9. Supplemental Resources
+
+**1. iptables(8) and ip6tables(8) Man Pages — man7.org**
+URL: https://man7.org/linux/man-pages/man8/iptables.8.html
+Coverage: The authoritative iptables reference covering all tables (filter, nat, mangle,
+raw), built-in chains (INPUT, OUTPUT, FORWARD, PREROUTING, POSTROUTING), match extensions
+(-m conntrack, -m state, -m limit, -m multiport), and targets (ACCEPT, DROP, REJECT, LOG,
+RETURN). The iptables-extensions(8) man page documents all match and target modules.
+Essential for understanding the rules used in Part 4 of the lab.
+
+**2. ufw — Uncomplicated Firewall Documentation (Ubuntu)**
+URL: https://help.ubuntu.com/community/UFW
+Coverage: Ubuntu's official ufw guide covering basic allow/deny rules, application profiles,
+logging levels, rule deletion by number and specification, IPv6 handling, and integration
+with Docker. Includes a troubleshooting section for common issues including rules that appear
+correct but do not take effect. Directly maps to all ufw commands in this module.
+
+**3. firewalld Documentation — firewalld.org**
+URL: https://firewalld.org/documentation/
+Coverage: The official firewalld documentation covering zones, services, ports, rich rules,
+direct rules, runtime versus permanent configuration, and the --reload workflow. The zone
+concept documentation explains source-based versus interface-based zone assignment priority.
+The firewall-cmd man page section covers all subcommands used in this module.
+
+**4. nftables — The Successor to iptables (Red Hat)**
+URL: https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/configuring_firewalls_and_packet_filters/getting-started-with-nftables_firewall-packet-filters
+Coverage: On RHEL 9 and newer Ubuntu releases, nftables is the underlying kernel framework
+replacing iptables. This guide introduces nft syntax, tables, chains, and rules. Understanding
+nftables is increasingly important as iptables is deprecated. The iptables-nft compatibility
+layer (iptables commands that internally use nftables) is also explained.
+
+**5. Arch Wiki — iptables and ufw**
+URL: https://wiki.archlinux.org/title/Iptables
+Coverage: The Arch Wiki iptables article provides a practical introduction to the filter
+table, chain traversal, stateful matching, logging, and saving rules. The companion ufw
+article covers the complete ufw workflow including application profiles and integration
+with other services. Both articles include worked examples and common configuration patterns
+not found in the official man pages.

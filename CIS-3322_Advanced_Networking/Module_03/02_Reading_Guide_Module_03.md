@@ -189,3 +189,19 @@ Work through each item before taking the quiz.
 
 - Cisco CCNA certification training information: cisco.com/c/en/us/training-events/training-certifications
 - Free CCNA study notes and video summaries: professormesser.com
+
+---
+
+## 10. Supplemental Resources
+
+The following open educational resources extend IPv6 addressing and configuration concepts to CCNA exam depth. All resources are freely available.
+
+1. **Cisco Networking Academy — CCNA: Introduction to Networks, Chapter 13 (IPv6 Addressing)** (skillsforall.com): This free chapter provides interactive IPv6 address type identification exercises, SLAAC simulation activities, and IPv6 static routing labs in Packet Tracer.
+
+2. **Jeremy's IT Lab — IPv6 (Days 31–32)** (youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ): These two video lessons cover IPv6 address types, EUI-64 derivation, SLAAC, DHCPv6, and static routing with worked configuration examples.
+
+3. **Cisco Learning Network — IPv6 Addressing Deep Dive** (learningnetwork.cisco.com): The Cisco Learning Network community includes comprehensive IPv6 study threads with practice problems on address compression, prefix identification, and NDP operation at CCNA exam difficulty.
+
+4. **ARIN IPv6 Wiki — Free Educational IPv6 Resources** (arin.net/resources/guide/ipv6): The American Registry for Internet Numbers (ARIN) provides free IPv6 tutorials, address type reference charts, and transition mechanism documentation aligned with current CCNA exam objectives.
+
+5. **Packet Tracer IPv6 Configuration Lab Tutorials** (skillsforall.com/course/getting-started-cisco-packet-tracer): The Cisco Networking Academy offers guided Packet Tracer tutorials specifically for IPv6 routing configuration, including SLAAC verification, static route troubleshooting, and neighbor discovery inspection — all directly applicable to this lab activity.

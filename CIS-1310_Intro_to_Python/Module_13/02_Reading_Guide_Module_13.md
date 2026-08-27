@@ -433,7 +433,31 @@ Watch the relevant episode of the [Python for Everybody Course Playlist](https:/
 
 ---
 
-## 7. Study Checklist
+## 7. Supplemental Resources
+
+**1. Official Python 3 Docs — The Import System**
+[https://docs.python.org/3/reference/import.html](https://docs.python.org/3/reference/import.html)
+The authoritative reference for Python's import mechanics — module search path (`sys.path`), the `__name__` attribute, the `__init__.py` requirement, and `importlib`. This is the primary source for PCAP exam questions about import behavior.
+
+**2. Official Python 3 Docs — The Python Standard Library**
+[https://docs.python.org/3/library/index.html](https://docs.python.org/3/library/index.html)
+The complete index of all standard library modules. Relevant to PCAP: `math`, `random`, `os`, `os.path`, `sys`, `datetime`, `collections`, `json`, `re`. Browsing this index builds familiarity with what is available without third-party packages.
+
+**3. Official Python 3 Docs — Virtual Environments and Packages**
+[https://docs.python.org/3/tutorial/venv.html](https://docs.python.org/3/tutorial/venv.html)
+The tutorial section on creating virtual environments with `python3 -m venv`, activating them, and installing packages with `pip`. Directly covers the PCAP-tested workflow for isolated Python environments.
+
+**4. Real Python — Python Modules and Packages**
+[https://realpython.com/python-modules-packages/](https://realpython.com/python-modules-packages/)
+A comprehensive free article covering all three import forms, namespace effects of each, the `__name__ == '__main__'` guard, package structure, `__init__.py`, and the `__all__` variable. The comparison table of import forms and their namespace effects is the most useful reference for PCAP exam preparation.
+
+**5. Python Packaging Authority — Python Packaging User Guide**
+[https://packaging.python.org/en/latest/tutorials/installing-packages/](https://packaging.python.org/en/latest/tutorials/installing-packages/)
+The official guide to installing Python packages with pip, using virtual environments, and understanding PyPI. Provides the professional context for `pip3 install`, `requirements.txt`, and why virtual environments are essential for project isolation.
+
+---
+
+## 8. Study Checklist
 
 - [ ] Watch the Module 13 video lecture by Professor Nash.
 - [ ] Read the High-Yield Glossary — especially the import forms table and namespace effects.

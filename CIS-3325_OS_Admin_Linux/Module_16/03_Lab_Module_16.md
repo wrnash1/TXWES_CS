@@ -234,3 +234,31 @@ This lab deliberately lacks step-by-step guidance because the Linux+ exam will n
 - Scenario 6 weakness: review Module 9 (shell scripting)
 
 Complete each scenario without looking at module notes on your first attempt. Then review, correct, and document what you had to look up — those are your study priorities.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Timed Full-System Audit
+
+Simulate an exam performance-based question under timed conditions by completing a comprehensive system audit with no reference materials.
+
+1. Set a 20-minute timer. Without referencing any module notes, complete all of the following tasks and document each command and its output: (a) display the full kernel version and architecture; (b) show all block devices and their filesystems with UUIDs; (c) list all LVM volume groups and their free space; (d) show all listening TCP/UDP ports with the process owning each; (e) display the currently active firewalld zone and its allowed services; (f) show the SELinux status and current mode; (g) list all users with UID >= 1000 from `/etc/passwd`; (h) display the last 5 failed authentication attempts from the journal.
+2. After completing step 1 (or when time expires), review your answers. For each task where you used an incorrect command, needed to look something up, or produced incomplete output — add that topic to a "gap list." This gap list represents your personalized final study priorities before the Linux+ exam.
+3. Re-attempt any tasks from step 1 that were on your gap list, this time checking the correct syntax from the relevant module's reading guide. Document the correct command for each gap item with a brief explanation of what flag or syntax you missed.
+4. Calculate your audit speed: how many of the 8 tasks did you complete correctly within 20 minutes? Exam pace requires roughly 1 minute per question for the 90-minute, 90-question exam. Repeat this exercise with a different set of tasks until you can complete 8 tasks correctly in under 15 minutes.
+
+### Challenge 2: End-to-End Automation Script
+
+Write a single orchestration script that ties together skills from every module in the course — demonstrating integrated Linux administration competency.
+
+1. Create `~/final_challenge.sh` with strict mode (`set -euo pipefail`). The script should accept a `--report` or `--fix` argument: in report mode, it surveys the system and outputs a status report; in fix mode, it applies remediations. Implement argument parsing with `case "$1" in --report) MODE=report ;; --fix) MODE=fix ;; *) echo "Usage: $0 [--report|--fix]"; exit 1 ;; esac`.
+2. Implement the following report checks (in `--report` mode, print PASS/FAIL for each): (a) SSH `PasswordAuthentication` is disabled: `grep -q "^PasswordAuthentication no" /etc/ssh/sshd_config`; (b) `root` account is locked: `sudo passwd -S root | grep -q " L "`; (c) `/tmp` is mounted with `noexec`: `mount | grep " /tmp " | grep -q "noexec"`; (d) `fail2ban` is active: `systemctl is-active fail2ban > /dev/null 2>&1`; (e) no world-writable files exist in `/etc`: `[ -z "$(sudo find /etc -maxdepth 1 -type f -perm -002 2>/dev/null)" ]`.
+3. Implement the `--fix` mode that automatically remediates each FAIL item: (a) disable SSH password auth by running `sudo sed -i 's/^#*PasswordAuthentication.*/PasswordAuthentication no/' /etc/ssh/sshd_config && sudo systemctl reload sshd`; (b) lock root: `sudo passwd -l root`; (c) add `noexec` to `/tmp` fstab entry if absent; (d) enable and start fail2ban: `sudo systemctl enable --now fail2ban`. Each fix should be idempotent — running it twice should produce no errors.
+4. Test both modes: run `bash ~/final_challenge.sh --report` and record the baseline state. Apply one deliberate misconfiguration (e.g., `sudo passwd -u root` to unlock root). Run `--report` again to confirm it detects the change. Run `--fix` to remediate. Run `--report` one final time to confirm all checks pass. Document the complete test cycle output.
+
+### Reflection Questions
+
+1. Throughout this course you have used dozens of commands across system administration, security, networking, storage, and automation. Identify the single command or utility you found most counterintuitive (had the hardest time remembering the correct syntax or flags) and explain the mental model or mnemonic you developed to remember it reliably. What does this exercise suggest about how you learn command-line tools?
+
+2. Linux administration is increasingly automated through tools like Ansible, Terraform, and container orchestration. Despite this, the CompTIA Linux+ exam still tests manual command-line skills. Argue both sides of the following question: "In a world where infrastructure is managed as code, is deep knowledge of individual Linux commands still professionally valuable, or has it become an anachronism?" Base your argument on specific scenarios from the lab exercises in this course where manual command knowledge was essential.

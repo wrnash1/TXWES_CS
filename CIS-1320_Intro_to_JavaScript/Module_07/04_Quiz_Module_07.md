@@ -4,7 +4,7 @@
 
 **Certification Alignment:** JSE — Certified Associate in JavaScript Programming (OpenEDG / JS Institute)
 
-**Instructions:** Choose the single best answer for each question.
+**Instructions:** Choose the single best answer for each question. Each question is worth 5 points (20 questions × 5 points = 100 points).
 
 ---
 
@@ -274,3 +274,269 @@ for (const [name, score] of Object.entries(scores)) {
 - *Why B is incorrect:* `bob`'s score is `85`, which is not greater than `89`. The condition filters `bob` out.
 - *Why C is incorrect:* `name` holds the key string (e.g., `'alice'`), not the score. Logging `name` prints the student's name, not their score.
 - *Why D is incorrect:* Both `alice` (90 > 89) and `carol` (92 > 89) satisfy the condition. The loop checks all entries and prints both names.
+
+---
+
+### Question 11
+
+What is the output of the following code?
+
+```javascript
+const obj = { a: 1, b: 2, c: 3 };
+delete obj.b;
+console.log(Object.keys(obj));
+console.log('b' in obj);
+```
+
+- A) `['a', 'b', 'c']` then `true`
+- B) `['a', 'c']` then `false`
+- C) `['a', 'c']` then `true`
+- D) `TypeError: Cannot delete property 'b'`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `delete obj.b` successfully removes the `b` property from the object. After deletion, `Object.keys(obj)` returns only the remaining keys.
+- *Why B is correct:* `delete obj.b` removes the `b` property. `Object.keys(obj)` returns `['a', 'c']`. `'b' in obj` returns `false` because the property no longer exists.
+- *Why C is incorrect:* After `delete obj.b`, `'b' in obj` is `false`. The property has been removed.
+- *Why D is incorrect:* `delete` on a regular object property does not throw a `TypeError`. It returns `true` (indicating success) and removes the property. `TypeError` would occur only when trying to delete a non-configurable property.
+
+---
+
+### Question 12
+
+What is the output of the following code?
+
+```javascript
+const obj = {};
+obj['first name'] = 'Alice';
+console.log(obj['first name']);
+console.log(obj.first name);
+```
+
+- A) `'Alice'` then `'Alice'`
+- B) `'Alice'` then `undefined`
+- C) `'Alice'` then `SyntaxError`
+- D) `undefined` then `SyntaxError`
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `obj.first name` is not valid syntax. `first name` contains a space and cannot be used with dot notation. The engine cannot parse it as a valid property name.
+- *Why B is incorrect:* Dot notation with a space is not valid syntax — it produces a `SyntaxError` at parse time, not `undefined`.
+- *Why C is correct:* `obj['first name']` correctly accesses the property using bracket notation (which accepts any string). `obj.first name` is a syntax error because dot notation requires a valid identifier — and identifiers cannot contain spaces.
+- *Why D is incorrect:* `obj['first name']` successfully returns `'Alice'` because the property was assigned.
+
+---
+
+### Question 13
+
+What is the output of the following code?
+
+```javascript
+const a = { x: 1 };
+const b = a;
+b.x = 99;
+console.log(a.x);
+```
+
+- A) `1`
+- B) `undefined`
+- C) `99`
+- D) `TypeError: Cannot modify const object`
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `b = a` does not copy the object. Both variables point to the same object in memory. Modifying `b.x` also modifies `a.x` because they reference the same object.
+- *Why B is incorrect:* `a.x` is not `undefined`. Both `a` and `b` refer to the same object, and `x` was set to `99`.
+- *Why C is correct:* Objects are assigned by reference. `const b = a` makes `b` point to the same object as `a`. `b.x = 99` modifies the shared object. `a.x` reflects the change: `99`.
+- *Why D is incorrect:* `const` prevents reassigning `a` or `b` to a different value. It does not prevent mutating the object's properties. No error is thrown.
+
+---
+
+### Question 14
+
+What is the output of the following code?
+
+```javascript
+const person = {
+  name: 'Alice',
+  greet() {
+    return `My name is ${this.name}`;
+  }
+};
+
+const fn = person.greet;
+console.log(fn());
+```
+
+- A) `'My name is Alice'`
+- B) `'My name is undefined'`
+- C) `TypeError: this is not defined`
+- D) `'My name is '`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* When `fn` is assigned `person.greet` and called as `fn()` (not `person.greet()`), the function is invoked without a calling object. In non-strict mode, `this` inside `fn` becomes the global object, which has no `name` property. In strict mode, `this` is `undefined`.
+- *Why B is correct:* Extracting a method from an object loses its binding context. `fn()` is called without an explicit receiver. In non-strict mode `this` is the global object and `this.name` is `undefined`. The template literal produces `'My name is undefined'`.
+- *Why C is incorrect:* `this` is always defined (it is `undefined` in strict mode or the global object in sloppy mode — but it is never a `ReferenceError`).
+- *Why D is incorrect:* `this.name` is `undefined`, not an empty string. `undefined` converts to the string `'undefined'` in template literals.
+
+---
+
+### Question 15
+
+What does `Object.assign({}, source)` do?
+
+- A) Freezes the `source` object so it cannot be mutated
+- B) Creates a shallow copy of `source` into a new empty object
+- C) Deep-clones all nested objects inside `source`
+- D) Merges `source` into the global object
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `Object.assign` does not freeze anything. `Object.freeze()` is the method that makes an object immutable.
+- *Why B is correct:* `Object.assign({}, source)` copies all enumerable own properties of `source` into the first argument (an empty object `{}`). The result is a new object with the same top-level properties. Note that nested objects are still copied by reference (shallow copy).
+- *Why C is incorrect:* `Object.assign` performs a shallow copy. Nested objects inside `source` are copied by reference, not cloned. Modifying a nested object in the copy also modifies the original.
+- *Why D is incorrect:* The first argument is the target object (`{}`). `Object.assign` copies into that target — not into the global object.
+
+---
+
+### Question 16
+
+What is the output of the following code?
+
+```javascript
+const user = { name: 'Alice', age: 30, role: 'admin' };
+const { role, ...rest } = user;
+console.log(role);
+console.log(rest);
+```
+
+- A) `'admin'` then `{ name: 'Alice', age: 30, role: 'admin' }`
+- B) `'admin'` then `{ name: 'Alice', age: 30 }`
+- C) `undefined` then `{ name: 'Alice', age: 30, role: 'admin' }`
+- D) `'admin'` then `{}`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* The rest element `...rest` collects all properties that were not explicitly destructured. Since `role` was extracted, it is excluded from `rest`.
+- *Why B is correct:* `role` receives `'admin'`. The rest pattern `...rest` collects the remaining properties `{ name: 'Alice', age: 30 }` — everything except `role`.
+- *Why C is incorrect:* `role` is explicitly destructured and receives `'admin'`.
+- *Why D is incorrect:* `rest` contains all properties not already extracted — `name` and `age` — not an empty object.
+
+---
+
+### Question 17
+
+What is the output of the following code?
+
+```javascript
+const config = Object.freeze({ host: 'localhost', port: 3000 });
+config.port = 8080;
+console.log(config.port);
+```
+
+- A) `8080`
+- B) `3000`
+- C) `TypeError: Cannot assign to read only property 'port'`
+- D) `undefined`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `Object.freeze()` makes all existing properties read-only. The assignment `config.port = 8080` is silently ignored in non-strict mode.
+- *Why B is correct:* `Object.freeze()` prevents any property additions, modifications, or deletions. In non-strict mode, the assignment silently fails and `config.port` remains `3000`.
+- *Why C is incorrect:* In **strict mode**, attempting to modify a frozen object does throw `TypeError`. However, without `'use strict'` the assignment silently fails. The question does not specify strict mode, so the answer is `3000`.
+- *Why D is incorrect:* The `port` property was initialized to `3000` and was not changed. It is not `undefined`.
+
+---
+
+### Question 18
+
+What is the output of the following code?
+
+```javascript
+const source = { a: 1, b: { c: 2 } };
+const copy = { ...source };
+copy.b.c = 99;
+console.log(source.b.c);
+```
+
+- A) `2`
+- B) `99`
+- C) `undefined`
+- D) `TypeError: Cannot assign to read only property`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* The spread operator `{ ...source }` creates a shallow copy. Top-level properties (`a`) are copied by value. Nested objects (`b`) are copied by reference — both `source.b` and `copy.b` point to the same object.
+- *Why B is correct:* `copy.b` and `source.b` reference the same nested object. Modifying `copy.b.c = 99` mutates the shared object. `source.b.c` reflects the change: `99`. This demonstrates the shallow copy limitation.
+- *Why C is incorrect:* `source.b.c` is `99` after the mutation through `copy.b.c`. It is not `undefined`.
+- *Why D is incorrect:* The spread operator does not freeze objects. Mutation of nested objects is permitted.
+
+---
+
+### Question 19
+
+Which method returns an array of a plain object's **enumerable own property values**?
+
+- A) `Object.keys(obj)`
+- B) `Object.entries(obj)`
+- C) `Object.values(obj)`
+- D) `Object.getOwnPropertyNames(obj)`
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `Object.keys(obj)` returns an array of property **names** (keys), not values.
+- *Why B is incorrect:* `Object.entries(obj)` returns an array of `[key, value]` pairs — not just values.
+- *Why C is correct:* `Object.values(obj)` returns an array containing only the values of the object's enumerable own properties, in the same order as `for...in`.
+- *Why D is incorrect:* `Object.getOwnPropertyNames(obj)` returns all own property names including non-enumerable ones (like `length` on arrays) — and it returns names, not values.
+
+---
+
+### Question 20
+
+What is the output of the following code?
+
+```javascript
+const team = {
+  name: 'Alpha',
+  members: ['Alice', 'Bob'],
+  describe() {
+    return `${this.name} has ${this.members.length} members`;
+  }
+};
+
+console.log(team.describe());
+console.log(team['describe']());
+```
+
+- A) `'Alpha has 2 members'` then `TypeError`
+- B) `'Alpha has 2 members'` then `'Alpha has 2 members'`
+- C) `'undefined has 2 members'` then `'Alpha has 2 members'`
+- D) `'Alpha has 2 members'` then `undefined`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `team['describe']()` is valid syntax. Bracket notation can access any property — including methods — and calling the result with `()` invokes it.
+- *Why B is correct:* Both `team.describe()` and `team['describe']()` call the same method with the same calling context (`team`). Both produce `'Alpha has 2 members'`. Dot and bracket notation are functionally identical here.
+- *Why C is incorrect:* Both calls have `team` as the calling object, so `this.name` is `'Alpha'` in both cases.
+- *Why D is incorrect:* `team['describe']()` returns the string from the method, not `undefined`. `undefined` would result only if the method had no `return` statement.

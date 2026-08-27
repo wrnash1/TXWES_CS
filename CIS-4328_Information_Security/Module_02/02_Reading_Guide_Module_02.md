@@ -130,6 +130,22 @@ Effective defense requires controls at every layer because no single control eli
 
 ---
 
+## 9. Supplemental Resources
+
+**1. CISA Phishing Guidance — "Phishing"**
+<https://www.cisa.gov/topics/cyber-threats-and-advisories/malicious-cyber-activity/phishing>
+CISA's authoritative overview of phishing attack types, indicators of compromise, and recommended organizational defenses. Directly supports the phishing variant comparison table and anti-phishing control framework covered in Module 02.
+
+**2. Anti-Phishing Working Group (APWG) eCrime Trends Reports**
+<https://apwg.org/resources/apwg-reports/>
+Industry-leading quarterly reports tracking phishing attack volumes, targeted brands, malicious domain patterns, and attack vector trends. Use these reports to ground the Module 02 threat landscape in current real-world data and to support gap analysis arguments.
+
+**3. Google Safe Browsing Transparency Report**
+<https://safebrowsing.google.com/safebrowsing/report_phish/>
+Google's public reporting tool and associated transparency data on phishing site detection. Useful for understanding how URL sandboxing and reputation-based URL filtering services identify and block malicious links at scale, as covered in the Module 02 Layer 1 defense-in-depth discussion.
+
+---
+
 ## 9. Required Study Resources
 
 - Professor Messer's SY0-701 study notes and video lectures for Domain 2 social engineering objectives, available free at professormesser.com.

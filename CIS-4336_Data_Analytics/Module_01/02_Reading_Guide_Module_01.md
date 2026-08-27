@@ -193,3 +193,17 @@ Work through each item before moving to the Lab and Quiz.
 
 - Official exam objectives: comptia.org (search "Data+ DA0-001 exam objectives")
 - Professor Messer's free study guides and practice questions: professormesser.com
+
+## 9. Supplemental Resources
+
+**1. Google Data Analytics Certificate — Foundations of Data (Coursera)**
+<https://www.coursera.org/learn/foundations-data>
+A beginner-friendly introduction to data types, the analytics lifecycle, and the role of a data analyst. Covers structured vs. unstructured data and the four analytics types with real-world examples.
+
+**2. Kaggle Learn — Intro to Machine Learning (Data Types and Exploration)**
+<https://www.kaggle.com/learn/intro-to-machine-learning>
+Hands-on Python notebooks exploring data classification and feature types in pandas. Exercises reinforce the distinction between nominal, ordinal, and quantitative variables in a practical ML context.
+
+**3. StatQuest with Josh Starmer — Types of Data (YouTube)**
+<https://www.youtube.com/watch?v=hZxnzfnt5v8>
+A concise visual explanation of the four scales of measurement (nominal, ordinal, interval, ratio) with memorable examples. Highly effective for exam preparation on measurement scale questions.

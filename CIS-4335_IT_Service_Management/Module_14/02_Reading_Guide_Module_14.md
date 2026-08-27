@@ -243,3 +243,19 @@ Effective compliance dashboards show control coverage percentage, control testin
 6. An organization is preparing for ISO 27001 certification. Describe the five steps of a risk assessment process under ISO 27001.
 
 7. What is the purpose of a compliance dashboard, and what three stakeholder groups does it serve?
+
+---
+
+## Supplemental Resources
+
+**1. ISO — ISO/IEC 27001 Information Security Management Overview**
+<https://www.iso.org/isoiec-27001-information-security.html>
+The official ISO page for the ISO/IEC 27001 standard, covering the ISMS framework, certification process, and the relationship to ISO 27002 controls. Essential reference for understanding what ISO 27001 certification requires and how Statement of Applicability and risk assessment fit within the standard.
+
+**2. AICPA — SOC 2 Report Overview**
+<https://www.aicpa-cima.com/topic/audit-assurance/audit-and-assurance-greater-than-soc-2>
+Official AICPA resource on SOC 2 reports, Trust Services Criteria, and the distinction between Type I and Type II assessments. Directly relevant to the audit evidence and SOC 2 concepts covered in this module.
+
+**3. NIST — Risk Management Framework (RMF) Overview**
+<https://csrc.nist.gov/projects/risk-management/about-rmf>
+NIST's Risk Management Framework provides a structured process for identifying, assessing, and responding to information security risks. Complements ITIL 4's risk management concepts with detailed U.S. government-standard methodology for risk categorization, control selection, and continuous monitoring.

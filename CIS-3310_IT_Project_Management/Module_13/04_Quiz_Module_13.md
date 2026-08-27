@@ -225,3 +225,203 @@ Distractor Analysis:
 - **Why A is incorrect:** Baselines are approved reference points, not frozen documents. The integrated change control process exists specifically to allow controlled updates to project plans when circumstances change. A plan that cannot be updated is not a tool — it is a liability.
 - **Why C is incorrect:** Some Quality Management Plan updates do require sponsor awareness or approval (particularly changes to quality standards or significant resource additions). But the requirement is to keep the plan current — the statement that updates are "rarely necessary" directly contradicts quality management principles.
 - **Why D is incorrect:** New integration components and new vendors introduce new quality requirements, new acceptance criteria, and new failure modes. Quality management explicitly applies to all project scope, including scope additions. Excluding new scope from the quality plan is a process failure.
+
+---
+
+## Question 11
+
+Which quality framework uses the DMAIC cycle (Define, Measure, Analyze, Improve, Control)?
+
+- A) PDCA (Plan-Do-Check-Act)
+- B) ISO 9001
+- C) Six Sigma
+- D) Kaizen
+
+**Correct Answer:** C) Six Sigma
+
+**Distractor Analysis:**
+
+- *Why C is correct:* DMAIC is the core improvement methodology of Six Sigma. It is a data-driven, structured approach to eliminating defects: Define the problem, Measure current performance, Analyze root causes, Improve the process, and Control to sustain gains.
+- *Why A is incorrect:* PDCA is Deming's Plan-Do-Check-Act cycle — a four-step continuous improvement model. It predates Six Sigma and is a separate framework.
+- *Why B is incorrect:* ISO 9001 is an international quality management system standard focused on documentation, process consistency, and customer satisfaction — not specifically associated with DMAIC.
+- *Why D is incorrect:* Kaizen is a Japanese philosophy of continuous, incremental improvement often implemented through small team activities. It does not use the DMAIC structure.
+
+---
+
+## Question 12
+
+What does a Fishbone (Ishikawa) Diagram help a quality team accomplish?
+
+- A) Track defect frequency over time to identify statistical trends
+- B) Identify and organize the potential root causes of a specific quality problem into categories
+- C) Display the cumulative percentage of defects by category to prioritize improvement
+- D) Monitor a process variable against statistical control limits to detect special cause variation
+
+**Correct Answer:** B) Identify and organize the potential root causes of a specific quality problem into categories.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* The Fishbone (Ishikawa or cause-and-effect) diagram is a brainstorming and visual organization tool. The team places the problem at the "head" and organizes potential causes into branches (e.g., People, Process, Technology, Environment) to systematically identify root causes.
+- *Why A is incorrect:* Tracking defect frequency over time describes a Run Chart or Control Chart — tools that monitor process performance, not root cause analysis tools.
+- *Why C is incorrect:* Displaying cumulative defect percentages describes a Pareto Chart — the prioritization tool based on the 80/20 principle.
+- *Why D is incorrect:* Monitoring a process variable against control limits describes a Control Chart — the statistical process control tool.
+
+---
+
+## Question 13
+
+The four steps of the PDCA (Deming) cycle in correct order are:
+
+- A) Plan → Do → Control → Act
+- B) Plan → Do → Check → Act
+- C) Define → Do → Check → Adjust
+- D) Plan → Deliver → Check → Adjust
+
+**Correct Answer:** B) Plan → Do → Check → Act
+
+**Distractor Analysis:**
+
+- *Why B is correct:* PDCA stands for Plan (establish objectives and processes), Do (implement on a small scale), Check (evaluate results against the plan), Act (standardize successful changes or return to Plan if unsuccessful). This is the correct four-step sequence.
+- *Why A is incorrect:* "Control" is the fourth step of DMAIC (Six Sigma), not PDCA. The fourth PDCA step is "Act."
+- *Why C is incorrect:* "Define" is the first step of DMAIC. PDCA begins with "Plan." The last step is also "Act," not "Adjust."
+- *Why D is incorrect:* "Deliver" and "Adjust" are not PDCA steps. This is a fabricated distractor.
+
+---
+
+## Question 14
+
+A quality manager is analyzing defect data and finds that out of 500 total defects, the top three categories account for 420 defects. What does this tell the team, and what should they do?
+
+- A) The data is invalid — 80% of defects should always come from exactly 20% of categories.
+- B) The top three categories (84% of defects) are the "vital few" — the team should focus quality improvement resources on these categories first.
+- C) All five categories should be addressed simultaneously since the total defect count is too high.
+- D) The bottom categories should be fixed first because they are easier to address quickly.
+
+**Correct Answer:** B) The top three categories (84% of defects) are the "vital few" — the team should focus quality improvement resources on these categories first.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* 420/500 = 84%. The Pareto principle guides the team to address the highest-frequency categories first. Even though 84% slightly exceeds the classic "80%" threshold, the principle still holds: concentrate limited improvement resources on the categories causing the most harm.
+- *Why A is incorrect:* The 80/20 rule is a guideline, not a mathematical law that always produces exactly 80%. Real-world data varies. The principle is about concentrating effort on the dominant causes.
+- *Why C is incorrect:* Simultaneously addressing all categories spreads resources too thin and produces less improvement per dollar invested. Pareto-based prioritization is more efficient.
+- *Why D is incorrect:* Fixing the easiest categories first (regardless of impact) is an effort-optimization strategy, not a quality improvement strategy. The Pareto principle prioritizes by impact magnitude, not by implementation difficulty.
+
+---
+
+## Question 15
+
+What is Kaizen, and how does it differ from Six Sigma?
+
+- A) Kaizen is a statistical defect elimination methodology; Six Sigma is a continuous improvement philosophy.
+- B) Kaizen emphasizes small, incremental, continuous improvements made by all employees; Six Sigma uses a structured data-driven methodology (DMAIC) focused on reducing defect rates to near zero.
+- C) They are identical methodologies with different names used in different countries.
+- D) Kaizen uses DMAIC; Six Sigma uses PDCA.
+
+**Correct Answer:** B) Kaizen emphasizes small, incremental, continuous improvements made by all employees; Six Sigma uses a structured data-driven methodology (DMAIC) focused on reducing defect rates to near zero.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* Kaizen (Japanese for "change for better") is a philosophy of ongoing improvement through small, daily changes at every level of the organization. Six Sigma is a more formal, statistical methodology targeting near-zero defects (3.4 defects per million opportunities) using the DMAIC cycle.
+- *Why A is incorrect:* The descriptions are reversed. Kaizen is the continuous improvement philosophy; Six Sigma is the statistical methodology.
+- *Why C is incorrect:* They are distinct methodologies with different origins, tools, and application scopes. They can be used together (Lean Six Sigma) but are not identical.
+- *Why D is incorrect:* Kaizen does not use DMAIC (that is Six Sigma's method). Six Sigma does not use PDCA as its core cycle (though PDCA influenced quality thinking generally).
+
+---
+
+## Question 16
+
+A control chart for a software build process shows 8 consecutive data points below the center line, all within the UCL/LCL boundaries. What should the quality manager conclude?
+
+- A) The process is in control because no points exceed the control limits.
+- B) The process shows a non-random pattern (Rule of Seven violation) suggesting a systematic shift that should be investigated even though limits were not breached.
+- C) Eight points below the mean is normal statistical variation and requires no action.
+- D) The process can be improved by raising the UCL to accommodate the lower data points.
+
+**Correct Answer:** B) The process shows a non-random pattern (Rule of Seven violation) suggesting a systematic shift that should be investigated even though limits were not breached.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* The Rule of Seven states that seven or more consecutive points on the same side of the mean signals a non-random shift. Eight consecutive points below the mean exceeds this threshold — it indicates the process has systematically changed (improved or degraded) and investigation is warranted.
+- *Why A is incorrect:* Being within control limits is necessary but not sufficient to conclude a process is in control. The Rule of Seven detects systematic patterns that control limits alone cannot catch.
+- *Why C is incorrect:* Eight consecutive points on one side of the mean is not normal variation. In a truly random process, the probability of this occurring by chance is extremely low — it signals something systematic.
+- *Why D is incorrect:* Adjusting the UCL to accommodate data patterns defeats the purpose of statistical process control. Control limits are calculated from process data, not adjusted to match desired outcomes.
+
+---
+
+## Question 17
+
+Which of the following BEST describes the purpose of Quality Assurance (QA) in the PDCA cycle?
+
+- A) QA occurs in the "Check" step — it evaluates completed deliverables for defects.
+- B) QA occurs primarily in the "Plan" and "Do" steps — it designs processes and audits process adherence to prevent defects.
+- C) QA replaces the "Act" step by documenting all improvements for future reference.
+- D) QA is not part of PDCA — it is exclusive to Six Sigma.
+
+**Correct Answer:** B) QA occurs primarily in the "Plan" and "Do" steps — it designs processes and audits process adherence to prevent defects.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* QA is proactive and process-oriented. In PDCA terms, QA contributes to Plan (designing quality processes and standards) and Do (auditing that processes are being followed correctly). Its goal is to prevent defects before deliverables are produced.
+- *Why A is incorrect:* Evaluating completed deliverables for defects describes Quality Control (QC), not QA. QC fits in the Check step. QA is upstream, process-focused work.
+- *Why C is incorrect:* The Act step involves standardizing successful improvements or re-looping. QA does not replace it — it contributes to the entire cycle through process governance.
+- *Why D is incorrect:* QA is a universal quality management concept applicable to PDCA, Six Sigma, ISO, and all other quality frameworks. It is not exclusive to Six Sigma.
+
+---
+
+## Question 18
+
+A project team is performing root cause analysis on a recurring server timeout issue. They use a Fishbone diagram and identify that the timeout occurs because of insufficient memory allocation in the application server configuration. What should the team do NEXT in the quality improvement process?
+
+- A) Close the issue and report it as resolved since the root cause is identified.
+- B) Develop a corrective action to increase the memory allocation, implement it, and monitor the results.
+- C) Add the issue to the Risk Register as a new threat.
+- D) Escalate to the project sponsor before taking any action on the server configuration.
+
+**Correct Answer:** B) Develop a corrective action to increase the memory allocation, implement it, and monitor the results.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* Root cause identification is a diagnosis step — it does not resolve the problem. The team must implement a corrective action (the fix), verify it resolves the issue, and monitor to confirm the improvement holds. This follows the PDCA Do → Check → Act sequence.
+- *Why A is incorrect:* Identifying the root cause is not the same as resolving it. Closing the issue before implementing a fix leaves the defect in place.
+- *Why C is incorrect:* An ongoing performance issue being actively diagnosed and corrected is not a new risk — it is a current problem. Adding it to the Risk Register at this point confuses issue management with risk management.
+- *Why D is incorrect:* A server configuration adjustment is an operational fix within the team's authority. Escalating a routine technical correction to the sponsor is unnecessary overhead and delays resolution.
+
+---
+
+## Question 19
+
+How does the "Act" step of the PDCA cycle differ from simply completing a task?
+
+- A) The Act step involves assigning new tasks to team members for the next cycle.
+- B) The Act step involves standardizing the successful change across the organization or returning to Plan to address remaining issues — ensuring the improvement is embedded, not just completed once.
+- C) The Act step requires sponsor approval before any changes can be finalized.
+- D) The Act step closes the quality process permanently and documents findings in the Risk Register.
+
+**Correct Answer:** B) The Act step involves standardizing the successful change across the organization or returning to Plan to address remaining issues — ensuring the improvement is embedded, not just completed once.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* Act is the institutionalization step. If the Do step produced a successful improvement (confirmed in Check), Act means embedding the new process as the standard so it persists. If the improvement was insufficient, Act means looping back to Plan with new information. Either way, the cycle continues — quality improvement is never "done."
+- *Why A is incorrect:* Assigning new tasks is an operational activity, not the PDCA Act step. Act is about systemic standardization, not task assignment.
+- *Why C is incorrect:* Sponsor approval may be needed for significant changes to baselines, but the Act step as defined in PDCA is about standardizing or re-planning — not a governance approval gate.
+- *Why D is incorrect:* PDCA is cyclical, not terminal. Closing the process permanently contradicts the continuous improvement philosophy. The Risk Register is not a PDCA artifact.
+
+---
+
+## Question 20
+
+A project manager notices that defect rates increased after a new developer joined the team. A Fishbone diagram analysis identifies inadequate onboarding and coding standard training as root causes. Which Cost of Quality category should the project invest in to prevent recurrence?
+
+- A) External failure costs — reimburse customers for the defects
+- B) Internal failure costs — increase the budget for rework
+- C) Prevention costs — develop a formal onboarding and coding standards training program for new team members
+- D) Appraisal costs — add more code review cycles to catch defects earlier
+
+**Correct Answer:** C) Prevention costs — develop a formal onboarding and coding standards training program for new team members.
+
+**Distractor Analysis:**
+
+- *Why C is correct:* The root cause is inadequate training — a process gap that produces defects before they happen. The most cost-effective and targeted response is prevention investment: designing a formal onboarding program that ensures new developers understand and apply the required standards from day one.
+- *Why A is incorrect:* External failure costs are incurred when defects reach customers. Reimbursing customers is reactive and expensive — not a quality improvement investment.
+- *Why B is incorrect:* Increasing the rework budget accepts the defects and funds their correction — this is internal failure cost spending. It does not prevent the problem; it funds dealing with it after the fact.
+- *Why D is incorrect:* Adding code review cycles increases appraisal costs — these catch defects earlier but do not prevent them. The root cause is training, not insufficient review. More reviews without fixing the training gap means reviewing the same categories of errors indefinitely.

@@ -60,3 +60,13 @@ In this final module, your lab activities focus on exam preparation rather than 
 * [ ] Review the key glossary terms and certification exam tips from Modules 01-15.
 * [ ] Complete the final exam lab activities and revisit any module labs where confidence is low.
 * [ ] Schedule your AZ-900 certification exam at [Microsoft Certification – AZ-900](https://learn.microsoft.com/en-us/certifications/exams/az-900/).
+
+---
+
+## 9. Supplemental Resources
+
+1. Official AZ-900 exam skills outline — the authoritative list of all topics tested on the exam, updated with each exam version: https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/az-900
+
+2. John Savill's AZ-900 Study Cram (YouTube) — comprehensive video review of all AZ-900 exam domains in a structured study format: https://www.youtube.com/watch?v=tQp1YkB2Tgs
+
+3. Microsoft Azure free account — create a free Azure account to get hands-on practice with all services covered in the AZ-900 exam: https://azure.microsoft.com/en-us/free/

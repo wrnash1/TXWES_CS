@@ -253,3 +253,21 @@ Submit to Canvas:
 1. `lab16_final.py` — all six implementations and integration test (Part 1)
 2. Certification exam score report PDF (Part 2)
 3. Short self-assessment (3–5 sentences): Which algorithm family from this course was most challenging for you to master? What specific technique or insight finally made it click? What would you recommend to a future CIS-2315 student struggling with the same concept?
+
+---
+
+## Part 9 — Challenge Exercise
+
+These steps are **optional** and ungraded. They are designed for students who want to go beyond the core curriculum and build advanced interview readiness.
+
+### 9.1 — Mock Interview: 45-Minute Timed Session
+
+Simulate a real technical interview. Set a 45-minute timer and attempt all three problems without notes or autocomplete. Then review each solution against the reference implementations. Problems: (1) LeetCode #200 (Number of Islands) — use BFS or DFS to count connected components in a 2D grid. (2) LeetCode #300 (Longest Increasing Subsequence) — implement the O(n²) DP solution, then the O(n log n) patience sort. (3) LeetCode #56 (Merge Intervals) — sort intervals by start time, then greedily merge overlapping pairs. After the timer ends, write a 3-sentence self-assessment: what did you get right, where did you struggle, and which concept needs one more review session before the exam.
+
+### 9.2 — System Design: Design a Spell Checker
+
+Design a spell checker that: (1) checks if a word is correctly spelled in O(L), (2) returns all correctly spelled words that are within edit distance 1 of the input (one insertion, deletion, or substitution), and (3) returns all words that start with the input as a prefix in O(L + output). Choose the data structures for each operation and justify your choice. Implement the edit distance 1 generation function `generate_candidates(word, alphabet)` that returns all strings within edit distance 1 of `word` (this set has O(L × A) elements). Then filter candidates through the spell checker's dictionary using a Trie or hash set. Analyze the time and space complexity of the full system for a dictionary of N words each of average length L.
+
+### 9.3 — End-to-End Algorithm Portfolio Review
+
+For each of the 10 algorithm families below, write a 2-sentence summary explaining (a) the core insight and (b) the canonical LeetCode problem that best illustrates it. Do this from memory, then compare against the course materials. The 10 families: (1) Binary Search, (2) Two Pointers / Sliding Window, (3) BFS / DFS, (4) Topological Sort, (5) Dijkstra's Algorithm, (6) Merge Sort / Divide & Conquer, (7) Greedy (Activity Selection), (8) Dynamic Programming 1D (Coin Change), (9) Dynamic Programming 2D (LCS), (10) Trie. This exercise identifies any remaining gaps before the certification exam and produces a personal one-page cheat sheet.

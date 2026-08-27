@@ -555,3 +555,16 @@ find /usr /bin /sbin -newer /var/lib/rpm/rpmdb.sqlite -type f 2>/dev/null
 9. What command shows the transaction history and allows you to undo a package installation on a RHEL system?
 
 10. What security risk is created by setting `gpgcheck=0` in a repository configuration file?
+
+---
+
+## 9. Supplemental Resources
+
+**1. [DNF Command Reference — Red Hat Documentation](https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/9/html/managing_software_with_the_dnf_tool/index)**
+Red Hat's official DNF documentation for RHEL 9. Covers all major dnf operations: installing, removing, upgrading, searching, repository management, history and rollback, modules, and configuration options in `/etc/dnf/dnf.conf`. Directly maps to the RHEL portions of the Module 10 lab and the CompTIA Linux+ exam objectives for package management.
+
+**2. [Debian APT User's Guide](https://www.debian.org/doc/manuals/apt-guide/index.en.html)**
+The official Debian APT documentation. Explains the relationship between dpkg, apt, apt-get, and apt-cache; covers sources.list format, GPG key management, preference pinning, and the difference between `remove` and `purge`. Essential reading for understanding the APT tool ecosystem at a conceptual level beyond just memorizing commands.
+
+**3. [How to Install Software from Source on Linux — It's FOSS](https://itsfoss.com/install-software-from-source-code/)**
+A practical walkthrough of the `./configure && make && sudo make install` workflow with clear explanations of what each step does, common configure flags like `--prefix`, and why `checkinstall` is recommended over bare `make install`. Includes troubleshooting for common build errors such as missing development libraries, which directly prepares students for the source compilation challenge in this module's lab.

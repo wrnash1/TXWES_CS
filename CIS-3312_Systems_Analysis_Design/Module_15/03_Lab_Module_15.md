@@ -170,4 +170,63 @@ Before submitting, confirm your document includes:
 
 ---
 
+---
+
+## Part 9 — Challenge Exercise
+
+This section is optional and not separately graded. It extends the lab into advanced
+implementation and change management practice aligned with ECBA exam competencies.
+
+### Challenge Step 1: Resistance Escalation Scenario
+
+Three weeks after go-live at Brazos Valley Medical Center, the BA receives a report that
+Medical Records staff are printing EHR screens and maintaining paper shadow files in
+addition to entering data in the new system. The department supervisor says: "We need
+the paper backup in case the system goes down." Design a comprehensive intervention
+plan that addresses this reversion using the ADKAR framework. Your plan must: diagnose
+which ADKAR stage or stages are involved (justify your diagnosis), design a minimum of
+three specific interventions targeting the identified stages, define measurable success
+criteria for each intervention, specify who is responsible for each intervention
+(by role), and establish a thirty-day re-assessment checkpoint with criteria for
+escalating to executive leadership if the reversion continues. Finally, write a one-
+paragraph reflection on the ethical dimension of this situation: the supervisor's concern
+about downtime is legitimate — how does the BA balance honoring that concern while still
+driving adoption of the intended solution?
+
+### Challenge Step 2: Ninety-Day PIR Report
+
+The Brazos Valley HIPAA compliance audit is scheduled ninety days after go-live. Using
+the business value metrics you defined in Part 4A, write a complete ninety-day PIR
+report as if you had collected real data. Fabricate plausible but realistic results —
+for example, patient registration time reduced from 12 to 8.5 minutes (target was 7
+minutes), or paper storage costs eliminated at 85% of projected savings. Your report
+must include: an executive summary with a traffic-light status for each projected
+outcome (Green = met, Yellow = partial, Red = missed), a root cause analysis for any
+Yellow or Red outcomes using the 5 Whys technique, a prioritized corrective action
+register with owner and target date for each action, a HIPAA audit readiness assessment
+covering the specific audit-relevant outcomes, and a recommendation on whether the EHR
+system should be considered a successful implementation or requires a formal remediation
+plan. Close with a lessons-learned section of at least five findings with specific
+recommendations for the next Brazos Valley system implementation.
+
+### Challenge Step 3: Transition Plan Document
+
+Write a complete transition plan for the Brazos Valley EHR system covering the handoff
+from the project team to the hospital's IT operations group. The transition plan must
+address all six components listed in Section 6.2 of the reading guide and additionally
+include: a knowledge transfer schedule showing which project team members will brief
+which operations team roles on which topics over a four-week period before the project
+team disbands; a system architecture overview summary (one page maximum, written for
+operations staff, not developers) covering how the cloud-hosted EHR connects to the
+hospital network, where patient data is stored, and who the primary vendor contacts are;
+a downtime procedure document addressing the Medical Records staff concern about system
+unavailability — specifically, what clinical staff should do during a system outage and
+how long the outage tolerance is before paper backup procedures activate; and a six-month
+support model showing how support transitions from the dedicated project team floor
+walkers in weeks one through four, to a shared IT help desk in months two through four,
+to steady-state vendor support in months five and six. This exercise develops the
+operational documentation skills that distinguish senior BAs from junior ones.
+
+---
+
 *Module 15 Lab | CIS-3312 Systems Analysis and Design | Texas Wesleyan University*

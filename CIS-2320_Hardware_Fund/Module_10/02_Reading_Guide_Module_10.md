@@ -264,3 +264,29 @@ To boot from unsigned recovery media: Enter UEFI setup → Security tab → Secu
 - Professor Messer's CompTIA A+ Core 1 free study notes and video course: professormesser.com (220-1101 section, Domain 5.3)
 - Professor Messer's CompTIA A+ Core 2 free study notes and video course: professormesser.com (220-1102 section, Domain 3.1)
 - CompTIA A+ Exam Objectives (220-1101 and 220-1102): comptia.org (free download; review both troubleshooting domains)
+
+---
+
+## 9. Supplemental Resources
+
+The following free resources supplement Module 10 content on boot troubleshooting, POST diagnostics, BSOD analysis, and UEFI configuration.
+
+1. **Professor Messer — CompTIA A+ Core 1 (220-1101) Boot Process and Troubleshooting**
+   URL: [https://www.professormesser.com/free-a-plus-training/220-1101/220-1101-video/](https://www.professormesser.com/free-a-plus-training/220-1101/220-1101-video/)
+   Relevance: Free video lectures covering POST failures, beep codes, UEFI boot configuration, Secure Boot, and boot order — the primary exam objectives for Domain 5.3. The videos align directly with the scenario-based questions on the A+ exam.
+
+1. **Microsoft Learn — Troubleshoot Windows Startup (Official Documentation)**
+   URL: [https://learn.microsoft.com/en-us/troubleshoot/windows-client/performance/windows-boot-issues-troubleshooting](https://learn.microsoft.com/en-us/troubleshoot/windows-client/performance/windows-boot-issues-troubleshooting)
+   Relevance: Free official Microsoft documentation covering BSOD stop codes, BCD repair with bootrec commands, Startup Repair, and Windows Recovery Environment tools. Authoritative reference for A+ exam questions about Windows boot failure resolution steps.
+
+1. **NirSoft BlueScreenView — BSOD Dump File Analyzer**
+   URL: [https://www.nirsoft.net/utils/blue_screen_view.html](https://www.nirsoft.net/utils/blue_screen_view.html)
+   Relevance: Free portable tool that reads Windows minidump files created by BSOD events and displays the stop code, faulting driver, and memory address. Useful for hands-on practice identifying stop codes and understanding what component each code points to — directly supporting the BSOD troubleshooting skills tested on the A+ exam.
+
+1. **UEFI Forum — UEFI Specifications and Overview**
+   URL: [https://uefi.org/specifications](https://uefi.org/specifications)
+   Relevance: The official UEFI industry organization publishes free overview documents explaining the UEFI boot process, Secure Boot architecture, and GPT/MBR differences. Understanding UEFI at a conceptual level is required for boot order configuration and Secure Boot troubleshooting questions on the A+ exam.
+
+1. **MemTest86 — Free Bootable RAM Diagnostic Tool**
+   URL: [https://www.memtest86.com/](https://www.memtest86.com/)
+   Relevance: Free industry-standard bootable memory testing tool used to diagnose RAM hardware faults that cause MEMORY_MANAGEMENT and PAGE_FAULT_IN_NONPAGED_AREA BSODs. Running MemTest86 is the standard first step when the A+ exam presents a scenario with random system crashes or memory-related stop codes.

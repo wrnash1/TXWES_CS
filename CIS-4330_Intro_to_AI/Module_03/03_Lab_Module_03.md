@@ -290,3 +290,24 @@ Scoring Part A steps 1-5: 4 points each step = 20 points. Step 6 questions: Q A 
 ## Deliverable
 
 Submit a single document (PDF or Word) containing all calculations, answers, and justifications. Show your work for all distance calculations in Part A. Include your name, course section, and date at the top. Upload to the Module 03 Lab Assignment in Canvas by the posted due date.
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: K-Means vs. DBSCAN on Non-Spherical Data
+
+1. Using Python and scikit-learn, generate a synthetic dataset with `sklearn.datasets.make_moons(n_samples=300, noise=0.05, random_state=42)`. This produces two interleaving crescent-shaped clusters.
+2. Train a K-means model with K=2 and a DBSCAN model (tune `eps` and `min_samples` to get 2 clusters with minimal noise points). Visualize both results as scatter plots colored by cluster assignment.
+3. Calculate the silhouette score for both results using `sklearn.metrics.silhouette_score`. Record and compare the scores.
+4. Explain in 3-4 sentences why DBSCAN outperforms K-means on this dataset, referencing the shape assumption each algorithm makes.
+
+### Challenge 2: PCA Preprocessing Effect on Clustering Quality
+
+1. Load the `sklearn.datasets.load_wine()` dataset (178 samples, 13 features, 3 known classes — ignore the class labels as this is an unsupervised exercise).
+2. Apply K-means with K=3 to the raw 13-feature dataset. Record the silhouette score and create a 2D scatter plot using the first two raw features.
+3. Apply PCA to reduce to 2 components, then train K-means with K=3 on the PCA-reduced data. Record the silhouette score and create a 2D scatter plot of the two principal components colored by cluster.
+4. Compare the silhouette scores and visuals. Explain whether PCA preprocessing improved clustering quality for this dataset and why standardizing features before PCA matters (hint: check the feature scales in `wine.feature_names`).
+
+### Reflection Questions
+
+1. Based on Challenge 1, describe a real-world dataset where you would choose DBSCAN over K-means and explain what properties of that data drive your decision.
+2. In Challenge 2, if you were presenting your cluster results to a business team, how would you explain what the PCA axes represent in plain language without using statistical terminology?

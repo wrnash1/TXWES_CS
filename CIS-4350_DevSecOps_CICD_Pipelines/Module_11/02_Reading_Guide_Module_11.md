@@ -158,3 +158,20 @@ Container image scanning principles connect to Kubernetes security.
 - [ ] Review the Trivy documentation at [https://aquasecurity.github.io/trivy/](https://aquasecurity.github.io/trivy/).
 - [ ] Complete the Module 11 lab activity.
 - [ ] Attempt all 10 quiz questions and review distractor analysis for any incorrect answers.
+
+---
+
+## 9. Supplemental Resources
+
+**1. [Aqua Security Trivy documentation](https://aquasecurity.github.io/trivy/)**
+The official Trivy documentation covering all scan targets (container images, filesystems, Git repos, Kubernetes clusters), scanner modes (vuln, secret, config, sbom), output formats (table, JSON, SARIF, CycloneDX), CLI flags (`--ignore-unfixed`, `--exit-code`, `.trivyignore`), and CI/CD integration patterns.
+
+**2. [Anchore Grype GitHub repository and documentation](https://github.com/anchore/grype)**
+The official Grype repository covering installation, CLI usage (`--fail-on`, `--only-fixed`, `--output`), supported ecosystems, SBOM input scanning, and integration with Anchore's Syft SBOM generator. Includes worked examples for container image and filesystem scanning.
+
+**3. [GitHub — Storing workflow data as artifacts and uploading SARIF results](https://docs.github.com/en/code-security/code-scanning/integrating-with-code-scanning/uploading-a-sarif-file-to-github)**
+GitHub's official guide to uploading SARIF files from container scanners and other security tools to GitHub Code Scanning. Covers the `github/codeql-action/upload-sarif@v3` action, `if: always()` pattern, SARIF file size limits, and how findings appear in the Security tab and pull request annotations.
+
+---
+
+Reading Guide — Module 11 | CIS-4350 | Texas Wesleyan University | Professor Nash

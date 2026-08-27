@@ -194,3 +194,19 @@ Work through each item before taking the quiz.
 
 - Cisco CCNA certification training information: cisco.com/c/en/us/training-events/training-certifications
 - Free CCNA study notes and video summaries: professormesser.com
+
+---
+
+## 10. Supplemental Resources
+
+The following open educational resources extend VLAN and switching concepts to CCNA exam depth. All resources are freely available.
+
+1. **Cisco Networking Academy — CCNA: Switching, Routing, and Wireless Essentials** (skillsforall.com): Chapters 1–3 of this free course cover VLAN concepts, trunk configuration, DTP behavior, and VTP operation with interactive Packet Tracer labs.
+
+2. **Jeremy's IT Lab — VLANs and Trunking (Days 16–18)** (youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ): These lessons cover VLAN creation, 802.1Q trunking, DTP negotiation modes, native VLAN configuration, and the `show interfaces trunk` output interpretation at CCNA exam depth.
+
+3. **Cisco Learning Network — VLAN and Switching Study Group** (learningnetwork.cisco.com): Community forums and study group resources for VLANs, trunking, and switching concepts include hundreds of practice questions and configuration scenario discussions.
+
+4. **Cisco Packet Tracer Labs — VLAN Configuration Activities** (skillsforall.com/course/getting-started-cisco-packet-tracer): Pre-built Packet Tracer activities for VLAN configuration, trunk verification, and access port troubleshooting are available through the Cisco Networking Academy, all aligned with CCNA Domain 2 objectives.
+
+5. **GNS3 Documentation — Ethernet Switching Labs** (docs.gns3.com): GNS3 provides free virtual lab guides for switch configuration including VLAN trunking, DTP, and VTP lab topologies that can be run without physical hardware.

@@ -209,4 +209,44 @@ The written policy (150–200 words) must specify:
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: LoRaWAN Spreading Factor Trade-off Calculator
+
+Build a quantitative understanding of how spreading factor affects time-on-air and battery life.
+
+1. Using the LoRaWAN time-on-air formula (or the Semtech LoRa calculator at [https://www.semtech.com/design-support/lora-calculator](https://www.semtech.com/design-support/lora-calculator)), calculate the approximate time-on-air in milliseconds for a 12-byte payload at each spreading factor SF7 through SF12, using BW=125 kHz, CR=4/5, explicit header mode. Create a table with columns: SF, Data Rate (kbps), Time-on-Air (ms), Energy per Transmission (relative).
+2. A Class A device transmits one reading every 6 hours. Using your time-on-air values, calculate what percentage of the 1% EU868 duty cycle limit each SF uses per transmission (duty cycle = time-on-air / transmission interval). Which spreading factors are safe within the 1% limit?
+3. Explain in 3–5 sentences why a device in good RF conditions (close to a gateway) should use the lowest spreading factor (SF7), and why a device at the edge of coverage should use the highest spreading factor (SF12), referencing both battery life and network capacity.
+
+### Challenge 2: Wi-Fi IoT VLAN Configuration Design
+
+Extend your Part 4 network segmentation design by adding specific technical configuration details.
+
+1. For one of the two access points in your Part 4 design, write a simulated configuration snippet in the style of a wireless controller CLI that creates two SSIDs mapped to two VLANs. Use the format:
+
+   ```text
+   ssid iot-sensors
+     vlan 20
+     security wpa2-psk passphrase IoTSensors2024!
+     client-isolation enable
+
+   ssid corporate
+     vlan 10
+     security wpa3-personal
+     client-isolation disable
+   ```
+
+   Explain what `client-isolation enable` does on the IoT SSID and why it is important for device-to-device communication restriction.
+
+2. Write four specific firewall rules in pseudo-ACL format for the boundary between VLAN 20 (IoT) and VLAN 10 (Corporate). Each rule should specify: direction, source, destination, port/protocol, and action (permit/deny). Ensure the rules enforce the principle of least privilege.
+3. Describe the onboarding procedure for a new IP security camera. List the steps an IT administrator must perform — from physically unboxing the camera to verifying it has network connectivity only to its approved cloud endpoint — without ever allowing it onto VLAN 10.
+
+### Reflection Questions
+
+1. Your Part 3 LoRaWAN trace showed three gateways receiving the same uplink. In a rural agricultural deployment, there may be only one gateway within range of each sensor. What failure mode does this create, and what deployment strategy would you recommend to maintain the reliability advantage that multiple gateways provide in urban LoRaWAN networks?
+2. Your Part 2 audit found hardcoded Wi-Fi credentials as the highest-priority remediation concern. Describe a secure credential provisioning process — from firmware build through device deployment — that ensures the Wi-Fi passphrase is never present as a plaintext string in a shipped device's firmware binary.
+
+---
+
 End of Lab – Module 05

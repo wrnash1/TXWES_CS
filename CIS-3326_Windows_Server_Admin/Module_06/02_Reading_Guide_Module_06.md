@@ -332,4 +332,26 @@ Get-DhcpServerv4Reservation -ScopeId 192.168.10.0
 
 ---
 
+## 9. Supplemental Resources
+
+The following free, open-access resources go deeper on Module 06 topics:
+
+**1. Microsoft Learn — Implement DNS for Windows Server**
+<https://learn.microsoft.com/en-us/training/modules/implement-dns-for-windows-server/>
+Covers DNS zone types, record management, forwarders, conditional forwarders, and zone delegation with sandbox exercises aligned to AZ-800.
+
+**2. Microsoft Learn — Implement DHCP**
+<https://learn.microsoft.com/en-us/training/modules/implement-dhcp/>
+Hands-on module covering DHCP scope creation, options configuration, reservations, and DHCP Failover setup with Load Balance and Hot Standby modes.
+
+**3. Microsoft Docs — DNS troubleshooting guide**
+<https://learn.microsoft.com/en-us/troubleshoot/windows-server/networking/troubleshoot-dns-guidance>
+Systematic guide for diagnosing DNS resolution failures, SRV record issues, and zone transfer problems — directly applicable to dcdiag DNS test failures encountered in labs.
+
+**4. Microsoft Docs — DHCP logging and auditing**
+<https://learn.microsoft.com/en-us/windows-server/networking/technologies/dhcp/dhcp-top>
+Official DHCP documentation covering audit log interpretation, rogue server detection, and DHCP event IDs — useful for understanding the security implications of DHCP authorization covered in Questions 6 and 9.
+
+---
+
 *Review all sections before beginning Lab 06, Quiz 06, and Discussion 06.*

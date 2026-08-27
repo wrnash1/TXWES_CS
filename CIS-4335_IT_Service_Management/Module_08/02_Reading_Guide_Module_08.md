@@ -284,4 +284,22 @@ upon — the event-to-incident pipeline was broken; no proactive escalation occu
 
 ---
 
+---
+
+## Supplemental Resources
+
+**1. AXELOS — ITIL 4 Incident Management Practice**
+<https://www.axelos.com/resource-hub/blog/itil-4-incident-management>
+Official AXELOS description of the Incident Management practice, including its purpose, scope, key activities, and relationship with Problem Management and the Service Desk. Essential reading for Foundation exam preparation.
+
+**2. HDI (Help Desk Institute) — Service Desk Metrics and Best Practices**
+<https://www.thinkhdi.com/library/supportworld/2021/top-service-desk-metrics>
+Industry standards guidance for measuring service desk performance including first-contact resolution, average handle time, and escalation rates. Directly supports understanding the shift-left strategy and tier-model performance measurement.
+
+**3. PagerDuty — Incident Response Guide**
+<https://response.pagerduty.com>
+A comprehensive, freely available incident response handbook used by technology organizations worldwide. Covers war room roles, communication templates, post-mortem structure, and on-call best practices — directly applicable to this module's major incident management content.
+
+---
+
 Module 08 Reading Guide | CIS-4335 IT Service Management | Texas Wesleyan University

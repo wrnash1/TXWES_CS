@@ -203,3 +203,203 @@ A fixed asset (manufacturing equipment) was purchased for $180,000 with a 10-yea
 - *Why A is incorrect:* The acquisition cost is the gross asset value but the balance sheet also shows accumulated depreciation; the net book value decreases each period as depreciation is posted.
 - *Why C is incorrect:* Full depreciation at placement describes certain accelerated tax depreciation methods; the scenario specifies straight-line over 10 years.
 - *Why D is incorrect:* 80% of original cost ($144,000) corresponds to 2 years of straight-line depreciation (not 4 years), and the calculation described does not match the declining balance method formula.
+
+---
+
+### Question 11
+
+(5 points)
+
+In SAP, when a vendor invoice is posted in the Accounts Payable (FI-AP) module, what happens to the General Ledger simultaneously?
+
+- A) The AP clerk must manually create a corresponding GL journal entry to record the liability
+- B) SAP automatically creates the corresponding GL posting (debit expense/asset, credit vendor payable) at the same time the AP document is saved — no separate manual GL entry is needed
+- C) The GL is updated during the next overnight batch run, not in real time
+- D) The GL entry is created only after the payment is released to the vendor
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* SAP's sub-ledger integration means that posting an AP document simultaneously creates the corresponding FI-GL document. The sub-ledger and GL are always in sync — this is the core integrated accounting architecture.
+  - *Why A is incorrect:* Manual GL entries are not required for sub-ledger transactions in SAP; automatic integration is one of the fundamental values of ERP over disconnected systems.
+  - *Why C is incorrect:* GL updates in SAP occur in real time when the source document is posted; there is no overnight batch requirement for sub-ledger-to-GL posting.
+  - *Why D is incorrect:* The GL liability is recorded when the invoice is posted (the obligation exists from receipt of goods/services), not when payment is made. Payment simply clears the open item in both AP and GL.
+
+---
+
+### Question 12
+
+(5 points)
+
+A company acquires a manufacturing machine for $240,000 with a 6-year useful life, $0 salvage value, using straight-line depreciation. What is the annual depreciation expense and the net book value at the end of Year 3?
+
+- A) Annual depreciation $30,000; NBV at end of Year 3 = $150,000
+- B) Annual depreciation $40,000; NBV at end of Year 3 = $120,000
+- C) Annual depreciation $48,000; NBV at end of Year 3 = $96,000
+- D) Annual depreciation $40,000; NBV at end of Year 3 = $80,000
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Straight-line: $240,000 ÷ 6 years = $40,000/year. After 3 years: accumulated depreciation = $120,000. NBV = $240,000 − $120,000 = $120,000.
+  - *Why A is incorrect:* $30,000/year would be $240,000 ÷ 8 years, not 6 years. The resulting NBV of $150,000 reflects this incorrect denominator.
+  - *Why C is incorrect:* $48,000/year would be $240,000 ÷ 5 years, which incorrectly uses 5 as the divisor instead of 6.
+  - *Why D is incorrect:* While the annual depreciation of $40,000 is correct, the NBV of $80,000 reflects 4 years of depreciation ($160,000 accumulated), not 3 years.
+
+---
+
+### Question 13
+
+(5 points)
+
+Which of the following SAP transactions is used to run the automated monthly depreciation posting for all fixed assets?
+
+- A) F110 (Automatic Payment Run)
+- B) FB60 (Vendor Invoice Entry)
+- C) AFAB (Depreciation Run)
+- D) F150 (Dunning Run)
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - *Why C is correct:* Transaction AFAB is the SAP Asset Accounting depreciation run. It calculates depreciation for all active asset master records using their assigned depreciation keys and posts the resulting journal entries to the GL for the specified period.
+  - *Why A is incorrect:* F110 is the Automatic Payment Program used to release vendor payments in batch; it has no function in asset depreciation.
+  - *Why B is incorrect:* FB60 is used to manually enter vendor invoices in FI-AP; it is not used for depreciation calculations.
+  - *Why D is incorrect:* F150 is the dunning run that generates overdue payment notices to customers; it is an AR function unrelated to asset accounting.
+
+---
+
+### Question 14
+
+(5 points)
+
+A company's SAP CO module is configured with profit centers for North America, Europe, and Asia-Pacific. When a sales order is created in the SD module, what happens in CO?
+
+- A) Nothing — CO only receives postings from manual journal entries created by the accounting team
+- B) The revenue and cost of goods sold from the sales order automatically flow to the appropriate profit center, enabling real-time regional profitability reporting without manual allocation
+- C) The sales order creates a cost center posting that reduces the departmental budget
+- D) CO blocks the sales order until the profit center manager manually approves the transaction
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* SAP's integration between SD and CO means that revenue and COGS from sales transactions automatically post to the configured profit center based on the customer or material master settings — enabling real-time management reporting without manual allocation journals.
+  - *Why A is incorrect:* CO receives automatic postings from FI, MM, and SD transactions based on the account assignment configuration; manual journals are not required for standard business transactions.
+  - *Why C is incorrect:* Cost centers are for cost tracking by department; a sales order posts to a profit center (revenue + cost), not a cost center.
+  - *Why D is incorrect:* Profit center assignment is automatic and does not create an approval workflow that blocks sales processing.
+
+---
+
+### Question 15
+
+(5 points)
+
+Which SAP financial module is responsible for managing the **sub-ledger for money owed to the company by customers** and for executing the dunning process?
+
+- A) FI-AP (Accounts Payable)
+- B) FI-AR (Accounts Receivable)
+- C) FI-AA (Asset Accounting)
+- D) CO-CCA (Cost Center Accounting)
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* FI-AR is the customer-side sub-ledger. It tracks open customer invoices (money owed to the company), manages payment terms and cash discount tracking, and executes the dunning run to generate overdue payment notices.
+  - *Why A is incorrect:* FI-AP is the vendor-side sub-ledger tracking what the company owes to vendors; it handles outgoing payments, not customer collections.
+  - *Why C is incorrect:* FI-AA manages fixed asset records and depreciation; it has no function related to customer receivables.
+  - *Why D is incorrect:* CO-CCA tracks departmental costs; it does not manage customer invoices or collections.
+
+---
+
+### Question 16
+
+(5 points)
+
+A company performs intercompany transactions between two subsidiaries: Subsidiary A sells goods worth $500,000 to Subsidiary B within the same corporate group. Why must these transactions be eliminated during consolidation, and which ERP function handles this?
+
+- A) They must be eliminated because subsidiary transactions are illegal under GAAP accounting standards; SAP AP blocks intercompany invoices automatically
+- B) They must be eliminated to prevent double-counting — the intercompany revenue in Sub A and the intercompany expense in Sub B both disappear at the group level; SAP's consolidation tools (FI-LC or SAP Group Reporting) handle elimination
+- C) They do not need to be eliminated; intercompany sales are recorded as external revenue in consolidated financial statements
+- D) Intercompany transactions must be eliminated from the balance sheet only, not from the income statement
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* In consolidated financial statements, intercompany transactions are eliminated to prevent the group from reporting revenue it earned from itself. SAP FI-LC (Legal Consolidation) or SAP Group Reporting automates this elimination using intercompany matching and posting logic.
+  - *Why A is incorrect:* Intercompany transactions are not illegal; they are standard business practice. The accounting issue is elimination at consolidation, not legality.
+  - *Why C is incorrect:* Intercompany transactions are specifically excluded from consolidated external revenue; only third-party revenue is reported in consolidated statements.
+  - *Why D is incorrect:* Both income statement items (intercompany revenue and expense) and balance sheet items (intercompany receivables and payables) must be eliminated during consolidation.
+
+---
+
+### Question 17
+
+(5 points)
+
+A company's ERP period-locking prevents backdated postings after the month-end close. An accounts payable clerk receives a vendor invoice dated last month but discovers it in the current period. Which is the correct way to handle this in SAP?
+
+- A) Force a backdated posting by temporarily unlocking the closed period without authorization
+- B) Post the invoice with the current period document date and note the timing difference; if material, an accrual may have been booked in the prior period which this posting will reverse
+- C) Reject the invoice and ask the vendor to reissue it with the current month's date
+- D) Void the invoice and create a new purchase order for the same goods with the current date
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Late invoices are a normal occurrence in accounts payable. The standard practice is to post with the current document date, noting the invoice date discrepancy. If the prior period included an accrual for the anticipated expense, the current posting will offset it. Period locking exists to protect closed-period integrity, not to reject legitimate invoices.
+  - *Why A is incorrect:* Unlocking closed periods without authorization violates internal controls and audit requirements; it is a segregation of duties violation.
+  - *Why C is incorrect:* Asking the vendor to change the invoice date is inappropriate and potentially fraudulent; the invoice date reflects when the goods or services were delivered.
+  - *Why D is incorrect:* Voiding the invoice and recreating a purchase order is unnecessary and would break the audit trail connecting the payment to the original goods receipt.
+
+---
+
+### Question 18
+
+(5 points)
+
+What is the primary purpose of the **Controlling (CO) — Cost Element Accounting** sub-module in SAP?
+
+- A) It defines the chart of accounts and manages the GL account master records
+- B) It maps GL accounts to cost elements, enabling cost flows to be tracked through cost objects (cost centers, internal orders, projects) in the management accounting layer
+- C) It manages vendor payment terms and cash discount calculations
+- D) It produces the legally required external financial statements in IFRS or US GAAP format
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Cost Element Accounting (CO-CEL) creates the bridge between FI and CO by defining which GL accounts are also CO cost elements. This mapping ensures that every FI posting with a cost-relevant account automatically flows into the CO reporting hierarchy.
+  - *Why A is incorrect:* The chart of accounts and GL account master records are managed in FI configuration, not in CO-CEL.
+  - *Why C is incorrect:* Payment terms and cash discounts are managed in FI-AP and the vendor master record, not in CO.
+  - *Why D is incorrect:* External financial statements (balance sheet, income statement) are produced by FI; CO produces internal management reports that are not the legally mandated external statements.
+
+---
+
+### Question 19
+
+(5 points)
+
+A manufacturing company uses SAP CO to allocate the IT department's costs to the production departments that use IT services. Which CO tool performs this allocation based on a predetermined distribution key?
+
+- A) Three-way match
+- B) Dunning run
+- C) Cost center assessment or distribution cycle
+- D) Profit center elimination
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - *Why C is correct:* CO cost center assessment and distribution cycles are the standard SAP tools for allocating costs from a sending cost center (e.g., IT) to receiving cost centers (e.g., production departments) based on configured allocation keys (headcount, square footage, IT tickets, etc.).
+  - *Why A is incorrect:* The three-way match is an AP payment control process; it has no function in cost center cost allocation.
+  - *Why B is incorrect:* A dunning run generates collection notices in FI-AR; it is unrelated to internal cost allocation between departments.
+  - *Why D is incorrect:* Profit center elimination is a consolidation concept for removing intercompany balances; it is not the mechanism for departmental cost allocation.
+
+---
+
+### Question 20
+
+(5 points)
+
+Which of the following scenarios would cause an invoice to be blocked by SAP's three-way match process?
+
+- A) The vendor invoice amount matches the purchase order exactly, and all 500 units were received as documented in the goods receipt
+- B) The vendor invoice is for 500 units at $10 each ($5,000), the purchase order was for 500 units at $10 each, but the goods receipt only recorded 400 units received
+- C) The vendor invoice arrives two days after the goods receipt was posted
+- D) The purchase order was created by the procurement team rather than by the requesting department
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* The three-way match fails when any dimension (price, quantity, or total) does not match across the three documents. In this case, the invoice bills for 500 units but only 400 were received — a quantity discrepancy that blocks payment until the remaining 100 units are received or the invoice is corrected.
+  - *Why A is incorrect:* When all three documents match (same price, same quantity), the three-way match passes and payment can proceed.
+  - *Why C is incorrect:* Invoice timing (arriving after the goods receipt) does not cause a three-way match failure; the match compares document data, not arrival dates.
+  - *Why D is incorrect:* Who created the purchase order is an authorization control question, not a three-way match data comparison issue. The match compares PO, GR, and invoice data fields.

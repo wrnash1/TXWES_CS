@@ -209,3 +209,173 @@ D) `netdom renamecomputer localhost /newname:SRV-01 /restart`
   - Why A is incorrect: `Set-ComputerName` is not a valid PowerShell cmdlet. The correct cmdlet is `Rename-Computer`.
   - Why C is incorrect: `Set-Hostname` is not a valid PowerShell cmdlet for Windows Server. This syntax does not exist in the Windows PowerShell environment.
   - Why D is incorrect: While `netdom renamecomputer` works, it is a legacy command-line tool. The PowerShell equivalent `Rename-Computer -Restart` is the current best-practice method tested on AZ-800.
+
+---
+
+### Question 11 (5 points)
+
+Which Windows Server edition includes the Host Guardian Service and Shielded Virtual Machines features that protect tenant VMs from compromised fabric administrators?
+
+- A) Standard edition with Software Assurance
+- B) Essentials edition with the Hyper-V role enabled
+- C) Datacenter edition
+- D) Standard edition with the RSAT tools installed
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why A is incorrect: Software Assurance is a licensing benefit that provides upgrade rights and other perks, but it does not unlock Shielded VMs or Host Guardian Service on Standard edition. These remain Datacenter-exclusive features.
+  - Why B is incorrect: Essentials edition does not support Hyper-V hosting at scale and does not include Host Guardian Service. Essentials is designed for small business single-server deployments.
+  - Why D is incorrect: RSAT provides remote administration tools but does not unlock server features. Edition determines which roles and features are available, not the management tools installed.
+
+---
+
+### Question 12 (5 points)
+
+An administrator wants to verify that Windows Server activation succeeded on a Server Core machine. Which command displays the current activation status?
+
+- A) `slmgr /dli`
+- B) `wscript /status`
+- C) `netsh activation query`
+- D) `Get-WindowsLicense`
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - Why B is incorrect: `wscript /status` is not a valid activation query command. `wscript` is a Windows Script Host launcher, not a licensing tool.
+  - Why C is incorrect: `netsh activation query` is not a valid netsh context. Netsh does not have an activation module.
+  - Why D is incorrect: `Get-WindowsLicense` is not a valid PowerShell cmdlet in standard Windows Server installations. License status is queried with `slmgr` or the `Get-CimInstance SoftwareLicensingProduct` cmdlet.
+
+---
+
+### Question 13 (5 points)
+
+A junior administrator accidentally set a static IP address on the wrong network adapter of a Server Core machine. Which PowerShell cmdlet removes the incorrect IP address assignment without requiring a reboot?
+
+- A) `Delete-NetIPAddress`
+- B) `Remove-NetIPAddress`
+- C) `Clear-NetIPAddress`
+- D) `Reset-NetAdapter`
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: `Delete-NetIPAddress` is not a valid PowerShell cmdlet in the NetTCPIP module. The verb for removing IP configurations is `Remove`.
+  - Why C is incorrect: `Clear-NetIPAddress` is not a valid cmdlet. The correct cmdlet is `Remove-NetIPAddress`.
+  - Why D is incorrect: `Reset-NetAdapter` resets the adapter to a default state but is more disruptive than needed. `Remove-NetIPAddress` selectively removes the specific address configuration.
+
+---
+
+### Question 14 (5 points)
+
+Which DNS SRV record must be resolvable on the internal network for Windows Server machines to automatically locate the KMS host during activation?
+
+- A) `_kms._tcp`
+- B) `_vlmcs._tcp`
+- C) `_activation._udp`
+- D) `_spooler._tcp`
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: `_kms._tcp` is not the correct SRV record name used by the Volume Activation client service. The correct record name is `_vlmcs._tcp`.
+  - Why C is incorrect: `_activation._udp` is not a real DNS SRV record. Windows activation uses TCP, not UDP, and the record name is `_vlmcs._tcp`.
+  - Why D is incorrect: `_spooler._tcp` is unrelated to activation; it is not even a standard Windows DNS record. This option tests recognition of the correct KMS discovery mechanism.
+
+---
+
+### Question 15 (5 points)
+
+An organization needs to deploy Windows Server to 200 remote branch offices that have no network connectivity to the corporate data center. Activation must work at each site independently. Which activation method is most appropriate?
+
+- A) KMS, because it requires no internal server infrastructure at each branch
+- B) MAK, because each server can activate independently by contacting Microsoft's activation servers
+- C) Azure AD join, because it provides cloud-based activation without on-premises infrastructure
+- D) KMS proxy, because it routes activation requests through the corporate WAN
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: KMS requires an internal KMS host reachable on the network and a minimum activation threshold of 5 servers. Branch offices with no corporate connectivity cannot use a centralized KMS host.
+  - Why C is incorrect: Azure AD join is an identity and management feature, not a Windows Server volume activation method. It does not replace KMS or MAK for Windows Server license activation.
+  - Why D is incorrect: A KMS proxy requires WAN connectivity to the central KMS host, which the question explicitly states is unavailable at these branches.
+
+---
+
+### Question 16 (5 points)
+
+After installing Windows Server 2022, an administrator runs `Get-WindowsFeature` and notices hundreds of features listed as "Available" rather than "Installed." What does the "Available" state indicate?
+
+- A) The features have been downloaded and are ready to install without any additional media
+- B) The features are listed in the manifest but their binaries have not yet been installed; installation requires the source media or Windows Update
+- C) The features require a Datacenter edition license to install
+- D) The features are installed but disabled pending a reboot
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: "Available" does not mean the binaries are present on the local disk. It means the feature is known to the system but requires source media or online access to obtain the binaries.
+  - Why C is incorrect: Most features listed as Available are edition-neutral and do not require Datacenter. Edition restrictions apply to specific features like S2D and Shielded VMs, but "Available" simply reflects installation state.
+  - Why D is incorrect: Features that are installed but pending a reboot show as "Installed" with a restart indicator, not as "Available." "Available" means the binaries are not on the system.
+
+---
+
+### Question 17 (5 points)
+
+Which PowerShell cmdlet retrieves detailed hardware and OS information including the computer name, installed RAM, number of processors, and Windows edition from the local machine?
+
+- A) `Get-SystemInfo`
+- B) `Get-WmiObject Win32_OperatingSystem`
+- C) `Get-ComputerInfo`
+- D) `systeminfo /fo list`
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why A is incorrect: `Get-SystemInfo` is not a valid PowerShell cmdlet. The correct cmdlet that aggregates comprehensive system information in PowerShell is `Get-ComputerInfo`.
+  - Why B is incorrect: `Get-WmiObject Win32_OperatingSystem` returns OS-specific information but not the comprehensive hardware and configuration detail that `Get-ComputerInfo` provides in a single object.
+  - Why D is incorrect: `systeminfo /fo list` is a valid command-line tool but it is not a PowerShell cmdlet and does not return structured PowerShell objects that can be piped or filtered.
+
+---
+
+### Question 18 (5 points)
+
+Windows Admin Center is installed on a gateway server. An administrator attempts to manage a remote Server Core machine but cannot connect. The firewall on the remote server is enabled. Which firewall rule group must be enabled on the remote Server Core machine to allow Windows Admin Center management?
+
+- A) File and Printer Sharing
+- B) Windows Remote Management
+- C) Remote Event Log Management
+- D) Network Discovery
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: File and Printer Sharing allows SMB and network printing access but is not the protocol used by Windows Admin Center for management connectivity. WAC uses WinRM.
+  - Why C is incorrect: Remote Event Log Management enables reading event logs remotely but is not required for general Windows Admin Center connectivity. WAC uses WinRM as its transport.
+  - Why D is incorrect: Network Discovery enables the computer to see and be seen on the network but is a discovery protocol (SSDP/WSD), not the management transport. WinRM must be allowed for WAC to manage the remote node.
+
+---
+
+### Question 19 (5 points)
+
+An administrator needs to convert a Windows Server 2022 Standard evaluation installation to a licensed Standard edition. Which tool and action accomplishes this conversion?
+
+- A) Run `slmgr /ipk <Standard product key>` to install the retail product key over the evaluation key
+- B) Run `DISM /online /Set-Edition:ServerStandard` with no product key to convert in place
+- C) Use Server Manager to switch the license mode under Local Server properties
+- D) Reinstall from ISO, selecting the non-evaluation edition during setup
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - Why B is incorrect: DISM `/Set-Edition` requires a valid product key and is used to upgrade editions (e.g., Standard to Datacenter). Converting an evaluation to a licensed copy of the same edition uses `slmgr /ipk` with the appropriate product key.
+  - Why C is incorrect: Server Manager does not expose a license mode switch. License conversion is performed via command-line tools (`slmgr`) or DISM.
+  - Why D is incorrect: Reinstalling from ISO would require reconfiguring the entire server from scratch. The supported in-place conversion for evaluation-to-licensed uses `slmgr /ipk`, which avoids reinstallation.
+
+---
+
+### Question 20 (5 points)
+
+An administrator runs `Enable-PSRemoting -Force` on a Server Core machine. Which underlying Windows service must be running for PowerShell remoting to function?
+
+- A) Remote Procedure Call (RPC)
+- B) Windows Remote Management (WinRM)
+- C) Remote Registry
+- D) Secondary Logon
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: RPC is a foundational communication protocol used by many Windows services, but PowerShell remoting specifically depends on WinRM, not raw RPC. `Enable-PSRemoting` starts and configures the WinRM service.
+  - Why C is incorrect: Remote Registry enables remote access to the registry via the registry editor. It is independent of PowerShell remoting and uses a different transport.
+  - Why D is incorrect: Secondary Logon (RunAs) allows starting processes under different credentials locally. It is not involved in PowerShell remoting connectivity.

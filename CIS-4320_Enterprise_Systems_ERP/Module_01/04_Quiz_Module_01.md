@@ -203,3 +203,203 @@ A student is reviewing for the Salesforce Certified Associate exam and reads tha
 - *Why A is incorrect:* Salesforce does not use version numbers in the same way traditional software products do; it uses seasonal release names.
 - *Why B is incorrect:* Q1/Q2/Q3 are fiscal quarter labels, not Salesforce release names. Salesforce delivers three releases but they are not named by fiscal quarter.
 - *Why D is incorrect:* Alpha/Beta/GA are software development lifecycle stages used during a feature's development, not the names of Salesforce's annual production releases.
+
+---
+
+### Question 11
+
+(5 points)
+
+Which of the following best describes the concept of **Total Cost of Ownership (TCO)** when evaluating an ERP investment?
+
+- A) The one-time software license fee paid to the ERP vendor at contract signing
+- B) The full financial cost over the system's useful life, including licenses, implementation labor, training, customization, infrastructure, and ongoing support
+- C) The annual subscription fee charged by a SaaS ERP vendor
+- D) The hardware cost of servers required to run the ERP system on-premise
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* TCO encompasses all costs over the system's lifetime — not just the initial purchase price. Exam questions on vendor selection and investment justification require understanding that implementation labor and ongoing support often far exceed the license fee.
+  - *Why A is incorrect:* The one-time license fee is only one component of TCO; many ERP projects spend 3-5x the license cost on implementation services alone.
+  - *Why C is incorrect:* An annual subscription fee is a recurring cost component, but it still excludes implementation, training, customization, and integration costs that are part of TCO.
+  - *Why D is incorrect:* Hardware costs are one infrastructure component of TCO but do not represent the full scope of the concept, which includes people, process, and technology costs.
+
+---
+
+### Question 12
+
+(5 points)
+
+An organization's General Ledger, Accounts Payable, and Accounts Receivable are all managed in which SAP S/4HANA module?
+
+- A) CO (Controlling)
+- B) MM (Materials Management)
+- C) SD (Sales and Distribution)
+- D) FI (Financial Accounting)
+
+- **Correct Answer:** D
+- **Distractor Analysis:**
+  - *Why D is correct:* SAP FI (Financial Accounting) owns external financial reporting — the General Ledger (FI-GL), Accounts Payable (FI-AP), Accounts Receivable (FI-AR), and Asset Accounting (FI-AA). These are legal reporting requirements.
+  - *Why A is incorrect:* CO (Controlling) handles internal management accounting — cost centers, profit centers, and internal orders — not external financial statements.
+  - *Why B is incorrect:* MM handles procurement and inventory logistics, not financial accounting records.
+  - *Why C is incorrect:* SD handles customer-facing sales processes — order entry, pricing, shipping — not the General Ledger or payables/receivables.
+
+---
+
+### Question 13
+
+(5 points)
+
+A company moves from three separate departmental databases to a single ERP system. After go-live, a sales order entered by a sales representative automatically reduces the available inventory count without any additional data entry. This outcome is an example of which ERP characteristic?
+
+- A) Role-based access control
+- B) Process integration through a shared data model
+- C) Multi-tenant cloud hosting
+- D) Customization via configuration tables
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* The automatic propagation of a sales order into inventory — with no manual re-entry — demonstrates ERP's core value: integrated processes sharing a common data model so one transaction automatically updates all relevant modules.
+  - *Why A is incorrect:* Role-based access control determines who can perform which actions; it does not describe automatic data propagation across modules.
+  - *Why C is incorrect:* Multi-tenancy is a cloud architecture model describing how multiple customers share infrastructure; it is unrelated to automatic data propagation between business modules.
+  - *Why D is incorrect:* Configuration tables allow system behavior to be adjusted without code changes, but they do not explain why one transaction updates multiple modules simultaneously.
+
+---
+
+### Question 14
+
+(5 points)
+
+Which of the following correctly identifies Salesforce's deployment model?
+
+- A) On-premise only — customers install Salesforce on their own data center servers
+- B) Hybrid — customers choose between on-premise and cloud deployment at implementation time
+- C) SaaS only — Salesforce has no on-premise deployment option; all customers run on Salesforce's shared cloud infrastructure
+- D) Private cloud only — each customer receives a dedicated cloud server managed by Salesforce
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - *Why C is correct:* Salesforce is exclusively a SaaS platform. Unlike SAP, which offers on-premise, private cloud, and public cloud options, Salesforce has always been cloud-only. This distinction is frequently tested on the Salesforce Certified Associate exam.
+  - *Why A is incorrect:* Salesforce has no on-premise installation option — this is one of its defining architectural characteristics.
+  - *Why B is incorrect:* There is no hybrid deployment choice for Salesforce; customers cannot move workloads to their own hardware.
+  - *Why D is incorrect:* Salesforce uses a multi-tenant architecture where many customers share infrastructure, not dedicated private servers per customer.
+
+---
+
+### Question 15
+
+(5 points)
+
+**Master data** differs from **transactional data** in which of the following ways?
+
+- A) Master data changes with every business transaction; transactional data rarely changes
+- B) Master data is core reference data (vendors, customers, materials) that is reused across many transactions; transactional data is the record of individual business events that reference master data
+- C) Master data is stored in a separate database from transactional data in all ERP systems
+- D) Master data is created by the ERP vendor during installation; transactional data is created by IT administrators
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Master data (vendor master, customer master, material master) is stable reference information shared across processes. Transactional data (purchase orders, invoices, deliveries) represents individual business events and references master data records.
+  - *Why A is incorrect:* This reverses the relationship — master data is relatively stable; transactional data is created continuously as business events occur.
+  - *Why C is incorrect:* In an ERP system, master data and transactional data typically reside in the same shared database — separation would reintroduce the silo problem.
+  - *Why D is incorrect:* Master data is created and maintained by business users (purchasing managers creating vendor records, etc.), not by the ERP vendor or IT administrators during installation.
+
+---
+
+### Question 16
+
+(5 points)
+
+An enterprise runs SAP S/4HANA for back-office operations and Salesforce for CRM. A salesperson closes a deal in Salesforce and the corresponding sales order must appear in SAP within minutes. Which integration architecture pattern best satisfies this requirement?
+
+- A) Batch/scheduled integration running nightly
+- B) Real-time event-driven integration triggered by the Opportunity close event in Salesforce
+- C) Manual export from Salesforce to a CSV file imported into SAP each morning
+- D) Read-only cross-database access where SAP queries the Salesforce database directly
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* A real-time event-driven integration fires when the Salesforce Opportunity is marked Closed-Won, immediately creating the corresponding SAP sales order via middleware (e.g., MuleSoft or SAP BTP). This meets the "within minutes" requirement.
+  - *Why A is incorrect:* Nightly batch integration would create a gap of up to 24 hours between the Opportunity close and the SAP sales order — not acceptable for time-sensitive order fulfillment.
+  - *Why C is incorrect:* Manual CSV export is a manual, error-prone process that introduces significant lag and human effort, negating the integration benefits.
+  - *Why D is incorrect:* Direct cross-database queries between different vendor systems are not a standard or supported integration pattern; each system uses proprietary data structures not designed for external direct access.
+
+---
+
+### Question 17
+
+(5 points)
+
+In the SAP organizational hierarchy, which level represents the highest scope, containing all company codes, plants, and other organizational units within a single SAP installation?
+
+- A) Plant
+- B) Company Code
+- C) Client
+- D) Storage Location
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - *Why C is correct:* In SAP, the Client is the highest organizational level. All data within a Client is logically separate from data in other Clients. A Client can contain multiple Company Codes (legal entities), which contain multiple Plants, which contain multiple Storage Locations.
+  - *Why A is incorrect:* A Plant is an operational unit (factory, distribution center) that sits below the Company Code level in the hierarchy.
+  - *Why B is incorrect:* A Company Code represents one legal entity (e.g., a subsidiary) and sits below the Client level; one Client can contain many Company Codes.
+  - *Why D is incorrect:* A Storage Location is the lowest physical storage unit (a specific warehouse area), sitting below the Plant level.
+
+---
+
+### Question 18
+
+(5 points)
+
+Which of the following describes the role of **middleware** in an enterprise integration architecture?
+
+- A) A database management system that stores ERP master data
+- B) Software that sits between two or more systems and handles data mapping, transformation, routing, authentication, and error handling to enable them to communicate
+- C) A user interface layer that displays data from multiple ERP modules on one screen
+- D) A programming language used to write custom ERP reports
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Middleware (e.g., MuleSoft, SAP Integration Suite, Dell Boomi) acts as a translation and routing layer between systems with different data formats and protocols, handling the technical complexity of connecting SAP to Salesforce, legacy systems, or third-party applications.
+  - *Why A is incorrect:* A database management system stores data; middleware manages data movement and transformation between systems, not storage.
+  - *Why C is incorrect:* A unified user interface or dashboard is a front-end presentation layer; middleware operates at the system-to-system integration layer, not the display layer.
+  - *Why D is incorrect:* ABAP is the programming language for SAP customization; it is not a middleware product. Middleware is a separate category of platform software.
+
+---
+
+### Question 19
+
+(5 points)
+
+A regional hospital uses separate systems for patient scheduling, billing, pharmacy, and lab results. A patient's allergy information recorded at check-in is not visible to the pharmacy when dispensing medication. This scenario illustrates which of the following enterprise systems concepts?
+
+- A) Single source of truth achieved through ERP integration
+- B) The functional silo problem — isolated systems that cannot automatically share critical data
+- C) Role-based access control preventing the pharmacy from viewing patient data
+- D) Master data corruption caused by data migration errors
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* The hospital scenario is a classic functional silo problem — each department operates an isolated system, and critical patient safety data (allergies) cannot flow automatically to dependent departments (pharmacy), creating operational and safety risks.
+  - *Why A is incorrect:* Single source of truth is the goal of ERP integration — the scenario describes the opposite: a silo problem where there is no shared truth.
+  - *Why C is incorrect:* The question says the pharmacy cannot see allergy data, not that it is restricted from seeing it by a security policy. Role-based access control is a designed security restriction, not a system isolation problem.
+  - *Why D is incorrect:* Master data corruption describes data quality problems from poor migration; the scenario describes an architectural isolation problem, not corrupted data.
+
+---
+
+### Question 20
+
+(5 points)
+
+Which of the following statements about SAP S/4HANA's in-memory architecture is accurate?
+
+- A) SAP HANA stores all data exclusively in CPU registers, making disk storage unnecessary
+- B) SAP HANA uses a columnar in-memory database that allows analytical queries to run on live transactional data, reducing the need for separate overnight batch extracts to a data warehouse
+- C) SAP HANA requires all customizations to be rewritten in Java before they can be deployed
+- D) SAP HANA is a standalone reporting tool that supplements traditional SAP ECC but does not replace it
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* SAP HANA's columnar in-memory design allows OLTP and OLAP workloads to coexist on the same data, enabling real-time analytics on live business data — a key architectural differentiator from traditional row-based databases that required overnight ETL jobs to populate a separate data warehouse.
+  - *Why A is incorrect:* CPU registers are the processor's internal computation space, not a database storage medium. HANA stores data in RAM (main memory) for speed and persists to disk for durability.
+  - *Why C is incorrect:* SAP continues to use ABAP as its primary language on HANA; no Java rewrite is required. HANA compatibility required some ABAP optimization but not a language change.
+  - *Why D is incorrect:* SAP S/4HANA is the full replacement for SAP ECC (the previous generation ERP), not a supplementary reporting add-on. S/4HANA runs the complete ERP suite on the HANA database.

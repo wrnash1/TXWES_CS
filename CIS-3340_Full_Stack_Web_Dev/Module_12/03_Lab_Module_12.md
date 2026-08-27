@@ -43,7 +43,7 @@ npm install jsonwebtoken bcryptjs
 
 Add `JWT_SECRET` to your `.env` file:
 
-```
+```text
 NODE_ENV=development
 PORT=3000
 FRONTEND_URL=http://localhost:5173
@@ -379,3 +379,73 @@ Submit your `lab12-auth` folder zipped (excluding `node_modules`). Required file
 | DELETE returns 403 for student role | 10 |
 | Postman screenshot shows all 12 test cases with correct status codes | 10 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Token Refresh Endpoint and Expiry Simulation
+
+Add a `/api/auth/refresh` endpoint that issues a new token from a valid but potentially short-lived one, and test token expiry behavior.
+
+1. Add a `POST /api/auth/refresh` route to `routes/auth.js`. The request must include a valid Bearer token. If the token is valid (not expired), issue a new token with a fresh `exp`:
+
+```js
+router.post('/refresh', requireAuth, (req, res) => {
+  const { userId, email, role } = req.user;
+  const token = jwt.sign(
+    { userId, email, role },
+    process.env.JWT_SECRET,
+    { expiresIn: process.env.JWT_EXPIRES_IN || '24h' }
+  );
+  res.status(200).json({ token });
+});
+```
+
+1. Add `JWT_SHORT_EXPIRES_IN=10s` to `.env`. Temporarily update `routes/auth.js` to use `process.env.JWT_SHORT_EXPIRES_IN` in the login response instead of `JWT_EXPIRES_IN`. Register, login, wait 11 seconds, then call `GET /api/auth/profile` — verify you receive `401` with `"Token has expired"`.
+1. Call `POST /api/auth/refresh` with a valid (non-expired) token and confirm a new token is returned. Decode both the old and new tokens at `https://jwt.io` and verify the `iat` and `exp` claims differ.
+1. Revert `JWT_EXPIRES_IN` back to `24h` for the remaining tests.
+
+### Challenge 2: Promote-to-Admin Endpoint with Role Guard
+
+Add an admin-only endpoint that promotes a user from `'student'` to `'staff'` role, and test the 403 behavior for non-admin tokens.
+
+1. Add a `PATCH /api/users/:id/role` route to a new file `routes/users.js`:
+
+```js
+const { Router } = require('express');
+const userDb = require('../data/users');
+const { requireAuth, requireRole } = require('../middleware/auth');
+const { NotFoundError, ValidationError } = require('../utils/errors');
+
+const router = Router();
+
+router.patch('/:id/role', requireAuth, requireRole('admin'), (req, res, next) => {
+  const id = parseInt(req.params.id);
+  if (isNaN(id)) return next(new ValidationError('id must be a number'));
+
+  const { role } = req.body;
+  const allowedRoles = ['student', 'staff', 'admin'];
+  if (!role || !allowedRoles.includes(role)) {
+    return next(new ValidationError(`role must be one of: ${allowedRoles.join(', ')}`));
+  }
+
+  const user = userDb.findById(id);
+  if (!user) return next(new NotFoundError('User'));
+
+  user.role = role;
+  const { passwordHash, ...safe } = user;
+  res.status(200).json(safe);
+});
+
+module.exports = router;
+```
+
+1. Mount the router in `app.js`: `app.use('/api/users', require('./routes/users'));`
+1. In Postman, register two accounts. Use one account's token to attempt `PATCH /api/users/2/role` with `{ "role": "staff" }` — confirm `403 Forbidden` since neither account is admin.
+1. Manually seed an admin user in `data/users.js` by pushing a pre-hashed record at startup, then log in as that admin and confirm the role promotion succeeds with `200` and the updated user object.
+
+### Reflection Questions
+
+1. The `POST /api/auth/refresh` endpoint in Challenge 1 requires a valid (non-expired) token to issue a new one. This means a user with an expired token cannot refresh — they must log in again. How does the OAuth 2.0 refresh token grant solve this problem, and why does it use a separate long-lived refresh token rather than the access token itself?
+2. The in-memory user store loses all registered users when the server restarts. In a production system using PostgreSQL, what constraint would you add to the `users` table to enforce the "email must be unique" rule at the database level rather than relying solely on the application-level `findByEmail` check?

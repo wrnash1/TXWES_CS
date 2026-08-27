@@ -271,7 +271,28 @@ Expand-around-center: `expand(i,i)` for odd, `expand(i,i+1)` for even. Slice: `s
 
 ---
 
-## 13. Study Checklist
+## 13. Supplemental Resources
+
+The following free, openly licensed resources support final exam preparation and certification readiness. All are zero-cost and require no account to access.
+
+1. **LeetCode — Top Interview Questions (Free Tier)** — [https://leetcode.com/problemset/all/?listId=wpwgkgt](https://leetcode.com/problemset/all/?listId=wpwgkgt)
+   LeetCode's curated "Top Interview Questions" list contains 145 problems across all difficulty levels covering the exact algorithm families taught in CIS-2315: arrays, strings, trees, graphs, DP, and sorting. Solving 10–15 of these before the certification exam provides direct practice under interview-style problem statements.
+
+2. **NeetCode 150 — Complete Roadmap (YouTube + Website)** — [https://neetcode.io/roadmap](https://neetcode.io/roadmap)
+   A free structured study roadmap organizing 150 LeetCode problems by pattern (Arrays, Two Pointers, Sliding Window, Heaps, Graphs, DP, etc.). Each problem links to a free video solution. The roadmap directly maps to the CIS-2315 module sequence and is the most widely used free self-study resource for technical interview preparation.
+
+3. **Big-O Cheat Sheet** — [https://www.bigocheatsheet.com/](https://www.bigocheatsheet.com/)
+   A single-page reference for time and space complexities of all major data structures (array, linked list, BST, AVL, heap, hash table) and algorithms (sorting, searching, graph traversal). Use this as a quick-review reference before the certification exam.
+
+4. **MIT OCW 6.006 — Introduction to Algorithms (Full Course)** — [https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/](https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/)
+   The complete free MIT undergraduate algorithms course — lecture notes, problem sets, and exams. Covers every major topic in CIS-2315 at a rigorous level. Particularly useful for reviewing Master Theorem applications, DP recurrences, and graph algorithm correctness proofs.
+
+5. **HackerRank — Interview Preparation Kit** — [https://www.hackerrank.com/interview/interview-preparation-kit](https://www.hackerrank.com/interview/interview-preparation-kit)
+   HackerRank's free Interview Preparation Kit with timed practice problems organized by topic (Arrays, Dictionaries, Trees, Graphs, DP, Greedy). Completing this kit provides targeted practice across the full CIS-2315 curriculum and directly builds certification exam readiness.
+
+---
+
+## 14. Study Checklist
 
 - [ ] Watch the Module 16 video lecture by Professor Nash.
 - [ ] Complete the Module 16 Final Practice Quiz (10 cross-module questions).

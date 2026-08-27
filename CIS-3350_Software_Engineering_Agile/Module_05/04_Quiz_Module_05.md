@@ -196,3 +196,171 @@ Distractor Analysis:
 - Why D is incorrect: Sprint cancellation requires the Sprint Goal to be obsolete; a low-output Sprint does not meet that criterion, and retroactive cancellation is not a Scrum construct.
 
 ---
+
+### Question 11 (5 points)
+
+The Scrum Guide says that improvement items identified at the Sprint Retrospective "may" be added to the Sprint Backlog. Why is this considered a best practice?
+
+- A) It ensures the improvements are completed before product work begins in the next Sprint
+- B) It gives process improvements the same visibility, prioritization, and accountability as product work
+- C) It transfers ownership of the improvements from the team to the Product Owner
+- D) It replaces the need to hold another Retrospective until all improvements are implemented
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Incorrect — Improvements are not necessarily done before product work; they are integrated into the Sprint alongside product backlog items.
+  - C) Incorrect — Process improvements remain the team's accountability; adding them to the Sprint Backlog does not transfer ownership to the Product Owner.
+  - D) Incorrect — Retrospectives continue every Sprint regardless of whether prior improvements are fully implemented.
+
+---
+
+### Question 12 (5 points)
+
+A stakeholder attending the Sprint Review says "I approve this Increment — you can release it." What is wrong with this statement from a Scrum perspective?
+
+- A) Nothing — stakeholder approval is required before any Increment can be released
+- B) Stakeholders do not approve releases; the Product Owner decides whether and when to release the Increment
+- C) The Scrum Master must countersign the approval before it is valid
+- D) Approval is only granted at Sprint Planning, not the Sprint Review
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Incorrect — The Sprint Review is not an approval gate; the Product Owner holds release authority, not stakeholders collectively.
+  - C) Incorrect — The Scrum Master has no release authority; their role is coaching and facilitation.
+  - D) Incorrect — Sprint Planning does not involve release approval; it creates the Sprint Goal and Sprint Backlog.
+
+---
+
+### Question 13 (5 points)
+
+Which of the following best describes the "product feedback loop" created by the Sprint Review?
+
+- A) Sprint Planning → execution → Sprint Review → updated Product Backlog → next Sprint Planning
+- B) Sprint Review → Sprint Retrospective → next Daily Scrum → updated Sprint Backlog
+- C) Daily Scrum → Sprint Review → Sprint Retrospective → next Sprint Planning
+- D) Sprint Retrospective → updated Definition of Done → Sprint Review → stakeholder sign-off
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - B) Incorrect — This sequence mixes product and process feedback loops and incorrectly connects Retrospective output to Daily Scrum.
+  - C) Incorrect — The Daily Scrum is an intra-Sprint event; it is not part of the inter-Sprint product feedback loop.
+  - D) Incorrect — The Definition of Done update is a process feedback output from the Retrospective, not a step in the product feedback loop.
+
+---
+
+### Question 14 (5 points)
+
+A Scrum Team holds its Sprint Retrospective and produces a list of twelve improvements. The Scrum Master asks the team to commit to implementing all twelve in the next Sprint. Is this good practice?
+
+- A) Yes — more improvements committed means faster team growth
+- B) Yes — the Scrum Guide requires all identified improvements to be actioned immediately
+- C) No — the Scrum Guide recommends committing to at least one high-priority improvement; twelve simultaneous commitments risk spreading the team too thin and implementing none well
+- D) No — the Scrum Master does not have authority to ask for improvement commitments; that is the Product Owner's job
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) Incorrect — Committing to too many improvements simultaneously leads to none being done well; focused improvement is more effective.
+  - B) Incorrect — The Scrum Guide says "at least one" improvement, not all identified improvements.
+  - D) Incorrect — Process improvements are the Scrum Team's collective accountability; the Scrum Master appropriately facilitates that commitment.
+
+---
+
+### Question 15 (5 points)
+
+At the Sprint Review, the Product Owner announces that based on stakeholder feedback, two previously high-priority Product Backlog items are now low-priority and three new items have been added to the top of the backlog. Is this appropriate?
+
+- A) No — the Product Backlog order cannot change until the next Sprint Planning
+- B) Yes — the Sprint Review exists precisely to inspect the Increment and adapt the Product Backlog based on new information
+- C) No — stakeholders cannot influence the Product Backlog; only the Scrum Team can propose changes
+- D) Yes — but only if the Developers agree to the reprioritization before the Sprint Review ends
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Incorrect — The Product Backlog is dynamic and can be updated at any time; the Sprint Review is specifically intended to produce Product Backlog updates.
+  - C) Incorrect — Stakeholders are invited to the Sprint Review specifically to provide feedback that informs Product Backlog changes; the Product Owner incorporates that feedback.
+  - D) Incorrect — Product Backlog ordering is the Product Owner's sole accountability; Developer agreement is not required to reorder the backlog.
+
+---
+
+### Question 16 (5 points)
+
+The "Four Ls" retrospective format asks the team to discuss what they Liked, Learned, Lacked, and Longed for. Which of the four categories most directly surfaces process improvements?
+
+- A) Liked — because it identifies what to continue doing
+- B) Learned — because new knowledge drives future changes
+- C) Lacked — because it identifies gaps in process, support, or resources that should be addressed
+- D) Longed for — because it describes aspirational practices the team has never tried
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) Incorrect — "Liked" surfaces practices to continue, not improvements to make; it is backward-looking in a positive way.
+  - B) Incorrect — "Learned" captures insights but does not directly identify what was missing from the process.
+  - D) Incorrect — "Longed for" is aspirational but may not map to a concrete, actionable improvement for the next Sprint.
+
+---
+
+### Question 17 (5 points)
+
+Which Sprint event most directly embodies the Scrum empirical pillar of "Adaptation" at the product level?
+
+- A) Sprint Planning, because the team decides what to build next
+- B) Daily Scrum, because the team adapts the Sprint Backlog daily
+- C) Sprint Review, because stakeholder feedback causes the Product Backlog to be updated
+- D) Sprint Retrospective, because the team changes its process based on what it learned
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) Incorrect — Sprint Planning is an adaptation event, but it works from an already-updated Product Backlog; the Sprint Review is where the product-level adaptation occurs.
+  - B) Incorrect — The Daily Scrum enables process-level adaptation within the Sprint, not product-level adaptation.
+  - D) Incorrect — The Sprint Retrospective drives process-level adaptation; the Sprint Review drives product-level adaptation.
+
+---
+
+### Question 18 (5 points)
+
+The CampusConnect team skips their Sprint Retrospective after Sprint 7 because "the Sprint went great and there's nothing to improve." What is the primary risk of this decision?
+
+- A) The team will violate the Scrum Guide's timebox rules
+- B) The team misses an opportunity to reinforce what worked well and discover subtle issues before they become larger problems in future Sprints
+- C) The Scrum Master will be penalized for failing to schedule the event
+- D) Stakeholders will lose confidence in the team's ability to self-manage
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Incorrect — Timebox rules define the maximum duration, not a penalty for skipping; the risk is loss of improvement opportunity, not a rule violation penalty.
+  - C) Incorrect — The Scrum Guide does not define penalties for individuals; the team collectively is accountable for conducting Scrum events.
+  - D) Incorrect — Stakeholders do not attend the Retrospective; they would not directly observe its absence.
+
+---
+
+### Question 19 (5 points)
+
+At a Sprint Review, a Developer begins explaining at length why a feature took longer than expected. The stakeholders are disengaged. What is the Scrum Master's most appropriate action?
+
+- A) Interrupt the Developer and redirect the meeting to the product demonstration
+- B) Allow the explanation to continue because transparency requires sharing all relevant information
+- C) Ask the Developer to hold detailed technical explanations for the Retrospective and refocus the Sprint Review on the Increment and stakeholder feedback
+- D) Cancel the Sprint Review and reschedule when the Developers are better prepared
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) Incorrect — Interrupting the Developer is disrespectful; coaching toward the appropriate forum is more effective.
+  - B) Incorrect — Transparency is important, but the Sprint Review's purpose is product inspection and stakeholder collaboration, not internal process debriefs.
+  - D) Incorrect — Cancelling the Sprint Review for this reason is disproportionate; facilitation coaching is the correct intervention.
+
+---
+
+### Question 20 (5 points)
+
+The Scrum Guide describes the Sprint Retrospective as creating a plan for improving quality and effectiveness. Quality improvements specifically could include which of the following?
+
+- A) Reducing the number of Sprint Backlog items to ensure the Sprint Goal is always achieved
+- B) Tightening the Definition of Done to require additional automated test coverage
+- C) Increasing the Sprint timebox to give the team more time to complete quality work
+- D) Moving testing responsibilities to a separate QA team to improve test quality
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Incorrect — Reducing Sprint Backlog items is a capacity planning adjustment, not a quality improvement; it does not change the team's quality standards.
+  - C) Incorrect — Sprints have a fixed maximum length of one month and are not extended to accommodate quality; this would also reduce delivery frequency.
+  - D) Incorrect — Delegating testing to a separate team contradicts the cross-functional, self-managing Scrum Team principle and typically reduces quality by introducing handoffs.

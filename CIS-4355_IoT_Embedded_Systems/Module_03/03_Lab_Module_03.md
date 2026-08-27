@@ -245,4 +245,30 @@ Question 3: Rewrite the `processCommand` function to eliminate both vulnerabilit
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Add a Second Sensor and Watchdog Timer in MicroPython
+
+Extend your Part 1 MicroPython script to add fault recovery and a second sensor type.
+
+1. Add a software watchdog timer to your script using `machine.WDT(timeout=8000)`. Call `wdt.feed()` at the end of each successful loop iteration. In a comment, explain what would happen to the device if the DHT11 read hung indefinitely and `wdt.feed()` was never called.
+2. Extend the script to also read an MQ-2 gas sensor (or simulate it with a potentiometer) connected to ADC pin 34 on the ESP32. Use `machine.ADC(machine.Pin(34))` and set attenuation to `ADC.ATTN_11DB` to read the full 0–3.3 V range. Print the raw ADC value alongside the DHT11 readings.
+3. Add a running minimum and maximum tracker for temperature. Declare `temp_min` and `temp_max` as module-level variables before the loop. Update them inside the `try` block after each successful reading and print them in the output block.
+4. Modify the output separator to include a reading counter: `--- Reading #N ---` where N increments each loop iteration.
+
+### Challenge 2: Firmware Security — Extract and Harden
+
+Practice the attacker perspective and then apply the fix.
+
+1. Create a small text file named `demo_firmware.bin` containing the following text content (simulating a firmware binary with an embedded credential): `\x00\x01\x02WiFiPass=SuperSecret99\x00\x00\x03`. Run `strings demo_firmware.bin` (or on Windows use `findstr /r "[a-zA-Z0-9=!@#]" demo_firmware.bin`) and document what an attacker would see. Screenshot the output.
+2. Research the Arduino `EEPROM` library (for AVR) or the ESP32 `Preferences` library (for ESP32/MicroPython `nvm`). Write a 3–5 sentence explanation of how you would store a Wi-Fi credential so it is NOT present as a plaintext string in the compiled firmware binary. Describe the provisioning flow (how the credential gets into EEPROM/NVM the first time).
+3. Identify one additional hardcoded value in the Part 1 starter code (hint: the GPIO pin number) and explain whether hardcoding it is a security risk, a maintainability risk, or both.
+
+### Reflection Questions
+
+1. The watchdog timer added in Challenge 1 resets the device if `wdt.feed()` is not called within 8 seconds. Describe one scenario where this behavior could be harmful in a production IoT device and explain how you would design the firmware to handle that edge case gracefully.
+2. Embedded C and MicroPython both allow accessing the same I2C sensor. Given that MicroPython is significantly slower, identify one specific IoT application where the speed difference would matter enough to require C, and one where MicroPython's development speed advantage outweighs the performance cost.
+
+---
+
 End of Lab – Module 03

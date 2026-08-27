@@ -281,3 +281,19 @@ ITIL 4 is explicitly compatible with Agile, DevOps, Lean, and organizational cha
 * [ ] Take the Module 02 Quiz.
 * [ ] Post your initial discussion response by Wednesday at 11:59 PM.
 * [ ] Reply to at least two classmates by Sunday at 11:59 PM.
+
+---
+
+## 14. Supplemental Resources
+
+**1. AXELOS — ITIL 4 Service Value System Overview**
+<https://www.axelos.com/resource-hub/blog/itil-4-the-service-value-system>
+An official AXELOS article explaining the SVS architecture, inputs, outputs, and the relationship between its five components. Recommended as a companion to the module reading guide for exam preparation.
+
+**2. IT Process Wiki — ITIL 4 Value Chain Activities**
+<https://wiki.en.it-processmaps.com/index.php/ITIL_4_Service_Value_Chain>
+A detailed reference covering all six Service Value Chain activities with descriptions, inputs, and outputs. Includes diagrams showing how activities combine into value streams.
+
+**3. Atlassian — DevOps and ITSM Integration**
+<https://www.atlassian.com/itsm/itil>
+A practitioner-oriented guide explaining how ITIL 4 and DevOps complement each other. Useful for understanding why the SVS was designed to support Agile and DevOps environments and how value streams apply in real software delivery organizations.

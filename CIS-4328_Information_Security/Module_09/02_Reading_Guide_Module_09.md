@@ -41,6 +41,22 @@ In this week's hands-on lab, you will configure MFA policies, analyze authentica
 
 ---
 
+### 9. Supplemental Resources
+
+**1. NIST SP 800-63B — Digital Identity Guidelines: Authentication and Lifecycle Management**
+<https://pages.nist.gov/800-63-3/sp800-63b.html>
+NIST's authoritative guidance on authenticator assurance levels (AAL1, AAL2, AAL3), phishing-resistant MFA requirements, and password policy recommendations. Directly supports Module 09 coverage of MFA factor types, FIDO2 requirements, and the deprecation of SMS OTP for high-assurance use cases.
+
+**2. FIDO Alliance — How FIDO Works**
+<https://fidoalliance.org/how-fido-works/>
+The FIDO Alliance's explanation of FIDO2/WebAuthn authentication including passkeys, hardware security keys, and the origin-binding mechanism that makes FIDO2 phishing-resistant. Directly addresses Module 09 content on phishing-resistant authenticators and the distinction between TOTP and FIDO2 security properties.
+
+**3. OWASP Authentication Cheat Sheet**
+<https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html>
+A practical reference covering secure authentication implementation including password storage (salting and hashing), account lockout policies, MFA implementation, and session management. Bridges Module 09 authentication concepts with the secure coding practices covered in Module 03.
+
+---
+
 ### 3. Study Checklist
 - [ ] Read the glossary terms above and be able to classify authentication factors and select the correct method for any given scenario.
 - [ ] Read the "Authentication" section in [Professor Messer's SY0-701 Study Notes](https://www.professormesser.com/).

@@ -207,3 +207,21 @@ Submit as a single PDF or Word document to the Canvas Module 06 Lab assignment.
 | Part 2: Quality Tool Application | 40 | Correct Pareto math and prioritization; complete fishbone with realistic causes |
 | Part 3: Quality Management Plan | 30 | Measurable standards; specific QA and QC activities; complete defect workflow |
 | **Total** | **100** | |
+
+---
+
+## Part 9 — Challenge Exercise
+
+This section is optional for students seeking additional depth and exam preparation. It is not graded as part of the standard 100-point lab but may be used for extra credit at the instructor's discretion.
+
+### Challenge Step 1: Control Chart Interpretation
+
+Using the following 12 weeks of defect counts from the CityBuild GIS rollout — 4, 7, 5, 6, 3, 8, 9, 11, 14, 12, 13, 15 — calculate the mean and estimate the Upper Control Limit (UCL) and Lower Control Limit (LCL) using ±3 units as a simplified approximation. Plot the values in a simple table. Identify any data points outside the control limits and any Rule of Seven violations (7 consecutive points on the same side of the mean or trending in one direction). Write two sentences explaining what corrective action the PM should take based on your findings.
+
+### Challenge Step 2: COQ Trade-Off Analysis
+
+The project sponsor asks whether investing an additional $8,000 in developer training (prevention) is justified given the project's current defect rate. Using the COQ framework, estimate how much the current defect rate is costing the project in internal failure costs (assume each defect costs $500 to fix and the project averages 20 defects per month). Calculate how many months it would take the prevention investment to break even, assuming training reduces the defect rate by 60%. Show your calculation and write a three-sentence recommendation for the sponsor.
+
+### Challenge Step 3: Process Audit Checklist
+
+Design a brief Quality Assurance process audit checklist (8–10 items) that could be used to verify whether the CityBuild project team is following its approved Quality Management Plan. Items should cover: testing procedures, defect logging discipline, review gate compliance, and documentation standards. Frame each item as a yes/no auditable question. This exercise mirrors the type of QA audit documented in PMI's Manage Quality process.

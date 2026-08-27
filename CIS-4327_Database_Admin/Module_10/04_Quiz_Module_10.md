@@ -137,3 +137,193 @@ An application uses `SELECT * FROM orders ORDER BY created_at LIMIT 10 OFFSET 10
 - D) Use `FETCH FIRST 10 ROWS ONLY` instead of `LIMIT`.
 
 **Answer: C** — Large OFFSET values require the database to scan and discard all preceding rows before returning the target page. At OFFSET 1,000,000 this means scanning one million rows just to return ten. Keyset pagination uses an index seek on the last seen value (`WHERE created_at > last_seen`), which is an O(1) index lookup regardless of which page you are on. A B-tree index on `created_at` helps the sort but does not solve the OFFSET scan problem.
+
+---
+
+### Question 11 (5 points)
+
+A PostgreSQL query plan shows a `Hash Join` node with `Batches: 8`. What does this indicate and what is the recommended action?
+
+A) The hash join required 8 passes through the table; add an index to eliminate the join.
+B) The inner table's hash could not fit in `work_mem` and spilled to disk across 8 batches; increase `work_mem` for this session to reduce disk spills.
+C) Eight parallel workers are being used; disable parallel query for this query.
+D) The join column has 8 distinct values; add a partial index for each value.
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A) `Batches` refers to disk-spill batches during the hash build phase, not table scan passes; adding an index would change the join type but does not address the root cause of the memory spill.
+- C) Parallel workers appear in `Workers Planned` / `Workers Launched` nodes, not in the `Batches` field; a batch count of 8 has no relation to parallel execution degree.
+- D) Distinct value count is a cardinality metric visible in statistics, not in the plan's Batches counter; partial indexes per value are a valid technique for different problems but do not address hash join memory spill.
+
+---
+
+### Question 12 (5 points)
+
+Which PostgreSQL index type is most appropriate for a column storing `tsvector` full-text search data that will be queried with the `@@` match operator?
+
+A) B-tree
+B) GIN
+C) BRIN
+D) Hash
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A) B-tree indexes support equality and range comparisons on scalar values; they cannot index the internal lexeme structure of a `tsvector` or support the `@@` full-text match operator.
+- C) BRIN indexes store min/max summaries per block range; they are designed for physically ordered numeric or date columns and do not support full-text search operators.
+- D) Hash indexes support only equality (`=`) comparisons; they cannot index the multi-lexeme contents of a `tsvector` column.
+
+---
+
+### Question 13 (5 points)
+
+A DBA wants to create an index that allows PostgreSQL to satisfy a query using an Index Only Scan, avoiding any heap access entirely. The query is `SELECT customer_id, order_date FROM orders WHERE status = 'pending'`. Which index definition achieves this?
+
+A) `CREATE INDEX ON orders (status) INCLUDE (customer_id, order_date);`
+B) `CREATE INDEX ON orders (customer_id, order_date, status);`
+C) `CREATE INDEX ON orders (status, customer_id);`
+D) `CREATE INDEX ON orders (customer_id) WHERE status = 'pending';`
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- B) This index supports the lookup but stores `status` as the first key column, followed by the projected columns as key columns — the planner may use it but the INCLUDE clause (covering index) is the canonical way to add non-key columns for Index Only Scans without bloating the key.
+- C) This composite index includes `customer_id` as a key column but does not include `order_date`, so the planner must still visit the heap to retrieve `order_date`, preventing an Index Only Scan.
+- D) A partial index filtered on `status = 'pending'` reduces index size but does not include `order_date` in the index, so heap access is still required for that column.
+
+---
+
+### Question 14 (5 points)
+
+The `default_statistics_target` PostgreSQL parameter is set to its default of 100. A DBA observes chronic planner misestimates on a highly skewed column `campaign_id`. What change most directly improves plan accuracy for that column?
+
+A) `ALTER TABLE orders ALTER COLUMN campaign_id SET STATISTICS 500;`
+B) `SET default_statistics_target = 500;` in `postgresql.conf`
+C) `REINDEX TABLE orders;`
+D) `CLUSTER orders USING idx_campaign_id;`
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- B) Changing `default_statistics_target` globally affects all columns in all tables, which increases `ANALYZE` time cluster-wide and wastes resources on columns that do not need higher precision; per-column statistics targeting is the correct approach.
+- C) `REINDEX` rebuilds index structures and has no effect on the statistical histogram used by the planner for row count estimation.
+- D) `CLUSTER` physically reorders table rows to match an index, which can improve sequential scan performance on range queries but does not change the quality of statistics collected by `ANALYZE`.
+
+---
+
+### Question 15 (5 points)
+
+A developer reports that a query reading from a Cloud SQL for PostgreSQL instance runs well initially but slows dramatically after several weeks of production use. `EXPLAIN ANALYZE` shows an increasingly bloated Seq Scan. Which maintenance operation most likely resolves the long-term degradation?
+
+A) Run `VACUUM ANALYZE` on the affected table to reclaim dead tuples and refresh statistics.
+B) Increase `shared_buffers` by 25% to improve cache hit ratio.
+C) Add a composite index on all columns in the SELECT list.
+D) Restart the Cloud SQL instance to clear the buffer pool.
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- B) Increasing `shared_buffers` improves cache utilization but does not remove dead tuple bloat that inflates physical table size and forces the planner to scan more pages.
+- C) Adding an index on SELECT list columns creates a covering index but does not remove existing table bloat; if the table has grown 3x due to dead tuples, even an index scan incurs extra I/O from inflated heap pages.
+- D) Restarting clears the buffer cache (warms cold), which worsens performance temporarily and does not reclaim dead tuple space; this is the opposite of the correct action.
+
+---
+
+### Question 16 (5 points)
+
+MySQL's `EXPLAIN` output shows `rows=8500000` for a table with 9 million total rows and `type=ALL`. An engineer adds an index on the filtered column. After adding the index, `EXPLAIN` still shows `type=ALL`. What is the most likely reason MySQL ignored the new index?
+
+A) The index was created with an incorrect column type.
+B) The optimizer estimated that fetching 8.5 million rows out of 9 million via an index would require more I/O than a sequential scan, so it chose the full table scan.
+C) The MySQL version does not support the index type used.
+D) The table requires `ANALYZE TABLE` before any index can be used.
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A) Type mismatch typically causes a type conversion in the WHERE clause that prevents index use, but in this scenario the query selectivity (94% of rows) is the dominant factor, not a type error.
+- C) Standard B-tree indexes are supported in all production MySQL versions; a version incompatibility would produce a creation error, not silent optimizer avoidance.
+- D) While `ANALYZE TABLE` updates statistics, a correctly created index is immediately visible to the optimizer; the root cause here is selectivity, not missing statistics.
+
+---
+
+### Question 17 (5 points)
+
+A PostgreSQL query runs an expensive subquery inside a `WHERE x IN (SELECT ...)` clause repeatedly. The DBA rewrites it as a `JOIN`. What execution plan improvement is most likely?
+
+A) The JOIN version enables the planner to choose a hash join or merge join, which evaluates the subquery once rather than once per outer row.
+B) JOINs always produce fewer rows than subqueries, reducing result set size.
+C) The planner automatically converts all correlated subqueries to JOINs internally, so there is no practical difference.
+D) JOINs bypass the statistics system and always use index scans.
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- B) JOINs do not inherently produce fewer rows; the result set size depends on join type and data — an INNER JOIN with no deduplication can produce more rows than a subquery using IN (which deduplicates).
+- C) Modern PostgreSQL can decorrelate some subqueries automatically, but complex correlated subqueries are not always converted; explicit rewrites to JOINs give the planner maximum flexibility to choose the best strategy.
+- D) JOINs are not exempt from the statistics system; the planner uses statistics for both JOIN and subquery plans to estimate cardinality and choose between hash join, merge join, and nested loop strategies.
+
+---
+
+### Question 18 (5 points)
+
+Which `pg_stat_statements` column best identifies queries that are causing the most total I/O pressure on a PostgreSQL instance?
+
+A) `calls`
+B) `mean_exec_time`
+C) `shared_blks_read + shared_blks_written`
+D) `rows`
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- A) `calls` counts how many times a query was executed but says nothing about I/O volume per call; a query called once that reads 10 million blocks causes more I/O pressure than one called 1,000 times that reads 5 blocks each.
+- B) `mean_exec_time` measures average wall-clock duration, which correlates with I/O but is also affected by CPU, lock waits, and network; it does not directly quantify block I/O volume.
+- D) `rows` counts result rows returned or affected; a query returning 1 row could still read millions of blocks (e.g., a sequential scan with a highly selective filter at the very end).
+
+---
+
+### Question 19 (5 points)
+
+A partial index is defined as `CREATE INDEX idx_pending ON orders (created_at) WHERE status = 'pending'`. Under which condition will the query planner use this index?
+
+A) Only when the query contains `WHERE status = 'pending'` as a filter condition.
+B) Whenever the query filters on `created_at`, regardless of the `status` filter.
+C) Only when the query uses `ORDER BY created_at` without any WHERE clause.
+D) Only when `created_at` is the primary key of the table.
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- B) The partial index only covers rows where `status = 'pending'`; a query that does not filter on `status = 'pending'` may need rows with other status values that are not in the index, so the planner will not use the partial index for such queries.
+- C) A partial index with a WHERE clause cannot satisfy ORDER BY queries that touch all rows; the index only covers the pending subset, making it unusable for queries that do not also filter to that subset.
+- D) The primary key has no relation to whether a partial index is used; partial index eligibility depends on whether the query's WHERE clause implies the index predicate.
+
+---
+
+### Question 20 (5 points)
+
+A DBA observes that `autovacuum` is not keeping up with dead tuple accumulation on a heavily updated table, leading to table bloat. Which parameter change most directly increases autovacuum aggressiveness for that specific table?
+
+A) `ALTER TABLE orders SET (autovacuum_vacuum_scale_factor = 0.01);`
+B) `SET autovacuum_vacuum_cost_delay = 0;` in `postgresql.conf`
+C) `VACUUM FULL orders;` run on a schedule.
+D) Increase `max_connections` to allow more autovacuum workers.
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- B) Setting `autovacuum_vacuum_cost_delay = 0` removes throttling globally, which can cause autovacuum to consume excessive I/O and interfere with application queries; per-table tuning is the preferred approach.
+- C) `VACUUM FULL` reclaims space by rewriting the entire table, but it holds an exclusive lock, blocking all other operations for the duration; it is a one-time fix, not an ongoing solution to autovacuum falling behind.
+- D) `max_connections` controls client connection limits and has no effect on autovacuum worker count; autovacuum worker count is governed by `autovacuum_max_workers`.

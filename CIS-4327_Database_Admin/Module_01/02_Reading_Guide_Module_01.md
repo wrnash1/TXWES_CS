@@ -261,3 +261,19 @@ Work through this checklist before proceeding to the lab.
 ---
 
 Reference: cloud.google.com/learn
+
+---
+
+## 9. Supplemental Resources
+
+**1. PostgreSQL Official Documentation — The Query Planner**
+https://www.postgresql.org/docs/current/planner-optimizer.html
+Explains how PostgreSQL generates execution plans, interprets EXPLAIN output, and uses table statistics to choose between sequential scans and index scans.
+
+**2. Google Cloud — Cloud SQL for PostgreSQL Concepts**
+https://cloud.google.com/sql/docs/postgres/concepts
+Covers instance configuration, connection options, high availability, read replicas, and maintenance windows specific to Cloud SQL for PostgreSQL.
+
+**3. Use The Index, Luke — A Guide to Database Performance for Developers**
+https://use-the-index-luke.com/
+A free, vendor-neutral reference covering B-tree index internals, composite index column ordering, partial indexes, and how execution plans change with and without indexes.

@@ -337,3 +337,122 @@ Submit through the course LMS:
 2. A screenshot of the script output showing the device list
 3. Your SDN architecture diagram (photo or exported image)
 4. The completed worksheet sections (Parts 1, 2, 4, 5, 6) as a PDF or Word document
+
+---
+
+## Part 9 — Challenge Exercise
+
+This optional challenge extends the lab to CCNA exam difficulty. Complete all steps and include deliverables in your submission for up to 20 bonus points.
+
+### Challenge Step 1: Extend the Python Script to Configure a Device via POST
+
+Extend the `dnac_lab.py` script to use the DNA Center Intent API to configure a network device. Use the DevNet Always-On sandbox to POST a tag or note to a device to practice the create workflow.
+
+```python
+import requests
+import json
+
+# Authenticate (reuse token from lab)
+auth_url = "https://sandboxdnac.cisco.com/dna/system/api/v1/auth/token"
+response = requests.post(auth_url, auth=("devnetuser", "Cisco123!"), verify=False)
+token = response.json()["Token"]
+headers = {"X-Auth-Token": token, "Content-Type": "application/json"}
+
+# Get device list to retrieve a device ID
+devices_url = "https://sandboxdnac.cisco.com/dna/intent/api/v1/network-device"
+devices = requests.get(devices_url, headers=headers, verify=False)
+device_id = devices.json()["response"][0]["id"]
+
+# POST a tag to the first device
+tag_url = f"https://sandboxdnac.cisco.com/dna/intent/api/v1/tag/member"
+tag_payload = {
+    "memberToTags": {
+        device_id: ["CIS3322-Lab"]
+    },
+    "memberType": "networkdevice"
+}
+tag_response = requests.post(tag_url, headers=headers, json=tag_payload, verify=False)
+print(f"POST status: {tag_response.status_code}")
+print(json.dumps(tag_response.json(), indent=2))
+```
+
+Document the HTTP status code returned (201 for success or an error code with explanation). Explain in 2–3 sentences the difference between what happens to the DNA Center data model when you use POST (create) versus PUT (replace/update) for an existing resource.
+
+### Challenge Step 2: Write an Ansible Playbook to Configure Multiple Cisco IOS Devices
+
+Create a complete Ansible inventory file and playbook that configures three key settings simultaneously across multiple Cisco IOS routers: hostname, banner MOTD, and a loopback interface. Use the Cisco DevNet IOS-XE Always-On sandbox (sandboxiosxe.cisco.com) as the managed device.
+
+**Inventory file (`inventory.ini`):**
+
+```ini
+[routers]
+iosxe-sandbox ansible_host=sandboxiosxe.cisco.com ansible_user=developer ansible_password=C1sco12345 ansible_network_os=ios ansible_connection=network_cli ansible_become=yes ansible_become_method=enable
+```
+
+**Playbook (`configure_routers.yml`):**
+
+```yaml
+---
+- name: Configure IOS-XE Router
+  hosts: routers
+  gather_facts: false
+
+  tasks:
+    - name: Set hostname
+      cisco.ios.ios_system:
+        hostname: CIS3322-Lab-Router
+        state: merged
+
+    - name: Configure MOTD banner
+      cisco.ios.ios_banner:
+        banner: motd
+        text: |
+          *** CIS-3322 Authorized Access Only ***
+        state: present
+
+    - name: Configure loopback interface
+      cisco.ios.ios_interfaces:
+        config:
+          - name: Loopback100
+            description: "CIS3322 Challenge Lab"
+            enabled: true
+        state: merged
+```
+
+Run the playbook with `ansible-playbook -i inventory.ini configure_routers.yml -v` and document the output. Identify which tasks show "changed" vs "ok" and explain what idempotency means in the context of these results.
+
+### Challenge Step 3: Explore NETCONF Using Python's ncclient Library
+
+Connect to the Cisco DevNet IOS-XE Always-On sandbox using NETCONF (port 830) to retrieve and modify interface configuration using structured XML data rather than CLI.
+
+```python
+from ncclient import manager
+import xmltodict
+import json
+
+# Connect via NETCONF
+with manager.connect(
+    host="sandboxiosxe.cisco.com",
+    port=830,
+    username="developer",
+    password="C1sco12345",
+    hostkey_verify=False
+) as m:
+    # Retrieve running configuration
+    config_filter = """
+    <filter>
+      <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+        <interface>
+          <Loopback/>
+        </interface>
+      </native>
+    </filter>
+    """
+    response = m.get_config(source="running", filter=config_filter)
+
+    # Convert XML to dictionary and print formatted
+    config_dict = xmltodict.parse(response.xml)
+    print(json.dumps(config_dict, indent=2))
+```
+
+Run the script and document the JSON output showing the loopback interface configuration. Then write a second NETCONF edit-config operation to add a description to Loopback100 using an XML payload. Explain in 3–4 sentences how NETCONF's structured data model (YANG + XML) differs fundamentally from CLI-based configuration, and why structured configuration is preferred for large-scale automated deployments.

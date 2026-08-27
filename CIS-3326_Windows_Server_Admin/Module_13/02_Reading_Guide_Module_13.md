@@ -271,3 +271,25 @@ Get-BitLockerVolume | Select-Object MountPoint, VolumeStatus,
 9. What is thin provisioning in Storage Spaces, and what risk does overprovisioning create?
 
 10. A volume is using Data Deduplication and shows a 75% savings rate. Explain what this means for storage consumption.
+
+---
+
+## Supplemental Resources
+
+The following free, open-access resources go deeper on Module 13 topics:
+
+**1. Microsoft Learn — Implement Storage Spaces and Storage Spaces Direct**
+<https://learn.microsoft.com/en-us/training/modules/implement-storage-spaces-storage-spaces-direct/>
+Hands-on module covering Storage Spaces pool creation, resiliency types (mirror, parity, dual parity), thin provisioning, and virtual disk management with sandbox exercises aligned to AZ-800.
+
+**2. Microsoft Docs — Storage Replica overview**
+<https://learn.microsoft.com/en-us/windows-server/storage/storage-replica/storage-replica-overview>
+Complete architecture reference for Storage Replica including synchronous vs. asynchronous modes, log volume requirements, partnership configuration, and failover procedures.
+
+**3. Microsoft Docs — Resilient File System (ReFS) overview**
+<https://learn.microsoft.com/en-us/windows-server/storage/refs/refs-overview>
+Covers ReFS features including integrity checksums, block clone for Hyper-V, allocate on write, and limitations compared to NTFS (no boot volume support, no EFS, no compression).
+
+**4. Microsoft Docs — Data Deduplication overview**
+<https://learn.microsoft.com/en-us/windows-server/storage/data-deduplication/overview>
+Full reference for Data Deduplication including supported workloads, savings rate calculations, optimization job scheduling, and integration with Storage Spaces and iSCSI volumes.

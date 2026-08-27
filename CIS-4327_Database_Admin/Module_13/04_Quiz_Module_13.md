@@ -165,3 +165,193 @@ Distractor analysis: A is incorrect because Cloud SQL slow query logs capture SQ
 ---
 
 Reference: cloud.google.com/learn
+
+---
+
+### Question 11 (5 points)
+
+A PostgreSQL DBA wants to restrict users in the `analyst_role` to only see rows in the `employees` table where `department = 'Finance'`. Which PostgreSQL feature enforces this transparently without requiring analysts to modify their queries?
+
+A) Row-Level Security (RLS) with a policy `USING (department = 'Finance')` applied to `analyst_role`.
+B) A view that filters `WHERE department = 'Finance'` with `GRANT SELECT` to `analyst_role`.
+C) A `CHECK` constraint on the `department` column restricting values to `'Finance'`.
+D) A `BEFORE SELECT` trigger that raises an exception for non-Finance rows.
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- B) A view requires analysts to query the view instead of the base table; if they have access to the table directly, they can bypass the view. RLS is enforced at the table level regardless of how the query reaches the table.
+- C) A `CHECK` constraint validates values during INSERT/UPDATE; it does not restrict which rows are visible to specific roles during SELECT queries.
+- D) PostgreSQL does not have `BEFORE SELECT` triggers; triggers fire on INSERT, UPDATE, DELETE, and TRUNCATE operations, not on SELECT statements.
+
+---
+
+### Question 12 (5 points)
+
+A Cloud SQL for PostgreSQL instance uses the default `postgres` superuser account for all application connections. A security audit flags this as a violation of the principle of least privilege. What is the correct remediation?
+
+A) Create a dedicated application database user with only the privileges required (e.g., SELECT, INSERT, UPDATE on specific tables) and update the application connection string.
+B) Rename the `postgres` superuser to a less obvious name to reduce the attack surface.
+C) Set a very long, complex password on the `postgres` account and rotate it monthly.
+D) Disable remote connections for the `postgres` account in `pg_hba.conf`.
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- B) Renaming the superuser is security through obscurity; the account still has superuser privileges and a determined attacker using `pg_roles` can discover the new name.
+- C) A strong password reduces brute-force risk but does not address the privilege problem; the application still has full superuser access when only SELECT/INSERT/UPDATE is needed.
+- D) Disabling remote connections for `postgres` is a useful hardening step but does not create a least-privilege application account; the root issue is the use of superuser for application workloads.
+
+---
+
+### Question 13 (5 points)
+
+A developer stores database credentials in a `.env` file committed to a Git repository. A security team discovers this in a code review. What is the correct remediation and prevention strategy?
+
+A) Store credentials in Google Cloud Secret Manager, grant the application's service account `roles/secretmanager.secretAccessor`, and access secrets at runtime via the API — never commit secrets to version control.
+B) Encrypt the `.env` file with AES-256 before committing it to the repository.
+C) Use a private Git repository to restrict who can view the committed credentials.
+D) Base64-encode the credentials in the `.env` file to obscure them from casual inspection.
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- B) Encrypting the `.env` file still puts a secret in version control; the encryption key itself becomes the secret that must be managed, and decrypting it at build time recreates the original problem.
+- C) Private repositories do not prevent all employees, CI/CD pipelines, or attackers who gain repository access from reading the credentials; the secret is still in version history indefinitely.
+- D) Base64 encoding is not encryption; it is trivially reversible with one command and provides no security protection.
+
+---
+
+### Question 14 (5 points)
+
+Which Cloud SQL SSL mode setting enforces that all client connections must use TLS, rejecting any connection attempt without TLS?
+
+A) `ALLOW_UNENCRYPTED_AND_ENCRYPTED`
+B) `ENCRYPTED_ONLY`
+C) `OPTIONAL_ENCRYPTED`
+D) `SSL_REQUIRED_WITH_CERT_VERIFY`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A) `ALLOW_UNENCRYPTED_AND_ENCRYPTED` is the permissive default that accepts both encrypted and unencrypted connections; it does not enforce TLS.
+- C) `OPTIONAL_ENCRYPTED` is not a valid Cloud SQL SSL mode name; the valid options are `ALLOW_UNENCRYPTED_AND_ENCRYPTED` and `ENCRYPTED_ONLY`.
+- D) `SSL_REQUIRED_WITH_CERT_VERIFY` is not a valid Cloud SQL SSL mode; certificate verification for mutual TLS is a separate configuration (requiring client certificates) layered on top of `ENCRYPTED_ONLY`.
+
+---
+
+### Question 15 (5 points)
+
+A company uses pgaudit on Cloud SQL for PostgreSQL to log all DDL operations. After reviewing logs, they find that `pgaudit.log = 'ddl'` is capturing CREATE and DROP statements but not GRANT and REVOKE statements. What change is needed?
+
+A) Add `'role'` to the `pgaudit.log` setting: `pgaudit.log = 'ddl, role'` — GRANT and REVOKE are role-related events logged under the `role` category.
+B) Set `pgaudit.log = 'all'` to capture every possible event type.
+C) Enable Data Access audit logs in the Cloud Console to supplement pgaudit DDL logs.
+D) Run `GRANT` and `REVOKE` statements as superuser to ensure they appear in the DDL log.
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- B) Setting `pgaudit.log = 'all'` would capture everything including every SELECT and DML statement, generating enormous log volume and cost; targeted logging categories are the correct approach.
+- C) Data Access audit logs capture GCP API-level access events, not PostgreSQL-internal privilege changes (GRANT/REVOKE); pgaudit is the correct tool for SQL-level privilege auditing.
+- D) Running GRANT/REVOKE as superuser does not change their pgaudit category; GRANT and REVOKE are categorized as `role` events regardless of which user executes them.
+
+---
+
+### Question 16 (5 points)
+
+A BigQuery dataset contains sensitive PII. An analyst's service account has `roles/bigquery.dataViewer` on the dataset. The security team wants to mask the `ssn` column so the analyst sees `***-**-XXXX` instead of the real value. Which BigQuery feature provides this?
+
+A) Policy Tag on the `ssn` column with a Data Catalog masking rule assigning `LAST_FOUR_CHARACTERS` masking to the analyst's principal.
+B) A row access policy on the `ssn` column filtering rows where `ssn IS NULL`.
+C) An authorized view that replaces `ssn` with a static string `'***-**-XXXX'` for all rows.
+D) Removing `roles/bigquery.dataViewer` and replacing it with a custom role that excludes the `ssn` column.
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- B) Row access policies control which rows are visible, not column value masking; filtering on `ssn IS NULL` would hide rows without a null SSN, not mask the column value.
+- C) An authorized view can mask columns but requires the analyst to query the view directly; Policy Tags with masking rules apply transparently to the base table without requiring users to change their query target.
+- D) Custom IAM roles control resource-level access but cannot enforce column-level value masking within BigQuery; Policy Tags are the purpose-built mechanism for this requirement.
+
+---
+
+### Question 17 (5 points)
+
+An organization needs to ensure that Cloud SQL backups cannot be accessed or deleted by anyone — including project owners — unless two authorized security officers approve the request. Which Google Cloud feature enforces this four-eyes principle for backup deletion?
+
+A) VPC Service Controls perimeter around the Cloud SQL project.
+B) Cloud KMS key destruction with a 24-hour scheduled deletion window.
+C) Access Approval — requires explicit approval from designated approvers before Google or privileged users can access or modify protected resources.
+D) Binary Authorization requiring signed attestations before any Cloud SQL operation.
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- A) VPC Service Controls restricts which networks and identities can call APIs; it does not implement a multi-person approval workflow for specific operations.
+- B) Cloud KMS scheduled key destruction is a protection for encryption keys, not a general-purpose approval workflow for Cloud SQL backup operations.
+- D) Binary Authorization controls which container images can be deployed to GKE based on attestations; it is not applicable to Cloud SQL backup operations.
+
+---
+
+### Question 18 (5 points)
+
+A DBA needs to grant a reporting service account read-only access to a specific BigQuery table without granting access to the entire dataset. Which IAM binding achieves this at the minimum required scope?
+
+A) Grant `roles/bigquery.dataViewer` on the specific table resource, not the dataset.
+B) Grant `roles/bigquery.dataViewer` on the dataset and use a row access policy to restrict to specific rows.
+C) Grant `roles/bigquery.admin` at the project level and rely on the application to only read the allowed table.
+D) Grant `roles/bigquery.dataViewer` at the project level to ensure the service account can access all tables.
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- B) Granting `dataViewer` at the dataset level provides access to all tables in the dataset, not just the specific one; row access policies control row visibility, not table access.
+- C) Granting `bigquery.admin` at the project level violates the principle of least privilege and provides far more access than needed, including the ability to delete tables and modify schemas.
+- D) Project-level `dataViewer` grants access to all datasets and tables in the project; table-level grants are the correct minimum scope for single-table access.
+
+---
+
+### Question 19 (5 points)
+
+A security team enables Cloud Audit Logs Data Access logging for BigQuery at the organization level. After one week, they discover the logs are costing more than expected. Which Data Access log type is most likely generating the highest volume and cost?
+
+A) Admin Activity logs — capturing all DDL changes.
+B) DATA_READ logs — capturing every BigQuery SELECT query including all analyst exploratory queries.
+C) POLICY_DENIED logs — capturing all IAM permission denials.
+D) DATA_WRITE logs — capturing all INSERT, UPDATE, and DELETE operations.
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A) Admin Activity logs are always on but only capture administrative operations (dataset creation, IAM changes, etc.); in an analytics organization, DDL changes are infrequent and generate low log volume.
+- C) POLICY_DENIED logs are a separate log type for VPC Service Controls access denials; they generate entries only when access is blocked, not on every query.
+- D) DATA_WRITE logs capture DML writes; in a read-heavy analytics organization, write volume is far lower than read volume from analyst SELECT queries.
+
+---
+
+### Question 20 (5 points)
+
+Which PostgreSQL mechanism allows a superuser to define a security barrier that prevents a user-defined function in a `WHERE` clause from seeing row values before the security policy filter is applied?
+
+A) `CREATE VIEW ... WITH (security_barrier = true)` — prevents the view's WHERE clause from leaking row values to functions called in the outer query.
+B) `CREATE FUNCTION ... SECURITY DEFINER` — runs the function as its owner rather than the caller.
+C) `SET row_security = on` — enables row security globally for all tables.
+D) `GRANT EXECUTE ON FUNCTION ... TO PUBLIC` — restricts function execution to specific roles.
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- B) `SECURITY DEFINER` changes which user's privileges the function runs under; it does not prevent the function from seeing rows that should be filtered by a security policy.
+- C) `SET row_security = on` enables row-level security enforcement for the session, but it does not specifically address the security barrier issue of functions in WHERE clauses seeing pre-filter row values.
+- D) `GRANT EXECUTE` controls who can call the function; revoking public execute access limits who runs the function but does not prevent it from seeing pre-filter values when executed by an authorized user.

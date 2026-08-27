@@ -265,6 +265,44 @@ Submit a single document (PDF or Google Doc) containing:
 
 ---
 
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: End-to-End Architecture Validation
+
+1. For the fictional company's order management system (Cloud SQL for PostgreSQL, HA, with a BigQuery analytics pipeline), write a Terraform `main.tf` that defines the following resources with correct configuration:
+   - `google_sql_database_instance` with `availability_type = "REGIONAL"`, `deletion_protection = true`, `lifecycle { prevent_destroy = true }`, and a deny maintenance period of Dec 20 – Jan 5.
+   - `google_sql_database` for the application database.
+   - `google_sql_user` for the application service account (use IAM-based auth, not a password).
+
+2. Validate your Terraform with `terraform validate` and run `terraform plan` (you do not need to apply). Capture the plan output and confirm the resource count matches your configuration.
+
+3. Add a Cloud Monitoring alerting policy resource to your Terraform for `database/postgresql/num_backends` exceeding 80 for the instance, with a 2-minute duration condition and an email notification channel.
+
+4. Run `terraform plan` again and confirm the alerting policy is included in the planned changes.
+
+### Challenge 2: Exam Scenario Speed Drill
+
+Answer each of the following in 2 minutes or less (simulating exam pace). Write your answer and a one-sentence justification for each:
+
+1. A global fintech company needs 99.999% availability and multi-region strong consistency for its transaction ledger. Which GCP service? Why?
+
+2. An analyst's BigQuery query scans 50 TB instead of the expected 500 GB. The table is partitioned by `event_date`. What is the single most likely cause?
+
+3. A DMS migration of MySQL to Cloud SQL shows CDC lag increasing for 3 hours. What is the root cause and the fix?
+
+4. An application service account needs to connect via the Cloud SQL Auth Proxy and run SELECT queries only. List the two minimum required permissions (one IAM, one database).
+
+5. A Cloud SQL instance with `deletion_protection = false` is managed by Terraform. A `terraform destroy` is run. What happens to the instance?
+
+### Reflection Questions
+
+1. Looking back across all 16 modules, identify the single most complex decision you would face as a DBA at a company migrating from on-premises Oracle to Google Cloud — considering security, performance, HA, and cost simultaneously. Describe how you would approach the decision and which GCP services you would recommend.
+2. The Google Cloud Professional Cloud Database Engineer exam tests both GCP-specific managed services and general database administration principles. Describe two scenarios where knowledge of underlying PostgreSQL or MySQL internals (not GCP-specific features) would be essential to answer an exam question correctly.
+
+---
+
 Module 16 Lab — CIS-4327 Database Administration
 
 Texas Wesleyan University | Proprietary and Confidential. Not for disclosure outside of course participants.

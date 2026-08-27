@@ -203,3 +203,36 @@ Submit as a single PDF or Word document to the Canvas Module 01 Lab assignment.
 | Part 2: Triple Constraint Analysis | 30 | Correct identification of changed/fixed constraints; practical trade-off recommendation |
 | Part 3: Project Charter | 40 | Complete, SMART objectives, realistic milestones, 3+ stakeholders, 2+ risks |
 | **Total** | **100** | |
+
+---
+
+## Part 9 — Challenge Exercise
+
+This section is optional for students seeking additional depth and exam preparation. It is not graded as part of the standard 100-point lab but may be used for extra credit at the instructor's discretion.
+
+### Challenge Step 1: Stakeholder Power/Interest Grid
+
+Using the stakeholders you identified in Part 3, construct a 2×2 Power/Interest Grid. Place each stakeholder in one of four quadrants:
+
+- **High Power / High Interest** — Manage closely
+- **High Power / Low Interest** — Keep satisfied
+- **Low Power / High Interest** — Keep informed
+- **Low Power / Low Interest** — Monitor
+
+For each quadrant, write one sentence describing how the project manager should communicate with that group. This exercise maps to CompTIA Project+ Domain 2 (Project Execution) and the Stakeholder Management knowledge area.
+
+### Challenge Step 2: EEF vs. OPA Classification Audit
+
+Create a table with two columns: EEF and OPA. Without looking at your notes, list five items in each column drawn from the TechStart University scenario or from your own IT experience. For each item, write a one-sentence explanation of why it belongs in that column. Then review Section 1 of the Reading Guide to verify your answers and correct any misclassifications. This exercise reinforces a distinction that appears as a distractor in nearly every Project+ practice exam.
+
+### Challenge Step 3: Mini Lessons Learned Entry
+
+Imagine you have just completed the TechStart University SIS project. Draft a three-item Lessons Learned entry in the format below. This entry would be stored as an OPA for future projects at the university.
+
+| Lesson | What Happened | Recommendation for Future Projects |
+|---|---|---|
+| 1. | | |
+| 2. | | |
+| 3. | |  |
+
+Your lessons must be specific, realistic, and grounded in the scenario constraints (8-month deadline, $420,000 budget, four integrated modules). Vague entries such as "communicate better" score no credit on this exercise.

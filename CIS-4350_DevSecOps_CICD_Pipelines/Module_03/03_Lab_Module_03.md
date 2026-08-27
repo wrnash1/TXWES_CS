@@ -390,4 +390,56 @@ Submit the following on Canvas:
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Implement a Reusable Security Workflow
+
+Refactor the pipeline from this lab into a reusable workflow that can be called by multiple application repositories.
+
+1. Create a new GitHub repository named `security-workflows` in your account.
+2. Create `.github/workflows/sast-gate.yml` inside it with the following structure — the workflow should accept an `language` input and a `fail_threshold` input (default `7`), run Semgrep with the appropriate ruleset, and upload SARIF results:
+
+```yaml
+on:
+  workflow_call:
+    inputs:
+      language:
+        required: true
+        type: string
+      fail_threshold:
+        required: false
+        type: string
+        default: '7'
+```
+
+3. In your `lab03` application repository, replace the inline Semgrep job with a call to the reusable workflow using `uses: YOUR_USERNAME/security-workflows/.github/workflows/sast-gate.yml@main`.
+4. Verify the pipeline still produces SARIF output in the Security tab of the calling repository.
+
+### Challenge 2: Tune Quality Gates with a Suppression File
+
+Add an OWASP Dependency-Check suppression file to handle a known false positive without lowering the global CVSS threshold.
+
+1. Identify one finding from your Dependency-Check SARIF report that you determine to be a false positive or accepted risk (note its CVE ID).
+2. Create a `dependency-check-suppressions.xml` file:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.3.xsd">
+  <suppress>
+    <notes>Accepted risk — CVE does not apply to our usage pattern. Reviewed [date].</notes>
+    <cve>CVE-YYYY-NNNNN</cve>
+  </suppress>
+</suppressions>
+```
+
+1. Pass the suppression file to Dependency-Check in your workflow using `--suppression dependency-check-suppressions.xml`.
+2. Confirm the previously flagged CVE no longer causes a gate failure while other Critical CVEs still fail the build.
+
+### Reflection Questions
+
+1. Your reusable workflow is pinned at `@main`. A security engineer pushes an update to `sast-gate.yml` that tightens the CVSS threshold from 7 to 6. All consuming repositories inherit this change on their next run. What are the benefits and risks of this coupling? How would you mitigate the risks while preserving the governance benefit?
+2. A developer argues that suppression files undermine the point of security gates because anyone can suppress any finding. How would you design a process around suppression file changes to maintain security governance — what branch protection rules, reviewer requirements, and documentation standards would you require?
+
+---
+
 Lab 03 | CIS-4350 | Texas Wesleyan University | Professor Nash

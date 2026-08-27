@@ -112,6 +112,43 @@ Submit to the Canvas assignment portal by the module due date.
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Product Goal Design
+
+The PetConnect Product Backlog you built in Parts 1–3 needs a Product Goal. Write a Product Goal for PetConnect that:
+
+1. Describes the future state of the product (not a task list) in one to two sentences.
+2. Is ambitious enough to span multiple Sprints but concrete enough to be achievable within 6–12 months.
+3. Can serve as a test for whether a given Product Backlog item belongs in the backlog — show this by applying your Product Goal to three of your PBIs and explaining why each one contributes to (or fails to contribute to) the Product Goal.
+4. Then write a second Product Goal that the team might pursue after the first is achieved, and identify two new PBIs that would logically appear in the backlog when the second Product Goal becomes active.
+
+### Challenge 2: Backlog Health Audit
+
+A poorly maintained Product Backlog is provided below. Evaluate it and produce a written improvement plan.
+
+Backlog (10 items as given):
+
+1. "Make the app better" — 0 pts estimated, no acceptance criteria
+2. "Authentication" — 21 pts, no acceptance criteria, no description
+3. "As a user, I can log in with my email and password so that my data is saved" — 3 pts, 2 AC
+4. "Notifications" — 13 pts, vague description
+5. "As a user, I can view my pet's vaccination history so I know when boosters are due" — 5 pts, 3 AC
+6. "Fix all bugs" — 0 pts, no AC
+7. "As a vet, I can add notes to a patient record so the owner has a written visit summary" — 8 pts, 2 AC
+8. "Database migration to PostgreSQL" — 8 pts, no user-facing value stated
+9. "As a user, I can set medication reminders for my pet so I never miss a dose" — 5 pts, 3 AC
+10. "Everything else" — 21 pts, no description
+
+For each item: identify which INVEST criteria it fails, rewrite it as an improved user story (or split it if needed), and add at least two acceptance criteria to any item that currently has none. Conclude with a one-paragraph assessment of this backlog's overall health and the three highest-priority actions to improve it.
+
+### Reflection Questions
+
+1. The Scrum Guide says the Product Backlog is "emergent." What does emergent mean in practice, and how does that change the way a Product Owner should think about adding items to the backlog compared to a traditional requirements analyst writing a fixed specification?
+2. Some Agile practitioners argue that the INVEST criteria are too rigid and prevent teams from starting work on complex, poorly understood problems. Do you agree or disagree? Use a specific example to support your position.
+
+---
+
 ## Rubric Summary
 
 | Component | Points |

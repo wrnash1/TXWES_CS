@@ -288,4 +288,26 @@ Removing a group from Security Filtering prevents that group from receiving the 
 
 ---
 
+## 9. Supplemental Resources
+
+The following free, open-access resources go deeper on Module 08 topics:
+
+**1. Microsoft Learn — Manage Group Policy in Windows Server**
+<https://learn.microsoft.com/en-us/training/modules/manage-group-policy-in-windows-server/>
+Hands-on module covering GPO creation, LSDOU processing, Enforced, Block Inheritance, Security Filtering, WMI Filters, and RSoP reporting with sandbox exercises.
+
+**2. Microsoft Docs — Group Policy Software Installation**
+<https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2003/cc738858(v=ws.10)>
+Detailed reference for deploying and uninstalling software via GPO, including the "Uninstall when out of scope" option discussed in Question 12 — directly applicable to enterprise software lifecycle management.
+
+**3. Microsoft Docs — Understanding Group Policy processing order and precedence**
+<https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2003/cc785665(v=ws.10)>
+Comprehensive explanation of LSDOU, link order, Enforced, and Block Inheritance interaction with detailed worked examples for scenarios that commonly appear on AZ-800.
+
+**4. Microsoft Docs — Group Policy Operational log reference**
+<https://learn.microsoft.com/en-us/troubleshoot/windows-server/group-policy/using-group-policy-events-to-troubleshoot>
+Covers how to read Event IDs in the Group Policy operational log under Applications and Services Logs — the advanced troubleshooting path when `gpresult` output alone is insufficient.
+
+---
+
 *Review all sections before beginning Lab 08, Quiz 08, and Discussion 08.*

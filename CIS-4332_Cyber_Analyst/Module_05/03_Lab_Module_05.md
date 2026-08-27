@@ -231,3 +231,29 @@ In 4-5 sentences, describe the most significant investigative limitation created
 ## Academic Integrity Notice
 
 All network data in this lab is fabricated for educational purposes. No real systems are involved. All work must be your own. Reference professormesser.com and comptia.org for additional study context.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Traffic Pattern Analysis
+
+The following NetFlow summary was extracted from a 4-hour capture window. Host 10.10.4.88 made: (1) 847 outbound connections to 847 unique external IPs on port 80, each lasting < 1 second with < 200 bytes transferred; (2) 1 outbound connection to 45.32.114.22 on port 4443, lasting 3 hours 47 minutes, 840 MB transferred outbound; (3) 340 DNS queries to external resolvers for subdomains of `telemetry-cdn5.net` with hex-encoded 32-character subdomain labels.
+
+1. Identify the most likely attack technique represented by each of the three traffic patterns, providing the ATT&CK technique ID and name for each.
+2. Rank the three patterns by detection priority (1 = most urgent) and justify your ranking using potential business impact.
+3. Write a Wireshark display filter string that would isolate only the traffic from pattern 2 (long-duration connection to 45.32.114.22 on port 4443).
+4. For pattern 3, describe what artifact you would find on the host's local DNS resolver cache and how clearing it contributes to containment.
+
+### Challenge 2: IDS Rule Design
+
+Design a Suricata-style rule to detect the DNS tunneling pattern from Challenge 1 (pattern 3).
+
+1. Write the rule in Suricata format including: `alert`, protocol, source/destination specifications, `msg`, `content` or `pcre` match targeting the hex subdomain pattern, and `sid`.
+2. Identify one legitimate application category that could produce similar DNS query patterns (many queries to subdomains of a single domain) and explain how you would distinguish it from tunneling in follow-up investigation.
+3. Explain the trade-off between setting a low query-count threshold (detect faster, more false positives) versus a high threshold (fewer false positives, slower detection) in the rule's `threshold` option.
+
+### Reflection Questions
+
+1. Describe a realistic attack scenario where an analyst relying only on signature-based IDS would miss a compromise that anomaly-based detection would catch. Be specific about what the anomaly-based system would observe.
+2. A colleague argues that deploying a NIPS inline is always better than a NIDS in tap mode because it can actively block threats. Construct a two-sentence counter-argument describing a scenario where a misconfigured NIPS could cause more harm than leaving it in tap mode.

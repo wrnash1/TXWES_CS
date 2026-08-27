@@ -161,3 +161,47 @@ Submit the following to Canvas by the Module 02 lab deadline:
 | **Total**                                                                | **100** |
 
 Partial credit is awarded for answers that show correct reasoning even if a specific detail is incorrect. No credit is awarded for blank responses or answers that indicate the student did not attempt the identification exercise.
+
+---
+
+## Part 9 — Challenge Exercise
+
+These advanced steps are optional for students seeking additional depth and are not included in the standard grading rubric.
+
+### Challenge Step 1 — BIOS/UEFI Feature Audit
+
+Access the UEFI setup on any available system (your lab machine, home PC, or an instructor-provided system):
+
+1. Enter UEFI setup at boot (typically Del, F2, or F12 — consult the board manual).
+1. Navigate to the Security or Boot section and locate the **Secure Boot** setting. Record whether it is currently enabled or disabled, and whether the system is in UEFI native mode or CSM/legacy mode.
+1. Locate the **Boot Order** configuration. Record the current boot device priority list.
+1. Find the **System Information** or **Main** page. Record the UEFI/BIOS version, the CPU model, the installed RAM size and speed (as detected by the firmware), and the current system date/time.
+1. Exit without saving changes. In your notes, explain what would happen if you removed the CMOS battery for 30 seconds and rebooted — which of the values you recorded would change and which would not?
+
+### Challenge Step 2 — PCIe Bandwidth Calculation
+
+Using the PCIe bandwidth formula `Bandwidth = Lanes × Transfer Rate per Lane`, calculate the theoretical maximum bidirectional bandwidth for each of the following slot configurations. Show your work.
+
+| Configuration | Transfer Rate per Lane | Total Bandwidth |
+|---|---|---|
+| PCIe 3.0 x1 | ~985 MB/s | |
+| PCIe 3.0 x16 | ~985 MB/s | |
+| PCIe 4.0 x4 | ~1,969 MB/s | |
+| PCIe 4.0 x16 | ~1,969 MB/s | |
+| PCIe 5.0 x16 | ~3,938 MB/s | |
+
+After completing the table, answer: A mainstream NVMe SSD achieves sequential read speeds of approximately 7,000 MB/s. What is the minimum PCIe 4.0 lane configuration required to avoid the SSD being bottlenecked by the interface? Show your calculation.
+
+### Challenge Step 3 — Chipset Compatibility Research
+
+Choose any two modern desktop motherboards from different manufacturers (use the manufacturer's product page or a site like pcpartpicker.com). For each board, document the following using only the official specification sheet or product page:
+
+1. Form factor
+1. Socket type
+1. Chipset model
+1. Supported CPU generations (list the generation names, e.g., "12th and 13th gen Intel Core")
+1. Maximum supported RAM speed (XMP/EXPO profile)
+1. Number of M.2 slots and their PCIe generation support
+1. Whether CPU overclocking is supported (yes/no) and which chipset feature enables or prevents it
+
+Write a one-paragraph summary comparing the two boards: which would you recommend for a budget home office build, and which for a performance workstation, and why?

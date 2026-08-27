@@ -419,3 +419,19 @@ history = model.fit(
 - [ ] Complete Module 06 Lab
 - [ ] Complete Module 06 Quiz
 - [ ] Post to Module 06 Discussion Board by Wednesday 11:59 PM
+
+---
+
+## 9. Supplemental Resources
+
+**1. Keras Callbacks API Reference**
+<https://www.tensorflow.org/api_docs/python/tf/keras/callbacks>
+Complete API documentation for all built-in Keras callbacks: `EarlyStopping`, `ModelCheckpoint`, `ReduceLROnPlateau`, `LearningRateScheduler`, `TensorBoard`, and `CSVLogger`. Each entry includes all constructor parameters with types, defaults, and usage examples — the authoritative reference when configuring callbacks for TF Developer Certificate exam tasks.
+
+**2. Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift (original paper)**
+<https://arxiv.org/abs/1502.03167>
+The Ioffe and Szegedy (2015) paper that introduced batch normalization. Section 3 explains the mathematical formulation (gamma, beta, running mean, running variance) used in Keras `BatchNormalization`. Reading the abstract and Section 3 directly supports the parameter count and placement questions in this module's quiz and lab.
+
+**3. Dropout: A Simple Way to Prevent Neural Networks from Overfitting (original paper)**
+<https://jmlr.org/papers/v15/srivastava14a.html>
+The Srivastava et al. (2014) JMLR paper introducing dropout. Section 2 explains inverted dropout scaling (why `model.predict()` does not need to scale outputs) and Section 3 covers placement guidelines. The experiments in Section 5 provide concrete evidence for the dropout rates recommended in this module's placement guidelines table.

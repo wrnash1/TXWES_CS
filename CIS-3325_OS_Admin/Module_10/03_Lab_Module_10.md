@@ -379,3 +379,251 @@ Submit all of the following through the course LMS:
 | Analysis Question 4 (sshd -t importance) | 10 |
 | Analysis Question 5 (rsync cron command) | 15 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+**Challenge Step 1 — SSH certificate authority for host and user authentication**
+
+Standard SSH uses manually distributed public keys. SSH certificates issued by an internal
+CA allow centralized trust without copying keys to every server. Set up a minimal SSH CA
+on your VM:
+
+```bash
+mkdir -p ~/lab10/ssh-ca
+cd ~/lab10/ssh-ca
+
+ssh-keygen -t ed25519 -f ca_host_key -C "Host CA" -N ""
+ssh-keygen -t ed25519 -f ca_user_key -C "User CA" -N ""
+ls -la
+```
+
+Sign the server's existing host key with the host CA:
+
+```bash
+sudo cp /etc/ssh/ssh_host_ed25519_key.pub ~/lab10/ssh-ca/
+ssh-keygen -s ca_host_key -I "lab10server" -h -n "lab10server,localhost,127.0.0.1" \
+    -V +52w ssh_host_ed25519_key.pub
+ls -la ssh_host_ed25519_key-cert.pub
+ssh-keygen -L -f ssh_host_ed25519_key-cert.pub
+```
+
+Generate a user key and sign it with the user CA:
+
+```bash
+ssh-keygen -t ed25519 -f ~/lab10/ssh-ca/certuser_key -C "certuser" -N ""
+ssh-keygen -s ca_user_key -I "certuser@lab" -n "labadmin" \
+    -V +1d certuser_key.pub
+ssh-keygen -L -f certuser_key-cert.pub
+```
+
+Configure sshd to trust the user CA (in a drop-in override to avoid disrupting the lab):
+
+```bash
+echo "TrustedUserCAKeys /home/labadmin/lab10/ssh-ca/ca_user_key.pub" \
+    | sudo tee /etc/ssh/sshd_config.d/99-lab10-ca.conf
+sudo sshd -t
+sudo systemctl reload ssh
+```
+
+Test certificate-based login:
+
+```bash
+ssh -i ~/lab10/ssh-ca/certuser_key -o CertificateFile=~/lab10/ssh-ca/certuser_key-cert.pub \
+    labadmin@localhost "echo 'Certificate auth succeeded'; ssh-keygen -L -f ~/.ssh/authorized_keys 2>/dev/null || true"
+```
+
+Clean up the override after verifying:
+
+```bash
+sudo rm /etc/ssh/sshd_config.d/99-lab10-ca.conf
+sudo systemctl reload ssh
+```
+
+Document the output of ssh-keygen -L for both the host certificate and the user certificate.
+Explain in three sentences how SSH certificate authentication differs from standard public key
+authentication, why certificates are preferred in large environments, and what the -V +1d
+validity window means for operational security.
+
+**Challenge Step 2 — SSH multiplexing and connection reuse**
+
+SSH connection multiplexing allows multiple sessions to share a single TCP connection,
+eliminating re-authentication overhead for repeated connections:
+
+```bash
+mkdir -p ~/.ssh/control
+
+cat >> ~/.ssh/config << 'EOF'
+
+Host mux-demo
+    HostName localhost
+    User labadmin
+    ControlMaster auto
+    ControlPath ~/.ssh/control/%r@%h:%p
+    ControlPersist 10m
+    ServerAliveInterval 30
+    ServerAliveCountMax 3
+EOF
+```
+
+Measure connection time without multiplexing (first connection establishes master):
+
+```bash
+time ssh mux-demo "hostname && uptime"
+```
+
+Measure connection time with multiplexing reuse (subsequent connections use existing master):
+
+```bash
+time ssh mux-demo "hostname && uptime"
+time ssh mux-demo "hostname && uptime"
+```
+
+Inspect the control socket:
+
+```bash
+ls -la ~/.ssh/control/
+ssh -O check mux-demo
+ssh -O status mux-demo 2>&1 || true
+```
+
+Run a remote command pipeline through the mux connection:
+
+```bash
+ssh mux-demo "ps aux --sort=-%cpu | head -5"
+ssh mux-demo "df -h / /tmp"
+ssh mux-demo "journalctl -n 5 --no-pager"
+```
+
+Measure the time difference between first and subsequent connections:
+
+```bash
+for i in {1..5}; do
+    time ssh mux-demo "echo run $i" 2>&1
+done
+```
+
+Stop the master connection explicitly:
+
+```bash
+ssh -O stop mux-demo
+ls ~/.ssh/control/
+```
+
+Document the timing results for first versus subsequent connections. Explain in two sentences
+why ControlPersist 10m keeps the master connection alive for 10 minutes after the last
+session closes, and in what operational scenario (e.g., Ansible, rsync in a loop) connection
+multiplexing provides the most significant performance benefit.
+
+**Challenge Step 3 — Automated key rotation and audit script**
+
+Write a script that audits SSH configuration and authorized keys across the system, checks
+key ages, and reports any configuration deviations from a hardening baseline:
+
+```bash
+cat > ~/lab10/ssh_audit.sh << 'EOF'
+#!/usr/bin/env bash
+set -euo pipefail
+
+REPORT_FILE="/tmp/ssh_audit_$(date +%Y%m%d_%H%M%S).txt"
+WARN=0; FAIL=0
+
+log()  { echo "$1" | tee -a "$REPORT_FILE"; }
+warn() { echo "WARN:  $1" | tee -a "$REPORT_FILE"; (( WARN++ )); }
+fail() { echo "FAIL:  $1" | tee -a "$REPORT_FILE"; (( FAIL++ )); }
+pass() { echo "PASS:  $1" | tee -a "$REPORT_FILE"; }
+
+log "=== SSH Security Audit: $(date) ==="
+log "Host: $(hostname)"
+log ""
+
+log "--- sshd_config Hardening Checks ---"
+check_directive() {
+    local key="$1" expected="$2"
+    local val
+    val=$(sshd -T 2>/dev/null | awk -v k="${key,,}" 'tolower($1)==k {print $2; exit}')
+    if [[ -z "$val" ]]; then
+        warn "$key: could not determine value"
+    elif [[ "${val,,}" == "${expected,,}" ]]; then
+        pass "$key = $val"
+    else
+        fail "$key = $val (expected: $expected)"
+    fi
+}
+
+check_directive "PermitRootLogin"        "no"
+check_directive "PasswordAuthentication" "no"
+check_directive "X11Forwarding"          "no"
+check_directive "MaxAuthTries"           "3"
+check_directive "Protocol"              "2"
+
+log ""
+log "--- SSH Host Key Permissions ---"
+for keyfile in /etc/ssh/ssh_host_*_key; do
+    [[ -f "$keyfile" ]] || continue
+    perms=$(stat -c "%a" "$keyfile")
+    owner=$(stat -c "%U" "$keyfile")
+    if [[ "$perms" == "600" && "$owner" == "root" ]]; then
+        pass "$keyfile: $perms $owner"
+    else
+        fail "$keyfile: $perms $owner (expected: 600 root)"
+    fi
+done
+
+log ""
+log "--- User authorized_keys Audit ---"
+while IFS=: read -r uname _ uid _ _ home _; do
+    (( uid >= 1000 )) || continue
+    [[ -d "$home" ]] || continue
+    ak="$home/.ssh/authorized_keys"
+    [[ -f "$ak" ]] || continue
+    perms=$(stat -c "%a" "$ak")
+    count=$(grep -c "^ssh-" "$ak" 2>/dev/null || echo 0)
+    if [[ "$perms" =~ ^[46]00$ || "$perms" =~ ^[46]40$ ]]; then
+        pass "$uname: $count key(s) in authorized_keys (perms: $perms)"
+    else
+        fail "$uname: authorized_keys permissions $perms (expected: 600 or 640)"
+    fi
+    while IFS= read -r keyline; do
+        [[ "$keyline" =~ ^ssh- ]] || continue
+        keytype=$(echo "$keyline" | awk '{print $1}')
+        keycomment=$(echo "$keyline" | awk '{print $3}')
+        if [[ "$keytype" == "ssh-rsa" ]]; then
+            warn "$uname: RSA key found ($keycomment) — consider upgrading to ed25519"
+        fi
+    done < "$ak"
+done < /etc/passwd
+
+log ""
+log "--- Summary ---"
+log "Warnings: $WARN  Failures: $FAIL"
+log "Report saved: $REPORT_FILE"
+(( FAIL == 0 ))
+EOF
+chmod +x ~/lab10/ssh_audit.sh
+```
+
+Run the audit and review the report:
+
+```bash
+~/lab10/ssh_audit.sh
+echo "Exit code: $?"
+cat /tmp/ssh_audit_*.txt | tail -20
+```
+
+Deliberately introduce a failure by setting a bad permission on the authorized_keys file,
+re-run, and verify the FAIL count increases:
+
+```bash
+chmod 644 ~/.ssh/authorized_keys
+~/lab10/ssh_audit.sh || echo "Audit found failures (expected)"
+chmod 600 ~/.ssh/authorized_keys
+~/lab10/ssh_audit.sh && echo "Audit clean after fix"
+```
+
+Document the WARN and FAIL counts from each run. Explain in three sentences: (1) why
+`sshd -T` is more reliable than parsing /etc/ssh/sshd_config directly for auditing, (2)
+why RSA keys should be replaced with ed25519 on modern systems, and (3) how this script
+could be extended to run on multiple remote hosts using SSH and aggregate results into a
+single report file.

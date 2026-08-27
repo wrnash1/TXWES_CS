@@ -316,3 +316,19 @@ Senior roles:
 - [ ] Know the continual improvement model (7 steps)
 - [ ] Have reviewed all module quizzes and practice questions
 - [ ] Have completed at least one timed 40-question practice exam
+
+---
+
+## Supplemental Resources
+
+**1. AXELOS — ITIL 4 Foundation Certification**
+<https://www.axelos.com/certifications/itil-service-management/itil-4-foundation>
+The official AXELOS page for ITIL 4 Foundation certification, including the exam syllabus, sample questions, and candidate handbook. Essential reference for understanding exactly what the Foundation exam covers, the exam format (40 questions, 65% pass mark, 60 minutes), and accredited training options.
+
+**2. AXELOS — ITIL 4 Foundation Sample Exam Papers**
+<https://www.axelos.com/resource-hub/document/itil-4-foundation-sample-paper-1>
+Official ITIL 4 Foundation sample exam with answer rationale from AXELOS. Provides the closest simulation of actual exam question style and difficulty. Working through these with full distractor analysis is the highest-value exam preparation activity available.
+
+**3. IT Revolution — The ITIL 4 Create, Deliver and Support Overview**
+<https://itrevolution.com/articles/itil-4-foundation/>
+IT Revolution's overview of ITIL 4 Foundation, written for practitioners coming from Agile and DevOps backgrounds. Covers how ITIL 4 differs from previous versions, why it coexists with DevOps, and the key conceptual shifts (SVS, four dimensions, guiding principles) that the Foundation exam tests most heavily.

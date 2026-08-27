@@ -165,3 +165,173 @@ Distractor analysis: The question asks for the changes that most reduce attack s
 ---
 
 Reference: cloud.google.com/learn
+
+---
+
+### Question 11 (5 points)
+
+A Cloud SQL for MySQL instance has `--availability-type=ZONAL`. A zone outage occurs. What happens to the database?
+
+- A) The instance becomes unavailable until the zone recovers; no automatic failover occurs because HA is not enabled.
+- B) Cloud SQL automatically fails over to a standby in another zone within approximately 60 seconds.
+- C) The instance is automatically migrated to a new zone and resumes with no data loss.
+- D) Cloud SQL activates a read replica in another zone and promotes it to primary automatically.
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - B) Automatic failover to a standby in another zone requires `--availability-type=REGIONAL` (HA enabled); ZONAL instances have no standby in a separate zone.
+  - C) Automatic live migration to a new zone does not occur for ZONAL instances during a zone outage; the instance remains down until the zone recovers.
+  - D) Read replicas are not automatically promoted during a primary failure; promotion requires a manual `gcloud sql instances promote-replica` command.
+
+---
+
+### Question 12 (5 points)
+
+A DBA needs to apply a new database flag to a Cloud SQL for PostgreSQL instance. The gcloud command completes successfully, but the change does not take effect until the next maintenance window. What does this indicate about the flag that was changed?
+
+- A) The flag requires a database restart to take effect and was not applied with `--database-flags` in a way that triggered an immediate restart.
+- B) The flag is not supported on Cloud SQL PostgreSQL and was silently ignored.
+- C) The instance is in a read replica configuration and flags propagate from primary to replica on a delay.
+- D) The flag requires Cloud SQL Enterprise Plus edition which is not currently active on the instance.
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - B) If a flag were unsupported, the gcloud command would return an error, not succeed silently; all accepted flags are validated before applying.
+  - C) Database flags are set per-instance, not propagated from primary to replica; replicas have their own flag configurations.
+  - D) Most database flags are available on both Enterprise and Enterprise Plus editions; edition is not the reason a flag waits for a maintenance window.
+
+---
+
+### Question 13 (5 points)
+
+Which command correctly creates a Cloud SQL for PostgreSQL read replica of an existing instance named `prod-pg-01` in the same region?
+
+- A) `gcloud sql instances create prod-pg-replica --master-instance-name=prod-pg-01 --region=us-central1`
+- B) `gcloud sql instances clone prod-pg-01 prod-pg-replica --point-in-time=now`
+- C) `gcloud sql instances patch prod-pg-01 --replica-names=prod-pg-replica`
+- D) `gcloud sql replicas create prod-pg-replica --source=prod-pg-01`
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - B) `gcloud sql instances clone` creates a copy of the instance at a point in time; it produces an independent instance, not a continuously updated read replica.
+  - C) `gcloud sql instances patch` modifies existing instance properties; there is no `--replica-names` flag to create new replicas via a patch command.
+  - D) `gcloud sql replicas` is not a valid gcloud command group; read replicas are created using `gcloud sql instances create` with the `--master-instance-name` flag.
+
+---
+
+### Question 14 (5 points)
+
+A Cloud SQL for PostgreSQL instance is using the `pg_audit` extension to log all DDL statements. The DBA notices the audit log volume is extremely high, causing excessive storage costs. Which change best reduces log volume while retaining DDL audit coverage?
+
+- A) Set `pgaudit.log = 'ddl'` to log only DDL statements rather than all statement classes.
+- B) Disable the `pg_audit` extension entirely and rely on Cloud Logging for query auditing.
+- C) Switch the instance to Cloud SQL Enterprise Plus to get the built-in data cache that reduces log I/O.
+- D) Increase the `log_min_duration_statement` threshold so only slow DDL statements are logged.
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - B) Disabling `pg_audit` removes DDL audit coverage entirely, which violates the requirement to retain it; the goal is to reduce volume while keeping DDL logging.
+  - C) The data cache in Enterprise Plus reduces read I/O for query data, not log write volume; it has no effect on audit log generation rate.
+  - D) `log_min_duration_statement` controls logging of slow queries based on execution time; it does not apply to `pg_audit` DDL logging, which logs all DDL regardless of duration.
+
+---
+
+### Question 15 (5 points)
+
+An application uses a Cloud SQL for MySQL instance. After enabling SSL, some legacy application clients fail to connect with the error "SSL connection error." The DBA confirms SSL is required on the instance. What is the most likely cause?
+
+- A) The legacy clients are not configured with the server's CA certificate and are failing the SSL handshake.
+- B) The Cloud SQL instance does not support SSL for MySQL; only PostgreSQL supports SSL connections.
+- C) The MySQL port 3306 is blocked by a VPC firewall rule that is not aware of SSL traffic.
+- D) SSL requires the Cloud SQL Enterprise Plus edition which is not enabled on the instance.
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - B) Cloud SQL for MySQL fully supports SSL/TLS connections; SSL is available and configurable on all Cloud SQL MySQL instances.
+  - C) VPC firewall rules operate at the IP/port level; port 3306 is the same whether SSL is used or not; SSL does not require a separate port or firewall rule change.
+  - D) SSL is available on both Enterprise and Enterprise Plus editions of Cloud SQL; edition tier does not determine SSL availability.
+
+---
+
+### Question 16 (5 points)
+
+A DBA wants to verify that a Cloud SQL automated backup completed successfully and determine the backup's exact creation timestamp. Which method is correct?
+
+- A) Run `gcloud sql backups list --instance=INSTANCE_NAME` and inspect the STATUS and END_TIME columns.
+- B) Connect to the instance via Cloud Shell and query the `information_schema.BACKUP_STATUS` table.
+- C) Navigate to Cloud Storage and list the contents of the automatic backup bucket for the instance.
+- D) Check the Cloud SQL slow query log for entries tagged with BACKUP type.
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - B) There is no `information_schema.BACKUP_STATUS` table in PostgreSQL or MySQL; backup metadata is managed by Cloud SQL and is only accessible via the Cloud SQL API or gcloud CLI.
+  - C) Cloud SQL automated backups are stored in GCP-managed storage buckets that are not directly accessible to the user; there is no user-visible Cloud Storage bucket to browse.
+  - D) The slow query log records slow SQL queries; backup operations are not recorded as SQL query log entries.
+
+---
+
+### Question 17 (5 points)
+
+Your Cloud SQL for PostgreSQL instance is handling peak write load. You observe that `pg_stat_bgwriter` shows a very high `checkpoint_write_time` and frequent checkpoints. What is the most appropriate tuning action?
+
+- A) Increase `max_wal_size` (or `checkpoint_segments` in older versions) to allow larger WAL accumulation between checkpoints, reducing checkpoint frequency.
+- B) Decrease `checkpoint_completion_target` to make each checkpoint complete faster.
+- C) Disable WAL archiving to reduce the I/O overhead of checkpoint operations.
+- D) Add more read replicas to distribute the checkpoint write load across multiple instances.
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - B) `checkpoint_completion_target` controls how much of the checkpoint interval is used for spreading writes; decreasing it concentrates writes into a shorter burst, which typically worsens I/O pressure, not reduces it.
+  - C) Disabling WAL archiving removes the ability to perform point-in-time recovery; checkpoints are part of the core WAL management process and disabling archiving does not reduce checkpoint frequency.
+  - D) Read replicas receive WAL from the primary but do not participate in the primary's checkpoint operations; adding replicas has no effect on primary checkpoint frequency or write time.
+
+---
+
+### Question 18 (5 points)
+
+A developer reports that a query runs in 200ms on the development Cloud SQL instance but takes 8 seconds on the production instance with the same data volume. Both instances have identical schemas and indexes. What is the most likely cause?
+
+- A) Table statistics are stale on the production instance, causing the query planner to choose an inefficient execution plan.
+- B) The production instance has more concurrent connections that are blocking the query.
+- C) The development instance uses a faster machine type than the production instance.
+- D) The production instance has SSL enabled, adding encryption overhead to each query.
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - B) Lock blocking would show the query in a "waiting" state in `pg_stat_activity`; a 40x slowdown without waiting is more characteristic of a bad query plan than lock contention.
+  - C) The question states both instances have identical data volume; if the dev instance had a faster machine type, it would typically be faster on all queries equally, not only some — and the scenario describes a single query performing poorly.
+  - D) SSL adds minimal TLS handshake overhead (milliseconds) at connection establishment, not per-query execution time; it cannot account for a 40x difference in query execution time.
+
+---
+
+### Question 19 (5 points)
+
+Which Cloud SQL feature allows an administrator to restore a deleted Cloud SQL instance within a limited window after deletion?
+
+- A) Instance recovery using `gcloud sql instances restore` within the retention window before the instance data is purged.
+- B) Restoring from the most recent automated backup to a new instance using `gcloud sql backups restore`.
+- C) Recovering from a WAL archive by replaying transactions from the last full backup.
+- D) Using Database Migration Service to recreate the instance from Cloud Logging audit records.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) There is no `gcloud sql instances restore` command for recovering a deleted instance by name; once an instance is deleted, the instance object is gone and recovery proceeds through backup restore to a new instance.
+  - C) WAL archive replay (PITR) requires a running Cloud SQL instance as the target; it cannot recreate a deleted instance from scratch without first creating a new instance.
+  - D) Cloud Logging audit records capture API calls and SQL statements for audit purposes; they are not a backup medium and cannot be used to recreate a database through Database Migration Service.
+
+---
+
+### Question 20 (5 points)
+
+A Cloud SQL for PostgreSQL instance has both a public IP and Private IP configured. The application connects via Private IP through Private Services Access. The security team discovers the public IP is still enabled. What is the correct remediation?
+
+- A) Disable the public IP on the instance using `gcloud sql instances patch --no-assign-ip` to remove the internet-facing endpoint.
+- B) Add an authorized networks entry of `0.0.0.0/0` with a deny rule to block all public connections.
+- C) Enable Cloud SQL Auth Proxy on the public IP to add an authentication layer in front of it.
+- D) Delete and recreate the instance with Private IP only, as public IP cannot be disabled on a running instance.
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - B) Authorized networks in Cloud SQL only support allow-listed CIDR ranges; there is no deny rule mechanism; removing the public IP is the correct action, not adding an allow-all-then-deny entry.
+  - C) The Auth Proxy adds authentication but does not remove the public endpoint; the IP address remains reachable on the network even when Auth Proxy is used.
+  - D) Public IP can be disabled on a running instance using `gcloud sql instances patch --no-assign-ip` without deleting and recreating the instance; deletion is unnecessary.

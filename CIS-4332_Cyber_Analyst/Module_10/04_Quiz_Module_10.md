@@ -211,3 +211,203 @@ Distractor Analysis:
 - B is incorrect. `DescribeInstances` → `RunInstances` → `TerminateInstances` could represent resource abuse (cryptomining instance launch and termination after testing) or authorized operational activity. It does not directly represent persistence establishment in the identity domain.
 - C is correct. This three-event sequence is the canonical cloud persistence pattern: `CreateUser` creates a new IAM identity the attacker controls; `CreateLoginProfile` enables that identity to log into the AWS console with a password (not just programmatic access); `CreateAccessKey` provides a permanent programmatic credential for that identity. Together, these three actions create a fully functional backdoor account. Even if the originally compromised `dev-jenkins` access key is revoked, the attacker retains access via the new `backup-svc-user` account. This sequence in sequence from the same IP over a short window is high-confidence malicious.
 - D is incorrect. `GetCallerIdentity` → `ListRoles` → `AssumeRole` represents identity reconnaissance followed by lateral movement via role assumption — an ATT&CK Discovery then Lateral Movement sequence. While this is a serious finding, it describes an attacker moving laterally or escalating privileges within the existing session, not creating a persistent backdoor that survives credential revocation.
+
+---
+
+## Question 11 (5 points)
+
+A cloud security analyst reviewing Azure Active Directory audit logs finds that a user account has been added to the Global Administrator role by an account that was itself created 48 hours ago. Neither the role assignment nor the new account creation appears in any approved change management tickets. Which cloud attack technique does this sequence most likely represent?
+
+- A) SQL injection against the Azure management API
+- B) Privilege escalation via unauthorized role assignment — potentially indicating a compromised account being used to establish privileged persistence before the original compromise is detected
+- C) A DDoS attack targeting the Azure identity management service
+- D) Legitimate Microsoft Entra ID behavior that creates administrative accounts during tenant provisioning
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A is incorrect. SQL injection targets database query inputs in web applications. Azure AD role assignment is an identity management operation performed through APIs and portals, not SQL queries.
+- B is correct. Creating a new account and immediately elevating it to Global Administrator (or equivalent privileged role) within 48 hours without change management approval is a high-confidence cloud privilege escalation and persistence indicator. This sequence (account creation → privileged role assignment → no ticket) indicates an attacker using a compromised identity to establish a persistent privileged foothold before the original breach is detected.
+- C is incorrect. A DDoS attack aims to overwhelm services with traffic, causing unavailability. Account creation and role assignment are identity management events, not traffic-based attacks.
+- D is incorrect. Azure tenant provisioning creates specific service accounts with documented, predictable behavior. Untracked Global Administrator role assignments to newly created accounts are not part of normal provisioning and should always be investigated.
+
+---
+
+## Question 12 (5 points)
+
+Which AWS service provides continuous monitoring and threat detection for AWS accounts by analyzing CloudTrail logs, VPC Flow Logs, and DNS logs using machine learning and threat intelligence?
+
+- A) AWS Config
+- B) Amazon Inspector
+- C) Amazon GuardDuty
+- D) AWS Trusted Advisor
+
+Correct Answer: C
+
+Distractor Analysis:
+
+- A is incorrect. AWS Config tracks configuration changes and compliance state of AWS resources. It does not analyze logs for threat detection patterns using machine learning.
+- B is incorrect. Amazon Inspector performs automated security assessments of EC2 instances and container images for known vulnerabilities and misconfigurations. It is a vulnerability assessment tool, not a threat detection platform.
+- C is correct. Amazon GuardDuty is the AWS managed threat detection service. It continuously analyzes CloudTrail management events, S3 data events, VPC Flow Logs, and DNS logs to identify threats such as compromised credentials, reconnaissance activity, data exfiltration, and cryptomining — applying ML-based anomaly detection and threat intelligence.
+- D is incorrect. AWS Trusted Advisor provides cost optimization, performance, security, fault tolerance, and service quota recommendations. Its security checks cover basic hygiene items (open S3 buckets, unrestricted security groups) but it does not perform continuous threat detection or log analysis.
+
+---
+
+## Question 13 (5 points)
+
+An analyst is reviewing GCP (Google Cloud Platform) Cloud Audit Logs and finds that a service account key was created, an IAM policy was modified to grant the service account `roles/owner` on the project, and then a VM instance was created — all within 7 minutes. The service account was not previously documented. What cloud attack phase does this most likely represent?
+
+- A) Initial access via spearphishing
+- B) Post-compromise resource abuse — the attacker, having already gained a foothold, is creating privileged infrastructure for cryptomining, data exfiltration, or C2 staging
+- C) Normal GCP DevOps automation for continuous deployment pipelines
+- D) A GCP billing optimization activity that creates temporary instances to balance workloads
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A is incorrect. Initial access via spearphishing involves sending a malicious email to gain an initial foothold. The log events described occur after access is already established — they are post-compromise infrastructure actions, not the initial entry vector.
+- B is correct. Creating a service account key, granting it owner-level IAM permissions, and then launching VM instances in rapid succession without documentation is a textbook post-compromise cloud resource abuse pattern. Attackers use this sequence to establish persistent access and create compute resources for cryptomining, proxying, or data exfiltration. The speed and undocumented nature are the key indicators.
+- C is incorrect. Legitimate CI/CD automation creates predictable, documented resources with tracked service accounts. Undocumented service accounts with owner-level permissions created manually in 7 minutes are not consistent with normal DevOps pipeline behavior.
+- D is incorrect. GCP billing optimization does not involve creating new service accounts with owner-level IAM roles. Workload balancing is handled by autoscaling and managed instance groups.
+
+---
+
+## Question 14 (5 points)
+
+Which of the following best describes the cloud security concept of "misconfiguration as the primary attack surface"?
+
+- A) Cloud providers introduce new vulnerabilities faster than they can patch them, making cloud environments inherently less secure than on-premises systems
+- B) The most common and impactful cloud security incidents result from customer-controlled configuration errors — such as overly permissive IAM policies, publicly accessible storage buckets, and missing logging — rather than from exploitation of unpatched CVEs in cloud infrastructure
+- C) Cloud misconfigurations can only be identified through manual security audits performed by cloud vendor support teams
+- D) Misconfigurations in cloud environments are automatically remediated by the cloud provider under the shared responsibility model
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A is incorrect. Cloud providers have dedicated security teams and patch cloud infrastructure rapidly. The most common cloud breaches are not caused by unpatched cloud infrastructure CVEs — they result from customer IAM and configuration errors.
+- B is correct. The industry consensus from Gartner, CSA, and major cloud providers is that misconfiguration is the leading cause of cloud security incidents. Publicly exposed S3 buckets, wildcard IAM policies, disabled CloudTrail, unrestricted security groups, and missing MFA on cloud console accounts are all customer-configurable settings that, when incorrectly set, create the most impactful exposures.
+- C is incorrect. Cloud Security Posture Management (CSPM) tools, native cloud security services (AWS Security Hub, Azure Defender for Cloud, GCP Security Command Center), and automated CIS Benchmark scanning can all identify misconfigurations programmatically without vendor support involvement.
+- D is incorrect. Under the shared responsibility model, customer-controlled configurations (IAM, storage access policies, logging settings) are entirely the customer's responsibility to configure and maintain. The cloud provider does not automatically correct customer misconfiguration.
+
+---
+
+## Question 15 (5 points)
+
+An analyst investigating an AWS incident finds that `AssumeRole` was called on a role named `OrganizationAccountAccessRole` from an external AWS account ID not belonging to the organization. The role's trust policy contains `"Principal": {"AWS": "*"}`. What does this finding indicate and what is the immediate remediation?
+
+- A) This is normal cross-account federation behavior and requires no action
+- B) The role's trust policy allows any AWS account to assume the role — this is a critical misconfiguration that may have enabled unauthorized cross-account access; restrict the trust policy to specific, authorized account IDs immediately
+- C) The wildcard principal is required for AWS Organizations integration and cannot be modified
+- D) The external AWS account assumption is blocked by default SCPs and requires no remediation
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A is incorrect. A trust policy with `"Principal": {"AWS": "*"}` grants permission for any entity in any AWS account to assume the role. This is almost never intentional and represents a critical misconfiguration that should be investigated immediately.
+- B is correct. An IAM role with a wildcard principal in its trust policy can be assumed by any authenticated AWS principal in any account. If an external account ID successfully called `AssumeRole` on this role, unauthorized cross-account access occurred. The immediate action is to update the trust policy to restrict the principal to specific authorized account IDs or ARNs.
+- C is incorrect. AWS Organizations cross-account access uses specific trust policies with the organization's master account ID or an organization unit condition — not a wildcard. The wildcard is never a required or recommended configuration for Organizations integration.
+- D is incorrect. SCPs (Service Control Policies) can restrict what services a member account can use but do not block `AssumeRole` calls from external accounts by default. Trust policy restrictions are the correct control for cross-account role access.
+
+---
+
+## Question 16 (5 points)
+
+In a containerized environment running Kubernetes, an attacker exploits a vulnerability in a pod and gains container escape to the underlying node. Which Kubernetes security control, if properly configured, would have most limited the blast radius of this container escape?
+
+- A) Network policies restricting inbound traffic to the pod on specific ports
+- B) Pod Security Admission enforcing restricted security contexts — preventing containers from running as root, disabling privilege escalation, and requiring read-only root filesystems
+- C) Resource quotas limiting CPU and memory usage per namespace
+- D) Horizontal Pod Autoscaler configuration
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A is incorrect. Network policies restrict network communication to and from pods. They reduce the attack surface for network-based exploits but do not prevent container escape techniques that exploit kernel vulnerabilities or privileged container configurations.
+- B is correct. Pod Security Admission (PSA) with the restricted security context prevents containers from running with root privileges, disables Linux capability additions, requires read-only root filesystems, and prevents privilege escalation. These constraints significantly limit the techniques available for container escape — a container running without root privileges and with a read-only filesystem has far fewer escape paths than a privileged container.
+- C is incorrect. Resource quotas limit computational resources per namespace. They prevent resource exhaustion but have no effect on privilege-based container escape techniques.
+- D is incorrect. Horizontal Pod Autoscaler manages scaling of pods based on metrics. It has no security function related to container escape prevention.
+
+---
+
+## Question 17 (5 points)
+
+A cloud security analyst discovers that an S3 bucket containing application logs has been configured with `Block Public Access: Off` and the bucket policy includes `"Principal": "*", "Action": "s3:GetObject"`. The bucket contains 14 months of application logs. What is the immediate risk and remediation action?
+
+- A) The bucket is accessible only to authenticated AWS users; no immediate action is required
+- B) The bucket is publicly readable by anyone on the internet — any person with the bucket URL can download all 14 months of application logs; immediately enable S3 Block Public Access and remove the public-read bucket policy
+- C) The bucket policy with wildcard principal only applies to AWS service accounts, not external internet users
+- D) Application logs cannot contain sensitive data so the public accessibility presents no meaningful risk
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A is incorrect. `"Principal": "*"` in an S3 bucket policy means any principal — including unauthenticated requests from the public internet — can perform the allowed actions. This is not limited to authenticated users.
+- B is correct. An S3 bucket with Block Public Access disabled and a bucket policy allowing `s3:GetObject` for `Principal: *` is fully publicly readable without any authentication. Any person with the bucket URL (which can be enumerated or exposed) can download all objects. Application logs frequently contain sensitive data including IP addresses, user identifiers, authentication events, and application errors. Immediate remediation is to enable S3 Block Public Access and remove or restrict the bucket policy.
+- C is incorrect. `"Principal": "*"` means all principals, including anonymous (unauthenticated) internet users. It is not limited to AWS service accounts.
+- D is incorrect. Application logs routinely contain PII, authentication tokens, session identifiers, IP addresses, and business logic information that can be exploited by attackers for reconnaissance and further attacks.
+
+---
+
+## Question 18 (5 points)
+
+Which cloud security framework provides a hierarchical set of security controls mapped to cloud service provider services and organized into 17 domains including Identity and Access Management, Infrastructure Security, and Data Security?
+
+- A) NIST Cybersecurity Framework (CSF)
+- B) Cloud Security Alliance (CSA) Cloud Controls Matrix (CCM)
+- C) CIS Benchmarks
+- D) ISO 27001
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A is incorrect. The NIST CSF is a general cybersecurity risk framework with five functions (Identify, Protect, Detect, Respond, Recover). It is not cloud-specific and does not organize controls into cloud-oriented domains.
+- B is correct. The CSA Cloud Controls Matrix (CCM) is the cloud industry's most widely referenced control framework. It organizes 197 control objectives into 17 domains specifically addressing cloud security concerns, with mappings to major compliance frameworks (ISO 27001, SOC 2, NIST SP 800-53) and cloud provider services.
+- C is incorrect. CIS Benchmarks are hardening guides providing specific technical configuration recommendations for operating systems, cloud platforms, databases, and applications. They are implementation-level guides, not a control framework with domain structure.
+- D is incorrect. ISO 27001 is a general information security management system standard. While applicable to cloud environments, it is not cloud-specific and does not map controls to cloud provider services in the CCM's domain structure.
+
+---
+
+## Question 19 (5 points)
+
+An analyst wants to verify whether any EC2 instances in an AWS account are publicly accessible via SSH (port 22) from the internet. Which AWS native tool provides an automated compliance check for this condition?
+
+- A) AWS CloudTrail — query for `AuthorizeSecurityGroupIngress` events with port 22
+- B) AWS Security Hub — CIS AWS Foundations Benchmark control for unrestricted SSH access
+- C) Amazon VPC Flow Logs — filter for inbound port 22 traffic
+- D) AWS Cost Explorer — review resource usage for all EC2 instances
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A is incorrect. CloudTrail logging `AuthorizeSecurityGroupIngress` events would show when SSH rules were created but does not provide an ongoing compliance assessment of current security group state. Historical event analysis does not tell you current configuration state.
+- B is correct. AWS Security Hub includes the CIS AWS Foundations Benchmark as a built-in security standard. Control 4.1 specifically checks for security groups that allow unrestricted (0.0.0.0/0) inbound access on port 22. This provides a continuous, automated compliance check with findings for non-compliant security groups.
+- C is incorrect. VPC Flow Logs capture actual network traffic — they would show if SSH connections are being made but do not assess whether the security group configuration allows unrestricted access. You would see traffic after the fact, not the misconfiguration itself.
+- D is incorrect. AWS Cost Explorer is a billing and cost management tool. It provides no security configuration assessment capability.
+
+---
+
+## Question 20 (5 points)
+
+Under the cloud shared responsibility model for SaaS (Software as a Service), which security control remains the customer's responsibility?
+
+- A) Patching the underlying operating system on which the SaaS application runs
+- B) Managing the physical security of the data center hosting the SaaS application
+- C) Managing user identity and access controls — including which users are provisioned, their privilege levels, and offboarding processes when users leave the organization
+- D) Encrypting data at the storage layer within the SaaS provider's infrastructure
+
+Correct Answer: C
+
+Distractor Analysis:
+
+- A is incorrect. In a SaaS model, the cloud provider is responsible for all infrastructure including OS patching. The customer has no access to or responsibility for the underlying operating system.
+- B is incorrect. Physical data center security is always the cloud provider's responsibility under all service models (IaaS, PaaS, SaaS). Customers have no physical access to the provider's facilities.
+- C is correct. Identity and access management is explicitly the customer's responsibility even in a SaaS model. The customer controls which users are provisioned, what roles and permissions they have, and whether access is revoked when employees leave. Failure to offboard departing employees promptly from SaaS applications is a common cloud access control gap.
+- D is incorrect. In a SaaS model, the cloud provider manages all data storage infrastructure including at-rest encryption at the storage layer. Customers may have the ability to provide their own encryption keys (customer-managed keys) in some SaaS offerings, but base storage encryption is a provider responsibility.

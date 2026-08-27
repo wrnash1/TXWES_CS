@@ -374,7 +374,28 @@ for (const [key, value] of Object.entries(person)) {
 
 ---
 
-## 10. JSE Certification Exam Tips
+## 10. Supplemental Resources
+
+The following free, openly available resources extend and reinforce the topics covered in this module.
+
+- **[Eloquent JavaScript — Chapter 4: Data Structures: Objects and Arrays](https://eloquentjavascript.net/04_data.html)**
+  The primary OER textbook. Covers object literals, properties, methods, arrays, and the relationships between them with extensive worked examples.
+
+- **[MDN Web Docs — Working with objects](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_objects)**
+  Comprehensive guide covering object creation, property access, property enumeration, object methods (`Object.keys`, `Object.values`, `Object.entries`, `Object.assign`, `Object.freeze`), and getter/setter syntax.
+
+- **[MDN Web Docs — Destructuring assignment](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment)**
+  Full reference for object and array destructuring including renaming, default values, nested destructuring, and rest patterns in destructuring.
+
+- **[MDN Web Docs — Optional chaining (`?.`)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining)**
+  Full reference with examples for `?.` on properties, method calls, and array indexes. Includes browser compatibility and the combined `?.` + `??` pattern.
+
+- **[javascript.info — Objects: the basics](https://javascript.info/object)**
+  Beginner-friendly introduction to object literals, properties, computed property names, shorthand properties, and property existence checks with interactive exercises.
+
+---
+
+## 11. JSE Certification Exam Tips
 
 1. **Dot vs bracket notation** — dot notation requires a valid identifier. Bracket notation works with any string, including keys stored in variables. Know which situations require brackets.
 
@@ -398,7 +419,7 @@ for (const [key, value] of Object.entries(person)) {
 
 ---
 
-## 11. Study Checklist
+## 12. Study Checklist
 
 - [ ] Watch the Module 07 video lecture by Professor Nash.
 - [ ] Read Chapter 4 (Data Structures) of [Eloquent JavaScript](https://eloquentjavascript.net/04_data.html).

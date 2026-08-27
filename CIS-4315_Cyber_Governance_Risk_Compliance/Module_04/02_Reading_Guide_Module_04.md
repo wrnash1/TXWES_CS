@@ -326,3 +326,19 @@ The results of all four feed into the risk register — the organization's autho
 - [ ] List all six STRIDE threat categories and the security property each violates
 - [ ] Explain in one paragraph when qualitative analysis is preferable to quantitative
 - [ ] Proceed to the Module 04 Lab Activity
+
+---
+
+## 9. Supplemental Resources
+
+**NIST SP 800-30 Rev. 1 — Guide for Conducting Risk Assessments**
+URL: https://csrc.nist.gov/publications/detail/sp/800-30/rev-1/final
+Description: Free NIST publication providing comprehensive guidance on risk assessment methodology including threat source and event catalogs, likelihood and impact determination, and risk determination. Appendix D contains a detailed threat source catalog directly applicable to the qualitative and quantitative techniques covered in this module.
+
+**Microsoft STRIDE Threat Modeling Documentation**
+URL: https://learn.microsoft.com/en-us/azure/security/develop/threat-modeling-tool-threats
+Description: Microsoft's free documentation on the STRIDE threat modeling methodology, including descriptions of each threat category, the security property each violates, and examples of STRIDE applied to modern application architectures. The Microsoft Threat Modeling Tool is available as a free download for hands-on practice.
+
+**NIST SP 800-34 Rev. 1 — Contingency Planning Guide, Chapter 3: Business Impact Analysis**
+URL: https://csrc.nist.gov/publications/detail/sp/800-34/rev-1/final
+Description: Free NIST publication with the most comprehensive government-published guidance on Business Impact Analysis methodology. Chapter 3 covers BIA planning, data collection, critical resource identification, and the establishment of MTD, RTO, and RPO values — directly aligned with the BIA content in this module.

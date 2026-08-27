@@ -193,3 +193,29 @@ In 100-150 words, explain why maintaining parallel systems during transition cre
 2. Name your file: `Lab08_LastName_FirstName.pdf`
 3. Upload to Canvas under "Lab 08 -- Human Capital Management Modules."
 4. Deadline: See course schedule in Canvas. Late submissions lose 10 points per day.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: SuccessFactors Module Implementation Sequencing
+
+A 1,200-employee retail company is implementing SAP SuccessFactors for the first time. They currently manage HR in spreadsheets, use ADP for payroll, and have no formal performance management process. The CHRO wants to implement all modules but knows the budget only allows two modules per year. The project team is debating sequencing.
+
+1. Recommend a three-year phased implementation sequence for the following modules: Employee Central, Recruiting, Onboarding, Performance and Goals, Learning, Succession Planning, and Compensation. Justify your sequencing decisions — specifically explain which modules are prerequisites for others.
+2. The payroll team argues that migrating from ADP to Employee Central Payroll should happen in Year 1 to save integration costs. Provide two arguments in favor of this approach and two arguments against it, then state your final recommendation with justification.
+3. Define the data migration scope for Phase 1 (Employee Central go-live): list five employee data fields that must be migrated from the spreadsheet system, specify the data quality check that must pass for each field before the data is loaded, and explain what happens in SuccessFactors if a required field is missing.
+4. Identify two integration points that must be configured between Employee Central and SAP S/4HANA FI/CO at go-live, and describe the data that flows across each integration.
+
+### Challenge 2: Payroll Audit and Compliance Scenario
+
+A SuccessFactors payroll manager discovers that three employees in the Finance department were paid their old salary for two pay periods after receiving approved merit increases. The error went undetected because the payroll team did not have a pre-run validation check comparing approved compensation changes to payroll inputs.
+
+1. Design a pre-payroll validation checklist with six checks that should be run before each payroll is processed. For each check, specify: what is being compared, the data source for each side of the comparison, and the action to take if a discrepancy is found.
+2. Explain the journal entry that was incorrectly posted to the GL for each of the three affected employees (using placeholder amounts), and write the correcting journal entry required to fix the prior-period error.
+3. Describe the internal control failure that allowed this error to persist for two pay periods. Identify which COSO internal control component was deficient and recommend one preventive control and one detective control to prevent recurrence.
+
+### Reflection Questions
+
+1. In the implementation sequencing challenge, most HCM experts recommend Employee Central (core HR) as the first module implemented. Why does this sequencing recommendation make sense architecturally — what breaks if you implement Recruiting or Performance before Employee Central is in place?
+2. The payroll error in Challenge 2 persisted for two pay periods before discovery. In a fully integrated SuccessFactors + SAP environment, what automated reconciliation or alerting capability would ideally have caught this discrepancy within one business day of the first incorrect payroll run?

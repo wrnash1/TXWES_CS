@@ -162,4 +162,20 @@ Protocols interact with multiple OWASP items:
 
 ---
 
+## 9. Supplemental Resources
+
+**1. HiveMQ MQTT Security Fundamentals**
+[https://www.hivemq.com/blog/mqtt-security-fundamentals/](https://www.hivemq.com/blog/mqtt-security-fundamentals/)
+A detailed multi-part series covering MQTT authentication (username/password, X.509 certificates), TLS configuration, topic-level access control lists, and broker hardening. Directly relevant to the broker security questions in the Module 04 lab.
+
+**2. Mosquitto MQTT Broker Documentation**
+[https://mosquitto.org/documentation/](https://mosquitto.org/documentation/)
+The official reference for the Eclipse Mosquitto open-source broker. Covers `mosquitto.conf` directives including `allow_anonymous`, `password_file`, `acl_file`, TLS listener configuration, and the `mosquitto_pub`/`mosquitto_sub` command-line clients.
+
+**3. Eclipse Paho MQTT Python Client Documentation**
+[https://eclipse.dev/paho/files/paho.mqtt.python/html/client.html](https://eclipse.dev/paho/files/paho.mqtt.python/html/client.html)
+The complete API reference for the Paho MQTT Python library used in the Module 04 lab. Covers `Client`, `connect()`, `loop_start()`, `loop_forever()`, `publish()`, `subscribe()`, callback signatures, and TLS configuration with `tls_set()`.
+
+---
+
 End of Reading Guide – Module 04

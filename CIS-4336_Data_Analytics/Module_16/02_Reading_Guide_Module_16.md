@@ -302,3 +302,19 @@ All key terms from Modules 1–15 are tested on the exam. The most frequently te
 * **freeCodeCamp Data Analysis with Python** — [freecodecamp.org/learn](https://www.freecodecamp.org/learn/data-analysis-with-python/)
 * **Khan Academy Statistics and Probability** — [khanacademy.org/math/statistics-probability](https://www.khanacademy.org/math/statistics-probability)
 * **IAPP Privacy Fundamentals** — [iapp.org/resources](https://iapp.org/resources/)
+
+---
+
+## 9. Supplemental Resources
+
+**1. CompTIA Data+ DA0-001 Exam Objectives (Official)**
+<https://www.comptia.org/certifications/data>
+The official CompTIA page for the Data+ certification, including a free downloadable exam objectives PDF that maps every tested topic to its domain and percentage weight. This is the authoritative source for confirming what is and is not on the exam — essential reading before your study plan is finalized.
+
+**2. Jason Dion — CompTIA Data+ Study Group (YouTube)**
+<https://www.youtube.com/c/JasonDion>
+A free YouTube channel by a CompTIA-certified instructor with domain-by-domain walkthroughs, practice question reviews, and test-taking strategy videos for the Data+ exam. Particularly useful for domains where the reading guides alone are not sufficient for retention, such as Domain 2 (Data Mining) and Domain 5 (Governance).
+
+**3. Whizlabs — CompTIA Data+ Practice Tests**
+<https://www.whizlabs.com/comptia-data-plus>
+A paid practice exam platform offering timed, scored mock exams aligned to the DA0-001 exam objectives with detailed answer explanations. Completing at least two full practice exams under timed conditions is one of the highest-value preparation activities before scheduling the real exam.

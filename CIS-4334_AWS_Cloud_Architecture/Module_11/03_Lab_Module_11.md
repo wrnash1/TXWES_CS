@@ -392,4 +392,24 @@ Compile all deliverables into a single document labeled clearly by task number. 
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: IAM Access Analyzer Finding Investigation
+Use IAM Access Analyzer to detect and review externally accessible resources, then practice remediating the findings.
+1. Enable IAM Access Analyzer for your account: `aws accessanalyzer create-analyzer --analyzer-name lab11-analyzer --type ACCOUNT`. Wait for the status to become `ACTIVE`: `aws accessanalyzer get-analyzer --analyzer-name lab11-analyzer --query "analyzer.status"`.
+2. List any findings generated: `aws accessanalyzer list-findings --analyzer-arn <analyzer-arn> --output table`. If no findings exist, create a test condition by temporarily setting an S3 bucket policy that grants access to a second AWS account (use a test/non-production bucket): `aws s3api put-bucket-policy --bucket <your-bucket> --policy '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"AWS":"arn:aws:iam::123456789012:root"},"Action":"s3:GetObject","Resource":"arn:aws:s3:::<your-bucket>/*"}]}'`. Re-list findings to observe the cross-account access finding.
+3. Archive the finding to acknowledge it: `aws accessanalyzer update-findings --analyzer-arn <arn> --status ARCHIVED --ids <finding-id>`. Then remove the cross-account bucket policy and verify the finding moves to RESOLVED status within a few minutes.
+4. Document the difference between an ACTIVE, ARCHIVED, and RESOLVED Access Analyzer finding. Explain what action each status implies the security team should take.
+
+### Challenge 2: CloudTrail Log Querying for Security Events
+Practice querying CloudTrail event history to reconstruct a security timeline — a core skill for incident response.
+1. Query CloudTrail for all IAM-related API calls from the last hour: `aws cloudtrail lookup-events --lookup-attributes AttributeKey=EventSource,AttributeValue=iam.amazonaws.com --start-time $(date -u -d '1 hour ago' +%Y-%m-%dT%H:%M:%SZ) --output table`. Record the event names observed.
+2. Query for all `ConsoleLogin` events in the last 24 hours: `aws cloudtrail lookup-events --lookup-attributes AttributeKey=EventName,AttributeValue=ConsoleLogin --start-time $(date -u -d '24 hours ago' +%Y-%m-%dT%H:%M:%SZ)`. For each login event, note the `sourceIPAddress` and `userAgent` fields in the event JSON.
+3. Query for any `DeleteBucket` or `DeleteObject` events: `aws cloudtrail lookup-events --lookup-attributes AttributeKey=EventName,AttributeValue=DeleteBucket`. If none exist, query for `PutBucketPolicy` to find a policy change event and examine the full event JSON: `aws cloudtrail lookup-events --lookup-attributes AttributeKey=EventName,AttributeValue=PutBucketPolicy --query "Events[0].CloudTrailEvent" --output text | python -m json.tool`.
+4. Identify which fields in a CloudTrail event record are most useful for answering each of these incident response questions: (a) Who performed the action? (b) From where? (c) Was it authenticated with MFA? (d) Did the action succeed or fail?
+
+### Reflection Questions
+1. After completing Challenge 1, explain how IAM Access Analyzer differs from a manual IAM policy review. What specific class of misconfiguration — affecting cross-account or public access — can Access Analyzer detect that a policy review of individual IAM policies alone would miss? How does this relate to the AWS Well-Architected Framework Security pillar principle of "apply security at all layers"?
+2. Based on Challenge 2, explain why CloudTrail event history (90-day lookup) is sufficient for routine auditing but insufficient for long-term compliance requirements. What configuration change converts CloudTrail from a short-term lookup service into a permanent, tamper-evident audit log, and which AWS service would you use to alert on specific API patterns (such as `DeleteTrail` or `StopLogging`) in near-real time?
+
 *Proprietary and Confidential. Not for disclosure outside of Texas Wesleyan University.*

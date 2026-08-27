@@ -211,3 +211,203 @@ Distractor Analysis:
 - B is incorrect. Lateral movement involves connections to multiple different destination IPs (other hosts on the subnet) to identify targets. Repeated identical connections to a single external IP are not a lateral movement scan pattern.
 - C is correct. C2 beaconing is a well-documented behavioral indicator where compromised malware contacts its C2 server at regular intervals to check for new commands and confirm availability. Consistent timing intervals and uniform packet sizes are the defining characteristics of beaconing behavior, mapped to ATT&CK T1071 (Application Layer Protocol).
 - D is incorrect. DDoS participation generates very high-volume traffic to a single target at maximum throughput, not regular low-frequency check-in messages. The pattern described — regular 60-second intervals — is far too infrequent for a denial-of-service contribution.
+
+---
+
+## Question 11 (5 points)
+
+A malware sample is submitted to a sandbox. The sandbox report shows the sample checks for the following before executing its payload: running process list for `vmware.exe` and `vboxservice.exe`, screen resolution below 1024x768, and system uptime under 2 minutes. If any condition is true, the sample exits without executing. What technique does this behavior represent?
+
+- A) Privilege escalation
+- B) Anti-sandbox / virtualization evasion (ATT&CK T1497)
+- C) DLL hijacking
+- D) Credential dumping
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A is incorrect. Privilege escalation involves the malware gaining higher system permissions. Checking for virtualization indicators and exiting early is an evasion behavior, not a privilege gain behavior.
+- B is correct. Checking for VMware/VirtualBox processes, unusually low screen resolution (common in sandbox VMs), and short uptime (indicating a freshly spun-up sandbox VM) are all classic sandbox detection evasion techniques documented as ATT&CK T1497 (Virtualization/Sandbox Evasion). The sample is trying to determine if it is being analyzed and terminating to avoid behavioral detection.
+- C is incorrect. DLL hijacking involves placing a malicious DLL in a location where a legitimate application will load it ahead of the real DLL. It is a persistence/execution technique, not an evasion check.
+- D is incorrect. Credential dumping involves extracting authentication credentials from OS memory or storage. It has no relationship to sandbox environment checks.
+
+---
+
+## Question 12 (5 points)
+
+Which analysis type — static or dynamic — would most effectively reveal that a malware sample uses polymorphic code that changes its binary signature on every execution?
+
+- A) Static analysis, because PE header analysis reveals encryption routines used to generate new signatures
+- B) Dynamic analysis, because executing the sample in a controlled sandbox captures the runtime behavior regardless of how the binary signature changes between executions
+- C) Static analysis using strings extraction, because the strings visible in the binary reveal the polymorphic engine's source code
+- D) Neither — polymorphic malware cannot be analyzed using standard SOC analysis techniques
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A is incorrect. While static PE analysis can sometimes identify encryption or packing stubs, polymorphic code is specifically designed to change its binary content and evade static signature-based detection. Relying on static analysis for polymorphic samples is unreliable.
+- B is correct. Dynamic analysis executes the sample in a sandboxed environment and captures what it actually does — network connections, file writes, registry changes, process creation — regardless of how the binary mutates. The behavior remains consistent even as the static signature changes, making dynamic analysis the more effective approach for polymorphic samples.
+- C is incorrect. Polymorphic malware's code changes are at the binary level. The strings extracted from one execution are not the engine source code and will differ between executions.
+- D is incorrect. Both static and dynamic analysis have value even for polymorphic malware. Dynamic analysis is particularly effective precisely because it bypasses the signature-evasion mechanism.
+
+---
+
+## Question 13 (5 points)
+
+A malware sample creates the Windows registry key `HKCU\Software\Microsoft\Windows\CurrentVersion\Run\UpdateService` pointing to `C:\Users\Public\svchost32.exe`. Which ATT&CK technique does this represent and what is its purpose?
+
+- A) T1059.001 — PowerShell execution for lateral movement
+- B) T1547.001 — Boot or Logon Autostart Execution via Registry Run Keys for persistence
+- C) T1003.001 — OS Credential Dumping via LSASS memory
+- D) T1078 — Valid Accounts for initial access
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A is incorrect. T1059.001 describes using PowerShell as an execution vehicle. Creating a registry Run key is not a PowerShell execution technique — it is a persistence mechanism that survives reboots.
+- B is correct. T1547.001 (Registry Run Keys / Startup Folder) is the canonical ATT&CK sub-technique for using `HKCU\Software\Microsoft\Windows\CurrentVersion\Run` to execute a binary at user logon. This creates persistence so the malware runs every time the user logs in, which is the explicit purpose of this registry key location.
+- C is incorrect. T1003.001 involves reading LSASS process memory to extract credential hashes. Registry key creation has no relationship to LSASS credential dumping.
+- D is incorrect. T1078 (Valid Accounts) describes using legitimate credentials for initial access or persistence. Creating a registry key is a technical persistence mechanism, not a credential-based technique.
+
+---
+
+## Question 14 (5 points)
+
+During static analysis of a suspected malware sample, an analyst uses a strings extraction tool and finds the string `cmd.exe /c net user administrator P@ssw0rd! /add`. What does the presence of this string indicate?
+
+- A) The binary is a legitimate Microsoft administrative utility because it contains Windows command syntax
+- B) The malware contains hardcoded commands to create a new Windows administrator account — likely for backdoor persistence
+- C) The string is meaningless because static strings can be present in any binary for documentation purposes
+- D) The binary is a Trojan horse masquerading as a calculator application
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A is incorrect. Legitimate Microsoft utilities do not embed hardcoded `net user` account creation commands with specific passwords. The presence of this specific string in a suspicious binary is a red flag indicating malicious intent.
+- B is correct. `net user administrator P@ssw0rd! /add` is the Windows command to create or modify the Administrator account. Finding this hardcoded in a malware sample indicates it is designed to create a privileged backdoor account — a persistence technique (ATT&CK T1136.001 — Create Local Account).
+- C is incorrect. Strings found in malware during static analysis provide direct evidence of intended functionality. A string like a `net user` account creation command is not documentation — it is an operational capability embedded in the binary.
+- D is incorrect. While Trojans do masquerade as legitimate software, the defining finding here is the backdoor account creation string. The malware's disguise (if any) is a separate characteristic from what this specific string reveals.
+
+---
+
+## Question 15 (5 points)
+
+A SOC analyst is reviewing a VirusTotal report for a file hash submitted after a malware detection. The report shows 4 out of 72 antivirus engines flag the file as malicious. The majority (68 engines) return clean. How should the analyst interpret this result?
+
+- A) 4 flagging engines confirms the file is definitively malicious and the system must be reimaged immediately
+- B) 0 flagging engines would confirm the file is clean — 4 detections is a borderline result that requires additional investigation, including sandbox analysis and hash lookup in threat intelligence feeds
+- C) A clean result from 68 engines is definitive proof the file is benign; the 4 flagging engines are false positives
+- D) VirusTotal results should not be used for malware analysis and the analyst should close the investigation
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A is incorrect. A 4/72 detection ratio alone is not sufficient to confirm malicious classification and trigger reimaging. The sample may be a low-prevalence or newly created malware not yet in most engines' databases, or it may be a false positive from the 4 engines. Additional analysis is required.
+- B is correct. VirusTotal detection ratios require contextual interpretation. Low detection counts can indicate newly crafted or targeted malware that most engines have not yet encountered. The appropriate response is to enrich the finding with sandbox execution, behavioral analysis, and additional threat intelligence correlation before classifying definitively.
+- C is incorrect. 68 clean results do not definitively prove benignity. Zero-day and custom malware regularly achieve 0/72 on VirusTotal because no engine has a signature for it yet. Clean results reduce suspicion but do not eliminate it.
+- D is incorrect. VirusTotal is a widely used, legitimate threat intelligence platform. It is appropriate to use for malware investigation. Discarding it as a tool without basis is not professional SOC procedure.
+
+---
+
+## Question 16 (5 points)
+
+Which of the following Windows API calls in a malware sample's Import Address Table (IAT) most strongly indicates the malware has credential dumping capability?
+
+- A) `WriteFile` and `CreateFile`
+- B) `OpenProcess` with access to LSASS combined with `ReadProcessMemory`
+- C) `RegSetValueEx` and `RegCreateKeyEx`
+- D) `InternetOpen` and `InternetConnect`
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A is incorrect. `WriteFile` and `CreateFile` indicate the malware reads and writes files. This is common across many malware types (file droppers, ransomware) and is not specific to credential dumping.
+- B is correct. Credential dumping from LSASS memory (ATT&CK T1003.001) requires opening a handle to the `lsass.exe` process using `OpenProcess` with PROCESS_VM_READ access, then extracting credential data using `ReadProcessMemory`. The combination of these two API calls in the IAT is a well-known credential dumping indicator.
+- C is incorrect. `RegSetValueEx` and `RegCreateKeyEx` indicate registry write operations — associated with persistence mechanisms like Run key installation, not credential dumping.
+- D is incorrect. `InternetOpen` and `InternetConnect` are WinInet API calls indicating the malware performs network communication — consistent with C2 beaconing or download functionality, not credential dumping.
+
+---
+
+## Question 17 (5 points)
+
+A malware sample drops a DLL into `C:\Windows\System32\wbem\` with the same name as a legitimate Windows DLL. When a legitimate application loads the DLL, it loads the malicious version first due to DLL search order. Which technique does this represent?
+
+- A) Process injection
+- B) DLL search order hijacking (ATT&CK T1574.001)
+- C) Reflective DLL loading
+- D) AppLocker bypass via trusted publisher
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A is incorrect. Process injection involves writing and executing code within another process's memory space. DLL search order hijacking places a malicious DLL on disk in a path that Windows searches before the legitimate DLL location.
+- B is correct. Windows DLL load order follows a defined search path. DLL search order hijacking (T1574.001) places a malicious DLL in a location that Windows searches before the directory containing the legitimate DLL. When a legitimate application loads the DLL by name without a full path, it finds the malicious version first.
+- C is incorrect. Reflective DLL loading injects a DLL directly into process memory without writing it to disk and without using the normal Windows DLL loader. This is an in-memory execution technique distinct from on-disk path manipulation.
+- D is incorrect. AppLocker bypass via trusted publisher involves exploiting code signing trust to execute unsigned code. It does not involve DLL search path manipulation.
+
+---
+
+## Question 18 (5 points)
+
+A malware analyst receives a sample that is a 64-bit Windows PE executable. Before submitting it to a sandbox, the analyst wants to quickly determine if it is packed without running it. Which static analysis approach best answers this question?
+
+- A) Check the file's digital signature certificate to see if it is signed by a known publisher
+- B) Examine the PE section entropy values — sections with entropy near 8.0 indicate packing
+- C) Count the number of imported DLLs — packed samples import more DLLs than unpacked samples
+- D) Check the file creation timestamp in the PE header — packed files always have creation timestamps after 2020
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A is incorrect. Digital signatures indicate publisher identity and integrity, not packing status. Many malware samples are unsigned; some are even signed with stolen certificates. Signature presence or absence does not indicate packing.
+- B is correct. Entropy analysis is the standard static method for detecting packed PE files. Normal code sections have entropy between 5.0 and 7.0. A section with entropy near 8.0 (maximum randomness) indicates compressed or encrypted content — the characteristic of a packed payload waiting to be decompressed at runtime.
+- C is incorrect. Packed samples typically import very few DLLs because the actual imports are hidden inside the packed payload and resolved dynamically at runtime. Unpacked malware may import many DLLs. The relationship is inverse to what the option states.
+- D is incorrect. PE header timestamps can be easily modified by the malware author and provide no reliable indication of packing. There is no time-based correlation between packing and creation date.
+
+---
+
+## Question 19 (5 points)
+
+Which malware category is specifically designed to intercept and record keystrokes, screenshots, clipboard content, and browser credentials without the user's knowledge?
+
+- A) Ransomware
+- B) Rootkit
+- C) Spyware / Keylogger
+- D) Worm
+
+Correct Answer: C
+
+Distractor Analysis:
+
+- A is incorrect. Ransomware encrypts files and demands payment for decryption keys. While some ransomware variants perform data exfiltration before encryption, credential and keystroke surveillance is not the defining ransomware capability.
+- B is incorrect. A rootkit is designed to hide the presence of malware by modifying the operating system or firmware. Rootkits provide stealth capability and often accompany other malware types, but keystroke recording is not their defining function.
+- C is correct. Spyware and keyloggers are explicitly designed for covert data collection — capturing keystrokes to harvest credentials, taking periodic screenshots, logging clipboard content, and extracting saved browser passwords. This category directly targets confidentiality through surveillance.
+- D is incorrect. A worm is designed for self-replication and propagation across networks. Its defining characteristic is spreading, not surveillance or data collection.
+
+---
+
+## Question 20 (5 points)
+
+A malware analyst observes that a sample creates a mutex named `Global\MutexForSingleInstance_v3` immediately upon execution. What is the purpose of this behavior?
+
+- A) The mutex protects user files from being modified during the infection process
+- B) The mutex prevents multiple instances of the malware from running simultaneously on the same host — a standard technique used to avoid detection from redundant process behavior
+- C) The mutex establishes the C2 communication channel over a named pipe
+- D) The mutex is used to escalate privileges to SYSTEM by exploiting mutex handle inheritance
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A is incorrect. Mutexes in malware are not designed to protect files. File locking uses different Windows mechanisms. A malware-created mutex is a control structure, not a file protection mechanism.
+- B is correct. Malware creates a uniquely named mutex at startup and checks for its existence on subsequent executions. If the mutex already exists, the new instance exits — ensuring only one copy of the malware runs at a time. This prevents redundant behavior that might trigger behavioral alerts and is a well-documented anti-analysis technique. The mutex name itself becomes a host-based IOC for detection.
+- C is incorrect. Named pipes are a separate Windows inter-process communication mechanism. Mutexes are mutual exclusion objects — they coordinate access but do not transmit data or establish network channels.
+- D is incorrect. Mutexes do not provide a privilege escalation mechanism. Privilege escalation requires exploiting specific vulnerabilities or abusing token/impersonation APIs — not mutex handle operations.

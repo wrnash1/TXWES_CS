@@ -414,3 +414,21 @@ Submit to Canvas:
 | Longest Consecutive | Set membership; only start from sequence beginning |
 | `defaultdict` | Missing keys return default value, not KeyError |
 | `Counter` | Frequency map; missing keys return 0 |
+
+---
+
+## Part 9 — Challenge Exercise
+
+These steps are **optional** and ungraded. They are designed for students who want to deepen their understanding beyond the core lab.
+
+### 9.1 — Design a Hash Map from Scratch (LeetCode #706)
+
+Implement `MyHashMap` with `put(key, value)`, `get(key)`, and `remove(key)` without using Python's built-in `dict`. Use separate chaining with a fixed array of 1024 buckets and a simple hash function `key % 1024`. Handle collisions by storing `(key, value)` pairs in a list at each bucket. Verify it passes LeetCode #706. Then modify your implementation to support dynamic resizing: when `load_factor > 0.75`, double the bucket array and rehash all entries. Add a test that inserts 2,000 entries and confirms `get` still returns correct values after the resize.
+
+### 9.2 — Subarray Sum Equals K (LeetCode #560)
+
+Given an array of integers `nums` and a target `k`, return the number of contiguous subarrays that sum to `k`. The naive O(n²) approach tries all (i,j) pairs. The optimal O(n) approach uses a prefix-sum hash map: maintain a running prefix sum and count how many times `prefix_sum - k` has appeared (using `defaultdict(int)` initialized with `{0: 1}`). Implement both approaches, verify they produce the same answers on several test cases, and explain in a comment why the prefix-sum + hash map approach is O(n) rather than O(n²).
+
+### 9.3 — LFU Cache (LeetCode #460)
+
+Implement a Least Frequently Used (LFU) cache: `get(key)` and `put(key, value)` both O(1). The LFU cache evicts the least frequently accessed item; ties are broken by LRU order (evict the least recently used among those with minimum frequency). The solution requires three hash maps: `key_map` (key → value, frequency), `freq_map` (frequency → ordered dict of keys), and tracking the `min_freq`. This is one of the most difficult hash table problems on LeetCode. Implement it, verify correctness on the LeetCode test cases, and write a detailed comment explaining the role of each hash map and why ordered dicts (`collections.OrderedDict`) are used in `freq_map`.

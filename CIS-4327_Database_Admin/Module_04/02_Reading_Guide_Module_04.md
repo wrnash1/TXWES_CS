@@ -225,3 +225,19 @@ Tip 8: Cloud Spanner is substantially more expensive than Cloud SQL. Cost-sensit
 ---
 
 Reference: cloud.google.com/learn
+
+---
+
+## 9. Supplemental Resources
+
+**1. Cloud Spanner — Official Documentation: Schema and Data Model**
+https://cloud.google.com/spanner/docs/schema-and-data-model
+Covers table interleaving, primary key design, secondary indexes with STORING, and DDL syntax specific to Cloud Spanner.
+
+**2. Google Cloud Blog — Spanner Internals: TrueTime and External Consistency**
+https://cloud.google.com/blog/products/databases/inside-cloud-spanner-and-the-cap-theorem
+Explains TrueTime's role in achieving external consistency, discusses how Spanner relates to the CAP theorem, and describes the Paxos consensus mechanism.
+
+**3. Cloud Spanner — Best Practices for Schema Design**
+https://cloud.google.com/spanner/docs/best-practice-large-scale
+Google's official guide for avoiding hotspots, choosing primary key strategies (UUIDs, hash prefixes, bit-reversal), and designing interleaved tables for production workloads.

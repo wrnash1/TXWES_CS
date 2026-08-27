@@ -205,3 +205,208 @@ Distractor Analysis:
 - Why A is incorrect: The -v flag inverts the match. Without -v, grep "^#" would show comment lines. With -v, it shows everything except comment lines.
 - Why C is incorrect: The pattern ^# matches lines starting with a hash. It has nothing to do with the word "ssh." The ^ is a regex anchor meaning "start of line."
 - Why D is incorrect: Blank lines do not start with # so they would be included in the output. This command does not specifically target blank lines. To exclude blank lines you would use grep -v "^$".
+
+---
+
+Questions 11-20 — 5 pts each
+
+---
+
+**Question 11**
+
+An administrator wants to display the 20 most recently modified files in /var/log, with the
+newest file listed first. Which command achieves this?
+
+- A) ls -lt /var/log | head -20
+- B) ls -la /var/log | sort | head -20
+- C) find /var/log -type f | head -20
+- D) ls -lS /var/log | head -20
+
+Correct Answer: A) ls -lt /var/log | head -20
+
+Distractor Analysis:
+
+- Why B is incorrect: ls -la | sort sorts alphabetically by the first character of each output line, which is the permission string. This does not produce a time-sorted list.
+- Why C is incorrect: find /var/log -type f lists all regular files but in filesystem order, not by modification time. The output is not sorted.
+- Why D is incorrect: ls -lS sorts by file size (largest first), not by modification time. The -S flag is a size sort.
+
+---
+
+**Question 12**
+
+Which command counts the exact number of lines in the file /var/log/syslog?
+
+- A) grep -c "" /var/log/syslog
+- B) wc -l /var/log/syslog
+- C) cat /var/log/syslog | count
+- D) Both A and B
+
+Correct Answer: D) Both A and B
+
+Distractor Analysis:
+
+- Why A alone is partially correct: grep -c "" counts lines matching an empty pattern, which matches every line. It produces the same result as wc -l.
+- Why B alone is partially correct: wc -l is the standard, direct tool for counting lines and is correct by itself.
+- Why C is incorrect: There is no standard Linux command called count. This command would fail with "command not found."
+
+---
+
+**Question 13**
+
+An administrator creates a symbolic link with the command ln -s /etc/nginx/nginx.conf
+/home/admin/nginx.conf. The original file /etc/nginx/nginx.conf is later deleted. What
+happens when the administrator tries to open /home/admin/nginx.conf?
+
+- A) The file opens normally because the symbolic link keeps a copy of the original data.
+- B) The symbolic link becomes broken and attempting to open it results in "No such file or directory."
+- C) The symbolic link automatically updates to point to the nearest file named nginx.conf.
+- D) The symbolic link is automatically deleted by the kernel when the target is removed.
+
+Correct Answer: B) The symbolic link becomes broken and attempting to open it results in "No such file or directory."
+
+Distractor Analysis:
+
+- Why A is incorrect: Symbolic links are pointers to a path, not copies of data. When the target file is deleted, the link's stored path resolves to nothing. No data is preserved in the link itself.
+- Why C is incorrect: Symbolic links are static path references. They never update automatically. The link continues to point to the original (now missing) path indefinitely.
+- Why D is incorrect: The kernel does not automatically delete symbolic links when targets are removed. The broken link persists on the filesystem until explicitly deleted with rm.
+
+---
+
+**Question 14**
+
+An administrator needs to find all files in /home that were modified within the last 2 hours.
+Which find command is correct?
+
+- A) find /home -mtime -2
+- B) find /home -mmin -120
+- C) find /home -newer /etc/passwd
+- D) find /home -atime -120
+
+Correct Answer: B) find /home -mmin -120
+
+Distractor Analysis:
+
+- Why A is incorrect: -mtime measures in 24-hour periods, not hours. -mtime -2 finds files modified in the last 48 hours, not the last 2 hours.
+- Why C is incorrect: -newer finds files newer than a reference file, not files modified within a time window. This depends on /etc/passwd's modification time, which may not be relevant.
+- Why D is incorrect: -atime measures access time in 24-hour periods. The administrator needs modification time (-mmin) not access time (-atime).
+
+---
+
+**Question 15**
+
+What is the purpose of the pipe operator | in a Linux command pipeline?
+
+- A) It redirects standard output to a file, appending new data to any existing content.
+- B) It connects the standard output of the command on the left to the standard input of the command on the right.
+- C) It runs the command on the right only if the command on the left fails with a non-zero exit code.
+- D) It executes both commands simultaneously and merges their outputs into a single stream.
+
+Correct Answer: B) It connects the standard output of the command on the left to the standard input of the command on the right.
+
+Distractor Analysis:
+
+- Why A is incorrect: Appending to a file is done with the >> redirection operator. The pipe does not write to files.
+- Why C is incorrect: The || operator (double pipe) runs the right command only if the left command fails. The single | is a pipeline operator, not a conditional.
+- Why D is incorrect: Commands in a pipeline run concurrently in the sense that they are connected by a buffer, but the output is a serial stream. They do not merge outputs - the output of the left command becomes the input of the right.
+
+---
+
+**Question 16**
+
+An administrator wants to display lines 50 through 60 of a large log file without opening the
+entire file. Which command achieves this?
+
+- A) head -60 /var/log/syslog | tail -11
+- B) sed -n '50,60p' /var/log/syslog
+- C) tail -n +50 /var/log/syslog | head -11
+- D) All of the above produce the same result
+
+Correct Answer: D) All of the above produce the same result
+
+Distractor Analysis:
+
+- Why A alone is partially correct: head -60 extracts the first 60 lines, then tail -11 shows the last 11 of those, which is lines 50-60. Valid but slightly inefficient.
+- Why B alone is partially correct: sed -n '50,60p' is the most direct method, printing only lines 50 through 60.
+- Why C alone is partially correct: tail -n +50 starts output at line 50, then head -11 takes the first 11 lines (50-60). All three approaches produce identical results.
+
+---
+
+**Question 17**
+
+An administrator runs the command: find / -type f -name "*.conf" 2>/dev/null
+
+What does the 2>/dev/null portion accomplish?
+
+- A) It saves all configuration files found to /dev/null for later review.
+- B) It suppresses permission denied error messages by redirecting stderr to the null device.
+- C) It filters the output to show only files with exactly two configuration sections.
+- D) It redirects standard output to a second terminal session.
+
+Correct Answer: B) It suppresses permission denied error messages by redirecting stderr to the null device.
+
+Distractor Analysis:
+
+- Why A is incorrect: /dev/null is a discard device. Any data written to it is immediately discarded and cannot be retrieved. Nothing is saved.
+- Why C is incorrect: The number 2 in shell redirection refers to file descriptor 2 (stderr). It has no relationship to file content or configuration sections.
+- Why D is incorrect: Redirecting to another terminal session is done with the tee command or by writing to /dev/pts/N. 2>/dev/null sends stderr to the null device, not to another terminal.
+
+---
+
+**Question 18**
+
+A junior administrator runs rm -rf /home/user/documents/ and then realizes they deleted
+the wrong directory. Which statement about data recovery is most accurate in a standard Linux
+environment?
+
+- A) The files can be recovered immediately by running undelete /home/user/documents/.
+- B) On a standard ext4 filesystem without a backup, recovery is difficult or impossible because rm bypasses the trash system and immediately unlinks the inodes.
+- C) The files are moved to /tmp/deleted/ automatically and can be restored from there.
+- D) Running fsck immediately after the deletion will restore all deleted files.
+
+Correct Answer: B) On a standard ext4 filesystem without a backup, recovery is difficult or impossible because rm bypasses the trash system and immediately unlinks the inodes.
+
+Distractor Analysis:
+
+- Why A is incorrect: There is no standard undelete command in Linux for ext4 filesystems. Unlike Windows Recycle Bin or macOS Trash, rm on the command line does not move files to a recoverable location.
+- Why C is incorrect: Command-line rm does not move files to any trash directory. Desktop environments (GNOME, KDE) may use a trash mechanism, but the rm command bypasses it entirely.
+- Why D is incorrect: fsck is a filesystem consistency checker that repairs filesystem structure corruption. It does not recover recently deleted files. Running fsck on a mounted filesystem can cause additional data loss.
+
+---
+
+**Question 19**
+
+An administrator needs to search all .log files in /var/log for lines containing the phrase
+"authentication failure" (case-insensitive). Which command is correct?
+
+- A) grep "authentication failure" /var/log/*.log
+- B) grep -ri "authentication failure" /var/log/
+- C) find /var/log -name "*.log" | grep "authentication failure"
+- D) grep -l "authentication failure" /var/log/
+
+Correct Answer: B) grep -ri "authentication failure" /var/log/
+
+Distractor Analysis:
+
+- Why A is incorrect: This command searches only .log files in /var/log itself, is case-sensitive, and misses subdirectories under /var/log. The -r flag is needed for recursive search and -i for case-insensitivity.
+- Why C is incorrect: Piping the find output to grep searches the list of filenames for the phrase, not the file contents. find | xargs grep would be the correct pattern.
+- Why D is incorrect: grep -l lists only the filenames that contain matches, not the matching lines themselves. The question asks to search for lines, implying line content output is required.
+
+---
+
+**Question 20**
+
+Which command displays the inode number of a file, which can be used to identify hard-linked
+files that share the same inode?
+
+- A) ls -li filename
+- B) stat filename
+- C) find . -inum $(ls -i filename | awk '{print $1}')
+- D) Both A and B
+
+Correct Answer: D) Both A and B
+
+Distractor Analysis:
+
+- Why A alone is partially correct: ls -li displays files in long format with the inode number as the first column. The -i flag adds the inode number.
+- Why B alone is partially correct: stat filename displays comprehensive file metadata including the inode number (labeled "Inode:"), link count, permissions, and timestamps. Both commands show the inode number.
+- Why C is incorrect: While this find command would work to locate files sharing an inode, it is a multi-step pipeline that identifies files by inode rather than displaying the inode number of a specific file.

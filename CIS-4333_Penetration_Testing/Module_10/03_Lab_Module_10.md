@@ -243,4 +243,22 @@ Submit all screenshots and finding records as a single PDF or ZIP file to the Ca
 
 ---
 
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Blind SQL Injection Time-Based Extraction
+
+On your authorized DVWA target (security level: Low), navigate to the SQL Injection (Blind) module. Using Burp Repeater, manually test for time-based blind SQL injection by submitting: `1' AND SLEEP(5)--`. Observe the response time compared to a baseline request. Then extract the first character of the database name using: `1' AND IF(SUBSTRING(database(),1,1)='d',SLEEP(5),0)--`. Systematically adjust the character being tested until you confirm the first character. Document your complete methodology: the baseline response time, the sleep-confirmed response time, the injection payload for each character position tested, and the extracted character. Explain in writing why time-based blind injection is significantly harder to automate safely than union-based injection and what risk the `SLEEP()` function creates on a production database server.
+
+### Challenge 2: File Upload Filter Bypass Analysis
+
+On your authorized DVWA target, navigate to the File Upload module at security level Medium. Attempt to upload a PHP webshell (`shell.php`) — document the server's rejection message. Then attempt the following bypass techniques in order, documenting the result of each: (1) rename to `shell.php.jpg`, (2) rename to `shell.jpg.php`, (3) keep `.php` extension but change the `Content-Type` header in Burp Intercept from `application/x-php` to `image/jpeg`. For each attempt, record the request in Burp, the server's response, and whether the bypass succeeded. Write a structured analysis explaining what validation layer each technique attempts to bypass (extension blacklist, extension whitelist, MIME type check, content inspection) and what the most robust server-side file upload validation approach would include.
+
+### Reflection Questions
+
+1. During the lab you exploited SQL injection to extract data from the DVWA database. However, in a real engagement the client's production database may contain tens of thousands of records of customer PII. Using the legal and ethical framework from Modules 01 and 02, explain what level of data extraction is appropriate to confirm and document an SQL injection finding, and what language you would want in the RoE document before conducting any database enumeration against a production system.
+
+2. You discovered both a reflected XSS vulnerability and a stored XSS vulnerability in the same DVWA application. Write a comparative risk analysis: which vulnerability receives the higher CVSS 3.1 base score and why, how the attack scope and victim population differ between the two types, and what remediation approach addresses both vulnerabilities at the root cause rather than through filtering.
+
 *End of Module 10 Lab Activity*

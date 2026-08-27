@@ -136,14 +136,14 @@ Variables in Terraform Cloud are set at the workspace level through the UI, API,
 
 **Terraform variables** — equivalent to input variables (`var.region`):
 
-```
+```text
 Key:   region
 Value: us-east-1
 ```
 
 **Environment variables** — available as shell environment variables during execution:
 
-```
+```text
 Key:   AWS_ACCESS_KEY_ID
 Value: AKIAIOSFODNN7EXAMPLE
 ```
@@ -228,7 +228,7 @@ Characteristics:
 
 ### 5.3 GitOps Workflow
 
-```
+```text
 1. Developer creates branch and modifies .tf files
 2. Pull request opened
 3. Terraform Cloud detects PR → runs speculative plan
@@ -379,6 +379,22 @@ Manual confirmation is the recommended setting for production workspaces.
 Terraform Cloud transforms Terraform from a single-user CLI tool into a team-scale platform. Its key differentiators over the open-source CLI are managed remote execution, workspace-level secrets, VCS-triggered workflows, Sentinel policy enforcement, and role-based access control.
 
 Understanding the architecture of Terraform Cloud — particularly how workspaces, runs, variables, and policies interact — is essential for both the Terraform Associate exam and for any team operating Terraform in production.
+
+---
+
+## 11. Supplemental Resources
+
+**1. Terraform Cloud Getting Started**
+<https://developer.hashicorp.com/terraform/tutorials/cloud/cloud-sign-up>
+The official getting-started tutorial for Terraform Cloud covering account creation, organization setup, connecting the CLI via the `cloud` block, and running your first remote plan and apply. The hands-on steps closely mirror the lab workflow in this module.
+
+**2. Terraform Cloud Workspaces Documentation**
+<https://developer.hashicorp.com/terraform/cloud-docs/workspaces>
+Complete reference for Terraform Cloud workspaces including workspace settings, execution modes (remote, local, agent), variable management, run lifecycle, VCS integration configuration, and the distinction between TFC workspaces and CLI workspaces.
+
+**3. Sentinel — Policy as Code Framework**
+<https://developer.hashicorp.com/sentinel/docs/terraform>
+The Sentinel documentation specific to Terraform Cloud integration, covering the three enforcement levels (advisory, soft mandatory, hard mandatory), the `tfplan/v2` import used to inspect planned resource changes, and how policy sets are organized and applied to workspaces.
 
 ---
 

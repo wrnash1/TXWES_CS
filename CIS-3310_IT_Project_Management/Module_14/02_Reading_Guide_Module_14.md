@@ -219,3 +219,29 @@ A complete SOW includes:
 - [ ] Complete the Module 14 Lab vendor evaluation exercise
 - [ ] Take the Module 14 Quiz (10 questions)
 - [ ] Post Module 14 Discussion initial response by Wednesday at 11:59 PM
+
+---
+
+## 9. Supplemental Resources
+
+The following free, openly licensed resources extend the concepts in this module. All links are publicly accessible — no account or purchase required.
+
+1. **Project Management Open Textbook — Chapter 12: Project Procurement Management**
+   *BC Campus OpenEd* — [opentextbc.ca/projectmanagement — Chapter 12](https://opentextbc.ca/projectmanagement/chapter/chapter-12-project-procurement-management/)
+   Covers make-or-buy analysis, contract types, SOW components, and vendor evaluation with worked examples applicable to IT procurement decisions.
+
+2. **PMI — Procurement Management Overview (Free Article)**
+   *Project Management Institute* — [pmi.org/learning/library/procurement-management-contract-types](https://www.pmi.org/learning/library/procurement-management-contract-types-6234)
+   PMI's overview of contract type selection logic, risk allocation principles, and the role of the procurement management plan — directly tested on Project+ and PMP exams.
+
+3. **NIGP — Understanding Contract Types: Fixed-Price vs. Cost-Reimbursable (Free)**
+   *National Institute of Governmental Purchasing* — [nigp.org/learning/contract-types-overview](https://www.nigp.org/learning/contract-types-overview)
+   Practical breakdown of when each contract type is appropriate, including T&M considerations and risk-shifting implications for buyer and seller.
+
+4. **YouTube — \"Statement of Work Tutorial for Project Managers\" (Adriana Girdler)**
+   [youtube.com/watch?v=0HiDzaFkPIQ](https://www.youtube.com/watch?v=0HiDzaFkPIQ)
+   Step-by-step walkthrough of SOW structure — scope of work, deliverables, acceptance criteria, and compliance requirements. Directly supports the Module 14 lab SOW drafting exercise.
+
+5. **Smartsheet — RFP vs. RFQ vs. IFB: A Plain-Language Guide (Free)**
+   [smartsheet.com/content/rfp-vs-rfq](https://www.smartsheet.com/content/rfp-vs-rfq)
+   Side-by-side comparison of the three primary solicitation document types with guidance on when each is appropriate — covers the award criteria differences tested on the Project+ exam.

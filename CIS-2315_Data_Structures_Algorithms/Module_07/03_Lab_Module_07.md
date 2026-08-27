@@ -336,3 +336,21 @@ Submit to Canvas:
 | K-th largest | Min-heap of size K; discard elements ≤ heap[0] |
 | heapreplace | Pop + push in one O(log n) call — use for K-th largest |
 | Peek | heap[0] — O(1), no pop needed |
+
+---
+
+## Part 9 — Challenge Exercise
+
+These steps are **optional** and ungraded. They are designed for students who want to deepen their understanding beyond the core lab.
+
+### 9.1 — Median of a Data Stream (LeetCode #295)
+
+Maintain a running median as integers arrive one at a time. The optimal O(log n) per insertion solution uses two heaps: a max-heap for the lower half and a min-heap for the upper half. After each insertion, rebalance so the two heaps differ in size by at most 1. `find_median()` returns `max_heap[0]` if sizes differ, or the average of both tops if equal. Implement `MedianFinder` with `add_num(val)` and `find_median()`, verify on the sequence `[1, 2, 3, 4, 5]` (medians: 1, 1.5, 2, 2.5, 3), and write a comment explaining why the two-heap approach is superior to sorting the entire array after each insertion.
+
+### 9.2 — Task Scheduler (LeetCode #621)
+
+Given a list of CPU tasks and a cooldown period `n`, find the minimum number of intervals to finish all tasks, where a task of the same type cannot be repeated within `n` intervals. The key insight is that the most frequent task dictates the minimum schedule length. Use a max-heap to always execute the most frequent available task, and a queue to track tasks in cooldown. Implement the greedy simulation, verify it returns 8 for `tasks = ['A','A','A','B','B','B'], n = 2`, and add a comment explaining why a greedy max-frequency strategy is optimal here.
+
+### 9.3 — O(n) Heapify Proof by Analysis
+
+The `heapq.heapify` function is O(n) despite appearing to call `sift_down` n/2 times (each O(log n)). The key is that most nodes are near the bottom and perform little work. Write a Python script that counts the actual number of sift-down comparisons performed during `heapify` for arrays of sizes n = 100, 1,000, 10,000, and 100,000 (constructed with worst-case reverse-sorted input). Compute the ratio `comparisons / n` for each and verify empirically that it converges to a constant — confirming O(n) behavior. Add a mathematical comment explaining that the sum Σ (h × n/2^h) from h=0 to log n converges to 2n, proving O(n).

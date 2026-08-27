@@ -229,4 +229,21 @@ Download the OpenVPN config from your TryHackMe account settings and connect wit
 
 ---
 
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Email Format Inference and Username List Construction
+
+Using the email addresses discovered during your theHarvester lab activity (or the fictional findings from your lab scenario), determine the organization's email naming convention. Then construct a fictional username list of 10 plausible employee usernames following that format, using only publicly available name data (e.g., LinkedIn-style names you invent for the fictional organization). Document your reasoning for the naming convention inference, the specific evidence that supports it, and explain how this username list would be used in a later authorized testing phase such as Active Directory enumeration or password spraying.
+
+### Challenge 2: Reconnaissance Attack Surface Summary
+
+Using all findings from your Module 05 lab — theHarvester output, DNS enumeration results, and any Wayback Machine or Shodan observations — write a one-page attack surface summary as it would appear in the reconnaissance section of a professional penetration test report. The summary must: quantify the number of unique findings by category (subdomains, email addresses, exposed services, technology stack indicators), identify the two highest-risk findings with justification, and propose specific active testing activities for the next phase based on the passive findings.
+
+### Reflection Questions
+
+1. During reconnaissance you discover that a target organization has 23 subdomains exposed via certificate transparency logs, but only 4 are listed in their public DNS. What does this discrepancy suggest about their asset management practices, and how would you prioritize these 19 undocumented subdomains during active testing?
+2. A colleague argues that passive reconnaissance tools like Shodan and theHarvester are "safe" to use against any target without authorization because they only query third-party databases. Evaluate this argument legally and ethically, citing specific laws or standards covered in the course.
+
 **Proprietary and Confidential. Not for disclosure outside of Texas Wesleyan University course use.**

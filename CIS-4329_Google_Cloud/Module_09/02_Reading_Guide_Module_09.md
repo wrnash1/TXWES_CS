@@ -303,3 +303,19 @@ Before starting Lab 09, confirm you can answer yes to each item:
   `https://cloud.google.com/armor/docs`
 - ACE exam guide:
   `https://cloud.google.com/certification/guides/cloud-engineer`
+
+---
+
+## 9. Supplemental Resources
+
+**1. Google Cloud Documentation — Cloud Load Balancing Overview**
+<https://cloud.google.com/load-balancing/docs/load-balancing-overview>
+Comprehensive reference covering all GCP load balancer types, the component chain (forwarding rule → target proxy → URL map → backend service), health check ranges, and guidance on selecting the correct load balancer for a given scenario — directly tested on the ACE exam.
+
+**2. Google Cloud Skills Boost — HTTP Load Balancer with Cloud Armor**
+<https://www.cloudskillsboost.google/focuses/1232>
+Hands-on lab configuring a Global HTTP(S) Load Balancer with managed instance groups, setting up Cloud Armor security policies, and verifying that allow/deny rules evaluate in priority order.
+
+**3. Google Cloud Documentation — Cloud CDN Cache Modes**
+<https://cloud.google.com/cdn/docs/caching>
+Detailed explanation of the three Cloud CDN cache modes (`USE_ORIGIN_HEADERS`, `CACHE_ALL_STATIC`, `FORCE_CACHE_ALL`), cache key configuration, TTL overrides, and cache invalidation — all of which appear in ACE exam scenario questions.

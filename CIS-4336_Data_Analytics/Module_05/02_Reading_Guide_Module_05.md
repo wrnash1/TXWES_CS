@@ -246,3 +246,17 @@ When reading a box plot for an exam question:
 
 - Official exam objectives: comptia.org (search "Data+ DA0-001 exam objectives")
 - Professor Messer's free study guides: professormesser.com
+
+## 9. Supplemental Resources
+
+**1. Khan Academy — Descriptive Statistics**
+<https://www.khanacademy.org/math/statistics-probability/summarizing-quantitative-data>
+Free video lessons and exercises on mean, median, mode, standard deviation, IQR, and box plots. Each concept includes practice problems with immediate feedback, mapped directly to the content of this module.
+
+**2. StatQuest with Josh Starmer — Standard Deviation vs. Standard Error**
+<https://www.youtube.com/watch?v=SzZ6GpcfoQY>
+A clear visual explanation of variance, standard deviation, and the practical difference between population and sample calculations. Directly addresses the Bessel's correction concept tested in this module.
+
+**3. Towards Data Science — Understanding Box Plots**
+<https://towardsdatascience.com/understanding-boxplots-5e2df7bcbd51>
+A detailed visual guide to reading and interpreting box plots, including skewness identification, whisker length, and outlier detection. Includes Python code to generate and annotate box plots for real datasets.

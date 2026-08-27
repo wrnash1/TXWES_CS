@@ -162,6 +162,35 @@ Label each part clearly. Include your full name and student ID on all submitted 
 
 ---
 
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Live Phishing Infrastructure Analysis
+
+Using only publicly available tools and resources — no credential entry, no clicking suspicious links — analyze a recent real-world phishing campaign report.
+
+1. Visit the APWG eCrime Trends reports page at <https://apwg.org/resources/apwg-reports/> and locate the most recent quarterly report. Identify: the top three most-impersonated brand categories, the predominant attack delivery channel for that quarter, and the percentage of phishing sites using HTTPS. Explain why HTTPS usage on phishing sites undermines the common user heuristic of "look for the padlock."
+2. Using the Google Safe Browsing Transparency Report at <https://transparencyreport.google.com/safe-browsing/overview>, locate current statistics on sites detected for phishing. Record the weekly detection count and describe how this data is used operationally by URL sandboxing and reputation-filtering controls.
+3. Select one of the phishing incidents from Broadfield University's Part A scenario (2-A through 2-F) and map it to a specific MITRE ATT&CK technique. Navigate to <https://attack.mitre.org/techniques/T1566/> (Phishing) and identify the correct sub-technique that best describes the attack. Record the technique ID, name, and at least two detection data sources listed in the ATT&CK entry.
+4. Based on your research, write a one-paragraph threat briefing — suitable for a non-technical university VP — describing the current phishing threat landscape and recommending one immediate priority action.
+
+### Challenge 2: DMARC Policy Deployment Gap Analysis
+
+A regional hospital network has the following email authentication posture for its three domains: `hospital-main.org` has SPF and DKIM configured with DMARC at `p=none`; `hospital-billing.org` has SPF only, no DKIM, no DMARC; `hospital-staff.org` has no SPF, DKIM, or DMARC configured.
+
+1. For each of the three domains, classify the current protection level as: (a) fully protected, (b) monitoring only, or (c) unprotected. Justify each classification using the SPF/DKIM/DMARC mechanics from Module 02 Section 5.
+2. Construct the DMARC DNS TXT record string that `hospital-billing.org` should deploy as an initial monitoring-only policy. Then construct the record that represents the final enforcement target (p=reject; pct=100). Explain what `pct=100` means and why an organization might start with `pct=10` instead.
+3. A threat actor sends a spoofed email from `billing@hospital-billing.org` to a hospital employee while the domain has only SPF configured (no DKIM, no DMARC). Walk through the receiving mail server's authentication check sequence and explain exactly why the spoofed email could still reach the inbox despite SPF being present.
+4. Prioritize a remediation roadmap for all three domains — list which domain should be addressed first, second, and third — and justify each prioritization decision using the CIA Triad property most at risk for each domain based on its function (main communications, billing, staff).
+
+### Reflection Questions
+
+1. In Challenge 1, you identified that many phishing sites now use HTTPS. A user argues that HTTPS proves a site is safe because it means the connection is encrypted. Explain in your own words why this reasoning is dangerously incorrect, and describe what HTTPS actually guarantees versus what it does not guarantee about the legitimacy of a website.
+2. In Challenge 2, you analyzed DMARC deployment across three domains. A security manager argues that deploying DMARC at `p=reject` immediately is better than a gradual rollout because "half-measures don't stop attacks." How would you respond to this argument? Identify at least one specific operational risk of jumping directly to `p=reject` without a monitoring phase, and explain how DMARC reporting helps mitigate that risk during the rollout.
+
+---
+
 Texas Wesleyan University — CIS-4328 Information Security — Module 02 Lab
 
 Proprietary and Confidential. Not for disclosure outside of authorized course use.

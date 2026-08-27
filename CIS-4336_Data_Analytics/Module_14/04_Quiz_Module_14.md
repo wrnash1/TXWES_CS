@@ -210,6 +210,208 @@ A shows a 45-point gap between training and test accuracy — a clear overfittin
 
 ---
 
+---
+
+### Question 11 (5 points)
+
+A logistic regression model predicts the probability of a customer making a purchase. The default decision threshold is 0.5. An analyst lowers the threshold to 0.3. What is the effect on the model's precision and recall?
+
+A) Precision increases and recall decreases — fewer predictions are made, and more are correct.
+
+B) Both precision and recall decrease — lowering the threshold reduces confidence in all predictions.
+
+C) Precision decreases and recall increases — more customers are predicted positive, catching more true positives but also more false positives.
+
+D) Neither precision nor recall changes — only the predicted probabilities change, not the class labels.
+
+#### Q11 Correct Answer: C
+
+#### Q11 Distractor Analysis
+
+Lowering the threshold means more observations are classified as positive. This catches more actual positives (raising recall) but also increases false positives (reducing precision). A reverses the direction. B is incorrect; recall improves when more positives are predicted. D is incorrect; changing the threshold directly changes which class labels are assigned, affecting both metrics.
+
+---
+
+### Question 12 (5 points)
+
+Which cross-validation technique is most appropriate for a time-series dataset (e.g., monthly sales forecasting) where temporal order matters?
+
+A) K-fold cross-validation — randomly splits data into k folds; appropriate for non-temporal datasets.
+
+B) Stratified k-fold — preserves class proportions across folds; designed for classification imbalance, not time order.
+
+C) Time series split (walk-forward validation) — always trains on past data and tests on future data, preserving temporal order.
+
+D) Leave-one-out cross-validation — uses one sample as the test set; does not respect temporal ordering.
+
+#### Q12 Correct Answer: C
+
+#### Q12 Distractor Analysis
+
+For time series, it is critical that the model never trains on future data. Time series split (walk-forward validation) sequentially expands the training window and always evaluates on the next future period. K-fold and leave-one-out (A, D) randomly assign samples to folds, which would allow future data to appear in training. Stratified k-fold (B) addresses class imbalance in classification, not temporal structure.
+
+---
+
+### Question 13 (5 points)
+
+A feature importance chart from a trained Random Forest shows that `tenure_months` has an importance score of 0.42 and all other 19 features each have scores below 0.05. What is the most appropriate business interpretation and next analytical step?
+
+A) Remove `tenure_months` from the model because features with high importance scores cause overfitting.
+
+B) `tenure_months` is the most predictive feature; investigate the business relationship between customer tenure and the target, and consider whether this feature is available at prediction time.
+
+C) The model is underfitting because a single feature dominates; add more features immediately.
+
+D) A feature importance of 0.42 means the model is 42% accurate when using only that feature.
+
+#### Q13 Correct Answer: B
+
+#### Q13 Distractor Analysis
+
+High feature importance means the model found this variable most useful for splitting. The correct response is to understand the business meaning and verify it is a legitimate predictor (not a proxy that leaks the label). A is incorrect; high importance does not cause overfitting by itself. C is incorrect; feature dominance is not an underfitting signal. D misinterprets importance scores as accuracy values.
+
+---
+
+### Question 14 (5 points)
+
+What is the purpose of `MinMaxScaler` versus `StandardScaler` in feature preprocessing?
+
+A) `MinMaxScaler` centers features at mean=0 and scales to std=1; `StandardScaler` scales features to a [0, 1] range.
+
+B) `MinMaxScaler` scales features to a defined range (e.g., 0 to 1); `StandardScaler` centers features at mean=0 with std=1. Use `MinMaxScaler` when the algorithm requires bounded inputs; use `StandardScaler` for algorithms sensitive to outliers.
+
+C) Both scalers produce identical output; the choice between them is purely a coding style preference.
+
+D) `StandardScaler` should only be used with tree-based models; `MinMaxScaler` is required for distance-based models like KNN.
+
+#### Q14 Correct Answer: B
+
+#### Q14 Distractor Analysis
+
+A reverses the definitions. C is incorrect; the two scalers produce different outputs and behave differently with outliers. D is incorrect in its prescriptions; tree-based models do not require scaling at all, and both scalers can be used with distance-based models, though StandardScaler is more robust to outliers.
+
+---
+
+### Question 15 (5 points)
+
+A classification model is evaluated on a test set of 1,000 records: 950 "No" and 50 "Yes". The model predicts "No" for every record and achieves 95% accuracy. What critical problem does this reveal?
+
+A) The model is well-trained because 95% accuracy is an excellent result.
+
+B) The model is overfitting — it memorized the majority class during training.
+
+C) The model has learned nothing useful; it exploits class imbalance and fails to detect any positive cases (0% recall on the minority class).
+
+D) The test set is too small to evaluate model performance accurately.
+
+#### Q15 Correct Answer: C
+
+#### Q15 Distractor Analysis
+
+A is incorrect — 95% accuracy on an imbalanced dataset can be achieved with a trivially useless model that always predicts the majority class. B is incorrect; this pattern is class imbalance, not overfitting. D is a distraction; the problem is the model, not the sample size.
+
+---
+
+### Question 16 (5 points)
+
+What is the primary purpose of using `cross_val_score` with 5 folds instead of a single train-test split?
+
+A) Cross-validation uses all available data for training simultaneously, producing a more accurate model.
+
+B) Cross-validation produces five independent performance estimates, reducing the variance of the evaluation metric and providing a more reliable assessment of generalization performance.
+
+C) Cross-validation eliminates the need for feature scaling because folds automatically normalize data.
+
+D) Cross-validation is only appropriate when the dataset has fewer than 1,000 rows.
+
+#### Q16 Correct Answer: B
+
+#### Q16 Distractor Analysis
+
+A is incorrect; each fold holds out a portion of data for testing — it does not train on all data simultaneously. C is false; each fold still requires the same preprocessing pipeline as a single split. D is incorrect; cross-validation is recommended for any dataset size where robust performance estimation is needed.
+
+---
+
+### Question 17 (5 points)
+
+An analyst encodes a `city` column with 500 distinct values using one-hot encoding. What problem does this create?
+
+A) The resulting 500 binary columns will cause a key error in scikit-learn because the column limit is 256.
+
+B) The resulting high-dimensional feature space (500 new columns) may cause the curse of dimensionality, slow training, and overfitting — especially with small to medium datasets.
+
+C) One-hot encoding is only appropriate for binary (2-value) columns; label encoding must be used for columns with more than 10 categories.
+
+D) The resulting columns will sum to a value greater than 1 for each row, violating the binary constraint.
+
+#### Q17 Correct Answer: B
+
+#### Q17 Distractor Analysis
+
+A is false; there is no 256-column limit in scikit-learn. C is incorrect; one-hot encoding can be used for any number of categories, though high cardinality creates the dimensionality problem described in B. D is incorrect; exactly one of the 500 columns will equal 1 per row, so they sum to exactly 1.
+
+---
+
+### Question 18 (5 points)
+
+Which scikit-learn class correctly builds a pipeline that first applies `StandardScaler` and then trains a `LogisticRegression` model?
+
+A) `Pipeline([('scaler', LogisticRegression()), ('model', StandardScaler())])` — steps are in the wrong order.
+
+B) `Pipeline([('scaler', StandardScaler()), ('model', LogisticRegression())])` — the transformer precedes the estimator in the correct order.
+
+C) `Pipeline(StandardScaler(), LogisticRegression())` — missing the list of named tuples required by Pipeline.
+
+D) `Pipeline([StandardScaler(), LogisticRegression()])` — missing the required name strings for each step.
+
+#### Q18 Correct Answer: B
+
+#### Q18 Distractor Analysis
+
+A places the estimator before the transformer — incorrect order and incorrect step assignments. C uses positional arguments without names — not the correct Pipeline API syntax. D omits the name strings required by Pipeline (each step must be a `(name, estimator)` tuple).
+
+---
+
+### Question 19 (5 points)
+
+A churn prediction model reports: precision = 0.71, recall = 0.55, F1 = 0.62. The business team wants to reduce customer service costs by targeting only high-confidence churn predictions. Which adjustment should the analyst make?
+
+A) Lower the classification threshold to 0.3 to increase recall and catch more churning customers.
+
+B) Raise the classification threshold to 0.7 to increase precision, ensuring that predicted churners are more likely to be true churners before the team invests in outreach.
+
+C) Switch from F1 score to accuracy as the primary metric to align with business cost reduction goals.
+
+D) Remove the recall metric entirely because the business only cares about cost, not true positive rate.
+
+#### Q19 Correct Answer: B
+
+#### Q19 Distractor Analysis
+
+When the goal is to reduce cost by avoiding false positives (contacting non-churners), increasing the threshold raises precision at the expense of recall. A lowers the threshold — the opposite effect, catching more churners but with more false positives. C is incorrect; accuracy is misleading for imbalanced classes. D is incorrect; removing metrics does not change model behavior.
+
+---
+
+### Question 20 (5 points)
+
+What does `model.predict_proba(X_test)` return that `model.predict(X_test)` does not?
+
+A) A single class label (0 or 1) for each test observation using the default 0.5 threshold.
+
+B) A two-column array where each row contains the probability of belonging to class 0 and class 1, allowing threshold adjustment and probability-ranked outputs.
+
+C) The confusion matrix comparing predicted labels to actual labels.
+
+D) The feature importance scores sorted in descending order.
+
+#### Q20 Correct Answer: B
+
+#### Q20 Distractor Analysis
+
+`predict()` returns the predicted class label after applying the decision threshold. `predict_proba()` returns a probability distribution over all classes, enabling analysts to rank observations by confidence, adjust the decision threshold, or produce probability-calibrated outputs. C describes `confusion_matrix()`, not `predict_proba()`. D describes `feature_importances_` attribute.
+
+---
+
 ### Answer Key
 
 | Question | Correct Answer |
@@ -224,3 +426,13 @@ A shows a 45-point gap between training and test accuracy — a clear overfittin
 | 8 | C |
 | 9 | C |
 | 10 | C |
+| 11 | C |
+| 12 | C |
+| 13 | B |
+| 14 | B |
+| 15 | C |
+| 16 | B |
+| 17 | B |
+| 18 | B |
+| 19 | B |
+| 20 | B |

@@ -225,3 +225,237 @@ What error does `int('3.14')` raise, and how do you fix it?
 - *Why B is correct:* `int('3.14')` raises `ValueError: invalid literal for int() with base 10: '3.14'`. The fix is to chain the conversions: `float('3.14')` converts the string to the float `3.14`, then `int(3.14)` truncates it to `3`.
 - *Why C is incorrect:* `int('3.14')` has no `SyntaxError` — it is valid Python syntax. The error occurs at runtime when `int()` tries to parse the string. Removing the quotes gives `int(3.14)`, which works but loses the `str` input scenario.
 - *Why D is incorrect:* `int()` does NOT accept strings containing decimal points. It only accepts strings of whole-number digits (with optional leading sign). A decimal point in the string always raises `ValueError`.
+
+---
+
+### Question 11
+
+What is the output of the following code?
+
+```python
+a, b, c = 1, 2, 3
+a, b = b, a
+print(a, b, c)
+```
+
+- A) `1 2 3`
+- B) `2 1 3`
+- C) `3 2 1`
+- D) `SyntaxError: cannot unpack`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* The line `a, b = b, a` swaps the values of `a` and `b`. After the swap `a = 2` and `b = 1`. Printing `a b c` gives `2 1 3`, not `1 2 3`.
+- *Why B is correct:* Python evaluates the right side `b, a` as the tuple `(2, 1)` before any assignment occurs. Then `a` receives `2` and `b` receives `1`. `c` is unchanged at `3`. Output: `2 1 3`.
+- *Why C is incorrect:* `c` retains its original value `3`. Only `a` and `b` are swapped.
+- *Why D is incorrect:* `a, b = b, a` is valid Python tuple unpacking — a standard swap idiom. No `SyntaxError` is raised.
+
+---
+
+### Question 12
+
+Which of the following is NOT a valid Python identifier?
+
+- A) `_hidden`
+- B) `__dunder__`
+- C) `myVariable123`
+- D) `return`
+
+**Correct Answer:** D
+
+**Distractor Analysis:**
+
+- *Why A is incorrect (i.e., it IS valid):* `_hidden` is a valid identifier. A leading underscore is permitted and conventionally indicates a "private" or internal name.
+- *Why B is incorrect (it IS valid):* `__dunder__` (double underscore on both sides) is valid and follows Python's dunder/magic method naming convention. It is widely used in the standard library.
+- *Why C is incorrect (it IS valid):* `myVariable123` is valid — it starts with a letter, contains only letters, digits, and no special characters.
+- *Why D is correct (it is INVALID):* `return` is a Python reserved keyword. Keywords cannot be used as identifiers. The PCAP exam requires knowing all Python keywords.
+
+---
+
+### Question 13
+
+What does `print('A', 'B', 'C', sep='', end='!\n')` output?
+
+- A) `A B C!`
+- B) `ABC!`
+- C) `A B C!` followed by a newline
+- D) `A\nB\nC!`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `A B C!` would result from the default `sep=' '`. Since `sep=''` (empty string), no space is inserted between arguments.
+- *Why B is correct:* `sep=''` means no separator between arguments, producing `ABC`. `end='!\n'` replaces the default newline with `!` followed by a newline. Final output: `ABC!` followed by a newline.
+- *Why C is incorrect:* Spaces between letters would require `sep=' '`. `sep=''` is an empty string.
+- *Why D is incorrect:* `\n` between each letter would require `sep='\n'`. The `end` parameter only affects what follows the final argument, not separators between arguments.
+
+---
+
+### Question 14
+
+A student wants to display a number with exactly 8 characters total width, right-aligned, with 2 decimal places. Which f-string format spec achieves this?
+
+- A) `f'{value:.2f}'`
+- B) `f'{value:8.2f}'`
+- C) `f'{value:2.8f}'`
+- D) `f'{value:>8}'`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `:.2f` specifies 2 decimal places but no total width. The output width equals however many characters the number needs.
+- *Why B is correct:* `8.2f` means total field width of 8, 2 decimal places, fixed-point format. The number is right-aligned by default within the 8-character field. For example, `f'{3.14:8.2f}'` produces `    3.14` (4 leading spaces + 4 characters for `3.14`).
+- *Why C is incorrect:* `2.8f` reverses the numbers — 2 total width and 8 decimal places, which would produce a wide number, not a narrow one. The format spec order is `width.precisiontype`.
+- *Why D is incorrect:* `>8` right-aligns within 8 characters but applies no decimal rounding. For a float this would give more decimal places than desired.
+
+---
+
+### Question 15
+
+What is the output of this code?
+
+```python
+x = 7
+x //= 2
+x **= 2
+print(x)
+```
+
+- A) `12.25`
+- B) `9`
+- C) `6.25`
+- D) `7`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `12.25` would come from `(7 / 2) ** 2 = 3.5 ** 2 = 12.25` using true division. But `//=` is floor division: `7 // 2 = 3`.
+- *Why B is correct:* `x //= 2` → `x = 7 // 2 = 3`. Then `x **= 2` → `x = 3 ** 2 = 9`. Result: `9`.
+- *Why C is incorrect:* `6.25` = `2.5 ** 2`, which would only arise if `x` became `2.5` — impossible from floor division of integers.
+- *Why D is incorrect:* `7` is the starting value, before any augmented assignments are applied.
+
+---
+
+### Question 16
+
+Which of the following correctly reads an integer from the user and stores it?
+
+- A) `n = input(int('Enter n: '))`
+- B) `n = int(input('Enter n: '))`
+- C) `n = input('Enter n: ', int)`
+- D) `n = (int) input('Enter n: ')`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `int('Enter n: ')` tries to convert the prompt string `'Enter n: '` to an integer, which raises `ValueError` immediately — before any user input is received.
+- *Why B is correct:* The correct pattern is to call `input()` first (which returns a `str`), then wrap it with `int()` to convert: `n = int(input('Enter n: '))`. This is the standard Python idiom.
+- *Why C is incorrect:* `input()` accepts only one argument — the prompt string. It does not accept a type argument. This raises `TypeError`.
+- *Why D is incorrect:* `(int) input(...)` is not valid Python syntax. C-style casting with parenthesized type names is not how Python works.
+
+---
+
+### Question 17
+
+What is the output of the following code?
+
+```python
+name = 'Python'
+print(f'{"Hello":>10} {name}!')
+```
+
+- A) `Hello Python!`
+- B) `     Hello Python!`
+- C) `Hello      Python!`
+- D) `SyntaxError: expressions in f-strings cannot use format specs with string literals`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `>10` right-aligns within a 10-character field. `'Hello'` is 5 characters, so 5 spaces are prepended: `     Hello`. The total output is `     Hello Python!`.
+- *Why B is correct:* The f-string expression `{"Hello":>10}` formats the string literal `'Hello'` right-aligned in a 10-character wide field, producing `     Hello` (5 spaces + `Hello`). Then a space and `Python!` follow.
+- *Why C is incorrect:* `Hello      Python!` would require left-alignment (`<10`), which pads spaces after the string.
+- *Why D is incorrect:* F-strings fully support format specs applied to string literals inside `{}`. Expressions can be any valid Python expression, including string literals.
+
+---
+
+### Question 18
+
+Python variable names are case-sensitive. What does the following code output?
+
+```python
+Score = 95
+score = 80
+SCORE = 70
+print(Score + score + SCORE)
+```
+
+- A) `NameError` — Python sees three different variables
+- B) `245`
+- C) `95` — only the first assignment is used
+- D) `SyntaxError` — you cannot have three versions of the same name`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `Score`, `score`, and `SCORE` are three distinct, valid variable names in Python — all defined without error. No `NameError` occurs since all three are defined before `print()`.
+- *Why B is correct:* All three variables are defined and hold integer values. `95 + 80 + 70 = 245`. Python's case sensitivity means these are three independent variables that can all coexist.
+- *Why C is incorrect:* Python does not deduplicate variable names by case. Each name is a separate binding in the namespace.
+- *Why D is incorrect:* Python has no restriction against having variables with the same spelling in different cases. It is poor style (PEP 8 warns against it), but it is not a syntax error.
+
+---
+
+### Question 19
+
+Which of the following statements about Python's dynamic typing is TRUE?
+
+- A) A variable's type is fixed when it is first assigned and cannot change
+- B) Python infers types at compile time the first time a variable is used
+- C) A variable can be rebound to a value of a different type at any time
+- D) Dynamic typing means Python performs no type checking and all operations always succeed
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* This describes static typing (C, Java). Python variables are not bound to a type — only values have types. The variable is just a name pointing to an object.
+- *Why B is incorrect:* Python does not compile to native code with type inference. Types are determined at runtime, not compile time.
+- *Why C is correct:* In Python, variables are references to objects. You can do `x = 5` then `x = 'hello'` then `x = [1, 2, 3]` — the variable `x` simply points to a new object each time. The type is a property of the object, not the variable.
+- *Why D is incorrect:* Dynamic typing does not mean "no type checking." Python checks types at runtime and raises `TypeError` when an operation is applied to incompatible types (e.g., `'hello' + 5`). The checking happens later (at runtime) rather than earlier (at compile time).
+
+---
+
+### Question 20
+
+What does the following code print?
+
+```python
+total = 0
+total += 10
+total += 20
+total -= 5
+total *= 3
+print(total)
+```
+
+- A) `75`
+- B) `90`
+- C) `25`
+- D) `30`
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- *Why A is correct:* Trace step by step: `total = 0` → `+= 10` → `10` → `+= 20` → `30` → `-= 5` → `25` → `*= 3` → `75`. Final value: `75`.
+- *Why B is incorrect:* `90` would result if `*= 3` were applied before `-= 5`: `30 * 3 = 90`. But the operations execute in written order — subtraction before multiplication.
+- *Why C is incorrect:* `25` is the intermediate value after the subtraction, before `*= 3` is applied.
+- *Why D is incorrect:* `30` is the intermediate value after the second addition, before subtraction and multiplication.

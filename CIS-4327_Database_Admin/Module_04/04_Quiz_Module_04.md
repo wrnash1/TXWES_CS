@@ -174,3 +174,173 @@ Distractor analysis: B is incorrect because Cloud Spanner does not have separate
 ---
 
 Reference: cloud.google.com/learn
+
+---
+
+### Question 11 (5 points)
+
+A Cloud Spanner table is defined with a UUID (STRING(36)) primary key generated using `GENERATE_UUID()`. A developer proposes switching to a SHA-256 hash of a business key instead. What is the primary reason UUID or hash-based keys are preferred over sequential integers in Cloud Spanner?
+
+- A) They produce random key values that distribute rows evenly across tablets, preventing write hotspots.
+- B) UUID keys are smaller in storage than INT64, reducing tablet storage consumption.
+- C) Cloud Spanner's query optimizer requires string keys to build efficient execution plans.
+- D) Sequential integer keys violate the Cloud Spanner DDL syntax rules for primary key definitions.
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - B) A UUID stored as STRING(36) is larger than an INT64; storage size is not the motivation for using UUIDs in Spanner.
+  - C) The query optimizer works with both INT64 and STRING primary keys; key type does not determine optimizer behavior.
+  - D) Cloud Spanner fully supports INT64 as a primary key data type; the issue is the sequential pattern of values, not the type itself.
+
+---
+
+### Question 12 (5 points)
+
+A Cloud Spanner read-write transaction reads a row, performs a computation, and then updates that row. The transaction spans 45 seconds of application processing time. What risk does this create?
+
+- A) The transaction's read locks will expire after the default 10-second idle timeout, causing the transaction to abort with a DEADLINE_EXCEEDED error.
+- B) Another transaction that reads the same row will be blocked for 45 seconds, degrading overall throughput.
+- C) The Paxos consensus vote will time out if the transaction does not commit within 30 seconds.
+- D) Cloud Spanner will automatically commit the transaction after 30 seconds to prevent lock accumulation.
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - B) Cloud Spanner uses optimistic concurrency for reads in read-write transactions; read locks in a snapshot read do not block concurrent readers; the contention risk is at commit time, not during the read phase.
+  - C) The Paxos consensus vote occurs at commit time, not during the transaction's open window; a 45-second transaction does not directly cause a Paxos timeout unless the commit itself is delayed.
+  - D) Cloud Spanner does not auto-commit open transactions; it aborts them when they exceed the maximum transaction duration limit.
+
+---
+
+### Question 13 (5 points)
+
+Which Cloud Spanner feature allows an application to run a read-only workload and explicitly specify that it should observe a consistent snapshot of the database as of 30 seconds ago?
+
+- A) Timestamp-bound read using `read_timestamp` or `exact_staleness` set to 30 seconds.
+- B) Read-write transaction with a `SET TRANSACTION READ ONLY` statement.
+- C) Blind write Mutation with a timestamp set to 30 seconds in the past.
+- D) A secondary index with a STORING clause covering all queried columns.
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - B) `SET TRANSACTION READ ONLY` is a SQL SQL Server/Oracle concept; Cloud Spanner read-only transactions use timestamp bound parameters in the client library API, not SQL syntax.
+  - C) A blind write Mutation is a write operation; setting a past timestamp on a Mutation does not create a read snapshot.
+  - D) A STORING secondary index optimizes read performance by eliminating back-joins; it does not control the staleness or snapshot time of a read.
+
+---
+
+### Question 14 (5 points)
+
+You are migrating a workload to Cloud Spanner. The source schema has a `products` table and a `product_images` table joined by `product_id`. In production, images are always fetched together with their product. Which Spanner schema design is recommended?
+
+- A) Interleave `product_images` in parent `products` so image rows are physically co-located with product rows.
+- B) Create a secondary index on `product_images.product_id` with STORING for all image columns.
+- C) Merge both tables into a single `products` table with image data stored as a BYTES column.
+- D) Keep the tables separate with standard foreign keys and rely on Spanner's join optimizer.
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - B) A secondary index with STORING still requires a back-join to the base table for columns not in STORING, and does not provide physical co-location of parent and child rows on the same server.
+  - C) Storing binary image data as a BYTES column in the parent table creates very large rows, complicates querying individual images, and is not the recommended relational approach.
+  - D) Cloud Spanner does not support foreign key constraints with the same semantics as traditional RDBMS; interleaving is the recommended design for parent-child access patterns, not separate tables with implicit joins.
+
+---
+
+### Question 15 (5 points)
+
+An engineering team wants to perform a schema change on a production Cloud Spanner table that has millions of rows — specifically adding a new NOT NULL column with a default value. What is true about schema changes in Cloud Spanner?
+
+- A) Cloud Spanner schema changes are fully online and non-blocking; the new column is added without locking the table or requiring a maintenance window.
+- B) Adding a NOT NULL column requires taking the table offline to backfill all existing rows with the default value before the change completes.
+- C) Cloud Spanner does not support NOT NULL constraints; all columns are implicitly nullable.
+- D) Schema changes in Cloud Spanner require exporting all data, dropping the table, recreating it with the new schema, and reimporting the data.
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - B) Cloud Spanner performs schema changes online using a long-running schema change operation; it does not lock the table; backfill of NOT NULL columns with defaults happens in the background.
+  - C) Cloud Spanner does support NOT NULL constraints on columns; this is a valid DDL constraint.
+  - D) The export-drop-recreate-reimport approach is required in some traditional databases but not in Cloud Spanner, where DDL changes are applied online as background operations.
+
+---
+
+### Question 16 (5 points)
+
+What is the purpose of the `NULLS_FIRST` ordering behavior for Cloud Spanner's ASC sort order on secondary index keys?
+
+- A) NULL values sort before non-NULL values in ascending order, which means NULLable indexed columns place rows with NULL key values at the start of the index.
+- B) NULL values are excluded from the secondary index entirely, reducing index size.
+- C) NULLable columns cannot be used as secondary index keys in Cloud Spanner.
+- D) NULL values always sort after non-NULL values regardless of ASC or DESC ordering in Spanner.
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - B) NULL values are included in Cloud Spanner secondary indexes; they are not excluded; understanding their sort position is important for query correctness.
+  - C) NULLable columns can be used as secondary index keys in Cloud Spanner; the index handles NULL values with defined ordering semantics.
+  - D) Cloud Spanner's behavior is NULL FIRST for ASC and NULL LAST for DESC, which is the opposite of some other SQL databases; this is specifically tested behavior.
+
+---
+
+### Question 17 (5 points)
+
+A Cloud Spanner database uses a multi-region configuration spanning `nam6` (North America). A regional outage takes down one of the read-write regions. What is the expected behavior?
+
+- A) Spanner continues serving reads and writes from the remaining regions without data loss; the Paxos quorum can still be achieved with the surviving replicas.
+- B) All write transactions are blocked until the failed region recovers to maintain strict consistency.
+- C) Spanner automatically promotes a read-only replica to a read-write replica and redirects all traffic.
+- D) The database enters read-only mode until the failed region is restored to prevent split-brain writes.
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - B) The Paxos consensus protocol in Spanner is designed to tolerate the loss of minority replicas; a quorum of surviving replicas can continue committing transactions without blocking.
+  - C) Spanner's multi-region configuration does not have a separate "promotion" step; the consensus group automatically re-forms around surviving replicas.
+  - D) Entering read-only mode would violate the 99.999% SLA guarantee; Spanner's design specifically prevents this by using a quorum that can function without a single region.
+
+---
+
+### Question 18 (5 points)
+
+Which statement correctly describes Cloud Spanner's PITR (point-in-time recovery) capability compared to Cloud SQL PITR?
+
+- A) Cloud Spanner has built-in version retention for PITR with no additional configuration; Cloud SQL requires WAL archiving to be explicitly enabled before PITR is possible.
+- B) Cloud SQL PITR supports any point within the last 30 days; Cloud Spanner PITR is limited to the last 1 hour.
+- C) Both services require manual snapshot exports to Cloud Storage before PITR is possible.
+- D) Cloud Spanner PITR requires Enterprise Plus edition while Cloud SQL PITR is available on all editions.
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - B) Cloud Spanner's version retention window is configurable up to 7 days; Cloud SQL PITR retention is also configurable but not 30 days by default; the key distinction is that Spanner requires no setup while Cloud SQL requires enabling WAL archiving.
+  - C) Cloud SQL PITR does not require manual snapshot exports; it uses WAL logs; Cloud Spanner PITR uses built-in versioning; neither requires manual exports.
+  - D) Cloud Spanner does not have edition tiers that control PITR; all Spanner instances support version retention.
+
+---
+
+### Question 19 (5 points)
+
+A development team wants to query Cloud Spanner from within a Python application. Which client library approach does Google recommend for new applications?
+
+- A) Use the `google-cloud-spanner` Python client library with the Spanner client and transaction API.
+- B) Connect using a standard PostgreSQL JDBC driver pointed at the Spanner instance's IP address.
+- C) Use the REST API directly with `urllib` and manually construct JSON mutation payloads.
+- D) Use the `psycopg2` PostgreSQL adapter since Cloud Spanner supports a PostgreSQL dialect.
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - B) Cloud Spanner does not expose a standard PostgreSQL TCP port; it uses gRPC-based connections through the Cloud Spanner API, not a standard database TCP socket.
+  - C) Using raw REST API calls is functionally possible but is significantly more complex and error-prone than using the client library; Google explicitly recommends the client library for all new applications.
+  - D) While Cloud Spanner does support a PostgreSQL-compatible dialect through the PGAdapter proxy, `psycopg2` connecting directly without PGAdapter does not work; the client library is the recommended approach.
+
+---
+
+### Question 20 (5 points)
+
+An application inserts 10,000 rows into Cloud Spanner in a single operation. Which approach provides the best throughput?
+
+- A) Use Mutations buffered in a single read-write transaction committed atomically, leveraging Spanner's batch write capability.
+- B) Issue 10,000 individual DML INSERT statements in separate transactions.
+- C) Use a single DML INSERT ... SELECT statement reading from a subquery.
+- D) Export the rows to Cloud Storage as CSV and use Spanner's built-in data import to load them.
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - B) Issuing 10,000 separate transactions adds network round-trip overhead for each commit; batching mutations in one transaction is dramatically faster.
+  - C) INSERT ... SELECT in DML reads from a subquery within the same database; it does not apply to loading externally generated rows and goes through the query planner, which is slower than batched mutations.
+  - D) Cloud Spanner does not have a built-in CSV import feature equivalent to Cloud SQL's import; data loading is done through client libraries using mutations or the Dataflow template for large datasets.

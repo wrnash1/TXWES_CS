@@ -425,3 +425,21 @@ Submit to Canvas:
 | House Robber | `dp[i] = max(dp[i-1], dp[i-2]+nums[i])` |
 | LCS | 2D table; match → `dp[i-1][j-1]+1`; else → `max(up, left)` |
 | 0/1 Knapsack | `dp[i][w] = max(skip, take)`; O(n×W) |
+
+---
+
+## Part 9 — Challenge Exercise
+
+These steps are **optional** and ungraded. They are designed for students who want to deepen their understanding beyond the core lab.
+
+### 9.1 — Longest Increasing Subsequence (LeetCode #300)
+
+Given an unsorted array of integers, find the length of the longest strictly increasing subsequence. The O(n²) DP solution defines `dp[i]` as the length of the LIS ending at index `i`: `dp[i] = max(dp[j]+1 for j < i if nums[j] < nums[i])`, base case `dp[i]=1`. Implement this solution, verify it returns 4 for `[10,9,2,5,3,7,101,18]` (LIS = [2,3,7,101] or [2,3,7,18] or [2,5,7,18]). Then implement the O(n log n) patience sorting solution using `bisect_left` to maintain a sorted `tails` array, where `tails[i]` stores the smallest tail element of all increasing subsequences of length `i+1`. Verify both give the same answer and explain why the O(n log n) approach does not directly recover the subsequence (only its length).
+
+### 9.2 — Edit Distance (LeetCode #72)
+
+Given two strings `word1` and `word2`, return the minimum number of operations (insert, delete, replace) to convert `word1` to `word2` — known as Levenshtein distance. Define `dp[i][j]` as the edit distance between `word1[0..i-1]` and `word2[0..j-1]`. Recurrence: if characters match, `dp[i][j] = dp[i-1][j-1]`; otherwise, `dp[i][j] = 1 + min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1])` (delete, insert, replace). Base cases: `dp[i][0]=i`, `dp[0][j]=j`. Implement the solution, verify `edit_distance('horse','ros')=3` and `edit_distance('intention','execution')=5`, and fill the full DP table by hand for a short pair (e.g., 'cat'/'cut'). Explain how the three recurrence terms correspond to the three edit operations.
+
+### 9.3 — Space-Optimized LCS and Backtracking
+
+The standard LCS implementation uses O(m×n) space for the full DP table. Implement a space-optimized version that uses only O(n) space (two rows at a time), and verify it returns the same LCS length as the full table. Then, separately, implement a `recover_lcs(text1, text2)` function that backtracks through the full DP table to return the actual LCS string (not just its length). Verify that `recover_lcs('abcde', 'ace') == 'ace'` and `recover_lcs('AGGTAB', 'GXTXAYB') == 'GTAB'`. Explain why backtracking requires the full O(m×n) table and cannot be done with the two-row space optimization.

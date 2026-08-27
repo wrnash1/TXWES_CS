@@ -183,3 +183,29 @@ Complete the following before the lab and quiz:
 - [ ] Complete the Module 07 Lab activity
 - [ ] Take the Module 07 Quiz
 - [ ] Post Module 07 Discussion initial response by Wednesday at 11:59 PM
+
+---
+
+## 9. Supplemental Resources
+
+The following free, openly licensed resources extend the concepts in this module. All links are publicly accessible — no account or purchase required.
+
+1. **Project Management Open Textbook — Chapter 9: Resource Management**
+   *BC Campus OpenEd* — [opentextbc.ca/projectmanagement — Chapter 9](https://opentextbc.ca/projectmanagement/chapter/chapter-9-project-human-resource-management/)
+   Covers resource planning, team development, Tuckman's stages, motivation theories, and conflict resolution with project management applications.
+
+2. **RACI Matrix Template and Guide — ProjectManager.com (Free)**
+   [projectmanager.com/blog/raci-chart](https://www.projectmanager.com/blog/raci-chart-a-beginners-guide-with-template)
+   Step-by-step guide to building a RACI matrix with downloadable templates. Directly supports the Module 07 lab.
+
+3. **YouTube — "Tuckman's Stages of Group Development" (MindTools)**
+   [youtube.com/watch?v=OhSI6oBQmQA](https://www.youtube.com/watch?v=OhSI6oBQmQA)
+   Animated 5-minute explainer of all five Tuckman stages with PM behavior guidance for each — highly recommended before the quiz.
+
+4. **PMI — Conflict Management in Projects (Free Article)**
+   *Project Management Institute* — [pmi.org/learning/library/conflict-management](https://www.pmi.org/learning/library/conflict-management-8946)
+   PMI article covering all five conflict resolution techniques with scenario examples aligned to PK0-005 objectives.
+
+5. **Herzberg and Maslow Motivation Theories — MindTools (Free)**
+   [mindtools.com/herzbergs-motivation-hygiene-theory](https://www.mindtools.com/a3mwjqf/herzbergs-motivation-hygiene-theory)
+   Clear comparison of Herzberg's hygiene factors vs. motivators and how they relate to Maslow's hierarchy — a commonly tested pair on the Project+ exam.

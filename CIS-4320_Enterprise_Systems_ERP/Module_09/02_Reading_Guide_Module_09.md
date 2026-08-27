@@ -348,3 +348,19 @@ INCOME STATEMENT
 - Complete Lab 09.
 - Post to Discussion Forum 09 by Wednesday at 11:59 PM.
 - Complete Quiz 09.
+
+---
+
+## 9. Supplemental Resources
+
+**1. SAP Learning — Financial Accounting with SAP S/4HANA: Business Processes**
+<https://learning.sap.com/learning-journeys/run-financial-accounting-with-sap-s-4hana>
+Official SAP learning journey covering the complete FI module: G/L, AP, AR, and asset accounting. Maps directly to the transaction codes (FB60, F110, F150, FEBAN) and process flows tested in this module's quiz and Lab 09.
+
+**2. SAP Help Portal — SAP S/4HANA Finance Transaction Code Reference**
+<https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/sts/2022/en-US/index.html>
+Official SAP product documentation. The FI section provides detailed explanation of each transaction code's purpose, prerequisites, and output — the authoritative reference for the transaction code master table in Section 9.
+
+**3. AICPA — Revenue Recognition and Financial Reporting Standards (ASC 606 / IFRS 15)**
+<https://www.aicpa.org/resources/article/revenue-recognition>
+Resource covering how revenue recognition standards affect how ERP systems must be configured to comply with ASC 606 and IFRS 15. Relevant to the financial statement generation content in this module and the compliance themes in Module 15.

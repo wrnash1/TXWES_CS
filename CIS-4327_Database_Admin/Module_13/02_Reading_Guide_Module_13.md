@@ -311,6 +311,26 @@ tradeoffs (e.g., "Which configuration meets both compliance and operational requ
 
 ---
 
+---
+
+## 9. Supplemental Resources
+
+The following free, open-access resources support Module 13 topics:
+
+**1. [Cloud SQL Documentation — Configuring SSL/TLS](https://cloud.google.com/sql/docs/postgres/configure-ssl-instance)**
+Covers Cloud SQL SSL modes (`ALLOW_UNENCRYPTED_AND_ENCRYPTED` vs `ENCRYPTED_ONLY`), server certificates, and configuring client certificate mutual TLS.
+
+**2. [Cloud SQL Documentation — IAM Database Authentication](https://cloud.google.com/sql/docs/postgres/iam-authentication)**
+Explains how to configure Cloud SQL IAM authentication, create IAM database users, and connect with short-lived OAuth tokens from service accounts and user identities.
+
+**3. [BigQuery Documentation — Column-Level Security Using Policy Tags](https://cloud.google.com/bigquery/docs/column-level-security)**
+Covers creating tag taxonomies in Data Catalog, applying policy tags to BigQuery columns, and assigning masking rules to control what different principals see in sensitive columns.
+
+**4. [PostgreSQL Documentation — Row Security Policies](https://www.postgresql.org/docs/current/ddl-rowsecurity.html)**
+Explains how to enable RLS on a table, create policies with `USING` and `WITH CHECK` expressions, and apply different policies to different roles for row-level access control.
+
+---
+
 Module 13 Reading Guide — CIS-4327 Database Administration
 
 Texas Wesleyan University | Proprietary and Confidential. Not for disclosure outside of course participants.

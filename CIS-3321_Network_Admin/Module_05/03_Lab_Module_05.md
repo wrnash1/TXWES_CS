@@ -214,4 +214,48 @@ Submit the following to the Canvas assignment dropbox:
 
 ---
 
+## Part 9 — Challenge Exercise
+
+These advanced steps extend Module 05 with STP observation and EtherChannel configuration.
+
+### Challenge Step 1: Observe Spanning Tree Protocol in Packet Tracer
+
+1. Build a topology with three interconnected Cisco 2960 switches forming a triangle (Switch1–Switch2, Switch2–Switch3, Switch1–Switch3).
+2. Assign IP addresses to the switch management VLANs:
+   - Switch1 VLAN 1: 192.168.1.1/24
+   - Switch2 VLAN 1: 192.168.1.2/24
+   - Switch3 VLAN 1: 192.168.1.3/24
+3. On each switch, run `show spanning-tree vlan 1` and record:
+   - Which switch is the Root Bridge
+   - The Bridge Priority and MAC address of the root bridge
+   - Which ports on the non-root switches are in Forwarding state vs. Blocking state
+
+**Challenge Question 1:** Explain why one of the three redundant links between the switches is in Blocking state. What would happen to that blocked port if the active link connecting the root bridge to another switch failed? Which STP port role and state would the previously blocked port transition to, and how long does IEEE 802.1D STP take to converge?
+
+### Challenge Step 2: Force a Root Bridge Election
+
+1. On Switch1, reduce the spanning tree priority to force it to become the root bridge:
+   ```
+   spanning-tree vlan 1 priority 4096
+   ```
+2. Wait for STP to reconverge (approximately 30–50 seconds in Packet Tracer).
+3. Run `show spanning-tree vlan 1` on all three switches again.
+
+**Challenge Question 2:** After forcing Switch1 to become the root, which ports changed from Forwarding to Blocking (or vice versa)? Write out the complete port role assignment (Root Port, Designated Port, Alternate Port) for each switch after reconvergence. How does the `priority` value affect which switch becomes the root bridge?
+
+### Challenge Step 3: Configure EtherChannel Between Two Switches
+
+1. Add a second link between Switch1 and Switch2 (connect Fa0/2 on each to each other using a second straight-through cable).
+2. Without EtherChannel, STP should block one of the two links. Verify this with `show spanning-tree`.
+3. Configure LACP EtherChannel on both switches to aggregate both links:
+   ```
+   interface range fa0/1 - 2
+   channel-group 1 mode active
+   ```
+4. Verify with `show etherchannel summary` — the bundle should show `SU` (in use, layer 2) with both interfaces aggregated.
+
+**Challenge Question 3:** After configuring EtherChannel, how does STP treat the two physical links? What is the effective bandwidth of the aggregated link? Why does EtherChannel solve the problem of STP blocking redundant parallel links between the same two switches?
+
+---
+
 *CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash*

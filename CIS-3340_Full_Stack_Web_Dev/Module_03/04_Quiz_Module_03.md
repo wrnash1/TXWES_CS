@@ -222,3 +222,183 @@ An AWS CloudFront distribution serves a responsive website. A developer updates 
 - Why B is correct: CloudFront caching is the most common reason users see stale content after an S3 update. Invalidating `"/index.html"` resolves this immediately.
 - Why C is incorrect: S3 objects can be overwritten in place — deletion and re-upload is not required.
 - Why D is incorrect: The viewport meta tag is a client-side HTML instruction parsed by the browser's rendering engine — CloudFront does not parse or forward meta tags.
+
+---
+
+### Question 11 (5 points)
+
+A developer wants to apply different styles when the user's operating system is set to dark mode. Which CSS feature enables this without JavaScript?
+
+- A) `@media (color-scheme: dark)`
+- B) `@media (prefers-color-scheme: dark)`
+- C) `@supports (dark-mode: enabled)`
+- D) `:root[data-theme="dark"]`
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: `color-scheme` is a CSS property (not a media feature) that hints to the browser which color scheme an element supports — it does not query the user's OS preference.
+  - Why B is correct: `@media (prefers-color-scheme: dark)` is the standard media query that detects the user's OS-level color scheme preference and applies the enclosed styles when dark mode is active.
+  - Why C is incorrect: `@supports` tests for CSS property support, not user preferences; `dark-mode: enabled` is not valid syntax.
+  - Why D is incorrect: `:root[data-theme="dark"]` is a valid CSS selector for a JavaScript-driven theme toggle, but it does not respond to the OS color preference automatically without JavaScript setting the attribute.
+
+---
+
+### Question 12 (5 points)
+
+Which CSS property prevents images from overflowing their containers on small screens?
+
+- A) `width: 100%`
+- B) `max-width: 100%`
+- C) `overflow: hidden` on the container
+- D) `object-fit: contain`
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: `width: 100%` forces the image to always fill its container's width, which can cause upscaling and quality loss on large screens.
+  - Why B is correct: `max-width: 100%` allows the image to be its natural size up to the container width, then scales it down if the container is narrower — preventing overflow without forcing upscaling.
+  - Why C is incorrect: `overflow: hidden` clips content that overflows rather than preventing the image from overflowing.
+  - Why D is incorrect: `object-fit: contain` controls how image content fills its declared box dimensions — it does not prevent the box itself from overflowing the container.
+
+---
+
+### Question 13 (5 points)
+
+What does `@media (prefers-reduced-motion: reduce)` target, and why is it important?
+
+- A) It targets users on low-bandwidth connections and disables high-resolution images to reduce data transfer.
+- B) It targets users who have enabled a system-level setting to minimize motion and animation, often required by users with vestibular disorders or motion sensitivity to prevent discomfort.
+- C) It targets older browsers that do not support CSS transitions and falls back to static styles automatically.
+- D) It targets mobile devices with reduced CPU power and applies lighter rendering effects to improve performance.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: Bandwidth reduction is addressed by the `prefers-reduced-data` media feature (experimental), not `prefers-reduced-motion`.
+  - Why B is correct: The `prefers-reduced-motion` setting reflects the user's OS accessibility preference to minimize animation. Users with vestibular disorders, epilepsy, or motion sensitivity may experience nausea or disorientation from excessive animation.
+  - Why C is incorrect: `@media (prefers-reduced-motion)` is a preference query, not a browser capability detection — `@supports` is the feature used to test CSS support.
+  - Why D is incorrect: CPU performance is not reported by `prefers-reduced-motion`; this preference is set by the user in OS accessibility settings regardless of device performance.
+
+---
+
+### Question 14 (5 points)
+
+A developer writes base styles for a 1200px desktop layout and adds `@media (max-width: 768px)` rules to adjust for mobile. Which responsive strategy does this represent, and what is its primary drawback?
+
+- A) Mobile-first; the drawback is that `max-width` media queries require more CSS declarations than `min-width`.
+- B) Desktop-first; mobile browsers must parse and then override the full desktop CSS before applying the mobile rules, which adds unnecessary parsing work on constrained devices.
+- C) Container queries; the drawback is that container queries are not yet supported in all modern browsers.
+- D) Fluid-only; the drawback is that percentage widths break at extreme viewport sizes.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: Writing base styles for 1200px and overriding with `max-width` is desktop-first, not mobile-first.
+  - Why B is correct: Desktop-first strategy requires mobile browsers to load and parse the full desktop stylesheet before applying override rules, adding unnecessary work on lower-powered devices.
+  - Why C is incorrect: Container queries use `@container`, not `@media` — this code uses `@media (max-width)` which is a standard viewport media query.
+  - Why D is incorrect: The described approach uses `max-width` breakpoints, not percentage-only fluid layout.
+
+---
+
+### Question 15 (5 points)
+
+Which attribute on a hamburger toggle button is required to communicate its open/closed state to screen reader users?
+
+- A) `data-open="true"`
+- B) `aria-expanded="true"` or `aria-expanded="false"` updated dynamically with JavaScript
+- C) `role="toggle"` on the button element
+- D) `aria-hidden="false"` on the navigation list
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: `data-*` attributes are custom data hooks for JavaScript — they are not exposed in the accessibility tree and are not announced by screen readers.
+  - Why B is correct: `aria-expanded` is the ARIA state attribute that communicates whether a control's associated panel is expanded or collapsed. Screen readers announce the current state when the button receives focus.
+  - Why C is incorrect: `role="toggle"` is not a valid ARIA role; interactive toggle state is communicated through `aria-expanded`, not a custom role.
+  - Why D is incorrect: `aria-hidden="false"` is the default state and redundant; it does not communicate the toggle state of the controlling button.
+
+---
+
+### Question 16 (5 points)
+
+A developer wants a section's padding to scale smoothly with viewport width — 1rem at 375px, scaling up to 3rem at 1440px — without writing media queries. Which CSS function accomplishes this?
+
+- A) `padding: min(1rem, 3rem);`
+- B) `padding: clamp(1rem, 2vw, 3rem);`
+- C) `padding: calc(1rem + 100vw);`
+- D) `padding: fit-content(3rem);`
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: `min()` returns the smaller of its arguments — `min(1rem, 3rem)` always returns `1rem` regardless of viewport width.
+  - Why B is correct: `clamp(1rem, 2vw, 3rem)` uses `2vw` as the fluid preferred value that scales with viewport width, clamped between a 1rem minimum and 3rem maximum.
+  - Why C is incorrect: `calc(1rem + 100vw)` would produce an extremely large value (the full viewport width plus 16px) rather than a gently scaling padding.
+  - Why D is incorrect: `fit-content()` is a sizing function for grid tracks and element widths — it is not valid for padding values.
+
+---
+
+### Question 17 (5 points)
+
+Which media query feature detects that a user is interacting via a pointing device that lacks hover capability, such as a touchscreen?
+
+- A) `@media (pointer: coarse)`
+- B) `@media (hover: none)`
+- C) `@media (touch-events: enabled)`
+- D) `@media (input: touch)`
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: `@media (pointer: coarse)` detects an imprecise pointing device (like a finger on a touchscreen) but does not directly test hover capability.
+  - Why B is correct: `@media (hover: none)` matches devices where the primary input mechanism cannot hover, such as touchscreens. Developers use this to disable hover-only interactions that would not be accessible on touch devices.
+  - Why C is incorrect: `touch-events` is not a valid CSS media feature.
+  - Why D is incorrect: `input: touch` is not a valid CSS media feature.
+
+---
+
+### Question 18 (5 points)
+
+A developer uses `em` units for padding inside a card component. If the card's `font-size` is `1.25rem` and the padding is set to `1em`, what is the computed padding in pixels (assuming the root font size is 16px)?
+
+- A) 16px
+- B) 20px
+- C) 25px
+- D) 12.5px
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: 16px would be the result if `em` computed against the root font size, but `em` is relative to the element's own `font-size`, not the root.
+  - Why B is correct: The card's `font-size` is `1.25rem` = 1.25 × 16px = 20px. `1em` = the element's font-size = 20px.
+  - Why C is incorrect: 25px would require a `font-size` of 25px (1.5625rem), not 1.25rem.
+  - Why D is incorrect: 12.5px would result from `0.625rem` — not from `1em` at a 20px font-size context.
+
+---
+
+### Question 19 (5 points)
+
+When writing mobile-first CSS, where should `@media (min-width: 768px)` rules be placed relative to the base styles they override?
+
+- A) Before the base styles, so the browser applies desktop styles before the mobile defaults.
+- B) After the base styles they modify, so the cascade applies the media query block over the base rules when the condition is met.
+- C) In a separate CSS file linked with a `media` attribute on the `<link>` element.
+- D) Inside the HTML `<style>` tag in the `<head>` rather than in the external stylesheet.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: Placing media queries before their base styles would cause the base styles to override the media query styles due to cascade order — the opposite of the intended behavior.
+  - Why B is correct: In the CSS cascade, later rules with the same or higher specificity win. Media query blocks must follow the base rules they augment so the browser applies them on top when the condition is true.
+  - Why C is incorrect: While separate files linked with `media` attributes is a valid historical pattern, it adds extra HTTP requests and is not the standard modern approach — all breakpoints in a single file is preferred.
+  - Why D is incorrect: Moving media queries to a `<style>` tag does not affect their cascade behavior and fragments the stylesheet across files and inline markup.
+
+---
+
+### Question 20 (5 points)
+
+A responsive page works correctly in Chrome DevTools device simulation but breaks on a real iPhone. The developer verifies the viewport meta tag is present. What is the most likely additional cause?
+
+- A) iPhones do not support CSS Grid — the layout must be rebuilt using Flexbox for iOS compatibility.
+- B) The page is served over HTTP instead of HTTPS — iOS Safari applies different rendering rules for non-secure pages.
+- C) The page uses device-pixel-ratio-specific assets that conflict with the iPhone's Retina display scaling, causing layout to calculate at 2x sizes.
+- D) The DevTools simulation does not account for iOS Safari-specific behaviors such as the address bar affecting `100vh`, or CSS features not yet implemented in the WebKit engine.
+
+- **Correct Answer:** D
+- **Distractor Analysis:**
+  - Why A is incorrect: iOS Safari fully supports CSS Grid — this is not the cause of layout differences between DevTools simulation and real device.
+  - Why B is incorrect: HTTP vs HTTPS affects security features like service workers and mixed-content blocking, not basic layout rendering.
+  - Why C is incorrect: Device pixel ratio affects image sharpness, not CSS layout dimensions — `px` in CSS refers to logical pixels, not physical pixels.
+  - Why D is correct: Chrome DevTools simulates screen dimensions but does not replicate WebKit-specific rendering quirks. Common iOS-only issues include `100vh` being taller than the visible viewport (due to the Safari address bar), `-webkit-` prefixed properties needed for certain CSS features, and Safari's distinct handling of certain flexbox edge cases.

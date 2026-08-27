@@ -1,128 +1,223 @@
 # Video Script: Module 06 – Cloud Networking & Hybrid Architectures
+
 ## CSC-6361 Advanced Computer Networks | Graduate Level
+
 ## Part 2 of 2 | Estimated Duration: 15–18 minutes
+
 ## Week 6: November 23 – December 1, 2026 (Extended due to Thanksgiving)
+
 ## Due: Tuesday, December 1, 2026 at 11:59 PM CST
+
 ## Recorded by: Professor Nash | Texas Wesleyan University
 
 ---
 
 ### Pre-Roll Slide
-[SHOW SLIDE: "CSC-6361 — Module 06 Part 2: Multi-Cloud, Network Segmentation & Research Paper Overview | Texas Wesleyan University"]
+
+[SHOW SLIDE: Course banner — "CSC-6361 Advanced Computer Networks | Module 06 Part 2: AWS Direct Connect, Azure ExpressRoute & Hybrid Design Patterns | Texas Wesleyan University | Graduate Level"]
 
 ---
 
-### Section 1: Multi-Cloud Networking
+### Section 1: Welcome to Part 2
 
-[00:00 – 05:30]
-[SHOW DIAGRAM: Multi-cloud — enterprise on-prem connecting to AWS, Azure, and GCP simultaneously via transit hub]
+[00:00 – 01:30]
+[SHOW SLIDE: Professor Nash on camera, hybrid cloud diagram visible behind.]
 
-[Alt-text: A hub-and-spoke diagram. In the center is a box labeled "Transit Network (AWS Transit Gateway / Azure Virtual WAN)." Arrows connect to: "AWS VPC-A," "AWS VPC-B," "Azure VNET-1," "GCP VPC," and "On-Premise DC." Each connection is labeled with the appropriate service name.]
+Welcome back. In Part 1 we built the foundation: SD-WAN architecture with the four Viptela components, OMP protocol, centralized control vs. data policies, VXLAN encapsulation, and EVPN as the BGP control plane.
 
-Many enterprises use two or more cloud providers simultaneously — a strategy called **multi-cloud**. Reasons include:
-- Different cloud providers offer different specialized services (e.g., AWS for general workloads, GCP for BigQuery analytics, Azure for Microsoft 365 integration).
-- Avoiding vendor lock-in.
-- Regulatory requirements specifying data must not reside in a single provider.
+In Part 2 we move to the cloud provider side of hybrid architecture. Specifically: **AWS Direct Connect** — including Virtual Interface types and Link Aggregation Groups — and **Azure ExpressRoute** — circuits, peering types, and route filters. We will then examine how enterprises design hybrid connectivity for resiliency: active/active vs. active/standby patterns. We close with how **BGP communities** are used to engineer traffic flows across cloud provider connections.
 
-**Challenges of Multi-Cloud Networking:**
-1. **Connectivity:** Each cloud has its own VPC/VNET with different IP address ranges. Connecting them requires either:
-   - **Cloud-to-Cloud VPN:** IPsec tunnels between AWS VGW and Azure VPN Gateway.
-   - **Third-party transit network:** A commercial multi-cloud networking platform (e.g., Megaport, Equinix Fabric) that connects to multiple providers.
-   - **SD-WAN overlay:** SD-WAN vEdge devices deployed in each cloud, connected by OMP.
+These topics appear directly on the CCNP ENCOR 350-401 exam in the Infrastructure domain and are essential knowledge for any network engineer working in a hybrid enterprise environment today.
 
-2. **IP Address Management:** With multiple VPCs and VNETs, IP address space must be carefully planned to avoid overlap. A global IPAM (IP Address Management) system is essential.
+---
 
-3. **Security Policy Consistency:** Security Groups and NSGs (Network Security Groups — Azure) are provider-specific. A change made in one cloud's security policy is not automatically reflected in another. Cloud Security Posture Management (CSPM) tools help enforce consistent policies.
+### Section 2: AWS Direct Connect — Architecture and VIF Types
 
-**AWS Transit Gateway:**
-AWS Transit Gateway is a regional hub that connects multiple VPCs and on-premise networks through a single managed routing hub. Instead of creating a mesh of VPC peering connections (which doesn't scale), all VPCs connect to the Transit Gateway, which handles routing between them.
+[01:30 – 07:00]
+[SHOW DIAGRAM: AWS Direct Connect architecture — enterprise router at colocation facility connecting to AWS Direct Connect location, then to AWS backbone, then to VPC Virtual Private Gateway and Transit Gateway]
 
-- Supports up to 5,000 VPC attachments.
-- Supports Direct Connect and VPN attachments for hybrid connectivity.
-- Enables route table segmentation — different VPCs can be in different "route domains," preventing lateral movement between sensitive workloads.
+[Alt-text: A diagram showing three zones from left to right. Zone 1 (left): "Enterprise Network — on-premise router connected to enterprise WAN." Zone 2 (center): "Colocation/Carrier Facility — cross-connect between enterprise router and AWS Direct Connect router. Labeled: 'AWS Direct Connect Location (e.g., Equinix Dallas).' A DX router icon is shown." Zone 3 (right): "AWS Region — Virtual Private Gateway attached to VPC-A and VPC-B. Transit Gateway attached to multiple VPCs. Both connected to the DX router in Zone 2 via Virtual Interfaces (VIFs)."]
 
-**VPC Peering vs. Transit Gateway:**
-| Feature | VPC Peering | Transit Gateway |
+#### What is AWS Direct Connect?
+
+AWS Direct Connect (DX) is a dedicated private network connection between your enterprise and AWS infrastructure. Instead of routing traffic over the public internet, Direct Connect traffic travels over a private fiber circuit — typically provisioned through a colocation facility (such as Equinix) where your equipment and the AWS Direct Connect router are co-located and connected via a cross-connect.
+
+Key capacity options:
+
+- **1 Gbps and 10 Gbps:** Dedicated connections — a full physical port at the DX location is allocated to your account.
+- **50 Mbps to 500 Mbps (Hosted Connections):** Ordered through an AWS Direct Connect Partner — shared physical port, logical capacity guarantee.
+
+The circuit itself is Layer 1 (fiber) and Layer 2 (802.1Q VLAN). All routing is BGP — you establish BGP sessions over the Direct Connect circuit using Virtual Interfaces.
+
+#### Virtual Interface (VIF) Types
+
+This is a critical exam topic. AWS Direct Connect uses three types of Virtual Interfaces:
+
+| VIF Type | Connects To | BGP ASN Required | Use Case |
+|---|---|---|---|
+| **Private VIF** | A single VPC via Virtual Private Gateway (VGW) | Your private ASN | Connect on-premise to a specific VPC |
+| **Public VIF** | AWS public services (S3, DynamoDB, public AWS IPs) | Your public ASN | Access AWS public endpoints without internet |
+| **Transit VIF** | AWS Transit Gateway (TGW) | Your private ASN | Connect to multiple VPCs via a single VIF |
+
+> **Graduate Design Note:** For most enterprise deployments, **Transit VIF + Transit Gateway** is the preferred architecture. A single Transit VIF connects to Transit Gateway, which then routes to all attached VPCs. This eliminates the need to create a separate Private VIF for each VPC — scalability advantage as VPC count grows.
+
+#### Private VIF — Routing Details
+
+When you establish a Private VIF to a VPC's Virtual Private Gateway:
+
+- BGP session is established between your on-premise router and the VGW.
+- Your router advertises your on-premise prefixes to AWS.
+- AWS advertises the VPC CIDR block(s) back to your router.
+- Maximum prefixes you can advertise: **100 routes** (soft limit, can be raised via AWS support).
+
+#### Public VIF — Routing Details
+
+A Public VIF is used to access AWS public service endpoints (e.g., S3, CloudFront, SQS) via Direct Connect instead of the internet. You advertise your public IP prefixes to AWS; AWS advertises all AWS public IP ranges to you (this is a very large route table — filter carefully).
+
+> **Key Exam Point:** A Public VIF does NOT give you access to your VPC. It gives you access to AWS public services. To access resources inside a VPC, you need a Private VIF or Transit VIF.
+
+#### Link Aggregation Groups (LAG)
+
+A LAG bundles multiple Direct Connect connections at the same DX location into a single logical link:
+
+- All physical connections in a LAG must be the same speed (e.g., all 1 Gbps or all 10 Gbps).
+- LACP (Link Aggregation Control Protocol) is used for LAG negotiation.
+- A LAG provides both **increased bandwidth** and **connection redundancy** — if one physical link fails, the LAG continues with the remaining links.
+- Maximum 4 connections per LAG.
+
+---
+
+### Section 3: Azure ExpressRoute — Architecture and Peering Types
+
+[07:00 – 12:00]
+[SHOW DIAGRAM: Azure ExpressRoute architecture — enterprise network connecting through ExpressRoute circuit to Microsoft Edge, then to Azure Virtual Network and Microsoft 365 services]
+
+[Alt-text: A diagram showing "Enterprise Network" on the left connected via "ExpressRoute Circuit (provider-managed)" to a central "Microsoft Enterprise Edge (MSEE) Router." From the MSEE, two paths go right: (1) "Private Peering — Azure Virtual Networks (VNets)" and (2) "Microsoft Peering — Microsoft 365, Azure Public Services." A third element "ExpressRoute Global Reach" is shown connecting two enterprise sites to each other through the MSEE.]
+
+#### What is Azure ExpressRoute?
+
+Azure ExpressRoute is Microsoft's dedicated private connectivity product — functionally equivalent to AWS Direct Connect. An ExpressRoute Circuit is provisioned through one of Microsoft's connectivity partners (AT&T, Equinix, Megaport, and others) and provides a private, reliable path to Azure and Microsoft 365 services.
+
+ExpressRoute circuit speeds range from **50 Mbps to 100 Gbps**, depending on the provider and tier.
+
+The ExpressRoute architecture uses **two physical connections** (primary and secondary) by default — this is not optional redundancy, it is built into the circuit specification. Both connections terminate at Microsoft Enterprise Edge (MSEE) routers in different physical locations for maximum resilience.
+
+#### ExpressRoute Peering Types
+
+| Peering Type | Connects To | BGP Community Support | Use Case |
+|---|---|---|---|
+| **Private Peering** | Azure Virtual Networks (VNets) via ExpressRoute Gateway | No BGP community filtering | Connect on-premise to Azure VNets |
+| **Microsoft Peering** | Azure public services + Microsoft 365 | Yes — route filters required | Access Office 365, Azure Storage, etc. |
+
+> **Azure vs. AWS Terminology Note:** Azure "Private Peering" is the functional equivalent of AWS "Private VIF." Azure "Microsoft Peering" covers what AWS handles with "Public VIF" — but with a key difference: Microsoft Peering requires explicit **route filters** to control which services' prefixes are received. Without a route filter, no routes are advertised over Microsoft Peering.
+
+#### Route Filters on Microsoft Peering
+
+Route filters are Azure resources that specify which BGP communities you want to receive over Microsoft Peering. Each Azure service region and Microsoft 365 service has a BGP community value. Example:
+
+- Azure East US public services: BGP community `12076:51004`
+- Exchange Online (Microsoft 365): BGP community `12076:5010`
+
+You attach a route filter to the Microsoft Peering, selecting only the community values for services you need. This prevents receiving the full Microsoft BGP table (which is enormous) when you only need Office 365 reachability.
+
+#### ExpressRoute Global Reach
+
+ExpressRoute Global Reach is a feature that connects two on-premise networks to each other through the Microsoft backbone — without going through Azure VNets. If your company has offices in Dallas and London, both with ExpressRoute circuits, Global Reach creates a direct path between Dallas and London through Microsoft's network. This is a WAN optimization capability, not just a cloud connectivity feature.
+
+#### ExpressRoute vs. Direct Connect — Comparison
+
+| Feature | AWS Direct Connect | Azure ExpressRoute |
 |---|---|---|
-| Connection type | Direct 1:1 between 2 VPCs | Hub-and-spoke — all VPCs connect to TGW |
-| Scale | Max ~125 peering connections | Thousands of attachments |
-| Transitivity | ❌ Not transitive (A↔B, B↔C ≠ A↔C) | ✅ Transitive routing via TGW route tables |
-| Cost | No hourly charge | Hourly charge + data processing fee |
-| Use case | Simple, few VPCs | Complex, many VPCs, hybrid |
+| Dedicated circuit speeds | 1 Gbps, 10 Gbps (hosted: 50M–500M) | 50 Mbps to 100 Gbps |
+| Redundancy model | Manual — you provision two circuits | Built-in dual connection (primary + secondary) |
+| Transit connectivity | Transit VIF + Transit Gateway | ExpressRoute Global Reach |
+| BGP community filtering | Not on Private VIF | Required on Microsoft Peering |
+| Public service access | Public VIF | Microsoft Peering (with route filters) |
 
 ---
 
-### Section 2: Network Segmentation in Hybrid Environments
+### Section 4: Hybrid Connectivity Design Patterns
 
-[05:30 – 10:30]
-[SHOW DIAGRAM: Microsegmentation — Group-Based Policy tagging and enforcement across on-prem, cloud, and remote users]
+[12:00 – 15:30]
+[SHOW DIAGRAM: Two patterns side by side — active/active (both Direct Connect circuits carry traffic) and active/standby (primary circuit carries all traffic, standby sits idle until failover)]
 
-**Macro vs. Microsegmentation:**
-- **Macrosegmentation:** Traditional VLAN/VRF-based segmentation — entire subnets or VLANs are separated. A user in VLAN 10 cannot reach VLAN 20 without going through a firewall/router. Coarse-grained.
-- **Microsegmentation:** Policy is enforced at the workload level — individual VMs or containers can have their own security policy even if they share the same IP subnet. Software-defined, fine-grained.
+#### Active/Active Hybrid Design
 
-**Cisco TrustSec — Group-Based Policy (GBP):**
-In the campus (SD-Access), TrustSec assigns a **Security Group Tag (SGT)** to each endpoint based on its identity (user role, device type, authentication state). SGT tags are propagated across the network and enforced at policy enforcement points — routers, switches, firewalls — without requiring IP address-based ACLs.
+In an active/active design, two or more paths to the cloud are used simultaneously:
 
-Example: A contractor's laptop (SGT 20) connecting to the network can only reach internet breakout resources (SGT 10). An employee laptop (SGT 30) can reach corporate applications (SGT 40). This policy travels with the user regardless of which physical port, VLAN, or location they connect from.
+- Two Direct Connect circuits (or a LAG) with BGP load balancing.
+- Both circuits advertise the same prefixes to AWS; AWS distributes outbound traffic across both.
+- On the enterprise side, ECMP (Equal-Cost Multi-Path) routing distributes inbound traffic.
 
-**Cloud Workload Segmentation:**
-In AWS, the equivalent of microsegmentation is achieved by combining:
-- **Security Groups per instance** (stateful, instance-level firewall).
-- **VPC Endpoints** — keep traffic to AWS services on the private network (no internet exposure).
-- **AWS Network Firewall** — stateful inspection and IDS/IPS for VPC traffic.
-- **Private Link** — expose services to other VPCs without routing through the internet.
+Benefits:
+
+- Full bandwidth utilization of both circuits.
+- Seamless failover — if one circuit fails, traffic immediately shifts to the surviving circuit with no BGP reconvergence delay (BFD on Direct Connect detects failures in milliseconds).
+
+Consideration:
+
+- Requires careful BGP tuning to prevent asymmetric routing (inbound on Circuit A, outbound on Circuit B) if the circuits have different capacities.
+
+#### Active/Standby Hybrid Design
+
+In an active/standby design, one path carries all traffic and the other sits in cold standby:
+
+- Primary: Direct Connect circuit with BGP local preference 200 (preferred).
+- Standby: IPsec VPN over internet with BGP local preference 100 (backup).
+- When Direct Connect fails, BGP withdraws the preferred routes and traffic shifts to the VPN.
+
+BGP tuning mechanisms for active/standby:
+
+- **AS Path Prepending:** Advertise your prefixes to AWS with extra AS hops on the backup path — AWS prefers the shorter path (Direct Connect) and only uses the VPN when the DX path disappears.
+- **Local Preference:** Set higher local preference on routes received via Direct Connect on your enterprise BGP router — your traffic prefers DX outbound.
+- **MED (Multi-Exit Discriminator):** Used when advertising the same prefix via two AWS Direct Connect locations in different regions; lower MED = preferred.
+
+#### BGP Communities for Cloud Traffic Engineering
+
+BGP communities are 32-bit values (AS:value format) attached to route advertisements. Both AWS and Azure use well-known communities to signal routing preferences.
+
+AWS Direct Connect BGP communities:
+
+| Community Value | Meaning |
+|---|---|
+| `7224:9100` | Local AWS Region only (do not propagate to other regions) |
+| `7224:9200` | Prefer this path for all AWS traffic in the continent |
+| `7224:9300` | Global — propagate to all AWS regions worldwide |
+
+You set these communities on routes you advertise to AWS to control how AWS distributes those prefixes internally. Conversely, AWS tags the routes it advertises to you with communities indicating the originating region — you can use these to set different local preferences for traffic from different AWS regions.
+
+Azure ExpressRoute BGP communities (inbound, from Microsoft):
+
+- Each Azure region has a unique BGP community value in the `12076:5xxxx` range.
+- You can use these in route-map `match community` statements to set local preferences per region — for example, prefer the Dallas ExpressRoute for East US traffic and the New York ExpressRoute for West Europe traffic.
+
+---
+
+### Section 5: Part 2 Summary and Module Wrap-Up
+
+[15:30 – 17:30]
+[SHOW SLIDE: Module 06 complete summary — SD-WAN + VXLAN/EVPN + cloud connectivity]
+
+In Part 2 you have learned:
+
+- **AWS Direct Connect:** VIF types (Private, Public, Transit), LAG aggregation, BGP routing model, and the Transit VIF + Transit Gateway enterprise pattern.
+- **Azure ExpressRoute:** Circuit architecture (dual connections), Private Peering vs. Microsoft Peering, route filters as a requirement for Microsoft Peering, and Global Reach for site-to-site connectivity.
+- **Hybrid design patterns:** Active/active (ECMP, full bandwidth utilization) vs. active/standby (AS path prepending, local preference, MED for BGP failover tuning).
+- **BGP communities for cloud TE:** AWS 7224:9xxx communities for regional propagation control; Azure 12076:5xxxx regional communities for local preference tuning.
+
+Combined with Part 1 (SD-WAN, VXLAN, EVPN), you now have a complete picture of how modern enterprises connect their campus networks, data centers, and cloud workloads into a unified hybrid architecture. This is the network engineer's domain in 2026 and beyond.
+
+**Reminder:** All Module 06 deliverables — Lab, Discussion, and Research Paper — are due **Tuesday, December 1, 2026 at 11:59 PM CST**.
 
 ---
 
-### Section 3: IPv6 in Enterprise and Cloud Networks
+### Additional Resources
 
-[10:30 – 13:00]
-[SHOW SLIDE: IPv4 exhaustion → dual-stack transition → IPv6-only cloud paths]
-
-IPv6 adoption is accelerating. All major cloud providers support IPv6, and IPv6-only subnets are increasingly common for new cloud deployments. Key points for the CCNP exam and enterprise design:
-
-**Dual-Stack Design:**
-Most current enterprise networks run **dual-stack** — both IPv4 and IPv6 simultaneously. Devices have both an IPv4 and IPv6 address; applications that support IPv6 prefer it, others fall back to IPv4.
-
-**IPv6 Addressing in Enterprise:**
-- **Global Unicast (GUA):** Public IPv6 addresses, routable on the internet (equivalent to public IPv4). Prefix: 2000::/3.
-- **Link-Local (LLA):** Automatically assigned on every IPv6-enabled interface, used for on-link routing. Prefix: FE80::/10. Never routed beyond the local segment.
-- **Unique Local Address (ULA):** Similar to RFC 1918 private space. Prefix: FC00::/7. Not routable on the internet.
-
-**SLAAC — Stateless Address Autoconfiguration:**
-IPv6 devices can configure their own GUA without a DHCPv6 server using SLAAC — the router sends a **Router Advertisement (RA)** containing the network prefix, and the device appends its own 64-bit Interface ID (derived from MAC via EUI-64 or randomly generated).
-
-**OSPFv3 for IPv6:**
-OSPFv3 is the IPv6 version of OSPF (though modern IOS uses "OSPF with address-family ipv6" in named mode rather than the separate `ipv6 router ospf` process). Configuration parallels OSPFv2.
+- AWS Direct Connect User Guide: [https://docs.aws.amazon.com/directconnect/latest/UserGuide/Welcome.html](https://docs.aws.amazon.com/directconnect/latest/UserGuide/Welcome.html)
+- Azure ExpressRoute Documentation: [https://docs.microsoft.com/en-us/azure/expressroute/expressroute-introduction](https://docs.microsoft.com/en-us/azure/expressroute/expressroute-introduction)
+- Cisco SD-WAN Cloud OnRamp Configuration Guide: [https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/cloudonramp/ios-xe-17/cloud-onramp-book-xe.html](https://www.cisco.com/c/en/us/td/docs/routers/sdwan/configuration/cloudonramp/ios-xe-17/cloud-onramp-book-xe.html)
+- IETF RFC 4271 — BGP-4: [https://datatracker.ietf.org/doc/html/rfc4271](https://datatracker.ietf.org/doc/html/rfc4271)
 
 ---
 
-### Section 4: Research Paper Overview
-
-[13:00 – 15:00]
-[SHOW SLIDE: Research Paper requirements — 5–7 pages, due December 1]
-
-Your **Graduate Research Paper** is due together with the Module 06 assignments on **December 1, 2026 at 11:59 PM CST**.
-
-**Requirements Recap:**
-- **Length:** 5–7 pages, double-spaced, 12pt font (not counting title page and references).
-- **Topic:** An advanced networking topic of your choice (approved by the instructor no later than November 13).
-- **References:** Minimum 5 credible technical sources.
-- **Citation Format:** APA or IEEE (consistent throughout).
-- **Thesis:** Your paper must advance a clear, original analytical argument — not just summarize sources.
-
-**If you have not yet submitted your topic proposal**, email me immediately at nash@txwes.edu. Topic approval is required before you can submit the paper.
-
-**Reminder of suggested topics (Module 06 is an excellent source):**
-- SD-WAN deployment strategy: MPLS replacement or complement?
-- AWS Transit Gateway vs. traditional hub-and-spoke WAN design
-- RPKI (Resource Public Key Infrastructure) and BGP route origin validation
-- IPv6 enterprise migration planning: challenges and best practices
-- Network automation maturity model: from CLI to Intent-Based Networking
-
-**Module 06 assignments due: Tuesday, December 1, 2026 at 11:59 PM CST**
-*(Extended from Sunday, November 30 due to Thanksgiving Break November 26–28)*
-
----
-*End of Part 2 — Module 06*
+End of Part 2 — Module 06

@@ -244,3 +244,27 @@ The following traps appear regularly on A+ Core 1 scenario questions for Domain 
 
 - Professor Messer's CompTIA A+ Core 1 free study notes and video course: professormesser.com (220-1101 section, Domain 3.4)
 - CompTIA A+ Exam Objectives (220-1101): comptia.org (free download; review Domain 3.4 objectives in full)
+
+---
+
+## 9. Supplemental Resources
+
+1. **Professor Messer — Custom PC Configurations (220-1101 Free Video)**
+   URL: [https://www.professormesser.com/free-a-plus-training/220-1101/220-1101-video/](https://www.professormesser.com/free-a-plus-training/220-1101/220-1101-video/)
+   Relevance: Free video covering the four custom PC build types (CAD workstation, virtualization host, gaming PC, NAS) directly aligned to Domain 3.4 objectives and Module 08 exam questions.
+
+2. **VirtualBox (Free Type 2 Hypervisor)**
+   URL: [https://www.virtualbox.org/wiki/Downloads](https://www.virtualbox.org/wiki/Downloads)
+   Relevance: Free, open-source Type 2 hypervisor for Windows, macOS, and Linux. Use for the Challenge Exercise to create and run actual virtual machines, giving hands-on experience with the virtualization concepts covered in this module.
+
+3. **TrueNAS SCALE (Free NAS OS)**
+   URL: [https://www.truenas.com/truenas-scale/](https://www.truenas.com/truenas-scale/)
+   Relevance: Free, open-source NAS operating system built on ZFS. Review the documentation to understand real-world NAS hardware requirements (ECC RAM, NAS-rated drives, RAID-Z configuration) as described in the Module 08 reading guide.
+
+4. **Puget Systems Workstation Guides (Free Reference)**
+   URL: [https://www.pugetsystems.com/recommended/](https://www.pugetsystems.com/recommended/)
+   Relevance: Free professional workstation hardware recommendations with application-specific benchmark data for CAD (SolidWorks, AutoCAD), video editing, and 3D rendering. Reinforces the professional vs. consumer GPU distinction and the After Effects RAM scaling discussion.
+
+5. **PCPartPicker — Build Showcase (Free)**
+   URL: [https://pcpartpicker.com/builds/](https://pcpartpicker.com/builds/)
+   Relevance: Community PC build database with component lists and total cost estimates. Browse completed builds tagged as "Workstation," "NAS," "Gaming," and "Server" to see real-world examples of how the component selection principles from this module are applied in practice.

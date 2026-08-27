@@ -483,4 +483,125 @@ Also delete the S3 state bucket and DynamoDB lock table if you created them for 
 
 ---
 
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: OIDC Authentication Upgrade
+
+Replace the static AWS access key secrets in the pipeline with OIDC-based keyless authentication.
+
+**Step A.** In the AWS console, create an IAM OIDC identity provider:
+
+```text
+Provider URL: https://token.actions.githubusercontent.com
+Audience:     sts.amazonaws.com
+```
+
+Then create an IAM role with the following trust policy, replacing `OWNER` and `REPO` with your GitHub username and repository name:
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Federated": "arn:aws:iam::ACCOUNT_ID:oidc-provider/token.actions.githubusercontent.com"
+      },
+      "Action": "sts:AssumeRoleWithWebIdentity",
+      "Condition": {
+        "StringEquals": {
+          "token.actions.githubusercontent.com:aud": "sts.amazonaws.com"
+        },
+        "StringLike": {
+          "token.actions.githubusercontent.com:sub": "repo:OWNER/REPO:*"
+        }
+      }
+    }
+  ]
+}
+```
+
+1. Attach `AmazonS3FullAccess` and `AmazonDynamoDBFullAccess` to the role (for lab purposes only — in production use least-privilege policies).
+2. Update `.github/workflows/terraform.yml` to remove the `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` environment variables. Add `id-token: write` to the workflow permissions and add an `aws-actions/configure-aws-credentials@v4` step that assumes the new OIDC role.
+3. Delete the `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` GitHub secrets from your repository settings.
+4. Push a change and confirm the pipeline runs successfully using OIDC credentials. Record in your submission: what is the maximum lifetime of credentials issued via OIDC assume-role, and why does this reduce the blast radius of a CI system compromise compared to long-lived access keys?
+
+### Challenge 2: Scheduled Drift Detection Pipeline
+
+Add a second GitHub Actions workflow file that runs drift detection on a nightly schedule.
+
+**Step A.** Create `.github/workflows/drift-detection.yml`:
+
+```yaml
+name: Terraform Drift Detection
+
+on:
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  drift-check:
+    name: Detect Drift
+    runs-on: ubuntu-latest
+    env:
+      AWS_DEFAULT_REGION: "us-east-2"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.6.6"
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_OIDC_ROLE_ARN }}
+          aws-region: us-east-2
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Detect Drift
+        id: drift
+        run: |
+          terraform plan -detailed-exitcode -no-color 2>&1 | tee plan_output.txt
+          echo "exit_code=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
+
+      - name: Open Drift Issue
+        if: steps.drift.outputs.exit_code == '2'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const plan = fs.readFileSync('plan_output.txt', 'utf8');
+            github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: 'Infrastructure Drift Detected — ' + new Date().toISOString().split('T')[0],
+              body: '## Drift Detected\n\nTerraform plan detected infrastructure drift.\n\n```\n' + plan.slice(0, 4000) + '\n```',
+              labels: ['infrastructure', 'drift']
+            });
+```
+
+1. Commit and push the new workflow file. Use the **workflow_dispatch** trigger to run it manually from the Actions tab without waiting for the scheduled time.
+2. Manually change the S3 bucket versioning to `Suspended` in the AWS console again, then re-run the drift detection workflow using `workflow_dispatch`. Confirm it creates a GitHub Issue with the plan output.
+3. Re-enable versioning via `terraform apply` to resolve the drift. Run the drift workflow again and confirm no issue is created (exit code 0).
+4. Record in your submission: what notification channel would you add beyond GitHub Issues (e.g., Slack, PagerDuty) and how would you categorize drift severity to distinguish between critical drifts (security group rules changed) and low-priority drifts (tag value changed)?
+
+### Reflection Questions
+
+1. The lab pipeline applies automatically on every push to main after PR merge. Describe a scenario in a regulated environment (healthcare, finance, government) where this automatic apply would be insufficient and explain what additional controls — human approval steps, change management integrations, or compliance-specific audit requirements — you would add to the pipeline before deploying to a production environment.
+2. tfsec and Checkov perform static analysis before any infrastructure is created, while Terratest runs integration tests against deployed infrastructure. Describe a class of infrastructure defect that static analysis cannot catch but Terratest can, and a class of defect that Terratest cannot catch but static analysis can. Use a concrete example for each.
+
+---
+
 End of Module 12 Lab

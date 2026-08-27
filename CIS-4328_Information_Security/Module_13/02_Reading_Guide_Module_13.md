@@ -320,4 +320,20 @@ Security+ SY0-701 heavily tests risk calculations. You must be able to compute S
 
 ---
 
+## 9. Supplemental Resources
+
+**1. NIST SP 800-30 Rev. 1 — Guide for Conducting Risk Assessments**
+[https://csrc.nist.gov/publications/detail/sp/800-30/rev-1/final](https://csrc.nist.gov/publications/detail/sp/800-30/rev-1/final)
+The authoritative NIST guide for conducting information security risk assessments. Covers threat sources, threat events, vulnerabilities, likelihood determination, and impact analysis using both qualitative and quantitative approaches. Required reading for any practitioner performing formal risk assessments.
+
+**2. NIST SP 800-34 Rev. 1 — Contingency Planning Guide for Federal Information Systems**
+[https://csrc.nist.gov/publications/detail/sp/800-34/rev-1/final](https://csrc.nist.gov/publications/detail/sp/800-34/rev-1/final)
+The definitive federal reference for Business Impact Analysis, Recovery Time Objectives, Recovery Point Objectives, and Maximum Tolerable Downtime. Section 3 provides a step-by-step BIA methodology directly applicable to the calculations and scenarios in this module.
+
+**3. SANS Reading Room — Introduction to Information Security Risk Management**
+[https://www.sans.org/reading-room/whitepapers/auditing/introduction-information-security-risk-management-1204](https://www.sans.org/reading-room/whitepapers/auditing/introduction-information-security-risk-management-1204)
+A practitioner-focused introduction to the risk management lifecycle, connecting NIST frameworks to real-world risk register construction, qualitative and quantitative analysis, and risk treatment decision-making. Useful supplemental reading that bridges textbook concepts and industry practice.
+
+---
+
 *End of Reading Guide — Module 13*

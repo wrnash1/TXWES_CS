@@ -276,8 +276,190 @@ D. The IRP development should be led by the IT department rather than the securi
 
 ---
 
+---
+
+### Question 11 (5 points)
+
+An organization discovers that its Incident Response Plan was last updated eighteen months ago, before the company migrated its primary systems to a hybrid cloud environment. The plan's containment procedures reference on-premises network isolation tools that are no longer deployed. What is the most appropriate immediate action?
+
+- A) Declare the current IRP void and begin responding to all incidents using ad hoc judgment until a new plan is written.
+- B) Treat the plan as fully current because the incident response lifecycle principles do not change with infrastructure changes.
+- C) Identify and document the specific sections made obsolete by the cloud migration and initiate an expedited out-of-cycle review and update of the affected procedures.
+- D) Engage an external consulting firm to rewrite the entire IRP before responding to any new incidents.
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - *Why C is correct:* Significant infrastructure changes are a defined trigger for an out-of-cycle IRP review. The appropriate response is to identify the specific obsolete sections immediately, document the gap for awareness, and initiate an expedited update process — not to void the entire plan or wait for a full rewrite.
+  - *Why A is incorrect:* A partially outdated plan retains value for the sections that remain accurate. Responding purely on ad hoc judgment is far more dangerous than using an imperfect plan as a baseline.
+  - *Why B is incorrect:* While lifecycle principles remain constant, specific containment procedures are infrastructure-dependent. A plan referencing decommissioned tools will fail during execution at exactly the worst possible moment.
+  - *Why D is incorrect:* Engaging a full external rewrite before responding to any incidents is operationally unreasonable and would leave the organization without any structured response capability during the rewrite period.
+
+---
+
+### Question 12 (5 points)
+
+A financial services company's IRP assigns the role of Incident Response Manager to the CISO. During a major ransomware event on a Tuesday evening, the CISO is on a transatlantic flight and unreachable. The next most senior security manager begins making containment decisions. At what point should this person formally assume the IR Manager role?
+
+- A) Only after the CISO lands and formally delegates authority via email.
+- B) Immediately upon determining that the CISO is unreachable and the incident severity requires IR Manager-level decisions — per the backup contact provisions in the IRP.
+- C) Never — all significant decisions must wait for the designated IR Manager regardless of availability.
+- D) After the incident is fully contained, to avoid creating confusion in the response chain.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* A well-designed IRP includes explicit backup contact and role assumption provisions for exactly this scenario. The deputy assumes the IR Manager role as soon as the primary is confirmed unreachable and incident conditions require that authority. Waiting for a delegation email introduces unacceptable delay.
+  - *Why A is incorrect:* Requiring a formal email delegation before any IR Manager action could delay critical containment decisions by hours. The IRP's backup provisions eliminate the need for real-time delegation.
+  - *Why C is incorrect:* An IRP that requires waiting for an unavailable designated manager has a fatal design flaw. Every critical IRP role must have a named backup with explicitly pre-authorized decision authority.
+  - *Why D is incorrect:* Assuming the IR Manager role after the incident is contained provides no operational value. The role assumption is needed during the active response, not as a post-incident administrative formality.
+
+---
+
+### Question 13 (5 points)
+
+During a post-incident review, the team discovers that the IRP required the on-call analyst to notify the CISO "as soon as possible" when a High-severity incident was detected. In the most recent incident, the analyst waited 3 hours before notifying the CISO because they believed they could resolve the issue independently. Which IRP design improvement would most directly prevent this failure?
+
+- A) Replace the CISO with a more available manager who can respond faster.
+- B) Replace "as soon as possible" with a specific, objective time requirement — such as "within 30 minutes of High-severity classification" — making compliance measurable and non-discretionary.
+- C) Train analysts to exercise better judgment about when escalation is necessary.
+- D) Eliminate the CISO notification requirement for High-severity incidents to reduce unnecessary alerts.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Vague escalation language such as "as soon as possible" is a well-documented IRP weakness. It permits individual discretion and creates inconsistency. Replacing it with a specific time threshold makes the requirement measurable, removes individual judgment from the timing decision, and creates a clear compliance standard.
+  - *Why A is incorrect:* The failure was in the escalation criteria language, not in the CISO's availability. Changing personnel does not address the root cause of vague escalation language.
+  - *Why C is incorrect:* The IRP's purpose is to eliminate dependence on good individual judgment under high-stress conditions. Relying on better analyst judgment is precisely what the plan should avoid — the plan should make the correct action the only available action.
+  - *Why D is incorrect:* Eliminating CISO notification for High-severity incidents would deprive leadership of the situational awareness needed to authorize significant containment actions and manage regulatory obligations.
+
+---
+
+### Question 14 (5 points)
+
+An organization's IRP requires that all digital evidence collected during incident response be preserved in a manner that supports potential legal proceedings. A junior analyst, during the eradication phase, wipes and reimages three compromised servers before forensic images were created. Which consequence is MOST likely to result from this action?
+
+- A) No consequence — reimaging is the correct eradication technique and is always legally acceptable.
+- B) The organization may be unable to determine the full scope of the attack and may face spoliation risk if litigation follows the incident.
+- C) The organization is required to notify law enforcement immediately about the evidence destruction.
+- D) The analyst will be personally criminally liable for destroying electronic evidence.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Wiping systems before forensic imaging destroys evidence of the attack's scope, entry vector, lateral movement, and attacker tools. If litigation or regulatory investigation follows, the organization may face spoliation sanctions — adverse inference or penalties for destruction of potentially relevant evidence. The investigation is also degraded by the loss of this evidence.
+  - *Why A is incorrect:* Reimaging is an eradication technique, but the IRP requirement to preserve forensic evidence before eradication means reimaging without prior imaging violates the plan. Legal acceptability depends on whether the organization had a duty to preserve evidence.
+  - *Why C is incorrect:* Mandatory law enforcement notification for evidence destruction is not a universal legal requirement. Whether notification is required depends on whether a legal hold was in effect and other jurisdictional factors.
+  - *Why D is incorrect:* Personal criminal liability for evidence destruction requires specific statutory conditions, typically a legal hold or ongoing investigation with actual notice. A junior analyst acting outside an established legal hold would not ordinarily face criminal liability, though organizational liability remains.
+
+---
+
+### Question 15 (5 points)
+
+A healthcare organization's IRP contains a section on cyber insurance requirements. The policy requires notification to the insurer "within 72 hours of discovering a covered cyber event." The IR team contains a ransomware attack on Wednesday morning but delays notifying the insurer until the following Monday because they want to have a complete incident report ready. Which risk does this create?
+
+- A) No risk — insurers prefer receiving complete reports and routinely accept delays.
+- B) The organization may be at risk of claim denial or reduced coverage if the 72-hour notification requirement was violated, regardless of the completeness of the eventual report.
+- C) The organization must contact the regulator instead of the insurer within 72 hours.
+- D) The delay is acceptable because 72-hour requirements apply only to GDPR, not cyber insurance policies.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Cyber insurance policies commonly contain prompt notification requirements, and failure to comply can be cited as a basis for claim denial or coverage reduction. Insurers need timely notification to exercise their contractual rights — such as approving response vendors, managing legal exposure, and coordinating with their own representatives. Waiting for a complete report does not satisfy the notification requirement.
+  - *Why A is incorrect:* Insurers do not routinely waive notification deadline requirements as a matter of course. Delay in notification may be explicitly cited in policy language as a condition affecting coverage.
+  - *Why C is incorrect:* Regulatory notification and insurer notification are separate and independent obligations. Each has its own timeline and recipient. The cyber insurer notification deadline is contractual, not regulatory.
+  - *Why D is incorrect:* 72-hour requirements appear in multiple contexts — GDPR supervisory authority notification, cyber insurance policies, and some contractual service agreements all commonly use this timeframe. The source of the requirement here is the insurance policy.
+
+---
+
+### Question 16 (5 points)
+
+During a tabletop exercise, a facilitator presents an inject: the organization's domain controller has been compromised and all Active Directory credentials are believed to be exposed. The IR team lead immediately proceeds to "reset all Active Directory passwords." A participant raises a concern. Which concern is most valid from an incident management perspective?
+
+- A) Resetting AD passwords is not a security response action and should not be discussed in an IR context.
+- B) Before resetting passwords organization-wide, the team must consider whether such a broad action would alert the attacker to the investigation, prematurely trigger their next phase, or disrupt critical business operations.
+- C) Password resets require board approval before execution and cannot be discussed without that authorization.
+- D) All AD credentials are considered permanently compromised once exposed; resetting them provides no security value.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Mass credential resets are a valid eradication action but carry significant tactical and operational implications. An advanced persistent threat actor monitoring for investigation activity may accelerate their timeline or trigger destructive actions upon detecting a mass credential rotation. Additionally, an organization-wide AD password reset can disrupt service accounts, automated processes, and user access in ways that create significant business impact. This decision requires careful coordination — not reflexive immediate execution.
+  - *Why A is incorrect:* Credential rotation is explicitly an eradication activity in the NIST SP 800-61 framework. It is a core IR response action for credential compromise incidents.
+  - *Why C is incorrect:* Operational credential management decisions are within the authority of the IR Manager and CISO acting under the IRP. Board approval is not required for eradication actions.
+  - *Why D is incorrect:* Credential rotation is effective and necessary after credential compromise. The value of new credentials is that they replace those the attacker possesses, eliminating their ability to authenticate with previously harvested credentials.
+
+---
+
+### Question 17 (5 points)
+
+An organization is evaluating whether to retain a third-party incident response firm on a break-glass retainer. Which statement most accurately describes the primary governance benefit of a retainer arrangement compared to engaging a firm at the time of an incident?
+
+- A) A retainer arrangement is always less expensive than an on-demand engagement for the same incident.
+- B) A retainer arrangement eliminates the need for an internal incident response team.
+- C) A retainer arrangement pre-establishes legal agreements, pricing, scope, and onboarding so the firm can begin work in hours rather than days when an incident occurs.
+- D) A retainer arrangement guarantees that the firm will be available regardless of concurrent demand from other clients.
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - *Why C is correct:* The primary governance value of a retainer is operational readiness. When an incident occurs, an organization without a retainer must negotiate contracts, approve vendors, and complete legal agreements under the worst possible conditions — active incident pressure. A retainer pre-clears all administrative barriers so the firm can begin substantive response work immediately.
+  - *Why A is incorrect:* A retainer involves pre-paid hours and annual fees. It is not always less expensive than on-demand engagement for all incident scenarios. The value is in readiness and speed, not necessarily in cost savings.
+  - *Why B is incorrect:* Retainer arrangements supplement internal capability, particularly for surge capacity and specialized expertise. They do not replace the internal IR team, which must still triage, contain, and manage the response.
+  - *Why D is incorrect:* Retainer agreements typically include capacity provisions but do not guarantee unlimited availability. During major simultaneous incidents affecting multiple clients, capacity constraints can still occur. However, priority response SLAs are commonly included in retainer agreements.
+
+---
+
+### Question 18 (5 points)
+
+A company's Incident Response Plan classifies a confirmed malware infection on a single, isolated workstation with no network connectivity and no sensitive data as Severity 4 (Low). The on-call analyst treats this as a Severity 2 (High) incident because the malware family involved has been associated with ransomware precursor activity. Which statement best evaluates the analyst's decision?
+
+- A) The analyst is correct to override the classification because any ransomware-associated malware is automatically a High severity incident.
+- B) The analyst is incorrect — the classification framework must be applied objectively, and the current system state meets Severity 4 criteria; intelligence context should be escalated through the documented criteria, not through unilateral reclassification.
+- C) The analyst should close the ticket without action since the workstation is isolated.
+- D) The analyst should immediately notify the board because ransomware precursor activity always requires board-level escalation.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Severity classification must be applied consistently based on documented criteria. Unilateral analyst reclassification based on intelligence context that the criteria do not cover creates inconsistency, escalation queue problems, and governance accountability issues. The appropriate action is to apply the documented criteria and use the escalation path within the IRP — such as notifying a supervisor about the intelligence context — rather than reclassifying unilaterally.
+  - *Why A is incorrect:* While the threat intelligence context is important, automatic severity overrides based on malware family alone are not how classification frameworks function. Classification is based on observable system state, not threat intelligence association alone.
+  - *Why C is incorrect:* Closing a confirmed malware infection without remediation, regardless of current isolation, allows the malware to persist on the device. The workstation must be eradicated even if it is isolated.
+  - *Why D is incorrect:* Board-level escalation for a single isolated workstation with ransomware precursor malware is disproportionate to the current observable impact. Escalation criteria should be criteria-based, not driven by threat intelligence associations alone.
+
+---
+
+### Question 19 (5 points)
+
+An organization operating in the European Union discovers a data breach affecting 8,000 EU residents' personal data. The organization determines that the breach poses a high risk to those individuals' rights and freedoms. Under GDPR, which of the following notification obligations apply?
+
+- A) Notify the supervisory authority within 72 hours and notify the affected individuals without undue delay.
+- B) Notify the supervisory authority within 30 days and notify affected individuals within 60 days.
+- C) Notify affected individuals within 72 hours; supervisory authority notification is optional.
+- D) No notification is required because the breach did not involve financial data.
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - *Why A is correct:* GDPR Article 33 requires notification to the supervisory authority within 72 hours of becoming aware of a personal data breach. GDPR Article 34 requires notification to affected individuals "without undue delay" when the breach is likely to result in a high risk to their rights and freedoms. Both obligations are triggered in this scenario.
+  - *Why B is incorrect:* The GDPR supervisory authority notification deadline is 72 hours, not 30 days. The 30 and 60-day timelines describe HIPAA individual notification — a different regulatory framework.
+  - *Why C is incorrect:* Under GDPR, when a breach poses high risk to data subjects, individual notification is required — it is not optional. The supervisor notification is also required within 72 hours.
+  - *Why D is incorrect:* GDPR applies to personal data of any type. The type of data does not determine whether notification is required; the nature of the breach and the risk to individuals does.
+
+---
+
+### Question 20 (5 points)
+
+An organization receives a subpoena requiring the production of all electronic records related to a specific individual for a period spanning eighteen months. The CISO discovers that the organization's standard log retention policy deletes most logs after ninety days. Which governance failure does this most directly represent?
+
+- A) A technical failure in the backup system that caused logs to be deleted earlier than intended.
+- B) A failure to implement a legal hold process that coordinates with legal counsel to preserve records relevant to reasonably anticipated litigation before routine deletion destroys them.
+- C) A compliance gap in the organization's SIEM configuration that should have been identified in the last audit.
+- D) An acceptable business outcome — log retention policies cannot account for every possible legal proceeding.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Legal hold processes must preserve evidence before routine deletion schedules eliminate potentially relevant records. A mature IRP and information governance program coordinates with legal counsel to identify when litigation is anticipated and implement holds before evidence is lost. The ninety-day deletion policy is a legitimate business decision, but the failure to override it when litigation became foreseeable is a governance failure.
+  - *Why A is incorrect:* The deletion followed policy correctly — it is the policy's interaction with the legal hold obligation that created the gap, not a technical failure.
+  - *Why C is incorrect:* While SIEM retention is an audit topic, the root governance failure here is the absence of a legal hold process coordinated with legal counsel.
+  - *Why D is incorrect:* Legal hold obligations are not optional. When litigation is reasonably anticipated, organizations have a legal duty to preserve relevant records.
+
+---
+
 ## End of Quiz
 
-**Total: 10 questions | 100 points**
+**Total: 20 questions | 10 questions at 10 points each (original) + 10 questions at 5 points each (supplemental) = 150 points**
 
 Review your answers using the distractor analysis provided. For any question you answered incorrectly, revisit the corresponding section in the Module 10 Reading Guide before proceeding to the lab.

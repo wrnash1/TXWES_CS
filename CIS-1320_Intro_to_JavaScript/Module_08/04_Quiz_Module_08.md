@@ -4,7 +4,7 @@
 
 **Certification Alignment:** JSE — Certified Associate in JavaScript Programming (OpenEDG / JS Institute)
 
-**Instructions:** Choose the single best answer for each question.
+**Instructions:** Choose the single best answer for each question. Each question is worth 5 points (20 questions × 5 points = 100 points).
 
 ---
 
@@ -266,3 +266,275 @@ const arr2 = [4, 5, 6];
 - *Why B is incorrect:* The `+` operator on arrays coerces both to strings and concatenates them. `[1,2,3] + [4,5,6]` produces the string `'1,2,34,5,6'`.
 - *Why C is correct:* `[...arr1, ...arr2]` creates a new array containing all elements of `arr1` followed by all elements of `arr2`. Neither original is modified.
 - *Why D is incorrect:* `arr1.concat` without `()` is a reference to the method function, not a call. The semicolon then treats `arr2` as a separate statement. This does not produce a merged array.
+
+---
+
+### Question 11
+
+What is the output of the following code?
+
+```javascript
+const arr = [1, 2, 3, 4, 5];
+const result = arr.every(n => n > 0);
+const result2 = arr.some(n => n > 4);
+console.log(result, result2);
+```
+
+- A) `false` `true`
+- B) `true` `false`
+- C) `true` `true`
+- D) `false` `false`
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `every(n => n > 0)` returns `true` because all elements (`1`, `2`, `3`, `4`, `5`) satisfy `n > 0`.
+- *Why B is incorrect:* `some(n => n > 4)` returns `true` because at least one element (`5`) satisfies `n > 4`.
+- *Why C is correct:* `every` returns `true` when all elements pass the test — all five are greater than `0`. `some` returns `true` when at least one element passes the test — `5 > 4` is true.
+- *Why D is incorrect:* Both `every` and `some` return `true` for this array and these conditions.
+
+---
+
+### Question 12
+
+What is the output of the following code?
+
+```javascript
+const words = ['hello', 'world', 'foo'];
+const result = words.map(w => w.toUpperCase()).join(' - ');
+console.log(result);
+```
+
+- A) `['HELLO', 'WORLD', 'FOO']`
+- B) `'HELLO-WORLD-FOO'`
+- C) `'HELLO - WORLD - FOO'`
+- D) `'hello - world - foo'`
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `map` produces a new array, but then `.join(' - ')` is chained, which converts the array to a string with the specified separator.
+- *Why B is incorrect:* The separator passed to `join` is `' - '` (space-hyphen-space), not just `'-'`. The output includes spaces around the hyphens.
+- *Why C is correct:* `map` produces `['HELLO', 'WORLD', 'FOO']`. `join(' - ')` joins with `' - '` as separator: `'HELLO - WORLD - FOO'`.
+- *Why D is incorrect:* `map(w => w.toUpperCase())` converts each word to uppercase. The original lowercase strings are not preserved in the output.
+
+---
+
+### Question 13
+
+What is the output of the following code?
+
+```javascript
+const arr = [1, [2, 3], [4, [5, 6]]];
+console.log(arr.flat());
+console.log(arr.flat(2));
+```
+
+- A) `[1, 2, 3, 4, 5, 6]` then `[1, 2, 3, 4, 5, 6]`
+- B) `[1, [2, 3], [4, [5, 6]]]` then `[1, 2, 3, 4, 5, 6]`
+- C) `[1, 2, 3, 4, [5, 6]]` then `[1, 2, 3, 4, 5, 6]`
+- D) `[1, 2, 3, 4, 5, 6]` then `[1, 2, 3, 4, [5, 6]]`
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `flat()` with no argument defaults to depth `1`. `[4, [5, 6]]` becomes `[4, [5, 6]]` after one level of flattening — the inner `[5, 6]` is not flattened in the first call.
+- *Why B is incorrect:* `flat()` does flatten one level. `[2, 3]` and `[4, [5, 6]]` are unwrapped — the result is `[1, 2, 3, 4, [5, 6]]`, not the original.
+- *Why C is correct:* `flat()` (depth 1): removes one level of nesting → `[1, 2, 3, 4, [5, 6]]`. `flat(2)` (depth 2): removes two levels → `[1, 2, 3, 4, 5, 6]`.
+- *Why D is incorrect:* This reverses the results. Greater depth = more flattening, not less.
+
+---
+
+### Question 14
+
+What is the output of the following code?
+
+```javascript
+const products = [
+  { name: 'pen', price: 1.5 },
+  { name: 'notebook', price: 3.0 },
+  { name: 'ruler', price: 2.0 }
+];
+const total = products.reduce((sum, p) => sum + p.price, 0);
+console.log(total);
+```
+
+- A) `3`
+- B) `6.5`
+- C) `1.5`
+- D) `NaN`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* The number of products is `3`, but `reduce` is summing the `price` values, not counting items.
+- *Why B is correct:* Starting from `0`, each iteration adds the product's price: `0 + 1.5 = 1.5`, `1.5 + 3.0 = 4.5`, `4.5 + 2.0 = 6.5`. Final result: `6.5`.
+- *Why C is incorrect:* `1.5` is the first product's price. `reduce` accumulates across all products.
+- *Why D is incorrect:* All prices are valid numbers and the accumulator starts at `0`. No `NaN` is produced.
+
+---
+
+### Question 15
+
+What is the output of the following code?
+
+```javascript
+const nums = [5, 3, 8, 1, 9, 2];
+const sorted = [...nums].sort((a, b) => a - b);
+console.log(sorted[0]);
+console.log(nums[0]);
+```
+
+- A) `1` then `1`
+- B) `1` then `5`
+- C) `5` then `5`
+- D) `9` then `5`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `[...nums]` creates a new array. Sorting the copy does not affect the original `nums`. `nums[0]` remains `5`.
+- *Why B is correct:* `[...nums]` makes a shallow copy, then `.sort((a, b) => a - b)` sorts it in ascending order: `[1, 2, 3, 5, 8, 9]`. `sorted[0]` is `1`. The original `nums` is unchanged, so `nums[0]` is still `5`.
+- *Why C is incorrect:* `sorted[0]` is `1` after ascending sort.
+- *Why D is incorrect:* `9` is the maximum, which would be `sorted[sorted.length - 1]` in ascending order, not `sorted[0]`.
+
+---
+
+### Question 16
+
+What is the output of the following code?
+
+```javascript
+const arr = ['a', 'b', 'c'];
+arr.forEach((item, index) => {
+  arr[index] = item.toUpperCase();
+});
+console.log(arr);
+```
+
+- A) `['a', 'b', 'c']`
+- B) `['A', 'B', 'C']`
+- C) `undefined`
+- D) `TypeError: arr is read-only`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `forEach` executes the callback for each element. The callback mutates `arr[index]` in-place, so the array is modified.
+- *Why B is correct:* `forEach` provides `item` and `index` to the callback. For each element, `arr[index] = item.toUpperCase()` replaces the lowercase letter with its uppercase equivalent. After all three iterations, `arr` is `['A', 'B', 'C']`.
+- *Why C is incorrect:* `forEach` always returns `undefined`, but this code logs `arr`, not the return value of `forEach`.
+- *Why D is incorrect:* `arr` is declared with `const` but its elements are mutable. Modifying elements via index assignment is permitted.
+
+---
+
+### Question 17
+
+What is the output of the following code?
+
+```javascript
+const arr = [1, 2, 3, 4, 5];
+const result = arr.findIndex(n => n > 3);
+console.log(result);
+```
+
+- A) `4`
+- B) `3`
+- C) `[4, 5]`
+- D) `true`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `4` is the value of the element at index `3`, not the index itself. `findIndex` returns the index, not the value.
+- *Why B is correct:* `findIndex` returns the index of the first element that satisfies the predicate. `1 > 3` = false, `2 > 3` = false, `3 > 3` = false, `4 > 3` = true. Index `3` is returned.
+- *Why C is incorrect:* `findIndex` returns a single number (the index), not an array of matching values. `filter` would return matching values as an array.
+- *Why D is incorrect:* `findIndex` returns the index (a number), not a boolean. It returns `-1` when no match is found, and `0` or a positive integer when found.
+
+---
+
+### Question 18
+
+What is the output of the following code?
+
+```javascript
+const matrix = [[1, 2], [3, 4], [5, 6]];
+const flat = matrix.flatMap(row => row);
+console.log(flat);
+```
+
+- A) `[[1, 2], [3, 4], [5, 6]]`
+- B) `[1, 2, 3, 4, 5, 6]`
+- C) `[[1, 3, 5], [2, 4, 6]]`
+- D) `[1, 2, 3, 4, 5, 6, undefined]`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `flatMap` maps and then flattens one level. The mapping `row => row` returns each row as-is, so it is equivalent to `flat()` — the nested arrays are flattened one level.
+- *Why B is correct:* `flatMap(row => row)` applies `identity` (returns the row unchanged) and then flattens one level. Each `[1,2]`, `[3,4]`, `[5,6]` is unpacked into the result: `[1, 2, 3, 4, 5, 6]`.
+- *Why C is incorrect:* `flatMap` does not transpose the matrix. It flattens the rows sequentially.
+- *Why D is incorrect:* `flatMap` does not add `undefined`. All rows have values and the flatten is clean.
+
+---
+
+### Question 19
+
+What is the output of the following code?
+
+```javascript
+const arr = [1, 2, 3, 2, 1];
+console.log(arr.indexOf(2));
+console.log(arr.lastIndexOf(2));
+console.log(arr.includes(5));
+```
+
+- A) `1`, `3`, `false`
+- B) `1`, `3`, `true`
+- C) `2`, `2`, `false`
+- D) `0`, `4`, `false`
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- *Why A is correct:* `indexOf(2)` returns the index of the first occurrence of `2`: index `1`. `lastIndexOf(2)` returns the index of the last occurrence of `2`: index `3`. `includes(5)` returns `false` because `5` is not in the array.
+- *Why B is incorrect:* `includes(5)` is `false` because `5` does not appear in `[1, 2, 3, 2, 1]`.
+- *Why C is incorrect:* `indexOf(2)` returns the index (`1`), not the value. The value `2` is at index `1`.
+- *Why D is incorrect:* The first `2` is at index `1`, not `0`. Index `0` holds `1`.
+
+---
+
+### Question 20
+
+What is the output of the following code?
+
+```javascript
+const numbers = [10, 20, 30, 40, 50];
+const result = numbers
+  .filter(n => n > 15)
+  .map(n => n / 10)
+  .reduce((sum, n) => sum + n, 0);
+console.log(result);
+```
+
+- A) `14`
+- B) `15`
+- C) `140`
+- D) `10`
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- *Why A is correct:* `filter(n => n > 15)` → `[20, 30, 40, 50]`. `map(n => n / 10)` → `[2, 3, 4, 5]`. `reduce((sum, n) => sum + n, 0)` → `0 + 2 + 3 + 4 + 5 = 14`.
+- *Why B is incorrect:* `15` is not produced. The correct sum of `[2, 3, 4, 5]` with initial value `0` is `14`.
+- *Why C is incorrect:* `140` would result if `map` were not applied — summing `[20, 30, 40, 50]` directly equals `140`. But after `map`, the values are divided by `10`.
+- *Why D is incorrect:* `10` is `20 / 10 / 2` — not the full chain sum. The reduce accumulates all four mapped values.

@@ -182,3 +182,21 @@ Submit as a single PDF or Word document to the Canvas Module 07 Lab assignment.
 | Part 2: Tuckman Stages | 35 | Correct stage IDs; accurate characteristics; appropriate PM actions |
 | Part 3: Conflict Resolution | 30 | Correct technique; scenario-specific implementation; alternative addressed |
 | **Total** | **100** | |
+
+---
+
+## Part 9 — Challenge Exercise
+
+This section is optional for students seeking additional depth and exam preparation. It is not graded as part of the standard 100-point lab but may be used for extra credit at the instructor's discretion.
+
+### Challenge Step 1: Extended RACI Audit
+
+Review the RACI matrix you built in Part 1. Perform the following audit checks and document your findings: (a) Identify any task with zero Responsible entries and explain why that is a problem. (b) Identify any task with more than one Accountable entry and correct it. (c) Identify any stakeholder who is Consulted on every task and explain whether this creates a bottleneck risk. Write a 4–6 sentence audit summary describing your findings and corrections.
+
+### Challenge Step 2: Team Development Action Plan
+
+The DataBridge EHR integration team has just entered the Storming stage. Two developers are competing for the technical lead role, and a third team member is disengaging. Write a 6–8 sentence Team Development Action Plan that describes: the specific PM interventions for the role conflict, the approach for re-engaging the disengaged member, and the success criteria that would indicate the team has moved into the Norming stage. Reference at least one motivation theory (Maslow or Herzberg) in your plan.
+
+### Challenge Step 3: Organizational Structure Impact Analysis
+
+The DataBridge project is currently operating in a balanced matrix structure. The project sponsor is considering shifting to a projectized structure for the final three months of the project. Write a brief analysis (5–7 sentences) comparing the two structures in terms of PM authority, resource availability, and team loyalty. Make a recommendation for or against the shift and justify it based on the project's current phase and remaining risk profile.

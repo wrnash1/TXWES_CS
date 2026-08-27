@@ -204,3 +204,21 @@ Submit the following in a single PDF or Word document:
 | Part 3: Control Chart Analysis | 25 | Out-of-control points, Rule of Seven, trend interpretation |
 | Part 4: Quality Improvement Memo | 20 | Five elements, PDCA applied, findings match data |
 | **Total** | **100** | |
+
+---
+
+## Part 9 — Challenge Exercise
+
+This section is optional for students seeking additional depth and exam preparation. It is not graded as part of the standard 100-point lab but may be used for extra credit at the instructor's discretion.
+
+### Challenge Step 1: PDCA Improvement Cycle Application
+
+Using the root cause identified in your Part 1 Fishbone diagram, write a complete PDCA cycle entry for one corrective action. Structure your response with four clearly labeled sections — Plan (what will be done and why), Do (how it will be implemented and by whom), Check (what metric or test will confirm it worked), and Act (how the improvement will be standardized or what the next cycle will address if unsuccessful). This exercise maps directly to the Manage Quality process in PMI's quality management framework.
+
+### Challenge Step 2: Six Sigma vs. PDCA Decision
+
+The HRConnect project sponsor asks whether the team should use PDCA or launch a Six Sigma DMAIC initiative to address the recurring data import defects. Write a 5–7 sentence recommendation that: explains the key difference between the two frameworks, assesses which is appropriate given the HRConnect project's scale and timeline, and justifies your recommendation with at least one criterion from the Module 13 reading. Reference the project's defect frequency data from Part 2 in your justification.
+
+### Challenge Step 3: Cost of Quality ROI Analysis
+
+The data import defects identified in the lab are costing the organization an estimated $3,200 per month in support staff time and rework (external and internal failure costs combined). A proposed prevention investment — implementing automated data validation rules — would cost $8,000 to build and $400/month to maintain. Calculate the break-even point in months. Write a three-sentence executive summary recommending whether to make the prevention investment, citing the Cost of Quality principle that prevention costs less than failure in the long run.

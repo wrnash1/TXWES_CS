@@ -372,3 +372,17 @@ Submit the following to Canvas:
 ---
 
 *Lab 08 — Module 08: Azure Networking | CIS-4331 | Texas Wesleyan University*
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: VNet Peering and Connectivity Test
+Create a second VNet (`lab08-vnet-b`, address space `10.1.0.0/16`) with one subnet (`10.1.1.0/24`) in the same resource group. Deploy a second VM (`lab08-vm-b`) into this VNet with no public IP. Establish VNet peering between `lab08-vnet` and `lab08-vnet-b` in both directions using `az network vnet peering create`. From `lab08-web-vm`, attempt to ping `lab08-vm-b`'s private IP address. If the ping fails, diagnose why (check NSG rules on both subnets — ICMP may be blocked by default). Add an NSG rule to allow ICMP if needed. Document all commands, their outputs, and whether ping succeeds after each configuration change. Explain in 2–3 sentences what "non-transitive" peering means and how it would affect a scenario with three VNets (A, B, C) where A is peered to B and B is peered to C but A is not peered to C.
+
+### Challenge 2: NSG Flow Logs and Effective Security Rules
+Enable Network Watcher in the East US region using `az network watcher configure --enabled true --locations eastus`. Use `az network watcher show-effective-nsg --vm lab08-web-vm --resource-group lab08-rg` to retrieve the effective NSG rules for the VM. Compare the CLI output to what you saw in the Portal's Effective Security Rules panel. Add a new inbound NSG rule that allows HTTPS (port 443) from any source at priority 120. Then use `az network watcher test-connectivity` to test whether a connection from the VM to an external HTTPS endpoint (e.g., `microsoft.com:443`) would be allowed or denied. Document all commands and outputs and explain how the `test-connectivity` command differs from actually making a network connection.
+
+### Reflection Questions
+1. In this lab, you associated the NSG with the subnet rather than with individual VM NICs. A colleague suggests always attaching NSGs to NICs instead of subnets because it gives more granular per-VM control. Describe a specific scenario where NIC-level NSG attachment is genuinely required (a scenario that subnet-level NSGs cannot handle), and a scenario where subnet-level association is clearly superior.
+2. The lab demonstrated that deleting an NSG allow rule immediately blocked traffic without any service restart. Azure NSGs are stateful — when an outbound connection is allowed, the corresponding inbound response is automatically permitted. Explain how stateful packet inspection in NSGs simplifies rule management compared to stateless packet filtering, and describe what additional rules would be required if Azure NSGs were stateless.

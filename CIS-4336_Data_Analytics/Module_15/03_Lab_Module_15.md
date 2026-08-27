@@ -178,3 +178,113 @@ Compile all five parts into a single PDF document named `module15_lab_[YourLastN
 | Part 4: All four bias questions answered with accurate reasoning | 20 |
 | Part 5: Policy addresses all five required elements and is professionally written | 15 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Automated PII Detection and Classification Script
+
+Build a Python function that scans a pandas DataFrame and automatically flags columns that likely contain personally identifiable information based on column names and value patterns.
+
+1. Create a function `detect_pii(df)` that checks each column against two criteria: (a) a list of high-risk column name keywords (e.g., `['name', 'email', 'phone', 'ssn', 'dob', 'address', 'zip', 'ip']`), and (b) a regex pattern check on column values for common PII formats (email: `\S+@\S+\.\S+`, US phone: `\d{3}[-.\s]?\d{3}[-.\s]?\d{4}`, SSN: `\d{3}-\d{2}-\d{4}`). The function returns a DataFrame with columns: `column_name`, `detection_method`, `pii_type`, and `risk_level` (High/Medium).
+2. Create a synthetic test DataFrame with 10 columns: some with obvious PII (email, phone), some with quasi-identifiers (zip_code, birth_year, gender), and some with no PII (product_id, amount, region). Run `detect_pii()` on it and print the results. Write two sentences evaluating the limitations of automated PII detection — specifically, what types of PII would this function miss?
+
+```python
+import pandas as pd
+import re
+
+PII_NAME_KEYWORDS = ["name", "email", "phone", "ssn", "dob", "address", "zip", "ip",
+                     "birth", "passport", "license", "national_id", "credit"]
+
+PII_PATTERNS = {
+    "email":   (r"[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}", "High"),
+    "US_phone":(r"\b\d{3}[-.\s]?\d{3}[-.\s]?\d{4}\b", "High"),
+    "SSN":     (r"\b\d{3}-\d{2}-\d{4}\b", "High"),
+    "IPv4":    (r"\b(?:\d{1,3}\.){3}\d{1,3}\b", "Medium"),
+}
+
+def detect_pii(df):
+    results = []
+    for col in df.columns:
+        col_lower = col.lower()
+        for kw in PII_NAME_KEYWORDS:
+            if kw in col_lower:
+                results.append({
+                    "column_name": col,
+                    "detection_method": "column_name",
+                    "pii_type": kw,
+                    "risk_level": "High" if kw in ["ssn","email","phone","passport"] else "Medium"
+                })
+                break
+
+        sample = df[col].dropna().astype(str).head(50)
+        for pii_type, (pattern, risk) in PII_PATTERNS.items():
+            hits = sample.str.contains(pattern, regex=True, na=False).sum()
+            if hits > 0:
+                results.append({
+                    "column_name": col,
+                    "detection_method": "value_pattern",
+                    "pii_type": pii_type,
+                    "risk_level": risk
+                })
+
+    return pd.DataFrame(results).drop_duplicates(subset=["column_name", "pii_type"])
+```
+
+### Challenge 2: Fairness Audit on a Simulated Loan Dataset
+
+Perform a quantitative fairness audit on a simulated binary classification outcome dataset to measure disparate impact.
+
+1. Generate a synthetic loan decision dataset with 1,000 records containing: `applicant_id`, `age_group` (25-34, 35-44, 45-54, 55-64), `income_bracket` (Low, Medium, High), `credit_tier` (1-5), `zip_group` (A through E where C and D are predominantly minority areas), and `approved` (0/1). Construct the dataset so that zip groups C and D have systematically lower approval rates (approx. 40%) compared to A, B, E (approx. 75%), even within the same income and credit tier.
+2. Compute the approval rate for each `zip_group` and the overall rate. Apply the **80% rule (four-fifths rule)** from US employment and housing law: a group has disparate impact if its approval rate is less than 80% of the highest group's approval rate. Print a fairness audit table showing each group's approval rate, the ratio to the highest-approval group, and a PASS/FAIL flag. Write three sentences describing what actions a compliance officer would take if the audit reveals a FAIL for one or more groups.
+
+```python
+import pandas as pd
+import numpy as np
+
+np.random.seed(99)
+n = 1000
+zip_groups = np.random.choice(list("ABCDE"), n, p=[0.2, 0.2, 0.2, 0.2, 0.2])
+credit_tier = np.random.randint(1, 6, n)
+income_bracket = np.random.choice(["Low", "Medium", "High"], n, p=[0.3, 0.4, 0.3])
+age_group = np.random.choice(["25-34","35-44","45-54","55-64"], n)
+
+base_prob = 0.75
+approved = []
+for z, c in zip(zip_groups, credit_tier):
+    p = base_prob + (c - 3) * 0.05
+    if z in ["C", "D"]: p -= 0.35
+    p = max(0.05, min(0.95, p))
+    approved.append(np.random.binomial(1, p))
+
+df_loans = pd.DataFrame({
+    "applicant_id": range(1, n+1),
+    "zip_group": zip_groups,
+    "credit_tier": credit_tier,
+    "income_bracket": income_bracket,
+    "age_group": age_group,
+    "approved": approved
+})
+
+overall_rate = df_loans["approved"].mean()
+group_rates = df_loans.groupby("zip_group")["approved"].mean()
+max_rate = group_rates.max()
+
+audit = group_rates.reset_index()
+audit.columns = ["zip_group", "approval_rate"]
+audit["ratio_to_max"] = (audit["approval_rate"] / max_rate).round(3)
+audit["four_fifths_flag"] = audit["ratio_to_max"].apply(
+    lambda r: "PASS" if r >= 0.80 else "FAIL"
+)
+audit["approval_rate"] = audit["approval_rate"].round(3)
+print(f"Overall approval rate: {overall_rate:.3f}")
+print(f"Highest group rate:    {max_rate:.3f}")
+print("\nFairness Audit (80% Rule):")
+print(audit.to_string(index=False))
+```
+
+### Reflection Questions
+
+1. In Challenge 1, the `detect_pii()` function relies on column names and value regex patterns. Describe two categories of PII that this automated approach would consistently miss, and explain what additional data profiling or domain knowledge would be needed to detect them.
+2. In Challenge 2, the four-fifths rule is a legal heuristic, not a guarantee of fairness. A zip group could have a 79% approval rate compared to an 85% maximum (ratio = 0.93 — PASS under the four-fifths rule) yet still have a statistically significant disparity. What statistical test would you apply to determine whether observed approval rate differences are statistically significant, and at what alpha level would you recommend setting the threshold for a lending compliance audit?

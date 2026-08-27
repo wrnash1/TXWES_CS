@@ -328,3 +328,21 @@ AlloyDB for PostgreSQL (Module 12) targets the gap between Cloud SQL and Spanner
 - [ ] Spanner vs Cloud SQL decision matrix: 5-nines, global, horizontal → Spanner
 - [ ] `STORING` in Spanner index = `INCLUDE` in PostgreSQL
 - [ ] `NULL_FILTERED` index: excludes NULL values
+
+---
+
+## 9. Supplemental Resources
+
+The following free, open-access resources support Module 11 topics:
+
+**1. [PostgreSQL Documentation — Row Estimation Examples](https://www.postgresql.org/docs/current/row-estimation-examples.html)**
+Explains how the PostgreSQL planner uses column statistics to estimate row counts, including the impact of `default_statistics_target` and per-column `SET STATISTICS` on plan quality.
+
+**2. [Google Cloud — Cloud SQL Query Insights Overview](https://cloud.google.com/sql/docs/postgres/query-insights-overview)**
+Documents how Query Insights samples and aggregates queries, explains the normalized query view, latency percentiles, and how to identify top CPU consumers without modifying application code.
+
+**3. [Google Cloud Spanner — Secondary Indexes](https://cloud.google.com/spanner/docs/secondary-indexes)**
+Covers Spanner secondary index syntax including `STORING`, `NULL_FILTERED`, and interleaved indexes, with guidance on hotspot avoidance and index selection for read performance.
+
+**4. [BigQuery Documentation — Introduction to Partitioned Tables](https://cloud.google.com/bigquery/docs/partitioned-tables)**
+Explains BigQuery date, timestamp, and integer range partitioning, partition pruning mechanics, and how to write WHERE clauses that enable partition elimination.

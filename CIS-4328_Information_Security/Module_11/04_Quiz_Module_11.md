@@ -232,4 +232,226 @@ D) Post-Incident Activity — by documenting the gap in the lessons learned repo
 
 ---
 
+---
+
+## Question 11
+
+A forensic analyst is investigating a compromised Linux server. The analyst needs to determine what processes were running at the time of compromise and what network connections they had established. The server has since been rebooted for operational reasons. Which evidence source is no longer available due to the reboot?
+
+A) The system's disk image, because rebooting overwrites the file system
+
+B) The contents of RAM, because RAM is volatile and cleared on power-off
+
+C) The server's event logs, because log rotation occurs on reboot
+
+D) The firewall's NetFlow records, which are deleted on reboot
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- Why A is incorrect: Rebooting a system does not overwrite the file system. Disk contents including files, logs, and registry entries persist across reboots. The disk image remains collectable and valid after a reboot.
+- Why C is incorrect: System event logs are written to disk and persist across reboots. Log rotation is a scheduled process based on size or time, not triggered by reboots in standard configurations.
+- Why D is incorrect: NetFlow records are collected by network devices (routers, firewalls) and stored on those devices or a central collector — they are not stored in the server's RAM and are not affected by the server's reboot state.
+
+---
+
+## Question 12
+
+An organization's IR plan classifies incidents by severity using four tiers: P1 (critical — all hands), P2 (high — senior analyst response), P3 (medium — standard response), P4 (low — next business day). A ransomware attack encrypts the organization's active directory domain controllers, taking down authentication for all 4,000 employees. Which tier applies, and what is the FIRST action the IR team lead should take?
+
+A) P2 — Assign a senior analyst and begin investigation per standard playbook
+
+B) P1 — Invoke the all-hands response and activate the IR plan's major incident procedures, including executive notification
+
+C) P3 — Restore domain controllers from backup and document as a standard recovery event
+
+D) P4 — Log the ticket and schedule remediation for the next business day since ransomware is a known threat type
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- Why A is incorrect: An attack rendering authentication unavailable for 4,000 employees meets any reasonable definition of a critical P1 incident. A senior analyst response without executive notification and all-hands mobilization is insufficient for an enterprise-wide authentication outage.
+- Why C is incorrect: Ransomware on domain controllers is not a standard recovery event. The scope (all users impacted), the attacker's persistence in the environment, and potential lateral movement require the full IR lifecycle — not a simple restore.
+- Why D is incorrect: An active ransomware attack affecting the entire organization cannot wait until the next business day. Deferring the response allows the attacker to establish additional persistence, exfiltrate data, or extend encryption.
+
+---
+
+## Question 13
+
+During eradication following a breach, the IR team removes all identified malware and patches the exploited vulnerability. Two weeks later, the same attacker regains access through the same system. Which eradication failure is MOST likely responsible?
+
+A) The team did not update the IDS signatures after eradication
+
+B) A backdoor or secondary persistence mechanism was not identified and removed during eradication
+
+C) The lessons learned review was not completed before recovery
+
+D) The team restored from a backup that predated the initial compromise
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- Why A is incorrect: Updating IDS signatures improves detection but does not prevent re-entry if the attacker's persistence mechanism was not removed. A missed backdoor allows re-access regardless of detection capability.
+- Why C is incorrect: The lessons learned review is a post-incident improvement process. Completing or skipping it does not affect whether the attacker can re-access the system — eradication completeness is what determines re-compromise risk.
+- Why D is incorrect: Restoring from a backup predating the compromise would be a recovery best practice, not a failure. If the team restored from a clean pre-compromise backup, the system should not contain malware. The failure is missing a persistence mechanism during eradication, not the backup selection.
+
+---
+
+## Question 14
+
+An organization is subject to GDPR and experiences a data breach affecting personal data of 3,200 EU residents. The breach occurred on a Tuesday. When must the organization notify the supervisory authority?
+
+A) Within 72 hours of becoming aware of the breach — by Friday at the latest
+
+B) Within 30 days of discovery to allow time for a complete investigation
+
+C) Only if the individuals affected formally request notification
+
+D) Within 24 hours of discovery, as GDPR requires same-day notification for personal data
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- Why B is incorrect: GDPR Article 33 requires notification to the supervisory authority within 72 hours of becoming aware of a breach — not 30 days. A 30-day window is found in some US state breach notification laws, not GDPR.
+- Why C is incorrect: GDPR breach notification to the supervisory authority is mandatory — it is not contingent on individual requests. Notification to affected individuals (Article 34) may also be required if the breach poses a high risk, but it is separate from the supervisory authority notification.
+- Why D is incorrect: GDPR specifies 72 hours, not 24 hours, for supervisory authority notification. If 72 hours cannot be met, the notification must still be submitted with a reasoned explanation for the delay.
+
+---
+
+## Question 15
+
+A junior analyst is performing memory forensics on a live system and uses the `strings` command to extract readable text from a RAM dump. The analyst finds what appears to be a plaintext encryption key in the output. Which property of volatile memory does this finding demonstrate?
+
+A) RAM stores only program executables; the key must have been loaded from disk
+
+B) Memory encryption prevents readable strings from appearing in RAM dumps
+
+C) Cryptographic keys, passwords, and other secrets exist in plaintext in RAM during active use, making memory acquisition a high-value forensic target
+
+D) The `strings` command only retrieves data from the swap file, not from RAM
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- Why A is incorrect: RAM stores all running process data — not just executables — including heap memory, stack variables, network buffers, and cryptographic material. The observation is correct: encryption keys appear in RAM during use.
+- Why B is incorrect: Standard RAM on most systems is not encrypted at rest. Memory encryption technologies (AMD SME, Intel TME) exist but are not universally deployed, and even encrypted-in-transit keys are decrypted in CPU registers and memory regions during active operations.
+- Why D is incorrect: The `strings` command, when applied to a raw memory dump file, extracts readable ASCII/Unicode strings from that dump. It operates on whatever file is provided as input — including raw RAM dumps, not just swap files.
+
+---
+
+## Question 16
+
+An organization's IR team uses a SIEM to correlate log data. During an incident, analysts observe that log entries from a critical server stop appearing in the SIEM at 11:47 PM on the night of a suspected compromise. Which explanation MOST warrants investigation?
+
+A) The server's time zone was changed, causing a timestamp offset in the SIEM
+
+B) An attacker may have disabled or cleared the logging agent on the server to reduce their forensic footprint
+
+C) SIEM log ingestion pipelines routinely pause at midnight for maintenance
+
+D) The server's disk filled up, and the OS automatically paused log writing
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- Why A is incorrect: A time zone change would shift timestamps, not stop log entries entirely. Logs would still appear in the SIEM but with offset times.
+- Why C is incorrect: SIEM log ingestion pipelines are designed for high availability. Scheduled maintenance pauses are typically pre-announced and affect all log sources simultaneously, not a single server.
+- Why D is incorrect: While a full disk can pause OS logging, the timing — precisely during a suspected compromise — makes attacker action the higher-priority hypothesis to investigate. Full disk conditions also typically generate system alerts through other channels.
+
+---
+
+## Question 17
+
+A company's tabletop exercise simulates a ransomware attack on their file servers. During the exercise, the team discovers that IT only has the personal cell phone numbers of two executives — neither of whom is available. The primary communication channel (corporate email) would be encrypted by the ransomware in the scenario. Which gap does this reveal, and in which IR phase should it be addressed?
+
+A) Detection gap — the SIEM should detect ransomware before it encrypts the email server; address in Detection and Analysis
+
+B) Eradication gap — executives should be involved in eradication decisions; address in Containment/Eradication/Recovery
+
+C) Communication gap — the IR plan lacks an out-of-band communication method and complete emergency contact list; address in Preparation
+
+D) Recovery gap — the organization should back up executive contact information; address in Post-Incident Activity
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- Why A is incorrect: The gap described is not about detection capability. The SIEM may detect the attack but cannot fix the inability to reach executives when email is down.
+- Why B is incorrect: The lack of communication channels is a pre-incident planning failure, not an eradication phase gap. Eradication focuses on removing attacker presence — executive contact methods are needed much earlier.
+- Why D is incorrect: Post-Incident Activity addresses improvements after a real incident. The tabletop exercise has identified the gap while still in Preparation. The appropriate action is to fix the IR plan now, before an actual incident forces the team to work around the gap.
+
+---
+
+## Question 18
+
+A forensic investigator hashes a seized hard drive immediately upon collection and records SHA-256: `a7f3...`. After imaging, the investigator hashes the forensic image and records SHA-256: `a7f3...`. Three weeks later, during trial, the investigator hashes the original drive again and records SHA-256: `a7f3...`. What does this consistent hash value across all three points in time prove?
+
+A) The hard drive contains no deleted files, because deleted files would change the hash
+
+B) The hash algorithm SHA-256 has no known collisions, proving the drive is authentic
+
+C) The bit-level content of the drive has not changed since original collection, establishing integrity for the chain of custody
+
+D) The original drive and the forensic image are the same physical device
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- Why A is incorrect: Deleted files occupy space in the unallocated clusters of the drive. A forensic image captures the full disk including unallocated space. The presence or absence of deleted files does not affect whether the hash is consistent — what matters is that nothing changed.
+- Why B is incorrect: SHA-256 having no known practical collisions strengthens confidence, but the hash value's purpose in chain of custody is to detect any modification — even a single bit change would produce a different hash. The statement that it "proves authenticity" conflates integrity with provenance.
+- Why D is incorrect: A forensic image is a copy, not the same physical device. The identical SHA-256 hash proves the image is an exact bit-for-bit copy of the original, but they remain distinct objects.
+
+---
+
+## Question 19
+
+A security analyst is asked to categorize a collection of observations from a compromised endpoint. Which observation is BEST classified as an Indicator of Attack (IOA) rather than an Indicator of Compromise (IOC)?
+
+A) A file hash matching a known ransomware sample in the NIST National Software Reference Library
+
+B) An IP address listed on multiple threat intelligence feeds as a known C2 server
+
+C) A process spawning `cmd.exe` as a child process via a Microsoft Office document immediately after the document is opened
+
+D) A registry key value matching a known malware persistence entry
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- Why A is incorrect: A file hash matching a known malware sample is an artifact-based Indicator of Compromise — it identifies a specific known-malicious file. It is retrospective and signature-based.
+- Why B is incorrect: A threat intelligence feed entry for a known C2 IP is an Indicator of Compromise — a specific artifact known to be associated with malicious activity.
+- Why D is incorrect: A registry key matching a known persistence entry is also an Indicator of Compromise — a specific artifact of a known persistence technique.
+
+---
+
+## Question 20
+
+An organization recovers from a ransomware incident and holds a lessons learned meeting two months later. An attendee argues that two months is too long to wait and that the review should have been held sooner. According to NIST SP 800-61 guidance, what is the recommended timing, and why does it matter?
+
+A) NIST recommends waiting at least 90 days to allow all legal matters to be resolved before discussing the incident internally
+
+B) NIST recommends holding the lessons learned meeting within one to two weeks of incident closure while details are fresh and improvement actions can be implemented before the next incident
+
+C) NIST does not specify a timeframe — any timing is acceptable as long as the meeting occurs eventually
+
+D) NIST recommends holding the lessons learned meeting simultaneously with eradication so improvements are applied immediately
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- Why A is incorrect: NIST SP 800-61 does not recommend waiting for legal resolution before holding an internal lessons learned review. Legal counsel participation is appropriate, but legal proceedings do not delay the internal improvement process.
+- Why C is incorrect: NIST SP 800-61 Section 3.4 specifically recommends holding the lessons learned meeting as soon as possible after the incident — ideally within one to two weeks. Vague timing guidance is not what NIST provides.
+- Why D is incorrect: Eradication occurs while the incident is still active. Holding a lessons learned meeting during active eradication would be premature and would not have the full incident scope needed for meaningful analysis.
+
+---
+
 *End of Quiz — Module 11*

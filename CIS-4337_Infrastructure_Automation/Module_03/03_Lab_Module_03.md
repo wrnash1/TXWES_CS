@@ -363,4 +363,72 @@ This is expected. Changing from `count` to `for_each` changes the resource addre
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Multi-Provider Aliased Configuration
+
+Extend the configuration to deploy an S3 bucket in a second AWS region using a provider alias. This simulates a real-world cross-region backup architecture.
+
+```hcl
+provider "aws" {
+  alias  = "west"
+  region = "us-west-2"
+}
+
+resource "aws_s3_bucket" "backup" {
+  provider = aws.west
+  bucket   = "${var.project_name}-backup-${random_id.suffix.hex}"
+
+  tags = merge(local.common_tags, {
+    Name   = "${var.project_name}-backup"
+    Region = "us-west-2"
+  })
+}
+```
+
+1. Add a `random_id` resource (using the `hashicorp/random` provider) to generate a unique suffix for the bucket name, preventing naming conflicts.
+2. Add the `random` provider to `required_providers` and run `terraform init` to download it.
+3. Run `terraform plan` and confirm that `aws_s3_bucket.backup` shows provider `aws.west` in the plan output.
+4. Record in `lab_notes.txt`: how does the plan distinguish which provider configuration each resource uses?
+
+### Challenge 2: Object Variable and for Expression
+
+Replace the individual `worker_names` variable with a structured `object`-typed variable that carries both a name and an environment tag per worker. Use a `for` expression to build the `for_each` argument.
+
+```hcl
+variable "workers" {
+  description = "Worker instance definitions"
+  type = map(object({
+    name        = string
+    environment = string
+  }))
+  default = {
+    alpha = { name = "worker-alpha", environment = "dev" }
+    beta  = { name = "worker-beta",  environment = "staging" }
+  }
+}
+
+resource "aws_instance" "worker" {
+  for_each      = var.workers
+  ami           = var.ami_id
+  instance_type = var.instance_type
+
+  tags = merge(local.common_tags, {
+    Name        = each.value.name
+    Environment = each.value.environment
+  })
+}
+```
+
+1. Run `terraform plan` and confirm that instances are addressed as `aws_instance.worker["alpha"]` and `aws_instance.worker["beta"]`.
+2. Add a third worker `gamma = { name = "worker-gamma", environment = "prod" }` to the default and re-run `terraform plan`. Observe that Terraform plans only to add the new `gamma` instance without touching `alpha` or `beta`.
+3. Record in `lab_notes.txt`: explain why this behavior (adding only `gamma`) would not be guaranteed if you had used `count` instead of `for_each`.
+
+### Reflection Questions
+
+1. You used both `count` and `for_each` in this lab. Describe a specific production scenario where using `count` would cause a dangerous unintended plan result, and explain how switching to `for_each` resolves it.
+2. The `lifecycle { prevent_destroy = true }` argument stopped Terraform from deleting the web instance. What organizational process should accompany this technical control to ensure the protection is not bypassed by simply removing the `lifecycle` block?
+
+---
+
 Module 03 Lab — CIS-4337 Infrastructure Automation — Texas Wesleyan University

@@ -354,3 +354,16 @@ Answer these before taking the module quiz:
 - `journalctl -u <service> -f` is your first debugging tool for any misbehaving service.
 - Cron's five time fields (minute, hour, day-of-month, month, day-of-week) must be memorized for the Linux+ exam.
 - Always use absolute paths and redirect output in cron jobs to avoid silent failures.
+
+---
+
+## 9. Supplemental Resources
+
+**1. [systemd.service Man Page — man7.org](https://man7.org/linux/man-pages/man5/systemd.service.5.html)**
+The authoritative reference for all directives available in service unit files. Covers `ExecStart`, `ExecStartPre`, `ExecStop`, `Restart`, `RestartSec`, `User`, `Group`, `WorkingDirectory`, `EnvironmentFile`, `StandardOutput`, `StandardError`, and all sandboxing/security directives. Bookmarking this page alongside `man 5 systemd.unit` gives you a complete unit file reference for writing production-quality service definitions.
+
+**2. [How to Create a Systemd Service — DigitalOcean Community](https://www.digitalocean.com/community/tutorials/how-to-use-systemctl-to-manage-systemd-services-and-units)**
+A practical DigitalOcean tutorial covering the full lifecycle of systemd service management: writing unit files, enabling, starting, stopping, and masking services, reading status output, and using `systemctl edit` for drop-in overrides. The tutorial's worked examples reinforce the Module 12 lab scenarios and are available for both Ubuntu and CentOS/RHEL environments.
+
+**3. [Understanding Cron — Crontab Guru](https://crontab.guru/)**
+An interactive cron expression editor and validator. Enter any cron expression and it immediately shows the next scheduled run times in plain English. The site also includes a reference for all five time fields and a library of common expressions. Essential for verifying cron schedules before deploying them to production, and directly applicable to the cron scheduling tasks in the Module 12 lab.

@@ -333,4 +333,66 @@ Ensure `var.ingress_ports` is declared as `list(number)`. If you declared it as 
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Dynamic Security Group with Object Variable
+
+Replace the simple `list(number)` ingress variable with a structured `list(object)` variable that carries port, protocol, and CIDR per rule. Use a dynamic block and a `for` expression together.
+
+**Step A.** Replace `variable "ingress_ports"` with the following structured variable:
+
+```hcl
+variable "ingress_rules" {
+  type = list(object({
+    port     = number
+    protocol = string
+    cidr     = string
+    description = string
+  }))
+  default = [
+    { port = 80,  protocol = "tcp", cidr = "0.0.0.0/0",    description = "HTTP" },
+    { port = 443, protocol = "tcp", cidr = "0.0.0.0/0",    description = "HTTPS" },
+    { port = 22,  protocol = "tcp", cidr = "10.0.0.0/8",   description = "SSH internal" }
+  ]
+}
+```
+
+**Step B.** Update the `dynamic "ingress"` block to use `var.ingress_rules` as `for_each`, with `iterator = rule`, and reference `rule.value.port`, `rule.value.protocol`, `rule.value.cidr`, and `rule.value.description` inside the `content` block.
+
+1. Run `terraform plan` and confirm three ingress rules appear with the correct ports and CIDRs.
+2. Add a fourth rule for port `8443` with `cidr = "0.0.0.0/0"` to the default list and re-run `terraform plan`. Confirm Terraform plans an in-place update to the security group adding the new rule.
+3. In `lab_notes.txt`, use a `for` expression in `terraform console` to extract just the `description` fields from `var.ingress_rules` as a list: `[for r in var.ingress_rules : r.description]`.
+
+### Challenge 2: Data Source Chaining with `depends_on`
+
+Demonstrate the scenario where a data source queries a resource being created in the same run, requiring explicit `depends_on`.
+
+**Step A.** Add a second VPC resource to `main.tf` that is created with a specific `Name` tag, then add a data source that looks it up by that tag:
+
+```hcl
+resource "aws_vpc" "secondary" {
+  cidr_block = "10.7.0.0/16"
+  tags       = { Name = "lab06-secondary" }
+}
+
+data "aws_vpc" "secondary_lookup" {
+  filter {
+    name   = "tag:Name"
+    values = ["lab06-secondary"]
+  }
+  depends_on = [aws_vpc.secondary]
+}
+```
+
+1. Run `terraform plan` and observe the plan. Remove the `depends_on` line, run `terraform plan` again, and record what warning or error Terraform produces.
+2. Restore `depends_on`, run `terraform apply -auto-approve`, and confirm the data source output matches the resource's VPC ID.
+3. In `lab_notes.txt`, explain why `depends_on` is needed here even though the data source implicitly references no attribute of `aws_vpc.secondary`.
+
+### Reflection Questions
+
+1. You used both `aws_iam_policy_document` data source and `jsonencode()` to generate IAM policy JSON. In what situation would you prefer the data source approach over `jsonencode()`, and vice versa?
+2. Dynamic blocks make configurations more flexible but can reduce readability. Describe a guideline for when to use a `dynamic` block versus writing static repeated nested blocks, and explain how documentation can compensate for reduced readability.
+
+---
+
 Module 06 Lab — CIS-4337 Infrastructure Automation — Texas Wesleyan University

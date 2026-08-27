@@ -139,6 +139,33 @@ Submit to the Canvas assignment portal by the module due date.
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Pipeline Design from Scratch
+
+You are the first DevOps-minded developer on a new Scrum team building a university course registration portal. The team has no CI pipeline yet. Design a CI/CD pipeline for this project from scratch:
+
+1. Define the complete pipeline stages in sequence. For each stage: name the stage, describe what it does, specify whether it blocks subsequent stages on failure, and estimate its run time. Your pipeline must complete in under 20 minutes total.
+2. The team's Definition of Done currently says only "code reviewed and merged." Propose a new Definition of Done that incorporates your pipeline. Write four specific DoD criteria derived from your pipeline design, each stated as a verifiable pass/fail condition.
+3. The pipeline's integration test stage requires a running database. Propose two approaches for providing the test database in the CI environment. For each approach, describe the setup, the benefit, and one limitation. Consider: in-memory test databases (H2, SQLite), Docker containers spun up per pipeline run, and shared staging database instances.
+4. After three months, the team notices that 30 percent of pipeline failures are caused by test flakiness rather than real defects. Write a policy statement (3–5 sentences) that the team could post in their team working agreement defining: how flaky tests are identified, what happens when one is discovered, and what the resolution timeline should be.
+
+### Challenge 2: Deployment Decision Analysis
+
+The university course registration portal needs to deploy a change that modifies the student enrollment data model. The change adds a new required field (`enrollment_section`) that must be populated during registration. The current production database has 47,000 existing enrollment records with null values in the new field. The release is scheduled during a low-traffic period (Sunday 2–4 AM) but final exams begin Monday.
+
+1. Analyze whether blue-green or canary deployment is appropriate for this release given the database schema change. Consider: the zero-downtime requirement, the non-nullable field migration, the risk of running two application versions against the same database simultaneously, and the rollback complexity.
+2. Write a step-by-step deployment runbook for your chosen strategy. The runbook must include: pre-deployment verification steps (at least 3), the deployment sequence, the health check criteria for confirming success, and the rollback trigger criteria.
+3. The team's monitoring shows error rates increased from 0.1 percent to 2.3 percent immediately after deployment. Based on your runbook, describe: the decision process for determining whether to roll back, the specific rollback steps, and how the database migration is handled if rollback is required.
+4. After a successful deployment, write a three-item blameless post-mortem agenda for the team's next Retrospective. For each agenda item, describe what the team would discuss and what output (action item, policy change, or DoD update) would result.
+
+### Reflection Questions
+
+1. The Agile Manifesto was written in 2001, before modern CI/CD tools (GitHub Actions, Jenkins, CircleCI) existed. Yet Manifesto Principle 9 — "continuous attention to technical excellence and good design" — is cited as the foundation for CI adoption. Is CI a natural extension of the Manifesto, or is it an external practice being retrofitted onto Agile philosophy? Defend your position.
+2. Some development teams argue that requiring CI pipeline green status as part of the Definition of Done creates bottlenecks when the pipeline is slow or flaky — developers get blocked waiting for a pipeline they don't control. Describe the strongest version of this argument, then construct the counter-argument from a Scrum quality-first perspective. Which position do you find more defensible in a university course project context?
+
+---
+
 ## Rubric Summary
 
 | Component | Points |

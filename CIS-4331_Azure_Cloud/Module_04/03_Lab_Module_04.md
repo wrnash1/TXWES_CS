@@ -242,3 +242,17 @@ Answer: Why is cleaning up container resources equally important to cleaning up 
 **Browser shows "This site can't be reached":** The container may still be starting. Wait 30 seconds and refresh. Also ensure you are using `http://` not `https://` — the Hello World container only exposes port 80 (HTTP).
 
 **Cost calculation note:** ACI pricing may vary by region and over time. Use the rates provided in Step B3 for this lab calculation, or retrieve current rates from the Azure Pricing Calculator at learn.microsoft.com.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Private Registry Deployment
+Create an Azure Container Registry (Basic SKU) using `az acr create`. Pull the public `mcr.microsoft.com/azuredocs/aci-helloworld` image locally using `docker pull`, re-tag it with your ACR login server name using `docker tag`, push it using `docker push`, then deploy a new ACI container group that pulls from your private ACR using `--registry-login-server`, `--registry-username`, and `--registry-password` (retrieve credentials with `az acr credential show`). Verify the container is running and accessible. Document each CLI command and its output. Clean up all resources when complete.
+
+### Challenge 2: Container Service Selection Analysis
+For each of the following scenarios, identify the most appropriate Azure container service (ACI, AKS, Container Apps, or App Service with containers) and write a 3-4 sentence justification citing specific service characteristics: (a) a machine learning inference API that receives bursts of requests during business hours and zero traffic overnight; (b) a legacy Windows .NET Framework 4.6 web application being moved to Azure with no code changes; (c) a microservices application with 12 services that need independent scaling, rolling deployments, and Kubernetes-native features like ConfigMaps and Secrets.
+
+### Reflection Questions
+1. In the lab you deployed a container to ACI and it was accessible within about 60 seconds. Compare this to the VM deployment time you experienced in Module 03. What architectural differences between containers and VMs explain this startup time difference?
+2. A colleague says that because ACI uses hypervisor isolation (each container group runs in its own VM), there is no security benefit to using AKS over ACI. Do you agree? What security considerations exist in AKS that ACI does not address?

@@ -259,3 +259,67 @@ Submit to the Canvas assignment portal before the stated deadline.
 | D | Analytics Type Identification | 15 |
 | E | Python Data Inspection | 20 |
 | **Total** | | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Multi-Source Data Inventory
+
+Build a mini data inventory for a fictional e-commerce company by performing the following steps.
+
+1. Create a Python dictionary representing three data sources: a SQL orders table (columns: order_id, customer_id, amount, order_date, status), a JSON product review API response with optional nested "media" arrays, and a folder of product photo JPEG files. For each source, record its structure type, file format, and the pandas read function or preprocessing step required to load it.
+2. Load the orders table simulation into a pandas DataFrame with at least 10 rows of realistic sample data. Assign correct dtypes — use `pd.Categorical` for `status` (ordinal: Pending, Processing, Shipped, Delivered) and ensure `order_date` is `datetime64`.
+3. Call `df.dtypes`, `df.describe()`, and `df["status"].value_counts()` on your DataFrame. For each output, write one sentence explaining what the output reveals and which scale of measurement applies to each column.
+
+```python
+import pandas as pd
+
+orders = {
+    "order_id": [1001,1002,1003,1004,1005,1006,1007,1008,1009,1010],
+    "customer_id": [201,202,203,201,204,205,202,206,207,201],
+    "amount": [59.99,120.00,34.50,89.95,210.00,15.00,77.50,300.00,45.25,130.00],
+    "order_date": pd.date_range("2024-01-01", periods=10, freq="3D"),
+    "status": pd.Categorical(
+        ["Delivered","Shipped","Processing","Delivered","Pending",
+         "Delivered","Shipped","Processing","Delivered","Pending"],
+        categories=["Pending","Processing","Shipped","Delivered"],
+        ordered=True
+    )
+}
+df = pd.DataFrame(orders)
+print(df.dtypes)
+print(df.describe())
+print(df["status"].value_counts())
+```
+
+### Challenge 2: Analytics Type Classification Report
+
+Using the same orders DataFrame from Challenge 1, produce a written analytics-type classification for four derived questions.
+
+1. Write Python code to answer each of the following questions about the data, then label each answer as Descriptive, Diagnostic, Predictive, or Prescriptive: (a) What is the total revenue and average order value? (b) Which customer places the most orders? (c) What percentage of orders are still Pending or Processing? (d) If you were to sort customers by total spend and flag the top 20% for a loyalty offer, what analytics type does that action represent?
+2. For question (d), extend the DataFrame to add a `high_value` boolean flag using `pd.qcut` or a manual threshold on `amount`. Print the flagged customers.
+
+```python
+# (a) Descriptive
+print("Total revenue:", df["amount"].sum())
+print("Average order value:", df["amount"].mean())
+
+# (b) Descriptive
+print("Top customer:", df["customer_id"].value_counts().idxmax())
+
+# (c) Descriptive
+pct_open = (df["status"].isin(["Pending","Processing"]).sum() / len(df)) * 100
+print(f"Open orders: {pct_open:.1f}%")
+
+# (d) Prescriptive — flagging customers for action
+customer_spend = df.groupby("customer_id")["amount"].sum()
+threshold = customer_spend.quantile(0.80)
+high_value = customer_spend[customer_spend >= threshold].index
+print("High-value customers:", high_value.tolist())
+```
+
+### Reflection Questions
+
+1. When you called `df.describe()`, the `status` column was excluded from the default output. What does this tell you about how pandas treats ordered categorical variables, and how would you obtain a summary of that column?
+2. A marketing manager asks you to "find the average customer satisfaction rating and use it to target unhappy customers." Using what you know about ordinal measurement scales, evaluate whether this request is statistically valid and suggest a more appropriate approach.

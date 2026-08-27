@@ -7,7 +7,7 @@
 
 ---
 
-**Question 1**
+### Question 1
 
 What is the maximum data transfer speed of USB 3.0 (SuperSpeed)?
 
@@ -26,7 +26,7 @@ What is the maximum data transfer speed of USB 3.0 (SuperSpeed)?
 
 ---
 
-**Question 2**
+### Question 2
 
 In the context of PC hardware, which of the following most accurately describes USB Type-C?
 
@@ -45,7 +45,7 @@ In the context of PC hardware, which of the following most accurately describes 
 
 ---
 
-**Question 3**
+### Question 3
 
 A user plugs a USB 3.0 external hard drive into their laptop and notices file transfers are completing at approximately 30 MB/s instead of the expected 300+ MB/s. The drive works correctly on another laptop at full speed. What is the most likely cause on this laptop?
 
@@ -64,7 +64,7 @@ A user plugs a USB 3.0 external hard drive into their laptop and notices file tr
 
 ---
 
-**Question 4**
+### Question 4
 
 A technician sets up a KVM switch so that one monitor, keyboard, and mouse can control two desktop PCs. After configuration, switching to the second PC results in a blank monitor screen, though the keyboard and mouse switch correctly. What is the most likely cause?
 
@@ -83,7 +83,7 @@ A technician sets up a KVM switch so that one monitor, keyboard, and mouse can c
 
 ---
 
-**Question 5**
+### Question 5
 
 A company requires employees to authenticate to their workstations using both a password and a physical card issued by the IT department. The card contains an embedded chip that stores cryptographic credentials. Which peripheral device reads this card, and which authentication factor category does it represent?
 
@@ -102,7 +102,7 @@ A company requires employees to authenticate to their workstations using both a 
 
 ---
 
-**Question 6**
+### Question 6
 
 A technician connects a Thunderbolt 4 laptop to a Thunderbolt 4 dock using a standard USB-C charging cable (not a Thunderbolt cable). The user reports that the dock's USB ports and connected monitor do not work, but the laptop charges correctly. What is the most likely cause?
 
@@ -121,7 +121,7 @@ A technician connects a Thunderbolt 4 laptop to a Thunderbolt 4 dock using a sta
 
 ---
 
-**Question 7**
+### Question 7
 
 Which USB connector type is described as: small, asymmetric, 5-pin, with one beveled edge; commonly used on Android smartphones manufactured between approximately 2010 and 2018?
 
@@ -140,7 +140,7 @@ Which USB connector type is described as: small, asymmetric, 5-pin, with one bev
 
 ---
 
-**Question 8**
+### Question 8
 
 An employee in a high-security government facility must unlock their workstation. The security policy requires the "something you are" authentication factor only — no password or card. The employee is wearing protective gloves that prevent fingerprint scanning. Which biometric option is most appropriate?
 
@@ -159,7 +159,7 @@ An employee in a high-security government facility must unlock their workstation
 
 ---
 
-**Question 9**
+### Question 9
 
 A user connects a USB 3.0 hub to their laptop's blue USB 3.0 port. They then connect a USB 2.0 keyboard, a USB 3.0 flash drive, and a USB 2.0 webcam to the hub. At what speed will the USB 3.0 flash drive transfer data through this configuration?
 
@@ -178,7 +178,7 @@ A user connects a USB 3.0 hub to their laptop's blue USB 3.0 port. They then con
 
 ---
 
-**Question 10**
+### Question 10
 
 Which of the following correctly describes the difference between Thunderbolt 3 and Thunderbolt 4 in terms of data speed and capabilities?
 
@@ -194,3 +194,203 @@ Which of the following correctly describes the difference between Thunderbolt 3 
 - *Why A is incorrect:* Thunderbolt 3 already operates at 40 Gbps, not 20 Gbps. Thunderbolt 2 operates at 20 Gbps. Thunderbolt 4 does not double the speed; it standardizes the minimum feature set.
 - *Why C is incorrect:* Thunderbolt 4 does not use channel aggregation to reach 80 Gbps. Future Thunderbolt 5 targets higher speeds, but Thunderbolt 4 is capped at 40 Gbps.
 - *Why D is incorrect:* Thunderbolt 4 continues to use the USB Type-C physical connector, exactly as Thunderbolt 3 does. There is no proprietary connector associated with Thunderbolt 4.
+
+---
+
+### Question 11
+
+A user plugs a USB 3.2 Gen 2x2 device into a blue USB Type-A port on their desktop. The device performs at only 5 Gbps instead of the expected 20 Gbps. What is the MOST likely explanation?
+
+- A) The USB cable is defective and limits speed to 5 Gbps
+- B) The blue Type-A port supports USB 3.0 (5 Gbps); USB 3.2 Gen 2x2 requires a USB Type-C port with the appropriate host controller
+- C) The device needs a driver update to unlock 20 Gbps operation
+- D) USB 3.2 Gen 2x2 is only supported on Thunderbolt 4 ports
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why B is correct:* USB 3.2 Gen 2x2 (20 Gbps) uses dual-lane signaling and is only available on USB Type-C ports with a compatible host controller. The blue USB Type-A connector is limited to single-lane USB 3.0/3.1 speeds (5 Gbps or 10 Gbps). Achieving 20 Gbps requires a Type-C host port with Gen 2x2 controller support.
+- *Why A is incorrect:* While a damaged cable could limit speed, the more fundamental issue is the port type. Type-A physically cannot carry the dual-lane signal required for USB 3.2 Gen 2x2 regardless of cable quality.
+- *Why C is incorrect:* Driver updates can fix recognition or stability issues but cannot change the physical capability of a port. A USB 3.0 Type-A port cannot be upgraded to 20 Gbps via software.
+- *Why D is incorrect:* USB 3.2 Gen 2x2 is a USB specification and does not require Thunderbolt 4. It requires a compatible USB Type-C host controller, not a Thunderbolt controller.
+
+---
+
+### Question 12
+
+A technician needs to connect a USB 2.0 printer to a workstation. The only available port on the back of the PC is a USB 3.0 (blue) Type-A port. What will happen?
+
+- A) The printer will not be detected because USB 2.0 devices are not backward compatible with USB 3.0 ports
+- B) The printer will function normally at USB 2.0 speeds; USB 3.0 ports are backward compatible with USB 2.0 devices
+- C) The printer will operate at USB 3.0 speeds (5 Gbps) automatically when connected to the blue port
+- D) A USB 2.0 hub must be used between the port and the printer to ensure compatibility
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why B is correct:* USB is backward compatible across generations. A USB 2.0 device connected to a USB 3.0 port negotiates to USB 2.0 speed (480 Mbps). The printer will be detected and operate normally — it just will not benefit from the higher-speed port. No hub or adapter is required.
+- *Why A is incorrect:* USB is specifically designed for backward compatibility. This is a core design principle of the USB specification and is tested repeatedly on the A+ exam.
+- *Why C is incorrect:* The printer's internal controller determines the maximum speed, not the port it is connected to. A USB 2.0 printer communicates at USB 2.0 speeds regardless of which USB generation port it uses.
+- *Why D is incorrect:* A USB 2.0 hub is unnecessary. Direct connection to the USB 3.0 port with a standard USB cable will work correctly at USB 2.0 speeds.
+
+---
+
+### Question 13
+
+Which of the following correctly identifies the PS/2 connector and its modern replacement?
+
+- A) PS/2 is a 6-pin mini-DIN connector used for keyboard and mouse; it has been largely replaced by USB
+- B) PS/2 is a 9-pin serial DB-9 connector used for legacy mice; it has been replaced by Bluetooth
+- C) PS/2 is a 15-pin VGA-style connector used for keyboard connection; it has been replaced by HDMI
+- D) PS/2 is a 25-pin parallel port connector used for printers; it has been replaced by USB Type-B
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- *Why A is correct:* PS/2 connectors are 6-pin mini-DIN connectors that connect keyboard and mouse to older motherboards. Color coding distinguishes them: purple for keyboard, green for mouse. PS/2 is not hot-pluggable (devices must be connected before boot). USB replaced PS/2 as the standard keyboard and mouse interface.
+- *Why B is incorrect:* A 9-pin serial DB-9 connector is a legacy COM port (RS-232 serial), not a PS/2 connector. DB-9 was used for serial mice and modems, not the PS/2 protocol.
+- *Why C is incorrect:* A 15-pin connector associated with displays describes VGA (HD-15). PS/2 has nothing to do with video output.
+- *Why D is incorrect:* A 25-pin parallel port (Centronics/DB-25) was used for legacy printers. It is an entirely different connector type from PS/2 and was replaced by USB Type-B for printers.
+
+---
+
+### Question 14
+
+A company policy requires two-factor authentication using "something you know" and "something you have." A user currently authenticates with a password only. Which addition satisfies the policy?
+
+- A) A longer, more complex password
+- B) A fingerprint scanner
+- C) A hardware TOTP token that generates a new 6-digit code every 30 seconds
+- D) A second password stored on a separate login screen
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why C is correct:* A TOTP (Time-based One-Time Password) hardware token is a physical device that generates a time-synchronized code. It represents "something you have" (physical possession of the token). Combined with the existing password ("something you know"), this creates true two-factor authentication with two different factor categories.
+- *Why A is incorrect:* A longer password is still only "something you know." Increasing password complexity adds strength within a single factor but does not add a second factor from a different category.
+- *Why B is incorrect:* A fingerprint scanner adds "something you are" (biometric) — not "something you have." This satisfies a different two-factor combination (know + are) but is not "something you have" as the policy may specifically require.
+- *Why D is incorrect:* A second password is still "something you know." Two passwords are two instances of the same factor category, not two-factor authentication.
+
+---
+
+### Question 15
+
+A user plugs a device into their laptop's USB-C port and it charges the laptop's battery. What USB capability enables this behavior?
+
+- A) USB Alt Mode — the USB-C port is operating in alternate mode to deliver power in reverse
+- B) USB Power Delivery (USB PD) — a negotiated power protocol over USB-C that can deliver up to 100W (PD 3.0) or 240W (PD 3.1) in either direction
+- C) Thunderbolt 4 — all USB-C charging is performed through the Thunderbolt 4 controller
+- D) USB 3.2 Gen 2 — the 10 Gbps data rate automatically converts to 20W of charging power at half speed
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why B is correct:* USB Power Delivery (USB PD) is a separate USB standard that allows USB-C connections to negotiate variable power levels. USB PD 3.0 supports up to 100W; USB PD 3.1 supports up to 240W. Critically, power delivery can flow in either direction — a peripheral, dock, or wall adapter can charge the laptop through the same port that delivers data. This is not tied to USB speed generation.
+- *Why A is incorrect:* USB Alt Mode allows the USB-C port to carry non-USB signals (DisplayPort, Thunderbolt, HDMI). It does not describe the power delivery function.
+- *Why C is incorrect:* USB-C charging via USB PD does not require Thunderbolt 4. Any USB-C port with USB PD support can charge the host device regardless of whether it has a Thunderbolt controller.
+- *Why D is incorrect:* USB data speed (3.2 Gen 2 = 10 Gbps) and charging power are entirely independent specifications. A USB 3.2 Gen 2 speed rating has no relationship to how much power the port delivers.
+
+---
+
+### Question 16
+
+A KVM switch has four PC input ports and one set of outputs (monitor, keyboard, mouse). A technician wants to control all four PCs. Which statement about OS compatibility is correct?
+
+- A) All four PCs must run the same operating system for the KVM switch to function correctly
+- B) The KVM switch operates at the hardware signal level and is OS-agnostic; PCs running different OSes can all be controlled through the same KVM
+- C) The KVM switch requires a USB driver installed on each connected PC before it will recognize keyboard and mouse input
+- D) The KVM switch's monitor output only supports Windows-native display resolutions; Linux and macOS may show incorrect resolutions
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why B is correct:* KVM switches operate below the OS layer — they route physical electrical signals (USB HID for keyboard/mouse, video signal for the monitor). The OS receives standard USB keyboard and mouse input and a standard monitor signal. No driver, no OS configuration, and no OS compatibility check is involved. A KVM switch works equally well with Windows, Linux, macOS, and any other OS.
+- *Why A is incorrect:* This is a classic A+ exam trap. KVM switches have no OS awareness. Different OSes on different connected PCs are fully supported.
+- *Why C is incorrect:* The connected PCs see standard USB HID keyboard and mouse devices — the same devices they would see if directly connected without a KVM. No additional KVM-specific driver is required.
+- *Why D is incorrect:* The KVM switch passes the video signal transparently. Resolution is determined by the GPU, the monitor's EDID, and the OS display driver — not by the KVM switch's OS compatibility.
+
+---
+
+### Question 17
+
+A technician sets up a workstation for a security researcher who needs to run a USB device identification utility. The utility scans all USB devices connected to the system and reports their device class, vendor ID, and product ID. Where does this information originate?
+
+- A) The USB device reports its vendor ID, product ID, and device class in a USB descriptor transmitted to the host during the device enumeration process
+- B) The information is looked up in a local database file installed by the USB driver during device setup
+- C) Windows Device Manager generates these IDs randomly during initial USB device recognition
+- D) The information is stored on the USB cable's internal memory chip and reported at connection time
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- *Why A is correct:* USB device enumeration is the process where the USB host controller requests descriptor packets from a newly connected device. The device's firmware responds with standard USB descriptors containing the Vendor ID (VID), Product ID (PID), device class code, manufacturer string, and product string. This happens automatically over the USB protocol before any OS driver is loaded.
+- *Why B is incorrect:* While Windows does maintain a device database for driver matching, the vendor ID and product ID originate from the device itself via descriptors — not from the driver database. The database is consulted to find the appropriate driver after the IDs are read.
+- *Why C is incorrect:* Device IDs are not randomly generated. They are fixed identifiers assigned by the USB Implementers Forum (USB-IF) to device manufacturers and hard-coded in the device firmware.
+- *Why D is incorrect:* USB cables do not contain memory chips or identification data (with the exception of active optical cables and some proprietary smart cables, which is a narrow special case). The device itself — not the cable — transmits descriptor information.
+
+---
+
+### Question 18
+
+A user connects a USB keyboard and mouse to a KVM switch. After switching to a second PC, the keyboard is recognized but the mouse appears to disconnect and reconnect repeatedly. What is the MOST likely cause?
+
+- A) The second PC's USB drivers are corrupted and need reinstallation
+- B) The KVM switch's USB hub protocol is incompatible with the mouse, or the mouse cable has a marginal connection at the KVM
+- C) The mouse requires Thunderbolt 4 to maintain a stable connection during KVM switching
+- D) The second PC's BIOS does not have USB legacy mode enabled, preventing mouse detection after POST
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why B is correct:* When a KVM switch changes input, it re-enumerates the USB devices on the new port. Some mice (particularly those with custom HID firmware or very fast polling rates) are sensitive to re-enumeration timing and may disconnect/reconnect repeatedly if the KVM's USB hub has compatibility issues or if the cable connection is marginal. Testing with a different mouse or a different KVM port isolates the cause.
+- *Why A is incorrect:* Corrupted USB drivers would affect all USB devices on that PC, not just the mouse through a KVM. The fact that the keyboard works normally rules out a systemic USB driver issue.
+- *Why C is incorrect:* Mice do not require Thunderbolt 4 — they are low-bandwidth USB HID devices that operate at USB 1.1 Low Speed (1.5 Mbps). Thunderbolt has no relevance to mouse connectivity.
+- *Why D is incorrect:* USB legacy mode in BIOS enables USB devices during POST (before the OS loads). If the PC has already booted and the keyboard is recognized, the BIOS USB settings are not the issue — the OS USB stack is active and functional.
+
+---
+
+### Question 19
+
+Which USB connector type is specifically designed to be reversible (insertable in either orientation)?
+
+- A) USB Type-A
+- B) USB Type-B
+- C) USB Micro-B
+- D) USB Type-C
+
+**Correct Answer:** D
+
+**Distractor Analysis:**
+
+- *Why D is correct:* USB Type-C is the only standard USB connector designed to be symmetrical and reversible — it can be inserted either way without needing to orient the connector. This was one of the primary design goals of the USB Type-C specification, addressing the user frustration of the directional Type-A connector.
+- *Why A is incorrect:* USB Type-A has an asymmetric design and is directional. The flat rectangular connector has a specific top and bottom and can only be inserted one way. It is famously non-reversible (the origin of many jokes about USB orientation).
+- *Why B is incorrect:* USB Type-B is a square-profile directional connector used on printers, scanners, and audio interfaces. It is not reversible.
+- *Why C is incorrect:* USB Micro-B is a small asymmetric connector with a distinctive beveled shape. It is directional and not reversible.
+
+---
+
+### Question 20
+
+A technician is troubleshooting a workstation where a USB device is detected but identified as an "Unknown Device" in Device Manager with a yellow warning triangle. What is the MOST likely cause?
+
+- A) The USB port hardware is physically damaged and cannot supply sufficient power
+- B) The device driver for the USB device is missing, corrupted, or incompatible with the installed OS version
+- C) The USB cable is too long and the signal has degraded below the threshold for device identification
+- D) The device's USB descriptor has been corrupted and the device must be replaced
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why B is correct:* "Unknown Device" with a yellow warning triangle in Device Manager means Windows successfully detected the device via USB enumeration (it can read the VID and PID) but failed to load or find an appropriate driver. The fix is to install the correct driver — from Windows Update, the device manufacturer's website, or a driver package on physical media.
+- *Why A is incorrect:* Physical port damage or insufficient power typically results in the device not being detected at all, or causes intermittent disconnection. It does not produce the specific "Unknown Device" entry that appears when the device is successfully enumerated but undriven.
+- *Why C is incorrect:* A cable that is too long causes signal degradation that prevents detection entirely — the device would not appear in Device Manager at all. An "Unknown Device" entry requires successful USB enumeration, which means the signal was adequate.
+- *Why D is incorrect:* While a corrupted USB descriptor is theoretically possible, it is an extremely rare hardware failure. The overwhelmingly more common cause of "Unknown Device" is a missing or failed driver installation — the standard first step in troubleshooting this specific Device Manager state.

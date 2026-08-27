@@ -407,3 +407,16 @@ keras.layers.LSTM(64, kernel_regularizer=regularizers.l2(0.001))
 ---
 
 *End of Reading Guide — Module 10*
+
+---
+
+## 9. Supplemental Resources
+
+**1. [Understanding LSTM Networks — colah's blog](https://colah.github.io/posts/2015-08-Understanding-LSTMs/)**
+Christopher Olah's landmark blog post explaining LSTM architecture with detailed annotated diagrams of the forget gate, input gate, cell state update, and output gate. Widely regarded as the clearest explanation of LSTM internals available online and essential reading before the TF Developer Certificate exam.
+
+**2. [TensorFlow Time Series Forecasting Tutorial](https://www.tensorflow.org/tutorials/structured_data/time_series)**
+Official TensorFlow tutorial covering the complete time series pipeline: windowing, normalization, baseline models, linear models, dense networks, CNNs, LSTMs, and multi-step forecasting. Directly aligned with the time series task category on the TF Developer Certificate exam.
+
+**3. [Illustrated Guide to LSTMs and GRUs — Towards Data Science](https://towardsdatascience.com/illustrated-guide-to-lstms-and-gru-s-a-step-by-step-explanation-44e9eb85bf21)**
+Step-by-step visual walkthrough of LSTM and GRU computations with animated diagrams. Covers the intuition behind each gate and the mathematical update equations. Particularly useful for understanding the GRU's simplified two-gate structure compared to LSTM's four-gate design.

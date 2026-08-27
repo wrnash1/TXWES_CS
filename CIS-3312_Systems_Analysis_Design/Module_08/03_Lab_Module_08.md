@@ -289,4 +289,22 @@ sees or experiences, not how the database updates internally.
 
 ---
 
+## Part 9 — Challenge Exercise
+
+This section is optional and not separately graded. It extends the lab into advanced use case and story mapping practice aligned with ECBA exam competencies.
+
+### Challenge Step 1: Generalization Relationship Modeling
+
+Return to your use case diagram from Task 1. Identify a situation in the Lakewood Library Management System where actor generalization applies — for example, a "Staff Member" actor that generalizes into "Librarian" and "Circulation Desk Associate," where both specialized actors inherit the base actor's use case associations but each has additional unique use cases. Add the generalization relationship to your diagram using the correct UML notation (open-triangle arrowhead from the specialized actor to the general actor). Write one paragraph explaining what generalization means in this context and which use cases each specialized actor inherits versus which are unique to each.
+
+### Challenge Step 2: Release Planning with Risk-Based Slicing
+
+Review your story map from Task 4. Identify the two user stories that carry the highest technical or business risk (for example, integration with an external payment system, or a complex search algorithm). Justify why these stories are high-risk. Then argue whether these high-risk stories should be placed in the MVP slice (to validate the risk early) or deferred to a later release (to reduce MVP complexity). Write a one-page release planning rationale addressing: risk identification, the tradeoff between early risk validation and MVP simplicity, and your final recommendation with justification.
+
+### Challenge Step 3: Use Case to Test Case Traceability
+
+Select one of your fully dressed use case specifications from Task 2. For the main success scenario and each extension, write one corresponding test case in the following format: Test Case ID, Use Case Step Reference, Test Description, Preconditions, Test Steps, Expected Result, Pass/Fail Criteria. Demonstrate that every step in the use case has at least one corresponding test case. This exercise practices the forward traceability link from use case specification to test planning — the core of the Requirements Traceability Matrix (RTM) concept covered in Module 04.
+
+---
+
 *Lab Activity — Module 08 | CIS-3312 Systems Analysis and Design | Texas Wesleyan University*

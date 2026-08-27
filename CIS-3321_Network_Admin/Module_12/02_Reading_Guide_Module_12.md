@@ -321,3 +321,33 @@ On high-latency WAN links, TCP congestion control throttles throughput unnecessa
 9. What is zero-touch provisioning in SD-WAN and what operational benefit does it provide?
 
 10. Compare GEO satellite and LEO satellite WAN in terms of latency and suitability for real-time applications.
+
+---
+
+## 9. Supplemental Resources
+
+The following free resources extend Module 12 content on WAN technologies, MPLS, SD-WAN, and broadband connectivity.
+
+**1. Professor Messer — WAN Technologies Free Videos (N10-008)**
+URL: https://www.professormesser.com/network-plus/n10-008/n10-008-video/
+Relevance: Professor Messer covers WAN types (T1, MPLS, Metro Ethernet, satellite, broadband), SD-WAN concepts, and WAN optimization in videos aligned to Network+ exam objectives.
+
+**2. Cisco — MPLS Configuration Guide (Free)**
+URL: https://www.cisco.com/c/en/us/td/docs/ios-xml/ios/mp_l3_vpns/configuration/xe-16-12/mp-l3-vpns-xe-16-12-book.html
+Relevance: Cisco's free MPLS L3 VPN configuration guide covers PE/P/CE router roles, VRF configuration, label distribution, and MPLS VPN troubleshooting. Directly applicable to understanding the MPLS architecture described in this module.
+
+**3. MEF Forum — Carrier Ethernet Education (Free)**
+URL: https://www.mef.net/education/
+Relevance: The Metro Ethernet Forum provides free educational resources on Carrier Ethernet service types (E-Line, E-LAN, E-Tree), MEF certification, and Carrier Ethernet 2.0 specifications. The definitive source for Metro Ethernet service definitions.
+
+**4. Cisco SD-WAN (Viptela) Architecture Overview (Free)**
+URL: https://www.cisco.com/c/en/us/solutions/enterprise-networks/sd-wan/index.html
+Relevance: Cisco's free SD-WAN product documentation and architecture overview covering the SD-WAN controller (vManage), edge device (vEdge), orchestration (vBond), and application-aware routing policies — directly mapped to the SD-WAN content in this module.
+
+**5. FCC Broadband Speed Guide (Free)**
+URL: https://www.fcc.gov/consumers/guides/broadband-speed-guide
+Relevance: The FCC's free consumer broadband guide explains DSL, cable, fiber, satellite, and cellular broadband technologies including typical speeds and use cases — useful reference for comparing WAN access technology characteristics.
+
+---
+
+*CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash*

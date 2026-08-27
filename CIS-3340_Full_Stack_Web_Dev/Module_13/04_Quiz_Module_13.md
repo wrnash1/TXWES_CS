@@ -238,3 +238,183 @@ A React application logs in successfully and receives a JWT. The token has `"exp
 - Why B is correct: A single centralized response handler is the correct pattern for authentication lifecycle management in React.
 - Why C is incorrect: Express returns JSON responses, not browser redirects. The React SPA handles navigation — it does not follow HTTP 302 redirects from an API.
 - Why D is incorrect: `redirect_uri` is an OAuth 2.0 parameter used during the authorization code flow — it is not a JWT claim and the browser does not act on JWT payload values.
+
+---
+
+### Question 11 (5 points)
+
+A developer stores the JWT in `localStorage` and later discovers the app has an XSS vulnerability. Which statement best describes the resulting security risk?
+
+- A) The XSS vulnerability is unrelated to token storage — tokens in `localStorage` are protected by the Same-Origin Policy.
+- B) An attacker's injected script can call `localStorage.getItem('token')` and exfiltrate the token to a remote server, allowing the attacker to impersonate the user from any origin.
+- C) Only server-side XSS vulnerabilities can steal tokens from `localStorage`.
+- D) The JWT is already encrypted in `localStorage` by the browser, so exfiltration is harmless.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: The Same-Origin Policy governs cross-origin requests, not JavaScript access to `localStorage`. Any script running on the page — including injected scripts — can read `localStorage`.
+  - Why B is correct: XSS gives the attacker arbitrary JavaScript execution. `localStorage` is fully accessible to JavaScript, so the attacker can read, copy, and send the token to a remote server where it can be replayed.
+  - Why C is incorrect: XSS is a client-side vulnerability. An injected script runs in the browser with full access to `localStorage`, regardless of where the server is located.
+  - Why D is incorrect: JWTs are base64url-encoded, not encrypted. `localStorage` also stores values as plain strings — the browser applies no encryption.
+
+---
+
+### Question 12 (5 points)
+
+A React application sends authenticated requests using `fetch` with `credentials: 'include'`. The backend Express server uses the `cors` package with `origin: 'http://localhost:5173'`. Requests succeed in development, but the browser still blocks the preflight. Which additional option must be set on the server?
+
+- A) `methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE']`
+- B) `credentials: true`
+- C) `allowedHeaders: ['Content-Type', 'Authorization']`
+- D) `exposedHeaders: ['Set-Cookie']`
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: Listing HTTP methods is not required for `credentials: 'include'` to work — the browser allows all standard methods unless the server restricts them.
+  - Why B is correct: When the client sends `credentials: 'include'`, the server must respond with `Access-Control-Allow-Credentials: true`. The `cors` package sets this header when `credentials: true` is configured. Without it the browser rejects the response.
+  - Why C is incorrect: `allowedHeaders` allows the `Authorization` header through preflight — it is good practice but is not the specific missing option that blocks `credentials: 'include'` requests.
+  - Why D is incorrect: `exposedHeaders` controls which response headers JavaScript can read — it is unrelated to the `credentials` requirement.
+
+---
+
+### Question 13 (5 points)
+
+Which hashing algorithm should NEVER be used for storing user passwords, and why?
+
+- A) bcrypt — it is too slow and causes unacceptable login latency.
+- B) Argon2 — it won a password hashing competition so it must have known weaknesses.
+- C) SHA-256 — it is a fast general-purpose algorithm, which makes brute-force attacks using GPUs trivial.
+- D) PBKDF2 — it uses HMAC internally, which is the same as signing a JWT.
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why A is incorrect: bcrypt's intentional slowness is a security feature, not a flaw. A cost factor of 12 takes roughly 250 ms per hash — negligible for login but enormously expensive for attackers.
+  - Why B is incorrect: Argon2 won the Password Hashing Competition in 2015 specifically because of its strong security properties. It is the recommended algorithm for new systems.
+  - Why C is correct: SHA-256 can compute billions of hashes per second on modern GPU hardware. An attacker with a stolen hash database can perform an offline brute-force attack and crack common passwords in minutes.
+  - Why D is incorrect: PBKDF2 is a legitimate password hashing function. Its use of HMAC is irrelevant to JWT signing — the two use cases are entirely separate.
+
+---
+
+### Question 14 (5 points)
+
+A JWT is issued with `{ "alg": "HS256", "typ": "JWT" }` in its header. An attacker intercepts the token and changes the header to `{ "alg": "none", "typ": "JWT" }`, removes the signature, and replays it. Which server-side behavior prevents this attack?
+
+- A) The server checks that `alg` is not `"none"` before calling `jwt.verify()`.
+- B) The `jsonwebtoken` library's `jwt.verify()` rejects `alg: none` tokens by default when a secret is provided.
+- C) The payload is encrypted with the same secret, so altering the header invalidates decryption.
+- D) The browser blocks requests containing `alg: none` tokens before they reach the server.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: While adding an explicit check is a valid defense-in-depth measure, the primary protection comes from the library's default behavior, not from manual header inspection.
+  - Why B is correct: The `jsonwebtoken` library requires a valid signature when a secret is provided to `jwt.verify()`. A token with `alg: none` has no signature — verification fails with `JsonWebTokenError`. The library explicitly rejects unsigned tokens unless `algorithms: ['none']` is explicitly allowed.
+  - Why C is incorrect: JWT payloads are base64url-encoded, not encrypted. There is no encryption to invalidate.
+  - Why D is incorrect: The browser has no knowledge of JWT contents — it transmits whatever the JavaScript sends in the `Authorization` header.
+
+---
+
+### Question 15 (5 points)
+
+An Express API sets this CORS configuration: `cors({ origin: 'http://localhost:5173', credentials: true })`. A deployed React app at `https://app.example.com` sends a request with `credentials: 'include'`. What happens?
+
+- A) The request succeeds because `credentials: true` overrides the origin restriction.
+- B) The browser sends the request and the server responds, but the browser blocks the response because the `Access-Control-Allow-Origin` header does not match the request's origin.
+- C) The server returns `403 Forbidden` because the origin does not match.
+- D) The browser blocks the preflight request before it reaches the server because `https` and `http` are different schemes.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: `credentials: true` enables the `Access-Control-Allow-Credentials: true` response header — it does not broaden the allowed origins.
+  - Why B is correct: The server responds with `Access-Control-Allow-Origin: http://localhost:5173`. The browser compares this to the actual request origin `https://app.example.com` — they do not match, so the browser blocks JavaScript from reading the response (CORS error). The server itself never returns a CORS error — the enforcement is entirely in the browser.
+  - Why C is incorrect: The CORS `origin` option in the `cors` middleware causes the server to omit or mismatch the `Access-Control-Allow-Origin` header — it does not return `403`.
+  - Why D is incorrect: The browser does send the preflight — CORS enforcement happens at the response stage, not during the send stage.
+
+---
+
+### Question 16 (5 points)
+
+The `Access-Control-Max-Age` response header returned during a CORS preflight controls which behavior?
+
+- A) The maximum age of the JWT before the browser considers it expired.
+- B) How long (in seconds) the browser may cache the preflight response, skipping subsequent `OPTIONS` requests for the same endpoint.
+- C) The maximum time the server will wait for a request body before closing the connection.
+- D) How long the `Set-Cookie` header's `Max-Age` attribute overrides `Access-Control-Max-Age`.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: JWT expiration is controlled by the `exp` claim in the token payload and verified by `jwt.verify()` on the server — not by any HTTP header.
+  - Why B is correct: `Access-Control-Max-Age` tells the browser how long to cache the preflight result. During that window, the browser skips the `OPTIONS` request and sends the actual request directly, reducing latency.
+  - Why C is incorrect: Request body timeout is configured at the web server or framework level (e.g., Express `timeout` middleware) — not via a CORS header.
+  - Why D is incorrect: Cookie `Max-Age` and `Access-Control-Max-Age` are entirely unrelated headers with no interaction.
+
+---
+
+### Question 17 (5 points)
+
+RS256 (asymmetric) is used instead of HS256 (symmetric) to sign JWTs in a microservices architecture. What is the primary advantage?
+
+- A) RS256 tokens are smaller because the signature uses fewer bytes than HS256.
+- B) RS256 allows any service to verify tokens using only the public key — no service needs access to the private signing key, limiting the blast radius of a key compromise.
+- C) RS256 tokens are impossible to decode because RSA encryption is applied to the payload.
+- D) RS256 eliminates the need for an `exp` claim because RSA keys expire automatically.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: RSA signatures are larger than HMAC-SHA256 signatures. The RS256 token is bigger, not smaller.
+  - Why B is correct: In RS256, only the Auth service holds the private key and signs tokens. All downstream services verify with the public key. A compromised downstream service cannot forge tokens — it cannot sign with the private key it never had.
+  - Why C is incorrect: JWT payloads are base64url-encoded and always readable. RS256 is an asymmetric signing algorithm, not an encryption algorithm. For confidentiality use JWE.
+  - Why D is incorrect: All JWTs should include an `exp` claim regardless of the signing algorithm. RSA keys do not expire automatically.
+
+---
+
+### Question 18 (5 points)
+
+A JWT is compromised before it expires. The API uses stateless JWT verification and has no token blacklist. What is the most accurate statement about revoking the token?
+
+- A) Delete the token from the user's `localStorage` — this revokes it server-side.
+- B) The API can call `jwt.invalidate()` to mark the token as revoked in the `jsonwebtoken` library's internal store.
+- C) True stateless JWT revocation is impossible before expiry without additional server-side state such as a token blacklist or short expiry combined with refresh tokens.
+- D) Changing the JWT secret immediately revokes all existing tokens and is the standard revocation mechanism.
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why A is incorrect: Deleting the token from `localStorage` removes it from the compromised client, but the attacker who stole it still holds a valid copy. The server has no record of which tokens have been issued and cannot distinguish the attacker's copy.
+  - Why B is incorrect: `jsonwebtoken` does not have a `jwt.invalidate()` function — there is no built-in revocation store in the library.
+  - Why C is correct: Stateless JWTs are self-contained. The server cannot revoke a specific token without maintaining server-side state (a blacklist). Practical mitigation strategies include short expiry plus refresh tokens, or a Redis-backed token blacklist.
+  - Why D is incorrect: Changing the secret invalidates ALL tokens including legitimate ones — it is a last-resort emergency measure, not a targeted revocation mechanism.
+
+---
+
+### Question 19 (5 points)
+
+An Express route applies `authenticate` middleware followed by `requireRole('admin')` middleware. A request arrives with a valid JWT for a user with `role: 'student'`. Which response does the client receive?
+
+- A) `401 Unauthorized` — the token is valid but the role is wrong, so the user is considered unauthenticated.
+- B) `403 Forbidden` — the user is authenticated but lacks the required role.
+- C) `404 Not Found` — the admin route is hidden from non-admin users.
+- D) `200 OK` — both middleware functions run, and the route handler ignores the role check.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: `401` means "not authenticated" — the server cannot identify who the user is. A valid JWT proves identity. The correct code for "authenticated but unauthorized" is `403`.
+  - Why B is correct: `requireRole` checks `req.user.role` after `authenticate` has already set it. The student role is not in the allowed list, so `requireRole` calls `next(new ForbiddenError(...))` and the global error handler returns `403`.
+  - Why C is incorrect: HTTP route matching is independent of authorization — the route exists and is matched before middleware runs. Returning `404` for authorization failures would leak information about which routes exist.
+  - Why D is incorrect: `requireRole` calls `next(err)` when the role check fails, bypassing the route handler entirely.
+
+---
+
+### Question 20 (5 points)
+
+A developer adds `app.use(authenticate)` before all routes so every route is protected. The login and registration endpoints then start returning `401 Unauthorized` before the request body is even read. What is the correct fix?
+
+- A) Move the auth middleware after the `express.json()` middleware so the body is parsed first.
+- B) Mount the auth routes before `app.use(authenticate)`, or add a path check inside `authenticate` to skip unprotected paths.
+- C) Add `if (req.path === '/login') next()` inside the route handler rather than the middleware.
+- D) Disable the `authenticate` middleware for the entire application and protect routes individually using inline `if` checks in each handler.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: The order of `express.json()` relative to `authenticate` is irrelevant to this problem. The issue is that `authenticate` runs before the request reaches the auth routes, not that the body is unparsed.
+  - Why B is correct: Auth routes (`/api/auth/login`, `/api/auth/register`) must be reachable without a token. The cleanest pattern is to mount them before `app.use(authenticate)` so the global middleware never runs for those paths. Alternatively, `authenticate` can skip paths matching an allowlist.
+  - Why C is incorrect: Placing path checks inside a route handler is wrong — the middleware has already run and rejected the request before the route handler is reached.
+  - Why D is incorrect: Individual `if` checks in every handler are error-prone and do not scale. Middleware is the correct abstraction for cross-cutting concerns.

@@ -240,4 +240,232 @@ D. Individual service-level snapshot policies with IAM policies preventing delet
 
 ---
 
+### Question 11 (5 points)
+
+A developer uploads a 10 GB file to Amazon S3 using a standard PutObject API call and receives a timeout error. What is the recommended approach for uploading objects of this size?
+
+A. Enable S3 Transfer Acceleration on the bucket to increase the upload speed and retry the single PutObject call
+
+B. Use S3 multipart upload to split the file into parts (minimum 5 MB each), upload parts in parallel, and complete the upload with CompleteMultipartUpload
+
+C. Compress the file below 5 GB before uploading to avoid the single-object size limit
+
+D. Switch to a direct-connect enabled bucket that supports larger single-object uploads
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect. Transfer Acceleration routes data through CloudFront edge locations to improve throughput for distant users, but it does not solve the 5 GB single PUT object size limit or timeout issues with very large files.
+- B is correct. S3 multipart upload is the correct approach for files larger than 100 MB and is required for files larger than 5 GB. The file is split into parts (minimum 5 MB, maximum 5 GB each), uploaded in parallel to increase throughput and allow retry of individual failed parts, then combined by CompleteMultipartUpload.
+- C is incorrect. S3 objects can be up to 5 TB in size. There is no 5 GB single object size limit per se — the limit is on a single PutObject API call (5 GB). For files over 5 GB, multipart upload is required regardless of compression. Compressing the file does not change the architectural need for multipart upload.
+- D is incorrect. There is no "Direct Connect enabled bucket" type in S3. Direct Connect provides private network connectivity to AWS, which improves throughput and reduces latency for S3 uploads, but the multipart upload requirement for large objects is independent of the network path.
+
+---
+
+### Question 12 (5 points)
+
+A company stores petabytes of log data in S3 Standard. A data engineer needs to run SQL queries to extract metrics from specific fields across millions of log files without downloading the entire dataset. Which S3 feature addresses this use case?
+
+A. S3 Intelligent-Tiering, which automatically indexes and queries files based on access patterns
+
+B. S3 Select, which retrieves only the rows and columns needed from individual S3 objects using SQL expressions
+
+C. Amazon Athena, which runs distributed SQL queries across all objects in an S3 bucket using a schema-on-read approach
+
+D. S3 Transfer Acceleration, which speeds up the download of large datasets for local query processing
+
+**Correct Answer: C**
+
+**Distractor Analysis:**
+
+- A is incorrect. S3 Intelligent-Tiering automatically moves objects between cost tiers based on access frequency. It does not index, catalog, or query the content of files. It is a storage cost optimization feature.
+- B is incorrect. S3 Select retrieves a subset of data FROM A SINGLE S3 OBJECT using a SQL-like expression, filtering rows and projecting columns within one file. It is not designed to query across millions of files. For a cross-object query over a large dataset, Amazon Athena is the correct service.
+- C is correct. Amazon Athena is a serverless SQL query engine that runs distributed queries across all objects in an S3 bucket using a schema-on-read approach. It integrates with AWS Glue Data Catalog for schema management and can process petabytes of data in S3 without any data movement. Athena charges per TB of data scanned — use columnar formats like Parquet and partition pruning to minimize cost.
+- D is incorrect. Transfer Acceleration speeds up data transfer to and from S3. It does not provide any query capability and would still require downloading the entire dataset for local processing.
+
+---
+
+### Question 13 (5 points)
+
+A media production company shares large video source files (up to 50 GB each) between editors in multiple AWS Regions. Files must be accessible with low latency from any Region. The files are modified frequently during active production and must remain consistent across all regions within 30 seconds of modification. Which storage solution meets these requirements?
+
+A. Amazon S3 with Cross-Region Replication configured between all Regions
+
+B. Amazon EFS with EFS Replication enabled to secondary Regions
+
+C. Amazon FSx for Lustre with data repositories linked to S3 in each Region
+
+D. Amazon S3 with S3 Multi-Region Access Points and replication configured between all Regions
+
+**Correct Answer: D**
+
+**Distractor Analysis:**
+
+- A is incorrect. S3 CRR replicates objects across Regions, but Multi-Region Access Points are needed to provide a single endpoint that routes reads and writes to the nearest bucket replica. Without Multi-Region Access Points, the application must manage which Region's bucket endpoint to use.
+- B is incorrect. Amazon EFS is a shared NFS file system designed for EC2 instances within a Region or connected via VPC peering. EFS Replication creates a read-only replica — not bidirectional synchronization. Modifications in a secondary Region are not replicated back to the primary.
+- C is incorrect. FSx for Lustre is a high-performance parallel file system used for compute-intensive workloads (HPC, ML training). It can link to S3 as a data repository but is not designed as a multi-region synchronous collaboration platform.
+- D is correct. S3 Multi-Region Access Points provide a single global endpoint that routes requests to the closest bucket replica. Combined with S3 Replication configured bidirectionally between all Regions, objects modified in any Region replicate to all other Regions. Replication time control (RTC) can guarantee 99.99% of objects replicate within 15 minutes, typically within seconds.
+
+---
+
+### Question 14 (5 points)
+
+An on-premises application needs to use standard SMB protocol to access AWS-managed file storage. The on-premises server runs Windows and needs to mount the storage as a network drive. Which AWS storage service supports this requirement?
+
+A. Amazon EFS (Elastic File System)
+
+B. Amazon FSx for Windows File Server
+
+C. Amazon S3 with S3 File Gateway
+
+D. Amazon EBS with Multi-Attach enabled
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect. Amazon EFS uses the NFS protocol (NFSv4.1), not SMB. Windows does have NFS client support, but the standard Windows network drive protocol is SMB. EFS is primarily designed for Linux workloads. For Windows SMB access, FSx for Windows File Server is the purpose-built service.
+- B is correct. Amazon FSx for Windows File Server is a fully managed Windows-native file system that supports SMB protocol, Windows NTFS, Active Directory integration, DFS namespaces, and user quotas. Windows applications can mount it as a standard network drive using a UNC path. It supports both on-premises access (via Direct Connect or VPN) and EC2 access.
+- C is incorrect. S3 File Gateway provides an NFS/SMB interface to S3 for on-premises applications using AWS Storage Gateway. S3 File Gateway does support SMB for Windows clients. However, for a fully managed enterprise Windows file system with NTFS, Active Directory, and DFS support, FSx for Windows File Server is the purpose-built answer on the SAA-C03 exam.
+- D is incorrect. EBS Multi-Attach allows an io2 EBS volume to be attached to multiple EC2 instances simultaneously within the same AZ. EBS volumes are block storage accessible only from EC2 instances within the same AZ. They cannot be mounted on-premises as a network drive.
+
+---
+
+### Question 15 (5 points)
+
+A DevOps team runs containerized CI/CD build jobs on ECS Fargate. Each build job needs to read and write to a shared file system simultaneously, and multiple build containers may need access to the same files at the same time from different containers. Which storage option is correct for this use case?
+
+A. EBS gp3 volume with Multi-Attach enabled
+
+B. S3 bucket with eventual consistency
+
+C. Amazon EFS with the EFS access point configured for each container
+
+D. Instance store volumes on Fargate tasks
+
+**Correct Answer: C**
+
+**Distractor Analysis:**
+
+- A is incorrect. EBS Multi-Attach allows an io2 volume to be attached to multiple EC2 instances in the same AZ, but it is NOT available for Fargate tasks (which are serverless and do not use EC2 instances). Multi-Attach also requires applications to manage concurrent write coordination at the file system level.
+- B is incorrect. Amazon S3 uses eventual consistency for overwrites in some operations (though S3 now provides strong consistency). S3 is an object store, not a file system — concurrent reads and writes from multiple containers require application-level coordination and S3 does not support file locking semantics that CI/CD build tools expect.
+- C is correct. Amazon EFS is a fully managed NFS file system that supports concurrent access from multiple compute resources simultaneously — including Fargate tasks. EFS Access Points provide application-specific entry points with customized POSIX permissions. EFS automatically scales storage and IOPS without provisioning.
+- D is incorrect. Fargate tasks are serverless — there are no EC2 instances with instance store volumes underlying Fargate. Fargate does not support instance store.
+
+---
+
+### Question 16 (5 points)
+
+A company is migrating 500 TB of on-premises backup data to Amazon S3 Glacier Deep Archive. The on-premises data center has only a 1 Gbps internet connection shared with production traffic. The migration must complete within 2 weeks without impacting production traffic. Which AWS data transfer service is MOST appropriate?
+
+A. AWS DataSync over the internet connection, throttled to 50% bandwidth
+
+B. Amazon S3 Transfer Acceleration to maximize upload throughput
+
+C. AWS Snowball Edge Storage Optimized device to physically ship data to AWS
+
+D. AWS Direct Connect with a dedicated 10 Gbps connection provisioned for the migration
+
+**Correct Answer: C**
+
+**Distractor Analysis:**
+
+- A is incorrect. DataSync at 50% of 1 Gbps = 500 Mbps. 500 TB / 500 Mbps = ~8,000,000 seconds = ~93 days. This far exceeds the 2-week requirement. Even at full 1 Gbps, the transfer would take 46 days.
+- B is incorrect. S3 Transfer Acceleration routes uploads through CloudFront edge locations, improving throughput for users geographically distant from the S3 Region. However, the total bandwidth is still limited by the 1 Gbps internet connection. The math does not change — 500 TB over 1 Gbps still takes weeks.
+- C is correct. AWS Snowball Edge Storage Optimized holds up to 80 TB per device. For 500 TB, approximately 7 devices are needed. Data is loaded to the devices on-premises and physically shipped to AWS for ingest. Physical transport at 40 GB/day per device via FedEx/UPS can transfer petabytes faster than any internet-based solution. This is the canonical SAA-C03 answer for large datasets with limited bandwidth and a tight timeline.
+- D is incorrect. Provisioning a new Direct Connect connection takes weeks to months — far longer than the 2-week migration window. Direct Connect also requires physical cross-connect provisioning at a colocation facility.
+
+---
+
+### Question 17 (5 points)
+
+An architect is evaluating EBS volume options for an Amazon RDS for PostgreSQL instance that requires 50,000 IOPS and 1,000 MB/s throughput for a mission-critical financial database. Which EBS volume type should be selected?
+
+A. gp3 (General Purpose SSD) with IOPS provisioned at 50,000
+
+B. io2 Block Express (Provisioned IOPS SSD)
+
+C. st1 (Throughput Optimized HDD)
+
+D. sc1 (Cold HDD)
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect. gp3 volumes support a maximum of 16,000 IOPS and 1,000 MB/s throughput. The requirement of 50,000 IOPS exceeds gp3's maximum. For RDS, gp3 is appropriate for most workloads, but mission-critical databases requiring more than 16,000 IOPS need io2.
+- B is correct. io2 Block Express is the highest-performance EBS volume type, supporting up to 256,000 IOPS and 4,000 MB/s throughput per volume. It provides sub-millisecond I/O latency with 99.999% volume durability — appropriate for mission-critical financial databases requiring guaranteed IOPS performance.
+- C is incorrect. st1 is a throughput-optimized HDD designed for sequential large-block workloads (Kafka logs, big data). It provides up to 500 MB/s throughput and approximately 500 IOPS — far below the 50,000 IOPS requirement. HDDs are not appropriate for database workloads.
+- D is incorrect. sc1 is a cold HDD for infrequently accessed data, providing up to 250 MB/s and approximately 250 IOPS. This is orders of magnitude below the mission-critical database requirement.
+
+---
+
+### Question 18 (5 points)
+
+A company needs to migrate 10 TB of data from an on-premises NAS to Amazon S3 weekly on an ongoing basis. The migration must only transfer files that have changed since the previous week's sync, preserving file metadata. Which AWS service is purpose-built for this recurring, change-detection-based migration?
+
+A. AWS Snowball Edge with weekly device shipments
+
+B. AWS DataSync with a scheduled weekly sync task
+
+C. AWS Transfer Family (SFTP) with a scheduled Lambda function
+
+D. Amazon S3 Cross-Region Replication configured between the NAS and S3
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect. Snowball Edge is designed for large one-time or infrequent offline data migrations. A weekly recurring sync using physical device shipments is operationally impractical — device turnaround time alone makes weekly syncs infeasible.
+- B is correct. AWS DataSync is designed for recurring, incremental data migration between on-premises file storage (NAS, NFS, SMB) and AWS storage services (S3, EFS, FSx). DataSync automatically detects changed files since the last sync, transfers only the deltas, preserves file metadata (timestamps, permissions), and can be scheduled using AWS EventBridge or built-in scheduling. It is the purpose-built solution for this use case.
+- C is incorrect. AWS Transfer Family provides SFTP, FTP, and FTPS endpoints for S3 and EFS. It is designed for external users uploading files to S3 via SFTP, not for scheduled on-premises-to-S3 migration with change detection. A Lambda function would need custom change detection logic.
+- D is incorrect. S3 Cross-Region Replication operates between S3 buckets, not from on-premises NAS to S3. The on-premises NAS is not an S3 bucket, so CRR cannot be the source.
+
+---
+
+### Question 19 (5 points)
+
+A company uses Amazon S3 to store financial reports. S3 server access logging is enabled and logs are written to a separate S3 bucket. After a security incident, the investigation team discovers that a large number of objects were read by an unauthorized IP address. Which log field in the S3 server access log would confirm the source IP address of the unauthorized requests?
+
+A. `UserAgent` field
+
+B. `RemoteIP` field
+
+C. `BucketOwner` field
+
+D. `Referrer` field
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect. The `UserAgent` field contains the user agent string (browser or SDK name and version) of the client that made the request. It is not the source IP address and can be easily spoofed.
+- B is correct. The `RemoteIP` field in S3 server access logs contains the IP address of the requester. This is the field the investigation team would use to identify the source IP of the unauthorized access. Combined with the timestamp, bucket, key, operation, and HTTP status fields, the investigation team can reconstruct the access pattern.
+- C is incorrect. `BucketOwner` contains the canonical user ID of the S3 bucket owner — the account that owns the bucket, not the requester. It does not change per request based on who accessed the bucket.
+- D is incorrect. The `Referrer` field contains the HTTP Referer header value if present in the request. It indicates which webpage or application initiated the request, not the network-level source IP address. This field is often empty or can be spoofed.
+
+---
+
+### Question 20 (5 points)
+
+A company needs to share specific S3 objects securely with thousands of external users without making the bucket public. The links must expire after 24 hours and each user should only receive access to their own data. Which S3 feature accomplishes this at scale with minimal code?
+
+A. S3 Bucket ACLs with individual user accounts listed for each object
+
+B. S3 presigned URLs generated per user and per object with a 24-hour expiration
+
+C. S3 Static Website Hosting with IAM user provisioning for external users
+
+D. S3 Bucket Policy with a time-based condition using `aws:CurrentTime`
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect. S3 Bucket ACLs are a legacy access control mechanism and cannot scale to thousands of external users — each user would need an AWS account and explicit ACL entry per object. AWS recommends disabling ACLs and using bucket policies or presigned URLs instead.
+- B is correct. Presigned URLs are generated by the backend application using the application's IAM credentials or role. Each URL encodes the target bucket, object key, expiration time, and a cryptographic signature. External users without AWS credentials receive a time-limited URL granting access to exactly one object. The backend generates URLs on-demand per user, making this the scalable, minimal-code solution for large-scale external sharing.
+- C is incorrect. S3 Static Website Hosting serves content publicly over HTTP from S3. It does not support user-specific access control or link expiration. IAM user provisioning for thousands of external users is not a viable or recommended approach.
+- D is incorrect. S3 bucket policy conditions using `aws:CurrentTime` can restrict access to specific time windows, but these conditions apply globally to the principal specified in the policy — not per-user or per-object. This approach cannot generate per-user, per-object time-limited access at scale.
+
 *Proprietary and Confidential. Not for disclosure outside of Texas Wesleyan University.*

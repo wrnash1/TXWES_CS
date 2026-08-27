@@ -310,3 +310,19 @@ Work through each item before taking the Module 12 quiz.
 - Cisco CCNA certification training information: [Cisco Training](https://www.cisco.com/c/en/us/training-events/training-certifications/certifications/associate/ccna.html)
 - Free CCNA study notes and practice questions: [Professor Messer](https://www.professormesser.com)
 - Cisco SD-WAN architecture overview: [Cisco SD-WAN](https://www.cisco.com/c/en/us/solutions/enterprise-networks/sd-wan/index.html)
+
+---
+
+## 13. Supplemental Resources
+
+The following open educational resources extend WAN technologies and remote access concepts to CCNA exam depth. All resources are freely available.
+
+1. **Cisco Networking Academy — CCNA: Enterprise Networking, Security, and Automation, Chapters 2–3 (VPN and IPsec Concepts)** (skillsforall.com): Free chapters covering site-to-site IPsec VPN concepts, GRE tunnel configuration, remote access VPN, and SD-WAN architecture with interactive Packet Tracer activities for GRE tunnel and VPN configuration labs.
+
+2. **Jeremy's IT Lab — VPNs and WAN (Days 54–56)** (youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ): Video lessons covering GRE tunnels, IPsec concepts (IKE phases, AH vs ESP, Tunnel vs Transport mode), SD-WAN components, MPLS concepts, and PPPoE configuration. Jeremy's GRE tunnel video includes a complete Packet Tracer walkthrough with OSPF running over the tunnel.
+
+3. **Cisco Learning Network — SD-WAN and WAN Study Group** (learningnetwork.cisco.com): Community discussions covering SD-WAN component roles, GRE troubleshooting (up/down state), IPsec Phase 1 and Phase 2 failure analysis, and MPLS CE/PE configuration boundaries — all at CCNA exam level.
+
+4. **Cisco SD-WAN Design Guide** (cisco.com): Cisco's publicly available SD-WAN design documentation covering the vManage/vSmart/vBond/vEdge architecture, zero-touch provisioning workflow, BFD-based path monitoring, and application-aware routing policy configuration with reference topologies.
+
+5. **PacketLife.net — IPsec Cheat Sheet** (packetlife.net): A freely available quick reference covering IPsec protocol stack (IKE, AH, ESP), Phase 1 and Phase 2 parameters, Tunnel vs Transport mode differences, and pre-shared key vs certificate authentication — all aligned to CCNA exam testable content.

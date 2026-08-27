@@ -200,3 +200,19 @@ Several regulatory frameworks impose specific requirements on asset disposal:
 6. What is a software license audit and why should organizations with mature SAM programs have less to fear from one?
 
 7. How does the CMDB support Change Management's impact analysis function?
+
+---
+
+## Supplemental Resources
+
+**1. AXELOS — ITIL 4 IT Asset Management Practice**
+<https://www.axelos.com/resource-hub/blog/it-asset-management-practice>
+Official AXELOS overview of the IT Asset Management practice in ITIL 4, covering the purpose, key activities, CMDB integration, and relationship to Service Configuration Management. Essential reference for understanding how ITAM fits within the broader ITIL 4 framework.
+
+**2. NIST SP 800-88 — Guidelines for Media Sanitization**
+<https://csrc.nist.gov/publications/detail/sp/800-88/rev-1/final>
+The authoritative U.S. government standard for data sanitization methods — clear, purge, and destroy — with specific guidance on cryptographic erasure for encrypted media. Directly relevant to the secure disposal section of this module and referenced in HIPAA compliance guidance.
+
+**3. ITAM Forum — Software Asset Management Best Practices**
+<https://www.itassetmanagement.net/best-practices/>
+Practitioner-focused resource from the IT Asset Management Forum covering SAM program maturity, license reconciliation workflows, vendor audit preparation, and over/under-licensing risk management. Provides real-world context for the SAM concepts covered in this module.

@@ -187,6 +187,206 @@ What is the purpose of changing the native VLAN on a trunk from VLAN 1 to an unu
 
 ---
 
+## Question 11
+
+A Cisco switch port is currently operating in `dynamic auto` mode. A second port on a neighboring switch is also in `dynamic auto` mode. What is the resulting operational mode of the link?
+
+- A) Trunk — both sides are willing to trunk so a trunk forms
+- B) Access — neither side actively negotiates, so no trunk forms and the port remains in access mode
+- C) The link enters an err-disabled state because two auto ports cannot connect
+- D) Trunk — DTP always forms a trunk when two switches are directly connected
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A is incorrect: `dynamic auto` means "I will trunk if you ask me to." Neither side initiates DTP negotiation, so no trunk is formed. Both sides remain in access mode.
+- B is correct: DTP `dynamic auto` is passive — it waits for the other side to initiate. When both sides are passive (`dynamic auto` or `dynamic auto`), neither initiates, so the result is access mode. A trunk only forms when at least one side is `dynamic desirable` or `trunk`.
+- C is incorrect: Two `dynamic auto` ports do not cause err-disabled state. The port simply remains operational as an access port.
+- D is incorrect: DTP does not automatically form a trunk between any two directly connected switches. The negotiation mode determines the outcome. Both-auto results in access mode.
+
+---
+
+## Question 12
+
+Which Cisco IOS command verifies the current administrative and operational mode of a specific switch port, including whether it is in access or trunk mode and which VLAN it is in?
+
+- A) `show vlan brief`
+- B) `show interfaces GigabitEthernet0/1 switchport`
+- C) `show interfaces trunk`
+- D) `show cdp neighbors`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A is incorrect: `show vlan brief` shows VLAN names and the access ports assigned to each VLAN. It does not show per-port switchport mode details (administrative mode, operational mode, or DTP configuration).
+- B is correct: `show interfaces [interface] switchport` provides the full switchport profile for a single interface: administrative mode, operational mode, trunking encapsulation, access VLAN, native VLAN, and DTP status. This is the authoritative per-port verification command.
+- C is incorrect: `show interfaces trunk` shows only ports currently operating in trunk mode. It does not show access port details and will not display ports in access mode.
+- D is incorrect: `show cdp neighbors` shows neighboring Cisco devices. It has no relationship to switchport mode verification.
+
+---
+
+## Question 13
+
+A network engineer needs to prevent a host from being placed in VLAN 1 as a result of automatic DTP negotiation. The port is connected to an end device. Which two commands harden the port against DTP-based VLAN attacks?
+
+- A) `switchport mode trunk` and `switchport trunk allowed vlan 1`
+- B) `switchport mode access` and `switchport nonegotiate`
+- C) `switchport access vlan 1` and `no switchport`
+- D) `spanning-tree portfast` and `switchport mode dynamic desirable`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A is incorrect: Configuring the port as a trunk is the opposite of the goal. A trunk carries multiple VLANs and should not be connected to an end device. This would also increase the attack surface.
+- B is correct: `switchport mode access` forces the port into access mode (cannot be negotiated to trunk). `switchport nonegotiate` disables DTP entirely on the port, preventing any DTP-based negotiation. Together these two commands harden the port against VLAN hopping attacks via DTP.
+- C is incorrect: `switchport access vlan 1` would assign the port to VLAN 1, which is what we want to avoid. `no switchport` removes the Layer 2 configuration and converts the port to a Layer 3 routed port.
+- D is incorrect: PortFast is a Spanning Tree optimization for access ports (not a VLAN security measure). `dynamic desirable` actively tries to form a trunk, which is the opposite of what is needed.
+
+---
+
+## Question 14
+
+A switch has VLANs 10, 20, and 30 configured. An administrator enters `no vlan 20` in global configuration mode. What happens to ports currently assigned to VLAN 20?
+
+- A) The ports are automatically reassigned to VLAN 1
+- B) The ports remain assigned to VLAN 20, but traffic is not forwarded because VLAN 20 no longer exists in the database
+- C) The ports are shut down and placed in err-disabled state
+- D) The ports are automatically reassigned to the next numerically available VLAN
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A is incorrect: Cisco IOS does not automatically reassign ports to VLAN 1 when a VLAN is deleted. The port retains its VLAN assignment in the configuration, but the VLAN no longer exists in the database.
+- B is correct: When a VLAN is deleted with `no vlan`, the switch removes it from the VLAN database. Ports still assigned to the deleted VLAN remain in that assignment but are effectively inactive — no traffic is forwarded because the VLAN does not exist. `show vlan brief` will show these ports under an "inactive" state.
+- C is incorrect: Deleting a VLAN does not place ports in err-disabled state. Err-disabled results from security or spanning tree violations, not VLAN deletion.
+- D is incorrect: Cisco IOS does not automatically reassign ports to adjacent VLANs when a VLAN is deleted. The port retains its original VLAN assignment in configuration.
+
+---
+
+## Question 15
+
+An 802.1Q frame arrives on a trunk port with a VLAN tag of 0. How does the receiving switch handle this frame?
+
+- A) The frame is forwarded to all ports in VLAN 0 because 0 is a valid data VLAN
+- B) The frame is treated as a native VLAN frame and forwarded to the configured native VLAN
+- C) The frame is dropped because VLAN 0 is reserved and not a usable data VLAN
+- D) The switch re-tags the frame with VLAN 1 before forwarding
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- A is incorrect: VLAN 0 is reserved in the 802.1Q specification. There is no VLAN 0 in the VLAN database; it cannot be created or assigned as a data VLAN.
+- B is incorrect: A VLAN tag of 0 in the 802.1Q header is a priority tag used for CoS markings with no VLAN assignment, not a native VLAN indicator. Native VLAN frames are sent without a VLAN tag (untagged), not with tag 0.
+- C is correct: VLAN 0 is reserved by IEEE 802.1Q. The tag value of 0 in the VLAN ID field indicates a frame carrying only priority information (Class of Service) with no VLAN membership. It is not a usable data VLAN and Cisco IOS treats it as reserved.
+- D is incorrect: Cisco IOS does not re-tag frames from VLAN 0 to VLAN 1. The VLAN 0 handling is defined by the 802.1Q standard as a priority-only frame designation.
+
+---
+
+## Question 16
+
+A switch is operating in VTP server mode with VTP domain "CORP" and revision number 15. A new switch with VTP server mode, domain "CORP", and revision number 18 is connected to the network. What happens?
+
+- A) The new switch ignores the existing switches because it is also in server mode
+- B) The new switch's higher revision number causes it to overwrite the VLAN database on all other switches in the domain
+- C) The existing switch with revision 15 becomes the VTP primary server and rejects the new switch
+- D) VTP does not synchronize because two server-mode switches cannot be in the same domain
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A is incorrect: VTP server mode does not prevent synchronization with other VTP servers. Any VTP device in the same domain with a higher revision number will propagate its VLAN database to all other devices.
+- B is correct: This describes the classic VTP revision number vulnerability. A device with a higher revision number (even a new or unauthorized switch) will overwrite the VLAN database on all switches in the domain. This is why VTP is considered dangerous — a misconfigured switch can delete all VLANs from a production network.
+- C is incorrect: There is no concept of a "VTP primary server" that blocks other servers in VTP version 1 and 2. VTP version 3 introduced a primary server designation, but the default behavior in VTP v1/v2 is to accept any higher revision number.
+- D is incorrect: Multiple VTP server-mode switches can and do coexist in the same domain. All servers in the domain accept updates from devices with higher revision numbers.
+
+---
+
+## Question 17
+
+A network engineer configures `switchport trunk native vlan 99` on SW1's Gi0/1 interface. The neighboring SW2's Gi0/1 still has native VLAN 1. What symptom will occur and what log message will appear?
+
+- A) The trunk will not form because native VLAN mismatch prevents DTP negotiation
+- B) The trunk forms but CDP generates a "Native VLAN mismatch" warning message on both switches
+- C) SW1 drops all frames on VLAN 99 and SW2 drops all frames on VLAN 1
+- D) The mismatch causes a broadcast storm between the two switches
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A is incorrect: A native VLAN mismatch does not prevent the trunk from forming. The trunk is up at Layer 1 and Layer 2. The mismatch is detected by CDP and reported as a warning, but DTP does not check native VLAN consistency.
+- B is correct: When native VLANs differ between trunk partners, the trunk operates but frames sent untagged by SW1 (expecting VLAN 99) will be received by SW2 and placed in VLAN 1 (SW2's native VLAN). This causes unexpected VLAN membership. CDP detects the discrepancy and logs a "native VLAN mismatch" message on both switches.
+- C is incorrect: Frames are not dropped based on native VLAN mismatch. They are misassigned — frames intended for VLAN 99 end up in VLAN 1 on SW2, and vice versa.
+- D is incorrect: A native VLAN mismatch does not cause broadcast storms. Broadcast storms are caused by Layer 2 loops without STP, not VLAN configuration discrepancies.
+
+---
+
+## Question 18
+
+The maximum number of VLANs supported on a standard Cisco Catalyst switch is 4094. Why is VLAN 4094 given as the limit rather than 4096?
+
+- A) Cisco reserves VLANs 4095 and 4096 for internal switch processes
+- B) The 802.1Q VLAN ID field is 12 bits, allowing values 0–4095, but VLANs 0 and 4095 are reserved
+- C) VLANs above 4000 require an extended VLAN range license on Cisco switches
+- D) The 802.1Q specification limits trunk ports to 4094 simultaneous tagged VLANs for performance reasons
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A is incorrect: Cisco does not reserve 4095 and 4096 for internal use. The limit is defined by the IEEE 802.1Q standard, not by Cisco's internal requirements.
+- B is correct: The 802.1Q VLAN ID field is 12 bits, providing values 0 through 4095 (2^12 = 4096 values). VLAN 0 is reserved for priority-tagged frames (no VLAN membership) and VLAN 4095 (0xFFF) is reserved by the standard. This leaves VLANs 1 through 4094 as usable. VLAN 1 is the default and VLANs 1002–1005 are reserved for legacy protocols.
+- C is incorrect: Extended VLAN range (1006–4094) may require VTP transparent or off mode on older IOS versions, but this is a VTP limitation, not a licensing restriction on modern Cisco Catalyst switches.
+- D is incorrect: The 4094 VLAN limit is a specification limit, not a performance-based restriction. Cisco switches can forward traffic on all 4094 VLANs simultaneously within hardware capacity.
+
+---
+
+## Question 19
+
+A frame arrives untagged on a trunk port configured with `switchport trunk native vlan 10`. Which VLAN does the switch assign this frame to?
+
+- A) VLAN 1 (the default VLAN always receives untagged frames on trunk ports)
+- B) VLAN 10 (the configured native VLAN receives all untagged frames on the trunk)
+- C) The frame is dropped because trunk ports do not accept untagged frames
+- D) The switch tags the frame with VLAN 1 before forwarding it
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A is incorrect: The native VLAN is configurable. If the native VLAN is changed from VLAN 1 to VLAN 10, then VLAN 10 receives untagged frames on that trunk — not VLAN 1.
+- B is correct: The native VLAN is the VLAN to which untagged frames received on a trunk port are assigned. By default this is VLAN 1, but after `switchport trunk native vlan 10`, all untagged frames received on that trunk are placed in VLAN 10.
+- C is incorrect: Trunk ports do accept untagged frames — they assign them to the native VLAN. This is the entire purpose of the native VLAN concept on 802.1Q trunks.
+- D is incorrect: The switch does not re-tag untagged frames with VLAN 1. It assigns them to the native VLAN internally for forwarding decisions. Frames leave the trunk toward the destination following standard 802.1Q tagging rules.
+
+---
+
+## Question 20
+
+A network administrator wants to verify whether a trunk between SW1 and SW2 is correctly forwarding VLAN 30 traffic. The `show interfaces trunk` output on SW1 shows VLAN 30 in "Vlans allowed on trunk" but not in "Vlans in spanning tree forwarding state and not pruned." What does this indicate?
+
+- A) VLAN 30 traffic is being blocked by Spanning Tree Protocol on this trunk
+- B) VLAN 30 does not exist in the VLAN database on SW1
+- C) The trunk is not carrying VLAN 30 because of a misconfigured native VLAN
+- D) VLAN 30 is administratively shut down on this trunk
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- A is correct: The fourth row of `show interfaces trunk` — "Vlans in spanning tree forwarding state and not pruned" — shows only VLANs that are both active in the VLAN database AND in the STP forwarding state on that trunk. VLAN 30 appearing in row 1 (allowed) but absent from row 4 indicates STP is blocking VLAN 30 traffic on this specific trunk interface.
+- B is incorrect: If VLAN 30 did not exist in the VLAN database, it would be absent from the "Vlans allowed and active in management domain" row (row 3), not just from row 4. VLAN 30 appearing in row 1 (allowed) could still mean it is blocked by STP in row 4.
+- C is incorrect: Native VLAN misconfiguration affects untagged frame assignment. It does not cause a specific VLAN to be absent from the STP forwarding state row.
+- D is incorrect: There is no concept of "administratively shutting down" a specific VLAN on a trunk in standard Cisco IOS. VLANs are either present in the database and active, or they are removed with `no vlan`.
+
+---
+
 ## Question 10
 
 A network engineer runs `show interfaces trunk` on SW1 and sees the following entry: Gi0/1 appears in "Vlans allowed on trunk" as 1-4094 but in "Vlans allowed and active in management domain" as only 10,20. What is the most likely explanation?

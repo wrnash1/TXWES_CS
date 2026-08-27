@@ -202,5 +202,177 @@ D. Replace `terraform.workspace` with a new input variable `var.environment` tha
 
 ---
 
+---
+
+### Question 11 (5 points)
+
+A developer runs `terraform workspace select prod` and then immediately runs `terraform apply` without reviewing the plan. Which workspace-related risk does this scenario illustrate?
+
+- A) Workspace state corruption because `select` and `apply` cannot be run without an intervening `plan`.
+- B) The implicit selection risk — the active workspace is a CLI-level setting that is easy to forget, leading to unintended applies against the wrong environment.
+- C) The shared provider risk — the prod workspace uses a different AWS account than the developer's credentials allow.
+- D) State locking failure because the prod workspace was already locked by another process.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A is incorrect — Terraform does not require `plan` before `apply`; `-auto-approve` skips the plan review entirely, but `plan` is not mandatory.
+  - C is incorrect — the scenario does not mention credential differences; the risk described is forgetting which workspace is active.
+  - D is incorrect — state locking would produce an explicit error message; this scenario illustrates a silent operational risk, not a locking failure.
+
+---
+
+### Question 12 (5 points)
+
+What does the `*` symbol indicate when you run `terraform workspace list`?
+
+- A) The workspace has unsaved changes.
+- B) The workspace is the `default` workspace.
+- C) The workspace is currently selected (active).
+- D) The workspace has the highest resource count.
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A is incorrect — Terraform state is written atomically after apply; there is no concept of "unsaved changes" tracked by the workspace list command.
+  - B is incorrect — `*` marks whichever workspace is currently active, which may or may not be `default`.
+  - D is incorrect — `terraform workspace list` output contains no resource count information.
+
+---
+
+### Question 13 (5 points)
+
+A team stores Terraform state in an S3 backend with `key = "app/terraform.tfstate"`. After running `terraform workspace new prod`, what is the S3 key where the `prod` workspace state is stored?
+
+- A) `app/terraform.tfstate.prod`
+- B) `prod/app/terraform.tfstate`
+- C) `env:/prod/app/terraform.tfstate`
+- D) `app/prod/terraform.tfstate`
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A is incorrect — S3 does not append the workspace name as a file extension suffix.
+  - B is incorrect — Terraform prefixes the path with `env:/`, not just the workspace name.
+  - D is incorrect — the workspace name is not inserted between the key segments; the `env:/` prefix is prepended to the entire key.
+
+---
+
+### Question 14 (5 points)
+
+You need to destroy all resources in the `staging` workspace. Which sequence of commands is correct?
+
+- A) `terraform workspace delete staging` then `terraform destroy`
+- B) `terraform workspace select staging` then `terraform destroy -auto-approve` then `terraform workspace select default` then `terraform workspace delete staging`
+- C) `terraform destroy -workspace=staging -auto-approve`
+- D) `terraform workspace select staging` then `terraform workspace delete staging`
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A is incorrect — you cannot delete a workspace that still has managed resources (non-empty state); you must destroy first.
+  - C is incorrect — `-workspace=` is not a valid flag for `terraform destroy`; you must switch workspaces using `terraform workspace select`.
+  - D is incorrect — you cannot delete the currently selected workspace; you must switch to a different workspace before deleting.
+
+---
+
+### Question 15 (5 points)
+
+A team of six engineers works on the same Terraform configuration. Each engineer creates their own workspace named after their username to test changes. What risk does this practice introduce?
+
+- A) Workspace names must be globally unique across all Terraform Registry accounts.
+- B) All workspaces share the same backend, so the S3 bucket (or equivalent) accumulates many state files, increasing storage costs and management overhead.
+- C) Terraform automatically merges all workspace states during the next `terraform apply`.
+- D) Workspaces named after usernames are rejected by Terraform's naming validation.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A is incorrect — workspace names are scoped to a single configuration's backend; there is no global registry of workspace names.
+  - C is incorrect — Terraform never merges state across workspaces; each workspace's state is completely isolated.
+  - D is incorrect — Terraform workspace names accept any alphanumeric string with underscores and hyphens; username-based names are fully valid.
+
+---
+
+### Question 16 (5 points)
+
+In the directory-based environment isolation pattern, each environment directory has its own `backend.tf` file. What is the primary benefit of this over a single backend configuration shared by all environments?
+
+- A) Separate backend files allow each environment to use a different Terraform version.
+- B) Each environment can store its state in a completely separate location (e.g., different S3 bucket, storage account, or GCS bucket), enabling separate access controls and preventing accidental cross-environment state operations.
+- C) Separate backend files are required by the Terraform Registry for module publication.
+- D) Backend files in subdirectories are encrypted by default, whereas a root-level `backend.tf` is stored in plaintext.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A is incorrect — Terraform version constraints are set in `required_version`, not in the backend configuration.
+  - C is incorrect — module publication requirements concern repository naming and module structure, not backend configuration.
+  - D is incorrect — backend configuration files are plain HCL text in all cases; encryption applies to the state data stored in the backend, not to the configuration files.
+
+---
+
+### Question 17 (5 points)
+
+Which of the following expressions correctly reads the current workspace name inside a `locals` block?
+
+- A) `local.workspace = terraform.workspace`
+- B) `environment = var.workspace`
+- C) `env = terraform.workspace`
+- D) `workspace_name = terraform.workspace`
+
+- **Correct Answer:** D
+- **Distractor Analysis:**
+  - A is incorrect — `local.workspace = ...` is not valid HCL; local values are declared as `name = expression` inside a `locals {}` block, not using dot notation.
+  - B is incorrect — `var.workspace` references an input variable named `workspace`, which must be explicitly declared; it is not the built-in workspace value.
+  - C is incorrect — while `env = terraform.workspace` is syntactically valid as a local assignment, option D is the clearest and most semantically precise expression of reading the workspace name. More importantly, option C uses `env` which is not valid — this is a distractor that could be confused with `env.` namespace which doesn't exist.
+
+---
+
+### Question 18 (5 points)
+
+A Terraform configuration uses a `lookup()` call: `lookup(local.workspace_config, terraform.workspace, local.workspace_config["default"])`. What does the third argument provide?
+
+- A) A validation rule that rejects unknown workspace names.
+- B) A fallback value returned when the workspace name is not a key in `local.workspace_config`.
+- C) The default workspace's configuration, which is always used regardless of the current workspace.
+- D) A required second map argument for the `lookup()` function signature.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A is incorrect — `lookup()` does not perform validation; it performs a safe map key access and returns the fallback instead of erroring on a missing key.
+  - C is incorrect — the fallback is only used when the key is absent; if the workspace name exists in the map, the map's value is returned, not the default.
+  - D is incorrect — `lookup(map, key, default)` is a three-argument function; the third argument is the default, not a second map. Two-argument `lookup(map, key)` also exists but throws an error on missing keys.
+
+---
+
+### Question 19 (5 points)
+
+A CI/CD pipeline creates a workspace named after each pull request (e.g., `pr-123`) to deploy ephemeral test environments. After the pull request is merged, the pipeline should clean up. What is the correct cleanup sequence?
+
+- A) Delete the workspace directory from version control, then run `terraform init`.
+- B) Switch to the `pr-123` workspace, run `terraform destroy`, switch to another workspace, then delete the `pr-123` workspace.
+- C) Run `terraform workspace delete pr-123 -force` without destroying resources first.
+- D) Run `terraform state rm module.app` and then delete the workspace.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A is incorrect — workspaces are backend-level state constructs, not version-controlled directories; deleting a file from git does not affect backend state.
+  - C is incorrect — while a `-force` flag analogue does not officially exist for workspace deletion in the standard CLI, destroying infrastructure first is the correct operational practice to avoid orphaned cloud resources.
+  - D is incorrect — `terraform state rm` removes resources from state tracking without destroying the actual infrastructure, leaving orphaned cloud resources.
+
+---
+
+### Question 20 (5 points)
+
+Which statement best describes the relationship between Terraform workspaces and the `terraform.workspace` built-in value when the `default` workspace is active?
+
+- A) `terraform.workspace` returns `null` in the default workspace.
+- B) `terraform.workspace` returns the empty string `""` in the default workspace.
+- C) `terraform.workspace` returns the string `"default"` in the default workspace.
+- D) `terraform.workspace` is only available when a non-default workspace is active.
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A is incorrect — `terraform.workspace` is always a non-null string value; it never returns `null`.
+  - B is incorrect — the default workspace has an actual name: `"default"`; the built-in returns that string, not an empty string.
+  - D is incorrect — `terraform.workspace` is always available regardless of which workspace is active; there is no conditional availability.
+
+---
+
 *Texas Wesleyan University — CIS-4337 Infrastructure Automation*
 *Proprietary and Confidential. Not for disclosure outside of authorized course participants.*

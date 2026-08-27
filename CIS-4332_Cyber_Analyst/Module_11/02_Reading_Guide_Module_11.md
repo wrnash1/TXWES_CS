@@ -197,6 +197,22 @@ Scenario questions will present an incident in progress and ask what the analyst
 
 ---
 
+## 9. Supplemental Resources
+
+**1. NIST SP 800-61 Rev. 2 — Computer Security Incident Handling Guide**
+<https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-61r2.pdf>
+This is the primary reference document for this entire module. Sections 3.1 through 3.4 define the four IR phases, escalation criteria, evidence handling principles, and post-incident activity requirements that form the core of the CySA+ exam's IR content. If you have time to read only one document for this module, this is it.
+
+**2. CISA — Incident Response Playbooks (Federal Civilian Executive Branch)**
+<https://www.cisa.gov/sites/default/files/2024-08/Federal_Government_Cybersecurity_Incident_and_Vulnerability_Response_Playbooks_508C.pdf>
+CISA's federal IR playbook templates covering phishing, malware, and vulnerability response. Reading through a playbook (especially the Malware Response playbook, Section 3) illustrates how abstract NIST phase descriptions translate into concrete analyst actions, decision branches, and escalation criteria — directly applicable to the scenario-based questions on the CySA+ exam.
+
+**3. MITRE ATT&CK — Incident Response Techniques Reference**
+<https://attack.mitre.org/tactics/TA0040/>
+The ATT&CK Impact tactic page documents adversary actions that cause harm to systems and data — including data encryption (ransomware), inhibit system recovery (VSS deletion), and data destruction. Understanding the technique IDs and descriptions at the Impact tactic level gives analysts a structured vocabulary for documenting what an attacker accomplished during an incident, directly feeding the incident timeline and lessons-learned deliverables covered in Section 5.
+
+---
+
 ## Required Resources
 
 - NIST SP 800-61 Rev. 2 — Computer Security Incident Handling Guide (free: nvlpubs.nist.gov)

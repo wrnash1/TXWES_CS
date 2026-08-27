@@ -222,4 +222,30 @@ Submit all items as a single PDF or as a combined Canvas submission with the dia
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Extend the Scenario with a New Sensor Type
+
+The Rampage Hall scenario uses temperature, humidity, CO2, and motion sensors. Extend your architecture to include 6 vibration sensors (ADXL345 accelerometer, SPI interface) mounted on HVAC fan housings to detect bearing wear.
+
+1. Add the ADXL345 sensors to your Part 1 component mapping table. Identify the correct architecture layer and justify the SPI interface choice versus I2C for this application.
+2. Update your Part 2 architecture diagram to include the new sensors. Show the data path from sensor to the gateway, labeling the SPI bus and any protocol conversion that occurs at the ESP32.
+3. Define a new MQTT topic structure for vibration data that is consistent with the existing `campus/rampagehall/room204/co2` pattern. Your topic must encode building, zone, device type, and unit ID (example: `campus/rampagehall/hvac/vibration/fan-03`).
+4. Write a 2–3 sentence justification for whether vibration anomaly detection (threshold: RMS acceleration > 2 g) should be processed at the edge or sent raw to the cloud, referencing the 50 ms alarm requirement from the reading guide examples.
+
+### Challenge 2: Trust Boundary Security Analysis
+
+Choose one of the three trust boundaries you marked in your Part 2 diagram (Perception→Network, Network→Processing, or Processing→Application) and perform a deeper security analysis.
+
+1. List three specific attack vectors that could exploit this trust boundary (for example: replay attack, man-in-the-middle certificate spoofing, unauthorized MQTT topic injection).
+2. For each attack vector, specify one technical control that mitigates it and identify which OWASP IoT Top 10 item it addresses.
+3. Write a brief policy statement (3–5 sentences) that a facilities IT team could use as a standard operating procedure for hardening that specific boundary.
+
+### Reflection Questions
+
+1. After completing the vibration sensor extension, which component in the architecture required the most significant change — the sensor, the ESP32, the gateway, or the broker — and why does that component bear most of the integration complexity?
+2. The reading guide states that edge processing is preferred for latency requirements under 100 ms. Identify one scenario in the Rampage Hall building where cloud processing is actually the better choice despite this guideline, and explain the trade-off you are accepting.
+
+---
+
 End of Lab – Module 01

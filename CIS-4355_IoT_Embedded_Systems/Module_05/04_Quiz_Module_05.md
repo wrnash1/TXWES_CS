@@ -207,4 +207,186 @@ A BLE asset-tracking beacon is deployed in a hospital supply room. A security re
 
 ---
 
+---
+
+### Question 11 (5 points)
+
+A LoRaWAN gateway has a GPS receiver and records the precise receive time for every uplink frame. Which network function uses this timestamp data to determine which gateway received the uplink first?
+
+- A) Adaptive Data Rate (ADR) — to select the fastest spreading factor for the next uplink.
+- B) Network server deduplication — to select the best copy of a frame received by multiple gateways.
+- C) Application server decryption — to verify that the AppSKey has not expired since the last session.
+- D) End device join procedure — to authenticate the device's DevEUI against the network registry.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) ADR uses RSSI and SNR measurements to optimize the spreading factor. It does not use gateway receive timestamps for this purpose.
+  - B) When multiple gateways receive the same uplink, the network server deduplicates the copies. It compares the arrival timestamps and RSSI/SNR values to select the highest quality copy, while the others are discarded. The GPS-timestamped fine-timestamp also enables geolocation features.
+  - C) AppSKey expiry is managed through session lifecycle mechanisms (re-join), not through timestamps in forwarded packets.
+  - D) The join procedure (OTAA) uses AppKey and JoinEUI/DevEUI in a separate message flow. Gateway timestamps are not part of the join authentication.
+
+---
+
+### Question 12 (5 points)
+
+Which BLE pairing mode uses a physical secondary channel — such as NFC tap or QR code scan — to exchange keys, providing the strongest protection against over-the-air interception?
+
+- A) Just Works
+- B) Passkey Entry
+- C) Numeric Comparison
+- D) Out-of-Band (OOB)
+
+- **Correct Answer:** D
+- **Distractor Analysis:**
+  - A) Just Works performs the key exchange entirely over Bluetooth with no user interaction and no secondary channel. It is the weakest pairing mode — fully vulnerable to MITM attacks.
+  - B) Passkey Entry requires the user to enter a 6-digit PIN displayed on one device into the other. The PIN exchange happens over the Bluetooth channel, which can be intercepted during pairing.
+  - C) Numeric Comparison requires both devices to display the same 6-digit number and the user to confirm. It provides MITM protection but relies on the user comparing numbers correctly.
+  - D) OOB pairing exchanges cryptographic data over a secondary channel that an attacker cannot intercept wirelessly — typically NFC tap or scanning a QR code. An attacker would need physical access to intercept the OOB channel, making it the most secure pairing mode.
+
+---
+
+### Question 13 (5 points)
+
+A LoRaWAN end device using OTAA (Over-the-Air Activation) completes a Join procedure. Which two session keys are derived from this join, and from what inputs are they generated?
+
+- A) NwkSKey and AppSKey, both derived from the AppKey combined with the JoinNonce, NetID, and DevNonce using AES-128.
+- B) DevEUI and AppEUI, exchanged in plaintext during the join to identify the device to the network.
+- C) Network key and device key, pre-loaded at manufacturing and never changed after deployment.
+- D) TLS client certificate and TLS server certificate, generated during the DTLS handshake over the join channel.
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - A) In OTAA, the device and join server (application server) both hold the AppKey. After a successful join, both sides derive NwkSKey and AppSKey using AES-128 encryption of the JoinNonce (from join accept), the NetID, and the DevNonce (random value sent in the join request). The derived keys are unique per join session.
+  - B) DevEUI and AppEUI are identifiers, not session keys. They are transmitted during the join request but do not serve as encryption keys.
+  - C) Pre-loaded unchanging keys describe ABP (Activation by Personalization), not OTAA. OTAA derives fresh keys on every join, providing better forward secrecy.
+  - D) LoRaWAN uses AES-128 symmetric keys, not TLS certificates. DTLS is used by CoAP, not LoRaWAN.
+
+---
+
+### Question 14 (5 points)
+
+Wi-Fi 6 (802.11ax) introduced BSS Coloring to improve performance in dense IoT deployments. What does BSS Coloring do?
+
+- A) It assigns each access point a color code that the operating system uses to select the best visual theme for the network management dashboard.
+- B) It adds a color identifier to each Wi-Fi frame so devices can quickly distinguish between frames from their own Basic Service Set and overlapping BSSs, reducing unnecessary backoff and improving channel reuse.
+- C) It color-codes IoT device categories (sensors, actuators, gateways) so the router can apply QoS policies based on device type.
+- D) It maps each SSID to a specific color on the 2.4 GHz spectrum to prevent channel overlap between neighboring networks.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) BSS Coloring has nothing to do with user interface themes. It is a radio-layer mechanism.
+  - B) In dense environments, 802.11 radios waste airtime backing off for frames from other networks that do not actually affect them. BSS Coloring adds a 6-bit color field to PHY headers. Devices can quickly identify frames from other BSSs as foreign and skip unnecessary deferral, dramatically improving throughput in dense IoT deployments with many overlapping networks.
+  - C) Device type classification for QoS is a separate network policy function. BSS Coloring has no knowledge of device categories.
+  - D) BSS Coloring does not manipulate the radio spectrum or channel assignments. It is a MAC/PHY layer identifier that aids in medium access decisions.
+
+---
+
+### Question 15 (5 points)
+
+A campus deploys NB-IoT parking sensors. An operator notes that each sensor has a 15-year battery life target but currently contacts the network every 10 seconds to send a "no change" heartbeat. Which NB-IoT feature should be configured to extend battery life while still reporting occupancy changes within 30 seconds?
+
+- A) Enable eDRX (Extended Discontinuous Reception) with a 20-second cycle to reduce listening intervals while meeting the 30-second response window.
+- B) Disable the cellular modem entirely and use LoRaWAN instead.
+- C) Increase the transmission power to reduce the number of retransmissions required, lowering average energy.
+- D) Configure the SIM card for roaming mode to connect to a less congested carrier tower.
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - A) eDRX allows the device to negotiate with the network to sleep for configurable intervals (seconds to minutes) between checks for downlink pages, instead of listening every few hundred milliseconds. A 20-second eDRX cycle means the sensor checks for network pages every 20 seconds — well within the 30-second response requirement — while consuming a small fraction of the current drawn by continuous reception.
+  - B) Replacing NB-IoT with LoRaWAN is a complete technology change that may not be appropriate for an urban cellular-covered campus. The question asks for an NB-IoT feature, not a technology migration.
+  - C) Increasing transmission power increases per-transmission energy consumption. It reduces retransmissions only in poor signal conditions — it does not help when the issue is the frequency of heartbeat transmissions.
+  - D) Roaming mode selects a different carrier tower but does not change the power consumption pattern. PSM and eDRX are the correct power-saving features.
+
+---
+
+### Question 16 (5 points)
+
+A smart meter uses Zigbee to communicate with a home area network (HAN) hub. Which Zigbee device role does the smart meter most likely occupy, and what communication constraint follows from that role?
+
+- A) Zigbee Coordinator, meaning only one smart meter can exist per HAN network.
+- B) Zigbee Router, meaning the smart meter can relay messages from other Zigbee devices in the home.
+- C) Zigbee End Device, meaning the smart meter cannot route traffic for other devices and must communicate through a parent router or coordinator.
+- D) Zigbee Gateway, meaning the smart meter bridges Zigbee to Ethernet and requires a wired uplink.
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) The Coordinator is a single network-initializing device. Smart meters are leaf nodes, not coordinators. The HAN hub typically plays the coordinator role.
+  - B) Router devices must be mains-powered to stay awake and forward packets at any time. Smart meters in residential settings are typically mains-powered, so they could technically be routers, but in Zigbee smart energy profiles, meters are standardly specified as end devices communicating with the hub.
+  - C) In Zigbee Smart Energy profile (used for smart meters and HAN devices), the utility meter registers as an end device or router depending on the deployment. As an end device, it cannot relay messages for other nodes and must associate with a router or coordinator as its parent. This is the standard exam answer for smart meter Zigbee role.
+  - D) Zigbee Gateway is not a Zigbee protocol device role — it is an informal term for a bridge device that is architecturally separate from the Zigbee network topology roles.
+
+---
+
+### Question 17 (5 points)
+
+An IoT device provisioning system uses WPS Push Button Configuration (PBC) to connect new devices to the Wi-Fi network. What specific attack does this enable, and what is the recommended mitigation?
+
+- A) WPS PBC enables a replay attack on HTTPS provisioning packets; disable HTTPS on the management interface.
+- B) WPS PBC is vulnerable to a race-condition attack where any device within range that sends a WPS PBC request within the 2-minute window can join the network; disable WPS entirely and use WPA3-Personal for new device onboarding.
+- C) WPS PBC broadcasts the WPA2 passphrase in cleartext during the button press; encrypt the provisioning channel with TLS.
+- D) WPS PBC requires physical access to the device, making it immune to remote attacks.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) WPS PBC does not interact with HTTPS provisioning. The vulnerability is in the WPS protocol itself, not in a web management interface.
+  - B) WPS PBC opens a 2-minute enrollment window after the button is pressed. During this window, any device that initiates a WPS exchange can join the network — there is no device authentication. An attacker with a WPS-capable device within radio range during this window can enroll an unauthorized device. WPS also has a separate PIN brute-force vulnerability. The mitigation is to disable WPS entirely.
+  - C) The WPA2 passphrase is never broadcast. WPS PBC generates a new session key during the enrollment handshake. The vulnerability is race condition enrollment, not passphrase disclosure.
+  - D) WPS PBC does not require physical device access — only proximity within Wi-Fi range. This makes it remotely exploitable by any attacker near the building during the 2-minute window.
+
+---
+
+### Question 18 (5 points)
+
+What is the maximum payload size for a LoRaWAN message at SF7 BW125 (the highest data rate setting), and why does the payload size decrease at higher spreading factors?
+
+- A) 222 bytes at SF7; higher SF uses smaller frames to reduce collision probability in the gateway receive buffer.
+- B) 51 bytes at all spreading factors; LoRaWAN enforces a fixed maximum payload regardless of data rate.
+- C) 242 bytes at SF7; lower payload limits at higher spreading factors are enforced by regional duty cycle regulations, not physics.
+- D) 222 bytes at SF7; higher spreading factors have much longer time-on-air per symbol, making long payloads exceed the duty cycle limits imposed by regional regulations.
+
+- **Correct Answer:** D
+- **Distractor Analysis:**
+  - A) Collision probability at the gateway is managed by the network server through deduplication and channel planning, not by reducing frame size. The payload size limit is driven by duty cycle compliance.
+  - B) LoRaWAN payload limits are not fixed — they vary by data rate and regional parameters. At SF12 the practical maximum payload is 51 bytes in many regions; at SF7 it is 222 bytes (LoRaWAN Regional Parameters for US915).
+  - C) The duty cycle limit is the correct regulatory mechanism, but the direction is wrong. Higher spreading factors have longer time-on-air, not shorter. To stay within the duty cycle (e.g., 1% in EU868), long transmissions must carry less data or the device must wait longer between transmissions.
+  - D) At SF12, each symbol takes 32x longer than at SF7. A 222-byte payload at SF12 would have a time-on-air of several seconds, violating regional duty cycle limits. LoRaWAN regional parameters reduce the maximum payload at higher SFs to keep transmissions within allowed duty cycles.
+
+---
+
+### Question 19 (5 points)
+
+A building has Zigbee smart lighting. An attacker obtains the Zigbee network key through a social engineering attack on an employee. What can the attacker do with this key?
+
+- A) Decrypt all past Zigbee network traffic captured before the key was compromised, because Zigbee provides forward secrecy.
+- B) Only subscribe to Zigbee advertising packets — the network key does not grant access to joined device communications.
+- C) Decrypt and inject Zigbee network layer traffic, potentially issuing commands to lights and other devices on the network.
+- D) Access the LoRaWAN network server because Zigbee and LoRaWAN share the same AES-128 key infrastructure.
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) Zigbee does not provide forward secrecy. The network key is a static shared secret. If captured, all past traffic can be decrypted with it — but the question says the attacker obtained the key, not past traffic, so this option is describing a property that actually makes the situation worse, not better.
+  - B) The Zigbee network key encrypts all network layer frames between joined devices. An attacker with the key can decrypt any network-layer message and craft valid encrypted commands. It is not limited to advertising packets.
+  - C) The Zigbee network key is used to encrypt and authenticate network layer frames. With the key, an attacker can decrypt all Zigbee network traffic and craft valid encrypted commands — including turning lights on/off, triggering alarms, or jamming device responses. The link key (if configured) provides additional per-device protection, but network-layer access is fully compromised.
+  - D) Zigbee and LoRaWAN are entirely separate protocols with separate key management systems. Compromising a Zigbee key has no effect on a LoRaWAN deployment.
+
+---
+
+### Question 20 (5 points)
+
+An IoT developer is choosing between LoRaWAN OTAA (Over-the-Air Activation) and ABP (Activation by Personalization) for a fleet of 1,000 sensors. Which statement correctly identifies the security tradeoff?
+
+- A) ABP is more secure because the session keys are generated fresh on every power cycle.
+- B) OTAA is more secure because each join generates unique session keys, and the frame counter resets cleanly after each join; ABP's hardcoded session keys and static frame counters create replay attack risks after device reset.
+- C) Both activation methods provide equivalent security because both use AES-128 session keys.
+- D) ABP is preferred for large deployments because the join procedure creates network overhead that OTAA eliminates.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) In ABP, session keys are hardcoded at manufacturing and never change. A device reset in ABP does not generate new keys; the same keys are used for the entire device lifetime.
+  - B) OTAA generates a fresh NwkSKey and AppSKey on every join. This provides session key freshness and limits the impact of key compromise. ABP devices have static keys stored in firmware — extractable by physical access — and the frame counter is typically reset to 0 on device reboot, enabling replay attacks unless the network server disables frame counter checking.
+  - C) Both use AES-128, but key management differences create very different security postures. OTAA's key derivation and session freshness make it substantially more secure than ABP despite using the same cipher.
+  - D) While OTAA does add join overhead, this is a minor operational concern. Security best practice is to use OTAA. ABP's frame counter and static key issues are more significant problems than OTAA join overhead for a 1,000-device fleet.
+
+---
+
 End of Quiz – Module 05

@@ -191,3 +191,30 @@ Based on your readiness assessment above, write a 175-225 word go/no-go recommen
 2. Name your file: `Lab04_LastName_FirstName.pdf`
 3. Upload to Canvas under "Lab 04 — ERP Implementation Lifecycle."
 4. Deadline: See course schedule in Canvas. Late submissions lose 10 points per day.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Data Migration Quality Gate Design
+
+A 200-person logistics company is migrating 8 years of customer, vendor, inventory, and financial data from QuickBooks and a legacy Access database into SAP S/4HANA. The project manager has asked you to design the data migration quality gate process.
+
+1. Define five data quality rules (validation checks) that must pass before any data is loaded into the production SAP environment. For each rule, specify: the data object (e.g., vendor master), the field being validated, the rule logic, and the consequence if the rule fails.
+2. Design a two-stage quality gate checklist: (a) pre-migration validation checks run before the production load begins, and (b) post-migration reconciliation checks run after the load completes but before users access the system. Include at least four items in each stage.
+3. Determine the go/no-go threshold: at what error rate (expressed as a percentage of records) would you recommend halting the cutover and executing the rollback plan? Justify your threshold with reference to the business impact of the affected data object.
+4. Identify which legacy system (QuickBooks or Access database) poses the higher data quality risk and explain your reasoning based on typical characteristics of each system type.
+
+### Challenge 2: Change Resistance Intervention Plan
+
+You are the change manager for a 500-user Salesforce Sales Cloud implementation. Two weeks before go-live, a survey reveals that 35% of sales representatives say they plan to continue using their current spreadsheet-based pipeline tracking even after go-live. Your sponsor is alarmed.
+
+1. Using the ADKAR model, diagnose which element(s) are most likely deficient based on the survey finding. Support your diagnosis with at least two pieces of evidence from the scenario.
+2. Design a three-week pre-go-live intervention plan with specific activities targeted at each deficient ADKAR element. Include: activity name, target audience, format (workshop, video, email, etc.), duration, and expected outcome.
+3. Define two leading indicators you would monitor in the first 30 days after go-live to assess whether the intervention is working, and specify the data source for each (e.g., Salesforce login reports, pipeline record count).
+4. Write a 75-word message from the Sales VP to their team that addresses the resistance by connecting the new system to the reps' personal interests (commission visibility, territory management, quota tracking) rather than focusing on compliance.
+
+### Reflection Questions
+
+1. In the data migration scenario, the quality gate design required you to set a go/no-go threshold. How does the business criticality of the data object (financial records vs. marketing contact lists) affect where you set that threshold?
+2. The ADKAR diagnosis in Challenge 2 required inferring which elements were deficient from indirect evidence. In a real implementation, what methods would you use to directly measure each ADKAR element before go-live to avoid relying on inference?

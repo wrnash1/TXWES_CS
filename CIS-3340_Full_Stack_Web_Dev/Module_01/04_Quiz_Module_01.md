@@ -222,3 +222,183 @@ A developer deploys a React application to S3 with static website hosting enable
 - Why B is incorrect: `<meta property="og:title">` controls the title shown in social media link previews — search engines use the `<title>` element, not the Open Graph title.
 - Why C is correct: The `<title>` element is the highest-weight on-page SEO signal and directly controls the headline displayed in organic search results.
 - Why D is incorrect: Search engines read the `<h1>` as a content signal, but it does not control the search result title — that is determined by `<title>`.
+
+---
+
+### Question 11 (5 points)
+
+Which HTML5 element should be used to mark up a standalone piece of content, such as a blog post, that could be syndicated or redistributed independently?
+
+- A) `<section>`
+- B) `<div>`
+- C) `<article>`
+- D) `<main>`
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why A is incorrect: `<section>` represents a thematic grouping within a larger document and is not designed for independently distributable content.
+  - Why B is incorrect: `<div>` is a non-semantic generic container that conveys no meaning about the content it wraps.
+  - Why C is correct: `<article>` is the semantic element for self-contained content that could stand alone when removed from its surrounding context, such as a blog post or news article.
+  - Why D is incorrect: `<main>` marks the primary content area of the page — there is only one per page and it wraps everything unique to that document, not individual posts.
+
+---
+
+### Question 12 (5 points)
+
+A developer writes `<img src="logo.svg">` without an `alt` attribute. What is the consequence for users accessing the page with a screen reader?
+
+- A) The screen reader skips the image entirely because SVG files are ignored.
+- B) The screen reader announces the full file path or filename, which is unhelpful and potentially confusing.
+- C) The browser automatically generates a description using computer vision and inserts it as alt text.
+- D) The image is hidden from the accessibility tree, producing the same result as `alt=""`.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: Screen readers do not skip all SVG images; they attempt to describe any image element that lacks an `alt` attribute.
+  - Why B is correct: When `alt` is absent, most screen readers fall back to reading the filename or URL of the image, which provides no meaningful context to the user.
+  - Why C is incorrect: Browsers do not generate alt text from computer vision; that is a feature of some third-party browser extensions, not native browser behavior.
+  - Why D is incorrect: An empty `alt=""` explicitly marks the image as decorative and removes it from the accessibility tree. A missing `alt` attribute is different and triggers fallback behavior.
+
+---
+
+### Question 13 (5 points)
+
+What is the purpose of the `<link rel="canonical">` element in an HTML `<head>` block?
+
+- A) It loads an external CSS file and marks it as the canonical stylesheet for the page.
+- B) It tells search engines which URL is the authoritative version of a page to prevent duplicate content penalties.
+- C) It specifies the language of the linked resource for screen reader voice selection.
+- D) It creates a browser-level redirect from the current URL to the canonical URL.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: `<link rel="canonical">` is unrelated to stylesheets; CSS is linked with `<link rel="stylesheet">`.
+  - Why B is correct: The canonical link element signals to search crawlers which version of a URL should be indexed when the same content is accessible at multiple addresses, preventing split ranking signals.
+  - Why C is incorrect: Language is declared with the `lang` attribute on the `<html>` element or the `hreflang` attribute on alternate links, not `rel="canonical"`.
+  - Why D is incorrect: Canonical links are hints for search crawlers, not HTTP redirects; they do not affect browser navigation behavior.
+
+---
+
+### Question 14 (5 points)
+
+A developer wants to display a publication date on a blog post in a human-friendly format while also making it machine-readable. Which markup is most appropriate?
+
+- A) `<p class="date">September 15, 2025</p>`
+- B) `<span data-date="2025-09-15">September 15, 2025</span>`
+- C) `<time datetime="2025-09-15">September 15, 2025</time>`
+- D) `<meta name="date" content="2025-09-15">`
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why A is incorrect: A plain `<p>` with a CSS class provides no machine-readable date; the class name is a styling hook, not a semantic signal.
+  - Why B is incorrect: `data-*` attributes are custom data slots for JavaScript; they are not read by search engines or assistive technologies as semantic date values.
+  - Why C is correct: The `<time>` element is the HTML5 semantic element for dates and times; the `datetime` attribute provides the machine-readable ISO 8601 value while the element's text content remains human-readable.
+  - Why D is incorrect: `<meta>` tags are invisible metadata; this would not render any visible date text on the page.
+
+---
+
+### Question 15 (5 points)
+
+Which of the following best describes the difference between `<strong>` and `<b>` in HTML5?
+
+- A) `<strong>` adds bold styling; `<b>` adds bold styling with an underline.
+- B) `<strong>` conveys semantic importance and is announced by screen readers; `<b>` applies bold styling with no semantic meaning.
+- C) `<strong>` is deprecated in HTML5 and should be replaced with `<b>`.
+- D) Both elements are identical — HTML5 does not distinguish between them.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: Neither `<strong>` nor `<b>` adds an underline. Both render text in bold by default, but their semantic meanings differ.
+  - Why B is correct: `<strong>` indicates that the enclosed text has strong importance; screen readers may emphasize it with a different tone. `<b>` draws visual attention without implying importance.
+  - Why C is incorrect: `<strong>` is a current, actively-used HTML5 element; it is not deprecated.
+  - Why D is incorrect: HTML5 defines distinct semantics for `<strong>` (importance) and `<b>` (stylistic attention) even though both render as bold by default.
+
+---
+
+### Question 16 (5 points)
+
+A page contains a sidebar with related articles that are tangentially related to the main content but not part of the primary editorial flow. Which element is most semantically appropriate for the sidebar?
+
+- A) `<section>`
+- B) `<div>`
+- C) `<aside>`
+- D) `<nav>`
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why A is incorrect: `<section>` groups thematically related content that is part of the main content flow; it is not designed for tangential supplementary content.
+  - Why B is incorrect: `<div>` is non-semantic; it is a valid fallback but `<aside>` is more meaningful for this use case.
+  - Why C is correct: `<aside>` is defined as content that is tangentially related to the content around it, such as a sidebar, pull quote, or related-articles panel.
+  - Why D is incorrect: `<nav>` is reserved for landmark navigation link groups; using it for a list of related articles misrepresents the content's purpose.
+
+---
+
+### Question 17 (5 points)
+
+What does the `lang` attribute on the `<html>` element tell assistive technologies?
+
+- A) It sets the character encoding used to decode the document's bytes.
+- B) It specifies the primary human language of the document so screen readers can select the correct voice engine and pronunciation rules.
+- C) It declares the programming language used by inline `<script>` elements.
+- D) It configures the browser's spell-check language for all text input fields on the page.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: Character encoding is declared by `<meta charset="UTF-8">`, not the `lang` attribute.
+  - Why B is correct: WCAG 3.1.1 (Level A) requires a `lang` attribute on the `<html>` element so that screen readers can apply correct language-specific pronunciation and voice profiles.
+  - Why C is incorrect: Script type or language is declared with the `type` attribute on `<script>`, not the `lang` attribute on `<html>`.
+  - Why D is incorrect: While some browsers use `lang` as a hint for spell-check, the primary and required purpose of `lang` on `<html>` is accessibility and language processing.
+
+---
+
+### Question 18 (5 points)
+
+A team is auditing their page for WCAG 2.1 Level AA compliance. Which color contrast ratio must body text (18pt or smaller) meet to pass?
+
+- A) 3:1
+- B) 4.5:1
+- C) 7:1
+- D) 2:1
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: A 3:1 ratio is the minimum for large text (18pt or 14pt bold) and for non-text UI components under WCAG 1.4.11 — it does not meet the requirement for standard body text.
+  - Why B is correct: WCAG 1.4.3 (Level AA) requires a minimum contrast ratio of 4.5:1 between normal text and its background for text smaller than 18pt (or 14pt bold).
+  - Why C is incorrect: 7:1 is the enhanced contrast ratio required for WCAG Level AAA under criterion 1.4.6, not Level AA.
+  - Why D is incorrect: 2:1 falls below all WCAG conformance thresholds and would fail even the minimum Level A requirements.
+
+---
+
+### Question 19 (5 points)
+
+Which `<head>` element should be placed first within the `<head>` block, before any other element?
+
+- A) `<title>`
+- B) `<meta name="viewport">`
+- C) `<meta charset="UTF-8">`
+- D) `<link rel="stylesheet">`
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why A is incorrect: `<title>` must come after the charset declaration; placing it first can cause the title to be parsed with the wrong encoding if non-ASCII characters are present.
+  - Why B is incorrect: `<meta name="viewport">` is important but must follow `<meta charset>` to ensure correct rendering context.
+  - Why C is correct: The HTML specification recommends placing `<meta charset>` as the very first element inside `<head>` so the browser knows the encoding before parsing any other content, including the `<title>`.
+  - Why D is incorrect: Stylesheets are typically the last items in `<head>` after metadata declarations; placing them first before charset risks encoding issues with any non-ASCII characters in the stylesheet path.
+
+---
+
+### Question 20 (5 points)
+
+A developer adds `role="banner"` to a `<div>` at the top of the page. A colleague suggests replacing the `<div>` with `<header>`. Which statement best justifies the colleague's suggestion?
+
+- A) `<div role="banner">` causes a browser rendering error; `<header>` must be used instead.
+- B) The `<header>` element implicitly carries `role="banner"` when it is a direct child of `<body>`, making the explicit ARIA role redundant — using native HTML is preferred per the first rule of ARIA.
+- C) `<div role="banner">` is ignored by all screen readers because ARIA roles are only valid on native semantic elements.
+- D) Using `<header>` instead of `<div>` reduces the page's DOM node count, which improves Lighthouse performance scores.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: `<div role="banner">` is valid markup and does not cause a rendering error; it is simply less elegant than using the native element.
+  - Why B is correct: The first rule of ARIA states that you should use native HTML elements with built-in semantics before adding explicit ARIA roles. `<header>` already exposes `role="banner"` implicitly, so the ARIA attribute is unnecessary.
+  - Why C is incorrect: ARIA roles on `<div>` elements are fully supported and recognized by modern screen readers; they are not ignored.
+  - Why D is incorrect: Replacing a `<div>` with `<header>` does not change the DOM node count — it replaces one element with another of the same structural depth.

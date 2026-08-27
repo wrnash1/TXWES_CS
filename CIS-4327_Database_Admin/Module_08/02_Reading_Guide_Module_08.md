@@ -344,3 +344,19 @@ Cloud Storage buckets containing database exports should have:
 - [ ] Cloud SQL restore always creates a new instance
 - [ ] Cloud SQL service account needs `storage.objectAdmin` for export/import
 - [ ] WAL archiving parameters: `archive_mode`, `archive_command`, `archive_timeout`
+
+---
+
+## 9. Supplemental Resources
+
+**1. Cloud SQL — Backup and Recovery Documentation**
+https://cloud.google.com/sql/docs/postgres/backup-recovery/backing-up
+Covers Cloud SQL automated backups, on-demand backups, PITR configuration, retention settings, and restore operations for both PostgreSQL and MySQL.
+
+**2. PostgreSQL Documentation — pg_dump and pg_restore**
+https://www.postgresql.org/docs/current/app-pgdump.html
+Official reference for all pg_dump flags, output formats (plain, custom, directory, tar), and parallel restore options with pg_restore.
+
+**3. Google Cloud Blog — Database Backup Best Practices on GCP**
+https://cloud.google.com/blog/products/databases/best-practices-for-cloud-sql-operational-guidelines
+Discusses RPO/RTO design decisions, PITR configuration, CMEK for backup encryption, and backup validation strategies for Cloud SQL workloads.

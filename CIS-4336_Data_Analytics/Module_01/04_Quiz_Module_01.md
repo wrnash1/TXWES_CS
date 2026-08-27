@@ -204,3 +204,183 @@ A data analyst is working with a dataset and needs to decide which statistical o
 - **Why A is incorrect:** Dataset size affects statistical power and computational requirements but does not determine which operations are logically valid for a variable type.
 - **Why B is incorrect:** File format (CSV, JSON, Parquet) describes how data is stored, not the nature of the values. The same ordinal variable stored in CSV or a database is still ordinal.
 - **Why D is incorrect:** Software tools can compute any operation mechanically. The tool's capability is not the standard for validity — the measurement scale is.
+
+---
+
+### Question 11 (5 points)
+
+Which of the following is an example of ratio-scale data?
+
+- A) A student's letter grade (A, B, C, D, F)
+- B) Calendar year of a company's founding (e.g., 1995, 2003)
+- C) Number of customer complaints received per week
+- D) Temperature measured in degrees Fahrenheit
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - **Why C is correct:** Weekly complaint count is ratio-scale — it has equal intervals, a true zero (zero complaints means no complaints), and supports all arithmetic operations including meaningful ratios.
+  - **Why A is incorrect:** Letter grades are ordinal qualitative. The gap between A and B is not the same magnitude as between C and D, and no true zero exists.
+  - **Why B is incorrect:** Calendar years are interval-scale, not ratio. The year 0 is a calendar convention, not the true absence of time, so ratios ("twice as old") are meaningless.
+  - **Why D is incorrect:** Fahrenheit temperature is interval-scale because 0°F does not represent the absence of heat. Ratio statements like "60°F is twice as warm as 30°F" are invalid.
+
+---
+
+### Question 12 (5 points)
+
+An analyst wants to investigate why a retailer's online conversion rate dropped 18 percent last month. Which analytics type best describes this investigation?
+
+- A) Descriptive analytics
+- B) Diagnostic analytics
+- C) Predictive analytics
+- D) Prescriptive analytics
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - **Why B is correct:** Diagnostic analytics investigates the root cause of a known event — here, explaining why the conversion rate fell. The defining question is "why did it happen?"
+  - **Why A is incorrect:** Descriptive analytics would have produced the summary metric showing the 18-percent drop, but it does not investigate the cause.
+  - **Why C is incorrect:** Predictive analytics would forecast future conversion rates, not explain what caused a past change.
+  - **Why D is incorrect:** Prescriptive analytics would recommend specific actions to improve conversion; investigation of cause comes before any recommendation.
+
+---
+
+### Question 13 (5 points)
+
+A healthcare organization stores patient MRI scan images in a cloud object store and radiology report text in a separate database table. How should these two data sources be classified?
+
+- A) Both are unstructured
+- B) MRI images are unstructured; radiology report text in a table is structured
+- C) MRI images are semi-structured; radiology report text is unstructured
+- D) Both are structured because they are organized in the same system
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - **Why B is correct:** Image files have no predefined schema and are unstructured. A database table with defined columns is structured, even if the text values inside one column vary in length.
+  - **Why A is incorrect:** The radiology reports stored in a relational table with defined columns conform to a schema, making that source structured, not unstructured.
+  - **Why C is incorrect:** Semi-structured data uses tags or keys (like JSON). Raw image files have no such organizational markup.
+  - **Why D is incorrect:** Physical co-location in the same system does not determine structural classification. Schema enforcement determines structure.
+
+---
+
+### Question 14 (5 points)
+
+In the data analytics lifecycle, which stage is most concerned with ensuring data quality dimensions such as completeness, consistency, and accuracy?
+
+- A) Define the question
+- B) Collect data
+- C) Clean and transform
+- D) Act and monitor
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - **Why C is correct:** The clean and transform stage directly addresses data quality. Analysts handle null values, remove duplicates, correct inconsistencies, and standardize formats during this stage.
+  - **Why A is incorrect:** Defining the question focuses on business problem scope and success criteria, not on the quality of raw data.
+  - **Why B is incorrect:** Data collection focuses on acquiring raw data from sources. Quality issues are identified here but corrected in the next stage.
+  - **Why D is incorrect:** Act and monitor measures outcomes after deployment. Data quality remediation has already occurred before reaching this stage.
+
+---
+
+### Question 15 (5 points)
+
+A dataset column contains values such as "TX," "CA," "NY," and "FL" representing U.S. state abbreviations. Which classification and valid operation are correct?
+
+- A) Ordinal qualitative; compute the median state abbreviation
+- B) Nominal qualitative; compute the mode (most frequent state)
+- C) Interval quantitative; compute the mean of state abbreviations
+- D) Ratio quantitative; compute the sum of state abbreviations
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - **Why B is correct:** State abbreviations are categories with no inherent order — nominal qualitative. The only meaningful summary is counting frequencies and identifying the most common value (mode).
+  - **Why A is incorrect:** Ordinal requires a meaningful ordering. There is no natural ranking among state abbreviations, so ordinal classification is incorrect.
+  - **Why C is incorrect:** State abbreviations are not numeric and have no quantitative meaning. Treating them as interval data and computing a mean is invalid.
+  - **Why D is incorrect:** Abbreviations cannot be summed. They are categorical labels, not numeric quantities.
+
+---
+
+### Question 16 (5 points)
+
+Which statement best explains why a data analyst must understand measurement scales before selecting a statistical method?
+
+- A) Measurement scales determine how large the dataset must be before analysis can begin.
+- B) Measurement scales dictate which mathematical and statistical operations produce meaningful results for a given variable.
+- C) Measurement scales are only relevant when using spreadsheet software, not Python or SQL.
+- D) Measurement scales affect only the visualization choice, not the underlying statistical test.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - **Why B is correct:** Each measurement scale permits specific operations. Ratio-scale data supports all arithmetic; ordinal supports median but not mean; nominal supports only frequency counts. Applying an inappropriate operation produces misleading results.
+  - **Why A is incorrect:** Dataset size affects statistical power and sampling considerations, but it is independent of measurement scale. A small ratio-scale dataset and a large nominal dataset both follow the same operational rules for their respective scales.
+  - **Why C is incorrect:** Measurement scale is a property of the data, not the software. Python, SQL, Excel, and R all face the same validity constraints when operating on ordinal or nominal data.
+  - **Why D is incorrect:** Measurement scale affects both visualization choices and statistical test selection. Choosing a bar chart vs. histogram is influenced by scale, but so is choosing a chi-square test vs. a t-test.
+
+---
+
+### Question 17 (5 points)
+
+A logistics company builds a machine learning model that predicts parcel delivery delays 48 hours in advance based on weather, carrier load, and historical delay patterns. Which analytics type does this represent?
+
+- A) Descriptive analytics
+- B) Diagnostic analytics
+- C) Predictive analytics
+- D) Prescriptive analytics
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - **Why C is correct:** Predictive analytics uses historical patterns and statistical models to forecast future outcomes. A model that predicts delays 48 hours in advance is squarely predictive.
+  - **Why A is incorrect:** Descriptive analytics reports on what has already occurred. Forecasting a future event is not descriptive.
+  - **Why B is incorrect:** Diagnostic analytics explains the cause of a past event, not a future one. The goal here is prediction, not root-cause investigation.
+  - **Why D is incorrect:** Prescriptive analytics would go further by recommending specific actions — for example, suggesting which packages to reroute. Predicting a delay is not yet a recommendation.
+
+---
+
+### Question 18 (5 points)
+
+Which pandas method is most appropriate for computing the frequency distribution of a nominal qualitative column such as "product_category"?
+
+- A) `df["product_category"].mean()`
+- B) `df["product_category"].describe()`
+- C) `df["product_category"].value_counts()`
+- D) `df["product_category"].std()`
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - **Why C is correct:** `value_counts()` returns the count of each unique value in a Series, which is the appropriate summary for nominal qualitative data.
+  - **Why A is incorrect:** `.mean()` requires numeric data and will raise a TypeError on a string column. Even if categories were encoded as integers, averaging nominal data is meaningless.
+  - **Why B is incorrect:** `.describe()` on an object-dtype column returns count, unique, top, and frequency — partial information, but `value_counts()` provides a complete frequency table sorted by frequency, which is the standard approach.
+  - **Why D is incorrect:** `.std()` computes standard deviation, a numeric operation that is invalid for nominal string data.
+
+---
+
+### Question 19 (5 points)
+
+What distinguishes a data warehouse from a data lake in an analytics architecture?
+
+- A) A data warehouse stores only unstructured data; a data lake stores only structured data.
+- B) A data warehouse enforces a predefined schema and stores processed, structured data optimized for querying; a data lake stores raw data of any structure.
+- C) A data lake requires SQL queries; a data warehouse uses Python scripts only.
+- D) A data warehouse is hosted on-premises only; a data lake exists exclusively in the cloud.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - **Why B is correct:** Data warehouses use schema-on-write — data is structured and cleaned before loading. Data lakes use schema-on-read — raw data in any format is stored first, and structure is applied at query time.
+  - **Why A is incorrect:** This reverses the actual distinction. Warehouses store structured data; lakes store all types including unstructured.
+  - **Why C is incorrect:** Both architectures support SQL and Python. Many data lake platforms (e.g., Databricks, AWS Athena) support SQL queries on raw files.
+  - **Why D is incorrect:** Both data warehouses and data lakes can be on-premises or cloud-hosted. The distinction is about data structure and schema enforcement, not deployment location.
+
+---
+
+### Question 20 (5 points)
+
+A dataset contains a "date_of_birth" column. What scale of measurement applies to this column, and which arithmetic operation is valid?
+
+- A) Ratio scale; computing the average birth year is meaningful because year zero is a true zero point.
+- B) Interval scale; computing the difference between two dates (elapsed days) is valid, but ratios such as "twice as old" are not.
+- C) Ordinal scale; birth dates can only be ranked but differences cannot be computed.
+- D) Nominal scale; birth dates are labels with no mathematical meaning.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - **Why B is correct:** Calendar dates are interval-scale. The difference between dates is meaningful and equal-interval (elapsed days), but there is no true zero point — year zero is a calendar convention, not the absence of time — so ratios are invalid.
+  - **Why A is incorrect:** Calendar year zero is not a true zero in the ratio-scale sense. Saying a person born in 2000 is "twice as old" as one born in 1000 is meaningless on the Gregorian calendar.
+  - **Why C is incorrect:** Ordinal data supports ranking only, with unequal or unknown intervals. Date arithmetic produces precise, equal-interval differences in days, hours, or years, exceeding ordinal capability.
+  - **Why D is incorrect:** Nominal data has no mathematical meaning. Dates clearly support subtraction (difference), which rules out nominal classification.

@@ -326,4 +326,20 @@ Integrating Checkov SARIF output with GitHub's code scanning feature makes CIS c
 
 ---
 
+## Supplemental Resources
+
+**1. Terraform Security — Protect Sensitive Input Variables**
+<https://developer.hashicorp.com/terraform/tutorials/configuration-language/sensitive-variables>
+An official HashiCorp tutorial demonstrating the `sensitive = true` variable attribute, how Terraform propagates sensitivity through expressions, and why the state file still requires encryption at the backend level. Includes hands-on examples showing the difference between display suppression and true data protection.
+
+**2. HashiCorp Vault Provider for Terraform**
+<https://registry.terraform.io/providers/hashicorp/vault/latest/docs>
+The complete Terraform provider documentation for HashiCorp Vault, covering all supported data sources including `vault_kv_secret_v2` for static secrets, `vault_aws_secret_backend_creds` for dynamic IAM credentials, and the AppRole authentication configuration. Essential for understanding Vault-Terraform integration patterns used in secure CI/CD pipelines.
+
+**3. AWS IAM Policy Generator for Terraform**
+<https://developer.hashicorp.com/terraform/tutorials/aws/aws-iam-policy>
+A HashiCorp tutorial on building least-privilege IAM policies using `aws_iam_policy_document` data sources. Covers the structured policy document syntax, condition keys for scoping resources to specific ARN patterns, and the workflow of iteratively building and testing policies against real `terraform plan` and `terraform apply` runs.
+
+---
+
 End of Module 13 Reading Guide

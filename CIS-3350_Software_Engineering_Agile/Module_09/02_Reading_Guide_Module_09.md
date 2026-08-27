@@ -165,6 +165,24 @@ Tip 8: Kanban does not require or prohibit any specific estimation technique. So
 
 ---
 
+## 9. Supplemental Resources
+
+The following free, open-access resources go deeper on Module 09 topics:
+
+**1. "Kanban Guide for Scrum Teams" — Scrum.org**
+<https://www.scrum.org/resources/kanban-guide-scrum-teams>
+An official Scrum.org guide describing how Kanban practices can be applied within a Scrum Team context. Covers flow metrics, WIP limits, and the relationship between the Sprint and Kanban's continuous flow. Free PDF download from Scrum.org.
+
+**2. "Lean Software Development: An Agile Toolkit" — Chapter Summary (Mary Poppendieck)**
+<https://www.informit.com/articles/article.aspx?p=169223>
+A free excerpt and summary from the original Poppendieck Lean Software Development book on InformIT. Covers the seven wastes of software development with software-specific examples. Essential reading for Module 09's waste analysis lab.
+
+**3. "Little's Law for Everyone" — Dr. Neil Gunther**
+<https://www.agilealliance.org/resources/experience-reports/littles-law-applied-to-agile-development/>
+An accessible Agile Alliance article applying Little's Law to software development teams. Explains the math behind WIP limits and cycle time improvement with worked numerical examples. Free access via the Agile Alliance resource library.
+
+---
+
 ## 8. Study Checklist
 
 - [ ] State the five Lean principles from memory and give one software example for each

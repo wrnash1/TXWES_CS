@@ -471,6 +471,31 @@ Submit the following to the Module 05 Lab assignment in Canvas:
 
 ---
 
+## Part 9 — Challenge Exercise
+
+**This section is optional but strongly recommended.** These exercises build algorithmic thinking using loops — a core skill for coding interviews and the JSE exam.
+
+### Challenge Step 9.1 — FizzBuzz
+
+Create `fizzbuzz.js`. Write a `for` loop from `1` to `50` that prints:
+
+- `'FizzBuzz'` when the number is divisible by both 3 and 5
+- `'Fizz'` when divisible by 3 only
+- `'Buzz'` when divisible by 5 only
+- The number itself otherwise
+
+Use `%` (modulo) and `if/else if/else`. Then refactor using the ternary operator in a single expression per iteration. Log both versions side by side and verify they produce identical output. FizzBuzz is one of the most commonly asked screening questions in technical interviews.
+
+### Challenge Step 9.2 — Labeled Break in Nested Loop Search
+
+Create `search_grid.js`. Create a 4×4 two-dimensional array (array of arrays) filled with random integers from 1–20. Write nested `for` loops with a `outer:` label. Search for the first value greater than `15`. When found, log the row index, column index, and value, then use `break outer` to exit both loops immediately. Log a message after the loops confirming whether the value was found. This demonstrates a practical use case for labeled breaks.
+
+### Challenge Step 9.3 — Sieve of Eratosthenes (Prime Numbers)
+
+Create `primes.js`. Implement a simplified Sieve of Eratosthenes to find all prime numbers up to 50 using nested loops and `continue`. The algorithm: start with an array of `true` values indexed 0–50. For each number from 2 to `Math.sqrt(50)`, if it is still marked true (prime), mark all its multiples as false (not prime) using an inner loop. After the sieve, collect all indices still marked `true` (starting from index 2) — these are the primes. Log the resulting array. This exercise uses all loop types and `continue` in a real algorithmic context.
+
+---
+
 ## Reflection Questions
 
 Answer in the Canvas text box (two to three sentences each):

@@ -210,3 +210,220 @@ What does `a - b` produce if `a = {1, 2, 3, 4}` and `b = {3, 4, 5}`?
 - *Why B is correct:* The set difference `a - b` gives elements that are in `a` but not in `b`. From `a = {1, 2, 3, 4}`, the elements `3` and `4` are also in `b`, so they are excluded. The result is `{1, 2}`.
 - *Why C is incorrect:* `{1, 2, 5}` is the symmetric difference (`a ^ b`) — elements in either set but not both.
 - *Why D is incorrect:* `{3, 4}` is the intersection (`a & b`) — elements in both sets.
+
+---
+
+### Question 11
+
+What is the output of this code?
+
+```python
+t = (1, 2, 3, 2, 1)
+print(t.count(2), t.index(3))
+```
+
+- A) `2 3`
+- B) `2 2`
+- C) `1 2`
+- D) `TypeError: tuples have no count or index methods`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `t.count(2)` is `2` (correct), but `t.index(3)` returns the index of the first occurrence of `3`, which is `2` (index 2), not `3`.
+- *Why B is correct:* `t.count(2)` counts occurrences of `2` in the tuple: positions 1 and 3 → count is `2`. `t.index(3)` returns the index of the first `3`, which is at index `2`. Output: `2 2`.
+- *Why C is incorrect:* `t.count(2) = 2`, not `1`. The value `2` appears at indices 1 and 3.
+- *Why D is incorrect:* Tuples do support `count()` and `index()` — they are read-only sequence methods that do not modify the tuple.
+
+---
+
+### Question 12
+
+What is the result of `{1, 2, 3} | {3, 4, 5}`?
+
+- A) `{3}`
+- B) `{1, 2, 4, 5}`
+- C) `{1, 2, 3, 4, 5}`
+- D) `{1, 2, 3, 3, 4, 5}`
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `{3}` is the intersection (`&`) — the only element in both sets.
+- *Why B is incorrect:* `{1, 2, 4, 5}` is the symmetric difference (`^`) — elements in one set but not both.
+- *Why C is correct:* `|` is the union operator — it returns all elements present in either set. Duplicates are automatically eliminated: `3` appears in both but only once in the result.
+- *Why D is incorrect:* Sets never contain duplicate values. Even though `3` is in both sets, it appears only once in the union result.
+
+---
+
+### Question 13
+
+What does `sorted([(2, 'b'), (1, 'c'), (1, 'a')])` produce?
+
+- A) `[(1, 'a'), (1, 'c'), (2, 'b')]`
+- B) `[(1, 'c'), (1, 'a'), (2, 'b')]`
+- C) `[(2, 'b'), (1, 'c'), (1, 'a')]`
+- D) `TypeError: tuples cannot be compared`
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- *Why A is correct:* Python sorts tuples lexicographically — first by the first element, then by the second as a tiebreaker. Both `(1, 'a')` and `(1, 'c')` have first element `1`. Since `'a' < 'c'`, `(1, 'a')` comes first. Then `(2, 'b')` follows.
+- *Why B is incorrect:* Python's sort is stable — but when comparing tuples with equal first elements, it compares second elements. `'a' < 'c'`, so `(1, 'a')` sorts before `(1, 'c')`.
+- *Why C is incorrect:* That is the original unsorted order.
+- *Why D is incorrect:* Tuples are fully comparable in Python. Comparison proceeds element by element, left to right.
+
+---
+
+### Question 14
+
+Which of the following is a valid way to create an empty set?
+
+- A) `s = {}`
+- B) `s = set()`
+- C) `s = set{}`
+- D) `s = ()`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `{}` creates an empty **dict**, not a set. This is a critical distinction tested directly on the PCAP exam.
+- *Why B is correct:* `set()` with no arguments creates an empty set. This is the only way to create an empty set in Python.
+- *Why C is incorrect:* `set{}` is not valid Python syntax. `set()` is a function call, not a literal syntax like `{}`.
+- *Why D is incorrect:* `()` creates an empty **tuple**, not a set.
+
+---
+
+### Question 15
+
+What does `lambda x, y: x if x > y else y` return when called as `f(3, 7)`?
+
+- A) `3`
+- B) `7`
+- C) `True`
+- D) `SyntaxError` — lambda cannot contain if/else expressions
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* The lambda returns the larger value. Since `3 > 7` is `False`, the expression returns `y = 7`, not `x = 3`.
+- *Why B is correct:* The lambda uses a ternary expression: return `x` if `x > y`, else return `y`. With `x=3, y=7`: `3 > 7` is `False`, so `y = 7` is returned.
+- *Why C is incorrect:* The lambda returns the value of `x` or `y`, not a boolean comparison result.
+- *Why D is incorrect:* Lambda expressions fully support ternary (`if`/`else`) expressions within their body. The ternary is a single expression, which is all a lambda may contain.
+
+---
+
+### Question 16
+
+What is the output of this code?
+
+```python
+coords = (3, 7)
+x, y = coords
+print(f'x={x}, y={y}')
+```
+
+- A) `x=(3, 7), y=(3, 7)`
+- B) `x=3, y=7`
+- C) `TypeError: cannot unpack non-sequence tuple`
+- D) `x=7, y=3`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Tuple unpacking assigns individual elements, not the entire tuple to each variable.
+- *Why B is correct:* `x, y = coords` unpacks the two-element tuple, assigning `3` to `x` and `7` to `y`. The f-string produces `x=3, y=7`.
+- *Why C is incorrect:* Tuples are sequences and fully support unpacking. The error message is fabricated — no such `TypeError` occurs.
+- *Why D is incorrect:* Unpacking assigns in order: first element to the first variable. `x` gets `3`, `y` gets `7` — not reversed.
+
+---
+
+### Question 17
+
+What does `discard()` do that `remove()` does not?
+
+- A) `discard()` removes an element and returns it; `remove()` returns `None`
+- B) `discard()` removes all occurrences; `remove()` removes only the first
+- C) `discard()` does not raise an error if the element is not found; `remove()` raises `KeyError`
+- D) `discard()` works on lists; `remove()` works only on sets
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Neither `discard()` nor `remove()` returns the element. Both return `None`. `pop()` is the method that removes and returns an element.
+- *Why B is incorrect:* Sets cannot contain duplicates, so "all occurrences" vs "first occurrence" is irrelevant. Both methods remove a single element (since duplicates don't exist in sets).
+- *Why C is correct:* `s.remove(x)` raises `KeyError` if `x` is not in the set. `s.discard(x)` does the same thing if `x` is present, but silently does nothing if `x` is absent. Use `discard()` when you want to remove-if-present without the need for a guard check.
+- *Why D is incorrect:* Both `discard()` and `remove()` are set methods, not list methods. Lists have their own `remove()` method that raises `ValueError` (not `KeyError`) for missing values.
+
+---
+
+### Question 18
+
+What is the output of this code?
+
+```python
+students = [('Alice', 90), ('Bob', 85), ('Carol', 90), ('Dave', 85)]
+result = sorted(students, key=lambda s: (-s[1], s[0]))
+print(result[0])
+```
+
+- A) `('Alice', 90)`
+- B) `('Carol', 90)`
+- C) `('Bob', 85)`
+- D) `('Dave', 85)`
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- *Why A is correct:* The key `(-s[1], s[0])` sorts by score descending (negated) then name ascending. Score 90 students come first (negative: -90 < -85). Among `'Alice'` and `'Carol'` (both 90), `'Alice' < 'Carol'` alphabetically, so Alice is first.
+- *Why B is incorrect:* Carol also has score 90 but `'Alice' < 'Carol'` alphabetically, so Alice sorts before Carol.
+- *Why C is incorrect:* Bob has score 85, which sorts after both 90-point students.
+- *Why D is incorrect:* Dave has score 85 and comes last among the 85-point students alphabetically.
+
+---
+
+### Question 19
+
+A tuple `t = (1, [2, 3], 4)` contains a list. What happens when you run `t[1].append(5)`?
+
+- A) `TypeError: tuple object does not support item assignment`
+- B) The tuple becomes `(1, [2, 3, 5], 4)` — the list inside is mutable
+- C) The tuple becomes `(1, [2, 3], 4, 5)` — the value is appended to the tuple
+- D) `AttributeError: tuples have no append method`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `t[1].append(5)` does not assign to `t[1]` — it calls a method on the object that `t[1]` references. Tuple immutability means the reference inside the tuple cannot be changed, but the object being referenced (the list) can still be mutated.
+- *Why B is correct:* The tuple's immutability means `t[1]` will always refer to the same list object. But the list itself is mutable — `append()` modifies the list object in place. The tuple's reference is unchanged; the referenced list now has an extra element.
+- *Why C is incorrect:* `append()` is a list method, not a tuple method. And tuples themselves cannot be extended.
+- *Why D is incorrect:* `t[1]` is a list, not a tuple. Lists have `append()`. The `AttributeError` would only occur if you tried `t.append(5)` on the tuple itself.
+
+---
+
+### Question 20
+
+What does `{x**2 for x in range(5)}` produce?
+
+- A) `[0, 1, 4, 9, 16]` — a list comprehension
+- B) `{0, 1, 4, 9, 16}` — a set comprehension
+- C) `(0, 1, 4, 9, 16)` — a generator expression
+- D) `SyntaxError` — comprehensions cannot use the `**` operator inside curly braces
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Square brackets `[...]` create a list comprehension. Curly braces `{...}` with an expression (not a key-value pair) create a set comprehension.
+- *Why B is correct:* `{expression for var in iterable}` is a set comprehension — it produces a set. `{x**2 for x in range(5)}` = `{0, 1, 4, 9, 16}`. Note: since sets are unordered, the display order may vary, but the content is the five unique squared values.
+- *Why C is incorrect:* A generator expression uses parentheses: `(x**2 for x in range(5))`. This creates a lazy iterator, not a set.
+- *Why D is incorrect:* `**` is a valid Python operator and works inside any comprehension. No SyntaxError occurs.

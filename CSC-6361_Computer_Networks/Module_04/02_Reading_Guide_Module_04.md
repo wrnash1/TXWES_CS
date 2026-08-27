@@ -174,3 +174,23 @@ show ip prefix-list                         ! View configured prefix lists
 4. **Defense-in-Depth Argument:** A bank executive argues that deploying 802.1X is expensive and complex, and that requiring VPN for all internal traffic would solve the same problem. Evaluate this argument — is it correct, and what are the trade-offs?
 
 **Citation:** Cite NIST SP 800-41 (firewall/ACL policy), CIS Benchmarks for Cisco IOS, or a peer-reviewed paper on Layer 2 security attacks (available via IEEE Xplore through TXWES West Library).
+
+---
+
+## 9. Supplemental Resources
+
+**1. Cisco Security Configuration Guide — AAA**
+https://www.cisco.com/c/en/us/td/docs/ios-xml/ios/sec_usr_aaa/configuration/xe-16/sec-usr-aaa-xe-16-book.html
+Authoritative Cisco IOS-XE configuration reference for AAA, TACACS+, and RADIUS implementation.
+
+**2. NIST SP 800-53 — Security and Privacy Controls**
+https://csrc.nist.gov/publications/detail/sp/800-53/rev-5/final
+Federal standard for security controls applicable to enterprise network infrastructure hardening.
+
+**3. IETF RFC 2865 — Remote Authentication Dial In User Service (RADIUS)**
+https://datatracker.ietf.org/doc/html/rfc2865
+The original RADIUS protocol specification — essential reading for understanding the authentication exchange.
+
+**4. Cisco White Paper — Control Plane Policing**
+https://www.cisco.com/c/en/us/support/docs/quality-of-service-qos/qos-policing/116664-technote-qos-00.html
+Technical explanation of CoPP design principles, rate-limit categories, and configuration examples.

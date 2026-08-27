@@ -239,3 +239,215 @@ while temp:
 - *Why B is correct:* Two stack reversals produce the original order. First reversal: `s=[1,2,3]` → `temp=[3,2,1]`. Second reversal: `temp=[3,2,1]` → `s=[1,2,3]`. The two reversals cancel, and the stack is restored to its original state.
 - *Why C is incorrect:* Both loops terminate when their respective sources are empty, not simultaneously. At no point are both stacks empty at the same time during the loop (unless the starting stack was empty).
 - *Why D is incorrect:* The code applies the same pop-then-repush operation to all elements uniformly. No element is treated differently from any other. There is no mechanism to move only the middle element.
+
+---
+
+### Question 11
+
+**Each question is worth 5 points.**
+
+A browser's back/forward navigation maintains two stacks: `back_stack` and `forward_stack`. When the user visits a new page, the current page is pushed to `back_stack` and `forward_stack` is cleared. When the user clicks Back, the current page is pushed to `forward_stack` and the top of `back_stack` is popped. Which operation is O(1) and which is amortized O(n)?
+
+- A) Visiting a new page is O(1); pressing Back is O(n) because `forward_stack` must be rebuilt
+- B) Both operations are O(1) — all operations are stack push/pop
+- C) Pressing Back is O(n) because the forward stack must be searched for a matching page
+- D) Visiting a new page is O(n) because the forward stack must be fully cleared
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Clearing `forward_stack` might seem expensive, but clearing means resetting a reference to an empty list — O(1). There is no per-element loop required to empty the stack.
+- *Why B is correct:* All operations are stack operations. Visiting a new page: push to `back_stack` (O(1)), clear `forward_stack` by assigning `[]` (O(1)) — total O(1). Pressing Back: push current to `forward_stack` (O(1)), pop from `back_stack` (O(1)) — total O(1). No scanning or traversal is required.
+- *Why C is incorrect:* No search is performed. The forward stack operation is a simple push of the current page — O(1). The forward stack is not searched; it is treated as a pure LIFO container.
+- *Why D is incorrect:* Clearing the forward stack by `forward_stack = []` is O(1) — it creates a new empty list reference. The old list's memory will be reclaimed by the garbage collector, but that cost is not charged to the operation.
+
+---
+
+### Question 12
+
+What is the output of the following code?
+
+```python
+s = []
+for ch in 'ABCDE':
+    s.append(ch)
+result = []
+for _ in range(3):
+    result.append(s.pop())
+print(result)
+```
+
+- A) `['A', 'B', 'C']`
+- B) `['E', 'D', 'C']`
+- C) `['C', 'D', 'E']`
+- D) `['A', 'B', 'C', 'D', 'E']`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `s.pop()` removes from the top (end) of the stack. After pushing 'A' through 'E', the top is 'E'. The first pop returns 'E', not 'A'.
+- *Why B is correct:* After the first loop, `s = ['A','B','C','D','E']` with 'E' at the top. Three pops return 'E', then 'D', then 'C' in that order. `result = ['E','D','C']`.
+- *Why C is incorrect:* `['C','D','E']` would be the result if pops were in reverse order — i.e., if the stack were reversed before popping, or if elements were dequeued rather than popped.
+- *Why D is incorrect:* `result` only receives 3 elements from the 3 iterations of the second loop. The remaining 2 elements ('A' and 'B') stay in `s` and are never moved to `result`.
+
+---
+
+### Question 13
+
+Which statement correctly describes the difference between a stack and a queue when used to implement graph traversal?
+
+- A) A stack explores nodes closest to the source first; a queue explores nodes deepest first
+- B) A stack enables depth-first search; a queue enables breadth-first search
+- C) Both explore nodes in the same order; only performance differs
+- D) A queue enables depth-first search; a stack enables breadth-first search
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* This reverses the correct description. A queue explores closest (shallowest) nodes first — this is BFS. A stack explores deepest first — this is DFS. The description in option A applies to a queue, not a stack.
+- *Why B is correct:* Iterative DFS: push the starting node onto a stack, then repeatedly pop a node and push its unvisited neighbors. Neighbors pushed last are explored first — LIFO behavior drives depth-first exploration. Iterative BFS: enqueue the starting node, then repeatedly dequeue a node and enqueue its unvisited neighbors. Neighbors enqueued earliest are processed first — FIFO behavior drives breadth-first (level-by-level) exploration.
+- *Why C is incorrect:* The traversal orders are fundamentally different. DFS follows a single path as deep as possible before backtracking; BFS explores all nodes at distance k before exploring nodes at distance k+1. The data structure choice (stack vs queue) is precisely what produces these different orders.
+- *Why D is incorrect:* This is the complete reversal of the correct answer. Queue = BFS; Stack = DFS. This is a common confusion point that interviewers test.
+
+---
+
+### Question 14
+
+In the valid parentheses problem (`is_valid`), what should the function return for the empty string `""`?
+
+- A) `False` — an empty string contains no matching pairs
+- B) `True` — the stack is empty after processing, satisfying `len(stack) == 0`
+- C) `None` — the function should raise an exception for empty input
+- D) `False` — the function requires at least one bracket pair
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Validity means every opener has a matching closer in correct order. An empty string trivially satisfies this — there are no openers without closers. Mathematically, an empty set of bracket pairs is a valid (empty) sequence of matching pairs.
+- *Why B is correct:* The loop body never executes for an empty string. The stack remains empty. The final `return len(stack) == 0` evaluates to `return 0 == 0` which is `True`. An empty string is a valid (trivially balanced) bracket string — this is the standard convention.
+- *Why C is incorrect:* Raising an exception for an empty string would be incorrect behavior. The function should handle all string inputs, including empty.
+- *Why D is incorrect:* No requirement in the problem states that at least one pair must be present. The empty case is well-defined and the correct answer is `True`.
+
+---
+
+### Question 15
+
+A circular queue (ring buffer) of capacity `k` is implemented with a fixed array. When is the queue considered full?
+
+- A) When the `front` pointer equals the `rear` pointer
+- B) When `(rear + 1) % k == front` — the next rear position would equal front
+- C) When all array indices contain non-null values
+- D) When `rear == k - 1` — the rear pointer reaches the last index
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `front == rear` indicates the queue is empty, not full. This is the standard empty condition for a circular buffer. Confusing full and empty is a classic ring buffer bug.
+- *Why B is correct:* In a circular buffer, `rear` points to the next position to fill. After filling the position, `rear = (rear + 1) % k`. The queue is full when `rear`'s next position (mod k) would wrap into `front` — meaning there is one unused slot (a common convention to distinguish full from empty). `(rear + 1) % k == front` is the standard full condition.
+- *Why C is incorrect:* Checking all array indices for non-null values is O(k) — not suitable for a real-time check. The purpose of a ring buffer is O(1) full/empty detection.
+- *Why D is incorrect:* `rear == k - 1` only detects that the rear reached the physical end of the array — but a circular buffer wraps around. The rear pointer resets to 0 and continues filling from the beginning when space is available.
+
+---
+
+### Question 16
+
+The "decode string" problem (LeetCode #394) asks you to decode strings like `"3[a2[c]]"` → `"accaccacc"`. Which data structure naturally handles the nested bracket structure?
+
+- A) A queue — process characters in FIFO order
+- B) A stack — push current state when entering `[`, pop and combine when encountering `]`
+- C) A hash map — store the multiplier for each character
+- D) A priority queue — process higher multipliers first
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* A queue processes in FIFO order, which is appropriate for level-by-level problems, not nested structures. Nested brackets require remembering the state at each nesting level — FIFO order doesn't preserve this hierarchy.
+- *Why B is correct:* Nested brackets map directly to recursive structure, which maps to a stack. When `[` is encountered, push the current string and current multiplier onto the stack (saving state for this nesting level). When `]` is encountered, pop the previous string and multiplier, compute `prev_string + multiplier × current_string`. The stack naturally handles arbitrary nesting depth in O(n) time.
+- *Why C is incorrect:* A hash map stores key-value pairs. There is no meaningful key for each multiplier in a nested string — the same multiplier digit (e.g., `3`) can appear at multiple nesting levels with different targets.
+- *Why D is incorrect:* Priority queues reorder elements by priority. The decode problem requires preserving the original order of the string and handling nesting levels — neither of which relates to priority ordering.
+
+---
+
+### Question 17
+
+`collections.deque` supports both `appendleft` and `popleft` in O(1). How does it achieve this, unlike a Python list?
+
+- A) It uses a hash table to track both ends
+- B) It uses a doubly linked list (or block-based doubly linked structure), allowing O(1) operations at both ends
+- C) It preallocates extra capacity at the front of the array
+- D) It sorts elements to keep the front accessible in O(1)
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* A hash table provides O(1) access by key, not O(1) access to ends. A deque needs ordered front/back access, not key-based access.
+- *Why B is correct:* CPython's `collections.deque` is implemented as a doubly-linked list of fixed-size memory blocks (not individual node links). This allows O(1) insertion and removal at both the front and back without shifting. This is fundamentally different from Python's `list`, which is a contiguous array requiring O(n) shifts for front operations.
+- *Why C is incorrect:* A Python list is a contiguous array. Even with extra capacity at the front, inserting at position 0 still requires updating the reference count and internal array pointer — it does not change the O(n) shifting cost. Real O(1) front access requires a non-contiguous structure.
+- *Why D is incorrect:* Sorting is O(n log n) and is unrelated to achieving O(1) end access. Sorting a deque on every operation would destroy the insertion order.
+
+---
+
+### Question 18
+
+In the daily temperatures monotonic stack solution, what value is stored in the stack — the temperature value or the index?
+
+- A) The temperature value — to compare with incoming temperatures directly
+- B) The index — to compute the number of days between current and future warmer day
+- C) Both — a tuple of (index, temperature) for efficient comparison
+- D) A hash of the temperature — to enable O(1) lookup by temperature
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Storing only temperature values would allow comparison, but the answer requires the number of days elapsed — a distance in indices. If you only store values, you cannot compute `result[i] = j - i` because `i` (the original index) is lost.
+- *Why B is correct:* The stack stores indices. When a warmer day at index `j` is found, all cooler days at indices on the stack are popped, and for each popped index `i`, `result[i] = j - i`. The temperature at index `i` is retrieved as `temps[i]` using the stored index — O(1) array access.
+- *Why C is incorrect:* Storing both is redundant — the temperature is fully accessible from the index via `temps[i]`. Storing a tuple wastes space and adds complexity without benefit.
+- *Why D is incorrect:* Hashing temperatures adds unnecessary O(1) overhead and does not help compute the index distance. There is no lookup-by-temperature operation in this problem.
+
+---
+
+### Question 19
+
+What is the time complexity of the valid parentheses algorithm (`is_valid`) on a string of length n?
+
+- A) O(n²) — for each closer, the entire stack is scanned
+- B) O(n log n) — the stack is sorted to match brackets
+- C) O(n) — each character is pushed or popped at most once
+- D) O(1) — hash map lookups make all operations constant
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* The algorithm does not scan the stack. When a closing bracket is encountered, only `stack[-1]` (the top) is accessed — O(1). There is no loop over the stack contents.
+- *Why B is incorrect:* No sorting occurs. The hash map `match = {')': '(', ']': '[', '}': '{'}` provides O(1) lookup of the expected opener for each closer. Sorting is irrelevant to this problem.
+- *Why C is correct:* The outer `for` loop iterates over each of the n characters once. Each character causes at most one stack `append` (O(1)) or one `stack[-1]` access plus one `pop` (O(1)). Total: n iterations × O(1) per iteration = O(n). The final `len(stack) == 0` check is O(1).
+- *Why D is incorrect:* O(1) total would mean the algorithm takes a fixed number of operations regardless of string length. The outer loop runs n times — the algorithm is O(n), not O(1). The hash map lookups are O(1) per character, contributing to the O(n) overall.
+
+---
+
+### Question 20
+
+A stack-based expression evaluator processes the postfix expression `"5 3 2 * + 8 -"`. What is the final result?
+
+- A) `7`
+- B) `3`
+- C) `-3`
+- D) `9`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Trace: push 5, push 3, push 2. `*` → pop 2 and 3, push 6. `+` → pop 6 and 5, push 11. push 8. `-` → pop 8 and 11, push 11 − 8 = 3. The result is 3, not 7.
+- *Why B is correct:* Full trace of `"5 3 2 * + 8 -"`: Push 5 → [5]. Push 3 → [5,3]. Push 2 → [5,3,2]. `*`: pop 2,3 → push 3×2=6 → [5,6]. `+`: pop 6,5 → push 5+6=11 → [11]. Push 8 → [11,8]. `-`: pop 8,11 → push 11−8=3 → [3]. Final stack: [3]. Result = 3.
+- *Why C is incorrect:* `-3` would result from `8 - 11 = -3`, which would happen if the subtraction popped the operands in the wrong order (subtracting the first-popped from the second-popped). The correct convention is: pop `b` first, pop `a` second, compute `a op b` → 11 − 8 = 3.
+- *Why D is incorrect:* 9 does not appear in any correct intermediate step of this expression evaluation.

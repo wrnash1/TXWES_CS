@@ -272,4 +272,26 @@ Compile all deliverables into a single document labeled clearly by task number. 
 
 ---
 
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: DynamoDB On-Demand vs. Provisioned Capacity Analysis
+Compare the cost implications of on-demand versus provisioned capacity mode for a given traffic pattern.
+1. If you have a DynamoDB table from Part 1, check its current capacity mode: `aws dynamodb describe-table --table-name <table-name> --query "Table.BillingModeSummary"`.
+2. Switch the table to provisioned mode with 10 RCUs and 5 WCUs: `aws dynamodb update-table --table-name <table-name> --billing-mode PROVISIONED --provisioned-throughput ReadCapacityUnits=10,WriteCapacityUnits=5`.
+3. Enable DynamoDB Auto Scaling for the table using: `aws application-autoscaling register-scalable-target --service-namespace dynamodb --resource-id "table/<table-name>" --scalable-dimension "dynamodb:table:ReadCapacityUnits" --min-capacity 5 --max-capacity 100`. Document the difference between manually provisioned capacity and Auto Scaling-managed provisioned capacity.
+4. Calculate the monthly cost difference between on-demand mode (at the lab's average request rate from Part 1) versus provisioned mode at the configured RCU/WCU values. Use the AWS DynamoDB pricing page for your Region.
+
+### Challenge 2: ElastiCache Redis Cluster Inspection
+Explore ElastiCache for Redis through CLI commands to understand cluster topology and replication.
+1. List all ElastiCache clusters in your account: `aws elasticache describe-cache-clusters --output table`.
+2. If a Redis cluster exists, describe its replication group: `aws elasticache describe-replication-groups --output json`. Record the number of node groups (shards), the number of replicas per shard, and whether Multi-AZ is enabled.
+3. Examine the cluster's parameter group to understand key Redis configuration: `aws elasticache describe-cache-parameters --cache-parameter-group-name <group-name> --query "Parameters[?ParameterName=='maxmemory-policy']"`. Record the eviction policy setting and explain what it means for cache behavior when memory is full.
+4. If no ElastiCache cluster exists, research and document the three most important ElastiCache for Redis configuration parameters for a session caching use case: eviction policy, persistence setting, and replication configuration.
+
+### Reflection Questions
+1. After completing Challenge 1, explain the decision criteria for choosing DynamoDB on-demand versus provisioned capacity. At what utilization threshold does provisioned mode become more cost-effective than on-demand, and what operational overhead does provisioned mode require compared to on-demand?
+2. Based on Challenge 2, how does the ElastiCache Redis eviction policy affect application behavior when the cache is full? Compare the `allkeys-lru` and `noeviction` policies and explain which is appropriate for a session caching use case versus a leaderboard use case, referencing the Well-Architected Framework's Performance Efficiency pillar.
+
 *Proprietary and Confidential. Not for disclosure outside of Texas Wesleyan University.*

@@ -205,3 +205,213 @@ SAP PP integrates tightly with MM and FI throughout the production process. Whic
 - *Why A is incorrect:* MRP does not generate Purchase Orders — it generates Purchase Requisitions. POs are created by buyers in MM. Also, FI variance posting occurs at order settlement (after production is complete), not at order creation.
 - *Why C is incorrect:* Production Orders are created after MRP runs, not before. MRP calculates component requirements based on existing demand, not after the Production Order exists. MM does not generate Purchase Orders automatically from MRP — buyers must convert PRs. FI postings occur in real time as each transaction is posted, not at month-end.
 - *Why D is incorrect:* A Planned Order (for in-house production) is converted to a Production Order (CO40), not a Purchase Order. Purchase Orders are for externally procured materials. Also, FI inventory postings occur at Goods Receipt time, not during the MRP run — MRP creates no financial postings.
+
+---
+
+### Question 11
+
+(5 points)
+
+A manufacturing engineer needs to verify which finished products use a specific bearing component (material BEAR-6205) before making a design change that would alter the bearing's dimensions. Which SAP PP transaction provides this information?
+
+- A) CS11 — Multi-Level BOM Explosion displays the bearing's own sub-components
+- B) CS15 — Where-Used List shows all BOMs that contain the specified component as a line item
+- C) CS03 — Display BOM shows the bearing's own BOM structure
+- D) MD04 — Stock/Requirements List shows the bearing's supply and demand elements
+
+- **Correct Answer:** B
+
+- **Distractor Analysis:**
+  - *Why B is correct:* CS15 is the Where-Used List. It takes a component material number as input and returns all BOMs (at one or multiple levels) that include that component. This is exactly the reverse-lookup needed before a design change — the engineer can see every parent product that would be affected.
+  - *Why A is incorrect:* CS11 explodes a finished product's BOM downward to show all sub-components at every level. It answers "what does this product contain?" not "what products contain this component?" CS11 requires the parent material as input, not a component.
+  - *Why C is incorrect:* CS03 displays a single BOM for a specific material. If the bearing has its own BOM (if it is itself assembled from sub-components), CS03 would show those sub-components. It does not show which parent products use the bearing.
+  - *Why D is incorrect:* MD04 shows MRP planning elements — open orders, requirements, and stock balance over time — for a single material. It does not reveal BOM parentage or show which products the bearing is a component of.
+
+---
+
+### Question 12
+
+(5 points)
+
+A production planner sets the lot size rule for material FG-WING-005 to "FX" (Fixed Lot Size) with a fixed quantity of 50 units. MRP calculates a net requirement of 68 units for a given week. How many units will MRP propose in the Planned Order, and what is the consequence?
+
+- A) 68 units — MRP always matches the exact net requirement regardless of lot size rule
+- B) 50 units — MRP proposes one lot of 50 units, leaving an uncovered shortage of 18 units
+- C) 100 units — MRP rounds up to the next full lot and proposes two lots of 50 units
+- D) 68 units rounded to 70 — MRP rounds to the nearest multiple of the fixed lot size
+
+- **Correct Answer:** C
+
+- **Distractor Analysis:**
+  - *Why C is correct:* With a Fixed Lot Size (FX) rule, MRP will propose multiples of the fixed quantity until the net requirement is covered. One lot of 50 does not cover 68 — so MRP proposes two lots of 50 = 100 units. The 32-unit surplus will appear as excess inventory on the available quantity timeline in MD04.
+  - *Why A is incorrect:* EX (Exact Lot Size) is the rule that matches the exact net requirement. FX (Fixed Lot Size) forces the order quantity to a predefined fixed amount or a multiple thereof — it does not match the net requirement precisely.
+  - *Why B is incorrect:* MRP with FX lot size will not leave a shortage uncovered. It will generate sufficient lots to satisfy the net requirement, even if that means ordering more than exactly needed. Leaving a shortage uncovered would defeat the purpose of MRP.
+  - *Why D is incorrect:* Rounding to the nearest multiple is not standard FX behavior. FX always rounds up (not to nearest) to ensure the requirement is fully covered. A rule that could round down would risk leaving demand uncovered.
+
+---
+
+### Question 13
+
+(5 points)
+
+A Work Center (machine WC-LATHE-03) has a capacity of 8 hours per day and runs 5 days per week. A Production Order operation on this Work Center has a standard machine time of 3.5 hours. The order was confirmed (CO11N) with an actual machine time of 4.8 hours. What is the variance, and where does it ultimately flow after order settlement (KO88)?
+
+- A) 1.3-hour favorable variance; flows to a WIP account in FI
+- B) 1.3-hour unfavorable variance; the machine time overrun increases actual production cost and flows to the Production Variance account in FI at KO88
+- C) 1.3-hour unfavorable variance; the variance is absorbed into the standard cost of the finished product
+- D) No variance — actual time is recorded for information only; standard cost never changes
+
+- **Correct Answer:** B
+
+- **Distractor Analysis:**
+  - *Why B is correct:* Actual machine time (4.8 hrs) exceeds standard (3.5 hrs) by 1.3 hours — this is an unfavorable time variance. The additional hours are charged to the Production Order at the Work Center's cost rate (per hour). At KO88 settlement, actual costs exceed standard costs, and the difference posts to the Production Variance account in FI/CO.
+  - *Why A is incorrect:* A favorable variance means actual cost is less than standard (actual time is shorter than planned). Here actual time exceeds standard — this is unfavorable, not favorable.
+  - *Why C is incorrect:* Production variances are never absorbed into the standard cost of the finished product. Standard cost remains fixed until a cost estimate is released. Variances are posted separately to FI variance accounts to preserve the integrity of standard costing.
+  - *Why D is incorrect:* Actual times confirmed on a Production Order are valued using the Work Center's cost rates and posted to the Production Order as actual costs. They affect the order's actual cost accumulation and therefore the settlement variance — they are not informational only.
+
+---
+
+### Question 14
+
+(5 points)
+
+During a production planning review, the planner sees that several Planned Orders in MD04 have a "Firming" indicator set. What does a firmed Planned Order mean, and why would a planner firm a Planned Order?
+
+- A) A firmed Planned Order has been converted to a Production Order and sent to the shop floor for execution
+- B) A firmed Planned Order is protected from being changed or deleted by the next MRP run — the planner has manually confirmed this order quantity and date
+- C) A firmed Planned Order indicates the order has been approved by the Plant Manager and cannot be modified
+- D) A firmed Planned Order has been assigned to a specific Work Center and cannot be rescheduled
+
+- **Correct Answer:** B
+
+- **Distractor Analysis:**
+  - *Why B is correct:* Firming a Planned Order (setting the Firming indicator in MD04 or MD05) prevents MRP from rescheduling, changing the quantity, or deleting the order during the next MRP run. Planners firm orders when they have made manual adjustments or coordinated with vendors/shop floor on specific dates and quantities that should not be overwritten by automatic planning.
+  - *Why A is incorrect:* Converting a Planned Order to a Production Order is a separate action (CO40). Converting creates an entirely new Production Order document — the Planned Order disappears and is replaced by the Production Order. Firming does not convert the order.
+  - *Why C is incorrect:* There is no standard "Plant Manager approval" status associated with firming in SAP PP. Firming is a planning tool controlled by the production planner, not an approval workflow step.
+  - *Why D is incorrect:* Work Center assignment is part of the Routing — operations are assigned to Work Centers in the Routing definition. Firming the Planned Order does not assign it to a specific Work Center or affect rescheduling from a capacity perspective independently.
+
+---
+
+### Question 15
+
+(5 points)
+
+A production scheduler needs to understand whether Work Center WC-MILL-02 is overloaded for the next two weeks based on all open Production Orders that have operations assigned to it. Which SAP PP transaction provides a graphical or tabular view of work center load versus available capacity?
+
+- A) MD04 — Stock/Requirements List shows capacity for all materials planned on the Work Center
+- B) CM01 — Work Center Capacity Load displays planned load versus available capacity over a time horizon
+- C) CO03 — Display Production Order shows the scheduled dates for operations on that Work Center
+- D) COOIS — Production Order Information System lists all open Production Orders but not capacity load
+
+- **Correct Answer:** B
+
+- **Distractor Analysis:**
+  - *Why B is correct:* CM01 (Capacity Planning — Work Center View) shows the capacity load on a specific Work Center: the total planned work (in hours) from all Production Order operations scheduled on that Work Center compared to its available capacity (daily or weekly hours). It is the primary capacity leveling and overload detection tool in SAP PP.
+  - *Why A is incorrect:* MD04 is material-centric — it shows supply and demand for a single material. It does not aggregate Work Center load across multiple Production Orders or compare planned hours to capacity availability.
+  - *Why C is incorrect:* CO03 shows the details of a single Production Order including its scheduled operation dates and the Work Center assigned to each operation. However, it shows only that one order — it cannot aggregate load across all orders on a given Work Center.
+  - *Why D is incorrect:* COOIS (Production Order Information System) is a reporting tool that lists Production Orders with their status, dates, and quantities. While it can filter by Work Center, it does not display a capacity load chart or compare planned load to available capacity.
+
+---
+
+### Question 16
+
+(5 points)
+
+Transaction CO11N is used to confirm a production operation. Which of the following data elements is captured during a production confirmation in SAP PP?
+
+- A) Vendor name, invoice number, and payment terms for the raw materials consumed
+- B) Yield quantity (units produced), scrap quantity, actual machine time, actual labor time, and the operation being confirmed
+- C) Customer name, sales order number, and delivery date for the finished product
+- D) Cost center, GL account, and cost element for the variance posting
+
+- **Correct Answer:** B
+
+- **Distractor Analysis:**
+  - *Why B is correct:* CO11N captures the actual execution data for a production operation: how many good units were produced (yield), how many were scrapped, and the actual times (machine hours, labor hours) compared to the planned times from the Routing. This data feeds actual cost calculations and shop floor progress tracking.
+  - *Why A is incorrect:* Vendor invoice data belongs to MM (MIRO) — it records how much was paid to a vendor for purchased materials. Production confirmation is internal to the manufacturing execution process and has no connection to vendor invoices.
+  - *Why C is incorrect:* Customer and sales order data belongs to SD (Sales and Distribution). While a Production Order may have been triggered by a Sales Order in a Make-to-Order environment, the production confirmation itself does not capture customer or delivery information.
+  - *Why D is incorrect:* Cost center, GL account, and cost element assignments are configured in the PP/CO master data (Work Center cost rates, cost elements). They are determined automatically by SAP based on confirmation data — the shop floor operator does not enter them manually during CO11N.
+
+---
+
+### Question 17
+
+(5 points)
+
+A company manufactures a product using a multi-level BOM. Level 0 is the finished product; Level 1 contains two sub-assemblies (SA-A and SA-B); Level 2 contains the raw materials for each sub-assembly. MRP runs for the Level 0 finished product and generates Planned Orders. What happens to the demand for Level 1 sub-assemblies and Level 2 raw materials?
+
+- A) MRP only plans Level 0 — sub-assemblies and raw materials must be planned in separate manual MRP runs
+- B) MRP automatically explodes the BOM downward, generating dependent requirements at Level 1 and Level 2 simultaneously in a single planning run
+- C) MRP generates Planned Orders only for Level 1; a second MRP run is needed to generate requirements for Level 2 raw materials
+- D) Level 2 raw materials are planned by MM, not PP — PP only manages production of finished and semi-finished goods
+
+- **Correct Answer:** B
+
+- **Distractor Analysis:**
+  - *Why B is correct:* SAP MRP performs a full multi-level BOM explosion in a single planning run. When demand for the finished product (Level 0) is planned, MRP automatically derives dependent requirements for all sub-assemblies and raw materials at every BOM level. This is one of MRP's core capabilities — a single MD01 or MD02 run covers the entire product structure.
+  - *Why A is incorrect:* Separate MRP runs per BOM level would defeat the purpose of an integrated planning system. SAP MRP was designed specifically to handle multi-level structures in one execution — planners do not need to manually cascade requirements through each level.
+  - *Why C is incorrect:* A single MRP run cascades through all BOM levels simultaneously. There is no need for a second run to reach Level 2 materials. The explosion is recursive — each level's Planned Orders create dependent requirements for the level below.
+  - *Why D is incorrect:* Both MM (for externally purchased raw materials) and PP (for in-house manufactured sub-assemblies) are involved in MRP. The distinction is the procurement proposal type: raw materials get Purchase Requisitions routed to MM; in-house sub-assemblies get Planned Orders converted in PP. Both happen in the same MRP run.
+
+---
+
+### Question 18
+
+(5 points)
+
+A plant controller wants to review production efficiency across all Production Orders that were settled in June 2026, comparing actual production costs to standard costs and summarizing variance by variance category (input price variance, quantity variance, lot size variance). Which SAP report or transaction is most appropriate?
+
+- A) MD05 — MRP List shows the last MRP run results including planned versus actual requirements
+- B) COOIS — Production Order Information System provides a list of orders but not variance category detail
+- C) CO1P / KKBC_ORD — Production Order Cost Report shows actual vs. standard costs and variance categories per order
+- D) KO88 — Settlement transaction can be executed in simulation mode to show variance previews
+
+- **Correct Answer:** C
+
+- **Distractor Analysis:**
+  - *Why C is correct:* The Production Order Cost Report (accessible via CO03 → Costs tab, or KKBC_ORD for summary across orders) shows the actual costs accumulated on each order versus the standard cost of production, with variance broken down into categories: input price variance (material cost difference), quantity variance (more or less material used than planned), and lot size variance. This is the controller's primary production variance analysis tool.
+  - *Why A is incorrect:* MD05 is the MRP List — it shows a snapshot of the last MRP planning run for a material (planned orders, purchase requisitions, dates). It contains no cost or variance information.
+  - *Why B is incorrect:* COOIS provides a configurable list of Production Orders with status, dates, quantities, and basic cost data. It is useful for operational tracking but does not provide the detailed variance category breakdown the controller needs.
+  - *Why D is incorrect:* KO88 is the settlement execution transaction — it posts the settlement, not a variance analysis report. While KO88 can be run in test mode to preview settlement results, it is a posting transaction, not a cost analysis tool for reviewing multiple settled orders.
+
+---
+
+### Question 19
+
+(5 points)
+
+In a Make-to-Order (MTO) production environment, a Production Order is created directly from a Sales Order line item. How does this differ from a Make-to-Stock (MTS) Production Order, and what is the key consequence for inventory and cost flow?
+
+- A) MTO and MTS Production Orders are identical — the only difference is that MTO orders are created manually while MTS orders are created by MRP
+- B) In MTO, the Production Order is linked to a specific Sales Order and the finished goods produced go directly to the Sales Order; inventory is not built to stock, and costs are settled to the Sales Order rather than to a stock account
+- C) In MTO, finished goods are posted to stock and then allocated to the Sales Order at the time of delivery — the production cost flows through inventory exactly as in MTS
+- D) MTO Production Orders skip the Goods Receipt step — finished goods are delivered directly to the customer without entering SAP inventory
+
+- **Correct Answer:** B
+
+- **Distractor Analysis:**
+  - *Why B is correct:* In Make-to-Order, the Production Order carries the Sales Order as an account assignment. The finished goods produced are posted against the Sales Order (they may appear in stock but are valuated and attributed to that specific Sales Order — not generic stock). Settlement flows to the Sales Order cost object, enabling exact cost and margin tracking per customer order.
+  - *Why A is incorrect:* MTO and MTS Production Orders differ in more than creation method. The fundamental difference is account assignment: MTO orders are assigned to Sales Orders; MTS orders are assigned to cost centers or profit centers. This affects settlement, inventory valuation, and cost traceability.
+  - *Why C is incorrect:* In true MTO, finished goods produced are earmarked for the specific Sales Order at the time of production. They are not available for any other Sales Order allocation. The accounting and settlement logic differs from MTS because costs trace to the individual customer order.
+  - *Why D is incorrect:* MTO Production Orders do post a Goods Receipt — the finished product enters SAP inventory as a valuated stock item (though earmarked for the specific Sales Order). The Goods Issue to the Sales Order delivery then removes it from inventory in the normal SD delivery process.
+
+---
+
+### Question 20
+
+(5 points)
+
+A plant has 200 active Production Orders in various statuses. The Production Planning manager wants a single report listing all REL (Released) orders that are past their scheduled finish date (overdue), with the open quantity remaining and the responsible Work Center for the final operation. Which transaction is most appropriate?
+
+- A) MD04 — Stock/Requirements List filtered by order status and date
+- B) CS11 — BOM explosion filtered by order finish date
+- C) COOIS — Production Order Information System with filters on status REL, finish date less than today, and output layout including open quantity and Work Center
+- D) CO03 — Display Production Order iterated manually for all 200 orders
+
+- **Correct Answer:** C
+
+- **Distractor Analysis:**
+  - *Why C is correct:* COOIS (Production Order Information System) is specifically designed for this type of cross-order reporting. The planner can filter by order status (REL), finish date (less than or equal to today), and configure the output layout to include remaining quantity and the Work Center of the last operation. COOIS is the standard SAP PP reporting cockpit for shop floor management.
+  - *Why A is incorrect:* MD04 is material-centric — it shows planning elements for one material at a time. It cannot aggregate all overdue Production Orders across all materials in a single report filtered by status and finish date.
+  - *Why B is incorrect:* CS11 is the multi-level BOM explosion — it shows product structure, not Production Order execution status. It has no concept of order finish dates, order status, or remaining production quantities.
+  - *Why D is incorrect:* CO03 displays a single Production Order. Reviewing 200 orders individually is operationally impossible for a daily management review. COOIS exists precisely to avoid this — it provides mass reporting across all orders with flexible filtering.

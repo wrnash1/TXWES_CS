@@ -306,3 +306,51 @@ Your final exam for this course is the official **CompTIA Security+ (SY0-701)** 
 Upload a scanned copy, clear photograph, or official PDF of your final score report to this Canvas drop-box. 
 
 *Note: Your final grade will be calculated based on the prorated score of this exam as outlined in the Syllabus Grading Policy.*
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Full-Spectrum Incident Response Simulation
+
+A regional hospital network's SOC receives the following sequence of events over a 72-hour period:
+
+- **Hour 0**: A phishing email impersonating the hospital's IT helpdesk is delivered to 340 staff. The email links to a credential harvesting page mimicking the hospital's VPN login portal.
+- **Hour 2**: Fourteen staff members submit credentials to the fake portal. The threat actor uses harvested credentials to authenticate to the hospital's Remote Desktop Gateway from four distinct Eastern Europe IP addresses.
+- **Hour 6**: Lateral movement begins — the attacker uses compromised credentials to access three clinical workstations and the billing server. A SIEM alert fires on anomalous after-hours RDP lateral movement.
+- **Hour 18**: The attacker deploys ransomware that begins encrypting file shares, including the EHR system's shared storage. Ransom demand: $2.4 million in cryptocurrency within 48 hours.
+- **Hour 72**: The hospital must decide whether to pay the ransom, restore from backup, or negotiate.
+
+**Task 1.1 — NIST IR Phase Mapping**: For each of the six NIST IR phases, identify the specific actions the hospital's security team should have taken or should take at each phase in this scenario. For each phase, identify at least one preparation gap that allowed the attack to progress to the next stage.
+
+**Task 1.2 — MITRE ATT&CK Mapping**: Map each of the five attacker actions described (phishing delivery, credential theft, RDP authentication, lateral movement, ransomware deployment) to the correct MITRE ATT&CK tactic and technique. Use the format: Tactic Name (TA####) — Technique Name (T####).
+
+**Task 1.3 — Containment Decision Analysis**: At Hour 18, the SOC has three containment options: (A) isolate only the confirmed-affected clinical workstations, (B) take the entire EHR system offline and isolate the affected network segment, or (C) allow operations to continue while monitoring to gather more threat intelligence. Evaluate each option against the criteria of: patient safety impact, data loss risk, forensic preservation, and recovery timeline. Which option do you recommend and why?
+
+**Task 1.4 — Ransom Decision Framework**: At Hour 72, draft a one-page memo to the hospital CEO that: (1) explains the legal and ethical considerations of paying the ransom, (2) assesses whether the hospital can restore operations from backup without paying, and (3) identifies the regulatory reporting obligations triggered by this incident (name the specific regulation, the notification timeline, and the recipient).
+
+---
+
+### Challenge 2: Cross-Domain Security Architecture Review
+
+A fintech startup is launching a cloud-native payment processing platform. The architecture consists of: a React front-end hosted on AWS CloudFront, a Node.js API layer on AWS Lambda, a PostgreSQL database on AWS RDS with Multi-AZ, and a third-party fraud detection microservice accessed via API over the internet. The company will process Visa and Mastercard transactions, store cardholder data for recurring billing, and serve customers in the US and EU.
+
+**Task 2.1 — Threat Modeling**: Using the STRIDE methodology (Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, Elevation of Privilege), identify one realistic threat for each STRIDE category specific to this architecture. For each threat, identify the component most at risk and one specific mitigating control.
+
+**Task 2.2 — Compliance Obligation Matrix**: Identify every compliance obligation triggered by this architecture. For each, specify: the framework name, what specific aspect of the architecture triggers it, the most operationally demanding single requirement, and the maximum penalty for non-compliance. Present as a table.
+
+**Task 2.3 — Defense-in-Depth Architecture Review**: The security team has implemented: TLS 1.2 in transit, AES-256 encryption at rest for the RDS database, API gateway rate limiting, and AWS WAF in front of CloudFront. Identify three significant security gaps not addressed by the current controls. For each gap, name the missing control, explain the specific attack it prevents, and reference the relevant SY0-701 exam objective domain.
+
+**Task 2.4 — Identity Architecture Design**: The platform needs to support: customer authentication via social login (Google/Apple), internal developer access to AWS resources with MFA, and the third-party fraud detection service accessing the API. For each of the three access patterns, specify: the appropriate identity protocol (SAML, OIDC, OAuth 2.0, AWS IAM roles, etc.), the minimum required MFA method, and the access revocation mechanism.
+
+---
+
+### Reflection Questions
+
+1. Throughout this course you have studied five Security+ exam domains: General Security Concepts, Threats and Vulnerabilities, Security Architecture, Security Operations, and Security Program Management. Reflecting on the incidents and scenarios in this lab, identify the single domain where you believe real-world organizations most frequently have critical gaps, and explain your reasoning using two specific examples from the lab scenarios above. Then describe what a newly hired security analyst could realistically accomplish in their first 90 days to begin closing gaps in that domain.
+
+2. The CompTIA Security+ certification is often described as a "mile wide and an inch deep" — broad coverage of many topics without deep specialization in any single area. Some hiring managers argue this breadth is exactly what entry-level security roles require; others argue that hands-on certifications like CEH or OSCP provide more practical value. Evaluate both positions. Based on your experience completing this course, what do you believe is the appropriate next certification or skill development path after Security+, and how does it build on the foundation this course established?
+
+---
+
+End of Lab — Module 16

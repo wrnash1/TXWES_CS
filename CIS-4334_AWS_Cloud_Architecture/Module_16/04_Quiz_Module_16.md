@@ -474,3 +474,233 @@ B is correct. S3 Object Lock in Compliance mode prevents ANY user, including the
 C is incorrect. S3 Object Lock in Governance mode can be overridden by users with the `s3:BypassGovernanceRetention` IAM permission. This does not protect against authorized IAM administrators. Governance mode is appropriate when you want protection with an administrative override capability.
 
 D is incorrect. An S3 Bucket Policy denying DeleteObject can be modified or deleted by an IAM user or role with `s3:PutBucketPolicy` permission, including the root account. Bucket policies do not provide immutable protection.
+
+---
+
+## Question 21 — Domain 1: Design Resilient Architectures
+
+A company's e-commerce application serves customers globally. The application runs on EC2 in `us-east-1` and `eu-west-1` with Route 53 latency-based routing. During a full `us-east-1` regional outage, Route 53 continues directing 50% of traffic there because health checks are not configured. What is the correct fix?
+
+- A. Switch from latency-based routing to geolocation routing
+- B. Add Route 53 health checks to each regional endpoint and associate them with the latency routing records
+- C. Enable Route 53 DNSSEC to detect and block unhealthy endpoints automatically
+- D. Increase the TTL on Route 53 records so clients cache the healthy endpoint longer
+
+### Q21 Answer: B
+
+### Q21 Analysis
+
+A is incorrect. Geolocation routing directs traffic based on the requester's geographic location — it does not perform health-based failover. Clients in North America would still be directed to `us-east-1` even if it is unavailable.
+
+B is correct. Route 53 routing policies (latency, weighted, geolocation) only perform failover when health checks are associated with the records. Without health checks, Route 53 continues to return all records regardless of endpoint health. Adding health checks to each regional record causes Route 53 to stop returning the `us-east-1` record when it fails, directing all traffic to `eu-west-1`.
+
+C is incorrect. DNSSEC validates the authenticity and integrity of DNS responses to prevent spoofing — it has no relationship to endpoint health monitoring or failover behavior.
+
+D is incorrect. Increasing TTL makes clients cache DNS responses longer, which would worsen the situation during a regional outage — clients that cached the `us-east-1` address would continue using it longer before receiving an updated healthy record.
+
+---
+
+## Question 22 — Domain 2: Design High-Performing Architectures
+
+A video streaming company stores large video files in S3 in `us-east-1`. Users in Southeast Asia report slow initial load times and buffering. Which solution provides the greatest improvement in streaming performance for these users?
+
+- A. Enable S3 Transfer Acceleration on the bucket
+- B. Deploy Amazon CloudFront with the S3 bucket as the origin and edge locations serving Southeast Asia
+- C. Create an S3 bucket replica in `ap-southeast-1` using S3 Cross-Region Replication
+- D. Increase the EC2 instance size of the application server that generates presigned S3 URLs
+
+### Q22 Answer: B
+
+### Q22 Analysis
+
+A is incorrect. S3 Transfer Acceleration speeds up uploads TO S3 from distant clients — it accelerates write operations, not download or streaming performance for end users reading from S3.
+
+B is correct. CloudFront caches video content at edge locations geographically close to Southeast Asian viewers. Subsequent requests for the same content are served from the edge location with sub-millisecond response times, eliminating the cross-Pacific round-trip latency that causes buffering.
+
+C is incorrect. S3 CRR replicates objects to a bucket in `ap-southeast-1`, which would reduce latency for direct S3 access — but requires application changes to route Southeast Asian users to the replica bucket. It also does not provide the edge caching benefit of CloudFront for repeated access to the same content.
+
+D is incorrect. The application server generates presigned URLs for S3 access — its size does not affect the actual video streaming performance. The bottleneck is the geographic distance between the S3 bucket and the end user, not the application server.
+
+---
+
+## Question 23 — Domain 3: Secure Architectures
+
+A company has multiple AWS accounts in an AWS Organization. The security team wants to prevent any account from disabling AWS CloudTrail — even account administrators. Which control achieves this?
+
+- A. Apply an IAM permission boundary to all IAM roles in each account, denying `cloudtrail:StopLogging`
+- B. Apply an SCP to the Organization root or relevant OUs that denies `cloudtrail:StopLogging` and `cloudtrail:DeleteTrail`
+- C. Enable AWS Config with a rule that detects and automatically re-enables CloudTrail when it is disabled
+- D. Configure CloudTrail log file integrity validation so tampering is detectable after the fact
+
+### Q23 Answer: B
+
+### Q23 Analysis
+
+A is incorrect. Permission boundaries apply to individual IAM roles and only limit the maximum permissions of that role. They do not apply to all principals automatically and can be modified by an IAM administrator with the `iam:PutRolePermissionsBoundary` permission.
+
+B is correct. SCPs apply to all principals (IAM users, roles, and the root user within member accounts) across all accounts in the OU or Organization. An SCP denying `cloudtrail:StopLogging` and `cloudtrail:DeleteTrail` cannot be overridden by any IAM policy within the member accounts — it is enforced at the organization boundary.
+
+C is incorrect. AWS Config with auto-remediation can re-enable CloudTrail after it is disabled, but there is a detection and remediation lag window during which CloudTrail is not recording. Prevention via SCP is the correct control for this requirement.
+
+D is incorrect. Log file integrity validation detects whether logs were tampered with after the fact — it does not prevent CloudTrail from being disabled in the first place.
+
+---
+
+## Question 24 — Domain 4: Design Cost-Optimized Architectures
+
+A company runs a web application with consistent 24/7 traffic on 20 `m5.large` On-Demand EC2 instances. They also run nightly batch jobs using 50 `c5.xlarge` instances from 11 PM to 5 AM. Which combination of purchasing options minimizes total cost?
+
+- A. All 70 instances: On-Demand
+- B. 20 `m5.large`: 1-year Standard Reserved Instances; 50 `c5.xlarge`: Spot Instances
+- C. 20 `m5.large`: 1-year Compute Savings Plan; 50 `c5.xlarge`: 1-year Compute Savings Plan
+- D. All 70 instances: 3-year All Upfront Standard Reserved Instances
+
+### Q24 Answer: B
+
+### Q24 Analysis
+
+A is incorrect. On-Demand for all instances pays full price for both steady-state and batch workloads — no discounts applied.
+
+B is correct. The 20 `m5.large` instances run 24/7 with predictable usage — 1-year Standard RIs provide up to 40% discount on steady, known instance types. The 50 `c5.xlarge` batch instances run only 6 hours per night and are fault-tolerant batch workloads — Spot Instances provide up to 90% discount and are the correct choice when interruption risk is acceptable.
+
+C is incorrect. Purchasing Savings Plan coverage for 50 instances that run only 25% of the day wastes commitment spend. A Savings Plan charges the committed $/hour regardless of whether the batch instances are running — you pay for the other 18 hours of unused commitment.
+
+D is incorrect. 3-year All Upfront RIs for short-running batch instances guarantees payment for 24 hours per day even though they only run 6 hours. The upfront cost and idle commitment make this far more expensive than Spot for transient batch workloads.
+
+---
+
+## Question 25 — Domain 1: Design Resilient Architectures
+
+An application writes to an SQS Standard queue. Occasionally, the same message is processed twice by the consumer Lambda function, causing duplicate database records. The team cannot change the Lambda function code. What is the MOST effective architectural change?
+
+- A. Increase the SQS visibility timeout to be longer than the Lambda function's maximum execution time
+- B. Switch from an SQS Standard queue to an SQS FIFO queue
+- C. Enable SQS long polling on the queue
+- D. Add a Dead-Letter Queue to capture messages that fail processing
+
+### Q25 Answer: B
+
+### Q25 Analysis
+
+A is incorrect. Increasing the visibility timeout reduces the likelihood of a second consumer receiving a message while the first is still processing, but SQS Standard queues still guarantee at-least-once delivery — the same message may be delivered more than once. This is a mitigation, not a solution.
+
+B is correct. SQS FIFO queues provide exactly-once processing within a 5-minute deduplication window. Each message has a deduplication ID, and FIFO queues reject duplicate messages sent within the window. Switching to FIFO eliminates duplicate deliveries at the queue level without requiring Lambda code changes.
+
+C is incorrect. Long polling reduces the number of empty API responses by waiting up to 20 seconds for a message to arrive — it optimizes cost and latency but has no effect on duplicate message delivery.
+
+D is incorrect. A DLQ captures messages that fail processing repeatedly — it handles failures, not duplicates. Adding a DLQ does not prevent the same message from being delivered to the consumer multiple times.
+
+---
+
+## Question 26 — Domain 2: Design High-Performing Architectures
+
+A DynamoDB table has a partition key of `DeviceId` (10,000 unique devices) and a sort key of `Timestamp`. An IoT application writes sensor readings continuously. After deployment, some writes are throttled even though the table's total provisioned WCUs are not exhausted. What is the most likely cause?
+
+- A. The table needs a GSI on `Timestamp` to distribute writes more evenly
+- B. A subset of devices generates significantly more writes than others, creating hot partitions that exceed per-partition throughput limits
+- C. The sort key `Timestamp` is causing partition collisions because many writes share the same timestamp value
+- D. DynamoDB on-demand mode should be used instead of provisioned mode for IoT workloads
+
+### Q26 Answer: B
+
+### Q26 Analysis
+
+A is incorrect. Adding a GSI on `Timestamp` creates a secondary index for querying by time — it does not change how writes are distributed to the base table partitions and would not resolve hot partition throttling.
+
+B is correct. DynamoDB distributes data across partitions based on the partition key hash. Each partition has a maximum throughput limit. If a small number of `DeviceId` values generate the majority of writes, those partitions become hot and throttle even when the table's total WCU capacity is not exhausted. This is the classic hot partition problem.
+
+C is incorrect. The sort key does not determine partition placement — only the partition key (hash) determines which partition an item lands on. Multiple items with different `DeviceId` values but the same `Timestamp` go to different partitions.
+
+D is incorrect. Switching to on-demand mode scales per-partition limits as well, making it a valid mitigation — but the question asks for the cause of the throttling, not the fix.
+
+---
+
+## Question 27 — Domain 3: Secure Architectures
+
+A company's application stores sensitive customer PII in RDS. The security team requires that database credentials are rotated every 30 days and that the application never stores credentials in environment variables or configuration files. Which combination of services meets both requirements?
+
+- A. AWS Systems Manager Parameter Store (SecureString) + Lambda rotation function triggered by EventBridge
+- B. AWS Secrets Manager with automatic rotation enabled + application retrieves credentials via Secrets Manager API at runtime
+- C. AWS KMS Customer Managed Key with automatic annual rotation + RDS native IAM database authentication
+- D. HashiCorp Vault deployed on EC2 + application retrieves credentials from the Vault API
+
+### Q27 Answer: B
+
+### Q27 Analysis
+
+A is incorrect. Parameter Store SecureString can store credentials securely, but it does not have native built-in rotation — a custom Lambda and EventBridge schedule must be built and maintained. This meets the requirement but is more complex than the purpose-built Secrets Manager solution.
+
+B is correct. AWS Secrets Manager has native RDS integration with built-in rotation Lambda functions that rotate the database password in both RDS and the secret automatically on the configured schedule (every 30 days). Applications call the Secrets Manager API at runtime to retrieve current credentials — no environment variables or config files needed.
+
+C is incorrect. KMS key rotation rotates encryption key material, not database user passwords. RDS IAM authentication eliminates password credentials for supported engines, but the question specifies credential rotation as a requirement — indicating passwords are in use.
+
+D is incorrect. HashiCorp Vault is a valid secrets management solution but requires deploying, patching, scaling, and operating the Vault cluster on EC2 — adding significant operational overhead compared to the AWS-native Secrets Manager.
+
+---
+
+## Question 28 — Domain 4: Design Cost-Optimized Architectures
+
+A startup is designing a new REST API. Expected traffic is 10,000 requests per day during weekdays and near-zero on weekends. The API calls a Lambda function that executes in under 200ms. Which compute and API layer is most cost-optimized for this traffic pattern?
+
+- A. EC2 `t3.micro` with a self-managed NGINX reverse proxy and Auto Scaling
+- B. API Gateway HTTP API + AWS Lambda
+- C. API Gateway REST API + EC2 with Application Load Balancer
+- D. AWS Fargate container running a Node.js Express server + Application Load Balancer
+
+### Q28 Answer: B
+
+### Q28 Analysis
+
+A is incorrect. An EC2 instance incurs hourly charges continuously, including during the weekend zero-traffic period. For 10,000 requests per day with near-zero weekend traffic, paying for idle EC2 capacity is wasteful compared to serverless invocation pricing.
+
+B is correct. API Gateway HTTP API charges per request ($1.00 per million requests) and Lambda charges per invocation and duration with a generous free tier. At 10,000 requests per day on weekdays, total monthly cost is well under $1. During weekends with zero traffic, there is zero cost. This is the optimal serverless pricing model for intermittent traffic.
+
+C is incorrect. REST API Gateway charges more per request than HTTP API, and EC2 plus ALB incurs continuous hourly charges regardless of traffic volume.
+
+D is incorrect. Fargate containers have a minimum charge per task per second they are running. Even with zero traffic on weekends, if tasks remain running, charges accumulate. Fargate is appropriate for longer-running containerized workloads, not sub-200ms API handlers with intermittent traffic.
+
+---
+
+## Question 29 — Domain 1: Design Resilient Architectures
+
+A financial application processes transactions using Step Functions. Each workflow involves five Lambda functions in sequence. If any function fails permanently (invalid data), the entire transaction must be rolled back. How should permanent rollback be implemented in Step Functions?
+
+- A. Add a Retry block with MaxAttempts=0 to skip retries for permanent failures
+- B. In the Catch block for permanent errors, transition to a dedicated rollback state that invokes compensating Lambda functions in reverse order
+- C. Enable Step Functions Express Workflows — they support automatic transaction rollback natively
+- D. Configure DynamoDB transactions within each Lambda function so DynamoDB handles the rollback automatically
+
+### Q29 Answer: B
+
+### Q29 Analysis
+
+A is incorrect. MaxAttempts=0 in a Retry block prevents retries for that error type, but it does not implement rollback logic — after skipping retries, the workflow still needs a Catch block to route to compensating states.
+
+B is correct. The Step Functions Saga orchestration pattern implements distributed transaction rollback by catching permanent failures and transitioning to compensating transactions — a sequence of states that reverse the effects of completed steps in reverse order. This is the idiomatic Step Functions approach for distributed transaction management.
+
+C is incorrect. Step Functions Express Workflows are optimized for high-volume, short-duration workflows — they do not provide automatic transaction rollback. Both Standard and Express workflows require explicit Catch and compensation state design for rollback.
+
+D is incorrect. DynamoDB transactions handle atomicity for operations within a single DynamoDB TransactWrite call, but they cannot roll back side effects that occurred in other AWS services (SNS notifications sent, SQS messages published, external API calls made) during earlier completed Lambda steps.
+
+---
+
+## Question 30 — Domain 2: Design High-Performing Architectures
+
+A company's Aurora MySQL cluster serves a read-heavy analytics workload. The reader endpoint load-balances across 3 read replicas. Business analysts report that some queries return stale data — results that do not reflect writes made seconds earlier. What is the architectural explanation?
+
+- A. Aurora read replicas use synchronous replication; stale reads are caused by network congestion between the writer and replicas
+- B. Aurora uses asynchronous replication from the writer to read replicas; replicas may lag behind the writer by a small duration
+- C. The Aurora reader endpoint always routes to the replica with the lowest CPU utilization, which may be the most lagged replica
+- D. The analysts are connected to the Aurora cluster writer endpoint instead of the reader endpoint
+
+### Q30 Answer: B
+
+### Q30 Analysis
+
+A is incorrect. Aurora read replica replication is asynchronous (typically sub-10ms lag under normal load), not synchronous. Synchronous replication is used for Multi-AZ standby in standard RDS — Aurora's shared storage architecture means replicas replay log records asynchronously.
+
+B is correct. Aurora read replicas receive log records from the writer asynchronously. Under normal conditions, replica lag is very low (sub-10ms), but it is never zero. Applications that write and immediately read within milliseconds may observe stale data on the reader endpoint. The solution for read-your-writes consistency is to direct those specific queries to the writer endpoint.
+
+C is incorrect. The Aurora reader endpoint uses a round-robin load balancing algorithm across available read replicas — it does not route based on CPU utilization or replica lag.
+
+D is incorrect. If analysts were connected to the writer endpoint, they would see the most current data — not stale data. Stale reads are characteristic of read replica lag on the reader endpoint, not of using the writer.

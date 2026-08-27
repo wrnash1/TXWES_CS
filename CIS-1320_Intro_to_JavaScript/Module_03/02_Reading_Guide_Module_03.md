@@ -347,6 +347,27 @@ console.log(noReturn());    // undefined — no return statement
 
 ---
 
+## 9. Supplemental Resources
+
+The following free, openly available resources extend and reinforce the topics covered in this module.
+
+- **[Eloquent JavaScript — Chapter 1: Values, Types, and Operators](https://eloquentjavascript.net/01_values.html)**
+  The primary OER textbook for this course. Chapter 1 covers all primitive types, arithmetic and string operators, comparison operators, logical operators, and type coercion with clear narrative explanations.
+
+- **[MDN Web Docs — JavaScript Data Types and Data Structures](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures)**
+  Comprehensive reference for all JavaScript types including the seven primitives and the object type. Covers boxing, coercion rules, and the `typeof` operator with detailed specification references.
+
+- **[javascript.info — Type Conversions](https://javascript.info/type-conversions)**
+  Focused article on implicit and explicit type coercion. Covers string, number, and boolean conversion rules with tables that are directly useful for predicting the output of coercion-heavy exam questions.
+
+- **[MDN Web Docs — Equality comparisons and sameness](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Equality_comparisons_and_sameness)**
+  Deep explanation of `==`, `===`, `Object.is()`, and the abstract equality algorithm. Includes the complete loose equality comparison table showing every cross-type comparison result.
+
+- **[javascript.info — Comparisons](https://javascript.info/comparison)**
+  Focused on comparison operators, string comparison (lexicographic), and the special behavior of `null` and `undefined` in comparisons. Includes interactive exercises.
+
+---
+
 ## 10. JSE Certification Exam Tips
 
 1. **`typeof null === 'object'`** — not `'null'`. Historical bug. Know it.
@@ -372,6 +393,7 @@ console.log(noReturn());    // undefined — no return statement
 ---
 
 ## 11. Study Checklist
+
 
 - [ ] Watch the Module 03 video lecture by Professor Nash.
 - [ ] Read Chapter 1 (Values, Types, and Operators) of [Eloquent JavaScript](https://eloquentjavascript.net/01_values.html).

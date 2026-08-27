@@ -275,3 +275,54 @@ Submit the following to the Canvas LMS assignment portal:
 5. Written answers to the three analysis questions in Part 8 (150–200 words total).
 
 ---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Priority Inversion Demonstration and Mutex Fix
+
+Reproduce a controlled priority inversion scenario on the ESP32 and then fix it with a mutex to verify the inversion no longer occurs. This exercise makes the Mars Pathfinder scenario concrete and observable through serial timestamps.
+
+1. Add three new tasks to the base lab application at priorities 1, 3, and 5. The low-priority task (priority 1) acquires a `SemaphoreHandle_t xSharedSemaphore` binary semaphore, holds it for 2000 ms (simulating a long critical section using `vTaskDelay(pdMS_TO_TICKS(2000))`), then gives it. The high-priority task (priority 5) waits on the same semaphore with `portMAX_DELAY`. The medium-priority task (priority 3) runs a busy-loop for 1500 ms without blocking. Log timestamps from each task using `Serial.printf()` with the task name and `xTaskGetTickCount()`.
+
+1. Observe the output: the high-priority task should be delayed by the full 2000 ms hold, and the medium-priority task should run during that window — demonstrating inversion. Record the timestamps showing the sequence: low acquires → medium runs → high waits → low gives → high runs.
+
+1. Replace the binary semaphore with a `SemaphoreHandle_t xSharedMutex = xSemaphoreCreateMutex()`. Change `xSemaphoreGive(xSharedSemaphore)` / `xSemaphoreTake(xSharedSemaphore, ...)` to the mutex equivalents. Rebuild and observe the timestamps again. With priority inheritance active, the low-priority task should be elevated to priority 5 when the high-priority task blocks, preempt the medium-priority task, and release the mutex faster. Document the difference in timestamps between the two runs.
+
+1. Write a 3–4 sentence analysis explaining exactly which line of code change (semaphore → mutex) enabled priority inheritance, why binary semaphores cannot provide this property (hint: ownership), and what the observable timestamp difference proves about the scheduler's behavior.
+
+---
+
+### Challenge 2: Event-Driven ISR-to-Task Pipeline with Queue
+
+Implement a hardware-interrupt-driven data pipeline where a GPIO interrupt fires on a button press, gives a semaphore from the ISR, and a high-priority processing task wakes up and enqueues a timestamped event record for a low-priority logging task to drain and print.
+
+1. Wire a pushbutton between GPIO 0 (the BOOT button on most ESP32 DevKit boards) and GND. Configure the GPIO as an input with internal pull-up:
+
+```cpp
+#define BTN_PIN 0
+
+void IRAM_ATTR btnISR() {
+    BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+    xSemaphoreGiveFromISR(xBtnSemaphore, &xHigherPriorityTaskWoken);
+    portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+}
+
+void setup() {
+    // ... existing setup ...
+    xBtnSemaphore = xSemaphoreCreateBinary();
+    pinMode(BTN_PIN, INPUT_PULLUP);
+    attachInterrupt(digitalPinToInterrupt(BTN_PIN), btnISR, FALLING);
+}
+```
+
+1. Create a processing task (priority 4) that blocks on `xSemaphoreTake(xBtnSemaphore, portMAX_DELAY)`, builds a `ButtonEvent_t { uint32_t timestamp_ms; uint32_t event_count; }` struct, and sends it to a dedicated `xEventQueue` (length 20, item size `sizeof(ButtonEvent_t)`). Create a logging task (priority 1) that drains `xEventQueue` and prints each event with its sequence number and timestamp.
+
+1. Press the button 10 times in rapid succession. Verify from the serial output that: all 10 events are captured (none dropped), the timestamps reflect the actual press timing, and the logging task runs after all presses have been processed (demonstrating that the queue buffered the backlog). If debounce causes duplicate events, add a 50 ms software debounce inside the processing task.
+
+---
+
+### Reflection Questions
+
+1. In Challenge 1, you observed that replacing a binary semaphore with a mutex changed the scheduling outcome even though both primitives implement mutual exclusion. Explain why the kernel cannot implement priority inheritance on a binary semaphore and can only implement it on a mutex — focus specifically on the concept of ownership and how its absence in a binary semaphore prevents the scheduler from knowing which task to elevate.
+
+2. In Challenge 2, `portYIELD_FROM_ISR(xHigherPriorityTaskWoken)` is called at the end of the ISR. Explain what happens if this line is omitted: the ISR returns normally, and the button processing task is in the Ready state. Describe the sequence of events from ISR return to the moment the processing task actually begins executing, and quantify the additional latency introduced by omitting the yield (express your answer in terms of FreeRTOS tick period).

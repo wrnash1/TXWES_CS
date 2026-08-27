@@ -496,6 +496,116 @@ Submit the following to the Module 09 Lab assignment in Canvas:
 
 ---
 
+## Part 9 — Challenge Exercise
+
+This section is **optional**. It extends the lab with advanced problems that apply callback and iteration concepts in more demanding scenarios. No screenshot is required, but you are encouraged to test your solutions in the Node.js console.
+
+### Step 9.1 — Implement `myForEach`, `myEvery`, and `mySome` from Scratch
+
+Create `custom_iteration.js`. Implement three functions that replicate the behavior of the built-in iteration methods without using the built-ins themselves:
+
+```javascript
+function myForEach(arr, callback) {
+  // Call callback(element, index, arr) for each element.
+  // Return undefined.
+}
+
+function myEvery(arr, callback) {
+  // Return true if callback returns truthy for all elements.
+  // Short-circuit: return false as soon as one callback returns falsy.
+  // Return true for empty arrays.
+}
+
+function mySome(arr, callback) {
+  // Return true if callback returns truthy for at least one element.
+  // Short-circuit: return true as soon as one callback returns truthy.
+  // Return false for empty arrays.
+}
+```
+
+Verify each implementation against the built-in:
+
+```javascript
+const nums = [2, 4, 6, 8];
+
+myForEach(nums, (n, i) => console.log(i, n));
+console.log(myEvery(nums, n => n % 2 === 0));   // true
+console.log(mySome(nums, n => n > 7));           // true
+console.log(myEvery([], n => n > 0));            // true
+console.log(mySome([], n => n > 0));             // false
+```
+
+Confirm that your `myEvery` stops early by adding a `console.log` inside the loop and testing with `[2, 3, 4]` and callback `n => n % 2 === 0`. You should see only `2` and `3` logged before it returns `false`.
+
+### Step 9.2 — Build a Reusable Pipeline with Callbacks
+
+Create `pipeline.js`. Write a `pipeline` function that accepts an array of transformation functions and returns a new function. When the returned function is called with a value, it applies each transformation in order — the output of each function becomes the input of the next:
+
+```javascript
+function pipeline(...fns) {
+  return function(value) {
+    return fns.reduce((acc, fn) => fn(acc), value);
+  };
+}
+```
+
+Build three transformation steps and compose them:
+
+```javascript
+const normalize  = s => s.trim().toLowerCase();
+const tokenize   = s => s.split(/\s+/);
+const capitalize = words => words.map(w => w[0].toUpperCase() + w.slice(1));
+
+const processTitle = pipeline(normalize, tokenize, capitalize);
+
+console.log(processTitle('  the quick BROWN fox  '));
+// ['The', 'Quick', 'Brown', 'Fox']
+```
+
+Then add a fourth step that uses `join` to reassemble the words into a title-cased string. Verify the full pipeline produces `'The Quick Brown Fox'` from the original messy input.
+
+Extend the exercise by applying `processTitle` to an array of book titles using `map`:
+
+```javascript
+const titles = [
+  '  javascript: the good PARTS  ',
+  'eloquent javascript  ',
+  '  YOU DON\'T KNOW JS'
+];
+
+const cleaned = titles.map(processTitle);
+console.log(cleaned);
+```
+
+### Step 9.3 — Frequency Counter with `reduce` and Iteration Methods
+
+Create `frequency.js`. Given an array of words, use `reduce` to build a frequency map, then use `filter`, `sort`, and `map` to produce a ranked report:
+
+```javascript
+const text = [
+  'the', 'quick', 'brown', 'fox', 'jumps', 'over',
+  'the', 'lazy', 'dog', 'the', 'fox', 'is', 'quick'
+];
+
+// Step 1: build frequency map { word: count }
+const freq = text.reduce((acc, word) => {
+  acc[word] = (acc[word] ?? 0) + 1;
+  return acc;
+}, {});
+
+// Step 2: convert to array of [word, count] pairs, sort descending by count
+const ranked = Object.entries(freq)
+  .sort(([, a], [, b]) => b - a)
+  .map(([word, count]) => `${word}: ${count}`);
+
+console.log(ranked);
+// ['the: 3', 'quick: 2', 'fox: 2', ...]
+```
+
+Extend this by using `every` to verify all words in `text` appear in `freq`, and use `some` to check whether any word appears more than twice. Print both boolean results with descriptive labels.
+
+---
+
 ## Reflection Questions
 
 Answer in the Canvas text box (two to three sentences each):

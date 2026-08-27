@@ -183,4 +183,20 @@ This objective explicitly tests: WPA cracking, evil twin attacks, deauthenticati
 
 ---
 
+---
+
+## 9. Supplemental Resources
+
+**1. Aircrack-ng Official Documentation and Wiki**
+[https://www.aircrack-ng.org/documentation.html](https://www.aircrack-ng.org/documentation.html)
+The official Aircrack-ng documentation covers every tool in the suite — airmon-ng, airodump-ng, aireplay-ng, and aircrack-ng — with usage examples and flag reference. It is the authoritative source for the wireless assessment workflow covered in Module 11 and directly applicable to PT0-002 Domain 3 wireless attack objectives.
+
+**2. hcxtools and hcxdumptool — PMKID Attack Documentation**
+[https://github.com/ZerBea/hcxtools](https://github.com/ZerBea/hcxtools)
+The hcxtools repository documents the modern WPA2 PMKID capture-and-crack workflow that complements the traditional four-way handshake approach. Understanding PMKID-based attacks (no deauthentication required) is directly relevant to PT0-002 wireless attack scenarios and the Module 11 lab.
+
+**3. TryHackMe — Wifi Hacking 101 Room**
+[https://tryhackme.com/room/wifihacking101](https://tryhackme.com/room/wifihacking101)
+TryHackMe's Wifi Hacking 101 room provides guided hands-on practice with the full aircrack-ng workflow — monitor mode, handshake capture, and offline cracking — in a browser-accessible environment that does not require physical wireless hardware. Completing this room reinforces all Module 11 lab exercises and builds command-line fluency with wireless assessment tools.
+
 *End of Module 11 Reading Guide*

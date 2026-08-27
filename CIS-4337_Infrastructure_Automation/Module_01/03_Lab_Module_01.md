@@ -319,4 +319,64 @@ Ensure you saved the file after editing. Also confirm you edited the value insid
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Multi-Resource Configuration with Output References
+
+Extend your `main.tf` to declare two `null_resource` blocks where the second resource depends on the first using an explicit `depends_on` meta-argument. Then add an `output` block that exposes the `id` of the second resource.
+
+```hcl
+resource "null_resource" "first" {
+  triggers = {
+    step = "one"
+  }
+}
+
+resource "null_resource" "second" {
+  depends_on = [null_resource.first]
+  triggers = {
+    step      = "two"
+    first_id  = null_resource.first.id
+  }
+}
+
+output "second_resource_id" {
+  description = "ID of the second null resource"
+  value       = null_resource.second.id
+}
+```
+
+1. Run `terraform plan` and observe the dependency ordering in the output. Note which resource Terraform plans to create first.
+2. Run `terraform apply -auto-approve` and confirm the output value is printed after apply completes.
+3. Record in `lab_notes.txt`: what would happen if you removed `depends_on` — would the order change, and why or why not given that `first_id` already creates an implicit dependency?
+
+### Challenge 2: Variable-Driven Configuration
+
+Refactor your `main.tf` to accept an input variable `demo_label` of type `string` with a default of `"challenge"`. Use this variable as the `demo_value` trigger on the `null_resource`.
+
+```hcl
+variable "demo_label" {
+  description = "Label used as the trigger value for the demo resource"
+  type        = string
+  default     = "challenge"
+}
+
+resource "null_resource" "variable_demo" {
+  triggers = {
+    demo_value = var.demo_label
+  }
+}
+```
+
+1. Run `terraform apply -auto-approve` with no extra flags to use the default value.
+2. Run `terraform apply -auto-approve -var="demo_label=custom-value"` and observe whether Terraform detects a change and replaces the resource.
+3. Run `terraform apply -auto-approve` a second time with no flags and confirm idempotency (no changes).
+
+### Reflection Questions
+
+1. When you changed `demo_label` via `-var` and Terraform replaced the resource, what does this tell you about how Terraform handles trigger value changes on `null_resource`? How does this behavior relate to the concept of immutable infrastructure?
+2. In a real-world scenario where your organization currently uses manual AWS console workflows, identify two specific risks that IaC adoption would mitigate, and explain how the declarative model addresses each risk.
+
+---
+
 Module 01 Lab — CIS-4337 Infrastructure Automation — Texas Wesleyan University

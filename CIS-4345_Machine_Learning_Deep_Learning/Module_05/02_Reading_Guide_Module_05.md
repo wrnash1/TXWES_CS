@@ -362,3 +362,19 @@ The `.keras` format is the modern recommended format for TensorFlow 2.x. The old
 - TensorFlow Keras Sequential API: [https://www.tensorflow.org/guide/keras/sequential_model](https://www.tensorflow.org/guide/keras/sequential_model)
 - TensorFlow Keras Functional API: [https://www.tensorflow.org/guide/keras/functional_api](https://www.tensorflow.org/guide/keras/functional_api)
 - TensorFlow Tensor guide: [https://www.tensorflow.org/guide/tensor](https://www.tensorflow.org/guide/tensor)
+
+---
+
+## 9. Supplemental Resources
+
+**1. TensorFlow Keras Sequential Model Guide**
+<https://www.tensorflow.org/guide/keras/sequential_model>
+Official guide covering the Sequential API end-to-end: building, inspecting with `model.summary()`, compiling, training, and saving. Includes worked examples for the exact patterns tested on the TensorFlow Developer Certificate exam.
+
+**2. TensorFlow Keras Functional API Guide**
+<https://www.tensorflow.org/guide/keras/functional_api>
+Official guide demonstrating multi-input models, skip connections, and shared layers using the Functional API. Directly supports the Module 05 lab's multi-input model section and the exam's architecture flexibility questions.
+
+**3. TensorFlow Core — tf.Tensor Guide**
+<https://www.tensorflow.org/guide/tensor>
+Comprehensive reference for tensor creation, shape manipulation, dtype casting, and the relationship between TensorFlow tensors and NumPy arrays. Covers `tf.reshape`, `tf.cast`, `tf.matmul`, and `tf.reduce_sum` — all operations appearing in this module's quiz and lab.

@@ -348,3 +348,346 @@ print(s.describe())
 - *Why B is correct:* `s.describe()` runs `Shape.describe()`. Inside that method, `self.area()` is called. `self` is a `Square`, so the MRO finds `Square.area()` first — which returns `4 ** 2 = 16`. The output is `Shape with area 16`.
 - *Why C is incorrect:* `Square` inherits `describe()` from `Shape`. Inherited methods are fully accessible on instances of the child class.
 - *Why D is incorrect:* Python does not check types before calling methods. `self.area()` works regardless of whether `area()` is defined on `Shape` or `Square` — Python finds the right one via the MRO.
+
+---
+
+### Question 11
+
+What is the output of this code?
+
+```python
+class A:
+    def method(self):
+        return 'A'
+
+class B(A):
+    def method(self):
+        return super().method() + 'B'
+
+class C(B):
+    def method(self):
+        return super().method() + 'C'
+
+print(C().method())
+```
+
+- A) `C`
+- B) `BC`
+- C) `ABC`
+- D) `CBA`
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `C.method()` calls `super().method()` which is `B.method()`. `B.method()` calls `super().method()` which is `A.method()`. The results are composed as each call returns.
+- *Why B is incorrect:* The chain goes C → B → A. `A.method()` returns `'A'`. `B.method()` returns `'A' + 'B'` = `'AB'`. `C.method()` returns `'AB' + 'C'` = `'ABC'`.
+- *Why C is correct:* Following the call chain: `A.method()` = `'A'`. `B.method()` = `super().method() + 'B'` = `'A' + 'B'` = `'AB'`. `C.method()` = `super().method() + 'C'` = `'AB' + 'C'` = `'ABC'`.
+- *Why D is incorrect:* `'CBA'` would result if each level prepended instead of appended. The `+` in each method appends the letter after the parent's result.
+
+---
+
+### Question 12
+
+What is the MRO for this class hierarchy?
+
+```python
+class X:
+    pass
+
+class Y(X):
+    pass
+
+class Z(Y, X):
+    pass
+```
+
+- A) `Z → Y → X → object`
+- B) `Z → X → Y → object`
+- C) `X → Y → Z → object`
+- D) `Z → Y → X → X → object` (X appears twice since Y inherits from X and Z inherits from X)
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- *Why A is correct:* Python's C3 linearization algorithm produces `Z → Y → X → object`. The leftmost base class (`Y`) comes before the rightmost (`X`), and duplicates are eliminated. Each class appears exactly once.
+- *Why B is incorrect:* `X` would not come before `Y` — `Y` inherits from `X`, so `Y` must be searched before `X` to preserve the child-before-parent ordering.
+- *Why C is incorrect:* Python searches from most specific to least specific — `Z` first, not `X` first.
+- *Why D is incorrect:* The MRO never includes the same class twice. C3 linearization explicitly prevents this — `X` appears once in the final MRO.
+
+---
+
+### Question 13
+
+What is the output of this code?
+
+```python
+class Base:
+    def __init__(self):
+        print('Base init')
+
+class Child(Base):
+    def __init__(self):
+        super().__init__()
+        print('Child init')
+
+class GrandChild(Child):
+    def __init__(self):
+        super().__init__()
+        print('GrandChild init')
+
+GrandChild()
+```
+
+- A) `GrandChild init` then `Child init` then `Base init`
+- B) `Base init` then `Child init` then `GrandChild init`
+- C) `GrandChild init` only
+- D) `Base init` then `GrandChild init`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `super().__init__()` calls the parent's `__init__` before the current class's print statement. The order is bottom-up in call ordering but top-down in execution because each class calls `super()` first.
+- *Why B is correct:* `GrandChild.__init__` calls `super().__init__()` (Child) first. `Child.__init__` calls `super().__init__()` (Base) first. `Base.__init__` prints `'Base init'`, returns to `Child` which prints `'Child init'`, returns to `GrandChild` which prints `'GrandChild init'`.
+- *Why C is incorrect:* `super().__init__()` calls are present and cause the parent classes' prints to execute.
+- *Why D is incorrect:* `Child.__init__` is also called and prints `'Child init'` between `'Base init'` and `'GrandChild init'`.
+
+---
+
+### Question 14
+
+What does `issubclass(Dog, Animal)` return, and what does `issubclass(Animal, Dog)` return, assuming `class Dog(Animal): pass`?
+
+- A) `True` then `True`
+- B) `True` then `False`
+- C) `False` then `True`
+- D) `False` then `False`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `issubclass(Animal, Dog)` is `False`. `Animal` does not inherit from `Dog` — the relationship is only one-directional.
+- *Why B is correct:* `Dog` inherits from `Animal` → `issubclass(Dog, Animal)` is `True`. `Animal` does not inherit from `Dog` → `issubclass(Animal, Dog)` is `False`.
+- *Why C is incorrect:* `issubclass(Dog, Animal)` is `True` because `Dog` inherits directly from `Animal`.
+- *Why D is incorrect:* `issubclass(Dog, Animal)` is definitely `True` — `Dog` explicitly inherits from `Animal` in the class definition.
+
+---
+
+### Question 15
+
+What is the output of this code?
+
+```python
+class Animal:
+    sound = 'generic'
+
+    def speak(self):
+        return f'I say: {self.sound}'
+
+class Dog(Animal):
+    sound = 'Woof'
+
+class Cat(Animal):
+    sound = 'Meow'
+
+animals = [Animal(), Dog(), Cat()]
+for a in animals:
+    print(a.speak())
+```
+
+- A) `I say: generic` three times
+- B) `I say: generic` then `I say: Woof` then `I say: Meow`
+- C) `I say: Woof` then `I say: Woof` then `I say: Woof`
+- D) `TypeError` — `speak()` uses `self.sound` which is not defined per-instance
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `Dog.sound` and `Cat.sound` are class variables that override `Animal.sound` for those classes. When `self.sound` is accessed on a `Dog` instance, Python finds `Dog.sound = 'Woof'` before `Animal.sound`.
+- *Why B is correct:* `speak()` is inherited by all three classes. Inside `speak()`, `self.sound` resolves via the MRO of `self`'s actual type. `Animal` → `'generic'`, `Dog` → `'Woof'`, `Cat` → `'Meow'`.
+- *Why C is incorrect:* Class variables are not shared downward. `Animal.sound` is `'generic'`, not `'Woof'`. And `Cat.sound` is `'Meow'`, not `'Woof'`.
+- *Why D is incorrect:* `self.sound` resolves correctly via the class hierarchy. Class variables are accessible on instances. No `TypeError` is raised.
+
+---
+
+### Question 16
+
+What is the output of this code?
+
+```python
+class Shape:
+    def __init__(self, color='white'):
+        self.color = color
+
+class Circle(Shape):
+    def __init__(self, radius, color='white'):
+        super().__init__(color)
+        self.radius = radius
+
+c = Circle(5, 'red')
+print(c.color)
+print(c.radius)
+print(isinstance(c, Shape))
+```
+
+- A) `white` then `5` then `True`
+- B) `red` then `5` then `False`
+- C) `red` then `5` then `True`
+- D) `red` then `white` then `True`
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `Circle(5, 'red')` passes `color='red'` to both `Circle.__init__` and `super().__init__(color)`. `self.color` is set to `'red'`, not the default `'white'`.
+- *Why B is incorrect:* `isinstance(c, Shape)` returns `True` because `Circle` inherits from `Shape`.
+- *Why C is correct:* `super().__init__('red')` calls `Shape.__init__` with `color='red'`, setting `self.color = 'red'`. `self.radius = 5`. `isinstance(c, Shape)` is `True`.
+- *Why D is incorrect:* `c.radius` is `5` (set in `Circle.__init__`), not `'white'`. The `color` default `'white'` is never used here because `'red'` was explicitly passed.
+
+---
+
+### Question 17
+
+What is the purpose of `abc.abstractmethod` and abstract base classes?
+
+- A) To make a class faster by preventing unnecessary inheritance
+- B) To document that a method should be overridden, without enforcing it
+- C) To declare a method that subclasses MUST override — instantiating the abstract class raises `TypeError`
+- D) To create classes that cannot be used as parent classes
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Abstract base classes do not affect performance. They exist purely as a design enforcement mechanism.
+- *Why B is incorrect:* Unlike docstrings or conventions, `@abstractmethod` is enforced at runtime. Attempting to instantiate a class with unimplemented abstract methods raises `TypeError`.
+- *Why C is correct:* When a class inherits from `ABC` and uses `@abstractmethod`, Python prevents direct instantiation of the abstract class. Subclasses that do not implement all abstract methods also cannot be instantiated — until they do.
+- *Why D is incorrect:* Abstract classes are specifically designed to be parent classes. Their purpose is to define a contract that child classes must fulfill.
+
+---
+
+### Question 18
+
+What is the output of this code?
+
+```python
+class Vehicle:
+    def __init__(self, speed=0):
+        self.speed = speed
+
+    def accelerate(self, amount):
+        self.speed += amount
+        return self
+
+    def brake(self, amount):
+        self.speed = max(0, self.speed - amount)
+        return self
+
+    def __str__(self):
+        return f'speed={self.speed}'
+
+v = Vehicle()
+print(v.accelerate(30).accelerate(20).brake(10))
+```
+
+- A) `speed=0`
+- B) `speed=40`
+- C) `speed=50`
+- D) `TypeError` — cannot chain method calls that return `self`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* The speed changes through the method chain. Starting at 0: `+30 = 30`, `+20 = 50`, `-10 = 40`.
+- *Why B is correct:* Each method returns `self`. `v.accelerate(30)` → speed=30, returns `v`. `.accelerate(20)` → speed=50, returns `v`. `.brake(10)` → speed=40, returns `v`. `print(v)` calls `__str__` → `speed=40`.
+- *Why C is incorrect:* The final `.brake(10)` reduces speed by 10: `50 - 10 = 40`.
+- *Why D is incorrect:* Returning `self` from methods enables method chaining — a common pattern in Python (the builder pattern and fluent interface). This is valid Python.
+
+---
+
+### Question 19
+
+What does `super().__init__()` call in this multiple-inheritance scenario?
+
+```python
+class A:
+    def __init__(self):
+        print('A')
+
+class B(A):
+    def __init__(self):
+        super().__init__()
+        print('B')
+
+class C(A):
+    def __init__(self):
+        super().__init__()
+        print('C')
+
+class D(B, C):
+    def __init__(self):
+        super().__init__()
+        print('D')
+
+D()
+```
+
+- A) `A` then `B` then `D`
+- B) `A` then `B` then `C` then `D`
+- C) `A` then `C` then `B` then `D`
+- D) `B` then `C` then `A` then `D`
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* The MRO for `D` is `D → B → C → A → object`. `super().__init__()` in `B` does not call `A.__init__()` directly — it calls the next class in the MRO, which is `C`. `C.__init__` then calls `A.__init__`.
+- *Why B is incorrect:* `B` and `C` cannot both print in MRO order without `C` coming before `B`. Because each method calls `super()` first, the base class `A` prints first, then the call stack unwinds through `C` then `B` then `D`.
+- *Why C is correct:* MRO: `D → B → C → A`. `D.__init__` calls `super()` → `B.__init__`. `B.__init__` calls `super()` → `C.__init__`. `C.__init__` calls `super()` → `A.__init__`. `A` prints `'A'` (no further super). Unwinding: `C` prints `'C'`, `B` prints `'B'`, `D` prints `'D'`. Output: `A C B D`.
+- *Why D is incorrect:* `A` always prints first because it is at the bottom of the `super()` chain — the deepest call returns first. `B` does not print before `A`.
+
+---
+
+### Question 20
+
+What is the output of this code?
+
+```python
+class Logger:
+    def log(self, message):
+        return f'[LOG] {message}'
+
+class Saver:
+    def save(self, data):
+        return f'[SAVE] {data}'
+
+class Service(Logger, Saver):
+    def process(self, data):
+        logged = self.log(data)
+        saved = self.save(data)
+        return f'{logged} | {saved}'
+
+s = Service()
+print(s.process('test'))
+print(isinstance(s, Logger))
+print(isinstance(s, Saver))
+```
+
+- A) `[LOG] test | [SAVE] test` then `True` then `False`
+- B) `[LOG] test | [SAVE] test` then `True` then `True`
+- C) `TypeError` — multiple inheritance is not allowed in Python
+- D) `[LOG] test` then `True` then `False`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `Service` inherits from both `Logger` and `Saver`. `isinstance(s, Saver)` is `True` — `Service` is a subclass of `Saver`.
+- *Why B is correct:* `Service` inherits `log()` from `Logger` and `save()` from `Saver`. `s.process('test')` calls both, producing `'[LOG] test | [SAVE] test'`. `isinstance(s, Logger)` and `isinstance(s, Saver)` are both `True`.
+- *Why C is incorrect:* Python explicitly supports multiple inheritance. `class Service(Logger, Saver):` is valid syntax and the MRO handles method resolution.
+- *Why D is incorrect:* `process()` returns the combined string including both the log and save results. The full string is printed, not just the log portion.

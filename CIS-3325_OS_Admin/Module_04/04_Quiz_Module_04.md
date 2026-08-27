@@ -210,3 +210,217 @@ Distractor Analysis:
 - Why A is incorrect: If the docker group did not exist, usermod -aG would fail with an error. The scenario implies the command ran successfully. Docker installation creates the docker group automatically.
 - Why B is incorrect: Any user can belong to the docker group. Group membership has no user restrictions by type or privilege level. The limitation is that being in the docker group itself grants significant privileges equivalent to root on some systems.
 - Why D is incorrect: Restarting the docker daemon affects the Docker service process, not the user's shell environment. The user's shell retains its original group list until a new login session is created. Running newgrp docker would activate the group in the current shell without logging out.
+
+---
+
+Questions 11-20 — 5 pts each
+
+---
+
+**Question 11**
+
+An administrator needs to force a user named newstaff to change their password on their
+very first login. Which command achieves this without deleting or resetting the password?
+
+- A) passwd --expire newstaff
+- B) chage -d 0 newstaff
+- C) usermod --force-reset newstaff
+- D) passwd -e newstaff
+
+Correct Answer: D) passwd -e newstaff
+
+Distractor Analysis:
+
+- Why A is incorrect: passwd --expire is not valid syntax. The correct flag is passwd -e (expire) or chage -d 0. The --expire flag does not exist for the passwd command.
+- Why B is incorrect: chage -d 0 also forces a password change at next login by setting the last password change date to epoch day 0 (January 1, 1970). Both B and D are technically valid, but passwd -e is the more direct single-command approach and is what CompTIA tests.
+- Why C is incorrect: usermod --force-reset is not a valid option. usermod manages account attributes like shell, home directory, and group membership, but not password reset forcing.
+
+---
+
+**Question 12**
+
+A systems administrator creates a user with useradd -m -s /bin/bash -c "Web App Service"
+-r webapp. Which statement correctly describes the resulting account?
+
+- A) The account is a regular user account with UID above 1000 and a home directory at /home/webapp.
+- B) The account is a system account with a UID below 1000 (system range), a home directory, and /bin/bash as its shell.
+- C) The account is created without a home directory because -r system accounts never get home directories.
+- D) The account cannot run any processes because system accounts are blocked by PAM.
+
+Correct Answer: B) The account is a system account with a UID below 1000 (system range), a home directory, and /bin/bash as its shell.
+
+Distractor Analysis:
+
+- Why A is incorrect: The -r flag creates a system account with a UID in the system range (below 1000 on most distributions). Without -r, the UID would be in the regular user range (1000+).
+- Why C is incorrect: By default, useradd -r does not create a home directory. However, the -m flag was explicitly included in this command, which forces home directory creation even for system accounts. The -m flag overrides the default no-home behavior of -r.
+- Why D is incorrect: System accounts run processes constantly. Daemons, web servers, and database services all run under system accounts. PAM does not block process execution based on UID range.
+
+---
+
+**Question 13**
+
+Which /etc/sudoers entry allows only the user alice to run the systemctl command as root
+with no password prompt, while restricting all other sudo commands?
+
+- A) alice ALL=(ALL) NOPASSWD: ALL
+- B) alice ALL=(root) NOPASSWD: /usr/bin/systemctl
+- C) alice ALL=(ALL) /usr/bin/systemctl
+- D) %alice ALL=(root) NOPASSWD: /usr/bin/systemctl
+
+Correct Answer: B) alice ALL=(root) NOPASSWD: /usr/bin/systemctl
+
+Distractor Analysis:
+
+- Why A is incorrect: NOPASSWD: ALL grants alice passwordless access to every command on every host as any user. This violates least privilege and is far too permissive.
+- Why C is incorrect: This entry allows alice to run systemctl as any user but still requires her sudo password. The question specifies no password prompt, which requires the NOPASSWD: keyword.
+- Why D is incorrect: The % prefix in sudoers denotes a group name, not a user name. %alice applies the rule to the group named alice, not the user named alice.
+
+---
+
+**Question 14**
+
+An administrator reviews /etc/login.defs and finds the line PASS_MAX_DAYS 90. What does
+this setting control?
+
+- A) The maximum number of days a session can remain idle before the user is logged out.
+- B) The maximum number of days a password is valid before the user must change it.
+- C) The maximum number of failed login attempts before the account is locked.
+- D) The maximum number of days after account creation before the first password must be set.
+
+Correct Answer: B) The maximum number of days a password is valid before the user must change it.
+
+Distractor Analysis:
+
+- Why A is incorrect: Session idle timeout is controlled by shell variables like TMOUT or by PAM's pam_limits module and /etc/security/limits.conf. It has nothing to do with /etc/login.defs PASS_MAX_DAYS.
+- Why C is incorrect: Failed login lockout is configured in PAM with pam_faillock or pam_tally2, not in /etc/login.defs. The relevant /etc/login.defs parameter for login attempts is LOGIN_RETRIES.
+- Why D is incorrect: The time before first password change after account creation is not what PASS_MAX_DAYS tracks. PASS_MAX_DAYS is about password age from the last change date, not from account creation.
+
+---
+
+**Question 15**
+
+After running getent passwd webdev, an administrator sees:
+
+webdev:x:1001:1001:Web Developer:/home/webdev:/bin/bash
+
+The administrator wants to change webdev's login shell to /usr/sbin/nologin to disable
+interactive login. Which command is correct?
+
+- A) chsh -s /usr/sbin/nologin webdev
+- B) usermod -s /usr/sbin/nologin webdev
+- C) passwd --shell /usr/sbin/nologin webdev
+- D) Both A and B
+
+Correct Answer: D) Both A and B
+
+Distractor Analysis:
+
+- Why A alone is partially correct: chsh -s changes the login shell for a user. When run with sudo for another user's account, it correctly updates /etc/passwd.
+- Why B alone is partially correct: usermod -s is the standard administrative tool for changing a user's shell attribute. Both commands write the same field in /etc/passwd.
+- Why C is incorrect: The passwd command manages password-related attributes (setting, locking, expiring). It has no --shell option. Shell changes are made with usermod or chsh.
+
+---
+
+**Question 16**
+
+A security policy requires all user passwords on a server to be at least 12 characters with
+complexity requirements. Which PAM module and configuration file enforce this policy on
+Ubuntu 22.04?
+
+- A) pam_unix.so with settings in /etc/pam.d/login
+- B) pam_pwquality.so with settings in /etc/security/pwquality.conf
+- C) pam_cracklib.so with settings in /etc/login.defs
+- D) pam_limits.so with settings in /etc/security/limits.conf
+
+Correct Answer: B) pam_pwquality.so with settings in /etc/security/pwquality.conf
+
+Distractor Analysis:
+
+- Why A is incorrect: pam_unix.so handles standard Unix password authentication but does not enforce complexity requirements. It verifies passwords against /etc/shadow but imposes no minlen or character class rules.
+- Why C is incorrect: pam_cracklib.so is the older predecessor to pam_pwquality.so. On Ubuntu 22.04, pam_pwquality.so has replaced it. /etc/login.defs does not configure PAM module parameters.
+- Why D is incorrect: pam_limits.so enforces resource limits (open files, CPU time, process count) per user or group from /etc/security/limits.conf. It has nothing to do with password complexity.
+
+---
+
+**Question 17**
+
+A Linux administrator needs to display the password aging information for the user bob,
+including the last change date, minimum days, maximum days, and expiry warning. Which
+command shows this?
+
+- A) passwd -S bob
+- B) chage -l bob
+- C) getent shadow bob
+- D) cat /etc/shadow | grep bob
+
+Correct Answer: B) chage -l bob
+
+Distractor Analysis:
+
+- Why A is incorrect: passwd -S bob shows a brief one-line password status (locked, usable, or no password) with a date and policy summary. It is less detailed than chage -l and uses a different format.
+- Why C is incorrect: getent shadow bob requires root and displays the raw /etc/shadow entry in colon-delimited format with epoch-day integers, which requires manual conversion to be readable. chage -l presents the information in a human-readable labeled format.
+- Why D is incorrect: Direct cat of /etc/shadow also displays raw epoch values. On most systems cat /etc/shadow is not readable by non-root users. chage -l requires sudo but formats the output clearly.
+
+---
+
+**Question 18**
+
+The /etc/skel directory contains template files. When is the content of /etc/skel relevant?
+
+- A) When an existing user's home directory is rebuilt by running usermod -m.
+- B) When a new user account is created with useradd -m, the files from /etc/skel are copied to the new home directory.
+- C) When a user logs in via SSH, /etc/skel files are read to configure the remote session.
+- D) When the root user runs cp -r /etc/skel /home/username to manually provision a user.
+
+Correct Answer: B) When a new user account is created with useradd -m, the files from /etc/skel are copied to the new home directory.
+
+Distractor Analysis:
+
+- Why A is incorrect: usermod -m moves an existing home directory. It does not repopulate it from /etc/skel. /etc/skel is only consulted during initial home directory creation.
+- Why C is incorrect: SSH sessions read ~/.bashrc, ~/.bash_profile, and similar files from the user's existing home directory. /etc/skel has no role after the account is created.
+- Why D is incorrect: While manually copying /etc/skel would produce a similar result, this is not when /etc/skel is automatically used. Its automatic use is exclusively triggered by useradd -m during account creation.
+
+---
+
+**Question 19**
+
+An administrator runs su - bob and is prompted for bob's password. After authenticating,
+the prompt changes and the administrator runs pwd. Which directory is shown?
+
+- A) The directory the administrator was in before running su -.
+- B) /root, because su - always switches to the root home directory.
+- C) /home/bob, because su - starts a login shell that loads bob's full environment and places the session in bob's home directory.
+- D) /tmp, because su - uses a clean environment with no home directory context.
+
+Correct Answer: C) /home/bob, because su - starts a login shell that loads bob's full environment and places the session in bob's home directory.
+
+Distractor Analysis:
+
+- Why A is incorrect: su - (with the dash) is a login shell switch. It changes the working directory to the target user's home directory. su without the dash stays in the calling user's current directory.
+- Why B is incorrect: su - root (or just su -) switches to root's home (/root). su - bob switches to bob's home (/home/bob). The destination depends on the target user.
+- Why D is incorrect: /tmp is not associated with su - behavior. The login shell reads ~/.bash_profile and ~/.profile which set HOME to the user's home directory, so pwd shows that directory.
+
+---
+
+**Question 20**
+
+A user account named oldadmin has been terminated. The administrator needs to prevent any
+login while preserving all files and audit trails, and must not delete the account. Which
+two actions accomplish this most effectively?
+
+- A) rm -rf /home/oldadmin && passwd -d oldadmin
+- B) usermod -L oldadmin && usermod -e 1 oldadmin
+- C) userdel oldadmin && chattr +i /var/log/auth.log
+- D) passwd -l oldadmin && chage -E 0 oldadmin
+
+Correct Answer: D) passwd -l oldadmin && chage -E 0 oldadmin
+
+Distractor Analysis:
+
+- Why A is incorrect: rm -rf /home/oldadmin destroys files and audit evidence, violating the requirement to preserve files. passwd -d removes the password (allows passwordless login in some configurations) rather than preventing login.
+- Why B is incorrect: usermod -L locks the password field (same effect as passwd -l) but usermod -e 1 sets the account expiry to January 2, 1970 (one day after epoch), which is essentially expired but an unusual convention. chage -E 0 is cleaner. The combination is functionally similar to D but less standard.
+- Why C is incorrect: userdel deletes the account entirely, violating the requirement not to delete it. chattr +i makes a file immutable, which is an unrelated operation that would prevent log rotation.
+
+---
+
+Note: For Question 11, both passwd -e and chage -d 0 are technically valid approaches to force password expiry. On the CompTIA Linux+ exam, passwd -e (or passwd --expire) is the primary tested syntax.

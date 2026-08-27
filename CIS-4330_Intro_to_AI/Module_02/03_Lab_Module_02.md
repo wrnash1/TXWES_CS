@@ -249,3 +249,24 @@ Scoring: 5 pts = correct paradigm, correct task type (if applicable), accurate t
 ## Deliverable
 
 Submit a single document (PDF or Word) containing your answers to all 19 items. Include your name, course section, and date at the top. Upload to the Module 02 Lab Assignment in Canvas by the posted due date.
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Imbalanced Classification Experiment
+
+1. Using Python and scikit-learn, load the `breast_cancer` dataset from `sklearn.datasets`. Note the class distribution (malignant vs. benign counts).
+2. Train a `LogisticRegression` classifier using the default settings. Report accuracy, precision, recall, and F1-score for the minority class using `classification_report`.
+3. Now apply `class_weight='balanced'` to the `LogisticRegression` constructor. Retrain and report the same metrics. Document which metrics improved and which changed.
+4. Explain in two sentences why recall for the malignant class is the most critical metric for a cancer screening tool, and which model configuration you would deploy.
+
+### Challenge 2: Choosing K in K-Means with the Elbow Method
+
+1. Using Python, generate a synthetic dataset with `sklearn.datasets.make_blobs(n_samples=300, centers=5, random_state=42)`.
+2. Train K-means models for K values from 1 to 10. For each K, record the inertia (within-cluster sum of squares, accessible via `kmeans.inertia_`).
+3. Plot inertia vs. K using matplotlib. Identify the "elbow" point where adding more clusters yields diminishing reduction in inertia.
+4. Compare your visual elbow K to the true number of blobs (5). Calculate the silhouette score for K=3, K=5, and K=7 using `sklearn.metrics.silhouette_score` and report which K scores highest.
+
+### Reflection Questions
+
+1. In Challenge 1, what practical harm could result from deploying the default (unbalanced) model in a real cancer screening program? Which responsible AI principle does this relate to?
+2. In Challenge 2, if you did not know the true number of clusters in a real business dataset, what combination of the elbow method and silhouette score would you use to justify your choice of K to a non-technical stakeholder?

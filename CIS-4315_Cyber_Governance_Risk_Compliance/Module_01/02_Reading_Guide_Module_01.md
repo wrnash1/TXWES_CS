@@ -266,3 +266,21 @@ Work through each item before moving to the quiz.
 ---
 
 Reading Guide — Module 01 | CIS-4315 | Texas Wesleyan University
+
+---
+
+## 9. Supplemental Resources
+
+The following resources extend the Module 01 content and are recommended for CISM exam preparation and professional practice.
+
+**NIST Cybersecurity Framework 2.0**
+URL: https://www.nist.gov/cyberframework
+Description: The authoritative NIST CSF 2.0 document, freely available. Includes the new Govern function, implementation tiers, and profiles. Essential reading for understanding how governance drives the entire framework. Read the Executive Summary and the Govern function overview.
+
+**ISACA COBIT 2019 Framework: Introduction and Methodology**
+URL: https://www.isaca.org/resources/cobit
+Description: ISACA's official COBIT 2019 documentation, available free to ISACA members. The Introduction and Methodology volume explains the governance/management distinction, the goals cascade, and the design factors. Directly aligned with CISM Domain 1.
+
+**ISO/IEC 27001:2022 Overview — ISO.org**
+URL: https://www.iso.org/standard/27001
+Description: The official ISO page for the ISO/IEC 27001:2022 standard. Explains the ISMS structure and the relationship between ISO 27001 requirements and ISO 27002 controls. Useful for understanding how the standard translates governance requirements into an auditable management system.

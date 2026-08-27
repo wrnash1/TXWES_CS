@@ -234,4 +234,246 @@ Distractor Analysis:
 
 ---
 
+---
+
+## Question 11
+
+A network engineer writes a Python script using the `requests` library to retrieve device information from Cisco DNA Center. The script returns a 401 HTTP status code. What is the most likely cause?
+
+A. The DNA Center server is unreachable at the specified IP address.
+
+B. The script is missing or providing an invalid authentication token in the request header.
+
+C. The GET request URL contains a typo and the resource does not exist.
+
+D. The JSON response body is malformed and cannot be parsed.
+
+Correct Answer: B — HTTP 401 Unauthorized indicates that the request lacks valid authentication credentials. For DNA Center REST APIs, every request must include a valid bearer token in the `X-Auth-Token` header. A missing token, an expired token, or an incorrect token all return 401. The fix is to re-authenticate (POST to the auth endpoint) to obtain a fresh token and include it in all subsequent requests.
+
+Distractor Analysis:
+
+* A — An unreachable server returns a connection error (requests.exceptions.ConnectionError) or a timeout — not an HTTP 401. An HTTP status code means the server was reached and understood the request.
+* C — A typo in the URL causing a missing resource returns 404 Not Found, not 401. A 404 means the server found no resource at that path.
+* D — A malformed JSON body returns 400 Bad Request from the server. However, a malformed response body would be a client-side parsing error in Python, not an HTTP status code from the server.
+
+---
+
+## Question 12
+
+In an SDN deployment, the control plane is separated from the data plane. A network device receives a packet that does not match any existing flow table entry. What happens next in a typical OpenFlow-based SDN architecture?
+
+A. The device drops the packet because it has no local intelligence to determine forwarding.
+
+B. The device floods the packet out all ports to ensure delivery.
+
+C. The device sends a Packet-In message to the SDN controller requesting forwarding instructions.
+
+D. The device applies the default route from its local routing table as a fallback.
+
+Correct Answer: C — When an OpenFlow-enabled switch receives a packet with no matching flow table entry, it generates a Packet-In message and sends it to the SDN controller. The controller then determines the appropriate forwarding action and installs a new flow entry in the switch's flow table (via a Flow-Mod message). Future packets matching that flow are forwarded by the switch using the installed rule without involving the controller.
+
+Distractor Analysis:
+
+* A — Dropping unknown packets is not the default OpenFlow behavior. The table-miss action (configurable) typically sends the packet to the controller via Packet-In.
+* B — While flooding is the default behavior in traditional Ethernet switches, OpenFlow-based devices send unknowns to the controller, not flood them (unless the controller instructs flooding as the action).
+* D — OpenFlow-based SDN data planes do not maintain independent local routing tables for fallback. All forwarding decisions are programmed by the controller.
+
+---
+
+## Question 13
+
+Which statement correctly describes the difference between traditional distributed networking and SDN?
+
+A. Traditional networking uses faster ASICs; SDN uses slower software-based switching.
+
+B. In traditional networking, each device independently runs control plane protocols; in SDN, control plane intelligence is centralized in a controller.
+
+C. SDN requires replacement of all network hardware with specialized SDN switches; traditional switches cannot be used.
+
+D. SDN eliminates the data plane entirely, processing all packets in software on the controller.
+
+Correct Answer: B — The fundamental distinction is where control plane intelligence resides. In traditional distributed networking, each router or switch independently runs protocols (OSPF, STP, etc.) and makes its own forwarding decisions. In SDN, these decisions are centralized in the controller, which programs forwarding rules into the data plane devices. The data plane hardware remains in the devices but follows instructions from the controller rather than computing them independently.
+
+Distractor Analysis:
+
+* A — SDN data planes use the same high-speed ASIC hardware as traditional switches. The separation of control and data planes does not reduce forwarding performance.
+* C — Many SDN architectures use commodity or standard network hardware. OpenFlow-capable software can be added to existing switches. Some SDN overlays (like Cisco SD-WAN) work with standard routers.
+* D — SDN does not eliminate the data plane. Packet forwarding still occurs in hardware at line rate within the network devices. Only the control plane logic is centralized.
+
+---
+
+## Question 14
+
+An Ansible playbook contains the following task. What does the `state: merged` parameter specify?
+
+```yaml
+- name: Configure interface description
+  cisco.ios.ios_interfaces:
+    config:
+      - name: GigabitEthernet0/1
+        description: "Uplink to Core"
+    state: merged
+```
+
+A. Replace the entire interface configuration with only the values specified.
+
+B. Add or update the specified values without removing existing interface configuration not mentioned in the task.
+
+C. Delete the interface and recreate it with the specified configuration.
+
+D. Verify the current state matches the specified values and report differences without making changes.
+
+Correct Answer: B — In Ansible network resource modules, `state: merged` applies the specified configuration additively. Existing configuration not mentioned in the task is left unchanged. This is the safest state for day-to-day changes — it only adds or modifies what is explicitly defined. Compare with `state: replaced` (replaces all config for the resource) or `state: deleted` (removes config).
+
+Distractor Analysis:
+
+* A — Describes `state: replaced`, which replaces all configuration for the specified resource section.
+* C — Describes behavior closer to `state: deleted` followed by `state: merged`, not the `merged` state alone.
+* D — Describes `state: gathered` or verification tasks. The `merged` state actively makes changes.
+
+---
+
+## Question 15
+
+A network automation script uses Python to configure VLANs on 100 switches using NETCONF. Which Python library is most appropriate for sending NETCONF requests?
+
+A. `requests`
+
+B. `ncclient`
+
+C. `netmiko`
+
+D. `json`
+
+Correct Answer: B — `ncclient` (NETCONF client) is the Python library specifically designed for NETCONF operations. It establishes SSH connections on port 830, handles NETCONF session management, and provides Python methods for get-config, edit-config, commit, and other NETCONF operations with XML payloads.
+
+Distractor Analysis:
+
+* A — `requests` is an HTTP/HTTPS library used for REST API calls (including RESTCONF). It does not support the SSH-based NETCONF protocol or NETCONF session management.
+* C — `netmiko` establishes SSH connections to network devices and sends CLI commands, parsing the text output. It does not use the NETCONF protocol or structured XML data.
+* D — `json` is Python's built-in JSON serialization/deserialization library. It handles data formatting but has no network connectivity capabilities.
+
+---
+
+## Question 16
+
+What is the correct HTTP method and expected success status code for updating an existing device configuration entry via a REST API?
+
+A. POST; 201 Created
+
+B. GET; 200 OK
+
+C. PUT; 200 OK
+
+D. DELETE; 204 No Content
+
+Correct Answer: C — PUT is the HTTP method used to update (replace) an existing resource. When a PUT request succeeds, the server typically responds with 200 OK (along with the updated resource) or 204 No Content (no body). POST creates new resources (returns 201); GET reads resources (returns 200); DELETE removes resources (returns 200 or 204).
+
+Distractor Analysis:
+
+* A — POST creates a new resource. Using POST when updating an existing resource is incorrect semantics and typically returns an error or creates a duplicate.
+* B — GET is a read-only operation. It retrieves the current state of a resource and never modifies it.
+* D — DELETE removes a resource. While 204 No Content is associated with successful DELETE operations, the question asks about updating, not deleting.
+
+---
+
+## Question 17
+
+A YANG data model defines the structure of configuration data for network devices. What is YANG used for in the context of NETCONF and RESTCONF?
+
+A. YANG is the transport protocol that carries XML configuration between the controller and managed devices.
+
+B. YANG defines the structure, data types, and constraints of configuration and operational data for device management.
+
+C. YANG is a query language similar to SQL used to filter NETCONF responses.
+
+D. YANG replaces CLI on network devices, providing a graphical interface for configuration.
+
+Correct Answer: B — YANG (Yet Another Next Generation) is a data modeling language (RFC 6020) that defines the schema for network configuration and operational data. It specifies what data exists, its types (strings, integers, lists), its hierarchy, and its constraints. NETCONF and RESTCONF use YANG models to validate configuration requests and structure responses. Cisco IOS-XE ships with hundreds of standard and vendor-specific YANG models.
+
+Distractor Analysis:
+
+* A — YANG is not a transport protocol. NETCONF uses SSH, RESTCONF uses HTTPS. YANG is only the data model definition language.
+* C — YANG is not a query language. NETCONF uses XPath expressions to filter XML data within requests. YANG defines the data structure that XPath navigates.
+* D — YANG has nothing to do with graphical interfaces. It is a text-based schema language read by tools and protocol implementations, not by end users directly.
+
+---
+
+## Question 18
+
+Which Cisco platform is the primary management interface for Cisco DNA Center's northbound REST API, allowing external applications to interact with the enterprise network programmatically?
+
+A. Cisco ISE (Identity Services Engine)
+
+B. Cisco WLC (Wireless LAN Controller)
+
+C. Cisco Intent-Based Networking (IBN) API on Catalyst Center
+
+D. Cisco IOS-XE RESTCONF interface
+
+Correct Answer: C — Cisco DNA Center (now rebranded as Catalyst Center) exposes its northbound REST API called the "Intent API" (also referred to as the IBN API). External applications and scripts use this API via HTTPS to interact with the entire network — device inventory, policy, automation, and assurance — through a single management point. This is the northbound interface above the DNA Center controller.
+
+Distractor Analysis:
+
+* A — Cisco ISE is a security policy management platform providing AAA and 802.1X. It has its own API but is not the DNA Center northbound interface for network management.
+* B — The WLC manages wireless networks. Its API is a management interface for the WLC specifically, not a network-wide SDN northbound API.
+* D — Cisco IOS-XE RESTCONF is a southbound interface — it runs directly on individual IOS-XE devices for per-device configuration. DNA Center's northbound API aggregates management across all devices.
+
+---
+
+## Question 19
+
+A Python script parsing a NETCONF response needs to extract the IP address value from the following XML structure. Which Python code correctly extracts the IP address string?
+
+```xml
+<interface>
+  <name>GigabitEthernet0/1</name>
+  <ipv4>
+    <address>
+      <ip>192.168.1.1</ip>
+    </address>
+  </ipv4>
+</interface>
+```
+
+A. `data["interface"]["ipv4"]["address"]["ip"]`
+
+B. `root.find(".//ip").text`
+
+C. `data.get("ip")`
+
+D. `json.loads(data)["ip"]`
+
+Correct Answer: B — When NETCONF XML is parsed with Python's `xml.etree.ElementTree` library, `root.find(".//ip")` uses XPath syntax to search for the `<ip>` element anywhere in the tree (`//` = recursive search). `.text` retrieves the text content of the element ("192.168.1.1"). This is the standard Python XML navigation pattern for nested elements.
+
+Distractor Analysis:
+
+* A — Dictionary-style bracket notation is used for JSON (parsed to a Python dictionary with `json.loads()`), not XML. XML parsed with ElementTree returns Element objects, not dictionaries.
+* C — `data.get("ip")` is a dictionary method that would only work if the XML had already been converted to a flat Python dictionary with an "ip" key. The nested XML structure requires tree traversal.
+* D — `json.loads()` parses JSON-formatted strings. The data shown is XML, not JSON. Calling `json.loads()` on an XML string raises a JSON decode error.
+
+---
+
+## Question 20
+
+An organization is evaluating whether to deploy Ansible or Puppet for network device configuration management. The primary requirement is support for agentless management of 300 Cisco IOS routers. Which tool is more appropriate and why?
+
+A. Puppet — it uses a pull model that distributes the load across all managed devices.
+
+B. Ansible — it is agentless and communicates with Cisco IOS routers via SSH without requiring software installation on each device.
+
+C. Chef — it provides the most extensive library of Ruby-based recipes for Cisco device management.
+
+D. Both are equally appropriate because all three tools support agentless Cisco IOS management.
+
+Correct Answer: B — Ansible is the correct choice because it is agentless — it requires no software installation on the 300 Cisco routers. Ansible communicates via SSH using the cisco.ios collection and can configure IOS devices directly. Puppet and Chef require agents installed on managed nodes, which is not feasible on Cisco IOS routers (you cannot install a Puppet agent on a router's IOS).
+
+Distractor Analysis:
+
+* A — Puppet's pull model is a feature of its agent-based architecture, but the pull model requires an agent on each managed node. Cisco IOS routers cannot run the Puppet agent.
+* C — Chef uses Ruby-based Cookbooks, but like Puppet, it requires a Chef client on managed nodes. Cisco IOS does not support the Chef client.
+* D — Only Ansible is agentless among the three tools. Puppet and Chef are agent-based and cannot directly manage traditional Cisco IOS devices without an agent.
+
+---
+
 End of Quiz — Module 15

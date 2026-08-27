@@ -395,3 +395,85 @@ setting the policy, verify the domain GPO link is enabled and Enforced:
 Get-GPInheritance -Target "DC=txwes,DC=edu" |
     Select-Object -ExpandProperty GpoLinks
 ```
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Configure and Verify Loopback Processing
+
+Loopback Processing is critical for kiosk and lab computer environments. Configure it and verify its effect on a user logging into a restricted machine.
+
+1. Create a new GPO named `TXWES_Loopback_Test` and enable Loopback Processing in Replace mode:
+
+   ```powershell
+   New-GPO -Name "TXWES_Loopback_Test" -Domain "txwes.edu"
+
+   Set-GPRegistryValue -Name "TXWES_Loopback_Test" `
+       -Key "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon" `
+       -ValueName "UserPolicyMode" -Type DWord -Value 2
+   ```
+
+   Note: Value 2 = Replace mode, Value 1 = Merge mode. Confirm this by checking the Group Policy Administrative Template path: Computer Configuration > Policies > Administrative Templates > System > Group Policy > "Configure user Group Policy loopback processing mode."
+
+2. Link the GPO to the Kiosks OU:
+
+   ```powershell
+   New-GPLink -Name "TXWES_Loopback_Test" `
+       -Target "OU=Kiosks,OU=TXWES,DC=txwes,DC=edu" `
+       -LinkEnabled Yes
+   ```
+
+3. Verify the GPO is linked and the registry value is set correctly:
+
+   ```powershell
+   Get-GPInheritance -Target "OU=Kiosks,OU=TXWES,DC=txwes,DC=edu" |
+       Select-Object -ExpandProperty GpoLinks
+
+   Get-GPRegistryValue -Name "TXWES_Loopback_Test" `
+       -Key "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon" `
+       -ValueName "UserPolicyMode"
+   ```
+
+4. In your lab notes, explain the difference between setting `UserPolicyMode = 1` (Merge) versus `UserPolicyMode = 2` (Replace). Describe a real-world scenario where Merge mode would be more appropriate than Replace mode.
+
+### Challenge 2: Identify Unlinked and Empty GPOs
+
+GPO sprawl (unused, unlinked, or empty GPOs) creates confusion and should be cleaned up regularly. Practice identifying them.
+
+1. List all GPOs and check which ones have no links by examining each GPO's XML report:
+
+   ```powershell
+   $allGPOs = Get-GPO -All
+   foreach ($gpo in $allGPOs) {
+       $report = [xml](Get-GPOReport -Guid $gpo.Id -ReportType Xml)
+       $links = $report.GPO.LinksTo
+       if (-not $links) {
+           Write-Host "UNLINKED: $($gpo.DisplayName)" -ForegroundColor Yellow
+       }
+   }
+   ```
+
+2. Identify GPOs that are linked but have "All Settings Disabled" status (they apply to OUs but contain no active settings):
+
+   ```powershell
+   Get-GPO -All | Where-Object { $_.GpoStatus -eq "AllSettingsDisabled" } |
+       Select-Object DisplayName, GpoStatus, CreationTime
+   ```
+
+3. For any GPOs that are both unlinked and empty (no active settings), document in your lab notes: what would be the safe procedure for removing them? Include what verification steps should be performed before deletion, and whether a backup is needed.
+
+4. Generate a complete GPO inventory report for all GPOs in the domain:
+
+   ```powershell
+   Get-GPO -All | Select-Object DisplayName, GpoStatus, CreationTime, ModificationTime |
+       Sort-Object DisplayName |
+       Export-Csv -Path "C:\GPO_Inventory.csv" -NoTypeInformation
+
+   Import-Csv "C:\GPO_Inventory.csv" | Format-Table -AutoSize
+   ```
+
+### Reflection Questions
+
+1. Loopback Processing Replace mode discards all of the user's OU policies and substitutes the computer's OU User Configuration. What specific risk does this create for a Domain Admin who logs on to a kiosk computer with Loopback Replace enabled, and how would you mitigate it without disabling Loopback Processing?
+2. You discovered several unlinked GPOs in the domain. Before deleting them, what information would you collect, and who in the organization should be consulted? Describe the process for safely retiring an unused GPO in a production environment.

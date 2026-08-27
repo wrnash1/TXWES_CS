@@ -166,6 +166,156 @@ An administrator needs to shrink an ext4 logical volume from 20 GB to 15 GB. The
 
 ---
 
+**Question 11** (5 points)
+
+An administrator wants to move all physical extents from `/dev/sdb1` to other PVs in the same volume group so that `/dev/sdb1` can be safely removed. Which command initiates this data migration?
+
+- A) `pvremove /dev/sdb1`
+- B) `vgreduce vg0 /dev/sdb1`
+- C) `pvmove /dev/sdb1`
+- D) `lv migrate /dev/sdb1`
+
+**Correct Answer: C**
+
+*Explanation: `pvmove /dev/sdb1` migrates all physical extents (and thus the data) from `/dev/sdb1` to other PVs in the volume group while the LV remains online and mounted. After `pvmove` completes, `vgreduce vg0 /dev/sdb1` removes it from the VG, and `pvremove /dev/sdb1` clears the PV label. Running `pvremove` or `vgreduce` before `pvmove` would destroy data.*
+
+---
+
+**Question 12** (5 points)
+
+A RAID 5 array with 5 drives experiences two simultaneous disk failures. What is the result?
+
+- A) The array degrades to a reduced capacity but remains operational.
+- B) The array enters read-only mode to prevent further data loss.
+- C) The array fails and data is lost because RAID 5 tolerates only one disk failure.
+- D) The array automatically rebuilds using a hot spare.
+
+**Correct Answer: C**
+
+*Explanation: RAID 5 uses single distributed parity and can tolerate exactly one simultaneous disk failure. With two failed drives, there is insufficient parity information to reconstruct the data — the array fails and data is unrecoverable without backups. RAID 6 is required to tolerate two simultaneous failures. Hot spare behavior is a configuration option, not a RAID 5 inherent feature, and it would not help after two simultaneous failures.*
+
+---
+
+**Question 13** (5 points)
+
+Which command displays the status of a software RAID array `/dev/md0` including whether it is degraded and how many drives are active?
+
+- A) `mdadm --status /dev/md0`
+- B) `mdadm --detail /dev/md0`
+- C) `cat /proc/mdstat`
+- D) Both B and C provide this information
+
+**Correct Answer: D**
+
+*Explanation: Both `mdadm --detail /dev/md0` and `cat /proc/mdstat` show RAID array status including active/degraded state and drive count. `mdadm --detail` provides structured output with drive roles, UUIDs, and rebuild progress. `/proc/mdstat` provides a quick kernel-level summary. Option A uses invalid syntax.*
+
+---
+
+**Question 14** (5 points)
+
+What does the `noatime` mount option accomplish, and in what scenario would it provide the most benefit?
+
+- A) It prevents the filesystem from recording access times on reads, which reduces write I/O on read-heavy workloads.
+- B) It disables all timestamp recording to make the filesystem read-only.
+- C) It prevents the system clock from updating atime fields during NFS operations.
+- D) It causes access time to be recorded only when the file is opened, not when it is read.
+
+**Correct Answer: A**
+
+*Explanation: Every file read normally triggers a metadata write to update the `atime` (access time) field. The `noatime` option disables this write, reducing I/O and improving performance particularly on read-heavy workloads like web server document roots or database directories. A related option, `relatime`, updates atime only when it is older than mtime — a compromise between `atime` and `noatime`.*
+
+---
+
+**Question 15** (5 points)
+
+An administrator uses `blkid` to find the UUID of `/dev/sdb1` and records it as `1a2b3c4d-...`. Later, the drive is removed and a new drive is installed and partitioned. The new `/dev/sdb1` has a different UUID. An fstab entry that uses `UUID=1a2b3c4d-...` will behave in which way?
+
+- A) The mount will succeed using the new drive because device names override UUIDs.
+- B) The mount will fail at boot because no device has the recorded UUID.
+- C) The system will prompt for a new UUID during boot.
+- D) The mount will succeed because `/dev/sdb1` is implicitly used as a fallback.
+
+**Correct Answer: B**
+
+*Explanation: fstab entries using UUID are tied to that specific UUID, not to a device name. If no device with that UUID exists (because the old drive was replaced), the mount fails at boot. With `nofail` in the mount options, the failure is non-fatal. Without it, the system may enter emergency mode. This illustrates why changing drives requires updating fstab with the new device's UUID.*
+
+---
+
+**Question 16** (5 points)
+
+Which `lvcreate` command creates a 500 MB LVM snapshot named `data_snap` of the logical volume `/dev/vg0/data`?
+
+- A) `lvcreate -L 500M --snapshot -n data_snap /dev/vg0/data`
+- B) `lvcreate -s -L 500M -n data_snap /dev/vg0/data`
+- C) `lvcreate -S 500M -n data_snap /dev/vg0/data`
+- D) Both A and B are correct
+
+**Correct Answer: D**
+
+*Explanation: Both `--snapshot` (long form) and `-s` (short form) are valid flags for creating an LVM snapshot. Both option A and option B specify the snapshot size (500M), snapshot name (`data_snap`), and source volume (`/dev/vg0/data`). The snapshot size determines how much change data can be recorded before the snapshot becomes invalid.*
+
+---
+
+**Question 17** (5 points)
+
+A volume group has 30 GB free. An administrator wants to create a logical volume using all remaining free space. Which command is correct?
+
+- A) `lvcreate -L 30G -n newvol vg0`
+- B) `lvcreate -l 100%FREE -n newvol vg0`
+- C) `lvcreate -L 100% -n newvol vg0`
+- D) `lvcreate --all-free -n newvol vg0`
+
+**Correct Answer: B**
+
+*Explanation: Lowercase `-l` (extents) allows special size specifiers like `100%FREE`, `100%VG`, and `100%PVS`. Uppercase `-L` (size) requires an absolute size in bytes, MB, GB, etc. `100%FREE` allocates all free extents in the VG. `100%VG` would try to use all VG space including already-allocated space and would fail.*
+
+---
+
+**Question 18** (5 points)
+
+After a hard power failure, an XFS filesystem mounted at `/data` shows corruption. The correct repair command is:
+
+- A) `fsck -y /dev/vg0/data` while the filesystem is mounted
+- B) `xfs_repair /dev/vg0/data` after unmounting the filesystem
+- C) `e2fsck -f /dev/vg0/data` after unmounting the filesystem
+- D) `mount -o remount,repair /data`
+
+**Correct Answer: B**
+
+*Explanation: XFS filesystems are repaired with `xfs_repair`, not `fsck` or `e2fsck` (which are for ext2/3/4). The filesystem MUST be unmounted before running `xfs_repair`. Running repair on a mounted filesystem will cause data corruption. `mount -o remount,repair` is not a valid option.*
+
+---
+
+**Question 19** (5 points)
+
+What is the purpose of the `discard` (also written as `trim`) mount option for an SSD-backed filesystem?
+
+- A) It enables the OS to inform the SSD controller which blocks are no longer in use, allowing the drive to optimize storage internally.
+- B) It discards all journal entries to improve write performance.
+- C) It prevents files from being recovered after deletion.
+- D) It enables write-back caching for improved sequential write speed.
+
+**Correct Answer: A**
+
+*Explanation: The TRIM/discard operation tells the SSD controller that certain logical blocks are no longer allocated (after file deletion or filesystem operations). This allows the SSD to perform garbage collection more efficiently, maintaining write performance over time. The `discard` option enables this passively (on every delete). The alternative is `fstrim`, run periodically (weekly via cron or systemd timer) to batch-process TRIM commands.*
+
+---
+
+**Question 20** (5 points)
+
+An administrator runs `pvdisplay /dev/sdc1` and sees `Allocatable: YES (but full)`. What does this mean?
+
+- A) The PV can accept new physical extents from a vgextend operation.
+- B) The PV is part of a volume group and all of its physical extents have been allocated to logical volumes.
+- C) The PV is being used by a snapshot that is consuming all available space.
+- D) The PV has no more room for filesystem data but metadata can still be written.
+
+**Correct Answer: B**
+
+*Explanation: `Allocatable: YES (but full)` means the PV is a member of a volume group (YES = allocatable) and all of its Physical Extents (PEs) have been allocated to one or more logical volumes. To use this PV for new logical volumes, you would first need to free space by shrinking or removing an existing LV, or by adding a new PV to the VG.*
+
+---
+
 ### Answer Key
 
 | Question | Answer |
@@ -180,3 +330,13 @@ An administrator needs to shrink an ext4 logical volume from 20 GB to 15 GB. The
 | 8 | B |
 | 9 | D |
 | 10 | C |
+| 11 | C |
+| 12 | C |
+| 13 | D |
+| 14 | A |
+| 15 | B |
+| 16 | D |
+| 17 | B |
+| 18 | B |
+| 19 | A |
+| 20 | B |

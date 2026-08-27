@@ -49,3 +49,23 @@ In this module's final lab activity, you will consolidate and demonstrate master
 *   [ ] Complete the Microsoft Learn [AI-900 Practice Assessment](https://learn.microsoft.com/en-us/certifications/exams/ai-900/practice/assessment?assessmentId=26&assessment-type=practice).
 *   [ ] Register for your AI-900 exam at [Microsoft Learn Certifications](https://learn.microsoft.com/en-us/certifications/exams/ai-900/).
 *   [ ] Proceed to the final course exam activity.
+
+---
+
+### 4. Supplemental Resources
+
+**1. Microsoft Learn — AI-900 Exam Skills Outline and Free Practice Assessment**
+<https://learn.microsoft.com/en-us/credentials/certifications/exams/ai-900/>
+The official Microsoft Learn page for AI-900 includes the complete skills measured document, free practice assessment with retired exam questions, and links to all learning paths that map to exam domains. The practice assessment is the most accurate predictor of exam readiness available at no cost.
+
+**2. Microsoft Azure AI Fundamentals — Full Study Guide (Microsoft Press)**
+<https://www.microsoftpressstore.com/store/exam-ref-ai-900-microsoft-azure-ai-fundamentals-9780137843671>
+The official Microsoft Press exam reference for AI-900. Organized by exam domain, it provides scenario-based coverage of all five domains with "Thought Experiments" and practice questions. Recommended for comprehensive review before the certification exam.
+
+**3. Azure AI Services Documentation Hub**
+<https://learn.microsoft.com/en-us/azure/ai-services/>
+The top-level documentation hub for all Azure AI services covered in this course: Computer Vision, Custom Vision, Face API, Language Service, Translator, Speech, Bot Service, Document Intelligence, Anomaly Detector, and OpenAI Service. Each service's "What is..." overview page is a concise last-minute review source for the scenario-matching questions on AI-900.
+
+---
+
+End of Reading Guide — Module 16

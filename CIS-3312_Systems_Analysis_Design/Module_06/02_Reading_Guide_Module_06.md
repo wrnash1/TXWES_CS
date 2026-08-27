@@ -180,3 +180,29 @@ Supplemental reading:
 - [ ] Watch the Module 06 video lecture.
 - [ ] Complete the Module 06 lab activity.
 - [ ] Post your initial discussion response by Wednesday at 11:59 PM.
+
+---
+
+## 11. Supplemental Resources
+
+The following open educational resources extend module content on DFDs and ERDs. All are freely accessible without login or purchase.
+
+1. **Data Flow Diagrams — Visual Paradigm Guide**
+   <https://www.visual-paradigm.com/guide/data-flow-diagram/what-is-data-flow-diagram/>
+   Focus: Comprehensive illustrated guide covering all DFD symbols, leveling rules, and notation conventions. Includes worked examples of Context Diagrams and Level 1 DFDs that directly support the lab exercises.
+
+2. **Entity-Relationship Diagram Tutorial — Lucidchart**
+   <https://www.lucidchart.com/pages/er-diagrams>
+   Focus: Clear explanation of ERD notation including Crow's Foot symbols, cardinality types, and junction table design. The worked examples reinforce Sections 5 and 6 of this guide.
+
+3. **Data Flow Diagram Rules and Best Practices — Sparxsystems**
+   <https://sparxsystems.com/resources/tutorials/uml/dataflow-diagram.html>
+   Focus: Reference guide covering DFD rule violations (black holes, miracles, level balancing) with diagrams. Directly reinforces Section 4 of this guide and the most common ECBA exam traps on DFDs.
+
+4. **Normalization and ERD Design — Database Design Course (freeCodeCamp YouTube)**
+   <https://www.youtube.com/watch?v=ztHopE5Wnpc>
+   Focus: Free university-level video covering entity-relationship modeling, normalization, and junction table design. Supplements the ERD sections of this module for visual learners.
+
+5. **Data Dictionary Best Practices — TechTarget**
+   <https://www.techtarget.com/searchdatamanagement/definition/data-dictionary>
+   Focus: Plain-language explanation of data dictionary structure, purpose, and content standards. Reinforces Section 1.12 and the data dictionary entries required in the lab.

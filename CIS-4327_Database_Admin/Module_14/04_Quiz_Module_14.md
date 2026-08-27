@@ -165,3 +165,193 @@ Distractor analysis: A is incorrect because a one-time migration does not mainta
 ---
 
 Reference: cloud.google.com/learn
+
+---
+
+### Question 11 (5 points)
+
+A team migrating from MySQL 5.7 to Cloud SQL for MySQL 8.0 is using DMS. The source has `binlog_format = STATEMENT`. The DMS connection test passes but the migration job fails after initial load during CDC. What is the root cause?
+
+A) MySQL 8.0 on Cloud SQL does not support statement-based replication; the source must use `binlog_format = ROW` for DMS CDC to function correctly.
+B) The MySQL 5.7 version is too old for DMS; a minimum of MySQL 5.7.34 is required.
+C) `STATEMENT` format requires GTID mode to be disabled; enabling GTID caused the conflict.
+D) The DMS job failed because Cloud SQL for MySQL 8.0 requires `binlog_expire_logs_seconds` instead of `expire_logs_days`.
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- B) MySQL 5.7 is a supported DMS source version; the version is not the cause of the CDC failure.
+- C) GTID mode and binlog format are independent settings; STATEMENT format does not require GTID to be disabled, and the failure is caused by the format incompatibility, not a GTID conflict.
+- D) Log retention parameter naming is a version difference but does not cause CDC to fail; DMS reads the binary log using the replication protocol, which works regardless of which parameter name controls log retention.
+
+---
+
+### Question 12 (5 points)
+
+During a PostgreSQL-to-Cloud SQL DMS migration, the team needs to maintain application read traffic against the target while migration is in progress. Which Cloud SQL feature allows read queries to run against the target during migration without interfering with DMS CDC replication?
+
+A) Promote the DMS target to primary so it can accept both reads and writes.
+B) Create a read replica of the Cloud SQL migration target; applications query the replica while DMS writes to the primary target.
+C) Use the Cloud SQL Auth Proxy to route read queries to the target simultaneously with DMS replication.
+D) Enable Cloud SQL Query Insights on the target to route read queries through the monitoring layer.
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A) Promoting the target ends the DMS migration permanently; once promoted, replication stops and the target becomes an independent primary — this is the cutover action, not a way to serve reads during migration.
+- C) The Cloud SQL Auth Proxy manages connection authentication and TLS; it does not differentiate read vs write traffic or route queries to specific instances.
+- D) Query Insights is a monitoring feature that samples queries for performance analysis; it does not route or manage query traffic.
+
+---
+
+### Question 13 (5 points)
+
+A Datastream job streaming CDC changes from PostgreSQL to BigQuery has been running for 3 days. A data analyst reports that a row updated on the source 4 hours ago is not yet visible in BigQuery. What is the most likely cause?
+
+A) Datastream has a 6-hour replication delay by design for consistency.
+B) The Datastream stream is paused or the target BigQuery dataset is in a different region causing routing delays.
+C) The PostgreSQL `wal_level` was changed from `logical` to `replica` after Datastream was configured, breaking logical decoding.
+D) BigQuery only accepts INSERT operations from Datastream; UPDATE operations are not supported.
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- A) Datastream provides near-real-time replication with typical latency of seconds to minutes; a 4-hour delay is abnormal and indicates a problem, not designed behavior.
+- B) Cross-region routing adds latency of milliseconds to seconds, not hours; a 4-hour delay would be visible as an error in the Datastream metrics, not just a delay.
+- D) Datastream supports INSERT, UPDATE, and DELETE operations from PostgreSQL to BigQuery using UPSERT semantics; UPDATE operations are fully supported.
+
+---
+
+### Question 14 (5 points)
+
+A company migrates from on-premises PostgreSQL 12 to Cloud SQL for PostgreSQL 15. After migration, a critical stored function using `WITH RECURSIVE` returns different results than on PostgreSQL 12. What is the most likely cause?
+
+A) Cloud SQL disables recursive CTEs by default; they must be enabled with a database flag.
+B) A behavior change between PostgreSQL versions in CTE optimization — PostgreSQL 12 added CTE inlining by default, and PostgreSQL 15 changed the optimizer behavior for certain recursive query patterns.
+C) The function was not migrated correctly by DMS; it must be manually recreated.
+D) `WITH RECURSIVE` is not supported in Cloud SQL for PostgreSQL 15.
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A) Cloud SQL does not disable `WITH RECURSIVE`; recursive CTEs are standard PostgreSQL functionality enabled by default in all supported versions.
+- C) DMS migrates data, not functions; the function needed to be manually migrated or converted — but the question states it is returning different results (not an error), implying it was successfully deployed and runs, which points to a behavioral difference between versions.
+- D) `WITH RECURSIVE` is standard SQL supported in all PostgreSQL versions from 8.4 onward; Cloud SQL for PostgreSQL 15 fully supports it.
+
+---
+
+### Question 15 (5 points)
+
+A DMS migration job shows `FULL DUMP IN PROGRESS` for 18 hours on a 2 TB MySQL database. The source database write rate is low. What is the most likely bottleneck?
+
+A) The Cloud SQL destination instance's disk write IOPS are saturating during the initial load phase.
+B) DMS has a 2 TB size limit and is throttling the migration.
+C) The MySQL `max_allowed_packet` setting is too small, causing DMS to retry large row batches.
+D) The Cloud SQL Auth Proxy is rate-limiting DMS connections.
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- B) DMS does not impose a 2 TB size limit on migration jobs; large database migrations are supported and may simply take longer proportional to data volume.
+- C) `max_allowed_packet` affects the maximum size of a single MySQL packet; while misconfiguration can cause errors for large BLOBs, it does not cause a general 18-hour slowdown on a 2 TB dump.
+- D) The Cloud SQL Auth Proxy is used for application connections, not for DMS replication connections; DMS connects via its own internal mechanism and is not rate-limited by the Auth Proxy.
+
+---
+
+### Question 16 (5 points)
+
+A migration team wants to validate that no rows are missing after a MySQL-to-Cloud SQL migration. They compare `SELECT COUNT(*) FROM orders` on both source and target and get the same number. A week after cutover, a data quality issue is discovered — some order amounts were incorrectly converted from DECIMAL(10,2) to FLOAT. Which validation approach would have caught this?
+
+A) Level 2 column checksum validation — computing an MD5 or CHECKSUM aggregate per table and comparing source vs target.
+B) Level 1 row count validation — the same approach already performed, just on a larger sample.
+C) Index cardinality check — comparing index statistics between source and target.
+D) CDC lag monitoring — ensuring replication lag was below 1 second at cutover.
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- B) Row count validation was already performed and did not catch the issue; repeating it on a larger sample still only counts rows without checking column values.
+- C) Index cardinality statistics reflect the distribution of column values but do not verify that numeric values are stored with correct precision; a FLOAT column has different cardinality characteristics than DECIMAL but this check would not reliably detect precision loss.
+- D) CDC lag monitoring measures replication timeliness, not data correctness; near-zero lag only confirms changes arrived quickly, not that they were converted correctly.
+
+---
+
+### Question 17 (5 points)
+
+Which DMS feature allows a team to assess which Oracle objects (tables, procedures, views) will require manual conversion before migrating to Cloud SQL for PostgreSQL, and provides an estimated conversion effort score?
+
+A) DMS Schema Conversion Workspace — analyzes the Oracle schema and generates a compatibility report with conversion recommendations and effort estimates.
+B) DMS connection profiles — test network connectivity and show which objects can be replicated.
+C) Cloud SQL Migration Center — a separate service that scans Oracle and provides a migration readiness score.
+D) BigQuery Migration Service — converts Oracle DDL to BigQuery-compatible schema definitions.
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- B) DMS connection profiles verify network access and authentication to the source and target databases; they do not analyze schema compatibility or estimate conversion effort.
+- C) Migration Center is a Google Cloud service that assesses VM and application migration readiness; it is not specific to Oracle-to-PostgreSQL schema conversion in DMS.
+- D) BigQuery Migration Service converts SQL queries and schemas for BigQuery workloads; it is not used for Oracle-to-Cloud SQL PostgreSQL schema conversion.
+
+---
+
+### Question 18 (5 points)
+
+A company runs a 24/7 e-commerce application on MySQL 8.0. They need to migrate to Cloud SQL for MySQL 8.0 (homogeneous migration) with a maximum cutover window of 2 minutes. Which approach achieves this?
+
+A) Use DMS continuous migration; when replication lag reaches under 2 seconds, stop application writes, wait for lag to reach 0, and switch connection strings to Cloud SQL.
+B) Use `mysqldump` during a 2-minute maintenance window at midnight; the dump of their 3 TB database will complete in 2 minutes.
+C) Use Cloud SQL import from a Cloud Storage backup; imports of large databases complete in under 2 minutes.
+D) Create a manual MySQL replica on Cloud SQL and switch application writes to it during the maintenance window.
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- B) A `mysqldump` of a 3 TB database takes hours, not 2 minutes; this approach would require a multi-hour maintenance window.
+- C) Cloud SQL imports of multi-TB databases take hours depending on instance tier and database size; 2 minutes is not achievable for a large database import.
+- D) Setting up a manual MySQL replica requires configuring binary log replication outside DMS and is operationally complex; DMS continuous migration is the managed, supported approach designed for this exact scenario.
+
+---
+
+### Question 19 (5 points)
+
+After completing a DMS migration promotion, the team discovers that 3 tables were excluded from the migration job due to missing primary keys on the source. How should the team migrate these 3 tables?
+
+A) Re-run the full DMS migration job with a new configuration that includes the 3 tables after adding primary keys on the source.
+B) Add primary keys to the 3 tables on the source, then export and import them separately using `mysqldump` or `pg_dump` for those specific tables.
+C) The tables cannot be migrated because DMS requires primary keys and they cannot be added to existing tables.
+D) Use BigQuery Data Transfer Service to load the 3 tables from the source into Cloud SQL.
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A) Re-running the full DMS migration would re-migrate all tables including those already successfully migrated, risking data conflicts on the Cloud SQL target that now has live application data.
+- C) Adding primary keys to existing tables is a standard DDL operation; `ALTER TABLE orders ADD PRIMARY KEY (id)` is valid in both MySQL and PostgreSQL as long as the column has no duplicate or null values.
+- D) BigQuery Data Transfer Service loads data into BigQuery, not Cloud SQL; it is not a tool for migrating tables between MySQL/PostgreSQL instances.
+
+---
+
+### Question 20 (5 points)
+
+A DBA is testing a DMS migration by querying `SELECT COUNT(*) FROM orders` on source (returns 1,200,000 rows) and target (returns 1,199,998 rows). The 2-row discrepancy appears during the CDC phase. What is the most likely explanation?
+
+A) CDC is still in progress and the 2 missing rows were inserted on the source after the DMS CDC position snapshot; they will appear on the target within seconds.
+B) DMS dropped 2 rows due to a primary key conflict on the target.
+C) The target Cloud SQL instance ran out of storage and truncated 2 rows.
+D) The COUNT queries were run at different times — the source had 2 more rows inserted between the two COUNT executions.
+
+**Correct Answer:** D
+
+**Distractor Analysis:**
+
+- A) If CDC is actively running and replication lag is near zero, a 2-row discrepancy is more likely a timing artifact than a genuine data loss; however, this explanation is less precise than option D which identifies the root cause (queries run at different times).
+- B) A primary key conflict causes DMS to log an error and skip the conflicting row; this would appear in DMS logs as an explicit error, not as a silent 2-row discrepancy.
+- C) Cloud SQL storage exhaustion causes write errors and alerts, not silent row truncation; the DMS job would fail with a disk full error before dropping individual rows.

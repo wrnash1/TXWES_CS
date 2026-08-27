@@ -233,3 +233,183 @@ Dense                 (None, 10)            27050
 - *Why B is incorrect:* 27,050 is only the Dense layer's parameter count. Summing all layers requires adding the Conv2D parameters (160) as well. This error reflects a misreading of the summary table.
 - *Why C is correct:* Always sum every row's `Param #` column. Pooling and Flatten layers have zero parameters because they perform fixed mathematical operations with no learnable weights. Only Conv2D and Dense have trainable parameters in this model.
 - *Why D is incorrect:* 27,370 does not correspond to any correct combination of the values shown. It may result from incorrectly double-counting bias terms or misreading the Flatten output size. Always verify the Flatten output by computing `H * W * C` from the pooling layer's output shape.
+
+---
+
+### Question 11 (5 points)
+
+A `Conv2D(64, (5, 5), padding='same', strides=2)` layer receives an input of shape `(64, 64, 16)`. What is the output shape?
+
+- A) `(64, 64, 64)`
+- B) `(32, 32, 64)`
+- C) `(30, 30, 64)`
+- D) `(60, 60, 64)`
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* With `padding='same'` and `strides=2`, each spatial dimension is halved: `ceil(64/2) = 32`. The depth equals the number of filters: 64. Output shape is `(32, 32, 64)`. The `same` padding ensures the stride alone controls spatial reduction.
+  - *Why A is incorrect:* `(64, 64, 64)` would result from `padding='same'` with `strides=1`. When `strides=2`, each dimension is divided by the stride value, producing 32, not 64.
+  - *Why C is incorrect:* `(30, 30, 64)` applies the `valid` padding formula `(64 - 5 + 1) / 2 = 30`. The question specifies `padding='same'`, which pads the input so that the stride alone determines the output size.
+  - *Why D is incorrect:* `(60, 60, 64)` would result from `(64 - 5 + 1) = 60` with `strides=1` and `valid` padding. Neither the stride nor the padding matches this scenario.
+
+---
+
+### Question 12 (5 points)
+
+Which of the following statements about `BatchNormalization` in a CNN is correct?
+
+- A) `BatchNormalization` is placed after the `Flatten` layer to normalize the flattened feature vector before the Dense classifier head.
+- B) `BatchNormalization` normalizes activations across the batch dimension, reducing internal covariate shift and allowing higher learning rates.
+- C) `BatchNormalization` replaces the need for `Dropout` entirely and should not be used alongside it.
+- D) `BatchNormalization` is only applicable to the first convolutional layer because later layers already receive normalized inputs from the previous `MaxPooling`.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Batch Normalization standardizes the output of a layer (or the input to an activation function) across the current mini-batch, keeping activations near zero mean and unit variance. This reduces internal covariate shift — the shifting of layer input distributions during training — allowing the use of higher learning rates and making the network less sensitive to weight initialization.
+  - *Why A is incorrect:* While BatchNorm can be placed after Flatten, the most common and beneficial use in CNNs is after each Conv2D layer (before the activation), not solely at the Flatten transition. Placing it only after Flatten would leave all convolutional activations unnormalized.
+  - *Why C is incorrect:* BatchNorm and Dropout serve complementary roles — BatchNorm addresses internal covariate shift while Dropout prevents co-adaptation of neurons. They are frequently used together. BatchNorm provides mild regularization but does not fully replace Dropout.
+  - *Why D is incorrect:* MaxPooling performs a fixed spatial downsampling operation and does not normalize activation magnitudes. BatchNorm is beneficial at every convolutional block, not just the first layer.
+
+---
+
+### Question 13 (5 points)
+
+A developer uses `strides=2` in a `Conv2D` layer instead of adding a `MaxPooling2D` layer after it. What is the key difference between these two spatial downsampling strategies?
+
+- A) Strided convolution reduces spatial dimensions but loses all channel information, while MaxPooling preserves all channels.
+- B) Strided convolution learns how to downsample (trainable), while MaxPooling always selects the maximum value (fixed, no learnable parameters).
+- C) MaxPooling introduces more parameters than strided convolution because it learns a pooling kernel.
+- D) Strided convolution can only be applied to the first layer, while MaxPooling can be placed anywhere in the network.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* A strided convolution applies a learnable filter while simultaneously reducing spatial dimensions — the downsampling is learned from data. MaxPooling is a fixed, parameter-free operation that always selects the maximum activation value in each pooling window. Modern architectures (e.g., ResNet) often prefer strided convolutions because the network can learn an optimal downsampling strategy.
+  - *Why A is incorrect:* Both strided convolution and MaxPooling preserve all channels (feature map depth). Neither operation reduces the channel dimension — only the spatial height and width are affected by downsampling.
+  - *Why C is incorrect:* MaxPooling has zero learnable parameters. It is a fixed mathematical operation. Strided convolution has more parameters than MaxPooling because the convolution itself has learnable weights.
+  - *Why D is incorrect:* Both strided convolution and MaxPooling can be applied at any layer in the network. There is no restriction limiting strided convolution to the first layer.
+
+---
+
+### Question 14 (5 points)
+
+What is the receptive field of a neuron in the second convolutional layer of a network where both layers use `3x3` kernels with `strides=1` and `padding='valid'`?
+
+- A) `3x3` — the receptive field is always determined only by the current layer's kernel size.
+- B) `5x5` — two stacked `3x3` kernels cover a `5x5` region in the original input.
+- C) `9x9` — two `3x3` kernels multiply: `3 * 3 = 9`.
+- D) `6x6` — two `3x3` kernels add: `3 + 3 = 6`.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Each neuron in the second convolutional layer looks at a `3x3` patch of the first layer's feature map. Each cell in that `3x3` patch of the first layer was computed from a `3x3` patch of the original input. The union of those patches in the original input forms a `5x5` region: `(3 - 1) + (3 - 1) + 1 = 5`. This is why deep stacked `3x3` convolutions are preferred — they build large receptive fields cheaply.
+  - *Why A is incorrect:* The receptive field grows with network depth. A neuron in a deeper layer "sees" a larger region of the original input because its activations are influenced by a larger neighborhood through the chain of preceding layers.
+  - *Why C is incorrect:* Receptive field does not multiply across layers. It grows additively: adding one `3x3` layer to an existing receptive field of `3x3` produces `3 + 2 = 5`, not `3 * 3 = 9`.
+  - *Why D is incorrect:* The formula `3 + 3 = 6` overcounts by not accounting for overlap. The correct formula for stacked `3x3` layers is `1 + N * (kernel_size - 1)` where N is the number of layers: `1 + 2 * 2 = 5`.
+
+---
+
+### Question 15 (5 points)
+
+A developer trains a CNN for 10-class image classification and calls `model.predict(x_test[0:1])`. The output is an array like `[[0.01, 0.02, 0.85, 0.03, ...]]`. What does this output represent and how would you determine the predicted class?
+
+- A) The output is the raw logit scores before softmax; the predicted class is the index of the logit closest to zero.
+- B) The output is the class probability distribution from the softmax layer; the predicted class index is `np.argmax(output[0])`.
+- C) The output is the pixel reconstruction of the input image compressed by the CNN; no class can be derived from it.
+- D) The output is a one-hot encoded label vector; the predicted class is the position of the `1` value.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* A `Dense(10, activation='softmax')` output layer produces a probability distribution over 10 classes — 10 non-negative values that sum to 1.0. The element with the highest probability is the predicted class. `np.argmax(model.predict(x)[0])` is the standard pattern for extracting the integer class prediction from a softmax output.
+  - *Why A is incorrect:* If the model uses softmax activation on the output layer (as specified), the output is already a probability distribution, not raw logits. Raw logits are produced only if the output layer has no activation (e.g., `Dense(10)` with no `activation` argument) or uses `activation='linear'`.
+  - *Why C is incorrect:* A CNN with a Dense softmax head is a discriminative classifier, not a reconstruction model. Only autoencoders produce image reconstructions. The CNN output vector contains class probabilities, not pixel values.
+  - *Why D is incorrect:* A one-hot vector contains exactly one `1.0` and all other values as `0.0`. A softmax probability distribution contains continuous values between 0 and 1. The model output shown (`[0.01, 0.02, 0.85, ...]`) is a probability distribution, not a binary one-hot encoding.
+
+---
+
+### Question 16 (5 points)
+
+Which layer in Keras adds **L2 regularization** to a `Conv2D` layer's kernel weights?
+
+- A) `keras.layers.Conv2D(32, (3,3), kernel_regularizer=keras.regularizers.l2(0.01))`
+- B) `keras.layers.Conv2D(32, (3,3), dropout_rate=0.01)`
+- C) `keras.layers.Conv2D(32, (3,3), weight_decay=0.01)`
+- D) `keras.layers.L2Regularizer(lambda=0.01)(Conv2D(32, (3,3)))`
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - *Why A is correct:* The `kernel_regularizer` argument in Keras layer constructors accepts a regularizer object. `keras.regularizers.l2(0.01)` creates an L2 regularizer with coefficient 0.01. During training, the L2 penalty `0.01 * sum(weights^2)` is added to the loss, discouraging large weights and reducing overfitting.
+  - *Why B is incorrect:* `Conv2D` has no `dropout_rate` argument. Dropout in CNNs is applied via a separate `keras.layers.Dropout(rate)` layer placed after the convolutional block, not as a parameter of Conv2D.
+  - *Why C is incorrect:* `weight_decay` is not a parameter of Keras's `Conv2D` layer. In some frameworks (e.g., PyTorch optimizers), weight decay is specified in the optimizer. In Keras, regularization is specified via `kernel_regularizer`.
+  - *Why D is incorrect:* `keras.layers.L2Regularizer` is not a valid Keras layer class. Regularizers in Keras are not applied as wrapper layers — they are passed as arguments to the layer being regularized via `kernel_regularizer`, `bias_regularizer`, or `activity_regularizer`.
+
+---
+
+### Question 17 (5 points)
+
+A developer wants to inspect the activation of the third layer (index 2) in a trained Keras model. Which code correctly creates the intermediate activation model?
+
+- A) `activation_model = keras.Model(inputs=model.input, outputs=model.layers[2].output)`
+- B) `activation_model = model.get_layer(index=2).predict(x_test)`
+- C) `activation_model = keras.Model(inputs=model.layers[2].input, outputs=model.output)`
+- D) `activation_model = keras.layers.Lambda(lambda x: model.layers[2](x))`
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - *Why A is correct:* `keras.Model(inputs=model.input, outputs=model.layers[2].output)` creates a sub-model that shares all weights with the original model but terminates its output at layer index 2. When `activation_model.predict(x)` is called, it returns the activations at that specific layer. This is the standard Keras pattern for feature visualization.
+  - *Why B is incorrect:* `model.get_layer(index=2)` returns a layer object, which is not callable on data directly as a predictor. A layer object does not have a `predict()` method — only `Model` instances have `predict()`. This would raise an `AttributeError`.
+  - *Why C is incorrect:* This creates a model from layer 2's input to the final output, which is a partial network starting mid-way. It is the reverse of what is needed for intermediate activation extraction and would require manually providing the correctly shaped intermediate tensor as input.
+  - *Why D is incorrect:* While `keras.layers.Lambda` can wrap arbitrary operations, this pattern does not create a proper Keras model and would not work correctly for prediction on batched data. The standard and correct approach is the `keras.Model(inputs, outputs)` functional API.
+
+---
+
+### Question 18 (5 points)
+
+When training a CNN with `model.fit(..., validation_split=0.1)`, which samples are used for validation?
+
+- A) A randomly selected 10% of the training data, shuffled and resampled each epoch.
+- B) The last 10% of the training array (by index), held out before training begins.
+- C) The first 10% of the training array (by index), held out before training begins.
+- D) A stratified 10% sample selected to maintain class balance across all classes.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Keras `validation_split` takes the **last** `fraction * N` samples from the provided training array before any shuffling. For 50,000 CIFAR-10 training samples, `validation_split=0.1` reserves samples at indices `45,000–49,999` for validation. This is a deterministic operation — the same samples are always held out.
+  - *Why A is incorrect:* The validation split is not re-randomized each epoch. The same held-out subset is used for validation throughout all training epochs. This is important for comparing validation metrics across epochs consistently.
+  - *Why C is incorrect:* Keras takes the last fraction of data, not the first. The first samples are used for training. This matters when data is ordered (e.g., temporally) — you should shuffle the data yourself before passing it to `model.fit()` if order is a concern.
+  - *Why D is incorrect:* `validation_split` does not perform stratification. For stratified splitting, use `sklearn.model_selection.train_test_split(stratify=y)` before calling `model.fit()`, and then pass `validation_data=(x_val, y_val)` explicitly.
+
+---
+
+### Question 19 (5 points)
+
+What is the primary advantage of using `padding='same'` throughout a CNN architecture compared to `padding='valid'`?
+
+- A) `padding='same'` reduces the parameter count of each Conv2D layer by avoiding border pixel computations.
+- B) `padding='same'` preserves spatial dimensions through conv layers, making it easy to predict output shapes and allowing flexible depth without manual size tracking.
+- C) `padding='same'` improves test accuracy because it forces the model to learn from zero-padded border regions, which act as a regularizer.
+- D) `padding='same'` is required when using `BatchNormalization` to ensure the batch statistics are computed over identical-sized feature maps.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* With `padding='same'` and `strides=1`, every Conv2D layer outputs the same spatial dimensions as its input. Only MaxPooling or strided convolutions reduce spatial size. This predictability simplifies architecture design: you can stack as many conv layers as needed without computing shrinking dimensions, and the only size changes come from deliberate downsampling layers.
+  - *Why A is incorrect:* `padding='same'` does not reduce parameter count — it adds zero-padding around the input, which is a computational (not parametric) operation. The parameter count of a Conv2D layer is determined entirely by `filters * kernel_h * kernel_w * input_channels + filters`, regardless of padding mode.
+  - *Why C is incorrect:* Zero padding allows the filter to process border pixels but does not introduce meaningful regularization. The accuracy difference between `same` and `valid` comes from architectural choices (depth, capacity) rather than a regularizing effect of padding.
+  - *Why D is incorrect:* BatchNormalization works with feature maps of any spatial size and has no requirement for `padding='same'`. BN normalizes over the batch, height, and width dimensions simultaneously, so it operates correctly regardless of whether padding changes feature map dimensions.
+
+---
+
+### Question 20 (5 points)
+
+A CNN trained on 224x224 images achieves 90% test accuracy. The developer wants to apply this model to 384x384 images at inference time without retraining. Which architectural change made during training would enable this?
+
+- A) Replace the `Flatten()` layer with `GlobalAveragePooling2D()` — this makes the model fully convolutional and input-size agnostic.
+- B) Replace `MaxPooling2D` with `AveragePooling2D` — average pooling accepts variable-size inputs while max pooling requires fixed sizes.
+- C) Add a `Reshape` layer at the end that resizes any input feature map to a fixed `(1, 1, 512)` tensor before the Dense head.
+- D) Set `padding='valid'` on all Conv2D layers — valid padding allows the model to process larger images by producing proportionally larger feature maps.
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - *Why A is correct:* `Flatten()` converts a `(H, W, C)` tensor into a 1D vector of length `H * W * C`. If `H` or `W` changes (larger input image), the flattened vector length changes, making the subsequent Dense layer incompatible. `GlobalAveragePooling2D()` averages each feature map to a single value regardless of spatial dimensions, always producing a `(C,)` vector. This makes the architecture fully compatible with any input spatial size.
+  - *Why B is incorrect:* Both `MaxPooling2D` and `AveragePooling2D` accept variable spatial dimensions — neither requires a fixed input size. The input-size constraint in standard CNNs comes from the `Flatten` layer, not from pooling type.
+  - *Why C is incorrect:* `keras.layers.Reshape` does not resize feature maps — it only rearranges the elements of a tensor without changing its total size. If the feature map has more elements than `1*1*512`, a `Reshape` would raise an error or produce incorrect results.
+  - *Why D is incorrect:* The padding mode affects how much spatial shrinkage occurs per conv layer, but the fundamental incompatibility with variable input sizes comes from `Flatten`. With `valid` padding on a larger image, the flattened vector would still have a different length, breaking the Dense head.

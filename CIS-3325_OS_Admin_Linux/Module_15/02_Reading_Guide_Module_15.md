@@ -384,3 +384,16 @@ Answer these before taking the quiz:
 - `auditd` captures events at the kernel level; it cannot be bypassed by userspace processes.
 - fail2ban is a detective control, not a preventive one — it acts after failures occur. Combine with SSH key-only authentication for defense in depth.
 - CIS Benchmarks provide the industry-standard checklist for Linux hardening. Know the Level 1 items for the Linux+ exam.
+
+---
+
+## 9. Supplemental Resources
+
+**1. [Red Hat SELinux User's and Administrator's Guide](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/using_selinux/index)**
+The authoritative Red Hat documentation for SELinux on RHEL 9. Covers concepts (DAC vs MAC, type enforcement, MLS), common administration tasks (`semanage`, `restorecon`, booleans), troubleshooting AVC denials with `ausearch` and `sealert`, writing custom policy modules, and confined vs. unconfined users. Essential for both the Module 15 lab and the CompTIA Linux+ security objectives.
+
+**2. [Lynis — Security Auditing Tool Documentation](https://cisofy.com/documentation/lynis/)**
+The official Lynis documentation for the open-source security auditing and hardening tool. Covers installation, performing a system audit (`sudo lynis audit system`), interpreting the hardening index score, understanding warnings and suggestions, and integrating Lynis into a CI/CD pipeline for continuous compliance checking. Lynis reports map directly to CIS Benchmark controls, making it ideal for exam preparation and real-world hardening projects.
+
+**3. [fail2ban Documentation — fail2ban.readthedocs.io](https://fail2ban.readthedocs.io/en/latest/)**
+The official fail2ban documentation. Covers the architecture (jail → filter → action), writing custom filters using regular expressions, defining custom actions beyond firewall bans (email notifications, database logging), the `fail2ban-client` management interface, and testing filters with `fail2ban-regex`. Understanding how to write custom filters is the key skill for applying fail2ban to non-standard application logs.

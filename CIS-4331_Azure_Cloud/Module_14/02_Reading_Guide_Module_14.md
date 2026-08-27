@@ -309,3 +309,13 @@ If a recommendation is not applicable — for example, a VM is intentionally idl
 ---
 
 *Texas Wesleyan University — CIS-4331 Azure Cloud Computing — Module 14 Reading Guide*
+
+---
+
+## 9. Supplemental Resources
+
+1. Azure Pricing Calculator — interactive tool for estimating Azure service costs before deployment: https://azure.microsoft.com/en-us/pricing/calculator/
+
+2. Azure Cost Management + Billing documentation — analyzing, monitoring, and optimizing Azure spending with budgets, cost analysis, and recommendations: https://learn.microsoft.com/en-us/azure/cost-management-billing/cost-management-billing-overview
+
+3. Azure Reserved Virtual Machine Instances documentation — understanding reservation discounts, scope, exchange, and cancellation policies: https://learn.microsoft.com/en-us/azure/cost-management-billing/reservations/save-compute-costs-reservations

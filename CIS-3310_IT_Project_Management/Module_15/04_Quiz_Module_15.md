@@ -257,3 +257,209 @@ allow the team to pull and self-assign work during sprint planning.
 *End of Quiz — Module 15*
 
 *Texas Wesleyan University — CIS-3310 IT Project Management*
+
+---
+
+## Questions 11–20
+
+**Instructions:** Each question is worth 5 points. Total for this section: 50 points. Select the best answer for each question.
+
+---
+
+## Question 11
+
+A product backlog contains 180 story points of unstarted work. The team's average velocity over the past four sprints is 30 story points per sprint. Each sprint is two weeks long. Approximately how many weeks remain to complete the backlog?
+
+- A) 6 weeks
+- B) 10 weeks
+- C) 12 weeks
+- D) 18 weeks
+
+**Correct Answer:** C) 12 weeks
+
+**Distractor Analysis:**
+
+- A) 6 weeks is incorrect — this would require 3 sprints at 30 points each (90 points), far less than the 180-point backlog remaining.
+- B) 10 weeks is incorrect — this equals 5 sprints × 30 points = 150 points, which still leaves 30 points unfinished.
+- C) 12 weeks is correct — 180 points ÷ 30 points/sprint = 6 sprints × 2 weeks/sprint = 12 weeks.
+- D) 18 weeks is incorrect — this overstates the remaining time and may result from dividing by the wrong unit or applying an incorrect velocity.
+
+---
+
+## Question 12
+
+During sprint planning, the development team and Product Owner disagree about whether a user story is small enough to complete in one sprint. The team says it is too large; the Product Owner insists it fits. What is the most appropriate resolution?
+
+- A) The Scrum Master makes the final decision because their role is to facilitate sprint planning
+- B) The Product Owner overrules the team because they own the backlog
+- C) The development team splits the story into smaller stories with the Product Owner's involvement
+- D) The story is removed from the backlog entirely until the disagreement is resolved
+
+**Correct Answer:** C) The development team splits the story into smaller stories with the Product Owner's involvement
+
+**Distractor Analysis:**
+
+- A) is incorrect — the Scrum Master facilitates but does not make scope or sizing decisions; that authority belongs to the team and Product Owner collaboratively.
+- B) is incorrect — the Product Owner controls backlog ordering and content, but the development team owns the sprint backlog and their own capacity judgments.
+- C) is correct — when a story is too large (an "epic"), the collaborative solution is to split it into smaller, sprint-sized stories. The Product Owner participates to ensure value is preserved.
+- D) is incorrect — removing the story entirely discards value without attempting a resolution and is not a standard Agile practice for sizing disagreements.
+
+---
+
+## Question 13
+
+A Kanban board shows the following column counts: Backlog (12), Ready (4), In Progress (6), Testing (3), Done (22). The WIP limit for In Progress is 4 and for Testing is 3. Which columns are currently violating WIP limits?
+
+- A) Backlog and Ready
+- B) In Progress only
+- C) In Progress and Testing
+- D) In Progress only; Testing is exactly at its limit
+
+**Correct Answer:** B) In Progress only
+
+**Distractor Analysis:**
+
+- A) is incorrect — Backlog and Ready columns typically do not have WIP limits applied in standard Kanban; the violation is in active-work columns.
+- B) is correct — In Progress has 6 items against a WIP limit of 4, which is a violation. Testing has exactly 3 items against a limit of 3 — that is at the limit, not over it.
+- C) is incorrect — Testing is at 3 items with a limit of 3. Being at the limit is permissible; the limit is a ceiling, and reaching it is not a violation.
+- D) is incorrect as a separate answer choice — this is the accurate description, but the question asks which columns are violating limits. Testing at exactly 3/3 is not a violation.
+
+---
+
+## Question 14
+
+An Agile team completes a sprint and the Product Owner notes that the increment is fully functional and meets all acceptance criteria, but it has not been deployed to production. The team says deploying was never part of the Definition of Done. What should happen next?
+
+- A) The increment counts as complete because it met all acceptance criteria
+- B) The Scrum Master should override the DoD and mark the sprint complete
+- C) The team should revisit and update the Definition of Done to include deployment if that is the expected standard
+- D) The Product Owner should accept the increment and raise a separate deployment task for the next sprint
+
+**Correct Answer:** C) The team should revisit and update the Definition of Done to include deployment if that is the expected standard
+
+**Distractor Analysis:**
+
+- A) is incorrect — acceptance criteria are story-level; the Definition of Done is the team-level quality gate. An increment that doesn't meet the DoD is not done, regardless of AC status.
+- B) is incorrect — the Scrum Master does not have authority to override the DoD; it is a team-owned agreement.
+- C) is correct — the appropriate response to discovering a gap in the DoD is to improve it during the retrospective. If deployment is expected, it should be added to the DoD for future sprints.
+- D) is incorrect — deferring deployment indefinitely as a perpetual next-sprint task is not a sustainable pattern and defeats the purpose of a potentially shippable increment.
+
+---
+
+## Question 15
+
+Which Agile Manifesto value is most directly reflected by a Scrum team that holds a Sprint Review every two weeks and adjusts the product backlog based on stakeholder feedback?
+
+- A) Individuals and interactions over processes and tools
+- B) Working software over comprehensive documentation
+- C) Customer collaboration over contract negotiation
+- D) Responding to change over following a plan
+
+**Correct Answer:** C) Customer collaboration over contract negotiation
+
+**Distractor Analysis:**
+
+- A) is incorrect — this value refers to prioritizing people and communication over rigid tool or process adherence. The sprint review scenario is more specifically about stakeholder collaboration.
+- B) is incorrect — working software is the output of the sprint, but the value being exercised in the review is the collaborative feedback loop with customers/stakeholders.
+- C) is correct — the Sprint Review is the primary event for customer collaboration. Gathering stakeholder feedback and adjusting the backlog exemplifies continuous collaboration with customers rather than negotiating fixed contract deliverables.
+- D) is incorrect — while backlog adjustment does involve responding to change, the mechanism described (review with stakeholders) is specifically customer collaboration.
+
+---
+
+## Question 16
+
+A project uses story points with a Fibonacci sequence (1, 2, 3, 5, 8, 13). A user story involves integrating with a third-party payment API the team has never used before. The team members' initial estimates during Planning Poker are: 3, 5, 13, 8. What should happen next?
+
+- A) The Scrum Master averages the estimates (7.25) and rounds to the nearest Fibonacci number
+- B) The outlier estimators (3 and 13) explain their reasoning and the team re-estimates
+- C) The Product Owner selects the most conservative estimate (13) to protect the sprint
+- D) The estimates are discarded and the story is moved to the next sprint
+
+**Correct Answer:** B) The outlier estimators (3 and 13) explain their reasoning and the team re-estimates
+
+**Distractor Analysis:**
+
+- A) is incorrect — averaging estimates defeats the purpose of Planning Poker, which is designed to surface divergence and prompt discussion, not mathematical averaging.
+- B) is correct — when estimates diverge significantly, the outliers share their reasoning. The person who estimated 3 may know a shortcut; the person who estimated 13 may be aware of a hidden complexity. Discussion leads to better-informed re-estimation.
+- C) is incorrect — the Product Owner does not own estimation; the development team owns sizing decisions. Conservative estimates by external selection undermine team ownership.
+- D) is incorrect — deferring the story is not warranted by estimation divergence alone. The resolution process (discussion and re-estimate) is the correct response.
+
+---
+
+## Question 17
+
+In a traditional waterfall project, a change to the requirements after the design phase has been completed typically requires which action?
+
+- A) The team immediately implements the change to avoid losing stakeholder trust
+- B) The change is submitted through the Integrated Change Control process for formal assessment and approval
+- C) The PM adds the requirement to the next project phase without documentation
+- D) The change is rejected because waterfall does not allow changes after design is complete
+
+**Correct Answer:** B) The change is submitted through the Integrated Change Control process for formal assessment and approval
+
+**Distractor Analysis:**
+
+- A) is incorrect — implementing changes without impact assessment and approval violates change control principles and can corrupt the schedule, cost, and scope baselines.
+- B) is correct — all changes on predictive projects must go through Integrated Change Control regardless of when they arise. The ICC process assesses impact, obtains CCB approval, and updates affected plans before work proceeds.
+- C) is incorrect — undocumented additions to scope represent scope creep and bypass the governance mechanisms that protect project baselines.
+- D) is incorrect — waterfall does not prohibit changes; it requires formal change control for them. A project that literally cannot accept changes lacks a functioning change management process.
+
+---
+
+## Question 18
+
+A Scrum team's burndown chart shows that the remaining-work line is flat for the first five days of a two-week sprint, then drops sharply in the last three days. What does this pattern most likely indicate?
+
+- A) The team is ahead of schedule and has extra capacity
+- B) The team has a healthy sprint pace with consistent daily delivery
+- C) Work items may not be broken into small enough tasks, causing delayed progress visibility
+- D) The Definition of Done is too strict and is preventing stories from being closed
+
+**Correct Answer:** C) Work items may not be broken into small enough tasks, causing delayed progress visibility
+
+**Distractor Analysis:**
+
+- A) is incorrect — a flat line followed by a sudden drop does not indicate ahead-of-schedule performance; it suggests work completion was not visible until late in the sprint.
+- B) is incorrect — a healthy sprint burndown shows a gradual, relatively consistent decline over the sprint, not a flat-then-drop pattern.
+- C) is correct — a flat burndown followed by a sharp drop typically means tasks are large and only close as completely done in bulk, or that the team is working without updating the board. It is a signal to decompose stories into smaller, daily-closeable tasks.
+- D) is incorrect — a strict DoD might cause stories to linger, but the pattern described — sudden bulk closure — is more consistent with task sizing or board hygiene issues than an overly strict quality gate.
+
+---
+
+## Question 19
+
+An organization's PMO has decided to pilot Scrum for an internal IT project. The IT manager who will serve as Scrum Master insists on approving all sprint backlog items before the team can begin work each day. Which Scrum value does this behavior most directly violate?
+
+- A) Focus
+- B) Openness
+- C) Respect
+- D) Courage
+
+**Correct Answer:** C) Respect
+
+**Distractor Analysis:**
+
+- A) is incorrect — Focus is about the team concentrating on sprint goals. Daily approval by a manager is an authority violation more than a focus issue.
+- B) is incorrect — Openness refers to transparency about work and challenges. Requiring daily approvals does not specifically violate openness.
+- C) is correct — Respect in Scrum includes respecting the team's self-organizing authority over their own work. A manager controlling daily access to the sprint backlog disrespects the team's autonomy and contradicts the self-organizing team principle.
+- D) is incorrect — Courage refers to doing the right thing and raising difficult issues. The scenario describes a management behavior, not a team courage failure.
+
+---
+
+## Question 20
+
+A project manager leading a software development team is transitioning from waterfall to Agile. The sponsor asks how project success will be measured differently in the new approach. Which response best reflects how Agile measures progress?
+
+- A) Progress is measured by the percentage of the project plan completed on schedule
+- B) Progress is measured by the number of hours logged by developers each sprint
+- C) Progress is measured by the amount of working software delivered to stakeholders each sprint
+- D) Progress is measured by comparing actual cost to the cost performance baseline
+
+**Correct Answer:** C) Progress is measured by the amount of working software delivered to stakeholders each sprint
+
+**Distractor Analysis:**
+
+- A) is incorrect — measuring percent of plan complete is a waterfall and EVM concept. Agile does not maintain a detailed baseline plan against which to measure variance.
+- B) is incorrect — tracking hours is a traditional resource management approach. Agile explicitly de-emphasizes hour-tracking in favor of delivered value.
+- C) is correct — the second Agile Manifesto value states that working software is the primary measure of progress. Delivered, functional increments each sprint are the definitive signal of Agile advancement.
+- D) is incorrect — cost performance baseline comparison is EVM, which belongs to traditional project management. While hybrid projects may use EVM, it is not the defining Agile progress measure.

@@ -204,3 +204,183 @@ Which Azure VM Scale Set feature prevents the autoscale engine from making repea
 - *Why A is incorrect:* Upgrade policy controls how OS and application updates are applied to Scale Set instances (Automatic, Rolling, or Manual). It has no relationship to autoscale frequency or oscillation prevention.
 - *Why B is incorrect:* Instance termination notification is a feature that sends a notification to instances before they are terminated during scale-in, allowing applications to complete in-flight operations gracefully. It does not control when scaling events occur.
 - *Why D is incorrect:* Spot eviction policy controls what happens to Scale Set Spot instances when Azure needs to reclaim capacity — either delete or deallocate them. It applies only to Spot VM Scale Sets and has no relationship to autoscale cool-down behavior.
+
+---
+
+### Question 11 (5 points)
+
+A company needs to deploy a virtual machine that will run a SQL Server workload requiring 1 TB of RAM. Which Azure VM series is specifically designed for this memory requirement?
+
+- A) D-series (General Purpose)
+- B) F-series (Compute Optimized)
+- C) M-series (Memory Optimized)
+- D) L-series (Storage Optimized)
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - *Why C is correct:* The M-series provides the highest memory-to-CPU ratios in Azure, with configurations supporting up to 4 TB of RAM. It is specifically designed for workloads like SAP HANA and large SQL Server in-memory configurations that require extreme amounts of RAM.
+  - *Why A is incorrect:* The D-series provides a balanced CPU-to-memory ratio designed for general workloads. It does not offer configurations with 1 TB or more of RAM.
+  - *Why B is incorrect:* The F-series is compute optimized — it has a high CPU-to-memory ratio, meaning relatively less RAM per core. It is the opposite of what a memory-intensive SQL Server workload requires.
+  - *Why D is incorrect:* The L-series is storage optimized for high disk throughput and IOPS, designed for NoSQL and data warehousing scenarios that need fast local disk. It does not provide extreme RAM configurations.
+
+---
+
+### Question 12 (5 points)
+
+A VM is running with a dynamically assigned public IP address. The VM is deallocated overnight to reduce costs and restarted the next morning. What is the expected behavior of the public IP address?
+
+- A) The IP address is permanently deleted when the VM is deallocated and a new one must be manually created
+- B) The same dynamic IP address is always preserved across deallocation cycles for the lifetime of the VM
+- C) The dynamic IP address is released when the VM is deallocated; a new IP address (potentially different) is assigned when the VM starts again
+- D) The IP address is converted to a static IP automatically after the first deallocation
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - *Why C is correct:* Dynamic public IP addresses are released back to Azure's address pool when a VM is deallocated. When the VM is started again, Azure assigns a new dynamic IP from the pool — it may or may not be the same address as before. To guarantee a consistent IP across start/stop cycles, a static public IP must be explicitly configured.
+  - *Why A is incorrect:* The public IP address resource itself persists in the resource group — it is not deleted. Only the IP lease is released. The IP resource can be reused when the VM restarts.
+  - *Why B is incorrect:* Dynamic IP behavior does not guarantee the same address is preserved. That is the definition of static IP behavior. If the same address happens to be re-assigned, it is coincidental, not guaranteed.
+  - *Why D is incorrect:* Azure does not automatically convert dynamic IPs to static IPs during deallocation. Static IP assignment is an explicit configuration choice made by the administrator, not an automatic transition.
+
+---
+
+### Question 13 (5 points)
+
+An organization wants to deploy 100 identical web server VMs and distribute traffic evenly among them. The number of VMs should automatically increase when CPU exceeds 70% and decrease when CPU drops below 30%. Which Azure feature handles both the identical VM deployment and the autoscaling in a single resource?
+
+- A) Azure Availability Set with autoscale rules
+- B) Azure Virtual Machine Scale Set
+- C) Azure Load Balancer with backend pool
+- D) Azure App Service with scale-out rules
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Azure Virtual Machine Scale Sets allow deployment of multiple identical VM instances and include built-in autoscale rules based on metrics like CPU utilization. Scale Sets can scale out (add instances) when CPU is high and scale in (remove instances) when CPU is low — managing both the instance count and the identical configuration as a single resource.
+  - *Why A is incorrect:* Availability Sets distribute VMs across fault and update domains for resilience but do not manage instance count, provide autoscaling, or ensure VMs are identical in configuration. They are for resilience, not scaling.
+  - *Why C is incorrect:* Azure Load Balancer distributes traffic across backend VMs but does not create VMs, manage VM count, or provide autoscaling. It is a traffic distribution layer, not a compute resource manager.
+  - *Why D is incorrect:* Azure App Service with scale-out rules is a PaaS service for web applications. The scenario describes IaaS VM infrastructure — App Service does not deploy raw VMs.
+
+---
+
+### Question 14 (5 points)
+
+What happens to managed disks attached to an Azure VM when the VM resource is deleted (but not the disks explicitly)?
+
+- A) All managed disks are automatically deleted with the VM
+- B) Managed disks are retained as orphaned resources in the resource group after the VM is deleted, unless "delete disk" is explicitly selected during VM deletion
+- C) Managed disks are moved to Azure Blob Storage automatically when their VM is deleted
+- D) Managed disks are detached and re-attached to another VM in the same resource group automatically
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* By default, managed disks are independent resources that persist after a VM is deleted. The Azure Portal offers a "Delete with VM" option when deleting a VM, but if not selected, the OS disk and any data disks remain in the resource group as unattached (orphaned) managed disks — which still incur storage costs.
+  - *Why A is incorrect:* Automatic deletion of disks with the VM is opt-in, not the default behavior. Without explicitly enabling this option, disks persist after VM deletion.
+  - *Why C is incorrect:* Managed disks are a separate storage resource type from Azure Blob Storage. They are never automatically converted to blobs or moved to a storage account.
+  - *Why D is incorrect:* Azure does not automatically re-attach orphaned disks to other VMs. Disks must be manually attached to a new VM by an administrator.
+
+---
+
+### Question 15 (5 points)
+
+A company needs VMs that can run for extended periods but must accept occasional interruptions of up to 30 seconds' notice. The workload is a batch data processing job that checkpoints progress every 5 minutes. Cost reduction is the top priority. Which VM pricing model is appropriate?
+
+- A) Pay-as-you-go Standard VMs
+- B) Azure Reserved Instances (1-year)
+- C) Azure Spot VMs
+- D) Azure Dedicated Hosts
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - *Why C is correct:* Azure Spot VMs use spare Azure capacity at discounts up to 90% off pay-as-you-go rates. They can be evicted with 30 seconds' notice when Azure needs the capacity back. Batch processing jobs that checkpoint frequently can tolerate eviction — the job resumes from the last checkpoint on a new Spot VM instance, making this the ideal cost-minimizing option.
+  - *Why A is incorrect:* Pay-as-you-go Standard VMs provide no eviction risk but also no discount. For a cost-priority workload that tolerates interruption, PAYG is unnecessarily expensive.
+  - *Why B is incorrect:* Reserved Instances reduce per-hour cost for continuously running workloads through a 1 or 3-year commitment. They still incur charges whether the VM runs or not and do not provide the depth of discount that Spot pricing offers.
+  - *Why D is incorrect:* Azure Dedicated Hosts provide physical server isolation for compliance and licensing reasons. They are significantly more expensive than standard VMs, the opposite of cost minimization.
+
+---
+
+### Question 16 (5 points)
+
+When using an Azure VM Scale Set with Rolling upgrade policy, how are OS or application updates applied to the VM instances?
+
+- A) All instances are updated simultaneously, causing a brief full-scale outage
+- B) Instances are updated in batches according to the configured batch size, keeping a portion of instances available throughout the upgrade
+- C) Updates are never applied automatically — each instance must be manually updated
+- D) The Scale Set creates entirely new instances with the new configuration and then deletes the old instances all at once
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Rolling upgrade policy updates VM instances in configurable batches (e.g., 20% at a time). At any given moment, the majority of instances remain on the current version and serve traffic while the batch being updated is temporarily offline. This provides zero-downtime upgrade capability for production Scale Sets.
+  - *Why A is incorrect:* That describes the Automatic upgrade policy without any rolling control — it would apply updates to all instances simultaneously, causing a full-scale service interruption. Rolling policy specifically avoids this.
+  - *Why C is incorrect:* That describes the Manual upgrade policy, where the Scale Set updates the model but does not apply changes to existing instances until an administrator triggers the update per-instance. Rolling policy automates staged updates.
+  - *Why D is incorrect:* Creating all-new instances and deleting old ones simultaneously describes a blue/green deployment pattern, not the Rolling upgrade policy. Rolling updates instances in place in batches without provisioning a parallel fleet.
+
+---
+
+### Question 17 (5 points)
+
+Which Azure CLI command correctly deallocates a VM named "webserver01" in a resource group named "prod-rg" to stop compute billing?
+
+- A) `az vm stop --name webserver01 --resource-group prod-rg`
+- B) `az vm deallocate --name webserver01 --resource-group prod-rg`
+- C) `az vm delete --name webserver01 --resource-group prod-rg`
+- D) `az vm poweroff --name webserver01 --resource-group prod-rg`
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* `az vm deallocate` releases the VM's compute allocation from the physical host, stopping compute billing. This is the correct command when the goal is to stop paying for the VM's CPU and RAM while retaining the VM configuration and its disks.
+  - *Why A is incorrect:* `az vm stop` shuts down the guest OS but does NOT deallocate the VM. The VM remains allocated on its physical host and compute billing continues at the full rate. This is the "Stopped (not deallocated)" state.
+  - *Why C is incorrect:* `az vm delete` permanently destroys the VM resource. The VM cannot be restarted after deletion. This is irreversible and is not the correct command when the intent is to pause the VM temporarily.
+  - *Why D is incorrect:* `az vm poweroff` is not a valid Azure CLI command. This may be confused with guest OS power commands. The correct CLI commands for VM state changes are `start`, `stop`, `deallocate`, `restart`, and `delete`.
+
+---
+
+### Question 18 (5 points)
+
+A VM Scale Set is configured with minimum 3 instances, maximum 10 instances, and a scale-out rule triggering when average CPU exceeds 75% for 5 minutes. The Scale Set currently has 3 instances all running at 80% CPU for 7 minutes. A scale-out event fires and adds 2 instances. The cool-down period is 5 minutes. During the cool-down period, CPU on all instances rises to 90%. What happens?
+
+- A) Another scale-out event fires immediately because CPU exceeds the threshold
+- B) The cool-down period suppresses additional scale-out events; no new scaling occurs until the cool-down expires
+- C) The Scale Set scales to the maximum of 10 instances immediately to handle the elevated CPU
+- D) The Scale Set scales back in because the cool-down period requires load to drop before scale-out can fire again
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* The cool-down period (5 minutes) is a stabilization window after a scaling event during which the autoscale engine ignores new scaling triggers. Even though CPU rises to 90%, no additional scale-out occurs until the cool-down expires. This prevents oscillation while new instances are starting and beginning to handle load.
+  - *Why A is incorrect:* The cool-down period explicitly prevents this. Without cool-down protection, the system could fire scale-out events repeatedly in quick succession before the newly added instances have time to start and distribute load.
+  - *Why C is incorrect:* Scaling to maximum immediately would bypass the configured cool-down and the incremental scale-out rules. Azure autoscale does not jump to maximum based on one metric reading.
+  - *Why D is incorrect:* Cool-down periods suppress scale-OUT triggers, not enforce scale-IN. The system does not scale in during a cool-down; it simply pauses all autoscale evaluation until the cool-down window expires.
+
+---
+
+### Question 19 (5 points)
+
+Which VM size attribute letter indicates that the VM has a local NVMe temporary disk in addition to standard temporary disk options?
+
+- A) `s` (Premium Storage capable)
+- B) `d` (local disk present)
+- C) `a` (AMD processor)
+- D) `m` (memory optimized sub-size)
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* The `d` attribute in an Azure VM size name (such as `Standard_D4ds_v5`) indicates that the VM includes a local NVMe or SSD temporary disk. This is useful for workloads requiring fast temporary scratch space, such as swap files, temp databases, or intermediate data processing.
+  - *Why A is incorrect:* The `s` attribute indicates Premium SSD storage eligibility for managed data disks. It is about the managed disk tier that can be attached, not about local temporary disk presence.
+  - *Why C is incorrect:* The `a` attribute indicates the VM uses an AMD EPYC processor rather than Intel. This is a processor architecture indicator, not a storage capability descriptor.
+  - *Why D is incorrect:* The `m` attribute indicates a larger memory configuration within the same VM series — a memory-boosted variant. It is not related to local disk presence.
+
+---
+
+### Question 20 (5 points)
+
+A web application team needs all VMs to be updated to a new OS image version without any downtime. The team wants Azure to automatically roll out updates in small batches and pause if health checks detect problems after each batch. Which Scale Set upgrade policy and feature combination achieves this?
+
+- A) Manual upgrade policy with health extension
+- B) Rolling upgrade policy with Application Health extension enabled
+- C) Automatic upgrade policy without health monitoring
+- D) Uniform orchestration with Spot eviction policy set to Deallocate
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Rolling upgrade policy updates instances in configurable batches. When the Application Health extension is enabled, Azure monitors each instance after its upgrade and will pause the rolling upgrade if instances report unhealthy. This combination provides zero-downtime updates with automatic safety gates.
+  - *Why A is incorrect:* Manual upgrade policy does not automatically apply updates to instances. An administrator must manually trigger each instance's update, which cannot achieve automated rolling deployments.
+  - *Why C is incorrect:* Automatic upgrade policy without health monitoring applies updates to all instances simultaneously or without safety checks, risking a full-scale outage if the new image has a defect.
+  - *Why D is incorrect:* Spot eviction policy controls what happens when Azure reclaims Spot instances. It has no relationship to OS image upgrade strategy or rolling update behavior.

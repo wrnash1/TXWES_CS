@@ -248,4 +248,204 @@ Why D is incorrect: DHCP client IDs are optional identifiers used for reservatio
 
 ---
 
-CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash
+### Question 11
+
+A DHCP server is configured with a scope for 192.168.50.0/24 with the range 192.168.50.10–192.168.50.200 and a lease time of 8 hours. A workstation requests an IP address and receives 192.168.50.75. After 4 hours, the workstation attempts to renew its lease. Which step of the DHCP process is the renewal, and what transport is used?
+
+- A) A new DHCP Discover broadcast — the workstation has forgotten its lease
+- B) A unicast DHCP Request sent directly to the DHCP server that issued the original lease
+- C) A unicast DHCP Offer sent from the server to the client unprompted
+- D) A broadcast DHCP Request because the client cannot yet use unicast
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* A DHCP Discover broadcast is only sent when a client has no IP address and no knowledge of a DHCP server. At renewal time (50% of lease), the client already knows its assigned IP and the server's IP.
+- *Why B is correct:* At the 50% lease point (T1 timer), the client sends a unicast DHCP Request directly to the server that granted the original lease, requesting renewal. Unicast is used because the client has an IP address and knows the server's address.
+- *Why C is incorrect:* DHCP Offers are sent by the server in response to client Discovers. The server does not proactively send Offers to renew leases without a client request.
+- *Why D is incorrect:* A broadcast DHCP Request is used during the initial DORA process before the client has been assigned an IP. After the initial assignment, renewals use unicast.
+
+---
+
+### Question 12
+
+Which DNS record type is used to define a human-readable alias that maps one hostname to another canonical hostname?
+
+- A) A record
+- B) PTR record
+- C) CNAME record
+- D) SRV record
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* An A record maps a hostname directly to an IPv4 address — not to another hostname alias.
+- *Why B is incorrect:* A PTR record performs reverse DNS — it maps an IP address back to a hostname. It is the opposite of a CNAME alias.
+- *Why C is correct:* A CNAME (Canonical Name) record creates an alias from one hostname to another. For example, `www.example.com CNAME example.com` means `www` is an alias for the canonical name `example.com`. Querying the alias returns the canonical name, which is then resolved to an IP.
+- *Why D is incorrect:* An SRV record specifies the location of a specific service (host and port) for a domain — it is used for service discovery (e.g., SIP, XMPP), not for simple hostname aliasing.
+
+---
+
+### Question 13
+
+An administrator checks the system time on a critical authentication server and finds it is 6 minutes ahead of the actual time. Kerberos authentication is failing for all users connecting to this server. What is the most likely cause?
+
+- A) The NTP server is unreachable and the server's clock drifted beyond the maximum tolerated skew.
+- B) The authentication failures are unrelated to time — the Kerberos service is misconfigured.
+- C) The maximum clock skew tolerance for Kerberos is 15 minutes — a 6-minute offset should not cause failures.
+- D) The server is using the wrong NTP stratum — only stratum 1 servers can be used for Kerberos.
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- *Why A is correct:* Kerberos has a maximum clock skew tolerance of 5 minutes (300 seconds) by default. A 6-minute offset exceeds this limit, causing Kerberos to reject tickets as potentially replayed. Accurate time synchronization via NTP is a prerequisite for Kerberos authentication.
+- *Why B is incorrect:* The scenario explicitly describes a time offset that exceeds Kerberos limits — this is the direct cause of the authentication failure. The Kerberos service itself is working correctly.
+- *Why C is incorrect:* The Kerberos maximum clock skew is 5 minutes by default, not 15 minutes. A 6-minute offset exceeds this limit and causes authentication failures.
+- *Why D is incorrect:* Kerberos does not require a stratum 1 NTP source. Any accurate, synchronized NTP source is acceptable. Stratum 2 and lower servers are routinely used for Kerberos clients.
+
+---
+
+### Question 14
+
+What is the purpose of a DNS TTL (Time to Live) value associated with a DNS record?
+
+- A) It limits the number of DNS hops between the client and the authoritative server before the query expires.
+- B) It specifies how long a DNS resolver may cache a record before it must query the authoritative server again for a fresh copy.
+- C) It sets the maximum number of times a DNS record can be queried before it expires.
+- D) It defines the lease period for the IP address returned in a DNS A record response.
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* DNS hop limiting is performed by a separate mechanism (the recursion depth and timeout). TTL in a DNS record is a caching duration, not a hop counter.
+- *Why B is correct:* The TTL value in a DNS resource record tells resolvers (caches) how many seconds they may cache the record and serve it in response to queries before the cached copy expires and a fresh query to the authoritative name server is required.
+- *Why C is incorrect:* DNS records do not have a query count limit. They can be queried indefinitely. TTL is time-based, not query-count-based.
+- *Why D is incorrect:* IP address lease periods are a DHCP concept, not a DNS concept. DNS A records do not manage IP address leases — that is the responsibility of the DHCP server.
+
+---
+
+### Question 15
+
+A DNS resolver performs a query for `mail.company.com`. The authoritative DNS server for `company.com` responds but directs the resolver to another DNS server for further information. This type of DNS response is called:
+
+- A) A recursive response
+- B) A non-authoritative response
+- C) An iterative (referral) response
+- D) A negative cache response (NXDOMAIN)
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* A recursive response is when the DNS server does all the resolution work itself and returns the final IP address to the client. The scenario describes a referral, not a full recursive answer.
+- *Why B is incorrect:* A non-authoritative response is a cached answer from a resolver — it indicates the answer came from cache, not that a referral was made.
+- *Why C is correct:* An iterative (or referral) response occurs when a DNS server does not have the answer itself but responds with a referral to another DNS server that is closer to the authoritative source. The resolver must then query the referred server. This is how root servers and TLD servers respond.
+- *Why D is incorrect:* NXDOMAIN (Non-Existent Domain) is the response when the queried hostname does not exist in DNS. It is a negative answer, not a referral.
+
+---
+
+### Question 16
+
+Which NTP stratum number describes an NTP server that synchronizes directly from a GPS receiver or atomic clock hardware reference?
+
+- A) Stratum 0
+- B) Stratum 1
+- C) Stratum 2
+- D) Stratum 3
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Stratum 0 refers to the physical precision time source itself (GPS receiver, atomic clock, CDMA signal) — it is not a network-accessible NTP server. Stratum 0 devices cannot serve NTP directly over the network.
+- *Why B is correct:* Stratum 1 NTP servers are directly connected to a stratum 0 reference (GPS, atomic clock via hardware interface). They are the primary NTP servers that other NTP infrastructure synchronizes from.
+- *Why C is incorrect:* Stratum 2 servers synchronize from stratum 1 servers. They are one hop removed from the hardware reference.
+- *Why D is incorrect:* Stratum 3 servers synchronize from stratum 2 servers. They are two hops removed from the hardware reference. Higher stratum numbers indicate increasing distance from the authoritative time source.
+
+---
+
+### Question 17
+
+An administrator configures a Cisco router as a DHCP relay agent by entering the command `ip helper-address 10.0.0.1` on the VLAN 30 interface. What does this command accomplish?
+
+- A) It assigns the router the IP address 10.0.0.1 as a secondary address on the VLAN 30 interface.
+- B) It configures the router to forward DHCP broadcast messages from VLAN 30 clients to the DHCP server at 10.0.0.1 as unicast packets.
+- C) It instructs the DHCP server at 10.0.0.1 to create a new scope for the VLAN 30 subnet automatically.
+- D) It creates a static DHCP reservation for MAC address 10.0.0.1 in the VLAN 30 scope.
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* The `ip helper-address` command is not used for address assignment on the interface — that is done with `ip address`. It configures broadcast forwarding for DHCP and other UDP protocols.
+- *Why B is correct:* `ip helper-address` configures the router's Layer 3 interface to forward DHCP broadcasts (and other specified UDP broadcasts) to the specified server as unicast packets. This allows clients in VLAN 30 to reach a DHCP server on a different subnet. The router inserts its VLAN 30 interface IP in the giaddr field of the forwarded packet, allowing the DHCP server to identify the correct scope.
+- *Why C is incorrect:* The router command does not automatically create DHCP scopes on the server. Scopes must be manually configured on the DHCP server by an administrator.
+- *Why D is incorrect:* DHCP reservations are based on MAC addresses configured on the DHCP server, not on IP addresses configured on a router interface.
+
+---
+
+### Question 18
+
+A company uses split-horizon DNS (split DNS). What is the purpose of this configuration?
+
+- A) To distribute DNS queries across multiple authoritative servers for load balancing.
+- B) To return different DNS answers to internal clients versus external clients for the same hostname.
+- C) To prevent DNS queries from leaving the internal network by blocking UDP port 53.
+- D) To duplicate DNS zones across two datacenters for redundancy.
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Distributing DNS queries across multiple servers for load balancing uses round-robin DNS or anycast DNS — not split-horizon DNS.
+- *Why B is correct:* Split-horizon (split-brain) DNS maintains separate DNS views for internal and external networks. Internal clients receive private IP addresses for company resources (e.g., 10.0.0.50 for `mail.company.com`), while external clients receive the public IP address. This allows internal clients to use direct private paths while external clients use public-facing addresses.
+- *Why C is incorrect:* Blocking UDP port 53 would break DNS entirely. Split DNS has nothing to do with firewall rules blocking DNS traffic.
+- *Why D is incorrect:* Duplicating zones for redundancy is called DNS secondary zones or zone transfer replication — not split-horizon DNS.
+
+---
+
+### Question 19
+
+Which attack targets DNS resolvers by inserting false DNS records into their cache, causing clients to be directed to attacker-controlled IP addresses?
+
+- A) DNS amplification attack
+- B) DNS zone transfer attack
+- C) DNS cache poisoning
+- D) DNS tunneling
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* A DNS amplification attack exploits open DNS resolvers to reflect large DNS responses at a DDoS victim by sending small queries with a spoofed source IP. It is a volumetric DDoS attack — not a record falsification attack.
+- *Why B is incorrect:* A DNS zone transfer attack involves an unauthorized AXFR request to retrieve the complete DNS zone file, exposing all hostnames. It is a reconnaissance attack, not a cache manipulation attack.
+- *Why C is correct:* DNS cache poisoning involves inserting forged DNS records into a resolver's cache. When a legitimate client queries the resolver for a domain, the poisoned cache returns the attacker's IP address instead of the real one, redirecting the client to a malicious server. DNSSEC is the countermeasure.
+- *Why D is incorrect:* DNS tunneling encodes data within DNS queries and responses to create a covert communication channel, bypassing firewalls. It does not involve poisoning DNS caches.
+
+---
+
+### Question 20
+
+A network administrator runs `nslookup -type=SOA example.com` and receives a response. What information is contained in an SOA (Start of Authority) record?
+
+- A) The list of all IP addresses assigned to example.com's web server
+- B) The hostnames of all mail servers responsible for example.com
+- C) The primary authoritative nameserver, administrator email, zone serial number, and refresh/retry/expiry timers
+- D) The IPv6 AAAA records for the example.com nameservers
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* IP addresses for web servers are stored in A records, not SOA records.
+- *Why B is incorrect:* Mail server hostnames are stored in MX records, not SOA records.
+- *Why C is correct:* The SOA (Start of Authority) record is the first record in a DNS zone and contains: the primary nameserver (MNAME), the administrator's email address in DNS format (RNAME), the zone serial number (used to detect zone changes during transfers), and the refresh/retry/expiry timers that control how secondary DNS servers synchronize with the primary.
+- *Why D is incorrect:* IPv6 addresses for nameservers are stored in AAAA records, not in the SOA record itself.
+
+---
+
+*CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash*

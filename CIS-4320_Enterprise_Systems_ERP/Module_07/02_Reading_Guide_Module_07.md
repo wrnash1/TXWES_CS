@@ -342,3 +342,19 @@ Complete before attempting the quiz:
 - Complete Lab 07.
 - Post to Discussion Forum 07 by Wednesday at 11:59 PM.
 - Complete Quiz 07 (10 questions).
+
+---
+
+## 9. Supplemental Resources
+
+**1. Salesforce Trailhead — Sales Cloud Basics**
+<https://trailhead.salesforce.com/content/learn/modules/sales-cloud-basics>
+Official Salesforce module covering the core Sales Cloud objects, the Lead-to-Opportunity lifecycle, Opportunity stages, forecasting, and Activity Management. Directly maps to Questions 1–10 in this module's quiz and the Lab 07 scenarios.
+
+**2. Salesforce Trailhead — Service Cloud Basics**
+<https://trailhead.salesforce.com/content/learn/modules/service-cloud-basics>
+Covers the Service Cloud Case lifecycle, Entitlements, Milestones, Knowledge, and Omni-Channel routing. Relevant to the service escalation scenarios in Lab 07 Part C and the CRM-ERP integration discussion in Section 6.
+
+**3. Salesforce Help — Opportunity Forecasting and Pipeline Management**
+<https://help.salesforce.com/s/articleView?id=sf.forecasts3_overview.htm>
+Official Salesforce documentation on the Collaborative Forecasting module — covering forecast categories, quota tracking, and manager override capabilities. Directly relevant to Questions 3, 10, and 14 on forecast amount calculations.

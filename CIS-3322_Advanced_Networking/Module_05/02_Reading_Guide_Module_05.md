@@ -190,3 +190,19 @@ Work through each item before taking the quiz.
 
 - Cisco CCNA certification training information: cisco.com/c/en/us/training-events/training-certifications
 - Free CCNA study notes and video summaries: professormesser.com
+
+---
+
+## 10. Supplemental Resources
+
+The following open educational resources extend STP and RSTP concepts to CCNA exam depth. All resources are freely available.
+
+1. **Cisco Networking Academy — CCNA: Switching, Routing, and Wireless Essentials, Chapter 5 (STP)** (skillsforall.com): This free chapter provides interactive STP topology simulations where students can visually observe port state transitions and root bridge election outcomes in animated Packet Tracer activities.
+
+2. **Jeremy's IT Lab — Spanning Tree Protocol (Days 20–22)** (youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ): Three comprehensive video lessons cover 802.1D STP election process, PVST+ per-VLAN operation, RSTP port roles and states, and PortFast/BPDU Guard configuration with CLI walkthroughs.
+
+3. **Cisco Learning Network — STP and RSTP Study Resources** (learningnetwork.cisco.com): The Cisco Learning Network community includes detailed STP troubleshooting threads, practice topology diagrams with port role labeling exercises, and exam-focused STP/RSTP comparison questions.
+
+4. **Cisco Packet Tracer — STP Lab Activities** (skillsforall.com): The Cisco Networking Academy provides dedicated Packet Tracer labs for observing root bridge election, blocking port determination, and BPDU Guard trigger behavior — all directly applicable to the Module 05 lab.
+
+5. **IEEE 802.1D Standard Overview — Wikipedia** (en.wikipedia.org/wiki/Spanning_Tree_Protocol): A freely accessible reference summarizing the IEEE 802.1D and 802.1w RSTP standards, port states comparison, and timer definitions. Useful for quick reference when reviewing exam prep materials.

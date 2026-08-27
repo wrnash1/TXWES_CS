@@ -220,4 +220,204 @@ D) A WIPS false-positive detection is blocking clients; the risk is that legitim
 
 ---
 
-CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash
+### Question 11
+
+Which 802.11 standard introduced MU-MIMO (Multi-User MIMO) and operates exclusively in the 5 GHz band, achieving theoretical maximum speeds up to 3.5 Gbps?
+
+- A) 802.11n (Wi-Fi 4)
+- B) 802.11ac (Wi-Fi 5)
+- C) 802.11ax (Wi-Fi 6)
+- D) 802.11g
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* 802.11n (Wi-Fi 4) introduced MIMO but operates on both 2.4 GHz and 5 GHz. Its maximum speed is 600 Mbps and it does not support MU-MIMO — it uses SU-MIMO (single-user).
+- *Why B is correct:* 802.11ac (Wi-Fi 5) introduced MU-MIMO for downlink, operates exclusively on the 5 GHz band, and can achieve up to 3.5 Gbps theoretical maximum using 160 MHz channels and 8 spatial streams.
+- *Why C is incorrect:* 802.11ax (Wi-Fi 6) improved on 802.11ac with OFDMA and full MU-MIMO (uplink and downlink), but Wi-Fi 6 operates on both 2.4 GHz and 5 GHz — it is not exclusively 5 GHz like 802.11ac.
+- *Why D is incorrect:* 802.11g is a legacy 2.4 GHz-only standard with a maximum speed of 54 Mbps. It predates MIMO technology entirely.
+
+---
+
+### Question 12
+
+An enterprise wireless network uses WPA2-Enterprise instead of WPA2-Personal. Which additional infrastructure component is required to support WPA2-Enterprise authentication?
+
+- A) A wireless LAN controller (WLC)
+- B) A RADIUS server for 802.1X authentication
+- C) A DHCP server with a dedicated wireless scope
+- D) An additional SSID for the authentication traffic
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* A wireless LAN controller manages and configures multiple APs centrally — it is not inherently required for WPA2-Enterprise, though it may be used alongside it.
+- *Why B is correct:* WPA2-Enterprise uses 802.1X, which requires a RADIUS (Remote Authentication Dial-In User Service) server to authenticate each user's individual credentials before granting wireless access. Each user presents their own username and password or certificate.
+- *Why C is incorrect:* A DHCP server assigns IP addresses to connected clients but is required for any DHCP-based network — it is not specific to WPA2-Enterprise authentication.
+- *Why D is incorrect:* A separate SSID for authentication traffic is not part of the WPA2-Enterprise architecture. Authentication occurs on the same SSID via the 802.1X EAP exchange.
+
+---
+
+### Question 13
+
+A wireless client is successfully authenticated and connected to an AP. The client is then suddenly disconnected. In a Wireshark capture, the last frame observed before disconnection is a deauthentication frame with reason code 7 (Class 3 frame received from nonassociated client). Which type of attack likely caused this disconnection?
+
+- A) A WPA2 KRACK (Key Reinstallation Attack)
+- B) A wireless deauthentication (de-auth flood) attack
+- C) An Evil Twin AP with a stronger signal
+- D) A WPS brute-force PIN attack
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* KRACK attacks manipulate the WPA2 four-way handshake to reinstall an already-in-use key, enabling decryption of traffic. They do not generate deauthentication frames that terminate connections.
+- *Why B is correct:* A deauthentication flood attack involves sending spoofed 802.11 deauthentication frames (using the AP's MAC address as the source) to targeted clients. Since management frames in 802.11 were historically unprotected, clients honored these frames and disconnected. 802.11w Management Frame Protection mitigates this.
+- *Why C is incorrect:* An Evil Twin AP causes clients to associate with the rogue AP — this involves a reassociation event, not a deauthentication frame with reason code 7.
+- *Why D is incorrect:* WPS PIN brute-force attacks target the WPS registration process over multiple PIN attempts. They do not cause sudden client disconnections via deauthentication frames.
+
+---
+
+### Question 14
+
+Which wireless encryption protocol uses CCMP (Counter Mode CBC-MAC Protocol) based on AES as its encryption mechanism, providing significantly stronger security than TKIP?
+
+- A) WEP
+- B) WPA (WPA1)
+- C) WPA2
+- D) WPA3
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* WEP uses RC4 stream cipher with a static key — it has no AES or CCMP component and is considered completely insecure.
+- *Why B is incorrect:* WPA (WPA1) introduced TKIP (Temporal Key Integrity Protocol) as a replacement for WEP's RC4 weakness. TKIP is an improvement over WEP but does not use AES/CCMP.
+- *Why C is correct:* WPA2 (IEEE 802.11i) mandated CCMP/AES as its primary encryption mechanism. CCMP uses AES in counter mode for encryption and CBC-MAC for message integrity, providing significantly stronger security than TKIP.
+- *Why D is incorrect:* WPA3 builds on WPA2's AES/CCMP foundation and adds SAE (Simultaneous Authentication of Equals) for improved key exchange, but CCMP/AES was introduced in WPA2, not WPA3.
+
+---
+
+### Question 15
+
+A network administrator is planning the wireless channel layout for a building with six access points using the 2.4 GHz band. Which channel assignments ensure that no two adjacent APs cause co-channel interference?
+
+- A) Channels 1, 2, and 3 in rotation
+- B) Channels 1, 6, and 11 in rotation
+- C) Channels 1, 5, and 9 in rotation
+- D) Channels 6, 7, and 8 in rotation
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Channels 1, 2, and 3 overlap heavily — they are only 5 MHz apart and a 2.4 GHz channel is 22 MHz wide. Adjacent-channel interference would be severe.
+- *Why B is correct:* Channels 1, 6, and 11 are the only three non-overlapping channels in the 2.4 GHz band in North America. They are spaced 25 MHz apart, completely avoiding overlap. Rotating these three channels across adjacent APs eliminates co-channel interference.
+- *Why C is incorrect:* Channels 1, 5, and 9 are spaced 20 MHz apart — they still have slight overlap since channels are 22 MHz wide. This is an improvement over sequential channels but not truly non-overlapping.
+- *Why D is incorrect:* Channels 6, 7, and 8 are adjacent channels with massive overlap — they would cause severe co-channel interference if used on neighboring APs.
+
+---
+
+### Question 16
+
+A company deploys a Wireless Intrusion Prevention System (WIPS). What is the primary function of a WIPS in an enterprise wireless environment?
+
+- A) To encrypt all wireless traffic before it reaches the wired network
+- B) To automatically assign IP addresses to wireless clients as a replacement for DHCP
+- C) To detect and respond to rogue APs, unauthorized clients, and wireless attacks such as deauthentication floods
+- D) To aggregate multiple SSIDs into a single management VLAN
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Traffic encryption is handled by the wireless security protocol (WPA2/WPA3) at the AP level. A WIPS monitors the radio frequency environment — it does not perform encryption.
+- *Why B is incorrect:* DHCP is a separate Layer 3 service. A WIPS operates in the RF/Layer 2 domain monitoring for unauthorized devices and attacks.
+- *Why C is correct:* A WIPS passively or actively monitors the RF environment for rogue APs (unauthorized APs on the network), unauthorized clients, and attack signatures (deauthentication floods, Evil Twin APs, WPS attacks). When detected, a WIPS can alert administrators or take active containment measures.
+- *Why D is incorrect:* SSID and VLAN management is a function of the wireless LAN controller or AP configuration system — not a WIPS.
+
+---
+
+### Question 17
+
+What is the maximum theoretical data rate for 802.11ax (Wi-Fi 6) on a single spatial stream using 80 MHz channels with 1024-QAM?
+
+- A) 54 Mbps
+- B) 300 Mbps
+- C) 600 Mbps
+- D) 1.2 Gbps
+
+**Correct Answer:** D
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* 54 Mbps is the maximum data rate for 802.11a/g (OFDM, 64-QAM, 54 Mbps per stream) — the pre-MIMO era standard.
+- *Why B is incorrect:* 300 Mbps is a common 802.11n rate for 2 spatial streams with 40 MHz channels — not 802.11ax.
+- *Why C is incorrect:* 600 Mbps is the theoretical maximum for 802.11n with 4 spatial streams at 40 MHz — not 802.11ax.
+- *Why D is correct:* 802.11ax (Wi-Fi 6) introduced 1024-QAM and improved OFDMA subcarrier efficiency, achieving approximately 1.2 Gbps on a single spatial stream with an 80 MHz channel. The full multi-stream aggregate rate reaches up to 9.6 Gbps.
+
+---
+
+### Question 18
+
+An administrator notices that a wireless client associates with an AP but then is immediately denied network access by a policy server. Which 802.1X component is responsible for enforcing this access decision?
+
+- A) The SSID (Supplicant)
+- B) The RADIUS server (Authentication Server)
+- C) The Access Point (Authenticator)
+- D) The wireless client NIC (Authentication Server)
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* The SSID is a network name, not an 802.1X component. In 802.1X, the supplicant is the client device requesting network access.
+- *Why B is incorrect:* The RADIUS server (Authentication Server) verifies credentials and sends an Access-Accept or Access-Reject message — but it is the Authenticator that physically enforces the decision by opening or keeping closed the controlled port.
+- *Why C is correct:* In 802.1X, the Access Point acts as the Authenticator. It maintains a controlled port (blocked) and an uncontrolled port (open for EAP traffic only). After receiving the RADIUS Access-Accept message, the Authenticator opens the controlled port, granting network access. If the RADIUS server rejects, the AP keeps the port blocked.
+- *Why D is incorrect:* The wireless client NIC is the Supplicant — it provides credentials. It is not the Authentication Server, which is the RADIUS server role.
+
+---
+
+### Question 19
+
+Which wireless feature introduced in 802.11ax (Wi-Fi 6) allows an AP to divide its channel into smaller sub-channels and serve multiple clients simultaneously, improving efficiency in high-density environments?
+
+- A) MU-MIMO
+- B) OFDMA (Orthogonal Frequency Division Multiple Access)
+- C) Beamforming
+- D) WPA3-SAE
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* MU-MIMO (Multi-User MIMO) was introduced in 802.11ac and uses multiple antenna streams to serve multiple clients. It is a spatial multiplexing technique, not a sub-channel frequency division technique.
+- *Why B is correct:* OFDMA divides a wireless channel into smaller sub-channels called Resource Units (RUs), allowing an 802.11ax AP to simultaneously serve multiple clients on different RUs within the same channel. This greatly improves efficiency in dense environments compared to one client per transmission slot.
+- *Why C is incorrect:* Beamforming focuses the AP's radio signal toward a specific client to improve signal strength and reduce interference. It does not divide the channel for multiple simultaneous clients.
+- *Why D is incorrect:* WPA3-SAE (Simultaneous Authentication of Equals) is a security protocol improvement for wireless authentication. It is unrelated to RF channel access efficiency.
+
+---
+
+### Question 20
+
+A site survey reveals that a deployed 5 GHz wireless AP is experiencing significant co-channel interference from a neighboring organization's AP using the same 5 GHz channel. What is the recommended corrective action?
+
+- A) Switch the AP to WPA2-Enterprise to filter the neighboring organization's traffic.
+- B) Reconfigure the AP to use a non-overlapping 5 GHz channel not used by the neighboring AP.
+- C) Reduce the AP's transmit power to maximum to overpower the neighboring AP.
+- D) Change the AP's SSID to match the neighboring AP's SSID to absorb its traffic.
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* WPA2-Enterprise provides authentication and encryption — it does not affect RF channel selection or interference between APs operating on the same channel.
+- *Why B is correct:* Co-channel interference occurs when two APs on the same channel overlap in coverage area. The solution is to select a different non-overlapping channel for the affected AP. The 5 GHz band offers many non-overlapping 20 MHz channels (up to 25 in the U.S.), providing significant flexibility.
+- *Why C is incorrect:* Increasing transmit power would worsen the interference by expanding the AP's coverage area into more of the neighboring AP's territory. It would not resolve the co-channel interference.
+- *Why D is incorrect:* Matching another organization's SSID would create an Evil Twin scenario, causing both organizations' clients to associate randomly with both APs — this would be both an attack and a severe operational failure.
+
+---
+
+*CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash*

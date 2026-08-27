@@ -212,3 +212,223 @@ What is the key insight that allows memoization to reduce Fibonacci from O(2ⁿ)
 - *Why B is correct:* The naive recursive call tree for `fib(n)` recomputes `fib(k)` exponentially many times for each k < n. Memoization stores the return value of each unique call after the first computation. Every subsequent call for the same argument returns the cached result in O(1). Each value from 0 to n is computed exactly once — total O(n) work.
 - *Why C is incorrect:* Memoization does not convert the recursion to iteration. The function is still recursive with stack frames. Bottom-up dynamic programming does convert to iteration, but that is a separate technique covered in Module 14.
 - *Why D is incorrect:* The recursion depth in memoized Fibonacci is still O(n) — the first call chain `fib(n) → fib(n-1) → ... → fib(0)` runs to full depth n. Subsequent calls are short-circuited by the cache, but the maximum stack depth at any one moment is still O(n).
+
+---
+
+### Question 11
+
+**Each question is worth 5 points.**
+
+In backtracking, what is the purpose of sorting the input before running the algorithm when the problem requires avoiding duplicate results?
+
+- A) Sorting allows binary search to be used inside the backtracking loop, reducing time complexity
+- B) Sorting groups identical elements together so duplicate branches can be detected and skipped with a simple index comparison
+- C) Sorting guarantees the base case is reached faster by ordering elements from smallest to largest
+- D) Sorting is required to ensure the `used` set works correctly
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Binary search is not used inside backtracking — the algorithm iterates through choices sequentially. Sorting does not enable binary search within the backtracking loop.
+- *Why B is correct:* When elements are sorted, duplicates are adjacent. The condition `if i > start and candidates[i] == candidates[i-1]: continue` detects when the same value would be chosen at the same recursion level as the previous iteration. Without sorting, duplicates may not be adjacent, and this simple index comparison would not work correctly.
+- *Why C is incorrect:* The base case condition (target reached, or length limit met) is not affected by element order. Sorting does not change when the base case is triggered.
+- *Why D is incorrect:* The `used` set tracks which indices are in the current path — sorting does not affect its correctness. Duplicate elimination requires a different mechanism (the skip condition), not the `used` set.
+
+---
+
+### Question 12
+
+What does the following recursive function compute?
+
+```python
+def mystery(n):
+    if n <= 1:
+        return 1
+    return n * mystery(n - 1)
+```
+
+- A) The nth Fibonacci number
+- B) The sum of integers from 1 to n
+- C) n factorial (n!)
+- D) The nth power of 2 (2ⁿ)
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Fibonacci is computed as `mystery(n-1) + mystery(n-2)` with base cases `mystery(0)=0, mystery(1)=1`. This function multiplies, not adds, and has only one recursive call.
+- *Why B is incorrect:* Sum 1..n would use `mystery(n-1) + n` (addition, not multiplication). The sum of 1+2+3+4 = 10; the factorial of 4 = 24 — different values.
+- *Why C is correct:* This is the textbook recursive factorial implementation. `mystery(5) = 5 × mystery(4) = 5 × 4 × mystery(3) = 5 × 4 × 3 × 2 × 1 × 1 = 120 = 5!`. Base case: `mystery(1) = 1` (1! = 1).
+- *Why D is incorrect:* Powers of 2 would use `2 * mystery(n-1)` with base case `mystery(0)=1` (2⁰=1). Multiplying by `n` (a variable) produces factorial growth, not exponential base-2 growth.
+
+---
+
+### Question 13
+
+A backtracking algorithm for the combination sum problem adds a pruning condition `if target < 0: return` before recursing. How does this affect performance?
+
+- A) It has no effect — the base case `target == 0` would eventually be reached anyway
+- B) It eliminates entire subtrees where the remaining target has already gone negative, reducing unnecessary recursive calls
+- C) It converts the algorithm from exponential to polynomial time
+- D) It ensures the algorithm only explores sorted branches, preventing duplicate combinations
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Without the pruning, the algorithm would continue recursing even after the running sum has exceeded the target, exploring many branches that cannot produce valid results. The `target < 0` check terminates these branches immediately instead of at a deeper level.
+- *Why B is correct:* When `target` goes negative, no additional elements (which are all positive) can bring it back to zero. Continuing would only waste work. Returning immediately prunes the entire subtree rooted at this call. This is the classic branch-and-bound pruning that separates practical backtracking implementations from their worst-case theoretical performance.
+- *Why C is incorrect:* Pruning reduces the constant factor and average-case performance, but the worst-case remains exponential (the problem of enumerating all valid combinations is inherently exponential in the output size). Pruning does not change the asymptotic class.
+- *Why D is incorrect:* Pruning on a negative target is about eliminating over-budget branches — it has nothing to do with sorted order or duplicate prevention. Duplicate prevention requires a separate skip condition.
+
+---
+
+### Question 14
+
+What is the output of the following code?
+
+```python
+def count_paths(n):
+    if n <= 0:
+        return 0
+    if n == 1:
+        return 1
+    return count_paths(n - 1) + count_paths(n - 2)
+
+print(count_paths(6))
+```
+
+- A) `8`
+- B) `13`
+- C) `5`
+- D) `21`
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- *Why A is correct:* `count_paths` computes the nth Fibonacci-like sequence with `f(1)=1, f(2)=f(1)+f(0)=1+0=1, f(3)=1+1=2, f(4)=2+1=3, f(5)=3+2=5, f(6)=5+3=8`. Note: `f(0)=0`. The result for n=6 is 8.
+- *Why B is incorrect:* 13 is `count_paths(7)`. For n=7: `f(7) = f(6) + f(5) = 8 + 5 = 13`. The question asks for n=6.
+- *Why C is incorrect:* 5 is `count_paths(5)`. `f(5) = f(4) + f(3) = 3 + 2 = 5`. The question asks for n=6.
+- *Why D is incorrect:* 21 is `count_paths(8)`. `f(8) = f(7) + f(6) = 13 + 8 = 21`. The question asks for n=6.
+
+---
+
+### Question 15
+
+In a recursion tree for `fib(5)`, how many times is `fib(2)` called?
+
+- A) 1
+- B) 2
+- C) 3
+- D) 5
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* If `fib(2)` were called only once, memoization would have minimal impact. The problem with naive Fibonacci is that `fib(2)` and smaller values are called many times.
+- *Why B is incorrect:* Tracing the recursion tree: `fib(5)` calls `fib(4)` and `fib(3)`. `fib(4)` calls `fib(3)` and `fib(2)`. `fib(3)` (from `fib(5)`) calls `fib(2)` and `fib(1)`. `fib(3)` (from `fib(4)`) calls `fib(2)` and `fib(1)`. Count of `fib(2)` calls: one from `fib(4)`, one from `fib(3)` under `fib(5)`, one from `fib(3)` under `fib(4)` = 3 total.
+- *Why C is correct:* Drawing the full recursion tree for `fib(5)`, `fib(2)` is called 3 times. This illustrates why memoization helps — each redundant call to `fib(2)` can be avoided after the first computation.
+- *Why D is incorrect:* 5 is the total number of unique Fibonacci values computed for `fib(5)` (fib(0) through fib(4)), not the count of `fib(2)` calls specifically.
+
+---
+
+### Question 16
+
+Which of the following correctly describes tail recursion?
+
+- A) A recursive function that calls itself with a larger input each time
+- B) A recursive function where the recursive call is the very last operation before returning, with no pending computation after it
+- C) A recursive function that uses two base cases instead of one
+- D) A recursive function that makes two recursive calls per invocation
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Recursive calls with larger inputs do not converge toward a base case and would cause infinite recursion. Tail recursion describes a structural property of where the recursive call appears, not the size of the input.
+- *Why B is correct:* Tail recursion means the function's last action is the recursive call — the return value of the recursive call is immediately returned without any further computation. Example: `return factorial_tail(n-1, acc * n)` is tail-recursive; `return n * factorial(n-1)` is not (the multiplication happens after the call returns). Some languages and compilers can optimize tail recursion into a loop, eliminating stack frame overhead.
+- *Why C is incorrect:* The number of base cases is a correctness concern, not the definition of tail recursion. A function with two base cases and a non-tail recursive call is not tail-recursive.
+- *Why D is incorrect:* Making two recursive calls per invocation (like Fibonacci) is generally the opposite of efficient tail recursion — it produces binary recursion trees with exponential call counts.
+
+---
+
+### Question 17
+
+What is the total number of recursive calls made by `subsets([1, 2, 3])`  in the standard backtracking implementation (include the initial call)?
+
+- A) 8
+- B) 15
+- C) 16
+- D) 7
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* 8 is the number of subsets (2³), not the number of recursive calls. Each call to `backtrack` records one subset, but the function is called more times than the number of results.
+- *Why B is correct:* The recursion tree for `subsets([1,2,3])` makes one call per node in a binary decision tree of depth 3. The total nodes in a complete binary tree of depth n is 2^(n+1) − 1. For n=3: 2⁴ − 1 = 15. At each level, each node spawns calls for each remaining element. The total is 1 + 3 + (3×2) + (3×2×1) ... accounting for the path structure = 15 nodes (1 root + 3 at depth 1 + 6 at depth 2 + 5 calls at leaves... the exact count via the recursion structure is 15).
+- *Why C is incorrect:* 16 = 2⁴ would be the count for a balanced binary tree of depth 4. The subsets tree for 3 elements has depth 3 and does not form a complete binary tree.
+- *Why D is incorrect:* 7 = 2³ − 1 is the number of internal nodes (non-leaf) in a complete binary tree of depth 3. The total call count includes both internal nodes and leaf nodes.
+
+---
+
+### Question 18
+
+In the N-Queens backtracking solution, which three sets are maintained to check if a position `(row, col)` is under attack?
+
+- A) `rows`, `cols`, `diagonals`
+- B) `cols`, `pos_diag` (row + col), `neg_diag` (row − col)
+- C) `rows`, `pos_diag`, `corners`
+- D) `queens`, `attacked`, `safe`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* The N-Queens algorithm places exactly one queen per row (iterating row by row), so no two queens share a row by construction. A `rows` set is unnecessary — the row is already guaranteed unique.
+- *Why B is correct:* Since one queen is placed per row, only columns and diagonals need checking. A queen at `(r, c)` attacks: all cells in column `c` (tracked by `cols`), all cells on the diagonal going down-right where `row + col` is constant (tracked by `pos_diag`), and all cells on the diagonal going down-left where `row - col` is constant (tracked by `neg_diag`). These three sets fully cover all attack directions in O(1) per check.
+- *Why C is incorrect:* There is no concept of "corners" in the N-Queens attack check. The two diagonal directions are fully described by `row+col` and `row-col`.
+- *Why D is incorrect:* These are vague placeholder names. The specific mathematical properties `row+col` and `row-col` are what make diagonal detection work in O(1) — abstract labels like `attacked` and `safe` do not describe the underlying mechanism.
+
+---
+
+### Question 19
+
+A recursive function is called with `n = 1000`. Python's default recursion limit is 1000. What happens?
+
+- A) The function runs successfully — the limit is checked after execution
+- B) Python automatically increases the recursion limit when needed
+- C) The function likely raises `RecursionError` because the call chain reaches or exceeds the system limit
+- D) The function silently truncates at depth 1000 and returns `None`
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Python checks the recursion depth at each call, not after execution. If depth reaches the limit before the base case is reached, `RecursionError` is raised immediately.
+- *Why B is incorrect:* Python does not automatically increase the recursion limit. The limit exists to prevent stack overflow from consuming all available memory. It can be manually increased with `sys.setrecursionlimit(n)`, but Python never does this automatically.
+- *Why C is correct:* Python's default recursion limit is 1000 (sys.getrecursionlimit() = 1000). With n = 1000, the call chain is `f(1000) → f(999) → ... → f(0)` — approximately 1001 frames. This meets or exceeds the limit. Python raises `RecursionError: maximum recursion depth exceeded`. The exact behavior depends on overhead frames, but n=1000 is dangerously close to the limit.
+- *Why D is incorrect:* Python does not silently truncate recursion. Reaching the limit raises an explicit exception that propagates up the call stack unless caught.
+
+---
+
+### Question 20
+
+What is the time complexity of generating all permutations of a list of n distinct elements using backtracking?
+
+- A) O(n²)
+- B) O(n · 2ⁿ)
+- C) O(n · n!)
+- D) O(2ⁿ)
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* O(n²) would be appropriate for an algorithm with two nested loops each of size n. Generating all permutations requires producing n! outputs — exponentially more than n² for large n.
+- *Why B is incorrect:* O(n · 2ⁿ) is the complexity of generating all subsets. Subsets have 2ⁿ outputs of up to length n. Permutations have n! outputs of exactly length n. For n ≥ 3, n! > 2ⁿ.
+- *Why C is correct:* There are exactly n! distinct permutations of n elements. Each permutation has length n, and recording it (copying the current list) costs O(n). Total time: O(n · n!). The backtracking tree work (pushes and pops) is also O(n · n!) — each of the n! leaf nodes required O(n) work to reach.
+- *Why D is incorrect:* O(2ⁿ) counts the number of subsets, not permutations. n! grows far faster than 2ⁿ for large n: 10! = 3,628,800 vs 2¹⁰ = 1,024.

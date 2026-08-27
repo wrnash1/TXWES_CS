@@ -125,3 +125,177 @@ Explain the difference between a standard ACL and an extended ACL in terms of: (
 A security auditor reviewing your BGP configuration says that MD5 authentication on BGP sessions "provides false security" because MD5 is cryptographically weak. Is the auditor correct? What does BGP MD5 authentication actually protect against, and what would you recommend as a more robust alternative? (3–4 sentences)
 
 **Model Answer:** The auditor is partially correct. BGP MD5 authentication (RFC 2385) uses MD5 to authenticate TCP segments in the BGP session, which does protect against **session hijacking and spoofed BGP UPDATE messages** from unauthorized parties who do not know the shared secret — it is not entirely worthless. However, MD5's cryptographic weaknesses mean that a sophisticated attacker with enough resources could potentially forge valid MD5-authenticated segments. **RFC 5925 (TCP Authentication Option — TCP-AO)** is the recommended modern replacement, supporting stronger HMAC algorithms (HMAC-SHA-1, HMAC-SHA-256). Additionally, combining BGP MD5 or TCP-AO with **GTSM (Generalized TTL Security Mechanism — RFC 5082)** — which sets the TTL to 255 so only directly connected peers can send BGP packets — provides a strong layered defense.
+
+---
+
+> **Instructor Note — Questions 11–20:** These 10 questions are worth **5 pts each** (50 pts total). Enter as a separate quiz section or append to the existing quiz. Same format rules apply.
+
+---
+
+### Question 11 (Multiple Choice — 5 pts)
+An engineer is configuring TACACS+ authorization and wants to allow a specific network operator to run only `show` commands at privilege level 1 and no configuration commands. Which configuration on the TACACS+ server and router correctly enforces this per-command authorization?
+
+- A) Set the user's privilege level to 15 on the TACACS+ server and use `aaa authorization commands 15 default group TACACS+ local`. ❌
+- B) Set the user's privilege level to 1 on the TACACS+ server, configure `aaa authorization commands 1 default group TACACS+ local` on the router, and define a permit list on the TACACS+ server for only `show` commands at privilege 1. ✅
+- C) Configure `aaa authorization exec default group TACACS+ local` — this automatically restricts commands per user. ❌
+- D) Create a named ACL on the router that blocks configuration mode access and apply it to the VTY line. ❌
+
+**Answer:** B — Per-command authorization in TACACS+ requires: (1) the AAA authorization statement on the router specifying the privilege level (`aaa authorization commands 1 default group TACACS+ local`), (2) the TACACS+ server having a permit/deny list for each command at that privilege level for the user. The TACACS+ server is queried for every command the user attempts — if the server denies `configure terminal`, the command is blocked. This granularity is impossible with RADIUS, which does not support per-command authorization.
+
+**Distractor Analysis:**
+- A: Privilege 15 grants full access — the opposite of what is needed.
+- C: `aaa authorization exec` only controls whether the user gets an EXEC shell, not which commands they can run.
+- D: ACLs filter IP traffic, not CLI command access.
+
+---
+
+### Question 12 (Multiple Choice — 5 pts)
+A network engineer applies the following CoPP policy map to the control plane:
+```
+policy-map COPP-POLICY
+ class ICMP-CLASS
+  police rate 64000 bps
+ class BGP-CLASS
+  police rate 2000000 bps
+ class class-default
+  drop
+```
+A legitimate BGP peer at 1.2.3.4 suddenly cannot maintain its BGP session during a period of high ICMP traffic. What is the most likely root cause?
+
+- A) The `class-default drop` is blocking BGP packets that were not classified into BGP-CLASS. ❌
+- B) The ICMP-CLASS rate limit is too low — an ICMP flood is consuming CPU before BGP packets are processed. ❌
+- C) BGP traffic from 1.2.3.4 is not being matched by BGP-CLASS and is falling into `class-default drop`, because the BGP-CLASS ACL or class-map does not include that peer's IP. ✅
+- D) CoPP cannot police both ICMP and BGP simultaneously on the same control plane. ❌
+
+**Answer:** C — CoPP relies on class-maps (typically backed by ACLs or DSCP/protocol matches) to classify traffic. If the BGP-CLASS class-map does not correctly match TCP port 179 from 1.2.3.4, that BGP traffic falls to `class-default`, which is configured to drop all unclassified traffic. The fix is to verify the BGP-CLASS ACL or match condition explicitly includes the peer address and TCP port 179. A CoPP audit after every BGP peering change is a critical operational practice.
+
+**Distractor Analysis:**
+- A: This is partially correct but is not the most specific root cause — it does not explain why BGP specifically failed while ICMP was running.
+- B: An ICMP flood consuming CPU would be rate-limited by ICMP-CLASS — that is exactly what CoPP prevents.
+- D: CoPP processes classes sequentially and handles multiple traffic types without conflict.
+
+---
+
+### Question 13 (Multiple Choice — 5 pts)
+What is the primary security benefit of enabling **IP Source Guard** on switch access ports, and what must be configured first for IP Source Guard to function?
+
+- A) IP Source Guard prevents MAC spoofing by binding a port to a specific MAC address. DHCP Snooping is required first. ❌
+- B) IP Source Guard drops packets whose source IP address does not match the DHCP Snooping binding table entry for that port, preventing IP address spoofing. DHCP Snooping must be enabled and the binding table populated before IP Source Guard can enforce bindings. ✅
+- C) IP Source Guard encrypts traffic at Layer 2. No prerequisites are required. ❌
+- D) IP Source Guard prevents rogue DHCP servers by rate-limiting DHCP traffic on untrusted ports. ❌
+
+**Answer:** B — IP Source Guard (IPSG) filters inbound packets on untrusted access ports by comparing the source IP in each packet against the DHCP Snooping binding table. If a host uses a static IP or a spoofed IP that does not match the binding table, the packet is dropped. This stops an attacker who has gained physical access to a port from spoofing another host's IP address to intercept traffic or bypass ACLs. DHCP Snooping must be configured first to build the binding table that IPSG consults.
+
+**Distractor Analysis:**
+- A: Port Security (not IPSG) provides MAC-based binding. IPSG binds to IP addresses.
+- C: IPSG is a filtering mechanism, not encryption.
+- D: DHCP rate limiting on untrusted ports is a DHCP Snooping feature, not IPSG.
+
+---
+
+### Question 14 (Multiple Choice — 5 pts)
+An enterprise is deploying MACsec (IEEE 802.1AE) on uplinks between access switches and distribution switches. Which statement about MACsec is correct?
+
+- A) MACsec encrypts Layer 3 headers only — it does not protect Layer 2 Ethernet frames. ❌
+- B) MACsec operates at Layer 2 and encrypts the entire Ethernet frame payload (from the EtherType field onward), providing hop-by-hop confidentiality and integrity on each physical link segment. ✅
+- C) MACsec is an end-to-end encryption standard that operates identically to IPsec at the transport layer. ❌
+- D) MACsec can only be deployed on WAN links and is not supported on switch-to-switch campus links. ❌
+
+**Answer:** B — MACsec (IEEE 802.1AE) provides hop-by-hop encryption at Layer 2. It encrypts the payload of each Ethernet frame between directly connected devices — each switch decrypts incoming frames and re-encrypts outbound frames. This means an attacker who taps the physical cable between two switches sees only encrypted data. Unlike IPsec (which is end-to-end at Layer 3), MACsec protects each link segment independently, making it ideal for protecting campus backbone links where physical access is a risk.
+
+**Distractor Analysis:**
+- A: MACsec encrypts the entire Ethernet payload starting from the EtherType, including Layer 3 headers and above.
+- C: IPsec is end-to-end at Layer 3; MACsec is hop-by-hop at Layer 2 — they are complementary, not equivalent.
+- D: MACsec is supported on Cisco Catalyst switches, ISR/ASR routers, and is well-suited to campus switch-to-switch uplinks.
+
+---
+
+### Question 15 (Multiple Choice — 5 pts)
+An SNMPv3 configuration uses `authNoPriv` security level. A junior engineer argues that this provides complete security because all SNMP messages are authenticated. What critical security gap does this configuration leave?
+
+- A) `authNoPriv` does not authenticate the SNMP manager — any device can send SNMP requests. ❌
+- B) `authNoPriv` authenticates messages (preventing tampering) but does not encrypt the SNMP payload — SNMP GET responses containing sensitive configuration data are transmitted in plaintext and can be captured by a network eavesdropper. ✅
+- C) `authNoPriv` is not supported on Cisco IOS devices; only `noAuthNoPriv` and `authPriv` are valid. ❌
+- D) `authNoPriv` does not support SHA authentication — only MD5. ❌
+
+**Answer:** B — SNMPv3 has three security levels: `noAuthNoPriv` (no authentication, no encryption), `authNoPriv` (HMAC authentication but no encryption), and `authPriv` (authentication + AES/DES encryption). With `authNoPriv`, the SNMP payload — including GET responses that may contain interface configurations, routing tables, and community strings — is sent in cleartext. An attacker passively capturing traffic on the management VLAN could read all SNMP data. For a production network, `authPriv` with AES-128 or AES-256 is the only acceptable SNMPv3 configuration.
+
+**Distractor Analysis:**
+- A: Authentication (HMAC-SHA or HMAC-MD5) does verify the identity of the SNMP manager — this is not the gap.
+- C: All three SNMPv3 security levels are supported on Cisco IOS.
+- D: Cisco IOS supports both SHA and MD5 for SNMPv3 authentication; SHA is strongly preferred.
+
+---
+
+### Question 16 (Scenario — 5 pts)
+A router's running configuration shows:
+```
+ip access-list extended MGMT-ACL
+ 10 permit tcp host 10.99.99.100 any eq 22
+ 20 deny ip any any log
+
+line vty 0 15
+ access-class MGMT-ACL in
+ transport input ssh
+```
+A network administrator at 10.99.99.200 attempts to SSH to the router and is denied. What is the single most specific cause and fix?
+
+- A) The ACL is applied in the wrong direction — `in` should be `out`. ❌
+- B) `transport input ssh` and an ACL cannot coexist on the same VTY line. ❌
+- C) The administrator's source IP (10.99.99.200) does not match the `host 10.99.99.100` permit statement in MGMT-ACL — only .100 is permitted. Add a permit statement for the administrator's IP or use `permit tcp 10.99.99.0 0.0.0.255 any eq 22`. ✅
+- D) SSH on the VTY requires `login authentication default` — without it, the ACL is not enforced. ❌
+
+**Answer:** C — The `host` keyword in the ACL matches only the single IP address 10.99.99.100 for SSH access. The administrator at 10.99.99.200 hits the implicit deny at line 20 and is blocked. The fix is to broaden the permit to the entire management subnet (`permit tcp 10.99.99.0 0.0.0.255 any eq 22`) or add a specific entry for .200. This is a common production issue when management access lists are too narrow — always document and plan for multiple admin workstations.
+
+**Distractor Analysis:**
+- A: `in` on `access-class` is correct — it filters inbound connection attempts to the VTY.
+- B: `transport input ssh` and `access-class` are designed to work together; this is a standard hardening configuration.
+- D: `login authentication default` controls the authentication method; the ACL is enforced regardless.
+
+---
+
+### Question 17 (Multiple Choice — 5 pts)
+Which command verifies that BGP MD5 authentication is active and functioning between two BGP peers, and what output field specifically confirms the MD5 session is authenticated?
+
+- A) `show ip bgp summary` — the "State/PfxRcd" column shows "MD5" when authenticated. ❌
+- B) `show ip bgp neighbors [peer-IP]` — the output includes "BGP neighbor is ... Options: (V4 Capability, Route refresh Capability, **Established**, **MD5 Message Digests**)" and shows the session state as Established. ✅
+- C) `show ip route bgp` — the routing table flags indicate MD5-authenticated routes with a special marker. ❌
+- D) `debug ip bgp [peer-IP] events` — the debug output logs each MD5 hash exchange. ❌
+
+**Answer:** B — `show ip bgp neighbors [peer-IP]` displays the full neighbor session details, including "MD5 Message Digests" in the Options field and "External BGP neighbor configured for session open authentication" when MD5 is active. If the session is in Established state with MD5 listed, authentication is working. If the password is mismatched, the session will be in Idle/Active state with TCP connection failures, and `debug ip bgp` would show "MD5 digest is wrong."
+
+**Distractor Analysis:**
+- A: `show ip bgp summary` does not show authentication details — only prefix counts and session state.
+- C: Routing table entries carry no authentication metadata.
+- D: Debug commands are correct for diagnosing failures, but `show ip bgp neighbors` is the standard verification command.
+
+---
+
+### Question 18 (Multiple Choice — 5 pts)
+An enterprise security team requires that all SNMP polling use authentication and encryption, and that only the network management system at 10.50.50.10 is permitted to query devices. Which SNMPv3 configuration elements correctly enforce both requirements simultaneously?
+
+- A) Configure a community string with `snmp-server community SECURE_STRING RO` and apply an ACL to permit only 10.50.50.10. ❌
+- B) Configure SNMPv3 with `authPriv` security level, assign the NMS user to a group with read access to a defined view, and apply an ACL to the SNMP group or community restricting access to 10.50.50.10. ✅
+- C) Configure SNMPv3 `noAuthNoPriv` and rely on the management VLAN firewall for IP restriction. ❌
+- D) Configure SNMPv3 `authNoPriv` with SHA and an ACL — this provides both authentication and source IP restriction simultaneously. ❌
+
+**Answer:** B — SNMPv3 `authPriv` satisfies the encryption requirement; the access restriction to the NMS IP (10.50.50.10) is enforced via an ACL associated with the SNMP group. The complete configuration involves: `snmp-server group MGMT_GROUP v3 priv access NMS-ACL`, `snmp-server user netadmin MGMT_GROUP v3 auth sha [authpass] priv aes 128 [privpass]`, and an ACL `NMS-ACL` permitting only 10.50.50.10. This is the gold standard for SNMP security on enterprise infrastructure.
+
+**Distractor Analysis:**
+- A: SNMPv2c community strings provide no encryption and are transmitted in plaintext — this does not meet "encryption" requirement.
+- C: `noAuthNoPriv` provides neither authentication nor encryption — relying on VLAN firewalls alone is defense-in-depth failure.
+- D: `authNoPriv` satisfies authentication but not encryption — SNMP GET responses would still be readable in plaintext.
+
+---
+
+### Question 19 (Short Answer — 5 pts)
+Explain the concept of a **BGP prefix filter** using a prefix-list and describe a specific scenario where failing to implement one could cause a serious outage. Include the IOS commands to configure and apply a basic inbound prefix filter. (3–4 sentences)
+
+**Model Answer:** A BGP prefix filter uses an `ip prefix-list` to explicitly permit or deny specific network prefixes received from (or sent to) a BGP peer — it controls which routes enter or leave the BGP table. Without an inbound prefix filter, a BGP peer can advertise any number of prefixes including bogon addresses (RFC 1918 space, 0.0.0.0/0, or full default routes), which could override legitimate routes and blackhole traffic — a scenario called **BGP route hijacking** that has caused real-world internet outages. For example, if an ISP peer accidentally advertises 0.0.0.0/0 to your router without a filter, your router installs it as the default route, potentially routing all traffic toward that peer instead of your legitimate default gateway. The configuration is: `ip prefix-list INBOUND-FILTER seq 10 permit 203.0.113.0/24` (allowing only expected prefixes), then `router bgp 65000` → `neighbor 1.2.3.4 prefix-list INBOUND-FILTER in`.
+
+---
+
+### Question 20 (Short Answer — 5 pts)
+Describe the **management plane hardening** practice of restricting VTY access using an ACL combined with `transport input ssh`, and explain why using Telnet for device management is a critical security risk even on a private management VLAN. (2–3 sentences)
+
+**Model Answer:** Applying `access-class [ACL] in` on VTY lines restricts SSH access to only the IP addresses defined in the ACL (typically the management VLAN or a dedicated jump host), combined with `transport input ssh` which blocks Telnet entirely so only SSH connections are accepted regardless of ACL entries. Telnet transmits all data — including usernames, passwords, and every command typed — in cleartext over the network, meaning anyone with access to a network tap, mirror port, or compromised switch on the management VLAN can capture administrator credentials in real time with tools like Wireshark. Even on a private management VLAN, insider threats, compromised infrastructure, or a misconfigured SPAN session could expose those credentials — SSH with RSA-2048 or higher keys eliminates this risk by encrypting the entire management session.

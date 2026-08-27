@@ -291,3 +291,19 @@ aws elbv2 describe-target-health \
 ## References
 
 All certification study materials and exam registration: <aws.amazon.com/certification>
+
+---
+
+## 9. Supplemental Resources
+
+**1. AWS Documentation — Amazon EC2 Auto Scaling User Guide**
+https://docs.aws.amazon.com/autoscaling/ec2/userguide/what-is-amazon-ec2-auto-scaling.html
+Comprehensive guide covering Auto Scaling groups, launch templates, scaling policies (target tracking, step, scheduled), lifecycle hooks, and health check integration with ELB.
+
+**2. AWS Skill Builder — Amazon EC2 Basics (Free Digital Course)**
+https://skillbuilder.aws/learn/course/external/view/elearning/479/amazon-ec2-basics
+Free course covering EC2 instance types, purchasing options, EBS volumes, and the fundamentals of compute on AWS — directly supporting Module 03 exam preparation.
+
+**3. AWS Documentation — Elastic Load Balancing Features Comparison**
+https://aws.amazon.com/elasticloadbalancing/features/
+Official feature comparison page for ALB, NLB, GWLB, and CLB — essential reference for the SAA-C03 load balancer selection questions covered in this module.

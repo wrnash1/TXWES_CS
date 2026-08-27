@@ -399,3 +399,20 @@ Use this checklist in the 48 hours before your DSOE exam:
 - [ ] Review the DORA performance bands — know Elite vs. High performer values for all four metrics
 - [ ] Confirm you can describe DSOMM Levels 1–4 and identify the level from a described program state
 - [ ] Confirm you can map a compliance requirement (SOC 2 CC8.1, PCI-DSS Req 6.3) to a specific pipeline control
+
+---
+
+## 9. Supplemental Resources
+
+**1. [DevSecOps Professional (DSOE) certification — Security Knowledge Framework](https://www.practical-devsecops.com/devsecops-professional-certification/)**
+The official Practical DevSecOps DSOE certification page covering exam domains, topic areas, and preparation guidance. Cross-references the tool and framework domains tested in the exam with the module content from this course.
+
+**2. [OWASP DevSecOps Guideline](https://owasp.org/www-project-devsecops-guideline/)**
+The OWASP DevSecOps Guideline covers the full DevSecOps lifecycle from pre-commit through production monitoring. Includes tool recommendations, integration patterns, and maturity model guidance that aligns with exam scenarios requiring end-to-end pipeline design decisions across all security domains.
+
+**3. [CNCF Cloud Native Security Whitepaper](https://github.com/cncf/tag-security/blob/main/security-whitepaper/v2/CNCF_cloud-native-security-whitepaper-May2022-v2.pdf)**
+The CNCF Security Technical Advisory Group's comprehensive whitepaper on cloud native security, covering supply chain security, runtime security, Kubernetes hardening, and compliance-as-code. Maps security controls across the software lifecycle and provides the architectural context for understanding how individual DevSecOps tools fit into a defense-in-depth strategy.
+
+---
+
+Reading Guide — Module 16 | CIS-4350 | Texas Wesleyan University | Professor Nash

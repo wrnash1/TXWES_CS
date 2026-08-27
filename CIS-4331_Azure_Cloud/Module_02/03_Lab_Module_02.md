@@ -270,3 +270,17 @@ Format as a single PDF or Word document. Include your full name, student ID, and
 **Resource group creation fails with "Location not available":** Verify the region name exactly matches the CLI identifier (`southcentralus`, not `South Central US`). Use `az account list-locations --output table` to find the exact name.
 
 **Cannot see resource group in Portal:** Confirm you are signed in to the correct subscription. Check the subscription filter in the Portal top bar — the Portal may be filtering to show only resources from a different subscription.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Availability Zone Deployment Comparison
+Using Azure CLI, create two resource groups — one in a region that supports Availability Zones (`eastus`) and one in a region that does not support them (verify using the `az account list-locations --query "[?availabilityZoneMappings == null]"` filter). Attempt to create a Standard public IP address in each group specifying `--zone 1`. Document what happens in the non-zone-supported region and explain why. Clean up both resource groups when finished with `az group delete`.
+
+### Challenge 2: Management Group Policy Inheritance Trace
+In the Azure Portal, navigate to Management Groups and draw the full hierarchy from the Root Management Group down to a resource group in your student subscription. For each level, identify whether any Azure Policy assignments exist (Policies blade). Document the assignment scope and effect for at least one policy you find. If no policies exist, describe what type of policy you would assign at the Root Management Group level to enforce a security baseline across all future subscriptions.
+
+### Reflection Questions
+1. You deployed resource groups in both South Central US and East US during the lab. A colleague suggests always deploying all resources in the same region to simplify management. What legitimate technical reasons might justify deploying resources across multiple regions instead?
+2. The management hierarchy you designed for Rampart Industries in Part C used separate subscriptions per division. What would happen to billing visibility and governance if all three divisions used a single shared subscription instead? What specific problems would arise?

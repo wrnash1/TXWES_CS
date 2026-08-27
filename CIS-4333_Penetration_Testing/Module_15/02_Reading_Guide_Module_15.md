@@ -188,3 +188,14 @@ framework.
 - [ ] Complete required readings and video segments
 - [ ] Review lab instructions before beginning the hands-on exercise
 - [ ] Proceed to the Module 15 quiz on Canvas
+
+## 9. Supplemental Resources
+
+**1. [OWASP Testing Guide — Reporting](https://owasp.org/www-project-web-security-testing-guide/)**
+The OWASP Web Security Testing Guide includes a dedicated section on reporting standards, evidence documentation, and findings classification. Relevant to chain-of-custody practices and structuring vulnerability findings with consistent severity language.
+
+**2. [NIST SP 800-115 — Technical Guide to Information Security Testing and Assessment](https://csrc.nist.gov/publications/detail/sp/800-115/final)**
+Section 4 of this NIST publication covers post-testing activities including cleanup obligations, evidence handling, and reporting. It is an authoritative government reference for the professional standards underlying PT0-002 Domain 5 content.
+
+**3. [Penetration Testing Execution Standard (PTES) — Post-Exploitation and Reporting](http://www.pentest-standard.org/index.php/Reporting)**
+The PTES reporting section defines industry expectations for post-engagement documentation including cleanup attestation format, evidence handling procedures, and the structure of findings with remediation recommendations. Use this alongside the reading guide to understand how professional engagements are formally closed.

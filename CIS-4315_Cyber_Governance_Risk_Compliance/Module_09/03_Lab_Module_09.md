@@ -258,3 +258,49 @@ Before submitting, verify:
 This lab directly applies CISM Domain 3 competencies. The metrics framework you build in Task 1 mirrors the process a CISM-certified manager uses to establish a security measurement program. The executive report in Task 3 is the primary vehicle by which CISOs maintain board-level accountability for security programs. The SIEM rule design in Task 4 connects security monitoring architecture to governance requirements.
 
 Keep your completed lab. The frameworks and templates you develop here can be adapted as study references for the CISM exam.
+
+---
+
+## Part 9 — Challenge Exercise
+
+These challenges extend the Module 09 lab into advanced security monitoring and metrics scenarios. Complete both challenges and the reflection questions for up to 15 bonus points.
+
+---
+
+### Challenge 1: SIEM Correlation Rule Design and Tuning
+
+Meridian Financial's SOC has deployed a new SIEM and the security engineering team must build a correlation rule library. The threat intelligence team has identified three priority detection scenarios based on recent incident data from the financial services sector.
+
+**Scenario A — Credential Stuffing Against Online Banking Portal**: Attackers are using lists of breached credentials to attempt automated logins to customer banking accounts. Typical pattern: high volume of failed authentications from distributed IP ranges, followed by successful logins from the same IP ranges.
+
+**Scenario B — Data Exfiltration via Cloud Storage**: Insiders and external attackers are uploading large volumes of sensitive data to personal cloud storage accounts (Google Drive, Dropbox, OneDrive) from corporate devices during or after business hours.
+
+**Scenario C — Privileged Account Misuse**: Privileged service accounts are being used interactively (human login) rather than running only as automated processes, indicating potential credential compromise or insider misuse.
+
+**Step 1**: For each scenario, design a SIEM correlation rule. For each rule provide: the log sources required, the detection logic (conditions that must be true to fire the alert), the time window, the severity level, and the initial response action when the alert fires.
+
+**Step 2**: After 30 days of operation, the SOC reports the following false positive rates: Scenario A rule — 6% false positive rate; Scenario B rule — 43% false positive rate; Scenario C rule — 78% false positive rate. For rules B and C, identify the most likely sources of false positives given the scenario context and propose specific tuning changes (additional conditions, exclusion lists, threshold adjustments) to bring the false positive rate below 15% without eliminating true positive coverage.
+
+**Step 3**: The CISO wants to add a UEBA layer to complement the SIEM rules. Explain what additional detection value UEBA would provide for each of the three scenarios that the static SIEM correlation rules cannot provide, and describe what baseline data UEBA would need for each scenario.
+
+---
+
+### Challenge 2: Executive Security Metrics Dashboard Redesign
+
+Meridian Financial's board has complained that the current quarterly security report is "too technical, too long, and doesn't help us make decisions." The current report is 22 pages and includes: raw vulnerability scan output (847 rows), a list of all security incidents with technical descriptions, firewall rule change logs, and patch compliance percentages by system.
+
+**Step 1**: Critique the current report format. Identify at least five specific reasons why the existing report fails to serve the board's governance and decision-making function, referencing the principles of effective executive security reporting from the reading guide.
+
+**Step 2**: Design a replacement executive security dashboard using the three-layer framework (strategic/executive, tactical/management, operational/analyst). For each layer, specify: the audience, the update frequency, the format (dashboard, report, scorecard), and five specific metrics or data elements it should contain. Use the Meridian Financial scenario facts from the main lab to ensure the metrics are contextually relevant.
+
+**Step 3**: The CFO reviews your proposed executive dashboard and asks: "How do I know if our security program is improving or getting worse?" Design a trend-based security program health scorecard with at least six metrics that, when viewed together over four quarters, would give the CFO a clear answer to this question. For each metric, specify the direction of improvement (higher is better / lower is better), the data source, and what a concerning trend would look like.
+
+---
+
+### Reflection Questions
+
+Answer each reflection question in four to six sentences.
+
+1. A security manager argues that the most important security metric is the number of incidents prevented — not incidents detected or responded to — because prevention is the primary goal of a security program. Explain why "incidents prevented" is difficult to measure reliably, what proxy metrics can be used to approximate prevention effectiveness, and what the governance risk is of building an executive dashboard primarily around prevention metrics.
+
+2. SIEM platforms are powerful but produce significant operational complexity — requiring ongoing rule tuning, log source integration maintenance, analyst training, and false positive management. Describe the conditions under which a mid-sized organization might conclude that a managed detection and response (MDR) service is more appropriate than an internally operated SIEM, and explain what governance oversight responsibilities the organization retains even when it outsources detection and response to a third party.

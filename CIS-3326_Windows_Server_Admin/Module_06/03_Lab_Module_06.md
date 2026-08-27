@@ -358,3 +358,79 @@ Get-DnsClientServerAddress -InterfaceAlias "Ethernet"
 ```
 
 If the reverse lookup PTR record test fails, verify the `10.168.192.in-addr.arpa` reverse zone was created in Step 5.3.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Configure a Conditional Forwarder and Test Resolution
+
+Conditional forwarders route DNS queries for specific domains to designated servers. Practice creating one and verifying resolution behavior.
+
+1. Create a conditional forwarder for the fictional partner domain `partner.local` pointing to `8.8.8.8` (using a public DNS server as a stand-in for a partner DNS server):
+
+   ```powershell
+   Add-DnsServerConditionalForwarderZone `
+       -Name "partner.local" `
+       -MasterServers 8.8.8.8 `
+       -ReplicationScope Forest
+   ```
+
+2. Verify the conditional forwarder was created:
+
+   ```powershell
+   Get-DnsServerZone | Where-Object { $_.ZoneName -eq "partner.local" }
+   ```
+
+3. Test how the DNS server handles a query for `partner.local` (the query will fail to resolve since `8.8.8.8` doesn't know about `partner.local`, but you should see the forwarding attempt in DNS debug logging):
+
+   ```powershell
+   Resolve-DnsName -Name "anyhost.partner.local" -Server 127.0.0.1
+   ```
+
+4. Enable DNS debug logging to capture the forwarded query attempt, then disable it after reviewing the log:
+
+   ```powershell
+   Set-DnsServerDiagnostics -All $true
+   # Re-run the Resolve-DnsName command above
+   # View the DNS debug log:
+   Get-Content "C:\Windows\System32\dns\dns.log" | Select-Object -Last 20
+   Set-DnsServerDiagnostics -All $false
+   ```
+
+   Document in your notes: what IP address did the debug log show the query being forwarded to?
+
+### Challenge 2: Analyze DHCP Lease Database and Test Scope Exhaustion
+
+Understanding the DHCP lease database and what happens when a scope is exhausted is critical for production troubleshooting.
+
+1. View all active leases in the `192.168.10.0` scope and count how many are in use:
+
+   ```powershell
+   $leases = Get-DhcpServerv4Lease -ScopeId 192.168.10.0
+   $leases | Select-Object IPAddress, HostName, ClientId, LeaseExpiryTime
+   Write-Host "Total active leases: $($leases.Count)"
+   ```
+
+2. View the scope statistics to see how many addresses are available vs. in use:
+
+   ```powershell
+   Get-DhcpServerv4ScopeStatistics -ScopeId 192.168.10.0
+   ```
+
+3. Calculate the maximum capacity of your scope. Based on the Start Range and End Range configured in Part 2 of this lab (minus the exclusion range), determine: how many addresses could potentially be leased? Show the calculation in your lab notes.
+
+4. Examine the DHCP audit log to see recent lease activity:
+
+   ```powershell
+   $logPath = "C:\Windows\System32\dhcp"
+   $today = Get-Date -Format "ddd"
+   Get-Content "$logPath\DhcpSrvLog-$today.log" | Select-Object -Last 30
+   ```
+
+   Identify the event ID code for a lease being granted (hint: look for ID 10 in the log format). Document what event ID 11 represents.
+
+### Reflection Questions
+
+1. Your conditional forwarder for `partner.local` sends queries to `8.8.8.8`. In a real enterprise scenario, you would point this at the partner company's actual DNS server. Explain why a conditional forwarder is more secure than simply listing the partner DNS server as a second general forwarder — consider what would happen to your other external DNS queries.
+2. DHCP scope exhaustion causes new clients to receive APIPA addresses and lose network connectivity. Describe two proactive monitoring approaches an administrator should implement to detect a scope approaching exhaustion before it becomes critical. Name any specific Windows Server tool or PowerShell cmdlet that would provide this alert.

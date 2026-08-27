@@ -199,3 +199,44 @@ Before the quiz and lab, confirm you can do all of the following without looking
 - Explain local port forwarding with a specific use case
 - Create a ~/.ssh/config entry for a frequently accessed server
 - Explain the SSH agent and its purpose
+
+---
+
+## 9. Supplemental Resources
+
+**1. OpenSSH Manual Pages — ssh(1), sshd(8), sshd_config(5), ssh_config(5)**
+URL: https://man.openbsd.org/ssh
+Coverage: The OpenBSD project maintains the authoritative OpenSSH manual pages. The ssh(1)
+page covers all client flags including -L (local forward), -R (remote forward), -D (dynamic),
+-A (agent forward), -N, and -f. The sshd_config(5) page documents every server directive
+including PermitRootLogin, PasswordAuthentication, AllowUsers, MaxAuthTries, and
+AuthorizedKeysFile. Essential reference for all SSH configuration topics in this module.
+
+**2. SSH Key Management and Best Practices — Red Hat Enterprise Linux 9**
+URL: https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/securing_networks/using-secure-communications-between-two-systems-with-openssh_securing-networks
+Coverage: Red Hat's OpenSSH security guide covering key generation with ssh-keygen, deploying
+public keys, configuring sshd_config for hardening, certificate-based authentication, and
+SSH agent usage. Includes step-by-step procedures for common administrative tasks and a
+security hardening checklist aligned with RHEL recommendations.
+
+**3. ssh-keygen(1) and ssh-copy-id(1) Man Pages — man7.org**
+URL: https://man7.org/linux/man-pages/man1/ssh-keygen.1.html
+Coverage: The ssh-keygen man page documents all key generation options including key types
+(-t ed25519, rsa, ecdsa), bit sizes (-b), comments (-C), and passphrase management. The
+ssh-copy-id man page explains the -i flag and how it writes keys to authorized_keys. Also
+covers key fingerprint display and known_hosts management with -R for host key removal.
+
+**4. rsync(1) Man Page and Tutorial — man7.org**
+URL: https://man7.org/linux/man-pages/man1/rsync.1.html
+Coverage: The rsync man page is comprehensive but dense. Key sections: -a (archive mode),
+-v (verbose), -z (compress), --delete (mirror deletions), --dry-run (simulate), --exclude,
+and --bwlimit. The FILTER RULES section covers include/exclude patterns for selective sync.
+Understanding the trailing slash behavior (source/ vs source) is critical for correct usage.
+
+**5. Arch Wiki — SSH Keys and OpenSSH**
+URL: https://wiki.archlinux.org/title/SSH_keys
+Coverage: Practical guide covering key pair generation, adding keys to ssh-agent with
+ssh-add, configuring SSH config file entries, multiplexing with ControlMaster, and
+troubleshooting authentication failures. The companion OpenSSH article covers server
+configuration, security hardening, and jump host configuration with ProxyJump. Both are
+regularly updated and include current best-practice recommendations.

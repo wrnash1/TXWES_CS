@@ -233,3 +233,17 @@ Work through each item before submitting the lab.
 - [ ] Complete the Module 01 lab activity.
 - [ ] Post your initial discussion response by Wednesday at 11:59 PM.
 - [ ] Respond to at least two classmates by Sunday at 11:59 PM.
+
+## 9. Supplemental Resources
+
+**1. fast.ai — Practical Deep Learning for Coders (free course)**
+<https://course.fast.ai/>
+A free, practical deep learning course that covers neural networks, image classification, NLP, and tabular data using Python. Ideal for building intuition about how deep learning systems work in practice before diving into Azure-specific tooling.
+
+**2. Google AI Education — Machine Learning Crash Course**
+<https://developers.google.com/machine-learning/crash-course>
+A free, self-paced course from Google covering supervised learning, gradient descent, neural networks, and responsible AI. Includes interactive exercises and video lectures that complement the AI-900 conceptual framework covered in this module.
+
+**3. IBM SkillsBuild — AI Fundamentals**
+<https://skillsbuild.org/learn/artificial-intelligence>
+A free beginner-level AI curriculum from IBM covering AI history, machine learning types, ethics, and real-world applications. Provides an alternative perspective on the same foundational concepts covered in Module 01, reinforcing the AI vs. ML vs. DL hierarchy and responsible AI principles.

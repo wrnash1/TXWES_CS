@@ -356,4 +356,19 @@ Expect exam questions on:
 
 ---
 
+---
+
+## 9. Supplemental Resources
+
+**1. [man7.org — proc(5) Virtual Filesystem](https://man7.org/linux/man-pages/man5/proc.5.html)**
+The complete reference for the Linux `/proc` virtual filesystem. Documents every `/proc/PID/` subdirectory and key system-wide files (`/proc/loadavg`, `/proc/meminfo`, `/proc/cpuinfo`). Essential when troubleshooting process behavior directly from kernel-exposed data without relying on higher-level tools.
+
+**2. [Red Hat — Understanding Linux Process States](https://www.redhat.com/sysadmin/linux-process-states)**
+A practical Red Hat sysadmin article covering all process state codes with real-world diagnostic scenarios. Includes guidance on interpreting large numbers of `D`-state processes (I/O wait) and zombie processes, and the commands used to investigate each.
+
+**3. [Crontab Guru — Interactive Cron Expression Editor](https://crontab.guru/)**
+An interactive web tool that parses and explains crontab expressions in plain English. Invaluable for verifying complex cron expressions before deploying them. Also includes a list of common cron schedule patterns and the special `@reboot`, `@daily`, and `@weekly` shorthand strings.
+
+---
+
 *End of Module 05 Reading Guide*

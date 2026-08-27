@@ -291,3 +291,19 @@ Complete before attempting the quiz:
 - Complete Lab 05.
 - Post to Discussion Forum 05 by Wednesday at 11:59 PM.
 - Complete Quiz 05 (10 questions).
+
+---
+
+## 9. Supplemental Resources
+
+**1. SAP Learning — Financial Accounting (FI) Core Concepts**
+<https://learning.sap.com/learning-journeys/exploring-sap-s-4hana-finance>
+SAP's official S/4HANA Finance learning journey covering the Universal Journal, sub-ledger integration, and the FI/CO relationship. Directly relevant to the three-way match, depreciation, and period-close content in this module.
+
+**2. openSAP — S/4HANA Finance: New Accounting Paradigm**
+<https://open.sap.com/courses/s4f1>
+Free openSAP course on the SAP S/4HANA Universal Journal and how it unifies FI and CO into a single data model. Understanding the Universal Journal is foundational for SAP Finance certification and explains why separate FI/CO reconciliation is no longer required in S/4HANA.
+
+**3. AICPA — Understanding Internal Controls in ERP Financial Systems**
+<https://www.aicpa.org/resources/article/internal-controls-erp>
+Professional resource from the American Institute of CPAs on how ERP financial controls (three-way match, period locking, segregation of duties) satisfy audit and compliance requirements. Relevant to the financial controls content in this module and the broader compliance themes in Module 15.

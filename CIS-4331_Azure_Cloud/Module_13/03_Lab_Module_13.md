@@ -395,3 +395,17 @@ Note: Log Analytics workspaces have a 14-day soft-delete retention after the res
 ---
 
 Lab 13 | CIS-4331 Azure Cloud | Texas Wesleyan University
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Application Insights Live Metrics and Custom Events
+Create an Application Insights resource in your lab resource group. Using the Application Insights JavaScript snippet, instrument a static HTML page hosted on Azure Blob Storage (static website enabled). Add a `trackEvent()` call that fires when a button on the page is clicked, naming the event "LabButtonClicked". Open the Application Insights Live Metrics stream, click the button several times, and capture a screenshot showing the custom event appearing in the Live Metrics stream. Then navigate to Application Insights > Events and run a KQL query against the `customEvents` table to count occurrences grouped by name. Document the instrumentation key setup, the JavaScript snippet, the Live Metrics screenshot, and the KQL query with results. Explain in 2–3 sentences how custom events in Application Insights differ from automatically collected telemetry (requests, dependencies, exceptions) and what business scenarios benefit from custom event tracking.
+
+### Challenge 2: Multi-Resource Dashboard with Alert Integration
+Create an Azure Dashboard that displays: (1) a Metrics chart showing CPU utilization for at least one VM or App Service over the past 24 hours, (2) a Log Analytics query tile showing the count of storage transactions per hour for the past 6 hours using KQL, and (3) an Alerts summary tile showing the current fired alert count. Configure the dashboard to auto-refresh every 5 minutes. Share the dashboard with Reader access to a second user in your Azure tenant (or document the sharing steps if a second user is unavailable). Export the dashboard JSON definition using the portal Download button. Document the dashboard JSON, a screenshot of the completed dashboard, and the sharing configuration. Explain in 2–3 sentences how a shared Azure Dashboard supports NOC (Network Operations Center) or on-call rotation practices compared to each engineer having a personal dashboard.
+
+### Reflection Questions
+1. The lab configured both a metric alert (storage transaction count) and a Log Analytics diagnostic settings pipeline for the same storage account. Describe a monitoring scenario where a metric alert alone is insufficient and a Log Analytics log query is required to diagnose the root cause — specifically: what does the metric alert tell the operations team, what does it NOT tell them, and what KQL query would they run against the StorageBlobLogs table to get the missing information?
+2. Azure Monitor supports four alert signal types: Metric, Log query, Activity Log, and Service Health. For each of the following production scenarios, identify the most appropriate signal type and justify your choice: (a) alert when any user deletes a Key Vault in the subscription; (b) alert when the East US region has a service issue affecting Azure SQL Database; (c) alert when the 95th percentile response time for an App Service exceeds 2 seconds over a 5-minute window; (d) alert when more than 10 authentication failures occur in a 15-minute window, detected from Azure AD sign-in logs.

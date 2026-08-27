@@ -57,7 +57,7 @@ Open `package.json` and replace the `"scripts"` section:
 
 Create `.env` in the project root:
 
-```
+```text
 NODE_ENV=development
 PORT=3000
 FRONTEND_URL=http://localhost:5173
@@ -65,7 +65,7 @@ FRONTEND_URL=http://localhost:5173
 
 Create `.gitignore`:
 
-```
+```text
 node_modules/
 .env
 ```
@@ -78,7 +78,7 @@ mkdir routes middleware utils
 
 Your structure should look like:
 
-```
+```text
 lab11-registrar/
 ├── app.js
 ├── server.js
@@ -447,3 +447,85 @@ Submit your `lab11-registrar` folder zipped (excluding `node_modules`). Required
 | `helmet`, `cors`, `morgan` configured correctly | 10 |
 | Testing screenshot shows all 11 test cases with expected results | 5 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: asyncHandler Wrapper and Custom Error Classes
+
+Refactor all async route handlers to use the `asyncHandler` utility and add an `UnauthorizedError` class for a protected endpoint.
+
+1. Create `utils/asyncHandler.js`:
+
+```js
+const asyncHandler = (fn) => (req, res, next) =>
+  Promise.resolve(fn(req, res, next)).catch(next);
+
+module.exports = asyncHandler;
+```
+
+1. Add `UnauthorizedError` to `utils/errors.js`:
+
+```js
+class UnauthorizedError extends AppError {
+  constructor(message = 'Unauthorized') {
+    super(message, 401, 'UNAUTHORIZED');
+  }
+}
+
+module.exports = { AppError, NotFoundError, ValidationError, UnauthorizedError };
+```
+
+1. Refactor `routes/students.js` to wrap every async handler with `asyncHandler` and remove all `try/catch` blocks. Import it at the top: `const asyncHandler = require('../utils/asyncHandler');`. Then change each route handler signature from `async (req, res, next)` to `asyncHandler(async (req, res, next))`.
+
+1. Add a protected `GET /api/students/export` route that requires an `X-Admin-Key` header matching the value of `process.env.ADMIN_KEY`. If the header is missing or wrong, `throw new UnauthorizedError('Admin key required')`. If correct, respond with the full student array as CSV text (`Content-Type: text/csv`). Add `ADMIN_KEY=txwes-secret` to `.env` and test the endpoint with and without the correct header.
+
+### Challenge 2: Rate Limiting and Request ID Middleware
+
+Add per-IP rate limiting and a request ID header to every response.
+
+1. Install the rate limiting package:
+
+```bash
+npm install express-rate-limit
+```
+
+1. Create `middleware/requestId.js` that attaches a unique request ID to both `req` and the response header:
+
+```js
+const { randomUUID } = require('crypto');
+
+function requestId(req, res, next) {
+  req.requestId = randomUUID();
+  res.set('X-Request-Id', req.requestId);
+  next();
+}
+
+module.exports = requestId;
+```
+
+1. In `app.js`, register the rate limiter and request ID middleware before routes:
+
+```js
+const rateLimit = require('express-rate-limit');
+const requestId = require('./middleware/requestId');
+
+const limiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 30,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Too many requests', code: 'RATE_LIMITED' }
+});
+
+app.use(requestId);
+app.use(limiter);
+```
+
+1. Test that every response includes an `X-Request-Id` header (visible in Thunder Client's response headers panel). To trigger the rate limit, send more than 30 requests within one minute and verify the `429` response with `{ "error": "Too many requests", "code": "RATE_LIMITED" }`.
+
+### Reflection Questions
+
+1. The `asyncHandler` wrapper catches rejected promises and calls `next(err)`. Without it, an unhandled rejection in an `async` route function in older versions of Express (before Express 5) would cause the Node.js process to crash or hang. How does Express 5 change this behavior, and why is `asyncHandler` still considered a best practice even with Express 5?
+2. The rate limiter stores request counts in memory by default. If the API is deployed across multiple Lambda instances or multiple Node.js processes, why does an in-memory rate limiter fail to enforce the limit accurately, and what storage backend would you use instead?

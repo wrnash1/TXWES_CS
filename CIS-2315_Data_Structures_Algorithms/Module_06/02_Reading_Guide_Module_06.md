@@ -212,6 +212,27 @@ Rotations per insert: at most 2 (one for LR or RL). After a rotation, the subtre
 
 ---
 
+## 9. Supplemental Resources
+
+The following free, openly licensed resources reinforce the concepts in this module. All are zero-cost and require no account to access.
+
+1. **VisuAlgo — AVL Tree Visualizations** — [https://visualgo.net/en/bst](https://visualgo.net/en/bst)
+   Interactive step-by-step visualization of AVL insertions and the triggered rotations. Select "AVL" mode in VisuAlgo to see the balance factor update and rotation animation after each insert.
+
+2. **OpenDSA — AVL Trees Chapter** — [https://opendsa-server.cs.vt.edu/ODSA/Books/Everything/html/AVL.html](https://opendsa-server.cs.vt.edu/ODSA/Books/Everything/html/AVL.html)
+   Free interactive textbook covering AVL balance factors, all four rotation cases, and height analysis with embedded exercises and diagrams.
+
+3. **MIT OCW 6.046J — Balanced BSTs (Lecture Notes)** — [https://ocw.mit.edu/courses/6-046j-design-and-analysis-of-algorithms-spring-2015/](https://ocw.mit.edu/courses/6-046j-design-and-analysis-of-algorithms-spring-2015/)
+   MIT lecture notes covering Red-Black tree properties, insertion cases, and the formal proof that Red-Black height is O(log n). Free with no account required.
+
+4. **Abdul Bari — AVL Tree Rotations (YouTube)** — [https://www.youtube.com/watch?v=jDM6_TnYIqE](https://www.youtube.com/watch?v=jDM6_TnYIqE)
+   Clear diagram-based walkthrough of all four AVL rotation cases (LL, RR, LR, RL) with worked examples. One of the clearest free explanations available.
+
+5. **Python `sortedcontainers` Documentation** — [https://grantjenks.com/docs/sortedcontainers/](https://grantjenks.com/docs/sortedcontainers/)
+   Free documentation for Python's `SortedList`, `SortedDict`, and `SortedSet` — the practical Python equivalents of AVL/Red-Black trees for interview use. Covers time complexity guarantees and usage examples.
+
+---
+
 ## 8. Study Checklist
 
 - [ ] Watch the Module 06 video lecture by Professor Nash.

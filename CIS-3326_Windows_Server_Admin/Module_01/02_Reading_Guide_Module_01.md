@@ -325,3 +325,25 @@ Complete each item before attempting the quiz.
 - [Server Core administration guide](https://learn.microsoft.com/en-us/windows-server/administration/server-core/server-core-administration)
 - [Windows Admin Center overview](https://learn.microsoft.com/en-us/windows-server/manage/windows-admin-center/overview)
 - [Volume Activation overview](https://learn.microsoft.com/en-us/windows/deployment/volume-activation/volume-activation-windows-10)
+
+---
+
+## 9. Supplemental Resources
+
+The following free, open-access resources go deeper on Module 01 topics:
+
+**1. Microsoft Learn — Windows Server on-premises deployment**
+<https://learn.microsoft.com/en-us/training/paths/windows-server-deployment-configuration-administration/>
+A complete Microsoft Learn path covering Windows Server deployment, configuration, and administration aligned to AZ-800. Includes interactive exercises for Server Core setup, edition selection, and activation.
+
+**2. Microsoft Learn — Administer Windows Server Core**
+<https://learn.microsoft.com/en-us/training/modules/administer-windows-server-core/>
+Module-level deep dive into Server Core management using sconfig, PowerShell, Windows Admin Center, and RSAT. Includes sandbox exercises you can complete in a browser.
+
+**3. Microsoft Learn — Implement Windows Server hybrid infrastructure**
+<https://learn.microsoft.com/en-us/training/paths/implement-windows-server-hybrid-infrastructure/>
+Covers Azure Hybrid Benefit, hybrid activation, and connecting on-premises Windows Server to Azure services — directly relevant to AZ-800 hybrid scenario questions.
+
+**4. Microsoft Tech Community — Windows Server Blog**
+<https://techcommunity.microsoft.com/category/windows-server/blog/windowsserverblog>
+Official Microsoft blog for Windows Server release announcements, edition changes, and servicing channel updates. Useful for staying current on LTSC lifecycle dates and new edition features.

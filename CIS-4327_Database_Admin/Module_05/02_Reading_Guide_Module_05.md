@@ -194,3 +194,19 @@ Tip 8: the minimum effective data size for Bigtable is approximately 1 TB. For s
 ---
 
 Reference: cloud.google.com/learn
+
+---
+
+## 9. Supplemental Resources
+
+**1. Cloud Bigtable — Official Documentation: Schema Design Best Practices**
+https://cloud.google.com/bigtable/docs/schema-design
+Google's canonical guide for row key design, column family design, avoiding hotspots, and GC policy configuration in Cloud Bigtable.
+
+**2. Cloud Bigtable Key Visualizer — Documentation**
+https://cloud.google.com/bigtable/docs/keyvis-overview
+Explains how to read Key Visualizer heatmaps, interpret hotspot signatures, and use the tool to diagnose uneven read/write distribution in production Bigtable tables.
+
+**3. Bigtable Whitepaper — Chang et al., Google (2006)**
+https://research.google/pubs/pub27898/
+The original academic paper describing the Bigtable wide-column storage model, tablet architecture, and compaction design — foundational reading for understanding Bigtable's internals at the exam level.

@@ -436,3 +436,31 @@ Submit a lab report in PDF format containing:
 | Part 6: Troubleshooting | 15 |
 | Written Analysis | 5 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Network Connectivity Validation Script
+
+Write a bash script that systematically validates all layers of network connectivity and produces a structured health report.
+
+1. Create `~/net_check.sh`. The script should check each layer in order and print a PASS/FAIL line for each. Layer 1/2: verify the interface is UP with `ip link show ens3 | grep -q "state UP"`. Layer 3: verify an IP is assigned with `ip addr show ens3 | grep -q "inet "`. Routing: verify a default route exists with `ip route show default | grep -q "default"`. DNS: test resolution with `dig +short google.com > /dev/null 2>&1`. Internet: test connectivity with `ping -c 1 -W 2 8.8.8.8 > /dev/null 2>&1`. Use `if` statements with `&&` echo "PASS" and `||` echo "FAIL" patterns.
+2. Add a function `check_port()` that accepts a host and port and tests TCP connectivity using bash's built-in `/dev/tcp`: `(echo >/dev/tcp/$HOST/$PORT) 2>/dev/null && echo "OPEN" || echo "CLOSED"`. Use this to check that the local SSH port (22) and HTTP port (80) are in the expected state.
+3. Add a DNS response time measurement: capture the output of `dig +stats google.com 2>&1 | grep "Query time"` and print the query time in milliseconds. Add a threshold check: if DNS takes longer than 500ms, print a warning.
+4. Make the script executable, run it, and pipe output to `tee /tmp/net_health.txt` to save and display simultaneously: `bash ~/net_check.sh | tee /tmp/net_health.txt`. Review the report and verify all expected checks pass.
+
+### Challenge 2: SSH Jump Host and Port Forwarding Configuration
+
+Configure SSH for a realistic multi-hop environment and demonstrate local and remote port forwarding.
+
+1. On your VM, configure the SSH client to simulate a jump-host scenario. Add entries to `~/.ssh/config` for two "hosts" using `localhost` with different ports to simulate multiple servers: one entry named `bastion` pointing to `127.0.0.1` port 22 with `StrictHostKeyChecking no`, and one named `appserver` pointing to `127.0.0.1` with `ProxyJump bastion`. Generate a dedicated test keypair: `ssh-keygen -t ed25519 -f ~/.ssh/test_key -N ""` and add it to `authorized_keys`: `cat ~/.ssh/test_key.pub >> ~/.ssh/authorized_keys`.
+2. Set up local port forwarding to forward a local port to a remote service. Start a simple HTTP server on port 8080 in the background: `python3 -m http.server 8080 &`. Then in another terminal, create an SSH local port forward: `ssh -L 9090:localhost:8080 -N -f localhost`. Verify the tunnel is active with `ss -tlnp | grep 9090` and test it: `curl http://localhost:9090 | head -5`.
+3. List all active SSH tunnels and forwarded ports: `ss -tlnp | grep ssh`. Kill the background SSH port-forward process: `pkill -f "ssh -L"`. Verify the tunnel is gone with `ss -tlnp | grep 9090`.
+4. Review the sshd audit log to see all authentication attempts from this session: `sudo journalctl -u ssh --since "1 hour ago" | grep -E "Accepted|Failed|Invalid"`. Count the number of successful key authentications and record the result.
+
+### Reflection Questions
+
+1. An administrator configures a firewalld zone and adds a service rule but forgets to run `firewall-cmd --reload`. The service becomes accessible immediately anyway. Explain under what condition this could happen, and describe the specific difference in behavior between `--add-service` without `--permanent`, `--add-service --permanent` without reload, and `--add-service --permanent` followed by reload.
+
+2. SSH host key verification (via `known_hosts`) protects against man-in-the-middle attacks. However, many tutorials instruct users to set `StrictHostKeyChecking no` and `UserKnownHostsFile /dev/null` in automation scripts. Describe the specific attack scenario that becomes possible when these settings are used in an automation context (such as a deployment pipeline or cron job that SSHes to production servers), and propose a more secure alternative that still allows non-interactive automation.

@@ -330,3 +330,135 @@ gcloud compute firewall-rules delete allow-http-to-web allow-health-check --quie
 | Reflection questions answered | 15 |
 | Resources cleaned up | 5 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: HTTPS Load Balancer with Google-Managed Certificate
+
+Upgrade the HTTP load balancer from the main lab to serve HTTPS using a
+Google-managed SSL certificate.
+
+1. Reserve a new global static IP address for the HTTPS frontend:
+
+```bash
+export PROJECT_ID=$(gcloud config get-value project)
+gcloud compute addresses create lab09-https-ip \
+  --global \
+  --ip-version=IPV4
+HTTPS_IP=$(gcloud compute addresses describe lab09-https-ip \
+  --global --format="value(address)")
+echo "HTTPS LB IP: $HTTPS_IP"
+```
+
+1. Create a Google-managed SSL certificate (replace `YOUR_DOMAIN` with a domain
+   you control and update its DNS A record to point to `$HTTPS_IP`):
+
+```bash
+gcloud compute ssl-certificates create lab09-cert \
+  --domains=YOUR_DOMAIN \
+  --global
+```
+
+1. Create a target HTTPS proxy referencing the existing URL map and the new
+   certificate:
+
+```bash
+gcloud compute target-https-proxies create lab09-https-proxy \
+  --url-map=lab09-url-map \
+  --ssl-certificates=lab09-cert \
+  --global
+```
+
+1. Create a forwarding rule for HTTPS on port 443:
+
+```bash
+gcloud compute forwarding-rules create lab09-https-rule \
+  --global \
+  --target-https-proxy=lab09-https-proxy \
+  --address=lab09-https-ip \
+  --ports=443
+```
+
+1. Poll the certificate status until it reaches `ACTIVE` (can take 15–60 minutes
+   after DNS propagation):
+
+```bash
+watch -n30 gcloud compute ssl-certificates describe lab09-cert \
+  --global --format="value(managed.status)"
+```
+
+### Challenge 2: URL Map Path-Based Routing to Two Backends
+
+Extend the URL map to route `/static/*` requests to a second backend service
+backed by a Cloud Storage bucket (using a serverless NEG).
+
+1. Create a Cloud Storage bucket to serve as the static origin:
+
+```bash
+gsutil mb -l us-central1 gs://${PROJECT_ID}-static-origin
+echo "<h1>Static content from GCS</h1>" > index.html
+gsutil cp index.html gs://${PROJECT_ID}-static-origin/
+gsutil iam ch allUsers:objectViewer gs://${PROJECT_ID}-static-origin
+```
+
+1. Create a serverless NEG pointing at the storage bucket FQDN:
+
+```bash
+gcloud compute network-endpoint-groups create lab09-gcs-neg \
+  --region=us-central1 \
+  --network-endpoint-type=INTERNET_FQDN_PORT \
+  --default-port=443
+gcloud compute network-endpoint-groups update lab09-gcs-neg \
+  --region=us-central1 \
+  --add-endpoint="fqdn=storage.googleapis.com,port=443"
+```
+
+1. Create a backend service for the GCS origin and add the NEG:
+
+```bash
+gcloud compute backend-services create lab09-static-backend \
+  --global \
+  --protocol=HTTPS \
+  --load-balancing-scheme=EXTERNAL
+gcloud compute backend-services add-backend lab09-static-backend \
+  --global \
+  --network-endpoint-group=lab09-gcs-neg \
+  --network-endpoint-group-region=us-central1
+```
+
+1. Update the URL map to add a path matcher routing `/static/*` to the new backend:
+
+```bash
+gcloud compute url-maps import lab09-url-map \
+  --global \
+  --source /dev/stdin << 'EOF'
+kind: compute#urlMap
+name: lab09-url-map
+defaultService: https://www.googleapis.com/compute/v1/projects/PROJECT_ID/global/backendServices/lab09-backend
+hostRules:
+  - hosts: ["*"]
+    pathMatcher: main
+pathMatchers:
+  - name: main
+    defaultService: https://www.googleapis.com/compute/v1/projects/PROJECT_ID/global/backendServices/lab09-backend
+    pathRules:
+      - paths: ["/static/*"]
+        service: https://www.googleapis.com/compute/v1/projects/PROJECT_ID/global/backendServices/lab09-static-backend
+EOF
+```
+
+### Reflection Questions
+
+1. During Challenge 1, the Google-managed certificate remained in `PROVISIONING`
+   status until the DNS A record was updated. Explain the technical reason why
+   certificate issuance requires the domain to resolve to the load balancer IP
+   before provisioning can begin, and describe what would happen if you pointed
+   DNS to the load balancer before creating the certificate resource.
+
+2. In Challenge 2, you routed `/static/*` to a Cloud Storage backend using a
+   serverless Network Endpoint Group. Compare this approach to simply enabling
+   Cloud CDN on the existing backend service. What are the operational tradeoffs
+   in terms of cache control, cost, and maintenance when serving static assets
+   directly from GCS versus caching them from an application backend via Cloud CDN?

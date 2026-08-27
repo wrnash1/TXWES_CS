@@ -256,3 +256,19 @@ Exam Tip 8: Event ID 4688 (process creation) requires audit policy to be enabled
 - [ ] Complete the Module 10 Lab
 - [ ] Complete the Module 10 Quiz
 - [ ] Post initial response to the Module 10 Discussion by Wednesday at 11:59 PM
+
+---
+
+## 9. Supplemental Resources
+
+**1. NIST SP 800-86 — Guide to Integrating Forensic Techniques into Incident Response**
+<https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-86.pdf>
+The authoritative NIST guide connecting digital forensics to the incident response lifecycle. It covers forensic readiness, the order of volatility, evidence collection procedures, and analysis methodologies directly corresponding to Sections 2 and 3 of this guide. Sections 3.1 through 3.4 are especially relevant to CySA+ exam scenarios.
+
+**2. SANS — DFIR (Digital Forensics and Incident Response) Posters and Cheat Sheets**
+<https://www.sans.org/posters/>
+SANS provides free downloadable reference posters covering Windows forensic artifacts, Linux forensic techniques, memory forensics with Volatility, and chain of custody procedures. The Windows Forensic Analysis poster is particularly useful for building fluency with the artifact types (Prefetch, Registry hives, Event Logs, LNK files, NTFS $MFT) covered in Section 4 of this guide.
+
+**3. Volatility Foundation — Memory Forensics Framework Documentation**
+<https://volatilityfoundation.org/>
+The official documentation and plugin reference for the Volatility memory analysis framework. Even without a lab environment, reviewing the plugin list and reading example analysis walkthroughs builds understanding of what memory forensics can reveal — running processes, network connections, injected code, and encryption keys in RAM — reinforcing the volatile evidence concepts in Section 1 of this module.

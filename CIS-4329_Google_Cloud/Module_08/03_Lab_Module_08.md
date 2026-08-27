@@ -285,3 +285,96 @@ Before submitting, confirm you have completed all items:
 | Reflection questions answered completely | 20 |
 | All resources cleaned up | 5 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Cloud SQL High Availability Failover Test
+
+Configure a Cloud SQL for PostgreSQL instance with high availability and simulate a failover to observe automatic promotion of the standby.
+
+1. Create a new Cloud SQL instance with `REGIONAL` availability type:
+
+```bash
+export PROJECT_ID=$(gcloud config get-value project)
+gcloud sql instances create lab08-ha-postgres \
+  --database-version=POSTGRES_15 \
+  --tier=db-g1-small \
+  --region=us-central1 \
+  --availability-type=REGIONAL \
+  --backup \
+  --backup-start-time=03:00
+```
+
+1. Wait for the instance to reach `RUNNABLE` status and note the primary zone:
+
+```bash
+gcloud sql instances describe lab08-ha-postgres \
+  --format="value(gceZone,secondaryGceZone)"
+```
+
+1. Initiate a manual failover to the standby zone:
+
+```bash
+gcloud sql instances failover lab08-ha-postgres
+```
+
+1. Watch the instance status cycle through `MAINTENANCE` → `RUNNABLE` and confirm the zones have swapped:
+
+```bash
+watch -n5 gcloud sql instances describe lab08-ha-postgres \
+  --format="value(state,gceZone,secondaryGceZone)"
+```
+
+1. Clean up the HA instance after the exercise:
+
+```bash
+gcloud sql instances delete lab08-ha-postgres --quiet
+```
+
+### Challenge 2: Firestore Composite Index Creation
+
+Demonstrate that Firestore requires a composite index for compound queries and create one via the CLI.
+
+1. In Cloud Shell, install the Firebase CLI and initialize Firestore index management:
+
+```bash
+npm install -g firebase-tools
+firebase login --no-localhost
+firebase init firestore
+```
+
+1. Create a `firestore.indexes.json` file that defines a composite index on the `customers` collection for `(tier ASC, account_balance DESC)`:
+
+```bash
+cat > firestore.indexes.json << 'EOF'
+{
+  "indexes": [
+    {
+      "collectionGroup": "customers",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "tier", "order": "ASCENDING" },
+        { "fieldPath": "account_balance", "order": "DESCENDING" }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}
+EOF
+```
+
+1. Deploy the index definition:
+
+```bash
+firebase deploy --only firestore:indexes
+```
+
+1. Verify the index appears in the Firestore console under **Indexes → Composite** and shows status `Enabled`.
+
+### Reflection Questions
+
+1. During the Cloud SQL failover you initiated, the instance briefly entered `MAINTENANCE` state. What is the expected downtime duration for a Cloud SQL HA failover, and how does this compare to the typical RTO of a zonal Cloud SQL instance that requires a manual restore from backup?
+
+2. Firestore automatically creates single-field indexes for every field, yet composite indexes must be defined manually. Explain why automatic composite indexing for every possible field combination would be impractical, and describe the tradeoff a developer must weigh when deciding whether to add a composite index for a given query.

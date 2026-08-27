@@ -191,3 +191,30 @@ Submit a single document to the Canvas assignment portal containing:
 - **Remediation too vague**: Every remediation should answer: "What exactly does the
   system administrator click, type, or configure to fix this?" Generic statements like
   "update the software" are insufficient.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Audience-Adapted Finding Summary
+
+Take your completed FIND-001 (SQL Injection) finding from Part 4 and rewrite its impact and remediation components twice — once for the technical report audience (security engineers) and once for the executive summary audience (the CIO).
+
+1. Write the technical-audience version using precise technical language: reference the CWE, specify the affected database table and column types, name the applicable regulatory standard, and provide the exact remediation command or configuration change.
+2. Write the executive-audience version in plain business language: describe the business consequence (financial, regulatory, reputational risk) without using tool names, CWE numbers, or SQL terminology. Limit this version to three sentences.
+3. Place both versions side by side in your submission document and label them clearly.
+4. Write one sentence explaining what would go wrong if the technical version were presented directly to the CIO without adaptation.
+
+### Challenge 2: Risk Rating Justification Memo
+
+Your FIND-002 (EternalBlue) finding received a CVSS 3.1 Base Score in the Critical range, but you reported it as High due to the host's network isolation. Write a one-page professional risk rating justification memo addressed to the client's audit team.
+
+1. State the raw CVSS Base Score and vector string for the finding.
+2. Identify the specific compensating controls present in the environment (network segmentation, VLAN isolation, no internet reachability) and explain how each one reduces the effective exploitability or impact.
+3. Cite the CVSS 3.1 specification's guidance on Environmental scoring to support your downward adjustment.
+4. Conclude with a clear statement of what event would cause you to revise the risk rating back to Critical (for example, if the network segmentation were removed or if the system were moved to an internet-facing segment).
+
+### Challenge Reflection Questions
+
+1. After writing both audience versions in Challenge 1, which component of the finding was hardest to translate from technical to executive language — evidence, impact, or remediation? What does that difficulty reveal about the gap between technical security work and business decision-making?
+2. In Challenge 2, what is the professional risk of downgrading a finding's severity rating in the report? Under what circumstances would a downward adjustment be inappropriate even if compensating controls exist?

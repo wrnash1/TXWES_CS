@@ -333,6 +333,26 @@ attribute to meet a stated requirement.
 
 ---
 
+---
+
+## 9. Supplemental Resources
+
+The following free, open-access resources support Module 15 topics:
+
+**1. [Google Cloud — Cloud Monitoring Metrics for Cloud SQL](https://cloud.google.com/monitoring/api/metrics_gcp#gcp-cloudsql)**
+Complete reference for all Cloud SQL metrics available in Cloud Monitoring, including connection count, CPU, memory, disk, replication lag, and backup metrics with their units and descriptions.
+
+**2. [Terraform Registry — Google Cloud SQL Instance Resource](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/sql_database_instance)**
+Official Terraform provider documentation for `google_sql_database_instance`, covering all configurable attributes including `deletion_protection`, `backup_configuration`, `database_flags`, `maintenance_window`, and `deny_maintenance_period`.
+
+**3. [Google Cloud — Cloud SQL Query Insights](https://cloud.google.com/sql/docs/postgres/using-insights)**
+Explains how to enable and use Query Insights for Cloud SQL, including how to interpret the query latency distribution, top queries by CPU, and per-query wait event breakdown.
+
+**4. [Google Cloud — Cloud Monitoring Alerting Policies](https://cloud.google.com/monitoring/alerts/using-alerting-ui)**
+Covers creating alerting policies with threshold conditions, duration settings, notification channels, and log-based metrics — including how to create absence alerts for missing metric data.
+
+---
+
 Module 15 Reading Guide — CIS-4327 Database Administration
 
 Texas Wesleyan University | Proprietary and Confidential. Not for disclosure outside of course participants.

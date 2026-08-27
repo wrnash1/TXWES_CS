@@ -139,3 +139,35 @@ NCC is subject to FERPA (Family Educational Rights and Privacy Act), which gover
 Submit your completed lab document to the Canvas assignment portal by the due date shown in the course schedule. Include all four exercises with substantive responses. One-word or one-phrase answers will not receive full credit — each response should demonstrate understanding of ITAM principles.
 
 **Grading:** Each exercise is worth 25 points, distributed across the tasks within each exercise based on completeness, accuracy, and application of ITAM concepts.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: CMDB Accuracy Recovery
+
+A logistics company has operated without a formal CMDB for seven years. Asset information lives in three separate spreadsheets maintained by different teams, none of which are synchronized. An incident last month took 6.5 hours to resolve because the responders did not know which servers hosted the affected application and had to map dependencies manually during the outage.
+
+The IT Director has approved a 90-day CMDB implementation project. The environment contains approximately 800 physical and virtual servers, 3,200 end-user devices, 140 network devices, and software licenses for 67 products across an estimated 2,400 users.
+
+1. Define a CMDB scoping strategy for this organization. Which asset categories should be included as full configuration items with relationship mapping? Which should be tracked in a separate asset register with limited CMDB integration? Justify each decision using IT Asset Management and Service Configuration Management principles.
+
+2. The three existing spreadsheets contain conflicting data — the same server appears in two spreadsheets with different hostnames, two different IP addresses, and two different owner assignments. Design a data reconciliation process for consolidating this data into the new CMDB. Your process should include at least four steps and address how conflicts are resolved when spreadsheet records contradict each other.
+
+3. Calculate and explain the business case for CMDB accuracy, using the 6.5-hour incident as a reference point. What specific CMDB capabilities would have reduced the resolution time, and what is the organizational cost of continuing without those capabilities?
+
+### Challenge 2: SAM Program Design
+
+A 600-person professional services firm has never conducted a formal software asset management program. An IT team member recently discovered that the firm has active licenses for 14 software products that appear to have no active users in the past 12 months. The total annual cost of these 14 products is $380,000.
+
+1. Design a SAM program launch plan for this organization. Your plan should include at minimum: (a) the data sources needed for an initial license baseline, (b) the reconciliation process for comparing entitlements to actual usage, and (c) the governance mechanism for ensuring new software purchases and deployments are captured going forward.
+
+2. For the $380,000 in potentially unused software: describe the investigation process you would follow before recommending cancellation. What factors other than usage data would you consider, and why does each matter to the cancellation decision?
+
+3. The firm's CEO asks: "We have a small IT team. Is a formal SAM program worth the overhead?" Construct a business case for SAM investment that addresses: license compliance risk, cost optimization opportunity, and the specific risk posed by the firm's current unmanaged state. Use quantitative reasoning where possible.
+
+### Reflection Questions
+
+1. The Module 13 reading guide states that CMDB inaccuracy creates risk, not just inconvenience. Using a specific example from either the lab scenario or the challenge exercise, explain a situation where CMDB inaccuracy would cause a worse outcome than simply not having a CMDB at all.
+
+2. Software Asset Management is sometimes described as both a compliance function and a cost optimization function. Explain why these two objectives occasionally conflict with each other — identify a scenario where the action that best satisfies compliance is not the action that best optimizes cost — and explain how a mature SAM program resolves that tension.

@@ -296,3 +296,25 @@ Answer these questions in your lab submission document:
 - Screenshot of the CloudTrail event for `AuthorizeSecurityGroupIngress` with userIdentity, sourceIPAddress, eventTime, and requestParameters visible
 - Screenshot of the AWS Config resource timeline showing before/after states for the security group
 - Written answers to all four reflection questions
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: CloudWatch Logs Insights Advanced Querying
+Practice writing multi-step Logs Insights queries to extract operational intelligence from Lambda and application logs.
+1. Navigate to CloudWatch Logs Insights and select the `/aws/lambda/` log group prefix (or a specific Lambda log group from the lab). Run a query that counts errors by error type over the last 24 hours: `filter @message like /ERROR/ | parse @message "* ERROR *: *" as timestamp, level, errorMsg | stats count(*) as errorCount by errorMsg | sort errorCount desc | limit 10`.
+2. Write a query that calculates p50, p90, p99 latency percentiles from Lambda `REPORT` lines: `filter @type = "REPORT" | parse @message "Duration: * ms" as duration | stats pct(duration, 50) as p50, pct(duration, 90) as p90, pct(duration, 99) as p99 by bin(5m)`. Run it and screenshot the results table.
+3. Create a saved query from one of the above queries using the "Save" button in Logs Insights. Confirm the saved query appears in the "Saved queries" panel. Document the query name and the log group it targets.
+4. Export the query results to CloudWatch dashboard: choose "Add to dashboard" from the Logs Insights results and create a new widget on an existing or new dashboard. Screenshot the dashboard widget displaying the query results.
+
+### Challenge 2: CloudWatch Anomaly Detection
+Configure CloudWatch anomaly detection on a metric to alert on unusual patterns rather than fixed thresholds.
+1. Choose a metric that has at least a few hours of data — Lambda `Duration`, EC2 `CPUUtilization`, or SQS `NumberOfMessagesSent`. Create an anomaly detection band on it: in the CloudWatch console, select the metric, choose "Add anomaly detection" and set the standard deviation band to 2. Allow 15 minutes for the model to train.
+2. Create a CloudWatch alarm based on the anomaly detection band: the alarm fires when the metric is outside the predicted band. Configure the alarm to notify the SNS topic from the lab (`lab13-alerts`). Document the alarm ARN: `aws cloudwatch describe-alarms --alarm-names <alarm-name> --query "MetricAlarms[0].AlarmArn"`.
+3. Examine the anomaly detection model configuration via CLI: `aws cloudwatch describe-anomaly-detectors --metric-name <metric-name> --namespace <namespace>`. Record the `Stat`, `Dimensions`, and `ExcludedTimeRanges` fields.
+4. Explain one scenario where anomaly detection-based alerting is superior to a fixed threshold alarm, and one scenario where a fixed threshold alarm is more appropriate. Reference a specific AWS workload type for each.
+
+### Reflection Questions
+1. After completing Challenge 1, explain how CloudWatch Logs Insights query-based dashboards differ from metric-based dashboards in terms of data freshness, cost, and use cases. When would you choose a Logs Insights widget over a CloudWatch metric widget for an operations dashboard, and what is the trade-off in query execution cost at high dashboard refresh rates?
+2. Based on Challenge 2, explain how CloudWatch anomaly detection addresses the challenge of setting meaningful alert thresholds for metrics with natural seasonality (e.g., traffic that peaks every weekday morning and drops on weekends). How does this relate to the AWS Well-Architected Framework Operational Excellence pillar principle of "anticipating failure" rather than simply reacting to it?

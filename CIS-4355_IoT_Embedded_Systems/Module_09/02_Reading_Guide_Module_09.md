@@ -328,3 +328,19 @@ Apply these criteria in order when selecting a wireless technology:
 6. A farmer wants to monitor soil moisture in 50 fields across a 500-acre property. Each sensor sends a 10-byte reading once per hour. There is no cellular coverage on the property. Which wireless technology is most appropriate? Justify using at least three criteria.
 7. What does an RSSI of -82 dBm indicate about Wi-Fi signal quality, and what practical steps can you take to improve it?
 8. Explain why LoRaWAN gateways are described as "transparent" and what happens when two gateways receive the same transmission from the same end device.
+
+---
+
+## 9. Supplemental Resources
+
+**1. The Things Network — LoRaWAN Documentation**
+[https://www.thethingsnetwork.org/docs/](https://www.thethingsnetwork.org/docs/)
+The Things Network's comprehensive LoRaWAN reference covering OTAA vs ABP activation, spreading factors, duty cycle limits, gateway architecture, and the Things Stack server. Includes hands-on quick-start guides for Arduino and MicroPython devices and a public community network for lab testing.
+
+**2. Nordic Semiconductor — BLE Fundamentals (Bluetooth Low Energy)**
+[https://academy.nordicsemi.com/courses/bluetooth-low-energy-fundamentals/](https://academy.nordicsemi.com/courses/bluetooth-low-energy-fundamentals/)
+Free online course from Nordic Semiconductor covering the BLE stack in depth: GAP advertising, GATT hierarchy (services, characteristics, descriptors), security pairing modes, and power optimization strategies. Directly supports Section 2 of this reading guide on BLE GATT and advertising.
+
+**3. Zigbee Alliance — Zigbee Specification Overview**
+[https://zigbeealliance.org/solution/zigbee/](https://zigbeealliance.org/solution/zigbee/)
+The Connectivity Standards Alliance (formerly Zigbee Alliance) overview of the Zigbee protocol stack, device types (Coordinator, Router, End Device), network topologies, and application profiles. Covers the AES-128 security model and the 65,000-node addressing space discussed in Section 3 of this guide.

@@ -555,3 +555,16 @@ Answer these questions before taking the quiz:
 - `man 5 sudoers` — sudoers file syntax reference
 - `man 8 pam` — PAM overview
 - Linux+ Study Guide (CompTIA XK0-005) — Chapter covering Domain 2: Security
+
+---
+
+## 9. Supplemental Resources
+
+**1. [Linux PAM Documentation — The Linux-PAM System Administrator's Guide](https://www.linux-pam.org/Linux-PAM-html/Linux-PAM_SAG.html)**
+The official Linux-PAM system administrator's guide. Covers the configuration file format, all four PAM management groups (auth, account, password, session), control flag semantics, and the full module reference. Essential for understanding how PAM stacks are evaluated and how to configure account lockout with `pam_faillock`.
+
+**2. [man7.org — sudoers(5)](https://man7.org/linux/man-pages/man5/sudoers.5.html)**
+The complete sudoers manual page online. Covers the full syntax including User_Alias, Host_Alias, Cmnd_Alias, Runas_Alias, the `NOPASSWD` tag, `Defaults` settings, and the `#includedir` directive. This is the definitive reference for writing complex sudo policies for the Linux+ exam.
+
+**3. [Ubuntu Server Guide — User Management](https://ubuntu.com/server/docs/user-management)**
+Canonical's official Ubuntu Server documentation for user management. Covers `adduser` vs `useradd`, group management, password aging with `chage`, and the `/etc/adduser.conf` configuration file. Includes Ubuntu-specific conventions that differ from RHEL, which is important context for understanding cross-distribution portability.

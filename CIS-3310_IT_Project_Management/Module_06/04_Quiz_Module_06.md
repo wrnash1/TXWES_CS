@@ -203,3 +203,203 @@ Distractor Analysis:
 - *Why A is incorrect:* A Pareto Chart ranks defect categories by frequency. It does not test the relationship between two continuous variables.
 - *Why B is incorrect:* A Control Chart monitors process performance over time against control limits. It tracks a single variable over time, not the correlation between two variables.
 - *Why D is incorrect:* A Fishbone Diagram identifies and categorizes potential causes of a specific defect. It is a brainstorming tool, not a statistical correlation analysis tool.
+
+---
+
+## Question 11
+
+Which of the following activities belongs to Quality Assurance (QA) rather than Quality Control (QC)?
+
+- A) Reviewing completed code modules against acceptance criteria
+- B) Conducting a process audit to verify that the team is following the approved testing procedures
+- C) Inspecting server hardware for physical defects before installation
+- D) Running regression tests on the application after a patch deployment
+
+**Correct Answer:** B) Conducting a process audit to verify that the team is following the approved testing procedures.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* QA is process-oriented and proactive — it audits the processes being used to prevent defects. A process audit confirming that approved procedures are being followed is a classic QA activity.
+- *Why A is incorrect:* Reviewing completed deliverables against criteria is a QC inspection activity — it measures outputs, not processes.
+- *Why C is incorrect:* Inspecting hardware for physical defects is a QC activity — it detects defects in a specific product, not evaluates a process.
+- *Why D is incorrect:* Running regression tests is a QC activity — it checks that specific outputs (the patched application) meet quality standards.
+
+---
+
+## Question 12
+
+What does the "Rule of Seven" indicate when applied to a Control Chart?
+
+- A) Seven data points in a row on the same side of the mean signal that the process may be out of control, even if all points are within the control limits.
+- B) A process is statistically in control if exactly seven defects occur per week.
+- C) Quality improvement requires at least seven corrective actions before the root cause is resolved.
+- D) The seven basic quality tools must all be applied before a process is considered controlled.
+
+**Correct Answer:** A) Seven data points in a row on the same side of the mean signal that the process may be out of control, even if all points are within the control limits.
+
+**Distractor Analysis:**
+
+- *Why A is correct:* The Rule of Seven is a statistical process control principle. Even when all points fall within the upper and lower control limits, a run of seven consecutive points on the same side of the mean (or trending in one direction) indicates a non-random pattern — a signal that the process has shifted and investigation is warranted.
+- *Why B is incorrect:* Seven defects per week is a performance measurement, not the Rule of Seven. The rule is about run patterns in the data, not absolute defect counts.
+- *Why C is incorrect:* There is no PMI rule requiring seven corrective actions. This confuses the Rule of Seven with a corrective action workflow.
+- *Why D is incorrect:* The seven basic quality tools are a set of analytical techniques. Their application is not governed by a "Rule of Seven."
+
+---
+
+## Question 13
+
+A development team consistently delivers software modules that pass technical testing but are frustrating for end users because they are difficult to navigate. The modules meet all written specifications. What quality concept does this scenario illustrate?
+
+- A) Gold plating — the team has added features beyond what was required
+- B) The difference between quality and grade — the product meets its low-grade specification but fails the higher quality standard expected by users
+- C) Scope creep — the users are requesting unplanned features through the help desk
+- D) A Control Chart out-of-control condition requiring a root cause analysis
+
+**Correct Answer:** B) The difference between quality and grade — the product meets its low-grade specification but fails the higher quality standard expected by users.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* This scenario illustrates the quality vs. grade distinction. Grade refers to the technical specification tier; quality refers to conformance to requirements including fitness for purpose. A product can conform to its written spec (grade) yet still fail user expectations (quality). PMI recognizes this distinction explicitly.
+- *Why A is incorrect:* Gold plating means adding features beyond scope. Here the team delivered exactly what was specified — no extras were added.
+- *Why C is incorrect:* Scope creep involves unauthorized additions. Users expressing dissatisfaction with the delivered product is not a scope creep scenario.
+- *Why D is incorrect:* No control chart data has been collected in this scenario. The issue is a requirements and quality planning problem, not a statistical process control anomaly.
+
+---
+
+## Question 14
+
+Which Cost of Quality (COQ) category includes the cost of training developers on secure coding practices BEFORE the application is built?
+
+- A) Internal Failure Costs
+- B) External Failure Costs
+- C) Appraisal Costs
+- D) Prevention Costs
+
+**Correct Answer:** D) Prevention Costs
+
+**Distractor Analysis:**
+
+- *Why D is correct:* Prevention costs are investments made BEFORE work is performed to prevent defects from occurring. Training developers in secure coding before writing code is a textbook prevention cost.
+- *Why A is incorrect:* Internal failure costs arise when defects are discovered AFTER work is done but BEFORE delivery to the customer — rework, retesting, scrap.
+- *Why B is incorrect:* External failure costs arise when defects are discovered by the customer AFTER delivery — warranty repairs, breach penalties, customer support costs.
+- *Why C is incorrect:* Appraisal costs are incurred to FIND defects — testing, inspections, audits. Training before building is upstream of appraisal.
+
+---
+
+## Question 15
+
+A Pareto chart analysis of a software project's defect log shows that login failures account for 42%, null pointer exceptions account for 31%, and slow page loads account for 15%. What does the 80/20 rule suggest the team should do?
+
+- A) Fix all three categories simultaneously since they collectively exceed 80% of defects.
+- B) Focus first on login failures and null pointer exceptions because together they account for 73% of defects and are the highest-impact categories.
+- C) Ignore slow page loads since they represent less than 20% of the total.
+- D) Address the slow page loads first because they are the easiest to fix quickly.
+
+**Correct Answer:** B) Focus first on login failures and null pointer exceptions because together they account for 73% of defects and are the highest-impact categories.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* The Pareto principle (80/20 rule) holds that roughly 80% of effects come from 20% of causes. The PM should focus corrective action on the highest-frequency defect categories first. The top two categories (42% + 31% = 73%) are the dominant causes and should be addressed before the smaller categories.
+- *Why A is incorrect:* The 80/20 rule is a prioritization principle, not a directive to fix everything simultaneously. Fixing everything at once diffuses resources and focus.
+- *Why C is incorrect:* Slow page loads (15%) should not be permanently ignored — it should be addressed after the higher-priority items. The 80/20 rule guides sequencing, not permanent exclusion.
+- *Why D is incorrect:* "Easiest to fix" is a resource/effort judgment, not the basis of Pareto prioritization. Impact frequency drives the priority, not implementation difficulty.
+
+---
+
+## Question 16
+
+Which quality management tool displays a process flow visually to help the team understand how work moves through a system and where defects are most likely to enter?
+
+- A) Control Chart
+- B) Flowchart
+- C) Histogram
+- D) Check Sheet
+
+**Correct Answer:** B) Flowchart
+
+**Distractor Analysis:**
+
+- *Why B is correct:* A Flowchart (process flow diagram) maps the sequence of steps in a process, including decision points and handoffs. It is used to identify where breakdowns, delays, or defect-prone steps exist in a workflow.
+- *Why A is incorrect:* A Control Chart tracks a process measurement over time against statistical control limits. It does not map process flow or show where in the process defects are introduced.
+- *Why C is incorrect:* A Histogram displays the frequency distribution of a single variable. It shows how often values fall in each range but does not depict process flow.
+- *Why D is incorrect:* A Check Sheet is a structured form for collecting and tallying defect occurrences. It gathers data for analysis but does not map process flow.
+
+---
+
+## Question 17
+
+Cost of Poor Quality (COPQ) is BEST described as:
+
+- A) The total investment in training and process improvement to prevent defects
+- B) All costs incurred because defects occurred — internal failure costs plus external failure costs
+- C) The budget reserved for quality inspections and audits
+- D) The cost difference between a high-grade product and a low-grade product
+
+**Correct Answer:** B) All costs incurred because defects occurred — internal failure costs plus external failure costs.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* COPQ = Internal Failure Costs + External Failure Costs. It represents the total cost the organization bears as a consequence of poor quality — rework, scrap, warranty claims, customer churn. This is distinct from the cost of investing in quality (prevention + appraisal = Cost of Good Quality).
+- *Why A is incorrect:* Training and process improvement are prevention costs — part of the Cost of Good Quality, not COPQ.
+- *Why C is incorrect:* Inspection and audit budgets are appraisal costs — also part of the Cost of Good Quality, not COPQ.
+- *Why D is incorrect:* The cost difference between grades is a product specification decision, not a quality cost category.
+
+---
+
+## Question 18
+
+A project manager samples 50 network switches from a hardware shipment and tests each for connectivity compliance before they are installed. Which quality process is being performed?
+
+- A) Quality Assurance — because the PM is verifying the procurement process
+- B) Quality Control — because the PM is inspecting actual units to detect non-conforming items before use
+- C) Validate Scope — because the customer must accept the hardware before installation
+- D) Control Quality — because the PM is comparing actual performance to the approved quality plan
+
+**Correct Answer:** B) Quality Control — because the PM is inspecting actual units to detect non-conforming items before use.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* Quality Control involves inspecting, measuring, or testing specific outputs (the hardware units) to identify defects before they impact the project. Sampling incoming materials for conformance is a QC inspection activity.
+- *Why A is incorrect:* Quality Assurance audits processes, not products. Inspecting physical units is product-level inspection = QC, not QA.
+- *Why C is incorrect:* Validate Scope is the process of obtaining customer acceptance of completed project deliverables. Receiving inspection of hardware before installation is a QC activity performed by the project team, not the customer.
+- *Why D is incorrect:* "Control Quality" and "Quality Control" are the same process (different PMBOK editions use different names). The answer B already correctly identifies QC; answer D is a rewording, not an incorrect distractor — in this format B is the cleaner, more complete answer.
+
+---
+
+## Question 19
+
+On a Control Chart, what do the Upper Control Limit (UCL) and Lower Control Limit (LCL) represent?
+
+- A) The project's approved quality budget maximum and minimum
+- B) The acceptable specification tolerances defined by the customer
+- C) The boundaries (typically ±3 standard deviations from the mean) within which a process is considered statistically in control
+- D) The maximum and minimum defect counts allowed per sprint before the project is placed on hold
+
+**Correct Answer:** C) The boundaries (typically ±3 standard deviations from the mean) within which a process is considered statistically in control.
+
+**Distractor Analysis:**
+
+- *Why C is correct:* UCL and LCL are calculated as the mean ± 3 standard deviations. Any data point outside these limits signals a special cause variation — the process is out of control and requires investigation.
+- *Why A is incorrect:* Control limits are statistical calculations from process data, not budget thresholds.
+- *Why B is incorrect:* Specification limits are set by customer requirements and may differ from statistical control limits. A process can be within spec but out of statistical control, or within control but approaching spec limits.
+- *Why D is incorrect:* Control limits are calculated from historical process data, not set by project management policy. Sprint defect caps are an Agile quality governance decision, not a Control Chart concept.
+
+---
+
+## Question 20
+
+A quality manager discovers that the root cause of 68% of reported software defects is inadequate unit testing by developers. Using Cost of Quality logic, which type of investment would MOST directly reduce these defects?
+
+- A) Increase external failure budget for customer support after release
+- B) Increase appraisal costs by adding more post-release testing cycles
+- C) Increase prevention costs by providing developer training on unit testing best practices
+- D) Increase internal failure response funding to fix defects found in system testing
+
+**Correct Answer:** C) Increase prevention costs by providing developer training on unit testing best practices.
+
+**Distractor Analysis:**
+
+- *Why C is correct:* If the root cause is inadequate unit testing, the highest-leverage intervention is upstream prevention — training developers. Prevention is always more cost-effective than detection or repair because it stops defects from forming in the first place.
+- *Why A is incorrect:* External failure costs are incurred after the customer finds defects. Increasing this budget accepts and funds poor quality rather than preventing it.
+- *Why B is incorrect:* Adding more testing cycles increases appraisal costs — this finds more defects but does not prevent them. It is less efficient than prevention.
+- *Why D is incorrect:* Internal failure funding fixes defects found after development — it is reactive. Addressing the root cause (training) is the proactive, cost-optimal solution.

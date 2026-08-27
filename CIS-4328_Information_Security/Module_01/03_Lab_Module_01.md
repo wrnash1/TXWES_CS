@@ -184,6 +184,33 @@ Part A selected answers for reference:
 
 ---
 
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Threat Actor Motivation Mapping
+
+Using the MITRE ATT&CK framework at <https://attack.mitre.org/groups/>, look up two real-world threat actor groups — one attributed to a nation-state and one attributed to organized crime.
+
+1. For each group, record: the group name, attributed country or criminal organization, primary motivation, and at least three TTPs (tactics, techniques, procedures) listed in their ATT&CK profile.
+2. Map each group's TTPs to the CIA Triad property most threatened by each technique.
+3. For each group, identify one IOC category (network, host, account, file) that would be most useful for detecting their activity in an enterprise environment and explain why.
+
+### Challenge 2: Security Control Gap Analysis for a Real Scenario
+
+A small regional hospital has the following current security controls in place: signature-based antivirus on all workstations, a perimeter firewall with no egress filtering, annual security awareness training, and paper sign-in logs for the server room.
+
+1. Map each existing control to the correct Category (Physical/Technical/Administrative) and Function (Preventive/Detective/Corrective/Deterrent/Compensating/Directive).
+2. Identify at least four security gaps — controls that are absent — and for each gap, name the specific attack scenario from Ridgeline's Module 01 incident list that the missing control would address.
+3. Propose a prioritized remediation plan listing the three most critical missing controls in order of priority. Justify each prioritization using the CIA Triad property most at risk.
+
+### Reflection Questions
+
+1. After completing both challenges, explain in your own words why threat actor motivation matters when selecting security controls. Give a specific example where the same vulnerability would require different control responses depending on whether the threat actor is a nation-state versus a script kiddie.
+2. In the hospital gap analysis, one of the existing controls — annual security awareness training — is classified as Administrative/Preventive. A security manager argues that training is actually a Directive control because it tells employees what to do. How would you resolve this classification disagreement, and what does the correct classification tell you about the control's purpose?
+
+---
+
 Texas Wesleyan University — CIS-4328 Information Security — Module 01 Lab
 
 Proprietary and Confidential. Not for disclosure outside of authorized course use.

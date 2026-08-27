@@ -127,3 +127,34 @@ Situations:
 ## Submission Instructions
 
 Compile all four exercises into a single document with clear headings. Label each numbered item before your response. Submit to the Module 06 Lab assignment in Canvas by the posted deadline.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: CIR Triage Simulation
+
+You are the ITSM manager at a mid-size healthcare IT department. You have inherited a Continual Improvement Register with the following five items, all of which have been sitting with no status update for four months:
+
+1. Replace paper-based on-call rotation schedule with a digital scheduling tool.
+2. Conduct ITIL 4 Foundation training for all 12 service desk agents.
+3. Investigate why the EHR system's monthly scheduled maintenance window regularly overruns by 90 minutes.
+4. Evaluate whether the current ticketing system supports automated SLA breach notifications.
+5. Redesign the physical layout of the server room to improve cable management.
+
+For each CIR item:
+- Assign a priority (High / Medium / Low) and write two sentences justifying your prioritization.
+- Identify which step of the Continual Improvement Model each item is currently at (it has been logged — that is all that has happened).
+- Recommend the next concrete action for the two highest-priority items.
+
+### Challenge 2: Seven-Step Application
+
+Apply the full seven-step Continual Improvement Model to the following scenario: The Parkview Medical Center service desk currently resolves 60% of incidents on first contact. The IT director has set a target of 85% first-contact resolution within six months.
+
+1. For each of the seven steps, write two to three sentences describing what specifically would happen at that step in this scenario. Use the Parkview context — do not write generic descriptions of the steps.
+2. Identify one metric that would be measured at Step 6 and explain what a "success" result would look like in numerical terms.
+
+### Reflection Questions
+
+1. ITIL 4 states that continual improvement is everyone's responsibility. Describe a practical mechanism — beyond the CIR — that an IT organization could use to make it easy for front-line service desk agents to submit improvement ideas. What barriers might prevent agents from contributing, and how would you address them?
+2. Consider an improvement initiative from your own experience (academic, work, or personal) that failed to sustain its results after initial success. Using the language of the Continual Improvement Model, identify which step was executed poorly and explain what should have been done differently.

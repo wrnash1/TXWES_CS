@@ -511,6 +511,38 @@ Submit the following to the Module 07 Lab assignment in Canvas:
 
 ---
 
+## Part 9 — Challenge Exercise
+
+**This section is optional but strongly recommended.** These exercises introduce advanced object patterns used daily in professional JavaScript.
+
+### Challenge Step 9.1 — Deep Clone vs Shallow Clone
+
+Create `clone_demo.js`. Demonstrate the difference between a shallow spread clone and a deep clone using `JSON.parse(JSON.stringify(obj))`. Create an object with a nested object and an array. Shallow-clone it with spread and show that mutating the nested object mutates the original. Then deep-clone it with `JSON.parse/stringify` and show the mutation is isolated. Add comments explaining when each approach is appropriate and what `JSON.parse/stringify` cannot handle (functions, `undefined` values, circular references).
+
+### Challenge Step 9.2 — Build a Map-Like Object with Helper Functions
+
+Create `object_map.js`. Implement three utility functions that operate on plain objects as if they were maps:
+
+- `mapValues(obj, fn)` — returns a new object with each value transformed by `fn`
+- `filterKeys(obj, predicate)` — returns a new object with only entries where `predicate(key, value)` is true
+- `mergeDeep(target, source)` — merges two objects recursively (not just shallow)
+
+Test each function with at least two examples and verify with `console.log`. This exercise reinforces `Object.entries()`, spread syntax, and recursive thinking.
+
+### Challenge Step 9.3 — Implement a Simple Observable Object
+
+Create `observable.js`. Write a `createObservable(initialData)` factory function that returns a proxy-like object where any property set triggers a console notification. Use a Proxy (or a getter/setter approach with `Object.defineProperty`) to intercept writes and log `Property 'X' changed from Y to Z`:
+
+```javascript
+const state = createObservable({ count: 0, name: 'App' });
+state.count = 1;   // logs: Property 'count' changed from 0 to 1
+state.name = 'My App';  // logs: Property 'name' changed from App to My App
+```
+
+This pattern is used in reactive frameworks like Vue.js.
+
+---
+
 ## Reflection Questions
 
 Answer in the Canvas text box (two to three sentences each):

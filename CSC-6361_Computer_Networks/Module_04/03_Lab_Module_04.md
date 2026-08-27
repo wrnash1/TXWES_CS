@@ -167,3 +167,23 @@ interface FastEthernet0/2   ! PC-Attacker port
 | Port Security (Part 5) | 15 |
 | Management Plane Verification (Part 6) | 10 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Reflexive ACL for Stateful Filtering
+1. On your lab router, create a named extended ACL called `OUTBOUND_TRAFFIC` that permits TCP and UDP traffic from the internal LAN (192.168.1.0/24) outbound, and uses the `reflect INTERNAL_SESSIONS` keyword to create a dynamic reflexive ACL.
+2. Create a second ACL called `INBOUND_TRAFFIC` that evaluates the reflexive ACL using `evaluate INTERNAL_SESSIONS` and denies everything else.
+3. Apply `OUTBOUND_TRAFFIC` outbound on the WAN interface and `INBOUND_TRAFFIC` inbound on the WAN interface.
+4. Test by initiating a TCP session from the LAN side and verifying the return traffic is permitted, then attempt an unsolicited inbound connection and verify it is dropped.
+
+### Challenge 2: SNMPv3 with AuthPriv Security Level
+1. Configure SNMPv3 on your router with a user named `netadmin`, using SHA authentication (password: `Auth@12345`) and AES-128 encryption (password: `Priv@12345`).
+2. Configure a view named `MGMT_VIEW` that includes the entire MIB tree (`1.3.6.1`).
+3. Associate the user with an SNMPv3 group named `MGMT_GROUP` using `priv` (AuthPriv) security level.
+4. From a management station, use an SNMPv3-capable tool (or `snmpwalk -v3`) to retrieve system information and verify the encrypted communication.
+
+### Reflection Questions
+1. You are asked to choose between TACACS+ and RADIUS for authenticating network administrators who need per-command authorization on Cisco routers. Which protocol do you choose and why? What specific feature makes your choice clearly superior for this use case?
+2. A colleague argues that CoPP is unnecessary overhead on a well-secured internal network. Construct a specific attack scenario that demonstrates why CoPP is valuable even on a network with strong perimeter security.

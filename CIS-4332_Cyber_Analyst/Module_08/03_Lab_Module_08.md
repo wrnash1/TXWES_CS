@@ -251,3 +251,36 @@ In 6–8 sentences, recommend one of the three options and justify your choice. 
 ## Academic Integrity Notice
 
 CVE data used in this lab is real and publicly available. Research must be performed independently. Do not share NVD research findings or prioritization lists with classmates before submission. All analysis and written justifications must be your own work.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Risk-Based Prioritization With EPSS
+
+Your vulnerability scanner returns five findings for a production environment. Use the following data to complete this challenge:
+
+| Finding | CVSS | EPSS | Asset | In KEV? |
+|---|---|---|---|---|
+| CVE-A | 9.8 | 0.012 (1.2%) | Dev sandbox (no prod data) | No |
+| CVE-B | 7.2 | 0.887 (88.7%) | Public-facing authentication portal | Yes |
+| CVE-C | 6.5 | 0.044 (4.4%) | Internal file server (500 users) | No |
+| CVE-D | 10.0 | 0.003 (0.3%) | Air-gapped offline backup system | No |
+| CVE-E | 8.1 | 0.731 (73.1%) | Domain controller (all 500 users) | Yes |
+
+1. Rank all five findings from highest to lowest remediation priority. Justify each ranking using at least two factors beyond CVSS score alone.
+2. For CVE-A (CVSS 9.8, low EPSS, dev sandbox), write a formal one-paragraph risk acceptance justification suitable for submission to the risk committee.
+3. CVE-D is on an air-gapped system. Describe the attack path that would be required to exploit it and explain whether the air-gap eliminates or merely reduces the effective risk.
+
+### Challenge 2: Compensating Control Design
+
+CVE-E (domain controller, CVSS 8.1, 73.1% EPSS, in KEV) cannot be patched for 30 days due to an upcoming organizational merger freeze on all production changes.
+
+1. Design a compensating control set: identify at least three specific technical controls you would implement on and around the domain controller to reduce exploitability during the 30-day window. For each control, explain which CVSS metric it most directly reduces (Attack Vector, Complexity, Privileges Required, etc.).
+2. Write a monitoring and detection plan: identify two SIEM correlation rules you would activate specifically for this 30-day period to detect exploitation attempts targeting this CVE's attack vector.
+3. Document the residual risk: after implementing your compensating controls, estimate whether the effective risk has been reduced to an acceptable level and explain your reasoning.
+
+### Reflection Questions
+
+1. A vulnerability management program patches only CVEs with CVSS scores of 9.0 or higher within 15 days. Using the EPSS data from Challenge 1, identify one CVE that this policy would over-prioritize and one it would under-prioritize, and explain why CVSS-threshold-only policies create blind spots.
+2. Explain the concept of a "vulnerability debt" in an organization that has not run credentialed scans for 6 months, and describe the operational challenges of rapidly remediating a large backlog compared to maintaining a continuous patching cadence.

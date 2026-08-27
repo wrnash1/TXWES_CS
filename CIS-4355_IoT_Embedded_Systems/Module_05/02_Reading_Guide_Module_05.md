@@ -168,4 +168,20 @@ Network segmentation between Purdue levels is the industrial equivalent of IoT V
 
 ---
 
+## 9. Supplemental Resources
+
+**1. LoRa Alliance — LoRaWAN Specification and Regional Parameters**
+[https://lora-alliance.org/resource_hub/lorawan-specification-v1-0-3/](https://lora-alliance.org/resource_hub/lorawan-specification-v1-0-3/)
+The official LoRaWAN MAC specification and the companion Regional Parameters document (covering US915, EU868, and other frequency plans). Required reading to understand spreading factors, payload size limits, duty cycle rules, and the OTAA vs. ABP activation procedures tested on the CompTIA IoT+ exam.
+
+**2. Bluetooth SIG — Core Specification Overview**
+[https://www.bluetooth.com/specifications/specs/core-specification-5-4/](https://www.bluetooth.com/specifications/specs/core-specification-5-4/)
+The official Bluetooth Core Specification from the Bluetooth SIG. The overview section covers BLE advertising, GATT profiles, pairing modes (Just Works, Passkey Entry, Numeric Comparison, OOB), and link encryption. Relevant to Module 05 pairing security questions.
+
+**3. GSMA — NB-IoT and LTE-M Deployment Guide**
+[https://www.gsma.com/iot/narrow-band-internet-of-things-nb-iot/](https://www.gsma.com/iot/narrow-band-internet-of-things-nb-iot/)
+The GSMA industry group's resource page for NB-IoT, including deployment guides, PSM and eDRX configuration, coverage enhancement modes, and comparisons with LTE-M. Essential reference for understanding cellular IoT connectivity requirements and operator SLA considerations.
+
+---
+
 End of Reading Guide – Module 05

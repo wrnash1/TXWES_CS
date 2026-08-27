@@ -218,3 +218,193 @@ A company runs a large-scale e-commerce application. During the holiday season, 
 ---
 
 Quiz 13 | CIS-4331 Azure Cloud | Texas Wesleyan University
+
+---
+
+### Question 11 (5 points)
+
+A team wants to monitor the CPU utilization of their Azure Virtual Machines and receive a page when any VM's CPU stays above 85% for more than 10 minutes. Which Azure Monitor components do they need to configure to achieve this?
+
+- A) A Log Analytics workspace query and an Action Group with an email receiver
+- B) A Metric Alert rule with a condition on "Percentage CPU > 85", a 10-minute evaluation window, and an Action Group with a notification action
+- C) An Application Insights availability test and an Action Group
+- D) Azure Service Health alert and an Action Group with SMS notification
+
+- **Correct Answer:** B
+
+- **Distractor Analysis:**
+  - *Why B is correct:* VM CPU utilization is a platform metric collected automatically by Azure Monitor. A Metric Alert rule evaluates the signal (Percentage CPU) against the threshold (>85%) over the specified time window (10 minutes). When the condition is met, the alert fires and triggers the linked Action Group, which can send email, SMS, voice call, webhook, or other notifications. This is the standard Azure Monitor alerting pattern for metric-based conditions.
+  - *Why A is incorrect:* Log Analytics KQL queries can detect conditions, but scheduled log query alerts have higher latency (typically minutes) compared to metric alerts and require logs to be configured and flowing. Platform metrics like CPU are better monitored with metric alerts, which evaluate faster. A log query alert is appropriate for log-based conditions, not VM CPU.
+  - *Why C is incorrect:* Application Insights availability tests monitor external application endpoints (HTTP URLs) for uptime and response time. They are not used for VM infrastructure metrics like CPU utilization.
+  - *Why D is incorrect:* Azure Service Health alerts notify about Azure platform incidents that Microsoft publishes. They do not evaluate customer workload metrics like individual VM CPU utilization.
+
+---
+
+### Question 12 (5 points)
+
+An operations team needs to query log data asking: "How many HTTP 500 errors occurred on our web application per hour over the last 7 days?" The logs are stored in a Log Analytics workspace. What query language do they use?
+
+- A) SQL (Structured Query Language)
+- B) KQL (Kusto Query Language)
+- C) Splunk Processing Language (SPL)
+- D) ANSI standard log query syntax
+
+- **Correct Answer:** B
+
+- **Distractor Analysis:**
+  - *Why B is correct:* Log Analytics workspaces use KQL (Kusto Query Language) as their query language. KQL is also used in Application Insights, Microsoft Sentinel, and Azure Resource Graph. KQL uses a pipe operator syntax (table | where | summarize | project) and supports time-series analysis, aggregation, and cross-workspace queries.
+  - *Why A is incorrect:* SQL is the query language for relational databases like Azure SQL Database. Log Analytics workspaces do not use SQL syntax, though Azure Data Explorer (which also uses KQL) supports some SQL-like syntax as an alternative.
+  - *Why C is incorrect:* Splunk Processing Language is the query language for Splunk, a competing log management platform. Azure Monitor uses KQL. While both serve similar analytical purposes, they are different products with different query syntaxes.
+  - *Why D is incorrect:* There is no ANSI standard for log query syntax. Log analytics tools each define their own query language. Azure Monitor's Log Analytics specifically requires KQL.
+
+---
+
+### Question 13 (5 points)
+
+A developer deploys a web application to Azure App Service. They want to track the number of users who visit the homepage each day, the average server response time, and any JavaScript errors that occur in the browser. Which Azure service is most appropriate for collecting all three of these data points?
+
+- A) Azure Monitor platform metrics
+- B) Azure Log Analytics with Activity Log diagnostics
+- C) Application Insights
+- D) Azure Service Health custom alerts
+
+- **Correct Answer:** C
+
+- **Distractor Analysis:**
+  - *Why C is correct:* Application Insights is Azure's application performance monitoring service. It collects server-side telemetry (response times, request rates, dependency calls, exceptions) and client-side telemetry (page views, browser performance, JavaScript errors) through a browser JavaScript SDK. It also tracks user sessions and custom events. All three data points (user visits, response time, browser errors) are native Application Insights capabilities.
+  - *Why A is incorrect:* Azure Monitor platform metrics collect infrastructure-level data about the App Service resource (CPU, memory, HTTP server errors at the infrastructure level). They do not track individual user page views, user sessions, or client-side JavaScript errors.
+  - *Why B is incorrect:* Log Analytics with Activity Log diagnostics captures Azure control-plane events (resource deployments, configuration changes, RBAC assignments). It does not collect application-level telemetry like user visits, response times, or browser JavaScript errors.
+  - *Why D is incorrect:* Azure Service Health tracks Microsoft's Azure platform status. It has no awareness of individual application behavior, user visits, or application errors.
+
+---
+
+### Question 14 (5 points)
+
+A company has 12 different alert rules monitoring various services. When any alert fires, they want to notify the on-call engineer via SMS, create a ticket in their IT service management system via webhook, and post a message to a Teams channel. How should they configure this to minimize management overhead?
+
+- A) Add SMS, webhook, and Teams notification actions individually to each of the 12 alert rules
+- B) Create one Action Group containing all three notification actions, and link all 12 alert rules to the same Action Group
+- C) Create 12 separate Action Groups (one per alert rule) each containing the three notification actions
+- D) Configure Azure Service Health to route all alert notifications to the ticketing system
+
+- **Correct Answer:** B
+
+- **Distractor Analysis:**
+  - *Why B is correct:* Action Groups are reusable notification configurations. By creating one Action Group with all three actions (SMS, webhook, Teams message) and linking all 12 alert rules to that single Action Group, any change to notification recipients or methods only requires updating one Action Group. This is the designed purpose of Action Groups — decouple the notification configuration from the alert rules for reuse.
+  - *Why A is incorrect:* Adding notification actions individually to each of the 12 alert rules creates 36 action configurations (3 × 12). When the on-call engineer changes or the webhook URL changes, the team must update all 12 rules individually. This is the maintenance overhead that Action Groups are designed to prevent.
+  - *Why C is incorrect:* Creating 12 separate Action Groups (one per alert rule) defeats the purpose of reusable Action Groups. This approach has the same maintenance overhead as option A — changes require updating 12 separate objects.
+  - *Why D is incorrect:* Azure Service Health alerts notify about Azure platform incidents. They cannot aggregate or route application-level metric and log alerts to ticketing systems. The routing described requires alert rules with Action Groups.
+
+---
+
+### Question 15 (5 points)
+
+An Azure Log Analytics workspace is configured to collect diagnostic logs from an Azure SQL Database. A security analyst runs a KQL query to find all failed login attempts in the last 24 hours but the results show no data even though failed logins are occurring. What is the most likely cause?
+
+- A) KQL queries cannot access SQL Database security event logs
+- B) The diagnostic settings on the SQL Database are not configured to send the SQLSecurityAuditEvents log category to the workspace
+- C) Log Analytics workspaces require a 48-hour delay before logs are queryable
+- D) SQL Database failed login logs are stored in the Activity Log, not in Log Analytics
+
+- **Correct Answer:** B
+
+- **Distractor Analysis:**
+  - *Why B is correct:* Diagnostic settings on Azure resources allow you to select which log categories to route to Log Analytics. SQL Database has multiple log categories (SQLInsights, QueryStoreRuntimeStatistics, SQLSecurityAuditEvents, Errors, Deadlocks, etc.). If the diagnostic settings were configured but the SQLSecurityAuditEvents category was not selected, security audit logs will not flow to the workspace and the query returns no data.
+  - *Why A is incorrect:* KQL can query any log type in a Log Analytics workspace, including SQL security audit logs. SQL Database supports the SQLSecurityAuditEvents log category which includes failed login events.
+  - *Why C is incorrect:* Log Analytics typically makes logs available for querying within 2-5 minutes of ingestion. There is no 48-hour delay; this is not an Azure Monitor characteristic.
+  - *Why D is incorrect:* The Azure Activity Log captures control-plane operations (creating or deleting SQL servers, changing firewall rules). Data-plane events like failed login attempts are captured in SQL Database diagnostic logs (specifically SQLSecurityAuditEvents), not in the Activity Log.
+
+---
+
+### Question 16 (5 points)
+
+An organization's Azure subscription experienced a regional outage in East US on a Tuesday afternoon. The operations team was alerted by their customers before they saw any internal alerts. Management wants to ensure the team is notified directly by Microsoft as soon as Azure service issues affecting East US are published. Which configuration achieves this?
+
+- A) Create an Azure Monitor metric alert on the East US region's availability metric
+- B) Configure an Azure Service Health alert for Service Issues affecting East US for all subscriptions
+- C) Enable Application Insights availability tests in all Azure regions
+- D) Create a Log Analytics query alert that scans the Activity Log for outage events
+
+- **Correct Answer:** B
+
+- **Distractor Analysis:**
+  - *Why B is correct:* Azure Service Health allows creating alert rules for Service Issues (active incidents), Planned Maintenance, and Health Advisories. Filtering by the East US region and the relevant subscription ensures the team receives a notification the moment Microsoft publishes a service issue affecting that region — before it necessarily manifests as application failures. The alert can trigger an Action Group sending email, SMS, or webhook notifications.
+  - *Why A is incorrect:* Azure Monitor metric alerts evaluate customer workload metrics (VM CPU, App Service response time, etc.). There is no "region availability metric" that reflects Azure infrastructure health. Metric alerts detect the application symptoms, not the platform cause.
+  - *Why C is incorrect:* Application Insights availability tests probe an application from outside to detect outages. They detect that the application is down (the symptom) but do not provide Microsoft's service issue notifications, root cause context, or estimated time to resolution that Service Health provides.
+  - *Why D is incorrect:* The Activity Log does not contain Azure service health incident records. Service Health events are published through a separate channel. Azure Service Health alert rules are the correct mechanism for receiving service issue notifications.
+
+---
+
+### Question 17 (5 points)
+
+A company pins four Azure Monitor charts to an Azure Dashboard: VM CPU over 24 hours, storage account transaction count over 7 days, App Service HTTP request rate over 1 hour, and a KQL query result showing error counts by hour. Which statement best describes the purpose and limitations of this Azure Dashboard?
+
+- A) The dashboard provides a real-time operations center view, but charts do not auto-refresh and must be manually refreshed
+- B) The dashboard provides a customizable shared view of metrics and log query results that auto-refreshes on the configured interval and can be shared with the team via Azure RBAC
+- C) The dashboard replaces Azure Monitor alert rules — active alerts are shown directly on the dashboard charts
+- D) The dashboard can only display metrics from a single Azure subscription
+
+- **Correct Answer:** B
+
+- **Distractor Analysis:**
+  - *Why B is correct:* Azure Dashboards are customizable views in the Azure Portal that can display pinned metrics charts, log query results, resource status tiles, and other widgets. They support auto-refresh intervals (from 5 minutes to 1 hour). Dashboards can be shared with other Azure users by granting them Reader access to the dashboard, making them useful for team situational awareness. They are the primary Azure Portal tool for building shared operational views.
+  - *Why A is incorrect:* Azure Dashboards do support auto-refresh. The auto-refresh interval can be configured (5m, 15m, 30m, 1h) or set to manual. Saying they "do not auto-refresh" is incorrect.
+  - *Why C is incorrect:* Dashboards can display an Alerts tile showing the count of fired alerts, but the dashboard charts themselves are metric/log visualizations. Dashboards do not replace alert rules. Alert rules evaluate conditions and trigger notifications; dashboards are visualizations only.
+  - *Why D is incorrect:* Azure Dashboards can display data from multiple subscriptions. Metric charts and log query tiles can be scoped to resources across subscriptions within the same Azure AD tenant.
+
+---
+
+### Question 18 (5 points)
+
+A company's Application Insights resource shows a spike in "Server response time" from 200ms average to 4 seconds, and simultaneously a spike in "Failed requests." A developer investigates by reviewing the Application Insights dependency tracking feature. What type of information does dependency tracking provide that helps diagnose this issue?
+
+- A) The list of users who made requests during the spike
+- B) The response times and success/failure status of calls the application made to external services (databases, APIs, storage) during the requests
+- C) The CPU and memory utilization of the App Service plan during the spike
+- D) The geographic distribution of requests during the spike
+
+- **Correct Answer:** B
+
+- **Distractor Analysis:**
+  - *Why B is correct:* Application Insights dependency tracking automatically instruments outbound calls the application makes to external dependencies — Azure SQL Database, Cosmos DB, Redis Cache, HTTP APIs, Azure Storage, and others. For each dependency call, it records the response time, success/failure status, and target endpoint. When the server response time spikes, dependency tracking shows whether a downstream service (such as the database) is responding slowly, isolating the root cause.
+  - *Why A is incorrect:* User information (authenticated user IDs) is captured in Application Insights through user tracking telemetry, but the dependency tracking feature specifically focuses on outbound service calls, not inbound user identity.
+  - *Why C is incorrect:* CPU and memory utilization of the App Service plan are Azure Monitor platform metrics available from the App Service resource. Application Insights dependency tracking focuses on application-level outbound calls, not infrastructure metrics.
+  - *Why D is incorrect:* Geographic distribution of requests is shown in the Application Insights map view and can be analyzed by location. Dependency tracking specifically shows outbound service call performance, which is the relevant feature for diagnosing slow response times caused by downstream service issues.
+
+---
+
+### Question 19 (5 points)
+
+A security team wants to retain Azure Activity Log data for 2 years to meet regulatory compliance requirements. By default, the Activity Log is retained for how long, and what configuration is needed to meet the 2-year requirement?
+
+- A) Default retention is 90 days; configure a diagnostic setting to send Activity Log data to a Log Analytics workspace with a 730-day retention setting or to Azure Storage
+- B) Default retention is 30 days; upgrade to an Azure Monitor Premium tier to extend retention to 2 years
+- C) Default retention is 1 year; no configuration is needed as the Activity Log automatically retains data for 2 years in enterprise subscriptions
+- D) Default retention is 7 days; configure Log Analytics with a Sentinel license to extend retention
+
+- **Correct Answer:** A
+
+- **Distractor Analysis:**
+  - *Why A is correct:* The Azure Activity Log has a default retention of 90 days in the Activity Log experience. To retain data beyond 90 days, the team must configure a diagnostic setting to export Activity Log data to a Log Analytics workspace (where retention can be set from 30 days to 730 days, or longer with archive tier) or to Azure Storage (where retention is governed by blob lifecycle management rules and is effectively unlimited). Both options can achieve the 2-year requirement.
+  - *Why B is incorrect:* The default Activity Log retention is 90 days, not 30 days. There is no "Azure Monitor Premium tier" — Azure Monitor is not tiered by license. Extending retention requires a diagnostic setting export, not a license upgrade.
+  - *Why C is incorrect:* The default retention is 90 days, not 1 year. Enterprise subscriptions do not automatically receive extended retention; retention extension requires explicit configuration of diagnostic settings.
+  - *Why D is incorrect:* The default retention is 90 days, not 7 days. Microsoft Sentinel does provide long-term retention capabilities, but a Sentinel license is not required to extend Activity Log retention. A Log Analytics workspace with the retention setting configured, or Azure Storage, achieves this without Sentinel.
+
+---
+
+### Question 20 (5 points)
+
+A company uses Azure Monitor to track the health of a critical order processing application. The team lead asks: "What is the difference between Azure Monitor Metrics and Azure Monitor Logs, and when should we use each?" Which answer best captures the distinction?
+
+- A) Metrics are stored in Log Analytics workspaces; Logs are stored in the Azure Metrics database. Both use KQL for queries
+- B) Metrics are numerical time-series values collected at regular intervals, optimized for fast threshold-based alerting and charting; Logs are structured event records with richer context, queried using KQL, best for investigation and trend analysis
+- C) Metrics can only be collected from Azure VMs; Logs can be collected from any Azure resource type
+- D) Metrics are retained for 90 days by default; Logs are retained for 30 days by default
+
+- **Correct Answer:** B
+
+- **Distractor Analysis:**
+  - *Why B is correct:* Metrics are lightweight numerical values (CPU %, transaction count, response time in ms) sampled at regular intervals (typically 1 minute). They are stored in the Azure Monitor metrics database, are fast to query, support near-real-time alerting, and are ideal for dashboards and threshold alerts. Logs are structured records (events, errors, audit entries) with rich contextual fields, stored in Log Analytics workspaces, queried with KQL, and better suited for investigation, correlation, and complex analysis requiring text fields and variable schemas.
+  - *Why A is incorrect:* The storage is reversed. Metrics are stored in the Azure Monitor metrics time-series database (not Log Analytics). Logs are stored in Log Analytics workspaces. Only Logs use KQL for queries; Metrics use a separate query interface (though metrics can also be sent to Log Analytics).
+  - *Why C is incorrect:* Both Metrics and Logs can be collected from many Azure resource types. Platform metrics are available for VMs, storage accounts, SQL databases, App Services, and many others. The statement that Metrics are only for VMs is incorrect.
+  - *Why D is incorrect:* The retention values are reversed. Platform metrics are retained for 93 days by default in the Azure Monitor metrics database. Log Analytics workspace logs have a configurable default retention of 30 days (free tier) to 730 days (paid tier). The specific numbers and the direction of the comparison in the distractor are incorrect.

@@ -346,4 +346,20 @@ print(f"Pearson r: {corr:.4f}")
 
 ---
 
+## 9. Supplemental Resources
+
+**1. Tableau Public Gallery — Data Visualization Examples**
+<https://public.tableau.com/app/discover>
+A public gallery of thousands of real-world interactive dashboards. Browse by topic to see how professionals choose chart types for different analytical questions — directly reinforces the visualization selection concepts in this module.
+
+**2. Data Visualization Catalogue**
+<https://datavizcatalogue.com>
+A comprehensive reference of chart types with descriptions of when to use each, what data structure each requires, and related chart alternatives. Useful as a quick decision guide for chart selection questions on the Data+ exam.
+
+**3. Seeing Theory — Correlation and Regression (Interactive)**
+<https://seeing-theory.brown.edu/regression-analysis/index.html>
+An interactive browser tool that lets you add data points to a scatter plot and see Pearson r and the regression line update in real time. Builds intuition for how outliers and data spread affect correlation coefficients.
+
+---
+
 End of Module 07 Reading Guide

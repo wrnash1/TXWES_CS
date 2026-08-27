@@ -367,4 +367,44 @@ Answer these before attempting the quiz.
 
 ---
 
+## Supplemental Resources
+
+The following open educational resources extend module content on implementation, change
+management, and transition planning. All are freely accessible without login or purchase.
+
+1. **ADKAR Model Overview — Prosci Change Management**
+   <https://www.prosci.com/methodology/adkar>
+   Focus: The authoritative source for the ADKAR model covering each stage in depth,
+   diagnostic applications, and intervention design. Directly supports Part 2 of the lab
+   and reinforces Section 3 of this reading guide for ECBA exam preparation.
+
+2. **Kotter's 8-Step Change Model — Kotter International**
+   <https://www.kotterinc.com/methodology/8-steps/>
+   Focus: The organizational-level change framework referenced in Section 3.4 of this
+   reading guide. Comparing ADKAR (individual level) with Kotter's model (organizational
+   level) deepens understanding of why both frameworks are used on large-scale
+   implementations.
+
+3. **Solution Evaluation Knowledge Area — IIBA BABOK Guide**
+   <https://www.iiba.org/standards-and-resources/babok/>
+   Focus: The BABOK Guide's coverage of Solution Evaluation, including performance
+   measurement, solution limitations assessment, and recommendations for improvement.
+   Reinforces the PIR content in Section 5 and the ECBA exam alignment throughout
+   this module.
+
+4. **Post-Implementation Review Guide — Project Management Institute**
+   <https://www.pmi.org/learning/library/post-project-review-7195>
+   Focus: Practical guidance on structuring and facilitating post-implementation reviews,
+   including agenda design, metrics selection, lessons-learned documentation, and
+   follow-through processes. Supports Part 4 of the lab directly.
+
+5. **Deployment Strategy Comparison — Atlassian DevOps Resources**
+   <https://www.atlassian.com/continuous-delivery/principles/deployment-strategies>
+   Focus: Clear comparison of deployment strategies — including big bang, phased, canary
+   (pilot), and blue-green (parallel) approaches — with visual diagrams and risk
+   assessments. Supplements Section 2 of this reading guide and supports the strategy
+   selection task in Part 1 of the lab.
+
+---
+
 *Module 15 Reading Guide | CIS-3312 Systems Analysis and Design | Texas Wesleyan University*

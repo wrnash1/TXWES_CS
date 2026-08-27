@@ -12,7 +12,7 @@
 
 ---
 
-**Question 1**
+### Question 1
 
 A security engineer is evaluating CSPM tools for a company that uses AWS, Azure, and GCP simultaneously. Which tool is best suited for this multi-cloud environment and provides a graph-based cloud attack path analysis capability?
 
@@ -30,7 +30,7 @@ A security engineer is evaluating CSPM tools for a company that uses AWS, Azure,
 
 ---
 
-**Question 2**
+### Question 2
 
 A DevSecOps team wants to catch S3 bucket misconfigurations before Terraform deploys them to AWS. At which stage of the CI/CD pipeline should they add a Checkov scan?
 
@@ -48,7 +48,7 @@ A DevSecOps team wants to catch S3 bucket misconfigurations before Terraform dep
 
 ---
 
-**Question 3**
+### Question 3
 
 An organization implements an AWS Service Control Policy that denies `cloudtrail:StopLogging`, `cloudtrail:DeleteTrail`, and `cloudtrail:UpdateTrail` for all accounts in the organization. Which CSPM control type does this SCP represent?
 
@@ -66,7 +66,7 @@ An organization implements an AWS Service Control Policy that denies `cloudtrail
 
 ---
 
-**Question 4**
+### Question 4
 
 During a Prowler CIS compliance assessment of an AWS account, a finding is generated with severity CRITICAL: `cloudtrail-logging-enabled — Ensure CloudTrail is enabled in all regions`. The organization has decided this region is low-risk and will not remediate within the standard SLA. What is the correct process according to CSPM exception management best practices?
 
@@ -84,7 +84,7 @@ During a Prowler CIS compliance assessment of an AWS account, a finding is gener
 
 ---
 
-**Question 5**
+### Question 5
 
 A Checkov scan of a Terraform file produces the following finding: `CKV_AWS_20: Ensure the S3 bucket does not have public ACLs`. The Terraform resource has `acl = "public-read"` on an `aws_s3_bucket_acl` resource. What is the correct remediation and why?
 
@@ -102,7 +102,7 @@ A Checkov scan of a Terraform file produces the following finding: `CKV_AWS_20: 
 
 ---
 
-**Question 6**
+### Question 6
 
 An organization enables AWS Config auto-remediation for the `s3-bucket-server-side-encryption-enabled` rule with `Automatic: true` and `MaximumAutomaticAttempts: 3`. During testing, the SSM Automation document for this remediation incorrectly enables encryption with a key that has no permissions for the application's IAM role, breaking the application. What process failure led to this outcome?
 
@@ -120,7 +120,7 @@ An organization enables AWS Config auto-remediation for the `s3-bucket-server-si
 
 ---
 
-**Question 7**
+### Question 7
 
 What is the primary difference between Prisma Cloud's RQL (Resource Query Language) approach to CSPM and Wiz's graph-based approach?
 
@@ -138,7 +138,7 @@ What is the primary difference between Prisma Cloud's RQL (Resource Query Langua
 
 ---
 
-**Question 8**
+### Question 8
 
 A Prowler scan generates 3,000 findings in a single AWS account. The security team is overwhelmed. Which approach best addresses finding volume management while maintaining security governance?
 
@@ -156,7 +156,7 @@ A Prowler scan generates 3,000 findings in a single AWS account. The security te
 
 ---
 
-**Question 9**
+### Question 9
 
 An organization wants to prevent any IAM role in their AWS organization from being created with `"Action": "*"` wildcard permissions. Which CSPM control should they implement?
 
@@ -174,7 +174,7 @@ An organization wants to prevent any IAM role in their AWS organization from bei
 
 ---
 
-**Question 10**
+### Question 10
 
 Which combination of CSPM controls implements the most complete defense-in-depth posture for preventing and detecting cloud misconfigurations?
 
@@ -189,3 +189,187 @@ Which combination of CSPM controls implements the most complete defense-in-depth
   - *Why A is incorrect:* Checkov only scans IaC code. Resources provisioned outside the pipeline (via console, CLI, or other tools) are not covered. Pull request reviews are human and can miss complex misconfigurations that automated tools would catch.
   - *Why B is incorrect:* Nightly scans plus manual review introduces a 24-hour detection window and relies on human capacity to process reports. Manual ticket assignment does not scale and has no enforcement mechanism for SLA compliance.
   - *Why D is incorrect:* AWS Security Hub aggregates findings but focuses on threats (GuardDuty) and vulnerability assessments, not primarily on configuration misconfigurations. GuardDuty detects active threats, not misconfigurations. Security Hub alone does not provide IaC scanning or auto-remediation capabilities.
+
+---
+
+**Question 11** (5 points)
+
+An AWS Config Rule evaluates all S3 buckets and marks any bucket without versioning enabled as NON_COMPLIANT. A developer creates a temporary scratch bucket without versioning for a one-time data transfer. The Config Rule immediately flags it. What is the most appropriate CSPM response?
+
+- A) Disable the Config Rule for the account to prevent false positives on temporary buckets
+- B) Document a time-boxed exception in the exceptions register with a justification and a named risk owner, and set the exception to expire when the scratch bucket is deleted
+- C) Lower the Config Rule's severity to Informational so it does not count against compliance metrics
+- D) Ignore the finding since scratch buckets are not subject to the same controls as production resources
+
+- **Correct Answer:** B) A time-boxed exception with documented justification and an expiry aligned to the bucket's expected lifetime.
+- **Distractor Analysis:**
+  - *Why B is correct:* Exceptions are a legitimate part of CSPM governance for justified deviations. The key requirement is documentation — why the exception is accepted, who owns it, when it expires — so auditors can review it.
+  - *Why A is incorrect:* Disabling the rule removes detection for all S3 buckets in the account, not just the scratch bucket. This eliminates governance coverage for potentially important resources.
+  - *Why C is incorrect:* Changing severity in tool configuration to avoid compliance metrics is a data integrity violation that misrepresents the actual security posture to auditors.
+  - *Why D is incorrect:* Ignoring findings without documentation creates an audit gap — there is no evidence the finding was considered, evaluated, and accepted.
+
+---
+
+**Question 12** (5 points)
+
+Prisma Cloud generates a finding: "AWS EC2 instance with public IP in a subnet without Network ACL restrictions — HIGH." The EC2 instance is a legitimate internet-facing web server. Which RQL query would help the security team verify whether this is a true positive?
+
+- A) `config from cloud.resource where api.name = 'aws-ec2-describe-instances' AND json.rule = publicIpAddress exists AND json.rule = subnetId exists`
+- B) A query that also joins the Security Group and Network ACL rules to verify whether inbound access is actually unrestricted
+- C) A query that checks whether GuardDuty has active findings for the instance
+- D) A query that checks the instance's CloudTrail API call history for the last 30 days
+
+- **Correct Answer:** B) A query combining the EC2 instance, Security Group rules, and Network ACL rules to determine whether the unrestricted access is genuine or mitigated by network controls.
+- **Distractor Analysis:**
+  - *Why B is correct:* A public IP alone does not mean the instance is exposed — Security Groups and Network ACLs may restrict inbound access to specific ports or IPs. True-positive validation requires checking all network control layers.
+  - *Why A is incorrect:* This query confirms the instance has a public IP but does not assess whether the traffic is actually unrestricted. It would produce the same result for a tightly-controlled web server and an exposed instance.
+  - *Why C is incorrect:* GuardDuty findings indicate active threats, not configuration validation. The absence of GuardDuty findings does not mean the configuration is correct.
+  - *Why D is incorrect:* CloudTrail history shows API calls made to AWS — it does not describe the network exposure of the instance.
+
+---
+
+**Question 13** (5 points)
+
+An organization deploys AWS GuardDuty and AWS Security Hub together. What is the division of responsibility between these two services?
+
+- A) GuardDuty scans IaC files before deployment; Security Hub monitors live resources after deployment
+- B) GuardDuty performs behavioral threat detection (anomalous API calls, network activity, credential misuse); Security Hub aggregates findings from GuardDuty, Config, Inspector, and third-party tools into a unified compliance and findings dashboard
+- C) GuardDuty manages IAM permissions; Security Hub manages network security group rules
+- D) GuardDuty is for detective controls; Security Hub replaces the need for IaC scanning in CI/CD pipelines
+
+- **Correct Answer:** B) GuardDuty detects active threats via behavioral analysis; Security Hub aggregates and normalizes findings from multiple AWS security services into a single pane of glass.
+- **Distractor Analysis:**
+  - *Why B is correct:* These services are complementary. GuardDuty uses machine learning to detect suspicious behavior in CloudTrail, VPC Flow Logs, and DNS logs. Security Hub consumes findings from GuardDuty, AWS Config, Inspector, Macie, and third-party integrations, normalizing them into ASFF (Amazon Security Finding Format) for unified triage.
+  - *Why A is incorrect:* Neither GuardDuty nor Security Hub scans IaC files — that is the role of checkov or tfsec in a CI/CD pipeline.
+  - *Why C is incorrect:* Neither service manages IAM permissions or security group rules — those are configuration resources managed by IAM and EC2 respectively.
+  - *Why D is incorrect:* Security Hub does not replace IaC scanning — it aggregates runtime findings. IaC scanning catches misconfigurations before deployment; Security Hub addresses runtime posture.
+
+---
+
+**Question 14** (5 points)
+
+A Prowler finding reports that CloudTrail multi-region logging is disabled. The remediation command is: `aws cloudtrail update-trail --name mytrail --is-multi-region-trail`. Before running this in production, what should the DevSecOps engineer verify?
+
+- A) That the AWS account has a CloudTrail lake configured to receive the new multi-region events
+- B) That enabling multi-region logging will not exceed S3 storage limits and that the S3 bucket policy allows CloudTrail to write from all regions
+- C) That all EC2 instances in all regions are running the CloudWatch agent before enabling multi-region logging
+- D) That the AWS account's Service Control Policy allows CloudTrail to be enabled in all regions
+
+- **Correct Answer:** B) Verify S3 storage and bucket policy before enabling multi-region logging to avoid write failures or unexpected costs.
+- **Distractor Analysis:**
+  - *Why B is correct:* Enabling multi-region CloudTrail increases log volume proportionally to the number of active regions. The S3 bucket must have a bucket policy that permits CloudTrail write access (`cloudtrail.amazonaws.com`) from all regions, and storage costs should be estimated.
+  - *Why A is incorrect:* CloudTrail Lake is an optional managed event data store — it is separate from standard CloudTrail S3 delivery. Multi-region logging writes to S3, not necessarily to CloudTrail Lake.
+  - *Why C is incorrect:* The CloudWatch agent is for metric and log collection from EC2 instances — it is unrelated to CloudTrail's ability to log API calls across regions.
+  - *Why D is incorrect:* If an SCP denied CloudTrail operations, Prowler would have flagged that separately. The current finding is about multi-region being disabled, not about SCPs preventing enablement.
+
+---
+
+**Question 15** (5 points)
+
+A CSPM tool identifies that an S3 bucket hosting a public static website has `BlockPublicPolicy: false`. The security team argues this is intentional for the website. Which explanation correctly describes why `BlockPublicPolicy: false` may still be a finding even for an intentional public website?
+
+- A) S3 static websites should use CloudFront, not direct bucket access, so the bucket itself should still have public access blocked
+- B) `BlockPublicPolicy: false` allows any future bucket policy change to make the bucket public, including accidental or malicious changes — the public website should be served through a controlled mechanism such as a specific bucket policy, not by disabling the block
+- C) Static website hosting does not work unless `BlockPublicPolicy` is set to true
+- D) `BlockPublicPolicy: false` is only a finding for buckets in the us-east-1 region
+
+- **Correct Answer:** A) The recommended pattern is to serve the website through CloudFront with the bucket remaining private, so the public access block can remain enabled without breaking the website.
+- **Distractor Analysis:**
+  - *Why A is correct:* Using CloudFront as a CDN in front of an S3 bucket allows the bucket to remain private (with public access block enabled) while the website is still publicly accessible through CloudFront. This eliminates direct public S3 access and allows applying WAF rules, access logging, and HTTPS enforcement at the CloudFront layer.
+  - *Why B is also partially correct:* But the question asks for the "best explanation" — the architectural recommendation (CloudFront) is more actionable than the general risk argument.
+  - *Why C is incorrect:* S3 static website hosting does work with `BlockPublicPolicy: false` combined with a public bucket policy — it is not required to set it to true for the website to function.
+  - *Why D is incorrect:* S3 public access block settings apply globally, not by region.
+
+---
+
+**Question 16** (5 points)
+
+Which AWS service acts as a preventive guardrail at the AWS Organizations level, and what is a key limitation compared to IAM policies on individual roles?
+
+- A) AWS Organizations SCPs; a limitation is that SCPs cannot use IAM condition keys such as `aws:RequestedRegion` or `aws:SourceIp`
+- B) AWS Organizations SCPs; a key limitation is that SCPs do not apply to the management (master) account of the organization
+- C) AWS Config Rules; a limitation is that they only evaluate resources in the account where the rule is deployed, not across the organization
+- D) AWS Control Tower guardrails; a limitation is that they only apply to accounts created after Control Tower was enabled
+
+- **Correct Answer:** B) SCPs do not apply to the management account — the management account retains all IAM permissions regardless of SCPs, making it a critical security boundary that must be managed separately.
+- **Distractor Analysis:**
+  - *Why B is correct:* This is a significant and exam-relevant limitation of SCPs. AWS explicitly excludes the management account from SCP enforcement. Any SCP that denies a dangerous action (like disabling CloudTrail) does not protect the management account itself, which is why the management account should have no workloads and be strictly access-controlled.
+  - *Why A is incorrect:* SCPs do support condition keys including `aws:RequestedRegion`, `aws:SourceIp`, and others. Condition-based SCPs are a common pattern for restricting to approved regions.
+  - *Why C is incorrect:* AWS Config Rules can be deployed as organizational rules that apply across all member accounts. This is a feature, not a limitation.
+  - *Why D is incorrect:* Control Tower guardrails apply to all accounts enrolled in Control Tower, including accounts that were enrolled after setup. The enrollment process applies guardrails at enrollment time.
+
+---
+
+**Question 17** (5 points)
+
+What does the CIS AWS Foundations Benchmark level 1 vs. level 2 distinction mean for an organization adopting Prowler for compliance assessment?
+
+- A) Level 1 checks are automated; Level 2 checks require manual audit procedures
+- B) Level 1 checks represent basic security hygiene applicable to all organizations; Level 2 checks are more stringent requirements suitable for high-security environments that can tolerate reduced usability
+- C) Level 1 covers AWS accounts; Level 2 covers multi-cloud environments including Azure and GCP
+- D) Level 1 findings have a 30-day SLA; Level 2 findings have a 7-day SLA by default
+
+- **Correct Answer:** B) Level 1 is baseline security applicable to all organizations; Level 2 is more stringent and appropriate for highly sensitive environments.
+- **Distractor Analysis:**
+  - *Why B is correct:* CIS Benchmarks define two implementation groups. Level 1 items are considered essential security configurations that all organizations should implement — they have minimal impact on usability. Level 2 items add more restrictive controls appropriate for environments that require higher security assurance, potentially with higher operational overhead.
+  - *Why A is incorrect:* Both Level 1 and Level 2 CIS checks can be automated with Prowler — the distinction is about security stringency, not automation feasibility.
+  - *Why C is incorrect:* CIS AWS Foundations Benchmark is AWS-specific at all levels — it does not extend to Azure or GCP in Level 2.
+  - *Why D is incorrect:* The CIS Benchmark defines control importance, not SLAs — SLAs are set by the organization's security policy, not by the benchmark itself.
+
+---
+
+**Question 18** (5 points)
+
+An organization uses Terraform to provision AWS resources and Checkov in CI/CD to scan IaC. A developer manually creates an S3 bucket with public access through the AWS console. Checkov does not flag this bucket. What control would detect this configuration drift?
+
+- A) Adding more Checkov rules that scan the AWS console directly
+- B) An AWS Config Rule that evaluates all S3 buckets in the account (regardless of how they were created) and reports NON_COMPLIANT for any bucket with public access enabled
+- C) A pre-commit hook that intercepts AWS CLI commands before they execute
+- D) A Terraform import of the manually-created bucket so Checkov can scan it
+
+- **Correct Answer:** B) An AWS Config Rule that evaluates all S3 buckets regardless of provisioning method.
+- **Distractor Analysis:**
+  - *Why B is correct:* AWS Config evaluates all resources in the account, not just those created through Terraform. This covers console-created, CLI-created, and SDK-created resources — providing comprehensive detection regardless of how the misconfiguration was introduced.
+  - *Why A is incorrect:* Checkov is a static analysis tool for IaC files — it cannot scan live AWS resources created through the console.
+  - *Why C is incorrect:* Pre-commit hooks run on the developer's local machine — they intercept Git operations, not AWS API calls. AWS console actions bypass both Git and pre-commit hooks entirely.
+  - *Why D is incorrect:* Running `terraform import` for every console-created resource is operationally impractical and still would not trigger Checkov in the CI pipeline unless a PR was opened with the imported resource definition.
+
+---
+
+**Question 19** (5 points)
+
+A CSPM finding reports "EC2 instance has IMDSv1 enabled (instance metadata service version 1)." Why is IMDSv2 preferred from a security perspective?
+
+- A) IMDSv2 encrypts instance metadata at rest, preventing unauthorized access to instance configuration
+- B) IMDSv2 requires a session-oriented PUT request to get a token before metadata can be accessed, preventing Server-Side Request Forgery (SSRF) attacks from reading instance metadata without the PUT step
+- C) IMDSv2 limits metadata access to IAM roles with the `ec2:DescribeInstances` permission
+- D) IMDSv2 disables the metadata endpoint entirely for instances that do not require it
+
+- **Correct Answer:** B) IMDSv2 requires a session token obtained via PUT, which SSRF vulnerabilities cannot easily perform — preventing the attack pattern used in the Capital One breach.
+- **Distractor Analysis:**
+  - *Why B is correct:* The SSRF attack pattern that exposed the Capital One breach exploited IMDSv1's GET-based metadata endpoint — any service-side request could reach it. IMDSv2 requires a PUT request with a TTL header to obtain a session token before metadata can be read. SSRF vulnerabilities typically only allow GET requests, making IMDSv2 resistant to this attack.
+  - *Why A is incorrect:* IMDSv2 does not encrypt metadata at rest — the data is the same. The security improvement is in the authentication requirement for access.
+  - *Why C is incorrect:* Instance metadata is accessible from within the instance without IAM authentication — it is a network endpoint on `169.254.169.254`. IAM permissions control AWS API calls, not direct metadata endpoint access.
+  - *Why D is incorrect:* IMDSv2 does not disable the endpoint — it adds a session token requirement. Disabling the endpoint is a separate option (`HttpEndpoint: disabled`).
+
+---
+
+**Question 20** (5 points)
+
+A Wiz security graph identifies the following "toxic combination": EC2 instance with an IAM role that has `s3:GetObject *` on all buckets + the instance is in a public subnet with port 80 open to 0.0.0.0/0 + the instance runs a web application with an unpatched CVE-2023-XXXX (SSRF). What makes this a "toxic combination" rather than three separate findings?
+
+- A) Each finding independently triggers a Critical severity alert — the combination increases the alert count
+- B) Individually, each finding might be Medium or Low severity, but the combination creates a complete attack chain: an attacker exploits SSRF to reach the metadata endpoint and steal IAM credentials with broad S3 access
+- C) The SSRF CVE makes the other two findings irrelevant — patching the CVE resolves all three
+- D) Wiz's graph combines findings only when they are in the same AWS region and availability zone
+
+- **Correct Answer:** B) The combination creates a complete, exploitable attack chain that no individual finding fully represents.
+- **Distractor Analysis:**
+  - *Why B is correct:* This is the core value of graph-based CSPM. The public exposure alone might be acceptable for a web server. The broad S3 permissions alone might be Low severity in isolation. The SSRF CVE might be Medium. But combined: an external attacker reaches the public web app, exploits SSRF to call `169.254.169.254/latest/meta-data/iam/security-credentials/`, obtains the EC2 role's temporary credentials, and uses them to exfiltrate all S3 data. Each finding enables the next step.
+  - *Why A is incorrect:* "Toxic combination" is not about alert count multiplication — it is about attack path completion that the individual findings do not individually represent.
+  - *Why C is incorrect:* Patching the SSRF removes one link in the attack chain but the other vulnerabilities remain. Defense in depth requires fixing all three.
+  - *Why D is incorrect:* Wiz's graph operates across regions, accounts, and cloud providers — it is not constrained to same-region or same-AZ resources.
+
+---
+
+Quiz — Module 10 | CIS-4350 | Texas Wesleyan University | Professor Nash

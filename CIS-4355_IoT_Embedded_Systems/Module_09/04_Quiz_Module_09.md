@@ -225,3 +225,223 @@ Correct Answer: C
 - B is incorrect — Zigbee mesh range is 10–100 meters per hop. Covering 200 acres (roughly 900m × 900m) would require dozens of mains-powered router nodes throughout the fields — expensive and complex to power.
 - C is correct — A single LoRaWAN gateway has 2–15 km range and can cover the entire 200-acre farm from one central location. Messages every 30 minutes are well within duty cycle limits. The low power requirement means sensors can run on batteries for years. The Things Network or a private gateway can serve hundreds of sensors. This is precisely the use case LoRaWAN was designed for.
 - D is incorrect — Deploying a private NB-IoT cellular network requires licensed spectrum, core network infrastructure, and significant investment — completely disproportionate to a farm-scale deployment. Public NB-IoT is unavailable due to no cellular coverage on the property.
+
+---
+
+## Question 11
+
+An ESP32 configured in Wi-Fi Station mode calls `WiFi.setSleep(true)` before entering a sensor-read loop. What is the primary effect of this setting?
+
+- A) The ESP32 radio turns off completely between TCP/IP packet transmissions to save power
+- B) The ESP32 uses modem-sleep, allowing the CPU to continue running while the radio duty-cycles with the access point's DTIM beacon
+- C) The ESP32 disconnects from the access point and reconnects for each transmission
+- D) The ESP32 switches from 802.11n to 802.11b to reduce transmitter power
+
+### Answer 11
+
+Correct Answer: B
+
+### Distractor Analysis 11
+
+- A is incorrect — `WiFi.setSleep(true)` enables modem-sleep mode, not radio-off. The radio duty-cycles in synchronization with the access point beacon; it does not turn off completely.
+- B is correct — Modem-sleep allows the Wi-Fi modem to sleep between beacon intervals (DTIM period, typically 100 ms), reducing average power from ~80–170 mA active to ~20 mA in light-sleep modem-sleep mode while maintaining the IP connection.
+- C is incorrect — Disconnecting and reconnecting per transmission describes a deep-sleep pattern that requires `WiFi.begin()` each wake cycle, not `WiFi.setSleep(true)`.
+- D is incorrect — `WiFi.setSleep()` does not change the 802.11 PHY standard or transmit power level. These are separate settings.
+
+---
+
+## Question 12
+
+A BLE peripheral device advertises its presence using GAP advertising packets. What information can a BLE scanner detect from advertising packets alone, WITHOUT establishing a connection?
+
+- A) The peripheral's GATT database structure and all characteristic values
+- B) The device name, manufacturer data, and service UUIDs broadcast in the advertising payload
+- C) The peripheral's stored pairing keys and bonding information
+- D) The full sensor reading history stored in the device
+
+### Answer 12
+
+Correct Answer: B
+
+### Distractor Analysis 12
+
+- A is incorrect — The GATT database is only accessible after establishing a BLE connection. Advertising packets contain only what the device explicitly broadcasts (name, manufacturer data, service UUIDs, TX power, etc.).
+- B is correct — GAP advertising packets (up to 31 bytes) can include the device name, manufacturer-specific data (used by iBeacon and Eddystone), service UUID hints, TX power level, and connection interval suggestions — all without any connection being established.
+- C is incorrect — Pairing keys and bonding information are security-sensitive data stored in the device's NVS/flash and are never broadcast in advertising packets.
+- D is incorrect — Sensor history is stored in GATT characteristics, which require a connection to read. Advertising is a one-way broadcast mechanism.
+
+---
+
+## Question 13
+
+A Zigbee End Device has lost communication with its parent Router. After the link failure, what does the End Device attempt to do?
+
+- A) Immediately shut down to conserve battery
+- B) Broadcast a Network Leave command to all neighbors
+- C) Scan available channels and attempt to rejoin the network through a different Router
+- D) Send a message to the Coordinator requesting a new parent assignment
+
+### Answer 13
+
+Correct Answer: C
+
+### Distractor Analysis 13
+
+- A is incorrect — Shutting down without attempting recovery would permanently disconnect the device. Zigbee's mesh protocol is designed specifically to recover from node failures automatically.
+- B is incorrect — Network Leave is a graceful departure command used when a device intentionally removes itself from the network, not a failure-recovery mechanism.
+- C is correct — When a Zigbee End Device loses its parent Router, it initiates a rejoin procedure: it scans the available channels for Zigbee network beacons and attempts to associate with a new parent Router or the Coordinator. This self-healing capability is a core advantage of mesh topology.
+- D is incorrect — End Devices cannot send directed messages to the Coordinator if they have lost their parent link, as all communications must route through a parent. The rejoin scan is the correct recovery mechanism.
+
+---
+
+## Question 14
+
+In LoRaWAN, what is the purpose of the Application Session Key (AppSKey)?
+
+- A) It authenticates the Join-Request message during OTAA activation
+- B) It encrypts the application payload (FRMPayload) end-to-end between the device and the application server
+- C) It derives the network session key used for MAC command encryption
+- D) It identifies the application server to the LoRaWAN network server
+
+### Answer 14
+
+Correct Answer: B
+
+### Distractor Analysis 14
+
+- A is incorrect — The Join-Request during OTAA is authenticated using the AppKey (the root key), not the AppSKey. AppSKey is derived after the join process completes.
+- B is correct — The AppSKey is used to encrypt (AES-128 CTR mode) and decrypt the FRMPayload — the actual application data. This ensures end-to-end confidentiality between the device and the application server, even though the LoRaWAN network server can see the encrypted payload.
+- C is incorrect — The Network Session Key (NwkSKey) is derived separately from AppSKey. NwkSKey handles MAC layer integrity (MIC) and frame counter verification; AppSKey handles payload confidentiality.
+- D is incorrect — Application server identification is handled by the AppEUI/JoinEUI, not the AppSKey.
+
+---
+
+## Question 15
+
+An NB-IoT sensor uses Power Saving Mode (PSM) with a periodic TAU timer of 6 hours. What does this mean for the device's communication behavior?
+
+- A) The device transmits a heartbeat every 6 hours but can receive downlink messages at any time
+- B) The device is reachable for downlink messages only within the active window after waking, and is completely unreachable during the 6-hour sleep period
+- C) The device maintains a persistent TCP connection for 6 hours before reconnecting
+- D) The device must transmit at least once every 6 hours or the network will deregister it
+
+### Answer 15
+
+Correct Answer: B
+
+### Distractor Analysis 15
+
+- A is incorrect — In PSM, the device enters a deep-sleep state in which it is not reachable for downlink messages. The network cannot deliver messages during the sleep period; they are queued by the network and delivered in the next active window.
+- B is correct — PSM devices wake at the TAU interval, enter an active window (eDRX or T3324 timer) during which they can receive queued downlink messages, send uplink data, then return to sleep. During the sleep period the network buffers any downlink; real-time reachability is impossible.
+- C is incorrect — PSM is a sleep mode that terminates network registration activity. A persistent TCP connection would prevent the device from sleeping and defeat the purpose of PSM.
+- D is incorrect — PSM devices periodically re-register with the network (tracking area update), but the mechanism is a network-managed timer, not a "must transmit or be deregistered" penalty.
+
+---
+
+## Question 16
+
+A Wi-Fi network uses WPA3-Personal. What security improvement does WPA3 provide over WPA2-Personal that directly addresses offline dictionary attacks?
+
+- A) WPA3 uses AES-256 instead of AES-128 for data encryption
+- B) WPA3 uses Simultaneous Authentication of Equals (SAE), replacing PSK handshake with a zero-knowledge proof that does not expose the password hash to capture
+- C) WPA3 requires a unique per-device SSID, preventing password reuse
+- D) WPA3 eliminates the need for a password by using certificate-based authentication for all devices
+
+### Answer 16
+
+Correct Answer: B
+
+### Distractor Analysis 16
+
+- A is incorrect — WPA3-Personal uses GCMP-128 (AES-128) for data encryption by default. AES-256 is used in WPA3-Enterprise. The encryption key size is not the primary improvement over WPA2 for dictionary attacks.
+- B is correct — WPA2 uses PSK (Pre-Shared Key) with a 4-way handshake that leaks a capturable hash to offline attackers. WPA3 replaces PSK with SAE (Dragonfly handshake), which provides forward secrecy and prevents offline dictionary attacks because no usable credential hash is captured during the handshake.
+- C is incorrect — WPA3 does not require per-device SSIDs. All devices join the same SSID using SAE with the same passphrase.
+- D is incorrect — WPA3-Personal still uses a passphrase. Certificate-based mutual authentication is the domain of WPA3-Enterprise (802.1X/EAP).
+
+---
+
+## Question 17
+
+An ESP32 running a BLE GATT server configures a temperature characteristic with the NOTIFY property. A smartphone app subscribes to notifications. What happens when the ESP32 calls `pCharacteristic->notify()`?
+
+- A) The ESP32 sends an unsolicited value update to all subscribed clients; clients do not send an acknowledgment
+- B) The ESP32 waits for the smartphone to poll the characteristic before sending the new value
+- C) The ESP32 sends the value and waits for the client to confirm receipt before clearing its transmit buffer
+- D) The smartphone is disconnected and must reconnect to receive the update
+
+### Answer 17
+
+Correct Answer: A
+
+### Distractor Analysis 17
+
+- A is correct — BLE NOTIFY (ATT opcode 0x1B) sends the characteristic value to all subscribed clients as an unsolicited server-initiated update. Unlike INDICATE (0x1D), NOTIFY does not require an acknowledgment from the client, making it suitable for high-frequency sensor data where occasional loss is acceptable.
+- B is incorrect — That describes READ polling, which requires the client to initiate each read. NOTIFY is server-initiated push.
+- C is incorrect — That describes INDICATE, not NOTIFY. INDICATE requires the client to send an ATT confirmation before the server clears the PDU.
+- D is incorrect — `notify()` does not disconnect the client. It sends a value update over the existing connection.
+
+---
+
+## Question 18
+
+Which LoRaWAN activation method is recommended for production deployments, and why?
+
+- A) ABP (Activation By Personalization), because pre-provisioned keys eliminate over-the-air exchange risk
+- B) OTAA (Over-The-Air Activation), because session keys are derived fresh per join, providing forward secrecy and replay protection
+- C) ABP, because OTAA requires a cellular connection to reach the join server
+- D) OTAA only works with Class B devices; ABP is required for Class A
+
+### Answer 18
+
+Correct Answer: B
+
+### Distractor Analysis 18
+
+- A is incorrect — ABP hardcodes session keys (NwkSKey, AppSKey) and device address in firmware, meaning a compromised device permanently exposes those keys with no rotation mechanism. This is considered a security anti-pattern for production.
+- B is correct — OTAA generates fresh NwkSKey and AppSKey for each join using the AppKey as a root. If a session key is compromised, a device rejoin generates new session keys. OTAA also resets frame counters correctly, preventing replay attacks — a known ABP vulnerability.
+- C is incorrect — OTAA Join-Request messages are routed through the LoRaWAN network server to the join server over IP. No cellular connection is needed on the device; the LoRaWAN gateway handles the IP backhaul.
+- D is incorrect — Both OTAA and ABP are compatible with Class A, B, and C devices. Device class is independent of activation method.
+
+---
+
+## Question 19
+
+A Zigbee network uses a 16-bit short address assigned by the Coordinator. What is the maximum number of addressable nodes in a single Zigbee network?
+
+- A) 255
+- B) 1,024
+- C) 65,535
+- D) 4,294,967,295
+
+### Answer 19
+
+Correct Answer: C
+
+### Distractor Analysis 19
+
+- A is incorrect — 255 (0xFF) is the range of an 8-bit address. Zigbee uses 16-bit short addresses (0x0000 to 0xFFFF) for in-network routing.
+- B is incorrect — 1,024 is not a Zigbee address space limit. It is not a power of 2 that corresponds to Zigbee addressing.
+- C is correct — Zigbee short addresses are 16 bits (0x0000–0xFFFE), giving 65,535 usable node addresses per network (0xFFFF is reserved for broadcast). This is the theoretical maximum; practical network size depends on coordinator capacity and routing table memory.
+- D is incorrect — 2^32 is the range of a 32-bit address, used in protocols like IPv4 or Bluetooth Classic device addresses. Zigbee uses 16-bit network addressing.
+
+---
+
+## Question 20
+
+A fleet management company wants to track 10,000 delivery vehicles across a national territory in real time, updating position every 30 seconds. Which wireless technology is the only viable option?
+
+- A) LoRaWAN, because of its long range and low power
+- B) Zigbee mesh, because it scales to large node counts
+- C) LTE-M, because it supports seamless handover across cellular towers and has nationwide carrier coverage
+- D) Wi-Fi, because it is available in urban areas where most deliveries occur
+
+### Answer 20
+
+Correct Answer: C
+
+### Distractor Analysis 20
+
+- A is incorrect — LoRaWAN lacks support for real-time mobility tracking. Each gateway serves a fixed area; vehicles crossing gateway boundaries introduce blackout periods. LoRaWAN is designed for low-frequency, stationary or slow-moving applications, not real-time fleet tracking at 30-second intervals.
+- B is incorrect — Zigbee is an in-building mesh protocol. There is no national Zigbee mesh infrastructure for outdoor vehicle tracking, and Zigbee range (10–100 m per hop) makes nationwide coverage impossible without an impractical number of infrastructure nodes.
+- C is correct — LTE-M provides nationwide cellular coverage through existing carrier infrastructure, supports 375 kbps data rates sufficient for GPS coordinates, enables seamless handover between towers as vehicles move, and achieves years of battery life with PSM/eDRX. It is the industry-standard technology for asset tracking and fleet management.
+- D is incorrect — Wi-Fi infrastructure is not available along highways, rural roads, or the vast majority of vehicle routes. Even in urban areas, association with unknown access points is unreliable and raises security concerns.

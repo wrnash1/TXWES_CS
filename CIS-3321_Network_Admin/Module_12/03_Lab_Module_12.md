@@ -270,3 +270,62 @@ Submit a PDF lab report containing:
 | Part 4 — SD-WAN policy mapping table | 15 |
 | Reflection paragraph | 10 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+These advanced steps extend the Module 12 lab with MPLS label analysis, QoS policy design, and SD-WAN policy expansion.
+
+### Challenge Step 1: Calculate T-Carrier Bandwidth Requirements for a Real Scenario
+
+A company needs to support the following simultaneous WAN traffic between its headquarters and a branch office:
+
+- 50 concurrent VoIP calls using G.711 codec (64 Kbps per call, plus 20% overhead)
+- 10 video conferencing sessions at 1 Mbps each (with 10% overhead)
+- Background file replication: 20 Mbps average sustained
+- Headroom requirement: 30% above peak usage
+
+Show all work:
+
+1. Calculate total VoIP bandwidth with overhead.
+2. Calculate total video conferencing bandwidth with overhead.
+3. Sum all traffic and add 30% headroom.
+4. Determine the minimum T-carrier circuit (T1, T2, or T3) that meets this requirement.
+5. Calculate how many T1 channels (DS0s) the selected circuit uses.
+
+**Challenge Question 1:** What T-carrier circuit did you select? What is its total bandwidth? What percentage of the circuit's total capacity will be consumed by the calculated peak traffic? Is there sufficient headroom for traffic spikes beyond the stated 30% requirement?
+
+### Challenge Step 2: Design a Complete SD-WAN Policy for a 5-Application Enterprise
+
+A healthcare enterprise has the following WAN transports at each clinic:
+- Transport A: MPLS — 50 Mbps, 8 ms, $1,500/month
+- Transport B: Fiber broadband — 1 Gbps, 12 ms, $400/month
+- Transport C: 5G cellular — 200 Mbps, 25 ms, $200/month (5 GB/day cap)
+
+Design complete routing policies for these five applications. For each, specify: primary transport, secondary transport, failover transport, and the metric (latency/bandwidth/cost) that drives each choice.
+
+1. Epic EHR (Electronic Health Records) — interactive clinical application, extremely latency-sensitive, HIPAA-regulated
+2. HD video telemedicine sessions — 4 Mbps per session, maximum 15 ms latency
+3. Nightly PACS backup (medical imaging archives) — 500 GB nightly, 12-hour window
+4. Staff email and Teams chat — bursty, latency-tolerant
+5. IoT medical device telemetry — small packets, continuous, must never drop
+
+**Challenge Question 2:** For application 1 (Epic EHR), explain why MPLS is the appropriate primary transport despite being the most expensive option. What specific SD-WAN monitoring metric would trigger automatic failover from MPLS to the fiber broadband backup, and what threshold value (ms latency or % packet loss) would you set in a production healthcare environment?
+
+### Challenge Step 3: Build a Multi-Site Redundant WAN in Packet Tracer with Floating Static Routes
+
+1. Extend your existing topology to three sites: HQ, Branch-A, and Branch-B.
+2. Connect HQ to Branch-A via two serial links (primary Gi0/1, backup Gi0/2).
+3. Connect HQ to Branch-B via one serial link.
+4. Configure floating static routes on HQ:
+   - Primary route to Branch-A: administrative distance 1 (default)
+   - Backup route to Branch-A via Branch-B: administrative distance 10
+5. Verify that the primary path is active with `show ip route`.
+6. Shut down the primary link to Branch-A. Verify the backup route becomes active within 30 seconds.
+
+**Challenge Question 3:** Explain the concept of administrative distance in Cisco IOS routing. Why does setting the backup static route to AD 10 instead of AD 1 prevent it from being used unless the primary fails? Compare this static-route failover mechanism to SD-WAN dynamic path selection — list two specific capabilities SD-WAN provides for failover that static routing with floating routes cannot provide.
+
+---
+
+*CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash*

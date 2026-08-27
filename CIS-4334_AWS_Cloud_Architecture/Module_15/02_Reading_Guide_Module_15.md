@@ -267,3 +267,19 @@ Rules can be shared with other accounts using AWS Resource Access Manager, enabl
 - Outposts is the answer when workloads require ultra-low latency or data residency on-premises
 - VPN CloudHub uses a single VGW to connect multiple remote sites together through AWS
 - Direct Connect Gateway allows one Direct Connect connection to reach VPCs in multiple regions
+
+---
+
+## 10. Supplemental Resources
+
+**1. AWS Documentation — AWS Migration Hub User Guide**
+https://docs.aws.amazon.com/migrationhub/latest/ug/what-is-migration-hub.html
+Comprehensive reference for tracking migration projects across AWS migration tools (MGN, DMS, Server Migration Service) and third-party tools in a single dashboard — directly aligned to the migration planning and tracking topics in Module 15 and the SAA-C03 Migration domain.
+
+**2. AWS Skill Builder — AWS Migration Essentials**
+https://skillbuilder.aws/learn/course/external/view/elearning/1880/aws-migration-essentials
+Free course covering the 7 Rs migration strategies, AWS Migration Hub, Application Migration Service, Database Migration Service, and hybrid connectivity options — supporting the full Module 15 curriculum and SAA-C03 exam preparation.
+
+**3. AWS Documentation — AWS Transit Gateway User Guide**
+https://docs.aws.amazon.com/vpc/latest/tgw/what-is-transit-gateway.html
+Authoritative guide to Transit Gateway attachments, route tables, inter-region peering, VPN integration, and Direct Connect Gateway association — the definitive reference for the hub-and-spoke hybrid connectivity architecture patterns covered in this module.

@@ -291,3 +291,108 @@ gcloud compute instances delete lab10-vm \
 | Reflection questions answered | 15 |
 | Resources cleaned up | 5 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Log-Based Metric and Alerting Policy
+
+Create a log-based metric that counts HTTP 500 errors from a Cloud Run service,
+then build an alerting policy that fires when the rate exceeds a threshold.
+
+1. Deploy a simple Cloud Run service that occasionally returns 500 errors:
+
+```bash
+export PROJECT_ID=$(gcloud config get-value project)
+export REGION=us-central1
+gcloud run deploy error-service \
+  --image=us-docker.pkg.dev/cloudrun/container/hello \
+  --region=$REGION \
+  --allow-unauthenticated
+```
+
+1. Create a log-based metric that counts entries where the log contains `500`:
+
+```bash
+gcloud logging metrics create http-500-errors \
+  --description="Count of HTTP 500 errors from Cloud Run" \
+  --log-filter='resource.type="cloud_run_revision" AND httpRequest.status=500'
+```
+
+1. Verify the metric was created:
+
+```bash
+gcloud logging metrics list
+gcloud logging metrics describe http-500-errors
+```
+
+1. In the Cloud Console, navigate to **Monitoring → Alerting → Create Policy** and
+   configure a condition on the `logging.googleapis.com/user/http-500-errors` metric
+   with a threshold of 1 error per minute. Set the notification channel to your email.
+
+1. Generate test 500 errors by invoking the service with a path that returns 500,
+   then verify the alert fires within 1–2 minutes.
+
+### Challenge 2: Organization-Level Aggregated Log Sink
+
+Configure an aggregated log sink at the project level that exports all Admin Activity
+audit logs to a Cloud Storage bucket, simulating a centralized audit log archive.
+
+1. Create a destination Cloud Storage bucket for the audit log archive:
+
+```bash
+gsutil mb -l us-central1 gs://${PROJECT_ID}-audit-archive
+gsutil lifecycle set /dev/stdin gs://${PROJECT_ID}-audit-archive << 'EOF'
+{
+  "rule": [
+    {
+      "action": {"type": "Delete"},
+      "condition": {"age": 365}
+    }
+  ]
+}
+EOF
+```
+
+1. Create a log sink targeting the archive bucket with a filter for Admin Activity
+   audit logs only:
+
+```bash
+gcloud logging sinks create audit-archive-sink \
+  gs://${PROJECT_ID}-audit-archive \
+  --log-filter='logName:"cloudaudit.googleapis.com/activity"'
+```
+
+1. Capture the sink's writer identity from the output and grant it write access to
+   the bucket:
+
+```bash
+WRITER_ID=$(gcloud logging sinks describe audit-archive-sink \
+  --format="value(writerIdentity)")
+echo "Writer identity: $WRITER_ID"
+gsutil iam ch ${WRITER_ID}:objectCreator \
+  gs://${PROJECT_ID}-audit-archive
+```
+
+1. Perform a test administrative action (e.g., create and delete a Cloud Storage
+   bucket) and verify that within 5 minutes new log objects appear in the archive
+   bucket:
+
+```bash
+gsutil ls gs://${PROJECT_ID}-audit-archive/
+```
+
+### Reflection Questions
+
+1. In Challenge 1, you created a log-based metric rather than using a native Cloud
+   Monitoring metric. Describe the tradeoffs between log-based metrics and native
+   metrics in terms of latency, cost, and the types of signals each can capture.
+   In what scenario would you prefer a log-based metric over a native metric even
+   if both were available?
+
+2. In Challenge 2, the sink's writer identity is a service account that must be
+   explicitly granted write access to the destination bucket. Explain why Cloud
+   Logging uses a per-sink service account identity rather than using your own
+   user account to write to the bucket, and what security principle this design
+   upholds.

@@ -351,4 +351,59 @@ Submit the following on Canvas:
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Implement Continuous Monitoring with snyk monitor
+
+Configure `snyk monitor` to send a dependency snapshot to the Snyk platform after every successful build of the `main` branch, enabling alerts when new CVEs are published between pipeline runs.
+
+1. In your GitHub Actions workflow, add a `snyk-monitor` job that runs after the existing `snyk-test` job passes, triggered only on pushes to `main` (not pull requests):
+
+```yaml
+  snyk-monitor:
+    name: Snyk Continuous Monitor
+    runs-on: ubuntu-latest
+    needs: snyk-test
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Monitor dependencies
+        run: snyk monitor --file=requirements.txt --project-name=lab08-app
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+```
+
+1. Push a commit to `main` and verify the project appears in the Snyk web dashboard under "Projects".
+2. Log into Snyk and navigate to the monitored project. Take a screenshot of the project view showing the dependency count and any alerts.
+
+### Challenge 2: Generate SLSA Provenance in GitHub Actions
+
+Use the official SLSA GitHub generator to produce a signed SLSA Level 3 provenance attestation for a build artifact.
+
+1. Add a workflow job that uses `slsa-framework/slsa-github-generator` to generate provenance for a binary or SBOM artifact produced by your lab's build:
+
+```yaml
+  provenance:
+    needs: [build]
+    permissions:
+      actions: read
+      id-token: write
+      contents: write
+    uses: slsa-framework/slsa-github-generator/.github/workflows/generator_generic_slsa3.yml@v2.0.0
+    with:
+      base64-subjects: "${{ needs.build.outputs.hashes }}"
+      upload-assets: true
+```
+
+1. Download the resulting `.intoto.jsonl` provenance attestation from the GitHub release assets.
+2. Verify the provenance using `slsa-verifier`: `slsa-verifier verify-artifact artifact.zip --provenance-path artifact.intoto.jsonl --source-uri github.com/YOUR_USERNAME/lab08-app`
+3. Record the provenance fields: `builder.id`, `invocation.configSource.uri`, and `metadata.buildFinishedOn` from the decoded attestation.
+
+### Reflection Questions
+
+1. You now have `snyk test` (pipeline gate), `snyk monitor` (continuous monitoring), and SLSA provenance (build integrity). Each addresses a different phase of the supply chain security problem. Draw a timeline from code commit to production deployment and mark which control catches which class of threat at which point.
+2. A CVE is published for a transitive dependency in your monitored Snyk project 10 days after the last deployment. Snyk sends an alert. The vulnerability has a CVSS score of 8.1 (HIGH). Describe your complete response process: who is notified, how exploitability is assessed, what the remediation options are, and what the target timeline should be based on the severity.
+
+---
+
 Lab 08 | CIS-4350 | Texas Wesleyan University | Professor Nash

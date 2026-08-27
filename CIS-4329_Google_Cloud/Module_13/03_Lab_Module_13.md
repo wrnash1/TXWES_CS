@@ -324,3 +324,139 @@ gcloud projects remove-iam-policy-binding YOUR_PROJECT_ID \
 | Reflection questions answered | 10 |
 | Resources cleaned up | 5 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Secret Manager Integration in Cloud Build
+
+Update the Cloud Build pipeline to retrieve a secret API key from Secret Manager
+rather than embedding it as a plaintext substitution variable.
+
+1. Create a secret in Secret Manager:
+
+```bash
+export PROJECT_ID=$(gcloud config get-value project)
+echo -n "supersecret-api-key-12345" | \
+  gcloud secrets create lab13-api-key \
+    --data-file=- \
+    --replication-policy=automatic
+```
+
+1. Grant the Cloud Build service account permission to access the secret:
+
+```bash
+PROJECT_NUMBER=$(gcloud projects describe $PROJECT_ID --format='value(projectNumber)')
+CB_SA="${PROJECT_NUMBER}@cloudbuild.gserviceaccount.com"
+gcloud secrets add-iam-policy-binding lab13-api-key \
+  --member="serviceAccount:$CB_SA" \
+  --role="roles/secretmanager.secretAccessor"
+```
+
+1. Update the `cloudbuild.yaml` from the main lab to use `availableSecrets`:
+
+```bash
+cat > ~/lab13-app/cloudbuild.yaml << 'EOF'
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    id: 'build-image'
+    args:
+      - 'build'
+      - '-t'
+      - 'us-central1-docker.pkg.dev/$PROJECT_ID/lab13-repo/lab13-app:$SHORT_SHA'
+      - '.'
+    secretEnv: ['API_KEY']
+  - name: 'gcr.io/cloud-builders/docker'
+    id: 'push-image'
+    args:
+      - 'push'
+      - 'us-central1-docker.pkg.dev/$PROJECT_ID/lab13-repo/lab13-app:$SHORT_SHA'
+    waitFor: ['build-image']
+availableSecrets:
+  secretManager:
+    - versionName: projects/$PROJECT_ID/secrets/lab13-api-key/versions/latest
+      env: 'API_KEY'
+images:
+  - 'us-central1-docker.pkg.dev/$PROJECT_ID/lab13-repo/lab13-app:$SHORT_SHA'
+EOF
+```
+
+1. Submit the build and verify that the API_KEY is available in the build step
+   without appearing in plaintext in the build logs:
+
+```bash
+gcloud builds submit ~/lab13-app/ \
+  --config=~/lab13-app/cloudbuild.yaml \
+  --region=us-central1
+```
+
+### Challenge 2: Artifact Registry Cleanup Policy
+
+Configure a cleanup policy on the Artifact Registry repository from the main lab
+to automatically delete untagged images older than 7 days.
+
+1. Create a cleanup policy JSON file:
+
+```bash
+cat > cleanup-policy.json << 'EOF'
+[
+  {
+    "name": "delete-untagged-old",
+    "action": {"type": "Delete"},
+    "condition": {
+      "tagState": "untagged",
+      "olderThan": "604800s"
+    }
+  },
+  {
+    "name": "keep-tagged",
+    "action": {"type": "Keep"},
+    "condition": {
+      "tagState": "tagged"
+    }
+  }
+]
+EOF
+```
+
+1. Apply the cleanup policy to the Artifact Registry repository:
+
+```bash
+gcloud artifacts repositories set-cleanup-policies lab13-repo \
+  --project=$PROJECT_ID \
+  --location=us-central1 \
+  --policy=cleanup-policy.json \
+  --no-dry-run
+```
+
+1. Verify the policy was applied:
+
+```bash
+gcloud artifacts repositories describe lab13-repo \
+  --project=$PROJECT_ID \
+  --location=us-central1 \
+  --format="value(cleanupPolicies)"
+```
+
+1. Push an untagged image and verify the policy would remove it (dry-run):
+
+```bash
+gcloud artifacts repositories set-cleanup-policies lab13-repo \
+  --project=$PROJECT_ID \
+  --location=us-central1 \
+  --policy=cleanup-policy.json \
+  --dry-run
+```
+
+### Reflection Questions
+
+1. In Challenge 1, the `availableSecrets` block ensures the API key is not visible
+   in Cloud Build logs. Explain what happens at the infrastructure level when Cloud
+   Build injects a secret from Secret Manager — specifically, how the value is
+   protected in transit, at rest in the worker, and after the build completes.
+
+2. In Challenge 2, you defined both a `delete-untagged-old` policy and a `keep-tagged`
+   policy. Explain why having both policies is important rather than just the delete
+   rule alone, and describe a scenario where a cleanup policy without a keep rule
+   could cause an unintended production incident.

@@ -354,4 +354,17 @@ terraform {
 
 ---
 
+## 9. Supplemental Resources
+
+**1. [checkov documentation — supported frameworks and checks](https://www.checkov.io/5.Policy%20Index/terraform.html)**
+The full checkov policy index lists every built-in check by ID, provider, resource type, and description. Use this reference to understand what each CKV check tests and to find the correct skip annotation for justified exceptions.
+
+**2. [tfsec documentation and check library](https://aquasecurity.github.io/tfsec/)**
+Official tfsec documentation covering all built-in rules, custom check authoring, configuration options, and CI integration. Includes SARIF output configuration and per-check severity overrides.
+
+**3. [HashiCorp Sentinel policy language documentation](https://developer.hashicorp.com/sentinel/docs)**
+Reference documentation for the Sentinel policy-as-code language used with Terraform Cloud and Terraform Enterprise. Covers enforcement levels (advisory, soft-mandatory, hard-mandatory), policy sets, and example policies for common IaC security controls.
+
+---
+
 Reading Guide — Module 06 | CIS-4350 | Texas Wesleyan University | Professor Nash

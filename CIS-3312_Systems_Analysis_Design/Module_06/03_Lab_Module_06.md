@@ -144,3 +144,21 @@ Part 4 Total: 15 points
 ## Submission Instructions
 
 Combine all four parts into one document with clearly labeled sections. For diagram parts, embed the diagram image or include a link to the shared diagram file. For written analysis parts, type your responses directly in the document. Submit to the Canvas Module 06 Lab assignment by the due date shown in the course calendar.
+
+---
+
+## Part 9 — Challenge Exercise
+
+This section is optional and not separately graded. It extends the lab into advanced modeling practice aligned with ECBA exam competencies.
+
+### Challenge Step 1: Level 2 DFD Decomposition
+
+Select one of the processes from your Level 1 DFD completed in the main lab. Decompose it into a Level 2 DFD showing the internal sub-processes, data flows, and data stores within that single process. Your Level 2 must be balanced with the Level 1 — every data flow entering or leaving the parent process at Level 1 must also appear as a boundary flow at Level 2. Label all elements using the correct DFD naming conventions. Include a brief written note explaining how you verified balance between Level 1 and Level 2. This exercise practices the DFD leveling and balancing rules that are among the most commonly tested concepts on the ECBA exam.
+
+### Challenge Step 2: ERD Extended Modeling with Weak Entities
+
+Review your ERD from the main lab. Identify whether any entity in your diagram is a weak entity — one that cannot be uniquely identified without reference to a parent entity (for example, an "OrderLine" that only makes sense in the context of a specific "Order"). If a weak entity exists, model it correctly using a double rectangle and a double diamond relationship. If no weak entity exists, redesign one entity to introduce a weak entity scenario and explain your reasoning. Write a one-paragraph explanation of what a weak entity is, why it arises in business data models, and how it is physically implemented in a relational database.
+
+### Challenge Step 3: Cross-Model Consistency Audit
+
+Perform a consistency audit across your three diagrams (Context Diagram, Level 1 DFD, and ERD). Check: (1) Every data element named in a DFD data flow should correspond to an entity or attribute in the ERD — list any DFD flows that reference data not represented in the ERD. (2) Every data store in the DFD should correspond to an entity or table in the ERD. (3) Every external entity in the DFD should be referenced in at least one data flow that connects to the data stored in the ERD. Document your findings as a three-column audit table: DFD Element | ERD Counterpart | Consistent (Yes/No). This cross-model consistency check mirrors the traceability work that BAs perform when handing off models to database architects.

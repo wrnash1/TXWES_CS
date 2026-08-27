@@ -412,3 +412,92 @@ delegation. Run the command as Domain Admin or check OU permissions in ADUC.
 Get-ADOrganizationalUnit -Identity "OU=IT,OU=TXWES,DC=txwes,DC=edu" |
     Select-Object Name, ProtectedFromAccidentalDeletion
 ```
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Enable and Test the Active Directory Recycle Bin
+
+The AD Recycle Bin is the safest recovery mechanism for accidentally deleted objects. Enable it and practice the restore workflow.
+
+1. Enable the AD Recycle Bin for the forest (requires Windows Server 2008 R2 or higher forest functional level):
+
+   ```powershell
+   Enable-ADOptionalFeature -Identity "Recycle Bin Feature" `
+       -Scope ForestOrConfigurationSet `
+       -Target "txwes.edu" `
+       -Confirm:$false
+   ```
+
+2. Verify the Recycle Bin is enabled:
+
+   ```powershell
+   Get-ADOptionalFeature -Filter {Name -like "*Recycle*"} |
+       Select-Object Name, EnabledScopes
+   ```
+
+3. Create a test user, then delete them:
+
+   ```powershell
+   New-ADUser -Name "Temp DeleteMe" -SamAccountName "tdeleteme" `
+       -UserPrincipalName "tdeleteme@txwes.edu" `
+       -Path "OU=Students,OU=TXWES,DC=txwes,DC=edu" `
+       -Enabled $true `
+       -AccountPassword (ConvertTo-SecureString "Temp123!" -AsPlainText -Force)
+
+   Remove-ADUser -Identity "tdeleteme" -Confirm:$false
+   ```
+
+4. Restore the deleted user from the Recycle Bin:
+
+   ```powershell
+   Get-ADObject -Filter {SamAccountName -eq "tdeleteme"} `
+       -IncludeDeletedObjects |
+       Restore-ADObject
+
+   # Verify the account is back
+   Get-ADUser -Identity "tdeleteme" | Select-Object Name, Enabled, DistinguishedName
+   ```
+
+   Take a screenshot showing the restored user's DistinguishedName in the original OU.
+
+### Challenge 2: Audit Stale User Accounts and Generate a Report
+
+Stale user accounts (never logged on, or inactive for over 90 days) are a security risk. Automate the identification and reporting process.
+
+1. Find all user accounts in the TXWES OU that have never logged on (LastLogonDate is null):
+
+   ```powershell
+   Get-ADUser -Filter * -SearchBase "OU=TXWES,DC=txwes,DC=edu" `
+       -Properties LastLogonDate, WhenCreated |
+       Where-Object { -not $_.LastLogonDate } |
+       Select-Object Name, SamAccountName, WhenCreated |
+       Sort-Object WhenCreated |
+       Format-Table -AutoSize
+   ```
+
+2. Find all user accounts that have not logged on in the last 90 days (accounts with a LastLogonDate older than 90 days):
+
+   ```powershell
+   $cutoff = (Get-Date).AddDays(-90)
+   Get-ADUser -Filter * -SearchBase "OU=TXWES,DC=txwes,DC=edu" `
+       -Properties LastLogonDate |
+       Where-Object { $_.LastLogonDate -lt $cutoff -and $_.LastLogonDate -ne $null } |
+       Select-Object Name, SamAccountName, LastLogonDate |
+       Sort-Object LastLogonDate |
+       Export-Csv -Path "C:\stale_accounts.csv" -NoTypeInformation
+   ```
+
+3. View the exported report:
+
+   ```powershell
+   Import-Csv -Path "C:\stale_accounts.csv" | Format-Table -AutoSize
+   ```
+
+4. In your lab notes, write a one-paragraph policy recommendation: at what inactivity threshold should accounts be automatically disabled versus deleted, and what approval process should be required before deletion?
+
+### Reflection Questions
+
+1. The Recycle Bin restore returned the account to its original OU. Explain what would have happened to the account's NTFS permissions and group memberships if the AD Recycle Bin had NOT been enabled at the time of deletion.
+2. Your stale account report identified accounts that have never logged on. List two legitimate reasons a user account might exist in Active Directory but have a null `LastLogonDate`, and explain how an administrator would distinguish these accounts from genuinely abandoned ones before disabling them.

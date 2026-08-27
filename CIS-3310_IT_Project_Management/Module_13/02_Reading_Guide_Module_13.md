@@ -268,3 +268,29 @@ Six Sigma's five-step process is Define, Measure, Analyze, Improve, Control. Thi
 - [ ] Complete the Module 13 Lab quality tools activity
 - [ ] Take the Module 13 Quiz (10 questions)
 - [ ] Post Module 13 Discussion initial response by Wednesday at 11:59 PM
+
+---
+
+## 9. Supplemental Resources
+
+The following free, openly licensed resources extend the concepts in this module. All links are publicly accessible — no account or purchase required.
+
+1. **Project Management Open Textbook — Chapter 8: Quality Management Tools**
+   *BC Campus OpenEd* — [opentextbc.ca/projectmanagement — Chapter 8](https://opentextbc.ca/projectmanagement/chapter/chapter-8-project-quality-management/)
+   Covers the seven basic quality tools including the Pareto chart, Fishbone diagram, and Control Chart with worked examples relevant to IT projects.
+
+2. **ASQ — PDCA Cycle Overview (Free)**
+   *American Society for Quality* — [asq.org/quality-resources/pdca-cycle](https://asq.org/quality-resources/pdca-cycle)
+   Official ASQ explanation of the Plan-Do-Check-Act cycle with application examples. Directly tested on the Project+ exam in the quality management domain.
+
+3. **iSixSigma — DMAIC vs. PDCA Comparison (Free)**
+   [isixsigma.com/dmaic-vs-pdca](https://www.isixsigma.com/methodology/dmaic/pdca-vs-dmaic-which-one-should-you-use/)
+   Side-by-side comparison of DMAIC and PDCA — addresses one of the most commonly tested quality framework distinctions on the Project+ exam.
+
+4. **YouTube — "Fishbone Diagram Tutorial" (ASQ)**
+   [youtube.com/watch?v=7aqXyNaQMVE](https://www.youtube.com/watch?v=7aqXyNaQMVE)
+   Step-by-step demonstration of building an Ishikawa diagram using a real defect scenario. Directly supports the Module 13 lab root cause analysis exercise.
+
+5. **Control Chart Tutorial — StatisticsHowTo (Free)**
+   [statisticshowto.com/control-chart](https://www.statisticshowto.com/control-chart/)
+   Clear explanation of UCL/LCL calculation, the Rule of Seven, and how to interpret out-of-control signals. Includes visual examples for all common control chart patterns.

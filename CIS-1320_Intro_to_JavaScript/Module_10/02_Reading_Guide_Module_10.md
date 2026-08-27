@@ -311,7 +311,28 @@ This is useful when you have multiple similar structures on the page and want to
 
 ---
 
-## 9. JSE Certification Exam Tips
+## 9. Supplemental Resources
+
+The following free, openly available resources extend and reinforce the topics covered in this module.
+
+- **[Eloquent JavaScript — Chapter 14: The Document Object Model](https://eloquentjavascript.net/14_dom.html)**
+  The primary OER textbook chapter for this module. Covers the DOM tree structure, moving through the DOM, finding elements, changing the document, creating and removing nodes, and handling attributes with worked examples.
+
+- **[MDN Web Docs — Introduction to the DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Introduction)**
+  Comprehensive introduction to the DOM API including the document tree, node types, the `document` object, and how JavaScript interacts with HTML. A strong conceptual foundation for all DOM work.
+
+- **[MDN Web Docs — Document.querySelector()](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector)**
+  Full reference for `querySelector` and `querySelectorAll` including accepted CSS selector syntax, return types, and the distinction between static NodeList and live HTMLCollection.
+
+- **[MDN Web Docs — Element.classList](https://developer.mozilla.org/en-US/docs/Web/API/Element/classList)**
+  Complete reference for the `classList` API — `add`, `remove`, `toggle`, `contains`, `replace`, and the `DOMTokenList` type. Includes browser compatibility and runnable examples.
+
+- **[javascript.info — Searching: getElement*, querySelector*](https://javascript.info/searching-elements-dom)**
+  Beginner-friendly comparison of all DOM selection methods with interactive examples. Clearly explains the difference between `querySelector`, `getElementById`, `getElementsByClassName`, live vs static collections, and scoped queries.
+
+---
+
+## 10. JSE Certification Exam Tips
 
 1. **`getElementById` vs `querySelector` syntax** — `getElementById('title')` takes just the string; `querySelector('#title')` uses the full CSS selector including the `#`. Both select by ID but with different argument formats.
 
@@ -335,7 +356,7 @@ This is useful when you have multiple similar structures on the page and want to
 
 ---
 
-## 10. Study Checklist
+## 11. Study Checklist
 
 - [ ] Watch the Module 10 video lecture by Professor Nash.
 - [ ] Read Chapter 14 (The Document Object Model) of [Eloquent JavaScript](https://eloquentjavascript.net/14_dom.html).

@@ -357,3 +357,19 @@ A threshold of 3.0 (three-sigma) rejects values more than three standard deviati
 6. An accelerometer reading shows random spikes of ±5g superimposed on a steady 1g reading. Which smoothing algorithm is most appropriate and why?
 7. What is the effect of setting EMA alpha to 0.01 versus 0.9? Which provides faster response to a sudden real change in the measured value?
 8. Why should you limit ESP32 ADC input to the range 100mV–3000mV rather than the full 0–3.3V range?
+
+---
+
+## 9. Supplemental Resources
+
+**1. Adafruit Sensor Tutorials — DHT, BMP280, and Calibration**
+[https://learn.adafruit.com/dht](https://learn.adafruit.com/dht)
+Adafruit's hands-on guides for DHT11/DHT22, BMP280, and BME280 sensors with wiring diagrams, Arduino and MicroPython code, and practical calibration notes. Covers common wiring mistakes and inter-reading delay requirements referenced throughout this module.
+
+**2. ESP32 Arduino Core — ADC Characteristics and Limitations**
+[https://docs.espressif.com/projects/arduino-esp32/en/latest/api/adc.html](https://docs.espressif.com/projects/arduino-esp32/en/latest/api/adc.html)
+Espressif's official ADC API documentation for the Arduino-ESP32 core. Explains the 12-bit resolution, non-linearity near 0V and 3.3V, attenuation settings, and the recommended 100mV–3000mV input range covered in Section 3 of this guide.
+
+**3. NXP UM10204 — I2C-Bus Specification and User Manual**
+[https://www.nxp.com/docs/en/user-guide/UM10204.pdf](https://www.nxp.com/docs/en/user-guide/UM10204.pdf)
+The authoritative I2C specification from NXP covering bus speeds (Standard/Fast/Fast-Plus/High-Speed), pull-up resistor calculation, address allocation, and multi-master arbitration. Essential reference for understanding the address conflict and resistor loading issues discussed in Section 2.

@@ -266,3 +266,29 @@ Always consult the specific service manual for the model being serviced. The ord
 - Professor Messer's CompTIA A+ Core 1 (220-1101) Study Notes — Laptop Hardware section: professormesser.com
 - CompTIA A+ Certification Exam Objectives (220-1101) — available at comptia.org
 - Manufacturer service manuals — available from the laptop manufacturer's support site
+
+---
+
+## 9. Supplemental Resources
+
+The following free resources supplement Module 13 content on laptop component identification, disassembly procedures, and hardware diagnostics.
+
+1. **Professor Messer — CompTIA A+ Core 1 (220-1101) Laptop Hardware**
+   URL: [https://www.professormesser.com/free-a-plus-training/220-1101/220-1101-video/](https://www.professormesser.com/free-a-plus-training/220-1101/220-1101-video/)
+   Relevance: Free video lectures covering SO-DIMM vs. DIMM, M.2 storage in laptops, display technologies (eDP, LVDS, CCFL, LED), battery replacement procedures, and ZIF connector handling — all primary exam objectives for Domain 1.3.
+
+1. **iFixit — Free Laptop Repair Guides**
+   URL: [https://www.ifixit.com/Device/Laptop](https://www.ifixit.com/Device/Laptop)
+   Relevance: iFixit publishes free step-by-step laptop disassembly and repair guides for hundreds of laptop models, including photo documentation of ZIF connectors, battery connectors, MHF4 antenna connectors, and display cable routing. Reviewing a guide for a real laptop model reinforces the component identification and disassembly sequencing skills tested in this module and on the A+ exam.
+
+1. **Crucial — Memory Advisor Tool (Free Compatibility Database)**
+   URL: [https://www.crucial.com/store/advisor](https://www.crucial.com/store/advisor)
+   Relevance: Crucial's free memory advisor tool identifies the correct SO-DIMM type, speed, and maximum capacity for specific laptop models. Using this tool for several laptop models provides hands-on practice with DDR4/DDR5 SO-DIMM specification lookup — a skill directly tested in A+ exam scenarios about laptop RAM compatibility.
+
+1. **Battery University — How to Prolong Lithium-Based Batteries (Free Article)**
+   URL: [https://batteryuniversity.com/article/bu-808-how-to-prolong-lithium-based-batteries](https://batteryuniversity.com/article/bu-808-how-to-prolong-lithium-based-batteries)
+   Relevance: Battery University provides free, technically detailed articles on lithium-ion battery chemistry, capacity degradation by charge cycle count, storage voltage recommendations, and health assessment methods. This directly supports A+ exam questions about battery replacement indications and expected battery life behavior covered in Module 13.
+
+1. **Panasonic Toughbook Service Manuals (Example of Free OEM Documentation)**
+   URL: [https://pc-ap.panasonic.com/pages/support/servicesupport.html](https://pc-ap.panasonic.com/pages/support/servicesupport.html)
+   Relevance: Many laptop manufacturers publish free service manuals and field service guides that document disassembly sequences, torque specifications, and component location diagrams. Reviewing an OEM service manual for any available laptop model demonstrates the professional documentation that technicians use in the field and reinforces the systematic disassembly approach emphasized in this module.

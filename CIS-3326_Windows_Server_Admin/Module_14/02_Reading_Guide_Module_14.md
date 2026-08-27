@@ -277,3 +277,25 @@ Reset-LapsPassword -Identity "DESKTOP-001"
 9. What event ID indicates a failed logon in the Windows Security event log?
 
 10. What is the difference between a JEA Session Configuration file and a Role Capability file?
+
+---
+
+## Supplemental Resources
+
+The following free, open-access resources go deeper on Module 14 topics:
+
+**1. Microsoft Learn — Implement security in Windows Server**
+<https://learn.microsoft.com/en-us/training/modules/implement-security-windows-server/>
+Hands-on module covering Windows Defender Antivirus, Attack Surface Reduction rules, Just Enough Administration (JEA), Credential Guard, LAPS, and security event monitoring with sandbox exercises aligned to AZ-800.
+
+**2. Microsoft Docs — Just Enough Administration (JEA) overview**
+<https://learn.microsoft.com/en-us/powershell/scripting/learn/remoting/jea/overview>
+Complete JEA documentation including session configuration files, role capability files, virtual accounts, constrained language mode, transcript logging, and step-by-step deployment guidance.
+
+**3. Microsoft Docs — Windows Local Administrator Password Solution (Windows LAPS)**
+<https://learn.microsoft.com/en-us/windows-server/identity/laps/laps-overview>
+Full reference for Windows LAPS including schema extension, GPO configuration, Azure AD support, password encryption at rest, and migration guidance from legacy LAPS to Windows LAPS.
+
+**4. Microsoft Docs — Credential Guard overview**
+<https://learn.microsoft.com/en-us/windows/security/identity-protection/credential-guard/credential-guard>
+Technical deep-dive on Credential Guard including Virtualization-Based Security architecture, how LSAIso protects NTLM hashes and Kerberos tickets, hardware requirements, and Pass-the-Hash/Pass-the-Ticket attack prevention.

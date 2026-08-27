@@ -166,3 +166,25 @@ Compile all deliverables into a single document labeled clearly by task number. 
 | Part 2: ASG Configuration | 35 | Minimum four problems identified with correct fixes; scaling policy analysis demonstrates understanding of target tracking behavior and T-series risks; corrected configuration is deployment-ready |
 | Part 3: Architecture Design | 35 | Load balancer types correct and justified; ASG parameters appropriate for stated requirements; session state solution specified; architecture diagram is complete and correct |
 | **Total** | **100** | |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Launch Template Versioning
+Create a Launch Template with two versions to practice version management for rolling updates.
+1. In the AWS Console, navigate to EC2 → Launch Templates → Create launch template. Use Amazon Linux 2023 AMI, instance type t2.micro (Free Tier eligible), and add a User Data script that installs httpd: `#!/bin/bash\nyum install -y httpd\nsystemctl start httpd`.
+2. After creating version 1, modify the launch template to update the User Data script to also write a custom HTML page: `echo "<h1>Version 2</h1>" > /var/www/html/index.html`. Save as version 2.
+3. Create an Auto Scaling group using the launch template with `$Latest` version. Record the launch template ID and version ARN.
+4. Update the ASG to use a specific version number instead of `$Latest` using: `aws autoscaling update-auto-scaling-group --auto-scaling-group-name <name> --launch-template LaunchTemplateId=<id>,Version=1`. Document the difference between pinning to a version number versus using `$Latest`.
+
+### Challenge 2: ALB Target Group Health Check Tuning
+Configure and test ALB health check behavior to understand how it affects instance availability detection speed.
+1. If you have an ALB and target group from the lab, modify the health check settings: set HealthyThreshold to 2 checks, UnhealthyThreshold to 2 checks, Interval to 10 seconds, and Timeout to 5 seconds.
+2. Calculate the worst-case time to detect an unhealthy instance with these settings and document it.
+3. Compare these settings to the defaults (healthy: 5, unhealthy: 2, interval: 30, timeout: 5) and calculate the detection time improvement.
+4. Using the AWS CLI, run: `aws elbv2 describe-target-health --target-group-arn <arn>` and record the health state of your registered targets.
+
+### Reflection Questions
+1. After completing Challenge 1, explain why a production Auto Scaling group should use a specific launch template version number rather than `$Latest` for the ASG definition. What operational risk does `$Latest` introduce in a production environment?
+2. How does the AWS Well-Architected Framework Reliability pillar's design principle "automatically recover from failure" apply to the Auto Scaling and ELB health check configuration you tested in Challenge 2? What is the minimum number of health check failures required before traffic is redirected?

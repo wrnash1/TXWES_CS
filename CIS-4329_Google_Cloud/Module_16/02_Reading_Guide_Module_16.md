@@ -512,3 +512,19 @@ Correct Answer: B — Cloud Monitoring Uptime Checks perform synthetic monitorin
 - [ ] Review the Organization Policy and VPC Service Controls distinction
 - [ ] Review the billing cost management patterns: Budget + Pub/Sub + Cloud Function; CUD vs. SUD; Spot VMs
 - [ ] Confirm you can describe the two-constraint exam method and apply it to a novel scenario
+
+---
+
+## 9. Supplemental Resources
+
+**1. Google Cloud Documentation — Associate Cloud Engineer Exam Guide**
+<https://cloud.google.com/certification/guides/cloud-engineer>
+Official exam guide listing all five ACE exam domains with specific topic areas and weightings — the authoritative source for understanding what the exam tests. Use this as the final checklist before sitting for the exam to confirm coverage of all domains.
+
+**2. Google Cloud Skills Boost — ACE Learning Path**
+<https://www.cloudskillsboost.google/paths/11>
+Google's official hands-on ACE certification learning path including Qwiklabs for all major service areas: Compute Engine, GKE, Cloud Storage, Cloud SQL, IAM, networking, and operations. Completing the labs in this path provides exam-ready practical experience across all five ACE domains.
+
+**3. Google Cloud Documentation — IAM Overview**
+<https://cloud.google.com/iam/docs/overview>
+Comprehensive reference for GCP IAM covering the resource hierarchy, role types (primitive, predefined, custom), service accounts, allow policies, deny policies, and IAM conditions — the most heavily tested ACE exam domain. Particular focus on the distinction between predefined and primitive roles and the Workload Identity pattern for key-free service authentication.

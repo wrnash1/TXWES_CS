@@ -145,3 +145,25 @@ Compile all deliverables into a single document labeled clearly by task number. 
 | Part 2: CLI Exploration | 35 | CLI output recorded or columns correctly explained; snapshot types distinguished accurately; Aurora endpoint behavior correct |
 | Part 3: Backup and Recovery | 25 | Point-in-time recovery mechanics correctly described; restore creates new instance (not in-place); improvement proposals reference specific AWS services and realistic impact |
 | **Total** | **100** | |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: RDS Parameter Group Customization
+Create and apply a custom RDS parameter group to modify database behavior and understand how managed service configuration works.
+1. Create a custom parameter group: `aws rds create-db-parameter-group --db-parameter-group-name lab06-custom --db-parameter-group-family mysql8.0 --description "Lab 06 custom params"`.
+2. Modify two parameters in the group: set `max_connections` to 200 and `slow_query_log` to 1: `aws rds modify-db-parameter-group --db-parameter-group-name lab06-custom --parameters "ParameterName=slow_query_log,ParameterValue=1,ApplyMethod=immediate" "ParameterName=max_connections,ParameterValue=200,ApplyMethod=pending-reboot"`.
+3. Apply the parameter group to an existing RDS instance: `aws rds modify-db-instance --db-instance-identifier <your-instance> --db-parameter-group-name lab06-custom --apply-immediately`. Note whether the instance requires a reboot.
+4. Verify the parameter group is applied: `aws rds describe-db-instances --db-instance-identifier <your-instance> --query "DBInstances[*].DBParameterGroups"`. Document the difference between `ApplyMethod=immediate` and `ApplyMethod=pending-reboot`.
+
+### Challenge 2: RDS Automated Backup and Snapshot Lifecycle
+Explore RDS backup mechanics and practice the point-in-time recovery decision process.
+1. Verify automated backup is enabled on an RDS instance and note the backup window and retention period: `aws rds describe-db-instances --db-instance-identifier <your-instance> --query "DBInstances[*].{Retention:BackupRetentionPeriod,Window:PreferredBackupWindow,PITR:LatestRestorableTime}"`.
+2. Create a manual snapshot: `aws rds create-db-snapshot --db-instance-identifier <your-instance> --db-snapshot-identifier lab06-manual-snap`. List all snapshots: `aws rds describe-db-snapshots --db-instance-identifier <your-instance> --output table`.
+3. Calculate the point-in-time restore window: given the instance's `LatestRestorableTime` and the backup retention period, determine the earliest timestamp to which you could restore.
+4. Document the key difference between restoring from a manual snapshot (creates new instance at snapshot time) vs. point-in-time restore (creates new instance at any second within the retention window using transaction logs).
+
+### Reflection Questions
+1. After completing Challenge 1, explain why `max_connections` requires a reboot (`pending-reboot`) while `slow_query_log` can be applied immediately. What does this tell you about the type of RDS parameter each one is, and how would this factor into planning a production parameter change?
+2. Based on Challenge 2, explain how the combination of automated daily backups and continuous transaction log backups enables point-in-time recovery. How does this capability align with the AWS Well-Architected Framework Reliability pillar objective of defining recovery objectives (RPO and RTO) and implementing data backup strategies to meet them?

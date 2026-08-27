@@ -291,3 +291,23 @@ This module has no new lab activity. Use the available time to complete any outs
 - [ ] Complete at least two full-length practice exams using [Professor Messer's SY0-701 practice tests](https://www.professormesser.com/) or another reputable source.
 - [ ] Review every question you answered incorrectly on practice exams and identify the domain and concept gap.
 - [ ] Register for the SY0-701 exam at [Pearson VUE / CompTIA certification portal](https://www.comptia.org/certifications/security).
+
+---
+
+## 9. Supplemental Resources
+
+**1. CompTIA Security+ SY0-701 Exam Objectives (Official)**
+[https://www.comptia.org/training/resources/exam-objectives/comptia-security-sy0-701-exam-objectives](https://www.comptia.org/training/resources/exam-objectives/comptia-security-sy0-701-exam-objectives)
+The official CompTIA exam objectives document lists every testable topic organized by domain and sub-objective. Reading the objectives alongside this guide lets you verify that your study plan covers every domain at the correct cognitive level. Use it as a checklist — anything listed in the objectives can appear on your exam.
+
+**2. NIST SP 800-61 Rev. 2 — Computer Security Incident Handling Guide**
+[https://csrc.nist.gov/publications/detail/sp/800-61/rev-2/final](https://csrc.nist.gov/publications/detail/sp/800-61/rev-2/final)
+The canonical NIST reference for the IR lifecycle tested throughout Domain 4. Sections 2–3 cover the four IR phases (Preparation, Detection and Analysis, Containment/Eradication/Recovery, Post-Incident Activity) with detailed guidance on each. Reading the original source text helps candidates answer the subtle phase-boundary and action-sequence questions that appear in SY0-701 scenario items.
+
+**3. MITRE ATT&CK Enterprise Matrix**
+[https://attack.mitre.org/matrices/enterprise/](https://attack.mitre.org/matrices/enterprise/)
+The ATT&CK framework documents adversary tactics (the "why") and techniques (the "how") used in real-world attacks across 14 tactical categories. For the SY0-701 exam, ATT&CK is the standard reference for identifying attack techniques from scenario descriptions. Focus on the 14 tactic headers and the most common techniques under Initial Access, Execution, Persistence, Lateral Movement, Command and Control, and Exfiltration — these map directly to Domain 2 and Domain 4 scenario questions.
+
+---
+
+End of Reading Guide — Module 16

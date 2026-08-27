@@ -205,3 +205,203 @@ In the LCS table for `text1='abcde'` and `text2='ace'`, what is `dp[3][2]` and w
 - *Why B is correct:* `dp[3][2]` = LCS of `text1[0..2]='abc'` and `text2[0..1]='ac'`. Both 'a' and 'c' appear in both strings in order ('a' at index 0, 'c' at index 2 in 'abc'; 'a' at 0, 'c' at 1 in 'ac'). LCS is 'ac', length 2. Reading the table: `dp[1][1]=1` (match 'a'), `dp[3][2]=2` (match 'c' at text1[2] and text2[1], extending `dp[2][1]=1`).
 - *Why C is incorrect:* `dp[3][2]` covers only the first 2 characters of `text2` ('ac'), not all 3 ('ace'). 'e' is not yet included at column index 2.
 - *Why D is incorrect:* 'abc' and 'ac' share 'a' and 'c' as a common subsequence. `dp[3][2]` is 2, not 0.
+
+---
+
+### Question 11
+
+What is the time and space complexity of the tabulation solution for `coin_change(coins, amount)` as shown in this module?
+
+- A) Time O(amount), Space O(coins)
+- B) Time O(amount × len(coins)), Space O(amount)
+- C) Time O(2^amount), Space O(amount)
+- D) Time O(amount log amount), Space O(1)
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* O(amount) time would require processing each amount in constant time — but for each amount `i`, the algorithm loops over all `len(coins)` denominations. The outer loop is O(amount) and the inner loop is O(len(coins)), giving O(amount × len(coins)) total.
+- *Why B is correct:* The tabulation fills a 1D array of size `amount+1`. For each index `i` (O(amount) iterations), it tries every coin denomination (O(len(coins)) iterations). Total time: O(amount × len(coins)). Space: O(amount) for the `dp` array. This is pseudo-polynomial — polynomial in `amount` but `amount` can be exponentially large in the number of input bits.
+- *Why C is incorrect:* O(2^amount) would be the naive recursion without memoization — exploring all possible combinations. Tabulation eliminates this by caching each subproblem result exactly once.
+- *Why D is incorrect:* O(amount log amount) would suggest a binary search or divide-and-conquer approach. No such technique is used here. The inner loop over coins is linear, not logarithmic.
+
+---
+
+### Question 12
+
+`climb_stairs(6)` should return 13. Which description correctly implements the space-optimized version for this call?
+
+- A) Use naive recursive Fibonacci: return `fib(6) + fib(5)`
+- B) Initialize `prev2=1, prev1=2`; loop from 3 to 6 doing `curr=prev1+prev2; prev2=prev1; prev1=curr`; return `prev1`
+- C) Initialize `dp=[0]*7; dp[1]=1; dp[2]=2`; return `dp[6]` after filling by Fibonacci loop — this is the O(n) space version
+- D) Return `2**6 // 6` using the Fibonacci approximation formula
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Naive recursive Fibonacci is O(2^n) — not the space-optimized version. It is also the wrong function: Climbing Stairs uses the same recurrence as Fibonacci but with different base cases (cs(1)=1, cs(2)=2).
+- *Why B is correct:* The space-optimized loop starts with base cases `prev2=1 (dp[1])`, `prev1=2 (dp[2])` and iterates from 3 to n. For n=6: i=3→curr=3; i=4→curr=5; i=5→curr=8; i=6→curr=13. Return 13. O(n) time, O(1) space.
+- *Why C is incorrect:* The array-based tabulation (O(n) space) also returns 13 correctly, but it is not the space-optimized version. The question asks specifically for the space-optimized implementation.
+- *Why D is incorrect:* `2**6 // 6 = 64 // 6 = 10` — this is wrong. There is no simple closed-form integer expression for the Fibonacci sequence like this.
+
+---
+
+### Question 13
+
+In House Robber, what is `rob([2,7,9,3,1])` and which houses are robbed to achieve the maximum?
+
+- A) 11 — houses at indices 0 and 2 (2+9)
+- B) 12 — houses at indices 0, 2, and 4 (2+9+1)
+- C) 11 — houses at indices 1 and 3 (7+3+1 is invalid; 7+3=10)
+- D) 14 — houses at indices 1 and 2 (7+9, but these are adjacent)
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Robbing indices 0 and 2 gives 2+9=11. But index 4 (value 1) is non-adjacent to index 2 — it can also be robbed. 2+9+1=12 > 11. Option A misses the additional non-adjacent house.
+- *Why B is correct:* Indices 0, 2, 4 are all non-adjacent (each pair differs by 2). Values: 2+9+1=12. The trace confirms this: prev2=0,p1=0→num=2:p1=2→num=7:curr=max(2,7)=7,p2=2,p1=7→num=9:curr=max(7,2+9)=11,p2=7,p1=11→num=3:curr=max(11,7+3)=11,p2=11,p1=11→num=1:curr=max(11,11+1)=12. Return 12. Houses robbed: 0(2), 2(9), 4(1).
+- *Why C is incorrect:* Indices 1 and 3 give 7+3=10 < 12. This is not the maximum. The listed arithmetic "7+3+1" includes index 4 (value 1) but indices 1,3,4 — where 3 and 4 are adjacent — violates the constraint.
+- *Why D is incorrect:* Indices 1 and 2 (values 7 and 9) are adjacent — robbing both violates the constraint. This option is invalid regardless of the value.
+
+---
+
+### Question 14
+
+In the 0/1 knapsack DP, `dp[i][w]` is defined as the maximum value using the first `i` items with capacity `w`. What is `dp[2][20]` for `items=[(60,10),(100,20),(120,30)]` and `capacity=50`?
+
+- A) 60 — only item A (weight 10) is included; item B does not fit alongside A in 20 kg
+- B) 100 — item B (weight 20) fills the capacity exactly; this is better than taking only A
+- C) 160 — items A and B both fit in 20 kg
+- D) 0 — neither item fits in 20 kg
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* While A (weight=10) does fit in capacity 20, item B (weight=20) alone yields value 100 > 60. The DP takes the maximum of skip B (`dp[1][20]=60`) and take B (`dp[1][0]+100=100`). The maximum is 100, not 60.
+- *Why B is correct:* `dp[2][20]`: item B has weight=20 which equals the capacity. Taking only B: `dp[1][20-20]+100 = dp[1][0]+100 = 0+100 = 100`. Skipping B: `dp[1][20]=60` (item A alone). `max(100, 60) = 100`. So `dp[2][20]=100`.
+- *Why C is incorrect:* Items A and B together weigh 10+20=30 kg, which exceeds capacity 20. They cannot both be included in `dp[2][20]`.
+- *Why D is incorrect:* Item A weighs 10 ≤ 20 and item B weighs 20 ≤ 20 — both fit individually. `dp[2][20]` is at minimum 60 (just item A).
+
+---
+
+### Question 15
+
+Why does Coin Change II (LeetCode #518) iterate coins in the outer loop and amounts in the inner loop, rather than amounts outer and coins inner?
+
+- A) Iterating coins outer is faster — it reduces the number of inner loop iterations
+- B) Iterating coins outer counts unordered combinations: once a coin type is processed, it cannot be "re-introduced" in a different order. Iterating amounts outer would count ordered permutations instead
+- C) Iterating amounts outer would cause an index out of bounds for large coin values
+- D) The order of loops does not matter — both give the same result for Coin Change II
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Both loop orders perform exactly O(amount × len(coins)) iterations total. The speed is identical. The difference is correctness, not performance.
+- *Why B is correct:* With coins outer and amounts inner: when processing coin `c`, all previous coins are already "locked in" to earlier positions in the `dp` array. Coin `c` can only extend combinations that were built without considering later coins. This prevents counting (1,2) and (2,1) as separate combinations. With amounts outer, for each amount `i` you add all coins — so (1 at i=1, then 2 at i=3) and (2 at i=2, then 1 at i=3) are counted separately as distinct orderings.
+- *Why C is incorrect:* Both loop orders access `dp[i-coin]` only when `coin <= i`, so there is no out-of-bounds risk in either order.
+- *Why D is incorrect:* The loop order does matter for Coin Change II. Amounts outer gives the number of ordered sequences (permutations); coins outer gives the number of unordered combinations. For target=3 with coins [1,2]: combinations = 2 ({1,2},{1,1,1}); permutations = 3 ({1,2},{2,1},{1,1,1}).
+
+---
+
+### Question 16
+
+`rob([2,1,1,2])` returns 4. Which pair of non-adjacent houses is robbed?
+
+- A) Houses 0 and 1 (values 2+1=3)
+- B) Houses 1 and 3 (values 1+2=3)
+- C) Houses 0 and 2 (values 2+1=3)
+- D) Houses 0 and 3 (values 2+2=4)
+
+**Correct Answer:** D
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Houses 0 and 1 are adjacent — robbing both violates the constraint. Additionally, 2+1=3 < 4.
+- *Why B is incorrect:* Houses 1 and 3 are non-adjacent (differ by 2), so the constraint is satisfied. But 1+2=3 < 4. This is not the maximum.
+- *Why C is incorrect:* Houses 0 and 2 are non-adjacent (differ by 2). 2+1=3 < 4. Not the maximum.
+- *Why D is correct:* Houses 0 and 3 differ by 3 — they are non-adjacent. Values 2+2=4. Trace `rob([2,1,1,2])`: p2=0,p1=0→num=2:curr=2,p2=0,p1=2→num=1:curr=max(2,0+1)=2,p2=2,p1=2→num=1:curr=max(2,2+1)=3,p2=2,p1=3→num=2:curr=max(3,2+2)=4,p2=3,p1=4. Return 4.
+
+---
+
+### Question 17
+
+In the LCS recurrence, when `text1[i-1] != text2[j-1]`, why is `dp[i][j] = max(dp[i-1][j], dp[i][j-1])` instead of `dp[i-1][j-1]`?
+
+- A) `dp[i-1][j-1]` is always zero when characters don't match
+- B) When characters don't match, the LCS of the two full prefixes is the best achievable by skipping one character from either string — `dp[i-1][j]` skips the last of `text1`; `dp[i][j-1]` skips the last of `text2`; we take the maximum
+- C) `dp[i-1][j-1]` would double-count characters in the two strings
+- D) The diagonal cell is only used during the matching step to avoid overwriting already-computed values
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `dp[i-1][j-1]` is not necessarily zero when characters don't match. It holds the LCS of both strings each shortened by one character, which can be any non-negative integer.
+- *Why B is correct:* When the current characters don't match, neither can be the "last matched character" of the LCS. We either skip `text1[i-1]` (giving `dp[i-1][j]`) or skip `text2[j-1]` (giving `dp[i][j-1]`). We take the maximum of these two options. `dp[i-1][j-1]` ≤ both options so it is never chosen.
+- *Why C is incorrect:* The concern about double-counting does not apply here. Using `max(dp[i-1][j], dp[i][j-1])` does not double-count — each cell represents a distinct subproblem.
+- *Why D is incorrect:* The reason for not using the diagonal cell is logical (it is never the maximum in the non-match case), not implementation-related.
+
+---
+
+### Question 18
+
+Which of the following correctly describes the difference between the 0/1 knapsack and the unbounded knapsack (Coin Change)?
+
+- A) 0/1 knapsack allows fractional items; unbounded knapsack requires whole items
+- B) 0/1 knapsack uses each item at most once; unbounded knapsack allows each item type to be used unlimited times
+- C) 0/1 knapsack is solved with a 2D table; unbounded knapsack always requires a 1D table
+- D) Unbounded knapsack is always faster because it has fewer constraints
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Fractional items describe the fractional knapsack (greedy, Module 13). Both 0/1 and unbounded knapsack require whole items. The distinction is about the count allowed per item type, not divisibility.
+- *Why B is correct:* In 0/1 knapsack, each item is unique — it can be taken (1 time) or left (0 times). The DP uses the previous row (`dp[i-1]`) to prevent reuse. In unbounded knapsack (like Coin Change), each item type can be used any number of times — the DP references `dp[i-coin]` in the current state to allow reuse.
+- *Why C is incorrect:* 0/1 knapsack can be implemented with a 1D rolling array; unbounded knapsack is also naturally 1D. Dimensionality is an implementation detail, not a defining property.
+- *Why D is incorrect:* Both 0/1 and unbounded knapsack are O(n × W) — the same asymptotic complexity. "Fewer constraints" does not imply faster runtime.
+
+---
+
+### Question 19
+
+What is the value of `fib_opt(0)`, `fib_opt(1)`, and `fib_opt(2)` according to the space-optimized Fibonacci in the reading guide?
+
+- A) 0, 1, 1
+- B) 1, 1, 2
+- C) 0, 1, 2
+- D) 1, 2, 3
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- *Why A is correct:* The Fibonacci sequence: fib(0)=0, fib(1)=1, fib(2)=1. In `fib_opt`: `if n <= 1: return n` handles n=0→0 and n=1→1. For n=2: prev2=0, prev1=1; loop range(2,3) runs once: curr=0+1=1, prev2=1, prev1=1; return 1. All three values: 0, 1, 1.
+- *Why B is incorrect:* 1, 1, 2 is a 1-indexed Fibonacci sequence (fib(1)=1, fib(2)=1, fib(3)=2). The module's implementation is 0-indexed: fib(0)=0.
+- *Why C is incorrect:* fib(2)=1, not 2. `fib(2)=fib(1)+fib(0)=1+0=1`. The value 2 belongs to fib(3).
+- *Why D is incorrect:* 1, 2, 3 would be an arithmetic sequence. Fibonacci never produces this as fib(0), fib(1), fib(2).
+
+---
+
+### Question 20
+
+In `longest_common_subsequence('abc', 'abc')`, the function returns 3. Why does `dp[i][j]` reach the value 3 only at `dp[3][3]` and not at an earlier cell?
+
+- A) Because the matching condition `text1[i-1]==text2[j-1]` is only true for `i=j=3`
+- B) Because `dp[i][j]` is defined as the LCS of the first `i` characters of `text1` and the first `j` characters of `text2` — a value of 3 requires all 3 characters of both strings to be considered, which only occurs at `dp[3][3]`
+- C) Because the table is filled diagonally and only reaches the bottom-right cell last
+- D) Because all off-diagonal cells are set to zero by default
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* The matching condition is true at (1,1) for 'a', (2,2) for 'b', and (3,3) for 'c'. The match at (1,1) gives `dp[1][1]=1`; the match at (2,2) gives `dp[2][2]=2`; the match at (3,3) gives `dp[3][3]=3`. The value 3 accumulates step by step.
+- *Why B is correct:* `dp[i][j]` represents the LCS of `text1[0..i-1]` and `text2[0..j-1]`. An LCS of length 3 requires at least 3 characters in each string, meaning `i >= 3` and `j >= 3`. The first (and only) cell satisfying both is `dp[3][3]`.
+- *Why C is incorrect:* The table is filled row by row, left to right — not diagonally. The value 3 is not seen earlier because of the subproblem definition (answer B), not the fill order.
+- *Why D is incorrect:* Off-diagonal cells are not zero for identical strings. For 'abc'/'abc': `dp[1][2]=1`, `dp[2][1]=1`, `dp[2][3]=2`, etc. Many non-diagonal cells have positive values.

@@ -209,3 +209,41 @@ Write your study plan in 150–200 words.
 Submit your completed lab document to the Canvas assignment portal by the due date. All exercises must be substantively completed — fill-in-blank answers require actual content, not dashes or TBD. The practice exam score from Exercise 1 will not be graded on pass/fail — only on completion and honest self-assessment.
 
 **Grading:** Exercise 1 = 40 points (completion and analysis), Exercise 2 = 25 points (concept accuracy), Exercise 3 = 20 points (recall and application), Exercise 4 = 15 points (quality of self-assessment and plan).
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Integrated Scenario Analysis
+
+The following scenario combines concepts from multiple modules. Read it carefully and answer all three questions.
+
+Redwood Technology Solutions is a 600-person managed services provider. They are preparing for their first ISO 27001 certification audit (scheduled in 8 weeks) while simultaneously onboarding a major new customer that requires a SOC 2 Type II report within 12 months. Their IT department uses Scrum for internal software development, deploys production changes 3–4 times per month via a manual release process, and has ITIL-aligned incident and change management processes. The change failure rate over the past 6 months is 19%. Their SLA with the new customer commits to 99.7% monthly availability. Their current cloud provider guarantees 99.8% in its service contract.
+
+A compliance gap assessment revealed:
+
+- Access removal upon employee termination has no documented process — three former employees have had active credentials for 30–60 days post-termination
+- Change records exist but approval timestamps are missing from 40% of records over the past 6 months
+- The CMDB has not been updated in 4 months — 22 new cloud VMs are unrecorded
+
+1. Identify three specific risks created by the scenario, classify each by risk type (technical, compliance, operational), and propose one specific control for each. For each control, identify which ITIL 4 practice it belongs to and whether it would also serve as SOC 2 or ISO 27001 audit evidence.
+
+2. The 19% change failure rate is a DORA Low performance indicator. Identify two specific process or structural changes — each grounded in a named ITIL 4 practice or DevOps concept — that would most directly reduce the change failure rate, and explain the mechanism by which each change reduces failures.
+
+3. The new customer's SOC 2 Type II audit will cover the 12-month period beginning when they sign the contract. Given that 40% of existing change records lack approval timestamps, what is the risk this creates for the Type II audit, and what must Redwood do within the first week of the contract period to protect its audit evidence going forward?
+
+### Challenge 2: Capstone Reflection
+
+This module is the final module of CIS-4335. You have studied the ITIL 4 Service Value System, all seven guiding principles, the four dimensions, the service value chain, and twelve or more individual ITIL 4 practices across sixteen modules.
+
+1. Select the three ITIL 4 practices you believe are most important for an organization just beginning its ITSM journey. For each, write 2–3 sentences explaining: what problem the practice solves, why it should be implemented before others, and one specific risk the organization faces if this practice is absent.
+
+2. ITIL 4 describes value as co-created between a service provider and a customer. Using a specific real-world technology service you have used personally (not a scenario from this course), describe: (a) what the provider contributes to value co-creation, (b) what you as the customer contribute, and (c) one way in which value was not co-created effectively — a moment where the service failed to deliver the outcome you needed despite being technically operational.
+
+3. You are presenting to a non-technical VP who asks: "We already have good technical staff who fix problems quickly. Why do we need ITIL?" Write a 150–200 word response that explains the business case for formal ITSM practices using language a non-technical executive would understand. Do not use ITIL jargon without explanation.
+
+### Reflection Questions
+
+1. Across the sixteen modules of this course, one concept has appeared repeatedly in different forms: the gap between technical compliance and actual value delivery. It appears in SLA watermelon reports, in DORA research on deployment quality, in the distinction between utility and warranty, and in XLA design. Using examples from at least three different modules, explain why this gap is a fundamental challenge in IT service management — not a problem that can be solved by any single practice or tool.
+
+2. If you were an IT director building an ITSM program from scratch at a 200-person company with no existing processes, which five ITIL 4 practices would you implement first and in what sequence? Justify your sequence by explaining the dependency relationships between the practices — specifically which practices must be in place before others can function effectively.

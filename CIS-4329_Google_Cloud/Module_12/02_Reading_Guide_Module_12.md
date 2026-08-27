@@ -236,3 +236,19 @@ Before starting Lab 12, confirm you can answer yes to each item:
   `https://lookerstudio.google.com`
 - ACE exam guide:
   `https://cloud.google.com/certification/guides/cloud-engineer`
+
+---
+
+## 9. Supplemental Resources
+
+**1. Google Cloud Documentation — BigQuery Table Partitioning**
+<https://cloud.google.com/bigquery/docs/partitioned-tables>
+Complete reference for BigQuery partitioned tables covering date/timestamp partitioning, integer-range partitioning, ingestion-time partitioning, partition filters, and the partition expiration setting — all high-frequency ACE exam topics.
+
+**2. Google Cloud Skills Boost — BigQuery: Qwik Start**
+<https://www.cloudskillsboost.google/focuses/1145>
+Hands-on lab loading public dataset tables into BigQuery, writing SQL queries, examining query execution plans, and using the dry-run feature to estimate query costs before execution.
+
+**3. Google Cloud Documentation — Introduction to Optimizing Query Performance**
+<https://cloud.google.com/bigquery/docs/best-practices-performance-overview>
+Best practices guide covering partitioning, clustering, authorized views, materialized views, and avoiding full-table scans — the optimization topics most commonly tested in ACE exam scenario questions on BigQuery cost and performance.

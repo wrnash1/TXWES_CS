@@ -262,7 +262,28 @@ items.forEach((item, i, arr) => {
 
 ---
 
-## 7. JSE Certification Exam Tips
+## 7. Supplemental Resources
+
+The following free, openly available resources extend and reinforce the topics covered in this module.
+
+- **[Eloquent JavaScript — Chapter 5: Higher-Order Functions](https://eloquentjavascript.net/05_higher_order.html)**
+  The primary OER textbook chapter for this module. Covers abstracting repetition, higher-order functions, `filter`, `map`, `reduce`, and composability. Includes the motivating problem of writing functions that accept other functions as arguments.
+
+- **[MDN Web Docs — Array.prototype.forEach()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach)**
+  Complete reference for `forEach` including callback signature `(element, index, array)`, return value (`undefined`), and behavior with sparse arrays. Includes runnable examples.
+
+- **[MDN Web Docs — Array.prototype.every() and some()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every)**
+  Full reference for `every` and `some` with examples demonstrating short-circuit behavior, empty-array edge cases, and comparisons with `filter`.
+
+- **[javascript.info — Array methods](https://javascript.info/array-methods)**
+  Deep dive covering `forEach`, `filter`, `map`, `reduce`, `find`, `findIndex`, `every`, `some`, `flat`, `flatMap`, and method chaining. Includes interactive exercises for each method and clear tables comparing when to use each.
+
+- **[MDN Web Docs — Callback function](https://developer.mozilla.org/en-US/docs/Glossary/Callback_function)**
+  Concise MDN glossary entry explaining what a callback is, the distinction between synchronous and asynchronous callbacks, and examples of passing functions as arguments to array methods.
+
+---
+
+## 8. JSE Certification Exam Tips
 
 1. **`forEach` always returns `undefined`** — assigning its result gives `undefined`, not an array. This is a common trap and appears on the exam.
 
@@ -286,7 +307,7 @@ items.forEach((item, i, arr) => {
 
 ---
 
-## 8. Study Checklist
+## 9. Study Checklist
 
 - [ ] Watch the Module 09 video lecture by Professor Nash.
 - [ ] Read Chapter 5 (Higher-Order Functions) of [Eloquent JavaScript](https://eloquentjavascript.net/05_higher_order.html).

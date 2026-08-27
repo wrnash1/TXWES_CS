@@ -247,9 +247,9 @@ async function deleteItem(id) {
 
 Cross-Origin Resource Sharing (CORS) is a browser security mechanism. A browser-side `fetch()` call to a different origin is blocked unless the server's response includes an `Access-Control-Allow-Origin` header.
 
-```
+```text
 Browser origin: https://myapp.com
-API origin:     https://api.myapp.com  ← different subdomain = different origin
+API origin:     https://api.myapp.com  <- different subdomain = different origin
 ```
 
 When the API Gateway endpoint is missing CORS configuration, the request succeeds on the server (you can see it in CloudWatch logs) but the browser blocks the response — this confuses many developers who check the server and see no errors.
@@ -344,3 +344,25 @@ async function fetchJSON(url) {
 - [ ] Check `response.ok` before parsing the response body
 - [ ] Explain the CORS error mechanism and how to fix it in Express and API Gateway
 - [ ] Complete Lab 05 and Discussion 05 before the module deadline
+
+---
+
+## 10. Supplemental Resources
+
+The following free, open-access resources go deeper on Module 05 topics:
+
+**1. MDN Web Docs — Using the Fetch API**
+[https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch)
+Authoritative reference covering all Fetch options, the `Response` interface, checking `response.ok`, reading response bodies, and handling CORS — directly aligned to the Lab 05 POST and error handling tasks.
+
+**2. MDN Web Docs — Using Promises**
+[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)
+The official guide explaining Promise chaining, error propagation through `.catch()`, `Promise.all`, `Promise.allSettled`, and the relationship between async/await and Promises.
+
+**3. javascript.info — Promises, async/await**
+[https://javascript.info/async](https://javascript.info/async)
+A free, structured course section covering the event loop, callbacks, Promises, and async/await with interactive exercises. Includes detailed diagrams of the microtask queue vs. macrotask queue covered in Module 05.
+
+**4. web.dev — Cross-Origin Resource Sharing (CORS)**
+[https://web.dev/articles/cross-origin-resource-sharing](https://web.dev/articles/cross-origin-resource-sharing)
+Google's in-depth article on CORS preflight requests, simple vs. preflighted requests, and the specific headers required — essential background for connecting browser fetch calls to AWS API Gateway endpoints.

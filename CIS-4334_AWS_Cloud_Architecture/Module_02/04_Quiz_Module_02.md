@@ -231,3 +231,232 @@ Correct Answer: B
 - B is correct: An explicit Deny in any applicable policy — whether identity-based, resource-based, SCP, or permission boundary — always overrides any Allow. The bucket policy's Deny for all principals applies to the role and blocks the PutObject operation.
 - C is incorrect: Policy evaluation is not based on creation order. All applicable policies are evaluated simultaneously and the explicit Deny rule applies regardless of when policies were created.
 - D is incorrect: IAM does not evaluate policies in sequence and stop at the first Allow. All policies are evaluated and a Deny anywhere in the result set causes denial.
+
+---
+
+## Question 11
+
+A company is using AWS Organizations and wants to prevent any IAM principal in their production account from disabling AWS CloudTrail logging, even account administrators. Which approach achieves this with the least operational overhead?
+
+- A) Attach a permission boundary to every IAM role in the production account that excludes cloudtrail:StopLogging
+- B) Apply a Service Control Policy to the production account's OU that denies cloudtrail:StopLogging and cloudtrail:DeleteTrail for all principals
+- C) Create a customer managed IAM policy with a Deny for cloudtrail:StopLogging and attach it to every user and role in the account
+- D) Enable AWS Config with a remediation rule that re-enables CloudTrail within 5 minutes of it being disabled
+
+### Answer 11
+
+Correct Answer: B
+
+### Explanation 11
+
+- A is incorrect: Permission boundaries must be attached to each individual IAM entity. New roles created later without the boundary would not be restricted. This approach also does not affect the account root user.
+- B is correct: An SCP applied to the production OU denies the specified CloudTrail actions for ALL IAM principals in the account, including administrators and the account root user (within AWS Organizations member accounts). This is the lowest-overhead, most comprehensive control — set once at the org level and it applies universally.
+- C is incorrect: A customer managed policy must be manually attached to every user and role. New identities created later would not have it attached, and the account administrator could simply detach it from their own role.
+- D is incorrect: AWS Config with remediation is a detective and reactive control, not preventive. There is a window between when CloudTrail is disabled and when remediation fires during which audit logging is lost. This does not prevent the action from occurring.
+
+---
+
+## Question 12
+
+An application running on Amazon EC2 uses the AWS SDK to call the S3 API. The developer wants to understand how the SDK obtains the AWS credentials it uses to sign API requests. Which credential source does the SDK use by default when running on an EC2 instance with an attached IAM instance profile?
+
+- A) It reads the AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY environment variables that must be set by the developer
+- B) It retrieves temporary credentials from the EC2 Instance Metadata Service (IMDS) endpoint automatically, refreshing them before expiry
+- C) It generates a new set of long-term credentials each time the SDK is initialized using the IAM API
+- D) It reads credentials from the ~/.aws/credentials file that was created when the developer ran aws configure
+
+### Answer 12
+
+Correct Answer: B
+
+### Explanation 12
+
+- A is incorrect: Environment variable credentials are a valid SDK credential source, but when an instance profile is attached, the SDK's default credential provider chain finds the IMDS credentials before checking environment variables in most implementations. More importantly, relying on environment variables for application credentials running on EC2 is an anti-pattern.
+- B is correct: The AWS SDK credential provider chain checks for instance profile credentials via the EC2 IMDS endpoint (169.254.169.254) automatically. When an IAM instance profile is attached to the EC2 instance, the SDK retrieves temporary STS credentials from IMDS without any developer configuration. The SDK also handles automatic credential refresh before expiry.
+- C is incorrect: The SDK never generates new long-term credentials. Long-term credentials are created manually by an IAM administrator. The SDK only retrieves credentials that already exist.
+- D is incorrect: The ~/.aws/credentials file is populated by aws configure for human users. On an EC2 instance with an instance profile, the SDK will find IMDS credentials higher in the credential provider chain before it reads the credentials file.
+
+---
+
+## Question 13
+
+A security engineer needs to write an IAM policy that allows users to start and stop only EC2 instances that are tagged with `Environment: production` in the same AWS account. Which policy element correctly implements the tag-based condition?
+
+- A) `"Condition": {"StringEquals": {"aws:ResourceTag/Environment": "production"}}`
+- B) `"Condition": {"StringEquals": {"ec2:InstanceType": "production"}}`
+- C) `"Condition": {"StringEquals": {"aws:RequestTag/Environment": "production"}}`
+- D) `"Condition": {"ArnLike": {"aws:ResourceArn": "arn:aws:ec2:*:*:instance/production-*"}}`
+
+### Answer 13
+
+Correct Answer: A
+
+### Explanation 13
+
+- A is correct: `aws:ResourceTag/TagKey` is the condition key used to match tags that already exist on the resource being acted upon. For controlling access to EC2 instances based on their existing tags, `aws:ResourceTag/Environment` with value `production` is the correct condition.
+- B is incorrect: `ec2:InstanceType` is a condition key for the instance type (e.g., t3.micro, m5.xlarge). It is not related to tags and `production` is not a valid instance type.
+- C is incorrect: `aws:RequestTag/TagKey` applies to tags that are being set in a CreateResource or TagResource API call (the tags being applied in the request). It is not used to control access based on existing resource tags. This is the correct key for `ec2:CreateTags` or `ec2:RunInstances` tag-enforcement policies.
+- D is incorrect: `aws:ResourceArn` is not a standard IAM condition key used for tag-based access control. ARN-based conditions use `ArnLike` with `aws:SourceArn`, not with resource ARNs in this context.
+
+---
+
+## Question 14
+
+An IAM role named `DataProcessorRole` has a policy allowing `s3:GetObject` on `arn:aws:s3:::reports-bucket/*`. A permission boundary attached to the role allows `s3:*` on all resources. What S3 actions can the role effectively perform on the reports bucket?
+
+- A) All S3 actions because the permission boundary allows s3:*
+- B) Only s3:GetObject because the effective permissions are the intersection of the identity policy and the permission boundary
+- C) No S3 actions because permission boundaries deny all actions not explicitly listed in the identity policy
+- D) All S3 actions except s3:DeleteObject because deletion is blocked by permission boundaries by default
+
+### Answer 14
+
+Correct Answer: B
+
+### Explanation 14
+
+- A is incorrect: A permission boundary does not grant permissions on its own. The permission boundary allows `s3:*`, but the identity policy only allows `s3:GetObject`. The effective permissions are the intersection, so only `s3:GetObject` is allowed.
+- B is correct: Effective permissions equal the intersection of the identity policy AND the permission boundary. The identity policy allows only `s3:GetObject`. Even though the permission boundary allows `s3:*`, the identity policy does not grant any other actions. Therefore, only `s3:GetObject` is effective.
+- C is incorrect: Permission boundaries do not deny actions from the identity policy. They restrict the ceiling. If the identity policy allows `s3:GetObject` and the boundary also includes `s3:GetObject` in its allow set (which `s3:*` does), the action is permitted.
+- D is incorrect: There is no default block on `s3:DeleteObject` from permission boundaries. The restriction comes from the identity policy's scope, not from any default permission boundary behavior.
+
+---
+
+## Question 15
+
+A company uses AWS IAM Identity Center (SSO) to grant employees access to multiple AWS accounts. A developer in the company attempts to access the AWS Management Console but receives an "Access Denied" error on the IAM Identity Center portal. Which is the most likely cause?
+
+- A) The developer's IAM user in the target account does not have the AdministratorAccess policy attached
+- B) The developer has not been assigned to a permission set in IAM Identity Center that grants access to the target account
+- C) The developer's MFA device is not registered with IAM Identity Center
+- D) The target AWS account has not been linked to the company's Active Directory domain
+
+### Answer 15
+
+Correct Answer: B
+
+### Explanation 15
+
+- A is incorrect: IAM Identity Center federation does not use IAM users with direct policy attachments. SSO creates temporary role sessions, not IAM user sessions. The developer does not need an IAM user in the target account.
+- B is correct: In IAM Identity Center, access to an AWS account is granted by assigning a user (or group) to a permission set for that account. If the developer has not been assigned to any permission set for the target account, they will not see that account in the portal and will receive an access denied error if they try to access it directly.
+- C is incorrect: MFA can be configured as a requirement in IAM Identity Center, but if MFA were the issue, the user would receive an MFA challenge prompt rather than an immediate access denied. Unregistered MFA would block authentication entirely, not just access to a specific account.
+- D is incorrect: AWS accounts in IAM Identity Center do not need to be linked to Active Directory at the account level. The identity source (Active Directory) is configured centrally at the IAM Identity Center level, not per-account.
+
+---
+
+## Question 16
+
+A security audit finds that an S3 bucket storing sensitive customer data has the following bucket policy. What is the security risk introduced by this policy?
+
+```json
+{
+  "Effect": "Allow",
+  "Principal": "*",
+  "Action": "s3:GetObject",
+  "Resource": "arn:aws:s3:::customer-data-bucket/*"
+}
+```
+
+- A) The policy uses a wildcard resource, which allows GetObject on all S3 buckets in the account
+- B) The Principal set to wildcard (`*`) allows any unauthenticated or authenticated user on the internet to read all objects in the bucket, making it publicly accessible
+- C) The policy missing a Condition block means it will be evaluated as a Deny by default
+- D) The policy applies only to IAM users in the same AWS account and poses no external risk
+
+### Answer 16
+
+Correct Answer: B
+
+### Explanation 16
+
+- A is incorrect: The `Resource` ARN `arn:aws:s3:::customer-data-bucket/*` scopes the policy to objects in the specific `customer-data-bucket`. It is not a global wildcard across all S3 buckets.
+- B is correct: `"Principal": "*"` in an S3 bucket policy grants access to any principal — any AWS account, any IAM user, any unauthenticated (anonymous) internet user. Combined with `s3:GetObject`, this makes every object in the bucket publicly readable. This is a critical misconfiguration that exposes sensitive customer data to the open internet.
+- C is incorrect: A missing Condition block does not cause a Deny. IAM policy evaluation defaults to implicit Deny only if no applicable Allow statement exists. An Allow with no conditions applies unconditionally.
+- D is incorrect: `"Principal": "*"` explicitly includes entities outside the AWS account, including unauthenticated users. It is not scoped to the same account.
+
+---
+
+## Question 17
+
+A DevOps team wants to allow developers to create IAM roles for their own applications, but only if those roles have a specific permission boundary attached that limits what the created roles can do. Which IAM feature enables this delegation pattern?
+
+- A) Service Control Policies applied to the developer OU
+- B) A policy on the developers that allows iam:CreateRole only when the iam:PermissionsBoundary condition key matches the approved boundary ARN
+- C) AWS Config rules that detect newly created roles without the required boundary and send an SNS alert
+- D) A resource-based policy on the IAM service restricting role creation to approved principals
+
+### Answer 17
+
+Correct Answer: B
+
+### Explanation 17
+
+- A is incorrect: SCPs restrict what actions can be performed in an account, but they do not enforce that a specific permission boundary is attached when creating roles. They can deny role creation entirely but not conditionally allow it with boundary enforcement.
+- B is correct: An IAM policy on the developer role can allow `iam:CreateRole` with a condition: `"Condition": {"StringEquals": {"iam:PermissionsBoundary": "arn:aws:iam::ACCOUNT:policy/DevRoleBoundary"}}`. This forces any role created by the developer to have the specified permission boundary — any attempt to create a role without it is denied. This is the AWS-recommended "permission boundary delegation" pattern.
+- C is incorrect: An AWS Config alert is a detective control that fires after the role is already created. It does not prevent the creation of over-privileged roles and requires a separate remediation process.
+- D is incorrect: IAM is not a resource-based policy service. You cannot attach resource-based policies to the IAM service itself to restrict API calls the way you can with S3 bucket policies.
+
+---
+
+## Question 18
+
+An IAM policy evaluation results in an implicit deny. What does this mean?
+
+- A) An explicit Deny statement in one of the applicable policies matched the requested action
+- B) No applicable policy contained an Allow statement for the requested action and resource combination, so access is denied by default
+- C) The requesting principal exceeded their API rate limit and the request was automatically denied
+- D) The requested action is not supported by IAM and was denied by the IAM service itself
+
+### Answer 18
+
+Correct Answer: B
+
+### Explanation 18
+
+- A is incorrect: This describes an explicit deny, not an implicit deny. An explicit deny occurs when a Deny statement in an applicable policy directly matches the action and resource.
+- B is correct: AWS IAM uses a default-deny model. If no applicable policy (identity policy, resource policy, SCP, permission boundary) contains an Allow statement for the specific action and resource, access is implicitly denied. The request is rejected not because anything said "no," but because nothing said "yes."
+- C is incorrect: API rate limiting results in throttling errors (HTTP 429 / ThrottlingException), not IAM authorization denials. Throttling is a service-level control, not an IAM evaluation outcome.
+- D is incorrect: IAM evaluates whether the principal is authorized to perform the action. If the service action is valid but no Allow exists, the result is implicit deny — not a rejection of the action's validity.
+
+---
+
+## Question 19
+
+A company uses AWS CloudTrail to log all IAM API activity. A security engineer wants to be alerted immediately when any IAM policy is created or modified. Which combination of services accomplishes this with the least custom code?
+
+- A) Enable AWS Config with a managed rule for IAM policy changes and set up an SNS notification
+- B) Create a CloudWatch Metric Filter on the CloudTrail log group matching IAM policy change events, then create a CloudWatch Alarm with an SNS action
+- C) Poll the CloudTrail API every 5 minutes with a Lambda function and compare results to the previous snapshot
+- D) Enable AWS Security Hub and subscribe to the IAM findings category
+
+### Answer 19
+
+Correct Answer: B
+
+### Explanation 19
+
+- A is incorrect: AWS Config managed rules evaluate resource configuration compliance but are not designed to trigger real-time alerts on API calls like policy creation. Config evaluates on configuration change and may have delays.
+- B is correct: CloudTrail logs all IAM API calls to CloudWatch Logs. A CloudWatch Metric Filter matching `eventSource = iam.amazonaws.com` and specific `eventNames` (CreatePolicy, PutUserPolicy, AttachRolePolicy, etc.) creates a custom metric. A CloudWatch Alarm fires when the metric count exceeds zero, triggering an SNS notification to the security team in near-real-time with no custom code beyond the metric filter pattern.
+- C is incorrect: Polling the CloudTrail API every 5 minutes adds custom Lambda code, introduces up to a 5-minute alert delay, and requires storing and comparing state between invocations. This is high operational overhead compared to option B.
+- D is incorrect: AWS Security Hub aggregates findings from integrated services (GuardDuty, Inspector, Macie, etc.) but does not directly alert on specific IAM API activity events. GuardDuty detects unusual IAM activity patterns but not routine policy changes.
+
+---
+
+## Question 20
+
+Which IAM best practice should a solutions architect recommend when a new employee joins the company and needs access to the AWS Management Console to manage EC2 resources?
+
+- A) Create an IAM user for the employee with a password, attach the AmazonEC2FullAccess managed policy directly to the user, and provide the console login URL
+- B) Create an IAM user for the employee, add them to an existing IAM group that has the appropriate EC2 permissions policy attached, and enable MFA on the account
+- C) Share the AWS root account credentials with the employee so they can access all services without needing individual permissions configured
+- D) Create a new IAM role for the employee and have them assume it using their personal Google account credentials
+
+### Answer 20
+
+Correct Answer: B
+
+### Explanation 20
+
+- A is incorrect: Attaching policies directly to individual users is an anti-pattern. As the organization grows, managing per-user policy attachments becomes unmanageable. The AWS best practice is to use groups for permission management. Additionally, MFA should always be required for console access.
+- B is correct: This follows IAM best practices: (1) use IAM groups to manage permissions at scale — add users to groups rather than attaching policies to individual users; (2) the group has the appropriate scoped policy, not AdministratorAccess; (3) MFA is required for console access, adding a second authentication factor against credential theft.
+- C is incorrect: Sharing root credentials is a critical security violation. The root account has unrestricted access to all AWS services and cannot be restricted by IAM policies. Root credentials must never be shared and should only be used for the specific tasks that require root access (such as changing the account email address).
+- D is incorrect: Personal Google accounts cannot directly assume IAM roles without proper federation configuration (such as SAML 2.0 or OIDC federation through IAM Identity Center or Cognito). This is not the standard approach for employee access provisioning.

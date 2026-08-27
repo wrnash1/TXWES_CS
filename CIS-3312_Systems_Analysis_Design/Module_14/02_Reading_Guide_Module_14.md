@@ -327,4 +327,43 @@ Answer these before attempting the quiz.
 
 ---
 
+## Supplemental Resources
+
+The following open educational resources extend module content on testing, traceability,
+and quality assurance. All are freely accessible without login or purchase.
+
+1. **Software Testing Fundamentals — ISTQB Foundation Level Syllabus (free download)**
+   <https://www.istqb.org/certifications/certified-tester-foundation-level>
+   Focus: The foundational testing standard covering test types, test case design
+   techniques (including boundary value analysis), defect lifecycle, and test management.
+   Reinforces Sections 3–5 of this reading guide and provides deeper coverage of testing
+   concepts tested on the ECBA exam.
+
+2. **Requirements Traceability — IIBA BABOK Guide Technique Reference**
+   <https://www.iiba.org/standards-and-resources/babok/>
+   Focus: The BABOK Guide's coverage of traceability as a requirements management
+   technique under Requirements Life Cycle Management. Connecting this to the RTM
+   structure in Section 2 reinforces how traceability supports ECBA exam competencies.
+
+3. **User Acceptance Testing Guide — Ministry of Testing**
+   <https://www.ministryoftesting.com/dojo/lessons/an-introduction-to-user-acceptance-testing-uat>
+   Focus: Practical introduction to UAT planning, participant selection, scenario writing,
+   entry and exit criteria, and defect management during UAT. Directly supports the UAT
+   planning tasks in Part 3 of the lab.
+
+4. **Defect Management Best Practices — Atlassian Jira Documentation**
+   <https://www.atlassian.com/agile/software-development/bugs>
+   Focus: Practical guidance on defect logging, severity vs. priority classification,
+   triage processes, and defect lifecycle management in agile contexts. Supplements
+   Section 5 of the reading guide and the defect triage task in Part 4 of the lab.
+
+5. **Writing Testable Requirements — Requirements Engineering Journal (open access)**
+   <https://re2023.ieeecomputer.org/>
+   Focus: Academic and practitioner resources on requirements quality, testability
+   criteria, and the cost of untestable requirements discovered late in development.
+   Reinforces Section 1 of this reading guide on the link between requirements quality
+   and testing outcomes.
+
+---
+
 *Module 14 Reading Guide | CIS-3312 Systems Analysis and Design | Texas Wesleyan University*

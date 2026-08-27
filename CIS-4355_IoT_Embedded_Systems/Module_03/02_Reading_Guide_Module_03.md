@@ -164,4 +164,20 @@ Buffer overflow vulnerabilities in Level 0 and Level 1 firmware are a primary at
 
 ---
 
+## 9. Supplemental Resources
+
+**1. MicroPython Documentation — machine Module**
+[https://docs.micropython.org/en/latest/library/machine.html](https://docs.micropython.org/en/latest/library/machine.html)
+The official reference for MicroPython's hardware abstraction layer. Covers `Pin`, `ADC`, `I2C`, `SPI`, `UART`, `Timer`, and `WDT` classes with examples. Required reading before any MicroPython hardware lab.
+
+**2. MISRA C:2012 Guidelines Overview (MISRA Consortium)**
+[https://www.misra.org.uk/misra-c/](https://www.misra.org.uk/misra-c/)
+MISRA C is the embedded C coding standard used in automotive, aerospace, and industrial safety-critical firmware. The overview page describes the rationale for rules banning `malloc()`, `gets()`, and other unsafe patterns that directly align with Module 03 security content.
+
+**3. Wokwi ESP32 and Arduino Simulator**
+[https://wokwi.com/](https://wokwi.com/)
+A browser-based simulator supporting Arduino C sketches and MicroPython on ESP32 and Raspberry Pi Pico. Includes DHT22, BME280, I2C OLED, and dozens of other components. No hardware required — full serial monitor output and pin state visualization.
+
+---
+
 End of Reading Guide – Module 03

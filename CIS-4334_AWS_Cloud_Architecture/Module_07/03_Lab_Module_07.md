@@ -262,4 +262,25 @@ Compile all deliverables into a single PDF or Word document labeled clearly by t
 
 ---
 
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Instance Refresh with Minimal Disruption
+Configure and execute an Instance Refresh on an existing Auto Scaling group to replace instances with a new launch template version.
+1. If you have an Auto Scaling group from Part 2, create a new version of the launch template with an updated tag: `aws ec2 create-launch-template-version --launch-template-id <id> --source-version 1 --launch-template-data '{"TagSpecifications":[{"ResourceType":"instance","Tags":[{"Key":"Version","Value":"v2"}]}]}'`
+2. Start an Instance Refresh: `aws autoscaling start-instance-refresh --auto-scaling-group-name cis4334-web-asg --preferences '{"MinHealthyPercentage":50,"InstanceWarmup":60}'`
+3. Monitor the refresh progress: `aws autoscaling describe-instance-refreshes --auto-scaling-group-name cis4334-web-asg --output table`
+4. Document the status transitions (Pending → InProgress → Successful) and explain why MinHealthyPercentage=50 means at most half the instances are replaced at the same time.
+
+### Challenge 2: Auto Scaling Predictive Scaling Analysis
+Enable and review Predictive Scaling recommendations for an existing Auto Scaling group to understand the ML-based forecasting capability.
+1. Enable Predictive Scaling in forecast-only mode: `aws autoscaling put-scaling-policy --auto-scaling-group-name cis4334-web-asg --policy-name PredictiveCPU --policy-type PredictiveScaling --predictive-scaling-configuration '{"MetricSpecifications":[{"TargetValue":50,"PredefinedMetricPairSpecification":{"PredefinedMetricType":"ASGCPUUtilization"}}],"Mode":"ForecastOnly"}'`
+2. Wait 24 hours for CloudWatch to generate historical data (or examine any existing ASG with historical data). Retrieve the scaling forecast: `aws autoscaling get-predictive-scaling-forecast --auto-scaling-group-name cis4334-web-asg --policy-name PredictiveCPU --start-time $(date -u +%Y-%m-%dT%H:%M:%SZ) --end-time $(date -u -d "+48 hours" +%Y-%m-%dT%H:%M:%SZ)`
+3. Compare the Predictive Scaling forecast times to the Scheduled Scaling action you configured in earlier labs. Document one advantage of Predictive Scaling over Scheduled Scaling for workloads with variable-time daily peaks.
+
+### Reflection Questions
+1. After completing Challenge 1, explain the trade-off between setting MinHealthyPercentage to 100% versus 50% during an Instance Refresh. When would you choose each value in a production environment, and what is the cost and availability implication of each?
+2. How does the combination of Instance Refresh and lifecycle hooks you worked with in this lab and Part 3 together address the AWS Well-Architected Framework Operational Excellence pillar principle of "perform operations as code"? Provide one specific example from the lab where manual operational steps were replaced by automated AWS-native mechanisms.
+
 *Proprietary and Confidential. Not for disclosure outside of Texas Wesleyan University.*

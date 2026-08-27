@@ -176,4 +176,164 @@ D. Batch processing with nightly reconciliation
 
 ---
 
+## Question 11 (5 points)
+
+A bank's loan application dataset has 150,000 records. A data quality check reveals 4,500 records where the same applicant appears twice with identical names and Social Security numbers but different loan amounts. Which data quality dimension is most directly violated?
+
+A. Accuracy
+
+B. Consistency
+
+C. Uniqueness
+
+D. Validity
+
+**Correct Answer:** C — Uniqueness is violated because the same real-world entity (the applicant) appears as duplicate records. Accuracy concerns whether values correctly represent reality (A). Consistency concerns disagreement across systems (B). Validity concerns whether values conform to defined rules (D).
+
+---
+
+## Question 12 (5 points)
+
+An organization implements a policy that data quality metrics must be measured and reported to the data governance council every month. What governance role is typically responsible for executing these measurements and delivering the reports?
+
+A. Chief Data Officer (CDO)
+
+B. Data Owner
+
+C. Data Steward
+
+D. Data Consumer
+
+**Correct Answer:** C — The data steward performs day-to-day operational quality monitoring, executes data quality checks, and reports metrics to governance bodies. The CDO sets strategy (A). The data owner has accountability for a data domain but typically delegates operational tasks (B). The data consumer uses data but is not responsible for governance reporting (D).
+
+---
+
+## Question 13 (5 points)
+
+A company discovers that its product catalog has items with negative prices (e.g., price = -$25.00). No product should have a negative price under any business rule. Which data quality dimension best classifies this issue?
+
+A. Completeness
+
+B. Timeliness
+
+C. Accuracy
+
+D. Validity
+
+**Correct Answer:** D — Validity is violated because the value (-$25.00) breaks a defined business rule (prices must be non-negative). The value is present (completeness is not the issue), and whether it is "accurate" is moot since a negative price has no real-world referent — it simply violates the rule. Timeliness concerns data currency (B).
+
+---
+
+## Question 14 (5 points)
+
+What does data lineage documentation specifically track?
+
+A. The business definitions and ownership of each data element in the enterprise
+
+B. The origin of data and every transformation, movement, and system it passed through from source to final destination
+
+C. The frequency and severity of data quality violations in a production dataset
+
+D. The access control policies that determine who can view or modify each data asset
+
+**Correct Answer:** B — Data lineage tracks the complete life of a data element: where it came from, how it was transformed, and where it ended up. This is critical for debugging data quality issues and understanding the impact of source system changes. Business definitions are managed in the data dictionary or catalog (A). Quality violation tracking is a data quality scorecard function (C). Access policies are part of data security governance (D).
+
+---
+
+## Question 15 (5 points)
+
+An e-commerce company defines "active customer" as a customer who placed an order in the last 90 days. The sales team defines it as any customer with a non-cancelled account. A report shows different active customer counts depending on which team runs it. What governance artifact would most directly resolve this disagreement?
+
+A. A data catalog with lineage visualization
+
+B. A master data management (MDM) golden record
+
+C. A business glossary with formally approved metric definitions
+
+D. A row-level security policy applied to the customer table
+
+**Correct Answer:** C — A business glossary provides formally agreed-upon definitions for key business terms and metrics. Without a single approved definition of "active customer," different teams will produce different numbers. A data catalog helps discover data but does not resolve definition conflicts (A). MDM creates golden records for entities, not metric definitions (B). Row-level security controls access, not definitions (D).
+
+---
+
+## Question 16 (5 points)
+
+A retailer runs a data quality check and finds that 3% of records in the `email_address` field contain values without the "@" symbol. Which remediation action is most appropriate as a first step?
+
+A. Delete all records with invalid email addresses
+
+B. Flag invalid records with a data quality indicator column and route them to a data steward review queue
+
+C. Replace all invalid email addresses with NULL
+
+D. Archive the affected records in a separate table and exclude them from all reports permanently
+
+**Correct Answer:** B — Best practice is to flag invalid records and route them for review rather than immediately deleting or nullifying data that may be recoverable. Deleting records (A) destroys potentially valuable information. Replacing with NULL (C) loses the original value and may cause its own completeness issues. Permanent exclusion (D) is premature before root cause analysis.
+
+---
+
+## Question 17 (5 points)
+
+Which statement correctly describes the difference between a data dictionary and a data catalog?
+
+A. A data dictionary is an enterprise search platform with business context, lineage, and quality scores; a data catalog is a simple column-level reference document
+
+B. A data dictionary defines column names, data types, and constraints for a specific system; a data catalog is a broader enterprise platform enabling data discovery, lineage, and business context across multiple systems
+
+C. A data dictionary and data catalog are identical tools with different names used by different industries
+
+D. A data catalog is used only in data lakes; a data dictionary is used only in relational databases
+
+**Correct Answer:** B — A data dictionary is system-specific: it documents the technical metadata (column names, types, constraints) for a particular database or application. A data catalog is enterprise-wide: it aggregates metadata from many systems, adds business context, lineage, ownership, and quality scores, and enables self-service data discovery. Options A reverses the definitions. C and D are incorrect.
+
+---
+
+## Question 18 (5 points)
+
+A data governance committee wants to assign formal accountability for the quality and proper use of all customer data across the enterprise. Which role should hold this accountability?
+
+A. Database Administrator (DBA)
+
+B. Data Steward
+
+C. Data Owner
+
+D. Business Analyst
+
+**Correct Answer:** C — The data owner holds formal business accountability for a data domain — including quality, compliance, and appropriate use decisions. The DBA manages physical database infrastructure (A). The data steward executes day-to-day quality management under the owner's authority (B). Business analysts consume data but are not accountable for it (D).
+
+---
+
+## Question 19 (5 points)
+
+An analyst running a report for a marketing campaign discovers that customer phone numbers in the CRM are formatted as "(512) 555-1234" while the same numbers in the billing system are stored as "5125551234". Both values are correct. Which data quality dimension is this an example of?
+
+A. Accuracy
+
+B. Validity
+
+C. Consistency
+
+D. Uniqueness
+
+**Correct Answer:** C — Consistency is violated because the same data is represented in different formats across systems, even though both are factually correct. The inconsistency creates integration and matching challenges. Accuracy concerns factual correctness (A). Validity concerns rule conformance — both formats may be considered valid in their respective systems (B). Uniqueness concerns duplicate records (D).
+
+---
+
+## Question 20 (5 points)
+
+What is the primary purpose of a data quality scorecard in a governance program?
+
+A. To replace the data catalog by providing a single view of all metadata
+
+B. To assign letter grades to individual data analysts based on their data entry accuracy
+
+C. To provide a standardized, repeatable summary of data quality metrics across dimensions so that quality trends can be tracked and remediation prioritized
+
+D. To enforce data retention policies by automatically deleting records that fail quality checks
+
+**Correct Answer:** C — A data quality scorecard aggregates quality metrics across dimensions (completeness, validity, accuracy, etc.) into a repeatable report that lets governance teams track trends and prioritize remediation efforts. It does not replace the catalog (A), grade employees (B), or enforce retention by deleting records (D).
+
+---
+
 End of Module 10 Quiz

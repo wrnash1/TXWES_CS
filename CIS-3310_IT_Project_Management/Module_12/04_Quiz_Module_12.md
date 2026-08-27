@@ -225,3 +225,203 @@ Distractor Analysis:
 - **Why A is incorrect:** Channel selection concerns the medium — email vs. meeting vs. report. The scenario does not indicate the wrong channel was used; it indicates the message content was not accessible. The channel delivered the message; the encoding failed to make it understandable.
 - **Why B is incorrect:** The stakeholders did respond — they reported they did not understand. Their feedback (confusion and non-action) is evidence that the communication loop completed but the message was not understood. The root cause is encoding, not feedback failure.
 - **Why D is incorrect:** Noise refers to external interference — network outages, distractions, misrouted emails, or environmental disruptions. Technical terminology used intentionally by the sender is an internal encoding decision, not external noise. The sender controlled the word choices.
+
+---
+
+## Question 11
+
+A project manager is planning a kickoff meeting for a new IT infrastructure rollout. Which statement BEST describes the purpose of the project kickoff meeting?
+
+- A) To present the final project schedule to the sponsor for approval
+- B) To formally launch project execution, align all stakeholders on objectives, introduce team members, and establish communication norms
+- C) To conduct a retrospective on any lessons learned from similar past projects
+- D) To review and baseline the project's risk register before work begins
+
+**Correct Answer:** B) To formally launch project execution, align all stakeholders on objectives, introduce team members, and establish communication norms.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* The kickoff meeting is the formal transition from Planning to Executing. Its purpose is to create shared understanding, introduce the team and their roles, confirm project objectives, and set the tone for how the team will work together.
+- *Why A is incorrect:* Schedule approval by the sponsor happens during the Planning Process Group, before the kickoff. The kickoff presumes planning is complete.
+- *Why C is incorrect:* Reviewing lessons learned from past projects is part of Planning (consulting OPAs). A kickoff meeting looks forward at the current project, not backward at past ones.
+- *Why D is incorrect:* The risk register is baselined during Planning. A kickoff meeting may reference top risks but does not baseline them.
+
+---
+
+## Question 12
+
+A stakeholder has High Power and Low Interest in the project. According to the Power/Interest grid, what is the most appropriate engagement strategy?
+
+- A) Manage closely — involve them in all major decisions
+- B) Keep satisfied — provide regular updates and address their concerns but do not overwhelm them with detail
+- C) Keep informed — send them routine status reports but require no action from them
+- D) Monitor — check in occasionally but devote minimal attention
+
+**Correct Answer:** B) Keep satisfied — provide regular updates and address their concerns but do not overwhelm them with detail.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* High Power / Low Interest stakeholders can significantly impact the project if dissatisfied, but they do not want deep involvement. The PM must keep them satisfied with appropriate-level updates without burdening them with operational detail.
+- *Why A is incorrect:* Manage closely is for High Power / High Interest stakeholders who want deep involvement and must be kept fully engaged.
+- *Why C is incorrect:* Keep informed is for Low Power / High Interest stakeholders who care about the project but cannot directly influence it.
+- *Why D is incorrect:* Monitor is for Low Power / Low Interest stakeholders who have minimal impact and minimal interest — the lightest engagement level.
+
+---
+
+## Question 13
+
+Which statement about the project status report is TRUE?
+
+- A) Status reports should only be sent when there is bad news to report.
+- B) A well-structured status report should cover project health, schedule status, budget status, open issues, top risks, and upcoming activities.
+- C) Status reports replace the need for status meetings.
+- D) Status reports are only required for external stakeholders — internal team members communicate verbally.
+
+**Correct Answer:** B) A well-structured status report should cover project health, schedule status, budget status, open issues, top risks, and upcoming activities.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* A comprehensive status report is a routine communication artifact that gives stakeholders a complete snapshot of project health across all key dimensions. It is a standard PMI artifact within the Communications Management knowledge area.
+- *Why A is incorrect:* Status reports are routine — they are sent on a defined schedule regardless of project health. Waiting for bad news defeats the purpose of proactive communication.
+- *Why C is incorrect:* Status reports and status meetings serve complementary purposes. Reports provide a written record; meetings allow for discussion, Q&A, and real-time decision-making.
+- *Why D is incorrect:* Status reports are typically distributed to all stakeholder groups — both internal and external. Internal team members benefit from written status visibility, especially on complex projects.
+
+---
+
+## Question 14
+
+A project manager adds a new vendor to the project team mid-execution. The original team had 8 members; the vendor adds 3 more. How many new communication channels are created?
+
+- A) 3
+- B) 24
+- C) 27
+- D) 30
+
+**Correct Answer:** C) 27
+
+**Distractor Analysis:**
+
+- *Why C is correct:* Original channels = 8(7)/2 = 28. New total with 11 members = 11(10)/2 = 55. New channels = 55 - 28 = 27.
+- *Why A is incorrect:* 3 represents only the vendor members added — not the channels created between the 3 new members and the existing 8, plus channels among the 3 new members themselves.
+- *Why B is incorrect:* 24 = 8 × 3 — the product of the original and new member counts, not the combinatorial formula.
+- *Why D is incorrect:* 30 does not result from any standard formula using these inputs.
+
+---
+
+## Question 15
+
+According to PMI's stakeholder engagement model, which engagement level describes a stakeholder who is actively promoting the project and working to ensure its success?
+
+- A) Supportive
+- B) Neutral
+- C) Leading
+- D) Resistant
+
+**Correct Answer:** C) Leading
+
+**Distractor Analysis:**
+
+- *Why C is correct:* Leading is the highest engagement level. A Leading stakeholder not only supports the project but actively champions it — advocating for it with other stakeholders, removing obstacles, and taking initiative to help the project succeed.
+- *Why A is incorrect:* Supportive describes a stakeholder who backs the project and cooperates with requests, but does not proactively advocate or champion the effort.
+- *Why B is incorrect:* Neutral describes a stakeholder who is aware of the project but has no strong positive or negative reaction. They neither help nor hinder.
+- *Why D is incorrect:* Resistant describes a stakeholder who opposes the project and may actively work against it.
+
+---
+
+## Question 16
+
+What is the PRIMARY difference between a project kickoff meeting and a project status meeting?
+
+- A) Kickoff meetings are mandatory; status meetings are optional.
+- B) Kickoff meetings launch execution and occur once; status meetings are recurring operational reviews during execution.
+- C) Status meetings are attended by all stakeholders; kickoff meetings are attended only by the core team.
+- D) Kickoff meetings review the risk register; status meetings review the scope baseline.
+
+**Correct Answer:** B) Kickoff meetings launch execution and occur once; status meetings are recurring operational reviews during execution.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* These two meeting types serve fundamentally different purposes. The kickoff is a one-time event that marks the formal start of execution. Status meetings are regular, recurring reviews throughout execution to track progress and make decisions.
+- *Why A is incorrect:* Both meeting types are standard project management practice and considered important. Neither is technically "optional" in a well-managed project.
+- *Why C is incorrect:* Both meeting types typically involve key stakeholders. Status meetings may be more selective (core team plus sponsor) rather than full-stakeholder gatherings, but the distinction is not who attends.
+- *Why D is incorrect:* Risk register review can occur in either meeting type. The distinction is about frequency and purpose, not which artifacts are reviewed.
+
+---
+
+## Question 17
+
+A senior developer on the project team is listed as Consulted (C) in the RACI matrix for the "Define System Architecture" task. What does this mean?
+
+- A) The developer will perform the architecture design work.
+- B) The developer will be notified of the final architecture decision after it is made.
+- C) The developer's expertise will be solicited before the architecture decision is finalized — two-way communication.
+- D) The developer is accountable for the architecture deliverable.
+
+**Correct Answer:** C) The developer's expertise will be solicited before the architecture decision is finalized — two-way communication.
+
+**Distractor Analysis:**
+
+- *Why C is correct:* Consulted (C) means the person's input is actively sought before decisions are made or tasks are completed. It is a two-way, prior communication — the PM asks, the developer responds, and the response shapes the outcome.
+- *Why A is incorrect:* Performing the work is the Responsible (R) role, not Consulted.
+- *Why B is incorrect:* Being notified after the decision is the Informed (I) role — one-way, after-the-fact communication.
+- *Why D is incorrect:* Accountability for the deliverable is the Accountable (A) role — the single person who owns the outcome.
+
+---
+
+## Question 18
+
+A project has 6 team members. The sponsor approves adding 4 additional members. What is the total number of communication channels after the expansion?
+
+- A) 15
+- B) 45
+- C) 55
+- D) 36
+
+**Correct Answer:** B) 45
+
+**Distractor Analysis:**
+
+- *Why B is correct:* New total team size = 6 + 4 = 10. Channels = 10(9)/2 = 45.
+- *Why A is incorrect:* 15 = 6(5)/2 — this is the channel count for the original 6-member team before expansion.
+- *Why C is incorrect:* 55 = 11(10)/2 — this applies the formula to 11 team members, not 10.
+- *Why D is incorrect:* 36 = 9(8)/2 — this uses 9 as the team size rather than 10.
+
+---
+
+## Question 19
+
+A project manager discovers that a key operations manager has moved from "Supportive" to "Resistant" on the Stakeholder Engagement Assessment Matrix over the past month. What is the MOST appropriate first action?
+
+- A) Remove the operations manager from the stakeholder register since they are now a risk.
+- B) Send the operations manager a detailed status report to provide more information.
+- C) Schedule a one-on-one conversation to understand the root cause of the shift in engagement and address the underlying concern.
+- D) Escalate to the project sponsor to have the operations manager's authority reduced.
+
+**Correct Answer:** C) Schedule a one-on-one conversation to understand the root cause of the shift in engagement and address the underlying concern.
+
+**Distractor Analysis:**
+
+- *Why C is correct:* A shift from Supportive to Resistant signals an unaddressed concern. The PM's most effective response is direct engagement — understanding why the stakeholder changed position and addressing the root cause. More information (emails/reports) will not fix a trust or concern issue.
+- *Why A is incorrect:* Removing a stakeholder from the register because they are resistant is exactly the wrong response. Resistant stakeholders need more engagement, not less. Removing them creates a blind spot.
+- *Why B is incorrect:* Sending more status reports addresses information gaps, not engagement resistance. If the shift is due to a concern (e.g., scope impact on their department), more data will not resolve it.
+- *Why D is incorrect:* Escalating to reduce the stakeholder's authority is an adversarial approach that will deepen resistance and damage relationships — a last resort, not a first step.
+
+---
+
+## Question 20
+
+Which component of the PMI sender-receiver communication model ensures that the message was understood as intended?
+
+- A) Encoding
+- B) Channel
+- C) Decoding
+- D) Feedback
+
+**Correct Answer:** D) Feedback
+
+**Distractor Analysis:**
+
+- *Why D is correct:* Feedback closes the communication loop. It is the receiver's response that confirms to the sender that the message was received and understood correctly. Without feedback, the sender cannot verify comprehension.
+- *Why A is incorrect:* Encoding is how the sender converts a thought into a message (word choice, format, detail level). It initiates communication but does not confirm understanding.
+- *Why B is incorrect:* The channel is the medium through which the message travels (email, meeting, report). It transmits the message but does not confirm receipt or comprehension.
+- *Why C is incorrect:* Decoding is how the receiver interprets the message. It is the receiver's internal process — the sender cannot observe it. Feedback is the observable signal that tells the sender decoding was successful.

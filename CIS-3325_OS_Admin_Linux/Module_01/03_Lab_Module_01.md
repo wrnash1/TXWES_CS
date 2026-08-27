@@ -232,3 +232,29 @@ Submit a screenshot showing:
 **Network is not working (no internet access from VM)**: Check VirtualBox Network settings for the VM. The default "NAT" adapter should provide outbound internet access. If the adapter shows "Not attached," change it to NAT.
 
 **VM is very slow**: Increase RAM in VirtualBox Settings → System → Motherboard. Also enable VT-x/AMD-V in your host BIOS if virtualization is not available.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Kernel and Distribution Deep Dive
+
+Explore your running system to collect detailed version and hardware information using only command-line tools.
+
+1. Run `uname -r` to get just the kernel release string, then run `uname -a` to get the full output. Record what each field in the full output means (kernel name, hostname, kernel release, kernel version, machine hardware, processor, hardware platform, OS).
+2. Run `cat /proc/version` and compare its output to `uname -a`. Identify which compiler was used to build your running kernel.
+3. Run `lscpu` to display CPU architecture details. Record the number of CPUs, threads per core, and whether virtualization is shown as active.
+4. Run `free -h` to display memory usage. Calculate the percentage of RAM currently in use by the system at idle.
+
+### Challenge 2: Exploring the Filesystem Root
+
+Without using the internet, discover what is in the top-level Linux directory structure entirely from within your VM.
+
+1. Run `ls /` to list all top-level directories. For at least five directories (e.g., `/bin`, `/etc`, `/var`, `/tmp`, `/home`), run `ls` inside each and describe in one sentence what type of content you find.
+2. Run `man hier` to read the official manual page describing the Linux filesystem hierarchy. Identify three directories you did not expect to find described there.
+3. Run `df -h` and `du -sh /*` (note: `du -sh /*` may produce some permission errors — that is expected). Compare the output to understand which top-level directories consume the most space on a fresh install.
+
+### Reflection Questions
+
+1. The Linux kernel is described as "monolithic." Based on what you observed with `lscpu` and `uname`, what are the potential tradeoffs of running all device drivers inside the kernel versus running them in userspace (as a microkernel would)?
+2. If you were deploying this Ubuntu Server VM in a real enterprise environment, which of the introductory commands from Part 7 would you run immediately after first login to verify the system is healthy, and why?

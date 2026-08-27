@@ -221,6 +221,27 @@ Constraints prune invalid paths: never add `)` when it would exceed `(` count. T
 
 ---
 
+## 9. Supplemental Resources
+
+The following free, openly licensed resources reinforce the concepts in this module. All are zero-cost and require no account to access.
+
+1. **NeetCode — Backtracking Problems Playlist (YouTube)** — [https://www.youtube.com/playlist?list=PLot-Xpze53ldg4pN6PfzoJY7KsKcxF1jg](https://www.youtube.com/playlist?list=PLot-Xpze53ldg4pN6PfzoJY7KsKcxF1jg)
+   Free video solutions for the most common backtracking interview problems including Subsets, Permutations, Combinations, and N-Queens. Each video draws the decision tree before writing code, matching the learning strategy in this module.
+
+2. **OpenDSA — Recursion Chapter** — [https://opendsa-server.cs.vt.edu/ODSA/Books/Everything/html/RecursionIntro.html](https://opendsa-server.cs.vt.edu/ODSA/Books/Everything/html/RecursionIntro.html)
+   Free interactive textbook chapter with visualizations of the call stack during recursive execution, embedded practice problems, and complexity analysis of factorial and Fibonacci.
+
+3. **Python `functools.lru_cache` Documentation** — [https://docs.python.org/3/library/functools.html#functools.lru_cache](https://docs.python.org/3/library/functools.html#functools.lru_cache)
+   Official Python documentation for `@lru_cache` and `@cache` (Python 3.9+). Explains the `maxsize` parameter, thread safety, and how to inspect cache statistics with `.cache_info()`.
+
+4. **VisuAlgo — Recursion Tree Visualizer** — [https://visualgo.net/en/recursion](https://visualgo.net/en/recursion)
+   Animates the recursive call tree for Fibonacci and other classic recursive algorithms, showing how the call stack grows and unwinds. Excellent for visualizing why naive Fibonacci is O(2ⁿ).
+
+5. **Algorithms Illuminated Part 1 (Tim Roughgarden — Free Lecture Videos)** — [https://www.algorithmsilluminated.org/](https://www.algorithmsilluminated.org/)
+   Free lecture videos by Stanford professor Tim Roughgarden covering recursion, divide-and-conquer, and the Master Theorem. The mathematical treatment of recurrences complements this module's practical focus.
+
+---
+
 ## 6. Study Checklist
 
 - [ ] Watch the Module 04 video lecture by Professor Nash.

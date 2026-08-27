@@ -194,3 +194,203 @@ Distractor Analysis:
 - Why A is incorrect: Most modern consumer motherboards support 32–128 GB total capacity across four slots. There is no common platform that caps at 24 GB specifically.
 - Why C is incorrect: DDR4 has no three-module limit. All four slots can be populated simultaneously on any standard four-slot board.
 - Why D is incorrect: BIOS reports the physical RAM detected by the memory controller, independent of any OS display limitation. An OS display limitation would appear in Windows, not in the BIOS memory readout.
+
+---
+
+### Question 11
+
+A technician needs to install ECC RAM in a workstation for a financial database application. Which of the following is required for ECC to function?
+
+- A) Any DDR4 motherboard with XMP support can use ECC modules
+- B) The motherboard and CPU must both support ECC; consumer platforms typically do not
+- C) ECC RAM is enabled by installing two matching ECC modules in dual-channel slots
+- D) ECC is activated by enabling the error correction setting in Windows Device Manager
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why B is correct:* ECC (Error-Correcting Code) RAM requires explicit hardware support in both the CPU's memory controller and the motherboard's chipset. Consumer Intel Core and AMD Ryzen platforms typically do not support ECC. ECC is natively supported on AMD Ryzen Pro, Intel Xeon, and AMD EPYC platforms, paired with server/workstation motherboards.
+- *Why A is incorrect:* XMP support has nothing to do with ECC. XMP profiles define speed and timing overclocking parameters for performance RAM — completely unrelated to error correction. A consumer board with XMP support cannot run ECC modules in ECC mode.
+- *Why C is incorrect:* Installing two ECC modules in dual-channel does not activate ECC. ECC operation is determined by hardware support in the CPU and chipset, not by dual-channel slot placement.
+- *Why D is incorrect:* ECC is a hardware feature implemented in the memory chips and the CPU's memory controller. It is not a software setting in Windows. Windows reports ECC status but cannot enable or disable the hardware feature.
+
+---
+
+### Question 12
+
+What does the PC4-25600 notation mean for a RAM module, and what is the equivalent DDR notation?
+
+- A) PC4-25600 means the module has 25,600 MB of capacity; it is equivalent to DDR4-12800
+- B) PC4-25600 is the module's peak bandwidth in MB/s; it is equivalent to DDR4-3200
+- C) PC4-25600 means the module has 25,600 pins arranged in a specific grid pattern; DDR4 notation is not equivalent
+- D) PC4-25600 describes the latency in nanoseconds; DDR4-3200 describes the clock speed in MHz
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why B is correct:* The PC notation (PC4 = DDR4 generation) expresses the module's peak theoretical bandwidth in MB/s. DDR4-3200 runs at 3200 MT/s × 8 bytes (64-bit bus width) = 25,600 MB/s = PC4-25600. This is a direct mathematical relationship: DDR speed × 8 = PC bandwidth rating.
+- *Why A is incorrect:* The PC number is bandwidth in MB/s, not module capacity. The equivalent DDR rating calculation given is also incorrect.
+- *Why C is incorrect:* The PC notation has nothing to do with pin count. Pin count (288 for DDR4) is a separate physical characteristic.
+- *Why D is incorrect:* PC4-25600 is not a latency value. Latency is expressed in CAS latency timings (e.g., CL16-18-18-38), which are separate from the bandwidth/speed notation.
+
+---
+
+### Question 13
+
+A server administrator orders DDR4 RAM modules described as "Registered (R-DIMM)" for a dual-processor server. How does registered RAM differ from unbuffered RAM?
+
+- A) Registered RAM has an error-correction chip soldered onto the PCB that corrects single-bit errors in real time
+- B) Registered RAM includes a register (buffer chip) between the DRAM chips and the memory controller, reducing electrical load and allowing more modules per channel
+- C) Registered RAM runs at lower voltages than unbuffered RAM, making it suitable for power-efficient server environments
+- D) Registered RAM uses a proprietary connector that only fits server-class motherboard slots
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why B is correct:* Registered (buffered) DIMMs contain a register chip (RCD — Registered Clock Driver) that buffers the address and command signals between the memory controller and the DRAM chips. This reduces the electrical load on the memory controller, allowing more DIMMs per channel and enabling very large memory configurations. Consumer platforms do not support R-DIMMs.
+- *Why A is incorrect:* This describes ECC functionality, not the registered characteristic. ECC and registered are separate features. A module can be ECC without being registered, or both ECC and registered (ECC R-DIMM).
+- *Why C is incorrect:* Registered DIMMs operate at the same voltage as equivalent unbuffered DIMMs within the same DDR generation. Voltage is not the distinguishing characteristic.
+- *Why D is incorrect:* R-DIMMs use standard DDR4 or DDR5 DIMM connectors. The physical connector is identical to unbuffered DIMMs; the incompatibility with consumer boards is electrical/protocol-based, not physical.
+
+---
+
+### Question 14
+
+What is the "1R" designation in a RAM module label such as "8GB 1Rx8"?
+
+- A) The module has a single rank, meaning it has one set of DRAM chips that the memory controller addresses at once
+- B) The "1R" indicates the module is the first revision in its production run
+- C) The module has a refresh cycle rate of 1 ms, faster than standard DDR4 modules
+- D) "1R" means the module contains a single row of DRAM chips on one side of the PCB only
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- *Why A is correct:* A "rank" is a set of DRAM chips that the memory controller accesses simultaneously as one 64-bit logical unit. A 1Rx8 module has one rank of eight 8-bit-wide chips (8×8 = 64 bits). A 2Rx8 module has two ranks and provides more capacity at the cost of slightly higher latency during rank switching.
+- *Why B is incorrect:* "R" in DDR module labeling always refers to rank count, not production revision number.
+- *Why C is incorrect:* Refresh cycle rate is not encoded in the consumer module label. DRAM refresh is managed internally by the memory controller and is not expressed as a rank designation.
+- *Why D is incorrect:* Rank refers to an electrical addressing concept, not physical chip placement. A single-rank module can have chips on both sides of the PCB.
+
+---
+
+### Question 15
+
+After installing new RAM, a system produces three short beeps during POST and does not boot. What does this symptom indicate?
+
+- A) The CPU is overclocked beyond its maximum safe frequency
+- B) The RAM is not being detected or there is a memory initialization failure
+- C) The GPU requires a firmware update before the system can POST
+- D) The SSD has failed and the system is broadcasting the failure through the speaker
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why B is correct:* POST beep codes are emitted to signal hardware initialization failures before any display output is possible. Three beeps is a common memory error code on many BIOS implementations (AMI BIOS associates 3 beeps with memory errors). A failure to detect RAM immediately after a RAM installation change is the most exam-appropriate answer.
+- *Why A is incorrect:* CPU overclocking failures typically cause a no-boot condition with no beeps, or a continuous single beep. Three beeps is specifically associated with memory errors in standard beep code tables.
+- *Why C is incorrect:* GPU firmware is updated from within an operating system. A GPU issue does not generate memory-type beep codes at POST.
+- *Why D is incorrect:* Storage drive failures do not generate POST beep codes. Drive failures are reported after POST completes.
+
+---
+
+### Question 16
+
+A DDR4-3200 module has a physical clock frequency of:
+
+- A) 3200 MHz — the data rate equals the clock frequency
+- B) 1600 MHz — DDR transfers data on both the rising and falling edges of each clock cycle, so the data rate is double the clock
+- C) 800 MHz — DDR uses quadruple data rate internally, so the external clock is divided by four
+- D) 6400 MHz — the effective bandwidth is double the advertised data rate
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why B is correct:* DDR stands for Double Data Rate. Data is transferred on both clock edges, yielding two transfers per cycle. DDR4-3200 has a physical base clock of 1600 MHz × 2 = 3200 MT/s. This is why DDR4-3200 is also called PC4-25600: 3200 MT/s × 8 bytes = 25,600 MB/s.
+- *Why A is incorrect:* DDR4-3200 does not have a 3200 MHz physical clock oscillation. The "3200" refers to the data transfer rate in MT/s, not the base clock frequency.
+- *Why C is incorrect:* 800 MHz is not the correct base clock for DDR4-3200. DDR4 uses an 8n prefetch internally, but the external interface speed is expressed as the full data rate.
+- *Why D is incorrect:* 6400 is the data rate of DDR5-6400, not the bandwidth of DDR4-3200.
+
+---
+
+### Question 17
+
+Which free tool is the standard technician utility for verifying dual-channel memory operation without opening the case?
+
+- A) Windows Event Viewer — it logs memory channel configuration at each boot
+- B) CPU-Z — the Memory tab shows Channel # as Single, Dual, or Quad
+- C) Device Manager — the RAM entry shows channel count in the properties window
+- D) Task Manager — the Performance > Memory tab shows the number of active memory channels
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why B is correct:* CPU-Z is a free system information utility. Its Memory tab explicitly reports the Channel # field as "Single," "Dual," or "Quad," confirming whether the memory controller is operating in dual-channel mode. This is the standard technician tool for verifying RAM configuration without hardware disassembly.
+- *Why A is incorrect:* Windows Event Viewer logs OS and application events. It does not log memory channel configuration.
+- *Why C is incorrect:* Device Manager shows hardware devices and driver status. RAM channel count is not displayed there.
+- *Why D is incorrect:* Task Manager's Performance > Memory view shows total RAM, speed, and form factor, but does not display single vs. dual-channel status. That detail requires CPU-Z.
+
+---
+
+### Question 18
+
+Which of the following would cause a Windows system to show less available RAM than physically installed?
+
+- A) The hard drive is nearly full, leaving no room for the virtual memory paging file
+- B) A portion of RAM is reserved by the iGPU for shared graphics memory
+- C) The OS cannot use RAM above 4 GB unless 64-bit mode is enabled in BIOS
+- D) RAM modules from different manufacturers run at different speeds, reducing usable capacity
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why B is correct:* Systems with integrated graphics that share system RAM allocate a portion of physical RAM for graphics use. This shows as "Hardware Reserved" in Task Manager's Memory view. For example, a system with 16 GB RAM and 1 GB reserved for iGPU shows 15 GB available to Windows.
+- *Why A is incorrect:* Hard drive free space affects the size of the paging file (virtual memory) but does not reduce the physical RAM visible to Windows.
+- *Why C is incorrect:* 64-bit mode is not a BIOS setting requiring separate activation. Modern x86-64 systems with a 64-bit OS always run in 64-bit mode. A 32-bit OS is limited to ~4 GB, but that is an OS limitation, not a BIOS toggle.
+- *Why D is incorrect:* RAM modules from different manufacturers running at different speeds do not reduce total visible capacity. The system runs all modules at the lower speed but includes all capacity in the total addressable memory.
+
+---
+
+### Question 19
+
+A user installs a DDR5 DIMM in a DDR4-only motherboard. What happens?
+
+- A) The module runs at DDR4 speeds due to automatic cross-generation negotiation
+- B) The module physically cannot be inserted because the notch positions differ between DDR4 and DDR5
+- C) The system boots but reports a BIOS compatibility warning
+- D) The DDR5 module operates in a legacy compatibility mode at 2133 MHz
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why B is correct:* DDR4 and DDR5 DIMMs both have 288 pins but have different notch positions on the contact edge. This physical keying prevents a DDR5 module from seating in a DDR4 slot. The notch alignment stops the module before any pins make contact.
+- *Why A is incorrect:* There is no cross-generation DDR auto-negotiation. DDR4 and DDR5 use fundamentally different signaling protocols and electrical specifications.
+- *Why C is incorrect:* The module cannot be physically inserted, so no boot sequence or BIOS warning is ever reached.
+- *Why D is incorrect:* There is no DDR5-to-DDR4 legacy compatibility mode. The two generations are electrically incompatible.
+
+---
+
+### Question 20
+
+After running MemTest86, a technician finds errors at specific memory addresses. What is the MOST appropriate next step?
+
+- A) Format and reinstall Windows because OS files are corrupted at those memory addresses
+- B) Enable XMP in BIOS to correct the memory timing errors MemTest86 detected
+- C) Replace the RAM module(s) that tested as faulty, testing each module individually to isolate which one has errors
+- D) Update the motherboard BIOS firmware because memory errors are always caused by outdated firmware
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why C is correct:* MemTest86 runs before the OS loads and tests physical DRAM cells by writing and reading patterns. Errors indicate physically faulty cells in the module. The protocol is to test each module individually in a known-good slot to isolate which module has defective cells. Faulty modules must be replaced.
+- *Why A is incorrect:* MemTest86 runs entirely from RAM — it has no interaction with OS files on storage. Errors reported are in RAM chips themselves, not in files on the drive.
+- *Why B is incorrect:* XMP affects memory overclocking speed and timing. Enabling XMP does not repair defective DRAM cells and may actually increase error rates on a marginal module.
+- *Why D is incorrect:* BIOS updates can improve RAM compatibility but do not repair physically defective DRAM cells. A confirmed hardware memory error requires module replacement.

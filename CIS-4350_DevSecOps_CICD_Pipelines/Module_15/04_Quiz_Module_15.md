@@ -199,3 +199,197 @@ Distractor Analysis:
 - Why A is incorrect: Security Gate Pass Rate at 71% indicates significant noise or genuine security debt in the pipeline, but a low pass rate does not directly mean vulnerabilities are escaping. The override approval process and gate configuration determine whether a low pass rate is operationally impactful. Escape Rate is the direct measure of pipeline effectiveness.
 - Why C is incorrect: Reducing MTTD improves detection speed but does not automatically improve MTTR, pass rate, or escape rate — each KPI has independent contributing factors. MTTD at 72 hours is suboptimal but not the most critical failure indicator; the escape rate represents actual breached security perimeter.
 - Why D is incorrect: MTTR-Security at 21 days for critical findings is a serious problem, but it is secondary to the escape rate question. Slow remediation means open findings exist for too long — but if they are caught by the pipeline and not escaping to production, the risk is manageable. An 8% escape rate means critical vulnerabilities are bypassing all controls and entering production, which is the more severe failure condition.
+
+---
+
+### Question 11
+
+A Security Champion proposes that the team's SAST gate should be set to fail the build on any HIGH or CRITICAL finding. Six months later, the gate pass rate has fallen to 40% and engineers have started adding `// nosec` comments without review to bypass the gate. Which transformation failure mode is occurring?
+
+- A) Security as Bottleneck — the security team is preventing deployments by requiring approval for every finding
+- B) Tool-First Culture — security tools were deployed without engineer training, leading to tool abuse rather than genuine remediation
+- C) Alert Fatigue — the gate is generating too many findings, causing engineers to suppress rather than fix them, undermining the security gate's effectiveness
+- D) Security Theater — the security team claims the tools are working because they are deployed, but the escape rate has increased
+
+Correct Answer: C — Alert fatigue occurs when the volume of security findings overwhelms engineers' capacity to triage and fix them, causing them to suppress findings with bypass mechanisms (`// nosec`, suppression annotations) rather than remediating them. The result is the opposite of the intended security outcome: the gate appears active but findings are ignored. The correct response is to tune the gate to a manageable finding rate, address the backlog systematically, and establish a governed suppression process with Security Champion review.
+
+Distractor Analysis:
+
+- Why A is incorrect: Security as Bottleneck occurs when the security team controls all decisions and engineers wait for approval. The scenario describes an automated gate that engineers bypass themselves — there is no approval bottleneck. The engineers are circumventing the control rather than waiting for security.
+- Why B is incorrect: Tool-First Culture describes deploying security tools without training, resulting in engineers not understanding findings. The scenario describes engineers who do understand the gate well enough to bypass it with `// nosec` — the problem is gate volume, not understanding.
+- Why D is incorrect: Security Theater describes the appearance of security without effectiveness (e.g., running scans but not acting on findings). The scenario is more specific: engineers are actively undermining the gate rather than simply not acting on findings. The mechanism (nosec bypass proliferation) is the alert fatigue failure mode.
+
+---
+
+### Question 12
+
+A DSOMM assessment places a newly formed DevSecOps team at Level 1 across all dimensions. The team wants to advance to Level 2 as quickly as possible. Which two actions have the highest impact on advancing from Level 1 to Level 2 in the Culture dimension?
+
+- A) Deploy OPA Gatekeeper to enforce PodSecurity admission policies and install Trivy operator for continuous scanning
+- B) Identify one Security Champion per team and provide them with an OWASP Top 10 training course; establish a shared security findings backlog visible to both development and security teams
+- C) Conduct an annual penetration test and present findings to the engineering leadership team
+- D) Deploy a full SAST, SCA, container scanning, and secrets scanning pipeline across all repositories
+
+Correct Answer: B — DSOMM Level 2 in the Culture dimension requires that security awareness is formalized and distributed — Security Champions are identified and receive training, and security knowledge is shared across teams rather than siloed in the security function. Establishing a shared backlog creates visibility and shared accountability. These are cultural and organizational actions, not tool deployments.
+
+Distractor Analysis:
+
+- Why A is incorrect: OPA Gatekeeper and Trivy operator are tool deployments that advance the Infrastructure/Compliance dimensions. Culture dimension advancement requires organizational and behavioral changes — champion identification, training, and shared accountability structures.
+- Why C is incorrect: An annual penetration test is a Level 3 or assessment activity. DSOMM Level 2 Culture requires daily-workflow integration of security — champions in sprints, training resources, and shared backlog. Annual point-in-time tests do not address the distribution and daily integration that characterizes Level 2 Culture.
+- Why D is incorrect: Full pipeline deployment advances the CI/CD Controls dimension (Security Testing in SAMM). Culture advancement requires the organizational foundation: people, training, and shared ownership — not tool suite completeness.
+
+---
+
+### Question 13
+
+Which DORA metric is most directly improved by reducing the Critical Escape Rate in a DevSecOps pipeline?
+
+- A) Deployment Frequency — because fewer security incidents means deployments can happen more often
+- B) Lead Time for Changes — because fixing security findings earlier in the pipeline reduces overall time to production
+- C) Change Failure Rate — because escaped critical vulnerabilities cause incidents that result in failed deployments or emergency rollbacks, directly increasing the Change Failure Rate
+- D) Mean Time to Recovery — because escaped vulnerabilities that cause incidents take longer to recover from than non-security incidents
+
+Correct Answer: C — Change Failure Rate (CFR) measures the percentage of deployments that result in a degraded service or require remediation (rollback, hotfix, incident). A critical vulnerability that escapes to production and is discovered via an external report or incident is a direct Change Failure Rate event. Reducing the escape rate reduces the number of deployments that lead to incidents, which directly reduces CFR toward the elite performer benchmark (<5%).
+
+Distractor Analysis:
+
+- Why A is incorrect: Deployment Frequency is driven by batch size, CI/CD maturity, and release process, not directly by security escape rate. Fewer security incidents may enable more confident deployments, but this is an indirect relationship.
+- Why B is incorrect: Lead Time for Changes is driven by CI/CD pipeline speed, PR review time, and test execution time. Fixing findings earlier reduces rework time, which can reduce lead time, but this is an indirect effect compared to the direct CFR impact of escaped vulnerabilities.
+- Why D is incorrect: MTTR (Mean Time to Recovery) measures how quickly the team recovers after an incident. Escape Rate affects whether incidents occur (CFR), not how fast recovery happens after an incident. MTTR is influenced by incident response maturity, not primarily by the escape rate.
+
+---
+
+### Question 14
+
+A security team proposes requiring all developers to complete a 40-hour annual security training course as part of the Security Champion program. A DevSecOps leader argues this approach is suboptimal. What is the DevSecOps-aligned alternative?
+
+- A) Require a 20-hour course instead — the issue is duration, not approach
+- B) Use just-in-time security training: provide context-sensitive guidance at the point where the security issue appears — such as inline documentation in the SAST finding, Secure Coding guidelines in the PR template, and targeted training for Security Champions on the specific vulnerability types their team encounters most frequently
+- C) Require the security team to conduct all training for all engineers quarterly — centralized training ensures consistency
+- D) Make all security training optional — forcing developers to learn security creates resentment that undermines the culture change
+
+Correct Answer: B — DevSecOps-aligned security training is contextual and continuous, not annual and generic. Just-in-time training surfaces security knowledge at the moment of relevance (when a SAST finding appears, when a PR introduces a new vulnerability pattern). Security Champions receive targeted deep training relevant to their team's technology stack. This approach has higher knowledge retention and adoption rates than periodic generic training.
+
+Distractor Analysis:
+
+- Why A is incorrect: Reducing the duration from 40 to 20 hours addresses course length but not the fundamental problem — annual, decontextualized training has low retention and does not change daily engineering behavior. The timing and context of training matter more than duration.
+- Why C is incorrect: Centralized security-team-delivered training replicates the centralized security bottleneck model. It does not scale to 80 engineers and does not build security knowledge within the development teams where it is needed.
+- Why D is incorrect: Making all training optional undermines the program. The Security Champion model requires commitment from identified champions who receive structured training. The criticism of mandatory training is about the format (annual, generic), not the principle of requiring learning.
+
+---
+
+### Question 15
+
+An organization's DevSecOps pipeline consistently shows a Security Gate Pass Rate of 95% for one team and 45% for another team. Both teams use the same tools and gate configurations. What is the most likely root cause of the difference, and what is the correct investigative approach?
+
+- A) The 45% team is producing lower-quality code — replace the team lead
+- B) Investigate whether the 45% team's codebase has a higher density of existing security debt, whether findings are from new code or legacy code, and whether the team's Security Champion is actively helping triage and remediate findings
+- C) Lower the pass threshold for the 45% team to match the 95% team — the difference indicates the threshold is incorrectly calibrated
+- D) The security tools are producing more false positives for the 45% team's technology stack — disable the tool for that team
+
+Correct Answer: B — A large gate pass rate difference between teams using the same tools is a diagnostic signal, not a definitive conclusion. The correct response is investigation: Is the 45% team working in a legacy codebase with accumulated security debt that is only now being measured? Are findings from new code written this sprint or from pre-existing code? Is the Security Champion engaged? Is the team getting support from the security function to prioritize and fix findings? The answer to these questions determines the correct intervention.
+
+Distractor Analysis:
+
+- Why A is incorrect: A low gate pass rate reflects the state of the codebase and process, not the quality of the team personnel. Making personnel decisions based on a single metric without investigation is poor management and would damage the psychological safety needed for DevSecOps culture change.
+- Why C is incorrect: Lowering thresholds for one team eliminates the measurement's value and allows security debt to accumulate unchecked. The goal is to understand and fix the root cause, not to make the metric look better.
+- Why D is incorrect: Disabling a security tool for a team because it is finding more issues is the opposite of the correct response. If a technology stack has more findings, the tool is working correctly. The correct response is to triage findings, prioritize remediation, and support the team — not to eliminate detection.
+
+---
+
+### Question 16
+
+The OWASP Software Assurance Maturity Model (SAMM) has five business functions. Which business function directly covers the security testing activities in a CI/CD pipeline (SAST, DAST, SCA)?
+
+- A) Governance — because pipeline security gates enforce organizational security policy
+- B) Construction — because security testing activities produce secure code artifacts
+- C) Verification — because Verification covers security testing including code review, automated security testing, and requirements-driven testing
+- D) Operations — because CI/CD pipeline execution is an operational activity
+
+Correct Answer: C — SAMM's Verification business function encompasses all security testing activities: security requirements-driven testing, automated security testing in pipelines (SAST, DAST, SCA), and manual security review. The Verification function's maturity model specifically addresses how well the organization tests software against security requirements before release. Improving SAMM Verification maturity is directly measured by expanding and strengthening pipeline security gates.
+
+Distractor Analysis:
+
+- Why A is incorrect: SAMM Governance covers security policy, compliance, and risk management. While pipeline gates enforce policy, the testing activities themselves are in Verification, not Governance.
+- Why B is incorrect: SAMM Construction covers security requirements, threat modeling, and secure architecture and design. It addresses what security properties the software should have, not how they are tested. Testing is Verification.
+- Why D is incorrect: SAMM Operations covers incident management, operational vulnerability management, and environment monitoring. CI/CD pipeline execution is a delivery mechanism, but the security testing it performs is classified under Verification.
+
+---
+
+### Question 17
+
+A Security Champion notices that engineers on their team are consistently marking SAST findings as false positives without review. The Champion wants to establish a governed suppression process. Which approach best balances velocity with security governance?
+
+- A) Remove the ability for engineers to mark any finding as a false positive — only the security team can suppress findings
+- B) Require that suppression annotations (`// nosec`, `# noqa`) be reviewed and approved in the PR by the Security Champion, who validates the false positive claim and adds a justification comment
+- C) Accept all suppression requests automatically and report them weekly to the security team for retroactive review
+- D) Turn off the SAST gate entirely until the backlog is cleared, then re-enable it
+
+Correct Answer: B — Security Champions are positioned precisely for this role: they have the security knowledge to evaluate whether a suppression claim is valid and the team presence to review it in the PR workflow. Requiring Champion review of suppression annotations in the PR creates a lightweight governance checkpoint that does not block velocity (it is part of the existing PR review process) while preventing unilateral false positive declarations that bypass the security gate.
+
+Distractor Analysis:
+
+- Why A is incorrect: Requiring only the security team to suppress findings reintroduces the centralized security bottleneck. For a team of 8 engineers generating dozens of SAST findings, requiring central security review of every suppression request is not scalable and undermines the purpose of the Champion model.
+- Why C is incorrect: Retroactive weekly review means suppressed findings have already been deployed. If a suppression was incorrectly granted, the finding may already be in production. The governance checkpoint must occur before merge, not after deployment.
+- Why D is incorrect: Disabling the gate eliminates all detection. The finding backlog problem should be addressed by triaging and categorizing the backlog — not by removing the detection capability while the backlog is addressed.
+
+---
+
+### Question 18
+
+Which combination of metrics provides the most complete picture of a DevSecOps program's effectiveness for an executive quarterly review?
+
+- A) Number of SAST rules enabled and number of security tools deployed
+- B) DORA Change Failure Rate, MTTR-Security for Critical findings, Critical Escape Rate, and Security Gate Pass Rate trending over four quarters
+- C) Total number of security findings identified and total number of findings closed this quarter
+- D) Number of Security Champions trained and number of security training hours delivered
+
+Correct Answer: B — An effective executive security dashboard shows both outcomes (Critical Escape Rate — are we preventing critical findings from reaching production?) and efficiency (MTTR-Security — how fast do we fix them when found?). DORA Change Failure Rate connects security effectiveness to business delivery performance. Security Gate Pass Rate trending shows pipeline health over time. Together, these four metrics tell a coherent story: how often critical vulnerabilities escape (outcome), how fast we respond (efficiency), what impact security incidents have on deployment success (business impact), and whether the pipeline is becoming more or less effective (trend).
+
+Distractor Analysis:
+
+- Why A is incorrect: Tool count and rule count are input metrics (activity measures), not outcome metrics. They show what the program has deployed, not whether it is working. A program with 20 tools and 10,000 rules could have a 100% escape rate if findings are ignored.
+- Why C is incorrect: Total findings opened and closed measures throughput but not quality or impact. Without context about severity distribution and whether escapes are occurring, these numbers do not tell whether the security investment is preventing incidents.
+- Why D is incorrect: Champion count and training hours are program adoption metrics that are useful for tracking the culture transformation. They do not measure security effectiveness — a team could have 20 trained champions and still have high escape rates if the pipeline is poorly configured.
+
+---
+
+### Question 19
+
+During a DevSecOps maturity assessment, a team reports: "We run SAST, SCA, and container scans in CI. We have Security Champions. We conduct quarterly threat modeling. Our MTTD is 4 hours and MTTR is 3 days for critical findings. We review DORA metrics in engineering leadership meetings." What DSOMM maturity level does this profile best represent?
+
+- A) Level 1 — Initial
+- B) Level 2 — Basic Adoption
+- C) Level 3 — High Adoption
+- D) Level 4 — Continuous Improvement
+
+Correct Answer: C — Level 3 (High Adoption) is characterized by: full pipeline gate suite across all finding categories (SAST, SCA, container, secrets, IaC), formal Security Champion program, threat modeling integrated into the development process, and security and DORA KPIs reviewed at leadership level. The profile matches Level 3 well: gates are comprehensive, champions exist, threat modeling is practiced (quarterly, though sprint-cadence would be Level 4), and KPIs are leadership-visible.
+
+Distractor Analysis:
+
+- Why A is incorrect: Level 1 organizations have no formal security program in the pipeline. This team has deployed multiple scanning tools, has champions, and reviews KPIs — all of which are well beyond Level 1.
+- Why B is incorrect: Level 2 teams have mandatory SAST and SCA gates and identified champions but lack the full gate suite, formal programs, and KPI integration with engineering leadership. This team has all of those, placing them above Level 2.
+- Why D is incorrect: Level 4 (Continuous Improvement) requires automation of security coverage metrics into engineering dashboards, sprint-cadence threat modeling (not quarterly), and security improvement metrics (escape rate trending to zero) as leadership-level OKRs. The quarterly threat modeling cadence and absence of continuous improvement automation places this team at Level 3, not Level 4.
+
+---
+
+### Question 20
+
+A developer asks a Security Champion: "Why should I care about DevSecOps? Security is the security team's job." Which response best represents the core DevSecOps culture argument?
+
+- A) "Because the company policy requires it and you could be fired for security violations."
+- B) "Because fixing a vulnerability after production deployment costs 30 times more than fixing it during development, and when you find and fix issues earlier in your own code, you protect your users and reduce the incident workload that would otherwise fall back to your sprint."
+- C) "Because security tools run automatically in CI now — you don't actually need to do anything differently."
+- D) "Because security is a compliance requirement and we need to pass our next audit."
+
+Correct Answer: B — The DevSecOps culture argument is grounded in practical developer self-interest and user protection, not compliance obligation or threat. The cost-of-defect curve (vulnerabilities cost exponentially more to fix later) is a concrete, credible argument. Connecting security to protecting users makes it a values-based argument. Connecting it to reduced sprint disruption (fewer incident-driven interruptions) makes it personally relevant. This is the Security Champion's value proposition to skeptical developers.
+
+Distractor Analysis:
+
+- Why A is incorrect: Rule-based arguments ("policy requires it") may achieve compliance behavior but do not build genuine security culture. Engineers who follow security practices only to avoid punishment will find ways around controls when they can. The goal is intrinsic motivation, not fear of consequences.
+- Why C is incorrect: "Tools run automatically — you don't need to do anything" is factually false (engineers must understand and act on findings) and counterproductive to culture change. It positions security as someone else's problem, which is the opposite of DevSecOps.
+- Why D is incorrect: Compliance framing ("pass our audit") is a valid business reason but is not the DevSecOps culture argument. It positions security as a bureaucratic checkbox rather than a quality attribute of the engineer's own work. The Security Champion model requires connecting security to the engineer's professional identity and values.
+
+---
+
+Quiz — Module 15 | CIS-4350 | Texas Wesleyan University | Professor Nash

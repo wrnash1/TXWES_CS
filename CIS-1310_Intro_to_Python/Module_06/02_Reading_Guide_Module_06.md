@@ -348,6 +348,30 @@ Watch Episodes 10–11 of the [Python for Everybody Course Playlist](https://www
 
 ---
 
+## 9. Supplemental Resources
+
+**1. Official Python 3 Docs — More on Lists**
+[https://docs.python.org/3/tutorial/datastructures.html#more-on-lists](https://docs.python.org/3/tutorial/datastructures.html#more-on-lists)
+The official tutorial section on all list methods with concise descriptions and examples. The full method table covers `append`, `extend`, `insert`, `remove`, `pop`, `clear`, `index`, `count`, `sort`, `reverse`, and `copy`. Essential PCAP reference.
+
+**2. Official Python 3 Docs — List Comprehensions**
+[https://docs.python.org/3/tutorial/datastructures.html#list-comprehensions](https://docs.python.org/3/tutorial/datastructures.html#list-comprehensions)
+Covers list comprehension syntax including nested comprehensions and filter conditions. Includes comparisons to equivalent `for` loop code — useful for understanding what the comprehension evaluates.
+
+**3. Python for Everybody — Chapter 8: Lists**
+[https://www.py4e.com/html3/08-lists](https://www.py4e.com/html3/08-lists)
+Free textbook chapter covering lists, list methods, string splitting, parsing, and iteration. Includes exercises and self-check questions. The section on aliasing and references is particularly relevant to the copy/alias trap.
+
+**4. Real Python — Python's list Data Type: A Deep Dive**
+[https://realpython.com/python-list/](https://realpython.com/python-list/)
+A comprehensive article covering list creation, indexing, slicing, methods, comprehensions, and performance considerations. Goes deeper than the exam requirements — good for students who want to understand the internal implementation.
+
+**5. Real Python — When to Use a List Comprehension in Python**
+[https://realpython.com/list-comprehension-python/](https://realpython.com/list-comprehension-python/)
+Explains when list comprehensions are more readable than equivalent loops, when to avoid them (complex logic), and how they relate to generator expressions, `map()`, and `filter()`. Builds professional Python style habits.
+
+---
+
 ## 9. Study Checklist
 
 - [ ] Watch the Module 06 video lecture by Professor Nash.

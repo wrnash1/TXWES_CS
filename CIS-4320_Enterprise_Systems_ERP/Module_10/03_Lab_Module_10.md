@@ -214,6 +214,33 @@ In 100–150 words, explain how the Valuation Class in the Material Master Accou
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Multi-Vendor Procurement Optimization Scenario
+
+Crestline Aerospace operates three manufacturing plants, each with its own Purchasing Organization. Plant 1100 (Texas) and Plant 1200 (Ohio) both purchase aluminum bar stock from the same two approved vendors: MetalSource Inc. (vendor 1001) and Apex Alloys LLC (vendor 1002). The current setup has no source list — buyers at each plant select vendors manually, resulting in inconsistent pricing and no volume consolidation.
+
+1. Design a Source List configuration for aluminum bar stock (material A-4400) that: (a) makes MetalSource Inc. the preferred vendor for Plant 1100 with fixed-source enforcement, (b) allows Apex Alloys as an alternative for Plant 1200 only, and (c) enables automatic PO creation from approved requisitions. Specify the Source List fields you would configure for each entry and what the "Fixed Source" flag means operationally.
+2. MetalSource offers a volume rebate: if total annual purchases exceed $500,000, the net price is reduced by 3%. Explain how SAP MM Conditions (pricing procedure) and Info Records could be configured to apply this rebate automatically once the threshold is met. What condition type would you use and at what level would it be maintained?
+3. Construct the complete three-way match audit trail for a single PO line: PO price = $12.00/unit, GR quantity = 500 units, MIRO invoice quantity = 500 units, MIRO invoice price = $12.36/unit. Show the journal entries for the GR posting and the MIRO posting (with the price difference). Identify whether SAP would auto-post the MIRO or block it, assuming a price tolerance of 2%.
+4. After reviewing the scenario, the Procurement Director asks whether Crestline should move from Moving Average Price to Standard Price for aluminum bar stock. Write a one-paragraph recommendation (75–100 words) that addresses: the impact on month-end variance reporting, the administrative burden of maintaining standard prices annually, and the specific risk if a large spot purchase is made at a price significantly above standard.
+
+### Challenge 2: Inventory Discrepancy Investigation and Physical Inventory Reconciliation
+
+Crestline's month-end cycle count for titanium sheet (material T-7700, standard price $85.00/sheet) shows a book quantity of 1,240 sheets in storage location 0001, but the physical count confirms only 1,198 sheets are present — a variance of 42 sheets.
+
+1. List the five most likely root causes of a negative inventory variance of this type in a manufacturing environment. For each cause, identify the SAP transaction or process failure that would produce it (e.g., a GI posting with wrong movement type, a scrapped quantity never posted in SAP).
+2. The physical inventory count was entered in SAP using MI04 (Enter Inventory Count). Walk through the complete sequence of SAP transactions required to: post the count result, generate the difference list, and post the inventory difference. Name each transaction and describe what document it creates.
+3. Calculate the financial impact of posting the 42-sheet variance. Show the journal entry that SAP would generate for the inventory adjustment posting. Identify the G/L account debited or credited for the variance and explain what type of account this is in the Chart of Accounts.
+4. Going forward, the Warehouse Manager wants to prevent undetected shrinkage by implementing continuous cycle counting rather than an annual physical inventory. Describe how SAP MM ABC indicator classification and cycle count planning support this goal. What criteria would you use to assign titanium sheet (high-value, low-volume) to cycle count class A, and how frequently should class A materials be counted per year?
+
+### Reflection Questions
+
+1. In Challenge 1, enforcing a fixed source list eliminates buyer discretion for vendor selection. What is the trade-off between procurement control (price consistency, volume leverage) and operational flexibility (spot buying when the preferred vendor is out of stock or lead time is too long)? Under what business conditions would you relax fixed-source enforcement?
+2. The inventory discrepancy in Challenge 2 could represent shrinkage, data entry error, or an unposted process step. In a fully integrated SAP environment, which integration point between MM and WM (Warehouse Management) or MM and PP (Production Planning) is most likely to produce unrecorded inventory movements — and what automated reconciliation check would catch such gaps within 24 hours?
+
+---
+
 ## Grading Rubric
 
 | Section | Points | Criteria |

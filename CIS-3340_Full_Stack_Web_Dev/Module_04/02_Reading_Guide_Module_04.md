@@ -16,7 +16,7 @@ This module covers the Document Object Model API — the programming interface t
 
 When a browser loads an HTML document, it parses the markup and constructs an in-memory tree called the DOM. Each HTML element becomes a node object with properties and methods. JavaScript interacts with this tree through the `document` global object.
 
-```
+```text
 document
  └── html
       ├── head
@@ -333,3 +333,25 @@ document.addEventListener('DOMContentLoaded', function() {
 - [ ] Build a DOM element with `createElement` and `innerHTML` from a data object
 - [ ] Persist user preferences with `localStorage`
 - [ ] Complete Lab 04 and Discussion 04 before the module deadline
+
+---
+
+## 11. Supplemental Resources
+
+The following free, open-access resources go deeper on Module 04 topics:
+
+**1. MDN Web Docs — Introduction to the DOM**
+[https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Introduction](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Introduction)
+The authoritative reference for the DOM API, covering the node tree, query methods, event interfaces, and the relationship between HTML markup and the in-memory object model.
+
+**2. MDN Web Docs — EventTarget.addEventListener()**
+[https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener)
+Full documentation for `addEventListener` including the options object (`once`, `capture`, `passive`), event bubbling and capturing phases, and the complete list of event types.
+
+**3. javascript.info — Document and events**
+[https://javascript.info/document](https://javascript.info/document)
+A free, interactive course section covering DOM navigation, element manipulation, event delegation, and bubbling with live code examples and exercises — directly complementing the Lab 04 accordion and search filter tasks.
+
+**4. web.dev — Storage for the web**
+[https://web.dev/articles/storage-for-the-web](https://web.dev/articles/storage-for-the-web)
+Google's guide comparing `localStorage`, `sessionStorage`, IndexedDB, and Cache API — including storage limits, eviction policies, and best practices relevant to the dark mode persistence feature in Lab 04.

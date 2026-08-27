@@ -455,7 +455,31 @@ Watch Episode 14 of the [Python for Everybody Course Playlist](https://www.youtu
 
 ---
 
-## 7. Study Checklist
+## 7. Supplemental Resources
+
+**1. Official Python 3 Docs — Classes**
+[https://docs.python.org/3/tutorial/classes.html](https://docs.python.org/3/tutorial/classes.html)
+The authoritative tutorial chapter on Python classes — covers class definitions, `__init__`, `self`, instance variables, class variables, method objects, inheritance, and the data model. This is the primary reference for PCAP exam questions on OOP basics.
+
+**2. Official Python 3 Docs — Data Model**
+[https://docs.python.org/3/reference/datamodel.html](https://docs.python.org/3/reference/datamodel.html)
+The complete reference for Python's special methods (`__init__`, `__str__`, `__repr__`, `__eq__`, `__lt__`, etc.) and how they interact with Python's operators and built-in functions. Essential for understanding how dunder methods work.
+
+**3. Python for Everybody — Chapter 14: Object-Oriented Programming**
+[https://www.py4e.com/html3/14-objects](https://www.py4e.com/html3/14-objects)
+Free textbook chapter introducing OOP concepts with real-world analogies. Covers class definitions, `__init__`, instance methods, and the `self` parameter with step-by-step examples appropriate for beginners.
+
+**4. Real Python — Object-Oriented Programming in Python 3**
+[https://realpython.com/python3-object-oriented-programming/](https://realpython.com/python3-object-oriented-programming/)
+A comprehensive free article covering class definitions, `__init__`, instance vs. class variables, `__str__` and `__repr__`, inheritance, and encapsulation. The section on class vs. instance variables and the shadowing behavior is directly relevant to PCAP exam questions.
+
+**5. Real Python — Python's property(): Add Managed Attributes to Your Classes**
+[https://realpython.com/python-property/](https://realpython.com/python-property/)
+A thorough free article on the `@property` decorator — Python's idiomatic way to add validation and computed attributes to classes. Understanding properties is the natural next step after mastering `__init__` and instance variables.
+
+---
+
+## 8. Study Checklist
 
 - [ ] Watch the Module 14 video lecture by Professor Nash.
 - [ ] Read the High-Yield Glossary — especially the instance variable vs class variable distinction.

@@ -165,3 +165,173 @@ Distractor analysis: B is incorrect because including the parent PK in the child
 ---
 
 Reference: cloud.google.com/learn
+
+---
+
+### Question 11 (5 points)
+
+A table `sales_rep_territories` has columns: rep_id (PK), rep_name, territory_id, territory_name, territory_manager. Which normal form is violated and why?
+
+- A) Third Normal Form — territory_name and territory_manager depend on territory_id, not directly on rep_id.
+- B) Second Normal Form — rep_name depends on only part of a composite primary key.
+- C) First Normal Form — territory_manager may represent multiple managers in one cell.
+- D) No normal form is violated — all attributes depend on rep_id.
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - B) The primary key is rep_id alone (single column), so a 2NF violation (partial dependency) is impossible; 2NF violations require a composite primary key.
+  - C) No evidence of multi-valued cells is given; the question describes single-valued columns, which satisfies 1NF atomicity.
+  - D) Territory_name and territory_manager depend on territory_id, not rep_id; the transitive chain rep_id → territory_id → territory_name violates 3NF.
+
+---
+
+### Question 12 (5 points)
+
+Which of the following correctly describes an insertion anomaly in a poorly designed relational table?
+
+- A) A new fact cannot be recorded without also inserting an unrelated fact as part of the same row.
+- B) An INSERT statement fails because a NOT NULL constraint is violated.
+- C) Two rows with the same primary key value are inserted, causing a duplicate key error.
+- D) An inserted row references a non-existent parent row, violating a foreign key constraint.
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - B) A NOT NULL constraint violation is an integrity enforcement mechanism, not a design anomaly; it reflects a constraint working correctly, not a schema deficiency.
+  - C) A duplicate primary key is a constraint violation, not a normalization anomaly; it indicates the application attempted to insert a duplicate row.
+  - D) A foreign key violation is a referential integrity issue, not an insertion anomaly as defined in normalization theory; an insertion anomaly occurs when valid data cannot be stored without introducing unrelated data.
+
+---
+
+### Question 13 (5 points)
+
+A database designer is creating a schema where a `Project` entity can have many `Tasks`, and each `Task` belongs to exactly one `Project`. The `Task` entity's primary key is composed of (project_id, task_number), where task_number is only unique within a project. What type of relationship does this represent?
+
+- A) An identifying relationship, because the child entity's primary key includes the parent entity's primary key.
+- B) A non-identifying relationship, because the child has its own independent primary key.
+- C) A many-to-many relationship, because each project has multiple tasks.
+- D) A reflexive relationship, because the task_number is derived from the project.
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - B) A non-identifying relationship means the child's primary key is independent of the parent's; here the child's PK includes the parent's PK (project_id), which is the definition of an identifying relationship.
+  - C) A many-to-many relationship requires each entity on both sides to have multiple associations with the other; here each task belongs to exactly one project, making it one-to-many.
+  - D) A reflexive relationship is a self-referencing relationship within the same entity (e.g., an employee who manages other employees); this describes a parent-child relationship between two different entities.
+
+---
+
+### Question 14 (5 points)
+
+When decomposing a table to eliminate a 3NF violation, which property must be preserved to ensure that the original table can be reconstructed from the decomposed tables?
+
+- A) Lossless-join decomposition — the natural join of the decomposed tables produces exactly the original table with no spurious tuples.
+- B) Functional dependency preservation — all functional dependencies from the original table are preserved in at least one of the decomposed tables.
+- C) Referential integrity — all foreign key constraints in the decomposed tables reference valid primary keys.
+- D) Domain-key normal form — all constraints in the decomposed tables are consequences of domain and key constraints.
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - B) Dependency preservation is also desirable but is a separate property; it ensures that all business rules (FDs) can be checked without joining tables, but it does not guarantee that original rows are recoverable.
+  - C) Referential integrity is a constraint property, not a decomposition property; it must be maintained but does not define whether decomposition is lossless.
+  - D) Domain-key normal form is a theoretical concept above BCNF and is not the property evaluated when assessing whether a decomposition is correct.
+
+---
+
+### Question 15 (5 points)
+
+In Crow's Foot ERD notation, what does a circle followed by a crow's foot on one end of a relationship line indicate?
+
+- A) Zero or many — the entity on that side may have zero or more related instances.
+- B) One and only one — the entity must have exactly one related instance.
+- C) One or many — the entity must have at least one related instance.
+- D) Zero or one — the entity may have at most one related instance.
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - B) One and only one is represented by two vertical bars (||); a circle indicates the zero/optional side.
+  - C) One or many is represented by a vertical bar followed by a crow's foot (|<); a circle, not a bar, is on the minimum side in option A.
+  - D) Zero or one is represented by a circle followed by a single vertical bar (O|); a crow's foot indicates "many," not "one."
+
+---
+
+### Question 16 (5 points)
+
+A retail company's `product_catalog` table stores product_id, product_name, supplier_id, supplier_name, supplier_contact_email, and unit_cost. When the supplier changes their contact email, a DBA must update hundreds of rows. Which anomaly type does this represent?
+
+- A) Update anomaly — the same fact (supplier email) is stored redundantly in multiple rows, requiring multiple updates to maintain consistency.
+- B) Deletion anomaly — deleting a product row removes the supplier's contact information permanently.
+- C) Insertion anomaly — a new supplier cannot be added until they supply at least one product.
+- D) Referential anomaly — the supplier_id foreign key does not reference a separate suppliers table.
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - B) A deletion anomaly would occur if deleting the last product for a supplier also destroyed the only record of that supplier's contact info; the question specifically describes the update scenario.
+  - C) An insertion anomaly would prevent adding a supplier with no products yet; the question describes an update problem with existing data, not an inability to insert new data.
+  - D) "Referential anomaly" is not a standard normalization term; the issue is a design anomaly caused by denormalization (storing supplier attributes in the product table), not a constraint violation.
+
+---
+
+### Question 17 (5 points)
+
+Which statement correctly describes why BigQuery schemas are deliberately denormalized while Cloud SQL schemas follow normalization principles?
+
+- A) BigQuery is optimized for columnar analytical scans where JOINs are expensive; denormalization reduces JOIN overhead at the cost of storage redundancy. Cloud SQL handles OLTP workloads where JOINs are efficient and normalization prevents update anomalies.
+- B) BigQuery does not support JOIN operations, so all data must be in a single flat table.
+- C) Cloud SQL cannot store duplicate column values, forcing normalization, while BigQuery has no uniqueness constraints.
+- D) Normalized schemas in BigQuery would violate its row-size limits, making denormalization technically required.
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - B) BigQuery fully supports JOIN operations; the reason for denormalization is performance optimization for analytical workloads, not a technical limitation.
+  - C) Cloud SQL can store duplicate column values in non-key columns; normalization is a design discipline, not a technical enforcement mechanism in the storage engine.
+  - D) BigQuery has no practical row-size constraint that forces denormalization; the motivation is query performance on columnar data, not storage mechanics.
+
+---
+
+### Question 18 (5 points)
+
+A `flights` table has a composite primary key of (flight_number, departure_date). The table also stores: airline_id, airline_name, aircraft_type, origin_airport, destination_airport. Which 2NF violation is present?
+
+- A) airline_name depends only on airline_id, not on the full composite key (flight_number, departure_date).
+- B) departure_date depends only on flight_number, not on the full composite key.
+- C) origin_airport depends on destination_airport rather than on the primary key.
+- D) aircraft_type is a transitive dependency through airline_id.
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - B) Departure_date is part of the primary key itself, not a non-key attribute; it cannot participate in a partial dependency.
+  - C) origin_airport depending on destination_airport would be a transitive dependency (3NF violation), not a partial dependency (2NF violation); additionally no evidence for this dependency is given.
+  - D) A transitive dependency violates 3NF, not 2NF; the question asks specifically about a 2NF violation, which requires a partial dependency on the composite key.
+
+---
+
+### Question 19 (5 points)
+
+A DBA is migrating an on-premises Oracle schema to Cloud SQL for PostgreSQL. The source schema contains a table with 47 columns and is in 1NF but not 2NF. The migration requires the destination schema to be in at least 3NF. What is the correct order of normalization steps?
+
+- A) Eliminate partial dependencies to reach 2NF, then eliminate transitive dependencies to reach 3NF.
+- B) Eliminate transitive dependencies to reach 3NF first, then check for partial dependencies.
+- C) Eliminate multi-valued attributes to reach 1NF, then eliminate all non-key dependencies at once.
+- D) Convert to BCNF directly, which automatically satisfies 1NF, 2NF, and 3NF requirements.
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - B) Normal form levels must be achieved in order (1NF → 2NF → 3NF); a table cannot be in 3NF unless it is first in 2NF; skipping 2NF to address transitive dependencies leaves partial dependencies unresolved.
+  - C) The table is already stated to be in 1NF, so eliminating multi-valued attributes is already done; the remaining work is achieving 2NF then 3NF in sequence.
+  - D) BCNF cannot be achieved without first achieving 3NF; converting directly to BCNF is not a defined single-step process and could result in loss of functional dependency preservation if not done carefully.
+
+---
+
+### Question 20 (5 points)
+
+An ERD shows a `Customer` entity connected to a `Shipping_Address` entity with a relationship labeled "has" and cardinality markers showing one customer to zero-or-many addresses. Which SQL DDL pattern correctly implements this relationship?
+
+- A) Add a `customer_id` foreign key column to the `shipping_addresses` table referencing the `customers` table.
+- B) Add a `shipping_address_id` foreign key column to the `customers` table referencing the `shipping_addresses` table.
+- C) Create a junction table `customer_addresses` with foreign keys to both `customers` and `shipping_addresses`.
+- D) Store address data as a JSON array column in the `customers` table.
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - B) Placing the foreign key in the parent (customers) table means each customer can only reference one address; to support multiple addresses the FK must be in the child (shipping_addresses) table.
+  - C) A junction table is used for many-to-many relationships; this is a one-to-many relationship (one customer, many addresses) and does not require a junction table.
+  - D) Storing addresses as a JSON array violates 1NF and prevents indexing, querying, or constraining individual address fields in the relational model.

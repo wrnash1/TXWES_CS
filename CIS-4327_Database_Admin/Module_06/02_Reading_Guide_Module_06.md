@@ -423,3 +423,19 @@ Before the exam, confirm you can answer these:
 - [ ] PgBouncer pooling mode tradeoffs for LISTEN/NOTIFY compatibility
 - [ ] Which background process is responsible for checkpoint writes
 - [ ] How to identify a blocking session using pg_blocking_pids()
+
+---
+
+## 9. Supplemental Resources
+
+**1. PostgreSQL Official Documentation — Server Configuration**
+https://www.postgresql.org/docs/current/runtime-config.html
+The complete reference for all postgresql.conf parameters including shared_buffers, work_mem, wal_level, autovacuum settings, and checkpoint configuration.
+
+**2. PostgreSQL Wiki — Tuning Your PostgreSQL Server**
+https://wiki.postgresql.org/wiki/Tuning_Your_PostgreSQL_Server
+Community-maintained tuning guide covering practical recommendations for shared_buffers, effective_cache_size, work_mem, and WAL settings for common workload types.
+
+**3. PgBouncer Documentation — Configuration Reference**
+https://www.pgbouncer.org/config.html
+Official PgBouncer configuration reference covering all pgbouncer.ini parameters, pooling mode trade-offs, auth_type options, and pool sizing strategies.

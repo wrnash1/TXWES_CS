@@ -376,3 +376,203 @@ D. Create a new DFS folder target pointing to the second printer's IP address
 ---
 
 *Submit answers to Canvas by the due date shown in the course schedule.*
+
+---
+
+### Question 11 (5 points)
+
+You create a new SMB share for the Finance department. You want to set the share
+permission so that NTFS permissions alone control access, following Microsoft's
+best practice. Which share permission configuration achieves this?
+
+- A) Grant Finance_Group Modify at the share level
+- B) Grant Everyone Full Control at the share level
+- C) Grant Authenticated Users Read at the share level
+- D) Grant Domain Admins Full Control at the share level
+
+- **Correct Answer: B**
+- **Distractor Analysis:**
+  - **A** — Granting Modify at the share level to Finance_Group means non-Finance users receive no share access. This requires maintaining share permissions in parallel with NTFS, increasing management complexity.
+  - **B** — Correct. Granting Everyone Full Control at the share level removes the share layer as a constraint. NTFS permissions exclusively control what each user can read, write, or delete. This is Microsoft's recommended best practice for simplified permission management.
+  - **C** — Authenticated Users Read would restrict all access to Read through the network, overriding any NTFS Modify or Full Control grants for all users.
+  - **D** — Granting only Domain Admins Full Control would lock out all non-admin users from the share entirely, regardless of their NTFS permissions.
+
+---
+
+### Question 12 (5 points)
+
+A user has Delete permission Denied explicitly on a file through a Deny ACE.
+The user is also a member of IT_Admins, which has Full Control Allow on the same
+file. What is the user's effective Delete permission?
+
+- A) Allow — Full Control from IT_Admins overrides the explicit Deny
+- B) Deny — explicit Deny ACEs override Allow ACEs regardless of group membership
+- C) Allow — cumulative permissions favor the highest permission level
+- D) Allow — the most recently applied permission takes precedence
+
+- **Correct Answer: B**
+- **Distractor Analysis:**
+  - **A** — Allow permissions from group membership do not override explicit Deny ACEs applied directly to the user or another group the user belongs to.
+  - **B** — Correct. In Windows NTFS, explicit Deny ACEs take precedence over Allow ACEs. If any ACE in the user's effective permission set contains Deny Delete, that Deny wins even if another ACE grants Full Control Allow.
+  - **C** — Cumulative permissions apply to Allow ACEs — you take the union of all Allow permissions. However, explicit Deny ACEs override any accumulated Allow permissions.
+  - **D** — NTFS permissions do not have a "last applied" rule. The Deny/Allow precedence rule is based on ACE type, not application order.
+
+---
+
+### Question 13 (5 points)
+
+You want to create a new SMB share at `C:\Data\HR` using PowerShell, grant
+HR_Group Change (Modify) permission at the share level, and limit concurrent
+connections to 25. Which command is correct?
+
+- A) `New-SmbShare -Name "HR" -Path "C:\Data\HR" -ChangeAccess "txwes\HR_Group" -ConcurrentUserLimit 25`
+- B) `New-SmbShare -Name "HR" -Path "C:\Data\HR" -FullAccess "txwes\HR_Group" -ConcurrentUserLimit 25`
+- C) `New-SmbShare -Name "HR" -Path "C:\Data\HR" -ReadAccess "txwes\HR_Group" -ConcurrentUserLimit 25`
+- D) `Set-SmbShare -Name "HR" -ChangeAccess "txwes\HR_Group" -ConcurrentUserLimit 25`
+
+- **Correct Answer: A**
+- **Distractor Analysis:**
+  - **A** — Correct. `-ChangeAccess` grants Change (Modify) share permission. `-ConcurrentUserLimit 25` limits simultaneous connections. Both parameters are valid for `New-SmbShare`.
+  - **B** — `-FullAccess` grants Full Control share permission, not Change. This grants a higher level than requested.
+  - **C** — `-ReadAccess` grants Read-only share permission, which is less than the required Change permission.
+  - **D** — `Set-SmbShare` modifies an existing share. The share must already exist before `Set-SmbShare` can configure it; it cannot create a new share.
+
+---
+
+### Question 14 (5 points)
+
+You check a DFS Namespace folder and find that a folder target is marked as
+"offline." Users report they cannot access `\\txwes.edu\Shared\Projects`. Which
+PowerShell command brings the folder target back online?
+
+- A) `Set-DfsnFolder -Path "\\txwes.edu\Shared\Projects" -State Online`
+- B) `Set-DfsnFolderTarget -Path "\\txwes.edu\Shared\Projects" -TargetPath "\\DC1\Projects" -State Online`
+- C) `Enable-DfsnRootTarget -Path "\\txwes.edu\Shared" -TargetPath "\\DC1\Projects"`
+- D) `Restart-Service -Name Dfs`
+
+- **Correct Answer: B**
+- **Distractor Analysis:**
+  - **A** — `Set-DfsnFolder` modifies folder-level properties such as referral mode and timeout. It does not control the online/offline state of individual folder targets.
+  - **B** — Correct. `Set-DfsnFolderTarget` controls properties of a specific folder target, including its state. `-State Online` makes the target available for client referrals.
+  - **C** — `Enable-DfsnRootTarget` operates on namespace root targets, not folder targets. It would not affect a folder-level target state.
+  - **D** — Restarting the DFS service affects all namespaces globally and would cause a brief disruption. It does not specifically fix a single offline folder target.
+
+---
+
+### Question 15 (5 points)
+
+A print administrator needs to move the print spooler folder from its default
+location (`C:\Windows\System32\spool\PRINTERS`) to `D:\PrintSpool` to free up
+space on the C: drive. Which registry key controls the spooler folder path?
+
+- A) `HKLM\SYSTEM\CurrentControlSet\Services\Spooler\DefaultSpoolDirectory`
+- B) `HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Print\Printers\DefaultSpoolDirectory`
+- C) `HKLM\SYSTEM\CurrentControlSet\Control\Print\Printers\DefaultSpoolDirectory`
+- D) `HKCU\Software\Microsoft\Windows NT\CurrentVersion\Devices\SpoolDirectory`
+
+- **Correct Answer: B**
+- **Distractor Analysis:**
+  - **A** — The `Services\Spooler` key controls service parameters such as startup type and image path, not the spool folder location.
+  - **B** — Correct. The default spool directory is configured at `HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Print\Printers\DefaultSpoolDirectory`. Changing this value and restarting the Spooler service moves the spool folder.
+  - **C** — The `Control\Print\Printers` key contains per-printer settings. There is no `DefaultSpoolDirectory` value at this path.
+  - **D** — `HKCU` values are per-user settings. The spool directory is a system-wide setting stored in `HKLM`.
+
+---
+
+### Question 16 (5 points)
+
+You configure NTFS permissions on `C:\Shares\Data` and set the following
+inheritance flags: `ContainerInherit` only (no `ObjectInherit`). What does
+this permission propagate to?
+
+- A) Only the Data folder itself
+- B) The Data folder and all files directly inside it
+- C) The Data folder and all subfolders, but not files in those subfolders
+- D) All files and subfolders recursively
+
+- **Correct Answer: C**
+- **Distractor Analysis:**
+  - **A** — Without any inheritance flags, the permission would apply only to the folder itself. `ContainerInherit` extends it beyond the folder.
+  - **B** — `ObjectInherit` propagates permissions to files. Without `ObjectInherit`, files do not inherit the permission.
+  - **C** — Correct. `ContainerInherit` propagates permissions to sub-containers (subfolders). Without `ObjectInherit`, the permission does not propagate to files within those subfolders.
+  - **D** — Both `ContainerInherit` and `ObjectInherit` are required to propagate permissions to all files and subfolders recursively.
+
+---
+
+### Question 17 (5 points)
+
+You need to add a second folder target to an existing DFS folder
+`\\txwes.edu\Shared\IT` pointing to `\\DC2\IT_Backup` for redundancy. Which
+PowerShell command accomplishes this?
+
+- A) `New-DfsnFolder -Path "\\txwes.edu\Shared\IT" -TargetPath "\\DC2\IT_Backup"`
+- B) `New-DfsnFolderTarget -Path "\\txwes.edu\Shared\IT" -TargetPath "\\DC2\IT_Backup"`
+- C) `Add-DfsnRootTarget -Path "\\txwes.edu\Shared" -TargetPath "\\DC2\IT_Backup"`
+- D) `Set-DfsnFolder -Path "\\txwes.edu\Shared\IT" -TargetPath "\\DC2\IT_Backup"`
+
+- **Correct Answer: B**
+- **Distractor Analysis:**
+  - **A** — `New-DfsnFolder` creates a new virtual DFS folder within the namespace. Running it on an existing folder path would produce an error.
+  - **B** — Correct. `New-DfsnFolderTarget` adds an additional physical target to an existing DFS folder. This enables client failover and load balancing between `\\DC1\IT` and `\\DC2\IT_Backup`.
+  - **C** — `Add-DfsnRootTarget` adds a target to the namespace root, not to a subfolder within the namespace.
+  - **D** — `Set-DfsnFolder` modifies folder-level settings such as referral timeout and state. It does not add folder targets.
+
+---
+
+### Question 18 (5 points)
+
+A user connects to `\\txwes.edu\Shared\Faculty` from their workstation and
+receives "Access Denied." The user is a member of Faculty_Staff, which has NTFS
+Read permission on the Faculty folder. The share permission is Everyone Full
+Control. ABE is enabled. What is the most likely cause?
+
+- A) ABE is hiding the Faculty folder because the user lacks Read permission
+- B) The share permission Everyone Full Control is overriding the NTFS permission
+- C) The user lacks NTFS Read permission; Faculty_Staff does not have an ACE on this folder
+- D) The DFS folder target is offline
+
+- **Correct Answer: C**
+- **Distractor Analysis:**
+  - **A** — ABE hides folders from users who lack Read permission, but it does not cause "Access Denied." If the folder is visible and the user tries to open it, the denial comes from the permission evaluation, not ABE.
+  - **B** — Everyone Full Control at the share level is not restrictive. Share permissions would only cause denial if they were set to Read or Deny — Full Control does not restrict access.
+  - **C** — Correct. The problem states the user is a member of Faculty_Staff and Faculty_Staff has NTFS Read permission. If the user still receives "Access Denied," the most likely cause is that Faculty_Staff does not actually have an effective ACE on this folder — perhaps due to a missing group membership, a misnamed group, or the ACE being on a different folder.
+  - **D** — An offline DFS folder target would produce an error about the path being unavailable, not an "Access Denied" message.
+
+---
+
+### Question 19 (5 points)
+
+A Windows Server administrator runs `Get-SmbShare` and notices a share named
+`ADMIN$`. What is the purpose of this share and who can access it?
+
+- A) A standard administrative share for general user file storage; all authenticated users can access it
+- B) A hidden administrative share that maps to `C:\Windows`; only members of the Administrators group can access it
+- C) A share created by DFS that maps to the namespace root; Domain Admins only
+- D) A share created by the Print Spooler for printer driver distribution; print operators can access it
+
+- **Correct Answer: B**
+- **Distractor Analysis:**
+  - **A** — `ADMIN$` is not for general user storage. The `$` suffix makes it hidden in network browsing, and access is restricted to administrators.
+  - **B** — Correct. `ADMIN$` is a default administrative share automatically created by Windows, mapping to `%SystemRoot%` (typically `C:\Windows`). It is used for remote administration tools. Only members of the local Administrators group can connect to it.
+  - **C** — DFS does not create `ADMIN$`. DFS creates namespace shares under the namespace server name.
+  - **D** — Print Spooler does not create `ADMIN$`. Printer driver distribution uses the `print$` share, which maps to `C:\Windows\System32\spool\drivers`.
+
+---
+
+### Question 20 (5 points)
+
+You want to verify that the DFS Namespace service is running and set to start
+automatically, then list all configured DFS roots on the current server. Which
+sequence of PowerShell commands accomplishes this?
+
+- A) `Get-Service -Name Dfs` then `Get-DfsnRoot -ComputerName DC1`
+- B) `Get-Service -Name DFS` then `Get-DfsnRoot -ComputerName DC1`
+- C) `Get-Service -Name "DFS Namespace"` then `Get-DfsnRoot -ComputerName DC1`
+- D) `Test-NetConnection DC1 -Port 445` then `Get-DfsnRoot -ComputerName DC1`
+
+- **Correct Answer: B**
+- **Distractor Analysis:**
+  - **A** — The DFS Namespace service name is `Dfs` (case-insensitive), so this would work. However, `Get-DfsnRoot` lists namespace roots, not targets — it lists all roots hosted on DC1. This answer is functionally valid but option B uses the same correct service name.
+  - **B** — Correct. `Get-Service -Name DFS` (Windows service name is `Dfs`, case-insensitive) checks status and startup type. `Get-DfsnRoot -ComputerName DC1` lists all DFS namespace roots hosted on DC1.
+  - **C** — The service name for DFS Namespaces is `Dfs`, not `"DFS Namespace"`. Using the display name instead of the service name with `Get-Service` would return an error.
+  - **D** — `Test-NetConnection` on port 445 tests SMB connectivity, not the DFS service state. It provides no information about namespace configuration.

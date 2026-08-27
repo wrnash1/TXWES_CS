@@ -151,3 +151,153 @@ A network printer that has been working reliably for six months suddenly stops r
 Correct Answer: B — The printer received a new DHCP IP address; client queues are pointing to the old address.
 
 Network printers configured with dynamic IP addressing can receive a new IP address when their DHCP lease expires or when the printer is power-cycled. When this happens, all existing print queue configurations on client computers — which reference the printer by IP address — stop working because that IP no longer routes to the printer. The printer itself functions normally (it can print test pages locally) but is unreachable at its old address. The fix is to assign the printer a static IP address and update client queues, or to configure the printer by hostname (DNS name) instead of IP address. Answer A is incorrect — fuser failure affects print quality output, not network job reception; a failing fuser does not block network communication. Answer C is incorrect — printer drivers do not fail en masse due to inactivity; driver loss on one computer is possible but simultaneous loss across all clients is not a realistic scenario. Answer D is incorrect — if the network NIC had failed, the printer would not have received the new IP address in the first place; DHCP communication requires a functioning NIC.
+
+---
+
+### Question 11
+
+A laser printer is producing pages where a repeating smudge mark appears at exactly the same position on every page and wipes off with a finger. What is the most likely cause?
+
+- A) The toner cartridge is running low on toner and the smudge is caused by uneven toner distribution as the supply depletes
+- B) The fuser assembly is failing — the smudge wipes off because the toner is not being bonded to the paper by sufficient heat and pressure during the fusing stage
+- C) The paper tray is loaded with paper that is too heavy for the printer's specification, and the extra weight prevents the paper from reaching the fuser at the correct speed
+- D) The printer drum has a gouge or contamination at a specific point — the drum's circumference determines the repeat interval of the defect, and a contaminated spot transfers excess toner at that position each rotation
+
+Correct Answer: D — A defect or contamination on the drum repeats at a fixed interval equal to the drum's circumference.
+
+A repeating defect at a fixed page interval is a diagnostic indicator of a drum problem. The drum rotates as paper passes through, and any contamination, gouge, or physical defect on the drum surface will transfer excess toner (or fail to pick up toner) at that exact position on every rotation. This produces a mark at the same distance on consecutive pages. Answer B is incorrect because unfused toner (fuser failure) would smear across the entire image area, not produce a small repeating mark at a fixed position. Answer A is incorrect because low toner causes fading and light print across the entire page, not a localized repeating smudge. Answer C is incorrect because paper weight causes feed jams or fuser pressure issues, not a repeating smudge at a fixed position.
+
+---
+
+### Question 12
+
+A user reports that their inkjet printer is producing streaks in the printed output, with certain colors missing entirely in horizontal bands. The printer is two weeks old and has never had a clogged nozzle before. What should the technician do first?
+
+- A) Replace the ink cartridge that corresponds to the missing color immediately — new printers frequently have defective cartridges from the factory
+- B) Run the printer's built-in printhead cleaning cycle from the printer's maintenance menu or control panel, as dried ink or air bubbles in a new inkjet printer can temporarily clog nozzles
+- C) Increase the print quality setting in the print driver to "Best" quality — lower quality settings skip nozzle rows to increase speed, which appears as streaks and missing bands
+- D) Disassemble the printhead and soak it in warm water for 30 minutes to dissolve dried ink — this is the recommended first maintenance step for any inkjet nozzle issue
+
+Correct Answer: B — Run the built-in printhead cleaning cycle first; clogged nozzles are common in new inkjet printers.
+
+Inkjet printers can develop clogged nozzles from dried ink (especially if the printer was stored or sat unused for a period between manufacturing and use). The printhead cleaning cycle fires ink through the nozzles at higher pressure to clear blockages and is the correct first maintenance step before taking any other action. Multiple cleaning cycles may be needed. Answer A is incorrect because replacing a cartridge is a costly first step when a non-destructive cleaning cycle is available and may resolve the issue. Answer C is incorrect because print quality settings affect resolution and ink coverage uniformly, not specific missing color bands corresponding to individual nozzle rows. Answer D is incorrect because manual soaking of the printhead requires disassembly, is not a beginner first step, and can damage the electronic contacts on the printhead if water reaches the wrong areas.
+
+---
+
+### Question 13
+
+A technician installs a new thermal printer for a retail point-of-sale system. After printing the first receipt, the output is completely blank — no text or graphics appear. The printer feeds paper normally. What is the most likely cause?
+
+- A) The thermal printer driver is not installed and the printer is outputting data correctly but the driver is translating all characters to blank spaces
+- B) The paper roll is loaded backward — thermal paper only reacts to heat on the coated side, and loading it with the uncoated side facing the thermal printhead produces blank output
+- C) The thermal printhead is operating at too low a temperature — increasing the temperature setting in the printer's configuration will make the output visible
+- D) The receipt paper is the wrong size and the printer is scaling the output off the printable area, causing the characters to print past the paper edge
+
+Correct Answer: B — The thermal paper roll is loaded backward with the uncoated side facing the printhead.
+
+Thermal printers work by applying heat to heat-sensitive paper coated on one side. If the paper is loaded with the coated side facing away from the printhead, the heat activates nothing and the output is completely blank. The paper still feeds and ejects normally because the paper movement mechanism is independent of the coating. The fix is to reload the paper with the coated side facing the printhead. Answer A is incorrect because a missing driver would cause no output at all (the printer would ignore or reject print jobs) rather than blank output from correctly fed paper. Answer C is incorrect because a thermal printhead operating at low temperature would produce faint output, not completely blank output — the output would be visible but light. Answer D is incorrect because incorrect paper size causes print jobs to be cut off or misaligned, not completely blank output across the entire page.
+
+---
+
+### Question 14
+
+A laser printer consistently outputs pages with a vertical white stripe running from top to bottom on the right side of each page. The stripe is always in the same position. What is the most likely cause?
+
+- A) The right paper guide in the paper tray is set too wide, allowing the paper to shift left during feeding and leaving a white margin on the right where the toner cannot reach
+- B) The toner cartridge has a scratch or developer roller defect in the area corresponding to the right side of the page, preventing toner from being applied to that vertical stripe
+- C) The printer's imaging drum is charged correctly but the laser scanning unit has a failed mirror segment that prevents the laser from writing to the right portion of the drum, leaving that area uncharged and therefore no toner is applied
+- D) The transfer corona wire is dirty on the right side, preventing the positive charge from being applied to the paper in that vertical stripe and preventing toner from transferring from the drum to the paper
+
+Correct Answer: C — A failed or blocked laser scanning unit segment prevents the laser from writing to that portion of the drum.
+
+A vertical white stripe in a consistent position across every page indicates that no toner is being deposited in that area. In a laser printer, toner is applied only to areas where the laser has discharged the drum (the latent image). If the laser scanning assembly has a defective mirror, lens, or blocked beam path for a specific portion of the scan, that horizontal segment of the drum is never discharged and toner is never applied there, producing a vertical white stripe on every page. Answer B is also plausible — a developer roller defect can produce a similar stripe — but laser scanning unit failure is the primary mechanism for a precisely defined vertical white stripe. Answer A is incorrect because paper guide misalignment would produce variable margins, not a sharp vertical stripe at an exact position. Answer D is incorrect because a dirty transfer corona wire produces light or missing areas but typically appears as horizontal banding rather than a precise vertical stripe.
+
+---
+
+### Question 15
+
+A technician is setting up a shared printer on a small office network using Windows. The printer is directly connected to one workstation via USB. Which of the following configurations allows all other workstations to print to this printer?
+
+- A) Connect the printer directly to the network switch via Ethernet and configure it with a static IP address — USB-connected printers cannot be shared on a Windows network
+- B) Enable Windows File and Printer Sharing on the host workstation, share the printer through the Windows Control Panel printer settings, and install the appropriate printer driver on each client workstation pointing to the shared printer's network path (for example, \\HostPC\PrinterName)
+- C) Install the printer driver on all workstations using the same USB cable — each workstation must physically connect to the printer in turn to receive the driver
+- D) Configure the printer as a network printer directly in the switch's management interface — managed switches include a print server feature that can redirect USB printer output to the network
+
+Correct Answer: B — Enable Windows Printer Sharing on the host PC and install the driver on each client pointing to the UNC network path.
+
+Windows printer sharing allows a USB-connected printer on one computer (the host) to be shared over the LAN. Other workstations access the shared printer using its UNC path (\\HostPC\PrinterName). The host computer must be on and running for other workstations to print. This is a standard Windows configuration for small offices that do not have a dedicated print server or a network-capable printer. Answer A is incorrect because USB-connected printers can be shared via Windows Printer Sharing — a direct network connection is not required. Answer C is incorrect because printer drivers are installed from software on each machine, not by sharing a USB cable; only one computer can connect to a USB device at a time. Answer D is incorrect because managed switches do not include print server functionality — switches are Layer 2 network devices with no application-layer print services.
+
+---
+
+### Question 16
+
+During a laser printer maintenance procedure, the technician opens the printer and notices the drum cartridge surface has a deep scratch visible in reflected light. After reinstalling the drum and printing a test page, what symptom should the technician expect?
+
+- A) A horizontal light band across every page at the location corresponding to the scratch, because the scratch prevents the fuser from reaching the paper at that point
+- B) A vertical black stripe on every page in the position corresponding to the scratch, because the scratched area of the drum holds toner regardless of laser exposure due to the altered surface charge properties
+- C) No visible defect — drum scratches are too microscopic to affect print quality and the OPC coating self-heals minor surface damage through normal use
+- D) Complete blank output on all pages because a scratched drum cannot hold any electrostatic charge across its entire surface
+
+Correct Answer: B — A scratched drum produces a vertical black stripe on every page.
+
+The drum's OPC (Organic Photoconductor) coating is sensitive and fragile. A physical scratch on the drum surface damages the OPC, creating an area that either holds toner unconditionally (if the scratch causes the area to attract toner without needing laser exposure) or fails to hold toner in a specific pattern. A deep scratch typically creates a vertical black stripe because the scratch runs the length of the drum and affects the same longitudinal position on every page rotation. This is a definitive sign the drum cartridge must be replaced. Answer A is incorrect because horizontal bands are produced by drum contamination or fuser issues, not drum scratches. Answer C is incorrect because drum OPC coatings do not self-heal and a scratch deep enough to be visible will produce a print defect. Answer D is incorrect because a single scratch does not eliminate charge from the entire drum surface — only the scratched area is affected.
+
+---
+
+### Question 17
+
+A user prints a document and finds that the printed output has a ghosted faint duplicate image slightly below and to the right of the main image on every page. The main image is dark and clear; the ghost is light. This is a laser printer. What component is most likely causing the ghosting?
+
+- A) The fuser assembly is applying too much heat, causing toner from the current pass to leave a residual impression that transfers to the next pass of paper
+- B) The drum is not being fully cleaned between print cycles — residual toner left on the drum from the previous page is partially transferring to the next page, creating a ghost of the previous image
+- C) The paper is too smooth and reflects the laser beam sideways, causing a secondary latent image to form adjacent to the intended image
+- D) The toner cartridge has too much toner loaded, causing toner to spill onto the drum outside the intended image area
+
+Correct Answer: B — Incomplete drum cleaning is leaving residual toner that transfers as a ghost image.
+
+Ghosting on a laser printer (a faint secondary image appearing on each page) is classically caused by incomplete cleaning of the drum. If the cleaning blade or cleaning pad fails to remove all residual toner after the transfer stage, that toner remains on the drum and partially transfers to the next page during the following print cycle. Since the residual image matches the previous page's content, it appears as a ghost. The cleaning assembly (blade or brush) should be inspected and the drum cartridge replaced if the cleaning mechanism is worn. Answer A is incorrect because excess fuser heat causes toner to offset to the fuser roller (which then deposits it later), not a ghost tied to the previous page's content. Answer C is incorrect because paper reflectivity does not create ghost images — the laser is inside the printer and paper does not interact with it. Answer D is incorrect because excess toner in the cartridge causes heavy or smeared output, not a ghost of the previous page.
+
+---
+
+### Question 18
+
+A technician is asked to install a network-attached printer that will be accessed by 30 users in an office. The printer has a built-in Ethernet port. What is the correct installation approach to allow all 30 users to print without a dedicated print server computer?
+
+- A) Connect the printer to the network switch, assign it a static IP address (or configure a DHCP reservation), and install the printer driver on each workstation pointing to the printer's IP address or hostname
+- B) Connect the printer to one workstation via USB, share the printer through Windows, and configure each workstation to use the shared printer's UNC path — this is equivalent to a direct network printer for 30 users
+- C) Connect the printer to the network switch and configure all 30 workstations to print to the same queue on the switch's built-in print management service
+- D) Connect the printer to the network switch and configure one workstation as a domain controller — only domain-joined machines can print directly to a network printer
+
+Correct Answer: A — Connect the printer to the switch, assign a static IP, and install the driver on each workstation pointing to the printer's IP.
+
+A network printer with a built-in Ethernet port acts as its own print server. Each client workstation installs the printer driver and configures the printer using the printer's IP address (or DNS hostname). The printer accepts jobs directly over the network without requiring a host PC. Assigning a static IP (or DHCP reservation) ensures the printer's address does not change and invalidate all client configurations. Answer B is incorrect because a USB-shared printer depends on one workstation being powered on and available at all times — this is not recommended for 30 users. Answer C is incorrect because switches do not include print management services. Answer D is incorrect because network printing does not require Active Directory or domain membership — workgroup configurations work equally well for direct IP-based printing.
+
+---
+
+### Question 19
+
+A color laser printer is producing output where cyan objects appear correctly but all magenta elements are missing from the print. All other colors (yellow, black) are present. What is the most likely cause?
+
+- A) The yellow and magenta toner cartridges are both installed but the magenta drum cartridge is defective, preventing magenta toner from being applied
+- B) The magenta toner cartridge is empty or the magenta imaging drum has failed — color laser printers use separate toner cartridges and drum units for each of the four CMYK colors (Cyan, Magenta, Yellow, Black)
+- C) The color calibration profile in the print driver has set magenta to zero density; reinstalling the driver will restore the magenta channel
+- D) The fuser assembly applies different temperatures for each color pass and the temperature for the magenta pass has dropped too low to bond toner to the paper
+
+Correct Answer: B — The magenta toner cartridge is empty or the magenta imaging drum has failed.
+
+Color laser printers use four separate imaging paths — one for each CMYK color. Each path has its own toner cartridge, developer, and in many designs a separate drum unit. If the magenta cartridge is empty or the magenta drum has failed, magenta is not applied during the transfer process. Cyan, yellow, and black are unaffected because they use independent components. The fix is to replace the magenta toner cartridge (and drum if applicable). Answer A is incorrect because yellow and magenta are distinct components — if yellow appears correctly, the yellow components are functioning, so the issue is specific to the magenta path. Answer C is incorrect because driver color density settings affect all print jobs simultaneously and are typically set by the administrator, not silently changed; a missing-color symptom across all output is more likely a hardware cause than a driver setting. Answer D is incorrect because fuser assemblies in most color laser printers apply heat uniformly to bond all colors in a single pass — the fuser does not have per-color temperature zones.
+
+---
+
+### Question 20
+
+A 3D printer is producing objects where the layers on the bottom portion of the print are solid but the upper layers are visibly separated and porous. The print bed is level. What is the most likely cause?
+
+- A) The print bed temperature is too high, causing the upper layers to melt back into the lower layers and creating a porous surface from re-solidification
+- B) The extruder is under-extruding — possible causes include a partial clog in the nozzle, incorrect filament diameter settings in the slicer, or insufficient extruder motor steps per mm, all of which result in insufficient plastic being deposited per layer as the print height increases
+- C) The layer height setting in the slicer is too small for the nozzle diameter being used, causing upper layers to fail to bond to lower layers because each layer is thicker than the gap between nozzles
+- D) The print cooling fan is causing premature solidification of the upper layers before they can bond to the previous layer — turning off the cooling fan will allow the upper layers to fuse correctly
+
+Correct Answer: B — The extruder is under-extruding, depositing insufficient plastic in the upper layers.
+
+Under-extrusion in 3D printing produces gaps between print lines (porosity) and layer separation, particularly noticeable in upper layers that are further from the first layer (which is typically slower and more carefully deposited). Common causes include: partial nozzle clog, incorrect filament diameter in the slicer settings, extruder motor calibration (steps per mm), and printing too fast for the hotend's melt rate. The bottom layers appear solid because the lower printing speed and prime squish of the first layers compensate for minor under-extrusion. Answer A is incorrect because high bed temperature affects adhesion of the first layer to the bed — it does not cause upper layer porosity. Answer C is incorrect because layer height smaller than appropriate for the nozzle diameter causes over-squish and elephant foot, not separation. Answer D is incorrect because the cooling fan is essential for upper layers to maintain structural integrity — removing it causes warping and drooping in overhanging features, not porosity from poor bonding.

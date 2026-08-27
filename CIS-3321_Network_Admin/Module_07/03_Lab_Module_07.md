@@ -329,4 +329,53 @@ Submit to the Module 07 Lab assignment in the course LMS before the posted deadl
 
 ---
 
-CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash
+## Part 9 — Challenge Exercise
+
+These advanced steps extend the Module 07 lab with advanced Wireshark analysis and SNMP simulation.
+
+### Challenge Step 1: Capture and Analyze a Complete HTTP Transaction
+
+1. Start a fresh Wireshark capture on your active network interface.
+2. Open a terminal and use curl to request a plain HTTP page:
+   ```
+   curl http://httpforever.com/
+   ```
+   (This site intentionally serves unencrypted HTTP for testing purposes.)
+3. Stop the Wireshark capture immediately after the response is received.
+4. Apply the display filter: `http`
+5. Find the HTTP GET request and the HTTP 200 OK response.
+6. For the GET request, expand all protocol layers and record the header at each OSI layer (Ethernet frame, IP packet, TCP segment, HTTP request).
+
+**Challenge Question 1:** In the HTTP GET request packet, identify and record the following values: source MAC address, destination MAC address, source IP address, destination IP address, source port, destination port, TCP sequence number, and HTTP request line (method + path). Map each value to its OSI layer. What does this exercise demonstrate about encapsulation?
+
+### Challenge Step 2: Write and Test Advanced Wireshark Display Filters
+
+Without running a live capture, write the correct Wireshark display filter syntax for each of the following scenarios. Then, if you have a previous capture file from this lab, test them.
+
+1. Show all DNS queries for A records only (record type = 1).
+2. Show all TCP resets (RST flag set).
+3. Show all packets larger than 1400 bytes.
+4. Show all ARP requests (not replies).
+5. Show all packets where the HTTP host header contains "google."
+
+**Challenge Question 2:** For each filter above, write the filter string. Then select any two of the five filters and explain what network troubleshooting scenario would lead an administrator to use each filter — what problem would you be investigating, and what would you expect to find in the results?
+
+### Challenge Step 3: Configure SNMP on a Cisco Device in Packet Tracer
+
+1. In Packet Tracer, add a Cisco 2911 router and a generic server (set up as an NMS).
+2. Connect them with a crossover cable and assign IP addresses (e.g., router Gi0/0: 10.0.0.1/24, server: 10.0.0.2/24).
+3. On the router CLI, configure SNMPv2c with a read-only community string:
+   ```
+   snmp-server community NetPlus2024 RO
+   snmp-server enable traps
+   snmp-server host 10.0.0.2 version 2c NetPlus2024
+   ```
+4. On the server, open the SNMP Services tab and add the community string `NetPlus2024`.
+5. From the server, send an SNMP GET to the router for the sysDescr OID (1.3.6.1.2.1.1.1.0).
+6. Record the response.
+
+**Challenge Question 3:** The community string `NetPlus2024` is transmitted in cleartext in SNMPv2c. Describe the security risk this creates. Rewrite the router configuration to use SNMPv3 with authentication and encryption — write the full IOS commands you would use to create an SNMPv3 user named `netadmin` with SHA authentication and AES-128 encryption.
+
+---
+
+*CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash*

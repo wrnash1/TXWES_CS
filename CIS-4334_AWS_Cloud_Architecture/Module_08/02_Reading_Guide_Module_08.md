@@ -378,4 +378,20 @@ aws s3api select-object-content \
 
 All AWS certification study materials and exam registration: aws.amazon.com/certification
 
+---
+
+## 11. Supplemental Resources
+
+**1. AWS Documentation — Amazon S3 Multipart Upload Overview**
+https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html
+Complete guide to S3 multipart upload — when to use it, how to initiate, upload, and complete multipart uploads, and CLI/SDK examples — essential for understanding large object upload patterns tested on SAA-C03.
+
+**2. AWS Skill Builder — Amazon EBS: Elastic Block Store Deep Dive**
+https://skillbuilder.aws/learn/course/external/view/elearning/678/amazon-ebs-elastic-block-store-deep-dive
+Free course covering EBS volume types (gp3, io2, st1, sc1), performance characteristics, snapshots, encryption, and Multi-Attach — directly supporting Module 08 EBS selection questions.
+
+**3. AWS Documentation — AWS Storage Services Overview (Whitepaper)**
+https://docs.aws.amazon.com/whitepapers/latest/aws-storage-services-overview/welcome.html
+AWS whitepaper comparing all storage services (S3, EBS, EFS, FSx, Storage Gateway, Snowball) by use case, performance, durability, and access patterns — the definitive reference for storage service selection scenarios on SAA-C03.
+
 *Proprietary and Confidential. Not for disclosure outside of Texas Wesleyan University.*

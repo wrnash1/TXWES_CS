@@ -258,3 +258,200 @@ Users receive `statusCode: 200` but the body is `undefined`. What is the bug?
 - Why B is correct: Missing `await` before the DynamoDB Promise is the exact cause of the `undefined` body.
 - Why C is incorrect: Lambda handlers can and should use the AWS SDK for DynamoDB access — that is the standard pattern.
 - Why D is incorrect: `result.Item` is the correct property for a DynamoDB `getItem` response — but it is undefined because `result` is an unresolved Promise, not because `JSON.stringify` has a serialization issue.
+
+---
+
+### Question 11 (5 points)
+
+What is the output order of the following code?
+
+```javascript
+console.log('A');
+Promise.resolve().then(() => console.log('B'));
+setTimeout(() => console.log('C'), 0);
+console.log('D');
+```
+
+- A) A, B, C, D
+- B) A, D, C, B
+- C) A, D, B, C
+- D) A, B, D, C
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why A is incorrect: Promise microtasks do not run before synchronous code — `D` must print before `B`.
+  - Why B is incorrect: Microtasks (Promise `.then`) drain before macrotasks (`setTimeout`), so `B` runs before `C`.
+  - Why C is correct: Synchronous code runs first (A, D), then the microtask queue drains (B), then the macrotask queue (C).
+  - Why D is incorrect: `D` is synchronous and prints before `B` which is a microtask queued after `D`.
+
+---
+
+### Question 12 (5 points)
+
+Which `Promise.all` behavior distinguishes it from `Promise.allSettled`?
+
+- A) `Promise.all` runs Promises sequentially; `Promise.allSettled` runs them in parallel.
+- B) `Promise.all` rejects immediately if any input Promise rejects; `Promise.allSettled` waits for all Promises to settle and always fulfills.
+- C) `Promise.all` only accepts an array of two Promises; `Promise.allSettled` accepts any number.
+- D) `Promise.all` returns values in the order they resolve; `Promise.allSettled` returns them in input order.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: Both methods start all Promises simultaneously — neither runs them sequentially.
+  - Why B is correct: `Promise.all` short-circuits and rejects as soon as any Promise rejects. `Promise.allSettled` always waits for every Promise and returns an array describing each outcome.
+  - Why C is incorrect: Both methods accept an iterable of any length.
+  - Why D is incorrect: Both methods return results in input array order, not in resolution order.
+
+---
+
+### Question 13 (5 points)
+
+A developer wants to send a POST request with a JSON body using `fetch()`. Which header is required for the server to correctly parse the body?
+
+- A) `Accept: application/json`
+- B) `Authorization: Bearer token`
+- C) `Content-Type: application/json`
+- D) `X-Requested-With: fetch`
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why A is incorrect: `Accept: application/json` tells the server what response format the client wants — it does not describe the request body format.
+  - Why B is incorrect: `Authorization` carries authentication credentials — it does not tell the server how to parse the body.
+  - Why C is correct: `Content-Type: application/json` informs the server that the request body is JSON-encoded, enabling it to parse the body correctly.
+  - Why D is incorrect: `X-Requested-With` is a non-standard legacy header sometimes added by older AJAX libraries — it is not required for JSON body parsing.
+
+---
+
+### Question 14 (5 points)
+
+An `async` function has no explicit `return` statement. What does it return?
+
+- A) `null`
+- B) `undefined` wrapped in a resolved Promise
+- C) An empty object `{}`
+- D) A rejected Promise
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: A function without a return statement produces `undefined`, not `null`.
+  - Why B is correct: `async` functions always return a Promise. When the function body completes without an explicit `return`, the returned Promise resolves with `undefined`.
+  - Why C is incorrect: An `async` function without a return statement never produces an empty object.
+  - Why D is incorrect: The returned Promise is fulfilled, not rejected, when there is no explicit `throw` or rejected `await`.
+
+---
+
+### Question 15 (5 points)
+
+A developer needs to abort a `fetch()` request if it takes longer than 5 seconds. Which built-in browser API enables this?
+
+- A) `clearTimeout(fetchPromise)`
+- B) `fetch(url, { timeout: 5000 })`
+- C) `AbortController` — create a controller, pass `signal` to fetch, and call `controller.abort()` after a timeout
+- D) `Promise.race([fetch(url), Promise.reject('timeout')])`
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why A is incorrect: `clearTimeout` cancels a `setTimeout` callback — it cannot cancel a `fetch()` Promise.
+  - Why B is incorrect: The Fetch API does not accept a `timeout` option — there is no built-in timeout parameter.
+  - Why C is correct: `AbortController` is the standard mechanism for cancelling fetch requests. Pass `{ signal: controller.signal }` to `fetch()`, then call `controller.abort()` when the timeout fires.
+  - Why D is incorrect: `Promise.race` with a rejecting Promise causes the caller to receive the rejection, but the underlying network request continues running in the background, consuming resources.
+
+---
+
+### Question 16 (5 points)
+
+When a `fetch()` call succeeds but the server returns a 500 status code, what happens to the returned Promise?
+
+- A) It rejects with a `TypeError: Failed to fetch` error.
+- B) It fulfills with a `Response` object where `response.ok` is `false` and `response.status` is `500`.
+- C) It rejects with an `HttpError` containing the status code.
+- D) It fulfills with `null` because 500 responses have no body.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: `TypeError: Failed to fetch` occurs for network-level failures — not for HTTP error responses.
+  - Why B is correct: The Fetch API only rejects for network failures. Any HTTP response, including 5xx errors, fulfills the Promise. The developer must check `response.ok` or `response.status`.
+  - Why C is incorrect: There is no built-in `HttpError` type in the Fetch API — developers typically throw their own errors after checking `response.ok`.
+  - Why D is incorrect: 500 responses can and do have a body. The Promise fulfills with the `Response` regardless of body content.
+
+---
+
+### Question 17 (5 points)
+
+What is "callback hell" and how do Promises solve it?
+
+- A) Callback hell refers to excessive use of `requestAnimationFrame` callbacks; Promises replace them with `async` animation loops.
+- B) Callback hell is deeply nested async callbacks where error handling is duplicated at each level and control flow is hard to follow; Promises flatten the structure into a chain with a single centralized `.catch()`.
+- C) Callback hell describes browser compatibility issues with older `addEventListener` syntax; Promises are a modern cross-browser replacement.
+- D) Callback hell refers to attaching too many listeners to the same element; Promises provide a one-time subscription model.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: `requestAnimationFrame` is used for animation timing — it is unrelated to callback hell.
+  - Why B is correct: Callback hell (the "pyramid of doom") is deeply nested error-first callbacks. Promise chaining flattens this into a linear sequence with a single `.catch()` for all errors.
+  - Why C is incorrect: Callback hell is about code structure and readability, not browser compatibility.
+  - Why D is incorrect: Too many event listeners is a different problem managed via event delegation, not callback hell.
+
+---
+
+### Question 18 (5 points)
+
+A Lambda function's `fetch()` call to a downstream API takes 5 seconds. The Lambda timeout is configured to 3 seconds. What is the result?
+
+- A) Lambda automatically retries the request three times before returning an error.
+- B) Lambda terminates the function at 3 seconds and returns a 504 Gateway Timeout to API Gateway.
+- C) The Lambda timeout does not affect in-flight `fetch()` requests — the downstream API response arrives after 5 seconds.
+- D) API Gateway automatically increases the Lambda timeout to match the downstream API response time.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: Lambda does not automatically retry on timeout — retry logic must be explicitly implemented.
+  - Why B is correct: When a Lambda function's configured timeout (3s) is shorter than the downstream operation's duration (5s), Lambda kills the function and the caller receives a 504 error.
+  - Why C is incorrect: Lambda's timeout terminates the entire function execution, including all in-flight async operations.
+  - Why D is incorrect: API Gateway and Lambda timeouts are independent settings that must be configured separately.
+
+---
+
+### Question 19 (5 points)
+
+A developer wraps an async function call in `try/catch` but omits `await`. What happens when the async function throws?
+
+```javascript
+function handleClick() {
+  try {
+    loadData(); // async function — await omitted
+  } catch (error) {
+    showError(error);
+  }
+}
+```
+
+- A) The `catch` block catches the error and calls `showError` as expected.
+- B) The error is caught but silently swallowed — `showError` is never called.
+- C) The `catch` block is never triggered because the error occurs inside a Promise — it becomes an unhandled rejection.
+- D) The code throws a `SyntaxError` at parse time because `await` is required inside `try/catch`.
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why A is incorrect: Without `await`, the `try/catch` block completes synchronously before the async function rejects.
+  - Why B is incorrect: The error is not silently swallowed — it becomes an unhandled Promise rejection logged in the console.
+  - Why C is correct: Without `await`, `try/catch` only catches synchronous errors before `loadData()` returns its Promise. Errors inside the async function occur after the `catch` block has already exited.
+  - Why D is incorrect: Omitting `await` is a logic error, not a syntax error — the code parses and runs without issue.
+
+---
+
+### Question 20 (5 points)
+
+What does `response.headers.get('Content-Type')` return when the server sends `Content-Type: application/json; charset=utf-8`?
+
+- A) `{ type: 'application/json', charset: 'utf-8' }`
+- B) `'application/json'` with the charset parameter stripped
+- C) `'application/json; charset=utf-8'` — the full header value as a string
+- D) `true` indicating JSON content type is present
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why A is incorrect: `headers.get()` returns a raw string — it does not parse headers into structured objects.
+  - Why B is incorrect: `headers.get()` returns the full header value including all parameters — it does not strip the charset.
+  - Why C is correct: `Headers.get()` returns the complete header value string exactly as sent by the server, including semicolon-separated parameters.
+  - Why D is incorrect: `headers.get()` returns a string or `null` — never a boolean.

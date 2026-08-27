@@ -376,3 +376,94 @@ Submit the following to the Canvas LMS assignment portal:
 5. Bonus deliverable (optional, 5 extra-credit points): Screenshot showing all five Python MQTT messages received by the Mosquitto subscriber, with timestamps.
 
 ---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Certificate Revocation Simulation with Mosquitto ACL and CRL Workflow
+
+Simulate the certificate revocation lifecycle: provision a second device certificate, verify it can connect, revoke it by implementing a Mosquitto ACL deny rule (simulating CRL enforcement), and confirm the revoked device is rejected.
+
+1. Using the CA key generated in Part 1, create a second device certificate for `device-002` following the same CSR and signing steps used in Step 1.4. Verify `device-002` can connect to the broker and publish a message using `mosquitto_pub` with its certificate — capture the successful connection output.
+
+1. Create a Mosquitto ACL file that explicitly denies the `device-002` identity from all MQTT operations:
+
+```bash
+cat > ~/iot-security-lab/acl.conf << 'EOF'
+# Deny revoked device — simulates CRL enforcement
+user device-002
+deny topic #
+
+# Allow all other authenticated devices
+pattern readwrite #
+EOF
+```
+
+Add the ACL file reference to your Mosquitto config and restart the broker:
+
+```bash
+echo "acl_file $HOME/iot-security-lab/acl.conf" >> ~/iot-security-lab/mosquitto-tls.conf
+pkill mosquitto
+mosquitto -c ~/iot-security-lab/mosquitto-tls.conf -v &
+```
+
+1. Attempt to publish from `device-002` again — the TLS handshake will succeed (the certificate is still technically valid) but the broker will reject the PUBLISH action due to the ACL deny. Capture the `Not authorized` error from the broker's verbose log. Then confirm `device-001` can still publish normally on the same topic.
+
+1. Write a 3–4 sentence analysis distinguishing what the ACL-based revocation in this exercise simulates versus what a true CRL-based revocation enforces — specifically, identify at which protocol layer each approach operates (TLS handshake vs. MQTT authorization) and the security gap that ACL-based revocation leaves open that a true CRL closes.
+
+---
+
+### Challenge 2: Multi-Device mTLS Broker with Automated Certificate Generation Script
+
+Write a shell script that automates the certificate generation pipeline for an arbitrary number of simulated devices and verify all devices can connect simultaneously.
+
+1. Create the following shell script at `~/iot-security-lab/provision_devices.sh` that generates unique certificates for N devices in a loop:
+
+```bash
+#!/usr/bin/env bash
+# provision_devices.sh — generate N device certificates signed by the lab CA
+# Usage: ./provision_devices.sh <N>
+set -euo pipefail
+
+N=${1:-3}
+CERTS="$HOME/iot-security-lab/certs"
+CA_KEY="$CERTS/ca.key"
+CA_CRT="$CERTS/ca.crt"
+
+for i in $(seq 1 "$N"); do
+    DEVICE="device-$(printf '%03d' "$i")"
+    echo "[+] Provisioning $DEVICE ..."
+
+    openssl ecparam -name prime256v1 -genkey -noout \
+        -out "$CERTS/$DEVICE.key"
+
+    openssl req -new \
+        -key "$CERTS/$DEVICE.key" \
+        -out "$CERTS/$DEVICE.csr" \
+        -subj "/C=US/ST=Texas/O=TXWES IoT Lab/CN=$DEVICE"
+
+    openssl x509 -req -days 365 \
+        -in "$CERTS/$DEVICE.csr" \
+        -CA "$CA_CRT" \
+        -CAkey "$CA_KEY" \
+        -CAcreateserial \
+        -out "$CERTS/$DEVICE.crt" 2>/dev/null
+
+    echo "    Certificate: $CERTS/$DEVICE.crt"
+done
+
+echo "[+] Provisioned $N device certificates."
+```
+
+Run the script to provision 5 devices: `bash ~/iot-security-lab/provision_devices.sh 5`
+
+1. Write a Python script that launches 5 concurrent `paho-mqtt` clients (one per device), each connecting with its unique certificate and publishing 3 messages to `sensors/{device_id}/telemetry`, then disconnecting. Use `threading.Thread` to run all 5 clients simultaneously. Capture the terminal output showing all 15 messages published across all devices.
+
+1. After all clients have published, run `mosquitto_sub` to subscribe to `sensors/#` for 10 seconds and verify messages from all 5 device IDs appear in the subscriber output. Screenshot or capture the output.
+
+---
+
+### Reflection Questions
+
+1. In Challenge 1, the ACL-based revocation allows the TLS handshake to complete successfully before the broker denies MQTT operations. Describe the specific security window this creates: between the moment `device-002`'s TLS handshake succeeds and the moment its PUBLISH is rejected, what information has the broker already disclosed to `device-002`, and why does a true CRL-based rejection (which terminates the handshake before any MQTT exchange) provide stronger isolation?
+
+2. In Challenge 2, the provisioning script uses `CAcreateserial` to auto-increment the CA serial number file. In a production IoT manufacturing environment, what additional properties must the serial number assignment process guarantee — beyond uniqueness within the CA — to comply with RFC 5280 X.509 certificate requirements, and what operational risk arises if two devices are accidentally issued certificates with the same serial number?

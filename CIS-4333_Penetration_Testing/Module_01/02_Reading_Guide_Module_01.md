@@ -258,3 +258,19 @@ For exam preparation aligned to PT0-002 objectives, use these authorized resourc
 - [ ] Review the document hierarchy table and memorize which document authorizes testing vs. which protects confidentiality
 - [ ] Complete the Module 01 lab: draft a scope of work and Rules of Engagement for the hypothetical scenario
 - [ ] Attempt all ten Module 01 quiz questions before checking answers
+
+---
+
+## 9. Supplemental Resources
+
+**1. PTES Technical Guidelines — Penetration Testing Execution Standard**
+[http://www.pentest-standard.org/index.php/Main_Page](http://www.pentest-standard.org/index.php/Main_Page)
+The official PTES documentation defines the six phases of a professional penetration test in detail. Reading the Pre-Engagement Interactions section directly supports Module 01 scoping and RoE concepts.
+
+**2. CompTIA PenTest+ Exam Objectives (PT0-002) — Official Objective List**
+[https://www.comptia.org/certifications/pentest](https://www.comptia.org/certifications/pentest)
+The official CompTIA objective document for PT0-002 maps every exam domain and sub-objective. Reviewing the Planning and Scoping domain (14% weight) alongside this reading guide ensures complete coverage of tested concepts.
+
+**3. TCM Security — Practical Ethical Hacking Course: Pre-Engagement Module**
+[https://academy.tcm-sec.com/p/practical-ethical-hacking-the-complete-course](https://academy.tcm-sec.com/p/practical-ethical-hacking-the-complete-course)
+TCM Security's free and paid course content includes practical walkthroughs of pre-engagement documentation, scoping decisions, and authorization frameworks aligned to real-world consulting practice and eJPT/OSCP preparation.

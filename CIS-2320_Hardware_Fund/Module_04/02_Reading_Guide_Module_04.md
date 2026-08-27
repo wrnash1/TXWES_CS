@@ -205,3 +205,27 @@ System shows reduced RAM or runs in single-channel:
 
 - [Professor Messer CompTIA A+ Core 1 (220-1101) Free Course — Memory Types and Installation](https://www.professormesser.com/free-a-plus-training/220-1101/220-1101-video/)
 - [CompTIA A+ Certification Official Page and Exam Objectives](https://www.comptia.org/certifications/a)
+
+---
+
+## 9. Supplemental Resources
+
+1. **Professor Messer — RAM Types and Installation (220-1101 Free Video)**
+   URL: [https://www.professormesser.com/free-a-plus-training/220-1101/220-1101-video/](https://www.professormesser.com/free-a-plus-training/220-1101/220-1101-video/)
+   Relevance: Free video lecture covering DDR3/DDR4/DDR5 differences, DIMM vs. SODIMM, dual-channel configuration, ECC, and XMP — all Module 04 exam objectives.
+
+2. **CPU-Z (Free System Information Utility)**
+   URL: [https://www.cpuid.com/softwares/cpu-z.html](https://www.cpuid.com/softwares/cpu-z.html)
+   Relevance: Use the Memory and SPD tabs to identify installed RAM generation, speed, timings, manufacturer, and channel configuration (Single/Dual). Essential for Part 2 of the lab and for Challenge Step 1.
+
+3. **MemTest86 (Free Bootable RAM Diagnostic Tool)**
+   URL: [https://www.memtest86.com/download.htm](https://www.memtest86.com/download.htm)
+   Relevance: Industry-standard bootable memory tester used to identify faulty RAM modules. Learning to interpret MemTest86 results is a directly tested A+ skill; this is the tool used in real technician work to confirm RAM hardware failures.
+
+4. **Kingston Technology — RAM Advisor Tool (Free)**
+   URL: [https://www.kingston.com/us/memory/search](https://www.kingston.com/us/memory/search)
+   Relevance: Free compatibility lookup tool — enter a motherboard or laptop model to find compatible RAM. Useful for understanding why not all DDR4 modules work in all DDR4 boards (XMP, voltage, and density compatibility constraints).
+
+5. **Crucial — Memory Upgrade Guide (Free OER Reference)**
+   URL: [https://www.crucial.com/articles/about-memory/support-what-does-the-memory-form-factor-mean](https://www.crucial.com/articles/about-memory/support-what-does-the-memory-form-factor-mean)
+   Relevance: Free vendor-neutral reference explaining DIMM vs. SODIMM form factors with photos. Supplements the Module 04 reading guide section on physical form factor differences.

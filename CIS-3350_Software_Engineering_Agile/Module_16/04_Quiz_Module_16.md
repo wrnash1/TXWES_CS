@@ -208,4 +208,176 @@ Distractor Analysis:
 
 ---
 
+---
+
+### Question 11 (5 points)
+
+A Scrum Team's Sprint Retrospective consistently produces a list of 8–10 improvement items, but by the following Sprint Review none of the improvements have been implemented. What is the most likely root cause?
+
+- A) The Sprint is too short for the team to implement improvements alongside feature work
+- B) The team is identifying too many improvements without committing to a small, specific number — the Retrospective should focus on one or two high-impact improvements the team commits to in the next Sprint
+- C) The Scrum Master is not enforcing the improvement list during the Sprint
+- D) Retrospective improvements should be added to the Product Backlog for the Product Owner to prioritize
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: Sprint length does not prevent improvements — even a two-week Sprint can absorb one focused process change. The problem is quantity and commitment, not Sprint duration.
+  - Why C is incorrect: Scrum Masters do not enforce team behavior. The team is self-managing and owns their improvement commitments. Enforcement would undermine the collaborative nature of the Retrospective.
+  - Why D is incorrect: Process improvements belong to the Scrum Team and live in the Sprint Backlog, not the Product Backlog. The Product Owner prioritizes product work; process improvements are a team-internal accountability.
+
+---
+
+### Question 12 (5 points)
+
+A stakeholder asks the Scrum Master: "Can you tell me which Developer is responsible for the login feature's bug?" What is the most appropriate response?
+
+- A) Name the Developer who last committed code to the login feature
+- B) Explain that in Scrum, accountability for the Increment belongs to the Developers as a team — there is no individual owner of a feature or defect
+- C) Ask the Developer in question to speak directly with the stakeholder without Scrum Master involvement
+- D) Escalate the question to the Product Owner, who tracks individual developer assignments
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: Individual blame attribution undermines the team accountability model. Naming a developer also uses git history as a proxy for fault, which is often misleading.
+  - Why C is incorrect: While direct developer-stakeholder communication is not prohibited, the question is about accountability attribution — which should be addressed at the team level, not deflected individually.
+  - Why D is incorrect: The Product Owner does not track individual developer assignments. Developers self-manage their work distribution; the Product Owner focuses on product value and backlog ordering.
+
+---
+
+### Question 13 (5 points)
+
+During Sprint Planning, the Product Owner presents 15 backlog items and says: "I need all 15 completed this Sprint." The Developers forecast they can complete 8 items based on their recent velocity. What is the correct outcome?
+
+- A) The Developers must commit to all 15 because the Product Owner has authority over Sprint scope
+- B) The Scrum Master splits the difference and negotiates 11 items as a compromise
+- C) The Developers select the items they forecast they can complete, collaborate with the Product Owner on the Sprint Goal, and the remaining items stay in the Product Backlog
+- D) The Sprint is extended to two and a half weeks to accommodate all 15 items
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why A is incorrect: The Product Owner has authority over backlog ordering but not over how much the Developers commit to completing. Developers determine Sprint scope based on their own forecast.
+  - Why B is incorrect: The Scrum Master does not negotiate Sprint scope. This would undermine Developer self-management and misrepresent the Scrum Master's role.
+  - Why D is incorrect: Sprints have fixed lengths. Extending a Sprint to fit more work is not a Scrum practice and would introduce unpredictability into the Sprint cadence.
+
+---
+
+### Question 14 (5 points)
+
+The Scrum Guide states that the Increment "may be delivered to stakeholders prior to the end of the Sprint." What does this mean for the Sprint Review?
+
+- A) The Sprint Review is unnecessary if the Increment has already been delivered before Sprint end
+- B) The Sprint Review is still held — it is an inspect-and-adapt event for the entire Scrum Team and stakeholders to examine the Increment and update the Product Backlog, regardless of whether the Increment was released earlier
+- C) Early delivery means the team can use the remaining Sprint time for the next Sprint's features
+- D) The Product Owner must approve early delivery before the Increment can be shared with stakeholders
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: The Sprint Review is a Scrum event whose purpose is inspection and adaptation — not simply a product handover ceremony. Its value is in the collaborative review of the Product Backlog and future direction, not just in seeing the product.
+  - Why C is incorrect: Starting next Sprint's features during the current Sprint would blur Sprint boundaries and undermine the Sprint Goal's focus. Remaining capacity can be used for refinement or current Sprint work, not pre-Sprint work.
+  - Why D is incorrect: The Product Owner does not gate delivery to stakeholders. The Sprint framework allows delivery at any point; the Product Owner's role is product direction, not release approval.
+
+---
+
+### Question 15 (5 points)
+
+A development manager tells the Scrum Master: "I want to attend the Daily Scrum to understand what the team is doing and give them direction." What should the Scrum Master do?
+
+- A) Invite the manager to attend and ask the Developers to prepare a brief status summary for the manager each day
+- B) Explain that the Daily Scrum is for Developers — the manager may observe silently but should not direct the team's work, which would undermine self-management
+- C) Prohibit the manager from attending and explain that the Scrum Guide forbids management at Scrum events
+- D) Agree to set up a separate weekly sync between the manager and the Developers to satisfy the manager's need for direction-giving
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: Preparing a status summary for the manager converts the Daily Scrum into a reporting event, defeating its purpose as a developer self-management tool.
+  - Why C is incorrect: The Scrum Guide does not prohibit observers from Daily Scrum. The issue is the manager's intent to give direction, not their presence. The Scrum Master should address the behavior, not apply a blanket prohibition.
+  - Why D is incorrect: A separate management sync may be useful, but it does not address the immediate situation — the manager's intent to use the Daily Scrum to direct work, which is a coaching moment.
+
+---
+
+### Question 16 (5 points)
+
+According to the Scrum Guide, what is the Scrum Master's primary obligation when the organization asks the Scrum Team to do something that conflicts with Scrum principles?
+
+- A) Always comply with organizational requests — the organization's authority supersedes framework guidelines
+- B) Refuse to comply and document the violation in writing for future reference
+- C) Coach the organization on Scrum principles, explain the impact of the request, and work collaboratively toward an approach that meets the organization's need without undermining empiricism
+- D) Escalate the conflict to Scrum.org for official guidance
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why A is incorrect: Blind compliance with anti-Scrum practices is a failure of the Scrum Master's organizational coaching accountability. The Scrum Master serves the organization by coaching it toward better practices, not by capitulating.
+  - Why B is incorrect: Refusing and documenting is confrontational and unproductive. The Scrum Master's approach should be coaching, not opposition. The goal is to help the organization, not to record violations.
+  - Why D is incorrect: Scrum.org does not adjudicate organizational disputes. The Scrum Master has the coaching tools and authority to address this within the organization.
+
+---
+
+### Question 17 (5 points)
+
+Which of the following most accurately describes how the Agile Manifesto's value of "responding to change over following a plan" is expressed in the Scrum framework?
+
+- A) Scrum Teams do not create plans — they only respond to events as they happen
+- B) The Product Backlog is reordered and refined continuously based on new learning, while the Sprint provides a short planning horizon that makes plans both relevant and adaptable
+- C) The Sprint Retrospective replaces traditional project planning by reviewing past performance instead
+- D) Scrum eliminates all documentation so that the team is free to change direction without constraint
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: Scrum creates plans — Sprint Planning, Sprint Goals, backlog ordering. It does not eliminate planning; it makes plans short-horizon and adaptive.
+  - Why C is incorrect: The Retrospective inspects team process, not product planning. Sprint Planning is the planning event; the Retrospective is about process improvement.
+  - Why D is incorrect: Scrum does not eliminate documentation. The Scrum Guide is silent on documentation — teams may produce as much or as little as serves their purpose. Reducing documentation is not the mechanism for responding to change.
+
+---
+
+### Question 18 (5 points)
+
+A Product Owner has 150 items in the Product Backlog. They ask: "Do I need to fully detail all 150 items?" What is the correct Scrum guidance?
+
+- A) Yes — all Product Backlog items must be fully detailed before Sprint Planning can begin
+- B) No — items near the top of the backlog should be detailed enough for Sprint Planning; items further down are less refined, with more detail added progressively as they approach the top
+- C) Yes — undetailed items violate the Definition of Ready and cannot remain in the Product Backlog
+- D) No — the Scrum Master is responsible for detailing backlog items before Sprint Planning
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: Fully detailing all 150 items upfront would be a significant waste — many items will change, be removed, or never be built. Progressive elaboration is a core Scrum practice.
+  - Why C is incorrect: "Definition of Ready" is a commonly used practice but is not defined in the Scrum Guide. The Guide describes product backlog refinement as an ongoing activity, not a formal gate.
+  - Why D is incorrect: Detailing backlog items is the Product Owner's responsibility, typically done collaboratively with Developers during refinement sessions. The Scrum Master does not own the content of the Product Backlog.
+
+---
+
+### Question 19 (5 points)
+
+A team member says: "I've been coding for 20 years. I don't need Scrum — I can manage my own work." Which Scrum concept most directly addresses this attitude?
+
+- A) The Scrum Guide's requirement that all team members be Scrum-certified before joining a Scrum Team
+- B) Scrum's self-managing team model, which does not require individual direction — it requires the team as a unit to plan, inspect, and adapt collaboratively; individual expertise is valued within that structure, not instead of it
+- C) The Product Owner's authority to set expectations for all team members
+- D) The Scrum Master's responsibility to enforce participation in all Scrum events
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: The Scrum Guide does not require certification for team members. This is a factual error.
+  - Why C is incorrect: The Product Owner sets product direction, not behavioral expectations for individual team members. Setting team behavioral norms is a team-level and Scrum Master coaching responsibility.
+  - Why D is incorrect: The Scrum Master coaches and facilitates but does not enforce participation in an authoritative way. The correct framing is coaching the individual toward understanding the collaborative value of Scrum events.
+
+---
+
+### Question 20 (5 points)
+
+After completing PSM I preparation, a student summarizes: "The exam is really asking one question over and over: does this action serve the empirical process or undermine it?" Is this an accurate characterization?
+
+- A) No — the PSM I tests memorization of Scrum Guide text, not reasoning about empiricism
+- B) No — the PSM I tests SAFe and LeSS alongside Scrum, requiring broad scaling knowledge
+- C) Yes — most PSM I questions evaluate whether a described action preserves or damages transparency, inspection, and adaptation; understanding empiricism deeply allows candidates to reason through unfamiliar scenarios
+- D) Partially — the exam tests empiricism for Scrum Master questions but tests tool knowledge for Developer questions
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why A is incorrect: The PSM I is explicitly scenario-based and tests applied reasoning, not memorization. Scrum.org designs questions to require understanding of principles, not recall of specific sentences.
+  - Why B is incorrect: The PSM I focuses on the Scrum Guide. SAFe and LeSS have their own separate certifications. PSM I questions about scaling are grounded in Scrum principles, not framework-specific details.
+  - Why D is incorrect: The PSM I does not have separate question types for Scrum Master and Developer questions. All questions test the same Scrum Guide principles applied to various roles and scenarios.
+
+---
+
 End of Quiz — Module 16

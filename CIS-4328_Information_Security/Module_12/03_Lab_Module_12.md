@@ -229,4 +229,89 @@ Submit a lab report containing:
 
 ---
 
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Advanced Memory and Disk Forensics Investigation
+
+A regional law firm has experienced a suspected insider data theft. A paralegal is suspected of exfiltrating client contracts and financial records before resigning. The firm's IT team acquired a memory image and a disk image from the paralegal's workstation before it was returned. You have been engaged as the forensic examiner.
+
+**Artifact Set A — Volatility pslist Output (excerpt):**
+
+```text
+PID   PPID  Name                  Start Time
+4     0     System
+392   4     smss.exe
+512   392   csrss.exe
+588   392   wininit.exe
+600   512   csrss.exe
+648   588   services.exe
+668   588   lsass.exe
+724   648   svchost.exe
+1144  648   svchost.exe
+2048  2036  explorer.exe
+3122  2048  chrome.exe
+3344  2048  winrar.exe           2026-05-14 17:42:11
+3501  3344  cmd.exe              2026-05-14 17:42:14
+3621  3501  xcopy.exe            2026-05-14 17:42:19
+4802  2048  7z.exe               2026-05-14 17:44:03
+```
+
+**Artifact Set B — Volatility netscan Output (excerpt):**
+
+```text
+Offset   Proto  LocalAddr        LocalPort  ForeignAddr      ForeignPort  State    PID
+...
+0x3a1bc  TCPv4  10.0.1.47        52341      185.220.101.89   443          ESTABLISHED  3122
+0x3a9f4  TCPv4  10.0.1.47        52398      10.0.1.1         445          ESTABLISHED  3621
+```
+
+**Artifact Set C — NTFS MFT Entries (recovered from unallocated space):**
+
+```text
+File: ContractArchive_MayJune2026.zip  Size: 847MB  Created: 2026-05-14 17:43:55  Deleted: 2026-05-14 17:51:02
+File: ClientList_Confidential.xlsx     Size: 12.4MB  Created: 2026-05-14 17:41:33  Deleted: 2026-05-14 17:51:09
+File: client_notes_export.pdf          Size: 3.1MB   Created: 2026-05-14 17:40:17  Deleted: 2026-05-14 17:51:14
+```
+
+**Artifact Set D — Windows Security Event Log (excerpt):**
+
+```text
+2026-05-14 17:38:02 | EventID 4624 | User: jmorgan | Source: 10.0.1.47 | Logon Type 2
+2026-05-14 17:40:10 | EventID 4688 | Process: chrome.exe | User: jmorgan
+2026-05-14 17:41:30 | EventID 4688 | Process: winrar.exe | CommandLine: winrar.exe a -p -r C:\Temp\ContractArchive_MayJune2026.zip "C:\ClientFiles\"
+2026-05-14 17:44:01 | EventID 4688 | Process: 7z.exe | CommandLine: 7z.exe a -p -mhe=on C:\Temp\final.7z C:\Temp\ContractArchive_MayJune2026.zip
+2026-05-14 17:51:00 | EventID 4688 | Process: cmd.exe | CommandLine: cmd.exe /c del /f /q C:\Temp\*.zip C:\Temp\*.xlsx C:\Temp\*.pdf
+2026-05-14 17:52:44 | EventID 1102 | Audit log cleared | User: jmorgan
+```
+
+1. Reconstruct the complete attack timeline from the artifact sets. For each event in your timeline, identify: the timestamp, the action taken, the artifact set that provides evidence, and whether the action is consistent with staging, exfiltration, or anti-forensics. Present your timeline in tabular format.
+
+2. Artifact Set B shows an established connection from PID 3122 (chrome.exe) to 185.220.101.89 on port 443. Explain how an examiner would determine whether this connection represents normal browser traffic versus data exfiltration via a web upload. Identify three specific additional artifacts the examiner should collect to answer this question, and describe what each artifact would show.
+
+3. Event ID 1102 appears at 17:52:44. Define what this event records, explain its forensic significance in this case, and describe what evidence the examiner should look for to determine whether the attacker succeeded in destroying log evidence or whether earlier log entries were preserved.
+
+4. The suspect's attorney argues that the MFT entries in Artifact Set C prove nothing because the files were deleted — the suspect claims she deleted temporary work files as part of routine cleanup. Using the full artifact set, construct a factual counter-argument demonstrating that the deletion was part of a deliberate anti-forensics sequence rather than routine maintenance. Cite at least three specific observations from the artifacts that support your argument.
+
+### Challenge 2: Forensic Investigation Legal Framework and Reporting
+
+A cybersecurity consulting firm has been retained to investigate a suspected employee fraud case at a privately-held manufacturing company. The investigation covers: a company-issued Windows laptop, a personal iPhone the employee used to send work emails under a BYOD policy, a shared file server the employee had access to, and the employee's Microsoft 365 corporate email account.
+
+1. For each of the four evidence sources, identify: the legal authorization basis required before collection (consent, corporate policy, court order, etc.), the specific legal risk if the wrong authorization basis is assumed, the forensic acquisition method appropriate for that source type, and the chain of custody step that must occur immediately after acquisition. Present your analysis in a structured format for each evidence source.
+
+2. The company's general counsel asks whether the investigation team can use a "consent to monitoring" clause in the employee's onboarding agreement as authorization to access the personal iPhone. Analyze the legal sufficiency of this argument. Address: what the onboarding consent clause can and cannot authorize, how BYOD-specific policy language changes the analysis, what jurisdiction-specific factors affect the answer, and what the investigation team should do if the employee refuses consent for the personal device.
+
+3. After completing the investigation, the lead examiner must produce a forensic report for use in potential civil litigation. Identify the six required sections of a forensically defensible report and describe the specific content each section must contain. For each section, explain the consequence of omitting that section or presenting its content in a technically imprecise way.
+
+4. The investigation uncovers evidence of fraud. The company's CFO asks the forensic team to share the findings with the company's external auditors and the FBI. Identify: what legal considerations govern sharing evidence with external auditors under an engagement letter, the legal basis for voluntarily disclosing evidence to federal law enforcement, whether voluntary disclosure to the FBI affects attorney-client privilege over the investigation, and what the examiner's obligations are if the FBI subsequently issues a subpoena for the forensic images.
+
+### Reflection Questions
+
+1. In Challenge 1, Event ID 1102 shows the suspect cleared the audit log. However, the investigation still recovered substantial evidence from multiple artifact sources. This illustrates a fundamental principle of digital forensics: anti-forensics actions are themselves forensic evidence. Explain why a sophisticated attacker who successfully destroys one artifact class (event logs) still leaves a detectable footprint across other artifact classes. Using the specific artifacts in Challenge 1, identify three artifact sources that survived the log-clearing action and explain why each was not affected by the 1102 event. Then describe what a truly comprehensive anti-forensics operation would have required, and why complete evidence destruction is rarely achievable on a live Windows system.
+
+2. Challenge 2 highlights the tension between investigative thoroughness and legal admissibility — collecting evidence without proper authorization can render it inadmissible and expose the organization to civil liability. Explain why digital forensic investigators must treat legal authorization as a prerequisite rather than a formality, describe a specific scenario where technically excellent forensic work was rendered worthless by an authorization defect, explain the concept of "fruit of the poisonous tree" as it applies to digital evidence in civil litigation, and describe what a minimum viable legal authorization checklist should contain before any collection begins in a corporate investigation.
+
+---
+
 *End of Lab — Module 12*

@@ -182,3 +182,30 @@ In 100-150 words, describe a real or hypothetical scenario from an industry you 
 4. Deadline: See the course schedule in Canvas.
 
 Late submissions lose 10 points per day unless an extension is approved in advance by Professor Nash.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Greenfield ERP Vendor Selection Matrix
+
+You have been hired as an ERP consultant for a 500-employee food-and-beverage manufacturer. The CEO wants to evaluate SAP S/4HANA, Oracle Cloud ERP, and Microsoft Dynamics 365. Build a structured vendor comparison:
+
+1. Create a weighted scoring matrix with at least six evaluation criteria (e.g., total cost of ownership, industry-specific functionality, implementation timeline, integration ecosystem, vendor support model, upgrade cadence). Assign a weight (must total 100%) to each criterion based on what matters most to a food manufacturer.
+2. Score each of the three vendors on each criterion from 1–5 and calculate a weighted total score. Document your scoring rationale for each cell.
+3. Write a 100-word executive summary recommending one vendor and justifying the choice using the weighted results.
+4. Identify one criterion where your scoring was most uncertain and explain what additional information you would need to finalize that score.
+
+### Challenge 2: Integration Failure Post-Mortem
+
+A retail company went live with SAP S/4HANA six months ago but kept Salesforce CRM on a separate, unintegrated system. Sales representatives are creating orders in Salesforce that are not flowing to SAP, causing fulfillment delays and duplicate invoices.
+
+1. Draw a data flow diagram showing what should happen (Opportunity close → SAP Sales Order) versus what is currently happening (manual workaround steps the team invented).
+2. Identify three specific data fields (e.g., customer ID, order total, requested delivery date) that are at risk of mismatching between the two systems given the current manual process.
+3. Propose a middleware integration solution (name a specific tool such as MuleSoft or SAP Integration Suite) and describe the two most critical data mappings it must handle.
+4. Estimate the business cost of the current failure in terms of time, accuracy, and customer experience — use specific numbers based on reasonable assumptions.
+
+### Reflection Questions
+
+1. In the vendor selection matrix, which criterion had the biggest impact on the final ranking? Would a different industry (e.g., financial services instead of food manufacturing) change that weighting significantly, and why?
+2. The integration failure scenario is a real pattern seen in many ERP go-lives. What organizational or project management decision most likely caused the integration to be left out of the initial scope, and what should the project manager have done differently during the planning phase?

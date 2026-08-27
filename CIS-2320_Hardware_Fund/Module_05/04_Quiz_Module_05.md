@@ -195,3 +195,203 @@ Distractor Analysis:
 - Why A is incorrect: There is no universal SATA color-coding standard. Cable colors vary by manufacturer and are not a reliable identification method.
 - Why C is incorrect: The function descriptions are reversed. The data cable carries the SATA data signal; the power cable carries DC voltages from the PSU.
 - Why D is incorrect: Both SATA data and power cables are flat. There is no round-versus-flat distinction for SATA cables; identification relies on connector width and pin count.
+
+---
+
+### Question 11
+
+A user purchases a new M.2 SSD labeled "M.2 2280 PCIe 4.0 x4 NVMe." What does "2280" describe?
+
+- A) The drive's maximum sequential read speed in MB/s
+- B) The physical dimensions of the drive — 22 mm wide and 80 mm long
+- C) The PCIe generation and lane count combined into a single number
+- D) The drive's NAND flash chip density in gigabits per die
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why B is correct:* M.2 size codes encode the width and length of the drive card in millimeters. The first two digits (22) are the width in mm; the last two digits (80) are the length in mm. An M.2 2280 drive is 22 mm × 80 mm — the most common desktop M.2 NVMe size.
+- *Why A is incorrect:* Sequential read speed is expressed in MB/s separately (e.g., "up to 7000 MB/s") and is not encoded in the size code.
+- *Why C is incorrect:* PCIe generation and lane count are expressed separately ("PCIe 4.0 x4") and are not combined into a single number in M.2 nomenclature.
+- *Why D is incorrect:* NAND chip density is an internal manufacturing specification not encoded in the consumer drive label's size code.
+
+---
+
+### Question 12
+
+Which of the following correctly describes the key difference between RAID 0 and RAID 1?
+
+- A) RAID 0 stripes data across multiple drives for performance with no redundancy; RAID 1 mirrors data across two drives for redundancy with no performance gain
+- B) RAID 0 requires three or more drives; RAID 1 requires exactly two drives
+- C) RAID 0 provides fault tolerance against one drive failure; RAID 1 provides no fault tolerance
+- D) RAID 0 and RAID 1 both require an identical number of drives and provide the same usable capacity
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- *Why A is correct:* RAID 0 (striping) splits data across all drives, increasing sequential read/write performance. It has zero fault tolerance — one drive failure destroys all data. RAID 1 (mirroring) writes identical data to two drives, providing fault tolerance against one drive failure at the cost of 50% usable capacity (2 × 1 TB = 1 TB usable).
+- *Why B is incorrect:* RAID 0 can be implemented with two drives (the minimum). RAID 1 also requires exactly two drives (it is a two-drive mirror). The minimum drive count for RAID 0 is 2, not 3.
+- *Why C is incorrect:* This reverses the descriptions. RAID 1 provides fault tolerance; RAID 0 provides no fault tolerance.
+- *Why D is incorrect:* RAID 0 and RAID 1 have different capacity calculations. RAID 0 uses 100% of total raw capacity (no redundancy overhead). RAID 1 uses 50% of raw capacity (one drive's worth is the usable space). They have very different usable capacity outcomes.
+
+---
+
+### Question 13
+
+A 7200 RPM hard disk drive experiences a "clicking" sound and the OS cannot access the drive. What is the MOST likely cause?
+
+- A) The drive's SATA data cable is damaged and is causing the drive to spin at the wrong speed
+- B) The read/write head is making mechanical contact with the spinning platters due to a head crash
+- C) The drive's firmware has become corrupted, causing it to click as it attempts to load its configuration
+- D) The SATA power connector is intermittent, causing the spindle motor to repeatedly start and stop
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why B is correct:* A clicking sound (often called the "click of death") is the hallmark symptom of a read/write head failure in an HDD. In normal operation, heads float on a thin air cushion above the platters. A head crash occurs when a head physically contacts the platter surface, destroying the platter's magnetic coating and the head itself. This causes the characteristic clicking as the arm repeatedly attempts and fails to seek to the correct position.
+- *Why A is incorrect:* A damaged SATA data cable causes connectivity errors (drive not detected, I/O errors) but does not affect spindle speed and does not produce a clicking sound.
+- *Why C is incorrect:* Firmware corruption typically causes the drive to be unrecognized by the OS or to appear with an incorrect model number. It does not produce mechanical clicking noises, which are physically caused by head movement.
+- *Why D is incorrect:* An intermittent power connection would cause the spindle to stop and restart (audible as a wind-down and spin-up sound), not a rapid repetitive clicking pattern. The clicking is specifically from the head actuator arm, not the spindle motor.
+
+---
+
+### Question 14
+
+Which RAID level requires a minimum of four drives and provides both striping performance and redundancy through mirroring?
+
+- A) RAID 0
+- B) RAID 1
+- C) RAID 5
+- D) RAID 10
+
+**Correct Answer:** D
+
+**Distractor Analysis:**
+
+- *Why D is correct:* RAID 10 (also written RAID 1+0) combines mirroring and striping. It requires at minimum four drives: two pairs of mirrored drives, with the pairs striped together. This provides the write performance of striping and the fault tolerance of mirroring. Usable capacity is 50% of raw total.
+- *Why A is incorrect:* RAID 0 only stripes — it provides no redundancy and requires a minimum of two drives.
+- *Why B is incorrect:* RAID 1 only mirrors — it requires exactly two drives per mirror set and provides no striping performance benefit.
+- *Why C is incorrect:* RAID 5 requires a minimum of three drives. It uses distributed parity for redundancy and striping for performance, but it is not a mirror+stripe (RAID 10) implementation.
+
+---
+
+### Question 15
+
+An NVMe SSD is installed in a PCIe 3.0 x4 M.2 slot, but the drive is rated for PCIe 4.0 x4. What is the expected behavior?
+
+- A) The drive will not function because PCIe 4.0 and PCIe 3.0 M.2 slots use different physical key configurations
+- B) The drive will operate at PCIe 3.0 speeds, achieving roughly half the rated maximum sequential throughput
+- C) The drive will function at full PCIe 4.0 speed because NVMe controllers automatically generate PCIe 4.0 timing on any slot
+- D) The drive will overheat because PCIe 3.0 slots do not provide adequate cooling voltage for PCIe 4.0 NVMe drives
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why B is correct:* PCIe is backward compatible across generations using the same physical connector. A PCIe 4.0 x4 NVMe drive installed in a PCIe 3.0 x4 M.2 slot will negotiate down to PCIe 3.0 speeds. PCIe 3.0 x4 provides approximately 3,940 MB/s bandwidth, compared to PCIe 4.0 x4's approximately 7,877 MB/s — roughly half the rated throughput.
+- *Why A is incorrect:* M.2 NVMe slots use the same M-key physical connector for both PCIe 3.0 and PCIe 4.0 drives. There is no physical key difference between generations; backward compatibility is electrical.
+- *Why C is incorrect:* PCIe generation is determined by the slot (motherboard), not the card (drive). A drive cannot force a slot to operate at a higher generation than the slot is rated for.
+- *Why D is incorrect:* PCIe slots do not supply "cooling voltage." All PCIe versions supply the same 3.3V and 12V power rails. Thermal management for NVMe drives is handled by the drive's heatsink and the system's airflow, not by the PCIe version.
+
+---
+
+### Question 16
+
+A technician is configuring storage for a video production workstation. The primary requirement is maximum read and write speed for editing 8K video files; data redundancy is not a concern because the files are regularly backed up. Which storage configuration best meets this requirement?
+
+- A) Two 4 TB HDDs in RAID 1
+- B) Two 2 TB NVMe SSDs in RAID 0
+- C) One 8 TB HDD with a SATA SSD cache drive
+- D) Four 1 TB SATA SSDs in RAID 5
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why B is correct:* Two NVMe SSDs in RAID 0 (striping) combines the bandwidth of both drives, potentially achieving 10,000–14,000 MB/s sequential throughput — far exceeding what 8K video editing workflows require. Since backup redundancy is covered externally, RAID 0's lack of fault tolerance is an acceptable tradeoff for maximum performance.
+- *Why A is incorrect:* HDDs in RAID 1 provide approximately 150–200 MB/s sequential speed — orders of magnitude slower than NVMe. This configuration prioritizes redundancy over speed, which is the opposite of the requirement.
+- *Why C is incorrect:* A hybrid HDD + SSD cache arrangement delivers moderate performance improvement for frequently accessed files but does not provide the sustained high-bandwidth sequential writes needed for 8K video capture and editing.
+- *Why D is incorrect:* Four SATA SSDs in RAID 5 provide decent throughput (2,000–2,500 MB/s with a hardware controller) and redundancy, but SATA SSDs are still slower than NVMe and RAID 5's parity calculation overhead reduces peak write throughput. The RAID 0 NVMe option outperforms this for a pure-speed requirement.
+
+---
+
+### Question 17
+
+What is the usable storage capacity of a RAID 5 array built with five 4 TB drives?
+
+- A) 20 TB (full capacity, no overhead)
+- B) 16 TB (one drive's worth reserved for distributed parity)
+- C) 10 TB (50% overhead for mirroring)
+- D) 12 TB (two drives' worth reserved for dual parity)
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why B is correct:* RAID 5 uses distributed parity equivalent to one drive's capacity spread across all drives. Usable capacity = (N − 1) × drive size = (5 − 1) × 4 TB = 4 × 4 TB = 16 TB. One drive's worth (4 TB) is consumed by the distributed parity that enables single-drive fault tolerance.
+- *Why A is incorrect:* 20 TB would be RAID 0 (no parity overhead). RAID 5 sacrifices one drive's equivalent capacity for parity.
+- *Why C is incorrect:* 50% overhead (10 TB usable from 20 TB raw) describes RAID 1 or RAID 10 (mirroring). RAID 5 parity overhead is 1/N, not 50%.
+- *Why D is incorrect:* Dual parity (two drives' worth reserved) describes RAID 6, which can survive two simultaneous drive failures. RAID 5 uses single parity (one drive's equivalent).
+
+---
+
+### Question 18
+
+A SATA SSD and a SATA HDD are both connected to the same motherboard. A technician notices the SSD boots Windows in approximately 8 seconds, while the HDD takes approximately 45 seconds. What is the PRIMARY reason for this speed difference?
+
+- A) The SSD has a faster CPU built into its controller chip
+- B) The SSD has no moving parts and accesses all storage locations in microseconds; the HDD requires physical platter rotation and head seeking
+- C) The SATA port the SSD uses provides more power than the port used by the HDD
+- D) The SSD uses compressed data storage, reducing the amount of data that must be read during boot
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why B is correct:* The fundamental speed advantage of SSDs over HDDs is the absence of mechanical components. HDDs must physically spin platters to the correct position and move the read/write head to the target track before reading data — a process taking 3–10 ms per random access. SSDs access any NAND flash cell electrically in microseconds, with no rotational latency or seek time. Boot time is dominated by random I/O (reading many small OS files), where SSDs outperform HDDs by orders of magnitude.
+- *Why A is incorrect:* SSD controllers are specialized microcontrollers optimized for NAND management (wear leveling, garbage collection, error correction). They do not contain general-purpose CPUs and their controller speed is not the primary explanation for the performance difference vs. HDDs.
+- *Why C is incorrect:* All SATA ports on the same controller provide the same power specifications. Power delivery does not vary between SATA ports on the same board and has no effect on drive speed.
+- *Why D is incorrect:* Consumer SSDs typically do not use real-time transparent compression for storage (some enterprise SSD controllers do, but this is not a standard feature of consumer SSDs). The speed advantage is from the NAND flash technology itself, not compression.
+
+---
+
+### Question 19
+
+Which of the following best describes the role of wear leveling in an SSD?
+
+- A) It regulates the SSD's operating temperature to prevent thermal degradation of NAND cells
+- B) It distributes write operations evenly across all NAND flash cells to prevent any single cell from wearing out prematurely
+- C) It reduces write amplification by compressing data before writing to NAND flash
+- D) It monitors SMART data to predict when individual NAND cells will fail and pre-emptively moves data
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why B is correct:* NAND flash cells have a finite number of program/erase (P/E) cycles before they fail (typically 1,000–100,000 cycles depending on cell type). Wear leveling is an algorithm in the SSD controller that ensures write operations are distributed evenly across all available cells, preventing hot spots where frequently written cells wear out while other cells remain unused. This extends the overall lifespan of the drive.
+- *Why A is incorrect:* Thermal management in SSDs is handled by the drive's thermal sensor and the system's SMART thermal monitoring — not by wear leveling algorithms. Wear leveling is specifically about distributing write cycles, not managing heat.
+- *Why C is incorrect:* Data compression is a separate optional feature in some SSD controllers (primarily Sandforce-based). Write amplification is the ratio of physical writes to logical writes; reducing write amplification is a goal of efficient garbage collection, not directly of wear leveling.
+- *Why D is incorrect:* SMART monitoring and predictive failure analysis are separate health monitoring functions. Wear leveling operates proactively on every write, not reactively in response to detected cell failures.
+
+---
+
+### Question 20
+
+A company is deploying storage for a critical financial database server that must survive two simultaneous drive failures without data loss. Which RAID level meets this requirement?
+
+- A) RAID 1
+- B) RAID 5
+- C) RAID 6
+- D) RAID 10
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why C is correct:* RAID 6 uses dual distributed parity, allowing the array to survive two simultaneous drive failures without data loss. It requires a minimum of four drives, with usable capacity = (N − 2) × drive size. For a mission-critical financial database, RAID 6 is the appropriate choice when two-drive fault tolerance is required.
+- *Why A is incorrect:* RAID 1 mirrors two drives and tolerates only one drive failure (the failure of one mirror). It does not provide two-drive fault tolerance and is not appropriate for large storage arrays.
+- *Why B is incorrect:* RAID 5 uses single distributed parity and can survive only one drive failure. A second drive failure before rebuild completes causes total data loss — unacceptable for a critical financial database.
+- *Why D is incorrect:* RAID 10 can survive one drive failure per mirror pair (in the best case, up to N/2 failures if each failing drive is in a different pair). However, if two failures occur in the same mirror pair, all data is lost. RAID 6 is the specified correct answer for guaranteed two-simultaneous-drive fault tolerance.

@@ -181,6 +181,24 @@ Tip 8: Scrum does not prescribe engineering practices (unit testing, CI/CD, pair
 
 ---
 
+## 9. Supplemental Resources
+
+The following free, open-access resources go deeper on Module 03 topics:
+
+**1. The 2020 Scrum Guide — Scrum.org (Full Text)**
+<https://scrumguides.org/scrum-guide.html>
+Every PSM I question is grounded in this document. For Module 03, focus on the "Scrum Team," "Scrum Events," "Scrum Artifacts," and "Scrum Values" sections. The guide is free and approximately 13 pages — there is no substitute for reading it directly.
+
+**2. Scrum Open Assessment — Scrum.org**
+<https://www.scrum.org/open-assessments/scrum-open>
+A free, official 30-question practice assessment from Scrum.org that mirrors the PSM I exam format. Questions are drawn from the Scrum Guide. Aim for a score above 85% before sitting the actual PSM I exam. Unlimited free attempts.
+
+**3. "Scrum: The Art of Doing Twice the Work in Half the Time" — Jeff Sutherland (Overview)**
+<https://www.scruminc.com/scrum-the-art-of-doing-twice-the-work-in-half-the-time/>
+The companion overview page for Sutherland's book, co-written by a Scrum co-creator. The page contains free excerpts and background on why Scrum was designed the way it was. Understanding the design rationale helps answer "why" questions on the PSM I exam that go beyond rules memorization.
+
+---
+
 ## 8. Study Checklist
 
 - [ ] Draw the complete Scrum framework diagram from memory (accountabilities, events, artifacts, timeboxes, commitments)

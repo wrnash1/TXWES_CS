@@ -246,6 +246,22 @@ The following SY0-701 exam objectives are covered in this module:
 
 ---
 
+## 9. Supplemental Resources
+
+**1. NIST SP 800-41 Rev. 1 — Guidelines on Firewalls and Firewall Policy**
+<https://csrc.nist.gov/publications/detail/sp/800-41/rev-1/final>
+NIST's authoritative guidance on firewall types, rule-set design, and policy management covering packet filtering, stateful inspection, and application-layer gateways. Directly supports Module 07 coverage of firewall classification, implicit deny, and ingress/egress filtering principles.
+
+**2. NIST SP 800-207 — Zero Trust Architecture**
+<https://csrc.nist.gov/publications/detail/sp/800-207/final>
+The authoritative NIST publication defining Zero Trust Architecture (ZTA) components, design models, and deployment scenarios. Covers Policy Enforcement Points, Policy Decision Points, and the contrast between perimeter-based and zero-trust network models — directly aligning with Module 07 zero trust and ZTNA content.
+
+**3. NSA Network Infrastructure Security Guide**
+<https://media.defense.gov/2022/Jun/15/2003018261/-1/-1/0/CTR_NSA_NETWORK_INFRASTRUCTURE_SECURITY_GUIDE_20220615.PDF>
+The NSA's practical network hardening guide covering segmentation, out-of-band management, routing protocol security, and switch/router hardening. Provides real-world implementation detail for the network security architecture principles covered in Module 07.
+
+---
+
 ## Review Checklist
 
 Before taking the Module 07 quiz, verify you can do each of the following without notes:

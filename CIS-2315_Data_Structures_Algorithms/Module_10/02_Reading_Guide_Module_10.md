@@ -299,6 +299,27 @@ Three-color DFS (0=white, 1=gray, 2=black) is the canonical directed cycle detec
 
 ---
 
+## 11. Supplemental Resources
+
+The following free, openly licensed resources reinforce the concepts in this module. All are zero-cost and require no account to access.
+
+1. **VisuAlgo — BFS and DFS Visualizations** — [https://visualgo.net/en/dfsbfs](https://visualgo.net/en/dfsbfs)
+   Step-by-step animations of BFS and DFS on directed and undirected graphs, with the queue/stack state shown alongside the graph traversal. An excellent tool for confirming your mental model before coding.
+
+2. **OpenDSA — Graph Traversal Chapter** — [https://opendsa-server.cs.vt.edu/ODSA/Books/Everything/html/GraphTraversal.html](https://opendsa-server.cs.vt.edu/ODSA/Books/Everything/html/GraphTraversal.html)
+   Free interactive OER textbook covering BFS, DFS, topological sort, and cycle detection with embedded exercises and complexity proofs.
+
+3. **NeetCode — Graphs BFS/DFS Playlist (YouTube)** — [https://www.youtube.com/playlist?list=PLot-Xpze53ldBT_7QA8NVot219jFNr_GI](https://www.youtube.com/playlist?list=PLot-Xpze53ldBT_7QA8NVot219jFNr_GI)
+   Free video solutions for Number of Islands, Course Schedule, and other BFS/DFS interview problems. Each video explains the algorithm choice (BFS vs DFS) and the complexity analysis.
+
+4. **Khan Academy — BFS and DFS** — [https://www.khanacademy.org/computing/computer-science/algorithms/graph-search/a/breadth-first-search-and-its-uses](https://www.khanacademy.org/computing/computer-science/algorithms/graph-search/a/breadth-first-search-and-its-uses)
+   Free article covering BFS with the level-by-level distance guarantee and common applications including shortest path in unweighted graphs.
+
+5. **MIT OCW 6.006 — BFS/DFS Lecture 13** — [https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/](https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/)
+   MIT lecture notes and video on BFS, DFS, topological sort, and DAG cycle detection. The proof that BFS computes shortest distances in unweighted graphs is covered rigorously here.
+
+---
+
 ## 10. Study Checklist
 
 - [ ] Watch the Module 10 video lecture by Professor Nash.

@@ -188,3 +188,200 @@ Correct answer: B — BigQuery automatically applies long-term storage pricing t
 and partitions that have not been modified for 90 or more consecutive days. The storage
 cost drops to approximately half the active rate, with no configuration required. This
 applies to storage cost only, not query cost. Tables are not automatically deleted.
+
+---
+
+### Question 11 (5 points)
+
+A team runs analytics queries against a BigQuery table 24 hours a day. At peak usage
+they consume 800 slots and at off-peak only 50 slots. They want to ensure peak queries
+are never throttled. Which pricing model is most appropriate?
+
+- A) On-demand pricing, which allocates up to 2000 slots automatically
+- B) Flat-rate pricing with a slot reservation sized for peak usage
+- C) On-demand pricing with query priority set to INTERACTIVE
+- D) Flex slots purchased for 60-second increments
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) On-demand pricing does allocate slots but does not guarantee a specific slot count; during periods of high contention, on-demand queries may be queued, which does not meet the "never throttled" requirement.
+  - C) INTERACTIVE query priority is the default on-demand mode; it does not reserve slots or guarantee throughput.
+  - D) Flex slots provide short-term commitment reservations (minimum 60 seconds) for burst capacity but are not suited for continuous 24-hour peak guarantees; flat-rate reservations are the appropriate long-term solution.
+
+---
+
+### Question 12 (5 points)
+
+A BigQuery table stores 10 million rows. A query filters on a non-partition, non-cluster
+column. What technique can reduce bytes scanned for this type of query without
+restructuring the table?
+
+- A) Create a secondary index on the filtered column
+- B) Re-create the table with clustering on the filtered column
+- C) Move the table to a regional dataset to enable regional query optimization
+- D) Set the table's default partition expiration to 1 day
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) BigQuery does not support secondary indexes in the traditional relational database sense; this is not an available optimization technique.
+  - C) Dataset region affects data residency and latency for the query job, not the amount of data scanned; changing region does not enable block skipping.
+  - D) Setting a partition expiration reduces stored data over time by deleting old partitions, but it does not reduce bytes scanned for queries on existing data and does not help if the column is not a partition column.
+
+---
+
+### Question 13 (5 points)
+
+A data engineering team loads new data into BigQuery every hour using batch jobs.
+They also need to ingest individual transaction records within 1 second of occurring
+for real-time dashboards. Which two loading methods should they use for each use case?
+
+- A) `bq load` for both batch and real-time ingestion
+- B) `bq load` for hourly batch; BigQuery Storage Write API for real-time streaming
+- C) Cloud Storage transfer for hourly batch; `bq insert` (legacy streaming) for
+   real-time
+- D) Dataflow for both batch and streaming ingestion
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) `bq load` ingests files stored in Cloud Storage or local files; it is not suitable for real-time single-record insertion with sub-second latency.
+  - C) `bq insert` is the legacy streaming API that works but is being superseded by the Storage Write API; more importantly, the combination in option B is the current recommended approach per GCP documentation.
+  - D) Dataflow can handle both batch and streaming but is a full pipeline service requiring more configuration; for simple hourly file loads, `bq load` is the standard approach.
+
+---
+
+### Question 14 (5 points)
+
+Which BigQuery feature allows a view in one dataset to query a table in a separate
+dataset that would otherwise be inaccessible to the view's users?
+
+- A) Cross-dataset IAM binding on the source table
+- B) Authorized view — the source dataset grants `bigquery.dataViewer` to the view's
+   service account
+- C) Authorized dataset — the source dataset adds the view's dataset as an authorized
+   entity
+- D) VPC Service Controls perimeter spanning both datasets
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) A cross-dataset IAM binding grants the view's users direct access to the source table, bypassing the row/column filtering the view provides; this defeats the purpose of the view.
+  - B) Authorized views require granting the source dataset access to the specific view (not a service account); the correct mechanism is adding the view as an authorized view in the source dataset's configuration, not granting IAM to a service account.
+  - D) VPC Service Controls restrict which networks can access BigQuery; they do not control which views can read which tables within BigQuery.
+
+---
+
+### Question 15 (5 points)
+
+A BigQuery job fails with the error `quotaExceeded: Your project exceeded quota for
+concurrent queries`. What is the immediate mitigation?
+
+- A) Purchase additional BigQuery storage capacity
+- B) Reduce the number of concurrent queries by queuing or batching requests, or
+   request a quota increase
+- C) Switch from on-demand to flat-rate pricing to remove the quota limit
+- D) Move the dataset to a multi-region location to distribute the query load
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) `quotaExceeded` for concurrent queries is a compute quota (number of simultaneous query jobs), not a storage quota; purchasing storage does not help.
+  - C) The concurrent query quota applies regardless of pricing model; flat-rate pricing changes how compute is billed but does not eliminate the project-level concurrent query quota.
+  - D) Dataset location affects data residency; distributing across regions does not increase the project-level concurrent query quota.
+
+---
+
+### Question 16 (5 points)
+
+A team needs to run the same aggregation query on a large BigQuery table hundreds
+of times per day with low latency. The underlying table is updated once per day.
+Which BigQuery feature pre-computes and caches the query results?
+
+- A) Query result cache (automatic 24-hour cache)
+- B) Materialized view
+- C) Partitioned table
+- D) Clustered table
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) The query result cache stores results for 24 hours and is invalidated when the underlying table changes; it re-executes the full query on the first run after the daily table update, and there is no control over cache refresh timing.
+  - C) Partitioned tables reduce bytes scanned by pruning partitions, but they do not pre-compute aggregations; each query still performs the aggregation at runtime.
+  - D) Clustered tables reduce bytes scanned by sorting data within partitions; they do not pre-compute or store query results.
+
+---
+
+### Question 17 (5 points)
+
+A security team needs to mask the `ssn` column in a BigQuery table so that only
+users with a specific IAM tag can see the plaintext values. All other users see
+a masked value. Which BigQuery feature provides this?
+
+- A) Authorized views with a CASE expression replacing SSN with `XXXX`
+- B) Column-level security using policy tags and data governance with BigQuery
+   Data Catalog
+- C) BigQuery row-level security filters applied to the SSN column
+- D) Encrypting the SSN column with CMEK at rest
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Authorized views can mask data with SQL expressions but require maintaining a separate view; column-level security with policy tags is the purpose-built, scalable solution that integrates with Data Catalog taxonomy management.
+  - C) Row-level security filters control which rows a user can see, not which columns or values within a column; it does not support partial value masking.
+  - D) CMEK encrypts all data at rest using a customer-managed key; it does not provide per-column access control or value masking for specific users.
+
+---
+
+### Question 18 (5 points)
+
+A company stores event data in BigQuery and needs to connect Looker Studio to their
+BigQuery dataset for real-time reporting. What must be configured so that Looker
+Studio can access the dataset?
+
+- A) The BigQuery dataset must be exported to Cloud Storage for Looker Studio to read
+- B) Grant the Looker Studio service account `roles/bigquery.dataViewer` on the dataset,
+   or use viewer credentials in the data source configuration
+- C) Enable the Looker Studio API in the GCP project that contains the BigQuery dataset
+- D) The BigQuery dataset must be in the same GCP project as the Looker Studio workspace
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Looker Studio connects directly to BigQuery using the BigQuery connector; no export to Cloud Storage is required.
+  - C) There is no separate "Looker Studio API" to enable; the BigQuery API must be enabled, and IAM permissions on the dataset are the access control mechanism.
+  - D) Looker Studio can connect to BigQuery datasets across GCP projects; they do not need to be in the same project, provided IAM permissions are correctly configured.
+
+---
+
+### Question 19 (5 points)
+
+A team creates a BigQuery dataset in `US` (multi-region). A Dataflow job in
+`us-central1` reads from this dataset. What egress charges apply for data
+read by the Dataflow job?
+
+- A) Standard GCP inter-region egress charges at $0.08/GB apply
+- B) No egress charges apply because Dataflow in `us-central1` and BigQuery in
+   the `US` multi-region are within the same geographic boundary
+- C) Egress charges apply only for reads exceeding 1 TB per month
+- D) BigQuery charges $5.00 per TB for Dataflow reads regardless of egress
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) BigQuery to Dataflow reads within the same GCP region or multi-region boundary do not incur inter-region egress charges; Google does not charge for data movement between services within the same location.
+  - C) There is no 1 TB monthly free tier threshold for BigQuery-to-Dataflow egress within the same region; the data movement is simply not charged.
+  - D) The $5.00 per TB charge is the on-demand query cost for bytes scanned by SQL queries; it is not a charge for data read by Dataflow pipelines.
+
+---
+
+### Question 20 (5 points)
+
+A BigQuery table is partitioned by `event_date` with 1000 daily partitions. The
+table has no partition filter requirement set. What is the risk of this configuration?
+
+- A) Queries without a partition filter cannot execute on tables with more than
+   500 partitions
+- B) Without a partition filter requirement, a user can accidentally run a full
+   table scan across all 1000 partitions, incurring high query cost
+- C) Tables with more than 999 partitions are automatically migrated to sharded
+   tables
+- D) Partition expiration is automatically enabled when partition count exceeds 1000
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) BigQuery does not restrict query execution based on partition count; there is no 500-partition execution limit.
+  - C) BigQuery supports up to 4000 partitions per table (7500 for ingestion-time partitions); automatic migration to sharded tables does not occur at any partition count threshold.
+  - D) Partition expiration must be explicitly configured; BigQuery does not automatically enable expiration when a table reaches any specific partition count.

@@ -198,3 +198,29 @@ Complete the following before attempting the lab:
 - [ ] Explain the difference between WPA2-Personal and WPA2-Enterprise authentication.
 - [ ] Describe what MDM software does and why IT departments use it for mobile devices.
 - [ ] Complete the Module 14 lab activity.
+
+---
+
+## 9. Supplemental Resources
+
+The following free resources supplement Module 14 content on mobile device connectivity, email protocols, Bluetooth, cellular standards, and MDM.
+
+1. **Professor Messer — CompTIA A+ Core 1 (220-1101) Mobile Device Connectivity**
+   URL: [https://www.professormesser.com/free-a-plus-training/220-1101/220-1101-video/](https://www.professormesser.com/free-a-plus-training/220-1101/220-1101-video/)
+   Relevance: Free video lectures covering Bluetooth pairing models (SSP, Numeric Comparison, Passkey Entry, Just Works), cellular generations (3G/4G LTE/5G), Wi-Fi security standards (WPA2/WPA3 Personal and Enterprise), email protocol port numbers, and MDM features — all directly tested in Domain 1.4 and Domain 2.4 on the A+ exam.
+
+1. **IANA Service Name and Transport Protocol Port Number Registry**
+   URL: [https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml](https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml)
+   Relevance: The Internet Assigned Numbers Authority (IANA) maintains the authoritative free registry of all assigned port numbers. A technician can look up the official port assignments for IMAP (143/993), POP3 (110/995), SMTP (25/465/587), and other protocols directly from this registry — the same port assignments tested on the A+ exam.
+
+1. **Bluetooth Special Interest Group (Bluetooth SIG) — Technology Overview**
+   URL: [https://www.bluetooth.com/learn-about-bluetooth/tech-overview/](https://www.bluetooth.com/learn-about-bluetooth/tech-overview/)
+   Relevance: The official Bluetooth standards body provides free technology overviews covering Bluetooth Classic, BLE (Bluetooth Low Energy), supported profiles (A2DP, HFP, HID, SPP), and Bluetooth 5.x range and speed improvements. This is the authoritative source for Bluetooth version and profile information tested on the A+ exam.
+
+1. **GSMA — Mobile Network Generation Comparison (Free Resource)**
+   URL: [https://www.gsma.com/futurenetworks/resources/](https://www.gsma.com/futurenetworks/resources/)
+   Relevance: The GSMA (Global System for Mobile Communications Association) is the global mobile industry standards organization. Free resources on their site explain 4G LTE, 5G NR (Sub-6 GHz and mmWave), and the differences between 5G NSA (Non-Standalone) and SA (Standalone) deployments — the cellular generation distinctions tested in A+ Core 1 scenarios about mobile device connectivity and speed expectations.
+
+1. **RFC 3501 — Internet Message Access Protocol (IMAP) Version 4**
+   URL: [https://www.rfc-editor.org/rfc/rfc3501](https://www.rfc-editor.org/rfc/rfc3501)
+   Relevance: The free, official IETF specification for IMAP4, which defines how email clients communicate with mail servers to retrieve, manage, and synchronize messages across multiple devices. Reading the protocol summary section clarifies the fundamental difference between IMAP server-side storage and POP3 download-and-delete behavior — a distinction that appears on nearly every A+ exam in the mobile connectivity and email configuration domains.

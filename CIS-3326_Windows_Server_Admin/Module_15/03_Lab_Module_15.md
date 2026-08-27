@@ -508,3 +508,207 @@ installed:
 ```powershell
 Get-WindowsFeature -Name RSAT-Performance-Tools
 ```
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Build an Automated Multi-Server Performance Baseline Report
+
+Collect performance counter data from multiple servers simultaneously and generate
+a comparative baseline CSV that can be used for trend analysis.
+
+1. Create a function that collects a 60-second average of key performance counters
+   from a remote server:
+
+   ```powershell
+   function Get-PerformanceBaseline {
+       param(
+           [Parameter(Mandatory=$true, ValueFromPipeline=$true)]
+           [string]$ComputerName
+       )
+       process {
+           try {
+               $counters = @(
+                   "\Processor(_Total)\% Processor Time",
+                   "\Memory\Available MBytes",
+                   "\Memory\Pages/sec",
+                   "\PhysicalDisk(_Total)\Avg. Disk Queue Length",
+                   "\System\Processor Queue Length"
+               )
+
+               $samples = Get-Counter -Counter $counters `
+                   -ComputerName $ComputerName `
+                   -SampleInterval 5 -MaxSamples 12 `
+                   -ErrorAction Stop
+
+               $data = $samples.CounterSamples | Group-Object Path |
+                   ForEach-Object {
+                       [PSCustomObject]@{
+                           Counter   = ($_.Name -split "\\")[-1]
+                           AvgValue  = [math]::Round(($_.Group.CookedValue | Measure-Object -Average).Average, 2)
+                       }
+                   }
+
+               $result = [ordered]@{ Computer = $ComputerName }
+               foreach ($item in $data) { $result[$item.Counter] = $item.AvgValue }
+               [PSCustomObject]$result | Add-Member -NotePropertyName "Timestamp" `
+                   -NotePropertyValue (Get-Date).ToString("yyyy-MM-dd HH:mm") -PassThru
+
+           } catch {
+               [PSCustomObject]@{
+                   Computer  = $ComputerName
+                   Error     = $_.Exception.Message
+                   Timestamp = (Get-Date).ToString("yyyy-MM-dd HH:mm")
+               }
+           }
+       }
+   }
+   ```
+
+2. Run the function against a list of servers and collect baselines:
+
+   ```powershell
+   $servers  = @("DC1", "localhost")
+   $baseline = $servers | Get-PerformanceBaseline
+   $baseline | Format-Table -AutoSize
+   ```
+
+3. Export the baseline and compare against thresholds:
+
+   ```powershell
+   $baseline | Export-Csv "C:\PerfData\MultiServer_Baseline_$(Get-Date -Format yyyyMMdd).csv" `
+       -NoTypeInformation
+
+   # Flag servers exceeding thresholds
+   foreach ($server in $baseline) {
+       if ($server.'% Processor Time' -gt 80) {
+           Write-Warning "$($server.Computer): CPU $($server.'% Processor Time')% — HIGH"
+       }
+       if ($server.'Available MBytes' -lt 200) {
+           Write-Warning "$($server.Computer): Available RAM $($server.'Available MBytes') MB — LOW"
+       }
+       if ($server.'Pages/sec' -gt 5) {
+           Write-Warning "$($server.Computer): Paging $($server.'Pages/sec') pages/sec — EXCESSIVE"
+       }
+   }
+   ```
+
+4. Load a previously saved baseline CSV and compare current values against it:
+
+   ```powershell
+   $previous = Import-Csv "C:\PerfData\MultiServer_Baseline_$(Get-Date -Format yyyyMMdd).csv"
+   $current  = $servers | Get-PerformanceBaseline
+
+   foreach ($cur in $current) {
+       $prev = $previous | Where-Object { $_.Computer -eq $cur.Computer }
+       if ($prev) {
+           $cpuDelta = [double]$cur.'% Processor Time' - [double]$prev.'% Processor Time'
+           Write-Host "$($cur.Computer) CPU delta vs baseline: $([math]::Round($cpuDelta,1))%"
+       }
+   }
+   ```
+
+   In your lab notes, explain why a 60-second sample (12 × 5-second intervals) is
+   the minimum recommended duration for a meaningful baseline, and what time of
+   day you should capture a baseline to represent typical production load.
+
+### Challenge 2: Write and Apply a Multi-Resource DSC Configuration
+
+Build a DSC configuration that configures three resources with dependency
+ordering, compile it to a MOF, and verify compliance.
+
+1. Write a DSC configuration that ensures IIS is installed, a web root directory
+   exists, and the W3SVC service is running — in that order:
+
+   ```powershell
+   Configuration LabWebServer {
+       Import-DscResource -ModuleName PSDesiredStateConfiguration
+
+       Node "localhost" {
+           WindowsFeature InstallIIS {
+               Name   = "Web-Server"
+               Ensure = "Present"
+           }
+
+           File WebRoot {
+               DestinationPath = "C:\WebRoot"
+               Type            = "Directory"
+               Ensure          = "Present"
+               DependsOn       = "[WindowsFeature]InstallIIS"
+           }
+
+           Service StartW3SVC {
+               Name        = "W3SVC"
+               State       = "Running"
+               StartupType = "Automatic"
+               DependsOn   = "[File]WebRoot"
+           }
+       }
+   }
+
+   # Compile to MOF
+   LabWebServer -OutputPath "C:\DSC\LabWeb"
+   Get-ChildItem "C:\DSC\LabWeb"
+   ```
+
+2. Configure the LCM for `ApplyAndMonitor` mode before applying:
+
+   ```powershell
+   [DSCLocalConfigurationManager()]
+   Configuration LCMConfig {
+       Node "localhost" {
+           Settings {
+               ConfigurationMode             = "ApplyAndMonitor"
+               RefreshFrequencyMins          = 30
+               ConfigurationModeFrequencyMins = 15
+           }
+       }
+   }
+
+   LCMConfig -OutputPath "C:\DSC\LCM"
+   Set-DscLocalConfigurationManager -Path "C:\DSC\LCM" -Verbose
+   Get-DscLocalConfigurationManager | Select-Object ConfigurationMode, RefreshFrequencyMins
+   ```
+
+3. Apply the configuration and verify:
+
+   ```powershell
+   Start-DscConfiguration -Path "C:\DSC\LabWeb" -Wait -Verbose -Force
+
+   Test-DscConfiguration -Verbose
+   Get-DscConfigurationStatus | Select-Object Status, StartDate, DurationInSeconds, ResourcesInDesiredState
+   ```
+
+4. Simulate drift by stopping the W3SVC service, then run `Test-DscConfiguration`
+   to confirm the LCM detects the change:
+
+   ```powershell
+   Stop-Service -Name W3SVC -Force
+
+   Test-DscConfiguration
+   # Expected output: False (drift detected)
+
+   Get-DscConfigurationStatus | Select-Object Status, ResourcesNotInDesiredState
+   ```
+
+   In your lab notes, record the `ResourcesNotInDesiredState` output. Then switch
+   the LCM to `ApplyAndAutoCorrect` and observe whether the W3SVC service restarts
+   automatically at the next consistency check.
+
+### Reflection Questions
+
+1. A performance baseline collected on Monday morning shows `Available MBytes: 1,800`
+   and `Pages/sec: 0.2`. A baseline collected the following Friday afternoon shows
+   `Available MBytes: 380` and `Pages/sec: 18.4`. Both baselines were collected
+   from the same server with no hardware changes. Interpret these values, identify
+   the resource bottleneck, and describe three investigation steps you would take
+   to identify the root cause before recommending a hardware upgrade.
+
+2. DSC `ApplyAndAutoCorrect` mode automatically corrects configuration drift, which
+   sounds ideal. However, a change management board questions whether auto-correction
+   could interfere with emergency manual changes made directly on a server during an
+   incident. Describe a scenario where `ApplyAndAutoCorrect` would revert a valid
+   emergency change, explain how you would prevent this in production while still
+   maintaining configuration integrity, and identify which DSC configuration mode
+   would be most appropriate for a regulated environment with strict change control.

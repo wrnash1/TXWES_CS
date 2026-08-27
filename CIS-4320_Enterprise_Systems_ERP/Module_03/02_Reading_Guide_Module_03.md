@@ -271,3 +271,19 @@ Complete these before attempting the quiz:
 - Complete Lab 03.
 - Post to Discussion Forum 03 by Wednesday at 11:59 PM.
 - Complete Quiz 03 (10 questions).
+
+---
+
+## 9. Supplemental Resources
+
+**1. Gartner Magic Quadrant for Cloud ERP for Product-Centric Enterprises**
+<https://www.gartner.com/en/documents/magic-quadrant-cloud-erp>
+The authoritative vendor landscape report evaluating SAP, Oracle, Microsoft, and others on Completeness of Vision and Ability to Execute. Understanding the Magic Quadrant framework is directly tested in ERP selection methodology questions.
+
+**2. SAP — Why SAP S/4HANA: Business Case and Transition Guide**
+<https://www.sap.com/products/erp/s4hana.html>
+SAP's official S/4HANA product page with whitepapers on TCO, migration paths from ECC, and industry-specific capabilities. Useful for building the vendor comparison sections of Lab 03.
+
+**3. Salesforce — AppExchange Overview and Ecosystem**
+<https://appexchange.salesforce.com>
+The live AppExchange marketplace. Browsing the ERP integration category demonstrates how Salesforce extends into back-office functions through partner applications — directly relevant to the deployment model comparison in this module.

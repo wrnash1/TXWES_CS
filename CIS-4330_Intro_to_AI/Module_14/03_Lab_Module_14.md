@@ -317,4 +317,28 @@ In 150–200 words, describe how the techniques you practiced today relate to re
 
 ---
 
-*Lab Line Count: 175 | Module 14 — AI Security and Privacy*
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Targeted vs. Untargeted FGSM and Defense Effectiveness
+
+1. Extend the FGSM experiment from Part 2 of this lab. Select an image that your ResNet-50 model classifies correctly with confidence above 0.90. Generate adversarial examples at five epsilon values: 0.005, 0.01, 0.02, 0.05, 0.10. For each epsilon, record: (a) the original class, (b) the adversarial prediction, (c) the adversarial confidence score, and (d) whether the perturbation is visually detectable.
+2. Implement a targeted FGSM attack: choose a specific wrong target class and modify the sign of the gradient to push the prediction toward that target. Compare the epsilon required to achieve the targeted misclassification versus the untargeted misclassification at the same confidence level.
+3. Apply two defenses to the adversarial examples: (a) Gaussian blur (sigma=1.0) using `scipy.ndimage.gaussian_filter`, and (b) JPEG compression at quality=50 using PIL. For each defense, test whether the defended image restores the correct classification. Record success/failure for each combination of epsilon and defense.
+4. Build a comparison table: Epsilon | Original Class | Adversarial Class | Untargeted Success | Targeted Class | Targeted Success | Blur Defense Restores | JPEG Defense Restores. Write a 3–4 sentence analysis of which epsilon range and which defense combination is most practical for a production computer vision pipeline.
+
+### Challenge 2: Membership Inference Attack Simulation
+
+1. Train two identical `RandomForestClassifier` models on the Breast Cancer Wisconsin dataset (`sklearn.datasets.load_breast_cancer`): Model A trained on 80 percent of the data (training set), Model B trained on 20 percent (test set). Both models have access to the full feature set.
+2. Implement a simple membership inference attack: for each sample in the full dataset, query Model A's `predict_proba` output and record the confidence for the true class. Repeat for Model B. Compute the mean confidence on samples that were in training vs. samples that were not in training for each model.
+3. A membership inference signal: training set samples typically receive higher confidence from the model they were trained on. Compute the AUC of a binary classifier that uses confidence score to predict "was this sample in the training set?" Plot the ROC curve.
+4. Apply a mitigation: retrain Model A with `max_depth=3` (a regularization constraint that reduces overfitting). Recompute the membership inference AUC. Write a 2–3 sentence explanation of why regularization reduces membership inference risk and what this reveals about the connection between overfitting and privacy.
+
+### Reflection Questions
+
+1. After completing Challenge 1, explain why JPEG compression and Gaussian blur can partially defend against FGSM adversarial examples, even though they are not designed as adversarial defenses. What property of adversarial perturbations makes them vulnerable to these preprocessing operations, and why does this defense fail at very high epsilon values?
+
+2. Based on Challenge 2, explain why membership inference attacks are more dangerous for models trained on small, sensitive datasets (such as a clinical trial dataset with 500 patients) than for models trained on large general datasets (such as an ImageNet model). What does this imply about the relationship between dataset size, overfitting risk, and the need for differential privacy?
+
+---
+
+Lab Line Count: 175 | Module 14 — AI Security and Privacy

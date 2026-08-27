@@ -426,3 +426,21 @@ Submit to Canvas:
 | Daily temperatures | Monotonic decreasing stack of indices — result[idx] = i - idx |
 | Two-stack queue | inbox + outbox; _transfer only when outbox empty; O(1) amortized |
 | Amortized O(1) | Each element moves at most once per stack — total work O(n) over n ops |
+
+---
+
+## Part 9 — Challenge Exercise
+
+These steps are **optional** and ungraded. They are designed for students who want to deepen their understanding beyond the core lab.
+
+### 9.1 — Largest Rectangle in Histogram
+
+LeetCode #84 asks for the area of the largest rectangle that can be formed within a histogram of bar heights. The optimal O(n) solution uses a monotonic increasing stack of bar indices. When a bar shorter than the top of the stack is encountered, pop bars and compute the area they could span. Implement the full solution, trace it step-by-step on the input `[2, 1, 5, 6, 2, 3]`, and write comments explaining why each pop computes the maximum width for that bar height. Add a sentinel `0` at the end of the heights array and explain why this sentinel is needed to flush remaining bars from the stack.
+
+### 9.2 — Evaluate Reverse Polish Notation
+
+LeetCode #150 gives an array of tokens representing a mathematical expression in Reverse Polish Notation (RPN). Implement `eval_rpn(tokens)` using a stack: push operands; when an operator is encountered, pop two operands, apply the operator, and push the result. Handle all four operators (`+`, `-`, `*`, `/`) with integer truncation toward zero for division. Verify on the inputs `["2","1","+","3","*"]` (answer: 9) and `["4","13","5","/","+"]` (answer: 6). State the time and space complexity and explain why a stack is the natural data structure for RPN evaluation.
+
+### 9.3 — Sliding Window Maximum
+
+LeetCode #239 asks for the maximum value in every contiguous subarray of size k. The brute-force O(nk) approach scans each window. The optimal O(n) approach uses a monotonic decreasing deque of indices. Implement both approaches, benchmark them on an array of size 100,000 with k = 1,000, and record the runtime ratio. In a comment block, explain why the deque approach achieves O(n): specifically, why each element is added to and removed from the deque at most once across all windows.

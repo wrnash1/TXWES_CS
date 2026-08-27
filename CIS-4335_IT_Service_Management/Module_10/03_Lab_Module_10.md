@@ -244,4 +244,36 @@ Before submitting, verify:
 
 ---
 
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: SLA Gap Analysis
+
+A small manufacturing company's IT department has been operating without formal SLAs for five years. The IT manager has collected the following data from last quarter:
+
+- Average P1 incident resolution time: 6 hours 40 minutes
+- Average P2 incident resolution time: 18 hours
+- Monthly availability of the ERP system: ranged from 97.3% to 99.1%
+- Customer satisfaction survey score (NPS): -12 (net detractor)
+- Number of proactive breach communications sent to business leadership: 0
+
+1. Using this baseline data, draft the availability target and P1/P2 resolution targets you would propose for a new SLA. Justify each target with one sentence explaining your rationale (why it is achievable yet challenging based on the current performance).
+2. Identify two risks in the current situation that a formal SLA would help mitigate, and explain how the SLA mechanism addresses each risk.
+3. Draft one OLA that the infrastructure team would need in order to support your proposed P1 resolution target. Include: parties, target, and one consequence for the team if the OLA is consistently missed.
+
+### Challenge 2: XLA Design
+
+The same manufacturing company wants to move beyond technical SLA metrics and measure actual user experience. The business users' most common complaints are: (1) they are never told about outages in advance, (2) when they call the service desk they have to explain their problem multiple times, and (3) after a ticket is closed they still cannot complete their work.
+
+1. Identify the most appropriate XLA measurement method (NPS, CES, outcome-based, or post-interaction survey) to address each of the three complaints. Justify your choice for each.
+2. Design one XLA target for the complaint you consider most damaging to the business relationship. Write the target in measurable terms (e.g., "X% of users confirm [specific outcome] within Y hours of ticket closure").
+
+### Reflection Questions
+
+1. An SLA that is technically met every month but consistently generates poor user satisfaction scores is arguably worse than no SLA at all, because it gives management false confidence. Do you agree or disagree? Support your position with specific reference to ITIL 4 concepts from this module.
+2. A colleague argues that OLAs are bureaucratic overhead — "if everyone just did their jobs, we wouldn't need internal agreements." Construct a counter-argument using a specific example from this module's lab or reading guide where an OLA's absence would directly cause an SLA breach.
+
+---
+
 Module 10 Lab | CIS-4335 IT Service Management | Texas Wesleyan University

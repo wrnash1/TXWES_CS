@@ -283,3 +283,17 @@ Submit the following to the course LMS:
 ---
 
 *Texas Wesleyan University — CIS-4331 Azure Cloud Computing — Module 15 Lab*
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Service Trust Portal Compliance Report Comparison
+Navigate to the Microsoft Service Trust Portal (servicetrust.microsoft.com) and download two compliance documents: (1) the most recent Azure SOC 2 Type II report summary or bridge letter, and (2) the Azure ISO 27001 certificate. Review both documents and document the following: the audit period covered by the SOC 2 report, the issuing audit firm, the Trust Service Criteria categories covered, the ISO 27001 certificate validity dates, and the certification body. Then compare the two frameworks in a structured table with columns for: Framework, Issuing Body, Scope, Renewal Frequency, and Primary Use Case. Write a 2–3 sentence explanation of why an organization pursuing HIPAA compliance on Azure would need to review the SOC 2 report in addition to signing the Microsoft BAA, and what gap the SOC 2 report fills that the BAA does not.
+
+### Challenge 2: GDPR Data Residency Policy Enforcement
+Create two resource groups in your Azure subscription: `eu-workload-rg` (representing an EU deployment) and `us-workload-rg` (representing a US deployment). Using Azure Policy, assign the built-in "Allowed locations" policy to `eu-workload-rg` restricting deployments to West Europe and North Europe only. Assign a second "Allowed locations" policy to `us-workload-rg` allowing East US, West US, and West US 2. Attempt to deploy a storage account to `eu-workload-rg` in East US and capture the error output. Then deploy a storage account to `eu-workload-rg` in West Europe and confirm it succeeds. Document all CLI commands, policy assignment outputs, the blocked deployment error, and the successful deployment confirmation. Write a 2–3 sentence explanation of how this Azure Policy configuration directly implements GDPR Article 44–46 data transfer restriction requirements, and identify one limitation of this approach that a comprehensive GDPR compliance program would need to address separately.
+
+### Reflection Questions
+1. The lab explored the Defender for Cloud regulatory compliance dashboard showing compliance against a framework like NIST SP 800-53 or ISO 27001. A new cloud engineer argues: "Our compliance score is 94% — we're basically fully compliant, so we don't need to spend more time on the remaining 6%." Evaluate this argument. Explain what the compliance score measures and what it does not measure, describe why the remaining non-compliant controls may represent disproportionate risk even if they represent a small percentage of controls, and identify two types of compliance obligations that the Defender for Cloud score does not capture at all.
+2. An organization must comply simultaneously with GDPR (EU), HIPAA (US healthcare), and PCI DSS (payment card). They are building a single Azure environment that processes EU patient payment data. Describe how the requirements of these three frameworks overlap and where they conflict, identify at least two Azure services or configurations that satisfy requirements from all three frameworks simultaneously, and explain why a compliance officer should not rely solely on the Azure Policy regulatory compliance dashboards for all three frameworks to declare the environment compliant.

@@ -172,6 +172,24 @@ Tip 8: The Scrum Guide says estimates belong to the Developers and cannot be ove
 
 ---
 
+## 9. Supplemental Resources
+
+The following free, open-access resources go deeper on Module 08 topics:
+
+**1. "Story Points Revisited" — Ron Jeffries**
+<https://ronjeffries.com/articles/019-01ff/story-points/Index.html>
+A reflective essay by one of the original XP practitioners and Agile Manifesto signatories on the value and misuse of story points. Jeffries critically examines whether story points still serve their original purpose in modern teams. Free access.
+
+**2. "How to Use Story Points" — Mountain Goat Software**
+<https://www.mountaingoatsoftware.com/blog/what-are-story-points>
+Mike Cohn's practical explanation of story points, including the Fibonacci scale rationale, reference story calibration technique, and common misuses. Free access on Mountain Goat Software's blog.
+
+**3. "Planning Poker" — Agile Alliance Glossary**
+<https://www.agilealliance.org/glossary/poker/>
+The Agile Alliance's canonical glossary entry on Planning Poker. Covers the technique's origins, the anchoring bias rationale, the role of divergent estimates, and variations used in practice. Free access.
+
+---
+
 ## 8. Study Checklist
 
 - [ ] Explain why relative estimation (story points) is more accurate than absolute estimation (hours) for complex software work

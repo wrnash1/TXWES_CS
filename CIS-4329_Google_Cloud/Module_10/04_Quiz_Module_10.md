@@ -200,3 +200,199 @@ Admin Activity logs are stored in the `_Required` bucket with 400-day retention 
 a 3-week-old event would still be available. Data Access logs capture data reads and
 writes to bucket objects, not bucket creation. System Event logs capture Google-initiated
 events, not user actions.
+
+---
+
+### Question 11 (5 points)
+
+A team configures a Cloud Monitoring alerting policy with a condition that triggers
+when CPU utilization exceeds 90%. The notification channel is an email address. After
+24 hours no alerts have fired despite CPU exceeding 90% several times. What is the
+most likely cause?
+
+- A) Cloud Monitoring only sends alerts for resource types with the Ops Agent installed
+- B) The alerting policy was saved in draft state and is not active
+- C) The notification channel email address has not been verified
+- D) CPU metrics require Data Access audit logs to be enabled
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) CPU utilization is a hypervisor-level metric available for all GCE VMs without the Ops Agent; it does not require the Ops Agent.
+  - B) Cloud Monitoring alerting policies do not have a draft state; once created, they are immediately active.
+  - D) Data Access audit logs record API calls to GCP data services; they are unrelated to Compute Engine CPU metrics or alerting policies.
+
+---
+
+### Question 12 (5 points)
+
+Which Logging Query Language (LQL) filter expression correctly matches all log
+entries with severity ERROR or higher?
+
+- A) `severity = "ERROR"`
+- B) `severity >= ERROR`
+- C) `logName = "ERROR"`
+- D) `severity IN ("ERROR", "CRITICAL", "ALERT", "EMERGENCY")`
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) `severity = "ERROR"` matches only ERROR severity exactly; it does not match CRITICAL, ALERT, or EMERGENCY, which are higher severity levels.
+  - C) `logName` is the full resource path of the log (e.g., `projects/PROJECT_ID/logs/cloudaudit.googleapis.com`), not a severity value; this expression is syntactically incorrect for severity filtering.
+  - D) While option D would technically match the four listed severities, it is verbose and would miss any future severity levels; `severity >= ERROR` is the idiomatic and comprehensive LQL expression.
+
+---
+
+### Question 13 (5 points)
+
+A Cloud Logging sink exports logs to a Cloud Storage bucket. Two weeks after
+configuration, you notice the sink is exporting logs but the GCS bucket storage
+cost is unexpectedly high. Which action reduces storage cost without disabling
+the sink?
+
+- A) Delete the sink and recreate it with a more restrictive filter
+- B) Enable log exclusions to drop the high-volume log types before they reach the sink
+- C) Set the GCS bucket storage class to Nearline
+- D) Reduce the sink's batch export interval
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Deleting and recreating the sink changes the filter going forward, but all already-exported objects remain in the bucket and continue to incur storage costs; the exclusion approach is less disruptive.
+  - C) Changing the storage class to Nearline reduces per-GB storage cost but introduces a 30-day minimum storage duration charge per object; for frequently accessed or frequently deleted log objects, this can increase total cost.
+  - D) Cloud Logging sinks do not have a configurable batch export interval that affects cost; sink exports are managed by the logging service and the batch timing is not a user-configurable parameter.
+
+---
+
+### Question 14 (5 points)
+
+You need to monitor a custom application metric: the number of orders processed
+per minute. The application runs on GCE and writes this value to its logs as
+structured JSON. Which approach makes this metric available in Cloud Monitoring
+for alerting?
+
+- A) Install Cloud Profiler on the VM to track the order count
+- B) Create a log-based metric using a filter that extracts the order count field
+   from the structured log entries
+- C) Use Cloud Trace to count spans with the order processing label
+- D) Enable Data Access audit logs and filter for order processing API calls
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Cloud Profiler analyzes CPU and memory usage in application code; it does not extract business metrics from logs.
+  - C) Cloud Trace tracks distributed request latency; it does not count business events or provide a mechanism to define alertable custom metrics from log fields.
+  - D) Data Access audit logs capture GCP API calls (reads/writes to GCP services); they do not capture application-level business events written to structured logs.
+
+---
+
+### Question 15 (5 points)
+
+What is the default retention period for logs stored in the `_Default` log bucket
+in Cloud Logging?
+
+- A) 7 days
+- B) 30 days
+- C) 90 days
+- D) 400 days
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) 7 days is not the default retention for the `_Default` bucket; this figure does not correspond to any standard Cloud Logging bucket default.
+  - C) 90 days is not the default; it can be configured as a custom retention period but is not the out-of-the-box default.
+  - D) 400 days is the fixed retention period for the `_Required` log bucket (which stores Admin Activity and System Event audit logs), not the `_Default` bucket.
+
+---
+
+### Question 16 (5 points)
+
+A Cloud Monitoring uptime check is configured to test an HTTPS endpoint every
+minute from multiple global regions. The check fails with `CONNECTION_TIMEOUT`
+from all regions. The application responds correctly to curl from Cloud Shell.
+What is the most likely cause?
+
+- A) The SSL certificate on the endpoint has expired
+- B) A firewall rule is blocking inbound traffic from the uptime check IP ranges
+   used by Cloud Monitoring
+- C) The uptime check interval is too short for the application to respond
+- D) Cloud Monitoring uptime checks cannot test HTTPS endpoints
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) An expired SSL certificate would cause `SSL_ERROR` or `CERTIFICATE_EXPIRED` failure, not `CONNECTION_TIMEOUT`; a timeout indicates the TCP connection is not reaching the server.
+  - C) Cloud Monitoring uptime checks have a 10-second default timeout, which is far longer than typical web response times; the 1-minute interval is the check frequency, not the timeout.
+  - D) Cloud Monitoring uptime checks support HTTP, HTTPS, and TCP protocols; HTTPS is fully supported.
+
+---
+
+### Question 17 (5 points)
+
+You use Cloud Error Reporting to monitor a Node.js application. A new deployment
+causes an increase in unhandled exception reports. Which action in Error Reporting
+lets you suppress a known, non-critical error while continuing to track new errors?
+
+- A) Create a log exclusion matching the error message pattern
+- B) Mute the specific error group in Error Reporting
+- C) Increase the alerting policy threshold to ignore low-frequency errors
+- D) Disable Error Reporting for the affected service
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) A log exclusion would prevent the error from being ingested into Cloud Logging at all; this could mask the error completely and remove the ability to review it later, which is more destructive than muting.
+  - C) Alerting policy thresholds apply to Cloud Monitoring metrics; Error Reporting uses its own notification system separate from Monitoring alerting policies.
+  - D) Disabling Error Reporting for the service removes visibility into all errors from that service, not just the known non-critical one.
+
+---
+
+### Question 18 (5 points)
+
+A security team requires that VPC flow logs from all subnets in a project be
+retained for 1 year for compliance. VPC flow logs are exported to Cloud Logging
+by default with a 30-day retention. What is the correct approach?
+
+- A) Change the `_Default` log bucket retention to 365 days
+- B) Create a log sink routing VPC flow logs to a Cloud Storage bucket with a
+   365-day object lifecycle, and optionally create a log exclusion to drop them
+   from the `_Default` bucket
+- C) Enable Admin Activity audit logs with a 365-day retention override
+- D) Configure each subnet's flow log sampling rate to 100% to ensure all logs
+   are captured before the 30-day expiry
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Changing the `_Default` bucket retention to 365 days would retain ALL logs in that bucket for a year, significantly increasing Cloud Logging storage costs for logs that do not need long retention.
+  - C) Admin Activity audit logs are already retained for 400 days in the `_Required` bucket; they are a separate log type from VPC flow logs and the retention is not configurable.
+  - D) Sampling rate affects what fraction of flows are logged; it does not extend the storage retention period or prevent expiry after 30 days.
+
+---
+
+### Question 19 (5 points)
+
+Cloud Profiler is enabled on a Java application running on App Engine Standard.
+Which two types of profiling data does Cloud Profiler collect by default?
+
+- A) Network throughput and disk I/O
+- B) CPU time and heap memory allocation
+- C) Request latency and error rate
+- D) Log entry count and severity distribution
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Network throughput and disk I/O are OS-level metrics collected by the Ops Agent and surfaced in Cloud Monitoring; they are not profiling dimensions tracked by Cloud Profiler.
+  - C) Request latency and error rate are distributed tracing and monitoring metrics tracked by Cloud Trace and Cloud Monitoring respectively; Cloud Profiler focuses on in-process resource consumption.
+  - D) Log entry count and severity distribution are Cloud Logging metrics; they describe log volume, not code-level resource consumption within the application.
+
+---
+
+### Question 20 (5 points)
+
+You need to grant a teammate read-only access to view logs and dashboards in
+Cloud Monitoring for a single GCP project. Which IAM role provides these
+permissions with least privilege?
+
+- A) `roles/monitoring.admin`
+- B) `roles/monitoring.viewer`
+- C) `roles/logging.admin`
+- D) `roles/viewer`
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) `roles/monitoring.admin` grants full administrative access to Cloud Monitoring including creating, modifying, and deleting alerting policies, dashboards, and notification channels — far more than read-only viewing requires.
+  - C) `roles/logging.admin` grants full administrative access to Cloud Logging; it includes the ability to delete log buckets, create sinks, and modify exclusions — not appropriate for a read-only viewer.
+  - D) `roles/viewer` is a basic project-level role that grants read access to all GCP resources; while it technically allows viewing logs and metrics, it grants far broader access than a monitoring-specific viewer role and violates least privilege.

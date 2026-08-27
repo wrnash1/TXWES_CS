@@ -396,3 +396,23 @@ gcloud logging read \
 - Workload Identity Federation: cloud.google.com/iam/docs/workload-identity-federation
 - Cloud Audit Logs: cloud.google.com/logging/docs/audit
 - IAM best practices: cloud.google.com/iam/docs/using-iam-securely
+
+## 9. Supplemental Resources
+
+**1. Google Cloud Documentation — Understanding IAM Roles**
+<https://cloud.google.com/iam/docs/understanding-roles>
+Comprehensive reference for all predefined roles across every GCP service,
+including the exact permission lists for each role. Essential for ACE exam
+preparation on least-privilege questions.
+
+**2. Google Cloud Skills Boost — Cloud IAM: Qwik Start**
+<https://www.cloudskillsboost.google/focuses/44159>
+Hands-on lab walking through IAM policy creation, role assignment, and
+service account configuration in a live GCP environment. Free with a Skills
+Boost trial or subscription.
+
+**3. Google Cloud Architecture Center — IAM Best Practices**
+<https://cloud.google.com/architecture/framework/security/access-control>
+Official best practice guidance covering service account security, Workload
+Identity Federation, and organizational IAM governance patterns from Google's
+architecture team.

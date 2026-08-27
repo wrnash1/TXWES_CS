@@ -204,3 +204,218 @@ A network engineer wants to verify that the LACP neighbor on the other end of a 
 - B is incorrect: `show interfaces port-channel 1` shows physical interface statistics for the logical port-channel but not LACP negotiation details or neighbor identity.
 - C is correct: `show lacp neighbor` displays the LACP system ID, port priority, and operational state of the LACP partner (neighbor) on the other end of the EtherChannel.
 - D is incorrect: `show spanning-tree interface port-channel 1` shows STP role and state for the port-channel. It does not contain LACP neighbor information.
+
+---
+
+## Question 11
+
+An engineer configures EtherChannel between SW1 and SW2 using LACP. SW1's Gi0/1 and Gi0/2 are configured as `channel-group 1 mode active`. SW2's Fa0/1 and Fa0/2 are configured as `channel-group 1 mode passive`. After checking `show etherchannel summary`, the engineer sees an "I" flag next to the port-channel. What does the "I" flag indicate?
+
+- A) The channel is in an inactive suspended state due to a configuration mismatch
+- B) The channel is functioning independently without any LACP negotiation
+- C) The channel is bundled and in-service
+- D) The channel is using individual mode (not bundled)
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- A is correct: The "I" flag in `show etherchannel summary` stands for "stand-alone/individual" which appears when ports are not bundled. However, more accurately in the context of a misconfiguration, ports that fail to bundle are often suspended (shown as "s" in the individual port flags). The "I" for in-use correctly applies when the channel is functioning, but the question's context of a mismatch causing "I" would indicate the ports are in individual mode — not bundled.
+- B is incorrect: Individual mode means the ports operate as standalone interfaces, not as a bundle. This is correct for what "I" represents but the question asks what the flag indicates in the context of a misconfiguration.
+- C is incorrect: A bundled and in-service EtherChannel shows the "SU" flags — S for "layer 2" and U for "in use." The "I" flag does not indicate a healthy bundled state.
+- D is correct per CCNA definition: The "I" flag in the `show etherchannel summary` output under the Protocol column indicates the channel is in Individual mode — the ports are not bundled and each is operating independently. This typically results from a negotiation failure due to mismatched modes or parameters.
+
+---
+
+## Question 12
+
+What is the effect of configuring EtherChannel load balancing using `port-channel load-balance src-dst-ip` on a Cisco switch?
+
+- A) Traffic is distributed based on the source MAC address only
+- B) Traffic is distributed based on a hash of both source and destination IP addresses
+- C) Each flow alternates between member links in a round-robin fashion for maximum distribution
+- D) The load balancing algorithm changes automatically based on traffic type
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A is incorrect: The `src-dst-ip` method uses both source and destination IP addresses, not source MAC address only. The `src-mac` or `dst-mac` methods use MAC addresses.
+- B is correct: `src-dst-ip` instructs the switch to compute a hash based on both the source IP and destination IP of each frame. Frames with the same source-destination IP pair will always use the same physical link. This provides good distribution when communicating with multiple different hosts.
+- C is incorrect: EtherChannel does not use round-robin per-packet load balancing in Cisco IOS. It uses per-flow hash-based balancing. All packets in the same flow (same hash result) use the same member link. Per-packet alternation would cause out-of-order delivery.
+- D is incorrect: The load balancing algorithm is static once configured. It does not change automatically based on traffic type. Changing the method requires manual reconfiguration with `port-channel load-balance`.
+
+---
+
+## Question 13
+
+A network administrator is troubleshooting an EtherChannel that fails to form between SW1 and SW2. The member ports on SW1 are configured as trunk ports with VLAN 10 and 20 allowed. The member ports on SW2 are configured as trunk ports with VLAN 10, 20, and 30 allowed. What will happen?
+
+- A) The EtherChannel forms but VLAN 30 is silently pruned from all frames
+- B) The EtherChannel forms because trunk configuration differences are permitted
+- C) The EtherChannel does not form because the allowed VLAN list must be identical on all member ports
+- D) The EtherChannel forms but generates a CDP warning about the VLAN mismatch
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- A is incorrect: EtherChannel does not silently prune VLANs to resolve a configuration mismatch. If the allowed VLAN lists differ, the channel fails to form or ports become suspended.
+- B is incorrect: All configuration parameters on member ports including the allowed VLAN list, trunk encapsulation, and native VLAN must be identical. Differences cause the EtherChannel to not form or ports to be suspended.
+- C is correct: One of the CCNA-tested EtherChannel requirements is that all member ports must have identical configurations. The allowed VLAN list must match exactly. If SW1 allows VLANs 10,20 and SW2 allows VLANs 10,20,30, the EtherChannel will fail — either not forming at all or showing ports as suspended (flag "s") in `show etherchannel summary`.
+- D is incorrect: CDP does not generate warnings about EtherChannel VLAN mismatch. The EtherChannel mechanism itself detects the inconsistency and prevents bundling.
+
+---
+
+## Question 14
+
+An engineer enters `channel-group 1 mode on` on both ends of a two-link EtherChannel. What negotiation protocol is used?
+
+- A) LACP (IEEE 802.3ad)
+- B) PAgP (Cisco-proprietary)
+- C) No negotiation protocol — static EtherChannel without LACP or PAgP
+- D) DTP (Dynamic Trunking Protocol) is used to negotiate the channel
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- A is incorrect: LACP is used when `mode active` or `mode passive` is configured. The `on` keyword explicitly bypasses LACP negotiation.
+- B is incorrect: PAgP is used when `mode desirable` or `mode auto` is configured. The `on` keyword bypasses PAgP negotiation.
+- C is correct: `channel-group mode on` creates a static EtherChannel with no negotiation protocol. Both sides are forced into the bundle without any LACP or PAgP exchange. The `show etherchannel summary` output will show a dash (—) in the Protocol column for static channels.
+- D is incorrect: DTP is used for switchport trunk negotiation (access vs. trunk mode). It is not related to EtherChannel negotiation.
+
+---
+
+## Question 15
+
+`show etherchannel summary` on SW1 shows the following:
+
+```text
+Group  Port-channel  Protocol    Ports
+------+-------------+-----------+-----------------------------------------------
+1      Po1(SU)       LACP        Gi0/1(P)  Gi0/2(P)  Gi0/3(s)  Gi0/4(s)
+```
+
+What does the "(s)" flag on Gi0/3 and Gi0/4 indicate?
+
+- A) The ports are suspended due to a configuration mismatch
+- B) The ports are standby LACP ports — configured but not actively forwarding, waiting in reserve
+- C) The ports are in err-disabled state
+- D) The ports are shut down administratively
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A is incorrect: Suspended ports due to mismatch show a different error state. The "s" lowercase flag in the Ports column indicates LACP hot-standby, not a mismatch condition.
+- B is correct: LACP supports up to 8 active member links ("P" flag) and up to 8 additional standby links ("s" flag). Standby ports are configured and ready to become active if an active member fails, but they do not forward traffic while in standby.
+- C is incorrect: Err-disabled ports would not appear in the EtherChannel bundle at all, or would show an error indication. Err-disabled is a separate switch port state.
+- D is incorrect: Administratively shut-down ports would not participate in EtherChannel at all. The "s" flag indicates an active LACP standby state, not administrative shutdown.
+
+---
+
+## Question 16
+
+After configuring an EtherChannel between two switches, the engineer notices that traffic from some hosts always uses the same physical link regardless of the number of active member ports. Why?
+
+- A) EtherChannel is misconfigured — it should round-robin between all links for every frame
+- B) This is expected behavior: EtherChannel uses a hash algorithm that consistently maps specific source-destination pairs to the same physical link
+- C) The switch is faulty — contact Cisco TAC for hardware replacement
+- D) This indicates the load-balance method is set to `dst-mac` and all traffic has the same destination MAC
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A is incorrect: Per-frame round-robin is not how Cisco EtherChannel operates. Round-robin per packet would cause out-of-order delivery within a TCP flow. Hash-based per-flow distribution is the design choice.
+- B is correct: EtherChannel uses a hashing algorithm (configurable via `port-channel load-balance`) to assign each flow to a specific physical link. The same source-destination pair always produces the same hash and therefore always uses the same link. This ensures in-order delivery within each flow.
+- C is incorrect: This is not a hardware fault. Hash-based distribution is the designed and documented behavior of Cisco EtherChannel load balancing.
+- D is partially correct in premise: If `dst-mac` load balancing is configured and all traffic goes to the same destination MAC (e.g., a default gateway), all traffic will use one link. However, option B is the more accurate and complete explanation of why specific source-destination pairs consistently use the same link.
+
+---
+
+## Question 17
+
+Which command globally changes the EtherChannel load balancing method on a Cisco switch to use both source and destination MAC addresses?
+
+- A) `port-channel load-balance src-dst-mac` applied under port-channel interface configuration
+- B) `port-channel load-balance src-dst-mac` applied in global configuration mode
+- C) `etherchannel load-balance src-dst-mac` applied in global configuration mode
+- D) `interface port-channel 1 load-balance src-dst-mac`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A is incorrect: The `port-channel load-balance` command is a global configuration command, not an interface-level command. It applies to all EtherChannel bundles on the switch.
+- B is correct: `port-channel load-balance src-dst-mac` is entered in global configuration mode and affects all EtherChannel bundles on the switch simultaneously. The available methods vary by platform but include `src-mac`, `dst-mac`, `src-dst-mac`, `src-ip`, `dst-ip`, and `src-dst-ip`.
+- C is incorrect: The command begins with `port-channel`, not `etherchannel`. `etherchannel` is not the correct IOS command prefix for the load-balance method.
+- D is incorrect: This is not valid IOS syntax. Load balancing is configured globally, not per port-channel interface.
+
+---
+
+## Question 18
+
+A network engineer needs to create an EtherChannel between a Cisco switch and a non-Cisco switch that supports IEEE 802.3ad link aggregation. Which channel mode on the Cisco side is required?
+
+- A) `channel-group 1 mode desirable`
+- B) `channel-group 1 mode active`
+- C) `channel-group 1 mode on`
+- D) `channel-group 1 mode auto`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A is incorrect: PAgP `desirable` mode is Cisco-proprietary. Non-Cisco switches do not support PAgP. This configuration will not form an EtherChannel with a non-Cisco device.
+- B is correct: LACP `active` mode uses the IEEE 802.3ad standard, which is supported by virtually all enterprise switch vendors. Configuring the Cisco switch in `active` mode allows it to form an LACP EtherChannel with any 802.3ad-compliant non-Cisco switch.
+- C is incorrect: Static `on` mode works only when both sides are also configured as `on`. Non-Cisco switches running 802.3ad would use LACP PDUs, not static mode. The static mode on the Cisco switch and LACP on the non-Cisco switch would be incompatible.
+- D is incorrect: PAgP `auto` mode is passive PAgP — it waits for the other side to initiate PAgP negotiation. Non-Cisco switches do not speak PAgP. This mode will not form an EtherChannel with a non-Cisco 802.3ad device.
+
+---
+
+## Question 19
+
+An EtherChannel bundle (port-channel 1) is configured as a trunk carrying VLANs 10 and 20. From STP's perspective, how does the spanning tree algorithm treat this bundle?
+
+- A) STP treats each physical member link as a separate interface with independent port costs and roles
+- B) STP treats the port-channel as a single logical interface with one port cost and one port role
+- C) STP is disabled on EtherChannel bundles to prevent port-cost calculation conflicts
+- D) STP assigns the lowest port cost to whichever physical link is currently active
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A is incorrect: If STP treated each physical link independently, the redundant links within the bundle would be blocked by STP rather than all forwarding together. EtherChannel is specifically designed to present a single logical link to STP.
+- B is correct: From STP's perspective, the port-channel (Po1) is a single logical interface. STP calculates port cost based on the total bandwidth of the bundle (e.g., two 1 Gbps links = 2 Gbps port-channel, with a lower aggregate STP cost). STP assigns one port role (Root, Designated, or Alternate) to the entire port-channel.
+- C is incorrect: STP is not disabled on port-channel interfaces. The port-channel participates in spanning tree as a single logical port.
+- D is incorrect: The STP cost for a port-channel is based on the aggregate bandwidth of all active member links, not the single lowest cost link.
+
+---
+
+## Question 20
+
+An engineer enters the following commands on SW1:
+
+```ios
+interface range GigabitEthernet0/1 - 2
+ channel-group 2 mode passive
+```
+
+No corresponding configuration exists on SW2. What is the result?
+
+- A) The EtherChannel forms because passive mode can operate without a partner
+- B) The EtherChannel does not form — LACP passive mode requires the partner to actively initiate (active mode)
+- C) The ports become err-disabled because passive mode is not a valid channel mode
+- D) The ports form a static EtherChannel because passive mode defaults to static if no partner responds
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A is incorrect: LACP passive mode is analogous to DTP `dynamic auto`. It waits for the other side to initiate. If SW2 has no channel-group configuration, there is no LACP PDU sent, and passive mode will not self-activate.
+- B is correct: LACP `passive` mode means the port will respond to LACP PDUs but will not initiate them. If SW2 has no EtherChannel or LACP configuration, it never sends LACP PDUs, so SW1's passive ports have nothing to respond to. The channel remains inactive.
+- C is incorrect: LACP passive is a valid channel mode. The ports do not enter err-disabled state just because no EtherChannel forms. The interfaces operate as normal individual access or trunk ports.
+- D is incorrect: LACP passive does not fall back to static mode. If no LACP partner is detected, the ports operate as individual interfaces without any EtherChannel behavior.

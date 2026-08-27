@@ -284,3 +284,34 @@ Submit the following as a single PDF or Word document in Canvas:
 | Troubleshooting Scenarios | 15 | Correct analysis for each scenario (5 pts each) |
 
 Partial credit is awarded for correctly completed sections even if later sections are incomplete.
+
+---
+
+## Part 9 — Challenge Exercise
+
+This optional challenge extends the lab to CCNA exam difficulty. Complete all steps and include deliverables in your submission for up to 20 bonus points.
+
+### Challenge Step 1: Design and Implement a VLSM Plan for a Four-Site Network
+
+Design a VLSM address plan from the block 10.50.0.0/22 for the following requirements:
+
+- Site A: 400 hosts
+- Site B: 100 hosts
+- Site C: 50 hosts
+- WAN Link R1–R2: 2 hosts
+
+Allocate subnets largest-first. Document the network address, subnet mask, broadcast address, and usable host range for each subnet. Configure the R1 and R2 interfaces in Packet Tracer using your calculated addresses. Verify connectivity between all configured interfaces using `ping`.
+
+### Challenge Step 2: Configure and Verify Route Summarization
+
+After implementing the VLSM plan, verify that all four subnets appear in R1's routing table as connected routes. Then configure a static summary route on R2 that advertises all four subnets back toward R1 using a single summary prefix. Verify the summary route appears in R1's routing table:
+
+```ios
+R1# show ip route
+```
+
+In your deliverable, explain in 3–4 sentences why summarization is beneficial in large networks and identify any trade-off introduced by summarizing these four specific prefixes into one route.
+
+### Challenge Step 3: Analyze a Troubleshooting Scenario Using show ip route
+
+Add a fifth router (R3) to your topology connected to R2 via a point-to-point /30 link. Configure R3 with an IP address but intentionally misconfigure the mask on R2's side of the link (use /29 instead of /30). Document the symptom (ping failure between R2 and R3), identify the root cause by examining `show ip interface brief` and `show ip route`, and document the corrective command. Submit a before-and-after comparison of `show ip interface brief` on R2 showing the misconfigured and corrected masks.

@@ -163,3 +163,29 @@ Complete the following before the lab and quiz:
 - [ ] Complete the Module 02 Lab activity
 - [ ] Take the Module 02 Quiz
 - [ ] Post Module 02 Discussion initial response by Wednesday at 11:59 PM
+
+---
+
+## 9. Supplemental Resources
+
+The following free, openly licensed resources extend the concepts in this module. All links are publicly accessible — no account or purchase required.
+
+1. **Project Management Open Textbook — Chapter 3: The Project Management Process Groups**
+   *BC Campus OpenEd* — [opentextbc.ca/projectmanagement — Chapter 3](https://opentextbc.ca/projectmanagement/chapter/chapter-3-the-project-management-process-groups-a-case-study/)
+   Walks through all five Process Groups using a case study format. Excellent preparation for scenario-based Project+ exam questions.
+
+2. **PMI — Project Lifecycle and Phases**
+   *Project Management Institute* — [pmi.org/learning/library/project-life-cycle](https://www.pmi.org/learning/library/project-life-cycle-phases-processes-8950)
+   Official PMI article distinguishing lifecycle phases from Process Groups — the most commonly confused pair of concepts in Module 02.
+
+3. **PMBOK 7th Edition Overview — PM PrepCast (Free Excerpt)**
+   *OSP International* — [project-management-prepcast.com/pmbok-7](https://www.project-management-prepcast.com/free/pmbok-guide)
+   Free chapter summary comparing PMBOK 6 (process-based) and PMBOK 7 (principle-based) perspectives — directly tested on PK0-005.
+
+4. **YouTube — "Project Lifecycle vs Process Groups" (Mike Clayton / OnlinePMCourses)**
+   [youtube.com/watch?v=fPNqT_5vVk4](https://www.youtube.com/watch?v=fPNqT_5vVk4)
+   A clear visual explanation of how lifecycle phases and Process Groups interact. Highly recommended before the quiz.
+
+5. **Stakeholder Analysis Tutorial — MindTools (Free)**
+   [mindtools.com/stakeholder-analysis](https://www.mindtools.com/aol0rms/stakeholder-analysis)
+   Step-by-step guide to building a Power/Interest Grid and planning stakeholder engagement strategies — directly supports the Module 02 lab.

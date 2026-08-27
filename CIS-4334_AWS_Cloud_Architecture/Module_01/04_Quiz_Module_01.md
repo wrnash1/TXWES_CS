@@ -223,3 +223,223 @@ Correct Answer: B
 - B is correct: AWS Outposts is designed for scenarios requiring AWS-native APIs with physical on-premises presence — low latency to local equipment and strict data locality requirements that prohibit sending data to a Region.
 - C is incorrect: This scenario describes the use case for AWS Local Zones, not Outposts. Outposts requires the customer to host the hardware at their own facility.
 - D is incorrect: High GPU demand is addressed by selecting EC2 GPU instance families (P4d, G5) in a standard Region. Outposts does not solve compute capacity constraints.
+
+---
+
+## Question 11
+
+A solutions architect is designing an architecture that must tolerate the simultaneous failure of two Availability Zones in the same AWS Region. What is the minimum number of Availability Zones required for the deployment to remain fully operational at normal capacity?
+
+- A) 2
+- B) 3
+- C) 4
+- D) 6
+
+### Answer 11
+
+Correct Answer: C
+
+### Explanation 11
+
+- A is incorrect: With only 2 AZs, a simultaneous dual-AZ failure would leave zero AZs operational.
+- B is incorrect: With 3 AZs, losing 2 leaves only 1 AZ running. The application survives on reduced capacity rather than remaining fully operational under N+2 design.
+- C is correct: To tolerate the simultaneous failure of any 2 AZs and remain fully operational at 100% capacity, you need N+2 AZs. Deploying across 4 AZs means losing 2 still leaves 2 AZs, which can carry the full load if each AZ is sized for 50% of total traffic. This is the N+2 high-availability design pattern.
+- D is incorrect: 6 AZs satisfies the requirement but is excessive. Most AWS Regions do not offer 6 AZs, and 4 is the correct minimum for N+2 tolerance.
+
+---
+
+## Question 12
+
+Which AWS service provides a globally distributed managed DNS service that can route users to the lowest-latency endpoint and automatically remove unhealthy endpoints from DNS responses?
+
+- A) AWS Global Accelerator
+- B) Amazon CloudFront
+- C) Amazon Route 53
+- D) AWS Transit Gateway
+
+### Answer 12
+
+Correct Answer: C
+
+### Explanation 12
+
+- A is incorrect: AWS Global Accelerator is a networking service that routes traffic over the AWS global backbone to the nearest healthy endpoint using static Anycast IP addresses. It is not a DNS service and does not perform DNS-based routing.
+- B is incorrect: Amazon CloudFront is a content delivery network that caches content at edge locations. It does not perform general-purpose DNS resolution or health-check-based DNS failover for arbitrary application endpoints.
+- C is correct: Amazon Route 53 is AWS's managed DNS service. It supports latency-based routing (directing users to the lowest-latency Region), health checks that monitor endpoint availability, and failover routing policies that automatically remove unhealthy endpoints from DNS responses.
+- D is incorrect: AWS Transit Gateway connects VPCs and on-premises networks in a hub-and-spoke topology. It is a network routing service, not a DNS service.
+
+---
+
+## Question 13
+
+A company needs to run a batch video processing job that can be interrupted and resumed from a checkpoint. The job takes approximately 8 hours to complete and runs weekly. The company wants to minimize EC2 costs. Which EC2 purchasing model is most appropriate?
+
+- A) On-Demand Instances
+- B) Reserved Instances with a 1-year commitment
+- C) Spot Instances
+- D) Dedicated Hosts
+
+### Answer 13
+
+Correct Answer: C
+
+### Explanation 13
+
+- A is incorrect: On-Demand pricing is the most expensive per-hour option and provides no discount for workloads that can tolerate interruption.
+- B is incorrect: Reserved Instances are most cost-effective for steady-state continuously running workloads with predictable usage patterns. A weekly 8-hour batch job has very low utilization over a year, making an RI commitment economically unfavorable.
+- C is correct: Spot Instances offer up to 90% discount versus On-Demand. Batch processing workloads that can checkpoint progress and resume after interruption are the canonical Spot Instance use case. The combination of interrupt-tolerance and large compute requirements makes Spot Instances the optimal choice.
+- D is incorrect: Dedicated Hosts are designed for per-socket or per-core software licensing compliance. They are the most expensive EC2 option and provide no technical or cost benefit for a batch processing workload.
+
+---
+
+## Question 14
+
+Which pillar of the AWS Well-Architected Framework focuses on the ability of a workload to perform its intended function correctly and consistently, including the ability to recover automatically from infrastructure failures?
+
+- A) Cost Optimization
+- B) Security
+- C) Performance Efficiency
+- D) Reliability
+
+### Answer 14
+
+Correct Answer: D
+
+### Explanation 14
+
+- A is incorrect: The Cost Optimization pillar focuses on running systems at the lowest price point while delivering the required business value, including right-sizing, eliminating waste, and using the right pricing model.
+- B is incorrect: The Security pillar focuses on protecting information and systems through identity management, detection controls, infrastructure protection, data protection, and incident response.
+- C is incorrect: The Performance Efficiency pillar focuses on using computing resources efficiently to meet system requirements and maintaining that efficiency as demand changes and technology evolves.
+- D is correct: The Reliability pillar encompasses the ability of a workload to perform its intended function correctly and consistently throughout its lifecycle, recover from failures automatically, and dynamically acquire resources to meet demand. This directly maps to concepts like Multi-AZ, Auto Scaling, and disaster recovery patterns.
+
+---
+
+## Question 15
+
+A new AWS account was created 13 months ago. A developer attempts to use the AWS Free Tier for launching an EC2 t2.micro instance and is surprised to see charges on the bill. What is the most likely explanation?
+
+- A) The Free Tier requires a paid support plan to remain active
+- B) The 12-month free tier offer for EC2 t2.micro hours expired after the first 12 months and standard On-Demand rates now apply
+- C) The Free Tier was automatically converted to a Reserved Instance after 12 months
+- D) EC2 t2.micro is not eligible for the AWS Free Tier in any Region
+
+### Answer 15
+
+Correct Answer: B
+
+### Explanation 15
+
+- A is incorrect: The AWS Free Tier is available to all new accounts regardless of support plan. No support plan purchase is required to activate or maintain free-tier eligibility.
+- B is correct: The 12-month free tier for EC2 (750 hours/month of t2.micro or t3.micro) is available only during the first 12 months after account creation. After 12 months, standard On-Demand pricing applies to all usage. Always-free tiers for services like Lambda and DynamoDB do not expire, but the 12-month EC2 offer does.
+- C is incorrect: The Free Tier does not automatically convert to Reserved Instances. Reserved Instances require an explicit purchase commitment and payment.
+- D is incorrect: EC2 t2.micro (or t3.micro in regions where t2.micro is not available) is specifically included in the AWS Free Tier for new accounts.
+
+---
+
+## Question 16
+
+A company with 15 AWS accounts wants centralized policy enforcement, consolidated billing, and the ability to restrict all accounts from launching EC2 instances outside the us-east-1 and us-west-2 Regions. Which combination of AWS services achieves all three goals?
+
+- A) AWS Config with a remediation rule and AWS Cost Explorer for billing
+- B) AWS Organizations with a Service Control Policy and consolidated billing enabled
+- C) AWS IAM with permission boundaries applied to every role in every account
+- D) AWS CloudFormation StackSets to deploy SCPs to every account
+
+### Answer 16
+
+Correct Answer: B
+
+### Explanation 16
+
+- A is incorrect: AWS Config can detect non-compliant resources but remediation is reactive rather than preventive. Config does not provide consolidated billing, and Cost Explorer is a cost visibility tool, not a billing consolidator.
+- B is correct: AWS Organizations provides: (1) consolidated billing — all 15 accounts roll up to one payment; (2) organizational units where SCPs can be applied; and (3) SCPs that restrict what actions are allowed in member accounts, including denying EC2 launch actions where `aws:RequestedRegion` is not us-east-1 or us-west-2. This SCP is applied at the OU or root level and affects all member accounts.
+- C is incorrect: IAM permission boundaries restrict individual IAM entities within a single account. Applying permission boundaries to every role in every account requires per-account, per-role management and provides no consolidated billing.
+- D is incorrect: CloudFormation StackSets can deploy resources (including IAM policies) across accounts, but SCPs are applied within AWS Organizations, not deployed as CloudFormation resources. StackSets also do not provide consolidated billing.
+
+---
+
+## Question 17
+
+Which of the following correctly describes how data transfer pricing works between two EC2 instances communicating using private IP addresses within the same VPC but in different Availability Zones?
+
+- A) Data transfer is free because both instances are within the same VPC
+- B) Data transfer incurs a per-GB charge in each direction because the traffic crosses AZ boundaries
+- C) Data transfer is free because private IP communication never leaves the AWS network backbone
+- D) Data transfer incurs charges only for traffic exceeding 1 TB per month
+
+### Answer 17
+
+Correct Answer: B
+
+### Explanation 17
+
+- A is incorrect: Same-VPC does not mean free cross-AZ data transfer. Data transfer charges apply per AZ boundary crossed, regardless of whether the same VPC is used.
+- B is correct: EC2 data transfer between instances in different AZs within the same Region using private IP addresses incurs a charge of $0.01 per GB in each direction. This is a commonly misunderstood cost that can become significant for high-throughput inter-AZ applications. The charge applies even when using private IPs and even within the same VPC.
+- C is incorrect: While private IP traffic stays on the AWS network and does not traverse the public internet, AWS still charges for cross-AZ data transfer. Staying on the AWS network is not the same as being free.
+- D is incorrect: There is no free tier threshold of 1 TB for cross-AZ EC2 data transfer. Cross-AZ charges apply from the first byte transferred.
+
+---
+
+## Question 18
+
+An architect wants to evaluate a new workload design against AWS best practices before development begins. The tool should generate a risk assessment report highlighting high-risk and medium-risk areas across all six Well-Architected Framework pillars. Which AWS tool provides this capability?
+
+- A) AWS Trusted Advisor
+- B) AWS Well-Architected Tool
+- C) AWS Security Hub
+- D) AWS Compute Optimizer
+
+### Answer 18
+
+Correct Answer: B
+
+### Explanation 18
+
+- A is incorrect: AWS Trusted Advisor analyzes deployed resources in an existing AWS account and provides recommendations across five categories. It reviews what has been built and deployed, not a planned workload described through a questionnaire.
+- B is correct: The AWS Well-Architected Tool allows architects to define a workload, answer questions across all six pillars (Operational Excellence, Security, Reliability, Performance Efficiency, Cost Optimization, Sustainability), and receive a risk report identifying high-risk issues (HRIs) and medium-risk issues before or after building. It is purpose-built for architecture review.
+- C is incorrect: AWS Security Hub aggregates security findings from GuardDuty, Inspector, Macie, and other services for deployed resources. It is a security posture management tool, not an architectural review tool.
+- D is incorrect: AWS Compute Optimizer analyzes the utilization metrics of existing EC2 instances, Auto Scaling groups, EBS volumes, and Lambda functions and recommends optimal resource configurations. It operates on deployed resources, not planned architectures.
+
+---
+
+## Question 19
+
+A developer notices that creating an IAM policy change in the AWS Management Console immediately affects all AWS Regions without any manual replication. What explains this behavior?
+
+- A) IAM replicates policy changes to all Regions within 60 seconds using an internal synchronization service
+- B) IAM is a global service; changes are immediately available across all Regions because IAM is not scoped to any Region
+- C) The AWS Management Console caches IAM data globally and applies changes to all Region views simultaneously
+- D) IAM policies are stored in Amazon S3 with Cross-Region Replication enabled, distributing changes automatically
+
+### Answer 19
+
+Correct Answer: B
+
+### Explanation 19
+
+- A is incorrect: IAM does not replicate across Regions because it is not a regional service. There is no IAM replication process — IAM is globally scoped by design with no regional partitions.
+- B is correct: IAM is a global AWS service. IAM users, groups, roles, and policies have global scope and are not tied to any specific Region. A policy change is immediately available in every Region because all Regions reference the same global IAM data plane — there is no per-Region copy to synchronize.
+- C is incorrect: The Console's behavior reflects IAM's global architecture, not browser caching. The changes are truly global at the service level, not simulated globally by the front-end.
+- D is incorrect: IAM does not store policies in customer-managed S3 buckets, and IAM does not use S3 CRR for distribution. IAM data persistence is internal to the AWS service layer.
+
+---
+
+## Question 20
+
+A company currently uses a single AWS account shared by all development, testing, staging, and production workloads. A security architect recommends separating each environment into its own dedicated AWS account. Which security benefit most strongly justifies this recommendation?
+
+- A) Separate accounts allow the company to use different instance types in each environment
+- B) Separate accounts provide blast radius containment — a security event, IAM misconfiguration, or accidental resource deletion in one environment cannot directly affect another account's resources
+- C) Separate accounts improve EC2 performance because compute resources are distributed across independent hardware pools per account
+- D) Separate accounts eliminate the need for IAM policies because account boundaries inherently restrict all access
+
+### Answer 20
+
+Correct Answer: B
+
+### Explanation 20
+
+- A is incorrect: All EC2 instance types are available in any AWS account. Account separation does not change the availability of instance types.
+- B is correct: The strongest security justification for environment account separation is blast radius containment. An IAM role compromised in the development account has no access to production resources in a separate account. An accidental `terraform destroy` in staging cannot destroy production resources. Account boundaries are the strongest isolation boundary in AWS, stronger than any IAM policy or VPC boundary within a single account.
+- C is incorrect: Account separation has no effect on EC2 hardware assignment or performance. EC2 instance performance is determined by instance type, placement groups, and the underlying physical host — not the account.
+- D is incorrect: IAM policies remain fully required within each account. Account boundaries prevent cross-account access by default, but all actions within an account still require appropriate IAM permissions. Account separation complements, not replaces, IAM.

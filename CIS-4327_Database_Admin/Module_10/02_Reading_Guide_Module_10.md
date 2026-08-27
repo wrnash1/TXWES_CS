@@ -328,3 +328,21 @@ A table with 50% dead tuple bloat requires twice as many block reads for a Seq S
 - [ ] Enabling Cloud SQL Performance Insights with gcloud
 - [ ] `default_statistics_target` increase for skewed columns
 - [ ] Composite index column ordering: equality before range
+
+---
+
+## 9. Supplemental Resources
+
+The following free, open-access resources support Module 10 topics:
+
+**1. [PostgreSQL Documentation — Using EXPLAIN](https://www.postgresql.org/docs/current/using-explain.html)**
+Authoritative reference for reading PostgreSQL execution plans, understanding node types (Seq Scan, Index Scan, Hash Join, Merge Join), and interpreting actual vs estimated row counts.
+
+**2. [PostgreSQL Documentation — Indexes](https://www.postgresql.org/docs/current/indexes.html)**
+Complete coverage of all PostgreSQL index types (B-tree, Hash, GIN, GiST, BRIN, SP-GiST), partial indexes, covering indexes with INCLUDE, and index-only scans.
+
+**3. [MySQL 8.0 Reference — Understanding the Query Execution Plan](https://dev.mysql.com/doc/refman/8.0/en/using-explain.html)**
+Explains MySQL EXPLAIN output columns including `type`, `key`, `rows`, and the `Extra` field values `Using filesort`, `Using temporary`, and `Using index`.
+
+**4. [Google Cloud — Query Insights for Cloud SQL](https://cloud.google.com/sql/docs/postgres/query-insights-overview)**
+Overview of Cloud SQL Performance Insights (Query Insights), including how to enable it, interpret top queries by latency, and use wait event data to diagnose bottlenecks.

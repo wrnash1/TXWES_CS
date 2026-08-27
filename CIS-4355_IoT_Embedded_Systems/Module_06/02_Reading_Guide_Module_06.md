@@ -497,3 +497,19 @@ void setup() {
 6. A servo requires a 50 Hz PWM signal. Calculate the period in milliseconds and the pulse width for 90 degrees (1500 µs).
 7. What is the maximum sample rate of the Uno ADC at its default prescaler setting?
 8. How does FreeRTOS on the ESP32 differ from the Arduino single-loop model?
+
+---
+
+## 9. Supplemental Resources
+
+**1. ESP32 Arduino Core Documentation — LEDC and Interrupt APIs**
+[https://espressif-docs.readthedocs-hosted.com/projects/arduino-esp32/en/latest/](https://espressif-docs.readthedocs-hosted.com/projects/arduino-esp32/en/latest/)
+The official Espressif Arduino-ESP32 core documentation. Covers the LEDC PWM API (`ledcSetup`, `ledcAttachPin`, `ledcWrite`), `IRAM_ATTR` ISR placement, FreeRTOS task creation, deep sleep, and all ESP32-specific extensions to the Arduino framework.
+
+**2. AVR-libc Reference Manual — Interrupts and Memory**
+[https://www.nongnu.org/avr-libc/user-manual/](https://www.nongnu.org/avr-libc/user-manual/)
+The definitive reference for the AVR C library used by the Arduino Uno. Covers interrupt vectors, the `volatile` keyword, `PROGMEM` and `pgm_read_*` functions, stack/heap layout, and fixed-width integer types from `<stdint.h>`. Essential background for understanding the memory management techniques in Section 8.
+
+**3. FreeRTOS API Reference**
+[https://www.freertos.org/a00106.html](https://www.freertos.org/a00106.html)
+The official FreeRTOS API documentation covering `xTaskCreatePinnedToCore()`, `vTaskDelay()`, `pdMS_TO_TICKS()`, queues, semaphores, and mutexes. The ESP32 Arduino core runs FreeRTOS v10. This reference is required for any multi-task ESP32 firmware beyond the examples in Section 7.

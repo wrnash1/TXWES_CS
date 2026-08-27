@@ -298,3 +298,25 @@ Before the exam, confirm you can answer yes to each item:
 - [ ] I know the difference between blue/green, canary, and in-place deployment strategies
 - [ ] I can explain why `Action: "*", Resource: "*"` is always the wrong IAM policy for a Lambda execution role
 - [ ] I can describe how CloudFront custom error responses solve the S3 SPA routing problem
+
+---
+
+## 10. Supplemental Resources
+
+The following free, open-access resources go deeper on Module 16 topics and directly support DVA-C02 exam preparation:
+
+**1. AWS Lambda Developer Guide**
+[https://docs.aws.amazon.com/lambda/latest/dg/welcome.html](https://docs.aws.amazon.com/lambda/latest/dg/welcome.html)
+The official AWS Lambda reference covering the handler signature, event and context objects, environment variables, layers, versioning, aliases, provisioned concurrency, cold start mitigation, and the execution environment lifecycle — the primary reference for Domain 1 and Domain 4 Lambda topics on the DVA-C02 exam.
+
+**2. Amazon DynamoDB Developer Guide**
+[https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html)
+The official DynamoDB reference covering partition keys, sort keys, `GetItem`, `PutItem`, `Query`, `Scan`, GSI, LSI, on-demand vs provisioned capacity, condition expressions, `attribute_not_exists`, DAX, and DynamoDB Streams — covers all DynamoDB patterns in Section 4 of this guide and the high-frequency DynamoDB questions in Domain 1.
+
+**3. AWS Serverless Application Model (SAM) Developer Guide**
+[https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/what-is-sam.html](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/what-is-sam.html)
+The official SAM reference covering the `Transform` declaration, `AWS::Serverless::Function`, `AWS::Serverless::Api`, `AWS::Serverless::SimpleTable`, SAM policy templates (`DynamoDBCrudPolicy`, `SQSPollerPolicy`), `Globals`, `sam build`, and `sam deploy --guided` — directly supports the SAM template pattern in Section 4 and deployment domain questions.
+
+**4. AWS CodePipeline User Guide**
+[https://docs.aws.amazon.com/codepipeline/latest/userguide/welcome.html](https://docs.aws.amazon.com/codepipeline/latest/userguide/welcome.html)
+The official CodePipeline reference covering pipeline stages (Source, Build, Deploy), integration with CodeBuild for build specs and test reports, CodeDeploy deployment strategies (in-place, blue/green, canary, linear), Lambda weighted aliases for canary deployments, and AppSpec file structure — covers the CI/CD patterns in Domain 3 and the deployment strategy comparison in Section 6.

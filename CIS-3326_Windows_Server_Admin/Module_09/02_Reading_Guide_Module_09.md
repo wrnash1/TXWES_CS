@@ -318,4 +318,26 @@ DNS: `_ldap._tcp.dc._msdcs.<domain>` and `_kerberos._tcp.dc._msdcs.<domain>`.
 
 ---
 
+## 9. Supplemental Resources
+
+The following free, open-access resources go deeper on Module 09 topics:
+
+**1. Microsoft Learn — Implement and manage DNS for Windows Server**
+<https://learn.microsoft.com/en-us/training/modules/implement-windows-server-dns/>
+Hands-on module covering DNS zone types, AD-Integrated zones, forwarders, conditional forwarders, and dynamic updates with sandbox exercises aligned to the AZ-800 exam.
+
+**2. Microsoft Docs — DHCP failover overview**
+<https://learn.microsoft.com/en-us/windows-server/networking/technologies/dhcp/dhcp-failover>
+Full explanation of DHCP Failover architecture including Hot Standby and Load Sharing modes, partner server configuration, shared secret requirements, and failover state machine behavior.
+
+**3. Microsoft Docs — DNS aging and scavenging**
+<https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2003/cc757041(v=ws.10)>
+Detailed reference covering the no-refresh and refresh interval mechanics, how timestamps are set, the two-level enablement requirement (server + zone), and how the scavenging cycle deletes stale records.
+
+**4. Microsoft Docs — DHCP scope options reference**
+<https://learn.microsoft.com/en-us/windows-server/networking/technologies/dhcp/dhcp-subnet-options>
+Covers DHCP option precedence (server → scope → reservation), how scope options are inherited, and commonly used option codes (003 Router, 006 DNS Servers, 015 DNS Domain Name) with configuration guidance.
+
+---
+
 *Review all sections before beginning Lab 09, Quiz 09, and Discussion 09.*

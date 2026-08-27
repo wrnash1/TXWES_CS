@@ -186,3 +186,19 @@ Work through each item before taking the quiz.
 
 - Cisco CCNA certification training information: cisco.com/c/en/us/training-events/training-certifications
 - Free CCNA study notes and video summaries: professormesser.com
+
+---
+
+## 9. Supplemental Resources
+
+The following open educational resources extend EtherChannel and link aggregation concepts to CCNA exam depth. All resources are freely available.
+
+1. **Cisco Networking Academy — CCNA: Switching, Routing, and Wireless Essentials, Chapter 6 (EtherChannel)** (skillsforall.com): This free chapter covers LACP, PAgP, static EtherChannel, and load balancing with Packet Tracer activities for configuring and verifying port-channel bundles.
+
+2. **Jeremy's IT Lab — EtherChannel (Day 23)** (youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ): A focused video lesson covering PAgP vs. LACP negotiation modes, static EtherChannel, the `show etherchannel summary` flag interpretation, and common EtherChannel misconfiguration troubleshooting.
+
+3. **Cisco Learning Network — EtherChannel and LACP Study Resources** (learningnetwork.cisco.com): Community discussions on EtherChannel configuration issues, mode compatibility matrices, and exam-focused questions on PAgP vs. LACP selection for mixed-vendor environments.
+
+4. **Cisco IOS Configuration Guide — EtherChannel** (cisco.com): Cisco's official IOS configuration guide for EtherChannel covers all supported load balancing methods, LACP system priority, port priority, and hot-standby port behavior with CLI examples.
+
+5. **GNS3 Labs — EtherChannel with LACP** (gns3.com/marketplace/featured): GNS3 community lab files for EtherChannel with LACP on Cisco IOS virtual routers and switches, allowing testing of multi-link aggregation without physical hardware.

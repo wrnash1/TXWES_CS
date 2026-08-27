@@ -246,4 +246,206 @@ Why D is incorrect: This design places the PDC Emulator as the sole authoritativ
 
 ---
 
-CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash
+### Question 11
+
+A DHCP server has an address pool of 192.168.1.1–192.168.1.200 with a lease time of 24 hours. After a campus event, all 200 addresses were leased. New devices are now being denied addresses. What is the most immediate corrective action?
+
+- A) Restart the DHCP server to clear all lease records.
+- B) Shorten the lease time so existing leases expire sooner and addresses become available more quickly.
+- C) Add a second DHCP server with the same scope to share the load.
+- D) Disable DHCP and configure all devices with static IP addresses.
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Restarting the DHCP server clears all lease records from memory, causing all current devices to lose their IP addresses. Devices would re-request addresses, but the pool is still exhausted — all 200 addresses would be re-leased immediately, solving nothing.
+- *Why B is correct:* Shortening the lease time causes existing leases to expire sooner. Devices that have disconnected from the network (after the event) will not renew, and those addresses will return to the available pool. This is the appropriate short-term adjustment without interrupting current active clients.
+- *Why C is incorrect:* Running two DHCP servers with the same scope causes IP address conflicts — both servers would assign the same addresses to different clients. Proper split-scope configuration (each server owns half the pool) would help but is not the "most immediate" single corrective action.
+- *Why D is incorrect:* Disabling DHCP and configuring hundreds of devices with static addresses is operationally impractical and extremely time-consuming. It would cause significant downtime.
+
+---
+
+### Question 12
+
+Which DHCP option number is used to specify the default gateway (router) for a DHCP client?
+
+- A) Option 1
+- B) Option 3
+- C) Option 6
+- D) Option 15
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* DHCP Option 1 specifies the subnet mask — it defines the network boundary, not the default gateway.
+- *Why B is correct:* DHCP Option 3 specifies the router (default gateway) for the client. This is one of the most commonly configured DHCP scope options alongside Option 6 (DNS servers) and Option 15 (domain name).
+- *Why C is incorrect:* DHCP Option 6 specifies the DNS server IP addresses — it tells the client which DNS server to use for name resolution.
+- *Why D is incorrect:* DHCP Option 15 specifies the DNS domain name (e.g., company.local) — it defines the domain the client should use for DNS suffixes.
+
+---
+
+### Question 13
+
+What is the purpose of the T2 timer in DHCP lease management, and what percentage of the lease duration does it typically represent?
+
+- A) T2 is the initial lease request timer (25% of lease duration) — used during the DORA Discover phase.
+- B) T2 is the rebinding timer (87.5% of lease duration) — if the client cannot renew with the original server, it broadcasts a Request to any available DHCP server.
+- C) T2 is the grace period timer (100% of lease duration) — the client is given extra time after lease expiry before losing its address.
+- D) T2 is the conflict detection timer (50% of lease duration) — the server pings the address before assigning it to verify no conflicts.
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* 25% does not correspond to the T2 timer. The T1 timer fires at 50% of lease duration for unicast renewal with the original server.
+- *Why B is correct:* The T2 (rebinding) timer fires at 87.5% of the lease duration. At this point, if the client has not successfully renewed via T1 unicast attempts, it broadcasts a DHCP Request to any DHCP server on the network to obtain a new lease, even from a different server.
+- *Why C is incorrect:* There is no 100% grace period timer defined as T2 in the DHCP standard. After the lease fully expires, the client must release the address and begin a new DORA process.
+- *Why D is incorrect:* DHCP conflict detection is a server-side feature where the server pings an address before assigning it — this is a separate mechanism, not the T2 timer. T2 is a client-side rebinding timer.
+
+---
+
+### Question 14
+
+An administrator reviews a DNS zone file and sees the following record:
+`192.168.1.50.in-addr.arpa. IN PTR server01.company.com.`
+What type of DNS record is this, and what is its purpose?
+
+- A) An A record — maps the IP address 192.168.1.50 to the hostname server01.company.com
+- B) A PTR record — used for reverse DNS lookup to resolve an IP address to a hostname
+- C) A CNAME record — creates an alias from the IP address to the canonical hostname
+- D) An NS record — identifies server01.company.com as the name server for the 192.168.1.0/24 subnet
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* An A record maps a hostname to an IP address (forward lookup). The record shown is in the `in-addr.arpa` zone, which is exclusively used for reverse DNS lookups.
+- *Why B is correct:* A PTR (Pointer) record provides reverse DNS — given an IP address, it returns the associated hostname. PTR records are stored in the `in-addr.arpa` zone with the octets of the IP address written in reverse order. This record maps 192.168.1.50 back to `server01.company.com`.
+- *Why C is incorrect:* A CNAME record creates an alias between two hostnames. It does not involve IP addresses or the `in-addr.arpa` reverse zone.
+- *Why D is incorrect:* An NS (Name Server) record identifies the authoritative name servers for a domain. It does not appear in the format shown and does not perform reverse IP lookups.
+
+---
+
+### Question 15
+
+An IPAM system alerts an administrator that DHCP Scope utilization for the 10.20.0.0/24 subnet has reached 92%. What is the most appropriate immediate action?
+
+- A) Expand the DHCP lease to 7 days to reduce the frequency of renewals and lower utilization.
+- B) Evaluate scope utilization trends, shorten the lease time to recover lapsed leases faster, and plan to expand the subnet or split it into multiple VLANs.
+- C) Remove all static IP reservations in the scope to free up addresses.
+- D) Delete the scope and reconfigure it with a smaller subnet to consolidate unused addresses.
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Increasing the lease time to 7 days would make the utilization problem worse — addresses held by devices that have disconnected would be unavailable for longer before expiring and returning to the pool.
+- *Why B is correct:* At 92% utilization, the scope is near exhaustion. Shortening the lease time recycles addresses from disconnected devices faster. IPAM trend analysis helps determine whether utilization is growing steadily (requiring a long-term subnet expansion or VLAN segmentation plan) or spiky (manageable with lease time adjustment).
+- *Why C is incorrect:* Removing DHCP reservations would cause those devices to receive random addresses rather than their reserved addresses, breaking any services that depend on known IP addresses (DNS entries, ACLs, print server configurations).
+- *Why D is incorrect:* Deleting the scope and reconfiguring with a smaller subnet would reduce the available address space, making the exhaustion problem worse — not better.
+
+---
+
+### Question 16
+
+A company's DHCP server is on VLAN 1 (10.0.1.0/24) and serves clients on VLAN 20 (172.16.20.0/24). The Layer 3 switch interface for VLAN 20 is assigned 172.16.20.1/24. After configuring `ip helper-address 10.0.1.5` on the VLAN 20 interface, clients still receive APIPA addresses. Which of the following is the most likely cause?
+
+- A) The DHCP server does not have a scope defined for the 172.16.20.0/24 network.
+- B) The `ip helper-address` command requires a restart of the switch to take effect.
+- C) VLAN 20 clients must have a static default gateway before DHCP can function.
+- D) `ip helper-address` only works for UDP port 69 (TFTP), not DHCP.
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- *Why A is correct:* The `ip helper-address` correctly forwards DHCP Discovers to the DHCP server with the VLAN 20 gateway IP (172.16.20.1) in the giaddr field. However, if the DHCP server does not have a scope configured for the 172.16.20.0/24 subnet, it will not respond to those relayed requests — and clients fall back to APIPA.
+- *Why B is incorrect:* The `ip helper-address` command takes effect immediately in IOS — no switch restart is required. Changes to interface configuration are applied when entered.
+- *Why C is incorrect:* DHCP clients do not need a static default gateway configured before requesting a DHCP lease. The entire purpose of DHCP is to provide the gateway, IP address, and DNS automatically.
+- *Why D is incorrect:* `ip helper-address` by default forwards multiple UDP protocols including DHCP (ports 67/68), TFTP (port 69), DNS (port 53), and others. DHCP is one of its primary functions.
+
+---
+
+### Question 17
+
+What does it mean when a DNS response is labeled "non-authoritative"?
+
+- A) The DNS response contains incorrect or potentially outdated information that should not be trusted.
+- B) The DNS response was served from a resolver's cache and was not obtained directly from the authoritative name server during this transaction.
+- C) The DNS server that answered does not have the record and is referring the client to another server.
+- D) The DNS record has expired and must be re-queried before use.
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Non-authoritative does not mean incorrect or untrustworthy. It simply indicates the answer came from cache rather than directly from the authoritative server. The data was accurate when originally fetched and remains valid as long as the TTL has not expired.
+- *Why B is correct:* A non-authoritative response means the answering DNS resolver (cache) obtained the record from the authoritative server at some earlier time and is now serving the cached copy. The answer is valid as long as the TTL has not expired.
+- *Why C is incorrect:* A referral (iterative response) occurs when a DNS server does not have the answer and directs the resolver to another server. This is different from a non-authoritative cached response.
+- *Why D is incorrect:* If a DNS record's TTL has expired in cache, the resolver re-queries the authoritative server before serving the record. An expired record would trigger a fresh authoritative query rather than a non-authoritative response.
+
+---
+
+### Question 18
+
+A network administrator wants to ensure that all external DNS queries from corporate workstations are logged for security auditing. Which DNS architecture change implements this while maintaining internet name resolution?
+
+- A) Configure all workstations to use 8.8.8.8 directly and capture packets on the internet gateway.
+- B) Deploy an internal DNS forwarder that receives all client queries, logs them, and forwards unresolved queries to the upstream DNS server.
+- C) Disable DNS caching on all workstations to force every query to go to the authoritative server.
+- D) Configure all workstations with a hosts file containing entries for commonly visited websites.
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Capturing packets at the gateway is technically possible but requires deep packet inspection of all DNS traffic. This is less controlled and harder to manage than a centralized DNS logging server.
+- *Why B is correct:* An internal DNS forwarder acts as the single DNS exit point for all corporate clients. It receives all queries, can log them with user/IP attribution, enforces DNS filtering policies, and forwards unresolved queries to upstream resolvers. This is the standard enterprise DNS logging architecture.
+- *Why C is incorrect:* Disabling DNS caching forces every query to the authoritative server, dramatically increasing DNS query load and latency. It does not centralize logging — queries would still go directly to external servers unless a forwarder is in place.
+- *Why D is incorrect:* A hosts file only covers entries explicitly listed in the file. It cannot scale to cover all internet hostnames and does not log queries.
+
+---
+
+### Question 19
+
+What NTP stratum number indicates that a device is unsynchronized and its time should not be trusted?
+
+- A) Stratum 0
+- B) Stratum 10
+- C) Stratum 15
+- D) Stratum 16
+
+**Correct Answer:** D
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Stratum 0 indicates a high-precision reference clock (GPS, atomic). It is the most accurate stratum level, not unsynchronized.
+- *Why B is incorrect:* Stratum 10 is a valid synchronized stratum — 10 hops from the reference clock. While further removed from accuracy, it indicates a device IS synchronized.
+- *Why C is incorrect:* Stratum 15 is the maximum valid stratum for a synchronized NTP client. It is valid but of lower accuracy.
+- *Why D is correct:* Stratum 16 in NTP means the device is unsynchronized. An NTP source advertising stratum 16 should not be used for time synchronization — it indicates the device has lost contact with its upstream NTP source and is operating on its own free-running clock.
+
+---
+
+### Question 20
+
+A company uses IPAM (IP Address Management) software. What is the primary operational benefit IPAM provides over managing IP addresses in spreadsheets?
+
+- A) IPAM replaces the need for DNS and DHCP servers entirely by managing all IP assignments directly.
+- B) IPAM provides automated discovery, real-time utilization visibility, integration with DNS and DHCP, and audit history — reducing errors and preventing scope exhaustion surprises.
+- C) IPAM encrypts all IP address assignments to prevent attackers from knowing the network topology.
+- D) IPAM eliminates the need for network documentation because the database replaces all IP address records.
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* IPAM does not replace DNS and DHCP servers — it integrates with them to provide management and visibility. DNS and DHCP remain separate infrastructure components.
+- *Why B is correct:* IPAM centralizes IP address tracking, integrates with DHCP servers to show real-time scope utilization, integrates with DNS to ensure forward/reverse records exist, provides automated scanning to discover untracked devices, and maintains an audit log of all address assignments and changes.
+- *Why C is incorrect:* IPAM does not encrypt IP address assignments. Network addressing information is a management data concern, not a confidentiality encryption concern.
+- *Why D is incorrect:* The IPAM database IS the network documentation — it supplements and replaces manual spreadsheets. It does not make network documentation unnecessary; it automates and improves it.
+
+---
+
+*CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash*

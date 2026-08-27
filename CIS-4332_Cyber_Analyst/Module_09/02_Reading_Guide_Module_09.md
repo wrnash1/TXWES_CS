@@ -279,3 +279,19 @@ Exam Tip 8: Dwell time is the most important IR metric. Questions about measurin
 - [ ] Complete the Module 09 Lab
 - [ ] Complete the Module 09 Quiz
 - [ ] Post initial response to the Module 09 Discussion by Wednesday at 11:59 PM
+
+---
+
+## 9. Supplemental Resources
+
+**1. NIST SP 800-61 Rev. 2 — Computer Security Incident Handling Guide**
+<https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-61r2.pdf>
+The foundational NIST publication defining the four-phase IR lifecycle. The full document (88 pages) covers preparation, detection and analysis, containment/eradication/recovery, and post-incident activity in detail. Sections 3.1 through 3.4 directly correspond to the content of this module and are the primary source for CySA+ IR phase questions.
+
+**2. CISA — Ransomware Guide (Joint CISA/MS-ISAC)**
+<https://www.cisa.gov/stopransomware/ransomware-guide>
+The definitive U.S. government guidance document on ransomware response, covering preparation, detection, containment, eradication, recovery, and post-incident steps specific to ransomware. The guide includes the VSS deletion prevention hardening steps, backup protection strategies, and recovery sequencing covered in Section 4 of this module.
+
+**3. FBI — IC3 Ransomware Reporting Portal**
+<https://www.ic3.gov/>
+The FBI Internet Crime Complaint Center's reporting portal for cybercrime including ransomware. Reviewing the portal's reporting guidance and recent ransomware advisories illustrates the federal reporting obligations and investigation support processes described in Section 6 of this guide. Law enforcement reporting after ransomware incidents is strongly encouraged and may provide decryptor resources in some cases.

@@ -261,3 +261,29 @@ Biometric scanners authenticate users based on unique physical characteristics. 
 
 - Professor Messer's CompTIA A+ Core 1 free study notes and video course: professormesser.com (220-1101 section, Domains 3.2 and 1.2)
 - CompTIA A+ Exam Objectives (220-1101): comptia.org (free download; review Domain 3.2 cable types and Domain 1.2 connector types)
+
+---
+
+## 9. Supplemental Resources
+
+The following free resources supplement Module 09 content on USB standards, peripheral connectivity, and authentication devices.
+
+1. **Professor Messer — CompTIA A+ Core 1 (220-1101) USB and Peripheral Devices**
+   URL: [https://www.professormesser.com/free-a-plus-training/220-1101/220-1101-video/](https://www.professormesser.com/free-a-plus-training/220-1101/220-1101-video/)
+   Relevance: Video lectures covering USB versions, connector types, Thunderbolt, KVM switches, and authentication peripherals aligned to Domain 3.2 and Domain 1.2 — the primary exam objectives for this module.
+
+1. **USB Implementers Forum (USB-IF) — USB Developer Resources**
+   URL: [https://www.usb.org/developers](https://www.usb.org/developers)
+   Relevance: The official standards body for USB publishes free specification summaries, connector diagrams, and certified product lists. The USB naming convention history (USB 3.0 → 3.1 Gen 1 → 3.2 Gen 1x1) is explained in official USB-IF documentation, which is authoritative for exam questions about version naming.
+
+1. **SpeedGuide.net — USB Speed Reference**
+   URL: [https://www.speedguide.net/articles/usb-speed-reference-5569](https://www.speedguide.net/articles/usb-speed-reference-5569)
+   Relevance: Concise free reference table comparing USB 1.1 through USB 3.2 Gen 2x2 speeds, connector types, and real-world throughput figures. Useful for verifying the speed hierarchy and understanding the gap between theoretical maximum and practical transfer rates.
+
+1. **NIST SP 800-63B — Digital Identity Guidelines (Authentication)**
+   URL: [https://pages.nist.gov/800-63-3/sp800-63b.html](https://pages.nist.gov/800-63-3/sp800-63b.html)
+   Relevance: The National Institute of Standards and Technology's free, authoritative publication defining the three MFA factor categories (something you know, something you have, something you are) used directly in CompTIA A+ exam questions about smart cards, biometric scanners, and TOTP tokens.
+
+1. **Plugable Technologies — Thunderbolt and USB-C Explained**
+   URL: [https://plugable.com/blogs/news/thunderbolt-vs-usb-c-what-s-the-difference](https://plugable.com/blogs/news/thunderbolt-vs-usb-c-what-s-the-difference)
+   Relevance: Free article clearly explaining the physical vs. protocol distinction between USB-C and Thunderbolt connectors — the most commonly tested trap on the A+ exam regarding peripheral interfaces. Includes cable identification tips and real-world compatibility scenarios.

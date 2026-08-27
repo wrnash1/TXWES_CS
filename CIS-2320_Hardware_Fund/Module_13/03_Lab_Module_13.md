@@ -206,3 +206,33 @@ Submit your completed lab responses as a single typed document to the Canvas ass
 - Component names must be correct and specific. "A cable" is not an acceptable answer where a specific connector type is expected.
 - Disassembly step sequences must be in the correct order. Partial credit is awarded for correct steps in the wrong position only if the error is minor.
 - Scenario analysis responses must demonstrate reasoning — state what the symptom tells you and why that points to the component you identified.
+
+---
+
+## Part 9 — Challenge Exercise
+
+These advanced steps are optional and are not included in the standard grading rubric.
+
+### Challenge Step 1 — iFixit Disassembly Guide Analysis
+
+Visit iFixit (ifixit.com) and select a laptop disassembly guide for any model available on the site (recommended: a ThinkPad, MacBook, or Dell XPS model, as these have comprehensive guides with full photo documentation):
+
+1. Read the full disassembly guide and document: the total number of disassembly steps, the number of distinct screw types used (note which Torx, Phillips, or proprietary bits are required), and the sequence in which major components are removed. Identify the step that represents the "point of no return" — the step after which the disassembly cannot be easily reversed without a specific replacement part.
+1. Identify and describe three specific steps in the guide where the technician must take an action to prevent ESD damage or component damage that is not immediately obvious from the step description alone (for example, a step that requires touching a grounding point before touching a sensitive component, or a step where improper tool angle can crack the chassis). Explain why each step poses a risk and what the correct technique is.
+1. After reviewing the guide, write a 2–3 sentence evaluation of whether the guide's difficulty rating matches your assessment of the actual complexity, referencing at least two specific steps that you believe are harder or easier than the rating suggests and explaining your reasoning.
+
+### Challenge Step 2 — Laptop Battery Lifecycle Calculation
+
+Using Battery University data (batteryuniversity.com) and the battery specifications of a specific laptop model:
+
+1. Research the rated cycle count for a lithium-ion laptop battery (use a specific laptop model's battery spec sheet or the general Li-ion cycle life of 300–500 cycles to 80% capacity). Calculate: if a student charges their laptop to 100% once per day from 20%, how many months until the battery reaches 80% of original capacity? Show your calculation and identify the assumptions you made.
+1. Research the effect of charge level on battery longevity: compare the cycle life of a battery charged to 100% vs. a battery kept between 20-80% charge. Document the approximate difference in cycle count and calculate how many additional months of 80%+ capacity the student would gain by adopting a 20-80% charging habit.
+1. Write 2–3 sentences explaining why many modern laptops (including Apple MacBook, Lenovo ThinkPad, and Dell XPS models) include a "battery health mode" or "conservation mode" that caps charging at 80%, and describe the trade-off between daily runtime and long-term battery longevity that this mode represents.
+
+### Challenge Step 3 — Display Panel Cross-Reference Research
+
+Practice the panel identification workflow a technician uses when ordering a replacement display:
+
+1. Choose any laptop model and locate the original display panel's part number by researching the laptop's service manual (available from the manufacturer's support site) or by looking up the model on a parts database such as LaptopScreen.com or Parts-People.com. Document the panel specifications: size, resolution, panel type (TN/IPS/OLED), connector type (eDP 30-pin or 40-pin, or LVDS), backlight type, and the part number.
+1. Using the panel specification from step 1, find at least two compatible aftermarket replacement panels from different manufacturers that would function correctly as substitutes. Document the part numbers and note any specification differences (such as color gamut or brightness) that would be meaningful to a user.
+1. Write 2–3 sentences explaining why a technician should verify the eDP connector pin count (30-pin vs. 40-pin) before purchasing a replacement panel, and describe what physical and visual symptom a technician would observe if a 30-pin eDP panel were connected to a 40-pin eDP cable (or vice versa) on a laptop motherboard.

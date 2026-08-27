@@ -250,3 +250,29 @@ A resistant stakeholder who receives more emails or reports does not become supp
 - [ ] Complete the Module 12 RACI lab activity
 - [ ] Take the Module 12 Quiz (10 questions)
 - [ ] Post Module 12 Discussion initial response by Wednesday at 11:59 PM
+
+---
+
+## 9. Supplemental Resources
+
+The following free, openly licensed resources extend the concepts in this module. All links are publicly accessible — no account or purchase required.
+
+1. **Project Management Open Textbook — Chapter 10: Communications and Stakeholder Management**
+   *BC Campus OpenEd* — [opentextbc.ca/projectmanagement — Chapter 10](https://opentextbc.ca/projectmanagement/chapter/chapter-10-project-communications-management/)
+   Integrated coverage of the communications model, RACI, Power/Interest grid, and stakeholder engagement strategies with worked IT examples.
+
+2. **RACI vs. RASCI vs. DACI — Atlassian (Free)**
+   [atlassian.com/team-playbook/plays/roles-and-responsibilities](https://www.atlassian.com/team-playbook/plays/roles-and-responsibilities)
+   Practical guide comparing RACI with related accountability frameworks — useful for students who will encounter variations on the standard RACI in professional IT environments.
+
+3. **PMI — Stakeholder Engagement Best Practices (Free Article)**
+   *Project Management Institute* — [pmi.org/learning/library/stakeholder-engagement-strategies](https://www.pmi.org/learning/library/stakeholder-engagement-strategies-11199)
+   PMI article on stakeholder engagement strategies, covering the five engagement levels and how to move stakeholders from Resistant to Supportive.
+
+4. **YouTube — "RACI Matrix Tutorial" (Simplilearn)**
+   [youtube.com/watch?v=RFmgJFME5GI](https://www.youtube.com/watch?v=RFmgJFME5GI)
+   10-minute video on building and validating a RACI matrix with common error examples — directly supports the Module 12 lab.
+
+5. **Kickoff Meeting Agenda Template — ProjectManager.com (Free)**
+   [projectmanager.com/blog/project-kickoff-meeting](https://www.projectmanager.com/blog/project-kickoff-meeting)
+   Free kickoff meeting agenda template with best practice guidance. Useful context for understanding the kickoff as a formal process artifact tested on the Project+ exam.

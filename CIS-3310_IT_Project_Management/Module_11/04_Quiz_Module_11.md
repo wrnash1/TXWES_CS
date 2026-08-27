@@ -225,3 +225,203 @@ Distractor Analysis:
 - **Why A is incorrect:** SWOT analysis is a qualitative risk identification technique. It examines internal and external factors to surface potential risks — it does not produce cost probability distributions.
 - **Why B is incorrect:** The Delphi Technique is a qualitative risk identification method using anonymous expert input. It identifies and qualitatively assesses risks but does not perform statistical cost modeling.
 - **Why D is incorrect:** The Probability and Impact Matrix is a qualitative prioritization tool. It ranks risks by P-I score to determine response priority. It does not aggregate risk impacts into a statistical probability distribution of project cost.
+
+---
+
+## Question 11
+
+A risk has a 40% probability of occurrence and would cause a $75,000 cost impact if it occurs. What is the Expected Monetary Value (EMV) of this risk?
+
+- A) +$30,000
+- B) -$30,000
+- C) -$75,000
+- D) -$45,000
+
+**Correct Answer:** B) -$30,000
+
+**Distractor Analysis:**
+
+- *Why B is correct:* EMV = Probability × Impact = 0.40 × (-$75,000) = -$30,000. For a threat, the impact is negative. The negative EMV represents the expected cost burden this risk places on the project contingency reserve.
+- *Why A is incorrect:* A positive $30,000 would be the EMV of an opportunity with the same probability and impact magnitude — threats have negative EMV.
+- *Why C is incorrect:* -$75,000 is the full impact if the risk occurs with 100% certainty. EMV weights the impact by probability, yielding a smaller expected value.
+- *Why D is incorrect:* -$45,000 = 0.60 × $75,000 — this uses the probability of the risk NOT occurring (1 - 0.40 = 0.60), which is not how EMV is calculated.
+
+---
+
+## Question 12
+
+The Delphi Technique for risk identification is specifically designed to address which problem?
+
+- A) The difficulty of scheduling all stakeholders for a face-to-face meeting
+- B) The tendency for vocal participants to dominate group risk discussions, preventing all perspectives from being heard
+- C) The lack of historical data from similar past projects
+- D) The requirement to document risks in a standard PMI format
+
+**Correct Answer:** B) The tendency for vocal participants to dominate group risk discussions, preventing all perspectives from being heard.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* The Delphi Technique uses anonymous, iterative expert polling. Because responses are anonymous, dominant personalities cannot suppress dissenting opinions. Experts provide independent assessments that are consolidated and shared back for further review until consensus emerges.
+- *Why A is incorrect:* Scheduling difficulty is a logistical problem; the Delphi Technique does accommodate remote and asynchronous participation, but preventing groupthink — not scheduling — is its primary purpose.
+- *Why C is incorrect:* Lack of historical data is addressed by analogous estimation or expert judgment in general. Delphi focuses on preventing bias in group opinion, not on sourcing historical data.
+- *Why D is incorrect:* Risk format standardization is a register design issue, not what the Delphi Technique was created to solve.
+
+---
+
+## Question 13
+
+A risk monitoring report shows that three previously identified risks have occurred and their contingency plans have been executed. One risk remains on the watch list with unchanged probability. Which process is being performed?
+
+- A) Plan Risk Responses
+- B) Perform Quantitative Risk Analysis
+- C) Implement Risk Responses
+- D) Monitor Risks
+
+**Correct Answer:** D) Monitor Risks
+
+**Distractor Analysis:**
+
+- *Why D is correct:* Monitor Risks is the Monitoring and Controlling process that tracks the status of identified risks, checks whether trigger conditions have fired, evaluates whether response plans were effective, and reviews the watch list for any changes in risk status.
+- *Why A is incorrect:* Plan Risk Responses is a Planning process that develops the response strategies. By the time risks are occurring and contingency plans are being executed, planning is complete.
+- *Why B is incorrect:* Quantitative Risk Analysis is a Planning process that uses statistical modeling. It does not describe the ongoing tracking of risk occurrences during project execution.
+- *Why C is incorrect:* Implement Risk Responses is the Executing process where response actions are carried out when triggers fire. Reviewing the watch list and tracking previously executed responses is Monitor Risks.
+
+---
+
+## Question 14
+
+Which risk response strategy for threats is described as: "The project team accepts that the risk may occur and decides to set aside a contingency reserve to deal with it if it does"?
+
+- A) Avoid
+- B) Mitigate
+- C) Transfer
+- D) Accept (Active)
+
+**Correct Answer:** D) Accept (Active)
+
+**Distractor Analysis:**
+
+- *Why D is correct:* Active acceptance means the team knowingly acknowledges the risk, decides not to prevent it, and prepares by reserving funds (contingency reserve) or developing a fallback plan. The reserve is the hallmark of active (vs. passive) acceptance.
+- *Why A is incorrect:* Avoid eliminates the risk by changing the project plan to remove the risk source. No reserve is needed because the risk no longer exists.
+- *Why B is incorrect:* Mitigate reduces the probability or impact of the risk through preventive action — not by setting aside reserves.
+- *Why C is incorrect:* Transfer shifts financial consequences to a third party. Setting aside an internal contingency reserve is not a transfer action.
+
+---
+
+## Question 15
+
+A project team is assessing a risk and assigns it a Probability score of 3 and an Impact score of 4 on a 1–5 scale. The organization uses a P × I threshold of ≥ 12 for "High" and 6–11 for "Medium." What priority is this risk?
+
+- A) Low
+- B) Medium
+- C) High
+- D) Cannot be determined without quantitative data
+
+**Correct Answer:** C) High
+
+**Distractor Analysis:**
+
+- *Why C is correct:* P × I = 3 × 4 = 12. Since 12 ≥ 12 (the High threshold), this risk is classified as High Priority and warrants a detailed proactive response plan.
+- *Why A is incorrect:* A Low priority would require a P × I score below 6. A score of 12 exceeds both the Low and Medium thresholds.
+- *Why B is incorrect:* Medium requires a score of 6–11. A score of 12 just meets the High threshold (≥ 12 is High per the stated criteria).
+- *Why D is incorrect:* Qualitative analysis using the P-I matrix is designed specifically to prioritize without quantitative data. The score of 12 is sufficient to classify this risk as High.
+
+---
+
+## Question 16
+
+What is the primary purpose of a risk audit?
+
+- A) To verify that the Risk Register has been updated with all project risks
+- B) To assess the effectiveness of the risk management process and the risk responses that have been implemented
+- C) To calculate the EMV of all open risks in the Risk Register
+- D) To present the Risk Register to the Change Control Board for approval
+
+**Correct Answer:** B) To assess the effectiveness of the risk management process and the risk responses that have been implemented.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* Risk audits examine whether the risk management process is being followed correctly and whether the responses that have been implemented are working as intended. They are a quality check on the entire risk management approach.
+- *Why A is incorrect:* Verifying register completeness is part of risk monitoring and identification, not the specific purpose of a formal risk audit.
+- *Why C is incorrect:* EMV calculation is a quantitative analysis technique performed during planning, not a risk audit activity.
+- *Why D is incorrect:* Risk Register approval is not a standard PMI governance step. The CCB approves change requests — not risk registers.
+
+---
+
+## Question 17
+
+Which risk identification technique specifically examines the project's Strengths, Weaknesses, Opportunities, and Threats?
+
+- A) Prompt List
+- B) Delphi Technique
+- C) SWOT Analysis
+- D) Root Cause Analysis
+
+**Correct Answer:** C) SWOT Analysis
+
+**Distractor Analysis:**
+
+- *Why C is correct:* SWOT Analysis is a strategic risk identification tool that systematically reviews internal factors (Strengths and Weaknesses) and external factors (Opportunities and Threats) to surface risks from all directions.
+- *Why A is incorrect:* A Prompt List uses structured categories or questions to guide brainstorming — it does not follow the Strengths/Weaknesses/Opportunities/Threats framework.
+- *Why B is incorrect:* The Delphi Technique is an expert polling method that prevents groupthink. It is used to gather and consolidate expert risk opinions, not to conduct a strategic environmental scan.
+- *Why D is incorrect:* Root Cause Analysis determines why something happened — it is a quality and retrospective tool, not a forward-looking risk identification technique.
+
+---
+
+## Question 18
+
+A project's Risk Register lists a risk with the following trigger condition: "The development team reports that integration testing failures exceed 20% of test cases in Sprint 3." What should happen when this trigger fires?
+
+- A) The PM should add the risk to the watch list for closer monitoring.
+- B) The PM and risk owner should immediately execute the pre-planned contingency response for this risk.
+- C) The PM should escalate to the project sponsor and wait for approval before acting.
+- D) The PM should close the risk and document it as resolved.
+
+**Correct Answer:** B) The PM and risk owner should immediately execute the pre-planned contingency response for this risk.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* Trigger conditions are defined specifically so that response plans can be executed promptly when a risk materializes. When the trigger fires, the pre-planned contingency plan should be activated without delay.
+- *Why A is incorrect:* Adding to the watch list is a monitoring action for risks that have not yet triggered. Once the trigger has fired, the risk is occurring — monitoring is no longer sufficient.
+- *Why C is incorrect:* Waiting for sponsor approval after a trigger fires wastes critical response time. Pre-approved contingency plans do not require additional sponsor sign-off to execute.
+- *Why D is incorrect:* Closing the risk after the trigger fires is premature. The response must be implemented, its effectiveness monitored, and only then, once the risk is fully resolved, should it be closed.
+
+---
+
+## Question 19
+
+A project manager is documenting a risk using the cause-event-effect format. Which of the following is a correctly structured risk statement?
+
+- A) "There is a risk that the project will be late."
+- B) "Due to the vendor's limited production capacity, there is a risk that hardware deliveries will be delayed by 3 weeks, which may cause the system integration milestone to slip and extend the project completion date."
+- C) "The vendor might cause problems."
+- D) "Risk: hardware delays. Impact: high."
+
+**Correct Answer:** B) "Due to the vendor's limited production capacity, there is a risk that hardware deliveries will be delayed by 3 weeks, which may cause the system integration milestone to slip and extend the project completion date."
+
+**Distractor Analysis:**
+
+- *Why B is correct:* A well-structured risk statement follows the cause-event-effect format: Cause (vendor's limited capacity) → Event (hardware deliveries delayed 3 weeks) → Effect (milestone slip, project delay). This precise structure enables the PM to design a targeted, effective response.
+- *Why A is incorrect:* "The project will be late" is an effect, not a risk statement. It has no cause or event — this is too vague to generate a useful response plan.
+- *Why C is incorrect:* "The vendor might cause problems" is too imprecise to act on. No cause, no specific event, no quantified effect — unusable as a Risk Register entry.
+- *Why D is incorrect:* "Hardware delays — Impact: high" is incomplete. Without the cause and effect, the PM cannot determine a targeted response strategy.
+
+---
+
+## Question 20
+
+Which of the following actions belongs to the "Implement Risk Responses" process, NOT the "Monitor Risks" process?
+
+- A) Reviewing the Risk Register to check if any watch list risks have escalated
+- B) Verifying that a risk trigger has not yet fired for a high-priority risk
+- C) Executing the approved contingency plan to procure a backup server after the primary server vendor fails to deliver
+- D) Updating the probability score for a risk whose likelihood has increased since the last review
+
+**Correct Answer:** C) Executing the approved contingency plan to procure a backup server after the primary server vendor fails to deliver.
+
+**Distractor Analysis:**
+
+- *Why C is correct:* Implement Risk Responses is the Executing process group activity where approved response actions are carried out. Executing the contingency plan (procuring a backup server) is the core activity of this process.
+- *Why A is incorrect:* Reviewing the register for watch list changes is Monitor Risks — a Monitoring and Controlling activity.
+- *Why B is incorrect:* Verifying that a trigger has not yet fired is part of Monitor Risks — watching for the signals that would activate a response.
+- *Why D is incorrect:* Updating probability scores is a re-analysis activity that belongs in Monitor Risks, potentially triggering a re-run of qualitative analysis if conditions have changed significantly.

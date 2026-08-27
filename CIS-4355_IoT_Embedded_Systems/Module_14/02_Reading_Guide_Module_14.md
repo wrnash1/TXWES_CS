@@ -229,3 +229,17 @@ Knowledge distillation trains a compact "student" model by minimizing its diverg
 10. A keyword spotting model achieves 94.2% accuracy in float32 and 93.6% accuracy after int8 quantization. The float32 model is 480 KB and the int8 model is 122 KB. The ESP32's available flash for the model is 200 KB. Which model can be deployed, and is the accuracy trade-off acceptable? Justify your answer.
 
 ---
+
+## 9. Supplemental Resources
+
+**1. TensorFlow Lite Micro — Official Getting Started Guide**
+[https://www.tensorflow.org/lite/microcontrollers](https://www.tensorflow.org/lite/microcontrollers)
+Google's official TensorFlow Lite Micro documentation covering the TFLM architecture, the MicroInterpreter workflow, operator resolver configuration, and the `AllocateTensors()` / `Invoke()` API. Includes worked examples for keyword spotting (micro_speech) and person detection that directly correspond to the lab exercises in this module, as well as guides for post-training quantization and converting trained models to C arrays.
+
+**2. Edge Impulse — TinyML Model Training and Deployment Platform**
+[https://docs.edgeimpulse.com/docs](https://docs.edgeimpulse.com/docs)
+Edge Impulse is the leading end-to-end TinyML development platform that automates the data collection, feature extraction (including MFCC for audio and spectral analysis for vibration), model training, quantization, and deployment pipeline described in this module. The documentation covers anomaly detection with autoencoders, keyword spotting with DS-CNN, and direct deployment to the ESP32 — making it a practical companion to the theory in this reading guide.
+
+**3. Pete Warden & Daniel Situnayake — "TinyML: Machine Learning with TensorFlow Lite on Arduino and Ultra-Low-Power Microcontrollers" (O'Reilly)**
+[https://www.oreilly.com/library/view/tinyml/9781492052036/](https://www.oreilly.com/library/view/tinyml/9781492052036/)
+The definitive textbook on TinyML by the authors of TensorFlow Lite Micro, covering the complete pipeline from data collection through model training, quantization, and microcontroller deployment. Chapters 7–10 cover keyword spotting (the "yes/no" model used in the lab), Chapters 11–13 cover person detection, and the appendices detail the MFCC feature pipeline and tensor arena sizing methodology referenced throughout this module.

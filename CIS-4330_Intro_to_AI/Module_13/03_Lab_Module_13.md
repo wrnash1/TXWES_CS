@@ -276,3 +276,31 @@ Submit a single document to the course LMS by the posted deadline containing:
 | D — Train-Test Split | 20 | Arithmetic shown; split strategy correct and justified; metric choice appropriate |
 | E — Azure ML | 15 | Component order correct; inference pipeline placement explained; versioning rationale accurate |
 | **Total** | **100** | |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: End-to-End Data Preparation Pipeline with scikit-learn
+
+1. Load the Titanic dataset from `seaborn.load_dataset('titanic')` or download it from Kaggle. Identify all columns, their data types, and missing value counts. Document which quality dimensions (completeness, accuracy, consistency, relevance) are affected by the problems you find.
+2. Build a scikit-learn `Pipeline` that handles: (a) imputing `age` with median, (b) imputing `embarked` with the most frequent value, (c) one-hot encoding `sex` and `embarked`, (d) dropping irrelevant columns (`name`, `ticket`, `cabin`), and (e) scaling all numeric features with `StandardScaler`. Apply the pipeline to the full dataset and verify the output shape and feature names.
+3. Perform a stratified 70/15/15 train/validation/test split preserving the `survived` class proportion. Verify the class proportion in each split. Train a `LogisticRegression` on the train set using the pipeline and report accuracy on the validation and test sets.
+4. Add one engineered feature of your own design (e.g., `FamilySize = sibsp + parch + 1`, or `IsAlone` binary flag). Re-run the pipeline and compare validation accuracy with and without the engineered feature. Report your finding in 2–3 sentences.
+
+### Challenge 2: Data Leakage Detection and Time-Series Split
+
+1. Create a synthetic dataset with 1,000 rows and the following columns: `transaction_date` (daily dates spanning 2020-01-01 to 2022-09-26), `amount` (random float 10–500), `merchant_category` (random choice of 5 categories), `is_fraud` (1 for 5 percent of rows, random). Add a leaky feature: `fraud_flag_next_day` — a binary column that equals 1 if the next day's transaction by the same simulated user was fraud. This feature would not exist at prediction time for new transactions.
+2. Train a `RandomForestClassifier` twice: (a) with the leaky feature included, (b) with the leaky feature excluded. Use a random 80/20 split for both. Compare the AUC-ROC scores and explain the magnitude of the difference.
+3. For the non-leaky model, switch from a random split to a time-based split: train on 2020–2021, test on 2022. Compare the AUC-ROC on the time-based test set to the random-split test score. Explain in 2–3 sentences why the scores differ and which split better simulates production conditions.
+4. Add stratified k-fold cross-validation (5 folds) to the non-leaky random-split model and a time-series cross-validation (`TimeSeriesSplit`, 5 splits) to the time-based model. Compare the mean and standard deviation of AUC-ROC across folds for each approach. Write a 2-sentence recommendation about which evaluation method should be used for this fraud detection use case.
+
+### Reflection Questions
+
+1. After completing Challenge 1, explain why fitting preprocessing transformers (such as `StandardScaler` or `OneHotEncoder`) on the full dataset before splitting into train and test sets constitutes data leakage. What specific information from the test set contaminates the training process, and how would this cause the model's test performance to be an overestimate of true production performance?
+
+2. Based on Challenge 2, explain why the dummy variable trap (dropping one column from one-hot encoded features) matters for logistic regression but is typically irrelevant for tree-based models like Random Forest. What property of each model type causes this difference?
+
+---
+
+End of Lab — Module 13

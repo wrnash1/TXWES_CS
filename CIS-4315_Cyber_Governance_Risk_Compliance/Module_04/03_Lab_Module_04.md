@@ -213,3 +213,50 @@ Write a 200–275 word professional memo from you (as a risk analyst) to PPS's C
 ## Academic Integrity Notice
 
 All calculations, ratings, and analysis in this lab must represent your own reasoning applied to the PPS scenario. You may discuss concepts with classmates, but your submitted calculations and written responses must be your own original work. Cite any external sources consulted beyond the course reading materials.
+
+---
+
+## Part 9 — Challenge Exercise
+
+These challenges extend the Module 04 lab into advanced risk analysis scenarios. Complete both challenges and the reflection questions for up to 15 bonus points.
+
+---
+
+### Challenge 1: Multi-Risk ALE Comparison and Treatment Decision
+
+Pinnacle Payment Solutions has identified four risks to its payment processing infrastructure. Use the data below to complete a comparative ALE analysis and treatment recommendation.
+
+| Risk | Asset Value | Exposure Factor | Annualized Rate of Occurrence | Available Control | Annual Control Cost | Control Reduces ALE to |
+|---|---|---|---|---|---|---|
+| SQL injection attack on cardholder DB | $5,000,000 | 60% | 0.30 | Web Application Firewall | $45,000/yr | $90,000 |
+| Insider data theft by privileged admin | $5,000,000 | 40% | 0.10 | DLP + privileged access monitoring | $60,000/yr | $40,000 |
+| Ransomware encrypting payment servers | $3,500,000 | 75% | 0.25 | Immutable backup + EDR | $55,000/yr | $65,625 |
+| Physical theft of backup tapes | $2,000,000 | 20% | 0.05 | Encrypted offsite storage | $8,000/yr | $4,000 |
+
+**Step 1**: Calculate the current ALE for each risk. Show your work using the full formula chain (AV → EF → SLE → ARO → ALE).
+
+**Step 2**: For each risk, calculate the net annual benefit of implementing the available control (ALE reduction minus annual control cost). Identify which controls are cost-justified and which are not.
+
+**Step 3**: Write a prioritized risk treatment recommendation for the CISO. Rank the four risks by priority for treatment investment and justify your ranking using both the net benefit calculation and any qualitative factors (e.g., regulatory exposure, reputational impact) that the ALE calculation does not capture.
+
+---
+
+### Challenge 2: STRIDE Application to a Payment Portal
+
+PPS is designing a new mobile payment application. The application allows cardholders to link their payment cards, initiate payments at merchant POS terminals, and view transaction history. Apply STRIDE threat modeling to this system.
+
+**Step 1**: Identify the key components and data flows in the mobile payment application (you may draw or describe a data flow diagram with at least five components: mobile app, authentication service, payment processing API, cardholder database, and merchant notification service).
+
+**Step 2**: For each of the six STRIDE categories, identify at least one specific threat to this application. For each threat, specify the component it targets, the attack mechanism, and the CIA property it violates.
+
+**Step 3**: Select the two threats you consider highest priority for the PPS development team to address before launch. Justify your selection by connecting each threat to a specific PCI-DSS requirement that would be violated if the threat were realized.
+
+---
+
+### Reflection Questions
+
+Answer each reflection question in four to six sentences.
+
+1. The ALE formula provides a useful quantification of annual risk exposure, but critics argue it gives a false sense of precision because its inputs (especially ARO and EF) are subjective estimates. Describe how a security manager should communicate the uncertainty in ALE estimates to executive leadership, and what governance safeguard should accompany any ALE-based investment decision.
+
+2. BIA and risk assessment are related but distinct processes. Explain the specific purpose of each and describe a scenario where completing the BIA before the risk assessment produces a better outcome than completing the risk assessment first.

@@ -275,3 +275,104 @@ gsutil rm -r gs://YOUR_PROJECT_ID-lab12-data/
 | Reflection questions answered | 10 |
 | Resources cleaned up | 5 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Authorized View for Cross-Dataset Access Control
+
+Create an authorized view that exposes a filtered subset of the orders table to
+a second dataset without granting direct table access.
+
+1. Create a second dataset to represent the analytics team's workspace:
+
+```bash
+export PROJECT_ID=$(gcloud config get-value project)
+bq mk --dataset ${PROJECT_ID}:lab12_analytics
+```
+
+1. Create an authorized view in `lab12_analytics` that selects only
+   non-sensitive columns from the orders table in your main lab dataset
+   (replace `lab12_dataset` and `orders` with your actual names):
+
+```bash
+bq query --use_legacy_sql=false --destination_table=${PROJECT_ID}:lab12_analytics.orders_view << 'EOF'
+SELECT
+  order_id,
+  order_date,
+  product_name,
+  quantity,
+  region
+FROM
+  `YOUR_PROJECT_ID.lab12_dataset.orders`
+WHERE
+  status != 'cancelled'
+EOF
+```
+
+1. Grant the analytics dataset access to the source dataset by adding the view
+   as an authorized view. In the Cloud Console, navigate to **BigQuery → lab12_dataset
+   → Sharing → Authorize Views** and add `lab12_analytics.orders_view`.
+
+1. Create a test IAM user (or use the analyst's Google account) and grant
+   `roles/bigquery.dataViewer` on `lab12_analytics` only. Verify that querying
+   the view succeeds but querying the source table directly fails.
+
+1. Test the access control:
+
+```bash
+bq query --use_legacy_sql=false \
+  "SELECT COUNT(*) FROM \`${PROJECT_ID}.lab12_analytics.orders_view\`"
+```
+
+### Challenge 2: Partition Filter Enforcement
+
+Enable the partition filter requirement on the main lab's partitioned table and
+observe how BigQuery rejects queries that do not include a partition filter.
+
+1. Update the partitioned table to require a partition filter:
+
+```bash
+bq update \
+  --require_partition_filter=true \
+  ${PROJECT_ID}:lab12_dataset.orders_partitioned
+```
+
+1. Attempt to run a query without a partition filter and observe the error:
+
+```bash
+bq query --use_legacy_sql=false \
+  "SELECT COUNT(*) FROM \`${PROJECT_ID}.lab12_dataset.orders_partitioned\`"
+```
+
+1. Run the same query with a partition filter and confirm it succeeds:
+
+```bash
+bq query --use_legacy_sql=false \
+  "SELECT COUNT(*) FROM \`${PROJECT_ID}.lab12_dataset.orders_partitioned\`
+   WHERE order_date BETWEEN '2024-01-01' AND '2024-03-31'"
+```
+
+1. Use the dry-run flag to compare bytes that would be scanned with and without
+   the partition filter (you can temporarily disable the requirement to test
+   the unfiltered dry-run):
+
+```bash
+bq query --use_legacy_sql=false --dry_run \
+  "SELECT COUNT(*) FROM \`${PROJECT_ID}.lab12_dataset.orders_partitioned\`
+   WHERE order_date BETWEEN '2024-01-01' AND '2024-03-31'"
+```
+
+### Reflection Questions
+
+1. In Challenge 1, you granted the analytics team access to the authorized view
+   dataset rather than the source table dataset. Explain why this two-layer access
+   model is more secure than simply granting `bigquery.dataViewer` on the source
+   dataset, and describe what additional protections an authorized view provides
+   that IAM column-level restrictions alone cannot.
+
+2. In Challenge 2, enabling `require_partition_filter` caused unfiltered queries
+   to fail entirely rather than succeed with high cost. Discuss the tradeoffs of
+   this setting: in what operational context is it appropriate to enforce it, and
+   when would it be counterproductive to a data team's workflow?

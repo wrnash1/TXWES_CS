@@ -307,7 +307,28 @@ Greedy fails — ratio-optimal item A blocks the B+C combination.
 
 ---
 
-## 9. Study Checklist
+## 9. Supplemental Resources
+
+The following free, openly licensed resources reinforce the concepts in this module. All are zero-cost and require no account to access.
+
+1. **VisuAlgo — Greedy Algorithms Visualization** — [https://visualgo.net/en/sorting](https://visualgo.net/en/sorting)
+   VisuAlgo's sorting section includes animated visualizations of greedy sorting strategies. Use the step-through mode to observe how earliest-finish selection works and compare with other orderings.
+
+2. **OpenDSA — Greedy Algorithms Chapter** — [https://opendsa-server.cs.vt.edu/ODSA/Books/Everything/html/Greedy.html](https://opendsa-server.cs.vt.edu/ODSA/Books/Everything/html/Greedy.html)
+   Free interactive OER textbook chapter on greedy algorithms covering activity selection, Huffman coding, and Prim's/Kruskal's MST. Includes embedded exercises and correctness proofs using exchange arguments.
+
+3. **NeetCode — Greedy Algorithms Playlist (YouTube)** — [https://www.youtube.com/playlist?list=PLot-Xpze53leVF-FAN7fo0HmL2S9-Emvo](https://www.youtube.com/playlist?list=PLot-Xpze53leVF-FAN7fo0HmL2S9-Emvo)
+   Free video walkthroughs for Jump Game I & II, Gas Station, and interval scheduling problems. Each video includes the greedy intuition, trace, and submitted LeetCode solution.
+
+4. **MIT OCW 6.006 — Greedy Algorithms (Lecture Notes)** — [https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/](https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/)
+   MIT lecture notes covering greedy algorithm design and exchange argument proofs. Includes worked examples with activity selection, interval graph coloring, and connections to Dijkstra's algorithm (a greedy shortest-path method).
+
+5. **Algorithms Illuminated (Roughgarden) — Part 3 Free Chapters** — [https://www.algorithmsilluminated.org/](https://www.algorithmsilluminated.org/)
+   Tim Roughgarden's free online textbook chapters covering greedy algorithms, scheduling problems, and the exchange argument proof technique. Companion to the Stanford Algorithms MOOC on Coursera (free to audit).
+
+---
+
+## 10. Study Checklist
 
 - [ ] Watch the Module 13 video lecture by Professor Nash.
 - [ ] Implement `activity_selection` and trace the example from the video.

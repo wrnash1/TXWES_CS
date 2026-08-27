@@ -225,3 +225,17 @@ For a typical IoT deployment, the five layers are:
 10. Describe two controls from different defense-in-depth layers that together prevent an attacker who has compromised a single device from accessing cloud backend data.
 
 ---
+
+## 9. Supplemental Resources
+
+**1. OWASP IoT Security Project — IoT Top 10 and Testing Guide**
+[https://owasp.org/www-project-internet-of-things/](https://owasp.org/www-project-internet-of-things/)
+The OWASP IoT Project is the authoritative reference for the IoT Top 10 vulnerability categories covered throughout this module, including detailed descriptions of each category's failure modes, real-world examples, and recommended controls. Sections on #1 (Weak Passwords), #4 (Lack of Secure Update Mechanism), #9 (Insecure Default Settings), and #10 (Lack of Physical Hardening) are directly relevant to the Mirai case study, firmware signing, and defense-in-depth topics in this reading guide.
+
+**2. Mozilla SSL Configuration Generator — TLS Cipher Suite Recommendations**
+[https://ssl-config.mozilla.org/](https://ssl-config.mozilla.org/)
+Mozilla's SSL Configuration Generator provides up-to-date, vetted TLS cipher suite recommendations for server configurations, including MQTT broker deployments. The "Modern" configuration profile lists the forward-secrecy cipher suites (ECDHE-ECDSA, ECDHE-RSA families) and TLS 1.3-only settings referenced in Sections 3 and 5 of this guide. Use this tool to verify that Mosquitto and other broker configurations follow current best practices.
+
+**3. Espressif ESP-IDF Security Guide — Secure Boot V2 and Flash Encryption**
+[https://docs.espressif.com/projects/esp-idf/en/latest/esp32/security/security.html](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/security/security.html)
+Espressif's official security guide for the ESP32 platform covers the full Secure Boot V2 eFuse burning process, flash encryption configuration, and the relationship between these two controls in a hardened production build. This reference directly supports Section 4 of this guide on firmware signing and the ESP32 secure boot implementation, and is essential reading before the lab's firmware signing simulation.

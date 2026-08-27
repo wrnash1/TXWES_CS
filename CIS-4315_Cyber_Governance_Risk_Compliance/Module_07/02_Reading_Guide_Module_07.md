@@ -333,3 +333,19 @@ DLP identifies and prevents unauthorized transmission of sensitive data.
 - [ ] Complete the Module 07 lab (CSF mapping and gap analysis)
 - [ ] Take the Module 07 quiz
 - [ ] Post to the Module 07 discussion forum by Wednesday 11:59 PM
+
+---
+
+## 11. Supplemental Resources
+
+**NIST SP 800-207 — Zero Trust Architecture**
+URL: https://csrc.nist.gov/publications/detail/sp/800-207/final
+Description: Free NIST publication providing the authoritative definition and conceptual framework for Zero Trust Architecture. Covers the seven tenets of ZTA, the logical components of a Zero Trust deployment (Policy Decision Point, Policy Enforcement Point), and deployment models for organizations migrating from perimeter-based architectures. Essential reading for understanding the Zero Trust principles covered in Section 6 of this module.
+
+**CIS Controls v8 — Full Document with Implementation Groups**
+URL: https://www.cisecurity.org/controls/v8
+Description: The Center for Internet Security's free Controls v8 publication provides the complete list of 18 control families and 153 safeguards with Implementation Group assignments. The document includes detailed guidance on why each safeguard matters, how it maps to common attack patterns from the CIS Community Attack Model, and which IG level applies. Directly supports the control framework comparison content in Section 3 of this module.
+
+**NIST CSF 2.0 — Quick Start Guides**
+URL: https://www.nist.gov/cyberframework/getting-started
+Description: NIST's free collection of Quick Start Guides for CSF 2.0, including guides for small businesses, enterprise risk management integration, and supply chain risk management. These practical guides demonstrate how the six CSF functions are applied in real organizational contexts and include worked examples of CSF Current and Target Profiles — directly supporting the CSF Profiles and Tiers content in Section 4 of this module.

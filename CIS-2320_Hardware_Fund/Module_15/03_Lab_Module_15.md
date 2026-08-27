@@ -196,3 +196,33 @@ Scenario C — Management asks whether the office should switch from a single sh
 Compile your complete lab report as a single document with clearly labeled sections for Parts 1, 2, and 3. Include all required screenshots, symptom-matching answers, maintenance documentation, and written scenario responses. Export as PDF and upload to the Module 15 Lab Assignment in Canvas by the posted deadline.
 
 Label all screenshots with a caption. Written answers must be in complete sentences. Symptom-matching answers may use a numbered list format. Late submissions receive a 10-point deduction per day unless an extension has been approved by Professor Nash before the deadline.
+
+---
+
+## Part 9 — Challenge Exercise
+
+These advanced steps are optional and are not included in the standard grading rubric.
+
+### Challenge Step 1 — Laser EP Process Component Mapping
+
+Create a detailed reference document mapping each EP process stage to the specific replaceable component(s) responsible and the print quality symptoms caused by failure of each component:
+
+1. Build a table with columns: EP Stage, Primary Component, Failure Symptom(s), and Typical Replacement Unit. Complete a row for each of the six EP process stages (Cleaning, Charging, Exposing, Developing, Transferring, Fusing). For the drum, note that it is involved in multiple stages and can produce different symptoms depending on which aspect of the drum has failed (OPC coating damage vs. contamination vs. worn cleaning blade).
+1. Research the "drum cycle" concept: calculate how many pages a standard drum cartridge is rated for (look up a specific HP LaserJet or Canon imageCLASS drum cartridge specification), and explain how the drum's circumference determines the repeat interval of drum-related defects on printed pages. Use the formula: repeat interval (mm) = drum circumference = pi x drum diameter. Find the approximate diameter of a common laser printer drum and calculate the expected defect repeat interval in millimeters.
+1. Write 2–3 sentences explaining why a laser printer drum is rated in pages but a fuser assembly is also rated in pages separately, and describe how a technician determines which component has reached end of life when a printer with 80,000 pages on it begins showing print quality defects.
+
+### Challenge Step 2 — 3D Print Quality Troubleshooting Research
+
+Using the Prusa Research knowledge base (help.prusa3d.com) or any available 3D printer troubleshooting resource, research and document the following FDM failure modes:
+
+1. Build a troubleshooting reference table with columns: Failure Mode, Visual Description, Root Cause, and Corrective Action. Include at minimum: warping, stringing/oozing, layer shifting, under-extrusion, over-extrusion, elephant foot (first layer squish), and support structure adhesion failure. For each failure mode, identify whether the primary cause is a slicer setting, a hardware calibration issue, or an environmental factor.
+1. Research first layer calibration: explain why the first layer is the most critical layer in an FDM print, describe the visual difference between a first layer that is too close to the bed (over-squished) vs. too far from the bed (under-adhered), and document the standard z-offset adjustment procedure used on Cartesian-style FDM printers to correct first layer height.
+1. Research filament moisture absorption: explain why PLA, ABS, and PETG filaments must be stored in sealed containers with desiccant, describe the print quality symptoms caused by printing with moisture-absorbed filament (popping sounds, surface bubbles, reduced layer strength), and describe how a technician would dry a spool of moisture-contaminated filament using a standard food dehydrator or oven set to the appropriate filament-specific temperature.
+
+### Challenge Step 3 — Network Printer Configuration and Security
+
+Research best practices for securing a network printer in a corporate environment and document the following:
+
+1. Many network printers ship with default web administration credentials (admin/admin or admin/password). Research what an attacker can do with access to a printer's web administration interface and document at minimum three specific risks (for example: capturing print jobs in plaintext, pivoting to the LAN through the printer's network interface, extracting cached documents from the printer's storage). Then document the security hardening steps a technician should perform when deploying a new network printer: change default credentials, disable unused protocols (FTP, Telnet, raw port 9100 if not needed), enable HTTPS-only administration, and update the printer firmware.
+1. Research IPP (Internet Printing Protocol) and document: what TCP port IPP uses (port 631), how it differs from the older LPD/LPR protocol (port 515), and why IPP over TLS (IPPS) is preferred for corporate environments where print jobs may contain confidential documents. Explain in 2–3 sentences why an organization should require TLS-encrypted printing even on internal LAN networks.
+1. Research printer audit logging: describe what events a corporate network printer should be configured to log (print job source IP, username, time, page count, document name if available), explain how these logs are used in a data loss prevention (DLP) investigation, and identify whether standard SOHO printers include this logging capability or whether enterprise-class printers are required.

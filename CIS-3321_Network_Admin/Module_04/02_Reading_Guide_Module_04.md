@@ -224,4 +224,30 @@ Written as IPv6 groups: 021a:2bff:fe3c:4d5e
 
 ---
 
+## 9. Supplemental Resources
+
+The following free resources extend Module 04 content on IPv6 addressing and transition technologies.
+
+**1. Professor Messer — IPv6 Addressing Free Video Lectures**
+URL: https://www.professormesser.com/network-plus/n10-008/n10-008-video/
+Relevance: Professor Messer covers IPv6 address types, SLAAC, NDP, and transition technologies in dedicated video segments. These are directly aligned with Network+ exam objectives and this module.
+
+**2. RFC 4291 — IPv6 Addressing Architecture**
+URL: https://datatracker.ietf.org/doc/html/rfc4291
+Relevance: The authoritative IETF standard defining all IPv6 address types, notation rules, and the meaning of each address prefix. Sections 2.1–2.5 cover address types tested on the exam. This is the primary reference for IPv6 address classification.
+
+**3. Cisco — IPv6 Addressing and Basic Connectivity Configuration Guide**
+URL: https://www.cisco.com/c/en/us/td/docs/ios-xml/ios/ipv6_basic/configuration/xe-16/ip6b-xe-16-book/ip6-add-basic-conn.html
+Relevance: Cisco's free official documentation covering IPv6 interface configuration, link-local address generation, and SLAAC on IOS devices. Directly applicable to Packet Tracer lab exercises for this module.
+
+**4. ARIN IPv6 Wiki — IPv6 Address Planning**
+URL: https://www.arin.net/resources/guide/ipv6/
+Relevance: The American Registry for Internet Numbers provides free IPv6 educational resources including address planning guides and transition technology overviews. Useful for understanding real-world IPv6 deployment practices.
+
+**5. Hurricane Electric IPv6 Certification and Training**
+URL: https://ipv6.he.net/certification/
+Relevance: Hurricane Electric offers free hands-on IPv6 certification tasks that require configuring and testing real IPv6 connectivity. Completing the first few levels of this free program provides practical IPv6 experience beyond what a simulation can offer.
+
+---
+
 *CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash*

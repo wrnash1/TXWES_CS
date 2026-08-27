@@ -196,3 +196,171 @@ Distractor Analysis:
 - Why D is incorrect: Updating the Product Backlog is an output of the Sprint Review, not the Retrospective.
 
 ---
+
+### Question 11 (5 points)
+
+According to the 2020 Scrum Guide, which of the following best describes the relationship between the Increment and the Definition of Done?
+
+- A) The Increment is the Definition of Done written down in document form
+- B) An Increment must meet the Definition of Done before it can be considered done and included in a Sprint Review
+- C) The Product Owner approves the Increment against the Definition of Done at Sprint Planning
+- D) The Increment replaces the Definition of Done once the team has built enough trust
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Incorrect — The Increment is the working software produced in the Sprint; the Definition of Done is a separate quality standard document.
+  - C) Incorrect — The Definition of Done is assessed by Developers as they complete work, not approved by the Product Owner at Sprint Planning.
+  - D) Incorrect — The Definition of Done is a permanent quality standard; it is never replaced by trust or informal agreement.
+
+---
+
+### Question 12 (5 points)
+
+A Scrum Team's Developers estimate that they can only complete six of the twelve Product Backlog items the Product Owner wants in the next Sprint. What should happen?
+
+- A) The Sprint is extended until all twelve items can be completed
+- B) The Scrum Master assigns the remaining six items to contractors outside the team
+- C) The Developers select only the items they forecast they can complete, and the Product Owner adjusts the Sprint Goal accordingly
+- D) The Product Owner overrides the Developers' estimate and commits to all twelve items
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) Incorrect — Sprint length is fixed and never extended to accommodate more scope.
+  - B) Incorrect — The Scrum Master does not assign work; Developers self-manage, and bringing in outside contractors mid-Sprint is not a Scrum mechanism.
+  - D) Incorrect — The Product Owner does not override Developer forecasts; Developers own the Sprint Backlog and are the authority on how much work they can take on.
+
+---
+
+### Question 13 (5 points)
+
+What does the Scrum Guide mean when it says the Scrum Team is "cross-functional"?
+
+- A) Team members rotate between different Scrum roles each Sprint
+- B) The team collectively has all the skills necessary to create value each Sprint without depending on people outside the team
+- C) Each Developer must be capable of performing every task on the project independently
+- D) The team reports to multiple managers from different functional departments
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Incorrect — Scrum roles (accountabilities) are not rotated; each person has a stable accountability within the Scrum Team.
+  - C) Incorrect — Cross-functional means the team collectively has all needed skills, not that each individual can do everything.
+  - D) Incorrect — Multiple management reporting lines describe a matrix organization structure, not the Scrum definition of cross-functional.
+
+---
+
+### Question 14 (5 points)
+
+Which of the following is the most accurate description of Product Backlog Refinement according to the 2020 Scrum Guide?
+
+- A) A formal Scrum event that occurs at the start of every Sprint with a defined timebox
+- B) An ongoing activity in which Product Backlog items are broken down and further defined; no more than 10% of Developers' capacity
+- C) A one-time activity conducted during Sprint 1 to prepare the initial backlog before development begins
+- D) A Product Owner responsibility performed independently, without Developer involvement
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Incorrect — Product Backlog Refinement is not a formal Scrum event; it is an ongoing activity without a prescribed timebox or mandatory schedule.
+  - C) Incorrect — Refinement is continuous throughout the product lifecycle, not a one-time Sprint 1 activity.
+  - D) Incorrect — While the Product Owner leads refinement, Developers participate because they add size estimates and technical insight.
+
+---
+
+### Question 15 (5 points)
+
+A manager tells the Scrum Master that the Scrum Master should assign daily tasks to each Developer so the manager can track individual output. According to Scrum, what is the correct response?
+
+- A) The Scrum Master should comply, since management hierarchy takes precedence over Scrum
+- B) The Scrum Master should agree to assign tasks but keep the assignments private from the manager
+- C) The Scrum Master should explain that Developers self-manage their work, and offer to help the manager understand how Sprint progress is made transparent through the Sprint Backlog and Burndown
+- D) The Scrum Master should report the manager to HR for violating Agile principles
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) Incorrect — Task assignment by managers undermines Developer self-management, a core Scrum principle; the Scrum Master's accountability includes protecting this.
+  - B) Incorrect — This is deceptive and does not address the underlying misunderstanding; transparency is a Scrum value.
+  - D) Incorrect — Reporting to HR is disproportionate; the Scrum Master serves the organization by coaching, not by filing complaints.
+
+---
+
+### Question 16 (5 points)
+
+The Sprint Retrospective occurs after the Sprint Review and before the next Sprint Planning. What is the significance of this ordering?
+
+- A) It allows the team to include process improvements in the upcoming Sprint Backlog
+- B) It ensures the Scrum Master can brief management before the team discusses problems internally
+- C) It allows the Product Owner to veto improvement actions before they are implemented
+- D) It separates product feedback (Review) from customer requirements (Retrospective)
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - B) Incorrect — The Retrospective is an internal team event; the Scrum Master does not brief management on its contents beforehand.
+  - C) Incorrect — The Product Owner participates in the Retrospective as a Scrum Team member but does not hold veto power over process improvements.
+  - D) Incorrect — The Retrospective is not about customer requirements; it focuses on the team's own process, interactions, and practices.
+
+---
+
+### Question 17 (5 points)
+
+According to the Scrum Guide, which Scrum value is most directly demonstrated when a Developer raises a serious concern about the team's technical approach during the Daily Scrum, even though the Scrum Master and Product Owner are present?
+
+- A) Commitment
+- B) Focus
+- C) Courage
+- D) Respect
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) Incorrect — Commitment refers to dedicating oneself to the team's goals; raising a concern is not specifically about commitment.
+  - B) Incorrect — Focus refers to directing energy toward the Sprint Goal; raising a concern about approach demonstrates a different value.
+  - D) Incorrect — Respect is about treating others as capable individuals; the act of voicing a difficult truth under potential social pressure is courage.
+
+---
+
+### Question 18 (5 points)
+
+What is the correct Scrum Guide answer when a stakeholder insists on attending the Daily Scrum to hear the team's updates directly?
+
+- A) Stakeholders must be refused entry; the Daily Scrum is restricted to Developers only
+- B) The Scrum Master can invite the stakeholder if they agree to remain silent and not participate
+- C) The Daily Scrum is for Developers; stakeholders may observe but must not disrupt or direct the event
+- D) The Product Owner should replace the Daily Scrum with a weekly stakeholder status call instead
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) Incorrect — The Scrum Guide does not say stakeholders are forbidden from observing; it says the Daily Scrum is for Developers (not a joint event with stakeholders).
+  - B) Incorrect — Observers are not restricted to Scrum Master invitations; however, the key point is they observe without disrupting.
+  - D) Incorrect — Replacing the Daily Scrum with a weekly status call defeats the purpose of daily inspection and adaptation.
+
+---
+
+### Question 19 (5 points)
+
+A Scrum Team has been operating for six months and its Definition of Done has not changed since Sprint 1. Is this a problem?
+
+- A) Yes — the Definition of Done must be updated every Sprint during the Retrospective
+- B) Not necessarily — if the original Definition of Done still accurately reflects quality requirements, it does not need to change; but the team should review it as their skills and organizational standards evolve
+- C) Yes — the Scrum Guide requires the Definition of Done to become more restrictive each Sprint
+- D) No — once established, the Definition of Done should never change because it creates stability for stakeholders
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Incorrect — The Scrum Guide does not mandate updating the Definition of Done every Sprint; changes are made when the team identifies a need.
+  - C) Incorrect — The Scrum Guide encourages raising standards over time but does not mandate it every Sprint.
+  - D) Incorrect — The Definition of Done can and should be improved as the team grows; "never change" is too rigid.
+
+---
+
+### Question 20 (5 points)
+
+The Product Goal is described in the Scrum Guide as the commitment for which artifact?
+
+- A) Sprint Backlog
+- B) Increment
+- C) Product Backlog
+- D) Definition of Done
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) Incorrect — The commitment for the Sprint Backlog is the Sprint Goal, not the Product Goal.
+  - B) Incorrect — The commitment for the Increment is the Definition of Done.
+  - D) Incorrect — The Definition of Done is itself a commitment (for the Increment), not a thing that has a commitment associated with it.

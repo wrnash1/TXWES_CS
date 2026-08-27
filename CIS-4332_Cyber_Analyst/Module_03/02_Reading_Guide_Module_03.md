@@ -299,3 +299,19 @@ Exam Tip 8: Scan frequency: continuous is the gold standard. Quarterly is insuff
 - [ ] Complete the Module 03 Lab
 - [ ] Complete the Module 03 Quiz
 - [ ] Post initial response to the Module 03 Discussion board by Wednesday at 11:59 PM
+
+---
+
+## 9. Supplemental Resources
+
+**1. CISA Known Exploited Vulnerabilities Catalog**
+<https://www.cisa.gov/known-exploited-vulnerabilities-catalog>
+The authoritative list of vulnerabilities with confirmed active exploitation, maintained by CISA. Each entry includes CVE ID, affected vendor/product, remediation due date (for federal agencies), and a brief description. Cross-referencing your scan results against this catalog is the single most impactful prioritization step covered in this module.
+
+**2. NIST National Vulnerability Database (NVD)**
+<https://nvd.nist.gov/>
+The U.S. government repository for vulnerability data enriched with CVSS scores, CPE applicability data, and CWE weakness categorizations. Use the NVD's CVE detail pages to practice reading CVSS vector strings and understanding Base, Temporal, and Environmental metric breakdowns for real-world vulnerabilities.
+
+**3. FIRST — CVSS v3.1 Specification and Calculator**
+<https://www.first.org/cvss/calculator/3.1>
+The interactive CVSS v3.1 calculator published by FIRST. Enter vector string values for any of the eight Base metrics and observe how the score changes. Experimenting with the calculator is the fastest way to build intuition for how Attack Vector, Privileges Required, and Scope interact to produce final severity scores.

@@ -196,3 +196,28 @@ Submit the following to Canvas as a single PDF document:
 ## Submission
 
 Upload your completed lab report PDF to the Module 11 Lab assignment in Canvas by the due date shown in the course schedule. Late submissions are subject to the course late policy.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Incident Severity Escalation Triage
+
+At 08:14 AM on a Monday, a Tier 1 analyst receives three alerts simultaneously: (A) successful login to Office 365 admin portal from an IP in Eastern Europe for an account whose last login was from Texas 3 hours ago; (B) 47 failed SSH attempts followed by a successful login to a DMZ web server from the same Eastern European IP; (C) EDR alert on `PAYROLL-SRV-01` for `mimikatz.exe` execution at 07:58 AM.
+
+1. Classify each alert as Low, Medium, High, or Critical and justify your severity rating for each using at least two contributing factors.
+2. Determine whether all three alerts are likely part of the same incident chain or separate incidents. Support your conclusion with specific indicators.
+3. Write a 90-second verbal handoff script for the Tier 1-to-Tier-2 escalation covering all three alerts, in the format: what happened, what evidence exists, what immediate containment you recommend, and what the Tier 2 analyst should investigate first.
+
+### Challenge 2: Post-Incident Action Items
+
+The same incident from Challenge 1 concluded with the following confirmed findings: the attacker used compromised O365 credentials (acquired via phishing 6 days prior) to access email, used an email rule to forward all messages to an external address, pivoted to the DMZ server via exposed SSH, used that access to reach PAYROLL-SRV-01 via a trust relationship, and ran Mimikatz to dump credentials — but did not exfiltrate payroll data. The incident was detected 6 days after initial access (dwell time: 6 days).
+
+1. Write three specific, actionable lessons-learned items. For each, specify: the detection or process gap it addresses, the recommended control or improvement, and which NIST IR phase it improves.
+2. Calculate the blast radius: if Mimikatz successfully dumped all domain credentials from PAYROLL-SRV-01's memory, list every remediation action required in the correct priority order.
+3. Identify which regulatory notification requirement (if any) is triggered by the email forwarding rule alone — even if payroll data was not exfiltrated.
+
+### Reflection Questions
+
+1. The six-day dwell time was only discovered because an EDR alert fired on Day 6. What proactive activity would most likely have reduced the dwell time, and which IR phase governs that capability?
+2. Explain why the NIST IR phases are described as iterative rather than strictly sequential, using a specific example from this incident where returning to a previous phase was necessary.

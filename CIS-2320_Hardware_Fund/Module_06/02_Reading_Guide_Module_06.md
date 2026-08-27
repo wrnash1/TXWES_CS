@@ -177,3 +177,27 @@ Complete the Reading Guide glossary review before beginning the lab.
 - [ ] Watch the power supply and cooling videos in Professor Messer's free A+ Core 1 course
 - [ ] Complete Lab 06 and submit via Canvas before the deadline
 - [ ] Post your Discussion 06 initial response by Wednesday at 11:59 PM
+
+---
+
+## 9. Supplemental Resources
+
+1. **Professor Messer — Power Supplies and Cooling (220-1101 Free Video)**
+   URL: [https://www.professormesser.com/free-a-plus-training/220-1101/220-1101-video/](https://www.professormesser.com/free-a-plus-training/220-1101/220-1101-video/)
+   Relevance: Free video covering PSU connector types, wattage calculation, efficiency ratings, and case airflow — directly aligned to Module 06 lab and quiz objectives.
+
+2. **80 Plus Certified Power Supply List (Free Official Database)**
+   URL: [https://www.plugloadsolutions.com/80PlusPowerSupplies.aspx](https://www.plugloadsolutions.com/80PlusPowerSupplies.aspx)
+   Relevance: The official searchable database of all 80 Plus certified power supplies. Use this to look up real PSU efficiency test results and verify efficiency tier claims when selecting PSUs for the lab challenge exercise.
+
+3. **PCPartPicker — PSU Calculator and Build Tool (Free)**
+   URL: [https://pcpartpicker.com/list/](https://pcpartpicker.com/list/)
+   Relevance: Free online PC build tool with an integrated estimated wattage calculator. Add components to a build list and the tool estimates total system power draw — useful for verifying your manual wattage calculations from the lab.
+
+4. **OuterVision Power Supply Calculator (Free)**
+   URL: [https://outervision.com/power-supply-calculator](https://outervision.com/power-supply-calculator)
+   Relevance: Detailed component-by-component PSU wattage calculator. Allows selection of specific CPU, GPU, RAM, storage, and cooling components to generate an accurate wattage estimate with recommended PSU wattage including headroom.
+
+5. **GamersNexus — PSU Teardown and Review Series (Free Videos)**
+   URL: [https://www.gamersnexus.net/reviews/power-supplies](https://www.gamersnexus.net/reviews/power-supplies)
+   Relevance: In-depth PSU reviews and teardowns from a technically rigorous hardware review site. Useful background for understanding the difference between quality and budget PSU designs, voltage ripple, and protection feature implementation.

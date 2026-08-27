@@ -203,3 +203,203 @@ Distractor Analysis:
 - *Why B is incorrect:* 78 and 120 do not result from the standard formula applied to 12 and 15 team members respectively.
 - *Why C is incorrect:* Communication channels grow combinatorially (quadratically), not proportionally. A 25% increase in team size produces a much larger percentage increase in channels.
 - *Why D is incorrect:* The communication channels formula counts all unique pairings regardless of reporting structure. Reporting hierarchy does not eliminate the need for communication between members.
+
+---
+
+## Question 11
+
+Which of the following scenarios best illustrates the concept of "progressive elaboration" in project planning?
+
+- A) The project manager completes the full project plan on day one and does not revise it.
+- B) The team refines the schedule, cost estimates, and scope detail in increasing depth as the project advances and more information becomes available.
+- C) The sponsor adds new requirements at the end of the project without formal change control.
+- D) The project is executed in a single continuous phase to avoid rework.
+
+**Correct Answer:** B) The team refines the schedule, cost estimates, and scope detail in increasing depth as the project advances and more information becomes available.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* Progressive elaboration is the deliberate, iterative refinement of project plans as knowledge increases. It is an expected, healthy process — not a sign of poor planning.
+- *Why A is incorrect:* Freezing the plan on day one ignores the reality that not everything is knowable at project start; this leads to invalid plans and missed scope.
+- *Why C is incorrect:* Adding requirements without change control is scope creep, not progressive elaboration. Elaboration is controlled and structured.
+- *Why D is incorrect:* Single-phase execution describes a waterfall delivery preference, not the concept of plan refinement.
+
+---
+
+## Question 12
+
+A project manager is computing communication channels for a team of 8 people. Using the formula N(N-1)/2, how many unique communication channels exist?
+
+- A) 16
+- B) 28
+- C) 36
+- D) 56
+
+**Correct Answer:** B) 28
+
+**Distractor Analysis:**
+
+- *Why B is correct:* N(N-1)/2 = 8 × 7 / 2 = 28. This formula is a Project+ exam staple. Each unique pair of team members represents one communication channel.
+- *Why A is incorrect:* 16 = 8 × 2; this might result from multiplying N by 2 rather than using the combination formula.
+- *Why C is incorrect:* 36 = 8 × 9 / 2; this erroneously uses N+1 instead of N-1.
+- *Why D is incorrect:* 56 = 8 × 7; this omits the division by 2, double-counting every pair.
+
+---
+
+## Question 13
+
+Which of the following is an example of an Organizational Process Asset (OPA)?
+
+- A) The local government's IT procurement regulation
+- B) A project charter template from a previous deployment stored in the company's intranet
+- C) The current inflation rate affecting hardware prices
+- D) The organizational culture of the company being serviced
+
+**Correct Answer:** B) A project charter template from a previous deployment stored in the company's intranet.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* OPAs are organizational-owned tools, templates, historical records, and knowledge bases. A reusable charter template stored internally is a classic OPA example.
+- *Why A is incorrect:* Government procurement regulation is an external condition the team cannot control — this is an Enterprise Environmental Factor (EEF).
+- *Why C is incorrect:* Inflation rates are market conditions — an external EEF, not an internal organizational asset.
+- *Why D is incorrect:* Organizational culture is an internal EEF. Although it is within the same organization, culture is not an asset that can be "used" on a project; it influences the project without being owned or controlled by the team.
+
+---
+
+## Question 14
+
+The five PMI Process Groups must always be performed in which order?
+
+- A) Planning → Initiating → Executing → Monitoring and Controlling → Closing
+- B) Initiating → Planning → Executing → Monitoring and Controlling → Closing
+- C) Initiating → Executing → Planning → Monitoring and Controlling → Closing
+- D) Planning → Executing → Initiating → Closing → Monitoring and Controlling
+
+**Correct Answer:** B) Initiating → Planning → Executing → Monitoring and Controlling → Closing
+
+**Distractor Analysis:**
+
+- *Why B is correct:* The Process Groups flow logically: you authorize first (Initiating), then plan, then execute. Monitoring and Controlling overlaps with Executing and continues throughout. Closing comes last.
+- *Why A is incorrect:* Planning before Initiating means planning a project before it has been formally authorized — this violates the PMI sequence.
+- *Why C is incorrect:* Executing before Planning means performing work without a plan — a fundamental project management failure mode.
+- *Why D is incorrect:* This ordering is nonsensical; Closing before Monitoring and Controlling and Initiating in the middle is not supported by any project management framework.
+
+---
+
+## Question 15
+
+Which role on a project team is responsible for providing funding, removing organizational obstacles, and signing the Project Charter?
+
+- A) Project Manager
+- B) Functional Manager
+- C) Project Sponsor
+- D) Subject Matter Expert
+
+**Correct Answer:** C) Project Sponsor
+
+**Distractor Analysis:**
+
+- *Why C is correct:* The project sponsor is the executive champion who funds the project and has the authority to sign the Project Charter. Sponsors also intercede when organizational politics threaten the project.
+- *Why A is incorrect:* The project manager is named in the charter and leads execution, but does not sign the charter and is not the funding authority.
+- *Why B is incorrect:* A functional manager oversees departmental staff and may share resources with the project, but does not authorize or fund it.
+- *Why D is incorrect:* Subject matter experts provide technical knowledge but have no sponsorship authority.
+
+---
+
+## Question 16
+
+A company routinely upgrades its antivirus software every year using the same documented process, tools, and schedule. Which PMI term best classifies this activity?
+
+- A) Program
+- B) Portfolio
+- C) Project
+- D) Operation
+
+**Correct Answer:** D) Operation
+
+**Distractor Analysis:**
+
+- *Why D is correct:* Annual routine upgrades using a repeated process with no defined end date are operational activities. "Routine," "repeated," and "same documented process" are all signals pointing to operations.
+- *Why A is incorrect:* A program is a group of related projects managed in a coordinated way. A single annual routine task is not a program.
+- *Why B is incorrect:* A portfolio is a collection of projects, programs, and operations managed to achieve strategic objectives — not a single routine task.
+- *Why C is incorrect:* A project requires a unique output and a defined end date. An annually recurring upgrade with the same process is not unique.
+
+---
+
+## Question 17
+
+Which of the following best describes the relationship between project lifecycle phases and PMI Process Groups?
+
+- A) They are the same thing — each phase corresponds to exactly one Process Group.
+- B) Lifecycle phases are defined by the project team and describe the work stages; Process Groups are universal PMI categories that can apply within each phase.
+- C) Process Groups are specific to waterfall projects; lifecycle phases apply to agile projects.
+- D) The lifecycle phases must always match the five Process Groups exactly.
+
+**Correct Answer:** B) Lifecycle phases are defined by the project team and describe the work stages; Process Groups are universal PMI categories that can apply within each phase.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* This is the precise PMI distinction. Lifecycle phases (e.g., Design, Build, Test) are tailored to the project. Process Groups (Initiating through Closing) are universal management categories that repeat across phases as needed.
+- *Why A is incorrect:* They are not the same. A single lifecycle phase can involve multiple Process Groups running concurrently (Planning and Executing may overlap in the Build phase).
+- *Why C is incorrect:* Both Process Groups and lifecycle phases apply across all methodologies — waterfall, agile, and hybrid.
+- *Why D is incorrect:* There is no PMI rule requiring phases to match Process Groups. A project could have 3 phases or 8 phases regardless of the 5 Process Groups.
+
+---
+
+## Question 18
+
+A project manager is told to manage the deployment of a new HR system that will integrate with three existing systems, require vendor contracting, and depend on regulatory compliance review. Which PMI Knowledge Areas are MOST directly relevant to these three characteristics?
+
+- A) Integration, Procurement, and Risk Management
+- B) Cost, Schedule, and Quality Management
+- C) Communications, Scope, and Resource Management
+- D) Stakeholder, Risk, and Cost Management
+
+**Correct Answer:** A) Integration, Procurement, and Risk Management
+
+**Distractor Analysis:**
+
+- *Why A is correct:* Integrating with existing systems requires Integration Management coordination. Vendor contracting falls under Procurement Management. Regulatory compliance introduces risks managed by Risk Management.
+- *Why B is incorrect:* Cost, Schedule, and Quality Management are universally relevant but are not specifically indicated by "vendor contracting," "system integration," and "regulatory review."
+- *Why C is incorrect:* While Communications and Resource Management are always relevant, they are not the primary areas triggered by the three described project conditions.
+- *Why D is incorrect:* Risk Management fits, but Stakeholder and Cost Management are not the primary knowledge areas implied by vendor contracting and system integration needs.
+
+---
+
+## Question 19
+
+In the context of the Project+ exam, what does the term "project governance" refer to?
+
+- A) The technical architecture review process for IT systems
+- B) The framework of policies, oversight, and decision-making authority that guides how a project is managed and monitored
+- C) The process of documenting all change requests in the change log
+- D) The legal contracts between the project team and external vendors
+
+**Correct Answer:** B) The framework of policies, oversight, and decision-making authority that guides how a project is managed and monitored.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* Project governance is the oversight structure that defines who makes decisions, how escalations are handled, what policies apply, and how compliance is ensured throughout the project.
+- *Why A is incorrect:* Technical architecture review is a quality or design concern, not a governance framework.
+- *Why C is incorrect:* Maintaining a change log is a change control activity within governance, not governance itself.
+- *Why D is incorrect:* Vendor contracts are part of Procurement Management; they fall within a governance framework but are not the definition of governance.
+
+---
+
+## Question 20
+
+Which of the following best explains why "quality" is often depicted at the CENTER of the Triple Constraint triangle?
+
+- A) Quality is the only constraint the project manager directly controls.
+- B) Quality is the result or outcome produced by the balance of scope, time, and cost — changes to any of the three outer constraints affect the quality of the final deliverable.
+- C) Quality must be approved by the project sponsor before the other constraints are set.
+- D) Quality is the most expensive constraint to manage and therefore requires central attention.
+
+**Correct Answer:** B) Quality is the result or outcome produced by the balance of scope, time, and cost — changes to any of the three outer constraints affect the quality of the final deliverable.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* The Triple Constraint triangle positions quality at the center because it is the emergent outcome of how the three constraints are balanced. Cut the budget, compress the schedule, or reduce scope — and quality is the first thing to suffer.
+- *Why A is incorrect:* The PM directly influences all four elements; quality is not uniquely the PM's alone.
+- *Why C is incorrect:* While sponsor approval is often required for quality targets, the reason quality is centered is about interdependency with the other constraints, not approval sequence.
+- *Why D is incorrect:* Cost is not the defining reason for quality's central position in the model; the dependency relationship is.

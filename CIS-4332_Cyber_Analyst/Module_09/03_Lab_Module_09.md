@@ -199,3 +199,28 @@ In 5-6 sentences, identify at least three specific improvements that should resu
 ## Academic Integrity Notice
 
 All scenario data in this lab is fabricated for educational purposes. CVE-2024-38200 is referenced here for educational context only. All work must be your own. Reference professormesser.com and comptia.org for additional study context.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Ransomware Containment Decision Tree
+
+A ransomware incident has been declared at 14:22 UTC. Affected systems identified so far: `FS-FINANCE-01` (file server, 500 GB encrypted), `WS-HR-44` (workstation, initial infection vector), `WS-ACCT-12` (workstation, evidence of lateral movement, not yet encrypted), and `BACKUP-SRV-01` (backup server, encryption has not started but the attacker has authenticated to it using a domain admin account 18 minutes ago).
+
+1. For each of the four systems, specify the containment action (EDR network isolate, firewall block, VLAN isolation, shutdown, no action pending investigation) and justify your choice, considering operational impact.
+2. The attacker has valid domain admin credentials. List all the credential management actions the IR team must take in the first 60 minutes, in priority order.
+3. Write a 5-bullet short-term containment status update suitable for communicating to the CISO at 15:00 UTC — 38 minutes into the response.
+
+### Challenge 2: Eradication Completeness Review
+
+After 6 hours of investigation, the IR team's eradication checklist shows: (1) malware binary deleted from WS-HR-44; (2) C2 IP 185.220.101.44 blocked at perimeter; (3) compromised admin account `svc_backup` password reset; (4) registry Run key `HKCU\...\Run\WindowsHelper` removed from WS-HR-44.
+
+1. Identify at least three additional eradication steps that appear to be missing from this checklist, given what you know about typical ransomware attacker behavior and the fact that lateral movement reached WS-ACCT-12 and BACKUP-SRV-01.
+2. Explain why the backup server (BACKUP-SRV-01) represents the highest-risk eradication gap and what specific steps are required to safely verify and restore backup integrity.
+3. Write the recovery sequence (ordered list of systems) for restoring business operations, with justification for why each system is positioned where it is.
+
+### Reflection Questions
+
+1. The IR team completed eradication and declared the incident resolved. Three days later, the same ransomware re-infected two servers. Based on what you learned in Sections 3 and 4, identify two most likely causes of re-infection and explain which eradication step failure each cause represents.
+2. Describe how a well-constructed post-incident lessons-learned report directly reduces MTTD and MTTR for future similar incidents. Be specific about which sections of the report feed back into which IR preparation activities.

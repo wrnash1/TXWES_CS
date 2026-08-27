@@ -122,6 +122,33 @@ Submit to the Canvas assignment portal by the module due date.
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Use Case to Automated Test Specification
+
+The use case you wrote in Part 2 describes behavior in structured natural language. Convert it into a test specification that a QA engineer could execute:
+
+1. For the main success scenario: write one end-to-end test case with preconditions, test steps, and expected result for each step, and a pass/fail criterion.
+2. For each alternative flow you documented: write one test case that exercises that path, including the specific condition that triggers it and the expected system response.
+3. For the exception flow: write one negative test case that verifies the system handles the error condition gracefully (error message shown, no data corrupted, system remains usable).
+4. Identify any acceptance criteria from your Part 3 user stories that are not covered by these test cases and write one additional test case to fill each gap.
+
+### Challenge 2: Requirements Triage Under Uncertainty
+
+The CampusAlert product team has just received a revised list of 30 requirements from the university IT committee. The Product Owner has 2 hours before Sprint 1 Planning and cannot refine all 30 items. Apply a structured triage approach:
+
+1. Categorize the 8 requirements you identified in Part 1 into three tiers: Tier 1 (must be in the first 2 Sprints — user safety depends on it), Tier 2 (important within first 6 months), Tier 3 (nice-to-have, can wait). Justify each tier assignment in one sentence.
+2. For Tier 1 requirements only: verify each one passes the INVEST criteria (specifically: Estimable and Testable) and flag any that need refinement before Sprint 1 Planning.
+3. Write a two-paragraph recommendation to the Product Owner explaining which Tier 1 items should become Sprint 1 backlog items and why — considering dependencies, risk, and the university's primary use case (emergency notification delivery).
+4. Identify one architectural decision the team will need to make in Sprint 1 that is implied by the NFRs (hint: 60-second delivery, 99.9% uptime, encryption) and describe how it affects Sprint 1 capacity planning.
+
+### Reflection Questions
+
+1. The Agile Manifesto values "working software over comprehensive documentation" — but in healthcare and aviation, comprehensive requirements documentation is legally required. How do high-performing Agile teams in regulated industries reconcile these two imperatives without abandoning either?
+2. Requirements elicitation assumes that stakeholders know what they want. Research and describe one common cognitive bias (e.g., anchoring, availability bias, scope illusion) that causes stakeholders to provide inaccurate or incomplete requirements during elicitation interviews. Describe a specific technique a requirements analyst or Product Owner can use to counteract it.
+
+---
+
 ## Rubric Summary
 
 | Component | Points |

@@ -267,4 +267,24 @@ To avoid ongoing charges, delete the following resources after completing the la
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Dead-Letter Queue Redrive and Poison Message Analysis
+Practice identifying and recovering failed messages using DLQ redrive policies and the SQS console redrive feature.
+1. Create a standard SQS queue named `challenge-processing` with a visibility timeout of 30 seconds and a maximum receive count of 2: `aws sqs create-queue --queue-name challenge-processing --attributes VisibilityTimeout=30,RedrivePolicy='{"deadLetterTargetArn":"<dlq-arn>","maxReceiveCount":"2"}'`. First create the DLQ: `aws sqs create-queue --queue-name challenge-dlq`.
+2. Send three messages to `challenge-processing`: `aws sqs send-message --queue-url <url> --message-body "message-1"` (repeat for message-2 and message-3). Then receive and intentionally NOT delete two of the messages (let the visibility timeout expire twice) to simulate processing failures. After the second receive, verify both failed messages appear in the DLQ: `aws sqs get-queue-attributes --queue-url <dlq-url> --attribute-names ApproximateNumberOfMessages`.
+3. Use the SQS console Redrive feature (or CLI: `aws sqs start-message-move-task --source-arn <dlq-arn> --destination-arn <source-queue-arn>`) to move the failed messages back to `challenge-processing` for reprocessing. Document the message move task ID and status.
+4. Describe when you would NOT want to automatically redrive DLQ messages — identify at least two failure scenarios where redriving without investigation would cause repeated failures or data corruption.
+
+### Challenge 2: SNS Message Filtering with Attribute-Based Routing
+Configure SNS subscription filter policies to route messages to different SQS queues based on message attributes, simulating environment-specific or priority-based routing.
+1. Create an SNS topic `challenge-events` and two SQS queues: `high-priority-queue` and `standard-queue`. Subscribe both queues to the SNS topic.
+2. Apply a subscription filter policy to `high-priority-queue` that matches only messages where the `priority` attribute equals `HIGH`: `aws sns set-subscription-attributes --subscription-arn <arn> --attribute-name FilterPolicy --attribute-value '{"priority": ["HIGH"]}'`. Leave `standard-queue` with no filter policy (receives all messages).
+3. Publish two test messages — one with `--message-attributes '{"priority":{"DataType":"String","StringValue":"HIGH"}}'` and one with `"StringValue":"NORMAL"`. Verify that `high-priority-queue` received only the HIGH message and `standard-queue` received both.
+4. Research and document the difference between SNS subscription filter policies and EventBridge event patterns. In what scenario would you choose EventBridge rule filtering over SNS filter policies, even when both could technically route the same event?
+
+### Reflection Questions
+1. After completing Challenge 1, explain the relationship between the SQS visibility timeout, the maxReceiveCount redrive policy parameter, and message delivery guarantees. What happens to a message that reaches maxReceiveCount but has no DLQ configured — and what does this tell you about the importance of always configuring a DLQ in production?
+2. Based on Challenge 2, how does SNS message filtering shift the routing responsibility from consumers to the messaging layer itself? Connect this to the AWS Well-Architected Framework's Operational Excellence pillar principle of "making frequent, small, reversible changes" — how does attribute-based routing make it easier to add new message consumers without modifying existing ones?
+
 *Proprietary and Confidential. Not for disclosure outside of Texas Wesleyan University.*

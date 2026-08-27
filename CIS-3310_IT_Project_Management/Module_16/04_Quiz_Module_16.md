@@ -226,3 +226,209 @@ correctly maps all three strategies.
 *End of Quiz — Module 16*
 
 *Texas Wesleyan University — CIS-3310 IT Project Management*
+
+---
+
+## Questions 11–20
+
+**Instructions:** Each question is worth 5 points. Total for this section: 50 points. Select the best answer for each question.
+
+---
+
+## Question 11
+
+A project manager discovers that a key vendor has missed three consecutive milestone deliveries. The vendor claims the delays are due to resource constraints outside their control. The contract is a Firm Fixed Price contract. What is the PM's most appropriate first action?
+
+- A) Immediately terminate the contract for cause and begin sourcing a replacement vendor
+- B) Issue a formal written cure notice identifying the breaches and requiring a corrective action plan within a defined period
+- C) Escalate to the project sponsor and request additional budget to cover transition costs
+- D) Accept the delays and adjust the project schedule baseline through the change control process
+
+**Correct Answer:** B) Issue a formal written cure notice identifying the breaches and requiring a corrective action plan within a defined period
+
+**Distractor Analysis:**
+
+- A) is incorrect — termination is a last resort after formal notification and failure to cure. Jumping directly to termination without a cure notice exposes the buyer to legal risk and wastes the existing vendor relationship.
+- B) is correct — a cure notice is the formal contractual mechanism that identifies the breach, specifies required corrective actions, and sets a deadline. It creates the documented record needed for any subsequent enforcement action.
+- C) is incorrect — escalating for additional budget is premature and addresses the wrong problem. Under an FFP contract, cost risk belongs to the seller; the PM's priority is contract enforcement, not budget adjustment.
+- D) is incorrect — accepting vendor delays and re-baselining the schedule without contractual action rewards non-performance, compromises the PM's leverage, and sets a damaging precedent.
+
+---
+
+## Question 12
+
+At project closure, the project manager realizes that the final lessons learned report has not been written and the team has already been reassigned to other projects. What is the most significant consequence of skipping this document?
+
+- A) The project sponsor will withhold final payment until the document is submitted
+- B) The PM will receive a performance penalty on their annual review
+- C) Future projects will lose access to organizational process assets that could have improved their planning and execution
+- D) The project cannot be formally closed without the lessons learned document signed by the CCB
+
+**Correct Answer:** C) Future projects will lose access to organizational process assets that could have improved their planning and execution
+
+**Distractor Analysis:**
+
+- A) is incorrect — payment terms are governed by the contract, not by lessons learned documentation. No standard contract ties final payment to internal PM artifacts.
+- B) is incorrect — while performance consequences are possible organizationally, this is not the primary significance from a project management framework perspective.
+- C) is correct — lessons learned are stored as organizational process assets (OPAs) and serve as reference inputs for future projects. Skipping them degrades the organization's institutional knowledge base.
+- D) is incorrect — while lessons learned are a closing deliverable, the CCB does not typically sign off on them; the formal closure is documented through administrative closure procedures, not CCB approval.
+
+---
+
+## Question 13
+
+A project manager is conducting the Monitor and Control Project Work process. She notices that the project's cost performance index has dropped from 1.05 to 0.88 over the past three reporting periods. What is the most appropriate immediate action?
+
+- A) Update the project schedule to reflect the new cost trajectory
+- B) Submit a change request to increase the budget by the variance amount
+- C) Investigate the root cause of the CPI decline before taking corrective action
+- D) Report the variance to the sponsor and wait for direction before acting
+
+**Correct Answer:** C) Investigate the root cause of the CPI decline before taking corrective action
+
+**Distractor Analysis:**
+
+- A) is incorrect — the schedule and cost are separate baselines. A declining CPI is a cost issue, not a schedule issue, and updating the schedule does not address cost overruns.
+- B) is incorrect — submitting a budget increase request before understanding why costs are rising may perpetuate the root cause. Root cause analysis must precede corrective action recommendations.
+- C) is correct — the PM must identify why the CPI is declining (scope creep, estimating errors, resource inefficiency, etc.) before determining the appropriate corrective action. Acting without diagnosis wastes resources.
+- D) is incorrect — waiting for the sponsor's direction before investigating is passive management. The PM is responsible for identifying variances, analyzing causes, and recommending corrective actions as part of the monitoring process.
+
+---
+
+## Question 14
+
+Which of the following best describes the purpose of a Work Breakdown Structure Dictionary?
+
+- A) A narrative description of each project phase and its associated process group
+- B) A document that defines the scope, deliverables, acceptance criteria, assigned resources, and cost estimates for each work package
+- C) A glossary of project management terminology used on the project
+- D) A list of all project stakeholders with their roles and communication preferences
+
+**Correct Answer:** B) A document that defines the scope, deliverables, acceptance criteria, assigned resources, and cost estimates for each work package
+
+**Distractor Analysis:**
+
+- A) is incorrect — the WBS Dictionary documents work packages, not project phases or process groups. Phase descriptions belong in the project management plan.
+- B) is correct — the WBS Dictionary is the companion reference to the WBS that provides detailed information for each work package, including scope description, deliverables, acceptance criteria, responsible party, estimated cost, and schedule data.
+- C) is incorrect — a terminology glossary is a separate document sometimes included in the project management plan. It is not the WBS Dictionary.
+- D) is incorrect — stakeholder roles and communication preferences are documented in the stakeholder register and communications management plan, not the WBS Dictionary.
+
+---
+
+## Question 15
+
+A project team member asks the project manager whether it is acceptable to add a small but useful feature to the software deliverable that was not in the approved scope, since it would only take a few hours. The PM knows this addition was not requested by the customer. What should the PM do?
+
+- A) Allow it because the customer will likely appreciate the extra functionality
+- B) Deny it because the team member does not have authority to make scope decisions
+- C) Submit a change request through the Integrated Change Control process before any work begins
+- D) Allow it on condition that the team member completes it during off-hours to avoid schedule impact
+
+**Correct Answer:** C) Submit a change request through the Integrated Change Control process before any work begins
+
+**Distractor Analysis:**
+
+- A) is incorrect — adding unrequested features is gold plating, which violates scope management principles. It consumes resources, may introduce defects, and bypasses change control.
+- B) is incorrect — while the team member lacks authority to approve scope changes, simply denying without offering the proper path forward is incomplete. The correct response is to direct the request through change control.
+- C) is correct — all scope additions, regardless of size, must go through the ICC process. This ensures impact is assessed, the CCB approves, and the change is documented. The size or intent of the addition does not exempt it from the process.
+- D) is incorrect — this option still permits unauthorized scope work. Whether it occurs during or after hours is irrelevant; the scope baseline has not been officially changed.
+
+---
+
+## Question 16
+
+A project manager is planning a project with highly uncertain scope and is told that stakeholder requirements will evolve significantly during development. The project has a one-year timeline and a cross-functional team experienced in iterative delivery. Which lifecycle is most appropriate?
+
+- A) Predictive — because a one-year timeline requires detailed upfront planning
+- B) Agile — because scope uncertainty and experienced iterative teams favor adaptive approaches
+- C) Incremental — because deliverables should be produced in phases with fixed requirements per phase
+- D) Waterfall — because the cross-functional team needs the structure of sequential phases
+
+**Correct Answer:** B) Agile — because scope uncertainty and experienced iterative teams favor adaptive approaches
+
+**Distractor Analysis:**
+
+- A) is incorrect — timeline length does not determine lifecycle. A one-year Agile project is common and well-suited to evolving requirements. Timeline is a constraint, not a lifecycle driver.
+- B) is correct — scope uncertainty, expected requirements evolution, and an experienced iterative team are the definitive indicators for an adaptive (Agile) approach. PMI's Agile Practice Guide and the Project+ exam both support this selection.
+- C) is incorrect — an incremental lifecycle delivers in phases but typically with fixed requirements per phase. It does not accommodate continuous scope evolution as well as a fully adaptive approach.
+- D) is incorrect — team structure (cross-functional) is a characteristic of both waterfall and Agile teams. Cross-functional composition does not favor waterfall; in fact, it is a hallmark of Agile teams.
+
+---
+
+## Question 17
+
+A project manager is asked by the project sponsor to provide a single number that represents the most likely total cost at completion given current performance. The project has BAC = $600,000, EV = $240,000, AC = $290,000, and PV = $300,000. Which value correctly represents the EAC assuming current performance continues?
+
+- A) $724,138
+- B) $650,000
+- C) $600,000
+- D) $560,000
+
+**Correct Answer:** A) $724,138
+
+**Distractor Analysis:**
+
+- A) is correct — CPI = EV / AC = 240,000 / 290,000 = 0.8276. EAC = BAC / CPI = 600,000 / 0.8276 ≈ $724,138. This formula assumes past cost performance will continue for the remainder of the project.
+- B) is incorrect — $650,000 does not result from any standard EAC formula using the given values. It may represent a rough estimate without calculation.
+- C) is incorrect — $600,000 is the BAC (original budget). It would only equal EAC if CPI = 1.0, meaning no cost variance. CPI here is 0.83, confirming an overrun trajectory.
+- D) is incorrect — $560,000 is below the BAC, which would indicate cost underrun. With CPI < 1.0, the project is over budget and EAC must exceed BAC.
+
+---
+
+## Question 18
+
+During the Closing process group, the project manager learns that a subcontractor performed additional work outside the original contract scope and has submitted an invoice for that work. The subcontractor claims verbal authorization was given by a senior engineer on the project team. What is the correct response?
+
+- A) Pay the invoice because the senior engineer has implied authority as a project team member
+- B) Refuse payment and terminate the relationship with the subcontractor
+- C) Refer the claim to the contract terms — verbal authorization is not valid unless confirmed in writing per the contract
+- D) Escalate to the sponsor and let them decide whether to pay the invoice
+
+**Correct Answer:** C) Refer the claim to the contract terms — verbal authorization is not valid unless confirmed in writing per the contract
+
+**Distractor Analysis:**
+
+- A) is incorrect — implied authority from a team member does not constitute a valid contract modification. Only authorized contract changes in writing are enforceable under standard contract terms.
+- B) is incorrect — refusing payment and terminating are premature without first evaluating the claim against contract terms. The subcontractor may have a legitimate dispute that requires formal resolution.
+- C) is correct — standard contract terms require written authorization for scope changes. Verbal instructions from a team member who is not the authorized contracting officer do not constitute a valid change order. The PM refers to the contract and may escalate for formal dispute resolution if needed.
+- D) is incorrect — while sponsor involvement may eventually be appropriate, the PM's first step is to evaluate the claim against the contract, not defer responsibility.
+
+---
+
+## Question 19
+
+A project manager is closing a 14-month IT infrastructure project. She needs to ensure all project records are properly archived. Which of the following is not typically included in project archives?
+
+- A) Final project schedule with actual completion dates
+- B) Approved change requests and change log
+- C) Personal performance appraisals of individual team members
+- D) Lessons learned register
+
+**Correct Answer:** C) Personal performance appraisals of individual team members
+
+**Distractor Analysis:**
+
+- A) is incorrect as an answer to "not included" — the final schedule with actuals is a standard project archive document used for historical reference in future similar projects.
+- B) is incorrect as an answer to "not included" — the change log and approved change requests are core project records that document all scope, schedule, and cost modifications.
+- C) is correct — personal performance appraisals are confidential HR documents managed by human resources, not project archives. They are not part of the project records or organizational process assets repository.
+- D) is incorrect as an answer to "not included" — the lessons learned register is a primary closing deliverable and a key organizational process asset that must be archived.
+
+---
+
+## Question 20
+
+A project manager is asked to advise a colleague who is beginning a new project in an organization with no previous projects of this type. There are no historical cost records, no similar completed projects, and requirements are not yet fully defined. Which estimating technique is most appropriate for initial budget development?
+
+- A) Bottom-up estimating — because it produces the most accurate result
+- B) Parametric estimating — because it uses mathematical models based on historical data
+- C) Analogous estimating — because it uses expert judgment based on a similar past project
+- D) Three-point estimating using PERT — because it accounts for uncertainty in the estimates
+
+**Correct Answer:** D) Three-point estimating using PERT — because it accounts for uncertainty in the estimates
+
+**Distractor Analysis:**
+
+- A) is incorrect — bottom-up estimating requires detailed, decomposed requirements to be most accurate. With undefined requirements, bottom-up cannot be applied meaningfully and would produce false precision.
+- B) is incorrect — parametric estimating requires historical data and mathematical models. The scenario explicitly states there are no historical cost records, ruling out parametric approaches.
+- C) is incorrect — analogous estimating requires a similar past project to reference. The scenario states there are no previous projects of this type, eliminating analogous estimating.
+- D) is correct — when requirements are uncertain and no historical data exists, three-point PERT estimating (optimistic, most likely, pessimistic) explicitly incorporates uncertainty into the estimate and is the most defensible approach given the constraints described.

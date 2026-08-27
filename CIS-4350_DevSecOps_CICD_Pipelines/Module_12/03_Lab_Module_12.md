@@ -355,3 +355,47 @@ Submit: the Checkov local output tables from Steps 1 and 2, the complete `k8s-sc
 ## Submission Instructions
 
 Combine all four parts into a single document. Label each part clearly. Include your name, date, course number (CIS-4350), and module number (12) at the top. Submit via the Canvas LMS assignment portal before the due date shown in Canvas.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: kube-bench CIS Benchmark Assessment
+
+Run kube-bench against a local Kubernetes cluster and triage the findings.
+
+1. Start a local cluster with `kind` or `minikube` and run kube-bench as a pod:
+
+```bash
+kubectl apply -f https://raw.githubusercontent.com/aquasecurity/kube-bench/main/job.yaml
+kubectl wait --for=condition=complete job/kube-bench --timeout=120s
+kubectl logs job/kube-bench
+```
+
+1. Record the FAIL and WARN counts by section (1 = Control Plane, 4 = Worker Nodes, 5 = Policies).
+2. Select three FAIL findings. For each, record: the check ID, the description, the remediation command or configuration change, and whether it is remediable in a managed cluster (EKS/GKE/AKS) where control plane nodes are not accessible.
+3. Write a one-paragraph explanation of why certain kube-bench FAIL findings cannot be remediated by a cluster operator in a managed Kubernetes service, and what the cloud provider's shared responsibility model implies for those findings.
+
+### Challenge 2: OPA Gatekeeper ConstraintTemplate for Privileged Container Prevention
+
+Write and deploy an OPA Gatekeeper policy that prevents privileged containers from being created.
+
+1. Install OPA Gatekeeper into your local cluster:
+
+```bash
+kubectl apply -f https://raw.githubusercontent.com/open-policy-agent/gatekeeper/release-3.14/deploy/gatekeeper.yaml
+```
+
+1. Create a `ConstraintTemplate` named `K8sNoPrivilegedContainers` with a Rego policy body that checks `input.review.object.spec.containers[_].securityContext.privileged == true` and emits a violation message.
+2. Create a `K8sNoPrivilegedContainers` Constraint resource that applies the template cluster-wide.
+3. Attempt to create a pod with `securityContext.privileged: true` and verify it is rejected. Record the admission error message.
+4. Create the same pod without the privileged setting and verify it is admitted. Record both outputs.
+
+### Reflection Questions
+
+1. You have applied a default-deny NetworkPolicy to all namespaces in your cluster. A developer reports that DNS resolution is broken for pods in the `app` namespace. Explain why default-deny NetworkPolicy breaks DNS, what specific NetworkPolicy rule is needed to restore DNS functionality, and on which port and protocol DNS traffic should be permitted.
+2. A security audit finds that your cluster has three service accounts bound to `cluster-admin`: `ci-deploy`, `monitoring`, and `legacy-app`. Each was created at different times for different reasons. Describe the process you would follow to remediate each one using least-privilege RBAC, including how you would discover what permissions each account actually needs before writing replacement Role/ClusterRole manifests.
+
+---
+
+Lab 12 | CIS-4350 | Texas Wesleyan University | Professor Nash

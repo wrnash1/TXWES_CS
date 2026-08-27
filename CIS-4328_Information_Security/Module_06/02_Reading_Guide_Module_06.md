@@ -247,6 +247,22 @@ The following SY0-701 exam objectives are covered in this module:
 
 ---
 
+## 9. Supplemental Resources
+
+**1. NIST SP 800-63B — Digital Identity Guidelines: Authentication and Lifecycle Management**
+<https://pages.nist.gov/800-63-3/sp800-63b.html>
+NIST's authoritative guidance on authenticator assurance levels (AAL1/AAL2/AAL3), phishing-resistant MFA requirements, and password policy recommendations. Directly supports Module 06 coverage of MFA factor types, FIDO2 requirements, and the deprecation of SMS OTP for high-assurance use cases.
+
+**2. CISA Zero Trust Maturity Model**
+<https://www.cisa.gov/zero-trust-maturity-model>
+CISA's five-pillar Zero Trust framework covering Identity, Devices, Networks, Applications, and Data. The Identity pillar directly maps to Module 06 content on continuous verification, least privilege enforcement, and PAM controls. Use this to understand how IAM principles connect to the broader Zero Trust architecture covered in Module 07.
+
+**3. OWASP JSON Web Token (JWT) Security Cheat Sheet**
+<https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.html>
+A practical reference for secure JWT implementation covering algorithm confusion attacks (RS256 vs HS256), token expiration enforcement, signature validation, and claim validation. Directly supports the Module 06 lab JWT analysis tasks and reinforces the connection between OAuth 2.0/OIDC token handling and secure IAM implementation.
+
+---
+
 ## Review Checklist
 
 Before taking the Module 06 quiz, verify you can do each of the following without notes:

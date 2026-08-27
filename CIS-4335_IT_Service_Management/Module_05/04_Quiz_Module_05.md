@@ -160,3 +160,153 @@ An organization's IT team realizes that its deployment process for software upda
 Correct answer: A
 
 Distractor analysis: A is correct because automating the environment configuration check is an Obtain/Build activity (ensuring service components are available and meet specifications) that directly applies the Optimize and Automate Guiding Principle (automating a repetitive, rule-based task to free human attention). B is incorrect because Deliver and Support is operational service delivery, not deployment pipeline optimization; and Keep It Simple and Practical is about reducing complexity, not specifically automation. C is incorrect because Design and Transition is about service design and pre-go-live testing, not deployment pipeline automation. D is incorrect because while Improve is involved in identifying the problem, and Start Where You Are informs the approach, the actual work of implementing the automation is Obtain/Build activity guided by Optimize and Automate.
+
+---
+
+## Question 11 (5 points)
+
+A company's IT team is designing a new employee self-service portal for HR requests. The team creates wireframes, defines the data model, documents integration points with the HR system, and establishes acceptance criteria. Which SVC activity is primarily being performed?
+
+* A) Obtain/Build
+* B) Engage
+* C) Design and Transition
+* D) Plan
+
+Correct answer: C
+
+Distractor analysis: C is correct because creating wireframes, defining data models, documenting integrations, and establishing acceptance criteria are all activities within Design and Transition — designing a service so it meets stakeholder requirements before it is built or deployed. A is incorrect because Obtain/Build involves acquiring or constructing components based on completed designs, not performing the design work itself. B is incorrect because Engage captures requirements and manages stakeholder relationships; the design documentation described is produced within Design and Transition. D is incorrect because Plan produces strategic direction and portfolio oversight, not service-level design documentation.
+
+---
+
+## Question 12 (5 points)
+
+Which of the following inputs does the Engage activity receive from external stakeholders that is then used by other SVC activities?
+
+* A) Improvement initiatives and performance baselines
+* B) Service demand, requirements, and feedback from customers and users
+* C) Configuration items and software components from vendors
+* D) Governance policies and compliance mandates from the board
+
+Correct answer: B
+
+Distractor analysis: B is correct because the Engage activity is the primary point through which external demand, service requirements, and consumer feedback enter the SVC and become inputs for Design and Transition, Obtain/Build, and Improve. A is incorrect because improvement initiatives and baselines originate from the Improve and Deliver and Support activities, not from Engage's external inputs. C is incorrect because configuration items and software components are inputs to Obtain/Build, typically sourced through supplier relationships managed in Partners and Suppliers, not directly via Engage. D is incorrect because governance policies flow from the Governance SVS component, not from external stakeholders through Engage.
+
+---
+
+## Question 13 (5 points)
+
+An organization maps the value stream for handling a major incident. The steps include: detecting the incident through monitoring, logging the ticket, notifying stakeholders, resolving the incident, and conducting a post-incident review. Which SVC activity handles the stakeholder notification step?
+
+* A) Plan
+* B) Improve
+* C) Engage
+* D) Obtain/Build
+
+Correct answer: C
+
+Distractor analysis: C is correct because notifying stakeholders about a service disruption — keeping customers and users informed about status and expected resolution — is a core Engage activity that maintains stakeholder relationships during service events. A is incorrect because Plan is a strategic direction-setting activity, not a real-time communication function. B is incorrect because Improve processes post-incident improvement data, not real-time stakeholder notifications. D is incorrect because Obtain/Build is about acquiring or building service components, not managing communications.
+
+---
+
+## Question 14 (5 points)
+
+The Deliver and Support activity is responsible for which of the following?
+
+* A) Designing new services to meet agreed requirements
+* B) Ensuring service components are acquired and meet specifications
+* C) Providing services and support according to agreed specifications during live operations
+* D) Establishing a shared organizational vision and improvement direction
+
+Correct answer: C
+
+Distractor analysis: C is correct because Deliver and Support is explicitly defined as the activity that ensures services are delivered to spec and supported — covering live incident resolution, service request fulfillment, and operational performance monitoring. A is incorrect because designing services to meet requirements is Design and Transition. B is incorrect because ensuring service components are acquired and meet specifications is Obtain/Build. D is incorrect because establishing shared organizational vision and improvement direction is the Plan activity.
+
+---
+
+## Question 15 (5 points)
+
+A value stream for onboarding a new SaaS application includes the following steps: capturing business requirements from the stakeholders, evaluating and selecting the vendor, configuring the application to organizational standards, testing with end users, deploying to production, and monitoring post-deployment performance. Which of the following correctly maps the first and last steps to their SVC activities?
+
+* A) First: Plan — Last: Improve
+* B) First: Engage — Last: Deliver and Support
+* C) First: Obtain/Build — Last: Improve
+* D) First: Design and Transition — Last: Deliver and Support
+
+Correct answer: B
+
+Distractor analysis: B is correct because capturing requirements from stakeholders is the Engage activity (understanding demand and requirements), and monitoring post-deployment performance is Deliver and Support (operational service delivery and monitoring). A is incorrect because the first step is stakeholder requirement capture, which is Engage, not Plan; Plan covers strategic direction and portfolio decisions. C is incorrect because Obtain/Build covers vendor evaluation and component configuration but not the initial requirement capture. D is incorrect because Design and Transition is not the first step — requirements must be captured before design can begin.
+
+---
+
+## Question 16 (5 points)
+
+An IT operations manager proposes a weekly metrics review meeting where the team examines incident trends, change success rates, and service desk backlog. The output of the meeting feeds directly into improvement planning. This meeting is an example of which SVC activity in action?
+
+* A) Plan
+* B) Engage
+* C) Design and Transition
+* D) Improve
+
+Correct answer: D
+
+Distractor analysis: D is correct because reviewing performance metrics to identify and prioritize improvement opportunities is the Improve activity — its defining purpose is to ensure continual improvement of products, services, and practices across the organization. A is incorrect because Plan is about strategic direction and portfolio, not weekly operational metric reviews. B is incorrect because Engage is about stakeholder relationship management and capturing demand, not internal performance review. C is incorrect because Design and Transition is about designing and testing services, not reviewing operational metrics for improvement planning.
+
+---
+
+## Question 17 (5 points)
+
+Which of the following scenarios most accurately illustrates the Obtain/Build activity?
+
+* A) An IT team conducts user acceptance testing for a new HR application.
+* B) A service desk agent handles a password reset request from an end user.
+* C) An IT team procures, licenses, and installs a database server that will underpin a new analytics service.
+* D) A project manager presents the roadmap for the next quarter's service improvements to the steering committee.
+
+Correct answer: C
+
+Distractor analysis: C is correct because procuring, licensing, and installing a database server — acquiring and preparing a service component to specification — is precisely the Obtain/Build activity. A is incorrect because user acceptance testing is a Design and Transition activity. B is incorrect because handling a live service request is a Deliver and Support activity. D is incorrect because presenting a roadmap to a steering committee is a combination of Plan and Engage activities.
+
+---
+
+## Question 18 (5 points)
+
+An organization's SVC diagram shows that the Improve activity has arrows connecting it to every other SVC activity. What does this architecture indicate about ITIL 4's approach to improvement?
+
+* A) Improvement is managed separately from operations and only activated by governance decisions.
+* B) Improvement is an isolated activity that collects data from all other activities but does not influence them.
+* C) Improvement is embedded throughout the SVC — every activity both generates improvement data and receives improvement guidance.
+* D) The Improve activity replaces the other activities when a major incident occurs.
+
+Correct answer: C
+
+Distractor analysis: C is correct because the bidirectional connections to all other activities reflect that improvement is continuous and embedded — each activity generates performance data that feeds Improve, and Improve outputs guidance that influences how each activity is performed. A is incorrect because Improve is an active SVC component, not an isolated governance-triggered function. B is incorrect because the connections are bidirectional — Improve both receives data from and sends guidance back to other activities. D is incorrect because major incidents trigger Deliver and Support and potentially Improve, but Improve does not replace operational activities.
+
+---
+
+## Question 19 (5 points)
+
+A financial services firm's IT department is building a value stream for delivering a new regulatory reporting service. The team must ensure the service meets compliance requirements before going live. Which SVC activity would include the formal compliance validation step?
+
+* A) Obtain/Build
+* B) Engage
+* C) Deliver and Support
+* D) Design and Transition
+
+Correct answer: D
+
+Distractor analysis: D is correct because Design and Transition ensures products and services meet requirements — including compliance requirements — before they are deployed to the live environment. Formal validation against regulatory standards is a pre-go-live quality gate that belongs in this activity. A is incorrect because Obtain/Build ensures components are acquired and configured to specification but does not perform the compliance validation review against regulatory requirements. B is incorrect because Engage captures compliance requirements but does not perform the validation. C is incorrect because Deliver and Support begins after the service is live; compliance validation must occur before deployment.
+
+---
+
+## Question 20 (5 points)
+
+An IT team designing a value stream for a cloud service migration omits the Engage activity because they consider it unnecessary for a purely technical migration. What is the most likely consequence of this omission?
+
+* A) The migration will fail due to inadequate hardware resources.
+* B) Governance will automatically reject the value stream design.
+* C) Stakeholder requirements and acceptance criteria will not be captured, increasing the risk of a migration that meets technical specifications but fails to serve user needs.
+* D) The Improve activity will compensate by gathering stakeholder requirements retrospectively.
+
+Correct answer: C
+
+Distractor analysis: C is correct because omitting Engage means the value stream has no mechanism for capturing user requirements, expectations, or acceptance criteria — the migration may be technically successful but fail to deliver the outcomes users need. A is incorrect because hardware adequacy is an Obtain/Build concern, not a consequence of skipping Engage. B is incorrect because governance does not automatically reject individual value stream designs based on activity omission. D is incorrect because Improve processes performance data from completed activities; it cannot compensate for requirements that were never captured before the migration.

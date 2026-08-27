@@ -306,3 +306,83 @@ print("\nApplying these SAME statistics to X_test prevents data leakage.")
 | D | StandardScaler applied correctly (fit on train, transform both) | 15 |
 | D | Questions D1 and D2 answered correctly | 10 |
 | **Total** | | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Comparing Scaled vs. Unscaled Model Performance
+
+Train two small Keras models on the Breast Cancer dataset — one using raw unscaled features and one using StandardScaler-normalized features — then compare their convergence behavior.
+
+```python
+import tensorflow as tf
+from tensorflow.keras.layers import Dense
+from tensorflow.keras.models import Sequential
+
+def build_model(input_dim):
+    model = Sequential([
+        Dense(32, activation='relu', input_shape=(input_dim,)),
+        Dense(16, activation='relu'),
+        Dense(1, activation='sigmoid')
+    ])
+    model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    return model
+
+# Train on unscaled data
+model_raw = build_model(X_train.shape[1])
+hist_raw = model_raw.fit(X_train, y_train, epochs=50, validation_split=0.15, verbose=0)
+
+# Train on scaled data
+model_scaled = build_model(X_train_scaled.shape[1])
+hist_scaled = model_scaled.fit(X_train_scaled, y_train, epochs=50, validation_split=0.15, verbose=0)
+
+# Plot validation accuracy curves side by side
+import matplotlib.pyplot as plt
+plt.figure(figsize=(10, 4))
+plt.plot(hist_raw.history['val_accuracy'], label='Unscaled', color='steelblue')
+plt.plot(hist_scaled.history['val_accuracy'], label='Scaled', color='coral')
+plt.title('Validation Accuracy: Scaled vs. Unscaled Features')
+plt.xlabel('Epoch')
+plt.ylabel('Validation Accuracy')
+plt.legend()
+plt.tight_layout()
+plt.show()
+```
+
+1. Record the final validation accuracy for both models after 50 epochs.
+2. Note how many epochs it takes each model to first exceed 90% validation accuracy.
+3. Explain in two sentences why the scaled model converges faster based on gradient descent theory.
+
+### Challenge 2: Exploring the Effect of Test Split Size
+
+Repeat the train-test split with three different `test_size` values (0.1, 0.2, 0.4) and observe how split size affects estimated model performance.
+
+```python
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+import numpy as np
+
+cancer = load_breast_cancer()
+X, y = cancer.data, cancer.target
+
+results = {}
+for split in [0.1, 0.2, 0.4]:
+    X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=split, random_state=42, stratify=y)
+    sc = StandardScaler()
+    X_tr_s = sc.fit_transform(X_tr)
+    X_te_s = sc.transform(X_te)
+    m = build_model(X_tr_s.shape[1])
+    m.fit(X_tr_s, y_tr, epochs=30, verbose=0)
+    _, acc = m.evaluate(X_te_s, y_te, verbose=0)
+    results[split] = acc
+    print(f"test_size={split:.1f} | train={len(X_tr)} | test={len(X_te)} | test_acc={acc:.4f}")
+```
+
+1. Compare the test accuracy across the three splits.
+2. Consider why a very small test set (10%) might give an unreliable accuracy estimate.
+
+### Reflection Questions
+
+1. When you reduced the test split to 10%, did your model appear more or less accurate? What does this suggest about the reliability of performance estimates on small test sets?
+2. In a real clinical deployment of a cancer screening model, what would be the ethical consequences of optimizing purely for accuracy instead of recall? What additional safeguards beyond a single metric should be in place?

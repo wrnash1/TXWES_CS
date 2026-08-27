@@ -196,3 +196,171 @@ Distractor Analysis:
 - Why D is incorrect: Principle 7 applies specifically to Agile contexts — if the team claims Agile, working software is the measure.
 
 ---
+
+### Question 11 (5 points)
+
+Agile Manifesto Principle 4 states that "business people and developers must work together daily throughout the project." Which Scrum role is specifically designed to fulfill this principle by acting as the bridge between business stakeholders and the development team?
+
+- A) Scrum Master
+- B) Product Owner
+- C) Release Manager
+- D) Technical Lead
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Incorrect — The Scrum Master coaches the team and organization on Scrum but does not serve as the business-to-developer bridge for product decisions.
+  - C) Incorrect — Release Manager is not a Scrum role; release decisions in Scrum are owned by the Scrum Team.
+  - D) Incorrect — Technical Lead is not a Scrum role; Scrum uses self-managing Developers without hierarchical technical roles.
+
+---
+
+### Question 12 (5 points)
+
+Agile Manifesto Principle 9 states that "continuous attention to technical excellence and good design enhances agility." Which practice most directly embodies this principle?
+
+- A) Scheduling a code review only before the final Sprint release
+- B) Incorporating refactoring and automated testing as ongoing activities within every Sprint
+- C) Assigning a dedicated quality assurance team to test after each Sprint
+- D) Delaying architectural improvements until a designated "hardening Sprint"
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Incorrect — A single pre-release code review is not "continuous" attention; it is a one-time gate inconsistent with Principle 9.
+  - C) Incorrect — Delegating quality to a separate team is a handoff that reduces agility and is inconsistent with self-managing teams producing "done" increments each Sprint.
+  - D) Incorrect — A hardening Sprint defers technical excellence to a batch activity, contradicting the "continuous" nature of Principle 9.
+
+---
+
+### Question 13 (5 points)
+
+Which of the following statements accurately describes all seventeen signatories of the Agile Manifesto?
+
+- A) They were academics who had never worked in commercial software development
+- B) They were experienced practitioners from diverse lightweight development methods
+- C) They were all employees of a single software consultancy that commissioned the document
+- D) They were government contractors mandated to create a new software standard by the DoD
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Incorrect — The signatories were experienced practitioners (Beck, Fowler, Schwaber, Sutherland, etc.), not academics; many had decades of industry experience.
+  - C) Incorrect — The signatories came from different organizations and methods; no single company commissioned the Manifesto.
+  - D) Incorrect — The Manifesto was a voluntary effort by independent practitioners, not a government-commissioned standard.
+
+---
+
+### Question 14 (5 points)
+
+A Scrum Master notices that their team never raises impediments at the Daily Scrum, even though Sprint delivery consistently falls short. Which Manifesto value is most likely being violated?
+
+- A) Working software over comprehensive documentation
+- B) Customer collaboration over contract negotiation
+- C) Individuals and interactions over processes and tools
+- D) Responding to change over following a plan
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) Incorrect — The problem is not about documentation vs. software; it is about communication and interaction quality within the team.
+  - B) Incorrect — The issue is internal team dynamics, not the relationship between the team and the customer.
+  - D) Incorrect — Failing to raise impediments is not about changing plans; it is about the team suppressing honest interaction in favor of appearing compliant with process.
+
+---
+
+### Question 15 (5 points)
+
+Agile Manifesto Principle 6 states that "face-to-face conversation is the most efficient and effective method of conveying information." How should a Scrum Team interpret this principle when working fully remotely?
+
+- A) Remote teams cannot be Agile because Principle 6 forbids distributed work
+- B) The principle's intent is rich, synchronous communication; remote teams should use video calls and real-time collaboration tools to honor the spirit of the principle
+- C) Remote teams should switch to Waterfall because Agile requires physical co-location
+- D) The principle only applies to Sprint Reviews; all other communication can be asynchronous
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Incorrect — The Manifesto does not forbid distributed work; the principle expresses a preference for richness of communication that can be approximated remotely.
+  - C) Incorrect — Nothing in the Manifesto or Scrum Guide restricts Agile to co-located teams; the Scrum Guide explicitly addresses distributed teams.
+  - D) Incorrect — The principle applies to all team communication, not only Sprint Reviews.
+
+---
+
+### Question 16 (5 points)
+
+Which Manifesto principle directly warns against over-engineering or adding unrequested features to a product?
+
+- A) Principle 3 — deliver working software frequently
+- B) Principle 7 — working software is the primary measure of progress
+- C) Principle 10 — simplicity, the art of maximizing work not done, is essential
+- D) Principle 12 — teams reflect regularly and adjust behavior
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) Incorrect — Principle 3 addresses delivery frequency, not the scope or complexity of what is delivered.
+  - B) Incorrect — Principle 7 defines the measure of progress; it does not address over-engineering.
+  - D) Incorrect — Principle 12 is about process reflection, not product simplicity.
+
+---
+
+### Question 17 (5 points)
+
+A development team using Scrum completes 85% of their Sprint Backlog items every Sprint but never achieves the Sprint Goal. According to the Agile Manifesto, what is the most significant problem with this pattern?
+
+- A) The team is not tracking velocity correctly
+- B) Sprint Backlog completion percentage is not the primary measure of progress; delivering working software toward the Sprint Goal is
+- C) The team needs to commit to fewer items per Sprint to improve completion rate
+- D) The Scrum Master should escalate to management for more resources
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Incorrect — Velocity tracking is a tool; the fundamental issue is the Sprint Goal not being achieved, which means the Increment does not deliver value.
+  - C) Incorrect — Committing to fewer items might improve the percentage but does not address why the Sprint Goal is consistently missed.
+  - D) Incorrect — Adding resources (Brooks's Law) typically slows teams; the problem here is goal alignment, not capacity.
+
+---
+
+### Question 18 (5 points)
+
+The Agile Manifesto's opening statement says practitioners are "uncovering better ways of developing software by doing it." Which word in that statement most directly reflects the empirical philosophy of Scrum?
+
+- A) "Better" — because Agile always produces better outcomes than Waterfall
+- B) "Ways" — because Agile has multiple valid methods and frameworks
+- C) "Uncovering" — because knowledge is discovered through experience, not prescribed in advance
+- D) "Developing" — because Agile is only applicable to software development, not other work
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) Incorrect — "Better" is a comparative adjective, not the word that captures epistemological stance; also, context-dependent outcomes are not guaranteed to be better.
+  - B) Incorrect — "Ways" acknowledges plurality of methods but does not capture the empirical learning philosophy.
+  - D) Incorrect — "Developing" describes the domain; the Scrum Guide itself notes Scrum is used beyond software.
+
+---
+
+### Question 19 (5 points)
+
+A Product Owner tells the team: "I know the Retrospective found three process problems, but we don't have time to fix them — let's just keep shipping." Which Manifesto principle is being most directly violated?
+
+- A) Principle 1 — customer satisfaction through early delivery
+- B) Principle 5 — build around motivated individuals and trust them
+- C) Principle 12 — teams reflect regularly and tune their behavior
+- D) Principle 9 — continuous attention to technical excellence
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) Incorrect — Principle 1 is about delivering valuable software to customers; this scenario is about ignoring process improvement identified by the team.
+  - B) Incorrect — While dismissing the team's findings could undermine trust, Principle 5 is specifically about motivated individuals having the environment they need, not about retrospective action items.
+  - D) Incorrect — The Retrospective findings described are process problems, not necessarily technical excellence issues.
+
+---
+
+### Question 20 (5 points)
+
+According to the Agile Manifesto, what is the correct relationship between an Agile team and a contract with a customer?
+
+- A) Contracts have no place in Agile; all agreements should be verbal
+- B) Contracts should lock in the complete feature list before work begins to protect both parties
+- C) Contracts have value, but the team prioritizes ongoing collaboration over strict adherence to contract terms when they conflict with delivering value
+- D) The Product Owner's primary job is to enforce the original contract scope against scope creep from stakeholders
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) Incorrect — The Manifesto does not prohibit contracts; Value 3 says "customer collaboration over contract negotiation," not "no contracts."
+  - B) Incorrect — Locking a complete feature list is a Waterfall practice that conflicts with welcoming change (Value 4 and Principle 2).
+  - D) Incorrect — The Product Owner maximizes product value, which means continuously re-prioritizing based on new information, not enforcing a fixed original scope.

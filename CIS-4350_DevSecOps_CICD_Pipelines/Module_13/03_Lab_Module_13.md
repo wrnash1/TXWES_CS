@@ -475,4 +475,57 @@ Submit the following in your lab report document:
 
 ---
 
-*CIS-4350 DevSecOps and CI/CD Pipelines | Texas Wesleyan University | Professor Nash*
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Extend Policies with a SOC 2 CC6.7 TLS Enforcement Rule
+
+Add a new SOC 2 rule that enforces TLS on all Service resources and write a corresponding Rego test.
+
+1. Add a new deny rule to `policies/k8s_soc2.rego` in the `k8s.soc2` package that fires when a Kubernetes Service resource has `spec.ports[_].port == 80` without a corresponding HTTPS port (443). The deny message should reference `SOC 2 CC6.7`.
+2. Write two test cases in `policies/k8s_soc2_test.rego`:
+   - One that asserts the rule fires for a Service with only port 80.
+   - One that asserts the rule does not fire for a Service with port 443.
+3. Run `opa test policies/ -v` and verify all tests pass. Record the full output.
+4. Run `conftest test` against a Service manifest you create with port 80 only and verify the violation is reported. Then add port 443 and verify the violation is cleared.
+
+### Challenge 2: Conftest GitHub Actions Integration with PR Annotations
+
+Integrate Conftest into a GitHub Actions workflow that posts policy violations as PR annotations.
+
+1. Create a GitHub Actions workflow file `conftest-check.yml` triggered on `pull_request` events affecting `manifests/**`:
+
+```yaml
+name: Conftest Policy Check
+on:
+  pull_request:
+    paths:
+      - 'manifests/**'
+jobs:
+  conftest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Conftest
+        run: |
+          curl -L https://github.com/open-policy-agent/conftest/releases/download/v0.46.0/conftest_0.46.0_Linux_x86_64.tar.gz | tar xz
+          sudo mv conftest /usr/local/bin/
+      - name: Run Conftest
+        run: |
+          conftest test manifests/ \
+            --policy policies/ \
+            --all-namespaces \
+            --output github
+```
+
+1. Open a PR that includes the non-compliant `deployment_noncompliant.yaml` from Part 3. Observe that violations appear as inline PR annotations on the manifest file.
+2. Update the manifest to be compliant and observe the annotations disappear when the check passes.
+3. Explain in 2–3 sentences why the `--output github` flag is used in a GitHub Actions workflow rather than the default table output, and what happens if `--output github` is used outside of a GitHub Actions environment.
+
+### Reflection Questions
+
+1. Your organization uses both OPA Gatekeeper (enforcing at cluster admission) and Conftest (enforcing in CI pipelines) with the same Rego policies. A developer argues this is redundant — if Gatekeeper will reject non-compliant resources anyway, there is no value in also running Conftest in CI. Explain the DevSecOps principle that justifies running both controls, and describe two scenarios in which the CI gate catches violations that Gatekeeper alone would not prevent.
+2. The policy change management process in this module requires a `dryrun` phase followed by a `warn` phase before switching to `deny`. A security engineer pushes back, arguing that critical security policies (such as prohibiting `privileged: true`) should go directly to `deny` because any delay allows privileged containers to be deployed. Evaluate this argument — under what conditions is skipping `dryrun`/`warn` justified for a new policy, and what risk does the accelerated rollout introduce?
+
+---
+
+Lab 13 | CIS-4350 | Texas Wesleyan University | Professor Nash

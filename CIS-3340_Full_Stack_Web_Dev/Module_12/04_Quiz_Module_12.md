@@ -290,3 +290,183 @@ A production React SPA deployed to S3 + CloudFront calls an API Gateway endpoint
 - Why B is correct: RDS Proxy is the AWS-designed solution for Lambda-to-RDS connection exhaustion.
 - Why C is incorrect: CloudFront caches static assets and API responses (when configured), but does not directly reduce Lambda concurrency for dynamic API calls.
 - Why D is incorrect: SQS would serialize requests and eliminate concurrency entirely — destroying the scalability benefit of Lambda. It also introduces significant latency.
+
+---
+
+### Question 11 (5 points)
+
+A developer stores a JWT in `localStorage` and reads it in a `fetch` call: `headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }`. A security auditor flags this as high-risk. Why?
+
+- A) `localStorage` is synchronous, which blocks the main thread when reading large tokens.
+- B) Any JavaScript running on the page — including injected code from an XSS attack — can read `localStorage`, stealing the JWT and allowing an attacker to impersonate the user until the token expires.
+- C) `localStorage` tokens expire automatically after 30 minutes, making long-lived JWTs unusable.
+- D) The `Authorization` header is not allowed in cross-origin requests — the token must be sent as a query parameter.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: `localStorage` reads are synchronous but extremely fast — blocking is not the security concern.
+  - Why B is correct: XSS (Cross-Site Scripting) attacks inject malicious JavaScript that reads `localStorage` and exfiltrates stored tokens. An HttpOnly cookie prevents this because JavaScript cannot access it at all.
+  - Why C is incorrect: `localStorage` has no automatic expiration — items persist until explicitly deleted or the user clears browser storage.
+  - Why D is incorrect: The `Authorization` header is permitted in cross-origin requests when the server includes `Access-Control-Allow-Headers: Authorization` in its CORS configuration.
+
+---
+
+### Question 12 (5 points)
+
+A developer uses `bcrypt.compare(plaintext, storedHash)`. The stored hash was created with cost factor 10 but the application now uses cost factor 12. What happens when a user logs in?
+
+- A) `bcrypt.compare` throws an error because the cost factors do not match.
+- B) `bcrypt.compare` reads the cost factor embedded in the stored hash and uses it automatically — the comparison succeeds if the password is correct regardless of the current default cost factor.
+- C) `bcrypt.compare` always rehashes the password with cost factor 12 before comparing, causing all old hashes to fail verification.
+- D) The login returns `false` for all attempts until the user resets their password with the new cost factor.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: `bcrypt.compare` does not throw when cost factors differ — it extracts the cost factor from the hash string itself.
+  - Why B is correct: The bcrypt hash format encodes the algorithm, cost factor, and salt in the hash string (`$2b$12$...`). `bcrypt.compare` extracts these parameters from the stored hash and applies them — it does not use the application's current default.
+  - Why C is incorrect: `bcrypt.compare` never modifies the stored hash — it only verifies the plaintext against it.
+  - Why D is incorrect: Existing hashes remain valid after changing the default cost factor. New registrations will use the new factor; existing accounts use their original hash until they next change their password.
+
+---
+
+### Question 13 (5 points)
+
+A JWT payload contains `{ "userId": 42, "role": "admin", "exp": 1735689600 }`. A developer decodes it with `jwt.decode(token)` instead of `jwt.verify(token, secret)` and uses `decoded.role` to authorize an admin action. What is the security vulnerability?
+
+- A) `jwt.decode` returns `null` for tokens with an `exp` claim — the authorization check will always fail.
+- B) `jwt.decode` does not verify the signature — an attacker can forge a token with `"role": "admin"` and gain unauthorized access because the signature is never checked.
+- C) `jwt.decode` only returns the header, not the payload — `decoded.role` will be `undefined`.
+- D) `jwt.decode` automatically refreshes expired tokens, potentially granting access after the token should have been invalid.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: `jwt.decode` works with all valid base64url-encoded JWTs — the `exp` claim does not cause it to return `null`.
+  - Why B is correct: `jwt.decode` is a base64url decode with no cryptographic verification. Anyone can construct a token with any payload and `jwt.decode` will return its contents as if it were legitimate. Always use `jwt.verify` for authorization decisions.
+  - Why C is incorrect: `jwt.decode` returns the full decoded payload (and optionally the header with `{ complete: true }`) — not just the header.
+  - Why D is incorrect: `jwt.decode` performs no expiration check and no token renewal — it simply decodes without validation.
+
+---
+
+### Question 14 (5 points)
+
+The login endpoint returns the same error message `"Invalid email or password"` whether the email is not found or the password is wrong. Why is this intentional?
+
+- A) It simplifies the code — only one error object needs to be created.
+- B) Returning different messages for wrong email vs wrong password is a user enumeration vulnerability — an attacker could discover which email addresses have accounts by observing which error they receive.
+- C) Express requires all `next(error)` calls to use the same error message to prevent duplicate error handler executions.
+- D) bcrypt.compare cannot distinguish between a wrong password and a missing user, so the error message must be generic.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: Code simplicity is a benefit but not the security reason. A developer could easily write two separate error objects.
+  - Why B is correct: User enumeration allows an attacker to build a list of valid email addresses from the application, which can then be used for targeted phishing or credential stuffing. A generic error message prevents this.
+  - Why C is incorrect: Express has no such restriction — multiple `next(err)` calls with different messages are perfectly valid.
+  - Why D is incorrect: `bcrypt.compare` compares a plaintext password against a hash — it is only called after the user record is found. The generic message is a deliberate security choice, not a bcrypt limitation.
+
+---
+
+### Question 15 (5 points)
+
+`requireAuth` middleware runs before `requireRole`. What happens if `requireRole` is applied without `requireAuth` before it?
+
+- A) `requireRole` works correctly because it reads the `Authorization` header directly.
+- B) `req.user` would be `undefined` because `requireAuth` is responsible for setting it. `requireRole` checks `if (!req.user)` and returns 401 or crashes if the null check is missing.
+- C) Express automatically runs all middleware in alphabetical order, so `requireAuth` always runs before `requireRole`.
+- D) `requireRole` only needs to run after `requireAuth` in production — in development, the order does not matter.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: `requireRole` reads `req.user.role` — it does not read the `Authorization` header itself. Without `requireAuth`, `req.user` is never set.
+  - Why B is correct: `requireAuth` decodes the JWT and sets `req.user`. `requireRole` depends on `req.user` existing. If `requireAuth` is skipped, `req.user` is `undefined` and accessing `req.user.role` throws a `TypeError`.
+  - Why C is incorrect: Express runs middleware in registration order, not alphabetical order.
+  - Why D is incorrect: The dependency between `requireAuth` and `requireRole` is a code logic requirement — it applies in all environments.
+
+---
+
+### Question 16 (5 points)
+
+A `TokenExpiredError` is caught in `requireAuth`. What is the correct HTTP status code to return and why?
+
+- A) `403 Forbidden` — the token exists but permission is denied.
+- B) `401 Unauthorized` — the token was valid but is no longer a valid credential; the client must obtain a new token.
+- C) `400 Bad Request` — an expired token is a malformed request.
+- D) `200 OK` with an `expired: true` field — the client should check this flag.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: `403` means authenticated but lacks permission. An expired token is an authentication failure — the user's identity cannot be confirmed, so `401` is correct.
+  - Why B is correct: `401` signals that authentication is required or has failed. The client should re-authenticate (log in again to get a new token) and retry.
+  - Why C is incorrect: `400` is for malformed requests such as invalid JSON or missing fields. An expired token is syntactically valid — it is semantically invalid from an authentication standpoint.
+  - Why D is incorrect: Returning `200` for a failed authentication is a serious error — clients and intermediaries treat `200` as success. Security middleware at the API gateway level would not block the request if it received `200`.
+
+---
+
+### Question 17 (5 points)
+
+AWS Cognito User Pools issue tokens after authentication. Which token should a React app send to API Gateway for identity verification, and what type is it?
+
+- A) The refresh token — it has the longest validity and is used for all API calls.
+- B) The ID token or access token — both are JWTs. The ID token contains user identity claims; the access token is used to authorize API calls. API Gateway Lambda Authorizers typically verify the access token.
+- C) The client secret from the Cognito app client configuration — it is embedded in the request header.
+- D) A session cookie set by Cognito's hosted UI — it is automatically included in all requests.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: The refresh token is used to obtain new access/ID tokens — it is never sent to resource APIs.
+  - Why B is correct: Cognito issues three tokens: ID token (user identity), access token (API authorization), and refresh token (token renewal). API calls use the access token in the `Authorization: Bearer` header. Lambda Authorizers verify it using the Cognito JWKS endpoint.
+  - Why C is incorrect: The client secret is used in server-to-server OAuth flows — it is never embedded in client-side requests or sent to APIs.
+  - Why D is incorrect: Cognito's hosted UI can set cookies for session management, but REST API calls use Bearer tokens in the `Authorization` header — not cookies.
+
+---
+
+### Question 18 (5 points)
+
+A Postman collection variable `token` is set by a Tests script after the login request. What is the advantage of using `pm.collectionVariables.set('token', json.token)` compared to manually copying the token from the response?
+
+- A) Collection variables are automatically encrypted at rest — manually copied tokens are stored in plain text.
+- B) The script automatically updates the token in all protected requests whenever login is re-run, eliminating the manual copy-paste step and reducing the chance of testing with a stale or expired token.
+- C) Collection variables bypass CORS restrictions that affect manually set headers.
+- D) Postman requires collection variables for Bearer tokens — manually entered values are ignored.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: Postman stores collection variables in plain text — there is no automatic encryption distinction between scripted and manual values.
+  - Why B is correct: Automating token capture ensures that every test run uses the freshly issued token. This is especially important when the JWT expires between test sessions.
+  - Why C is incorrect: CORS restrictions apply to browser-based requests — Postman makes direct HTTP requests and is not subject to browser CORS enforcement.
+  - Why D is incorrect: Postman accepts manually entered Bearer tokens — scripted capture is a convenience, not a requirement.
+
+---
+
+### Question 19 (5 points)
+
+A developer adds `const token = jwt.sign({ userId, email, role }, secret, { expiresIn: '24h' })`. The payload contains `role: 'student'`. An attacker intercepts the token, base64url-decodes the payload, changes `"role": "admin"`, and re-encodes it. What prevents this attack from succeeding?
+
+- A) JWT payloads are encrypted — the attacker cannot read or modify them.
+- B) The JWT signature is computed from both the header and the payload using the server's secret. Modifying the payload invalidates the signature, and `jwt.verify` will reject the tampered token with a `JsonWebTokenError`.
+- C) JWTs contain a checksum field in the payload that detects modification.
+- D) The `expiresIn` option locks the payload — any modification causes immediate expiry.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: JWT payloads are only base64url-encoded, not encrypted. The attacker can read and modify the bytes — but cannot produce a valid signature without the secret.
+  - Why B is correct: The third section of a JWT (the signature) is `HMACSHA256(base64url(header) + '.' + base64url(payload), secret)`. Changing the payload changes the signature input, producing a mismatch that `jwt.verify` detects and rejects.
+  - Why C is incorrect: JWTs have no checksum field — the signature is the integrity mechanism.
+  - Why D is incorrect: `expiresIn` sets the `exp` claim — it has no relationship to payload immutability.
+
+---
+
+### Question 20 (5 points)
+
+In the full-stack architecture (React → API Gateway → Lambda → RDS), where should the `JWT_SECRET` be stored in a production deployment?
+
+- A) In the Vite `.env` file prefixed with `VITE_` so both the React app and Lambda can access it.
+- B) Hardcoded in `middleware/auth.js` using a long random string literal so it cannot be changed accidentally.
+- C) In AWS Secrets Manager or AWS Systems Manager Parameter Store, retrieved by the Lambda function at cold-start or via environment variable injection — never committed to source code.
+- D) In the React app's `localStorage` so the frontend can verify tokens client-side without calling the backend.
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why A is incorrect: `VITE_` variables are embedded in the client-side JavaScript bundle and are publicly visible — a JWT secret must never be in the client bundle.
+  - Why B is incorrect: Hardcoded secrets in source code are exposed to anyone with repository access and cannot be rotated without a code change and redeployment.
+  - Why C is correct: AWS Secrets Manager stores secrets encrypted at rest and in transit. Lambda retrieves the secret at runtime via the AWS SDK or environment variable injection. Secrets can be rotated without redeploying code.
+  - Why D is incorrect: The JWT secret is used to sign and verify tokens — it must remain server-side only. Exposing it to the client would allow anyone to forge valid tokens.

@@ -290,3 +290,146 @@ gcloud billing budgets delete $BUDGET_NAME
 | Reflection questions answered | 15 |
 | Resources cleaned up | 5 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Programmatic Budget Enforcement with Cloud Functions
+
+Implement a budget enforcement mechanism that automatically disables billing
+on a project when spending exceeds a threshold, using a Pub/Sub budget
+notification and a Cloud Function.
+
+1. Create a Pub/Sub topic for the budget notification:
+
+```bash
+export PROJECT_ID=$(gcloud config get-value project)
+gcloud pubsub topics create billing-alerts
+```
+
+1. Update the existing budget from the main lab (or create a new one) to
+   publish notifications to the Pub/Sub topic when the 100% threshold is
+   reached. In the Cloud Console, navigate to **Billing → Budgets & Alerts**,
+   edit the budget, and under **Manage notifications** connect it to the
+   `billing-alerts` Pub/Sub topic.
+
+1. Create a Cloud Function that disables billing when triggered:
+
+```bash
+mkdir ~/lab14-billing-fn && cd ~/lab14-billing-fn
+
+cat > main.py << 'EOF'
+import base64
+import json
+import os
+from googleapiclient import discovery
+
+def disable_billing(event, context):
+    """Disable billing on the project when budget alert fires."""
+    pubsub_data = base64.b64decode(event['data']).decode('utf-8')
+    budget_notification = json.loads(pubsub_data)
+
+    cost_amount = budget_notification.get('costAmount', 0)
+    budget_amount = budget_notification.get('budgetAmount', 0)
+
+    print(f"Cost: {cost_amount}, Budget: {budget_amount}")
+
+    if cost_amount >= budget_amount:
+        project_id = os.environ.get('PROJECT_ID')
+        billing = discovery.build('cloudbilling', 'v1')
+        body = {'billingAccountName': ''}
+        billing.projects().updateBillingInfo(
+            name=f'projects/{project_id}',
+            body=body
+        ).execute()
+        print(f"Billing disabled for project {project_id}")
+    else:
+        print("Under budget — no action taken")
+EOF
+
+cat > requirements.txt << 'EOF'
+google-api-python-client==2.108.0
+EOF
+```
+
+1. Deploy the Cloud Function with the Pub/Sub trigger:
+
+```bash
+gcloud functions deploy disable-billing-fn \
+  --gen2 \
+  --runtime=python311 \
+  --region=us-central1 \
+  --source=. \
+  --entry-point=disable_billing \
+  --trigger-topic=billing-alerts \
+  --set-env-vars=PROJECT_ID=$PROJECT_ID
+```
+
+1. Grant the Cloud Function's service account the `billing.projectManager`
+   role so it can unlink billing:
+
+```bash
+PROJECT_NUMBER=$(gcloud projects describe $PROJECT_ID \
+  --format='value(projectNumber)')
+gcloud projects add-iam-policy-binding $PROJECT_ID \
+  --member="serviceAccount:${PROJECT_NUMBER}-compute@developer.gserviceaccount.com" \
+  --role="roles/billing.projectManager"
+```
+
+### Challenge 2: VM Rightsizing Recommendation Review
+
+Use the Recommender API to retrieve machine type change recommendations
+and compare estimated savings.
+
+1. Enable the Recommender API:
+
+```bash
+gcloud services enable recommender.googleapis.com
+```
+
+1. List VM rightsizing recommendations for the project in `us-central1`:
+
+```bash
+gcloud recommender recommendations list \
+  --project=$PROJECT_ID \
+  --location=us-central1 \
+  --recommender=google.compute.instance.MachineTypeRecommender \
+  --format=json | python3 -c "
+import sys, json
+recs = json.load(sys.stdin)
+for r in recs:
+  name = r.get('name','')
+  impact = r.get('primaryImpact',{}).get('costProjection',{})
+  print(f'Recommendation: {name}')
+  print(f'  Monthly savings: {impact}')
+  print()
+"
+```
+
+1. If no recommendations exist (new project with no usage data), describe
+   the IAM permission required for an external auditor to view recommendations
+   without being able to act on them:
+
+```bash
+gcloud projects add-iam-policy-binding $PROJECT_ID \
+  --member="user:AUDITOR_EMAIL@example.com" \
+  --role="roles/recommender.viewer"
+```
+
+1. Document the recommendation ID, suggested machine type, and estimated
+   monthly savings in your lab report.
+
+### Reflection Questions
+
+1. In Challenge 1, the Cloud Function disables billing entirely on the project
+   when the budget threshold is crossed. Describe two operational risks of this
+   approach and explain how you would mitigate them in a production environment
+   where complete billing shutdown could cause a major service outage.
+
+2. In Challenge 2, you used the Recommender API to retrieve machine type
+   suggestions. The Recommender service requires several days of CPU and memory
+   utilization data before generating recommendations. Explain why a VM that
+   runs at 2% CPU utilization consistently would NOT necessarily receive a
+   rightsizing recommendation to a smaller machine type, and what other factors
+   the Recommender considers beyond average utilization.

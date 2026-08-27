@@ -437,4 +437,114 @@ Remove `import.tf` before destroying if you imported a VPC you want to keep. Use
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Dynamic Block with Validation and Postcondition
+
+Extend the security group from Part 1 with a `postcondition` lifecycle block that verifies the security group was created with the expected number of ingress rules, and add a `precondition` on the VPC that enforces a minimum CIDR prefix length.
+
+**Step A.** Add a `precondition` block to `aws_vpc.main`:
+
+```hcl
+resource "aws_vpc" "main" {
+  cidr_block           = var.vpc_cidr
+  enable_dns_hostnames = true
+  enable_dns_support   = true
+
+  lifecycle {
+    precondition {
+      condition     = tonumber(split("/", var.vpc_cidr)[1]) <= 24
+      error_message = "VPC CIDR block must be /24 or larger (e.g. /16, /20, /24). Got: ${var.vpc_cidr}"
+    }
+  }
+
+  tags = {
+    Name      = "module15-vpc"
+    Owner     = var.owner_tag
+    ManagedBy = "Terraform"
+  }
+}
+```
+
+**Step B.** Add a `postcondition` block to `aws_security_group.app` that verifies the number of ingress rules in the created security group matches the input map length:
+
+```hcl
+lifecycle {
+  postcondition {
+    condition     = length(self.ingress) == length(var.security_group_rules)
+    error_message = "Security group has ${length(self.ingress)} ingress rules but ${length(var.security_group_rules)} were requested. Check for AWS deduplication of identical rules."
+  }
+}
+```
+
+1. Test the precondition by setting `vpc_cidr = "192.168.1.0/32"` in your `terraform.tfvars`. Run `terraform plan` and observe the precondition error with the message you defined.
+2. Restore the valid CIDR and apply. Add a duplicate rule to `var.security_group_rules` with identical port and CIDR to an existing rule. Run `terraform apply` and observe whether the postcondition fires (AWS may deduplicate identical security group rules, causing the count mismatch).
+3. Record in `lab_notes.txt`: what is the difference between a `precondition` and a `postcondition` in terms of when each is evaluated and what they are able to check? Give one example of a check that is only possible as a postcondition (cannot be done as a precondition).
+4. Document in `lab_notes.txt`: if a postcondition fails on an apply that also created other resources, are those other resources rolled back? What does the operator need to do to resolve the situation?
+
+### Challenge 2: Bulk Import with for_each and import Blocks
+
+Use `import` blocks with `for_each` to import multiple existing resources in a single plan/apply cycle.
+
+**Step A.** In the AWS console, create three S3 buckets manually (do not use Terraform). Name them:
+
+- `tf-lab-import-alpha-<your-suffix>`
+- `tf-lab-import-beta-<your-suffix>`
+- `tf-lab-import-gamma-<your-suffix>`
+
+**Step B.** Create `bulk_import/main.tf` using `for_each` on the `import` block pattern (Terraform 1.7+ supports `for_each` on import blocks; for Terraform 1.5–1.6 write three individual import blocks):
+
+```hcl
+terraform {
+  required_version = ">= 1.5.0"
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+  }
+}
+
+provider "aws" {
+  region = "us-east-2"
+}
+
+variable "import_buckets" {
+  type = map(string)
+  default = {
+    "alpha" = "tf-lab-import-alpha-your-suffix"
+    "beta"  = "tf-lab-import-beta-your-suffix"
+    "gamma" = "tf-lab-import-gamma-your-suffix"
+  }
+}
+
+import {
+  for_each = var.import_buckets
+  id       = each.value
+  to       = aws_s3_bucket.imported[each.key]
+}
+
+resource "aws_s3_bucket" "imported" {
+  for_each = var.import_buckets
+  bucket   = each.value
+
+  tags = {
+    ManagedBy = "Terraform"
+    Imported  = "true"
+  }
+}
+```
+
+1. Run `terraform init` and `terraform plan -generate-config-out=generated_buckets.tf`. Observe that the plan shows three import operations. Review the generated configuration and compare it to the minimal resource block you wrote.
+2. Run `terraform apply` and confirm all three buckets are now in state with `terraform state list`.
+3. Run `terraform plan` again after the import. If there are configuration drift differences between your resource block and the generated attributes, update the resource block to match until the plan shows zero changes.
+4. Document in `lab_notes.txt`: what problem does the `for_each` import block pattern solve compared to writing three individual import blocks? What is the minimum Terraform version required for `for_each` on import blocks, and what is the fallback approach for older versions?
+
+### Reflection Questions
+
+1. The lab uses a `moved` block to rename `aws_internet_gateway.main` to `aws_internet_gateway.primary` without destroying and recreating it. Explain what Terraform does internally when it processes a `moved` block during a plan. Specifically: does it make any API calls to the cloud provider during the plan, during the apply, or both? What is the one operation that `moved` blocks explicitly prevent compared to a plain rename without a `moved` block?
+2. The lab's `for_each` subnet approach ensures that removing `"private-b"` from the map only destroys that one subnet. Describe a real production scenario involving a database subnet group where the count-based index-shifting problem could cause catastrophic data loss, even if the database instances themselves are not in the shifted resources. Explain the specific sequence of events that would lead to the failure.
+
+---
+
 End of Module 15 Lab

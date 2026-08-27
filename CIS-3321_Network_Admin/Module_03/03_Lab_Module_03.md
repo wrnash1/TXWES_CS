@@ -276,4 +276,57 @@ Submit the following to the Canvas assignment dropbox:
 
 ---
 
+## Part 9 — Challenge Exercise
+
+These advanced steps extend the Module 03 lab with VLSM design and supernetting concepts.
+
+### Challenge Step 1: VLSM Network Design from Scratch
+
+An organization has been assigned the network 192.168.20.0/24. They need the following subnets (listed from largest to smallest requirement):
+
+- Department A: 50 hosts
+- Department B: 25 hosts
+- Department C: 10 hosts
+- WAN Link 1 (Router-to-Router): 2 hosts
+- WAN Link 2 (Router-to-Router): 2 hosts
+
+Design a VLSM address plan that wastes the fewest addresses. For each subnet, provide: subnet address, prefix length, subnet mask, first usable host, last usable host, and broadcast address. Show all work.
+
+**VLSM Design Rules:**
+1. Allocate subnets from largest to smallest.
+2. Start allocation from 192.168.20.0.
+3. Each new subnet begins immediately after the broadcast address of the previous subnet.
+
+**Challenge Question 1:** After allocating all five subnets, what address range remains unallocated? Express it in CIDR notation. How many usable addresses are left in the remaining space?
+
+### Challenge Step 2: Implement the VLSM Design in Packet Tracer
+
+1. Build a Packet Tracer topology with:
+   - 2 routers connected back-to-back on Gi0/2 (WAN Link 1)
+   - Router 1: Gi0/0 connected to a switch for Department A, Gi0/1 connected to a switch for Department B
+   - Router 2: Gi0/0 connected to a switch for Department C
+2. Assign exactly the subnet addresses you calculated in Challenge Step 1.
+3. Configure static routes on each router to reach the subnets connected to the other router.
+4. Test connectivity by pinging from a PC in Department A to a PC in Department C (through both routers).
+
+**Challenge Question 2:** What static route command did you enter on Router 1 to reach Department C's subnet? What static route did you enter on Router 2 to reach Department A's and B's subnets? Write the full IOS syntax for each command.
+
+### Challenge Step 3: Supernetting / Route Summarization
+
+Given the following four contiguous /26 subnets:
+- 192.168.20.0/26
+- 192.168.20.64/26
+- 192.168.20.128/26
+- 192.168.20.192/26
+
+Determine the single summary route (supernet) that covers all four subnets.
+
+1. Convert all four network addresses to binary.
+2. Find the longest common prefix shared by all four addresses.
+3. Express the summary route in CIDR notation.
+
+**Challenge Question 3:** What is the summary route that covers all four /26 subnets? How many bits of common prefix did you find? Verify your answer by confirming that both the first address (192.168.20.0) and the last host address of the last subnet (192.168.20.254) fall within the summary route's range.
+
+---
+
 *CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash*

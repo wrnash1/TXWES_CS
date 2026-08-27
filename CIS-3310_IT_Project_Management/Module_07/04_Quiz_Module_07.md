@@ -203,3 +203,203 @@ Distractor Analysis:
 - *Why A is incorrect:* Responsible designates someone who performs the work. The change management lead is not doing ETL development work; they are receiving updates about it.
 - *Why B is incorrect:* Accountable designates the single person who owns the task outcome. Seniority alone does not determine the A designation. There is already an Accountable person for ETL development, and only one A per task is permitted.
 - *Why C is incorrect:* Consulted designates someone whose input is solicited before decisions are finalized — two-way communication. The scenario explicitly states the change management lead has no input into technical decisions, which rules out Consulted.
+
+---
+
+## Question 11
+
+Which of the five conflict resolution techniques is generally considered MOST preferred by PMI because it addresses the root cause and results in a lasting solution?
+
+- A) Smoothing (Accommodating)
+- B) Forcing (Directing)
+- C) Collaborating (Problem Solving / Confronting)
+- D) Compromising (Reconciling)
+
+**Correct Answer:** C) Collaborating (Problem Solving / Confronting)
+
+**Distractor Analysis:**
+
+- *Why C is correct:* Collaborating (also called problem solving or confronting) is the PMI-preferred technique because it requires all parties to openly address the conflict, understand each other's positions, and reach a mutually acceptable solution that resolves the underlying issue.
+- *Why A is incorrect:* Smoothing acknowledges a problem but downplays its significance and does not resolve the root cause. It is a temporary measure, not a lasting solution.
+- *Why B is incorrect:* Forcing uses authority or power to impose a resolution. It creates winners and losers and does not achieve mutual understanding — the least preferred technique.
+- *Why D is incorrect:* Compromising requires both parties to give something up. It resolves the immediate conflict but leaves no one fully satisfied and does not address root causes. It is better than forcing or withdrawal but below collaborating in PMI's preference order.
+
+---
+
+## Question 12
+
+During a project kickoff meeting, team members are polite but cautious, asking basic questions about their roles and the project objectives. They are unsure of each other and are looking to the project manager for direction. Which Tuckman stage does this describe?
+
+- A) Storming
+- B) Norming
+- C) Performing
+- D) Forming
+
+**Correct Answer:** D) Forming
+
+**Distractor Analysis:**
+
+- *Why D is correct:* Forming is the first Tuckman stage. Team members are new to the group, are polite and cautious, do not yet know each other's work styles, and depend on the PM for guidance and direction.
+- *Why A is incorrect:* Storming involves conflict, competition, and challenges to authority as team members push back against structure and each other. The polite, uncertain behavior described is pre-conflict.
+- *Why B is incorrect:* Norming involves the team developing trust, establishing working agreements, and becoming more cohesive — a more advanced stage than the initial orientation described.
+- *Why C is incorrect:* Performing is the highest-functioning stage where the team operates independently with high productivity. This is the opposite of the new, uncertain behavior described.
+
+---
+
+## Question 13
+
+Which organizational structure gives the project manager the MOST authority and control over project resources?
+
+- A) Functional Organization
+- B) Weak Matrix
+- C) Strong Matrix
+- D) Projectized Organization
+
+**Correct Answer:** D) Projectized Organization
+
+**Distractor Analysis:**
+
+- *Why D is correct:* In a projectized (project-based) organization, team members are assigned full-time to the project and the PM has full authority over resources, budget, and personnel decisions. There are no competing functional managers.
+- *Why A is incorrect:* In a functional organization, the PM has little or no formal authority. Resources are controlled by functional managers and the PM must negotiate or request support.
+- *Why B is incorrect:* A weak matrix gives the PM slightly more coordination authority than a functional org but resources are still primarily controlled by functional managers.
+- *Why C is incorrect:* A strong matrix gives the PM significant authority, more than a weak matrix, but slightly less than a fully projectized structure where the PM has complete resource ownership.
+
+---
+
+## Question 14
+
+According to Herzberg's Two-Factor Theory, which of the following is a TRUE motivator (not a hygiene factor)?
+
+- A) A competitive base salary
+- B) Safe and comfortable working conditions
+- C) Recognition for completing a difficult technical milestone
+- D) Job security provided by a long-term contract
+
+**Correct Answer:** C) Recognition for completing a difficult technical milestone.
+
+**Distractor Analysis:**
+
+- *Why C is correct:* Herzberg's motivators are intrinsic factors that drive job satisfaction and engagement — achievement, recognition, the work itself, responsibility, and growth. Recognition for a specific accomplishment is a direct motivator.
+- *Why A is incorrect:* Salary is a hygiene factor. Its absence causes dissatisfaction, but providing it does not in itself motivate higher performance.
+- *Why B is incorrect:* Working conditions are a hygiene factor. Safe conditions prevent dissatisfaction but do not inherently motivate performance.
+- *Why D is incorrect:* Job security is a hygiene factor. Employees need it to feel safe, but it does not drive them to excel.
+
+---
+
+## Question 15
+
+What is the mandatory rule about the Accountable (A) designation in a RACI matrix?
+
+- A) Every task must have at least two Accountable designees to ensure backup coverage.
+- B) There must be exactly one Accountable person per task — no more, no less.
+- C) The Accountable person must also be designated as Responsible for the same task.
+- D) The project manager must be designated Accountable for every task on the RACI matrix.
+
+**Correct Answer:** B) There must be exactly one Accountable person per task — no more, no less.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* The single-accountable rule is the most important RACI governance principle. Having two people accountable for one task creates ambiguity about who ultimately owns the outcome. Having zero accountable people means no one owns the decision or deliverable.
+- *Why A is incorrect:* Two accountable designees violates the RACI principle. Accountability is singular by definition.
+- *Why C is incorrect:* The A and R roles can be held by different people. In many cases the PM (A) owns the outcome while a team member (R) does the work. They do not need to be the same person.
+- *Why D is incorrect:* The PM is not required to be Accountable for every task. Accountability may be delegated to functional leads, architects, or other experts for appropriate tasks.
+
+---
+
+## Question 16
+
+A team is in the Storming stage. Two senior developers are in an ongoing conflict about the best technical approach for the database architecture. The conflict is becoming disruptive to other team members. What is the PM's MOST appropriate action?
+
+- A) Ignore the conflict and let the developers resolve it on their own.
+- B) Force a decision by dictating the technical approach to the team.
+- C) Facilitate a structured problem-solving session where both developers present their approaches, evaluate the trade-offs, and reach a consensus decision.
+- D) Remove one of the developers from the project to eliminate the conflict source.
+
+**Correct Answer:** C) Facilitate a structured problem-solving session where both developers present their approaches, evaluate the trade-offs, and reach a consensus decision.
+
+**Distractor Analysis:**
+
+- *Why C is correct:* PMI's preferred conflict resolution is collaborating/problem solving. The PM facilitates the conversation, ensures both parties are heard, and drives toward a mutually agreed technical decision. This resolves the conflict constructively and advances the team toward Norming.
+- *Why A is incorrect:* Withdrawing (ignoring) is the least preferred technique. Unresolved conflict in the Storming stage does not resolve itself — it escalates and damages team cohesion.
+- *Why B is incorrect:* Forcing a decision eliminates the immediate visible conflict but creates resentment and does not build team trust. It is among the least preferred techniques.
+- *Why D is incorrect:* Removing a developer is an extreme escalation that loses valuable expertise and does not develop the PM's or team's conflict resolution skills.
+
+---
+
+## Question 17
+
+Resource leveling is performed to address which problem?
+
+- A) Activities taking longer than their estimated durations
+- B) The project schedule falling behind due to scope changes
+- C) A resource being over-allocated — assigned to more work in a given period than is humanly possible
+- D) The project budget being over-spent due to unplanned overtime
+
+**Correct Answer:** C) A resource being over-allocated — assigned to more work in a given period than is humanly possible.
+
+**Distractor Analysis:**
+
+- *Why C is correct:* Resource leveling resolves resource over-allocation by delaying activities until the resource has capacity. This keeps resource loading at or below 100% but typically extends the schedule.
+- *Why A is incorrect:* Activities taking longer than estimated is a schedule variance problem managed through corrective action, not resource leveling.
+- *Why B is incorrect:* Schedule delay from scope changes is addressed through change control and schedule compression — not resource leveling.
+- *Why D is incorrect:* Budget overruns from overtime are a cost management concern. Resource leveling prevents over-allocation that would cause overtime — but the problem statement here frames the issue as a cost problem, not a resource allocation problem.
+
+---
+
+## Question 18
+
+What does the Responsibility Assignment Matrix (RAM) at the summary level display?
+
+- A) Each team member's daily task schedule
+- B) The relationship between WBS work packages and project team members, showing who is responsible for each work component
+- C) The project budget allocated to each resource category
+- D) The communication frequency required for each stakeholder
+
+**Correct Answer:** B) The relationship between WBS work packages and project team members, showing who is responsible for each work component.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* The RAM maps the WBS to the project's organizational breakdown structure (OBS), showing which team member or group is responsible for each work package. The RACI chart is the most common specific form of a RAM.
+- *Why A is incorrect:* Daily task scheduling is a detailed schedule management activity, not the purpose of a RAM.
+- *Why C is incorrect:* Resource budget allocation is a cost management artifact (resource cost accounts), not a RAM.
+- *Why D is incorrect:* Communication frequency per stakeholder is defined in the Communications Management Plan, not the RAM.
+
+---
+
+## Question 19
+
+According to Maslow's Hierarchy of Needs, which level must be substantially met BEFORE the next level becomes a primary motivator?
+
+- A) Self-actualization before esteem needs
+- B) Social (belonging) needs before safety needs
+- C) Safety needs before physiological needs
+- D) Lower-level needs must be substantially satisfied before higher-level needs become primary motivators
+
+**Correct Answer:** D) Lower-level needs must be substantially satisfied before higher-level needs become primary motivators.
+
+**Distractor Analysis:**
+
+- *Why D is correct:* Maslow's hierarchy is progressive and bottom-up. Physiological → Safety → Social → Esteem → Self-actualization. Each level must be substantially met before the next level drives behavior. A team member worried about job security (safety) will not be motivated by recognition (esteem).
+- *Why A is incorrect:* Self-actualization is the top level — it comes after esteem, not before it.
+- *Why B is incorrect:* Safety needs precede social needs in the hierarchy. Social needs can only become primary motivators once safety needs are met.
+- *Why C is incorrect:* Physiological needs precede safety needs. You address basic survival needs first, then security.
+
+---
+
+## Question 20
+
+A project manager is working in a matrix organization and needs two network engineers for six weeks. The engineers are currently assigned to their functional manager's department. What is the PM's CORRECT approach to obtaining these resources?
+
+- A) Directly assign the engineers to the project without notifying their functional manager.
+- B) Negotiate with the functional manager to obtain the engineers for the required period, documenting the agreement in the staffing management plan.
+- C) Escalate to the sponsor and demand the engineers be transferred to the project permanently.
+- D) Hire external contractors instead because matrix organizations prohibit sharing functional resources.
+
+**Correct Answer:** B) Negotiate with the functional manager to obtain the engineers for the required period, documenting the agreement in the staffing management plan.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* In a matrix organization, the PM shares authority with functional managers. Resources are not exclusively "owned" by the project. The PM must negotiate resource availability with functional managers and document the agreement to ensure commitment.
+- *Why A is incorrect:* Directly assigning functional employees without manager authorization bypasses the organizational structure and creates conflict — the PM does not have unilateral authority in a matrix.
+- *Why C is incorrect:* Permanent transfer is inappropriate for a six-week need and would likely be rejected. Escalating to the sponsor before attempting direct negotiation is also skipping a step.
+- *Why D is incorrect:* Matrix organizations are specifically designed to share functional resources across projects. Resource sharing is the norm, not prohibited.

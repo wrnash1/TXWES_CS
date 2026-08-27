@@ -190,3 +190,21 @@ Submit the following as a single PDF or zipped package:
 | Part 3: Response Planning | 35 | Strategies assigned, secondary risk documented |
 | Part 4: Monitoring Setup | 15 | Triggers defined, escalation thresholds included |
 | **Total** | **100** | |
+
+---
+
+## Part 9 — Challenge Exercise
+
+This section is optional for students seeking additional depth and exam preparation. It is not graded as part of the standard 100-point lab but may be used for extra credit at the instructor's discretion.
+
+### Challenge Step 1: Decision Tree Analysis
+
+The FinRisk project team is deciding between two data backup approaches. Option A (on-premises backup) has a 15% probability of hardware failure costing $80,000 in recovery. Option B (cloud backup) has a 5% probability of a data sync failure costing $20,000, but adds $12,000 in annual subscription cost. Build a two-branch decision tree. Calculate the EMV for each option (include the subscription cost for Option B). Recommend which option the project should select based on the lowest total expected cost, and write two sentences justifying your recommendation to the project sponsor.
+
+### Challenge Step 2: Monte Carlo Narrative
+
+The FinRisk project team wants to use Monte Carlo simulation to determine the probability of completing the project within budget. In 5–8 sentences, explain: what inputs Monte Carlo simulation requires, how it generates a probability distribution, what a "P80 cost estimate" means, and why Monte Carlo is more informative than a single-point EAC estimate. You are not required to run an actual simulation — this is a conceptual explanation exercise.
+
+### Challenge Step 3: Risk Register Closure Report
+
+Select three risks from your Part 2 Risk Register. For each risk, write a brief Risk Closure Entry documenting: the original risk description, what actually happened (did the risk occur or not?), whether the response was effective, and the lesson learned for future similar projects. This closure entry would be stored as an OPA for future FinRisk-like projects. Format it as a three-row table with the columns: Risk Description, Outcome, Response Effectiveness (Yes/Partial/No), and Lesson Learned.

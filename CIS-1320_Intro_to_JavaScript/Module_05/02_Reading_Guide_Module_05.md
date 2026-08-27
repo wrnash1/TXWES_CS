@@ -395,7 +395,28 @@ If your browser tab freezes during a loop exercise, close the tab immediately. F
 
 ---
 
-## 9. JSE Certification Exam Tips
+## 9. Supplemental Resources
+
+The following free, openly available resources extend and reinforce the topics covered in this module.
+
+- **[Eloquent JavaScript — Chapter 2: Program Structure (Loops section)](https://eloquentjavascript.net/02_program_structure.html)**
+  The primary OER textbook. The loop sections cover `for`, `while`, and `do-while` with practical examples including break and continue behavior.
+
+- **[MDN Web Docs — Loops and iteration](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Loops_and_iteration)**
+  Comprehensive guide covering all loop types (`for`, `while`, `do-while`, `for...in`, `for...of`, `labeled` statements, `break`, and `continue`) with runnable examples.
+
+- **[javascript.info — Loops: while and for](https://javascript.info/while-for)**
+  Detailed breakdown of loop mechanics with interactive tasks. Covers off-by-one analysis, `break`/`continue` behavior, and loop labels for breaking nested loops.
+
+- **[MDN Web Docs — `for...of`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of)**
+  Full reference for the `for...of` loop including iterable protocol, use with arrays, strings, Maps, Sets, and generators.
+
+- **[MDN Web Docs — `for...in`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...in)**
+  Reference for `for...in` including the explicit warning about using it on arrays and why `for...of` or a traditional `for` loop is preferred for array iteration.
+
+---
+
+## 10. JSE Certification Exam Tips
 
 1. **`<` vs `<=` off-by-one** — `i < 5` runs five times (0–4); `i <= 5` runs six times (0–5). Read the condition carefully and count.
 
@@ -419,7 +440,7 @@ If your browser tab freezes during a loop exercise, close the tab immediately. F
 
 ---
 
-## 10. Study Checklist
+## 11. Study Checklist
 
 - [ ] Watch the Module 05 video lecture by Professor Nash.
 - [ ] Read Chapter 2 (Program Structure) of [Eloquent JavaScript](https://eloquentjavascript.net/02_program_structure.html) — loop sections.

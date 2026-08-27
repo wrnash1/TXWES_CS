@@ -235,4 +235,50 @@ The nslookup command is available on Windows, Linux, and macOS without any insta
 
 ---
 
+## Part 9 — Challenge Exercise
+
+These advanced steps extend the base lab for students seeking deeper protocol analysis skills.
+
+### Challenge Step 1: Query All DNS Record Types for a Domain
+
+Using `nslookup` in interactive mode, retrieve multiple DNS record types for a single domain and compare the results.
+
+1. Open a terminal and start nslookup in interactive mode by typing `nslookup` and pressing Enter.
+2. Set the query type to MX: `set type=MX`
+3. Query a mail domain: `gmail.com` — record all MX records and their priority values.
+4. Set the query type to TXT: `set type=TXT`
+5. Query the same domain for TXT records. Identify any SPF record (starts with `v=spf1`).
+6. Set the query type to AAAA: `set type=AAAA`
+7. Query `www.google.com` — record the IPv6 address if one is returned.
+
+**Challenge Question 1:** What is the purpose of an SPF (Sender Policy Framework) TXT record? How does it relate to email security, and at which TCP/IP layer does DNS (carrying SPF records) operate?
+
+### Challenge Step 2: Capture a DHCP Exchange Using Wireshark
+
+1. Download and install Wireshark (free at wireshark.org) if not already installed.
+2. Open Wireshark and start a capture on your active network adapter.
+3. In the capture filter bar, enter `udp port 67 or udp port 68` to filter DHCP traffic.
+4. Open an elevated command prompt (Windows) or terminal.
+5. Force a DHCP release and renew:
+   - Windows: `ipconfig /release` then `ipconfig /renew`
+   - Linux: `sudo dhclient -r` then `sudo dhclient`
+6. Stop the Wireshark capture and examine the DHCP packets captured.
+
+**Challenge Question 2:** Identify all four steps of the DHCP DORA process in your Wireshark capture. For each packet, record: source IP, destination IP, source port, destination port, and DHCP message type. Confirm which steps use broadcast and which use unicast addressing.
+
+### Challenge Step 3: Analyze TCP vs. UDP Headers in Wireshark
+
+1. Start a new Wireshark capture with no filter.
+2. Open a browser and visit any HTTP website (not HTTPS, use http:// explicitly if possible) OR use `curl http://example.com` from a terminal.
+3. Apply the Wireshark display filter: `tcp.port == 80`
+4. Find a TCP SYN packet. Expand the TCP header in the packet details pane.
+5. Record: source port, destination port, sequence number, acknowledgement number, and flags set.
+6. Now start a new capture and apply the filter: `udp.port == 53`
+7. Run `nslookup google.com` and stop the capture.
+8. Find a DNS query packet and expand the UDP header. Record: source port, destination port, length, checksum.
+
+**Challenge Question 3:** Compare the TCP header (SYN packet) with the UDP header (DNS query). List three specific fields present in the TCP header that are absent from the UDP header, and explain what function each missing field would have provided if UDP had included it.
+
+---
+
 *CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash*

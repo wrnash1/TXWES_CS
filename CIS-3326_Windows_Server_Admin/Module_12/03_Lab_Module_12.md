@@ -376,3 +376,180 @@ Test-WSMan -ComputerName "DC1"
 
 If the output shows an XML response with `productVendor: Microsoft`, WinRM is
 working correctly.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Build a Multi-Server Health Dashboard Script
+
+Write a production-quality PowerShell script that collects CPU, memory, disk,
+and top-process data from multiple servers simultaneously and exports the results
+to a structured CSV report.
+
+1. Create the data collection function that accepts pipeline input and returns
+   structured objects:
+
+   ```powershell
+   function Get-ServerHealth {
+       [CmdletBinding()]
+       param(
+           [Parameter(Mandatory=$true, ValueFromPipeline=$true)]
+           [string]$ComputerName
+       )
+       process {
+           try {
+               $os   = Get-WmiObject Win32_OperatingSystem -ComputerName $ComputerName -ErrorAction Stop
+               $disk = Get-WmiObject Win32_LogicalDisk -ComputerName $ComputerName `
+                           -Filter "DeviceID='C:'" -ErrorAction Stop
+
+               [PSCustomObject]@{
+                   Computer     = $ComputerName
+                   MemFreeGB    = [math]::Round($os.FreePhysicalMemory / 1MB, 1)
+                   DiskFreeGB   = [math]::Round($disk.FreeSpace / 1GB, 1)
+                   DiskTotalGB  = [math]::Round($disk.Size / 1GB, 1)
+                   DiskUsedPct  = [math]::Round((1 - $disk.FreeSpace/$disk.Size)*100, 1)
+                   Collected    = (Get-Date).ToString("yyyy-MM-dd HH:mm")
+                   Status       = "OK"
+               }
+           } catch {
+               [PSCustomObject]@{
+                   Computer    = $ComputerName
+                   MemFreeGB   = $null
+                   DiskFreeGB  = $null
+                   DiskTotalGB = $null
+                   DiskUsedPct = $null
+                   Collected   = (Get-Date).ToString("yyyy-MM-dd HH:mm")
+                   Status      = "ERROR: $($_.Exception.Message)"
+               }
+           }
+       }
+   }
+   ```
+
+2. Run the function against multiple servers using the pipeline and collect results:
+
+   ```powershell
+   $servers = @("DC1", "DC2", "localhost")
+   $results = $servers | Get-ServerHealth
+   $results | Format-Table -AutoSize
+   ```
+
+3. Export the results to CSV and verify the output:
+
+   ```powershell
+   $results | Export-Csv "C:\Reports\ServerHealth_$(Get-Date -Format yyyyMMdd).csv" `
+       -NoTypeInformation
+
+   Import-Csv "C:\Reports\ServerHealth_$(Get-Date -Format yyyyMMdd).csv" |
+       Format-Table -AutoSize
+   ```
+
+4. Add a threshold check that lists any server where disk usage exceeds 80%:
+
+   ```powershell
+   $results | Where-Object { [double]$_.DiskUsedPct -gt 80 } |
+       Select-Object Computer, DiskFreeGB, DiskUsedPct, Status
+   ```
+
+   In your lab notes, explain why the function returns a structured "ERROR" row
+   instead of throwing an exception, and why this design is better for bulk
+   reporting than letting errors propagate.
+
+### Challenge 2: Build an Event Log Audit Reporter with Weekly Scheduling
+
+Create a script that queries multiple security-relevant event IDs from the
+Security log, exports a report, and schedule it to run weekly.
+
+1. Write the event log collection function using efficient server-side filtering:
+
+   ```powershell
+   function Get-SecurityAuditReport {
+       param(
+           [string]$ComputerName = "localhost",
+           [int]$HoursBack       = 168   # 7 days
+       )
+
+       $start = (Get-Date).AddHours(-$HoursBack)
+
+       $eventIds = @(4625, 4740, 4648, 4672)   # failed logon, lockout, explicit creds, special priv
+
+       foreach ($id in $eventIds) {
+           try {
+               $events = Get-WinEvent -ComputerName $ComputerName -ErrorAction Stop `
+                   -FilterHashtable @{LogName='Security'; Id=$id; StartTime=$start}
+
+               [PSCustomObject]@{
+                   Computer  = $ComputerName
+                   EventID   = $id
+                   Count     = $events.Count
+                   FirstSeen = ($events | Sort-Object TimeCreated | Select-Object -First 1).TimeCreated
+                   LastSeen  = ($events | Sort-Object TimeCreated -Descending | Select-Object -First 1).TimeCreated
+               }
+           } catch {
+               [PSCustomObject]@{
+                   Computer  = $ComputerName
+                   EventID   = $id
+                   Count     = 0
+                   FirstSeen = $null
+                   LastSeen  = $null
+               }
+           }
+       }
+   }
+   ```
+
+2. Run the function, display the results, and export to CSV:
+
+   ```powershell
+   $report = Get-SecurityAuditReport -ComputerName "DC1" -HoursBack 24
+   $report | Format-Table -AutoSize
+
+   $report | Export-Csv "C:\Reports\SecurityAudit_$(Get-Date -Format yyyyMMdd).csv" `
+       -NoTypeInformation
+   ```
+
+3. Register a weekly scheduled task to run the audit script every Monday at 6 AM:
+
+   ```powershell
+   $action  = New-ScheduledTaskAction -Execute "PowerShell.exe" `
+                  -Argument "-File C:\Scripts\SecurityAudit.ps1"
+   $trigger = New-ScheduledTaskTrigger -Weekly -DaysOfWeek Monday -At "06:00AM"
+   $settings = New-ScheduledTaskSettingsSet -ExecutionTimeLimit (New-TimeSpan -Hours 1) `
+                   -StartWhenAvailable $true
+
+   Register-ScheduledTask -TaskName "WeeklySecurityAudit" `
+       -Action $action -Trigger $trigger -Settings $settings `
+       -User "SYSTEM" -RunLevel Highest
+
+   Get-ScheduledTask -TaskName "WeeklySecurityAudit" |
+       Select-Object TaskName, State, TaskPath
+   ```
+
+4. Verify the task exists and manually trigger it to confirm it runs successfully:
+
+   ```powershell
+   Start-ScheduledTask -TaskName "WeeklySecurityAudit"
+   Get-ScheduledTaskInfo -TaskName "WeeklySecurityAudit" |
+       Select-Object LastRunTime, LastTaskResult, NextRunTime
+   ```
+
+   In your lab notes, explain what `LastTaskResult: 0` means (success) versus
+   `LastTaskResult: 2147942401` (access denied), and why the task runs as SYSTEM.
+
+### Reflection Questions
+
+1. The `Get-ServerHealth` function uses `Get-WmiObject` for remote data collection.
+   Microsoft has deprecated `Get-WmiObject` in favor of `Get-CimInstance`. Describe
+   the primary functional differences between `Get-WmiObject` and `Get-CimInstance`
+   including the transport protocol each uses, and explain why `Get-CimInstance` is
+   preferred in modern environments that require PowerShell Remoting to work alongside
+   WMI queries.
+
+2. A weekly scheduled task runs a PowerShell audit script as SYSTEM on DC1. The
+   script queries the Security event log and emails results to the security team.
+   An auditor questions whether running the script as SYSTEM is appropriate. Describe
+   the security principle of least privilege as it applies to scheduled tasks, identify
+   what permissions the script actually needs (event log read, email send), and explain
+   how you would configure a dedicated service account or Group Managed Service Account
+   (gMSA) for this task instead of using SYSTEM.

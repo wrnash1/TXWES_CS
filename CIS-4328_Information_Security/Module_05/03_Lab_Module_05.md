@@ -188,4 +188,31 @@ Before submitting, verify:
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: TLS Configuration Audit Using SSL Labs
+
+Using the SSL Labs SSL Test at <https://www.ssllabs.com/ssltest/>, test two different public HTTPS servers of your choice — select one that you expect to be well-configured (e.g., a major bank or cloud provider) and one that may have legacy configuration issues (e.g., a smaller organization's public site).
+
+1. For each site, record: the overall SSL Labs grade, the TLS protocol versions supported, the cipher suites offered (note any that include RC4, 3DES, or non-PFS suites), the certificate's signature algorithm and key size, and whether OCSP Stapling is enabled.
+2. For the lower-rated site, identify at least three specific configuration weaknesses found by SSL Labs. For each weakness, state: the weakness name, the attack or risk it enables, and the specific remediation action required.
+3. One of the SSL Labs test categories is "Forward Secrecy." Explain in your own words what Perfect Forward Secrecy guarantees and why its absence means that recording encrypted traffic today could allow decryption in the future if a server's long-term private key is later compromised.
+4. SSL Labs reports whether a server is vulnerable to specific historical TLS attacks (POODLE, BEAST, ROBOT, etc.). Look up one of these attacks. Describe the attack mechanism in two to three sentences, identify which TLS protocol version or cipher suite is required for the attack to succeed, and state the remediation.
+
+### Challenge 2: PKI Chain of Trust Analysis and Certificate Revocation
+
+Using only a web browser and publicly available tools, complete the following PKI analysis tasks.
+
+1. Visit any three HTTPS websites and manually inspect the full certificate chain for each (browser padlock → Certificate → Certification Path). For each site, record: the end-entity certificate CN and validity dates, the intermediate CA name and issuing organization, and the root CA name. Identify whether any of the three sites share a common root CA.
+2. For one of the three sites, locate the OCSP responder URL (found in the certificate's Authority Information Access extension). Explain in plain language what the OCSP responder does, how OCSP Stapling improves on the basic OCSP model, and what the security risk is if a browser cannot reach the OCSP responder during a connection attempt.
+3. A security team discovers that one of their public web server certificates was issued with a 1024-bit RSA key and a SHA-1 signature by an intermediate CA whose certificate has since been revoked. The server certificate itself has not yet expired. Walk through each element of this scenario and explain: why the key size is insufficient, why the SHA-1 signature is a problem, why the revoked intermediate CA invalidates the chain regardless of the end-entity certificate's expiration date, and what the correct remediation sequence is.
+4. Research the concept of Certificate Transparency (CT) logs at <https://certificate.transparency.dev/>. Explain what CT logs are, why they exist as a PKI control, how they help detect misissued or fraudulent certificates, and what `expect-ct` header enforcement means for a web server operator.
+
+### Reflection Questions
+
+1. After completing both challenges, explain why an organization that enforces TLS 1.3 only — blocking TLS 1.0, 1.1, and 1.2 — is considered to have a stronger security posture even if TLS 1.2 with strong cipher suites is technically still secure. What specific attack classes does TLS 1.3 eliminate by design, and what does this mean for the concept of defense in depth applied to cryptographic protocol selection?
+2. In Challenge 2, you analyzed certificate chain validation. A user notices that a bank website shows a padlock and concludes the site is legitimate and safe. Explain two specific scenarios where the padlock could be present on a malicious or fraudulent site — one involving a domain validation certificate and one involving a compromised intermediate CA — and explain what control (beyond the padlock) a user should check to increase confidence in a site's legitimacy.
+
+---
+
 Module 05 Lab — End

@@ -523,3 +523,16 @@ Dataset size for hyperparameter tuning?
 ---
 
 *End of Reading Guide — Module 12*
+
+---
+
+## 9. Supplemental Resources
+
+**1. [Keras Tuner Documentation — Getting Started](https://keras.io/keras_tuner/)**
+Official Keras Tuner documentation covering `RandomSearch`, `Hyperband`, and `BayesianOptimization` tuners with complete code examples for `build_model(hp)`, `tuner.search()`, and `tuner.get_best_hyperparameters()`. The primary reference for all Keras Tuner exam questions.
+
+**2. [TensorFlow Model Optimization Toolkit — Post-Training Quantization](https://www.tensorflow.org/model_optimization/guide/quantization/post_training)**
+Official TF documentation covering all three post-training quantization modes: dynamic range, full integer, and float16. Includes the `representative_dataset` generator pattern and step-by-step TFLite conversion workflow with accuracy benchmarks on MobileNetV2.
+
+**3. [scikit-learn Hyperparameter Tuning — GridSearchCV and RandomizedSearchCV](https://scikit-learn.org/stable/modules/grid_search.html)**
+Scikit-learn's comprehensive guide to hyperparameter search for classical ML models. Covers `GridSearchCV`, `RandomizedSearchCV`, cross-validation scoring, and `pipeline` integration. Provides a useful contrast to Keras Tuner's approach and is directly applicable to the scikit-learn portions of the course.

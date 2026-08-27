@@ -213,4 +213,39 @@ Before submitting, verify:
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Threat Actor Profile and TTP Mapping Using MITRE ATT&CK
+
+Using the MITRE ATT&CK Groups database at <https://attack.mitre.org/groups/>, research two real-world threat actor groups — one nation-state attributed group and one financially motivated (organized crime) group of your choice.
+
+1. For each group, record: the group name, the ATT&CK group ID (e.g., G0001), the attributed country or criminal organization, the stated primary motivation, and at least four specific technique IDs with their tactic category and technique name from the group's ATT&CK profile.
+2. For each technique you identified, map it to the CIA Triad property most threatened by that technique. Justify each mapping in one sentence.
+3. Compare the two groups on the following dimensions: average dwell time (if documented), preferred initial access vector, use of zero-days vs. known CVEs, and whether living-off-the-land techniques appear in their profile. Present your comparison in a table.
+4. For each group, identify one specific IOC category (network, host, file, or behavioral) that would be most operationally useful for detecting that group's activity in an enterprise environment. Explain why that IOC category is more useful than the alternatives given the group's known TTPs.
+
+### Challenge 2: Malware Classification and Defense Mapping
+
+A SOC team has detected the following five behaviors across different endpoints during a single incident. Each behavior is independent — treat each as a separate malware specimen.
+
+1. A process in `C:\Windows\Temp\` is encrypting files and appending `.locked` extensions. A ransom note appears on the desktop.
+2. An executable disguised as a PDF reader installer has opened a persistent reverse shell to an external IP every time the system boots.
+3. A kernel-mode driver has modified system call tables and is hiding all files matching `svc*.exe` from directory listings and process lists.
+4. A process is silently capturing keystrokes and periodically uploading log files to an FTP server in 2 KB chunks.
+5. A Python script executes entirely in memory using PowerShell, connects to a C2 server, and downloads additional shellcode without writing any files to disk.
+
+For each of the five behaviors:
+
+- Identify the malware type (use the correct SY0-701 term from the Module 04 malware table).
+- State the primary CIA Triad property violated.
+- Identify one specific detection technique and one specific preventive control appropriate for that malware type.
+- Classify the preventive control using the Category (Physical/Technical/Administrative) and Function (Preventive/Detective/Corrective/Deterrent/Compensating/Directive) axes.
+
+### Reflection Questions
+
+1. In Challenge 1, you compared a nation-state group to a financially motivated group. Based on your research, explain in your own words why the same vulnerability might require a different defensive response depending on which type of threat actor is likely to exploit it. Give one specific example using techniques from your ATT&CK research.
+2. In Challenge 2, Behavior 5 describes fileless malware executing entirely in memory. A network administrator argues that because no malicious file is written to disk, traditional antivirus is sufficient protection since there is nothing to scan. Explain why this reasoning is incorrect, and identify two specific controls from the Module 04 reading that would be effective against fileless malware despite its lack of disk artifacts.
+
+---
+
 Module 04 Lab — End

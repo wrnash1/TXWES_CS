@@ -233,3 +233,35 @@ The Apex Logistics scenario compresses the full NIST SP 800-61 lifecycle — pha
 The skills you apply here — structured triage, evidence-versus-speed judgment, eradication planning, and lessons-learned documentation — are among the most tested competencies in CISM Domain 4. More importantly, they are among the most consequential skills in professional security management. The decisions made in the first two hours of an incident determine much of the outcome.
 
 Keep your completed deliverables. The incident timeline and lessons-learned report formats you produced are directly applicable to real-world incident response documentation.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Detection Architecture Gap Analysis
+
+Using the Apex Logistics scenario from this lab, perform a structured detection gap analysis.
+
+Step 1: Review the attack timeline. For each of the following four detection technologies — SIEM, EDR, NDR, and UEBA — assess whether it was present, absent, or partially effective in detecting the Apex compromise. Present your assessment as a table with columns: Technology, Present/Absent, Detection Opportunity (what it could have detected and when), and Gap (what it missed and why).
+
+Step 2: The attacker operated for three days before detection. Calculate the dwell time in hours. Then identify the single detection control whose absence most extended the dwell time, and justify your selection using the order of detection opportunities available across the attack timeline.
+
+Step 3: Design a detection rule in plain language (no code required) for a SIEM platform that would have generated an alert within 30 minutes of the web shell's first use on Saturday. Your rule should specify: the log source, the observable condition, the threshold or time window, and the alert severity it should generate.
+
+Step 4: Propose one deception technology deployment — a specific honeypot or honey credential — that would have generated a near-zero false-positive alert during the attacker's lateral movement phase. Describe where it would be placed, what it would emulate, and what condition triggers the alert.
+
+### Challenge 2: Eradication Completeness Audit
+
+After eradication of the Apex compromise, the IR team declares the environment clean. Two weeks later, the attacker reestablishes access through APP-PORTAL-01.
+
+Step 1: Using the Module 11 Reading Guide eradication checklist categories (malware removal, persistence mechanisms, credential rotation, vulnerability remediation), identify at least two specific items in each category that the original eradication team likely missed to allow re-entry.
+
+Step 2: Design a post-eradication validation checklist of at least eight specific, actionable verification steps that the team should have completed before declaring the environment clean. Each step must name the tool or log source used to verify it.
+
+Step 3: Write a 3-sentence executive briefing explaining the re-compromise to Apex's CEO in non-technical language, focusing on what failed and what has changed in the response program to prevent recurrence.
+
+### Reflection Questions
+
+1. The Apex incident involved active data exfiltration to a Tor exit node for 7.5 hours before detection. Using the NIST SP 800-61 framework, explain at which phase of the incident lifecycle the earliest detection opportunity existed, what detection technology would have provided it, and what organizational or process factor allowed that opportunity to be missed.
+
+2. Lessons-learned reviews are designed to be blameless improvement processes. However, the Apex incident revealed that the SIEM alert generated on Day 1 was dismissed by an analyst managing 2,800 alerts. Describe how you would structure the lessons-learned discussion to address this finding constructively — identifying the systemic root cause without creating a punitive atmosphere that would prevent honest participation from the analyst involved.

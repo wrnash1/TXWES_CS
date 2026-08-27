@@ -214,6 +214,206 @@ D. `/usr/log`
 
 ---
 
+### Question 11 (5 points)
+
+An administrator wants to search for the string "failed password" (case-insensitive) in `/var/log/auth.log` and save only the matching lines to a file called `failures.txt`. Which command accomplishes this?
+
+A. `grep "failed password" /var/log/auth.log > failures.txt`
+B. `grep -i "failed password" /var/log/auth.log > failures.txt`
+C. `find /var/log/auth.log -name "failed password" > failures.txt`
+D. `cat /var/log/auth.log | tee failures.txt | grep -i "failed password"`
+
+**Correct Answer: B**
+
+**Distractor Analysis**:
+
+- **A** is incorrect. Without `-i`, `grep` performs a case-sensitive match. "Failed Password" or "FAILED PASSWORD" entries would be missed.
+- **B** is correct. `-i` makes the match case-insensitive, catching all capitalizations of "failed password." The `>` redirect saves only the matching lines to `failures.txt`.
+- **C** is incorrect. `find` searches for files by name or attribute — it does not search file content. This command looks for a file named "failed password," which does not exist.
+- **D** is incorrect. This saves the full unfiltered log to `failures.txt` before the `grep` filter is applied. Only the terminal output is filtered; the file would contain the entire log.
+
+---
+
+### Question 12 (5 points)
+
+Which command appends the current date and time to the end of an existing file named `log.txt` without overwriting its contents?
+
+A. `date > log.txt`
+B. `date >> log.txt`
+C. `date 2> log.txt`
+D. `date | log.txt`
+
+**Correct Answer: B**
+
+**Distractor Analysis**:
+
+- **A** is incorrect. The `>` operator overwrites the file. Any existing content in `log.txt` would be deleted and replaced with just the date output.
+- **B** is correct. The `>>` operator appends stdout to the end of the file. Existing content is preserved and the new date is added at the bottom.
+- **C** is incorrect. `2>` redirects stderr, not stdout. The `date` command outputs to stdout and produces no stderr under normal operation, so `log.txt` would be created empty (or remain unchanged if it exists and no error occurred).
+- **D** is incorrect. The pipe `|` connects stdout to another command's stdin. `log.txt` is a filename, not a command. This syntax is invalid and would fail.
+
+---
+
+### Question 13 (5 points)
+
+A system administrator needs to find all `.log` files under `/var` that were modified within the last 2 days. Which `find` command is correct?
+
+A. `find /var -name "*.log" -size -2M`
+B. `find /var -type f -name "*.log" -mtime -2`
+C. `find /var -type f -name "*.log" -mtime +2`
+D. `find /var -name "*.log" -ctime -2`
+
+**Correct Answer: B**
+
+**Distractor Analysis**:
+
+- **A** is incorrect. `-size -2M` finds files smaller than 2 MB — it has nothing to do with modification time.
+- **B** is correct. `-mtime -2` means "modified less than 2 days ago" (i.e., within the last 2 days). The minus sign means "within the last N days."
+- **C** is incorrect. `-mtime +2` means "modified MORE than 2 days ago" — the opposite of what was requested. The plus sign means "older than N days."
+- **D** is partially correct in intent (ctime is "change time") but `-ctime` tracks inode change time (permissions, ownership changes), not content modification time. `-mtime` is the correct predicate for content modification.
+
+---
+
+### Question 14 (5 points)
+
+An administrator runs `command1 | command2 | command3`. In this pipeline, what does `command2` receive as its input?
+
+A. The stderr output of `command1`.
+B. The stdout output of `command1`.
+C. Data read directly from disk by the pipeline manager.
+D. The combined stdout and stderr of all commands.
+
+**Correct Answer: B**
+
+**Distractor Analysis**:
+
+- **A** is incorrect. By default, the pipe `|` connects only stdout of one command to stdin of the next. Stderr is not captured by the pipe unless explicitly redirected with `2>&1`.
+- **B** is correct. The pipe operator sends the stdout of `command1` to the stdin of `command2`. `command2` processes that data and its stdout flows to `command3`.
+- **C** is incorrect. Pipelines pass data between processes in memory (via kernel pipe buffers). No intermediate disk I/O occurs.
+- **D** is incorrect. Only stdout flows through a plain pipe. To include stderr, you would need `command1 2>&1 | command2`.
+
+---
+
+### Question 15 (5 points)
+
+Which of the following `find` options suppresses "Permission denied" error messages from appearing on the terminal?
+
+A. `find / -name "*.sh" --no-errors`
+B. `find / -name "*.sh" -silent`
+C. `find / -name "*.sh" 2>/dev/null`
+D. `find / -name "*.sh" 1>/dev/null`
+
+**Correct Answer: C**
+
+**Distractor Analysis**:
+
+- **A** is incorrect. There is no `--no-errors` option for `find`. This would cause an error.
+- **B** is incorrect. There is no `-silent` option for `find`. This would cause an error.
+- **C** is correct. `2>/dev/null` redirects stderr (file descriptor 2) to `/dev/null`, discarding all error messages including "Permission denied." Normal search results still appear on the terminal.
+- **D** is incorrect. `1>/dev/null` redirects stdout — the actual search results — to `/dev/null`, discarding them. Error messages would still appear on screen. This is the opposite of what was asked.
+
+---
+
+### Question 16 (5 points)
+
+What is the correct location for kernel modules (device drivers) on a Linux system?
+
+A. `/etc/modules`
+B. `/proc/modules`
+C. `/lib/modules/$(uname -r)/`
+D. `/dev/modules/`
+
+**Correct Answer: C**
+
+**Distractor Analysis**:
+
+- **A (`/etc/modules`)** is incorrect. `/etc/modules` is a configuration file that lists modules to load at boot — it does not contain the module files themselves.
+- **B (`/proc/modules`)** is incorrect. `/proc/modules` is a virtual file that lists currently loaded modules, but it does not store the module files on disk.
+- **C** is correct. Kernel module files (`.ko` files) are stored in `/lib/modules/<kernel-version>/`. The `$(uname -r)` substitution inserts the running kernel version. For example: `/lib/modules/6.5.0-21-generic/`.
+- **D (`/dev/modules/`)** is incorrect. `/dev` contains device files, not kernel module binaries. There is no `/dev/modules/` directory in the FHS.
+
+---
+
+### Question 17 (5 points)
+
+An administrator runs `wc -l /etc/passwd`. The output is `42`. What does this indicate?
+
+A. The passwd file has 42 characters.
+B. The passwd file has 42 words.
+C. The passwd file has 42 lines, suggesting approximately 42 user accounts or system entries.
+D. The passwd file is 42 kilobytes.
+
+**Correct Answer: C**
+
+**Distractor Analysis**:
+
+- **A** is incorrect. Character count is shown by `wc -c`. The `-l` flag counts lines.
+- **B** is incorrect. Word count is shown by `wc -w`. The `-l` flag counts lines.
+- **C** is correct. `wc -l` counts newline characters, which equals the number of lines. Since each line in `/etc/passwd` represents one user account or system service entry, 42 lines means approximately 42 entries.
+- **D** is incorrect. File size in kilobytes would be shown by `ls -lh` or `du -sh`. `wc -l` produces a line count, not a size measurement.
+
+---
+
+### Question 18 (5 points)
+
+Which of the following commands correctly uses `find`'s `-exec` option to delete all files named `*.tmp` under `/tmp`?
+
+A. `find /tmp -name "*.tmp" -exec rm {} ;`
+B. `find /tmp -name "*.tmp" -exec rm {} \;`
+C. `find /tmp -name "*.tmp" | rm`
+D. `find /tmp -name "*.tmp" -delete {}`
+
+**Correct Answer: B**
+
+**Distractor Analysis**:
+
+- **A** is incorrect. The semicolon that terminates `-exec` must be escaped as `\;` (or quoted as `';'`) to prevent the shell from interpreting it as a command separator. Without the backslash, the shell consumes the `;` before `find` sees it.
+- **B** is correct. `-exec rm {} \;` runs `rm` once per found file. `{}` is replaced by the filename; `\;` is the properly escaped terminator that `find` requires.
+- **C** is incorrect. Piping filenames from `find` to `rm` does not work — `rm` reads filenames as command-line arguments, not from stdin. `xargs` would be needed: `find /tmp -name "*.tmp" | xargs rm`.
+- **D** is incorrect. `-delete` is a valid `find` action that deletes found files, but `-delete {}` is wrong syntax. The correct usage is simply `-delete` with no argument: `find /tmp -name "*.tmp" -delete`.
+
+---
+
+### Question 19 (5 points)
+
+A junior administrator asks what `/dev/zero` is used for. Which answer is correct?
+
+A. It generates cryptographically secure random bytes.
+B. It produces an infinite stream of null bytes (zero bytes) when read.
+C. It discards all data written to it.
+D. It stores the current system entropy pool.
+
+**Correct Answer: B**
+
+**Distractor Analysis**:
+
+- **A** is incorrect. Cryptographically secure random bytes come from `/dev/random` (blocking) or `/dev/urandom` (non-blocking). `/dev/zero` always produces zero bytes, not random data.
+- **B** is correct. `/dev/zero` is a special character device that produces an endless stream of null (zero) bytes when read. It is commonly used to overwrite files or partitions with zeros: `dd if=/dev/zero of=/dev/sdb`.
+- **C** is incorrect. Discarding data written to a device describes `/dev/null` — data written to it disappears. `/dev/zero` is a data source, not a sink.
+- **D** is incorrect. The entropy pool is managed by `/dev/random` and `/dev/urandom`. `/dev/zero` has no connection to entropy.
+
+---
+
+### Question 20 (5 points)
+
+An administrator wants to view a file that is 5,000 lines long one screen at a time, with the ability to search for text and scroll both forward and backward. Which command is most appropriate?
+
+A. `cat /path/to/file`
+B. `head -5000 /path/to/file`
+C. `more /path/to/file`
+D. `less /path/to/file`
+
+**Correct Answer: D**
+
+**Distractor Analysis**:
+
+- **A** is incorrect. `cat` dumps the entire file to the terminal at once with no pagination. A 5,000-line file would scroll off screen instantly with no way to navigate backward.
+- **B** is incorrect. `head -5000` would print all 5,000 lines at once (since the file has exactly 5,000 lines), same problem as `cat`. `head` does not paginate.
+- **C** is partially correct but `more` only supports forward navigation. Once you scroll past a section you cannot scroll back. It is the older, less capable alternative.
+- **D** is correct. `less` is the standard pager for viewing large files. It supports forward and backward scrolling, text search with `/`, line-number jumping with `<number>G`, and handles files of any size without loading the whole file into memory.
+
+---
+
 ### Answer Key
 
 | Question | Answer |
@@ -228,3 +428,13 @@ D. `/usr/log`
 | 8 | B |
 | 9 | B |
 | 10 | C |
+| 11 | B |
+| 12 | B |
+| 13 | B |
+| 14 | B |
+| 15 | C |
+| 16 | C |
+| 17 | C |
+| 18 | B |
+| 19 | B |
+| 20 | D |

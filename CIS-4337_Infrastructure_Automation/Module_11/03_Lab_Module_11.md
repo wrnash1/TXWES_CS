@@ -153,7 +153,7 @@ terraform plan
 
 Observe that the plan runs remotely. The terminal output streams from Terraform Cloud:
 
-```
+```text
 Running plan in Terraform Cloud. Output will stream here.
 Waiting for the plan to start...
 
@@ -252,11 +252,11 @@ workspaces {
 }
 ```
 
-3. Run `terraform init` and `terraform apply`
+1. Run `terraform init` and `terraform apply`
 
 Observe that `lab11-prod` has completely separate state from `lab11-local`. The `app_id` will be a different value because the state is independent.
 
-4. Switch back to `lab11-local`:
+1. Switch back to `lab11-local`:
 
 ```hcl
 workspaces {
@@ -363,6 +363,62 @@ Answer these in a text file named `reflection.txt` and submit with your delivera
 | VCS integration configured and plan triggered by git push | 20 |
 | Reflection questions answered thoughtfully | 10 |
 | **Total** | **100** |
+
+---
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Variable Sets and Multi-Workspace Credential Sharing
+
+Simulate the pattern of sharing credentials across multiple workspaces using a variable set.
+
+**Step A.** In your Terraform Cloud organization, create a second workspace named `lab11-staging`. Set up a **variable set** named `shared-app-config` containing two Terraform variables:
+
+```text
+app_name    = "enterprise-app"
+environment = "shared"
+```
+
+1. Apply the variable set to both `lab11-local` and `lab11-staging` workspaces.
+2. Trigger a plan in each workspace from the CLI (without passing `-var` flags) and confirm that both workspaces receive `app_name = "enterprise-app"` from the variable set.
+3. In `lab11-local`, also set a workspace-level variable `app_name = "override-app"`. Trigger another plan and observe which value takes precedence: workspace-level variables override variable sets when the same key exists in both.
+4. Document in `reflection.txt`: what is the practical security benefit of storing AWS credentials (`AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`) in a global variable set rather than in each workspace individually? What access control risk exists if a developer has Write access to one workspace but the variable set contains credentials for all environments?
+
+### Challenge 2: Sentinel Policy Simulation with Run Triggers
+
+Simulate a Sentinel-like enforcement gate using Terraform's `precondition` block as a local policy equivalent, and connect two workspaces with a run trigger.
+
+**Step A.** In `main.tf` for `lab11-local`, add a `precondition` to the `local_file.app_config` resource that enforces a naming policy — the `app_name` variable must not contain the string `"test"` in a production-like environment:
+
+```hcl
+resource "local_file" "app_config" {
+  filename = "${path.module}/output/config.json"
+  content  = jsonencode({
+    app_name    = var.app_name
+    environment = var.environment
+    app_id      = random_id.app_id.hex
+  })
+
+  lifecycle {
+    precondition {
+      condition     = !(var.environment == "prod" && can(regex("test", var.app_name)))
+      error_message = "app_name must not contain 'test' when environment is prod."
+    }
+  }
+}
+```
+
+1. Set workspace variables `app_name = "test-app"` and `environment = "prod"` in `lab11-local`. Trigger a plan and observe the precondition failure message.
+2. Change `app_name` to `"prod-app"` and re-trigger. Confirm the plan succeeds.
+3. In the Terraform Cloud UI, configure a **run trigger** so that a successful apply in `lab11-local` automatically queues a plan in `lab11-staging`. Trigger an apply in `lab11-local` and verify that `lab11-staging` receives a queued run.
+4. Record in `reflection.txt`: how does Terraform's `precondition` / `postcondition` feature compare to Sentinel policies in terms of where the enforcement runs, who can override it, and what it can evaluate?
+
+### Challenge Reflection Questions
+
+1. The lab used the `cloud` block to connect a local configuration to Terraform Cloud for remote execution. Explain the complete data flow of a `terraform apply` in remote execution mode: which parts run locally, which parts run in Terraform Cloud, and where the state is written. Identify one scenario where remote execution mode could cause a problem that local execution mode would not.
+2. Terraform Cloud's sensitive variables protect secrets at the UI and API layer, but the Terraform Associate exam notes that values still flow through the execution environment. Describe two additional security controls (beyond marking a variable sensitive in the TFC UI) that an organization should implement to prevent accidental exposure of secrets like database passwords or cloud credentials stored in TFC workspace variables.
 
 ---
 

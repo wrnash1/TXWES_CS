@@ -468,4 +468,45 @@ Submit the following:
 
 ---
 
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Extended Mock Assessment — Hard Questions
+
+The following ten questions are designed at the upper difficulty range of the PSM I exam. Answer each independently, then compare your reasoning to the explanations provided.
+
+**Question HC-1:** A Scrum Team has been told they must use the organization's existing project management tool that requires all tasks to be assigned to specific individuals at Sprint start. The Product Owner and Scrum Master agree this creates problems. What is the single most important Scrum principle this requirement violates, and what should the Scrum Master do?
+
+**Question HC-2:** The Product Owner wants to add a new story to the current Sprint because a competitor just released a similar feature. The story is important but not urgent enough to threaten the Sprint Goal. What are the Developers' options and who makes the decision?
+
+**Question HC-3:** A Scrum Team's velocity has been 30–35 for six Sprints. In Sprint 7, the team's Definition of Done is updated to include security scanning and performance testing. Sprint 7 velocity drops to 18. What should the Scrum Master tell the Product Owner, and what should NOT be said?
+
+**Question HC-4:** Two team members disagree about the technical approach for a critical story. One approach is faster; the other is more maintainable. Sprint Planning has stalled for 45 minutes. Who resolves this, and how?
+
+**Question HC-5:** A Product Owner says: "I want the Retrospective skipped this Sprint. We're behind on features and I need the three hours for development work." What is the most precise Scrum Master response — referencing the specific principle or Scrum Guide concept that applies?
+
+For each hard question: write your answer (2–3 sentences), identify the Scrum Guide concept or section that applies, and rate your confidence (High / Medium / Low). Then write a one-sentence explanation of what makes this question harder than a typical PSM I question.
+
+### Challenge 2: Scenario Bank — Novel Situations
+
+The following five scenarios describe situations not directly covered in any single module. Each requires synthesizing concepts from multiple modules. For each scenario, write a 75–100 word response that applies Scrum principles correctly. Identify which module(s) inform your response.
+
+**Scenario A:** A Scrum Team's Product Owner goes on extended leave. The organization assigns the role to a committee of three senior stakeholders. After two Sprints, the team reports that Sprint Planning takes twice as long because the three stakeholders disagree on priorities. Using Scrum principles, describe what is happening and propose a resolution.
+
+**Scenario B:** A Scrum Team consistently delivers high-velocity Sprints but the organization's business metrics show no improvement after six months. The product is technically excellent. What does this indicate about how the Product Backlog has been managed, and which Scrum accountability is most directly responsible?
+
+**Scenario C:** A company adopts Scrum but keeps its existing annual performance review process, where each developer's yearly bonus is tied to how many story points they were assigned that year. After two Sprints, the team's velocity doubles — but Sprint Reviews show the Increment quality has declined. What is causing this, and what should the Scrum Master do?
+
+**Scenario D:** A team running two-week Sprints is asked to demo to a major enterprise customer every four weeks. The customer wants to see "only finished, polished features — no rough edges." The Product Owner agrees to hold back certain Increment items until the four-week demo. What Scrum principles does this arrangement risk violating, and what would a better approach look like?
+
+**Scenario E:** A Scrum Master is asked to produce a Gantt chart showing feature delivery dates for the next twelve months to satisfy an enterprise customer's contract requirement. The Scrum Master knows this forecast will be inaccurate. Describe the tension between organizational necessity and Scrum principles, and propose a resolution that satisfies the customer without making false commitments.
+
+### Reflection Questions
+
+1. You have now completed a sixteen-module course that covers SDLC models, the Agile Manifesto, the Scrum framework in depth, user stories, estimation, Kanban, Lean, requirements engineering, design patterns, CI/CD, scaled Agile, and metrics. If you had to identify the single idea from this course that most challenges how most software organizations currently operate, what would it be? Defend your choice with at least two specific examples of how that idea conflicts with common organizational practice.
+2. The PSM I certification tests knowledge of Scrum. But knowledge of a framework does not guarantee skilled application of it. What is the gap between passing the PSM I and being an effective Scrum practitioner, and what experiences, beyond certification, would close that gap? This is your capstone reflection — write 200–300 words.
+
+---
+
 End of Lab — Module 16

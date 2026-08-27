@@ -254,3 +254,17 @@ Before delivering a cleaned dataset, verify all of the following.
 
 - Official exam objectives: comptia.org (search "Data+ DA0-001 exam objectives")
 - Professor Messer's free study guides: professormesser.com
+
+## 9. Supplemental Resources
+
+**1. Kaggle Learn — Data Cleaning (Python)**
+<https://www.kaggle.com/learn/data-cleaning>
+A free, hands-on course covering handling missing values, scaling and normalization, data type parsing, and character encoding using real messy datasets. Directly maps to the techniques in this module.
+
+**2. Towards Data Science — A Practical Guide to Data Imputation**
+<https://towardsdatascience.com/6-different-ways-to-compensate-for-missing-values-data-imputation-with-examples-6022d9ca0779>
+Covers six imputation strategies with Python examples, including mean, median, mode, forward fill, KNN, and MICE. Essential reading for understanding when each method is appropriate.
+
+**3. pandas Official Documentation — Working with Missing Data**
+<https://pandas.pydata.org/docs/user_guide/missing_data.html>
+The authoritative reference for all pandas null-handling methods: `isnull()`, `fillna()`, `dropna()`, `ffill()`, `bfill()`, and interpolation. Includes edge cases and performance notes.

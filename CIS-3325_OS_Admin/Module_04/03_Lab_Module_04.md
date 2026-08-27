@@ -444,3 +444,88 @@ Submit all of the following through the course LMS:
 | Analysis Question 4 (chage -d 0) | 5 |
 | Analysis Question 5 (sudo vs wheel) | 10 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+**Challenge Step 1 — Implement password quality enforcement with PAM**
+
+Configure the pam_pwquality module to enforce a minimum password length of 14 characters
+with complexity requirements across all local accounts:
+
+```bash
+sudo apt install -y libpam-pwquality
+sudo cp /etc/security/pwquality.conf /etc/security/pwquality.conf.bak
+sudo tee /etc/security/pwquality.conf > /dev/null << 'EOF'
+minlen = 14
+dcredit = -1
+ucredit = -1
+lcredit = -1
+ocredit = -1
+maxrepeat = 3
+EOF
+cat /etc/security/pwquality.conf
+```
+
+Test the policy by attempting to set a weak password for dev1:
+
+```bash
+sudo passwd dev1
+```
+
+Try entering "password" and then "Password1!" and observe which are rejected. Then set a
+compliant password. Document the rejection messages and explain in two sentences what each
+pwquality.conf parameter controls.
+
+**Challenge Step 2 — Configure sudo with command aliasing and logging**
+
+Create a production-style sudoers configuration using command aliases and verify audit
+logging:
+
+```bash
+sudo visudo -f /etc/sudoers.d/lab-policy
+```
+
+Enter the following content using visudo (it will validate syntax before saving):
+
+```
+Cmnd_Alias NETWORK_CMDS = /usr/sbin/iptables, /usr/bin/ss, /usr/sbin/ip
+Cmnd_Alias SERVICE_CMDS = /usr/bin/systemctl start *, /usr/bin/systemctl stop *, /usr/bin/systemctl restart *, /usr/bin/systemctl status *
+Cmnd_Alias FORBIDDEN = /usr/bin/su, /usr/sbin/visudo, /usr/bin/passwd root
+
+dev1 ALL=(root) NOPASSWD: NETWORK_CMDS, SERVICE_CMDS
+dev1 ALL=(root) !FORBIDDEN
+```
+
+Test the policy:
+
+```bash
+sudo -u dev1 sudo systemctl status ssh
+sudo -u dev1 sudo su -
+sudo tail -20 /var/log/auth.log | grep sudo
+```
+
+Document which commands succeeded and which were denied. Explain in two sentences how the
+! (negation) operator in sudoers prevents privilege escalation even when broader rules exist.
+
+**Challenge Step 3 — Audit all accounts for security compliance**
+
+Write a security audit report for all local user accounts by examining /etc/passwd,
+/etc/shadow, and running chage checks:
+
+```bash
+awk -F: '$7 !~ /nologin|false/ && $3 >= 1000 {print $1}' /etc/passwd
+for user in $(awk -F: '$7 !~ /nologin|false/ && $3 >= 1000 {print $1}' /etc/passwd); do
+  echo "=== $user ==="; chage -l $user; echo
+done
+sudo awk -F: '$2 == "" {print $1 ": NO PASSWORD SET"}' /etc/shadow
+sudo awk -F: '$2 ~ /^[^!$]/ && $2 != "x" {print $1 ": UNSHADOWED PASSWORD"}' /etc/shadow
+find /home -maxdepth 1 -type d | while read d; do
+  ls -la "$d" | head -3
+done
+```
+
+Document all findings. Identify any accounts that: have no password set, have shells
+allowing login but no password aging configured, or have home directories with overly
+permissive ownership. Propose remediation commands for each finding.

@@ -205,3 +205,205 @@ Which of the following types can serve as a Python `dict` key?
 - *Why B is incorrect:* Neither `defaultdict` nor `setdefault` automatically removes empty lists. Empty-list cleanup would need to be done explicitly.
 - *Why C is correct:* With `defaultdict(list)`, writing `d[key].append(val)` works for any key — the factory creates an empty list if the key is new. With a plain dict, you must write `d.setdefault(key, []).append(val)` or check `if key not in d: d[key] = []` before appending. `defaultdict` eliminates this boilerplate, making group-by patterns cleaner and less error-prone.
 - *Why D is incorrect:* `d.setdefault(key, default)` works even if `key` is absent — it inserts `default` if the key is missing. The distinction is ergonomics and readability, not a correctness difference.
+
+---
+
+### Question 11
+
+**Each question is worth 5 points.**
+
+What is the load factor of a hash table, and why is a high load factor detrimental to performance?
+
+- A) Load factor = number of collisions / table size; high values mean more keys per bucket on average
+- B) Load factor = number of entries / table size; a high load factor increases the average collision probability, degrading O(1) average lookups toward O(n)
+- C) Load factor = table size / number of entries; high values mean the table is mostly empty
+- D) Load factor = maximum bucket size; a high value means one bucket holds all entries
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Load factor is defined as the ratio of entries to table size, not collisions to table size. The number of collisions is a consequence of load factor but not its definition.
+- *Why B is correct:* Load factor α = n/m where n = number of entries and m = table size (number of buckets). When α is close to 1 (or exceeds 1 for separate chaining), the average bucket length grows, making lookups degrade from O(1) toward O(n). For example, with α = 1, the expected number of comparisons per lookup approaches 2 (for chaining). Dynamic resize (typically at α = 0.75) keeps α bounded and preserves O(1) average.
+- *Why C is incorrect:* This is the reciprocal of the load factor. A high value of m/n would mean many empty buckets — low collisions. The actual load factor n/m is what's typically discussed.
+- *Why D is incorrect:* Maximum bucket size is not the load factor. Maximum bucket size is a separate concern related to worst-case hash collision clusters.
+
+---
+
+### Question 12
+
+In the Longest Consecutive Sequence problem (LeetCode #128), why must you only start counting from elements where `x - 1` is NOT in the set?
+
+- A) To avoid counting duplicate values multiple times
+- B) To ensure each sequence is counted only from its smallest element, preventing O(n²) redundant counting
+- C) To skip even numbers in the sequence
+- D) Because the set does not support membership tests for negative numbers
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Duplicates are handled by building a set (which removes duplicates automatically). The `x - 1` check is not about deduplication.
+- *Why B is correct:* If you start counting from every element, you repeatedly count the same sequences from each element within them. For example, sequence `[1, 2, 3, 4, 5]` would be counted 5 times — starting from 1, 2, 3, 4, and 5. The `x - 1 not in set` check ensures you only start counting from the minimum element of each sequence (the one with no predecessor). Each sequence is then counted exactly once, making the total work O(n) across all sequences.
+- *Why C is incorrect:* The check `x - 1 not in set` applies to all elements regardless of parity. There is no filtering by even or odd.
+- *Why D is incorrect:* Python's `set` supports membership tests for any hashable value including negative integers. `(-1) in {-1, 0, 1}` returns `True` without issue.
+
+---
+
+### Question 13
+
+What Python expression converts a string `s` into a canonical hashable key such that all anagrams of `s` produce the same key?
+
+- A) `hash(s)`
+- B) `frozenset(s)`
+- C) `tuple(sorted(s))`
+- D) `s.lower()`
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `hash(s)` returns a single integer. Different strings with different character orderings (including anagrams) generally have different hash values. `hash("abc")` ≠ `hash("bca")`.
+- *Why B is incorrect:* `frozenset(s)` creates a set of unique characters, discarding duplicate counts. `frozenset("aab")` = `frozenset("ab")` = `{'a','b'}`. This loses count information, causing non-anagrams with the same character set to be grouped together (e.g., "a" and "aa" would incorrectly share a key).
+- *Why C is correct:* `tuple(sorted(s))` sorts the characters alphabetically and creates a tuple. Any anagram of `s` has the same characters in the same sorted order, producing identical tuples. Tuples are hashable and can be used as dictionary keys. For example: `tuple(sorted("eat"))` = `('a','e','t')` = `tuple(sorted("ate"))` = `tuple(sorted("tea"))`.
+- *Why D is incorrect:* `s.lower()` only changes case; it does not sort characters or group anagrams. "eat" and "tea" both become "eat" and "tea" (lowercased), which are still different strings.
+
+---
+
+### Question 14
+
+Given `d = {"a": 1, "b": 2, "c": 3}`, what does `d.get("x", 0)` return?
+
+- A) Raises `KeyError` because "x" is not in `d`
+- B) Returns `None` because "x" is not in `d`
+- C) Returns `0` — the default value specified as the second argument
+- D) Returns `"x"` — the key that was queried
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `d["x"]` raises `KeyError` for a missing key, but `d.get("x", 0)` is specifically designed to avoid `KeyError`. It returns the default value instead.
+- *Why B is incorrect:* `d.get("x")` with no default argument returns `None` for a missing key. But `d.get("x", 0)` specifies `0` as the default, so `None` is not returned.
+- *Why C is correct:* `dict.get(key, default)` returns `dict[key]` if `key` exists, otherwise returns `default`. Since "x" is not in `d`, `d.get("x", 0)` returns `0`. This is the standard idiom for safe dictionary lookups in Python.
+- *Why D is incorrect:* `dict.get` returns the value associated with the key (or the default), never the key itself.
+
+---
+
+### Question 15
+
+In Python's `Counter`, what does `Counter("aab") - Counter("ab")` return?
+
+- A) `Counter({'a': 0, 'b': 0})` — all counts subtracted to zero
+- B) `Counter({'a': 1})` — only positive result counts are kept
+- C) `Counter({'a': -1, 'b': -1})` — negative counts allowed
+- D) `Counter({'b': -1})` — 'a' cancels out, 'b' goes negative
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Counter subtraction drops keys with zero counts. `Counter("aab") - Counter("ab")` would give `Counter({'a': 2-1=1, 'b': 1-1=0})`. The zero count for 'b' is dropped, leaving only `Counter({'a': 1})`.
+- *Why B is correct:* `Counter("aab")` = `{'a':2, 'b':1}`. `Counter("ab")` = `{'a':1, 'b':1}`. Subtraction: 'a': 2−1=1 (kept), 'b': 1−1=0 (dropped because non-positive). Result: `Counter({'a': 1})`. Counter subtraction drops all elements with zero or negative counts.
+- *Why C is incorrect:* Counter subtraction does not produce negative counts. Results with zero or negative counts are dropped entirely. For `Counter("a") - Counter("aab")`, 'a' would give 1-2=-1 which is dropped, resulting in `Counter()`.
+- *Why D is incorrect:* The calculation gives 'a': 2−1=1 (positive, kept) and 'b': 1−1=0 (non-positive, dropped). 'b' is dropped, not kept with value -1.
+
+---
+
+### Question 16
+
+Which collision resolution strategy guarantees that no element is stored outside the original hash table array?
+
+- A) Separate chaining — each bucket holds a linked list
+- B) Open addressing (linear probing) — all elements are stored in the array itself
+- C) Double hashing — uses two hash functions but still uses a secondary array
+- D) Cuckoo hashing — moves elements between multiple separate arrays
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Separate chaining stores overflow elements in linked list nodes that are allocated outside the array. The array holds pointers to lists, but the list nodes themselves live on the heap — outside the original array.
+- *Why B is correct:* Open addressing (including linear probing, quadratic probing, and double hashing) stores all elements directly in the hash table array itself. When a collision occurs, the algorithm probes successive slots in the same array until an empty slot is found. No auxiliary linked lists or secondary arrays are used.
+- *Why C is incorrect:* Double hashing is a form of open addressing, so it does store all elements in the original array. But calling a "secondary array" is incorrect — double hashing uses a secondary hash function, not a secondary array.
+- *Why D is incorrect:* Cuckoo hashing uses two separate hash tables (two arrays). Elements may be "kicked" between the tables. This does not store all elements in a single original array.
+
+---
+
+### Question 17
+
+What happens when you attempt to use a Python `list` as a dictionary key?
+
+- A) The list is automatically converted to a tuple and used as a key
+- B) Python raises `TypeError: unhashable type: 'list'`
+- C) Python uses the list's memory address as the hash value
+- D) Python converts the list to a string representation and uses that as the key
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Python does not automatically convert unhashable types for use as keys. An explicit conversion (`tuple(my_list)`) is required.
+- *Why B is correct:* Python dictionary keys must be hashable — they must implement `__hash__` and `__eq__` with consistent behavior. Python's `list` is mutable, and mutable objects are intentionally not hashable (because their hash value would change if the list were modified, breaking the hash table). Attempting to use a list as a key raises `TypeError: unhashable type: 'list'`.
+- *Why C is incorrect:* Using the memory address (id) as a hash would make list equality by identity rather than by value, breaking expected behavior. Python's design choice is to make mutable containers non-hashable rather than hash by identity.
+- *Why D is incorrect:* Python does not implicitly stringify objects for use as keys. The `str(my_list)` conversion must be done explicitly by the programmer.
+
+---
+
+### Question 18
+
+The `is_anagram` function (LeetCode #242) using `Counter` has what time and space complexity?
+
+- A) Time O(n log n), Space O(1)
+- B) Time O(n), Space O(1)
+- C) Time O(n), Space O(k) where k is the size of the character alphabet
+- D) Time O(n²), Space O(n)
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* O(n log n) is the complexity of the sort-based anagram check (`sorted(s) == sorted(t)`). The `Counter` approach iterates each string once — O(n).
+- *Why B is incorrect:* O(1) space would require a fixed-size array (e.g., a 26-element array for lowercase English letters). `Counter` allocates space proportional to the number of distinct characters.
+- *Why C is correct:* `Counter(s)` and `Counter(t)` each iterate n characters — O(n) time. The Counter objects store at most k distinct characters, where k is the alphabet size (e.g., k=26 for lowercase English, k=128 for ASCII). Space is O(k). Since k is a fixed constant for most problems (k ≤ 26), this is often stated as O(1) space in practice, but the technically correct answer acknowledges k.
+- *Why D is incorrect:* O(n²) would require nested loops. `Counter` construction is a single linear pass — O(n) with no nesting.
+
+---
+
+### Question 19
+
+What is the key insight that makes the Two Sum hash map solution O(n) instead of O(n²)?
+
+- A) The hash map sorts the array, enabling binary search
+- B) Each element is processed once; the complement is found in O(1) via hash map lookup instead of O(n) linear scan
+- C) The hash map removes duplicates, reducing the effective input size
+- D) The hash map enables parallel processing of array elements
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Hash maps do not sort data — they provide O(1) key-value lookup. Binary search would require sorting first (O(n log n)), which is a different approach entirely.
+- *Why B is correct:* The brute-force O(n²) solution uses a nested loop: for each element at index i, scan all other elements to find `target - nums[i]`. The O(n) solution replaces the inner scan with a hash map lookup: store `nums[i] → i` in the map, then check if `target - nums[i]` is already in the map. The lookup is O(1) amortized. One pass, O(1) per element, O(n) total.
+- *Why C is incorrect:* The Two Sum problem may have duplicate values, and duplicates are valid parts of the solution (e.g., [3, 3], target=6). The hash map does not remove duplicates.
+- *Why D is incorrect:* Python is single-threaded. Hash maps provide O(1) lookup per element, not parallelism. The improvement is algorithmic — O(n) vs O(n²) — not due to parallel execution.
+
+---
+
+### Question 20
+
+In separate chaining, what is the worst-case time complexity for a hash table lookup, and when does it occur?
+
+- A) O(1) — hash tables are always constant time
+- B) O(log n) — chains are kept sorted for binary search
+- C) O(n) — when all n keys hash to the same bucket, forming a single chain of length n
+- D) O(n log n) — when multiple buckets each hold a sorted sub-list
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* O(1) is the average case with a good hash function and bounded load factor. The worst case occurs when the hash function is poor or adversarial inputs cause all keys to collide.
+- *Why B is incorrect:* Standard separate chaining uses unsorted linked lists per bucket. Sorted chains would enable O(log n) binary search, but standard hash table implementations do not sort chains — the overhead is not justified for expected O(1) performance.
+- *Why C is correct:* If every key hashes to the same bucket index, all n entries are stored in a single chain. A lookup for any key requires scanning the entire chain — O(n) in the worst case. This is why a good hash function and bounded load factor are critical: they spread entries across buckets and bound the average chain length.
+- *Why D is incorrect:* O(n log n) is not a standard hash table lookup complexity. The combination of multiple sorted sub-lists would add up to O(n log n) total construction cost, but individual lookups are O(log k) per bucket where k is the bucket size.

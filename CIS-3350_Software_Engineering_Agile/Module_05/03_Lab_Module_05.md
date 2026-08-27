@@ -145,6 +145,33 @@ Submit to the Canvas assignment portal by the module due date.
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Retrospective Format Comparison
+
+The CampusConnect team has been using the Start/Stop/Continue format for three Sprints. Design an alternative Retrospective for Sprint 4 using the Sailboat format (Wind = what helped us, Anchors = what slowed us, Rocks = risks ahead, Island = our goal):
+
+1. Write at least two items for each of the four Sailboat categories, grounded in the Sprint 3 events from the lab scenario.
+2. Compare the two formats (Start/Stop/Continue vs. Sailboat): identify one type of problem each format surfaces more effectively than the other.
+3. Write a two-to-three sentence recommendation for which format the CampusConnect team should use in Sprint 5 and why, given the specific process issues identified so far.
+4. Identify one situation where the Five Whys format would be more appropriate than either format and describe the situation in two to three sentences.
+
+### Challenge 2: Sprint Review Stakeholder Engagement Plan
+
+The CampusConnect Product Owner notices that stakeholders attend Sprint Reviews but rarely provide actionable feedback — they mostly nod and say "looks good." Design a stakeholder engagement plan to change this:
+
+1. Write three specific techniques the Product Owner can use before the Sprint Review to prime stakeholders for meaningful feedback (not just observation).
+2. Write two facilitation questions the Scrum Master can ask during the Increment demonstration that force stakeholders to think critically rather than passively observe.
+3. Write a follow-up protocol: what should happen with stakeholder feedback in the 24 hours after the Sprint Review ends? Name the roles responsible and the artifact updated.
+4. Identify one risk of too much stakeholder feedback (e.g., conflicting priorities, scope explosion) and describe how the Product Owner manages it without dismissing stakeholder input.
+
+### Reflection Questions
+
+1. The Sprint Review and Sprint Retrospective both produce feedback that changes future behavior — one at the product level, one at the process level. In your view, which feedback loop is harder to act on in a real organization and why? What organizational structures or incentives tend to undermine each loop?
+2. Psychological safety is a prerequisite for an effective Sprint Retrospective. Identify three specific Scrum Master behaviors that would increase psychological safety in a Retrospective and three behaviors that would destroy it.
+
+---
+
 ## Rubric Summary
 
 | Component | Points |

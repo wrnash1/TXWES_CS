@@ -452,6 +452,128 @@ Save. Click any product card. It should highlight and the status bar should disp
 
 ---
 
+## Part 9 — Challenge Exercise
+
+This section is **optional**. It extends the lab with advanced problems that apply DOM creation, insertion, and cloning in more demanding scenarios.
+
+### Step 9.1 — `DocumentFragment` Batch Insertion
+
+Add a `<div id="batch-list"></div>` to your HTML. Write a function `renderBatch(items)` that builds all DOM nodes in a `DocumentFragment` before inserting them — preventing multiple reflows:
+
+```javascript
+function renderBatch(items) {
+  const container = document.getElementById('batch-list');
+  container.innerHTML = '';
+
+  const fragment = document.createDocumentFragment();
+
+  items.forEach((item, index) => {
+    const li = document.createElement('li');
+    li.textContent = `${index + 1}. ${item}`;
+    li.dataset.index = index;
+    fragment.appendChild(li);
+  });
+
+  container.appendChild(fragment);
+}
+```
+
+Call `renderBatch` with an array of at least 10 items. Then call it again with a different array — confirm the list re-renders completely. Measure whether the single `appendChild(fragment)` call appears as one insertion in the Elements panel (it should — the browser performs one DOM update, not ten).
+
+Extend the function to accept an optional `filter` callback: if provided, only items where `filter(item)` returns true should be rendered.
+
+### Step 9.2 — Virtual DOM Diff (Mini Re-render)
+
+Add a `<ul id="todo-list"></ul>` and a `<button id="refresh-btn">Refresh</button>`. Implement a simple re-render function that updates only the items that changed, rather than clearing and rebuilding the entire list:
+
+```javascript
+let currentItems = [];
+
+function diffRender(newItems) {
+  const ul = document.getElementById('todo-list');
+  const existingLis = Array.from(ul.children);
+
+  // Update or create each item
+  newItems.forEach((text, i) => {
+    if (existingLis[i]) {
+      // Item exists — update text if changed
+      if (existingLis[i].textContent !== text) {
+        existingLis[i].textContent = text;
+      }
+    } else {
+      // Item is new — create and append
+      const li = document.createElement('li');
+      li.textContent = text;
+      ul.appendChild(li);
+    }
+  });
+
+  // Remove extra items if new list is shorter
+  while (ul.children.length > newItems.length) {
+    ul.lastElementChild.remove();
+  }
+
+  currentItems = newItems;
+}
+```
+
+Call `diffRender` with an initial list. Then add a click handler to `#refresh-btn` that calls `diffRender` with a modified version of the list (change one item, add one, remove one). Observe in the Elements panel that only the changed `<li>` elements are updated.
+
+### Step 9.3 — Recursive DOM Builder
+
+Write a `buildDOM(spec)` function that accepts a JavaScript object describing a DOM tree and creates the corresponding elements recursively:
+
+```javascript
+// spec format:
+// { tag, text?, attrs?, children? }
+// Example:
+const spec = {
+  tag: 'article',
+  attrs: { class: 'post', 'data-id': '1' },
+  children: [
+    { tag: 'h2', text: 'Post Title' },
+    { tag: 'p',  text: 'Post body text here.' },
+    {
+      tag: 'ul',
+      children: [
+        { tag: 'li', text: 'Comment one' },
+        { tag: 'li', text: 'Comment two' }
+      ]
+    }
+  ]
+};
+```
+
+Implement `buildDOM`:
+
+```javascript
+function buildDOM(spec) {
+  const el = document.createElement(spec.tag);
+
+  if (spec.text) {
+    el.textContent = spec.text;
+  }
+
+  if (spec.attrs) {
+    Object.entries(spec.attrs).forEach(([key, value]) => {
+      el.setAttribute(key, value);
+    });
+  }
+
+  if (spec.children) {
+    spec.children.forEach(childSpec => {
+      el.appendChild(buildDOM(childSpec));
+    });
+  }
+
+  return el;
+}
+```
+
+Append `buildDOM(spec)` to `document.body` and verify the full nested structure renders correctly. Then modify the spec to add a deeply nested structure (3+ levels) and confirm the recursion handles it.
+
+---
+
 ## Lab Completion Checklist
 
 - [ ] `createElement` + `textContent` + `classList` + `appendChild` pipeline confirmed

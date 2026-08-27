@@ -283,7 +283,28 @@ This correctly finds B+C = 220 for the Module 13 counterexample (capacity=50, it
 
 ---
 
-## 11. Study Checklist
+## 11. Supplemental Resources
+
+The following free, openly licensed resources reinforce the concepts in this module. All are zero-cost and require no account to access.
+
+1. **VisuAlgo — Dynamic Programming Visualizations** — [https://visualgo.net/en/dp](https://visualgo.net/en/dp)
+   Animated step-by-step visualizations of classic DP problems including Fibonacci, Coin Change, and LCS. Use the table-fill mode to watch the recurrence execute one cell at a time — especially useful for building intuition for 2D DP tables.
+
+2. **OpenDSA — Dynamic Programming Chapter** — [https://opendsa-server.cs.vt.edu/ODSA/Books/Everything/html/DynamicProgramming.html](https://opendsa-server.cs.vt.edu/ODSA/Books/Everything/html/DynamicProgramming.html)
+   Free interactive OER textbook covering optimal substructure, overlapping subproblems, the Fibonacci sequence as a DP example, and the 0/1 knapsack problem. Includes embedded exercises and correctness proofs.
+
+3. **NeetCode — Dynamic Programming Playlist (YouTube)** — [https://www.youtube.com/playlist?list=PLot-Xpze53ldBT_7QA8NVot219jFNr_GI](https://www.youtube.com/playlist?list=PLot-Xpze53ldBT_7QA8NVot219jFNr_GI)
+   Free video walkthroughs for Climbing Stairs, House Robber, Coin Change, LCS, and 0/1 Knapsack. Each video includes a recurrence derivation, table trace, and Python solution with time/space analysis.
+
+4. **MIT OCW 6.006 — Dynamic Programming Lectures** — [https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/](https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/)
+   MIT lecture notes on DP covering memoization, the subproblem DAG, and the guessing framework. Lectures 19–22 cover 1D DP, 2D DP, and advanced DP problems. Free PDF notes and video lectures available.
+
+5. **Python `functools.lru_cache` Documentation** — [https://docs.python.org/3/library/functools.html#functools.lru_cache](https://docs.python.org/3/library/functools.html#functools.lru_cache)
+   Official Python documentation for `lru_cache` — the decorator used in this course for memoization. Explains cache size options, `cache_info()`, `cache_clear()`, and the `@cache` shorthand added in Python 3.9.
+
+---
+
+## 12. Study Checklist
 
 - [ ] Watch the Module 14 video lecture by Professor Nash.
 - [ ] Implement `fib_memo` and `fib_tab` from scratch. Verify `fib(10) = 55`.

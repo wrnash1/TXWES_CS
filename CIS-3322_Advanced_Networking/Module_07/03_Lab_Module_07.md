@@ -301,3 +301,31 @@ Submit the following as a single PDF or Word document in Canvas:
 | Troubleshooting Scenarios | 15 | Correct analysis for all three scenarios (5 pts each) |
 
 Partial credit awarded for demonstrably attempted but incomplete work.
+
+---
+
+## Part 9 — Challenge Exercise
+
+This optional challenge extends the lab to CCNA exam difficulty. Complete all steps and include deliverables in your submission for up to 20 bonus points.
+
+### Challenge Step 1: Add a Third VLAN and Configure Inter-VLAN Routing for It
+
+Add VLAN 30 (name SERVERS, subnet 192.168.30.0/24) to both the ROAS and SVI topologies. Configure the router subinterface for VLAN 30 in the ROAS section and an additional SVI for VLAN 30 in the SVI section. Add a PC in VLAN 30 on each topology. Verify cross-VLAN connectivity from a VLAN 10 host to the VLAN 30 host on both topologies. Document the additional commands required and the routing table entries added.
+
+### Challenge Step 2: Implement and Test an SVI ACL to Restrict Inter-VLAN Traffic
+
+On the multilayer switch, configure an ACL that prevents hosts in VLAN 10 from reaching hosts in VLAN 30, while still allowing VLAN 10 to reach VLAN 20:
+
+```ios
+MLS1(config)# ip access-list extended VLAN10_RESTRICT
+MLS1(config-ext-nacl)# deny ip 192.168.10.0 0.0.0.255 192.168.30.0 0.0.0.255
+MLS1(config-ext-nacl)# permit ip any any
+MLS1(config)# interface vlan 10
+MLS1(config-if)# ip access-group VLAN10_RESTRICT in
+```
+
+Verify that VLAN 10 hosts can still reach VLAN 20 but are blocked from VLAN 30. Document the ping results (success and failure) and the `show access-lists` output confirming match counters are incrementing. Explain in 2–3 sentences why this ACL is applied inbound on the VLAN 10 SVI rather than outbound on the VLAN 30 SVI.
+
+### Challenge Step 3: Compare ROAS and SVI Performance by Observing Routing Table Behavior
+
+Configure `show ip route` on both the ROAS router and the multilayer switch simultaneously for the same three-VLAN topology. Compare the two routing tables and document: (1) What type of route entries appear (connected, static, or dynamic), (2) whether the next-hop is an interface or an IP address, and (3) how the exit interface is listed differently between a router's routing table and a multilayer switch's routing table. Write a 3–4 sentence comparison explaining which method you would choose for a 500-user campus building and why.

@@ -432,3 +432,19 @@ show authentication sessions interface gigabitethernet 0/5 detail
 6. In 802.1X, what is the role of the authenticator and which device typically fills this role?
 
 Answers are found in the module video and this reading guide. Bring questions to the next synchronous session.
+
+---
+
+## Supplemental Resources
+
+The following open educational resources extend network security fundamentals to CCNA exam depth. All resources are freely available.
+
+1. **Cisco Networking Academy — CCNA: Enterprise Networking, Security, and Automation, Chapters 10–11 (Network Security Concepts and ACLs)** (skillsforall.com): Free chapters covering AAA concepts, RADIUS vs TACACS+, port security configuration and violation modes, DHCP snooping, Dynamic ARP Inspection, and 802.1X with Packet Tracer activities for each security feature.
+
+2. **Jeremy's IT Lab — Security (Days 48–52)** (youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ): Video lessons covering AAA/RADIUS/TACACS+ concepts, port security with all three violation modes, DHCP snooping trust port configuration, DAI validation logic, and 802.1X role definitions — all with exam-scenario walkthroughs at CCNA difficulty.
+
+3. **Cisco Learning Network — Security Fundamentals Study Group** (learningnetwork.cisco.com): Community discussions covering TACACS+ vs RADIUS exam traps, DHCP snooping Option 82 issues, DAI ARP ACL requirements for static hosts, err-disable recovery commands, and 802.1X MAB fallback configuration — frequently asked topics on the CCNA 200-301 exam.
+
+4. **Cisco IOS Security Configuration Guide — AAA** (cisco.com): Cisco's official guide covering `aaa new-model`, RADIUS and TACACS+ server configuration, method lists, fallback behavior, and command authorization for device administration with complete CLI examples.
+
+5. **Cisco Identity Services Engine (ISE) Documentation** (cisco.com/c/en/us/products/security/identity-services-engine): Overview documentation for Cisco ISE covering its role as a RADIUS/policy server, 802.1X with PEAP and EAP-TLS, MAB for non-802.1X devices, VLAN assignment from RADIUS attributes, and posture assessment — all concepts referenced in CCNA Security domain questions.

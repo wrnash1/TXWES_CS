@@ -410,7 +410,28 @@ Unhelpful comment: `// Add x and y` (directly before `return x + y`)
 
 ---
 
-## 9. JSE Certification Exam Tips
+## 9. Supplemental Resources
+
+The following free, openly available resources extend and reinforce the topics covered in this module. All links are zero-cost and do not require account creation.
+
+- **[MDN Web Docs — What is JavaScript?](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/First_steps/What_is_JavaScript)**
+  The definitive introductory article from Mozilla. Covers the history of JavaScript, client-side vs. server-side use cases, the browser execution model, and examples of what JavaScript can do. Essential reading for any beginner.
+
+- **[Eloquent JavaScript — Introduction](https://eloquentjavascript.net/00_intro.html)**
+  The free online textbook used as the primary OER for this course. The introduction chapter covers the philosophy of programming, what JavaScript is, and sets the context for everything covered in Module 01.
+
+- **[javascript.info — An Introduction to JavaScript](https://javascript.info/intro)**
+  A comprehensive, beginner-friendly resource. The "Introduction" section explains what JavaScript is, its relationship to ECMAScript, what it can and cannot do in the browser, and how it compares to other languages.
+
+- **[MDN Web Docs — `<script>`: The Script element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script)**
+  Full reference documentation for the HTML `<script>` element, including all attributes (`src`, `defer`, `async`, `type`, `nomodule`), usage examples, and browser compatibility tables.
+
+- **[Google Chrome DevTools — Console Overview](https://developer.chrome.com/docs/devtools/console/)**
+  Google's official documentation for the Chrome DevTools Console. Covers the REPL, filtering output, `console` API methods, and best practices for using the console as a debugging tool.
+
+---
+
+## 10. JSE Certification Exam Tips
 
 ### Exam Format
 
@@ -437,7 +458,7 @@ The JSE (Certified Associate in JavaScript Programming) exam is delivered by the
 
 ---
 
-## 10. Study Checklist
+## 11. Study Checklist
 
 - [ ] Watch the Module 01 video lecture by Professor Nash.
 - [ ] Read the Introduction chapter of [Eloquent JavaScript](https://eloquentjavascript.net/00_intro.html).

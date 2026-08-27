@@ -211,3 +211,183 @@ When should `mask_zero=True` be set in the `Embedding` layer?
 Texas Wesleyan University — CIS-4345 Machine Learning and Deep Learning
 
 Proprietary and Confidential. Not for disclosure outside of Texas Wesleyan University.
+
+---
+
+### Question 11 (5 points)
+
+What does the `oov_token='<OOV>'` parameter in `tf.keras.preprocessing.text.Tokenizer` do?
+
+- A) It removes out-of-vocabulary words from the training sentences entirely so they do not corrupt the model.
+- B) It reserves a special integer token for words encountered at test time that were not in the training vocabulary.
+- C) It limits the vocabulary to only words that appear at least twice, treating all rare words as out-of-vocabulary.
+- D) It tells the tokenizer to skip punctuation and special characters that do not belong in the vocabulary.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* When a word in a test sentence was not seen during `fit_on_texts()`, Keras assigns it the `<OOV>` token's integer ID (typically 1, since the OOV token is added first). Without this setting, unknown words are silently dropped, which can cause significant information loss for long or technical documents where many words are out-of-vocabulary.
+  - *Why A is incorrect:* The OOV token does not remove words — it replaces them with a fixed integer ID. Removing unknown words entirely is the behavior when `oov_token` is NOT set.
+  - *Why C is incorrect:* Minimum frequency filtering is controlled by a separate mechanism (not a built-in `Tokenizer` argument). The `oov_token` setting is purely about how to handle words absent from the trained vocabulary.
+  - *Why D is incorrect:* Punctuation filtering is handled separately (e.g., using `filters=` in the Tokenizer constructor). The OOV token is specifically for handling vocabulary mismatches between training and test sets.
+
+---
+
+### Question 12 (5 points)
+
+A developer uses `pad_sequences(sequences, maxlen=200, padding='pre', truncating='pre')`. What do `padding='pre'` and `truncating='pre'` do?
+
+- A) `padding='pre'` adds zeros at the end; `truncating='pre'` removes tokens from the end of long sequences.
+- B) `padding='pre'` adds zeros at the beginning; `truncating='pre'` removes tokens from the beginning of sequences that exceed `maxlen`.
+- C) `padding='pre'` adds zeros at the beginning; `truncating='pre'` removes the entire sequence if it exceeds `maxlen`.
+- D) Both settings are equivalent to `padding='post'` and `truncating='post'` — the prefix is only applied during validation.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* `padding='pre'` places the zero tokens before the actual word tokens, so the words appear at the end of the padded sequence. `truncating='pre'` removes tokens from the start of sequences longer than `maxlen`, preserving the end of the sequence (where the "punchline" or conclusion often appears in reviews). This is preferred for LSTM models because the most recent tokens (at the sequence end) feed directly into the final hidden state.
+  - *Why A is incorrect:* This describes `padding='post'` and `truncating='post'`. The `pre` prefix specifically places zeros/truncation at the beginning, not the end.
+  - *Why C is incorrect:* `truncating='pre'` removes individual tokens from the beginning, not the entire sequence. Sequences longer than `maxlen` are trimmed to exactly `maxlen` tokens.
+  - *Why D is incorrect:* `pre` and `post` are distinct settings with opposite behavior. They are applied identically during both training and validation — there is no mode distinction.
+
+---
+
+### Question 13 (5 points)
+
+What does `Bidirectional(LSTM(64))` do compared to a standard `LSTM(64)` layer?
+
+- A) It doubles the LSTM's memory by stacking two LSTM layers with 64 units each in sequence.
+- B) It processes the sequence in both forward and backward directions and concatenates the two hidden states, producing a 128-dimensional output.
+- C) It applies the LSTM twice to the same sequence (forward only) and averages the two outputs for more stable training.
+- D) It is an alias for `LSTM(64, return_sequences=True)` that returns the full sequence for use in the next layer.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* A `Bidirectional` wrapper creates two LSTM instances: one processes the sequence left-to-right, the other right-to-left. Their final hidden states are concatenated by default (merge mode `'concat'`), producing a `2 * 64 = 128`-dimensional output vector. This allows the model to capture context from both directions — useful for sentiment, where a word's meaning can depend on what follows it.
+  - *Why A is incorrect:* Stacking two sequential LSTM layers uses `return_sequences=True` on the first layer. A `Bidirectional` wrapper does not stack layers in sequence — it runs two LSTMs in parallel on the same input.
+  - *Why C is incorrect:* The forward and backward LSTMs receive the sequence in opposite orders (reversed), not the same order twice. The merge mode (default: concatenate) combines their outputs, not by averaging.
+  - *Why D is incorrect:* `return_sequences=True` is a separate parameter. `Bidirectional(LSTM(64))` with the default `return_sequences=False` still produces a single vector, not a sequence. The output dimension is doubled (128), not the temporal dimension.
+
+---
+
+### Question 14 (5 points)
+
+A developer trains a sentiment classifier on 25,000 IMDB reviews. The model uses an `Embedding(10001, 64)` layer followed by `GlobalAveragePooling1D()` and `Dense(1, activation='sigmoid')`. How many trainable parameters does the embedding layer contribute?
+
+- A) 64
+- B) 640,000
+- C) 640,064
+- D) 200 × 64 = 12,800
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - *Why C is correct:* The `Embedding(10001, 64)` layer creates a matrix of shape `(10001, 64)` — one 64-dimensional vector for each of the 10,001 vocabulary entries (10,000 words + 1 padding index). Total parameters: `10001 * 64 = 640,064`. These are all trainable by default and updated via backpropagation during `model.fit()`.
+  - *Why A is incorrect:* 64 is the embedding dimension per word, not the total number of parameters. The full embedding matrix multiplies this by the vocabulary size.
+  - *Why B is incorrect:* 640,000 ignores the `+1` for the padding/OOV index. The correct `input_dim` is 10,001 (not 10,000), so the matrix has 10,001 rows, giving `10001 * 64 = 640,064`.
+  - *Why D is incorrect:* `200` is the sequence length (`maxlen`), not the vocabulary size. The embedding matrix's row count equals the vocabulary size, not the sequence length. Sequence length determines how many times the embedding matrix is accessed per sample, not its size.
+
+---
+
+### Question 15 (5 points)
+
+Which of the following correctly defines the `TextVectorization` layer and calls `adapt()` properly?
+
+- A) `tv = TextVectorization(max_tokens=10000, output_sequence_length=200); tv.adapt(train_texts + test_texts)`
+- B) `tv = TextVectorization(max_tokens=10000, output_sequence_length=200); tv.adapt(train_texts)`
+- C) `tv = TextVectorization(max_tokens=10000); tv.fit(train_texts, epochs=5)`
+- D) `tv = TextVectorization(output_sequence_length=200); tv.adapt(x_train, y_train)`
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* `TextVectorization` is created with the vocabulary limit and output length, then `adapt()` is called on training text only. `adapt()` scans the training corpus to build the vocabulary, equivalent to `Tokenizer.fit_on_texts()`. Passing test data to `adapt()` constitutes data leakage.
+  - *Why A is incorrect:* Calling `adapt(train_texts + test_texts)` leaks test vocabulary into the model's preprocessing step. If the model is later deployed to production, this means production vocabulary will have inflated the training-time vocabulary in a way that cannot be replicated.
+  - *Why C is incorrect:* `TextVectorization` does not have a `fit()` method. The correct method is `adapt()`. Also, `adapt()` is called once on the full training set, not for multiple epochs.
+  - *Why D is incorrect:* `adapt()` accepts only text data (not labels). Passing `y_train` as a second argument would raise a TypeError or be silently ignored depending on the TensorFlow version.
+
+---
+
+### Question 16 (5 points)
+
+After training an NLP model, a developer runs `model.predict(["This film was absolutely fantastic!"])`. What must be true for this to work without any external preprocessing?
+
+- A) The developer must manually call `tokenizer.texts_to_sequences()` on the input string before calling `model.predict()`.
+- B) A `TextVectorization` layer must be the first layer inside the model, having been previously `adapt()`-ed on the training vocabulary.
+- C) The model must use `output_mode='binary'` in its `TextVectorization` layer so raw strings can be accepted.
+- D) The raw string must be wrapped in a `tf.constant()` call to convert it to a TensorFlow string tensor before prediction.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* When `TextVectorization` is embedded as the first model layer, the model's input signature accepts raw Python strings or `tf.string` tensors. Keras automatically converts the Python string list to the appropriate tensor type. The vectorization layer handles tokenization and padding internally, making the model fully self-contained.
+  - *Why A is incorrect:* External tokenization is needed only when using the legacy `Tokenizer` API with a separate preprocessing step. When `TextVectorization` is inside the model, no external preprocessing is required — that is the entire point of the pattern.
+  - *Why C is incorrect:* `output_mode='binary'` produces a multi-hot vocabulary bag representation, not an integer sequence. It does not affect whether the model accepts raw strings. The string-acceptance behavior comes from having `TextVectorization` as the first layer, regardless of output mode.
+  - *Why D is incorrect:* Keras's `model.predict()` automatically converts Python lists and strings to tensors internally. Manually wrapping in `tf.constant()` is not required and does not change the behavior.
+
+---
+
+### Question 17 (5 points)
+
+What is the effect of setting `return_sequences=True` in an LSTM layer that is NOT the last LSTM in a stacked architecture?
+
+- A) It makes the LSTM output the hidden state for every time step, producing a 3D output of shape `(batch, timesteps, units)` that the next LSTM layer can process.
+- B) It repeats the final hidden state across all time steps, producing a 3D output of shape `(batch, timesteps, units)` for visualization purposes.
+- C) It forces the LSTM to process the sequence in reverse order, returning the sequence from last token to first.
+- D) It has no effect on output shape — `return_sequences` only affects which loss function is used during training.
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - *Why A is correct:* By default, `LSTM` returns only the final hidden state — shape `(batch, units)`. With `return_sequences=True`, it returns the hidden state at every time step — shape `(batch, timesteps, units)`. This 3D output is required as input to a subsequent LSTM layer, which expects a sequence, not a single vector. Forgetting `return_sequences=True` on all but the last stacked LSTM is a common error.
+  - *Why B is incorrect:* The output is the actual computed hidden state at each time step, not a repetition of the final state. Each time step produces a different hidden state that reflects the sequence processed so far up to that point.
+  - *Why C is incorrect:* Reversing the sequence is the function of the `go_backwards=True` parameter, not `return_sequences`. `return_sequences` only controls whether the full sequence of hidden states or just the last one is returned.
+  - *Why D is incorrect:* `return_sequences=True` directly changes the output tensor's shape from 2D to 3D. This has significant architectural consequences — the next layer must accept 3D input. It has no effect on the loss function.
+
+---
+
+### Question 18 (5 points)
+
+A developer evaluates three NLP architectures on the IMDB dataset: (1) Embedding + GlobalAveragePooling1D, (2) Embedding + LSTM(64), (3) Embedding + Bidirectional(LSTM(64)). Listed from fastest to slowest training time, what is the expected order?
+
+- A) Bidirectional LSTM → LSTM → GlobalAveragePooling1D
+- B) GlobalAveragePooling1D → LSTM → Bidirectional LSTM
+- C) LSTM → GlobalAveragePooling1D → Bidirectional LSTM
+- D) All three train at approximately the same speed because the bottleneck is always the Embedding layer.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* `GlobalAveragePooling1D` has no trainable parameters and performs a simple mean — it is nearly instant. A single `LSTM(64)` processes the sequence recurrently with 64 hidden units, which is computationally significant but manageable. `Bidirectional(LSTM(64))` runs two LSTM instances (forward + backward), roughly doubling the LSTM computation. Training time scales as: GAP1D << LSTM << BiLSTM.
+  - *Why A is incorrect:* This is the reverse of the correct order. Bidirectional LSTM is the slowest because it has twice the recurrent computation of a single LSTM.
+  - *Why C is incorrect:* LSTM is slower than GlobalAveragePooling1D, not faster. GAP1D is a parameter-free mean operation while LSTM involves sequential matrix multiplications through gated recurrent cells.
+  - *Why D is incorrect:* The Embedding layer's forward pass is a simple lookup operation — very fast. The computational bottleneck for recurrent models is the sequential LSTM computation, which cannot be parallelized over the time dimension.
+
+---
+
+### Question 19 (5 points)
+
+In a text classification model, the embedding layer is initialized with `trainable=False` and pre-trained GloVe vectors. What does `trainable=False` mean in this context?
+
+- A) The embedding layer is excluded from the model graph and does not participate in the forward pass.
+- B) The GloVe weight matrix is frozen — the embedding vectors are used as fixed features and are not updated by backpropagation.
+- C) The embedding layer outputs zeros during training to prevent the pre-trained weights from interfering with the new model layers.
+- D) The embedding layer is only updated every 10 epochs to slow down the fine-tuning of the pre-trained weights.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Setting `trainable=False` on a Keras layer freezes its weights — they are excluded from the gradient computation and not updated during `model.fit()`. For pre-trained embeddings (GloVe, Word2Vec, FastText), this is commonly done when the pre-trained vectors are high quality and the task dataset is small. The embeddings still participate in the forward pass but their values remain constant.
+  - *Why A is incorrect:* `trainable=False` does not remove the layer from the computation graph. The forward pass still flows through the embedding layer — it produces outputs normally. Only the backward pass (weight update) is blocked.
+  - *Why C is incorrect:* A frozen layer still computes its normal output — it does not produce zeros. Zeroing outputs would destroy all semantic information encoded in the embeddings.
+  - *Why D is incorrect:* There is no built-in mechanism that updates frozen layers on a schedule. A layer is either trainable or not throughout training, unless `layer.trainable` is explicitly toggled between calls to `model.compile()`.
+
+---
+
+### Question 20 (5 points)
+
+A text classification model achieves 88% test accuracy on IMDB sentiment analysis. To squeeze out additional accuracy without retraining, a developer applies test-time averaging over 5 slightly different padded versions of each review. Why might this help for NLP models?
+
+- A) Averaging predictions across multiple tokenizations reduces vocabulary mismatch errors caused by `<OOV>` tokens.
+- B) Different `padding='pre'` and `padding='post'` configurations, or slight random dropout during inference, produce diverse prediction distributions whose average is more reliable than any single prediction.
+- C) Averaging five predictions forces the model to produce a probability of exactly 0.5, providing a conservative baseline.
+- D) Padding configuration has no effect on LSTM predictions because LSTMs always produce the same output for the same sequence of non-padding tokens.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* This is test-time augmentation (TTA) applied to NLP. Different padding placements change which hidden states the LSTM computes at each step (padding position affects when meaningful tokens are presented). Enabling `Dropout` during inference (via `model(x, training=True)`) creates stochastic predictions that, when averaged, reduce prediction variance. Both strategies are valid TTA approaches for sequence models.
+  - *Why A is incorrect:* Different padding configurations do not change which words map to `<OOV>` — that is entirely determined by the tokenizer's vocabulary. TTA via padding variation does not address vocabulary coverage.
+  - *Why C is incorrect:* Averaging diverse predictions does not force a result of 0.5. If all 5 predictions for a clearly positive review are above 0.8, their average is also above 0.8. Averaging reduces variance; it does not collapse predictions to a central value.
+  - *Why D is incorrect:* LSTM output does depend on padding position. With `padding='pre'`, the LSTM processes zeros first and then meaningful tokens, with the final hidden state seeing the most recent tokens. With `padding='post'`, it processes meaningful tokens first and then zeros. These produce different final hidden states and different predictions.

@@ -349,3 +349,19 @@ The DR plan is a technical document. Where the BCP addresses organizational-leve
 ## Alignment to CISM Exam Domains
 
 This module supports CISM Domain 4: Information Security Incident Management, which requires knowledge of recovery site alternatives, backup and recovery strategies, and disaster recovery testing. Students should review the ISACA CISM Review Manual sections covering DR strategy selection, testing approaches, and cloud-based recovery architectures.
+
+---
+
+## 9. Supplemental Resources
+
+**1. AWS Disaster Recovery Whitepaper — Disaster Recovery of Workloads on AWS**
+<https://docs.aws.amazon.com/whitepapers/latest/disaster-recovery-workloads-on-aws/disaster-recovery-workloads-on-aws.html>
+AWS's authoritative guide to the four DR patterns (backup-and-restore, pilot light, warm standby, multi-site active-active) with architecture diagrams, RTO/RPO guidance, and cost considerations. Essential reading for understanding cloud-native DR strategies covered in this module.
+
+**2. NIST SP 800-34 Rev. 1 — Contingency Planning Guide for Federal Information Systems**
+<https://csrc.nist.gov/publications/detail/sp/800-34/rev-1/final>
+Covers the full spectrum of IT contingency planning including alternate site selection, backup strategies, plan testing types, and maintenance requirements. Chapters 4 and 5 are most directly relevant to DR site strategy and testing covered in this module.
+
+**3. SANS Institute — Disaster Recovery Plan Strategies and Processes**
+<https://www.sans.org/reading-room/whitepapers/recovery/disaster-recovery-plan-strategies-processes-564>
+A practitioner-focused SANS whitepaper covering DR plan components, activation criteria, failover and failback sequencing, and lessons learned integration. Useful for understanding how DR governance principles translate to operational plan design.

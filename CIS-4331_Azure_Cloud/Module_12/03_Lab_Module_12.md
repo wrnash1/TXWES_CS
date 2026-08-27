@@ -305,3 +305,17 @@ az group delete \
 ---
 
 Lab 12 | CIS-4331 Azure Cloud | Texas Wesleyan University
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Azure Policy Custom Initiative
+Create a custom Azure Policy initiative (policy set) that bundles two built-in policies: "Require a tag on resources" (for the "Environment" tag) and "Allowed locations" restricted to East US and West US. Use `az policy set-definition create` with a JSON parameters file. Assign the initiative to your lab resource group with `az policy assignment create`. Create a new resource group in North Europe and verify it is flagged as non-compliant in the compliance dashboard. Document all CLI commands, the initiative definition JSON, and the compliance report output. Explain in 2–3 sentences why grouping related policies into initiatives simplifies governance compared to assigning each policy individually across multiple subscriptions.
+
+### Challenge 2: Microsoft Purview Data Classification Scan
+Create a new Azure Storage account and upload three sample text files — one containing a simulated Social Security Number pattern (e.g., "SSN: 123-45-6789"), one containing a simulated credit card number pattern, and one containing no sensitive data. Register the storage account as a data source in Microsoft Purview (create a free Purview account if needed) and run a full scan using the built-in "AzureStorage" scan rule set. After the scan completes, navigate to the Purview Data Catalog and document which files were classified and what sensitive information types were detected. Explain in 2–3 sentences how automated data classification in Purview supports GDPR and HIPAA compliance obligations.
+
+### Reflection Questions
+1. In the lab you assigned two Azure Policies at the resource group scope: an Allowed Locations Deny policy and a tag Audit policy. A new engineer joins the team and is granted Contributor access on the resource group. They attempt to deploy a storage account to West Europe with no tags. Walk through the exact sequence of evaluations Azure Resource Manager performs — in what order are RBAC and Policy evaluated, what happens at each step, and what error (if any) does the engineer see? Then explain what would need to change for the engineer to successfully deploy the storage account.
+2. Azure Policy offers five effects: Audit, Deny, Append, Modify, and DeployIfNotExists. For each of the following scenarios, identify the most appropriate effect and explain why: (a) you want to automatically add a missing "CostCenter" tag to all new resources using the value "Unallocated"; (b) you want to ensure every new Azure SQL Database has Transparent Data Encryption enabled, and automatically enable it if it is not; (c) you want to generate a compliance report showing which existing virtual networks do not have DDoS Protection enabled without blocking any deployments.

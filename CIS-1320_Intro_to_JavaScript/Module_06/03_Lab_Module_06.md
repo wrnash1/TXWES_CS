@@ -471,6 +471,78 @@ Submit the following to the Module 06 Lab assignment in Canvas:
 
 ---
 
+## Part 9 — Challenge Exercise
+
+**This section is optional but strongly recommended.** These exercises explore closures, higher-order functions, and functional programming patterns used in real JavaScript applications.
+
+### Challenge Step 9.1 — Memoization with a Closure
+
+Create `memoize.js`. Write a `memoize(fn)` higher-order function that wraps any pure function and caches its results. Use a closure to store the cache object:
+
+```javascript
+function memoize(fn) {
+  const cache = {};
+  return function(...args) {
+    const key = JSON.stringify(args);
+    if (key in cache) {
+      console.log('Cache hit:', key);
+      return cache[key];
+    }
+    const result = fn(...args);
+    cache[key] = result;
+    return result;
+  };
+}
+
+const slowSquare = n => { /* imagine this is slow */ return n * n; };
+const fastSquare = memoize(slowSquare);
+
+console.log(fastSquare(5));   // computes: 25
+console.log(fastSquare(5));   // cache hit: 25
+console.log(fastSquare(10));  // computes: 100
+```
+
+Run this and verify cache hits are logged on repeated calls. This pattern is used in production React and data-processing applications.
+
+### Challenge Step 9.2 — Function Composition
+
+Create `compose.js`. Write a `compose(...fns)` function that returns a new function that runs its arguments through a pipeline of functions from right to left:
+
+```javascript
+const compose = (...fns) => x => fns.reduceRight((acc, fn) => fn(acc), x);
+
+const trim = s => s.trim();
+const lower = s => s.toLowerCase();
+const exclaim = s => s + '!';
+
+const processInput = compose(exclaim, lower, trim);
+console.log(processInput('  HELLO WORLD  '));  // 'hello world!'
+```
+
+Also write a `pipe` version (left to right). Test both on the same input and verify the output differs only in order of application.
+
+### Challenge Step 9.3 — Currying
+
+Create `curry.js`. Write a manual curry of an `add` function, then write a general `curry(fn)` utility that converts any binary function into a curried version:
+
+```javascript
+// Manual curry
+const add = a => b => a + b;
+const add10 = add(10);
+console.log(add10(5));   // 15
+console.log(add10(20));  // 30
+
+// General curry
+const curry = fn => a => b => fn(a, b);
+const multiply = (a, b) => a * b;
+const triple = curry(multiply)(3);
+console.log(triple(7));  // 21
+```
+
+Write a comment explaining how currying relates to closures — specifically what each returned function captures in its closure.
+
+---
+
 ## Reflection Questions
 
 Answer in the Canvas text box (two to three sentences each):

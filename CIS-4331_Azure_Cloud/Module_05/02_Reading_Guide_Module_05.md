@@ -420,3 +420,19 @@ Reference: learn.microsoft.com/en-us/cli/azure/network
 - [ ] Take Quiz Module 05
 - [ ] Post Discussion Module 05 initial post by Wednesday 11:59 PM
 - [ ] Respond to two classmates by Sunday 11:59 PM
+
+---
+
+## 9. Supplemental Resources
+
+**1. Microsoft Learn — Azure Virtual Network overview**
+https://learn.microsoft.com/en-us/azure/virtual-network/virtual-networks-overview
+Comprehensive reference covering VNet concepts, address spaces, subnets, DNS settings, peering, and service endpoints — foundational reading for all AZ-900 and AZ-104 networking questions.
+
+**2. Microsoft Learn — Network security groups overview**
+https://learn.microsoft.com/en-us/azure/virtual-network/network-security-groups-overview
+Deep dive into NSG rule structure, default rules, priority evaluation, effective security rules, and the difference between inbound and outbound rule processing.
+
+**3. Microsoft Learn — Azure VPN Gateway documentation**
+https://learn.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-about-vpngateways
+Explains Site-to-Site, Point-to-Site, and VNet-to-VNet gateway types, SKU tiers, BGP routing, and the distinction between VPN Gateway and ExpressRoute for hybrid connectivity.

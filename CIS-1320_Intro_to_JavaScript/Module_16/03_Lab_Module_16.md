@@ -106,7 +106,86 @@ After completing the exam:
 
 ---
 
-## Grading
+## Part 9 — Challenge Exercise
+
+**Optional.** This section is not graded and does not affect your lab score. Complete it after your exam or as part of your final review if you want to verify your readiness at a deeper level. Each step asks you to write code from memory, without looking at notes or course materials.
+
+### Step 1 — Cross-Domain Coding Sprint
+
+Write each of the following programs from scratch in a single JavaScript file. Do not reference notes or previous labs. Time yourself — each should take no more than five minutes.
+
+1. A `counter` factory function that returns an object with `increment()`, `decrement()`, and `value()` methods. Each method must work correctly using a closure — no `class` syntax allowed.
+
+2. An `EventEmitter` class with `on(event, fn)`, `off(event, fn)`, and `emit(event, ...args)` methods. `emit` must call all registered listeners for the event, passing `...args` to each. `off` must remove only the specific function reference.
+
+3. An `async` function `loadAll(urls)` that accepts an array of URL strings, fetches all of them in parallel using `Promise.all`, checks `response.ok` on each, and returns an array of parsed JSON objects. If any request fails (non-2xx status or network error), the function should throw with a message that includes the failing URL.
+
+After writing each program, open the browser DevTools console, paste your code, and confirm it behaves correctly with test inputs of your choosing.
+
+### Step 2 — JSE High-Frequency Question Bank
+
+Without looking at the Reading Guide, write your answers to all 15 High-Frequency Exam Topics from memory. For each item, write:
+
+- The fact itself (one sentence)
+- A short code snippet that demonstrates it
+- A brief explanation of why beginners commonly get it wrong
+
+Example format for one item:
+
+```
+Topic: typeof null
+Fact: typeof null === 'object', not 'null'
+Code: console.log(typeof null);  // 'object'
+Why tricky: null is a primitive with no properties,
+            but its type string is 'object' due to a
+            legacy bug in the original JavaScript spec.
+```
+
+Produce all 15 entries, then compare your answers to the High-Frequency Exam Topics section in the Reading Guide. For any entry where your explanation was incomplete or incorrect, write a corrected version and note what you missed.
+
+### Step 3 — Debugging Challenge
+
+The following code contains **four bugs** — each is a distinct, realistic mistake that the JSE exam tests. Identify all four bugs, state what each bug is and why it is wrong, and write a corrected version of the entire function.
+
+```javascript
+class UserAccount {
+  constructor(name, balance) {
+    this.name = name
+    this.balance = balance
+  }
+
+  deposit(amount) {
+    if (amount <= 0) {
+      throw 'Amount must be positive'
+    }
+    this.balance += amount
+    return this.balance
+  }
+
+  static summary(accounts) {
+    const total = accounts.forEach(a => a.balance)
+    return { count: accounts.length, total }
+  }
+}
+
+class PremiumAccount extends UserAccount {
+  constructor(name, balance, tier) {
+    this.tier = tier
+    super(name, balance)
+  }
+
+  deposit(amount) {
+    const bonus = tier === 'gold' ? amount * 0.1 : 0
+    return super.deposit(amount + bonus)
+  }
+}
+```
+
+The four bugs involve: error handling best practice, array method return value, subclass constructor order, and a missing `this` reference. Write your corrected file, then test it in the DevTools console to confirm all four methods work correctly.
+
+---
+
+
 
 | Requirement | Points |
 |---|---|

@@ -218,4 +218,206 @@ What information has been revealed and how should the tester use it?
 
 ---
 
+---
+
+### Question 11
+
+A tester runs `nmap -sU -p 161 192.168.1.50` and the port is reported as `open|filtered`. What does this state indicate?
+
+- A) The port is confirmed open and a UDP service is listening, but no banner was returned
+- B) Nmap received no response; UDP `open|filtered` means the port may be open or a firewall is silently dropping packets — Nmap cannot distinguish between the two without a UDP application-layer probe
+- C) The port is confirmed filtered by a firewall and the SNMP service is not present on this host
+- D) The `open|filtered` state is only possible with TCP scans; UDP scans always return `open` or `closed`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- **Why B is correct:** UDP is connectionless — when Nmap sends a UDP probe and receives no response, it cannot determine whether the service is open and silently dropping the probe or whether a firewall is silently dropping it. This ambiguity produces the `open|filtered` state. A UDP-specific application probe (such as an SNMP GET request for port 161) can resolve the ambiguity.
+- **Why A is incorrect:** `open|filtered` does not mean the port is confirmed open. If the port were confirmed open (with a response), Nmap would report it as simply `open`.
+- **Why C is incorrect:** `open|filtered` does not mean confirmed filtered. If Nmap received an ICMP port-unreachable response, it would report the port as `closed`. Silent drops are what produce the ambiguous state.
+- **Why D is incorrect:** `open|filtered` is specifically a UDP scan result. TCP scans resolve to `open`, `closed`, or `filtered` based on SYN-ACK, RST, or no-response respectively — they do not produce `open|filtered`.
+
+---
+
+### Question 12
+
+Which Nmap output format is most appropriate when another tool or script needs to parse the scan results programmatically?
+
+- A) `-oN` (normal output) because it is human-readable and therefore the easiest to parse
+- B) `-oG` (grepable output) because grep is the fastest text-processing tool available
+- C) `-oX` (XML output) because structured XML can be parsed by standard XML libraries and tools like `xsltproc` for HTML reports
+- D) `-oA` (all formats) because outputting all formats simultaneously is required by most compliance frameworks
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- **Why C is correct:** XML is a structured, machine-readable format with well-defined schema. Tools like `xsltproc`, Python's `xml.etree`, and purpose-built parsers (e.g., python-nmap) consume `-oX` output natively. It is the standard format for importing Nmap results into vulnerability management platforms.
+- **Why A is incorrect:** Normal output (`-oN`) is designed for human readability, not programmatic parsing. It lacks consistent delimiters and structure, making it error-prone to parse with scripts.
+- **Why B is incorrect:** Grepable output (`-oG`) is useful for quick command-line extraction with grep/awk, but it is a flat format not designed for hierarchical or structured parsing by applications.
+- **Why D is incorrect:** `-oA` outputs all three formats simultaneously (normal, XML, grepable) as a convenience flag. No compliance framework mandates outputting all three formats. XML alone is sufficient for programmatic use.
+
+---
+
+### Question 13
+
+A tester wants to find all hosts on the 10.10.10.0/24 subnet that have port 445 open without performing a full port scan on every host. Which command achieves this most efficiently?
+
+- A) `nmap -p 1-1024 10.10.10.0/24` — scan the top 1024 ports on all hosts
+- B) `nmap -p 445 10.10.10.0/24` — scan only port 445 across all hosts in the subnet
+- C) `nmap -sV 10.10.10.0/24` — version detection will identify SMB automatically
+- D) `nmap --script smb-vuln-ms17-010 10.10.10.0/24` — run the vulnerability script which performs host discovery automatically
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- **Why B is correct:** Specifying `-p 445` restricts Nmap to testing only that port on each host, making the sweep fast and targeted. The subnet notation causes Nmap to probe all 256 addresses. This is the standard approach for identifying all SMB-capable hosts before deeper enumeration.
+- **Why A is incorrect:** Scanning ports 1–1024 on every host generates far more traffic than necessary and takes significantly longer. Only port 445 is needed for this objective.
+- **Why C is incorrect:** Version detection (`-sV`) runs against discovered open ports but still scans the default top-1000 ports on each host unless restricted with `-p`. This is less efficient than specifying only the target port.
+- **Why D is incorrect:** Running an NSE vulnerability script without first confirming which hosts have port 445 open is wasteful and potentially generates IDS alerts. Vulnerability scripts should follow host and port discovery, not replace them.
+
+---
+
+### Question 14
+
+During SNMP enumeration with `snmpwalk -v2c -c public 192.168.1.100`, the tester receives extensive output including interface descriptions, running processes, and installed software. What does the community string `public` reveal about this device's configuration?
+
+- A) `public` is a custom community string configured by the administrator for authorized testing
+- B) `public` is the default read-only SNMP community string; its presence indicates the device was deployed without changing default credentials, which is a misconfiguration
+- C) `public` is the SNMPv3 authentication username and its presence confirms that SNMPv3 is in use
+- D) `public` is only used by SNMPv1 and has no security implication on modern devices running SNMPv2c
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- **Why B is correct:** `public` is the industry-default read-only SNMP community string shipped with virtually all SNMP-capable devices. A device responding to `public` has not had its community string changed from the factory default — a well-documented misconfiguration that exposes system information to any unauthenticated requester on the network.
+- **Why A is incorrect:** `public` is the universally known default, not a custom administrator-configured string. Its presence is a finding precisely because it was not customized.
+- **Why C is incorrect:** SNMPv3 uses usernames, authentication protocols (MD5/SHA), and privacy protocols (DES/AES), not community strings. The `-v2c` flag in the command explicitly specifies SNMPv2c, which uses community strings.
+- **Why D is incorrect:** SNMPv2c uses community strings just as SNMPv1 does. The security implication is identical: anyone knowing the community string (which for `public` is everyone) can read device information. The version alone does not mitigate the default-credential risk.
+
+---
+
+### Question 15
+
+A tester runs `enum4linux -a 192.168.1.50` against a Windows host and receives share names, user account lists, and group memberships without providing any credentials. What vulnerability class does this represent?
+
+- A) Credential stuffing — the tool is using a known password list to authenticate
+- B) A null session — Windows SMB/NetBIOS is allowing unauthenticated connections that reveal sensitive enumeration data
+- C) A man-in-the-middle attack — enum4linux intercepts domain authentication traffic
+- D) An SQL injection — enum4linux queries the Windows registry database using injection techniques
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- **Why B is correct:** A null session is an unauthenticated SMB/NetBIOS connection (empty username and password) that older or misconfigured Windows systems allow. Through null sessions, an attacker can enumerate shares, user accounts, groups, password policies, and trust relationships — exactly what enum4linux retrieves. This is a well-known Windows misconfiguration.
+- **Why A is incorrect:** Credential stuffing requires having credential pairs to attempt. enum4linux's default behavior does not provide credentials — it connects anonymously (null session).
+- **Why C is incorrect:** enum4linux queries the target directly using SMB/RPC protocols. It does not intercept traffic between other hosts, which is the definition of a man-in-the-middle attack.
+- **Why D is incorrect:** SQL injection targets database query parsing. enum4linux communicates via SMB/RPC protocols to Windows services, not via SQL queries to a database engine.
+
+---
+
+### Question 16
+
+A tester discovers that an FTP server on port 21 allows anonymous login. After connecting with `ftp 192.168.1.50` and entering `anonymous` as the username with a blank password, they gain access to a directory of internal configuration files. What is the correct immediate action?
+
+- A) Download all accessible files immediately to preserve evidence before the session times out
+- B) Document the finding with a screenshot and connection log, note the accessible directory listing, then disconnect — bulk download requires specific RoE authorization for data exfiltration
+- C) Attempt to escalate privileges by uploading a webshell to the FTP root directory
+- D) Close the connection and do not document the finding, as accessing anonymous services is not a security vulnerability
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- **Why B is correct:** Confirming the vulnerability exists (anonymous login with access to sensitive files) is sufficient to document a critical finding. Bulk downloading files — especially configuration files that may contain credentials or PII — constitutes data exfiltration and typically requires explicit RoE authorization. The professional approach is to document access and directory listings without extracting data beyond what is needed to demonstrate impact.
+- **Why A is incorrect:** Bulk downloading client data without explicit authorization exceeds the typical scope of a penetration test and may violate the RoE, data handling agreements, and privacy laws regardless of whether the access was "authorized" by the vulnerability.
+- **Why C is incorrect:** Uploading files to a target system is a destructive action that changes the target's state and requires specific written authorization. It also escalates far beyond enumeration into exploitation without confirming the finding first.
+- **Why D is incorrect:** Anonymous FTP access to sensitive files is a significant vulnerability — insufficient access controls allowing unauthenticated access to internal data. Failing to document confirmed findings is a professional failure.
+
+---
+
+### Question 17
+
+Masscan is capable of scanning the entire IPv4 internet in under six minutes at maximum rate. Why would a professional penetration tester choose Nmap over Masscan for a targeted internal network engagement?
+
+- A) Masscan only works on IPv6 networks; Nmap supports both IPv4 and IPv6
+- B) Nmap provides service version detection, OS fingerprinting, and NSE scripting that Masscan lacks; Masscan is optimized for speed across massive address spaces, not for the detailed per-host enumeration needed in a targeted engagement
+- C) Masscan requires root privileges on Linux, while Nmap can run as a standard user for all scan types
+- D) Masscan is illegal to use in the United States, while Nmap is explicitly authorized by all compliance frameworks
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- **Why B is correct:** Masscan's design priority is raw throughput — it sacrifices detailed enumeration for speed. It does not perform service version detection, OS fingerprinting, or scripted checks. For a targeted internal engagement where the tester needs to understand what software is running and identify specific vulnerabilities, Nmap's depth of analysis is essential. Masscan is valuable for initial discovery on very large networks, followed by Nmap for detailed enumeration.
+- **Why A is incorrect:** Masscan supports both IPv4 and IPv6. IPv6 capability is not the distinguishing factor.
+- **Why C is incorrect:** Both Masscan and Nmap require elevated privileges for SYN scans. Nmap's Connect scan (`-sT`) does not require root, but this is not the reason to choose Nmap over Masscan.
+- **Why D is incorrect:** Masscan is not illegal; unauthorized use of any scanning tool is illegal regardless of the tool. No compliance framework explicitly authorizes only Nmap.
+
+---
+
+### Question 18
+
+After completing a scanning phase, a tester has Nmap XML output, enum4linux text files, and Nikto logs from multiple targets. Which documentation practice is required before moving to the exploitation phase?
+
+- A) Delete all scan logs to protect the client from data exposure if the tester's machine is compromised
+- B) Archive all output files with timestamps, cross-reference findings to confirm scope compliance, and create a structured finding list mapping each discovered service to its potential vulnerabilities before proceeding
+- C) Begin exploitation immediately to take advantage of any time-sensitive vulnerabilities before they are patched
+- D) Submit all raw scan outputs directly to the client as the final deliverable without further analysis
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- **Why B is correct:** Professional practice requires organizing and reviewing scan data before exploitation: confirming all targets are within scope, timestamping findings for chain-of-custody, and creating a prioritized finding list. This prevents accidental out-of-scope exploitation and ensures the exploitation phase is systematic rather than opportunistic.
+- **Why A is incorrect:** Deleting scan logs destroys evidence and violates documentation requirements. Scan output is part of the engagement record and must be retained per the RoE's data retention provisions.
+- **Why C is incorrect:** Rushing to exploitation without reviewing and organizing findings increases the risk of out-of-scope actions, missed vulnerabilities, and poor prioritization. Professional engagements follow a structured methodology.
+- **Why D is incorrect:** Raw scan outputs are not professional deliverables. Clients receive analyzed, interpreted findings that explain business impact and remediation guidance — not unprocessed tool output.
+
+---
+
+### Question 19
+
+A Nikto scan against a web server returns the finding: `+ OSVDB-3092: /admin/: This might be interesting...`. What should the tester do next?
+
+- A) Immediately attempt to brute-force login credentials against the `/admin/` path
+- B) Note the finding, manually browse to `/admin/` in a browser to observe the response, and document whether it presents a login form, redirects, or returns a 403 — then assess whether further testing of this path is within the RoE before proceeding
+- C) Dismiss the finding as a false positive since Nikto always flags `/admin/` regardless of whether content exists
+- D) Report the finding directly to the client without verifying it, since Nikto findings are always accurate
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- **Why B is correct:** Nikto findings require manual verification. Browsing to the path confirms whether an admin interface exists, what it exposes, and whether it is accessible — all without performing any destructive or intrusive action. Verifying before escalating is standard professional practice, and confirming scope authorization for admin interface testing is required before any login attempts.
+- **Why A is incorrect:** Brute-forcing credentials is an intrusive, potentially destructive action that requires explicit RoE authorization and should only follow confirmed discovery of a login interface, not immediate action on a Nikto suggestion.
+- **Why C is incorrect:** While Nikto does produce false positives, it cannot be dismissed without verification. Many `/admin/` paths contain real, exposed administrative interfaces with significant security impact.
+- **Why D is incorrect:** Reporting unverified scanner output as confirmed findings is unprofessional and inflates a client's vulnerability list with noise. All findings should be manually validated before being included in the report.
+
+---
+
+### Question 20
+
+A tester performs a full port scan (`nmap -p-`) and discovers that port 8443 is open on a target. They identify it as running HTTPS. What follow-on enumeration steps are appropriate before noting this as a potential finding?
+
+- A) Immediately exploit the service using Metasploit since HTTPS on a non-standard port is always misconfigured
+- B) Run `nmap -sV -p 8443` for version detection, browse the service to identify the application, run Nikto against port 8443, and check the TLS certificate for hostname and expiration details — then document all findings
+- C) Skip the port because HTTPS services are encrypted and cannot be enumerated without decrypting traffic
+- D) Only document the port number; application-layer enumeration of HTTPS requires credentials and cannot be performed passively
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- **Why B is correct:** Non-standard HTTPS ports often host management interfaces, development applications, or alternative web servers with weaker configurations. Version detection identifies the software; manual browsing reveals the application type and any exposed content; Nikto tests for common web vulnerabilities; TLS certificate inspection reveals hostnames, validity, and potential misconfigurations. This comprehensive approach produces actionable findings.
+- **Why A is incorrect:** A non-standard HTTPS port is interesting but not automatically exploitable. Skipping enumeration to jump directly to exploitation contradicts the methodology and may target the wrong application or misidentify the software.
+- **Why C is incorrect:** HTTPS encrypts traffic in transit but does not prevent enumeration of the service itself. Banner grabbing, certificate inspection, and web application scanning all work against HTTPS services without requiring traffic decryption.
+- **Why D is incorrect:** Application-layer enumeration of HTTPS does not require credentials. Public-facing web application headers, TLS certificates, and page content are accessible without authentication.
+
+---
+
 **Proprietary and Confidential. Not for disclosure outside of Texas Wesleyan University course use.**

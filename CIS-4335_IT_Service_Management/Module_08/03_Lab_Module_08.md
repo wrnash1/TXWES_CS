@@ -254,4 +254,41 @@ Before submitting, verify:
 
 ---
 
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Shift-Left Capability Gap Analysis
+
+A regional bank's service desk currently resolves 32% of incidents at Tier 1. The remaining 68% are escalated. A review of last month's ticket data reveals the following top five Tier 1 escalation reasons:
+
+1. VPN connectivity issues (18% of escalations) — agents say "too many variables"
+2. Multi-factor authentication failures (14%) — agents unsure how to reset authenticator apps
+3. Outlook calendar sync errors with mobile devices (11%) — no documented resolution steps
+4. Printer driver conflicts on Windows 11 (9%) — requires registry changes agents are not authorized to make
+5. SharePoint permission denied errors (8%) — requires admin access agents do not have
+
+For each item:
+
+1. Classify whether the barrier to Tier 1 resolution is a knowledge gap, an authorization gap, or a tooling gap.
+2. Recommend one specific shift-left action for each item that would enable Tier 1 to handle it without escalation or would reduce escalation frequency.
+
+### Challenge 2: Event-to-Incident Pipeline Design
+
+Design a complete event-to-incident pipeline for the following monitoring scenario at a hospital IT department. The hospital's patient monitoring network generates approximately 800 events per day across 120 connected devices.
+
+1. Define threshold values and event category (informational, warning, or exception) for the following three scenarios:
+   - A patient monitor's battery level dropping below 20%
+   - The central nursing station dashboard becoming unresponsive for 10 seconds
+   - A medication dispensing cabinet failing to communicate with the pharmacy system for 30 consecutive seconds
+2. For each exception-level event, describe what automated response should occur (alert generation, auto-ticket creation, on-call notification) and what the target response time should be.
+3. Identify one AIOps-style improvement that could reduce alert noise on this network and explain how it would work.
+
+### Reflection Questions
+
+1. The shift-left strategy moves resolution capability toward the user, ideally to self-service. However, some incidents genuinely require specialist expertise and cannot be shift-lefted without creating safety or compliance risks. Identify two types of IT incidents (in any industry) where shift-left should be deliberately limited, and explain why.
+2. A post-incident review is most valuable when it is blameless — focused on process and system improvements rather than individual fault. Why is a blame-focused PIR counterproductive, and what specific behaviors should a PIR facilitator model to keep the review constructive?
+
+---
+
 Module 08 Lab | CIS-4335 IT Service Management | Texas Wesleyan University

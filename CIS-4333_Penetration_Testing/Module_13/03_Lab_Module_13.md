@@ -350,4 +350,30 @@ Submit all content as a single PDF or ZIP file to the Canvas assignment portal.
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Multi-Hop Pivot Documentation
+
+Using your authorized lab environment, document a complete two-hop pivot chain: from your attack machine through a jump host to a second internal host that is not directly reachable from your machine.
+
+1. Draw a network diagram labeling your attack machine, the jump host (Hop 1), and the internal target (Hop 2) with their IP addresses and subnet boundaries.
+2. Record the exact SSH or Metasploit commands used to establish each hop, including the SOCKS proxy or port forward configuration at each layer.
+3. Run a TCP connect scan through the full pivot chain and capture the output.
+4. Write a one-paragraph narrative describing how an attacker would use this technique and what network monitoring controls could detect it at each hop.
+
+### Challenge 2: Persistence Mechanism Comparison Report
+
+Review two persistence mechanisms you practiced in this lab (one Linux, one Windows) and write a structured comparison from both an attacker and defender perspective.
+
+1. For each mechanism, document: the privilege level required, how the mechanism is triggered, what log entries or artifacts it generates on the host, and the cleanup steps required.
+2. Using the MITRE ATT&CK framework (attack.mitre.org), identify the specific technique ID for each mechanism and note any listed detection data sources.
+3. Write a brief remediation recommendation for each mechanism as if you were advising the client's blue team in your final report.
+
+### Challenge Reflection Questions
+
+1. During your pivot documentation in Challenge 1, what was the most significant indicator of compromise that a network defender monitoring egress traffic would likely observe? How would you document this observation in a professional penetration test report?
+2. When comparing the two persistence mechanisms in Challenge 2, which generated more detectable artifacts? What does this tell you about the relationship between stealth and privilege level when selecting a persistence technique during an authorized engagement?
+
+---
+
 *End of Module 13 Lab Activity*

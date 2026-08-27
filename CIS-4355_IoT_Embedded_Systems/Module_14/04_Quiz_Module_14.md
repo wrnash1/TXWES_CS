@@ -177,3 +177,171 @@ A developer is building a TinyML application that classifies four machine states
   - *Why D is incorrect:* Quantization-aware training (QAT) is performed on the development machine during training — not on the ESP32. QAT inserts fake quantization nodes into the Keras training graph and runs backpropagation with quantization noise, all on the development machine with GPU acceleration. The ESP32 is never involved in QAT.
 
 ---
+
+### Question 11
+
+A TinyML engineer trains a 3-class gesture classifier (swipe left, swipe right, no gesture) on an Arduino Nano 33 BLE Sense. The model achieves 97% accuracy on the test set but only 71% accuracy when deployed to the real device with live gestures. What is the most likely cause of this large accuracy gap?
+
+- A) The Arduino Nano's Cortex-M4 FPU introduces rounding errors in float32 operations that do not occur during training on an x86 machine, causing systematic prediction errors.
+- B) The training and test data were collected under controlled, stationary conditions with consistent gesture speed and orientation, but live use exposes the model to the natural variability of gesture style, wrist angle, and speed — a train/test distribution mismatch. The model has poor generalization because it was not trained on sufficiently diverse real-world samples.
+- C) The TFLM int8 quantization reduces model capacity so severely that it cannot distinguish between three classes; a float32 deployment would also achieve 97% in production.
+- D) The accelerometer on the production Arduino has a different calibration offset than the accelerometer used during training data collection, causing a systematic input bias that shifts all predictions to the wrong class.
+- **Correct Answer:** B) Train/test distribution mismatch — the controlled training data does not represent live gesture variability.
+- **Distractor Analysis:**
+  - *Why A is incorrect:* IEEE 754 float32 arithmetic is standardized across hardware platforms. The Cortex-M4 FPU and an x86 processor produce identical results for the same float32 operations. Systematic rounding differences between platforms are not a real phenomenon in standard hardware.
+  - *Why B is correct:* The gap between test accuracy and deployment accuracy is the classic symptom of distribution shift — the training and test data were drawn from the same controlled distribution, which differs from the production distribution. This is one of the most common TinyML deployment failure modes. The fix is data augmentation (varying speed, angle, orientation during collection) and collecting data from multiple users in varied conditions.
+  - *Why C is incorrect:* A well-quantized 3-class model with 97% float32 accuracy typically retains 95–97% accuracy after int8 quantization for simple gesture classification. Quantization does not cause a 26-percentage-point accuracy drop for this class of model.
+  - *Why D is incorrect:* While accelerometer calibration offsets are a real concern, they produce a constant systematic bias that shifts all readings by a fixed amount — this would be detectable and correctable by recalibrating or normalizing inputs. A 26-point gap due to accelerometer offset would produce consistent failures for all gestures in the same direction, not the variable accuracy seen in practice.
+
+---
+
+### Question 12
+
+A TFLM engineer profiles an anomaly detection autoencoder running on an ESP32 at 240 MHz. The model performs 1,000 inferences per second and consumes 180 mW of power during continuous inference. The device is battery-powered (3.7V, 2000 mAh LiPo). The application requires anomaly detection with at most 100 ms detection latency. What is the approximate battery life if the device runs inference continuously, and what architectural change would most significantly extend it?
+
+- A) Battery life ≈ 41 hours. Running at 1 Hz instead of 1 kHz (one inference per second) reduces inference CPU load by 99.9%, dropping inference power from 180 mW to approximately 0.18 mW — extending battery life by orders of magnitude while still meeting the 100 ms latency requirement.
+- B) Battery life ≈ 41 hours. The only way to extend it is to replace the ESP32 with an Arduino Nano (Cortex-M4, lower clock) which uses less power for the same inference rate.
+- C) Battery life ≈ 7.4 hours. Running at 10 Hz instead of 1 kHz reduces inference load by 99% and extends battery life proportionally to approximately 740 hours.
+- D) Battery life ≈ 41 hours. The most effective change is to use flash encryption to protect the model, which also reduces inference power consumption by eliminating plaintext flash reads.
+- **Correct Answer:** A) ~41 hours at 180 mW; running at 10 Hz (matching the 100 ms latency requirement) reduces inference power to near-zero, extending battery life by orders of magnitude.
+- **Distractor Analysis:**
+  - *Why A is correct:* Battery life = (capacity_mAh × voltage_V) / power_W = (2000 × 3.7) / 0.180 = 7,400 Wh / 0.180 W ≈ 41 hours. The latency requirement is 100 ms, meaning one inference every 100 ms (10 Hz) is sufficient. Running at 1,000 Hz is 100x more frequent than required. At 10 Hz, inference occupies 1/100 of the CPU time — the remaining 99% can be spent in modem sleep or light sleep, reducing average power consumption dramatically.
+  - *Why B is incorrect:* While a Cortex-M4 may run the inference at lower power per MHz, replacing hardware is a costly redesign. The immediate and far more impactful change is to reduce inference frequency from 1 kHz to 10 Hz, which is a one-line code change (`vTaskDelay(pdMS_TO_TICKS(100))`).
+  - *Why C is incorrect:* The battery life calculation is wrong. 2000 mAh × 3.7 V / 1000 = 7.4 Wh total energy. At 180 mW: 7.4 / 0.180 = 41 hours — not 7.4 hours. The 10 Hz power reduction is also understated; the power is not simply divided by 100 (sleep modes reduce power far more than proportionally).
+  - *Why D is incorrect:* Flash encryption has no measurable effect on power consumption during inference. Encrypted flash is decrypted transparently by the ESP32's hardware crypto engine with negligible power overhead. Encryption protects the model's confidentiality — it does not affect inference power.
+
+---
+
+### Question 13
+
+A TFLM application on an ESP32 calls `interpreter.input(0)->data.int8` to write quantized MFCC features. The input tensor's quantization parameters are scale = 0.0625 and zero_point = -10. A float32 MFCC feature value of 2.5 is to be written to the input. What is the correct int8 value to write?
+
+- A) 40
+- B) -10
+- C) 30
+- D) 50
+- **Correct Answer:** C) 30
+- **Distractor Analysis:**
+  - *Why A is incorrect:* `round(2.5 / 0.0625) = round(40)` — this omits the zero_point addition. The full quantization formula is `round(value / scale) + zero_point = 40 + (-10) = 30`.
+  - *Why B is incorrect:* This is the zero_point value alone — it represents the quantized equivalent of 0.0 in float32, not 2.5.
+  - *Why C is correct:* Applying the full quantization formula: `quantized = round(float_value / scale) + zero_point = round(2.5 / 0.0625) + (-10) = round(40.0) + (-10) = 40 - 10 = 30`. The int8 value 30 represents the float32 value 2.5 in this tensor's quantization scheme.
+  - *Why D is incorrect:* `round(2.5 / 0.0625) + 10 = 50` — this adds the zero_point rather than the correct negative value. The zero_point is -10, so the subtraction sign must be applied: 40 + (-10) = 30, not 40 + 10 = 50.
+
+---
+
+### Question 14
+
+A knowledge distillation setup has a large "teacher" model (ResNet-50 fine-tuned for vibration classification, 25 MB) and a small "student" model (DS-CNN, 180 KB). The student is trained to minimize cross-entropy loss against the teacher's softmax output probabilities at temperature T=4, rather than against the hard one-hot labels. What is the advantage of using the teacher's soft probabilities at T=4 compared to training the student on hard labels directly?
+
+- A) Using soft probabilities at T=4 causes the student to train faster because the loss gradients are larger, reducing the required number of training epochs by approximately half.
+- B) Soft probabilities at elevated temperature T=4 reveal the inter-class similarity structure that the teacher has learned — for example, that "bearing fault A" has a 15% probability of being confused with "bearing fault B" — providing richer gradient signal than hard binary labels and allowing the student to learn a more nuanced decision boundary from less data.
+- C) Using T=4 quantizes the teacher's output to 4-bit precision before passing it to the student, reducing the memory required for the distillation batch computation.
+- D) The temperature parameter T=4 ensures the student's output logits are also scaled by 4 during inference on the microcontroller, compensating for the int8 quantization scale factor automatically.
+- **Correct Answer:** B) Soft probabilities at T>1 reveal inter-class structure, providing richer gradient signal and enabling better student generalization.
+- **Distractor Analysis:**
+  - *Why A is incorrect:* Soft probability targets at T=4 produce softer loss gradients because the probability distributions are more uniform — the gradients are actually smaller per sample, not larger. The benefit is generalization quality, not training speed.
+  - *Why B is correct:* At T=1, the teacher's softmax is typically very peaked (e.g., 0.99 for the true class, 0.004 for others). The hard label equivalent is 1.0 / 0.0. At T=4, the distribution spreads: 0.72 for the true class, 0.12 for the most similar class, 0.04 for others. This non-zero probability on related classes is the "dark knowledge" — it encodes the teacher's belief about class similarity. The student learns not just "this is class A" but "this is class A, somewhat similar to class B, very different from class C." This richer training signal consistently produces students that generalize better than directly trained equivalents.
+  - *Why C is incorrect:* Temperature T in knowledge distillation is not related to bit precision. It is the denominator in the softmax exponent: `softmax(logit_i / T)`. Larger T flattens the distribution; it has nothing to do with quantization.
+  - *Why D is incorrect:* The temperature parameter is a training-time construct only. After distillation training is complete, T is discarded and the student model uses standard T=1 softmax during inference. The int8 quantization scale factor is independent of T.
+
+---
+
+### Question 15
+
+On the ESP32, `MicroInterpreter::Invoke()` is measured at 12 ms for a keyword spotting model. The audio pipeline requires one inference every 100 ms. The remaining 88 ms the ESP32 is idle. A product manager requests that the ESP32 also sample a DHT22 temperature sensor every 500 ms and publish readings over MQTT during the idle windows. Which FreeRTOS task design correctly integrates both workloads?
+
+- A) Run TFLM `Invoke()` and DHT22 sampling in the same task. Since both are sequential operations and 12 ms + DHT22 read time (< 5 ms) + MQTT publish (< 50 ms) fits within 100 ms, a single-task superloop handles both without any scheduling overhead.
+- B) Create a keyword spotting task (priority 3) that runs inference every 100 ms using `vTaskDelay(pdMS_TO_TICKS(100))`. Create a separate sensor+MQTT task (priority 2) that samples DHT22 and publishes every 500 ms. Both tasks block for most of their respective periods, leaving the CPU idle or in sleep the remaining time.
+- C) Create a single task that runs both workloads and uses a hardware timer ISR to preempt the DHT22 task every 100 ms to ensure inference runs on schedule.
+- D) Run TFLM `Invoke()` in a timer ISR every 100 ms and run DHT22 + MQTT in a FreeRTOS task. The 12 ms ISR duration is acceptable because no other ISR runs concurrently.
+- **Correct Answer:** B) Two separate tasks with independent delays, each blocking when not active.
+- **Distractor Analysis:**
+  - *Why A is incorrect:* A single-task superloop is the approach this course explicitly moved away from in Module 13. If the MQTT publish blocks for longer than expected (network congestion), the 100 ms inference deadline is missed. Blocking in one operation blocks all others. FreeRTOS tasks with independent `vTaskDelay()` calls handle variable blocking times correctly.
+  - *Why B is correct:* This is the canonical FreeRTOS multi-workload design. The keyword spotting task wakes every 100 ms, runs 12 ms of inference, then blocks for 88 ms. The sensor task wakes every 500 ms, reads DHT22 (< 5 ms), publishes MQTT (variable, up to ~50 ms), then blocks. The CPU is idle or in sleep when both tasks are blocked. Priority 3 > 2 ensures inference preempts the sensor task if their wake times coincide.
+  - *Why C is incorrect:* Using a hardware timer ISR to preempt a FreeRTOS task mid-execution is not how FreeRTOS scheduling works — ISRs use `xSemaphoreGiveFromISR()` or `xTaskNotifyFromISR()` to signal tasks, not to preempt tasks directly. The inference task should simply call `vTaskDelay()` to yield for 88 ms and wake on schedule.
+  - *Why D is incorrect:* Running 12 ms of TFLM inference inside a timer ISR is the same violation described in Question 8. ISRs must be short (microseconds); 12 ms blocks all lower-priority interrupts and violates the ESP32 Wi-Fi stack's timing requirements.
+
+---
+
+### Question 16
+
+A TinyML model converts a float32 vibration reading of 0.0 (exact zero) using the quantization formula with scale = 0.004 and zero_point = 128. The model uses uint8 quantization (range 0–255). What is the quantized value, and what does this confirm about the role of zero_point in asymmetric quantization?
+
+- A) Quantized value = 0. The zero_point is an artifact of the conversion API and does not affect the computation for zero-valued inputs.
+- B) Quantized value = 128. The zero_point maps float 0.0 to the midpoint of the uint8 range, enabling the uint8 representation to cover both positive and negative float values symmetrically around zero.
+- C) Quantized value = 255. Float 0.0 is treated as the maximum representable value when the zero_point is 128, because uint8 cannot represent negative values.
+- D) Quantized value = 64. The scale of 0.004 is applied to the zero_point, halving it from 128 to 64 before adding the floating-point contribution.
+- **Correct Answer:** B) Quantized value = 128; zero_point maps float 0.0 to the integer midpoint.
+- **Distractor Analysis:**
+  - *Why A is incorrect:* Applying the formula: `quantized = round(0.0 / 0.004) + 128 = round(0) + 128 = 128`. The zero_point definitively affects the output — it is not an artifact.
+  - *Why B is correct:* The quantization formula `quantized = round(float_value / scale) + zero_point` gives `round(0.0 / 0.004) + 128 = 0 + 128 = 128`. The zero_point = 128 in uint8 quantization maps float 0.0 to the midpoint of the [0, 255] range, allowing the uint8 representation to cover both negative floats (quantized values below 128) and positive floats (above 128) — asymmetric quantization around zero. This is critical for MFCC features and activation functions that produce both positive and negative values.
+  - *Why C is incorrect:* Float 0.0 with zero_point = 128 produces quantized value 128 (midpoint), not 255 (maximum). 255 would correspond to float value `(255 - 128) × 0.004 = 0.508`.
+  - *Why D is incorrect:* The scale is applied to the floating-point value, not to the zero_point. The zero_point is always added as a constant integer offset after the scaled division: `round(value / scale) + zero_point`, not `round(value / scale) + scale × zero_point`.
+
+---
+
+### Question 17
+
+A TinyML pipeline uses quantization-aware training (QAT) instead of post-training quantization. What is the primary advantage of QAT over PTQ, and what additional requirement does QAT impose that PTQ does not?
+
+- A) QAT produces smaller model files than PTQ because it prunes weights to zero during training. QAT requires access to the training GPU cluster; PTQ can run on a laptop.
+- B) QAT inserts simulated quantization noise into the forward pass during training, allowing the model's weights to adapt to the quantization error. This typically yields 0.5–2% higher accuracy than PTQ for small models on difficult tasks. The additional requirement is access to the original labeled training dataset and the ability to retrain — PTQ requires only a small unlabeled representative calibration set.
+- C) QAT converts model weights to int8 before training begins, so training runs entirely in integer arithmetic and is faster than float32 training. PTQ must train in float32 before conversion.
+- D) QAT eliminates the need for the `xxd` conversion step because the model is already in C array format after QAT training. PTQ requires the `xxd` conversion from binary TFLite to C array.
+- **Correct Answer:** B) QAT adapts weights to quantization error during training, yielding higher accuracy; requires the full training dataset and retraining capability.
+- **Distractor Analysis:**
+  - *Why A is incorrect:* QAT does not prune weights — it inserts fake quantization nodes (simulating int8 rounding) during the forward pass while keeping weights in float32 for the backward pass. Pruning is a separate technique.
+  - *Why B is correct:* During QAT, fake quantization operations simulate the rounding errors of int8 arithmetic during the training forward pass. The loss function sees the quantization-degraded activations and the optimizer adjusts weights to minimize loss under these conditions. The result is a model that is robust to int8 quantization. The key constraint is that you need the labeled training data and training infrastructure — PTQ requires only a small (~200-sample) unlabeled representative calibration set and the pre-trained float32 model.
+  - *Why C is incorrect:* QAT trains in float32 with fake quantization nodes — training does not run in actual int8 arithmetic. The backward pass uses float32 gradients throughout. QAT is not faster than standard float32 training; it is approximately the same speed or slightly slower due to the additional fake-quantize operations.
+  - *Why D is incorrect:* Both QAT and PTQ produce TFLite `.tflite` binary model files that must be converted to C arrays using `xxd -i`. The final deployment step is identical for both approaches.
+
+---
+
+### Question 18
+
+An ESP32 TinyML application runs TFLM inference every 500 ms. The developer notices that on the first call to `interpreter.Invoke()`, execution takes 45 ms, but all subsequent calls take 8 ms. What causes this one-time 45 ms latency spike on the first inference?
+
+- A) The first `Invoke()` call loads the model weights from flash into SRAM, which is slow due to flash read latency. Subsequent calls use a cached copy of the weights in SRAM.
+- B) The first `Invoke()` call performs just-in-time (JIT) compilation of the TFLM operation kernels from source code, caching the compiled versions for subsequent calls.
+- C) The first `Invoke()` call may trigger TFLM's internal arena layout verification pass, cache-line warm-up for flash-mapped model constants, and any one-time initialization of operation state (such as transposing weight matrices for optimized GEMM kernels). Subsequent calls skip these one-time initialization paths.
+- D) The first `Invoke()` call initializes the ESP32's hardware FPU context, which requires a 37 ms calibration sequence. Subsequent calls use the pre-warmed FPU state.
+- **Correct Answer:** C) First invoke performs one-time initialization including weight matrix preparation and cache warm-up; subsequent calls skip these paths.
+- **Distractor Analysis:**
+  - *Why A is incorrect:* TFLM model weights remain in flash throughout execution — they are never copied to SRAM. The TFLM design principle is that the model is stored in flash as a read-only FlatBuffer, accessed directly without copying. Caching weights in SRAM would consume the constrained SRAM allocation for the arena.
+  - *Why B is incorrect:* TFLM has no JIT compilation. All operation kernel code is compiled into the firmware binary at build time. There is no runtime code generation on embedded platforms.
+  - *Why C is correct:* Several TFLM operations perform one-time initialization on the first `Invoke()` call: weight matrix transposition for optimized GEMM layouts, initialization of persistent tensors (operation-specific scratch buffers allocated within the arena), and cold-start flash access patterns that benefit from the instruction cache warming up. After the first inference, these paths are complete and the execution falls to the optimized steady-state path.
+  - *Why D is incorrect:* The ESP32's FPU hardware context (FPSCR, float register state) is saved and restored by the FreeRTOS context switch — it does not require a multi-millisecond calibration sequence. FPU initialization is a microarchitectural operation that takes nanoseconds, not milliseconds.
+
+---
+
+### Question 19
+
+A wearable ECG monitor runs a TinyML atrial fibrillation (AF) classifier on an STM32L4 (no FPU, 128 KB SRAM, Cortex-M4 without FPU). The model currently uses dynamic range quantization (weights int8, activations float32). The inference time is 240 ms, which is too slow — the requirement is under 100 ms. The developer wants to reduce inference time without changing the model architecture. What is the most direct change to achieve this?
+
+- A) Upgrade to full integer quantization (all operations in int8), which eliminates float32 software emulation for all activation computations. On a Cortex-M4 without FPU, int8 MAC operations execute in hardware while float32 MACs require software emulation — the speedup is typically 4–10x.
+- B) Reduce the tensor arena size by 50%, which forces TFLM to use a more memory-efficient inference path that reduces latency.
+- C) Enable `Optimize.EXPERIMENTAL_SPARSITY` in the TFLite converter, which removes 50% of zero-weight multiply operations automatically.
+- D) Pin the inference task to the second core of the STM32L4, which doubles the available CPU bandwidth for the inference computation.
+- **Correct Answer:** A) Switch to full integer quantization; int8 hardware arithmetic is 4–10x faster than float32 software emulation on Cortex-M4 without FPU.
+- **Distractor Analysis:**
+  - *Why A is correct:* The STM32L4 Cortex-M4 without FPU must emulate float32 arithmetic in software — each float32 multiply-accumulate takes 10–30 clock cycles via the ARM soft-float library. An int8 multiply-accumulate executes in 1–3 hardware clock cycles. For a model whose bottleneck is the multiply-accumulate operations in dense and convolutional layers, full integer quantization eliminates all float32 activation arithmetic, producing the 4–10x speedup needed to meet the 100 ms requirement.
+  - *Why B is incorrect:* Reducing arena size below the minimum required amount causes `AllocateTensors()` to fail. If the arena is already sized at minimum, further reduction is not possible. Arena size does not affect inference algorithm selection in TFLM — there is no "more memory-efficient inference path."
+  - *Why C is incorrect:* Sparsity optimization in TFLM requires the model to have been trained with pruning applied (the `prune_low_magnitude()` wrapper). Post-hoc enabling of sparsity optimization does not create sparsity in a non-sparse model; it only accelerates already-sparse weight matrices.
+  - *Why D is incorrect:* The STM32L4 is a single-core processor — there is no second core. Even for dual-core processors like the ESP32, TFLM inference does not automatically parallelize across cores; it runs on a single core unless the model has been explicitly partitioned.
+
+---
+
+### Question 20
+
+A TinyML developer compares three model sizes for deployment on an ESP32: Model A (32 KB int8 quantized), Model B (128 KB int8 quantized), Model C (480 KB float32). The ESP32 has 4 MB flash and 520 KB SRAM. Which models fit in flash, which fit in SRAM for the tensor arena plus model, and what is the primary constraint for Model B at inference time?
+
+- A) All three models fit in flash. Only Model A fits in SRAM. Model B's primary inference constraint is the tensor arena — the intermediate activation tensors require SRAM and may exceed the 520 KB limit depending on the model's peak activation size.
+- B) Only Models A and B fit in flash. Model C exceeds the 4 MB flash limit. Model B's primary inference constraint is flash access speed — 128 KB models read slowly from SPI flash.
+- C) All three models fit in flash. Models A and B fit in SRAM. Model C requires 480 KB of SRAM for activations alone, exceeding the 520 KB limit with no room for the tensor arena or stack.
+- D) Only Model A fits in flash. Models B and C exceed the flash limit after accounting for firmware and filesystem overhead.
+- **Correct Answer:** A) All three fit in flash; Model B's inference constraint is whether the tensor arena fits in the remaining SRAM alongside firmware stack and heap.
+- **Distractor Analysis:**
+  - *Why A is correct:* All three models (32 KB, 128 KB, 480 KB) are well below the 4 MB flash capacity. Model C at 480 KB float32 requires the most careful memory analysis: the model itself lives in flash (read-only), but the tensor arena (which holds intermediate activations) must fit in SRAM. For a 480 KB float32 model, the activation tensors during inference may require 100–300 KB of arena SRAM, which together with the firmware heap (~50–100 KB), FreeRTOS task stacks (~20–50 KB), and Wi-Fi stack (~100 KB) may exceed 520 KB total SRAM. For Model B (128 KB int8), the arena is typically much smaller (16–64 KB), making it the safest choice for the ESP32.
+  - *Why B is incorrect:* 480 KB is well within the 4 MB flash. The statement "Model C exceeds the 4 MB flash limit" is numerically incorrect — 480 KB << 4 MB = 4,096 KB. The constraint for Model C is SRAM, not flash.
+  - *Why C is incorrect:* Model C's 480 KB size refers to the model file (stored in flash) — the weights. The model is not loaded into SRAM. Only the activations (tensor arena) need SRAM. For a 480 KB float32 model, the arena size depends on the architecture's peak activation width, not the total model size.
+  - *Why D is incorrect:* Even after accounting for a typical firmware binary (1–1.5 MB) and filesystem partition (512 KB–1 MB) on a 4 MB flash, all three models fit comfortably. A 480 KB model with 2 MB firmware and 1 MB filesystem uses 3.5 MB of a 4 MB flash — within the 4 MB limit.

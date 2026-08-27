@@ -454,3 +454,31 @@ Submit a lab report in PDF format containing:
 | Part 5: at scheduling | 5 |
 | Written explanations | 5 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Custom Systemd Service with Watchdog and Timer
+
+Write a custom systemd service that runs a monitoring script, configure it to restart automatically on failure, and pair it with a timer for periodic execution.
+
+1. Create a monitoring script at `/opt/diskmon.sh` that checks if any filesystem is more than 80% full and writes a timestamped warning to `/var/log/diskmon.log` if so: `df -h --output=target,pcent | tail -n +2 | while read mount pct; do PCT=${pct%%%}; if [ "$PCT" -gt 80 ]; then echo "$(date '+%Y-%m-%d %H:%M:%S') WARNING: $mount is ${pct} full" >> /var/log/diskmon.log; fi; done`. Make it executable: `sudo chmod +x /opt/diskmon.sh`. Test it manually first.
+2. Create a systemd service unit at `/etc/systemd/system/diskmon.service` with `[Unit]` section including `Description=Disk Usage Monitor`, a `[Service]` section with `Type=oneshot`, `ExecStart=/opt/diskmon.sh`, `User=root`, and a `[Install]` section with `WantedBy=multi-user.target`. Run `sudo systemctl daemon-reload && sudo systemctl start diskmon` and verify with `sudo systemctl status diskmon` and `cat /var/log/diskmon.log`.
+3. Create a paired timer unit at `/etc/systemd/system/diskmon.timer` with `[Unit]` description, a `[Timer]` section containing `OnBootSec=2min` (run 2 minutes after boot) and `OnCalendar=*:0/5` (every 5 minutes), and `[Install]` with `WantedBy=timers.target`. Enable and start the timer: `sudo systemctl daemon-reload && sudo systemctl enable --now diskmon.timer`. Verify with `sudo systemctl list-timers diskmon.timer`.
+4. Test the recovery behavior: add `Restart=on-failure` and `RestartSec=5` to the `[Service]` section. Temporarily break the service by changing `ExecStart=/opt/nonexistent.sh`. Reload and restart: `sudo systemctl daemon-reload && sudo systemctl restart diskmon`. Watch it attempt recovery with `sudo journalctl -u diskmon -f`. Then restore the correct path and reload.
+
+### Challenge 2: Journal Forensics and Service Failure Analysis
+
+Use journalctl to perform a structured investigation of service behavior across multiple boot sessions and extract meaningful operational insights.
+
+1. Query the journal to produce a boot history report: `sudo journalctl --list-boots`. Count the number of recorded boots. For each of the last 3 boots, extract the boot start time, kernel version, and first systemd message: `sudo journalctl -b -N --output=short-monotonic | head -3` (where N is the boot index -1, -2, -3).
+2. Generate a report of all services that failed at any point during the current boot: `sudo systemctl --failed --no-legend`. For each failed unit listed, retrieve its last 20 journal lines: `sudo journalctl -u UNIT -b -n 20`. Document the likely cause of each failure.
+3. Measure boot performance: `systemd-analyze` (total boot time), `systemd-analyze blame | head -10` (slowest units), and `systemd-analyze critical-chain` (the critical path through the boot). Identify the single unit contributing most to boot time and research whether it can be safely delayed with `systemctl edit --force UNIT` and a `[Unit]` section adding `After=` to defer it.
+4. Write a one-liner that queries journalctl for all SSH authentication failures in the last 7 days and counts them by source IP: `sudo journalctl -u ssh --since "7 days ago" | grep "Failed password" | awk '{print $(NF-3)}' | sort | uniq -c | sort -rn | head -10`. Record the top offending IPs and research what `fail2ban` does to address this problem automatically.
+
+### Reflection Questions
+
+1. systemd's `Requires=` dependency is "strong" (if the required unit fails, this unit fails too) while `Wants=` is "weak" (failure of the wanted unit is tolerated). Describe a specific real-world service where using `Requires=network-online.target` instead of `Wants=network-online.target` would cause an unnecessary and difficult-to-diagnose outage, and explain the exact failure scenario.
+
+2. `systemctl mask` creates a symlink to `/dev/null` to prevent a service from starting, while `systemctl disable` only removes the boot-time symlinks. Describe a scenario where an attacker who gains brief root access could exploit the difference between these two states — specifically, how an attacker might use a disabled-but-not-masked service to achieve persistence after their initial access vector is closed.

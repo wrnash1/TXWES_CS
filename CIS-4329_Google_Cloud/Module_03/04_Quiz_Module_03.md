@@ -226,3 +226,204 @@ last snapshot.
 End of Quiz — Module 03
 
 Course: CIS-4329 Google Cloud Computing | Texas Wesleyan University | Professor Nash
+
+---
+
+### Question 11 (5 points)
+
+You need to attach an additional persistent disk to a running Compute Engine VM
+without stopping it. Which statement about this operation is correct?
+
+- A) Additional disks can only be attached when the VM is in TERMINATED state
+- B) Additional persistent disks can be attached to a running VM with no downtime
+- C) Only Local SSD disks can be added to a running VM
+- D) Adding a disk automatically resizes the boot disk to accommodate the new storage
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Stopping the VM is not required; GCP supports hot-attaching additional persistent disks to running instances.
+  - C) Local SSD must be attached at VM creation time; it cannot be added to a running VM. Persistent disks are the type that supports hot-attach.
+  - D) Attaching a new disk creates a separate block device; it has no effect on the size of the existing boot disk.
+
+---
+
+### Question 12 (5 points)
+
+A VM instance is live-migrated by Google during a host maintenance event.
+What is the user-visible impact during a successful live migration?
+
+- A) The VM is rebooted and the startup script runs again
+- B) The VM experiences a brief pause of a few seconds but remains in RUNNING
+   state throughout; no restart occurs
+- C) The VM is terminated and a new VM is created in a different zone
+- D) The VM's external IP address changes after migration
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Live migration does not reboot the VM; the OS and processes continue running. The startup script does not re-execute.
+  - C) Live migration moves the running VM to a new host without termination. Creating a new VM in a different zone describes a different operation entirely.
+  - D) External IP addresses (static or ephemeral) are not affected by live migration; the VM retains its network configuration.
+
+---
+
+### Question 13 (5 points)
+
+An instance template specifies `--image-family=debian-11`. Six months later,
+Google releases a new Debian 11 patch image. What happens to VMs created
+from this template after the new image is published?
+
+- A) Existing VMs in the MIG are automatically updated to the new image
+- B) New VMs created from the template use the latest Debian 11 image at
+   creation time; existing VMs are unaffected
+- C) The template becomes invalid and must be recreated with the new image
+- D) The template pins to the exact image available at template creation time
+   and never references newer images
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) MIG instances are not automatically re-imaged when a new image is published; a rolling update must be explicitly initiated.
+  - C) Templates using image families remain valid indefinitely; they resolve to the latest non-deprecated image in the family at VM creation time.
+  - D) Image families are dynamic pointers to the latest image, not pins to a specific image version. To pin, you must specify a full image name (e.g., `debian-11-bullseye-v20231010`) rather than the family name.
+
+---
+
+### Question 14 (5 points)
+
+A managed instance group is configured with a maximum of 10 instances and a
+target CPU utilization of 70%. Current CPU utilization drops to 15% and stays
+there for the entire cool-down period. What does the autoscaler do?
+
+- A) Immediately terminates all instances except the minimum
+- B) Does nothing — the autoscaler only scales up, not down
+- C) Gradually removes instances until CPU utilization returns to approximately
+   70% or the minimum instance count is reached
+- D) Converts remaining instances to preemptible VMs to reduce cost
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) The autoscaler scales down incrementally, not all at once. It also respects the configured minimum instance count and cool-down period.
+  - B) The GCP autoscaler scales both up and down based on the configured signal; scale-down is a core feature.
+  - D) The autoscaler only changes instance count; it never changes the instance type or provisioning model of existing VMs.
+
+---
+
+### Question 15 (5 points)
+
+What is the maximum size of a single persistent disk that can be attached to
+a Compute Engine VM?
+
+- A) 10 TB
+- B) 32 TB
+- C) 64 TB
+- D) 100 TB
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) 10 TB is well below the actual limit; this figure is not a documented GCE limit.
+  - B) 32 TB is incorrect; the maximum for a single persistent disk is 64 TB.
+  - D) 100 TB exceeds the single-disk limit; to achieve this total capacity you would need to attach multiple disks or use a distributed storage solution.
+
+---
+
+### Question 16 (5 points)
+
+A VM is running a stateful application. The team wants to take a daily
+snapshot for backup purposes. Which approach minimizes the snapshot size
+on day 2 and beyond?
+
+- A) Delete the previous snapshot before creating each new one to save space
+- B) GCP snapshots are incremental by default — each snapshot after the first
+   captures only the blocks that changed since the last snapshot
+- C) Use full snapshots each day to ensure data integrity; incremental snapshots
+   are not supported on pd-ssd
+- D) Compress the disk before snapshotting to reduce the stored size
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Deleting the previous snapshot before creating a new one would make each new snapshot a full snapshot, increasing both snapshot time and storage cost.
+  - C) GCP snapshots are always incremental after the first; full snapshots are not a separate option, and incremental snapshots are fully supported on all persistent disk types including pd-ssd.
+  - D) There is no pre-snapshot disk compression step; GCP's snapshot system handles data efficiency automatically at the storage layer.
+
+---
+
+### Question 17 (5 points)
+
+A developer creates a VM with `--no-address` flag to omit the external IP.
+The VM needs to download packages from the internet using `apt-get`. What
+must be configured to allow this outbound internet access?
+
+- A) The VM automatically receives internet access through the internal VPC
+   network regardless of external IP assignment
+- B) Cloud NAT must be configured on the subnet's region to provide outbound
+   internet access for VMs without external IPs
+- C) A VPN tunnel must be established to route internet traffic
+- D) The VM must be assigned a static internal IP to access the internet
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) VMs without external IPs cannot initiate outbound connections to the internet unless Cloud NAT or a proxy is configured; the internal VPC network provides only private connectivity.
+  - C) A VPN tunnel connects to on-premises or other cloud networks, not to the general internet; Cloud NAT is the correct solution for outbound internet from private VMs.
+  - D) Internal IP addresses are private RFC 1918 addresses and are not routable on the public internet; having a static internal IP does not grant internet access.
+
+---
+
+### Question 18 (5 points)
+
+Which of the following correctly describes the difference between a
+machine image and a snapshot in Compute Engine?
+
+- A) A snapshot captures the full VM state including CPU registers; a machine
+   image captures only disk data
+- B) A machine image captures the complete VM configuration including all
+   attached disks, metadata, and network settings; a snapshot captures only
+   one persistent disk
+- C) Snapshots can be used to create new VMs directly; machine images cannot
+- D) Machine images and snapshots are interchangeable terms for the same
+   feature
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Neither snapshots nor machine images capture live CPU register state; live migration handles in-flight process state, not backup tools.
+  - C) Both snapshots and machine images can be used to create new VMs; a snapshot is used as a source disk, while a machine image creates a complete VM replica including all disks.
+  - D) They are distinct features: machine images are for full VM cloning/migration scenarios while snapshots are for disk-level backup and disk creation.
+
+---
+
+### Question 19 (5 points)
+
+A production web application runs in a regional MIG across `us-central1-a`,
+`us-central1-b`, and `us-central1-c`. Zone `us-central1-b` goes down. What
+happens to the instances that were running in that zone?
+
+- A) All instances in the MIG are immediately terminated for safety
+- B) The MIG detects the zone outage and recreates the affected instances in
+   the remaining healthy zones to maintain the target instance count
+- C) Traffic is automatically rerouted but no new instances are created until
+   the zone recovers
+- D) The MIG enters a degraded state and requires manual intervention to
+   redistribute instances
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) The MIG does not terminate healthy instances in other zones during a single-zone outage; only the affected zone's instances are impacted.
+  - C) A regional MIG actively works to maintain the target instance count; it creates replacement instances in available zones rather than waiting passively.
+  - D) Regional MIGs handle zone failures automatically without manual intervention; this self-healing behavior is a primary reason to use regional over zonal MIGs.
+
+---
+
+### Question 20 (5 points)
+
+You create a Spot VM for a batch workload. The VM is preempted after 2 hours.
+What is billed for those 2 hours?
+
+- A) Full on-demand pricing for 2 hours — preemption discounts only apply if
+   the VM runs for at least 1 hour
+- B) Spot VM pricing for 2 hours, subject to a 1-minute minimum billing
+- C) Nothing — preempted VMs are not billed for any usage
+- D) A preemption penalty fee in addition to the Spot VM usage charges
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Spot VM pricing applies for the entire duration the VM ran; there is no minimum runtime threshold before discounts apply.
+  - C) Spot VMs are billed for the time they run at the Spot price; you pay for the 2 hours of compute usage even though the VM was preempted.
+  - D) There is no preemption penalty fee; GCP does not charge extra when it reclaims a Spot VM.

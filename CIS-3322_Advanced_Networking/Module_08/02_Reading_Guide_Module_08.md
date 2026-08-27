@@ -177,3 +177,19 @@ Work through each item before taking the quiz.
 
 - Cisco CCNA certification training information: cisco.com/c/en/us/training-events/training-certifications
 - Free CCNA study notes and video summaries: professormesser.com
+
+---
+
+## 10. Supplemental Resources
+
+The following open educational resources extend OSPFv2 concepts to CCNA exam depth. All resources are freely available.
+
+1. **Cisco Networking Academy — CCNA: Enterprise Networking, Security, and Automation, Chapter 1 (OSPF)** (skillsforall.com): This free chapter covers OSPFv2 single-area configuration, Router ID election, DR/BDR election, and the `show ip ospf neighbor` verification workflow with interactive Packet Tracer labs.
+
+2. **Jeremy's IT Lab — OSPF (Days 24–27)** (youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ): Four video lessons covering OSPFv2 concepts, neighbor states, cost calculations, DR/BDR election, and troubleshooting. Jeremy's OSPF series is among the most-referenced CCNA study resources available.
+
+3. **Cisco Learning Network — OSPF Study Group** (learningnetwork.cisco.com): The Cisco Learning Network community maintains extensive OSPF discussion threads covering neighbor state machine troubleshooting, cost manipulation, and exam-style scenario questions at CCNA difficulty.
+
+4. **Cisco IOS OSPF Configuration Guide** (cisco.com): Cisco's official IOS configuration guide for OSPF covers all configuration commands, network statement syntax, passive interface behavior, and authentication options with complete CLI examples.
+
+5. **GNS3 Academy — Free OSPF Lab Course** (academy.gns3.com): Free video lessons and GNS3 topology files for OSPFv2 multi-router lab configurations, allowing hands-on practice with neighbor state troubleshooting, DR/BDR observation, and cost manipulation outside of Packet Tracer's limitations.

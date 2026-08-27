@@ -115,3 +115,26 @@ The scenario reveals that problems in one dimension created or worsened problems
 ## Submission Instructions
 
 Compile all four exercises into a single document with clear headings. Label each numbered item before your response. Submit to the Module 03 Lab assignment in Canvas by the posted deadline.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Four-Dimensional Service Audit
+
+Choose any IT service you use regularly (a university LMS, a streaming service, a banking app, or a workplace tool). Conduct a four-dimensional audit of that service:
+
+1. For each of the four dimensions, write two to three sentences identifying one strength and one gap you observe in how that service is delivered. Use correct ITIL 4 dimension names throughout.
+2. Select the dimension with the most critical gap and write a 75-word improvement recommendation that addresses that gap specifically.
+
+### Challenge 2: PESTLE Impact Assessment
+
+A regional healthcare IT department is planning to launch a patient self-service portal that allows patients to view records, book appointments, and message their care team.
+
+1. Identify one specific risk from each PESTLE category (Political, Economic, Social, Technological, Legal, Environmental) that the IT department must account for in its planning.
+2. For two of the six PESTLE risks you identified, map each risk to the most affected of the four ITIL 4 dimensions and explain in two sentences how that dimension's management practices would mitigate the risk.
+
+### Reflection Questions
+
+1. This module shows that neglecting any one of the four dimensions creates gaps that affect the other dimensions. Describe a real or hypothetical scenario where a failure in the Partners and Suppliers dimension cascades into a failure in the Value Streams and Processes dimension. Be specific.
+2. The PESTLE model includes an Environmental factor. Identify one way that growing concerns about IT energy consumption and e-waste could affect a large enterprise's IT service design decisions, and explain which of the four dimensions would be most impacted by that change.

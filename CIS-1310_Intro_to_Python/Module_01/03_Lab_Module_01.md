@@ -166,7 +166,6 @@ Python 3.10.12
 ```
 
 > Your exact minor version number may differ. You need Python 3.10 or higher.
-
 > **SCREENSHOT 3 REQUIRED:** Screenshot of `python3 --version` output. Save as `lab01_screenshot_03_python_version.png`.
 
 If you see `python3: command not found`, run:
@@ -528,6 +527,121 @@ Zip all 8 screenshots into a single file and upload to the Canvas Module 01 Lab 
 | 6 | `lab01_screenshot_06_indentation_demo.png` | `indentation_demo.py` correct output |
 | 7 | `lab01_screenshot_07_indentation_error.png` | Intentional `IndentationError` output |
 | 8 | `lab01_screenshot_08_pycache.png` | `__pycache__` directory listing |
+
+---
+
+## Part 9 — Challenge Exercise
+
+These steps are **optional** and ungraded. They are designed to stretch your understanding beyond the core lab. Students who complete them will be better prepared for future modules and the PCAP exam.
+
+### Challenge 9.1 — Write a Multi-File Program and Observe Separate Bytecode Files
+
+Create two Python files that work together:
+
+```bash
+nano ~/cis1310/greeter.py
+```
+
+Enter the following content:
+
+```python
+# greeter.py — a simple helper module
+def greet(name):
+    print('Hello,', name + '!')
+    print('Welcome to Python.')
+```
+
+Save and exit (Ctrl+O, Enter, Ctrl+X). Now create the main script:
+
+```bash
+nano ~/cis1310/main_greet.py
+```
+
+Enter:
+
+```python
+# main_greet.py — imports and uses greeter.py
+import greeter
+
+greeter.greet('Texas Wesleyan')
+greeter.greet('PCAP Learner')
+```
+
+Run it:
+
+```bash
+cd ~/cis1310
+python3 main_greet.py
+```
+
+After running, inspect `__pycache__`:
+
+```bash
+ls -la ~/cis1310/__pycache__/
+```
+
+You will see **separate `.pyc` files** for both `greeter` and `main_greet`. This demonstrates that Python compiles every module it imports — not just the entry-point script. Explain in a comment inside `main_greet.py` why two `.pyc` files were created instead of one.
+
+---
+
+### Challenge 9.2 — Measure the Bytecode Speed-Up
+
+Python caches bytecode so subsequent runs skip the parse step. You can observe this with the `time` utility:
+
+```bash
+cd ~/cis1310
+time python3 hello.py
+```
+
+Delete the bytecode cache:
+
+```bash
+rm -rf ~/cis1310/__pycache__
+time python3 hello.py
+```
+
+Run it a third time (bytecode now re-cached):
+
+```bash
+time python3 hello.py
+```
+
+Compare the real-time values from all three runs. Write a 2–3 sentence explanation in a comment block at the top of `hello.py` describing what you observed. Were the differences measurable? Why or why not? (On small scripts, the difference is often negligible — explain why `__pycache__` matters more for large projects with many modules.)
+
+---
+
+### Challenge 9.3 — Explore Python's Built-In Help System
+
+Python has a built-in interactive help system accessible from the REPL. Launch it and explore:
+
+```bash
+python3
+```
+
+```python
+>>> help()
+```
+
+At the `help>` prompt, type:
+
+```text
+help> modules
+```
+
+This lists all available standard library modules. Then try:
+
+```text
+help> keywords
+```
+
+This shows all Python reserved keywords you cannot use as variable names. Exit help by typing `quit`. Back in the REPL:
+
+```python
+>>> import keyword
+>>> print(keyword.kwlist)
+```
+
+This prints the complete list of Python 3 reserved keywords programmatically. Count how many there are and write a `print()` statement that outputs: `Python 3 has X reserved keywords.` (replace X with the actual count). Save this as `~/cis1310/keywords_demo.py` and include a screenshot as a bonus deliverable labeled `lab01_screenshot_bonus_keywords.png`.
 
 ---
 

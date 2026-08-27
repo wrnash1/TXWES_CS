@@ -170,6 +170,33 @@ Submit to the Canvas assignment portal by the module due date.
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Velocity Forecasting Model
+
+Using the RapidBuild team's velocity data from Part 1, build a more sophisticated forecast model:
+
+1. In addition to the simple average, calculate a weighted moving average for Sprint 11 planning that gives Sprint 10 a weight of 3, Sprint 9 a weight of 2, and Sprint 8 a weight of 1. Show the calculation and compare it to your simple average from Part 1. Which forecast would you use and why?
+2. The Product Backlog currently contains 190 points, but the Product Owner has indicated that: 20 percent of items are "likely to be descoped if timeline pressure increases," 15 percent of items are "likely to expand as more detail is known," and roughly 1 team member hour per day is spent on Sprint ceremonies and coordination that is not reflected in story points. Construct a best-case, most-likely, and worst-case release forecast range. Show all assumptions.
+3. A stakeholder asks: "What is the probability we deliver in 5 Sprints? In 6? In 7?" Using the velocity range from Sprints 8–10 (low: 33, average: 35.3, high: 38), calculate the implied number of Sprints under each velocity assumption and express the results as a range. Explain why this is a more useful answer than a single point estimate.
+4. The team is considering splitting one developer's role into a dedicated QA/testing specialist to reduce the end-of-Sprint testing crunch that causes the flat-then-drop burndown pattern. Using the velocity data, model the expected impact: Sprint 11–12 will lose 8 points of capacity while the team adjusts; after Sprint 12 the team expects 10 percent higher throughput due to faster story cycle time. Calculate the net Sprint forecast for Sprints 11–15 under this model and determine whether the investment breaks even before Sprint 15.
+
+### Challenge 2: Metric Dashboard Design
+
+You are the Scrum Master for a new product team at a software company. The VP of Engineering has asked you to propose a metrics dashboard that will be shown at the monthly leadership review. Design a dashboard that honestly serves both the team's empirical process and the leadership's need for visibility:
+
+1. Select exactly five metrics for the dashboard. For each metric: name it, define how it is calculated, state the data source, describe what the metric is intended to show, and write one "misuse warning" explaining how this metric could be misused by leadership and how you would prevent that misuse.
+2. The VP proposes adding individual developer story point completion and daily commit count to the dashboard. Write a professional 100-150 word response declining these additions and proposing alternatives that meet the VP's underlying need for visibility without the anti-patterns these metrics introduce.
+3. For each of your five chosen metrics, design one visual format (table, line chart, bar chart, CFD band, etc.) and write a two-sentence description of what a healthy pattern looks like versus a pattern that should prompt discussion.
+4. After three months, the leadership team starts citing your dashboard metrics in performance reviews for individual developers. Write a two-paragraph response addressing: why this creates a metric dysfunction, what the correct use of team metrics is, and what change you propose to the dashboard to prevent future misuse.
+
+### Reflection Questions
+
+1. The Agile Manifesto values "working software over comprehensive documentation." Metrics like burndown charts and CFDs are documentation of team performance — not working software. Does using metrics violate the Agile Manifesto's intent, or are they consistent with it? Construct the argument that metrics serve Agile values and the argument that they can undermine them. Which is stronger?
+2. Goodhart's Law states: "When a measure becomes a target, it ceases to be a good measure." Identify a real-world example (from software development, education, healthcare, or government) where Goodhart's Law caused a metric to fail catastrophically. Then describe how the same failure pattern could occur with Sprint velocity if misused, and propose a structural safeguard that would prevent it.
+
+---
+
 ## Rubric Summary
 
 | Component | Points |

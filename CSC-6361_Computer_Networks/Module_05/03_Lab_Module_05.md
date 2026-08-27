@@ -183,3 +183,23 @@ interface FastEthernet0/4   ! PC-Backup port
 | DSCP Marking at Access Layer (Part 4) | 15 |
 | End-to-End Verification (Part 5) | 10 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: GLBP Load Balancing Configuration
+1. Configure GLBP group 10 on a LAN interface shared between two routers. Set the virtual IP to 10.0.0.1/24 on both routers. Set the priority to 120 on Router A and 100 on Router B.
+2. Configure GLBP load balancing to use `round-robin` weighting so the AVG distributes ARP replies to both AVFs equally.
+3. Enable preempt with a delay of 30 seconds on Router A so it reclaims the AVG role after failure recovery.
+4. Verify with `show glbp` that Router A is the AVG and both routers are registered as AVFs. Explain what would happen to active sessions during an AVG failure.
+
+### Challenge 2: Ansible Playbook for QoS Verification
+1. Write an Ansible playbook (`qos_verify.yml`) that uses the `cisco.ios.ios_command` module to run `show policy-map interface` on your lab router and register the output.
+2. Add a task that uses `debug` to print lines from the output that contain "Class" or "rate".
+3. Add a second play that uses `cisco.ios.ios_config` to push a new QoS class map that classifies DSCP EF traffic, without modifying the existing policy.
+4. Run the playbook with `-v` verbosity and capture the output. Verify idempotency by running it a second time and confirming no changes are made.
+
+### Reflection Questions
+1. Your enterprise has a 100 Mbps WAN link shared between VoIP (G.711 codec, ~80 Kbps per call, 200 simultaneous calls max), video conferencing (10 Mbps burst), and data applications. Design a QoS policy that allocates bandwidth appropriately. Specify the queue type, bandwidth guarantee, and DSCP marking for each traffic class.
+2. Describe a scenario where RESTCONF would be a better choice than traditional SNMP for network monitoring, and a scenario where SNMP would still be preferable. Justify your answers.

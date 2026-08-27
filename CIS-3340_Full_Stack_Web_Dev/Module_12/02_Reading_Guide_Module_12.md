@@ -54,34 +54,34 @@ Contrast with session-based auth: the server stores a session ID → user mappin
 
 ### 2.2 Status Code Reference
 
-```
+```text
 1xx — Informational
   100 Continue
 
 2xx — Success
   200 OK
-  201 Created              → POST success; include Location: /api/resource/id header
-  204 No Content           → DELETE success; no response body
+  201 Created              -> POST success; include Location: /api/resource/id header
+  204 No Content           -> DELETE success; no response body
 
 3xx — Redirection
   301 Moved Permanently
-  304 Not Modified         → cached response still valid
+  304 Not Modified         -> cached response still valid
 
 4xx — Client Error
-  400 Bad Request          → invalid JSON, missing fields, malformed input
-  401 Unauthorized         → not authenticated
-  403 Forbidden            → authenticated but lacks permission
-  404 Not Found            → resource does not exist
-  405 Method Not Allowed   → wrong HTTP verb for this endpoint
-  409 Conflict             → duplicate resource (e.g., email already exists)
-  422 Unprocessable Entity → valid syntax but semantic validation failed
-  429 Too Many Requests    → rate limiting
+  400 Bad Request          -> invalid JSON, missing fields, malformed input
+  401 Unauthorized         -> not authenticated
+  403 Forbidden            -> authenticated but lacks permission
+  404 Not Found            -> resource does not exist
+  405 Method Not Allowed   -> wrong HTTP verb for this endpoint
+  409 Conflict             -> duplicate resource (e.g., email already exists)
+  422 Unprocessable Entity -> valid syntax but semantic validation failed
+  429 Too Many Requests    -> rate limiting
 
 5xx — Server Error
-  500 Internal Server Error → unhandled exception
-  502 Bad Gateway          → upstream server error
-  503 Service Unavailable  → temporarily down
-  504 Gateway Timeout      → upstream timeout
+  500 Internal Server Error -> unhandled exception
+  502 Bad Gateway          -> upstream server error
+  503 Service Unavailable  -> temporarily down
+  504 Gateway Timeout      -> upstream timeout
 ```
 
 ### 2.3 401 vs 403 — Critical Distinction
@@ -97,7 +97,7 @@ This distinction is tested on DVA-C02.
 
 ### 3.1 Resource Naming Rules
 
-```
+```text
 # Nouns for resources, HTTP verb for actions
 GET    /api/students          # list
 POST   /api/students          # create
@@ -121,7 +121,7 @@ POST /api/students/42/courses         # enroll student 42
 
 ### 3.2 Query Parameters for Filtering
 
-```
+```text
 # Filtering
 GET /api/students?major=CS&gpa_min=3.5
 
@@ -137,7 +137,7 @@ GET /api/students?fields=id,name,email
 
 ### 3.3 Versioning
 
-```
+```text
 # Version in URL path (most common)
 /api/v1/students
 /api/v2/students
@@ -156,9 +156,9 @@ bcrypt is an adaptive password hashing algorithm designed to be slow. The cost f
 
 The bcrypt hash format:
 
-```
+```text
 $2b$12$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy
- ↑↑ ↑↑  ↑                22 chars                 ↑ 31 chars
+ ^^ ^^  ^                22 chars                 ^ 31 chars
  |  |   |                 salt                        hash
  |  |   cost factor (12)
  |  algorithm identifier (2b = bcrypt)
@@ -203,13 +203,14 @@ const wrong = await checkPassword('wrongPassword', hash);    // false
 
 A JWT is three base64url-encoded JSON objects separated by dots:
 
-```
-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9        ← header
-.eyJ1c2VySWQiOjQyLCJyb2xlIjoic3R1ZGVudCJ9   ← payload
-.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c ← signature
+```text
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9        <- header
+.eyJ1c2VySWQiOjQyLCJyb2xlIjoic3R1ZGVudCJ9   <- payload
+.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c <- signature
 ```
 
 **Header** (decoded):
+
 ```json
 { "alg": "HS256", "typ": "JWT" }
 ```
@@ -324,7 +325,7 @@ router.delete('/:id', requireAuth, requireRole('admin', 'staff'), handler);
 
 ### 7.1 Setting Up a Collection
 
-Create a new Postman collection called "TxWes Registrar API". Add a collection-level variable `baseUrl = http://localhost:3000` and `token = ` (empty initial value).
+Create a new Postman collection called "TxWes Registrar API". Add a collection-level variable `baseUrl = http://localhost:3000` and `token` with an empty initial value.
 
 ### 7.2 Auto-Save Token from Login Response
 
@@ -381,3 +382,25 @@ In each protected request's Authorization tab, select "Bearer Token" and enter `
 - [ ] Explain why login error messages should be generic (same message for wrong email vs wrong password)
 - [ ] Set up a Postman collection with auto-save token and collection variable auth
 - [ ] Explain the relationship between JWT auth middleware and AWS Lambda authorizers
+
+---
+
+## 10. Supplemental Resources
+
+The following free, open-access resources go deeper on Module 12 topics:
+
+**1. JWT.io — JSON Web Token Introduction**
+[https://jwt.io/introduction](https://jwt.io/introduction)
+The official JWT.io introduction covering the three-part structure (header, payload, signature), standard claims, signing algorithms (HS256 vs RS256), and the security properties of signed tokens — directly aligned to Section 5 of this guide and the JWT patterns in Lab 12.
+
+**2. OWASP — Password Storage Cheat Sheet**
+[https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html](https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html)
+The OWASP authoritative guide on password hashing, bcrypt cost factor selection, why fast hashing algorithms (MD5, SHA-256) must never be used for passwords, and migration strategies for upgrading hash algorithms — directly reinforces Section 4 of this guide.
+
+**3. MDN Web Docs — HTTP authentication**
+[https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication](https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication)
+Complete reference for HTTP authentication schemes including Bearer tokens and the `Authorization` header format used by `requireAuth` middleware — covers the `401 Unauthorized` and `403 Forbidden` distinction tested in the quiz and the DVA-C02 exam.
+
+**4. AWS Documentation — Amazon Cognito — User Pools**
+[https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools.html](https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools.html)
+The official AWS Cognito documentation covering user pool setup, token types (ID token, access token, refresh token), Lambda authorizer integration, and the hosted UI — the production equivalent of the `bcrypt + JWT` auth system built in Lab 12 and a key DVA-C02 exam topic.

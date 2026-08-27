@@ -367,3 +367,82 @@ Submit all of the following through the course LMS:
 | Analysis Question 4 (world-writable) | 5 |
 | Analysis Question 5 (shadow file) | 10 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+**Challenge Step 1 — Audit SUID and SGID binaries system-wide**
+
+Run a full system scan for all SUID and SGID files and save the results for comparison:
+
+```bash
+find / -perm /4000 -type f 2>/dev/null | sort > /tmp/suid_list.txt
+find / -perm /2000 -type f 2>/dev/null | sort > /tmp/sgid_list.txt
+wc -l /tmp/suid_list.txt /tmp/sgid_list.txt
+cat /tmp/suid_list.txt
+```
+
+Install a new package that contains a SUID binary, then re-run the scan and diff the results:
+
+```bash
+sudo apt install -y sudo 2>/dev/null || true
+find / -perm /4000 -type f 2>/dev/null | sort > /tmp/suid_list_new.txt
+diff /tmp/suid_list.txt /tmp/suid_list_new.txt
+```
+
+Explain in two sentences why maintaining a baseline SUID file list and comparing it regularly
+is a critical security hardening practice on production Linux servers.
+
+**Challenge Step 2 — Implement and test ACLs on a shared directory**
+
+Create a realistic shared project directory with fine-grained ACL permissions:
+
+```bash
+sudo groupadd projectteam
+sudo useradd -m -s /bin/bash alice
+sudo useradd -m -s /bin/bash bob
+sudo usermod -aG projectteam alice
+sudo usermod -aG projectteam bob
+
+sudo mkdir -p /opt/project/shared
+sudo chown root:projectteam /opt/project/shared
+sudo chmod 2770 /opt/project/shared
+
+sudo setfacl -m u:alice:rwx /opt/project/shared
+sudo setfacl -m u:bob:rx /opt/project/shared
+sudo setfacl -m d:u:alice:rwx /opt/project/shared
+sudo setfacl -m d:u:bob:rx /opt/project/shared
+getfacl /opt/project/shared
+```
+
+Switch to alice and create a file, then switch to bob and attempt to write to it:
+
+```bash
+sudo -u alice touch /opt/project/shared/alice_file.txt
+sudo -u bob echo "test" >> /opt/project/shared/alice_file.txt
+```
+
+Document the permission denied output and explain in three sentences how ACLs extend beyond
+standard Unix permission bits to enable per-user access control on shared resources.
+
+**Challenge Step 3 — Explore umask interaction with SGID directories**
+
+Observe how umask affects files created inside an SGID directory and how default ACLs
+override the umask for inherited permissions:
+
+```bash
+umask
+sudo -u alice bash -c 'umask 027; touch /opt/project/shared/umask_test.txt'
+ls -la /opt/project/shared/umask_test.txt
+getfacl /opt/project/shared/umask_test.txt
+
+sudo setfacl -m d:o::r /opt/project/shared
+sudo -u alice bash -c 'touch /opt/project/shared/acl_test.txt'
+getfacl /opt/project/shared/acl_test.txt
+ls -la /opt/project/shared/acl_test.txt
+```
+
+Compare the two files' effective permissions. Explain in two sentences how default ACLs
+on a parent directory interact with the creating user's umask when determining the
+permissions of newly created files inside that directory.

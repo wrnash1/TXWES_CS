@@ -295,3 +295,19 @@ Before the exam, confirm you can answer these:
 - [ ] MySQL user identity format: `'user'@'host'`
 - [ ] `binlog_format = ROW` recommendation and why
 - [ ] Private IP vs authorized networks tradeoffs
+
+---
+
+## 9. Supplemental Resources
+
+**1. Cloud SQL for MySQL — Official Documentation**
+https://cloud.google.com/sql/docs/mysql
+Complete reference for Cloud SQL MySQL instance configuration, high availability, read replicas, binary log settings, and Auth Proxy setup.
+
+**2. MySQL 8.0 Reference Manual — InnoDB Configuration**
+https://dev.mysql.com/doc/refman/8.0/en/innodb-parameters.html
+Detailed descriptions of all InnoDB configuration variables including innodb_buffer_pool_size, innodb_flush_log_at_trx_commit, innodb_log_file_size, and the doublewrite buffer.
+
+**3. Cloud SQL Query Insights — Documentation**
+https://cloud.google.com/sql/docs/mysql/using-query-insights
+Guide to using Cloud SQL's built-in Query Insights feature for identifying slow queries, visualizing query plans, and monitoring query performance on Cloud SQL for MySQL instances.

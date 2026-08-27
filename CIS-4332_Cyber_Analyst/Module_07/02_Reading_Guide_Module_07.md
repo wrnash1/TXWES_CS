@@ -298,3 +298,19 @@ Exam Tip 8: Double-extortion ransomware exfiltrates before encrypting. The exfil
 - [ ] Complete the Module 07 Lab
 - [ ] Complete the Module 07 Quiz
 - [ ] Post initial response to the Module 07 Discussion board by Wednesday at 11:59 PM
+
+---
+
+## 9. Supplemental Resources
+
+**1. ANY.RUN — Interactive Malware Sandbox**
+<https://app.any.run/>
+A free interactive online sandbox that lets you submit files or URLs and observe live malware execution in a virtual Windows environment. The public sandbox database contains thousands of analyzed samples with full process trees, network IOCs, and ATT&CK technique mappings. Reviewing real sandbox reports from the public feed directly reinforces the dynamic analysis concepts in Section 3 and the IOC extraction workflow in Section 5.
+
+**2. CISA — Malware Analysis Reports**
+<https://www.cisa.gov/resources-tools/resources/malware-analysis-reports>
+CISA publishes detailed malware analysis reports for high-impact threat families observed targeting U.S. infrastructure. Each report includes static and dynamic analysis findings, YARA rules, network signatures, and detection recommendations. These reports are real-world examples of the professional-quality malware analysis products described in Section 6 of this guide.
+
+**3. VirusTotal — File and Hash Analysis Platform**
+<https://www.virustotal.com/>
+The industry-standard multi-engine file analysis platform used for static IOC verification and prevalence checks. Beyond detection ratios, VirusTotal's "Behavior" tab (for dynamic sandbox results) and "Relations" graph provide the same enrichment capabilities used in professional SOC triage. Practice submitting known benign files to understand what normal results look like before analyzing suspicious ones.

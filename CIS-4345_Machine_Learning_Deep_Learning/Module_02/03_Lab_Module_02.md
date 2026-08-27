@@ -450,3 +450,95 @@ Dataset element spec, batch shapes, TF model summary, and training curve plot.
 ## Submission Instructions
 
 Submit a single `.py` file or Jupyter `.ipynb` notebook named `Lab02_YourLastName.py` (or `.ipynb`). Include all code, print outputs, and saved plot files. Ensure all code runs end-to-end without errors from a clean Python session.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Comparing Scaler Behaviors on Skewed Data
+
+Generate a right-skewed income-like feature and compare how `StandardScaler`, `RobustScaler`, and a log transform each handle the distribution.
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import StandardScaler, RobustScaler
+
+np.random.seed(7)
+# Simulate skewed income: log-normal distribution
+income = np.random.lognormal(mean=10.8, sigma=1.2, size=500).reshape(-1, 1)
+
+standard_scaled = StandardScaler().fit_transform(income)
+robust_scaled   = RobustScaler().fit_transform(income)
+log_transformed = np.log1p(income)
+
+fig, axes = plt.subplots(1, 4, figsize=(16, 4))
+titles = ["Raw Income", "StandardScaler", "RobustScaler", "log1p Transform"]
+arrays = [income, standard_scaled, robust_scaled, log_transformed]
+
+for ax, title, arr in zip(axes, titles, arrays):
+    ax.hist(arr.flatten(), bins=40, edgecolor="black", color="steelblue", alpha=0.7)
+    ax.set_title(title)
+    ax.set_xlabel("Value")
+    ax.set_ylabel("Count")
+
+plt.tight_layout()
+plt.savefig("scaler_comparison.png", dpi=100)
+plt.show()
+
+for name, arr in zip(titles[1:], [standard_scaled, robust_scaled, log_transformed]):
+    print(f"{name:20s} | mean={arr.mean():.4f} | std={arr.std():.4f} | "
+          f"min={arr.min():.4f} | max={arr.max():.4f}")
+```
+
+1. Observe which scaler produces the least skewed output histogram for log-normal income data.
+2. Note the min/max range for each scaler — which has the most extreme outlier values after scaling?
+3. In one sentence, explain why `RobustScaler` outperforms `StandardScaler` when extreme outliers are present.
+
+### Challenge 2: Building a tf.data Pipeline with a Custom Map Function
+
+Extend the `tf.data` pipeline from Part 5 by adding a `.map()` step that applies a custom feature engineering transformation (polynomial feature for the first column) before batching.
+
+```python
+import tensorflow as tf
+
+# Reload clean scaled arrays from Part 4
+# (X_tr_sc and y_train should already be in scope)
+
+def add_polynomial_feature(x, y):
+    """Add x[:,0]^2 as an extra feature column."""
+    poly = tf.expand_dims(x[:, 0] ** 2, axis=1)   # shape (1,)
+    x_aug = tf.concat([x, poly], axis=1)
+    return x_aug, y
+
+# Build pipeline with map applied BEFORE batching for element-wise transform
+train_ds_aug = (
+    tf.data.Dataset.from_tensor_slices((X_tr_sc, y_train))
+    .shuffle(buffer_size=len(X_tr_sc))
+    .batch(32)
+    .map(add_polynomial_feature, num_parallel_calls=tf.data.AUTOTUNE)
+    .prefetch(tf.data.AUTOTUNE)
+)
+
+for xb, yb in train_ds_aug.take(1):
+    print("Augmented feature shape:", xb.shape)   # should be (32, n_features+1)
+    print("Extra column (x0^2) — first 5 values:", xb[:5, -1].numpy())
+
+# Train a model on the augmented dataset
+model_aug = tf.keras.Sequential([
+    tf.keras.layers.Dense(64, activation="relu", input_shape=(X_tr_sc.shape[1] + 1,)),
+    tf.keras.layers.Dense(32, activation="relu"),
+    tf.keras.layers.Dense(1)
+])
+model_aug.compile(optimizer="adam", loss="mse", metrics=["mae"])
+hist_aug = model_aug.fit(train_ds_aug, epochs=20, verbose=0)
+print(f"Final train MAE (augmented): ${hist_aug.history['mae'][-1]:,.0f}")
+```
+
+1. Compare the final training MAE of the augmented model versus the baseline model from Part 5.
+2. Adjust the `map` function to apply to batches (after `.batch()`) and verify the shape remains correct.
+
+### Reflection Questions
+
+1. In Challenge 1, the `log1p` transform produced the most symmetric distribution for income. Under what real-world conditions might you choose `RobustScaler` over a log transform, and when would you prefer the log transform?
+2. The `.map()` function in `tf.data` can run in parallel with `num_parallel_calls=tf.data.AUTOTUNE`. What are the potential risks of applying non-deterministic augmentation (e.g., random noise) inside a map function, and how would you ensure reproducibility?

@@ -239,3 +239,37 @@ mkdir /a/b/c and /a/b does not exist, the command fails.
 Read chapters 3 through 7 of The Linux Command Line by William Shotts, available at
 linuxcommand.org/tlcl.php. These chapters cover navigation, file manipulation, working with
 commands, redirections, and keyboard shortcuts.
+
+---
+
+## 9. Supplemental Resources
+
+The following free, openly licensed resources extend the concepts covered in this module.
+
+**1. The Linux Command Line — William Shotts (Chapters 3–7)**
+URL: https://linuxcommand.org/tlcl.php
+Coverage: Navigation, file manipulation, I/O redirection, pipelines, and expansion. Directly
+maps to every command in this module's lab. Chapters 3 and 4 cover ls, cd, file, and less.
+Chapter 6 covers redirection operators > >> 2>&1 and pipes.
+
+**2. Linux man pages online — find(1)**
+URL: https://man7.org/linux/man-pages/man1/find.1.html
+Coverage: Complete reference for the find command including all -mtime, -mmin, -size, -perm,
+-type, -name, and -exec options tested on the CompTIA Linux+ exam. Bookmark this page and
+read the EXAMPLES section.
+
+**3. GNU grep manual**
+URL: https://www.gnu.org/software/grep/manual/grep.html
+Coverage: Full documentation for grep including regular expression syntax, -E extended regex,
+-r recursive search, -i case-insensitive, -v invert, -l list files, and -c count. Essential
+for understanding grep patterns tested in the quiz and on the exam.
+
+**4. TLDP — Bash Guide for Beginners (Chapter 2: Regular Expressions)**
+URL: https://tldp.org/LDP/Bash-Beginners-Guide/html/chap_02.html
+Coverage: Explains regex anchors (^ $), character classes, and wildcards as used with grep,
+sed, and find. Foundational knowledge for all future scripting modules.
+
+**5. ArchWiki — File permissions and attributes**
+URL: https://wiki.archlinux.org/title/File_permissions_and_attributes
+Coverage: Hard links vs. symbolic links, inode numbers, special bits, and the relationship
+between directory permissions and file access. Complements the linking concepts in this module.

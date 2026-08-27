@@ -298,4 +298,22 @@ Set a timeout: `nikto -h TARGET_IP -timeout 10`. This limits each request to 10 
 
 ---
 
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Phased Scan Workflow Analysis
+
+Using your authorized Metasploitable 2 lab target, execute a fully documented phased scan workflow. First, run a fast full-port SYN scan to discover all open ports: `nmap -sS -p- -T4 --min-rate 5000 METASPLOITABLE_IP -oN phase1_discovery.txt`. Second, extract only the open port numbers from that output and run a targeted version and OS detection scan on those ports only: `nmap -sV -O -sC -p <open_ports> METASPLOITABLE_IP -oN phase2_detail.txt`. Compare the time each phase took and the volume of output generated. Write a structured analysis explaining: why running version detection only on confirmed open ports is more efficient than running it across all 65,535 ports, what information was present in phase 2 that was absent in phase 1, and when a single-phase comprehensive scan (`-A -p-`) might be appropriate versus when the two-phase approach is required.
+
+### Challenge 2: Service-to-CVE Research Documentation
+
+From your phase 2 scan output, select any three services that returned version strings (e.g., vsftpd 2.3.4, OpenSSH 4.7p1, Apache 2.2.8). For each service, complete a structured vulnerability research entry containing: the exact version string from the scan, the CVE identifier for the most critical known vulnerability, the CVSS score and attack vector, whether the vulnerability is pre-authentication or requires credentials, whether a public exploit exists in Metasploit or Exploit-DB, and your remediation recommendation. Format your three entries as a table suitable for inclusion in a professional penetration test report. This exercise directly practices the skill of translating raw scan output into actionable client findings.
+
+### Reflection Questions
+
+1. During the lab you ran Nikto against the Metasploitable 2 web server and likely received dozens of findings. Explain the difference between a scanner-reported finding and a confirmed vulnerability, and describe the manual verification step you would perform for two specific Nikto findings before including them in a client report. Why does including unverified scanner output in a report harm the client relationship?
+
+2. A client asks you to run the scanning phase against their production e-commerce server during peak business hours on a Friday afternoon, arguing it will "only take a few minutes." Using the concepts from Module 06, explain what risks this creates, which pre-engagement document should have addressed testing windows, and how you would professionally respond to this request.
+
 **Proprietary and Confidential. Not for disclosure outside of Texas Wesleyan University course use.**

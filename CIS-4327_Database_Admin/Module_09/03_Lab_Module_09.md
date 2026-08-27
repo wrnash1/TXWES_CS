@@ -356,3 +356,56 @@ Submit a PDF containing:
 | Part 4: Cloud SQL HA failover observed with zone data | 20 |
 | Written comparison of self-managed vs Cloud SQL HA | 10 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Synchronous Replication with Quorum Standby
+
+1. On `pg-primary`, configure synchronous replication to require acknowledgment from one of two standbys using quorum syntax:
+
+   ```ini
+   synchronous_standby_names = 'ANY 1 (pgstandby1, pgstandby2)'
+   ```
+
+2. Reload PostgreSQL on the primary (`sudo systemctl reload postgresql`) and verify the setting took effect:
+
+   ```sql
+   SHOW synchronous_standby_names;
+   ```
+
+3. With only `pgstandby1` connected, insert a row and confirm the commit completes. Then stop `pgstandby1` (`sudo systemctl stop postgresql` on that VM) and attempt another insert. Measure how long the primary blocks before timing out or falling back, using `\timing` in psql.
+
+4. Query `pg_stat_replication` and note the `sync_state` column value for each standby. Record which standby shows `sync` versus `potential` and explain the difference.
+
+### Challenge 2: Replication Slot WAL Retention Monitoring
+
+1. On `pg-primary`, create a physical replication slot without attaching a standby to it:
+
+   ```sql
+   SELECT pg_create_physical_replication_slot('orphan_slot');
+   ```
+
+2. Generate approximately 50 MB of WAL by running repeated inserts, then query the retained WAL size for the orphan slot:
+
+   ```sql
+   SELECT slot_name, active,
+          pg_size_pretty(pg_wal_lsn_diff(pg_current_wal_lsn(), restart_lsn)) AS retained_wal
+   FROM pg_replication_slots
+   WHERE slot_name = 'orphan_slot';
+   ```
+
+3. Drop the slot and confirm the WAL is no longer retained:
+
+   ```sql
+   SELECT pg_drop_replication_slot('orphan_slot');
+   SELECT slot_name FROM pg_replication_slots;
+   ```
+
+4. Write a shell one-liner using `psql -t -c` that could be scheduled as a cron job to alert when any slot's retained WAL exceeds 5 GB.
+
+### Reflection Questions
+
+1. When you disabled `pgstandby1` in Challenge 1, the primary blocked writes until the timeout. In a real production system with `synchronous_commit = on` and only one synchronous standby, what is the operational risk of that standby going offline unexpectedly, and how does the `ANY 1 (s1, s2)` quorum configuration mitigate it?
+2. An orphaned replication slot can silently fill the primary's disk and crash the entire database cluster. Describe the monitoring strategy you would implement in a production environment to detect this condition before it becomes critical, including what metric to alert on and at what threshold.

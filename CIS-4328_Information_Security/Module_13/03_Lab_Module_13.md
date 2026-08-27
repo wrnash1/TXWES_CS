@@ -175,4 +175,31 @@ Submit a lab report containing:
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Multi-Threat ALE Comparison and Control Selection
+
+A regional hospital is evaluating three separate threats to its patient records database (Asset Value: $3,200,000). Use the following data to perform a complete quantitative analysis for each threat:
+
+1. Ransomware attack: EF = 75%, ARO = 0.4. A managed detection and response (MDR) service costs $60,000/year and reduces EF to 15%.
+2. Insider data theft: EF = 20%, ARO = 1.2. User activity monitoring software costs $18,000/year and reduces ARO to 0.3.
+3. Physical server theft: EF = 100%, ARO = 0.05. A biometric server room upgrade costs $22,000 one-time + $3,000/year and reduces ARO to 0.005.
+
+For each threat: calculate baseline SLE and ALE, calculate post-control ALE, calculate the Value of Safeguard, and state whether the control is economically justified. Then write a one-paragraph prioritization recommendation to the hospital CISO identifying which control to fund first if the total available budget is $80,000.
+
+### Challenge 2: Risk Register and BIA Integration
+
+Construct an integrated risk and continuity analysis for a fictional online brokerage firm. The firm's trading platform processes $2.4 billion in daily transactions and has the following characteristics: single cloud region deployment (no failover), daily backups at midnight, no formal incident response plan, and 12 third-party API integrations with no vendor risk assessments on file.
+
+1. Identify four distinct risks (at least one technical, one operational, one regulatory, one third-party). For each risk, complete a full risk register entry including category, likelihood, impact, score on a 5x5 matrix, risk response strategy, and two specific controls.
+2. Perform a BIA for the trading platform. Establish justified MTD, RTO, and RPO values. Identify at least two gaps between the current backup/recovery posture and the BIA requirements.
+3. For the highest-scoring risk, write a formal risk acceptance memo (if appropriate) or a risk treatment recommendation (if acceptance is not appropriate). Justify your recommendation using the risk tolerance framework from the module.
+
+### Reflection Questions
+
+1. In quantitative risk analysis, the Asset Value is often the most debated input. What organizational factors beyond hardware replacement cost should be included in AV for a healthcare organization's patient records database, and how would you gather data to estimate them?
+2. A security manager presents a risk register to the board showing 14 High risks with no treatment plans and no risk owners assigned. From a governance and liability standpoint, why is an undocumented "we know about it but haven't acted" posture more dangerous than formal risk acceptance documentation for the same risks?
+
+---
+
 *End of Lab — Module 13*

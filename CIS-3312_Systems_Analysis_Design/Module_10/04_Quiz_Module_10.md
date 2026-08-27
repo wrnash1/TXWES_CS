@@ -313,4 +313,236 @@ Distractor Analysis:
 
 ---
 
+---
+
+### Question 11
+
+A DFD for an insurance claims system shows the following: External Entity "Claimant" → Process 1.0 "Submit Claim" → Data Store DS-1 "Claims." A second path shows Process 1.0 → External Entity "Fraud Detection Service." Which DFD element is missing for the Fraud Detection Service path to be correctly modeled?
+
+A. A data store between Process 1.0 and the Fraud Detection Service to buffer the claim data
+
+B. A labeled data flow arrow showing what data is sent from Process 1.0 to the Fraud Detection Service
+
+C. A second process bubble between Submit Claim and Fraud Detection Service
+
+D. A pool boundary separating the internal process from the external entity
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect because a buffering data store is not required for every external entity interaction; data can flow directly from a process to an external entity via a labeled data flow arrow.
+- C is incorrect because adding an intermediate process where none is needed introduces unnecessary complexity. The path from Process 1.0 to the external service can be direct.
+- D is incorrect because pool boundaries are a BPMN concept; DFDs use system boundary rectangles and external entity boxes, not pool notation.
+- B is correct because every arrow in a DFD must be a labeled data flow identifying what data is transferred. The path from Process 1.0 to Fraud Detection Service requires a named data flow arrow describing the data being sent (e.g., "Claim Details for Review").
+
+---
+
+### Question 12
+
+In a Gane-Sarson DFD, which shape is used to represent a process?
+
+A. A rectangle with double lines on the left edge
+
+B. A circle (bubble)
+
+C. A rounded rectangle with straight edges
+
+D. A rounded rectangle with a split top section containing the process number
+
+**Correct Answer: D**
+
+**Distractor Analysis:**
+
+- A is incorrect because a rectangle with double lines on the left edge represents an external entity in the Gane-Sarson notation.
+- B is incorrect because circles represent processes in the Yourdon-Coad notation, not Gane-Sarson.
+- C is incorrect because a plain rounded rectangle is not a standard DFD process symbol in either major notation.
+- D is correct because Gane-Sarson uses a rounded rectangle with a horizontal split — the top section contains the process identifier number and the bottom section contains the process name. This is the defining visual distinction between Gane-Sarson and Yourdon-Coad process notation.
+
+---
+
+### Question 13
+
+A BA is reviewing a DFD and finds a data store labeled "DS-3 Audit Log" that has only outgoing data flows and no incoming data flows. Which DFD error does this represent?
+
+A. Black hole — DS-3 receives data but produces no output
+
+B. Miracle — DS-3 produces data without receiving any input to store
+
+C. Level balancing violation — DS-3 should appear in the parent diagram
+
+D. External entity violation — audit logs must be modeled as external entities
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect because a black hole has inputs with no outputs — the opposite of what is described. DS-3 has outputs (outgoing flows) but no inputs.
+- C is incorrect because level balancing concerns boundary flows between DFD levels, not the input/output completeness of a data store.
+- D is incorrect because audit logs are internal persistent storage, which is correctly modeled as a data store. External entities are organizations or systems outside the system boundary.
+- B is correct because a data store with only outgoing flows and no incoming flows implies the data materializes with no process ever writing to it — a miracle. A data store must receive data from at least one process before it can supply data to another process.
+
+---
+
+### Question 14
+
+A BA is creating a Level 1 DFD for a hotel reservation system. The context diagram shows data flows: "Reservation Request" (from Guest to System) and "Confirmation Email" (from System to Guest). Which of the following Level 1 diagrams correctly balances with this context diagram?
+
+A. Level 1 shows "Reservation Request" entering the system boundary and "Booking Confirmation" leaving — using a different name for the outgoing flow
+
+B. Level 1 shows "Reservation Request" entering and "Confirmation Email" leaving — matching the exact flow names from the context diagram
+
+C. Level 1 shows only "Reservation Request" entering — the confirmation email can be added later
+
+D. Level 1 shows three new data flows not present in the context diagram
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect because level balancing requires that the same data flows cross the boundary at both levels. Renaming a flow between levels breaks traceability and constitutes an unbalanced DFD.
+- C is incorrect because both boundary flows from the context diagram must appear at Level 1. Omitting the confirmation email creates an unbalanced diagram.
+- D is incorrect because Level 1 boundary flows must match Level 1 exactly; new flows not in the context diagram represent an unbalanced expansion of scope.
+- B is correct because level balancing requires that every data flow crossing the system boundary at the context diagram also appears crossing the system boundary at Level 1, with the same names and directions.
+
+---
+
+### Question 15
+
+Which of the following DFD process names follows the recommended verb-noun naming convention?
+
+A. Customer Data
+
+B. Order Processing System
+
+C. Validate Member Eligibility
+
+D. IS-3 Database Function
+
+**Correct Answer: C**
+
+**Distractor Analysis:**
+
+- A is incorrect because "Customer Data" is a noun phrase with no verb — it sounds like a data store name, not a process name describing a transformation.
+- B is incorrect because "Order Processing System" is a system name, not a process verb-noun label. It also implies the entire system rather than a single transformation step.
+- D is incorrect because "IS-3 Database Function" is a technical implementation reference, not a descriptive verb-noun process name. Process names must describe what transformation occurs, not where it occurs technically.
+- C is correct because "Validate Member Eligibility" follows the verb-noun convention: the verb "Validate" describes the action (transformation), and "Member Eligibility" identifies the data being acted upon. This is the recommended DFD process naming format.
+
+---
+
+### Question 16
+
+A BA is using a DFD to model a payroll system. The process "Generate Paycheck" reads from a data store "Employee Records" and writes to a data store "Payroll Ledger." The BA also wants to show that the system sends a direct deposit notification to employees. Where should the "Employee" appear in the DFD?
+
+A. As a data store labeled "Employee" within the system boundary
+
+B. As an external entity outside the system boundary, receiving a "Direct Deposit Notification" data flow from the Generate Paycheck process
+
+C. As a process labeled "Receive Notification" inside the system boundary
+
+D. As a lane label subdividing the system boundary rectangle
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect because employees are people who interact with the system from outside it; they are external entities, not data stores.
+- C is incorrect because "Receive Notification" would be a process inside the system boundary; employees are outside the system and are correctly represented as external entities.
+- D is incorrect because lane labels are a BPMN concept; DFDs do not use lanes.
+- B is correct because employees receive notifications from the system but are not controlled by or internal to the system. They are external entities shown outside the system boundary, with a labeled data flow ("Direct Deposit Notification") from the Generate Paycheck process to the Employee entity.
+
+---
+
+### Question 17
+
+A data dictionary entry for a DFD data flow reads: "Order Confirmation = Order ID + Customer Name + Item List + Total Amount + Estimated Delivery Date." What does the "+" operator represent in this data dictionary notation?
+
+A. The "+" indicates that all elements must be concatenated into a single text string
+
+B. The "+" means "AND" — the data flow is composed of all listed elements together
+
+C. The "+" means "OR" — any one of the listed elements may be included
+
+D. The "+" indicates that each element is optional and may be omitted
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect because data dictionary notation describes logical data composition, not a physical string concatenation instruction for developers.
+- C is incorrect because "OR" in data dictionary notation is typically represented by "|" (pipe) or "[...]" bracket notation, not "+".
+- D is incorrect because optional elements in data dictionary notation are typically shown in parentheses "( )" — the "+" indicates a required component.
+- B is correct because in standard Yourdon-Coad and Gane-Sarson data dictionary notation, the "+" operator means "AND" — the composition of the data flow includes all listed elements. The Order Confirmation flow contains all five named components together.
+
+---
+
+### Question 18
+
+A BA is reviewing a DFD and finds that a data flow arrow connects an external entity "Supplier" directly to a data store "Inventory," bypassing any process. What DFD rule does this violate?
+
+A. External entities cannot appear at Level 1 — they are restricted to the context diagram only
+
+B. Data flows cannot go directly from an external entity to a data store — a process must receive and transform the data first
+
+C. Data stores can only receive flows from internal processes, not external entities, so this is correctly modeled
+
+D. The Supplier should be a process inside the system boundary since it writes to the inventory
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect because external entities can and do appear in Level 1 DFDs; they are present at all DFD levels where they exchange data with the system.
+- C is incorrect because this statement is actually the correct rule — but C frames it as justification for the diagram being correct. The diagram is not correct; the direct external entity-to-data store connection is the violation.
+- D is incorrect because suppliers are outside the system boundary and cannot be remodeled as internal processes; the issue is the missing process between the entity and the store.
+- B is correct because DFD rules prohibit direct connections between external entities and data stores. Any data from an external entity must pass through a process (which validates, transforms, or records the data) before being written to a data store.
+
+---
+
+### Question 19
+
+Which of the following describes the correct use of data stores in a DFD?
+
+A. A data store should be duplicated on every level of the DFD where it is referenced to avoid confusion
+
+B. A data store represents data at rest — it stores data that persists between processes and is accessed by one or more processes
+
+C. A data store must have the same name as the database table it represents in the physical design
+
+D. Data stores can only be read by processes — they cannot receive incoming data flows
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect because duplicating data stores at every level is not required; a data store is typically shown once at the level where the processes interacting with it are defined, with cross-reference notation if needed.
+- C is incorrect because DFDs are logical models; data store names describe the business data concept (e.g., "Customer Records"), not the physical database implementation (e.g., "tbl_customers"). Physical names are assigned during design.
+- D is incorrect because data stores both receive incoming flows (when processes write data) and produce outgoing flows (when processes read data). A data store with only reads and no writes is a miracle violation.
+- B is correct because a data store represents persistent data — a repository that holds data between process executions. It is the DFD representation of any stored information: files, databases, ledgers, or other persistent storage.
+
+---
+
+### Question 20
+
+A BA has drawn a Level 1 DFD for an order management system. A reviewer says: "Your diagram is accurate but too complex — stakeholders cannot read it." The BA's DFD has 15 processes, 8 data stores, and 6 external entities all visible simultaneously. What should the BA do?
+
+A. Remove the external entities to simplify the diagram since they are already shown in the context diagram
+
+B. Decompose the most complex processes into Level 2 diagrams, reducing the Level 1 to a manageable number of high-level processes
+
+C. Replace the DFD with a use case diagram, which stakeholders find easier to read
+
+D. Remove the data stores since they add visual complexity and can be added back during design
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect because external entities are a required part of Level 1 DFDs; removing them breaks the diagram's scope definition and violates balancing rules.
+- C is incorrect because replacing one modeling artifact with another that serves a different analytical purpose does not address the complexity issue; use case diagrams and DFDs serve different analytical roles.
+- D is incorrect because data stores are essential DFD elements representing persistent data; removing them eliminates critical information about where data is stored and retrieved.
+- B is correct because the standard solution to an overly complex DFD level is decomposition — creating Level 2 diagrams for the most complex processes, which reduces the visible complexity at Level 1 while preserving all detail at the lower level. DFD leveling exists specifically for this purpose.
+
+---
+
 *Quiz — Module 10 | CIS-3312 Systems Analysis and Design | Texas Wesleyan University*

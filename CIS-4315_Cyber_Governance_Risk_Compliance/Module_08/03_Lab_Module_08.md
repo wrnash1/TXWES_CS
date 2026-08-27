@@ -150,3 +150,43 @@ Late submissions lose 10 points per day per the course late policy.
 | C | Delivery Method Selection and Phishing Simulation Plan | 25 |
 | D | Measurement Plan | 25 |
 | **Total** | | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+These challenges extend the Module 08 lab into advanced security awareness program design and measurement scenarios. Complete both challenges and the reflection questions for up to 15 bonus points.
+
+---
+
+### Challenge 1: Phishing Simulation Campaign Design and Analysis
+
+Ironclad Insurance Group has 1,400 employees across three divisions: Claims Processing (600 employees), Underwriting (400 employees), and Corporate/Administrative (400 employees). The CISO has approved a six-month phishing simulation campaign with the following baseline metrics from last year's single simulation: overall click rate 28%, credential submission rate 11%, report rate 4%.
+
+**Step 1**: Design a differentiated six-month simulation campaign. The campaign must include at least four simulation waves with increasing difficulty. For each wave, specify: the target audience (all staff or specific division), the phishing lure theme (business-contextual), the difficulty level and why it is appropriate for that wave, and the behavioral outcome being measured (click, credential submission, or report rate).
+
+**Step 2**: After Wave 3, the Claims Processing division shows a click rate of 34% — higher than their baseline — while Corporate/Administrative has dropped to 9%. Analyze at least three possible explanations for the divergence and recommend a specific program intervention for Claims Processing that does not simply repeat the same training content.
+
+**Step 3**: At the end of the six-month campaign, define what "success" looks like using specific, measurable targets for at least three metrics (not just click rate). Explain how you would present these results to the board — what story do the metrics tell, and what investment recommendation would you make for Year 2 of the program?
+
+---
+
+### Challenge 2: Security Culture Assessment and Transformation Plan
+
+A newly hired CISO at Bridgewater Manufacturing (900 employees, heavy industrial operations) has conducted a security culture assessment using anonymous survey data. Key findings: 67% of employees say they "don't have time" for security requirements; 41% have shared their network credentials with a coworker in the past year; 78% say they have never received an explanation of why a security policy exists; leadership visibility on security issues is rated "low" by 82% of employees; only 12% of employees know how to report a suspected security incident.
+
+**Step 1**: Using the security culture maturity model (compliance-aware → security-aware → security-engaged → security-embedded), assess where Bridgewater currently sits. Justify your placement with specific references to the survey data. Identify the two most critical cultural barriers that must be addressed first and explain why.
+
+**Step 2**: Design a 12-month culture transformation plan. Your plan must include at least one initiative targeting each of the following levers: leadership visibility, employee understanding of security purpose, and low-friction reporting. For each initiative, specify the target audience, the delivery mechanism, the timeline, the resource requirement (estimated), and the success metric.
+
+**Step 3**: The VP of Operations objects to the culture transformation plan, arguing that "security awareness programs are an HR responsibility, not an operations issue" and that production floor employees cannot spare time for training. Write a 150-200 word response that addresses the VP's objection by connecting security culture specifically to operational risks that are within the VP's accountability, and by proposing a training format that minimizes production floor disruption.
+
+---
+
+### Reflection Questions
+
+Answer each reflection question in four to six sentences.
+
+1. Kirkpatrick Level 4 evaluation — measuring organizational results — is widely acknowledged as the most meaningful measure of a security awareness program's effectiveness, yet most organizations only measure Levels 1 and 2. Identify the practical barriers that prevent organizations from routinely measuring Level 4 outcomes, and describe a realistic approach a security manager at a mid-sized organization could use to approximate Level 4 measurement without a large dedicated analytics budget.
+
+2. Security awareness programs at many organizations consist primarily of annual compliance training that employees complete by clicking through slides. Describe the specific design and delivery characteristics that distinguish a compliance-checkbox program from one that genuinely changes security behaviors, and explain what organizational and leadership conditions must be present for a behavior-change program to succeed even if the content design is excellent.

@@ -169,3 +169,29 @@ Supplemental reading:
 - [ ] Watch the Module 02 video lecture.
 - [ ] Complete the Module 02 lab activity.
 - [ ] Post your initial discussion response by Wednesday at 11:59 PM.
+
+---
+
+## 11. Supplemental Resources
+
+The following open educational resources extend module content. All are freely accessible without login or purchase.
+
+1. **BABOK Guide v3 Knowledge Area 2 Overview — IIBA**
+   <https://www.iiba.org/career-resources/a-business-analysis-professionals-foundation-for-success/babok/>
+   Focus: Official IIBA reference for KA 2 task definitions, inputs, outputs, and recommended techniques. Download the ECBA exam blueprint here to confirm KA 2 question weighting.
+
+2. **Stakeholder Analysis and Engagement — MindTools**
+   <https://www.mindtools.com/pages/article/newPPM_07.htm>
+   Focus: Plain-language explanation of the Power-Interest Grid with worked examples. Useful visual reference for understanding quadrant classification and engagement strategies before attempting the lab.
+
+3. **Agile vs. Waterfall: Which Methodology Is Right for Your Project? — Atlassian**
+   <https://www.atlassian.com/agile/project-management/project-management-intro>
+   Focus: Compares predictive and adaptive approaches with real-world project examples. Reinforces the KA 2 approach selection decision factors discussed in Section 5 of this guide.
+
+4. **Business Analysis Planning — Open University OpenLearn**
+   <https://www.open.edu/openlearn/money-business/business-strategy-studies/introduction-business-analysis/content-section-0>
+   Focus: Free module covering BA planning fundamentals including stakeholder identification, governance, and approach selection at an introductory university level.
+
+5. **Requirements Management and Governance — TechRepublic**
+   <https://www.techrepublic.com/article/requirements-management-best-practices/>
+   Focus: Practical overview of requirements governance practices including change control, version management, and approval workflows. Supplements the governance concepts in Section 1.3 of this guide.

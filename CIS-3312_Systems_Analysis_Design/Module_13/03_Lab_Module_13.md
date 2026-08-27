@@ -174,4 +174,53 @@ Before submitting, confirm your PDF includes:
 
 ---
 
+---
+
+## Part 9 — Challenge Exercise
+
+This section is optional and not separately graded. It extends the lab into advanced
+prototyping and design validation practice aligned with ECBA exam competencies.
+
+### Challenge Step 1: Accessibility Audit of Your Wireframes
+
+Review the two wireframes you created in Part 1 (dashboard and fund transfer screens)
+against the WCAG 2.1 Level AA accessibility guidelines. For each wireframe, identify at
+least three specific accessibility requirements that must be documented to ensure the
+design is accessible to users with visual, motor, or cognitive disabilities. Format your
+findings as a table with columns: Screen, Accessibility Concern, WCAG Criterion Reference,
+and Required Design Change. Then write a one-paragraph explanation of why accessibility
+requirements must be captured by the BA during the design phase rather than left to
+developers to discover during implementation. Reference at least one legal or regulatory
+context (such as the ADA, Section 508, or the European Accessibility Act) in your
+explanation.
+
+### Challenge Step 2: Comparative Prototype Evaluation
+
+Select one screen from Part 1 and create two alternate wireframe versions — a Version A
+and a Version B — that apply different design approaches to the same functionality. For
+example, design the fund transfer confirmation step as a modal dialog in Version A and
+as a full-page confirmation screen in Version B. For each version, apply Nielsen's
+heuristics formally: evaluate all ten heuristics and mark each as Satisfied, Partially
+Satisfied, or Not Applicable, with a one-sentence note for each. Then write a
+recommendation selecting one version and justifying your choice by referencing the
+heuristic evaluation results, the target user profile (credit union members aged 25 to
+65), and the prototyping principle that design decisions should be evidence-based rather
+than preference-based.
+
+### Challenge Step 3: Full Validation Session Report
+
+Using the task scenarios and findings log template from Part 4, write a complete post-
+session validation report as if you had conducted the session and observed five
+participants completing three tasks. Fabricate realistic but plausible findings across
+the four severity levels (at least one critical, two major, two minor, one cosmetic).
+Your report must include: an executive summary of session outcomes (one paragraph), the
+complete findings log with all observations, a prioritized change list organized by
+severity with design change descriptions, a comparison of which design elements performed
+well versus which failed, and a recommendation on whether the design is ready to proceed
+to development or requires a second validation round. This exercise develops the
+reporting and stakeholder communication skills that BAs use after every design validation
+engagement.
+
+---
+
 *Module 13 Lab | CIS-3312 Systems Analysis and Design | Texas Wesleyan University*

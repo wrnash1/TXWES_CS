@@ -120,3 +120,28 @@ Problems to assess:
 ## Submission Instructions
 
 Compile all four exercises into a single document. Use clear headings for each exercise. Label each numbered item before your response. Submit to the Module 01 Lab assignment in Canvas by the posted deadline.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Service Value System Component Mapping
+
+Using the Rampart University Help Desk scenario from this lab, map each of the five SVS components to a concrete element of the scenario.
+
+1. Identify which SVS component is represented by the CIO's approval process and budget authority. Write one sentence explaining your mapping.
+2. Identify one of the seven Guiding Principles that should guide the IT team's decision to assess existing help desk processes at peer institutions before designing Rampart's own workflow. Name the principle and explain why it applies.
+3. Identify which of the six Service Value Chain activities (Plan, Improve, Engage, Design and Transition, Obtain/Build, Deliver and Support) is most active during the first week of live help desk operation when staff are handling real student tickets. Justify your answer in two sentences.
+4. Describe one Continual Improvement action the help desk manager should take after the first month of operation, and explain how it feeds back into the SVS.
+
+### Challenge 2: Stakeholder Value Negotiation
+
+A new scenario: Rampart's Head of IT Infrastructure wants to expand the help desk's scope to also support faculty research servers, but the CIO has not approved additional budget and the Director of Student Affairs insists the current scope (LMS, Wi-Fi, email) must not be diluted.
+
+1. Identify the ITIL 4 role each of the three named stakeholders holds in this expanded-scope discussion, and justify each classification.
+2. Draft a two-paragraph written rationale (minimum 100 words) that the Head of IT Infrastructure could use to propose the expansion. The rationale must reference utility, warranty, and value co-creation using correct ITIL 4 terminology.
+
+### Reflection Questions
+
+1. After completing this lab, describe in your own words one situation from your personal experience (academic, work, or daily life) where a service had utility but failed on warranty. What was the impact on your ability to achieve the outcome you were seeking?
+2. The ITIL 4 principle "Think and Work Holistically" states that no service or practice operates in isolation. Based on the Rampart Help Desk scenario, identify one downstream consequence — in a completely different part of the university — that could result from poor help desk performance. Explain the connection using at least one of the Four Dimensions.

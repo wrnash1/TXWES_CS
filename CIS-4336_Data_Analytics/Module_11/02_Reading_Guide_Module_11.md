@@ -420,4 +420,20 @@ FROM orders;
 
 ---
 
+## 9. Supplemental Resources
+
+**1. Mode Analytics SQL Tutorial — Window Functions**
+<https://mode.com/sql-tutorial/sql-window-functions>
+An interactive, browser-based SQL tutorial covering window functions including ROW_NUMBER, RANK, DENSE_RANK, LAG, LEAD, and SUM OVER — directly aligned with Module 11 content. Includes live query execution so you can test every example in the browser without local setup.
+
+**2. PostgreSQL Documentation — Window Functions**
+<https://www.postgresql.org/docs/current/tutorial-window.html>
+The official PostgreSQL tutorial for window functions, covering PARTITION BY, ORDER BY, frame specifications (ROWS BETWEEN), and the difference between window functions and GROUP BY. Authoritative reference for the ANSI SQL standard behavior tested on the Data+ exam.
+
+**3. SQLZoo — SELECT within SELECT (Subqueries)**
+<https://sqlzoo.net/wiki/SELECT_within_SELECT_Tutorial>
+An interactive tutorial covering correlated and non-correlated subqueries with progressively complex exercises. Directly supports the subquery and CTE concepts in Module 11 and reinforces the logical execution order of SQL queries.
+
+---
+
 End of Module 11 Reading Guide

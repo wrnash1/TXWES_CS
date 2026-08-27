@@ -258,3 +258,75 @@ Import-Module GroupPolicy
 ```
 
 If `gpupdate /force` says "User Policy could not be updated successfully," verify the user account running the command has the AD module available and is domain-joined.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Create and Test a WMI Filter for Server OS Targeting
+
+WMI Filters allow GPOs to apply only to machines meeting specific hardware or OS criteria. Create a filter that targets only Windows Server operating systems, then attach it to a test GPO.
+
+1. In GPMC, navigate to WMI Filters under your domain. Right-click and select New. Name the filter `Filter_ServersOnly`. In the query section, add the following WMI query (Namespace: `root\CIMv2`):
+
+   ```text
+   SELECT * FROM Win32_OperatingSystem WHERE ProductType = 2 OR ProductType = 3
+   ```
+
+   `ProductType 2` = Domain Controller, `ProductType 3` = member server. Save the filter.
+
+2. Create a new test GPO named `TEST_ServerPolicy`. Edit it and set any Computer Configuration setting (for example, set the screensaver timeout to 1800 seconds under Computer Configuration > Policies > Administrative Templates > Control Panel > Personalization).
+
+3. Link `TEST_ServerPolicy` to the Domain level in GPMC.
+
+4. On the Scope tab of the linked GPO, click the WMI Filtering dropdown and select `Filter_ServersOnly`.
+
+5. On DC1, run `gpupdate /force` and then verify the WMI filter is evaluated:
+
+   ```powershell
+   gpresult /r /scope:computer
+   ```
+
+   Confirm the GPO appears in Applied GPOs. Document in your lab notes why this WMI query would return FALSE on a Windows 10 or Windows 11 workstation (hint: `ProductType = 1`).
+
+### Challenge 2: GPO Backup, Modification, and Restore
+
+Safe change management requires backing up GPOs before modifying them. Practice the full backup-modify-restore workflow.
+
+1. Back up the `CORP_Domain_Security` GPO to `C:\GPO_Backup`:
+
+   ```powershell
+   New-Item -Path "C:\GPO_Backup" -ItemType Directory -Force
+   Backup-GPO -Name "CORP_Domain_Security" -Path "C:\GPO_Backup"
+   ```
+
+   Note the backup GUID returned in the output.
+
+2. Simulate an accidental misconfiguration by changing the maximum password age to 999 days:
+
+   ```powershell
+   Set-GPRegistryValue -Name "CORP_Domain_Security" `
+       -Key "HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon" `
+       -ValueName "MaximumPasswordAge" -Type DWord -Value 999
+   ```
+
+   Verify the change by running `Get-GPOReport -Name "CORP_Domain_Security" -ReportType HTML -Path "C:\before_restore.html"` and opening the file.
+
+3. Restore the GPO from backup. Use the GUID from Step 1:
+
+   ```powershell
+   Restore-GPO -Name "CORP_Domain_Security" -Path "C:\GPO_Backup"
+   ```
+
+4. Verify the restore by checking that the maximum password age returned to 90 days:
+
+   ```powershell
+   Get-GPOReport -Name "CORP_Domain_Security" -ReportType HTML -Path "C:\after_restore.html"
+   ```
+
+   Compare the two HTML reports and take a screenshot showing the restored value.
+
+### Reflection Questions
+
+1. The WMI Filter uses `ProductType = 2 OR ProductType = 3` to target servers. Explain how this filter provides better targeting than simply creating a separate OU for servers — consider scenarios where a new server is joined to the domain but placed in the wrong OU by mistake.
+2. The `Backup-GPO` and `Restore-GPO` cmdlets are a pre-change control step. Describe the difference between a GPO backup and the AD Recycle Bin as recovery mechanisms. In what scenario would a GPO backup be necessary even if the AD Recycle Bin is enabled?

@@ -297,4 +297,20 @@ Do commit: `.terraform.lock.hcl`, all `.tf` files, and `terraform.tfvars` in env
 
 ---
 
+## 9. Supplemental Resources
+
+**1. Terraform CLI Core Workflow**
+<https://developer.hashicorp.com/terraform/intro/core-workflow>
+The official walkthrough of the Write-Plan-Apply workflow with explanations of each phase. Covers team collaboration considerations and when to use saved plan files.
+
+**2. Terraform `terraform init` Command Reference**
+<https://developer.hashicorp.com/terraform/cli/commands/init>
+Complete reference for all `init` flags including `-upgrade`, `-migrate-state`, and `-reconfigure`. Essential for understanding backend initialization and provider plugin management.
+
+**3. Dependency Lock File Documentation**
+<https://developer.hashicorp.com/terraform/language/files/dependency-lock>
+Explains the `.terraform.lock.hcl` format, what checksums are recorded, when to commit it, and how to update it with `init -upgrade`. Directly supports Module 02 quiz questions on lock file behavior.
+
+---
+
 Module 02 Reading Guide — CIS-4337 Infrastructure Automation — Texas Wesleyan University

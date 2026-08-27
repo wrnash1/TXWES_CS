@@ -267,6 +267,27 @@ The minimum at any stack depth is the top of `min_stack`. When you pop the main 
 
 ---
 
+## 9. Supplemental Resources
+
+The following free, openly licensed resources reinforce the concepts in this module. All are zero-cost and require no account to access.
+
+1. **VisuAlgo — Stack and Queue Visualizations** — [https://visualgo.net/en/list](https://visualgo.net/en/list)
+   Interactive animations showing push/pop operations on stacks and enqueue/dequeue on queues with pointer-level detail. Useful for building intuition for the LIFO and FIFO access patterns before coding.
+
+2. **OpenDSA — Stacks Chapter** — [https://opendsa-server.cs.vt.edu/ODSA/Books/Everything/html/StackArray.html](https://opendsa-server.cs.vt.edu/ODSA/Books/Everything/html/StackArray.html)
+   Free interactive OER textbook with embedded exercises covering array-based and linked-list-based stack implementations, with complexity analysis and practice problems.
+
+3. **NeetCode — Stack Problems Playlist (YouTube)** — [https://www.youtube.com/playlist?list=PLot-Xpze53ldg4pN6PfzoJY7KsKcxF1jg](https://www.youtube.com/playlist?list=PLot-Xpze53ldg4pN6PfzoJY7KsKcxF1jg)
+   Free video solutions to the most common stack interview problems, including Valid Parentheses, Min Stack, and Daily Temperatures, with clear explanation of the monotonic stack pattern.
+
+4. **Python `collections.deque` Documentation** — [https://docs.python.org/3/library/collections.html#collections.deque](https://docs.python.org/3/library/collections.html#collections.deque)
+   Official Python documentation for `collections.deque` — the correct structure for O(1) queue operations. Covers `appendleft`, `popleft`, `rotate`, and the `maxlen` parameter.
+
+5. **CS50 — Data Structures Shorts: Stacks and Queues** — [https://cs50.harvard.edu/x/2024/shorts/](https://cs50.harvard.edu/x/2024/shorts/)
+   Short-form Harvard CS50 video lectures (5-10 minutes each) covering stacks and queues from first principles with memory diagrams. Free with no account required.
+
+---
+
 ## 8. Study Checklist
 
 - [ ] Watch the Module 03 video lecture by Professor Nash.

@@ -191,4 +191,29 @@ Review Module 14 Parts 1 and 2 and the Reading Guide before beginning. Pay parti
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Cross-Framework Compliance Mapping
+
+A multinational financial technology company (fintech) is headquartered in Texas, processes credit card payments for customers in the US and EU, employs 3,400 people, and is publicly traded on the NYSE. The company stores cardholder data, employee PII, and EU customer personal data in a shared cloud database hosted on AWS.
+
+1. Identify every compliance framework from this module that applies to this company. For each, state: what data or activity triggers applicability, the single most operationally demanding requirement, and the maximum penalty for non-compliance.
+2. The company's legal team asks whether a single ISO 27001 certification could satisfy all of its compliance obligations. Write a 200-word response explaining what ISO 27001 certification does and does not cover in relation to the other applicable frameworks.
+3. Design a data flow diagram (described in text) showing how cardholder data moves from a customer payment at checkout through the company's systems. For each stage in the flow, identify which compliance framework's requirements are most directly triggered and name one specific control required at that stage.
+
+### Challenge 2: Governance Document Suite Development
+
+A regional hospital network has no formal governance document hierarchy. The CISO has been asked to build one from scratch, starting with three foundational documents covering encryption, mobile devices, and third-party vendor access.
+
+1. Draft a one-paragraph **information security policy** statement for each of the three topics. Each policy statement must: be mandatory in tone, state the high-level requirement without specifying implementation details, and be written at a level appropriate for board approval.
+2. For the encryption topic, draft a supporting **standard** that specifies: the minimum encryption algorithm and key length for data at rest, the minimum TLS version for data in transit, and the requirement for encrypted backups. The standard must be specific and measurable.
+3. For the mobile device topic, draft a four-step **procedure** that an IT administrator would follow when a physician reports a lost mobile device that was enrolled in the MDM system and had access to patient records. The procedure must address containment, notification, evidence preservation, and documentation.
+
+### Reflection Questions
+
+1. A company's lawyers argue that because they use a PCI-DSS-compliant payment processor, the company itself has no PCI-DSS obligations. Is this argument correct? Explain what the shared responsibility model means in the context of PCI-DSS and where the merchant's obligations begin and end.
+2. A CISO tells the board: "We are HIPAA compliant." A board member asks, "Who certified you?" The CISO is silent. Why is there no "HIPAA certification," and what evidence should the CISO present instead to demonstrate HIPAA compliance to the board?
+
+---
+
 End of Lab — Module 14

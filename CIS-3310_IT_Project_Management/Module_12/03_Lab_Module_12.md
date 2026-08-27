@@ -214,3 +214,21 @@ Submit the following in a single PDF or Word document:
 | Part 3: RACI Matrix | 35 | One A per task; logical R assignments; errors corrected |
 | Part 4: Communication Plan | 20 | Five groups planned; formula applied correctly |
 | **Total** | **100** | |
+
+---
+
+## Part 9 — Challenge Exercise
+
+This section is optional for students seeking additional depth and exam preparation. It is not graded as part of the standard 100-point lab but may be used for extra credit at the instructor's discretion.
+
+### Challenge Step 1: Stakeholder Engagement Shift Scenario
+
+One month into the RetailOne POS deployment, the Store Operations Director has shifted from Supportive to Resistant. Based on your stakeholder register and Power/Interest grid from Parts 1 and 2, write a 6–8 sentence Stakeholder Re-engagement Plan for this stakeholder. Address: the likely root cause of the shift, the PM's immediate response action, the ongoing engagement approach to move the stakeholder back to Supportive, and the success indicator that confirms re-engagement has been achieved.
+
+### Challenge Step 2: RACI Exception Handling
+
+Identify two tasks from your Part 3 RACI matrix where the Accountable person is also listed as one of multiple Responsible persons. For each case, explain whether this dual designation is appropriate or represents a governance risk. If it is a risk, propose how to restructure the RACI entry to eliminate the ambiguity. Reference the single-A rule and the distinction between strategic accountability and operational responsibility.
+
+### Challenge Step 3: Communication Failure Post-Mortem
+
+Write a brief Post-Mortem Report (8–10 sentences) for a hypothetical communication failure on the RetailOne project: a critical security patch deployment window was missed because the IT Security Manager was never informed of the go-live date. Identify which communication plan element failed (was it the register entry, the format, the frequency, or the responsible sender?), explain how the failure could have been prevented, and propose a specific change to the Communications Management Plan to prevent recurrence. This exercise directly maps to the Monitor Communications process in PMI's framework.

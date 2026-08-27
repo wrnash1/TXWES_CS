@@ -211,3 +211,203 @@ Distractor Analysis:
 - B is correct. The CVSS Temporal Score accounts for factors that change over time. The Exploit Code Maturity (E) metric reduces the score if no exploit is available and increases urgency if a weaponized exploit exists. As the vendor releases a patch and the vulnerability ages, the Temporal Score typically decreases relative to the Base Score.
 - C is incorrect. The Temporal Score modifies the Base Score; it does not replace it. The Base Score remains the foundational measure.
 - D is incorrect. CVSS Temporal Score applies to vulnerabilities at any severity level. It is not restricted to Critical findings.
+
+---
+
+## Question 11 (5 points)
+
+A vulnerability scanner returns a finding for a web application on an internal development server that is not reachable from the internet and holds no production data. The CVSS Base Score is 9.1 (Critical). The CISA KEV catalog does not list this vulnerability. What is the most appropriate remediation priority decision?
+
+- A) Immediately patch within 24 hours because all Critical CVSS findings require emergency response
+- B) Accept the risk permanently since the server is internal
+- C) Apply normal business-priority patching within the standard patch cycle, documenting the rationale that low exposure and absence from KEV reduce effective risk
+- D) Remove the server from the network until the patch is applied
+
+Correct Answer: C
+
+Distractor Analysis:
+
+- A is incorrect. CVSS score alone does not determine patching urgency. The absence of external exposure, production data, and a KEV listing significantly reduces the actual risk. A flat "patch all Critical in 24 hours" policy fails to account for business context and would overwhelm patching teams with low-actual-risk items.
+- B is incorrect. Risk acceptance without documentation and context analysis is not a proper vulnerability management procedure. Internal servers can still be attack pivot points, so permanent risk acceptance without review is inappropriate.
+- C is correct. The combination of no external exposure, no production data, and no KEV listing justifies scheduling the patch within the standard cycle. Documenting the risk rationale is the professional approach and satisfies audit requirements.
+- D is incorrect. Taking the server offline is a disproportionate response given the low actual risk. Containment actions of this severity require confirmed exploitation evidence or critical asset exposure that is not present here.
+
+---
+
+## Question 12 (5 points)
+
+A credentialed vulnerability scan identifies 47 findings on a Windows server. An uncredentialed scan of the same server returns only 12 findings. What best explains the difference?
+
+- A) The credentialed scan misconfigured itself and generated false positives
+- B) The uncredentialed scan only tests for network-layer vulnerabilities; it cannot inspect installed software versions, registry settings, or local configurations that require authentication
+- C) Windows servers have fewer vulnerabilities when scanned without credentials because the scanner cannot trigger them
+- D) Credentialed scanning always returns more findings because it tests a broader IP range
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A is incorrect. The credentialed scan is more likely to produce accurate results, not more false positives. The difference in count is expected behavior, not misconfiguration.
+- B is correct. Credentialed scanning authenticates to the target system and can directly inspect installed software versions, patch levels, registry keys, and local configuration files. Uncredentialed scanning can only observe what is visible from the network — open ports, service banners, and externally reachable vulnerabilities. The 35-finding gap is a typical illustration of this difference.
+- C is incorrect. Vulnerabilities exist independent of scanning method. The scanner not being able to see them does not mean they are not present — it means the uncredentialed scan has a visibility gap.
+- D is incorrect. Credentialed scanning is not about scanning a broader IP range. It authenticates to a single target to gain deeper visibility into that target's configuration.
+
+---
+
+## Question 13 (5 points)
+
+An organization's remediation SLA requires Critical vulnerabilities to be patched within 15 days. A Critical finding was discovered on day 1 and is not yet patched on day 18. Which term describes this finding's status?
+
+- A) Risk accepted
+- B) False positive
+- C) SLA breach
+- D) Compensating control applied
+
+Correct Answer: C
+
+Distractor Analysis:
+
+- A is incorrect. Risk acceptance is a formal decision documented by authorized stakeholders that a finding will not be remediated. There is no indication that a formal risk acceptance decision was made — the patch is simply overdue.
+- B is incorrect. A false positive is a finding that the scanner reported but does not actually exist on the system. The scenario does not question whether the finding is real.
+- C is correct. The vulnerability was not remediated within the defined 15-day SLA window. This is a SLA breach — a measurable operational failure that should be tracked, escalated, and reported.
+- D is incorrect. A compensating control is a mitigation applied when a direct patch is not possible, accompanied by documentation. No such control is described in the scenario.
+
+---
+
+## Question 14 (5 points)
+
+Which CVSS v3.1 Base metric describes whether the attacker needs to be on the same network segment as the vulnerable component or can attack it remotely across the internet?
+
+- A) User Interaction (UI)
+- B) Privileges Required (PR)
+- C) Attack Vector (AV)
+- D) Scope (S)
+
+Correct Answer: C
+
+Distractor Analysis:
+
+- A is incorrect. User Interaction describes whether the attack requires a human user to take an action (e.g., click a link, open a file). It does not describe network positioning.
+- B is incorrect. Privileges Required describes whether the attacker needs to be authenticated and what privilege level is required before the attack can be executed.
+- C is correct. Attack Vector (AV) describes the context from which exploitation is possible. The values are Network (remotely exploitable across the internet), Adjacent (requires same network), Local (requires local access), and Physical (requires physical hardware access).
+- D is incorrect. Scope describes whether a successful exploit can affect components beyond the vulnerable component itself. It does not describe attacker positioning.
+
+---
+
+## Question 15 (5 points)
+
+The CISA Known Exploited Vulnerabilities (KEV) catalog was established to serve which primary purpose?
+
+- A) To replace CVSS as the standard vulnerability scoring system
+- B) To provide a government-mandated list of vulnerabilities that federal agencies must remediate within specified deadlines, serving as a practical exploitation-confirmed prioritization resource
+- C) To list all vulnerabilities discovered by CISA researchers regardless of exploitation status
+- D) To assign legal liability to vendors whose software appears in the catalog
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A is incorrect. The KEV catalog does not replace CVSS. They serve different purposes: CVSS measures theoretical severity; KEV confirms actual exploitation in the wild. Organizations use both together for prioritization.
+- B is correct. The KEV catalog was created by CISA under Binding Operational Directive 22-01. It lists vulnerabilities with confirmed evidence of active exploitation in the wild and mandates remediation deadlines for federal civilian agencies. Private sector organizations widely use it as a high-confidence exploitation-confirmed prioritization signal.
+- C is incorrect. The KEV catalog specifically requires evidence of active exploitation. It does not list all discovered vulnerabilities — that is the role of the NVD.
+- D is incorrect. The KEV catalog does not assign legal liability. Vendors are not penalized for appearing in the catalog — it is an informational resource for defenders.
+
+---
+
+## Question 16 (5 points)
+
+Which of the following best describes the difference between a patch and a compensating control in the context of vulnerability remediation?
+
+- A) A patch is applied by the vendor; a compensating control is applied by the operating system
+- B) A patch directly fixes the vulnerable code or configuration; a compensating control reduces the likelihood or impact of exploitation without fixing the underlying vulnerability
+- C) A patch is used for Critical findings; a compensating control is used for Low findings only
+- D) A patch and a compensating control are equivalent remediation actions that provide identical protection
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A is incorrect. Patches are distributed by vendors but applied by system administrators. Compensating controls are implemented by the defending organization and can include configuration changes, network segmentation, or additional monitoring — not operating system actions specifically.
+- B is correct. A patch modifies the software or configuration to eliminate the vulnerability entirely. A compensating control reduces risk through indirect means — for example, blocking network access to a vulnerable service as a workaround when the patch cannot be applied immediately — but the underlying vulnerability remains.
+- C is incorrect. Compensating controls are used across all severity levels when direct patching is not feasible, not only for Low severity findings.
+- D is incorrect. Compensating controls do not provide equivalent protection to direct patching. They are interim risk reduction measures, not permanent fixes.
+
+---
+
+## Question 17 (5 points)
+
+An analyst runs a vulnerability scan and finds a reported Critical vulnerability in Apache Struts on a production web server. The analyst verifies manually that the server actually runs Nginx, not Apache Struts. How should the analyst classify this finding?
+
+- A) True positive — the scanner correctly identified a real vulnerability
+- B) False positive — the scanner reported a vulnerability that does not exist on this system
+- C) False negative — the scanner missed a vulnerability that actually exists
+- D) True negative — the scanner correctly determined no vulnerability was present
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A is incorrect. A true positive requires that both the alert fired and the vulnerability actually exists. Since the server runs Nginx, not Apache Struts, the vulnerability cannot exist on this system.
+- B is correct. A false positive in vulnerability scanning occurs when the scanner reports a vulnerability on a system where the vulnerable component is not actually present. The scanner incorrectly fingerprinted the web server and produced an inaccurate result.
+- C is incorrect. A false negative means the scanner missed a vulnerability that does exist. In this case, the scanner reported something that does not exist — the opposite scenario.
+- D is incorrect. A true negative means no alert fired and no vulnerability exists. The scanner did fire an alert in this scenario — it just fired incorrectly.
+
+---
+
+## Question 18 (5 points)
+
+Which of the following is the correct order of the vulnerability management lifecycle phases?
+
+- A) Remediate → Scan → Prioritize → Discover → Report
+- B) Discover → Scan → Prioritize → Remediate → Report
+- C) Report → Discover → Scan → Remediate → Prioritize
+- D) Scan → Discover → Report → Prioritize → Remediate
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A is incorrect. Remediation cannot occur before scanning and prioritization. This order reverses the process.
+- B is correct. The vulnerability management lifecycle follows: Discover (identify assets in scope) → Scan (run the vulnerability scanner) → Prioritize (rank findings by risk) → Remediate (apply patches or controls) → Report (track metrics and communicate status). Some models use slightly different naming but this sequence is consistent across frameworks.
+- C is incorrect. Reporting is the final phase, not the first. The process must produce findings before they can be reported.
+- D is incorrect. Discovery of assets in scope precedes scanning. You cannot effectively scope a scan without knowing your asset inventory.
+
+---
+
+## Question 19 (5 points)
+
+Which vulnerability management metric most directly measures the program's effectiveness at protecting the organization from actively exploited threats?
+
+- A) Total number of vulnerabilities discovered per quarter
+- B) Percentage of KEV catalog items patched within the defined SLA timeframe
+- C) Average CVSS score across all open findings
+- D) Number of new vulnerability scanner licenses purchased
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A is incorrect. The number of discoveries is a coverage metric. Discovering many vulnerabilities without remediating them provides no protection.
+- B is correct. The KEV catalog lists vulnerabilities with confirmed active exploitation. Tracking what percentage of KEV items are remediated within the SLA directly measures whether the program is protecting the organization from the threats most likely to cause real-world harm.
+- C is incorrect. Average CVSS score across all open findings is a risk density metric, not a protection effectiveness metric. It does not indicate whether the most dangerous vulnerabilities are being addressed first.
+- D is incorrect. License purchases measure budget spend, not security outcomes.
+
+---
+
+## Question 20 (5 points)
+
+An organization wants to reduce the number of false positives in its credentialed vulnerability scan results. Which approach is most effective?
+
+- A) Switch from credentialed to uncredentialed scanning to reduce the number of findings
+- B) Tune the scanner's plugin configuration to match the actual operating systems, applications, and versions deployed, and maintain an accurate asset inventory
+- C) Increase scan frequency from weekly to daily, which will cause false positives to self-correct over time
+- D) Disable all plugins for operating system vulnerabilities and only scan application-layer components
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A is incorrect. Switching to uncredentialed scanning reduces overall findings but also dramatically reduces true positives — it does not improve accuracy. You lose real findings along with false ones.
+- B is correct. False positives in vulnerability scanning most commonly result from inaccurate asset inventory, incorrect OS/application fingerprinting, or overly broad plugin configurations. Tuning scanner plugins to reflect the actual environment and maintaining an accurate asset inventory are the most effective false positive reduction strategies.
+- C is incorrect. Increasing scan frequency does not cause false positives to self-correct. The same inaccurate plugin will produce the same false positive on every scan.
+- D is incorrect. Disabling OS vulnerability plugins would eliminate coverage for entire vulnerability categories, increasing false negatives (missed real vulnerabilities) far more than it reduces false positives.

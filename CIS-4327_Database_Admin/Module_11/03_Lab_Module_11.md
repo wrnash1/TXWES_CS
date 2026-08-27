@@ -355,3 +355,48 @@ gcloud sql instances delete ${SQL_INSTANCE} --quiet
 ---
 
 Reference: cloud.google.com/learn
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Trigram Full-Text Search with pg_trgm
+
+1. Enable the `pg_trgm` extension and create a GIN trigram index on a text column to support leading-wildcard LIKE searches:
+
+   ```sql
+   CREATE EXTENSION IF NOT EXISTS pg_trgm;
+   CREATE INDEX idx_orders_notes_trgm ON orders USING GIN (notes gin_trgm_ops);
+   ```
+
+2. Run `EXPLAIN ANALYZE` on a leading-wildcard query before and after the index, and compare the scan type and execution time:
+
+   ```sql
+   EXPLAIN ANALYZE SELECT order_id, notes FROM orders WHERE notes LIKE '%urgent%';
+   ```
+
+3. Confirm the plan switches from `Seq Scan` to `Bitmap Index Scan` using the trigram index. Record the execution time improvement ratio.
+
+4. Run the following to understand why trigrams work: execute `SELECT show_trgm('urgent');` and explain in your lab notes how a 3-character token index supports substring matching.
+
+### Challenge 2: Identifying and Resolving an N+1 Query Pattern
+
+1. In `pg_stat_statements`, identify a query that is called thousands of times per minute but returns only 1 row per call:
+
+   ```sql
+   SELECT query, calls, mean_exec_time, rows / NULLIF(calls, 0) AS avg_rows_per_call
+   FROM pg_stat_statements
+   WHERE rows / NULLIF(calls, 0) <= 1
+     AND calls > 500
+   ORDER BY calls DESC
+   LIMIT 10;
+   ```
+
+2. For the top result, write an equivalent batch query that retrieves the same data for 100 IDs in a single call using `= ANY(ARRAY[...])` syntax, and capture its `EXPLAIN ANALYZE` output.
+
+3. Compare the total execution time of 100 individual single-row queries versus one batch query returning 100 rows. Calculate the reduction in total database time.
+
+### Reflection Questions
+
+1. The trigram index in Challenge 1 enables `LIKE '%text%'` searches but is larger and slower to update than a B-tree index. Describe the specific scenario where you would choose a trigram GIN index over a full-text `tsvector` GIN index for a production search feature.
+2. The N+1 pattern is one of the most common application-level performance problems. Describe how you would detect it in production using only `pg_stat_statements` data, and what threshold values (calls, avg_rows_per_call) would trigger an investigation.

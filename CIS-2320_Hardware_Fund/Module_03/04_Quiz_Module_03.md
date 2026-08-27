@@ -194,3 +194,203 @@ Distractor Analysis:
 - Why A is incorrect: The pump head must connect to CPU_FAN so the BIOS detects a signal on that monitored header. Connecting it to SYS_FAN would trigger a CPU Fan Error at POST.
 - Why C is incorrect: Using a splitter to put all three cables on CPU_FAN could provide a signal but overwhelms the header's power capacity and prevents independent fan speed control for the radiator fans.
 - Why D is incorrect: Some high-end boards have a dedicated PUMP_FAN or W_PUMP header for this purpose, and connecting the pump there is valid on boards that have it — but the standard answer when only CPU_FAN and SYS_FAN are referenced is pump to CPU_FAN.
+
+---
+
+### Question 11
+
+A technician replaces a CPU in a desktop. After installation, the system boots but CPU temperatures immediately climb to 95°C at idle within 30 seconds. What is the MOST likely cause?
+
+- A) The CPU is overclocked in BIOS beyond its rated speed
+- B) Thermal paste was not applied between the IHS and the heat sink base
+- C) The CPU fan is connected to a SYS_FAN header instead of CPU_FAN
+- D) The CPU model is incompatible with the motherboard chipset
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why B is correct:* Without thermal paste, the metal-to-metal contact between the CPU IHS and the heat sink base has microscopic air gaps (air being a very poor thermal conductor). Heat builds up immediately because it cannot be efficiently transferred to the heat sink. Temperatures climbing to 95°C at idle within seconds is a clear sign the thermal interface is missing or severely inadequate.
+- *Why A is incorrect:* Overclocking would increase temperatures under load, not at idle within 30 seconds of boot. An overclock also requires BIOS configuration that would be visible in the system setup.
+- *Why C is incorrect:* Connecting the CPU fan to SYS_FAN may trigger a "CPU Fan Error" POST message, but the fan still spins and provides airflow to the heat sink. Temperatures would rise more slowly than without thermal paste. The rapid idle temperature spike points to a thermal interface failure.
+- *Why D is incorrect:* CPU incompatibility causes POST failures or the system refusing to boot — not a thermal runaway on a system that has booted successfully into the OS.
+
+---
+
+### Question 12
+
+Which CPU specification is MOST relevant when choosing a processor for a heavily multi-threaded workload such as video rendering or virtual machine hosting?
+
+- A) Boost clock speed (GHz)
+- B) Physical core count
+- C) L1 cache size per core
+- D) Integrated graphics model
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why B is correct:* Multi-threaded workloads distribute computation across independent threads that can execute simultaneously on separate cores. More physical cores means more true parallelism — each core executes its own thread independently. Video rendering and VM hosting both scale well with physical core count because they spawn dozens of independent work units.
+- *Why A is incorrect:* Boost clock speed benefits single-threaded performance — tasks where only one instruction stream runs at a time (gaming, many business apps). For heavily multi-threaded work, core count matters more than peak single-core frequency.
+- *Why C is incorrect:* L1 cache size affects how quickly each core can access its most recently used data. While important for latency-sensitive tasks, a larger L1 cache does not compensate for fewer cores in parallel workloads.
+- *Why D is incorrect:* Integrated graphics are entirely irrelevant to multi-threaded compute performance. VMs and rendering workloads run on CPU cores, not the integrated GPU.
+
+---
+
+### Question 13
+
+What is the purpose of the IHS (Integrated Heat Spreader) on a desktop CPU?
+
+- A) It contains the CPU's voltage regulation circuitry to protect the die from power fluctuations
+- B) It is a metal lid that protects the fragile CPU die and provides a flat, uniform surface for heat sink contact
+- C) It houses the CPU's L3 cache in a thermally isolated chamber to prevent cache data corruption from heat
+- D) It is a replaceable copper plate that the technician selects based on the heat sink brand being installed
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why B is correct:* The IHS is a flat metal cap (usually copper or nickel-plated copper) factory-bonded over the CPU die. It protects the small, fragile silicon die from direct mechanical contact with the heat sink, and its flat surface ensures consistent contact with the cooler base. Thermal paste fills the microscopic gap between the IHS and the cooler.
+- *Why A is incorrect:* Voltage regulation for the CPU is performed by the motherboard's VRM (Voltage Regulator Module) circuitry — not the IHS. The IHS has no electrical function.
+- *Why C is incorrect:* L3 cache is embedded in the CPU silicon die. The IHS sits above the die and has no internal structure to house cache memory.
+- *Why D is incorrect:* The IHS is factory-installed and not field-replaceable in normal technician practice. It is not selected based on cooler brand — it is a permanent part of the CPU package.
+
+---
+
+### Question 14
+
+A user upgrades from a 4-core/8-thread processor to an 8-core/16-thread processor at the same clock speed. In which scenario would the user see the GREATEST performance improvement?
+
+- A) Opening a web browser and loading a single website
+- B) Playing a single-player video game with minimal background tasks
+- C) Encoding a 4K video file using a multi-threaded encoder
+- D) Typing in a word processor while music plays in the background
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why C is correct:* Video encoding is an embarrassingly parallel workload — the encoder splits the video into segments and processes them simultaneously across available threads. Doubling from 8 to 16 threads provides near-linear speedup in encoding time, making this the scenario where the upgrade yields the most measurable benefit.
+- *Why A is incorrect:* Opening a web browser and loading a page is primarily single-threaded with brief bursts of activity. The difference between 8 and 16 threads is barely perceptible for this task.
+- *Why B is incorrect:* Most games, especially single-player titles, are primarily single-threaded or lightly multi-threaded (4–8 threads used). Clock speed matters more than thread count for gaming frame rates. Doubling thread count at the same GHz yields minimal gaming improvement.
+- *Why D is incorrect:* Typing in a word processor uses a single thread. Background music playback uses one or two threads. Total active threads are well within the capacity of even a 4-core CPU; 16 threads provide no measurable benefit here.
+
+---
+
+### Question 15
+
+When replacing a CPU cooler, a technician cleans the old thermal paste off the CPU IHS using a paper towel dampened with water. What is wrong with this method?
+
+- A) Water is too cold and may thermally shock the CPU die
+- B) Paper towels leave lint fibers that contaminate the thermal interface
+- C) Water is not an effective solvent for the silicone-based compounds in most thermal pastes
+- D) Water may cause the IHS to delaminate from the CPU package if applied repeatedly
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why C is correct:* Most thermal pastes use silicone oil or silicone grease as a carrier with metallic or ceramic filler particles. These compounds are hydrophobic and water-resistant — water does not dissolve or lift them effectively. The correct cleaning agent is isopropyl alcohol at 90% concentration or higher, which is an effective solvent for silicone-based thermal compounds.
+- *Why B is incorrect:* Paper towels can leave lint, which is a real concern, but it is a secondary issue compared to using an ineffective solvent. Lint contamination of the thermal interface is best avoided by using lint-free cloths or coffee filters — but the primary problem stated here is using water.
+- *Why A is incorrect:* Room-temperature water is not cold enough to thermally shock a CPU. Thermal shock from cleaning is not a recognized failure mode.
+- *Why D is incorrect:* The IHS is permanently bonded to the CPU package with solder or epoxy. Occasional cleaning with water would not delaminate it. This answer describes a non-existent failure mode.
+
+---
+
+### Question 16
+
+A technician notices that the CPU in a desktop PC runs at 2.4 GHz under heavy load, even though the processor's rated base clock is 3.6 GHz and its boost clock is 4.8 GHz. What is the MOST likely explanation?
+
+- A) The CPU is underclocked in BIOS and needs to be reset to default frequency
+- B) The CPU is thermal throttling because it is exceeding its maximum safe operating temperature
+- C) The system is in power-saving mode, which caps all cores at a reduced frequency
+- D) The memory is running at DDR4-2400 speed, bottlenecking the CPU's instruction throughput
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why B is correct:* Thermal throttling is an automatic CPU self-protection mechanism. When the CPU temperature reaches TJMax (typically 90–100°C depending on the model), it drops its clock multiplier to reduce heat output. Running below the rated base clock under load is a strong indicator of thermal throttling from inadequate cooling, dried-out thermal paste, or a clogged/failed heat sink.
+- *Why A is incorrect:* BIOS underclocking would cause the CPU to run at the underclocked frequency consistently — at idle, light load, and heavy load. Throttling behavior (reducing speed under load when temperatures rise) is specifically a thermal response, not a static BIOS frequency setting.
+- *Why C is incorrect:* Power-saving modes (like Windows Balanced power plan) reduce clock speed at idle but allow the CPU to boost under heavy load. A power plan would not result in the CPU running below base clock under full load.
+- *Why D is incorrect:* Memory bandwidth affects CPU performance in memory-bound workloads, but it does not directly cause the CPU to reduce its clock frequency. Clock throttling is purely a thermal or power management response.
+
+---
+
+### Question 17
+
+Which of the following best describes the relationship between a CPU's TDP rating and the minimum cooler required for that processor?
+
+- A) TDP is a maximum power draw rating; the cooler must be rated to dissipate at least that many watts
+- B) TDP is an average power draw figure; it has no bearing on cooler selection
+- C) TDP represents the heat generated only by the CPU die, not including RAM or VRMs
+- D) TDP stands for Total Drive Performance; it measures storage I/O capacity, not heat
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- *Why A is correct:* TDP (Thermal Design Power) is expressed in watts and represents the maximum sustained heat output the cooling solution must handle to keep the processor within its rated temperature range. A CPU with a 125W TDP requires a cooler rated at 125W or higher. Using an inadequate cooler (e.g., a 65W-rated stock cooler on a 125W TDP processor) results in thermal throttling or thermal shutdown.
+- *Why B is incorrect:* TDP is not an average — it is a design parameter that defines the cooling requirement. Cooler selection is directly based on TDP.
+- *Why C is incorrect:* TDP represents the total heat produced by the entire CPU package under sustained workload, including all on-die components. RAM and VRM heat is separate and not included in the CPU's TDP.
+- *Why D is incorrect:* TDP stands for Thermal Design Power. It has nothing to do with storage or I/O performance.
+
+---
+
+### Question 18
+
+A CPU has been installed in a LGA1700 socket. The technician notices that the load plate bent slightly during installation. What is the likely consequence if the system is powered on without correcting this?
+
+- A) The CPU will not be damaged because the IHS protects the die from uneven pressure
+- B) Uneven pressure from a bent load plate can crack the CPU die or cause incomplete contact, leading to instability or failure
+- C) The bent load plate will straighten itself under thermal expansion during the first boot cycle
+- D) The only consequence is aesthetic — the system will operate normally with a bent load plate
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why B is correct:* The LGA load plate applies even distributed pressure across the CPU's contact pads. A bent load plate creates uneven contact — some pads receive more pressure and some lose contact entirely. This can cause electrical failures (intermittent connection loss on CPU pins) and, in severe cases, physical stress that cracks the CPU die. Cracked silicon is a terminal failure.
+- *Why A is incorrect:* The IHS protects the die from direct mechanical contact with the cooler, but it does not protect against uneven clamp pressure from a distorted load plate pressing asymmetrically on the CPU package.
+- *Why C is incorrect:* Metal does not self-correct under thermal expansion in the temperature range of normal CPU operation. A bent load plate remains bent and continues to cause uneven contact across thermal cycles.
+- *Why D is incorrect:* A bent load plate is not merely aesthetic. Uneven contact on an LGA socket causes signal integrity failures on affected pins, which manifests as POST errors, system instability, or complete boot failure.
+
+---
+
+### Question 19
+
+What is the purpose of cache memory in a CPU, and which cache level is shared across all cores in a modern processor?
+
+- A) Cache memory is a high-speed register that stores the CPU's current instruction pointer; L1 is shared across all cores
+- B) Cache memory is SRAM on the CPU die that stores recently accessed data and instructions to reduce RAM access latency; L3 is shared across all cores
+- C) Cache memory is DRAM built into the CPU package for lower cost; L2 is shared across all cores
+- D) Cache memory stores the CPU's BIOS configuration; L3 is private to each core to protect settings from cross-core access
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why B is correct:* CPU cache is small-capacity, high-speed SRAM integrated on the processor die. It forms a hierarchy: L1 (fastest, smallest, private per core) → L2 (medium, private per core) → L3 (largest, slower, shared among all cores). The L3 cache acts as a shared pool that all cores can access, reducing main RAM reads for frequently used data across the whole workload.
+- *Why A is incorrect:* The instruction pointer (program counter) is a CPU register, not cache memory. L1 is private per core, not shared.
+- *Why C is incorrect:* CPU cache uses SRAM (Static RAM), not DRAM (Dynamic RAM). SRAM is more expensive and power-hungry but far faster than DRAM, which is why cache is small in size. L2 is private per core on most modern designs.
+- *Why D is incorrect:* Cache memory has nothing to do with BIOS configuration. BIOS settings are stored in a dedicated flash chip on the motherboard.
+
+---
+
+### Question 20
+
+A workstation has a CPU spec listed as "16C/32T." What does this notation mean, and what technology enables the thread count to be double the core count?
+
+- A) 16 cores and 32 total cache levels; L1 through L32 caches are distributed across the die
+- B) 16 physical cores, each capable of executing 32 simultaneous instructions per clock cycle
+- C) 16 physical cores and 32 logical threads, enabled by Hyper-Threading (Intel) or SMT (AMD)
+- D) 16 performance cores and 32 efficiency cores for a total of 48 execution units
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why C is correct:* The notation 16C/32T means 16 physical cores and 32 logical threads. Intel's Hyper-Threading (HT) and AMD's Simultaneous Multi-Threading (SMT) allow each physical core to execute two threads simultaneously by sharing internal execution resources between two logical processors. The OS sees 32 logical CPUs and can schedule 32 independent threads across them.
+- *Why A is incorrect:* "32T" in CPU notation always refers to threads, not cache levels. CPUs have three cache levels (L1, L2, L3) — not 32. Cache levels are not what the thread count notation describes.
+- *Why B is incorrect:* Instructions per clock cycle (IPC) is a different architectural metric describing execution efficiency per cycle. It is not encoded in the core/thread count notation. A core executing 32 instructions per clock would require a 32-wide superscalar design — not what 32T means.
+- *Why D is incorrect:* Intel's hybrid architecture (P-cores + E-cores) uses a different notation. A chip with 16 P-cores and 32 E-cores would typically be listed differently. The 16C/32T format specifically describes 16 identical cores with SMT/HT enabled.

@@ -272,3 +272,33 @@ After the query, write a 3-4 sentence explanation of each improvement you made a
 ## Academic Integrity Notice
 
 All log data in this lab is fabricated for educational purposes. All work must be your own. Do not share queries or answers before the submission deadline. Reference professormesser.com and comptia.org for additional study context.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Multi-Source Log Correlation
+
+You are given four log snippets from the same 12-minute window during an incident investigation:
+
+- **Windows Security Log**: Event ID 4625 (failed logon, Logon Type 3) × 87 entries for user `svc_backup` from IP 10.10.22.44, followed by Event ID 4624 (success, Logon Type 3) for the same user from the same IP.
+- **Sysmon Log**: Event ID 1 (Process Create) — `cmd.exe` spawned by `services.exe` with command line `net user administrator NewP@ss! /domain`.
+- **Firewall Log**: Outbound connection from 10.10.22.44 to 185.220.101.12 on port 443, 2.1 MB transferred.
+- **DNS Log**: Query from 10.10.22.44 for `api.update-svc-cdn.ru` resolved to 185.220.101.12, 9 minutes after the successful logon.
+
+1. Map each log entry to the most specific MITRE ATT&CK technique it represents (provide technique ID and name).
+2. Write a 3–4 sentence incident summary in the format a Tier 1 analyst would use when escalating to Tier 2, referencing the correlated evidence chain.
+3. Write a Splunk SPL query that would detect the specific process creation event (Sysmon EID 1, cmd.exe spawned by services.exe) across all hosts in the environment.
+
+### Challenge 2: SIEM Rule Design
+
+Design a correlation rule to detect the brute-force-then-success pattern observed in Challenge 1.
+
+1. Define the rule in structured format: Event Source, Event IDs, Threshold, Time Window, Grouping Fields, and Alert Condition.
+2. Identify two legitimate scenarios that could trigger false positives for this rule and describe an exception or suppression approach for each.
+3. Write a one-sentence behavioral hypothesis explaining what adversary goal this rule is designed to detect and which ATT&CK tactic it maps to.
+
+### Reflection Questions
+
+1. In the multi-source correlation above, which single log source would have been the least useful if it were the only source available, and why does this illustrate the importance of a multi-source SIEM strategy?
+2. Describe one real-world operational scenario where an organization might legitimately need to retain logs for longer than PCI DSS's 12-month minimum, and identify which regulation or business requirement would drive that extended retention.

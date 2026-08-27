@@ -202,4 +202,30 @@ DHCP lease renewal: Client attempts renewal at 50% of lease duration, then again
 
 ---
 
+## 9. Supplemental Resources
+
+The following free resources extend the Module 02 content on TCP/IP protocols, ports, and network services. All are openly available at no cost.
+
+**1. Professor Messer — Network+ Protocol and Port Free Study Notes**
+URL: https://www.professormesser.com/network-plus/n10-008/n10-008-video/
+Relevance: Professor Messer's free videos cover TCP vs. UDP, DHCP, DNS record types, and all well-known port numbers tested on the Network+ exam. His downloadable study notes summarize every protocol covered in this module.
+
+**2. RFC 768 — User Datagram Protocol (UDP) — Official Standard**
+URL: https://datatracker.ietf.org/doc/html/rfc768
+Relevance: The original one-page UDP specification from the IETF. Reading the actual standard reinforces exactly what UDP does and does not provide — essential for exam questions distinguishing TCP from UDP.
+
+**3. RFC 793 — Transmission Control Protocol (TCP) — Official Standard**
+URL: https://datatracker.ietf.org/doc/html/rfc793
+Relevance: The authoritative TCP specification describing the three-way handshake, sequence numbers, and flow control in full detail. Sections 3.4 and 3.5 cover connection establishment and termination tested on the exam.
+
+**4. IANA Service Name and Transport Protocol Port Number Registry**
+URL: https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml
+Relevance: The official Internet Assigned Numbers Authority registry of all assigned port numbers. Use this to verify any port number, protocol name, and transport type (TCP vs. UDP) — directly supports the port memorization required for Network+.
+
+**5. Wireshark Sample Captures — DHCP and DNS**
+URL: https://wiki.wireshark.org/SampleCaptures
+Relevance: Wireshark's public sample capture library includes DHCP DORA exchange and DNS query captures. Opening these in Wireshark visualizes the exact protocol exchange described in this module and reinforces packet-level understanding of UDP-based services.
+
+---
+
 *CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash*

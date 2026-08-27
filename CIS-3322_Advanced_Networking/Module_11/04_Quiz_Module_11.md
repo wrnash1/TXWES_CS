@@ -207,3 +207,203 @@ An engineer configures a Cisco DHCP pool and sets the `default-router` to 192.16
 - B is correct: The client can reach the DNS server (confirmed by ping), so the IP connectivity, DHCP assignment, and routing are all working correctly. The failure is at the DNS application layer. The DNS server at 10.0.0.53 is either not authoritative for the queried domain, has no forwarding configured to public DNS, or is configured to refuse certain client queries. This is a DNS server configuration issue, not a DHCP configuration issue.
 - C is incorrect: If the router reloaded without saving, the DHCP pool itself would be missing and clients would not receive any IP address. The scenario confirms clients are receiving IPs from the pool, so the configuration survived.
 - D is incorrect: `ip domain-lookup` is a router-level command that controls whether the router itself performs DNS resolution. It is not a DHCP pool subcommand and does not affect what DNS settings are delivered to clients.
+
+---
+
+## Question 11
+
+A DHCP server has a pool defined for 192.168.10.0/24 with exclusions for .1 through .10. A client sends a DHCP Discover. The server responds with an Offer containing 192.168.10.11. The client sends a Request, but before the server sends an Acknowledge, the server pings 192.168.10.11 and receives a reply. What happens next?
+
+- A) The server sends the Acknowledge anyway and adds 192.168.10.11 to the binding table
+- B) The server marks 192.168.10.11 as a conflict, moves to the next available address, and sends a new Offer
+- C) The server sends a DHCP NAK to the client and terminates the process
+- D) The server ignores the ping reply because only ARP is used for conflict detection
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A is incorrect: If the server detects the address is already in use (via ping probe), it does not assign that address. Proceeding would create an IP conflict on the network.
+- B is correct: Cisco IOS DHCP servers perform a ping probe before finalizing the offer. If a ping reply is received, the server records the address in the conflict table (`show ip dhcp conflict`), skips that address, selects the next available one, and sends a new Offer to the client. This protects against conflicts with hosts statically configured using addresses from the dynamic range.
+- C is incorrect: A DHCP NAK is sent when the server determines a client's requested address is incorrect (e.g., the client moved to a new subnet and requests its old address). It is not sent when the server detects a conflict during its own probe.
+- D is incorrect: Cisco IOS uses ICMP ping (not ARP) for conflict detection on the server side. Clients use ARP (gratuitous ARP after receiving an address) for their own conflict detection.
+
+---
+
+## Question 12
+
+A network engineer configures `ip dhcp snooping` globally but forgets to add `ip dhcp snooping vlan 10`. What is the result for VLAN 10 clients?
+
+- A) DHCP snooping applies to all VLANs automatically when enabled globally
+- B) VLAN 10 clients are unaffected — DHCP functions normally without snooping enforcement on that VLAN
+- C) All DHCP traffic on VLAN 10 is dropped because the VLAN is not in the snooping database
+- D) DHCP snooping only activates on VLAN 1 by default when enabled globally
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A is incorrect: `ip dhcp snooping` alone enables the feature globally but does not activate it on any specific VLAN. DHCP snooping must be explicitly enabled per VLAN using `ip dhcp snooping vlan <id>`.
+- B is correct: DHCP snooping only enforces its rules on VLANs where it has been explicitly enabled. If VLAN 10 is not listed in the `ip dhcp snooping vlan` command, snooping does not inspect or filter DHCP packets on that VLAN. Clients in VLAN 10 receive DHCP responses normally regardless of port trust state.
+- C is incorrect: DHCP traffic on a VLAN without snooping enabled is simply not inspected — it is forwarded normally. Snooping does not drop traffic on VLANs where it is not enabled.
+- D is incorrect: Cisco IOS does not apply snooping to VLAN 1 by default. No VLAN has snooping applied automatically — each must be explicitly configured.
+
+---
+
+## Question 13
+
+Which DHCP message type does a client send to formally accept a DHCP offer after receiving it from the server?
+
+- A) DHCP Discover
+- B) DHCP Acknowledge
+- C) DHCP Request
+- D) DHCP Inform
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- A is incorrect: DHCP Discover is the first message — the broadcast sent by a client that has no IP address and is searching for any available DHCP server. It is not used to accept an offer.
+- B is incorrect: DHCP Acknowledge (ACK) is sent by the server as the final message, confirming the lease and delivering the full configuration. The client does not send an Acknowledge.
+- C is correct: After receiving an Offer, the client broadcasts a DHCP Request to formally request the offered address from the specific server. This broadcast also notifies other servers (which may have also replied with offers) that their offers were not selected. The server then responds with a DHCP ACK to finalize the lease.
+- D is incorrect: DHCP Inform is sent by a client that already has a static IP address but wants to obtain other configuration parameters (such as DNS server information) from the DHCP server. It is not part of the standard address-acquisition process.
+
+---
+
+## Question 14
+
+An engineer runs `show ip dhcp binding` on a Cisco IOS DHCP server and sees no entries, but clients claim to have received IP addresses. What is the most likely explanation?
+
+- A) DHCP bindings are only displayed while clients are actively transmitting data
+- B) The DHCP server has reloaded since the last leases were assigned, and the binding table was not saved to NVRAM
+- C) The clients received addresses from a different DHCP server, not from this router
+- D) The binding table is only populated after the lease fully expires and is renewed
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- A is incorrect: DHCP bindings persist in the binding table for the duration of the lease regardless of whether clients are active. The table displays all current valid leases.
+- B is incorrect: While Cisco IOS can optionally save the DHCP binding database to a file (using `ip dhcp database`), a reload does not explain the absence of bindings for clients that currently have valid IPs. On reload, the server would re-issue leases and populate the table again on first client request.
+- C is correct: If `show ip dhcp binding` is empty but clients have valid IPs, those clients obtained their addresses from another DHCP server on the network — either a rogue server, a second legitimate server, or a DHCP relay pointing elsewhere. This is also a sign that DHCP snooping may not be enabled, allowing rogue servers to respond.
+- D is incorrect: DHCP bindings are added to the table when leases are granted — not after expiration. The table shows active leases, not expired ones.
+
+---
+
+## Question 15
+
+A DNS resolver has a cached A record for `www.example.com` with a TTL of 300 seconds. A client queries the resolver 200 seconds after the record was cached. What TTL value is returned to the client?
+
+- A) 300 seconds (the original TTL as set by the authoritative server)
+- B) 100 seconds (the remaining time before the cached record expires)
+- C) 0 seconds (TTL is not included in resolver responses)
+- D) The resolver re-queries the authoritative server before responding to reset the TTL to 300
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A is incorrect: DNS resolvers do not return the original TTL from the authoritative server. They return the remaining TTL — the time left before the cached record expires. This prevents clients from caching the record longer than the authoritative server intended.
+- B is correct: DNS resolvers decrement the TTL as time passes. If the record was cached with a TTL of 300 and 200 seconds have elapsed, the resolver returns the record with a TTL of 100 seconds (300 − 200). The client caches the record for its remaining 100 seconds.
+- C is incorrect: TTL is always included in DNS responses. It is a mandatory field that tells the recipient how long to cache the record.
+- D is incorrect: A resolver re-queries the authoritative server only after the cached TTL expires (reaches 0). As long as a valid cached record exists, the resolver serves it without contacting the authoritative server.
+
+---
+
+## Question 16
+
+Which command on a Cisco router shows the IP addresses assigned to DHCP clients along with their MAC addresses and lease expiration times?
+
+- A) `show ip dhcp pool`
+- B) `show ip dhcp server statistics`
+- C) `show ip dhcp binding`
+- D) `show ip dhcp conflict`
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- A is incorrect: `show ip dhcp pool` displays pool configuration details — subnet, total addresses, addresses in use, and available count. It does not list individual client bindings.
+- B is incorrect: `show ip dhcp server statistics` shows aggregate counters — total messages sent and received, total bindings, and pool information. It does not display per-client IP-to-MAC mappings.
+- C is correct: `show ip dhcp binding` is the primary command for viewing the active DHCP lease table. It displays each assigned IP address, the client's hardware (MAC) address, the lease start time, the lease expiration time, and the binding type. This is the first command to run when troubleshooting DHCP client address assignment.
+- D is incorrect: `show ip dhcp conflict` displays IP addresses that the DHCP server detected were already in use when it tried to assign them. It does not show current valid client bindings.
+
+---
+
+## Question 17
+
+An enterprise campus network uses a Cisco IOS router as a DHCP relay for three different VLANs. The DHCP server is on a centralized server VLAN at 10.1.1.10. Which interface configuration is required on the Layer 3 switch performing inter-VLAN routing?
+
+- A) `ip helper-address 10.1.1.10` on the server VLAN's SVI only
+- B) `ip helper-address 10.1.1.10` on each of the three client-facing VLAN SVIs
+- C) `ip dhcp relay 10.1.1.10` in global configuration on the Layer 3 switch
+- D) `ip helper-address 10.1.1.10` on the physical uplink port toward the server
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A is incorrect: The helper-address on the server VLAN SVI would relay DHCP broadcasts from the server VLAN to itself, which is not meaningful. The relay must be configured on the SVIs where client broadcasts originate.
+- B is correct: `ip helper-address` must be applied to each SVI (VLAN interface) that faces client devices. When a DHCP Discover broadcast arrives on a client VLAN, the SVI with the helper-address forwards it as a unicast to the DHCP server at 10.1.1.10, including the giaddr field so the server knows which subnet scope to use.
+- C is incorrect: `ip dhcp relay` is not a valid Cisco IOS command. The correct command is `ip helper-address` in interface configuration mode.
+- D is incorrect: Applying the helper-address to the physical uplink would only relay broadcasts that arrive on that specific physical interface. The three client VLANs use SVIs, and broadcasts arrive on those logical interfaces — not the physical uplink.
+
+---
+
+## Question 18
+
+What is the purpose of the `giaddr` (gateway IP address) field in a DHCP packet?
+
+- A) It specifies the IP address of the default gateway that the DHCP server should assign to the client
+- B) It is populated by the DHCP relay agent with its own interface address to tell the server which subnet scope to use
+- C) It identifies the client's current IP address before a renewal
+- D) It specifies the address of the DNS server configured in the DHCP pool
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A is incorrect: The default gateway for the client is delivered by the DHCP server in the `default-router` option (Option 3). The `giaddr` is a relay-agent field that identifies the relay, not the gateway the client should use.
+- B is correct: When a DHCP relay agent (configured with `ip helper-address`) forwards a client's Discover or Request to the DHCP server, it inserts its own interface IP address into the `giaddr` field. The server reads `giaddr` to determine which subnet the client is on and selects the appropriate scope/pool for the response. Without `giaddr`, the server would not know which subnet's address range to use.
+- C is incorrect: The client's current IP address in a renewal is carried in the `ciaddr` (client IP address) field, not `giaddr`. During initial discovery, `ciaddr` is 0.0.0.0.
+- D is incorrect: DNS server information is delivered in DHCP Option 6 — separate from any header fields. The `giaddr` field has nothing to do with DNS configuration.
+
+---
+
+## Question 19
+
+A client sends a DHCP Request broadcast after receiving offers from two DHCP servers. Server A offered 172.16.5.50 and Server B offered 172.16.5.51. The client selects Server A's offer. What happens to Server B's offered address?
+
+- A) Server B's address 172.16.5.51 remains permanently reserved and is never reused
+- B) Server B sees the broadcast Request and recognizes the client selected Server A; Server B returns 172.16.5.51 to its available pool
+- C) Server B sends a DHCP NAK to the client to prevent it from using Server A's address
+- D) Server B immediately offers 172.16.5.51 to the next client without waiting for the first client to respond
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A is incorrect: DHCP servers do not permanently reserve offered addresses. An offer is tentative — the address is held briefly while awaiting the Request. If the server sees the broadcast Request selecting a different server, the tentative hold is released.
+- B is correct: The DHCP Request is broadcast so all DHCP servers on the segment receive it. The Request includes the Server Identifier option specifying which server was chosen (Server A's IP). Server B sees this and understands its offer was declined. Server B releases 172.16.5.51 back to its available pool for future offers to other clients.
+- C is incorrect: A DHCP NAK is sent when a server wants to reject a client's request for a specific address — typically when the client is requesting an address that doesn't belong to the server's scope or that is already in use. Server B would not NAK a valid transaction between the client and Server A.
+- D is incorrect: DHCP servers do not re-offer addresses that are tentatively held for a pending transaction until the offer times out or the server receives confirmation the offer was declined.
+
+---
+
+## Question 20
+
+An engineer needs to verify that DHCP snooping is actively filtering DHCP traffic on a Cisco Catalyst switch. Which command output would confirm that an untrusted port has dropped a DHCP server message?
+
+- A) `show ip dhcp binding`
+- B) `show ip dhcp snooping statistics`
+- C) `show ip dhcp snooping`
+- D) `show interfaces status`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A is incorrect: `show ip dhcp binding` on a switch (when configured as a relay or with DHCP snooping) shows the snooping binding table — a list of known client MAC/IP/VLAN/port associations. It does not show drop counters.
+- B is correct: `show ip dhcp snooping statistics` displays counters for DHCP messages processed by the snooping feature, including messages forwarded and messages dropped. The "Messages Dropped" counter increments when a DHCP server message (Offer or ACK) arrives on an untrusted port, confirming that snooping is actively filtering rogue DHCP traffic.
+- C is incorrect: `show ip dhcp snooping` displays the current snooping configuration — which VLANs have snooping enabled, the option 82 setting, and per-interface trust state. It does not show packet counters or drop statistics.
+- D is incorrect: `show interfaces status` shows physical interface state (connected, notconnect, speed, duplex, VLAN assignment). It has no relationship to DHCP snooping filtering activity.

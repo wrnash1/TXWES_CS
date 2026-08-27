@@ -582,3 +582,16 @@ error "Failed to connect"
 9. How would you run a script in debug trace mode without modifying the script file?
 
 10. What does `$?` contain, and when should you check it?
+
+---
+
+## 9. Supplemental Resources
+
+**1. [Bash Scripting Guide — The Linux Documentation Project](https://tldp.org/LDP/abs/html/index.html)**
+The Advanced Bash-Scripting Guide (ABS) is one of the most comprehensive free references for bash scripting available. Covers all topics in this module in depth: variable types, quoting rules, arithmetic expansion, loops, functions, I/O redirection, process substitution, and trap. Particularly useful chapters include "Special Characters," "Tests," and "Here Documents." Essential bookmark for anyone working through the lab exercises.
+
+**2. [ShellCheck — Shell Script Static Analysis Tool](https://www.shellcheck.net/)**
+ShellCheck is an online and command-line linter for shell scripts that identifies common mistakes: unquoted variables, improper `[ ]` vs `[[ ]]` usage, unsafe glob expansion, portability issues, and more. Every script written in this module's lab should be run through ShellCheck before submission. The companion GitHub repository at `github.com/koalaman/shellcheck` includes the full list of checks with explanations, making it an excellent learning resource alongside the linter.
+
+**3. [Google Shell Style Guide](https://google.github.io/styleguide/shellguide.html)**
+Google's internal shell scripting style guide, published publicly. Provides opinionated but well-reasoned guidance on when to use bash vs other tools, function naming conventions, variable quoting, error handling patterns, and script structure. The section on "When to use Shell" is particularly relevant for understanding the limits of shell scripting. Following a consistent style guide is a key professional skill assessed in the CompTIA Linux+ exam objectives for scripting.

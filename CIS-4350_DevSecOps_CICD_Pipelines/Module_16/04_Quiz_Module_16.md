@@ -199,3 +199,197 @@ Distractor Analysis:
 - Why A is incorrect: SAST and SCA gate enforcement are Secure Build practices under the Implementation function. DAST operates on a running application, not on source code or build artifacts — it belongs to the Verification function, not Implementation.
 - Why C is incorrect: Incident Management is an Operations function practice that covers how the organization responds to confirmed security incidents. DAST findings are pre-production test results; they inform remediation before deployment, not incident response after exploitation.
 - Why D is incorrect: Threat Assessment is a Design function practice that covers threat modeling at the design phase. DAST findings can inform future threat model updates, but integrating DAST into the pipeline is a Verification: Security Testing maturity advancement, not a Design function activity.
+
+---
+
+### Question 11
+
+A pipeline has SAST, SCA, and container scanning all passing. A new dependency is added to `requirements.txt`. The SCA gate passes because the dependency has no known CVEs at the time of the commit. Six weeks later, a CVE is published for that dependency. Which control is designed to catch this post-commit vulnerability disclosure?
+
+- A) The SAST gate — SAST re-analyzes dependencies continuously as CVE databases are updated
+- B) A Snyk `monitor` or OWASP Dependency-Check scheduled pipeline job that re-scans the production artifact's dependency manifest against the current CVE database on a recurring schedule
+- C) The container scan gate — Trivy re-scans images continuously after they are pushed to the registry
+- D) The pre-commit secrets hook — it would detect the new dependency's credentials if exposed
+
+Correct Answer: B — SCA gates run at CI time against the CVE database as of that moment. New CVEs published after the build are not retroactively detected by the CI gate. Continuous SCA monitoring tools (Snyk `monitor`, OWASP Dependency-Track, or a scheduled Dependency-Check job) re-evaluate the registered dependency manifest against a continuously updated CVE database and alert when new vulnerabilities are published against known-deployed versions. This is the post-deploy continuous SCA monitoring pattern.
+
+Distractor Analysis:
+
+- Why A is incorrect: SAST analyzes source code logic for code-level vulnerabilities — it does not monitor CVE databases for dependency vulnerabilities. SAST re-runs on code changes, not on CVE database updates.
+- Why C is incorrect: Trivy scans when triggered (on push, on schedule, or by the Trivy operator in-cluster). The default container scan job runs at build time. The Trivy operator in Kubernetes provides continuous in-cluster scanning, but this is an additional deployment, not the default CI gate behavior.
+- Why D is incorrect: Pre-commit secrets hooks scan for credential patterns in files. They do not analyze dependency CVE status and have no connection to CVE database updates.
+
+---
+
+### Question 12
+
+An organization's pipeline requires that all HIGH and CRITICAL container findings are remediated before deployment. A developer argues that the base image `python:3.11-slim` has 14 HIGH findings that have no available fix versions, and the pipeline should not block on unfixable findings. Which CLI flag resolves this specific issue without permanently lowering the security bar?
+
+- A) `--severity LOW,MEDIUM` — lower the threshold so HIGH findings no longer block the pipeline
+- B) `trivy image --ignore-unfixed --severity HIGH,CRITICAL python:3.11-slim` — filter out CVEs without a fixed version, so the gate only fails on findings that the team can actually remediate
+- C) `trivy image --skip-files /usr/lib/python3.11 python:3.11-slim` — skip scanning the Python library directory to avoid false positives
+- D) Add all 14 CVE IDs to `.trivyignore` without expiry dates to permanently suppress them
+
+Correct Answer: B — `--ignore-unfixed` is the correct tool for this scenario. It filters the output to findings that have a patched version available, making the gate actionable. The HIGH/CRITICAL severity threshold is preserved — the gate still blocks on HIGH and CRITICAL findings that have fixes. This is the standard pattern for reducing base image noise without permanently accepting unfixed CVEs.
+
+Distractor Analysis:
+
+- Why A is incorrect: Lowering the severity threshold to LOW/MEDIUM would allow all HIGH and CRITICAL findings through — a permanent, broad security regression. The problem is specifically about unfixable findings, not about the severity level.
+- Why C is incorrect: `--skip-files` skips scanning specific paths regardless of whether findings have fixes. It would hide both fixable and unfixable findings in the Python library directory, including future fixable CVEs.
+- Why D is incorrect: `.trivyignore` without expiry dates permanently suppresses specific CVEs. When a fix becomes available for one of those 14 CVEs, the suppression would continue hiding the now-fixable finding. The `--ignore-unfixed` flag dynamically includes a CVE in the output as soon as a fix version is published.
+
+---
+
+### Question 13
+
+A GitHub Actions workflow uses `actions/checkout@v4` without `fetch-depth: 0`. The pipeline runs `gitleaks detect --source .` for secrets scanning. A developer committed an AWS access key in commit `abc123f` six months ago and removed it in commit `def456a` two commits later. The current HEAD commit contains no secrets. Does the pipeline detect the historical secret?
+
+- A) Yes — Gitleaks scans the working directory and would find the deleted file's content in the `.git` object store
+- B) No — `actions/checkout@v4` without `fetch-depth: 0` performs a shallow clone with depth 1 (current HEAD only); the historical commit `abc123f` is not present in the shallow clone, so Gitleaks cannot scan it
+- C) Yes — GitHub's built-in push protection would have blocked the original commit, so the secret was never actually stored in the repository history
+- D) No — Gitleaks only scans staged changes, not committed history; `gitleaks protect` would have caught it at commit time
+
+Correct Answer: B — Without `fetch-depth: 0`, GitHub Actions `actions/checkout@v4` defaults to a shallow clone containing only the HEAD commit (or a limited recent history). The historical commit containing the secret is not present in the shallow clone's `.git` directory, so Gitleaks cannot find it. This is the critical `fetch-depth: 0` requirement for historical secrets scanning.
+
+Distractor Analysis:
+
+- Why A is incorrect: Gitleaks scans the Git history available in the `.git` directory, not a separate object store. A shallow clone's `.git` directory does not contain the full commit history — only the commits included in the shallow clone depth.
+- Why C is incorrect: GitHub push protection (when enabled) blocks pushes of known secret patterns, but it was not enabled in all repositories by default for the timeframe described. Even with push protection enabled, it does not guarantee all secrets are blocked — only known patterns. Historical secrets in existing repositories are a separate concern from push protection.
+- Why D is incorrect: `gitleaks detect` scans repository history; `gitleaks protect` scans staged changes. The scenario uses `detect` mode — the issue is shallow clone depth preventing history access, not Gitleaks' mode.
+
+---
+
+### Question 14
+
+A Kubernetes cluster uses the `restricted` PodSecurity profile in `enforce` mode on the `production` namespace. A deployment manifest includes `securityContext.runAsNonRoot: true` and `securityContext.allowPrivilegeEscalation: false` but omits `capabilities.drop: [ALL]`. What is the admission outcome?
+
+- A) The pod is admitted — `runAsNonRoot` and `allowPrivilegeEscalation: false` satisfy the `restricted` profile requirements
+- B) The pod is rejected — the `restricted` profile requires all three: `runAsNonRoot: true`, `allowPrivilegeEscalation: false`, AND `capabilities.drop: [ALL]`; an incomplete Security Context fails admission
+- C) The pod is admitted with a warning — missing `capabilities.drop` generates a warning but does not block admission in `enforce` mode
+- D) The pod is admitted — capability drops are only required in the `baseline` profile, not `restricted`
+
+Correct Answer: B — The Kubernetes Pod Security Standards `restricted` profile has a defined set of requirements that all must be satisfied. The required Security Context fields include: `runAsNonRoot: true`, `allowPrivilegeEscalation: false`, `seccompProfile.type: RuntimeDefault` (or Localhost), AND `capabilities.drop: [ALL]` with only a specific allowlist of capabilities permitted. An incomplete Security Context that omits any required field fails the `restricted` profile check in `enforce` mode.
+
+Distractor Analysis:
+
+- Why A is incorrect: Satisfying some but not all `restricted` profile requirements is not sufficient. The profile is a complete specification — all conditions must be met. Two out of four required fields is a failing configuration.
+- Why C is incorrect: In `enforce` mode, violations result in rejection, not warnings. Warnings are the behavior of `warn` mode. `enforce` mode rejects the admission request.
+- Why D is incorrect: `capabilities.drop: [ALL]` is a requirement of the `restricted` profile specifically. The `baseline` profile prohibits certain capabilities (like `SYS_ADMIN`) but does not require dropping all capabilities. `restricted` is the more stringent profile that requires dropping all capabilities.
+
+---
+
+### Question 15
+
+A security engineer reviews a Checkov scan result that shows `FAILED for resource: aws_s3_bucket.data [CKV_AWS_18]`. The Terraform file shows the bucket has versioning enabled, server-side encryption enabled, and public access blocked. Why is the check still failing?
+
+- A) Checkov CKV_AWS_18 checks for S3 server-side encryption — the scan result contradicts the description
+- B) Checkov CKV_AWS_18 checks for S3 access logging — a separate configuration block enabling access logging is required even though versioning, encryption, and public access are correctly configured
+- C) Checkov CKV_AWS_18 checks for S3 bucket versioning — the versioning configuration has a syntax error
+- D) Checkov cannot evaluate S3 resources that have encryption enabled — the finding is a known false positive
+
+Correct Answer: B — CKV_AWS_18 specifically checks that S3 bucket access logging is enabled (the `logging` block in the Terraform `aws_s3_bucket` resource). Versioning, encryption, and public access block are separate controls with their own check IDs. Multiple S3 security checks can fail independently: CKV_AWS_18 (access logging), CKV_AWS_19 (encryption), CKV_AWS_20 (public ACL), CKV_AWS_57 (public policy). A bucket can pass some checks and fail others.
+
+Distractor Analysis:
+
+- Why A is incorrect: CKV_AWS_18 is the access logging check, not the encryption check. CKV_AWS_19 covers server-side encryption. The scenario states encryption is enabled — CKV_AWS_19 would pass. CKV_AWS_18 failing independently of encryption status is consistent.
+- Why C is incorrect: Versioning is covered by a different Checkov check ID. CKV_AWS_18 is access logging specifically. Versioning configuration syntax errors would also produce a different failure mode.
+- Why D is incorrect: Checkov evaluates S3 resources regardless of their encryption status. Each check tests a specific attribute independently. Encryption being enabled does not cause false positives for unrelated checks.
+
+---
+
+### Question 16
+
+In a GitHub Actions pipeline, a `secrets-scan` job uses `gitleaks/gitleaks-action@v2`. The job is defined with `if: github.event_name == 'push'`. A developer opens a PR from a feature branch. Does the secrets scan run?
+
+- A) Yes — pull request events are included in `push` events in GitHub Actions
+- B) No — `github.event_name == 'push'` only evaluates to true for direct push events (`git push`), not for pull request creation events (`pull_request`). The secrets scan is not triggered by a PR.
+- C) Yes — the Gitleaks action overrides the `if` condition and always runs on all events
+- D) No — the job requires `fetch-depth: 0` to run; without it, the `if` condition always evaluates to false
+
+Correct Answer: B — In GitHub Actions, `github.event_name` is set to the name of the event that triggered the workflow. A `git push` sets `event_name` to `push`. Opening a pull request sets `event_name` to `pull_request`. These are distinct event types. The `if: github.event_name == 'push'` condition is false for pull request events, so the job is skipped. To also scan on PRs, the condition should be `if: github.event_name == 'push' || github.event_name == 'pull_request'`.
+
+Distractor Analysis:
+
+- Why A is incorrect: `push` and `pull_request` are distinct event types in GitHub Actions. A pull request creation does not trigger `push` event handlers. The trigger must explicitly include `pull_request` in the workflow's `on:` clause or the `if` condition.
+- Why C is incorrect: GitHub Actions step and job conditions (`if:`) are evaluated by the GitHub Actions runner before executing any action. An action's internal logic cannot override a job-level `if` condition — if the condition is false, the job does not execute at all.
+- Why D is incorrect: `fetch-depth: 0` controls whether the checkout step clones full Git history. It is a parameter of `actions/checkout@v4`, not a prerequisite for evaluating `if` conditions. These are unrelated mechanisms.
+
+---
+
+### Question 17
+
+A team is building a complete DevSecOps pipeline and has enabled all of the following gates: Gitleaks secrets scan, Semgrep SAST, OWASP Dependency-Check SCA, Trivy container scan, and Checkov IaC scan. Which security domain is NOT covered by any of these five tools?
+
+- A) Hardcoded credentials in source code
+- B) Known CVEs in application dependencies
+- C) Runtime behavioral anomalies in a running production container
+- D) Misconfigured Terraform S3 bucket policies
+
+Correct Answer: C — Runtime behavioral anomaly detection requires a tool that observes the running system — container process activity, syscalls, network connections, and file access patterns at runtime. None of the five CI pipeline tools (secrets scan, SAST, SCA, container scan, IaC scan) observe runtime behavior. This is the gap that Falco fills: it runs as a DaemonSet in Kubernetes and detects suspicious runtime behavior using syscall-level rules.
+
+Distractor Analysis:
+
+- Why A is incorrect: Hardcoded credentials in source code are detected by secrets scanning tools (Gitleaks). This domain is covered.
+- Why B is incorrect: Known CVEs in application dependencies are detected by SCA tools (OWASP Dependency-Check, Snyk). This domain is covered.
+- Why D is incorrect: Misconfigured Terraform resources are detected by IaC scanning tools (Checkov, tfsec). S3 bucket policy misconfigurations are specifically covered by Checkov CKV_AWS checks. This domain is covered.
+
+---
+
+### Question 18
+
+A team wants to enforce that GitHub Actions workflows in their organization never use `pull_request_target` with a `checkout` step that checks out code from the PR head ref. Which risk does this combination create, and which control enforces the restriction?
+
+- A) It creates a Denial of Service risk; enforce with a `--timeout` flag on all workflow jobs
+- B) It creates a supply chain injection risk: `pull_request_target` runs with repository write permissions and access to secrets; if it checks out PR head code (from a fork), an attacker can submit a PR with a malicious `run:` step that exfiltrates secrets. A CODEOWNERS rule on `.github/workflows/` requiring security review of workflow changes enforces the restriction
+- C) It creates an infinite loop risk when the workflow modifies the repository; enforce with `concurrency: cancel-in-progress: true`
+- D) It creates a branch protection bypass; enforce by requiring status checks from all workflow jobs before merge
+
+Correct Answer: B — `pull_request_target` runs in the context of the target branch (with full write permissions and access to secrets), but if the workflow also checks out code from the PR head ref (the contributor's fork), an attacker can craft a malicious workflow step in their fork that runs with the target branch's elevated permissions — a classic CI/CD injection attack. CODEOWNERS review of workflow files is the primary preventive control, ensuring that any change to `pull_request_target` workflows is reviewed by a security engineer.
+
+Distractor Analysis:
+
+- Why A is incorrect: The risk is secret exfiltration and supply chain injection, not DoS. Timeout flags address runaway processes, not credential theft.
+- Why C is incorrect: `concurrency` settings control whether multiple workflow runs execute simultaneously. They have no connection to the security risk of running untrusted code with elevated permissions.
+- Why D is incorrect: Branch protection status checks ensure that required CI jobs pass before merge. They do not prevent a malicious PR from running elevated-permission steps in a `pull_request_target` workflow before the merge decision.
+
+---
+
+### Question 19
+
+A full DSOE exam preparation scenario: A team has the following security posture — Gitleaks pre-commit, Semgrep SAST on PR, Snyk SCA on PR, Trivy container scan at build, Cosign signing at push, Checkov IaC on PR, OWASP ZAP DAST at staging, OPA Gatekeeper on production cluster, Falco DaemonSet. An attacker compromises an engineer's workstation and modifies a legitimate application library in the engineer's local `node_modules/` folder before the build step runs, injecting malicious code that exfiltrates environment variables at runtime. Which control gap does this attack exploit?
+
+- A) There is no gap — Semgrep SAST would detect the injected code in the library file before build
+- B) The attack exploits the gap between local build environments and the CI build environment: CI should build from a clean dependency install (`npm ci` from `package-lock.json`) rather than using developer-supplied artifacts; additionally, Cosign signs the final built image but cannot detect code injected into a local `node_modules/` cache before CI fetch
+- C) Falco would detect the environment variable exfiltration at runtime and prevent data loss
+- D) Snyk SCA would detect the modification because it scans installed packages against known-good signatures
+
+Correct Answer: B — This is a CI build environment integrity threat. If the CI pipeline uses developer-supplied artifacts (a locally modified `node_modules/`) rather than building from a clean fetch, malicious modifications to local dependencies bypass all pre-commit and PR scanning controls. The mitigation is build integrity: the CI pipeline should always run `npm ci` (or `pip install -r requirements.txt`) from the lockfile — downloading dependencies fresh from the registry, not copying from a developer's local environment. This ensures CI scans the same artifacts that will be in the final image.
+
+Distractor Analysis:
+
+- Why A is incorrect: Semgrep SAST scans the application's source code in the repository, not installed `node_modules/` files. Injected library code in `node_modules/` is not in the repository and is not scanned by SAST unless the `node_modules/` directory is committed (an anti-pattern).
+- Why C is incorrect: Falco detects runtime anomalies — it might detect suspicious outbound connections or unusual process behavior, but it would not prevent the initial data exfiltration if the malicious code disguises its behavior. Falco is a detective, not a preventive control for this attack.
+- Why D is incorrect: Snyk SCA scans declared dependencies in `package.json`/`package-lock.json` against the CVE database. It does not verify the integrity of installed package files against their expected content. A locally modified `node_modules/` package would not be flagged by CVE-based SCA.
+
+---
+
+### Question 20
+
+A DSOE candidate must design a DevSecOps pipeline for a healthcare application that processes Protected Health Information (PHI). The pipeline must satisfy HIPAA Technical Safeguard requirements for access controls and audit logging. Which combination of pipeline and runtime controls maps most directly to HIPAA Technical Safeguard requirements?
+
+- A) Run OWASP Dependency-Check and ship the SCA report to the auditors annually
+- B) Configure SAST with HIPAA-specific rules; deploy OPA Gatekeeper policies enforcing `runAsNonRoot` and `readOnlyRootFilesystem` (access control safeguards); configure Kubernetes audit logging to an immutable log store and enable Falco runtime alerts for anomalous data access (audit logging safeguards); encrypt all data at rest (storage encryption KMS) and in transit (TLS 1.2+); gate deployment on all CRITICAL findings resolved
+- C) Deploy a Web Application Firewall in front of the application and configure rate limiting
+- D) Conduct an annual third-party penetration test and obtain HIPAA BAA agreements from all cloud providers
+
+Correct Answer: B — HIPAA Technical Safeguards require: access controls (who can access PHI — `runAsNonRoot`, RBAC, least-privilege service accounts, network policies), audit controls (records of access — Kubernetes audit log, Falco alerts, immutable log storage), integrity controls (PHI is not altered improperly — read-only filesystems, signed artifacts), and transmission security (PHI in transit is protected — TLS 1.2+). The combination described maps each Technical Safeguard category to a specific pipeline or runtime control.
+
+Distractor Analysis:
+
+- Why A is incorrect: SCA reports provide dependency vulnerability status but do not address HIPAA Technical Safeguard categories of access control, audit logging, integrity, or transmission security. Annual reporting is a compliance documentation activity, not a safeguard implementation.
+- Why C is incorrect: WAF and rate limiting address network-layer availability and some injection risks. They are useful perimeter controls but do not address HIPAA's access control requirements (who is authorized to access PHI within the system) or audit logging requirements.
+- Why D is incorrect: Annual penetration testing and BAA agreements are administrative and legal controls. HIPAA Technical Safeguards require implemented technical controls — encryption, access enforcement, audit trails — not just agreements with vendors or point-in-time assessments.
+
+---
+
+Quiz — Module 16 | CIS-4350 | Texas Wesleyan University | Professor Nash

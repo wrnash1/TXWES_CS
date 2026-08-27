@@ -240,3 +240,29 @@ Plenum-rated cable is required by fire code in air-handling spaces (the space ab
 - Professor Messer's CompTIA A+ Core 1 (220-1101) Study Notes — Network Cabling and Connector sections: professormesser.com
 - CompTIA A+ Certification Exam Objectives (220-1101) — available at comptia.org
 - TIA/EIA-568 Structured Cabling Standard — available through your institution's library
+
+---
+
+## 9. Supplemental Resources
+
+The following free resources supplement Module 11 content on network cabling, connectors, and switching hardware.
+
+1. **Professor Messer — CompTIA A+ Core 1 (220-1101) Network Cables and Connectors**
+   URL: [https://www.professormesser.com/free-a-plus-training/220-1101/220-1101-video/](https://www.professormesser.com/free-a-plus-training/220-1101/220-1101-video/)
+   Relevance: Free video lectures covering copper cable categories (Cat5 through Cat8), fiber optic types (single-mode vs. multimode), T568A/T568B wiring standards, and network connector identification — all primary exam objectives for Domain 2.1 and 2.2.
+
+1. **Fluke Networks — Cable Testing Learning Center**
+   URL: [https://www.flukenetworks.com/learning-center](https://www.flukenetworks.com/learning-center)
+   Relevance: Free educational articles from the leading manufacturer of professional cable testers. Covers wire map testing, pair skew, attenuation, NEXT (near-end crosstalk), and how to interpret cable test results — directly supporting the cable troubleshooting skills tested in Lab 11 and on the A+ exam.
+
+1. **Cisco Networking Academy — Introduction to Networks (Free Preview Chapters)**
+   URL: [https://www.netacad.com/courses/networking/ccna-introduction-networks](https://www.netacad.com/courses/networking/ccna-introduction-networks)
+   Relevance: Cisco's free Introduction to Networks course covers Ethernet standards, copper and fiber cabling, switches, and the OSI model at a level that directly reinforces A+ Core 1 Domain 2 networking objectives. The interactive cable and connector identification activities are particularly useful for exam preparation.
+
+1. **The Fiber Optic Association (FOA) — Free Online Reference Guide**
+   URL: [https://www.thefoa.org/tech/ref/index.html](https://www.thefoa.org/tech/ref/index.html)
+   Relevance: The FOA publishes a free comprehensive reference covering fiber optic cable types (single-mode, multimode OM1–OM5), connector types (ST, SC, LC, MTP), installation standards, and testing procedures. Authoritative and free; directly supports the fiber connector identification content in Module 11.
+
+1. **IEEE 802.3 Standard Summary — Ethernet Working Group**
+   URL: [https://www.ieee802.org/3/](https://www.ieee802.org/3/)
+   Relevance: The official IEEE 802.3 working group page provides free access to standard summaries and amendment descriptions for all Ethernet variants (1000BASE-T, 10GBASE-T, PoE/802.3af/at/bt). Understanding which amendment introduced which standard clarifies the A+ exam questions about cable category requirements for specific Ethernet speeds.

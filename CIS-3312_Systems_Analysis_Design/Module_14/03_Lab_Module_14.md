@@ -187,4 +187,54 @@ Before submitting, confirm your document includes:
 
 ---
 
+---
+
+## Part 9 — Challenge Exercise
+
+This section is optional and not separately graded. It extends the lab into advanced
+testing and quality assurance practice aligned with ECBA exam competencies.
+
+### Challenge Step 1: Full Test Suite Coverage Analysis
+
+Extend your RTM from Part 1 to include all remaining requirements that currently lack
+test cases. For each of the five requirements without coverage (FR-001, FR-002, FR-006,
+FR-007, and NFR-002), write one complete test case using the same format as Part 2.
+Then produce a coverage summary table showing: total requirements, total test cases,
+average test cases per requirement, requirements with only one test case (single-point
+coverage risk), and requirements with negative or boundary test cases. Write a one-
+paragraph coverage assessment explaining whether the test suite is adequate for a
+financial services application subject to regulatory oversight, and identify any
+requirement that you believe needs additional test cases beyond what you have written.
+
+### Challenge Step 2: Defect Root Cause Analysis
+
+For each of the five defects in Part 4, write a root cause analysis using the 5 Whys
+technique. Starting with the defect symptom, ask "Why?" five times to trace the defect
+back to its root cause in the requirements, design, development, or testing process.
+Then classify each root cause into one of four categories: Requirements Gap (the
+requirement was missing or ambiguous), Design Defect (the requirement was present but
+the design did not implement it correctly), Development Error (the design was correct
+but the code was wrong), or Testing Gap (the defect existed earlier but was not caught
+by prior testing phases). After completing all five analyses, write a one-paragraph
+lessons-learned statement identifying the most common root cause category across the
+five defects and recommending one process improvement the Frontier Financial Services
+project team should implement before the next system release.
+
+### Challenge Step 3: Regulated Environment RTM Extension
+
+The Frontier Financial Services loan application system is subject to the Consumer
+Financial Protection Bureau's (CFPB) fair lending regulations, which require that
+automated credit decisions be auditable and non-discriminatory. Extend the RTM with
+three new compliance requirements of your own design that address: (1) auditability of
+automated credit decisions, (2) equal treatment of applicants regardless of protected
+characteristics, and (3) retention of application data for regulatory examination.
+For each new requirement, write a complete test case that a compliance auditor could
+execute. Then write a one-paragraph explanation of how the RTM functions as a compliance
+artifact in regulated industries — specifically, what an auditor would look for in the
+RTM and why an incomplete or stale RTM creates organizational risk beyond the project
+itself. Reference the FDA regulated software environment context from Section 2.4 of
+the reading guide as a parallel example.
+
+---
+
 *Module 14 Lab | CIS-3312 Systems Analysis and Design | Texas Wesleyan University*

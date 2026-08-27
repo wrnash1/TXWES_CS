@@ -245,3 +245,193 @@ D. Management group hierarchy
 ---
 
 *Texas Wesleyan University — CIS-4331 Azure Cloud Computing — Module 14 Quiz*
+
+---
+
+### Question 11 (5 points)
+
+A company is evaluating whether to migrate their on-premises data center to Azure. They want to see a financial comparison showing the total cost of ownership for their current on-premises environment versus the projected Azure cost over three years. Which Azure tool is designed specifically for this analysis?
+
+- A) Azure Pricing Calculator
+- B) Azure Cost Management + Billing
+- C) Azure TCO Calculator
+- D) Azure Advisor Cost recommendations
+
+- **Correct Answer:** C
+
+- **Distractor Analysis:**
+  - *Why C is correct:* The Azure Total Cost of Ownership (TCO) Calculator is specifically designed to compare the cost of running workloads on-premises versus on Azure over a multi-year period. It accepts inputs for on-premises servers, storage, networking, and labor costs, then generates a report showing the estimated savings from migrating to Azure. The three-year comparison view is a core output of the TCO Calculator.
+  - *Why A is incorrect:* The Azure Pricing Calculator estimates the cost of specific Azure resources and configurations. It is used to plan Azure spending, not to compare Azure costs against on-premises infrastructure. It does not accept on-premises infrastructure inputs for a comparative analysis.
+  - *Why B is incorrect:* Azure Cost Management + Billing analyzes and reports on actual Azure spending that has already occurred. It is for managing and optimizing existing Azure costs, not for pre-migration comparison with on-premises costs.
+  - *Why D is incorrect:* Azure Advisor Cost recommendations identify cost optimization opportunities within an existing Azure deployment (rightsizing VMs, identifying unused resources, recommending reservations). It requires existing Azure resources to analyze and does not perform on-premises vs. Azure comparisons.
+
+---
+
+### Question 12 (5 points)
+
+A company purchases a 3-year Reserved Instance for a D4s_v3 virtual machine in East US. After 14 months, the workload this VM supports is migrated to a containerized environment and the VM is no longer needed. What happens to the reserved instance?
+
+- A) The reservation is automatically cancelled and the company is refunded the remaining prepaid amount
+- B) The reservation discount continues to apply to any other VM of the same size and region in the subscription, or can be exchanged or refunded subject to early termination fees
+- C) The company must continue running the D4s_v3 VM until the reservation expires to avoid penalties
+- D) Azure Advisor automatically reassigns the reservation to the next most expensive VM in the subscription
+
+- **Correct Answer:** B
+
+- **Distractor Analysis:**
+  - *Why B is correct:* Azure Reserved Instances are a billing discount applied to matching compute usage — they are not tied to a specific VM instance. If the original VM is deleted, the reservation discount automatically applies to any other VM of the same SKU, region, and scope. The company can also exchange the reservation for a different size or region, or cancel it for a partial refund (subject to Microsoft's early termination policy, which allows up to $50,000 in refunds per 12-month rolling window).
+  - *Why A is incorrect:* Reservations are not automatically cancelled when the original VM is deleted. They continue as a billing discount that applies to matching usage. Cancellation is a manual action and involves early termination fees if the reservation has remaining term.
+  - *Why C is incorrect:* The company does not need to keep the original VM running. If no matching VM exists, the reservation goes unused (wasted cost), but there is no penalty for not using it beyond the opportunity cost. The correct response is to exchange it or find another use for the discount.
+  - *Why D is incorrect:* Azure Advisor does not automatically reassign reservation discounts. Advisor may recommend purchasing reservations but does not manage or reassign existing reservations. Reservation management is done through the Azure portal under Cost Management + Billing.
+
+---
+
+### Question 13 (5 points)
+
+An Azure Advisor report shows a recommendation to "Right-size or shutdown underutilized virtual machines." The report identifies a Standard_D8s_v3 VM (8 vCPUs) with an average CPU utilization of 3% over the past 30 days. What does this Advisor recommendation suggest, and under which Advisor pillar does it appear?
+
+- A) Migrate the VM to a different Azure region for better performance; Performance pillar
+- B) Downsize the VM to a smaller SKU or shut it down if unused; Cost pillar
+- C) Enable Accelerated Networking to improve CPU efficiency; Reliability pillar
+- D) Add a second VM for redundancy to prevent single points of failure; Operational Excellence pillar
+
+- **Correct Answer:** B
+
+- **Distractor Analysis:**
+  - *Why B is correct:* Azure Advisor's Cost pillar analyzes VM utilization metrics over 30 days. When a VM shows consistently low CPU utilization (the threshold is typically below 5%), Advisor recommends downsizing to a smaller VM SKU (using fewer CPUs and less memory) or shutting down the VM if it is not needed. This reduces the hourly compute cost while maintaining the capability needed for the actual workload.
+  - *Why A is incorrect:* Region migration does not address underutilization. Advisor does not recommend moving resources to different regions to improve CPU efficiency. Region recommendations (if any) appear in the Reliability or Performance pillars related to availability, not cost.
+  - *Why C is incorrect:* Accelerated Networking improves network performance, not CPU efficiency. Accelerated Networking recommendations appear in the Performance pillar. It does not address the cost concern of an underutilized VM.
+  - *Why D is incorrect:* Adding a second VM for redundancy would increase cost, not reduce it. Redundancy recommendations appear in the Reliability pillar, not the Cost pillar. Advisor's Cost recommendations focus on eliminating waste.
+
+---
+
+### Question 14 (5 points)
+
+A company sets up an Azure Budget for their production subscription with a monthly limit of $10,000. They configure three alerts: at 50% ($5,000 forecast), at 90% ($9,000 actual), and at 100% ($10,000 actual). When the 100% actual threshold is reached, the linked Action Group sends an email. What else does Azure automatically do when the budget threshold is reached?
+
+- A) Azure automatically suspends all running VMs in the subscription to prevent further charges
+- B) Azure automatically moves all storage blobs to the Archive tier to reduce costs
+- C) Nothing additional — the budget only sends the notification; it does not automatically restrict or stop resources
+- D) Azure automatically removes Contributor access from all users in the subscription until the next billing period
+
+- **Correct Answer:** C
+
+- **Distractor Analysis:**
+  - *Why C is correct:* Azure Budgets are monitoring and alerting tools, not enforcement mechanisms. When a budget threshold is reached, Azure sends the configured notification (email, webhook, Action Group). Azure does not automatically stop, restrict, or modify resources when a budget is exceeded. Additional automated responses (such as running an Azure Automation runbook to stop non-critical VMs) require the team to configure the Action Group to trigger automation — it does not happen automatically.
+  - *Why A is incorrect:* Azure does not automatically suspend VMs when a budget is reached. Budget alerts are informational. Automatically stopping VMs would disrupt production workloads and is not Azure's default behavior. The team would need to explicitly configure automation in the Action Group to perform this action.
+  - *Why B is incorrect:* Azure does not automatically move blobs to Archive tier when a budget threshold is reached. Lifecycle Management policies can move blobs based on age or access patterns, but these are separate configurations with no connection to budget thresholds.
+  - *Why D is incorrect:* Azure does not remove RBAC access when a budget is exceeded. This would be highly disruptive and is not a default behavior. Budget alerts are notifications, not access control mechanisms.
+
+---
+
+### Question 15 (5 points)
+
+A company's development team has 15 developers each with an Azure subscription for development and testing. The subscriptions use pay-as-you-go pricing. A manager learns that Azure offers a Dev/Test pricing option. What is the primary benefit and the key requirement for Dev/Test pricing?
+
+- A) Dev/Test pricing provides free Azure services with no usage limits; requires an Azure free account
+- B) Dev/Test pricing provides discounted rates on Windows VMs, SQL Database, and other services by eliminating Microsoft software license costs; requires an active Visual Studio subscription for each developer
+- C) Dev/Test pricing provides a 50% flat discount on all Azure services; requires a minimum 12-month commitment
+- D) Dev/Test pricing provides the same discount as 3-year Reserved Instances; requires an Enterprise Agreement
+
+- **Correct Answer:** B
+
+- **Distractor Analysis:**
+  - *Why B is correct:* Azure Dev/Test pricing eliminates the cost of Windows Server and SQL Server licenses bundled into Azure VM pricing (similar to Azure Hybrid Benefit). This significantly reduces VM costs for development workloads. The key requirement is that each user accessing the Dev/Test subscription must have an active Visual Studio subscription (any tier). Dev/Test subscriptions are available under Visual Studio subscriptions, MSDN, and Enterprise Agreement Dev/Test offers.
+  - *Why A is incorrect:* Dev/Test pricing is not free — it applies discounted rates. It is not available through the Azure free account. Free accounts have a separate set of free services and spending credits for 12 months.
+  - *Why C is incorrect:* Dev/Test pricing is not a flat 50% discount on all services. The discount applies specifically to software license costs (Windows, SQL Server) embedded in VM pricing, and the savings vary by VM size and OS. There is no minimum 12-month commitment requirement.
+  - *Why D is incorrect:* Dev/Test pricing is available through Visual Studio subscriptions, not only Enterprise Agreements. The savings are different from Reserved Instance pricing — they eliminate software license costs rather than providing a compute commitment discount. The two can actually be combined.
+
+---
+
+### Question 16 (5 points)
+
+An organization wants to apply Azure Hybrid Benefit to reduce the cost of their Azure Virtual Machines. Which of the following is a prerequisite for using Azure Hybrid Benefit for Windows Server VMs?
+
+- A) The VMs must be running in the East US region
+- B) The organization must have Windows Server licenses covered by Software Assurance or qualifying Windows Server subscriptions
+- C) The VMs must be a minimum of Standard_D4s_v3 size
+- D) The organization must have an active Azure Reserved Instance for each VM
+
+- **Correct Answer:** B
+
+- **Distractor Analysis:**
+  - *Why B is correct:* Azure Hybrid Benefit for Windows Server allows organizations to use their existing on-premises Windows Server licenses (covered by Software Assurance, or with qualifying Windows Server subscriptions) to run Windows Server VMs in Azure without paying the Windows Server license component of the VM price. This can reduce Windows Server VM costs by up to 40%. Software Assurance or the qualifying subscription is the core prerequisite.
+  - *Why A is incorrect:* Azure Hybrid Benefit is available in all Azure regions, not only East US. There is no regional restriction on applying Hybrid Benefit.
+  - *Why C is incorrect:* Azure Hybrid Benefit applies to any VM size that can run Windows Server. There is no minimum size requirement. The benefit can be applied to small B-series development VMs as well as large M-series production VMs.
+  - *Why D is incorrect:* Azure Hybrid Benefit and Reserved Instances are independent discounts that can be combined (stacked) for greater savings. A Reserved Instance is not required to use Hybrid Benefit; they are separate purchasing mechanisms.
+
+---
+
+### Question 17 (5 points)
+
+An organization uses Azure Cost Management to analyze spending. They notice that $8,000 of their monthly $25,000 Azure bill is categorized under an unknown cost center because resources were deployed without tags. Going forward, they want to ensure every new resource has a "CostCenter" tag. Which combination of Azure services enforces this going forward AND improves visibility into the untagged existing costs?
+
+- A) Azure Advisor (Cost pillar) to identify untagged resources; Azure Budgets to block untagged spending
+- B) Azure Policy with the "Require a tag on resources" Deny effect for new resources; Azure Cost Management tag inheritance or manual tagging for existing resources
+- C) Azure Blueprints to redeploy all existing resources with tags; Azure Monitor alerts to detect new resources without tags
+- D) Azure Security Center to flag untagged resources; resource locks to prevent modification of tagged resources
+
+- **Correct Answer:** B
+
+- **Distractor Analysis:**
+  - *Why B is correct:* Azure Policy with the "Require a tag on resources" definition using the Deny effect blocks any new resource creation without the required tag, enforcing compliance going forward. For existing untagged resources, Azure Cost Management supports tag inheritance (subscription and resource group tags can be inherited by child resources for cost reporting), and the team can manually apply tags to existing resources or use the Modify policy effect with a remediation task to add tags automatically.
+  - *Why A is incorrect:* Azure Advisor identifies optimization opportunities but does not enforce governance. Azure Budgets alert when spending thresholds are reached but cannot block individual resource deployments based on missing tags. Neither enforces tag requirements at resource creation time.
+  - *Why C is incorrect:* Azure Blueprints is deprecated and would not redeploy existing resources. Azure Monitor cannot block resource creation; it can only alert after resources are created. This combination does not enforce tag requirements at deployment time.
+  - *Why D is incorrect:* Azure Security Center (now Defender for Cloud) monitors security posture, not tag compliance. Resource locks prevent deletion or modification of resources, not their creation. Locks on tagged resources would actually prevent the team from later modifying those resources. This is the wrong combination of tools.
+
+---
+
+### Question 18 (5 points)
+
+A company has been running the same set of Azure VMs for 18 months at pay-as-you-go rates. Azure Advisor's Cost pillar shows a recommendation to purchase 1-year Reserved Instances for these VMs with an estimated savings of 38%. The team is hesitant because they worry the workload might change. What is the primary risk of purchasing Reserved Instances, and what flexibility options does Azure provide to mitigate this risk?
+
+- A) The primary risk is VM performance degradation; Azure provides performance guarantees with reservations
+- B) The primary risk is committing to pay for capacity that may go unused if workloads change; Azure provides exchange and cancellation options (subject to limits) to mitigate this
+- C) The primary risk is regional availability; Azure guarantees capacity in the selected region for reserved instances
+- D) The primary risk is losing pay-as-you-go pricing benefits; Azure provides a hybrid billing mode that applies both discounts simultaneously
+
+- **Correct Answer:** B
+
+- **Distractor Analysis:**
+  - *Why B is correct:* The core risk of a Reserved Instance is the commitment — paying for capacity whether or not it is used. If a workload is decommissioned, migrated, or significantly reduced in scale, the reservation cost continues. Azure mitigates this through: (1) reservation exchanges — swap a reservation for a different size or region; (2) reservation cancellation — return a reservation for a prorated refund up to the $50,000 annual limit; and (3) reservation scope flexibility — the discount applies to any matching VM in the scope (subscription or shared), not just the original VM.
+  - *Why A is incorrect:* Reserved Instances are a billing construct, not a compute performance tier. Reservations provide the same VM performance as pay-as-you-go instances of the same SKU. There is no performance risk or guarantee difference.
+  - *Why C is incorrect:* Reserved Instances do provide a capacity reservation benefit (ensuring capacity in the specified region), but this is a benefit, not a risk. Regional availability risk is typically mitigated by reservations, not introduced by them.
+  - *Why D is incorrect:* "Hybrid billing mode" is not an Azure concept. Pay-as-you-go and Reserved Instance discounts are mutually exclusive for the same usage — the reserved instance discount replaces the pay-as-you-go rate (not combined with it). Azure Hybrid Benefit (a different program) can be stacked on top of reservations.
+
+---
+
+### Question 19 (5 points)
+
+An organization's Azure Cost Management analysis shows that their Azure SQL Database is the largest cost item at $2,400 per month, followed by Azure Blob Storage at $800 per month and Azure Virtual Machines at $600 per month. The CFO asks whether the database cost can be reduced. Which Azure Advisor pillar and what specific recommendation type would most directly address potential SQL Database overprovisioning?
+
+- A) Security pillar — recommendation to enable Advanced Threat Protection on the SQL Database
+- B) Cost pillar — recommendation to rightsize the database to a lower service tier or DTU count based on actual utilization
+- C) Reliability pillar — recommendation to enable geo-replication for the SQL Database
+- D) Performance pillar — recommendation to add more DTUs to improve query response time
+
+- **Correct Answer:** B
+
+- **Distractor Analysis:**
+  - *Why B is correct:* Azure Advisor's Cost pillar analyzes Azure SQL Database usage metrics and compares them to the provisioned tier. If the database is consistently using only a fraction of its provisioned DTUs or vCores, Advisor recommends downgrading to a lower service tier or compute size that matches actual utilization. This is the direct cost reduction recommendation for an overprovisioned SQL Database.
+  - *Why A is incorrect:* Advanced Threat Protection is a security feature that increases cost by adding the Defender for SQL plan. The Security pillar recommends enabling security features, not reducing costs. This recommendation would increase the SQL Database bill.
+  - *Why C is incorrect:* Geo-replication adds a secondary database in another region, which doubles the SQL Database cost. This is a Reliability recommendation that increases cost for higher availability. It does not reduce the $2,400 monthly cost.
+  - *Why D is incorrect:* Adding more DTUs increases the SQL Database tier, which increases cost. Performance pillar recommendations address response time and throughput, not cost reduction. The CFO's request is for cost reduction, making the Cost pillar the correct source.
+
+---
+
+### Question 20 (5 points)
+
+A startup is building their first Azure environment and wants to estimate costs before deploying anything. They have identified specific services they need: 2 Standard_D2s_v3 VMs running Linux 24/7, 500 GB Azure SQL Database (General Purpose, 4 vCores), and 10 TB Azure Blob Storage (Hot tier) in East US. Which tool do they use to estimate the monthly cost, and what information do they need to provide to get an accurate estimate?
+
+- A) Azure TCO Calculator; they provide their current on-premises server specifications and Azure automatically calculates equivalent Azure costs
+- B) Azure Pricing Calculator; they select each service, configure the SKU, region, and usage quantities, then read the monthly estimate from the calculator output
+- C) Azure Cost Management + Billing; they enable cost forecasting which projects future spending based on current resource configurations
+- D) Azure Advisor; they run a cost analysis scan which estimates the cost of the described architecture before deployment
+
+- **Correct Answer:** B
+
+- **Distractor Analysis:**
+  - *Why B is correct:* The Azure Pricing Calculator is the tool for estimating Azure costs before any resources are deployed. The team selects each service from the catalog (VMs, SQL Database, Blob Storage), configures the specific SKU (Standard_D2s_v3, 2 instances), operating hours (730 hours/month for 24/7), region (East US), and quantities (10 TB storage, 500 GB database). The calculator produces a monthly cost estimate that can be saved, shared, and exported to Excel.
+  - *Why A is incorrect:* The TCO Calculator is for comparing on-premises vs. Azure costs. The startup is building their first Azure environment and has no on-premises infrastructure to compare against. The TCO Calculator requires on-premises server specifications as input and is not designed for estimating the cost of a specific Azure architecture from scratch.
+  - *Why C is incorrect:* Azure Cost Management + Billing requires existing Azure resources generating actual cost data before it can forecast future spending. The startup has not deployed anything yet, so Cost Management has no data to analyze or forecast from.
+  - *Why D is incorrect:* Azure Advisor requires deployed Azure resources to analyze and make recommendations. It cannot estimate costs for a hypothetical architecture that has not been deployed. Advisor makes recommendations about existing resources, not pre-deployment cost estimates.

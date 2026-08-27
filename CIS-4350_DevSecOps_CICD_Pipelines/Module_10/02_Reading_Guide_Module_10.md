@@ -161,3 +161,20 @@ The principle of least privilege in IaC mirrors RBAC least privilege.
 - [ ] Review the OWASP IaC Security Cheat Sheet at [https://cheatsheetseries.owasp.org/cheatsheets/Infrastructure_as_Code_Security_Cheat_Sheet.html](https://cheatsheetseries.owasp.org/cheatsheets/Infrastructure_as_Code_Security_Cheat_Sheet.html).
 - [ ] Complete the Module 10 lab activity.
 - [ ] Attempt all 10 quiz questions and review distractor analysis for any incorrect answers.
+
+---
+
+## 9. Supplemental Resources
+
+**1. [AWS Security Hub documentation and standards reference](https://docs.aws.amazon.com/securityhub/latest/userguide/what-is-securityhub.html)**
+Official AWS documentation covering Security Hub's supported security standards (CIS AWS Foundations, AWS Foundational Security Best Practices, PCI-DSS), finding aggregation, custom insights, and integration with GuardDuty, Inspector, and Macie.
+
+**2. [Prowler open-source AWS security tool](https://docs.prowler.com/)**
+Documentation for Prowler, the open-source CLI tool for AWS, Azure, and GCP security assessments. Covers all supported compliance frameworks (CIS, SOC 2, PCI-DSS, HIPAA), output formats (HTML, JSON, SARIF), and CI/CD integration patterns.
+
+**3. [Wiz cloud security graph — research blog and attack path examples](https://www.wiz.io/blog/announcing-wiz-research)**
+Wiz's research blog covers real-world cloud attack paths, toxic combination analysis, and case studies of how graph-based CSPM detects risks that rule-based tools miss. Provides concrete examples of the graph security model described in this module.
+
+---
+
+Reading Guide — Module 10 | CIS-4350 | Texas Wesleyan University | Professor Nash

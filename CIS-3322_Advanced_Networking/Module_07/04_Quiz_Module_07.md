@@ -204,3 +204,203 @@ Which verification command confirms that a multilayer switch has connected route
 - B is incorrect: `show ip interface brief` displays the IP address and operational state of each interface including SVIs. It confirms IP addresses and up/down states but does not show the routing table or confirm which routes are installed.
 - C is correct: `show ip route` displays the complete routing table. Connected routes (marked C) appear for each SVI subnet when `ip routing` is enabled and the SVI is up/up. This is the definitive command to verify that the switch is routing between VLANs.
 - D is incorrect: `show interfaces trunk` displays trunk port status, allowed VLANs, and native VLAN. It applies to Layer 2 trunks between switches and has no relevance to Layer 3 SVI routing confirmation.
+
+---
+
+## Question 11
+
+An SVI for VLAN 30 on a multilayer switch shows as `down/down` in `show ip interface brief`. Which condition is the most likely cause?
+
+- A) The `ip routing` command has not been entered on the switch
+- B) No switch ports are currently assigned to VLAN 30 and active (up)
+- C) VLAN 30 does not exist in the VLAN database on the switch
+- D) The SVI IP address is in the same subnet as another SVI
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- A is incorrect: If `ip routing` is missing, SVIs will still show as up/up if configured correctly — they just will not route traffic. The absence of `ip routing` does not cause an SVI to go down/down.
+- B is partially correct: An SVI with no active access ports in the VLAN will also go down/down. However, the most direct cause for a newly configured SVI being immediately down/down is the VLAN not existing in the database.
+- C is correct: For an SVI to come up, three conditions must be met: (1) VLAN must exist in the VLAN database, (2) at least one access or trunk port assigned to that VLAN must be up, and (3) the SVI must not be administratively shut down. If the VLAN does not exist in the database (`show vlan brief` does not list it), the SVI will remain down/down regardless of port configuration.
+- D is incorrect: A duplicate subnet on two SVIs would cause routing conflicts but would not put the SVIs in a down/down state. Both interfaces would come up, but routing would behave unexpectedly.
+
+---
+
+## Question 12
+
+In a router-on-a-stick configuration, which command on the physical interface is required to allow 802.1Q subinterface traffic to pass?
+
+- A) `switchport mode trunk`
+- B) `no shutdown` (the physical interface does not require any additional commands beyond enabling it)
+- C) `encapsulation dot1q native`
+- D) `ip routing`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A is incorrect: `switchport mode trunk` is a switch command. A router's physical interface does not use switchport commands — it uses subinterfaces with `encapsulation dot1q [vlan-id]`.
+- B is correct: The physical parent interface in a ROAS configuration requires only `no shutdown` to be active. It does not require an IP address. The IP addresses are assigned to the subinterfaces. The only requirement is that the physical interface is up (not administratively shut down).
+- C is incorrect: `encapsulation dot1q native` is applied to a subinterface, not the physical parent interface. It configures a specific subinterface to handle the native VLAN (untagged traffic).
+- D is incorrect: `ip routing` is required on a multilayer switch to enable routing between SVIs. On a router, routing is always active by default. `ip routing` is not a router command in the context of enabling the routing engine.
+
+---
+
+## Question 13
+
+A PC in VLAN 10 (192.168.10.0/24) sends a packet to a PC in VLAN 20 (192.168.20.0/24) via a multilayer switch with SVIs. Describe the correct path the packet takes.
+
+- A) PC in VLAN 10 → VLAN 10 SVI (receives packet) → IP routing table lookup → VLAN 20 SVI (sends packet) → PC in VLAN 20
+- B) PC in VLAN 10 → trunk uplink → router subinterface → trunk downlink → PC in VLAN 20
+- C) PC in VLAN 10 → VLAN 10 SVI → dedicated inter-VLAN routing module → VLAN 20 SVI → PC in VLAN 20
+- D) PC in VLAN 10 → VLAN 10 SVI → default gateway of VLAN 10 router → VLAN 20 default gateway → PC in VLAN 20
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- A is correct: In SVI-based inter-VLAN routing, the packet from PC in VLAN 10 is received by the VLAN 10 SVI (acting as the default gateway). The multilayer switch performs a routing table lookup and determines the destination is in 192.168.20.0/24, which is directly connected via the VLAN 20 SVI. The packet exits through the VLAN 20 SVI and is forwarded to the destination PC.
+- B is incorrect: This describes router-on-a-stick (ROAS), not SVI-based routing. ROAS uses a trunk uplink to a router with subinterfaces. SVI routing occurs entirely within the multilayer switch hardware.
+- C is incorrect: There is no separate "inter-VLAN routing module" in Cisco IOS. Routing between SVIs occurs using the switch's Layer 3 hardware forwarding engine, not a separate module. The description in option A accurately represents the process.
+- D is incorrect: There is not a separate VLAN 10 router and VLAN 20 router in an SVI design. A single multilayer switch acts as the default gateway for both VLANs simultaneously through its two SVIs.
+
+---
+
+## Question 14
+
+A multilayer switch has `ip routing` enabled and SVIs for VLAN 10 and VLAN 20. A host in VLAN 10 can ping the VLAN 10 SVI but cannot ping any host in VLAN 20. `show ip route` shows connected routes for both VLANs. What is the most likely cause?
+
+- A) The host in VLAN 10 has the wrong default gateway configured
+- B) The VLAN 20 SVI is administratively shut down
+- C) `ip routing` needs to be re-entered to refresh the routing table
+- D) The hosts in VLAN 20 do not have the multilayer switch SVI as their default gateway
+
+**Correct Answer:** D
+
+**Distractor Analysis:**
+
+- A is incorrect: The host can ping the VLAN 10 SVI, which means the default gateway is reachable and correctly configured for VLAN 10. The problem is at the VLAN 20 end, not the VLAN 10 source.
+- B is incorrect: If the VLAN 20 SVI were down, it would not appear in the routing table as a connected route. The question states both connected routes are present in `show ip route`.
+- C is incorrect: Re-entering `ip routing` does not refresh the routing table. The routing table is correct — routes for both VLANs are present. The issue is not with the routing configuration on the switch.
+- D is correct: If the hosts in VLAN 20 have the wrong default gateway (e.g., pointing to a different address or not configured), they will receive the ICMP packet from the VLAN 10 host (routed correctly by the switch) but will not know how to send the reply back. The symptom of one-way communication (VLAN 10 host can initiate but no reply) strongly indicates a missing or incorrect default gateway on the VLAN 20 hosts.
+
+---
+
+## Question 15
+
+What happens to traffic destined for an external network (outside the switch's directly connected subnets) when inter-VLAN routing is configured on a multilayer switch but no default route is configured?
+
+- A) Traffic is forwarded using OSPF routes learned from the upstream router
+- B) Traffic is dropped with an "ICMP unreachable" message because no route exists in the routing table for the destination
+- C) Traffic is forwarded out the lowest-numbered interface by default
+- D) Traffic is forwarded to VLAN 1 as the default management VLAN
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A is incorrect: If OSPF is not configured, no OSPF routes exist. Routes are not automatically learned from neighboring routers without a routing protocol or static route.
+- B is correct: If no route exists for the destination (and no default route is configured), the switch drops the packet and may send an ICMP Destination Unreachable message back to the source. This is standard IPv4 routing behavior — traffic to unknown destinations cannot be forwarded.
+- C is incorrect: Cisco IOS does not use a "lowest interface" fallback for unknown destinations. Traffic with no matching route is always dropped.
+- D is incorrect: VLAN 1 has no special routing role in this context. The switch does not forward unknown destinations to VLAN 1 or any other default VLAN.
+
+---
+
+## Question 16
+
+In a ROAS configuration, a subinterface `GigabitEthernet0/0.20` is configured with `encapsulation dot1q 20` and IP address `192.168.20.1/24`. What must the switch trunk port connected to this router do for VLAN 20 traffic to reach the subinterface?
+
+- A) The switch trunk must be configured with `switchport trunk allowed vlan 20`
+- B) The switch trunk must use ISL encapsulation instead of 802.1Q for ROAS to work
+- C) The switch trunk must remove VLAN 20 from the allowed list so frames arrive untagged
+- D) No special configuration is needed on the switch trunk — ROAS automatically detects the subinterface
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- A is correct: For VLAN 20 frames to cross the trunk from the switch to the router, VLAN 20 must be in the trunk's allowed VLAN list. The `encapsulation dot1q 20` on the subinterface tells the router how to interpret arriving tagged frames, but the switch must also be configured to send VLAN 20 frames over the trunk.
+- B is incorrect: ISL is Cisco-proprietary and is legacy technology. Modern Cisco IOS uses 802.1Q (`encapsulation dot1q`) for ROAS subinterfaces, not ISL. Most modern platforms have dropped ISL support entirely.
+- C is incorrect: Removing VLAN 20 from the allowed list would prevent VLAN 20 traffic from crossing the trunk. VLAN 20 must be in the allowed list for tagged frames to reach the router.
+- D is incorrect: ROAS does not auto-detect or configure the switch trunk. The trunk configuration on the switch is completely independent of the router subinterface configuration. Both must be manually configured.
+
+---
+
+## Question 17
+
+Which inter-VLAN routing method is most appropriate for a high-density enterprise campus distribution layer with 20 VLANs and thousands of users requiring low-latency routing?
+
+- A) Router-on-a-stick (ROAS) with a single 1 Gbps uplink
+- B) SVIs on a multilayer switch using hardware ASIC-based routing
+- C) A dedicated firewall acting as the default gateway for each VLAN
+- D) A single router with 20 physical interfaces, one per VLAN
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A is incorrect: ROAS funnels all inter-VLAN traffic through a single physical link, which becomes a bottleneck at high traffic volumes. It is designed for small networks, not enterprise distribution layers with thousands of users.
+- B is correct: SVIs on a multilayer switch use dedicated ASIC hardware to route between VLANs at near-wire-speed without the latency of sending traffic to an external router. This is the standard enterprise solution for high-performance inter-VLAN routing at the Distribution layer.
+- C is incorrect: Firewalls introduce latency and are designed for security inspection, not high-throughput inter-VLAN routing. Using a firewall as the default gateway for every VLAN in a large campus is a design anti-pattern for performance reasons.
+- D is incorrect: A router with 20 physical interfaces (one per VLAN) is cost-prohibitive and impractical. Enterprise routers rarely have 20 LAN interfaces. SVIs on a multilayer switch provide the same functionality at a fraction of the cost and with better performance.
+
+---
+
+## Question 18
+
+An engineer adds VLAN 30 to a trunk between a Layer 2 switch and a multilayer switch. The multilayer switch has `ip routing` enabled. What additional step is required to enable routing for hosts in VLAN 30?
+
+- A) Create VLAN 30 in the VLAN database and configure an SVI with an IP address for VLAN 30
+- B) Add a static route pointing to the VLAN 30 subnet
+- C) Enable `ip routing` again — it must be re-entered whenever a new VLAN is added
+- D) Configure a new subinterface on the trunk port of the multilayer switch
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- A is correct: To enable routing for a new VLAN, two things must be done: (1) VLAN 30 must exist in the VLAN database (`vlan 30` in global config), and (2) an SVI must be created (`interface vlan 30`) and assigned an IP address. With `ip routing` already enabled, the new SVI subnet will automatically appear as a connected route in the routing table once the SVI is up.
+- B is incorrect: Static routes are used to reach networks that are not directly connected. VLAN 30 will be directly connected via the SVI — no static route is needed for the directly connected subnet.
+- C is incorrect: `ip routing` is a global switch function that enables Layer 3 routing on the switch. It does not need to be re-entered when new VLANs are added. It persists across VLAN additions.
+- D is incorrect: Multilayer switches with SVIs do not use subinterfaces. Subinterfaces are used on routers for ROAS. Multilayer switches use logical SVI interfaces instead.
+
+---
+
+## Question 19
+
+Why does a router-on-a-stick configuration experience degraded performance compared to SVI-based inter-VLAN routing in high-traffic environments?
+
+- A) ROAS uses a software routing table while SVIs use hardware ASIC routing
+- B) ROAS requires all inter-VLAN traffic to traverse the same physical uplink twice (once in each direction), creating a bandwidth bottleneck on that single link
+- C) ROAS cannot route more than 10 VLANs simultaneously
+- D) ROAS introduces additional TCP sequence number processing for each subinterface
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A is incorrect: Both ROAS (on a router) and SVIs (on a multilayer switch) can use hardware-based routing in their respective devices. The performance difference is primarily about link utilization, not routing table implementation.
+- B is correct: In ROAS, all inter-VLAN traffic must cross the single physical uplink between the switch and the router — once in the inbound direction (source VLAN to router) and once in the outbound direction (router back to destination VLAN). This double traversal of a single physical link creates a bottleneck. SVIs route traffic internally within the switch ASIC without using any external links.
+- C is incorrect: ROAS has no built-in limit on the number of VLANs it can route. The limit is the number of subinterfaces supported by the IOS image and router hardware, which is typically in the hundreds or thousands.
+- D is incorrect: ROAS does not process TCP sequence numbers. Routing is a Layer 3 function that forwards packets based on IP destination. TCP sequence numbers are a Layer 4 concern that routers do not modify.
+
+---
+
+## Question 20
+
+A host at 172.16.10.100/24 with default gateway 172.16.10.1 sends a packet to 172.16.20.200/24. The multilayer switch has SVI 172.16.10.1 and SVI 172.16.20.1. What source and destination MAC addresses does the packet carry when it arrives at the VLAN 20 destination host?
+
+- A) Source: host MAC of 172.16.10.100 / Destination: host MAC of 172.16.20.200
+- B) Source: MAC of SVI 172.16.10.1 / Destination: MAC of SVI 172.16.20.1
+- C) Source: MAC of SVI 172.16.20.1 / Destination: MAC of 172.16.20.200
+- D) Source: MAC of 172.16.10.100 / Destination: MAC of SVI 172.16.20.1
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- A is incorrect: When a packet crosses a router or Layer 3 switch boundary, the Layer 2 frame is re-created for the new segment. The source and destination MAC addresses are updated at each hop. The original source host MAC is not preserved across inter-VLAN routing.
+- B is incorrect: The source MAC on the outbound frame is the MAC of the exit interface (SVI 172.16.20.1), not the MAC of the incoming SVI (172.16.10.1). The destination MAC is the destination host's MAC address, not the SVI MAC.
+- C is correct: After inter-VLAN routing, the multilayer switch builds a new Layer 2 frame for the VLAN 20 segment. The source MAC is the MAC address of the VLAN 20 SVI (the exit interface, 172.16.20.1) and the destination MAC is the MAC address of 172.16.20.200 (resolved via ARP). This is standard Layer 3 routing behavior.
+- D is incorrect: Once the packet crosses from VLAN 10 to VLAN 20 via the switch, the source MAC is updated to the VLAN 20 SVI MAC, not the original host MAC. The destination MAC is the target host's MAC, which is correct here.

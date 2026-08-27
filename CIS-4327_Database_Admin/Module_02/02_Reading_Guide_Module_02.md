@@ -239,3 +239,19 @@ Tip 8: The three types of anomalies — update, insertion, and deletion — each
 ---
 
 Reference: cloud.google.com/learn
+
+---
+
+## 9. Supplemental Resources
+
+**1. Database Normalization — PostgreSQL Wiki**
+https://wiki.postgresql.org/wiki/Don%27t_Do_This
+A community-maintained guide covering common PostgreSQL schema anti-patterns, including denormalization pitfalls and constraint misuse, grounded in normalization principles.
+
+**2. Crow's Foot Notation Reference — Lucidchart Documentation**
+https://www.lucidchart.com/pages/er-diagrams
+Explains ERD symbols including Crow's Foot cardinality markers, entity types, and relationship notation with visual examples for practice.
+
+**3. Google Cloud — Choosing Between Cloud SQL and Cloud Spanner**
+https://cloud.google.com/blog/topics/developers-practitioners/choosing-between-cloud-sql-and-cloud-spanner
+Discusses schema design trade-offs when selecting between Cloud SQL and Cloud Spanner, including how normalization and interleaving factor into Google Cloud architecture decisions.

@@ -181,6 +181,22 @@ docker pull user/myapp:1.0
 
 ---
 
+## 9. Supplemental Resources
+
+**1. [Docker Engine Documentation — docs.docker.com](https://docs.docker.com/engine/)**
+https://docs.docker.com/engine/
+The official Docker Engine reference covering installation, CLI command reference, storage drivers, networking modes, and resource constraints. The CLI reference section documents every flag for `docker run`, `docker build`, `docker exec`, and `docker system` commands.
+
+**2. [Dockerfile Reference — docs.docker.com](https://docs.docker.com/reference/dockerfile/)**
+https://docs.docker.com/reference/dockerfile/
+Complete reference for all Dockerfile instructions including FROM, RUN, COPY, ADD, ENV, EXPOSE, CMD, ENTRYPOINT, WORKDIR, and USER, with detailed explanations of exec form versus shell form and layer caching behavior.
+
+**3. [Linux namespaces and cgroups — kernel.org](https://www.kernel.org/doc/html/latest/admin-guide/cgroup-v2.html)**
+https://www.kernel.org/doc/html/latest/admin-guide/cgroup-v2.html
+Kernel documentation for cgroup v2, the Linux resource control mechanism underlying Docker's `--memory`, `--cpus`, and `--blkio-weight` limits. Understanding cgroups and namespaces explains how containers achieve isolation without a hypervisor.
+
+---
+
 ### Study Checklist
 
 Before the quiz and lab, confirm you can do all of the following without looking them up:

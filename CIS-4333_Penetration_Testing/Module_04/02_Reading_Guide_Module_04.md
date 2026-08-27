@@ -55,3 +55,19 @@ In this week's hands-on lab, you will perform the following steps to apply these
 - [ ] Watch the Active Reconnaissance section of the [CompTIA PenTest+ Complete Course by freeCodeCamp](https://www.youtube.com/watch?v=3Kq1MIfC-4U).
 - [ ] Review the lab instructions and understand the purpose of each step before starting.
 - [ ] Proceed to the weekly hands-on lab activity.
+
+---
+
+## 9. Supplemental Resources
+
+**1. Nmap Official Documentation and Reference Guide**
+[https://nmap.org/book/man.html](https://nmap.org/book/man.html)
+The official Nmap reference manual documents every flag, scan type, timing template, and NSE script category. It is the authoritative source for understanding exactly what each option does — essential for PT0-002 exam preparation on the Information Gathering and Vulnerability Scanning domain.
+
+**2. TryHackMe — Nmap Room Series**
+[https://tryhackme.com/room/furthernmap](https://tryhackme.com/room/furthernmap)
+TryHackMe's Nmap rooms provide guided, hands-on practice with every major scan type against live vulnerable machines in a legal lab environment. Completing the Nmap series directly reinforces Module 04 content and builds practical command-line fluency.
+
+**3. Hack The Box Academy — Network Enumeration with Nmap**
+[https://academy.hackthebox.com/course/preview/network-enumeration-with-nmap](https://academy.hackthebox.com/course/preview/network-enumeration-with-nmap)
+HTB Academy's Nmap module covers scan types, NSE scripting, output formats, and firewall evasion techniques at a depth aligned to eJPT and OSCP preparation. The free tier includes enough content to reinforce all PT0-002 Nmap objectives covered in Module 04.

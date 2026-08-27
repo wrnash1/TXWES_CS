@@ -33,7 +33,7 @@ The root module is the entry point. Child modules are reusable components.
 
 The conventional structure for a Terraform module:
 
-```
+```text
 module-name/
   main.tf        # Resource and data source definitions
   variables.tf   # Input variable declarations
@@ -394,6 +394,22 @@ terraform get -update
 Modules are the packaging and reuse mechanism for Terraform. A good module encapsulates a set of related resources, exposes a clear interface through variables and outputs, and hides implementation details from callers.
 
 The ability to source modules from local paths, the Terraform Registry, and Git repositories enables teams to build internal module libraries and consume vetted public modules — both critical skills in production Terraform work.
+
+---
+
+## 10. Supplemental Resources
+
+**1. Terraform Modules — Language Reference**
+<https://developer.hashicorp.com/terraform/language/modules>
+The canonical documentation covering module block syntax, all supported source types (local path, registry, Git, S3, GCS, HTTP), meta-arguments (`count`, `for_each`, `depends_on`, `providers`), and the module composition patterns used throughout this module.
+
+**2. Terraform Registry — Browse Modules**
+<https://registry.terraform.io/browse/modules>
+The public Terraform Registry where you can explore verified and community modules. Use this to study real-world module interface designs — examining `variables.tf` and `outputs.tf` files in published modules is an effective way to learn module authoring best practices.
+
+**3. Terraform Module Sources Reference**
+<https://developer.hashicorp.com/terraform/language/modules/sources>
+Complete reference for all module source types including the `//` subdirectory separator in Git URLs, `?ref=` tag pinning, shorthand GitHub/Bitbucket formats, and S3/GCS archive sources. Essential reading for understanding how `terraform init` resolves and caches module code.
 
 ---
 

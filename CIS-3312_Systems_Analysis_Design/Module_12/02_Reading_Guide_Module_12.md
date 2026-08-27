@@ -348,4 +348,41 @@ Complete all readings before the lab activity.
 
 ---
 
+## Supplemental Resources
+
+The following open educational resources extend module content on database normalization
+and functional dependencies. All are freely accessible without login or purchase.
+
+1. **Database Normalization — Khan Academy Computing**
+   <https://www.khanacademy.org/computing/computer-programming/sql/relational-queries-in-sql/a/normalization>
+   Focus: Approachable introduction to normalization covering 1NF through 3NF with
+   step-by-step examples. Useful for reinforcing the decomposition process covered in
+   Sections 3–5 of this reading guide.
+
+2. **Functional Dependencies and Normal Forms — Stanford Database Course (free)**
+   <https://online.stanford.edu/courses/soe-ydatabases0005-databases-relational-databases-and-sql>
+   Focus: University-level treatment of functional dependencies, normal forms, and
+   decomposition theory. Provides the formal underpinning behind the practical BA
+   techniques described in this module.
+
+3. **Data Modeling Technique — IIBA BABOK Guide Overview**
+   <https://www.iiba.org/standards-and-resources/babok/>
+   Focus: The BABOK Guide's coverage of the Data Modeling technique under Requirements
+   Analysis and Design Definition. Reviewing the technique purpose and usage
+   considerations reinforces the ECBA exam connection made throughout this module.
+
+4. **Database Normalization Explained — Vertabelo Academy**
+   <https://vertabelo.com/blog/normalization-in-sql-1nf-2nf-3nf/>
+   Focus: Practical, diagram-rich walkthrough of 1NF, 2NF, and 3NF with business
+   scenarios similar to the hospital case study in this lab. Includes visual before/after
+   table comparisons that support the normalization decomposition tasks.
+
+5. **Denormalization: When and Why — Database Journal**
+   <https://www.databasejournal.com/ms-sql/sql-server-database-normalization/>
+   Focus: Discussion of denormalization trade-offs, data warehouse star schemas, and
+   performance justification. Supplements Section 7 of this reading guide and supports
+   the denormalization decision document in Part 5 of the lab.
+
+---
+
 *Module 12 Reading Guide | CIS-3312 Systems Analysis and Design | Texas Wesleyan University*

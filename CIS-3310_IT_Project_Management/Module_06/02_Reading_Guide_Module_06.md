@@ -191,3 +191,29 @@ Complete the following before the lab and quiz:
 - [ ] Complete the Module 06 Lab activity
 - [ ] Take the Module 06 Quiz
 - [ ] Post Module 06 Discussion initial response by Wednesday at 11:59 PM
+
+---
+
+## 9. Supplemental Resources
+
+The following free, openly licensed resources extend the concepts in this module. All links are publicly accessible — no account or purchase required.
+
+1. **Project Management Open Textbook — Chapter 8: Quality Management**
+   *BC Campus OpenEd* — [opentextbc.ca/projectmanagement — Chapter 8](https://opentextbc.ca/projectmanagement/chapter/chapter-8-project-quality-management/)
+   Covers QA vs. QC, the seven basic quality tools, and Cost of Quality with IT-sector examples.
+
+2. **ASQ — Seven Basic Quality Tools (Free Reference)**
+   *American Society for Quality* — [asq.org/quality-resources/seven-basic-quality-tools](https://asq.org/quality-resources/seven-basic-quality-tools)
+   The definitive free reference for all seven tools (flowchart, check sheet, Pareto, histogram, scatter diagram, control chart, fishbone). Includes visual examples for each.
+
+3. **YouTube — "Quality Management for PMP/CAPM" (Ricardo Vargas)**
+   [youtube.com/watch?v=SBKIoYiMCUo](https://www.youtube.com/watch?v=SBKIoYiMCUo)
+   Clear 20-minute video covering QA/QC distinction, COQ categories, and quality tools with exam-focused explanations.
+
+4. **PMI — Quality Management Overview**
+   *Project Management Institute* — [pmi.org/learning/library/quality-management-overview](https://www.pmi.org/learning/library/quality-management-4289)
+   PMI article outlining the Plan Quality Management, Manage Quality, and Control Quality processes as tested on PK0-005.
+
+5. **Cost of Quality Calculator and Guide — iSixSigma (Free)**
+   [isixsigma.com/methodology/cost-of-quality](https://www.isixsigma.com/methodology/cost-of-quality-coq/)
+   Detailed breakdown of prevention, appraisal, internal failure, and external failure costs with calculation examples — directly supports the COQ classification activity in the Module 06 lab.

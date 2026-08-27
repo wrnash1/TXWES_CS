@@ -184,3 +184,29 @@ Supplemental reading:
 - [ ] Watch the Module 05 video lecture.
 - [ ] Complete the Module 05 lab activity.
 - [ ] Post your initial discussion response by Wednesday at 11:59 PM.
+
+---
+
+## 11. Supplemental Resources
+
+The following open educational resources extend module content on use case modeling and user stories. All are freely accessible without login or purchase.
+
+1. **Use Case Modeling — BABOK Guide v3 Technique Reference**
+   <https://www.iiba.org/career-resources/a-business-analysis-professionals-foundation-for-success/babok/>
+   Focus: Official IIBA technique descriptions for Use Cases and Scenarios and User Stories. Review both entries in BABOK Chapter 10 to align terminology with the ECBA exam.
+
+2. **UML Use Case Diagram Tutorial — Visual Paradigm**
+   <https://www.visual-paradigm.com/guide/uml-unified-modeling-language/what-is-use-case-diagram/>
+   Focus: Illustrated guide to all UML use case notation elements: actors, system boundaries, use cases, include, extend, and generalization. Directly supports Part 1 of the lab diagram exercise.
+
+3. **User Stories — Agile Alliance**
+   <https://www.agilealliance.org/glossary/user-stories/>
+   Focus: Official Agile Alliance definition of user stories including the INVEST criteria, the three-part format, and acceptance criteria. The canonical reference for Section 1.6–1.8 of this guide.
+
+4. **Writing Effective Acceptance Criteria — Mountain Goat Software**
+   <https://www.mountaingoatsoftware.com/blog/acceptance-criteria-for-user-stories>
+   Focus: Practical guidance on writing Given/When/Then acceptance criteria with worked examples. Directly supports Part 3 of the lab.
+
+5. **Cockburn Use Case Template — Alistair Cockburn**
+   <https://alistair.cockburn.us/use-cases/>
+   Focus: The original Cockburn use case template used throughout this module for the use case specification format. Review the template structure and the distinction between main success scenario and alternate/exception flows.

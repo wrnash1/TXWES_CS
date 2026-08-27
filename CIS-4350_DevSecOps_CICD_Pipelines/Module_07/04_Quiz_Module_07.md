@@ -205,3 +205,173 @@ In a DevSecOps pipeline, DAST must run after SAST. What is the primary architect
 ---
 
 Quiz — Module 07 | CIS-4350 | Texas Wesleyan University | Professor Nash
+
+---
+
+### Question 11 (5 points)
+
+A SonarQube Quality Gate is configured with three conditions: coverage must be at least 80%, no new Critical issues, and reliability rating must be A. A build has 79% coverage, zero new Critical issues, and reliability rating A. What is the Quality Gate result?
+
+- A) Pass — the reliability and critical issue conditions are met
+- B) Fail — the coverage condition is not met, and all conditions must pass
+- C) Warning — the coverage is close enough to trigger a warning, not a fail
+- D) Pass — Quality Gates require a majority of conditions to pass, not all
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) All configured conditions must pass for the Quality Gate to succeed — partial compliance is not sufficient.
+  - C) SonarQube Quality Gates use hard pass/fail conditions — there is no "warning" state for a gate.
+  - D) Quality Gates require all conditions to pass — there is no majority-rules logic.
+
+---
+
+### Question 12 (5 points)
+
+OWASP ZAP's authenticated scan requires configuring a session management script. Why is authentication important for DAST coverage?
+
+- A) Unauthenticated scans run slower because ZAP cannot cache session tokens
+- B) Without authentication, ZAP can only scan publicly accessible endpoints and misses all vulnerabilities in protected functionality
+- C) ZAP requires authentication to generate SARIF output
+- D) Unauthenticated scans automatically trigger WAF rules that block ZAP's scanner IP
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Session caching has no meaningful impact on scan speed — coverage is the concern.
+  - C) SARIF output is independent of authentication configuration.
+  - D) WAF blocking is a possible operational challenge but is not the reason authentication is needed for coverage.
+
+---
+
+### Question 13 (5 points)
+
+The OWASP Top 10 category A01:2021 (Broken Access Control) is best detected by which combination of tools?
+
+- A) SAST alone — Semgrep has rules for all access control patterns
+- B) DAST combined with authenticated testing — access control failures require exercising the running application with different user roles
+- C) Container image scanning — access control vulnerabilities are encoded in the image layers
+- D) Dependency-Check — broken access control is caused by vulnerable third-party libraries
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) SAST can identify some access control patterns but cannot test authorization logic that depends on runtime session state.
+  - C) Container image scanning detects OS and library CVEs — it does not analyze application authorization logic.
+  - D) Dependency-Check finds known CVEs in libraries — broken access control typically refers to application-level logic flaws, not library vulnerabilities.
+
+---
+
+### Question 14 (5 points)
+
+A VEX (Vulnerability Exploitability Exchange) document states that a CVE in a dependency has status `not_affected` with justification `component_not_present`. What does this mean?
+
+- A) The vulnerability exists but the team has decided to accept the risk
+- B) The vulnerable component is listed in the SBOM but is not actually present in the deployed artifact
+- C) The vulnerability has been patched in the next release of the dependency
+- D) The CVE has been disputed and is no longer in the NVD database
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Accepted risk would use the VEX status `affected` with a remediation statement — `component_not_present` has a specific meaning.
+  - C) Patch availability would be reflected in the CVE record — VEX documents the exploitability in a specific product, not upstream patch status.
+  - D) CVE dispute is handled through the NVD/MITRE process — VEX documents the vendor's assessment of exploitability, independent of CVE status.
+
+---
+
+### Question 15 (5 points)
+
+Snyk integrates into a GitHub repository and automatically opens pull requests. Under which circumstance does Snyk open a pull request?
+
+- A) When it detects a new developer has been added to the repository
+- B) When it identifies a dependency with a known vulnerability and a fixed version is available
+- C) When a SAST scan produces more than 10 findings
+- D) When a container image push is detected in the repository's Dockerfile
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Snyk monitors dependencies and code, not team membership.
+  - C) Snyk's PR generation is triggered by vulnerability findings with available fixes — not finding counts from SAST.
+  - D) Snyk can scan Dockerfiles but auto-PR generation is driven by dependency fix availability, not image push events.
+
+---
+
+### Question 16 (5 points)
+
+A development team runs `semgrep --config=auto` in their CI pipeline. The `auto` configuration means:
+
+- A) Semgrep automatically detects the programming language and selects community-maintained rules from the Semgrep registry for that language
+- B) Semgrep generates its own rules by analyzing the codebase for patterns
+- C) Semgrep runs in auto-fix mode and automatically remediates all findings
+- D) Semgrep uses only the OWASP Top 10 ruleset regardless of language
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - B) Semgrep does not generate rules from the codebase — rules are written by humans and stored in the registry.
+  - C) Auto-fix (autofix) is a separate optional flag — `--config=auto` refers to rule selection, not remediation.
+  - D) `auto` selects the full relevant rule set for the detected language — it is not limited to the OWASP Top 10 rules.
+
+---
+
+### Question 17 (5 points)
+
+Which SBOM component field is most useful for matching a dependency against the NVD CVE database?
+
+- A) The component's license identifier (e.g., MIT, Apache-2.0)
+- B) The component's CPE (Common Platform Enumeration) or PURL (Package URL)
+- C) The component's SHA-256 hash
+- D) The component's source repository URL
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) License identifiers are used for compliance tracking — they are not used to look up CVEs.
+  - C) SHA-256 hashes identify a specific binary artifact but are not how the NVD organizes CVE records — CPE and PURL are the standard identifiers.
+  - D) Source repository URLs are informational — CVE databases use standardized identifiers like CPE, not arbitrary URLs.
+
+---
+
+### Question 18 (5 points)
+
+A pipeline runs OWASP ZAP baseline scan against a staging environment and produces 45 alerts. The team wants to fail the pipeline only on High and Critical risk alerts. How is this configured?
+
+- A) Use the `-l` flag to set the minimum alert level: `zap-baseline.py -l HIGH`
+- B) Use a ZAP Automation Framework plan with `failThreshold: high`
+- C) Both A and B are valid approaches depending on whether using the legacy CLI or the Automation Framework
+- D) ZAP always fails on all alert levels — per-severity thresholds require Burp Suite Enterprise
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) The `-l` flag is valid for the legacy `zap-baseline.py` script — it is a correct approach for the CLI mode.
+  - B) The Automation Framework `failThreshold` is the modern approach — it is also a correct approach.
+  - D) ZAP fully supports per-severity thresholds through both mechanisms — Burp Suite is not required.
+
+---
+
+### Question 19 (5 points)
+
+The CycloneDX SBOM format includes a `dependencies` section that maps components to their transitive dependencies. Why is transitive dependency tracking important for security?
+
+- A) Transitive dependencies are always more vulnerable than direct dependencies
+- B) A vulnerability in a deeply nested transitive dependency is still exploitable and must be identified for complete risk assessment
+- C) Transitive dependency tracking is required by US Executive Order 14028
+- D) Tools like Dependency-Check only scan transitive dependencies, not direct dependencies
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Vulnerability severity is not related to dependency depth — transitive dependencies are not inherently more vulnerable.
+  - C) EO 14028 requires SBOMs but does not specifically mandate transitive dependency tracking as a distinct requirement.
+  - D) Dependency-Check scans both direct and transitive dependencies — it is not limited to one or the other.
+
+---
+
+### Question 20 (5 points)
+
+A security team wants to enforce that every new GitHub release must have an associated SBOM artifact attached before the release is published. Which GitHub feature enforces this policy?
+
+- A) A branch protection rule requiring SBOM status checks
+- B) A GitHub Actions workflow triggered on `release: types: [published]` that generates and attaches the SBOM, or a pre-publish environment protection gate requiring the SBOM job to pass
+- C) A CODEOWNERS file requiring security team review of every release tag
+- D) A GitHub Actions workflow triggered on `push` that generates SBOMs for every commit
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Branch protection rules apply to branch merges, not release publishing events.
+  - C) CODEOWNERS handles code review requirements — it does not enforce artifact attachment to releases.
+  - D) Generating SBOMs on every commit does not ensure the SBOM is attached to the release artifact — the trigger must be aligned with the release event.

@@ -640,6 +640,179 @@ Zip all 5 screenshots and upload to the Canvas Module 09 Lab Assignment.
 
 ---
 
+## Part 9 — Challenge Exercise
+
+These steps are optional and ungraded. They extend the core lab concepts to production-relevant patterns.
+
+### Step 9.1 — Memoized Recursive Fibonacci
+
+The naive recursive Fibonacci is exponential in time. Python's `functools.lru_cache` decorator converts it to linear time using memoization — caching return values so each subproblem is solved only once.
+
+```bash
+nano memo_fib.py
+```
+
+```python
+# memo_fib.py
+import functools
+import time
+
+
+def fibonacci_slow(n):
+    '''Naive recursive Fibonacci — exponential time.'''
+    if n <= 1:
+        return n
+    return fibonacci_slow(n - 1) + fibonacci_slow(n - 2)
+
+
+@functools.lru_cache(maxsize=None)
+def fibonacci_fast(n):
+    '''Memoized recursive Fibonacci — linear time.'''
+    if n <= 1:
+        return n
+    return fibonacci_fast(n - 1) + fibonacci_fast(n - 2)
+
+
+# Compare runtimes for n=35
+n = 35
+
+start = time.perf_counter()
+result_slow = fibonacci_slow(n)
+slow_time = time.perf_counter() - start
+
+start = time.perf_counter()
+result_fast = fibonacci_fast(n)
+fast_time = time.perf_counter() - start
+
+print(f'fibonacci({n}) = {result_slow}')
+print(f'Naive time:     {slow_time:.4f} s')
+print(f'Memoized time:  {fast_time:.6f} s')
+print(f'Speedup:        {slow_time / fast_time:.0f}x')
+print(f'Cache info:     {fibonacci_fast.cache_info()}')
+```
+
+```bash
+python3 memo_fib.py
+```
+
+Observe that the memoized version is thousands of times faster. The `cache_info()` output shows how many calls were served from cache (`hits`) versus computed fresh (`misses`).
+
+### Step 9.2 — Closure-Based Event Dispatcher
+
+Build an event system using closures and `nonlocal`. The dispatcher accumulates registered callbacks in a shared list and calls them in order when the event fires.
+
+```bash
+nano event_dispatcher.py
+```
+
+```python
+# event_dispatcher.py
+# Demonstrates closures storing mutable state (a list of callbacks)
+
+
+def make_event():
+    '''Return (on, fire) — an event registration and trigger pair.'''
+    listeners = []
+
+    def on(callback):
+        '''Register a callback for this event.'''
+        listeners.append(callback)
+
+    def fire(*args, **kwargs):
+        '''Call all registered callbacks with the provided arguments.'''
+        for listener in listeners:
+            listener(*args, **kwargs)
+
+    return on, fire
+
+
+# Create two independent events
+on_login, fire_login = make_event()
+on_logout, fire_logout = make_event()
+
+# Register callbacks
+on_login(lambda user: print(f'  Welcome, {user}!'))
+on_login(lambda user: print(f'  Logging login for {user}'))
+on_logout(lambda user: print(f'  Goodbye, {user}. Session ended.'))
+
+print('Login event:')
+fire_login('Alice')
+
+print('\nLogout event:')
+fire_logout('Alice')
+
+print('\nSecond login event (different user):')
+fire_login('Bob')
+```
+
+```bash
+python3 event_dispatcher.py
+```
+
+Note that `listeners` is a list (mutable), so `on` can append to it without `nonlocal`. Modifying a mutable object in an enclosing scope does not require `nonlocal` — only rebinding (assignment) does.
+
+### Step 9.3 — Recursive Directory Tree
+
+Use recursion to build a text representation of a nested directory structure stored as a dict. This mirrors how real tree-traversal algorithms work on file systems, JSON documents, and XML.
+
+```bash
+nano tree_print.py
+```
+
+```python
+# tree_print.py
+# Recursive tree printer — demonstrates recursion on nested dicts
+
+
+def print_tree(node, prefix='', is_last=True):
+    '''Recursively print a nested dict as a directory tree.'''
+    connector = '└── ' if is_last else '├── '
+
+    if isinstance(node, dict):
+        for i, (name, subtree) in enumerate(node.items()):
+            last = (i == len(node) - 1)
+            print(prefix + ('└── ' if last else '├── ') + name)
+            extension = '    ' if last else '│   '
+            if isinstance(subtree, dict) and subtree:
+                print_tree(subtree, prefix + extension, True)
+    else:
+        print(prefix + connector + str(node))
+
+
+filesystem = {
+    'home': {
+        'alice': {
+            'documents': {
+                'report.pdf': None,
+                'notes.txt': None,
+            },
+            'pictures': {
+                'vacation': {
+                    'photo1.jpg': None,
+                    'photo2.jpg': None,
+                }
+            },
+        },
+        'bob': {
+            'scripts': {
+                'deploy.sh': None,
+            }
+        }
+    }
+}
+
+print('Filesystem tree:')
+print_tree(filesystem)
+```
+
+```bash
+python3 tree_print.py
+```
+
+Trace the recursion: `print_tree` calls itself once for each level of nesting. The `prefix` parameter accumulates indent characters — each recursive call extends it. The base case is a node with no children (an empty dict or `None` value).
+
+---
+
 ## Troubleshooting Guide
 
 **UnboundLocalError when reading a global variable inside a function.**

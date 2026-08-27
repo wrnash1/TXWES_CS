@@ -130,3 +130,36 @@ Total: 100 points
 ## Submission Instructions
 
 Combine both parts into one document. Label each section clearly. Submit to the Canvas Module 01 Lab assignment by the due date shown in the course calendar.
+
+---
+
+## Part 9 — Challenge Exercise
+
+This section is optional but strongly recommended for students pursuing the IIBA ECBA certification or seeking a deeper understanding of systems analysis practice. Challenge exercises are not graded separately; exceptional work here can be cited in your discussion board responses.
+
+### Challenge Step 1: Stakeholder Register Construction
+
+Using the Sparrow Ridge University Course Registration System case study from Part 2, build a formal stakeholder register. For each external entity you identified in your context diagram, create a stakeholder register entry with the following fields:
+
+- Stakeholder name or role
+- Stakeholder category (End User / Sponsor / SME / Regulator / External System)
+- Primary interest in the system (what they want or need from it)
+- Potential concern or risk (what could go wrong for this stakeholder)
+- Engagement level needed (Inform / Consult / Collaborate / Approve)
+
+Document at least six stakeholder entries. Justify your engagement level assignment for each one with a one-sentence rationale. This exercise mirrors BABOK KA 2 (BA Planning and Monitoring) stakeholder identification tasks that appear on the ECBA exam.
+
+### Challenge Step 2: Feasibility Recommendation Memo
+
+Write a one-page (approximately 300–400 word) feasibility recommendation memo addressed to the fictional Sparrow Ridge University CIO. Your memo must:
+
+- Assess all four feasibility dimensions (Technical, Economic, Operational, Legal) for the proposed registration system
+- Identify at least one significant risk for each dimension based on what you know from the case study
+- Conclude with a clear recommendation: Proceed, Proceed with Modifications, or Do Not Proceed
+- Use professional business memo format (To / From / Date / Subject / Body / Recommendation)
+
+This exercise mirrors the Planning phase deliverable expected of a BA before a project receives formal sponsorship. ECBA exam scenarios frequently test whether students can identify which feasibility dimension applies to a described risk condition.
+
+### Challenge Step 3: BACCM Mapping
+
+Select any real-world technology project you have read about, experienced, or observed (a mobile app, a campus system change, a government digital service, etc.). Write a short analysis (one paragraph per concept) mapping the project to all six BACCM concepts: Change, Need, Solution, Stakeholder, Value, and Context. Be specific — do not write generic definitions; apply each concept to your chosen project. This exercise develops the analytical habit of mapping real-world scenarios to the BABOK framework, which is the primary skill tested on the ECBA exam.

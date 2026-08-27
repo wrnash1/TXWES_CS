@@ -243,6 +243,22 @@ The SolarWinds supply chain attack illustrates this limitation — attackers sig
 
 ---
 
+## 9. Supplemental Resources
+
+**1. OWASP Top 10 2021**
+<https://owasp.org/www-project-top-ten/>
+The authoritative reference for web application security risk categories, updated in 2021 with data from thousands of real-world applications. Each category includes attack scenarios, prevention techniques, and example code. Required reading for all Module 10 lab and quiz content covering injection, broken access control, XSS, SSRF, and supply chain integrity.
+
+**2. OWASP Web Security Testing Guide (WSTG) v4.2**
+<https://owasp.org/www-project-web-security-testing-guide/>
+A comprehensive manual for testing web application security covering all OWASP Top 10 categories with specific test cases, HTTP request examples, and tool recommendations. Directly supports the Module 10 lab's SQL injection, XSS, and IDOR testing exercises and provides the methodology used in professional penetration testing engagements.
+
+**3. NIST SP 800-218 — Secure Software Development Framework (SSDF)**
+<https://csrc.nist.gov/publications/detail/sp/800-218/final>
+NIST's framework for integrating security into software development practices, covering secure design, code review, testing, and supply chain integrity. Directly supports Module 10 Secure SDLC content and the shift-left security concept, and maps to Executive Order 14028 requirements for software supply chain security.
+
+---
+
 ## Certification Exam Tip
 
 Security+ SY0-701 Domain 4 tests OWASP categories, secure development concepts, and testing methodologies. Pay close attention to the SAST versus DAST comparison — exam questions frequently ask which tool applies to which scenario and what "white-box" versus "black-box" means. Know code signing as a supply chain control and be able to explain its limitations.

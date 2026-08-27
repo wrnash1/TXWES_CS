@@ -387,3 +387,25 @@ express-server/
 - [ ] Write a request logger middleware with `next()`
 - [ ] Implement a 404 catch-all and global error handler
 - [ ] Use environment variables with `dotenv` and never commit `.env`
+
+---
+
+## 13. Supplemental Resources
+
+The following free, open-access resources go deeper on Module 07 topics:
+
+**1. Node.js Official Documentation — Getting Started**
+[https://nodejs.org/en/learn/getting-started/introduction-to-nodejs](https://nodejs.org/en/learn/getting-started/introduction-to-nodejs)
+The official Node.js introduction covering the event loop, non-blocking I/O, the V8 engine, and how Node.js differs from browser JavaScript — foundational reading before implementing Lambda functions in Module 14.
+
+**2. Express.js Official Guide**
+[https://expressjs.com/en/guide/routing.html](https://expressjs.com/en/guide/routing.html)
+The authoritative Express routing guide covering route methods, path patterns, route parameters, middleware, and the `Router` object used in Module 08 — directly aligned to the Lab 07 CRUD implementation.
+
+**3. MDN Web Docs — HTTP request methods**
+[https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods)
+Complete reference for all HTTP methods including safe and idempotent semantics — reinforces the REST principles applied in the Express route handlers built in this module.
+
+**4. freeCodeCamp — Node.js and Express for Beginners**
+[https://www.freecodecamp.org/news/free-8-hour-node-express-course/](https://www.freecodecamp.org/news/free-8-hour-node-express-course/)
+A free video-based course covering project setup, middleware, routing, and error handling in Express — useful supplemental reference for students who prefer video walkthroughs alongside the reading guide and lab.

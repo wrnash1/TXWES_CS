@@ -235,6 +235,22 @@ The following SY0-701 exam objectives are covered in this module:
 
 ---
 
+## 9. Supplemental Resources
+
+**1. NIST SP 800-175B Rev. 1 — Guideline for Using Cryptographic Standards in the Federal Government**
+<https://csrc.nist.gov/publications/detail/sp/800-175b/rev-1/final>
+NIST's authoritative guidance on selecting and using approved cryptographic algorithms including AES, SHA-2, RSA, ECC, and ECDHE. Directly supports Module 05 coverage of algorithm selection, key length recommendations, and the deprecation of MD5 and SHA-1.
+
+**2. SSL Labs SSL Test**
+<https://www.ssllabs.com/ssltest/>
+A free tool for analyzing the TLS configuration of any public HTTPS server. Use it to observe real-world certificate chains, cipher suite negotiations, protocol version support, and Perfect Forward Secrecy configuration — directly reinforcing the Module 05 lab TLS inspection tasks.
+
+**3. RFC 5280 — Internet X.509 Public Key Infrastructure Certificate and CRL Profile**
+<https://datatracker.ietf.org/doc/html/rfc5280>
+The authoritative specification for X.509 certificate structure, certificate extensions, the chain of trust validation algorithm, and CRL format. Reference Sections 3–4 for PKI architecture concepts and Section 6 for the path validation algorithm that browsers and TLS clients use to verify certificate chains.
+
+---
+
 ## Review Checklist
 
 Before taking the Module 05 quiz, verify you can do each of the following without notes:

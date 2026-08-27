@@ -57,7 +57,7 @@ If you still have your `cis4330-mod08-rg` resource group and Language resource f
    - **Name**: `lab09-faq`
    - **Description**: University IT Help Desk FAQ
    - **Default answer language**: English
-   - **Default answer when no match found**: "I'm sorry, I don't have an answer for that. Please contact the IT help desk at helpdesk@example.edu."
+   - **Default answer when no match found**: "I'm sorry, I don't have an answer for that. Please contact the IT help desk at <helpdesk@example.edu>."
 
 5. Click **Next** and then **Create project**.
 
@@ -291,6 +291,29 @@ Delete resource groups after submission to avoid charges.
 1. In the Azure portal, navigate to **Resource groups**.
 2. Select `cis4330-mod09-rg` (or your reused group).
 3. Click **Delete resource group**, confirm, and click **Delete**.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Active Learning Pipeline Simulation
+
+1. Review the list of 10 user queries you submitted to your knowledge base in Part C of this lab. Identify 3 queries that received a low confidence score (below 0.70) or were unmatched.
+2. For each low-confidence query: (a) write the question exactly as the user phrased it, (b) write the answer that should have been returned, and (c) write 2 alternative phrasings of the same question that could be added as alternate question variants in the knowledge base.
+3. Add all three Q&A pairs (with alternate questions) to your knowledge base, retrain, and re-run the same three queries. Record the new confidence scores.
+4. Explain in 2-3 sentences how the Active Learning workflow in production would automate steps 1-2 of this process, and what role the human reviewer plays in the full loop.
+
+### Challenge 2: Multi-Turn Conversation Design
+
+1. Design a multi-turn conversation for a new topic in your bot that requires at least 3 turns to complete. Example scenarios: a flight booking flow (origin → destination → date), a pizza order (size → toppings → delivery or pickup), or a library book reservation (title → availability check → confirm reservation date).
+2. Write out the conversation script as a dialogue between User and Bot for the happy path (user provides correct information each turn).
+3. Implement the multi-turn flow in either: (a) Copilot Studio using topics with follow-up prompts, or (b) Question Answering using follow-up prompts linked between Q&A pairs. Provide a screenshot of the conversation flow canvas or Q&A chain.
+4. Test the flow in the bot emulator or QA test panel and document one point where the conversation could fail (e.g., unexpected user input) and how you would handle it with a fallback prompt.
+
+### Reflection Questions
+
+1. After completing Challenge 1, explain why the human review step in Active Learning is essential rather than automatically accepting all suggested Q&A pairs. What types of incorrect or harmful suggestions might the system produce that human review would catch?
+2. Based on Challenge 2, describe the fundamental difference between a single-turn FAQ bot (Module 09 base lab) and a multi-turn task-completion bot in terms of what the bot must "remember" between conversation turns and how that changes the system design requirements.
 
 ---
 

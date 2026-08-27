@@ -182,3 +182,29 @@ Complete the following before attempting the lab:
 - [ ] Describe what causes warping in FDM 3D printing and how to prevent it.
 - [ ] Explain how a network printer is shared from a Windows PC and how client computers connect to it.
 - [ ] Complete the Module 15 lab activity.
+
+---
+
+## 9. Supplemental Resources
+
+The following free resources supplement Module 15 content on laser printers, inkjet printers, thermal printers, 3D printers, and printer troubleshooting.
+
+1. **Professor Messer — CompTIA A+ Core 1 (220-1101) Printers and Imaging**
+   URL: [https://www.professormesser.com/free-a-plus-training/220-1101/220-1101-video/](https://www.professormesser.com/free-a-plus-training/220-1101/220-1101-video/)
+   Relevance: Free video lectures covering the complete laser EP process, inkjet maintenance, thermal printer types, 3D printing technologies, and printer troubleshooting symptom mapping — all directly aligned to Domain 3.7 of the A+ Core 1 exam. The EP process step-by-step animation in the video is particularly useful for memorizing stage sequence and component assignments.
+
+1. **HP Support — Laser Printer Troubleshooting Guide (Free Online)**
+   URL: [https://support.hp.com/us-en/product/setup-user-guides/hp-laserjet-printers](https://support.hp.com/us-en/product/setup-user-guides/hp-laserjet-printers)
+   Relevance: HP publishes free online troubleshooting guides for LaserJet printers that document print quality defects (streaks, ghosting, fading, vertical lines) with component-level root cause analysis. Reviewing real manufacturer defect-diagnosis content reinforces the symptom-to-component mapping approach tested on the A+ exam and used in Lab 15.
+
+1. **Prusa Research — 3D Printing Knowledge Base (Free)**
+   URL: [https://help.prusa3d.com/](https://help.prusa3d.com/)
+   Relevance: Prusa Research publishes a free, comprehensive 3D printing knowledge base covering FDM printer calibration, filament properties (PLA, PETG, ABS), layer adhesion issues, under-extrusion, warping, stringing, and first layer adjustment. This is one of the most detailed free resources for understanding FDM 3D printing troubleshooting — relevant to the 3D printing content in Module 15 and A+ exam questions about 3D printing failure modes.
+
+1. **Epson — Printhead Maintenance Documentation (Free)**
+   URL: [https://epson.com/support](https://epson.com/support)
+   Relevance: Epson's free support documentation covers inkjet printhead nozzle check procedures, head cleaning cycles, and alignment procedures for Epson printers. Following a real manufacturer's maintenance workflow provides hands-on context for the inkjet maintenance steps covered in Module 15 and tested on the A+ exam.
+
+1. **CompTIA A+ Exam Objectives (220-1101) Domain 3.7 — Printers and Multifunction Devices**
+   URL: [https://www.comptia.org/certifications/a](https://www.comptia.org/certifications/a)
+   Relevance: The official CompTIA A+ exam objectives are available as a free PDF download from comptia.org. Domain 3.7 lists every printer technology, maintenance process, and troubleshooting procedure that is within scope for the exam. Comparing the exam objectives to Module 15 content ensures full coverage of all tested printer topics.

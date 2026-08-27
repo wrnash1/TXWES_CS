@@ -369,4 +369,17 @@ JWT_SECRET=your-jwt-secret-here
 
 ---
 
+## 9. Supplemental Resources
+
+**1. [GitHub Docs — About secret scanning](https://docs.github.com/en/code-security/secret-scanning/about-secret-scanning)**
+Official GitHub documentation covering push protection, partner patterns, and how to configure secret scanning for public and private repositories. Essential reference for the secrets management portions of this module.
+
+**2. [pre-commit framework documentation](https://pre-commit.com/)**
+The official documentation for the pre-commit framework, including all available hooks, configuration syntax, and integration with CI. Covers hook management, versioning, and CI mode (`pre-commit run --all-files`).
+
+**3. [git-filter-repo documentation and usage guide](https://github.com/newren/git-filter-repo)**
+The recommended tool for rewriting Git history to remove accidentally committed secrets. Covers all major use cases including path removal, content replacement, and handling force-push coordination with collaborators.
+
+---
+
 Reading Guide — Module 02 | CIS-4350 | Texas Wesleyan University | Professor Nash

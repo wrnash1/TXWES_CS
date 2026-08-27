@@ -199,3 +199,173 @@ Distractor Analysis:
 - Why D is incorrect: Adding testers is one possible response but should not be the first one. The team should first assess whether the bottleneck can be addressed by cross-training existing team members, reducing WIP upstream, or improving the testing process itself.
 
 ---
+
+### Question 11 (5 points)
+
+A Scrum Team has a stable average velocity of 32 points over eight Sprints. A senior developer leaves the team and is replaced by a junior developer in Sprint 9. Which adjustment to Sprint 9 planning is most appropriate?
+
+- A) Keep Sprint 9 planned at 32 points because the team size has not changed
+- B) Increase Sprint 9 to 40 points to motivate the new developer to perform at a senior level
+- C) Reduce Sprint 9 capacity to account for onboarding time and the new developer's lower initial output; plan at approximately 24–28 points
+- D) Skip Sprint 9 planning and run an informal Sprint until the new developer reaches full velocity
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why A is incorrect: Team composition change affects capacity even when headcount is stable. A junior replacing a senior temporarily reduces throughput due to onboarding, knowledge transfer overhead, and lower initial familiarity with the codebase.
+  - Why B is incorrect: Planning at an inflated target to "motivate" a new developer is a misuse of Sprint planning. It will result in incomplete stories and an inaccurate velocity reading.
+  - Why D is incorrect: Scrum requires Sprint Planning for every Sprint. Skipping planning violates the framework and removes the team's opportunity to commit to a Sprint Goal.
+
+---
+
+### Question 12 (5 points)
+
+A Sprint Burndown line rises above the original starting total on Day 4. What is the most accurate interpretation?
+
+- A) The team re-estimated stories upward or the Product Owner added items to the Sprint Backlog
+- B) The team is failing to complete stories and the cumulative backlog is growing
+- C) The Sprint should be cancelled because the scope has exceeded the team's capacity
+- D) The burndown tool has a bug — remaining work cannot mathematically exceed its starting value
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - Why B is incorrect: Incomplete stories reduce remaining points as they are finished; they do not cause the line to rise above the original total. A rise requires either re-estimation upward or scope addition.
+  - Why C is incorrect: A Sprint is cancelled only when the Sprint Goal becomes obsolete — typically a change in business direction. A scope addition or re-estimate does not trigger cancellation.
+  - Why D is incorrect: Remaining work can rise above its original value if stories are added to the Sprint Backlog or if an existing story is re-estimated to a larger size after work reveals more complexity.
+
+---
+
+### Question 13 (5 points)
+
+A Product Owner says: "Our average cycle time is 18 days and our average lead time is 42 days. I want to improve the customer experience. Which metric should the team focus on reducing first?" What is the most appropriate recommendation?
+
+- A) Focus on reducing cycle time first — it represents the team's execution efficiency
+- B) Focus on reducing lead time first — specifically the queue time of 24 days — because customers experience the full wait from request to delivery
+- C) Both metrics are equally important and should be addressed simultaneously
+- D) Focus on throughput instead — neither lead time nor cycle time directly relates to customer experience
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: Cycle time (18 days) is already a subset of lead time. Improving cycle time from 18 to 15 days would only reduce the customer's wait by 3 days. The 24-day queue is the larger opportunity.
+  - Why C is incorrect: While both metrics matter, the queue time (24 days) is the dominant component of the customer's wait. Prioritization based on impact favors addressing the larger component first.
+  - Why D is incorrect: Lead time is the most direct measure of customer experience (time from request to delivery). Throughput is about how many items complete per period, not how long any individual item takes.
+
+---
+
+### Question 14 (5 points)
+
+A Scrum Team uses their Release Burndown to forecast completion. The chart shows 180 remaining points. The last four Sprint velocities were 28, 31, 27, and 30. A stakeholder asks: "Will we be done in 6 Sprints?" What is the most honest and accurate response?
+
+- A) "Yes — 180 ÷ 29 (average velocity) = 6.2 Sprints, which rounds to 6"
+- B) "Probably not — the forecast of approximately 6 Sprints assumes the backlog does not grow; if the Product Owner continues adding items as in previous Sprints, the actual delivery may be 7–8 Sprints"
+- C) "We cannot forecast because the backlog may change"
+- D) "Yes — we commit to delivering in exactly 6 Sprints"
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: 6.2 rounds up to 7 Sprints, not 6. More importantly, this answer does not acknowledge the risk that scope changes, which is the primary reason Release Burndown forecasts are uncertain.
+  - Why C is incorrect: Uncertainty does not make forecasting impossible. The correct response is to provide a forecast with the uncertainty acknowledged, not to refuse to forecast.
+  - Why D is incorrect: Scrum forecasts are probabilistic, not commitments. Committing to exactly 6 Sprints for delivery ignores variability in velocity and scope.
+
+---
+
+### Question 15 (5 points)
+
+Which of the following is the best explanation for why comparing velocity across Scrum Teams is harmful?
+
+- A) Different teams use different Agile tools, making data formats incompatible
+- B) Story points are relative estimates calibrated to each team's context; a 5-point story for Team A may represent more or less work than a 5-point story for Team B, making the numbers incomparable
+- C) Scrum Teams are not allowed to share velocity data with people outside the team
+- D) Velocity is only meaningful when measured over 10 or more Sprints, and most teams have less history
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: Data format incompatibility is a tool concern, not the reason cross-team velocity comparison is harmful. The harm is in the interpretation and organizational behavior it creates.
+  - Why C is incorrect: There is no Scrum rule prohibiting sharing velocity data. The harm is not about privacy — it is about misinterpretation of relative estimates as absolute productivity measures.
+  - Why D is incorrect: While more Sprint history improves reliability, the number of Sprints is not why cross-team comparison is harmful. The fundamental issue is the non-comparable nature of relative estimation.
+
+---
+
+### Question 16 (5 points)
+
+A team has WIP of 20 stories and throughput of 2 stories per day. Using Little's Law, what is the average cycle time? If the team wants to reduce cycle time to 5 days without changing throughput, what WIP limit would achieve this?
+
+- A) Cycle time = 10 days; WIP limit needed = 10 stories
+- B) Cycle time = 10 days; WIP limit needed = 5 stories (since 5 ÷ 2 = 2.5, not 5 — so WIP = 10 is needed)
+- C) Cycle time = 40 days; WIP limit needed = 10 stories
+- D) Cycle time = 10 days; WIP limit needed = 15 stories
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - Why B is incorrect: This answer contains a calculation error in the explanation. If target cycle time = 5 days and throughput = 2, then WIP = 5 × 2 = 10 stories. The answer to the WIP limit question is 10, not 5.
+  - Why C is incorrect: Cycle time = 20 ÷ 2 = 10 days, not 40. The formula is WIP ÷ Throughput, not WIP × Throughput.
+  - Why D is incorrect: If target cycle time = 5 days and throughput = 2, WIP = 10. A WIP limit of 15 would produce cycle time = 15 ÷ 2 = 7.5 days, not the target 5.
+
+---
+
+### Question 17 (5 points)
+
+A Scrum Team's Sprint Burndown consistently shows the actual line staying exactly on or very slightly above the ideal line throughout each Sprint, ending at near-zero every Sprint. What does this burndown pattern most likely indicate?
+
+- A) The team is gaming the burndown by artificially updating their remaining estimates to match the ideal line
+- B) The team has well-calibrated Sprint Planning, effective daily inspection, and consistent delivery — the pattern is a healthy sign of predictable flow
+- C) The team is completing their stories too quickly and should be given more work
+- D) The team's velocity is too stable — healthy velocity should show significant variation Sprint over Sprint
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: While gaming is possible, consistently staying near the ideal line while ending at zero is the goal of good Sprint Planning and daily inspection — the most likely explanation is healthy practice, not manipulation.
+  - Why C is incorrect: Completing planned work and reaching zero is the Sprint Backlog's purpose. It does not mean the team is underchallenged; it means they planned appropriately.
+  - Why D is incorrect: Velocity stability is a sign of a mature team with well-calibrated estimates. Significant Sprint-to-Sprint variation is typically a sign of overcommitment, disruptions, or poor estimation — not a healthy pattern.
+
+---
+
+### Question 18 (5 points)
+
+A manager proposes tracking "number of commits per developer per week" as a productivity metric. Which metric anti-pattern does this represent, and what is the most significant behavioral consequence?
+
+- A) Velocity-as-target — developers will artificially inflate commit counts to appear productive
+- B) Individual output tracking — developers optimize for commit frequency rather than value delivery, encouraging small meaningless commits and discouraging large, thoughtful refactoring work
+- C) Burndown misuse — the commit count will distort the Sprint Burndown chart's accuracy
+- D) Lines-of-code measurement — the metric does not differentiate between value-adding and waste code
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: Velocity-as-target specifically refers to misusing story point velocity. Commit count is a different metric; the anti-pattern category here is individual output tracking.
+  - Why C is incorrect: Commit count has no direct effect on the Sprint Burndown chart. The Burndown tracks remaining story points, not commit frequency.
+  - Why D is incorrect: Lines-of-code measurement is a related but distinct anti-pattern; commit count and lines of code are different metrics, though both share the same fundamental flaw of measuring activity rather than value.
+
+---
+
+### Question 19 (5 points)
+
+A team's Release Burndown shows that despite consistently completing 30 points per Sprint, the remaining backlog has not decreased over the past three Sprints. What does this most likely indicate?
+
+- A) The team's velocity has been incorrectly reported — the true velocity is zero
+- B) The Product Owner has been adding approximately 30 points of new items to the backlog each Sprint, keeping the total flat
+- C) The team is counting incomplete stories as done, artificially inflating their velocity
+- D) The Sprint Review is revealing defects that return stories to the backlog
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: If the team is completing 30 points per Sprint, velocity is real — the backlog is not decreasing because scope is growing at the same rate as completion.
+  - Why C is incorrect: If incomplete stories were being counted as done, the backlog would appear to decrease (those stories would show as removed from the backlog). A flat line despite completion indicates additions, not false completions.
+  - Why D is incorrect: Defects discovered at Sprint Review return as new backlog items, which would show as backlog additions. While possible, this is a less likely explanation for a flat line over three Sprints than consistent scope addition.
+
+---
+
+### Question 20 (5 points)
+
+The Scrum Guide does not prescribe specific metrics. Why, then, do Scrum teams use velocity and burndown charts?
+
+- A) They are required by SAFe and LeSS as part of the scaling frameworks built on Scrum
+- B) They emerged as practical tools that support Scrum's empirical pillars — velocity supports Sprint Planning transparency, burndown supports daily inspection, and both enable adaptation when deviation is visible
+- C) They are required by most enterprise organizations as compliance reporting for project governance
+- D) They were added to Scrum in the 2020 Scrum Guide update as required artifacts
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: Velocity and burndowns are used by single-team Scrum teams without any scaling framework. Their origin predates SAFe and LeSS.
+  - Why C is incorrect: Enterprise governance requirements may reinforce their use, but teams adopt velocity and burndowns because they serve empiricism — not because of compliance.
+  - Why D is incorrect: The 2020 Scrum Guide did not add velocity or burndown charts. The Guide defines commitments for each artifact but prescribes no specific metrics.
+
+---

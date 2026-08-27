@@ -362,6 +362,22 @@ Before attending Lab 15, complete the following:
 
 ---
 
+---
+
+## 9. Supplemental Resources
+
+**1. Prosci — ADKAR Change Management Model**
+<https://www.prosci.com/methodology/adkar>
+Prosci's official ADKAR model resource covers each element (Awareness, Desire, Knowledge, Ability, Reinforcement) with diagnostic tools for identifying change resistance and interventions for each gap type. Directly relevant to the change management content in this module and the adoption failure scenarios covered in Lab 15.
+
+**2. SAP Learning — SAP Activate Methodology**
+<https://learning.sap.com/learning-journeys/discover-sap-activate>
+Official SAP learning journey for SAP Activate — the current SAP S/4HANA implementation methodology that replaced ASAP. Covers the Prepare, Explore, Realize, Deploy, and Run phases, Fit-to-Standard workshop approach, and agile sprint planning within the methodology framework tested in this module's quiz.
+
+**3. Salesforce Trailhead — Salesforce Implementation Basics**
+<https://trailhead.salesforce.com/content/learn/modules/salesforce-implementation-basics>
+Official Salesforce module covering the Discover, Define, Design, Build, Test, and Deploy phases of the Salesforce implementation lifecycle. Maps directly to the Salesforce methodology content in Section 2 of this Reading Guide and the phase deliverables tested in Quiz 15.
+
 *End of Reading Guide — Module 15*
 
 **Certification Alignment:** Salesforce Administrator / SAP S/4HANA Essentials

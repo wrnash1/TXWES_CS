@@ -134,3 +134,45 @@ Brightway's most critical service is its checkout flow. The current availability
 Submit your completed lab document to the Canvas assignment portal by the due date. All calculations must show your work. All written responses must use specific terminology from the module — vague or generic answers will not receive full credit.
 
 **Grading:** Each exercise is worth 25 points distributed across tasks based on accuracy, completeness, and quality of reasoning.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: DevOps Transformation Roadmap
+
+A 500-person insurance company's IT department has 12 application teams. All teams currently deploy monthly using a manual release process that requires CAB approval for every deployment. The average deployment takes 2 days of preparation, 4 hours of execution, and involves 3 different teams (development, QA, and operations). Change failure rate across all teams is 22%. Lead time from feature request to production is 6–8 weeks on average.
+
+The CTO has asked for a DevOps transformation roadmap to reach DORA High performance tier within 18 months.
+
+1. Establish the current baseline by classifying the organization's current DORA performance tier for each of the four metrics. Justify each classification using the scenario data provided. Calculate what the target metrics would be for DORA High performance tier.
+
+2. Identify the three most impactful structural or process changes that would most directly reduce the change failure rate from 22% to below 10%. For each change, describe the specific mechanism by which it reduces failure rate and estimate how long it would take to implement.
+
+3. The monthly CAB process is the most visible bottleneck. Design a change classification model that would allow routine application deployments to proceed as standard changes without individual CAB review, while ensuring that the CAB retains oversight of changes that genuinely require it. Include: the criteria for standard change classification, the process for pre-authorizing a deployment pipeline as a standard change procedure, and the conditions that would re-elevate a pipeline to normal change status.
+
+### Challenge 2: Value Stream Improvement
+
+An IT organization has mapped its feature delivery value stream and found the following:
+
+| Step | Value-Added Time | Queue/Wait Time |
+|---|---|---|
+| Feature definition | 4 hours | 3 days (backlog wait) |
+| Development | 16 hours | 0 |
+| Code review | 2 hours | 2 days (reviewer availability) |
+| QA testing | 8 hours | 1 day (QA queue) |
+| Security review | 3 hours | 5 days (security team queue) |
+| Deployment approval | 1 hour | 2 days (CAB schedule) |
+| Deployment execution | 2 hours | 0 |
+
+1. Calculate the total lead time, total value-added time, and value-added ratio for this process. Show your work.
+
+2. The security review queue (5-day wait) and CAB schedule wait (2-day wait) account for 7 of the approximately 14 days of total queue time. Design a specific improvement for each of these two queues. For each improvement, describe the mechanism, estimate the reduction in wait time, and identify any ITIL 4 governance considerations that must be preserved.
+
+3. After implementing both improvements, recalculate the value-added ratio. Then write 100–150 words explaining what the remaining non-value-added time represents and whether it is eliminable or irreducible — using Lean and ITIL 4 concepts.
+
+### Reflection Questions
+
+1. ITIL 4 and DevOps share the goal of faster, safer delivery — yet some organizations experience conflict between their ITIL governance teams and their DevOps teams. Based on this module, describe the most common source of this conflict and explain what organizational or process change would resolve it without sacrificing either governance or delivery speed.
+
+2. The DORA research shows that high deployment frequency is positively correlated with lower change failure rate — counterintuitively, teams that deploy more often fail less often per deployment. Using concepts from this module, explain the mechanism that causes this relationship. Your answer should reference at least two specific practices or concepts (e.g., batch size, automated testing, standard changes, error budget).

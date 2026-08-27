@@ -190,3 +190,28 @@ Your scan results for a Linux server show a Critical vulnerability in OpenSSL ve
 ## Academic Integrity Notice
 
 All work must be your own. The scan data in this lab is fabricated for educational purposes. Do not share answers before the submission deadline. Reference the CySA+ exam objectives at comptia.org and study materials at professormesser.com for additional context.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Prioritization Under Constraint
+
+Your team has capacity to remediate exactly 3 findings this sprint. You have the following open findings: (1) CVE-2021-44228 (Log4Shell, CVSS 10.0) on an internet-facing Java application server — in the KEV catalog; (2) CVE-2023-22515 (Confluence RCE, CVSS 10.0) on an internal Confluence server accessible only from the corporate network — in the KEV catalog; (3) CVE-2022-30190 (Follina, CVSS 7.8) on 340 employee workstations — in the KEV catalog; (4) CVE-2022-1388 (F5 BIG-IP RCE, CVSS 9.8) on a load balancer in the DMZ — not in KEV; (5) CVE-2020-1472 (Zerologon, CVSS 10.0) on a domain controller — in the KEV catalog.
+
+1. Select your top 3 remediation priorities and rank them. Justify each selection using at least two factors beyond CVSS score alone (e.g., asset criticality, exposure, KEV status, blast radius).
+2. For the two findings you deferred, write a one-sentence compensating control recommendation for each that reduces risk while the patch is pending.
+3. Explain why remediating the 340 workstations (Follina) in a single sprint may be operationally infeasible and what phased approach you would recommend.
+
+### Challenge 2: Scan Result Interpretation
+
+A credentialed scan of a Linux web server returns these findings: (A) OpenSSL 1.1.1 — CVE with CVSS 8.1, patch available; (B) Apache httpd 2.4.49 — CVE-2021-41773 (path traversal/RCE, CVSS 9.8), patch available, in KEV; (C) MySQL 5.7.38 — CVE with CVSS 5.4, no patch available from vendor; (D) PHP 7.4.3 — version identified but no CVE matched by scanner. The administrator states the server also runs a custom Python application, which the scanner did not assess.
+
+1. Classify each finding (A–D) by remediation type: patch, workaround, compensating control, or risk acceptance — and justify each choice.
+2. Explain what additional scanning action should be taken for the custom Python application and why the scanner's silence does not mean the application is vulnerability-free.
+3. Write an executive one-paragraph summary (4–5 sentences) of the server's risk posture suitable for a non-technical manager.
+
+### Reflection Questions
+
+1. A peer argues that CVSS is the only metric needed for vulnerability prioritization because it provides an objective score. Construct a two-sentence counter-argument using a specific example where a CVSS 9.x finding should be deprioritized below a CVSS 7.x finding.
+2. Describe one real-world scenario where accepting risk for a known vulnerability would be a defensible, professionally sound decision, and identify what documentation would be required to make that decision auditable.

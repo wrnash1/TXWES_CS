@@ -398,4 +398,20 @@ output "web_public_ip" {
 
 ---
 
+## 11. Supplemental Resources
+
+**1. Terraform Resource Blocks Reference**
+<https://developer.hashicorp.com/terraform/language/resources/syntax>
+Complete reference for resource block syntax, meta-arguments (`count`, `for_each`, `depends_on`, `lifecycle`, `provider`), and resource addressing. Essential for Module 03 lab exercises involving `count` vs `for_each`.
+
+**2. Terraform Input Variables Reference**
+<https://developer.hashicorp.com/terraform/language/values/variables>
+Covers all variable block arguments, type constraints, validation blocks, sensitive values, and the full variable value precedence order. Maps directly to exam questions on variable assignment priority.
+
+**3. Terraform Local Values Reference**
+<https://developer.hashicorp.com/terraform/language/values/locals>
+Explains when to use `locals` versus `variables`, how to compose local expressions, and best practices for avoiding over-use of locals that reduces configuration readability.
+
+---
+
 Module 03 Reading Guide — CIS-4337 Infrastructure Automation — Texas Wesleyan University

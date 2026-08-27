@@ -403,6 +403,62 @@ Submit the following to the Module 02 Lab assignment in Canvas:
 
 ---
 
+## Part 9 — Challenge Exercise
+
+**This section is optional but strongly recommended.** No screenshot submission is required, but completing these steps significantly deepens your understanding of scope and closures ahead of Module 06.
+
+### Challenge Step 9.1 — Demonstrate Classic `var` Loop Closure Bug
+
+In your `module02-lab` folder, create `closure_bug.js` and link it in your HTML. Add the following code:
+
+```javascript
+// Classic var closure bug
+const funcs = [];
+for (var i = 0; i < 3; i++) {
+  funcs.push(function() { console.log('var loop i =', i); });
+}
+funcs[0]();   // What do you expect?
+funcs[1]();
+funcs[2]();
+
+// Fix with let
+const funcs2 = [];
+for (let j = 0; j < 3; j++) {
+  funcs2.push(function() { console.log('let loop j =', j); });
+}
+funcs2[0]();
+funcs2[1]();
+funcs2[2]();
+```
+
+Run this and observe the output. The `var` version prints `3` three times (all functions share the same `i`). The `let` version prints `0`, `1`, `2` correctly (each iteration gets its own `j`). Write a comment in the file explaining why the behaviors differ.
+
+### Challenge Step 9.2 — Freeze a `const` Object with `Object.freeze()`
+
+Add the following to a new file `freeze_demo.js`:
+
+```javascript
+const config = Object.freeze({
+  maxRetries: 3,
+  timeout: 5000,
+  debug: false
+});
+
+config.debug = true;        // silently ignored in non-strict mode
+config.newProp = 'test';    // silently ignored
+
+console.log(config.debug);    // false — freeze prevented mutation
+console.log(config.newProp);  // undefined — property was not added
+```
+
+Observe how `Object.freeze()` makes the object's properties truly immutable — mutations are silently ignored in non-strict mode, or throw `TypeError` in strict mode. Add `'use strict';` to the top of the file and observe the difference.
+
+### Challenge Step 9.3 — Build a Scope Chain Visualization
+
+Write a function `scopeChain()` that creates three levels of nested functions, each logging a variable from a different scope level. The innermost function should be able to access all three variables. Add `console.log` calls to demonstrate which scope each variable comes from. Annotate the code with comments identifying each scope level: global, outer function, inner function, and innermost function.
+
+---
+
 ## Reflection Questions
 
 Answer in the Canvas text box (two to three sentences each):

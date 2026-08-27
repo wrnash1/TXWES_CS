@@ -356,3 +356,19 @@ Reference: learn.microsoft.com/en-us/cli/azure/container
 - [ ] Take Quiz Module 04
 - [ ] Post Discussion Module 04 initial post by Wednesday 11:59 PM
 - [ ] Respond to two classmates by Sunday 11:59 PM
+
+---
+
+## 9. Supplemental Resources
+
+**1. Microsoft Learn — Azure Container Instances documentation**
+https://learn.microsoft.com/en-us/azure/container-instances/container-instances-overview
+Complete ACI reference including container group concepts, restart policies, VNet integration, persistent volume mounts, and per-second billing details.
+
+**2. Microsoft Learn — Azure Kubernetes Service core concepts**
+https://learn.microsoft.com/en-us/azure/aks/concepts-clusters-workloads
+In-depth explanation of AKS clusters, node pools, pods, Deployments, Services, and the free managed control plane — the foundational concepts for understanding AKS architecture and cost model.
+
+**3. Microsoft Learn — Azure Container Apps overview**
+https://learn.microsoft.com/en-us/azure/container-apps/overview
+Covers Container Apps environments, scale rules, KEDA-based event-driven autoscaling, scale-to-zero behavior, and the distinction between Container Apps and AKS for teams choosing between managed and unmanaged Kubernetes.

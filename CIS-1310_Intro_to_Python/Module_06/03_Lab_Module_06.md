@@ -575,6 +575,54 @@ Zip all 5 screenshots and upload to the Canvas Module 06 Lab Assignment.
 
 ---
 
+## Part 9 — Challenge Exercise
+
+These steps are optional and ungraded. They extend list skills toward real data processing patterns.
+
+### Challenge 9.1 — Matrix Transposition
+
+Write `~/cis1310/module06/matrix_transpose.py` that transposes a 3x3 matrix using nested list comprehensions. Given:
+
+```python
+matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+```
+
+Produce the transposed matrix (rows become columns):
+
+```python
+transposed = [[1, 4, 7], [2, 5, 8], [3, 6, 9]]
+```
+
+Implement this using a nested list comprehension: `[[row[i] for row in matrix] for i in range(len(matrix[0]))]`. Then write a function `print_matrix(m)` that displays the matrix row by row with consistent column alignment. Compare the original and transposed matrices side-by-side in your output.
+
+---
+
+### Challenge 9.2 — Histogram Generator
+
+Write `~/cis1310/module06/histogram.py` that reads a list of integers from the user (one per line, stopping at a blank input) and displays a horizontal ASCII histogram. For each value `v`, print a bar of `v` asterisks followed by the count:
+
+```text
+Value 1: ****** (6)
+Value 2: *** (3)
+Value 3: ********* (9)
+```
+
+Also compute and display: minimum, maximum, mean, median (sort the list and take the middle element — handle both odd and even list lengths), and standard deviation (square root of the average squared deviation from the mean, using only built-in functions without importing `statistics`).
+
+---
+
+### Challenge 9.3 — List Deduplication Three Ways
+
+Write `~/cis1310/module06/dedup.py` that demonstrates three different approaches to removing duplicates from a list while preserving insertion order:
+
+1. A manual loop with an `in` membership check building a new list
+2. A list comprehension using `enumerate` that keeps an element only if its current index is the first occurrence
+3. Converting to a `dict.fromkeys()` and back to a list (this works because dictionaries preserve insertion order in Python 3.7+)
+
+Test all three on the list `[3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]`. Verify all three produce identical results. Print the method name, the result, and the execution approach for each. This exercise previews the `dict` data structure from Module 10.
+
+---
+
 ## Troubleshooting Guide
 
 **`IndexError: list index out of range`.**

@@ -192,6 +192,32 @@ The following commands appear in this module's lab. Review them before you start
 
 ---
 
+## 9. Supplemental Resources
+
+The following free, open-access resources go deeper on Module 01 topics. Use them to reinforce concepts, explore alternate explanations, or prepare for the PCAP exam.
+
+**1. Official Python 3 Documentation — The Python Tutorial**
+[https://docs.python.org/3/tutorial/index.html](https://docs.python.org/3/tutorial/index.html)
+The authoritative source for all Python behavior. Chapter 2 ("Using the Python Interpreter") and Chapter 3 ("An Informal Introduction to Python") directly cover REPL usage, script mode, and basic expressions. Bookmark this site — you will return to it throughout the course.
+
+**2. Python for Everybody (PY4E) — Full Free Textbook**
+[https://www.py4e.com/book](https://www.py4e.com/book)
+Dr. Charles Severance's open textbook used by millions of learners worldwide. Chapters 1–2 align directly with Module 01. The site also offers free video lectures, auto-graded exercises, and a browser-based Python interpreter for practice without installing anything.
+
+**3. Real Python — Python Basics: A Practical Introduction**
+[https://realpython.com/python-basics/](https://realpython.com/python-basics/)
+Real Python's free introductory articles cover the Python interpreter, REPL, and first scripts with clear diagrams and annotated code. Particularly useful: "How to Run Your Python Scripts" and "Interacting With Python."
+
+**4. PEP 8 — Style Guide for Python Code (Official)**
+[https://peps.python.org/pep-0008/](https://peps.python.org/pep-0008/)
+The official style guide maintained by the Python Software Foundation. Read the Indentation, Whitespace, and Comments sections. Understanding PEP 8 from day one builds professional habits that will serve you throughout your career.
+
+**5. CS50P — Introduction to Programming with Python (Harvard, Free)**
+[https://cs50.harvard.edu/python/](https://cs50.harvard.edu/python/)
+Harvard's free Python course available on edX and YouTube. Lecture 0 ("Functions, Variables") covers setting up Python and running first scripts — an excellent companion video with live coding demonstrations.
+
+---
+
 ## 8. Study Checklist
 
 Work through this list in order. Check each item off before moving to the next.

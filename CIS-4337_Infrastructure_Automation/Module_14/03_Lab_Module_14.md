@@ -438,4 +438,165 @@ terraform destroy -var="owner_tag=your-name" -auto-approve
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Cross-Account Provider Aliasing with AssumeRole
+
+Simulate a multi-account deployment by configuring two `aws` provider aliases that use different IAM role assumptions to represent a dev account and a staging account. In a real organization these would be separate AWS accounts; in this lab you will use two IAM roles within the same account to practice the configuration pattern.
+
+**Step A.** Create two IAM roles in your AWS account using the AWS console or CLI:
+
+```bash
+# Create a dev role (using your own account ID as the trusted principal for simplicity)
+aws iam create-role --role-name tf-lab-dev-role \
+  --assume-role-policy-document '{
+    "Version":"2012-10-17",
+    "Statement":[{
+      "Effect":"Allow",
+      "Principal":{"AWS":"arn:aws:iam::ACCOUNT_ID:root"},
+      "Action":"sts:AssumeRole"
+    }]
+  }'
+aws iam attach-role-policy --role-name tf-lab-dev-role \
+  --policy-arn arn:aws:iam::aws:policy/AmazonS3FullAccess
+
+# Repeat for staging role
+aws iam create-role --role-name tf-lab-staging-role \
+  --assume-role-policy-document '{
+    "Version":"2012-10-17",
+    "Statement":[{
+      "Effect":"Allow",
+      "Principal":{"AWS":"arn:aws:iam::ACCOUNT_ID:root"},
+      "Action":"sts:AssumeRole"
+    }]
+  }'
+aws iam attach-role-policy --role-name tf-lab-staging-role \
+  --policy-arn arn:aws:iam::aws:policy/AmazonS3FullAccess
+```
+
+**Step B.** Create `challenge1/main.tf` with two aliased provider configurations using `assume_role`:
+
+```hcl
+terraform {
+  required_version = ">= 1.5.0"
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+  }
+}
+
+provider "aws" {
+  alias  = "dev"
+  region = "us-east-2"
+
+  assume_role {
+    role_arn     = "arn:aws:iam::ACCOUNT_ID:role/tf-lab-dev-role"
+    session_name = "terraform-dev"
+  }
+}
+
+provider "aws" {
+  alias  = "staging"
+  region = "us-east-2"
+
+  assume_role {
+    role_arn     = "arn:aws:iam::ACCOUNT_ID:role/tf-lab-staging-role"
+    session_name = "terraform-staging"
+  }
+}
+
+resource "aws_s3_bucket" "dev_artifacts" {
+  provider = aws.dev
+  bucket   = "tf-lab-dev-artifacts-${var.suffix}"
+
+  tags = {
+    Environment = "dev"
+    ManagedBy   = "Terraform"
+  }
+}
+
+resource "aws_s3_bucket" "staging_artifacts" {
+  provider = aws.staging
+  bucket   = "tf-lab-staging-artifacts-${var.suffix}"
+
+  tags = {
+    Environment = "staging"
+    ManagedBy   = "Terraform"
+  }
+}
+
+variable "suffix" {
+  type = string
+}
+
+output "dev_bucket" {
+  value = aws_s3_bucket.dev_artifacts.id
+}
+
+output "staging_bucket" {
+  value = aws_s3_bucket.staging_artifacts.id
+}
+```
+
+1. Run `terraform init` and `terraform plan -var="suffix=your-name"`. Observe that the plan creates two S3 buckets and that both are attributed to their respective aliased providers in the plan output.
+2. Inspect `.terraform.lock.hcl` after init. Record the version selected and the h1 hash for the AWS provider. Note that a single lock file entry covers both aliased provider instances because they share the same source.
+3. Run `terraform apply -var="suffix=your-name"` and verify both buckets exist in the AWS console.
+4. Record in `lab_notes.txt`: when Terraform assumes a role, the temporary credentials last 1 hour by default. What `assume_role` argument would you add to set a custom session duration of 30 minutes, and why might a shorter session duration be preferable for a CI pipeline that runs for only a few minutes?
+
+### Challenge 2: Provider Version Constraint Pinning and Lock File Upgrade
+
+Explore the interaction between version constraints and the lock file by intentionally creating and then resolving a constraint conflict.
+
+**Step A.** In a new directory `challenge2/`, create `main.tf` with a deliberately older version constraint:
+
+```hcl
+terraform {
+  required_version = ">= 1.5.0"
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "= 5.0.0"
+    }
+    random = {
+      source  = "hashicorp/random"
+      version = "~> 3.5"
+    }
+  }
+}
+
+provider "aws" {
+  region = "us-east-2"
+}
+
+resource "random_id" "tag_suffix" {
+  byte_length = 4
+}
+
+resource "aws_s3_bucket" "pinned" {
+  bucket = "tf-lab-pinned-${random_id.tag_suffix.hex}"
+}
+```
+
+**Step B.** Run `terraform init` to install the exact pinned version, then examine the lock file:
+
+```bash
+terraform init
+cat .terraform.lock.hcl
+```
+
+1. Note the exact version recorded for `hashicorp/aws` and `hashicorp/random`. Record both in `lab_notes.txt`.
+2. Update the constraint in `main.tf` to `version = "~> 5.0"` to allow any `5.x` release, then run `terraform init` again (without `-upgrade`). Observe whether Terraform upgrades or keeps the existing lock file version and explain why in `lab_notes.txt`.
+3. Now run `terraform init -upgrade`. Observe that Terraform selects the latest `5.x` version, updates `.terraform.lock.hcl`, and reports the version change. Record the before and after versions.
+4. Change the constraint back to `version = "= 5.0.0"` and run `terraform init` without `-upgrade`. Observe the error Terraform produces when the lock file version conflicts with the updated constraint, and record the exact error message.
+5. Document in `lab_notes.txt`: what is the correct workflow for deliberately upgrading a provider in a team environment so that the lock file update is reviewed and approved through the same process as code changes?
+
+### Reflection Questions
+
+1. The lab used explicit `provider = aws.primary` and `provider = aws.secondary` meta-arguments on resources to assign them to the correct provider alias. Explain what would happen if you omitted the `provider` argument on a resource in a configuration that has two `aws` provider instances — one with an alias and one without. Which provider instance would Terraform use, and what rule determines this? Describe a scenario where forgetting a `provider` assignment would cause a resource to be created in the wrong region or account without a plan-time error.
+2. The `.terraform.lock.hcl` file records both the selected version and h1 cryptographic hashes for each provider. Explain the security purpose of the hash entries. What attack does hash verification prevent, and under what specific circumstance would you need to run `terraform providers lock -platform=` to add additional hash entries to the lock file?
+
+---
+
 End of Module 14 Lab

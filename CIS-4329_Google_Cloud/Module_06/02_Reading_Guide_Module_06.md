@@ -367,3 +367,23 @@ helm uninstall my-release
 - Autoscaling: cloud.google.com/kubernetes-engine/docs/concepts/cluster-autoscaler
 - Ingress: cloud.google.com/kubernetes-engine/docs/concepts/ingress
 - Helm: helm.sh/docs
+
+## 9. Supplemental Resources
+
+**1. Google Cloud Documentation — GKE Autopilot Overview**
+<https://cloud.google.com/kubernetes-engine/docs/concepts/autopilot-overview>
+Official guide to GKE Autopilot covering its managed node model, security
+defaults, billing by pod resource requests, and comparison with Standard
+clusters. Key reading for ACE exam questions on GKE cluster mode selection.
+
+**2. Google Cloud Skills Boost — Kubernetes Engine: Qwik Start**
+<https://www.cloudskillsboost.google/focuses/878>
+Hands-on lab deploying a containerized application to GKE, creating a
+Service, and scaling the deployment. Covers the core `kubectl` commands
+tested on the ACE exam.
+
+**3. Kubernetes Documentation — Concepts Overview**
+<https://kubernetes.io/docs/concepts/>
+The official Kubernetes documentation for core objects: Pods, Deployments,
+Services, Ingress, ConfigMaps, Secrets, and PersistentVolumeClaims. GKE
+is fully Kubernetes-conformant, so upstream docs apply directly.

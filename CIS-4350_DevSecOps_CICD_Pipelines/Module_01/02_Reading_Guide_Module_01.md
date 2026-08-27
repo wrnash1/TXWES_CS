@@ -313,4 +313,17 @@ Prioritize by CVSS score, exploitability, and asset criticality. Trying to fix e
 
 ---
 
+## 9. Supplemental Resources
+
+**1. [OWASP DevSecOps Guideline](https://owasp.org/www-project-devsecops-guideline/)**
+The OWASP DevSecOps Guideline provides practical guidance for integrating security into DevOps pipelines, covering tool categories, pipeline stages, and maturity models aligned with industry practice.
+
+**2. [DoD Enterprise DevSecOps Reference Design v2.0](https://dodcio.defense.gov/Portals/0/Documents/Library/DevSecOpsReferenceDesign.pdf)**
+The authoritative federal reference for DevSecOps pipeline architecture. Covers the DevSecOps lifecycle, container hardening, CI/CD toolchain selection criteria, and compliance integration — directly referenced in DSOE certification exams.
+
+**3. [NIST SP 800-218: Secure Software Development Framework (SSDF)](https://csrc.nist.gov/publications/detail/sp/800-218/final)**
+NIST's framework for integrating security practices into the software development lifecycle. Maps directly to shift-left security principles and provides a vocabulary for discussing DevSecOps requirements with compliance and risk teams.
+
+---
+
 Reading Guide — Module 01 | CIS-4350 | Texas Wesleyan University

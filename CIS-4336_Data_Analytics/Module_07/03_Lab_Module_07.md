@@ -295,4 +295,77 @@ Submit all of the following in a single ZIP file or folder:
 
 ---
 
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Multi-Region Distribution Deep Dive
+
+Extend the regional analysis to include full descriptive statistics and distribution visualization for every region.
+
+1. Compute a grouped summary table for all numeric columns (`sales_amount`, `ad_spend`, `customer_count`) grouped by `region`. Include mean, median, standard deviation, and IQR for each column in each region. Print the result as a formatted DataFrame with two decimal places.
+2. Create a 1×5 panel of box plots (one per region) for `sales_amount` using `matplotlib` subplots. Add a horizontal dashed line at the overall median to allow visual comparison. Save the figure as `regional_boxplots.png`. Identify which region has the largest IQR and which has the smallest, and write one sentence explaining the business implication of that difference.
+
+```python
+import matplotlib.pyplot as plt
+import pandas as pd
+
+regions = sorted(df["region"].unique())
+overall_median = df["sales_amount"].median()
+
+fig, axes = plt.subplots(1, len(regions), figsize=(16, 5), sharey=True)
+for i, region in enumerate(regions):
+    subset = df[df["region"] == region]["sales_amount"]
+    axes[i].boxplot(subset, patch_artist=True,
+                    boxprops=dict(facecolor="steelblue", alpha=0.7))
+    axes[i].axhline(overall_median, color="red", linestyle="--", linewidth=1,
+                    label="Overall median" if i == 0 else "")
+    axes[i].set_title(region)
+    axes[i].set_xlabel("Region")
+    if i == 0:
+        axes[i].set_ylabel("Sales Amount ($)")
+        axes[i].legend(fontsize=8)
+plt.suptitle("Sales Distribution by Region", fontsize=13, fontweight="bold")
+plt.tight_layout()
+plt.savefig("regional_boxplots.png", dpi=150)
+plt.show()
+```
+
+### Challenge 2: Regression Line and Residual Analysis
+
+Build a simple linear regression model from the correlation analysis and examine the residuals.
+
+1. Using `scipy.stats.linregress`, fit a regression of `sales_amount` on `ad_spend` using all 20 rows. Print the slope, intercept, r-value, p-value, and standard error. Interpret the slope in plain language: "For every additional $1 of ad spend, sales change by $___."
+2. Compute residuals (actual `sales_amount` minus predicted value for each row). Plot a residual scatter plot with `ad_spend` on the x-axis and residuals on the y-axis. Add a horizontal line at y = 0. Save as `residuals.png`. Write two sentences evaluating whether the residuals appear randomly distributed (which would support the linear model assumption) or show a pattern.
+
+```python
+from scipy.stats import linregress
+import numpy as np
+
+slope, intercept, r_val, p_val, std_err = linregress(df["ad_spend"], df["sales_amount"])
+print(f"Slope: {slope:.2f} | Intercept: {intercept:.2f}")
+print(f"r = {r_val:.4f}, p = {p_val:.4f}, SE = {std_err:.4f}")
+print(f"Interpretation: For every $1 increase in ad spend, sales change by ${slope:.2f}")
+
+predicted = slope * df["ad_spend"] + intercept
+residuals = df["sales_amount"] - predicted
+
+fig, ax = plt.subplots(figsize=(7, 4))
+ax.scatter(df["ad_spend"], residuals, color="darkorange", alpha=0.8, edgecolors="white")
+ax.axhline(0, color="red", linestyle="--", linewidth=1.5)
+ax.set_title("Residuals vs. Ad Spend")
+ax.set_xlabel("Ad Spend ($)")
+ax.set_ylabel("Residual ($)")
+plt.tight_layout()
+plt.savefig("residuals.png", dpi=150)
+plt.show()
+```
+
+### Reflection Questions
+
+1. In Challenge 1, the box plot panel shows each region's `sales_amount` distribution side by side. A regional director looks at the plot and says, "Central region is clearly the best performer." What additional context (beyond the box plot) would you need to validate that claim? What other metrics might matter beyond average sales?
+2. In Challenge 2, the residual plot shows whether the linear model fits well. If you observed that residuals increased as `ad_spend` increased (a funnel shape), what statistical term describes this pattern, and what would it suggest about the reliability of your regression predictions?
+
+---
+
 End of Lab 07

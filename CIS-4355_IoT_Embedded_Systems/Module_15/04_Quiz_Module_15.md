@@ -177,3 +177,179 @@ Which combination of fleet management capabilities, implemented together, provid
   - *Why D is incorrect:* Zero-touch provisioning and certificate renewal are provisioning-phase and credential-lifecycle controls. They ensure devices have valid credentials but do not address the risk of firmware vulnerabilities in deployed devices. A device with a perfectly valid, recently renewed certificate is equally exploitable if its firmware contains a critical vulnerability.
 
 ---
+
+### Question 11
+
+A company's fleet management query returns 12 devices with `shadow.reported.firmware_version < 'v2.3.0'` and `connectivity.connected = false` after a mandatory security patch campaign. The other 9,988 devices have been successfully updated. What is the most appropriate next action, and why is revoking these 12 devices' certificates not the correct first step?
+
+- A) The 12 devices should have their certificates revoked immediately because running outdated firmware with a known security vulnerability is equivalent to a compromised device and poses an ongoing threat to the fleet.
+- B) The fleet manager should investigate each of the 12 devices individually — query their last-seen timestamps, connection history, and installation site — before taking action. Certificate revocation is not the correct first step because these devices are offline and running outdated firmware, which may simply indicate connectivity problems, dead batteries, or powered-off installations rather than compromise or abandonment.
+- C) The 12 devices should be marked as permanently decommissioned in the registry because devices that fail to receive a mandatory update within the campaign window are operationally non-functional.
+- D) The 12 devices should receive a force-update job at the highest priority. If they do not update within 24 hours, their certificates should be revoked as a precautionary measure.
+- **Correct Answer:** B) Investigate individually; offline + outdated does not imply compromise or abandonment.
+- **Distractor Analysis:**
+  - *Why A is incorrect:* Offline devices running outdated firmware are a risk to be remediated, but revoking their certificates immediately eliminates the ability to update them remotely when they reconnect. The correct sequence is: investigate → attempt update → revoke only if the device is confirmed abandoned, lost, or compromised. Premature revocation converts a recoverable situation into a field service call.
+  - *Why B is correct:* The fleet indexing query identifies a candidate set for investigation, not a list of compromised devices. Many legitimate reasons explain this state: the device installation is in a vacation property that was powered off for the winter; the device has a failed Wi-Fi module; the device is in a low-signal area and connects only once per week. Investigation using last-seen timestamps, connection history, and contact with the installation site owner disambiguates these scenarios before taking irreversible action.
+  - *Why C is incorrect:* "Failed to receive a mandatory update" is a connectivity or access problem, not an operational failure. The device hardware and firmware may be functioning normally — it is simply unreachable. Decommissioning 12 operational devices would require field replacement at significant cost.
+  - *Why D is incorrect:* A force-update job is appropriate once connectivity is confirmed. However, the 24-hour revocation deadline is arbitrary and may not align with the device's natural reconnect cycle. Investigation should determine the cause of the missed update before setting deadlines.
+
+---
+
+### Question 12
+
+A fleet of smart thermostats reports telemetry every 60 seconds including `free_heap_bytes`. Over 30 days, the median free heap across 10,000 devices decreases from 85,000 bytes at deployment to 61,000 bytes — a 28% reduction. The minimum observed free heap on any device is 22,000 bytes. What does this trend most likely indicate, and what is the appropriate response?
+
+- A) The free heap decrease is expected — FreeRTOS heap usage naturally increases as connected buffers fill with received MQTT messages over time. The fleet is operating normally.
+- B) A 28% heap decrease over 30 days is a fleet-wide memory leak indicator. This trend suggests a slow memory leak in the firmware — likely in a library that allocates memory during each network operation or sensor read without corresponding frees. The response is to investigate the firmware for missing `free()` calls in TLS session handling, MQTT packet processing, or ArduinoJson allocations, then push a corrected firmware via OTA before any device's free heap drops to critical levels (typically <20,000 bytes for ESP32).
+- C) The free heap decrease is caused by the device registry accumulating shadow delta messages in MQTT receive buffers. The fix is to increase the MQTT client's receive buffer size on the thermostat.
+- D) A 28% decrease over 30 days is within normal variance; alert thresholds should only be set for single-reading spikes, not for gradual trends.
+- **Correct Answer:** B) Fleet-wide memory leak; investigate firmware allocations and push corrected OTA.
+- **Distractor Analysis:**
+  - *Why A is incorrect:* FreeRTOS heap usage does not naturally increase indefinitely under normal operation. A well-written embedded application has a stable steady-state heap footprint after initialization. A monotonically decreasing free heap over 30 days is the defining symptom of a memory leak, not normal behavior.
+  - *Why B is correct:* A steady 28% decrease over 30 days extrapolates to 0% free heap (device crash) in approximately 107 days from deployment. The minimum device at 22,000 bytes may crash within days. Common sources of slow memory leaks on ESP32 with MQTT include: not calling `mqtt.loop()` frequently enough (causing receive buffer buildup), creating `ArduinoJson::DynamicJsonDocument` objects on every reading without freeing them, or SSL session state accumulating in heap. The response requires firmware investigation, fix, and OTA deployment before the affected devices crash.
+  - *Why C is incorrect:* MQTT receive buffers in PubSubClient are statically sized in the client configuration — they do not grow unboundedly with received messages. Shadow delta messages are processed and discarded in the `on_message` callback; they do not accumulate in the client's heap beyond the static buffer.
+  - *Why D is incorrect:* Gradual trends in health metrics are often more operationally important than single-reading spikes. A spike may be a transient anomaly; a 30-day linear decrease is a systematic problem with a predictable failure point. Fleet monitoring systems should implement trend detection (e.g., linear regression on a rolling 7-day window) in addition to threshold checks.
+
+---
+
+### Question 13
+
+A device manufacturer implements JITP (Just-In-Time Provisioning). On first boot, each device connects to the provisioning endpoint using a shared claim certificate, registers itself, and receives a unique device certificate and private key in the provisioning response. The provisioning service stores the newly issued private key in its database for audit purposes. What is the security flaw in this design, and how should it be corrected?
+
+- A) The flaw is that the claim certificate is shared across all devices, allowing any device to observe another device's provisioning exchange. The fix is to generate a unique claim certificate per device before shipment.
+- B) The flaw is that the provisioning service is storing the device's private key — a key that should exist only on the device and never be transmitted or stored anywhere else. If the provisioning service's database is breached, all device private keys are compromised. The correct design is for the device to generate its own key pair on-device, send only the public key (or a CSR) to the provisioning service, and receive back a CA-signed certificate — the private key never leaves the device.
+- C) The flaw is that the private key is transmitted over the provisioning connection, which is secured by the claim certificate TLS connection. The fix is to use DTLS instead of TLS for the provisioning connection to add an additional encryption layer.
+- D) The flaw is that the provisioning service issues the same private key to every device for simplicity. The audit database correctly stores this shared key for recovery purposes.
+- **Correct Answer:** B) Storing the device private key server-side is a fundamental security violation; keys must be generated on-device.
+- **Distractor Analysis:**
+  - *Why A is incorrect:* While unique claim certificates per device are a stronger design than a shared claim certificate, this is not the primary security flaw described. The shared claim certificate allows enrollment of the current device and grants no access to other devices' provisioning sessions (each session is independent). The server-side storage of private keys is the critical flaw.
+  - *Why B is correct:* The device private key is the root of that device's security. If it is stored anywhere outside the device — even in an "audit database" — it can be exfiltrated in a server-side breach, granting an attacker permanent impersonation capability for every device whose key was stored. The correct PKI pattern is: the device generates the key pair internally (using the ESP32's hardware RNG), signs a Certificate Signing Request (CSR) with the private key, and submits only the CSR (which contains the public key) to the provisioning service. The provisioning service signs the CSR and returns the certificate. The private key never leaves the device.
+  - *Why C is incorrect:* The provisioning connection's transport encryption (TLS) does not address the root problem. Whether the key is transmitted over TLS or DTLS, the server still receives and stores the private key — the fundamental violation is that the key exists outside the device, not that the transmission channel is insufficiently encrypted.
+  - *Why D is incorrect:* This describes the exact same flaw as the scenario (stored private key) with an incorrect rationalization. A shared private key across devices means a single extraction compromises all devices — this is never an acceptable design.
+
+---
+
+### Question 14
+
+An IoT fleet health dashboard shows that a specific device has rebooted 47 times in the past 24 hours. The device's firmware version is current (v3.2.1), and the device connects to MQTT successfully after each reboot. Telemetry includes free heap, CPU temperature, and uptime. Which combination of telemetry fields would most help diagnose the cause of the repeated reboots?
+
+- A) Free heap at time of reboot (compare to steady-state) and the OTA partition's firmware signature verification status — repeated reboots often indicate a corrupted OTA partition that passes signature verification but crashes on startup.
+- B) Uptime at each reboot (determines whether the device reboots at a consistent time interval, suggesting a scheduled task or timer overflow), free heap trend before reboot (checks for memory exhaustion as a crash trigger), and the exception/fault type from the panic handler output (identifies whether it is a null pointer, stack overflow, or watchdog timeout).
+- C) CPU temperature before each reboot (thermal throttling may cause watchdog timeouts) and the Wi-Fi RSSI at the time of last message before reboot (poor connectivity may cause TLS handshake timeouts that trigger a software reset).
+- D) Shadow delta synchronization timestamp (devices that receive a configuration change and reboot to apply it would explain the 47 reboots if the delta was published repeatedly) and the device's MQTT keep-alive timeout setting.
+- **Correct Answer:** B) Uptime per reboot, heap trend, and panic handler output together provide the most complete diagnostic picture.
+- **Distractor Analysis:**
+  - *Why A is incorrect:* A corrupted OTA partition causing crashes would prevent the device from connecting to MQTT after each reboot — but the scenario states the device connects successfully after each reboot. This rules out OTA partition corruption as the primary cause.
+  - *Why B is correct:* The three-field combination covers the three most common causes of repeated reboots: (1) a consistent uptime interval before reboot (e.g., always crashes at 1,800 seconds) suggests a timer overflow, task watchdog expiry, or periodic task that triggers a fault; (2) declining free heap before reboots confirms memory exhaustion as the trigger; (3) the panic handler fault type from the serial output or crash log (if captured) is the most definitive diagnostic — it identifies the exact failure mode (null pointer dereference, stack canary violation, watchdog timeout, etc.).
+  - *Why C is incorrect:* CPU temperature and RSSI are valid secondary diagnostics but less likely to explain 47 reboots in 24 hours. Thermal throttling-induced watchdog timeouts would typically show a gradual warm-up pattern. RSSI-related TLS failures would appear as failed connection attempts, not successful connections after each reboot.
+  - *Why D is incorrect:* Shadow delta-triggered reboots would appear in the shadow synchronization log as a received delta, and the firmware would not need to reboot to apply a configuration change (changes like `reporting_interval_s` are applied at runtime). 47 identical delta publications that each trigger a reboot would be visible in the fleet server logs.
+
+---
+
+### Question 15
+
+A JITP provisioning template includes the following policy that is attached to each newly provisioned device. A security reviewer flags this policy as overly permissive. Identify the specific permission that makes this policy dangerous and explain the correct scope restriction.
+
+```json
+{
+  "Effect": "Allow",
+  "Action": ["iot:Connect", "iot:Publish", "iot:Subscribe", "iot:Receive"],
+  "Resource": "arn:aws:iot:us-east-1:123456789:*"
+}
+```
+
+- A) The `iot:Subscribe` permission is the dangerous permission — devices should only be allowed to publish, not subscribe. Subscribing allows a device to receive messages intended for other devices.
+- B) The wildcard `*` in the Resource ARN allows each provisioned device to connect as any client ID, publish to any MQTT topic, subscribe to any topic filter, and receive messages on any topic. A compromised device can publish to other devices' shadow topics, subscribe to all telemetry topics, and impersonate any other device. The fix is to scope the resource to the device's own client ID using the `${iot:ClientId}` policy variable.
+- C) The `iot:Connect` permission should be removed — devices do not need explicit Connect permission because it is granted by default when a certificate is attached to a policy.
+- D) The dangerous permission is `iot:Publish` on the wildcard resource, because it allows devices to publish to the `$aws/provisioning-templates/` topics and trigger additional provisioning enrollments for counterfeit devices.
+- **Correct Answer:** B) The wildcard Resource ARN allows cross-device access; use `${iot:ClientId}` to scope each permission to the device's own namespace.
+- **Distractor Analysis:**
+  - *Why A is incorrect:* Subscribing is a necessary capability for devices that need to receive OTA job notifications, shadow deltas, and cloud-to-device commands. Removing subscribe would break the device's ability to receive configuration updates. The problem is not the action type but the scope of the resource ARN.
+  - *Why B is correct:* The wildcard Resource ARN means the policy is equivalent to: "this device can do anything with any IoT resource in this account." The correct pattern uses `${iot:ClientId}` which resolves to the connecting device's MQTT client ID at policy evaluation time. For example: `arn:aws:iot:us-east-1:123:topic/devices/${iot:ClientId}/*` restricts the device to only publish and subscribe to topics under its own namespace. This ensures a compromised device cannot affect other devices' telemetry, shadows, or command topics.
+  - *Why C is incorrect:* `iot:Connect` is not granted by default — it must be explicitly permitted in the policy. Without `iot:Connect` on the matching client resource, the device cannot establish an MQTT connection even if its certificate is valid. The connection permission is separate from message-level permissions.
+  - *Why D is incorrect:* While publishing to provisioning template topics is a concern, AWS IoT Core's provisioning API endpoints use a separate permission (`iot:CreateKeysAndCertificate`, `iot:RegisterThing`) that is not covered by `iot:Publish`. A device with only `iot:Publish` cannot trigger provisioning enrollments for other devices.
+
+---
+
+### Question 16
+
+An IoT device completes an OTA update, reboots, and runs for 45 seconds. The firmware then calls `esp_ota_mark_app_valid_cancel_rollback()`. One minute later, the device crashes due to an unrelated application bug (a null pointer in a data processing task). What happens next, and why?
+
+- A) The bootloader rolls back to the previous firmware because the device crashed within the first 5 minutes after an OTA update, which triggers the rollback timer.
+- B) The bootloader boots the new firmware again (v2.1.0) because `esp_ota_mark_app_valid_cancel_rollback()` was called before the crash — the OTA partition was committed. The crash is treated as a normal application crash, not an OTA failure. Rollback does not occur.
+- C) The bootloader enters factory reset mode because two consecutive crashes (boot + application crash) within a short time window trigger the ESP-IDF recovery mechanism.
+- D) The bootloader rolls back to the previous firmware because the total uptime before crash (approximately 105 seconds) is below the ESP-IDF rollback timer default of 300 seconds.
+- **Correct Answer:** B) Committed OTA is permanent; the device reboots into the same new firmware; no rollback occurs.
+- **Distractor Analysis:**
+  - *Why A is incorrect:* There is no ESP-IDF "rollback timer" that automatically triggers rollback based on uptime after an OTA update. The rollback decision is binary and based solely on whether `esp_ota_mark_app_valid_cancel_rollback()` was called — not on how long the firmware ran.
+  - *Why B is correct:* Once `esp_ota_mark_app_valid_cancel_rollback()` is called, the new partition's OTA state is set to `ESP_OTA_IMG_VALID`. The bootloader will boot this partition on every subsequent boot regardless of crashes. The rollback mechanism only fires when the OTA state is still `ESP_OTA_IMG_PENDING_VERIFY` (not yet committed). After commitment, the firmware behaves like any non-OTA firmware — it crashes and reboots into the same partition. The null pointer crash is an application bug to be fixed via a subsequent OTA update.
+  - *Why C is incorrect:* ESP-IDF has no "two consecutive crashes" factory reset mechanism in the standard OTA system. Factory reset functionality (if implemented) is application-defined, not automatically triggered by crash count.
+  - *Why D is incorrect:* No 300-second rollback timer exists in the ESP-IDF OTA API. The concept of a "rollback timer" appears in some RTOS designs for self-test periods, but ESP-IDF's OTA rollback is event-driven (commit call) not time-driven.
+
+---
+
+### Question 17
+
+An IoT operations team sets up a Grafana dashboard connected to InfluxDB storing device telemetry. They create a panel showing "Devices not seen in the last 15 minutes." At 2:00 AM on a Saturday, the panel shows 847 devices as offline. At 2:15 AM, all 847 come back online simultaneously. What is the most likely explanation, and what monitoring improvement would detect the root cause earlier?
+
+- A) 847 devices simultaneously went offline because of a coordinated attack — the simultaneous offline event is suspicious and should be treated as a security incident immediately.
+- B) A network infrastructure event (ISP outage, cloud broker restart, or gateway maintenance) caused a mass disconnection. All devices reconnected when the infrastructure recovered. The monitoring improvement is to add broker-side telemetry: MQTT broker connection count over time, TLS handshake failure rates, and broker error logs — these would show the infrastructure event before device-level metrics begin to populate.
+- C) The InfluxDB ingestion pipeline experienced a 15-minute write lag, causing the dashboard to show stale data. The 847 devices never actually disconnected. The improvement is to add an InfluxDB write latency monitor.
+- D) 847 devices simultaneously exceeded their memory limit and crashed, rebooted, and reconnected. This indicates a firmware bug affecting that firmware version. The improvement is to set a heap memory alert threshold.
+- **Correct Answer:** B) Infrastructure outage causing mass disconnection; improve monitoring with broker-side connectivity metrics.
+- **Distractor Analysis:**
+  - *Why A is incorrect:* While a simultaneous mass disconnection is suspicious, the most likely explanation for 847 devices going offline and then all reconnecting is a shared infrastructure dependency (broker, network, DNS) rather than a coordinated attack. An attack would be more likely to show progressive disconnections rather than instant simultaneous disconnect-and-reconnect. The simultaneous reconnection is particularly characteristic of a broker restart — all devices experience the connection drop at the same moment and reconnect with their configured retry intervals.
+  - *Why B is correct:* Mass simultaneous device disconnection followed by mass simultaneous reconnection is the signature of a transient infrastructure failure, not a device-level problem. Monitoring the broker's connection count time series would show a vertical drop at 2:00 AM and recovery at 2:15 AM — much faster and clearer than waiting for device-level "not seen" dashboards to populate. Adding TLS handshake failure rate monitoring and broker restart event logging provides the root cause context.
+  - *Why C is incorrect:* An InfluxDB write lag of 15 minutes would affect all devices uniformly, not just 847 specific ones. If the lag cleared at 2:15 AM, you would see all devices' data suddenly become current simultaneously — which might match the described pattern — but write lag that long is unusual and would be detectable via InfluxDB's own metrics.
+  - *Why D is incorrect:* 847 devices crashing simultaneously from memory exhaustion would require all 847 devices to be running identical firmware, have identical memory usage patterns, and reach exhaustion at the same moment. This is statistically implausible compared to the infrastructure-failure explanation.
+
+---
+
+### Question 18
+
+A device's last OTA update attempt failed at 73% completion (the device lost Wi-Fi connectivity mid-download). The device reconnects 4 hours later. Which ESP-IDF OTA behavior correctly describes what happens, and which API function enables this behavior?
+
+- A) The device starts the download from byte 0 because the ESP-IDF OTA API does not support resumable downloads — partial downloads are discarded when the HTTPS connection drops.
+- B) The device resumes the download from the last committed byte (73% completion) because `esp_https_ota()` uses HTTP Range requests to resume from the last flash write position, tracked via the OTA partition's write pointer stored in NVM. The relevant API is `esp_https_ota_perform()` within the `esp_https_ota_begin()` / `esp_https_ota_finish()` context, which supports incremental chunk downloads.
+- C) The device cannot resume and must wait for the fleet management platform to push a new OTA job, because the original job's download URL expires after 1 hour.
+- D) The device resumes from byte 0 but uses a background download priority that does not affect normal device operation, completing the remaining 100% download over 4 hours to minimize bandwidth impact.
+- **Correct Answer:** B) ESP-IDF OTA resumes from the last write position using HTTP Range requests; `esp_https_ota_perform()` handles incremental chunk writes.
+- **Distractor Analysis:**
+  - *Why A is incorrect:* ESP-IDF's advanced OTA API (`esp_https_ota_begin()` + `esp_https_ota_perform()` + `esp_https_ota_finish()`) explicitly supports resumable downloads. The `esp_ota_begin()` function can be called with an offset parameter, and the HTTP client can send a Range header to continue from an intermediate position. The simplest `esp_https_ota()` convenience function may not support resume, but the full API does.
+  - *Why B is correct:* The ESP-IDF OTA API tracks the write position within the inactive partition. On reconnect, the firmware can determine how many bytes were already written (via `esp_ota_get_running_partition()` and the partition state), construct an HTTP Range request (`Range: bytes=N-` where N is the bytes already written), and continue writing from that position. This is the standard production pattern for OTA over unreliable Wi-Fi connections.
+  - *Why C is incorrect:* OTA download URL expiry is a server-side policy, not a fixed 1-hour limit. In production deployments, pre-signed S3 URLs or CDN URLs are typically valid for 24 hours or longer. The device reconnecting 4 hours later should find the URL still valid in most deployments.
+  - *Why D is incorrect:* ESP-IDF OTA does not have a "background download priority" mode. Downloads happen at the application's requested rate. Restarting from byte 0 after a partial download is the failure mode that resumable downloads were designed to prevent.
+
+---
+
+### Question 19
+
+An IoT company's fleet of 100,000 devices runs on a 3-year certificate lifecycle. The security team sets up automated certificate renewal: certificates expiring within 90 days are automatically renewed by the device using a renewal MQTT topic. A deployment error causes the renewal automation to be disabled for 6 months. When the error is discovered, 2,300 devices have certificates that expire within 7 days. What is the highest-priority remediation action and why?
+
+- A) Immediately revoke the 2,300 expiring certificates and issue new certificates manually, since expired certificates pose a greater security risk than the brief service disruption caused by revocation.
+- B) Immediately push an OTA update to all 2,300 devices that triggers the certificate renewal process, prioritizing connectivity continuity — devices that lose their ability to authenticate cannot receive future updates or management commands, effectively bricking them remotely.
+- C) Extend the expiry date on all 2,300 certificates by 90 days using the CA's administrative tools, providing time to fix the renewal automation properly without service disruption.
+- D) Allow the certificates to expire on schedule and rely on the JITP claim certificate to re-provision each affected device, since all devices should still have their claim certificates stored in firmware.
+- **Correct Answer:** B) OTA push to trigger certificate renewal is the highest priority — devices that expire lose all remote management capability.
+- **Distractor Analysis:**
+  - *Why A is incorrect:* Revoking 2,300 valid certificates would immediately disconnect those devices from the broker and eliminate the ability to push the renewal update to them. Revocation before renewal inverts the correct sequence — it creates the connectivity loss you are trying to prevent. Revocation is appropriate after renewal, not before.
+  - *Why B is correct:* A device whose certificate expires can no longer authenticate to the MQTT broker, which means it cannot receive OTA updates, configuration changes, or management commands. It becomes permanently unreachable until a physical intervention. The 7-day window provides time to push an OTA (or a targeted renewal command via MQTT) to all 2,300 devices before they expire. Once expired, the recovery path requires physical access or re-provisioning, which is far more expensive.
+  - *Why C is incorrect:* Extending certificate expiry dates via CA administrative tools is technically possible with some CA implementations, but it requires issuing new certificate versions for 2,300 devices and pushing them to the devices — which is the same as renewal. Most standard PKI implementations do not allow in-place extension of an issued certificate's validity period; a new certificate must be issued.
+  - *Why D is incorrect:* Claim certificates are the bootstrap provisioning credential — they are used only for the initial JITP enrollment and are typically invalidated or stored with restricted access after that. Relying on claim certificates for re-provisioning 2,300 devices assumes the claim certificates are still active, still stored in firmware, and that the provisioning service accepts them for re-enrollment. This is the most complex and risky recovery path and should be a last resort, not the first response.
+
+---
+
+### Question 20
+
+A zero-touch provisioning system requires devices to send a `RegisterThing` request containing the device serial number. The provisioning template generates a device certificate with a CN matching the serial number. An attacker intercepts the claim certificate from one device and attempts to enroll a device with a serial number `VALID_SERIAL_000001` that already exists in the registry. What should the provisioning service's response be, and what mechanism enforces this?
+
+- A) The provisioning service should issue a new certificate for `VALID_SERIAL_000001` because the serial number is a public identifier — the fact that the attacker knows it does not indicate compromise, and the new certificate would simply replace the original.
+- B) The provisioning service should reject the enrollment request because `VALID_SERIAL_000001` is already registered in the device registry. The uniqueness constraint on device IDs in the registry prevents duplicate enrollments for the same serial number, and the provisioning template should include a `CreateThing` operation with a duplicate-check that returns an error if the thing already exists.
+- C) The provisioning service should issue the certificate but flag the event for security review, allowing normal operations to continue while the potential duplicate enrollment is investigated.
+- D) The provisioning service should automatically revoke the original `VALID_SERIAL_000001` certificate and issue a new one, assuming the original device has been lost or replaced.
+- **Correct Answer:** B) The provisioning service rejects the duplicate enrollment; registry uniqueness constraint enforces this.
+- **Distractor Analysis:**
+  - *Why A is incorrect:* Issuing a new certificate for an already-registered serial number would result in two valid certificates for the same device identity — the original legitimate device and the attacker's counterfeit device could both authenticate as `VALID_SERIAL_000001`. This would break the per-device identity guarantee and allow the attacker's device to publish data masquerading as the legitimate device.
+  - *Why B is correct:* The device registry enforces Thing uniqueness. When the provisioning template executes a `CreateThing` operation with the name `VALID_SERIAL_000001`, AWS IoT Core (or equivalent) returns a `ResourceAlreadyExistsException` if the Thing already exists. The provisioning template can be configured to reject the enrollment or return an error in this case. This is a critical security control that prevents serial number replay attacks where an attacker uses an intercepted claim certificate to enroll counterfeit devices with known serial numbers.
+  - *Why C is incorrect:* Issuing the certificate and flagging for review creates a window where the attacker's counterfeit device has valid credentials. During this review window, the device can authenticate, publish data, receive commands, and cause harm. The correct behavior is to reject the request synchronously.
+  - *Why D is incorrect:* Automatically revoking the original certificate because a duplicate enrollment was attempted would allow the attacker to use the claim certificate as a denial-of-service tool against legitimate devices — connecting once per day with a known serial number would revoke that device's certificate daily.

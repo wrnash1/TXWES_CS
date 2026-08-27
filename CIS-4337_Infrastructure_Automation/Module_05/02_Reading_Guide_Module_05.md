@@ -288,4 +288,20 @@ Module resources appear in state with addresses like `module.network.aws_vpc.thi
 
 ---
 
+## 11. Supplemental Resources
+
+**1. Terraform Modules Overview**
+<https://developer.hashicorp.com/terraform/language/modules>
+The primary documentation for writing, calling, and publishing Terraform modules. Covers child module structure, the `module` block syntax, output references, and provider inheritance.
+
+**2. Terraform Module Sources Reference**
+<https://developer.hashicorp.com/terraform/language/modules/sources>
+Documents all supported module source types: local paths, Terraform Registry, GitHub, Bitbucket, S3, and more. Includes the correct syntax for each and the rules around the `version` argument.
+
+**3. Terraform Registry Module Browser**
+<https://registry.terraform.io/browse/modules>
+The public module registry. Browse community and verified modules for AWS, Azure, GCP, and other providers. Each module page displays inputs, outputs, version history, and usage examples — the same format you will encounter on the Terraform Associate exam.
+
+---
+
 Module 05 Reading Guide — CIS-4337 Infrastructure Automation — Texas Wesleyan University

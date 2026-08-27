@@ -202,4 +202,30 @@ The 5 GHz band has 24+ non-overlapping 20 MHz channels (regulatory domain depend
 
 ---
 
+## 9. Supplemental Resources
+
+The following free resources extend Module 06 content on wireless standards, security, and RF fundamentals.
+
+**1. Professor Messer — Wireless Networking Free Videos (N10-008)**
+URL: https://www.professormesser.com/network-plus/n10-008/n10-008-video/
+Relevance: Professor Messer covers 802.11 standards, WEP/WPA/WPA2/WPA3, wireless attacks (Evil Twin, deauthentication), and WIPS in videos directly aligned to Network+ exam objectives.
+
+**2. Wi-Fi Alliance — Wi-Fi 6 and Wi-Fi 6E Technical Overview**
+URL: https://www.wi-fi.org/discover-wi-fi/wi-fi-certified-6
+Relevance: The Wi-Fi Alliance's free official resources explain 802.11ax (Wi-Fi 6) improvements including OFDMA, MU-MIMO enhancements, and 6 GHz band introduction in Wi-Fi 6E. The definitive vendor-neutral source for Wi-Fi certification information.
+
+**3. Cisco — Wireless LAN Design Guide (Free)**
+URL: https://www.cisco.com/c/en/us/td/docs/solutions/Enterprise/Mobility/WiFiDeployGuide.html
+Relevance: Cisco's free enterprise wireless design guide covers channel planning, cell sizing, site survey methodology, and high-density wireless design — directly applicable to the exam objectives on wireless deployment planning.
+
+**4. Wireshark 802.11 Wireless Packet Analysis**
+URL: https://wiki.wireshark.org/CaptureSetup/WLAN
+Relevance: Free Wireshark documentation on capturing 802.11 wireless frames in monitor mode. Capturing real 802.11 management frames (beacons, probe requests, authentication frames) reinforces the frame-level understanding of wireless protocols tested on the exam.
+
+**5. IEEE 802.11 Standard Overview — IEEE Xplore (Free Summary)**
+URL: https://standards.ieee.org/ieee/802.11/7028/
+Relevance: The IEEE standards page for 802.11 provides free access to the standard summary and scope document. The full standard requires purchase, but the overview and amendment history clarify the evolution from 802.11a/b/g through 802.11ax.
+
+---
+
 *CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash*

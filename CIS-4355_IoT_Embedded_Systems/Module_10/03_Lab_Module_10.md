@@ -397,3 +397,48 @@ Subject: AWS Notification - Subscription Confirmation
 **SNS rule never triggers:** Verify the IAM role attached to the rule has `sns:Publish` permission on the topic ARN. Also confirm the rule SQL `WHERE` clause condition is met by your test data.
 
 **Certificate download missed:** If you did not download the private key when creating the certificate, you must create a new certificate — the private key cannot be retrieved after initial creation.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: AWS IoT Core Fleet Provisioning with Claim Certificates
+
+Implement zero-touch device provisioning using AWS IoT Core's fleet provisioning feature so that devices receive unique certificates at first boot without pre-registering each one individually.
+
+1. In the AWS IoT Core console, navigate to Connect → Fleet provisioning. Create a provisioning template named `LabFleetTemplate` with a template body that creates a Thing named `${AWS::IoT::Certificate::Id}`, attaches a policy named `LabDevicePolicy`, and activates the certificate. Download the provisioning claim certificate (a shared credential all unprovisioned devices carry).
+
+2. Modify your Part A ESP32 sketch to use a two-phase connection: first connect with the claim certificate to the `$aws/provisioning-templates/LabFleetTemplate/provision/json` topic and publish a `RegisterThing` request with a unique serial number (use the ESP32's MAC address via `WiFi.macAddress()`). Parse the `RegisterThing` accepted response to extract the new permanent certificate and private key from the JSON payload.
+
+3. Store the received permanent certificate and private key in ESP32 NVS using the `Preferences` library (`prefs.putString("cert", certPem)` and `prefs.putString("key", keyPem)`). On subsequent boots, check NVS first — if a permanent certificate exists, skip provisioning and connect directly with the permanent credentials.
+
+4. Write a 3–4 sentence analysis of how this fleet provisioning pattern eliminates the need for a factory provisioning station that loads individual certificates per device, and identify the security risk if the provisioning claim certificate is extracted from a device's firmware.
+
+### Challenge 2: AWS IoT Rules Engine — Multi-Action Pipeline
+
+Build a Rules Engine pipeline that routes sensor data to two destinations simultaneously based on message content.
+
+1. Create an IoT Rule named `LabSensorRouter` with the SQL expression:
+
+```sql
+SELECT topic(3) as device_id,
+       temperature,
+       humidity,
+       timestamp() as ts
+FROM 'lab10/+/sensors'
+WHERE temperature > 0
+```
+
+Add two actions to this rule: (a) republish to `lab10/processed/${device_id}` for downstream subscribers, and (b) send to an Amazon DynamoDB table named `SensorReadings` with partition key `device_id` (string) and sort key `ts` (number). Create the DynamoDB table and IAM role with `dynamodb:PutItem` permission.
+
+1. Publish 10 test messages from your ESP32 (or from the AWS IoT MQTT test client) with varying temperature values. Verify in the DynamoDB console that 10 items appear in the `SensorReadings` table.
+
+1. Add a conditional SNS action to the same rule using a `WHERE` clause modification: add a second rule named `LabTempAlert` that fires only when `temperature > 30`. This rule sends an SNS notification to the email you configured in Part D. Trigger it by publishing a message with `"temperature": 35`.
+
+1. In the AWS IoT console, open the rule's activity monitor and confirm that the action count for `LabSensorRouter` shows 10 invocations. Screenshot the DynamoDB item list and the SNS alert email.
+
+### Reflection Questions
+
+1. In Part C of the main lab, the Device Shadow `reported` state is updated by the ESP32 on each sensor reading. If the ESP32 goes offline for 2 hours and then reconnects, describe the exact sequence of MQTT messages the device should publish on reconnect to correctly synchronize its state with the Shadow — including which topics are published and subscribed.
+
+2. AWS IoT Core policies use the `${iot:ClientId}` policy variable to restrict each device to its own topic namespace. Explain what would happen if a device connected with client ID `device-001` attempted to publish to the topic `lab10/device-002/sensors`, and describe how the policy evaluation engine enforces this restriction at the broker level.

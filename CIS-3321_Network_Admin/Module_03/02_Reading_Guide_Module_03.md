@@ -233,4 +233,30 @@ Use this process for every subnetting question on the exam.
 
 ---
 
+## 9. Supplemental Resources
+
+The following free resources extend Module 03 content on IPv4 addressing, subnetting, and CIDR. No purchase is required.
+
+**1. Professor Messer — IPv4 Addressing and Subnetting Free Videos**
+URL: https://www.professormesser.com/network-plus/n10-008/n10-008-video/
+Relevance: Professor Messer provides dedicated videos on IPv4 addressing, subnetting, and CIDR notation. His subnetting video walks through the block-size method step by step, which directly matches the four-step process in this reading guide.
+
+**2. Subnet Practice Tool — SubnettingPractice.com**
+URL: https://www.subnettingpractice.com/
+Relevance: A free interactive subnetting drill tool that generates random subnetting problems and provides immediate feedback. Repetitive practice using this tool is the fastest way to master the speed subnetting required for the Network+ exam.
+
+**3. RFC 1918 — Address Allocation for Private Internets**
+URL: https://datatracker.ietf.org/doc/html/rfc1918
+Relevance: The original IETF standard defining the three private IPv4 address ranges. Reading the actual RFC is brief (3 pages) and definitively clarifies the exact boundaries of 10.x.x.x, 172.16–31.x.x, and 192.168.x.x.
+
+**4. Cisco — Understanding IP Addressing and Subnetting Basics**
+URL: https://www.cisco.com/c/en/us/support/docs/ip/routing-information-protocol-rip/13788-3.html
+Relevance: Cisco's official free documentation on IPv4 addressing and subnetting principles. Covers binary-to-decimal conversion, subnet calculation, and CIDR with worked examples from an industry-authoritative source.
+
+**5. IP Subnet Calculator — NetworkCalc.com**
+URL: https://networkcalc.com/subnet-calculator
+Relevance: A free online subnet calculator for verifying subnetting calculation results. Use it to check your work after completing manual calculations — not as a replacement for learning the manual method.
+
+---
+
 *CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash*

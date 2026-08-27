@@ -203,3 +203,203 @@ A sales order is entered in the SAP SD module for 500 finished assemblies. No fi
 - *Why B is incorrect:* Revenue should not be recognized before goods are delivered; posting revenue at order entry violates accrual accounting principles. Additionally, production cannot be skipped for manufactured goods.
 - *Why C is incorrect:* This sequence omits the production planning step entirely. For manufactured goods, PP must create and execute a production order before finished goods exist to ship.
 - *Why D is incorrect:* In a customer-demand-driven environment, the sales order must exist before production begins. Starting production before a customer order exists describes Make-to-Stock planning, not Make-to-Order, and the sequence described is reversed.
+
+---
+
+### Question 11
+
+(5 points)
+
+A material master record in SAP MM contains multiple views. Which view stores the MRP type, reorder point, safety stock level, and lot size parameters used by the planning run?
+
+- A) Sales view — because MRP planning data flows from customer orders
+- B) Accounting view — because inventory value and valuation class are stored there
+- C) MRP view — because all planning-relevant parameters for the material are configured in the MRP tabs of the material master
+- D) Warehouse Management view — because safety stock and bin locations are managed together
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - *Why C is correct:* SAP material master records have multiple views (tabs), each serving a different module. The MRP views (MRP 1–4) store all planning-relevant parameters: MRP type (reorder point, MRP, consumption-based), lot-sizing procedure, reorder point quantity, safety stock, and planned delivery time.
+  - *Why A is incorrect:* The Sales views store customer-facing data like sales unit, delivering plant, and delivery tolerances — not MRP planning parameters.
+  - *Why B is incorrect:* The Accounting view stores the valuation class and inventory price (standard or moving average); it does not contain MRP planning parameters.
+  - *Why D is incorrect:* Warehouse Management views store warehouse-specific data like bin type and special movement indicators; safety stock is an MRP parameter stored in the MRP views.
+
+---
+
+### Question 12
+
+(5 points)
+
+A company uses **Standard Price** valuation for a raw material. The standard price is $50/unit. A new shipment arrives at an actual purchase price of $58/unit. How does SAP record this goods receipt?
+
+- A) SAP records the inventory at $58 and updates the standard price to $58 for all future receipts
+- B) SAP records the inventory at $50 (standard price) and posts the $8/unit difference to a price variance account
+- C) SAP blocks the goods receipt until the purchase order price is corrected to match the standard price
+- D) SAP averages $50 and $58 and updates the inventory value to $54/unit
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* With Standard Price valuation (price indicator "S"), inventory is always recorded at the predetermined standard price. Any difference between actual purchase price and standard price is posted to a Price Difference account, enabling variance analysis.
+  - *Why A is incorrect:* Standard Price does not self-update from goods receipts; the standard price can only be changed through a deliberate price update transaction (MR21), not automatically.
+  - *Why C is incorrect:* SAP does not block goods receipts due to price discrepancies with standard price; the discrepancy is simply posted to the variance account.
+  - *Why D is incorrect:* Averaging the standard price with the actual price describes behavior closer to Moving Average Price valuation, not Standard Price valuation.
+
+---
+
+### Question 13
+
+(5 points)
+
+In SAP Supply Chain Management, what is the purpose of the **GR/IR clearing account**?
+
+- A) It is the cost center account used to allocate goods receipt costs to the appropriate department
+- B) It is a balance sheet clearing account that records the obligation to pay for goods received but not yet invoiced, and is cleared when the matching vendor invoice is posted
+- C) It is the General Ledger account that stores cumulative purchase order values for budget control
+- D) It is a vendor-specific account that tracks all open purchase orders for each supplier
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* The GR/IR (Goods Receipt / Invoice Receipt) clearing account bridges the timing difference between receiving goods (which creates a debit to inventory and credit to GR/IR) and receiving the vendor invoice (which debits GR/IR and credits vendor payable). At month-end, any non-zero balance represents goods received but not yet invoiced, or invoices received without a corresponding goods receipt.
+  - *Why A is incorrect:* Cost center allocation is a CO function; the GR/IR account is an FI clearing account, not a CO cost allocation vehicle.
+  - *Why C is incorrect:* Cumulative purchase order budget tracking is handled through commitment management in SAP, not the GR/IR clearing account.
+  - *Why D is incorrect:* Vendor-specific balances are tracked in the vendor sub-ledger (FI-AP); the GR/IR account is a balance sheet clearing account, not a vendor account.
+
+---
+
+### Question 14
+
+(5 points)
+
+A distribution company wants to minimize inventory holding costs while ensuring they never run out of their top-selling product during the 14-day supplier lead time. Which two SAP MRP parameters most directly address this requirement?
+
+- A) Standard Price and Moving Average Price
+- B) Safety Stock and Planned Delivery Time
+- C) Vendor Evaluation Score and Payment Terms
+- D) Goods Issue movement type and delivery confirmation
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Safety Stock sets the minimum inventory buffer that triggers replenishment before a stockout occurs. Planned Delivery Time tells MRP how many days to expect between creating a purchase order and receiving the goods, ensuring orders are placed far enough in advance to maintain the safety buffer during the lead time.
+  - *Why A is incorrect:* Standard Price and Moving Average Price are inventory valuation methods that affect financial reporting, not stock level planning or replenishment timing.
+  - *Why C is incorrect:* Vendor evaluation scores and payment terms are procurement management parameters; they do not directly control when MRP triggers replenishment proposals.
+  - *Why D is incorrect:* Goods issue movement type determines how stock reductions are posted financially; delivery confirmation is an operational logistics step. Neither directly controls safety stock levels or replenishment lead time calculations.
+
+---
+
+### Question 15
+
+(5 points)
+
+Which SAP module integration is triggered when a finished goods delivery is posted for a customer order in the SD module?
+
+- A) SD posts to FI-AP, creating a vendor payment obligation for the customer order
+- B) SD triggers MM-IM Goods Issue (movement type 601), reducing finished goods inventory and creating a COGS posting in FI
+- C) SD triggers PP to start a new production order for the delivered quantity to replenish stock
+- D) SD posts to CO-CCA, allocating the delivery cost to the shipping department cost center
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Posting a customer delivery in SD triggers movement type 601 in MM-IM, which reduces the finished goods inventory balance and creates the cost of goods sold (COGS) journal entry in FI — the classic SD-MM-FI integration chain.
+  - *Why A is incorrect:* FI-AP is the vendor payables module; a customer delivery creates a receivable (FI-AR), not a payable.
+  - *Why C is incorrect:* MRP-driven replenishment is triggered by the sales order demand (not the delivery posting), and even then it generates a planned order for human review — not an automatic new production order.
+  - *Why D is incorrect:* While shipping costs may be allocated to a cost center in CO, the primary financial impact of a goods issue is the inventory reduction and COGS posting in MM-IM and FI, not a cost center allocation.
+
+---
+
+### Question 16
+
+(5 points)
+
+What distinguishes **Make-to-Order (MTO)** production planning from **Make-to-Stock (MTS)** in SAP?
+
+- A) MTO produces goods in advance of customer orders and stores them in finished goods inventory; MTS produces only in direct response to individual customer orders
+- B) MTO links each production order directly to a specific customer sales order, with costs and stock tracked at the sales order level; MTS produces to replenish generic finished goods stock without a specific customer assignment
+- C) MTO is used only for services, not physical goods; MTS is used only for discrete manufacturing
+- D) MTO requires a purchase order from the vendor; MTS requires a production order from the plant
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* In Make-to-Order, each production order is a direct response to a specific sales order, and finished goods are earmarked for that customer. Cost tracking and special stock handling differ from MTS. In Make-to-Stock, production fills generic finished goods inventory that can be consumed by any future customer order.
+  - *Why A is incorrect:* This reverses the definitions. MTS produces in advance of orders; MTO produces in response to orders.
+  - *Why C is incorrect:* Both MTO and MTS apply to physical manufactured goods. Services typically use different planning strategies entirely.
+  - *Why D is incorrect:* Both MTO and MTS can involve purchase orders for components; the distinction is about whether production is tied to a specific customer order, not about purchasing behavior.
+
+---
+
+### Question 17
+
+(5 points)
+
+A procurement manager wants to automatically generate a purchase order every time a purchase requisition is created and has been approved. Which SAP functionality enables this automatic PO creation?
+
+- A) MIGO automatic release
+- B) Source List with automatic purchase order creation flag enabled in the material and vendor master
+- C) MRP automatic payment run
+- D) MIRO automatic three-way match bypass
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* SAP supports automatic PO creation from approved purchase requisitions when a source list entry exists for the material/vendor combination and the automatic PO creation indicator is set. This reduces manual effort in high-volume, low-risk procurement scenarios.
+  - *Why A is incorrect:* MIGO is the goods receipt transaction; it does not have a function for automatically creating purchase orders from requisitions.
+  - *Why C is incorrect:* The MRP payment run does not exist as an SAP transaction; F110 is the AP payment run, and it processes vendor payments, not procurement document creation.
+  - *Why D is incorrect:* MIRO is used for invoice verification; there is no "automatic bypass" of the three-way match — bypassing it would eliminate a critical financial control.
+
+---
+
+### Question 18
+
+(5 points)
+
+A company has 90 days of raw material inventory on hand but only 7 days of sales demand to cover. Which supply chain performance metric would flag this situation, and what business problem does it indicate?
+
+- A) On-Time Delivery Rate — indicates the supplier is delivering too early
+- B) Days Inventory Outstanding (DIO) — an extremely high DIO indicates excess cash tied up in inventory, increasing carrying costs and risk of obsolescence
+- C) Fill Rate — indicates that 83 days of inventory cannot be matched to customer orders
+- D) Purchase Order Cycle Time — indicates the procurement team is creating orders too frequently
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Days Inventory Outstanding (also called Days of Inventory on Hand) measures how long inventory sits before being consumed. A DIO of 90 days when sales demand is 7 days indicates dramatically over-purchased inventory — tying up working capital, increasing warehouse costs, and creating obsolescence risk.
+  - *Why A is incorrect:* On-Time Delivery Rate measures whether suppliers deliver on the promised date, not inventory levels relative to demand.
+  - *Why C is incorrect:* Fill Rate measures the percentage of customer orders fulfilled from available stock; it does not directly measure excess inventory levels.
+  - *Why D is incorrect:* Purchase Order Cycle Time measures how long it takes to create and send a purchase order; it does not measure inventory excess relative to demand.
+
+---
+
+### Question 19
+
+(5 points)
+
+In SAP Materials Management, which document type is created when a company confirms that goods ordered on a purchase order have physically arrived at the warehouse?
+
+- A) Purchase Requisition
+- B) Purchase Order
+- C) Material Document (Goods Receipt)
+- D) Vendor Invoice Document
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - *Why C is correct:* A Material Document (created by MIGO transaction, movement type 101) is the SAP record of goods physically received. It updates inventory quantity, creates the GR/IR clearing account entry, and triggers a corresponding FI accounting document.
+  - *Why A is incorrect:* A Purchase Requisition is created before the purchase order as an internal request to procure; it precedes the physical receipt of goods.
+  - *Why B is incorrect:* A Purchase Order is the legal commitment to the vendor; it is created before goods arrive, not at the time of receipt.
+  - *Why D is incorrect:* A Vendor Invoice Document (created by MIRO) is posted when the vendor's bill arrives; it comes after the goods receipt in the P2P sequence.
+
+---
+
+### Question 20
+
+(5 points)
+
+A company's ERP system has reorder point planning configured for a component. The reorder point is set at 200 units. Current stock is 180 units, with an open purchase order for 300 units already confirmed. Should MRP generate a new purchase requisition?
+
+- A) Yes — current stock (180) is below the reorder point (200), so MRP always generates a new requisition regardless of existing open purchase orders
+- B) No — MRP considers available stock plus open purchase orders (180 + 300 = 480 units), which exceeds the reorder point, so no additional procurement is needed
+- C) Yes — MRP ignores open purchase orders when calculating net requirements
+- D) No — once a reorder point is set, MRP never generates new requisitions until the open PO is received
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* SAP MRP calculates net requirements by netting current stock plus open purchase orders and production orders against demand. With 180 on hand and 300 on order, total available = 480 — well above the 200 reorder point. No new procurement proposal is needed.
+  - *Why A is incorrect:* MRP does not ignore existing open orders; considering all supply-side commitments is a core MRP calculation principle.
+  - *Why C is incorrect:* Ignoring open purchase orders would create duplicate procurement and excess inventory — the opposite of MRP's purpose. MRP always includes all planned and confirmed supply orders in its calculation.
+  - *Why D is incorrect:* Having an open PO does not permanently disable MRP planning. MRP continuously recalculates and would generate a new proposal if stock fell below requirements after the open PO is received and consumed.

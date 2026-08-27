@@ -237,3 +237,208 @@ The engineer must create a firewall rule explicitly allowing SSH.
 End of Quiz — Module 05
 
 Course: CIS-4329 Google Cloud Computing | Texas Wesleyan University | Professor Nash
+
+---
+
+### Question 11 (5 points)
+
+You create a custom VPC in auto mode. What subnets are automatically
+provisioned?
+
+- A) No subnets — auto mode requires you to create all subnets manually
+- B) One subnet per GCP region, each with a pre-defined IP range from
+   `10.128.0.0/9`
+- C) One subnet in the default region selected during VPC creation
+- D) One subnet per zone in the default region
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Auto mode specifically auto-creates subnets; that behavior is the defining characteristic of auto mode versus custom mode.
+  - C) Auto mode creates one subnet per region across all GCP regions simultaneously, not just the default region.
+  - D) Subnets are regional resources, not zonal; one subnet per region is created, covering all zones within that region automatically.
+
+---
+
+### Question 12 (5 points)
+
+A VM in subnet `10.0.1.0/24` needs to communicate with a VM in subnet
+`10.0.2.0/24` within the same custom VPC. No firewall rules have been
+configured. Will communication succeed?
+
+- A) Yes — VMs within the same VPC can always communicate freely regardless
+   of firewall rules
+- B) No — the default implied deny-all ingress rule blocks all traffic;
+   an explicit allow rule between the subnets must be created
+- C) Yes — subnets in the same VPC use route-based communication that bypasses
+   firewall rules
+- D) No — VMs on different subnets require VPC peering to communicate
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) In a custom VPC with no rules added, the implied deny-all ingress rule at priority 65535 blocks all inbound traffic, including traffic from other subnets in the same VPC.
+  - C) Firewall rules apply to all traffic entering a VM's network interface, regardless of whether the source is another subnet in the same VPC; routes determine the path but firewalls still filter.
+  - D) VPC peering connects separate VPCs; subnets within the same VPC do not require peering — they only need a firewall allow rule for the desired traffic.
+
+---
+
+### Question 13 (5 points)
+
+What is the primary difference between Partner Interconnect and Dedicated
+Interconnect?
+
+- A) Partner Interconnect uses encryption; Dedicated Interconnect does not
+- B) Partner Interconnect connects to Google's network through a supported
+   service provider; Dedicated Interconnect requires a physical connection
+   directly from the customer's facility to a Google colocation facility
+- C) Dedicated Interconnect supports up to 1 Gbps; Partner Interconnect
+   supports up to 100 Gbps
+- D) Partner Interconnect is only available in the United States
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Neither type of Interconnect provides encryption by default; both carry traffic over private physical circuits. Cloud VPN can be layered on top for encryption if needed.
+  - C) Dedicated Interconnect supports 10 Gbps or 100 Gbps per circuit; Partner Interconnect supports 50 Mbps to 50 Gbps through the partner's network. The bandwidth figures in option C are reversed.
+  - D) Partner Interconnect is available globally through supported service providers in many countries, not only the US.
+
+---
+
+### Question 14 (5 points)
+
+A GCP project has the default VPC. The default VPC includes a firewall rule
+`default-allow-internal`. What traffic does this rule permit?
+
+- A) All traffic between any VMs in any GCP project
+- B) All protocols and ports between VMs on the same default VPC
+- C) Only TCP:22 (SSH) and TCP:3389 (RDP) between VMs on the default VPC
+- D) ICMP only between VMs on the default VPC
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) `default-allow-internal` applies only within the same VPC network; it does not permit traffic between different projects or different VPCs.
+  - C) `default-allow-internal` allows all protocols and all ports between instances on the default VPC; SSH and RDP are covered by `default-allow-ssh` and `default-allow-rdp` respectively.
+  - D) ICMP-only would describe a much more restrictive rule; `default-allow-internal` permits TCP, UDP, and ICMP on all ports within the VPC.
+
+---
+
+### Question 15 (5 points)
+
+You need to allow a Cloud Run service (no external IP, serverless) to
+access a private Redis instance (Memorystore) in a VPC. What networking
+component enables this?
+
+- A) Cloud NAT configured on the VPC subnet
+- B) A Serverless VPC Access connector attached to the Cloud Run service
+- C) VPC peering between the serverless network and the customer VPC
+- D) A Cloud VPN tunnel between the Cloud Run region and the VPC
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Cloud NAT provides outbound internet access for VMs without external IPs; it does not route traffic from serverless services to private VPC resources.
+  - C) VPC peering connects two VPCs together; serverless services like Cloud Run do not reside in a customer-controlled VPC and cannot be a peer in a standard VPC peering relationship.
+  - D) Cloud VPN connects on-premises networks or other clouds to a GCP VPC; it is not the mechanism for connecting serverless services to private VPC resources within the same GCP project.
+
+---
+
+### Question 16 (5 points)
+
+An organization policy sets `constraints/compute.restrictVpcPeering` to deny
+all VPC peering requests in the organization. A developer in a project within
+that organization tries to create a VPC peering connection. What happens?
+
+- A) The peering succeeds if the developer has `roles/compute.networkAdmin`
+- B) The peering request is blocked by the organization policy regardless of
+   the developer's IAM role
+- C) The policy only applies to the organization node, not to individual
+   projects
+- D) The developer can override the organization policy by setting a
+   project-level policy to allow peering
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Organization Policy constraints operate independently of IAM; even a user with `roles/owner` cannot perform actions blocked by an Organization Policy.
+  - C) Organization Policy constraints applied at the Organization node cascade down to all folders and projects in the organization.
+  - D) Project-level policies can only make constraints more restrictive than the parent; they cannot override a deny set at the Organization level.
+
+---
+
+### Question 17 (5 points)
+
+Which GCP networking feature automatically assigns outbound public IP
+addresses to VMs that have no external IP, allowing them to make outbound
+internet connections while remaining unreachable from the internet?
+
+- A) Private Google Access
+- B) Cloud NAT
+- C) External Load Balancer with VIP
+- D) Shared VPC with a public subnet
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Private Google Access allows VMs without external IPs to reach Google APIs and GCP services (like Cloud Storage), but it does not provide general internet access to arbitrary public destinations.
+  - C) An External Load Balancer provides inbound internet connectivity to backend VMs; it does not enable outbound internet access for VMs with no external IP.
+  - D) Shared VPC is a network governance feature for sharing subnets across projects; it does not automatically provide outbound internet connectivity to VMs without external IPs.
+
+---
+
+### Question 18 (5 points)
+
+A firewall rule uses `--source-ranges=35.191.0.0/16,130.211.0.0/22` and
+`--target-tags=http-server`. What is this rule's purpose?
+
+- A) It blocks load balancer traffic from reaching the tagged VMs
+- B) It allows health check probes from GCP load balancers to reach VMs
+   tagged `http-server`
+- C) It allows all internet traffic on all ports to VMs tagged `http-server`
+- D) It allows VMs tagged `http-server` to send traffic to the internet
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) This is an ingress allow rule (the ranges `35.191.0.0/16` and `130.211.0.0/22` are the GCP health checker source ranges); it permits traffic, not blocks it.
+  - C) The source ranges `35.191.0.0/16` and `130.211.0.0/22` are specifically Google's health check probe ranges, not the entire internet; the rule is narrowly scoped to those two address blocks.
+  - D) A rule specifying `--source-ranges` applies to ingress traffic coming from those ranges; egress rules use `--destination-ranges`.
+
+---
+
+### Question 19 (5 points)
+
+You configure Cloud Armor with a security policy that includes:
+
+- Rule 1 priority 100: Allow requests from `203.0.113.0/24`
+- Rule 2 priority 500: Deny SQL injection (preconfigured WAF rule)
+- Default rule: Allow all
+
+A request arrives from `203.0.113.5` containing a SQL injection payload.
+What action is taken?
+
+- A) The request is allowed because Rule 1 matches first at priority 100
+- B) The request is denied because the WAF rule detects SQL injection
+- C) The default rule allows the request because the WAF rule only applies to
+   non-allowed IPs
+- D) Both rules match and the result is undefined behavior
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - B) Cloud Armor evaluates rules in priority order; Rule 1 at priority 100 is evaluated before Rule 2 at priority 500. Because the source IP matches Rule 1 (allow), the allow action is applied and evaluation stops before reaching the WAF rule.
+  - C) Cloud Armor does not have a concept of "non-allowed IPs" that bypasses further evaluation; it strictly evaluates rules in numeric priority order and stops at the first match.
+  - D) Cloud Armor's behavior is well-defined: the first matching rule wins; there is no undefined behavior when multiple rules could match.
+
+---
+
+### Question 20 (5 points)
+
+What is the purpose of a VPC flow log, and which resource must it be enabled
+on?
+
+- A) VPC flow logs record DNS query activity; enabled on the VPC network
+- B) VPC flow logs record a sample of network flows to and from VM network
+   interfaces; enabled on individual subnets
+- C) VPC flow logs record firewall rule evaluation decisions; enabled on
+   individual firewall rules
+- D) VPC flow logs record all API calls in the project; enabled on the
+   project's audit log configuration
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) DNS query logging is a separate feature of Cloud DNS private zones; VPC flow logs record network packet flows, not DNS queries.
+  - C) Firewall rule evaluation decisions are recorded in firewall logs (a separate feature enabled per firewall rule), not VPC flow logs.
+  - D) API call logging is handled by Cloud Audit Logs; VPC flow logs are specifically for network traffic metadata at the subnet level.

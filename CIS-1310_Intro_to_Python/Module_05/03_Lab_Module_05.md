@@ -623,6 +623,49 @@ Zip all 5 screenshots and upload to the Canvas Module 05 Lab Assignment.
 
 ---
 
+## Part 9 — Challenge Exercise
+
+These steps are optional and ungraded. They extend loop concepts to more complex algorithmic patterns.
+
+### Challenge 9.1 — FizzBuzz with Loop-Else
+
+FizzBuzz is a classic programming interview problem. Write `~/cis1310/module05/fizzbuzz.py` that:
+
+1. Uses a `for` loop over `range(1, 101)` to print numbers 1–100
+2. Prints `FizzBuzz` for multiples of both 3 and 5
+3. Prints `Fizz` for multiples of 3 only
+4. Prints `Buzz` for multiples of 5 only
+5. Prints the number itself otherwise
+6. After the loop, uses the `else` clause to print `Complete — no break occurred`
+7. Counts and prints the total number of `Fizz`, `Buzz`, and `FizzBuzz` outputs using three accumulator variables
+
+The challenge: the `elif` order matters — test `FizzBuzz` (divisible by both) first before testing `Fizz` or `Buzz` individually. If you check `Fizz` first, multiples of 15 will match early and never reach `FizzBuzz`.
+
+---
+
+### Challenge 9.2 — Prime Number Sieve (Loop + For-Else)
+
+Write `~/cis1310/module05/primes.py` that finds all prime numbers up to a user-specified limit using trial division and the `for-else` pattern:
+
+For each candidate number `n` from 2 to the limit, use a `for` loop to test whether any number from 2 to `n-1` divides `n` evenly. If a divisor is found, `break`. If the inner loop completes without breaking (meaning no divisor was found), the `else` clause identifies `n` as prime and appends it to a list.
+
+Print all discovered primes and their count. Then improve the algorithm: instead of testing up to `n-1`, only test up to `int(n**0.5) + 1` (the square root bound). Compare the execution speed hint — the optimized version tests far fewer candidates.
+
+---
+
+### Challenge 9.3 — Collatz Conjecture Visualizer
+
+Write `~/cis1310/module05/collatz.py` that implements the Collatz sequence:
+
+- Start with any positive integer `n`
+- If `n` is even: `n = n // 2`
+- If `n` is odd: `n = 3 * n + 1`
+- Repeat until `n == 1`
+
+Use a `while` loop to generate the sequence. Print each value, count the steps, and track the maximum value reached. Then run the sequence for starting values 1 through 20 using an outer `for` loop and print a summary table showing the starting value, number of steps to reach 1, and the maximum value encountered. The Collatz conjecture states this sequence always reaches 1 for any positive integer — it has never been proven or disproven for all integers.
+
+---
+
 ## Troubleshooting Guide
 
 **Infinite loop that won't stop.**

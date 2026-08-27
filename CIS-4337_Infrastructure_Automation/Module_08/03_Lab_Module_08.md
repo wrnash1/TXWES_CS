@@ -121,7 +121,7 @@ terraform state list
 
 Expected output:
 
-```
+```text
 local_file.app_config
 local_file.db_config
 local_file.readme
@@ -385,6 +385,48 @@ Submit the following to the course LMS:
 | State pull backup created correctly | 10 |
 | `.gitignore` correctly excludes state files | 15 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Cross-Configuration State Sharing with `terraform_remote_state`
+
+Simulate a multi-stack architecture where a "network" configuration shares its outputs with an "application" configuration using `terraform_remote_state`.
+
+**Step A.** Create a second Terraform configuration in `~/tf-lab-08-network/`. Add the following `main.tf` that writes a JSON file containing simulated network data, with outputs for `vpc_id` and `subnet_ids`:
+
+```hcl
+resource "local_file" "network_info" {
+  filename = "${path.module}/network_info.json"
+  content  = jsonencode({ vpc_id = "vpc-simulated-001", subnet_ids = ["subnet-a", "subnet-b"] })
+}
+
+output "vpc_id"     { value = "vpc-simulated-001" }
+output "subnet_ids" { value = ["subnet-a", "subnet-b"] }
+```
+
+**Step B.** Apply the network configuration: `terraform init && terraform apply -auto-approve`.
+
+1. In your original `~/tf-lab-08/` configuration, add a `terraform_remote_state` data source pointing to the network configuration's local state file path.
+2. Add a `local_file` resource that writes an `app-network.json` file using the VPC ID and subnet IDs from `data.terraform_remote_state.network.outputs`.
+3. Run `terraform plan` and confirm the outputs from the network stack appear as input to the app stack. Record in a notes file: what access permission would be needed if the network stack used an S3 backend instead of local?
+
+### Challenge 2: State Import and Reconciliation
+
+Practice the full import workflow on a resource that already exists but is not tracked in state.
+
+**Step A.** Manually create a file at `output/manual.txt` with content `"manually created"` using any method outside Terraform (e.g., your text editor or `echo`).
+
+1. Add a `local_file` resource block named `manual` in `main.tf` with the matching filename and content. Run `terraform plan` — confirm Terraform plans to create it (it doesn't know the file already exists).
+2. Run `terraform import local_file.manual output/manual.txt` to bring the existing file into state.
+3. Run `terraform plan` again. If there are still proposed changes, adjust the resource block's `content` argument to match the actual file content until the plan shows no changes.
+4. Record in a notes file: what is the key difference between `terraform import` (imperative) and the `import {}` block (declarative) with respect to CI/CD pipeline integration?
+
+### Reflection Questions
+
+1. You practiced `terraform state mv` to prevent destroy-and-recreate during refactoring. Describe an organizational process (code review, plan review, pre-merge checks) that would catch a configuration rename before it reaches production without the developer needing to manually run `state mv`.
+2. The lab stored state locally. List three specific risks that local state introduces for a team of five engineers working on the same infrastructure, and explain how each risk is mitigated by a remote backend with locking and versioning.
 
 ---
 

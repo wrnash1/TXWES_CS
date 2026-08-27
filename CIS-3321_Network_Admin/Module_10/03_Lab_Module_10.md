@@ -323,4 +323,44 @@ Submit to the Module 10 Lab assignment in the course LMS before the posted deadl
 
 ---
 
-CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash
+## Part 9 — Challenge Exercise
+
+These advanced steps extend the Module 10 lab with DHCP failover concepts, DNS zone configuration, and advanced NTP analysis.
+
+### Challenge Step 1: Simulate DHCP Scope Exhaustion and Recovery
+
+1. In your existing Packet Tracer DHCP topology, shrink the VLAN 10 scope address range to only 3 available addresses (e.g., 10.10.10.50–10.10.10.52).
+2. Force PC2, PC3, and an additional PC6 to all request DHCP addresses.
+3. Add a fourth PC (PC7) and force it to request an address — it should fail and fall back to APIPA (169.254.x.x).
+4. Verify PC7 received an APIPA address using its IP Configuration display.
+
+**Challenge Question 1:** Record the APIPA address assigned to PC7. What is the subnet mask associated with all APIPA addresses? Can PC7 communicate with PC2 (which received a 10.10.10.x address)? Explain why or why not based on the OSI Layer 3 subnet definitions involved. What are two corrective actions an administrator could take to resolve the scope exhaustion?
+
+### Challenge Step 2: Configure DHCP Options Manually and Verify
+
+In Packet Tracer, on your existing DHCP server:
+1. Add a new DHCP pool for a management VLAN (192.168.99.0/24):
+   - Default router: 192.168.99.1
+   - DNS server: 192.168.99.53
+   - Domain name: mgmt.txwes.edu
+   - Lease time: 2 days
+2. Connect a new PC to the management VLAN segment and verify it receives all configured options.
+3. Record the values from the PC's IP configuration display.
+
+**Challenge Question 2:** List each DHCP option number that corresponds to the values you configured (router, DNS server, domain name, lease time). Explain why explicitly configuring the DNS server option in DHCP scopes is important for network functionality — what would happen if a client received an IP address via DHCP but no DNS server option was delivered?
+
+### Challenge Step 3: Analyze Real-World NTP Synchronization on Your Computer
+
+1. On Windows, run: `w32tm /query /status`
+2. On Linux/macOS, run: `timedatectl` or `ntpq -p`
+3. Record:
+   - The NTP source your computer is synchronized to
+   - The stratum level reported
+   - The clock offset from the reference
+   - The last successful synchronization time
+
+**Challenge Question 3:** Based on your output, what stratum is your computer's NTP source? What stratum does that make your computer? If a Kerberos-enabled service (like Active Directory domain login) uses your computer's time, calculate how many additional seconds of clock drift would push the total beyond the 5-minute (300-second) Kerberos maximum. What would be the observable symptom if this threshold were exceeded, and what command would you run to immediately force a time resynchronization?
+
+---
+
+*CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash*

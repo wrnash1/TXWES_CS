@@ -369,3 +369,211 @@ New-ScheduledTaskAction -Execute "C:\Scripts\Cleanup.ps1" -Trigger "Daily" -At "
   - Why D is incorrect: `New-ScheduledTaskAction` creates a task action object
     — it does not register a task. Additionally, the parameters `-Trigger`,
     `-At`, and `-User` do not belong to `New-ScheduledTaskAction`.
+
+---
+
+### Question 11 (5 points)
+
+An administrator needs to find all processes on a server whose name starts with
+`"sql"` and display their process ID, name, and CPU time. Which command is
+correct?
+
+- A) `Get-Process | Where-Object {$_.Name -like "sql*"} | Select-Object Id, Name, CPU`
+- B) `Get-Process -Name "sql" | Select-Object Id, Name, CPU`
+- C) `Get-Process | Select-Object Id, Name, CPU | Where-Object {$_.Name -eq "sql*"}`
+- D) `Get-Process | Filter {$_.Name -starts "sql"} | Select-Object Id, Name, CPU`
+
+- **Correct Answer: A**
+- **Distractor Analysis:**
+  - **A** — Correct. `Where-Object` with `-like "sql*"` uses a wildcard pattern to match any process whose name begins with "sql". `Select-Object` then picks the three required properties.
+  - **B** — `Get-Process -Name "sql"` looks for a process named exactly "sql" (no wildcard). It would not match `sqlservr`, `sqlwriter`, etc. To use a wildcard with the `-Name` parameter: `Get-Process -Name "sql*"`.
+  - **C** — `Select-Object` is placed before `Where-Object` here. While this still works, the `-eq "sql*"` operator does exact string comparison; it does not treat `*` as a wildcard. `-like` is required for wildcard pattern matching.
+  - **D** — `Filter` is not a valid pipeline cmdlet. `-starts` is not a valid `-like` operator. The correct wildcard comparison operator is `-like`.
+
+---
+
+### Question 12 (5 points)
+
+An administrator uses `Invoke-Command` to query disk space on 10 servers and
+receives output objects. Each object has a `PSComputerName` property added
+automatically. What is the purpose of the `PSComputerName` property?
+
+- A) It specifies which computer should run the script block next time
+- B) It identifies which remote computer the result object came from, since all results are returned to the local session
+- C) It is the hostname of the local machine running the `Invoke-Command` call
+- D) It is a required parameter for filtering results before export
+
+- **Correct Answer: B**
+- **Distractor Analysis:**
+  - **A** — `PSComputerName` is a read-only property added to result objects. It has no role in directing future script execution.
+  - **B** — Correct. When `Invoke-Command` fans out to multiple computers, all result objects are returned to the local session. PowerShell automatically adds a `PSComputerName` property to each object so the administrator can identify which remote computer produced each row of output.
+  - **C** — `PSComputerName` identifies the remote source computer, not the local machine running the command. The local machine's name is available via `$env:COMPUTERNAME`.
+  - **D** — `PSComputerName` is not a required filter parameter. It is an informational property added automatically and is useful but not required for export.
+
+---
+
+### Question 13 (5 points)
+
+An administrator writes a script that reads a CSV file and creates AD user
+accounts. When run, the script throws a terminating error on the third row
+because the UPN already exists. The first two accounts were created successfully.
+Which change ensures all rows are attempted even if some fail?
+
+- A) Add `$ErrorActionPreference = "Ignore"` at the top of the script
+- B) Wrap the `New-ADUser` call in a `try` block with `-ErrorAction Stop` and a `catch` block that logs the error and continues
+- C) Add `-Confirm:$false` to the `New-ADUser` call to suppress the error dialog
+- D) Use `Start-Job` to run each row as a background job so errors in one job do not affect others
+
+- **Correct Answer: B**
+- **Distractor Analysis:**
+  - **A** — `$ErrorActionPreference = "Ignore"` silently discards all errors, including ones you need to know about. No logging occurs and the administrator has no record of which accounts failed.
+  - **B** — Correct. Wrapping `New-ADUser` in `try { ... -ErrorAction Stop } catch { ... }` converts non-terminating errors to terminating ones that are intercepted by `catch`. The `catch` block logs the failure and the loop continues to the next row.
+  - **C** — `-Confirm:$false` suppresses confirmation prompts, not errors. A duplicate UPN error is not a confirmation prompt; it is an exception thrown by AD.
+  - **D** — `Start-Job` would work but adds significant complexity — jobs run asynchronously, results must be collected with `Receive-Job`, and job management overhead is unnecessary for a sequential CSV import that simply needs per-row error handling.
+
+---
+
+### Question 14 (5 points)
+
+An administrator runs `Set-ExecutionPolicy Bypass -Scope Process`. What is the
+scope of this change?
+
+- A) The change applies to all users on the machine permanently
+- B) The change applies only to the current PowerShell process and is lost when the session closes
+- C) The change applies to the current user's profile and persists across sessions
+- D) The change applies to the LocalMachine scope and overrides all other scopes
+
+- **Correct Answer: B**
+- **Distractor Analysis:**
+  - **A** — `-Scope LocalMachine` applies to all users permanently. `-Scope Process` is restricted to the current session.
+  - **B** — Correct. `-Scope Process` applies the execution policy only to the current running PowerShell process. When the process exits, the setting is gone. It does not modify the registry or any persistent configuration.
+  - **C** — `-Scope CurrentUser` applies to the current user and persists across sessions by writing to the user's registry hive. `-Scope Process` is temporary.
+  - **D** — `-Scope LocalMachine` sets the policy for all users on the machine. `-Scope Process` is the most restricted and temporary scope; it does not affect or override `LocalMachine` or `CurrentUser` policy in the registry.
+
+---
+
+### Question 15 (5 points)
+
+An administrator wants to write a PowerShell function that accepts pipeline
+input. The function should accept a list of server names piped from another
+cmdlet. Which parameter declaration enables pipeline input by value?
+
+- A) `[Parameter(Mandatory=$true)] [string]$ComputerName`
+- B) `[Parameter(ValueFromPipeline=$true)] [string]$ComputerName`
+- C) `[Parameter(ValueFromPipelineByPropertyName=$true)] [string]$ComputerName`
+- D) `[Parameter(Pipeline=$true)] [string]$ComputerName`
+
+- **Correct Answer: B**
+- **Distractor Analysis:**
+  - **A** — `Mandatory=$true` requires the parameter to be provided but does not enable pipeline binding. The parameter would need to be passed explicitly.
+  - **B** — Correct. `ValueFromPipeline=$true` allows the parameter to accept input from the pipeline by value — meaning a string piped to the function populates `$ComputerName` directly.
+  - **C** — `ValueFromPipelineByPropertyName=$true` binds pipeline input by matching a property name on the incoming object to the parameter name. This requires the piped object to have a property named `ComputerName`, not raw string values.
+  - **D** — `Pipeline=$true` is not a valid `Parameter` attribute argument. The correct attribute is `ValueFromPipeline`.
+
+---
+
+### Question 16 (5 points)
+
+An administrator exports a list of running services to a CSV using:
+
+```powershell
+Get-Service | Where-Object {$_.Status -eq "Running"} |
+    Select-Object Name, DisplayName, Status |
+    Export-Csv "C:\Services.csv" -NoTypeInformation
+```
+
+When the CSV is later imported with `Import-Csv`, what type is the `Status`
+property of each imported object?
+
+- A) `[System.ServiceProcess.ServiceControllerStatus]` — the original enum type
+- B) `[string]` — CSV stores all values as text; Import-Csv creates string properties
+- C) `[int]` — CSV stores numeric enum values
+- D) `[bool]` — Status is either Running (true) or not Running (false)
+
+- **Correct Answer: B**
+- **Distractor Analysis:**
+  - **A** — CSV is a text format. When exported, the enum value is converted to its string representation (`"Running"`). When imported, `Import-Csv` creates `PSCustomObject` objects with all properties as strings.
+  - **B** — Correct. `Export-Csv` serializes all property values as strings. `Import-Csv` reads them back as strings. The original .NET type information is not preserved. This means comparisons like `-eq "Running"` work, but `-eq [System.ServiceProcess.ServiceControllerStatus]::Running` would fail.
+  - **C** — Enum values are exported as their string names (e.g., `"Running"`), not as integers. The integer representation is not written to the CSV.
+  - **D** — `Status` is a multi-value enum (Stopped, Running, Paused, etc.), not a boolean.
+
+---
+
+### Question 17 (5 points)
+
+An administrator needs to monitor a server's C: drive and send an email alert
+when free space drops below 10 GB. They plan to use a scheduled task running a
+PowerShell script every hour. Which script logic correctly checks the condition?
+
+- A) `if ((Get-PSDrive C).Free -lt 10) { Send-MailMessage ... }`
+- B) `if ((Get-Volume -DriveLetter C).SizeRemaining -lt 10GB) { Send-MailMessage ... }`
+- C) `if ((Get-WmiObject Win32_LogicalDisk -Filter "DeviceID='C:'").FreeSpace -lt "10GB") { Send-MailMessage ... }`
+- D) `if ((Get-Disk -Number 0).FreeSpace -lt 10GB) { Send-MailMessage ... }`
+
+- **Correct Answer: B**
+- **Distractor Analysis:**
+  - **A** — `(Get-PSDrive C).Free` returns free space in bytes. Comparing bytes to the integer `10` would be comparing bytes to a value of 10 bytes, not 10 GB. The comparison would almost never trigger correctly.
+  - **B** — Correct. `Get-Volume -DriveLetter C` returns a volume object with `SizeRemaining` in bytes. Comparing to `10GB` (which PowerShell expands to 10,737,418,240 bytes) correctly identifies when free space is below 10 gigabytes.
+  - **C** — `FreeSpace` from WMI is in bytes, which is correct for the comparison, but `"10GB"` is a string. Comparing a numeric property to a string would cause a type error or incorrect comparison. The literal should be `10GB` (no quotes).
+  - **D** — `Get-Disk` returns physical disk objects, not volume objects. Physical disk objects do not have a `FreeSpace` property — that belongs to logical volume/partition objects.
+
+---
+
+### Question 18 (5 points)
+
+An administrator runs `Get-Service -ComputerName DC2` and receives an error:
+"Cannot open Service Control Manager on computer 'DC2'. This operation might
+require other privileges." What is the most likely cause?
+
+- A) The WinRM service is not running on DC2
+- B) The administrator is not running PowerShell with elevated privileges or does not have administrative rights on DC2
+- C) `Get-Service` does not support the `-ComputerName` parameter on Windows Server 2022
+- D) DC2 is not reachable over the network
+
+- **Correct Answer: B**
+- **Distractor Analysis:**
+  - **A** — `Get-Service -ComputerName` uses the Windows Service Control Manager (SCM) API over RPC/DCOM, not WinRM. A WinRM failure would produce a different error.
+  - **B** — Correct. The Service Control Manager error indicates the current user does not have permission to connect to the remote SCM on DC2. Running PowerShell as a domain administrator or providing credentials resolves this.
+  - **C** — `Get-Service -ComputerName` is a supported parameter on all Windows Server versions. It uses legacy RPC/DCOM, not WinRM.
+  - **D** — A network connectivity failure would produce a different error such as "The RPC server is unavailable" or a network timeout, not a "Cannot open Service Control Manager" message.
+
+---
+
+### Question 19 (5 points)
+
+An administrator writes a script that generates a weekly server health report and
+saves it as a CSV. They want to append new data to the existing CSV each week
+without overwriting previous weeks' data. Which `Export-Csv` parameter enables
+appending?
+
+- A) `-Update`
+- B) `-Append`
+- C) `-Force`
+- D) `-NoClobber`
+
+- **Correct Answer: B**
+- **Distractor Analysis:**
+  - **A** — `-Update` is not a valid `Export-Csv` parameter.
+  - **B** — Correct. `-Append` adds new rows to an existing CSV file without overwriting existing content. The new rows are added after the last row. Note that `-NoTypeInformation` should also be specified to avoid adding a type header line to the appended rows.
+  - **C** — `-Force` overwrites an existing file that has the read-only attribute set. It does not append to an existing file.
+  - **D** — `-NoClobber` prevents `Export-Csv` from overwriting an existing file — the command fails instead. This is the opposite of append behavior.
+
+---
+
+### Question 20 (5 points)
+
+An administrator creates a `[PSCustomObject]` inside a function and needs to
+ensure the output displays cleanly in both the console and when exported to CSV.
+Which approach produces the best structured output?
+
+- A) Use `Write-Host` to output each property on its own line with a label
+- B) Return a `[PSCustomObject]@{ Property1 = value1; Property2 = value2 }` from the function
+- C) Use `Out-String` to convert the result to a formatted string before returning
+- D) Use `Format-Table` to pre-format the output before returning from the function
+
+- **Correct Answer: B**
+- **Distractor Analysis:**
+  - **A** — `Write-Host` sends output directly to the console and cannot be captured in a variable, piped to `Export-Csv`, or processed further in the pipeline. It produces unstructured text, not objects.
+  - **B** — Correct. `[PSCustomObject]@{}` creates a .NET object with named properties. This object passes cleanly through the PowerShell pipeline, can be sorted and filtered with `Where-Object`/`Sort-Object`, and serializes correctly with `Export-Csv -NoTypeInformation`.
+  - **C** — `Out-String` converts objects to a formatted string. Once converted, the output is a single string and loses all property structure. It cannot be piped to `Export-Csv` or filtered by property.
+  - **D** — `Format-Table` creates formatting objects for display purposes. Piping `Format-Table` output to `Export-Csv` produces malformed CSV with formatting metadata, not the original property values.

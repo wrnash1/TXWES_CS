@@ -458,4 +458,17 @@ program_output:
 
 ---
 
+## 9. Supplemental Resources
+
+**1. [Kubernetes RBAC documentation](https://kubernetes.io/docs/reference/access-authn-authz/rbac/)**
+Official Kubernetes documentation covering Roles, ClusterRoles, RoleBindings, ClusterRoleBindings, ServiceAccounts, and RBAC best practices. Includes worked examples for common permission patterns and the principle of least privilege.
+
+**2. [OPA Gatekeeper policy library](https://open-policy-agent.github.io/gatekeeper-library/website/)**
+A curated library of pre-built OPA Gatekeeper ConstraintTemplates and Constraints covering pod security, allowed registries, resource limits, and more. Use this as a reference when designing admission control policies for real clusters.
+
+**3. [Falco rules documentation and default rules reference](https://falco.org/docs/rules/)**
+Official Falco documentation for writing and customizing detection rules, including all available fields, macros, and lists. Covers integration with Kubernetes audit logs, gRPC output, and alerting integrations with Slack and PagerDuty.
+
+---
+
 Reading Guide — Module 05 | CIS-4350 | Texas Wesleyan University | Professor Nash

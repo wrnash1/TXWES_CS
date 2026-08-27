@@ -199,3 +199,173 @@ Distractor Analysis:
 - Why D is incorrect: DevOps does not modify or replace Scrum events. Sprint Retrospectives remain the team's mechanism for continuous improvement regardless of DevOps adoption.
 
 ---
+
+### Question 11 (5 points)
+
+A CI pipeline's static analysis stage fails because a developer used a deprecated API function. The developer argues: "The function still works — this is a false positive." What is the most accurate technical response?
+
+- A) Static analysis results are advisory only; the developer can override them if the code compiles successfully
+- B) Static analysis checks code quality patterns without running the code; deprecated API warnings indicate future breakage risk that the developer should address before merging
+- C) Static analysis is only relevant for security vulnerabilities, not API usage patterns
+- D) The pipeline should skip static analysis when the build stage passes to avoid slowing the team down
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: If the Definition of Done includes "all CI checks pass," then a static analysis failure means the story is not done — it is not advisory.
+  - Why C is incorrect: Static analysis tools cover a broad range of issues including deprecated APIs, code style, complexity metrics, and security patterns — not only security.
+  - Why D is incorrect: Skipping static analysis removes a quality signal that catches problems when they are cheapest to fix; it does not make the team faster in any meaningful sprint-over-sprint sense.
+
+---
+
+### Question 12 (5 points)
+
+A team uses Continuous Delivery with a manual release gate. The Product Owner asks: "Why does the deployment still require my approval if the pipeline is automated?" What is the most accurate explanation?
+
+- A) Regulatory requirements prohibit fully automated deployments for any software that handles user data
+- B) Continuous Delivery ensures software is technically releasable after every pipeline run, but the timing of when to release to users is a business decision reserved for the Product Owner
+- C) The pipeline cannot deploy to production without the Product Owner's technical credentials
+- D) The manual gate is required by the Scrum Guide, which states the Product Owner must approve each Increment before release
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: Regulatory constraints may apply in specific industries, but this is not the defining reason for the manual gate in Continuous Delivery — the gate is a deliberate design choice, not a universal rule.
+  - Why C is incorrect: The manual gate is a process decision, not a technical credential requirement. Deployment pipelines are configured to require approval, not credentials.
+  - Why D is incorrect: The Scrum Guide does not prescribe how releases are managed or who must approve deployments; the Guide is intentionally silent on engineering practices.
+
+---
+
+### Question 13 (5 points)
+
+Which of the following best describes the primary role of integration tests in a CI pipeline, as distinct from unit tests?
+
+- A) Integration tests verify that individual functions return the correct values for given inputs
+- B) Integration tests verify that multiple components — such as the application and its database — work correctly together
+- C) Integration tests replace E2E tests in teams that do not have a staging environment
+- D) Integration tests run faster than unit tests because they test fewer lines of code
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: Verifying individual function outputs is the role of unit tests, not integration tests.
+  - Why C is incorrect: Integration tests and E2E tests serve different purposes; integration tests verify component interactions while E2E tests simulate full user workflows. They are complementary, not interchangeable.
+  - Why D is incorrect: Integration tests run slower than unit tests because they involve real dependencies (databases, APIs, file systems) rather than isolated, in-memory logic.
+
+---
+
+### Question 14 (5 points)
+
+A Scrum team's pipeline takes 45 minutes to run. The Product Owner proposes: "We should only run the full pipeline on the last day of the Sprint to save time." What is the primary risk of this approach?
+
+- A) The pipeline will take longer on the last day because more code changes will be batched together
+- B) Defects introduced early in the Sprint will not be discovered until Sprint end, when the context is lost and fixing them consumes the Sprint Review buffer
+- C) Running the pipeline less frequently will cause the static analysis stage to produce more warnings
+- D) The canary deployment will not function correctly with infrequent pipeline runs
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: While batching more changes can slow a pipeline, the primary risk described is about defect discovery timing, not pipeline duration.
+  - Why C is incorrect: Static analysis warning counts are not affected by pipeline run frequency; they reflect code quality at the time of each run.
+  - Why D is incorrect: Canary deployment is a production release strategy unrelated to how often the CI pipeline runs during development.
+
+---
+
+### Question 15 (5 points)
+
+In DevOps culture, what does "shift left" mean in the context of quality assurance?
+
+- A) Moving the QA team from the right side of the org chart to a position reporting to the development lead
+- B) Performing quality checks earlier in the development process — during development rather than after code is complete — so defects are found when they are cheapest to fix
+- C) Shifting all test writing responsibility from developers to a dedicated QA engineer
+- D) Deploying to production earlier in the Sprint to collect real user feedback sooner
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: "Shift left" is a metaphor about where in the timeline quality activities occur, not about organizational reporting structures.
+  - Why C is incorrect: Shifting left means developers take more quality responsibility — writing tests earlier — not delegating test writing to a separate role.
+  - Why D is incorrect: Early production deployment is a release strategy decision, not what the "shift left" principle describes.
+
+---
+
+### Question 16 (5 points)
+
+A Scrum team adopts Continuous Deployment and finds that every code push automatically deploys to production. Two weeks later, the Product Owner complains: "I showed a stakeholder a feature yesterday but today it looks completely different." What process gap does this reveal?
+
+- A) The team's pipeline does not include a static analysis stage
+- B) Continuous Deployment does not include a human release decision, so the Product Owner must be informed of production changes through another mechanism such as deployment notifications or feature flags
+- C) The team needs to switch to Continuous Delivery to prevent unauthorized deployments
+- D) The Scrum Guide prohibits Continuous Deployment because it bypasses the Sprint Review
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: Static analysis checks code quality patterns; it has no connection to the Product Owner's awareness of production changes.
+  - Why C is incorrect: Switching to Continuous Delivery is one option, but the scenario reveals a communication gap, not necessarily that Continuous Deployment is wrong for this team. Feature flags and deployment notifications are also valid solutions.
+  - Why D is incorrect: The Scrum Guide does not address Continuous Deployment or prescribe any particular release model.
+
+---
+
+### Question 17 (5 points)
+
+Which of the following is the most significant advantage of canary deployment over blue-green deployment for a team releasing a machine learning model update?
+
+- A) Canary deployment eliminates the need for a staging environment
+- B) Canary deployment allows the team to measure model accuracy against real user behavior on a small population before exposing all users to potential prediction errors
+- C) Canary deployment is cheaper because it requires only one production environment
+- D) Canary deployment provides a faster rollback than blue-green because fewer users are affected
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: Canary deployment does not eliminate staging; both strategies use staging environments for pre-production verification.
+  - Why C is incorrect: Canary deployment requires running two software versions simultaneously on the same infrastructure, which adds operational complexity; it is not necessarily cheaper than blue-green.
+  - Why D is incorrect: Blue-green provides the fastest rollback — a single router switch returns all traffic to the previous environment. Canary rollback is faster to decide but still requires routing changes and monitoring to confirm stability.
+
+---
+
+### Question 18 (5 points)
+
+A team's CI pipeline runs successfully but the deployment to staging fails because of a missing environment variable. The Scrum Master says: "The pipeline is green — this story is done." Is this correct?
+
+- A) Yes — if the pipeline passes all test stages, the story meets the Definition of Done regardless of staging deployment
+- B) No — if the team's Definition of Done includes "deployed to staging," a staging deployment failure means the story is not done despite passing pipeline tests
+- C) Yes — environment configuration is an operations concern, not a development concern, so it does not affect story completeness
+- D) No — the Scrum Guide requires all stories to be deployed to production before being marked done
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: The Definition of Done defines what "done" means — if staging deployment is a criterion, passing pipeline tests alone is insufficient.
+  - Why C is incorrect: In DevOps culture, environment configuration is the development team's responsibility. The separation of dev and ops concerns is the anti-pattern DevOps addresses.
+  - Why D is incorrect: The Scrum Guide does not require production deployment as part of done. The DoD is defined by the Scrum Team and may or may not include production deployment.
+
+---
+
+### Question 19 (5 points)
+
+Which Lean waste category does the practice of running CI with daily integrations most directly reduce?
+
+- A) Extra features — by preventing developers from building unnecessary functionality
+- B) Defects — by detecting regressions immediately after the code change that introduced them, when they are cheapest to fix
+- C) Task switching — by limiting developers to one integration per day
+- D) Relearning — by documenting each integration in the pipeline run history
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: CI does not constrain feature scope; it verifies code quality. Preventing extra features is the responsibility of backlog management and the Product Owner.
+  - Why C is incorrect: Daily integration does not limit task switching; developers can still multitask. CI addresses defect detection timing, not developer work habits.
+  - Why D is incorrect: Pipeline run history is a transparency artifact, but the primary waste category CI targets is defects — bugs found late that require expensive rework.
+
+---
+
+### Question 20 (5 points)
+
+A Scrum team has a CI pipeline but no deployment automation — they deploy manually to production by copying files via FTP after each Sprint. Which DevOps practice would most directly improve this?
+
+- A) Adding more unit tests to the pipeline to catch additional defects before manual deployment
+- B) Implementing Continuous Delivery so that every successful pipeline run automatically deploys to a staging environment, reducing manual steps and the risk of human error during deployment
+- C) Switching from Scrum to Kanban to enable more frequent deployment windows
+- D) Asking the operations team to take over the manual deployment process to free up developer time
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why A is incorrect: More unit tests improve defect detection but do not address the manual deployment risk or inefficiency — the problem is the deployment process, not test coverage.
+  - Why C is incorrect: The delivery method (Scrum vs. Kanban) does not determine whether deployments are automated; automated deployment is an engineering practice, not a framework choice.
+  - Why D is incorrect: Delegating manual deployment to a separate operations team is the pre-DevOps model that DevOps was designed to replace; it increases handoff waste rather than eliminating it.
+
+---

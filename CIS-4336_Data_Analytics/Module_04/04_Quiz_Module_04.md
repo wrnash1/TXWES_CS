@@ -218,3 +218,187 @@ In SQL, what does the COALESCE function do?
 - **Why A is incorrect:** String concatenation in SQL uses the || operator or CONCAT() function, not COALESCE.
 - **Why C is incorrect:** COALESCE returns the first non-null value but does not perform type conversion. CAST() or CONVERT() handle type conversion.
 - **Why D is incorrect:** JOIN syntax connects tables; COALESCE operates on column values within a row. They are unrelated operations.
+
+---
+
+### Question 11 (5 points)
+
+An analyst writes `SELECT customer_id, order_date, total_amount, LAG(total_amount, 1) OVER (PARTITION BY customer_id ORDER BY order_date) AS prev_amount FROM orders;`. What does the `prev_amount` column contain for a customer's first order?
+
+- A) Zero, because there is no prior order
+- B) NULL, because there is no prior row within that customer's partition
+- C) The total_amount of the most recent order in the entire table
+- D) The average of all the customer's order amounts
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - **Why B is correct:** `LAG(col, 1)` retrieves the value from one row prior within the partition. For the first row in a customer's partition, no prior row exists, so the function returns NULL.
+  - **Why A is incorrect:** LAG does not substitute zero for missing prior rows. It returns NULL unless a default value is explicitly provided as a third argument: `LAG(total_amount, 1, 0)`.
+  - **Why C is incorrect:** LAG operates within the PARTITION BY boundary — in this case, per customer. It does not look outside the current customer's rows to find the most recent row in the entire table.
+  - **Why D is incorrect:** LAG retrieves a single prior row's value, not an average. AVG() OVER would compute an average; LAG retrieves a specific prior value.
+
+---
+
+### Question 12 (5 points)
+
+Which SQL clause would you use to return only the top 5 rows from a query result?
+
+- A) `HAVING COUNT(*) <= 5`
+- B) `WHERE rownum <= 5`
+- C) `LIMIT 5` (standard SQL / SQLite / PostgreSQL) or `TOP 5` (SQL Server)
+- D) `GROUP BY 5`
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - **Why C is correct:** `LIMIT n` in standard SQL, SQLite, and PostgreSQL restricts the result set to the first n rows. SQL Server uses `SELECT TOP n`. Both are the correct syntax for row-count restriction depending on the database platform.
+  - **Why A is incorrect:** `HAVING COUNT(*) <= 5` filters groups where the count of rows per group is 5 or fewer — it does not limit the overall result set to 5 rows.
+  - **Why B is incorrect:** `rownum` is an Oracle-specific pseudo-column and is not standard SQL. In standard SQL, row restriction uses `LIMIT` or `TOP`, not `WHERE rownum`.
+  - **Why D is incorrect:** `GROUP BY 5` groups by the fifth column in the SELECT list — it does not limit row count.
+
+---
+
+### Question 13 (5 points)
+
+What will the following query return if the `discount` column contains NULL for some rows?
+
+```sql
+SELECT AVG(discount) FROM orders;
+```
+
+- A) 0, because SQL treats NULL as zero in arithmetic
+- B) An error, because AVG cannot process NULL values
+- C) The average of only the non-null discount values, ignoring rows where discount is NULL
+- D) The average including NULL rows counted as zero in the denominator
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - **Why C is correct:** SQL aggregate functions (AVG, SUM, MIN, MAX, COUNT(col)) ignore NULL values. AVG computes the sum of non-null values divided by the count of non-null rows, not the total row count.
+  - **Why A is incorrect:** SQL does not treat NULL as zero in arithmetic or aggregate operations. NULL propagates through expressions: NULL + 5 = NULL, not 5.
+  - **Why B is incorrect:** AVG handles NULLs gracefully by ignoring them. It does not raise an error.
+  - **Why D is incorrect:** Including NULL rows as zero in the denominator is not SQL's behavior. Only non-null values are included in both the numerator and denominator of AVG.
+
+---
+
+### Question 14 (5 points)
+
+A query selects `customer_id` and `SUM(total_amount)` but omits `customer_id` from the GROUP BY clause. What happens?
+
+- A) The query returns one row with the grand total for all customers
+- B) The query returns a syntax error in most SQL databases because every non-aggregated SELECT column must appear in GROUP BY
+- C) SQL automatically groups by all columns not in an aggregate function
+- D) The query returns one row per customer using the first customer_id found
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - **Why B is correct:** Standard SQL requires that every column in SELECT that is not inside an aggregate function must appear in the GROUP BY clause. Omitting a non-aggregated column from GROUP BY is a syntax or logical error in most database systems (PostgreSQL, SQL Server, Oracle).
+  - **Why A is incorrect:** Returning one row with the grand total requires omitting `customer_id` from SELECT as well. If `customer_id` is in SELECT but not GROUP BY, a standard-compliant database raises an error.
+  - **Why C is incorrect:** SQL does not auto-group by unspecified columns. The GROUP BY clause must be explicit.
+  - **Why D is incorrect:** MySQL with non-strict mode may return one row per group using an arbitrary value for ungrouped columns, but this behavior is non-standard and produces unpredictable results.
+
+---
+
+### Question 15 (5 points)
+
+What is the difference between `DENSE_RANK()` and `RANK()` when two rows are tied?
+
+- A) `DENSE_RANK()` skips rank numbers after ties; `RANK()` does not skip
+- B) `RANK()` skips rank numbers after ties; `DENSE_RANK()` does not skip — it assigns the next sequential integer
+- C) Both functions produce identical output in all cases
+- D) `DENSE_RANK()` can only be used without `PARTITION BY`; `RANK()` requires `PARTITION BY`
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - **Why B is correct:** For two rows tied at rank 2: `RANK()` gives both rank 2 and the next row rank 4 (skipping 3). `DENSE_RANK()` gives both rank 2 and the next row rank 3 — no gaps.
+  - **Why A is incorrect:** This reverses the behavior. `RANK()` skips; `DENSE_RANK()` does not skip.
+  - **Why C is incorrect:** The two functions produce different results whenever ties exist. Only when no ties exist are the outputs identical.
+  - **Why D is incorrect:** Both `RANK()` and `DENSE_RANK()` accept optional `PARTITION BY` clauses. Neither requires nor prohibits it.
+
+---
+
+### Question 16 (5 points)
+
+An analyst wants to find customers whose total spending is in the top 25 percent. Which window function partitions the customer list into four equal groups ranked by spend?
+
+- A) `RANK() OVER (ORDER BY total_spend DESC)`
+- B) `NTILE(4) OVER (ORDER BY total_spend DESC)`
+- C) `PERCENT_RANK() OVER (ORDER BY total_spend DESC)`
+- D) `ROW_NUMBER() OVER (ORDER BY total_spend DESC)`
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - **Why B is correct:** `NTILE(4)` divides the ordered result set into 4 equal buckets and assigns each row a bucket number (1 through 4). Filtering for `NTILE(4) = 1` returns customers in the top 25 percent by spend.
+  - **Why A is incorrect:** `RANK()` assigns a rank number to each row but does not divide them into equal-sized groups. The top 25% by rank count depends on total rows, not equal quartile buckets.
+  - **Why C is incorrect:** `PERCENT_RANK()` computes each row's relative standing as a decimal between 0 and 1. While it could be used with a `<= 0.25` filter, `NTILE(4)` is the more direct and common approach for quartile grouping.
+  - **Why D is incorrect:** `ROW_NUMBER()` assigns a unique sequential integer. Without knowing the total row count, you cannot derive quartile boundaries from row numbers alone.
+
+---
+
+### Question 17 (5 points)
+
+Which of the following queries correctly uses a CTE to find the top-spending customer per region?
+
+- A) `WITH spend AS (SELECT customer_id, region_id, SUM(total_amount) AS total FROM orders JOIN customers USING (customer_id) GROUP BY customer_id, region_id), ranked AS (SELECT *, RANK() OVER (PARTITION BY region_id ORDER BY total DESC) AS rk FROM spend) SELECT * FROM ranked WHERE rk = 1;`
+- B) `WITH spend AS SELECT customer_id, SUM(total_amount) FROM orders GROUP BY customer_id RANK() OVER region_id;`
+- C) `SELECT TOP 1 customer_id FROM orders GROUP BY region_id ORDER BY SUM(total_amount) DESC;`
+- D) `WITH (SELECT customer_id, SUM(total_amount) AS total FROM orders) SELECT * WHERE total = MAX(total);`
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - **Why A is correct:** This query correctly defines a CTE `spend` that aggregates total spend per customer per region, then uses a second CTE `ranked` applying RANK() partitioned by region. The outer query filters for rank 1, returning the top spender in each region.
+  - **Why B is incorrect:** The CTE syntax is malformed — no parentheses around the CTE body, and `RANK() OVER region_id` is invalid syntax. A CTE requires `WITH cte_name AS (SELECT ...)`.
+  - **Why C is incorrect:** `SELECT TOP 1` returns only one row globally, not the top row per region. Finding the top per group requires a window function or correlated subquery.
+  - **Why D is incorrect:** The CTE syntax is malformed — the CTE name is missing, `WITH (SELECT ...)` is invalid. Additionally, `WHERE total = MAX(total)` uses an aggregate in WHERE, which is a SQL error.
+
+---
+
+### Question 18 (5 points)
+
+What result does a `FULL OUTER JOIN` between a `customers` table and an `orders` table produce?
+
+- A) Only rows where both a customer record and an order record exist
+- B) All customer rows plus all order rows, with NULLs filling unmatched columns on either side
+- C) All order rows with NULLs for any orders not matched to a customer
+- D) A Cartesian product of all customers by all orders
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - **Why B is correct:** FULL OUTER JOIN returns all rows from both tables. Where a customer has no order, the order columns are NULL. Where an order has no matching customer, the customer columns are NULL. All records from both sides appear.
+  - **Why A is incorrect:** That describes INNER JOIN, which returns only matched rows.
+  - **Why C is incorrect:** That describes a RIGHT JOIN on orders — all orders returned, with NULLs for unmatched customers. FULL OUTER JOIN also includes customers with no orders.
+  - **Why D is incorrect:** A Cartesian product (CROSS JOIN) returns every combination of every row from both tables — n × m rows. FULL OUTER JOIN does not cross-multiply; it matches on the join condition and includes unmatched rows with NULLs.
+
+---
+
+### Question 19 (5 points)
+
+An analyst needs to find all orders where the `total_amount` is above the average total amount for that order's region. Which SQL approach correctly implements this?
+
+- A) `SELECT * FROM orders WHERE total_amount > AVG(total_amount);`
+- B) `SELECT o.* FROM orders o JOIN (SELECT region_id, AVG(total_amount) AS avg_amt FROM orders GROUP BY region_id) r ON o.region_id = r.region_id WHERE o.total_amount > r.avg_amt;`
+- C) `SELECT * FROM orders HAVING total_amount > AVG(total_amount);`
+- D) `SELECT * FROM orders WHERE total_amount > (SELECT AVG(total_amount) FROM orders GROUP BY region_id);`
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - **Why B is correct:** The subquery computes average `total_amount` per `region_id`. The main query joins each order to its regional average and filters rows where the order exceeds that region-specific average. This correctly scopes the comparison to within each region.
+  - **Why A is incorrect:** AVG() cannot be used in a WHERE clause because WHERE runs before aggregation.
+  - **Why C is incorrect:** HAVING without GROUP BY treats the entire table as one group. This checks whether the row's amount exceeds the global average, not the regional average, and the syntax is non-standard.
+  - **Why D is incorrect:** The subquery returns one value per region (multiple rows), making the `>` comparison ambiguous. SQL cannot compare a single value to a multi-row subquery with `>` — it requires `> ALL(...)` or `> ANY(...)` or a correlated approach.
+
+---
+
+### Question 20 (5 points)
+
+A query produces 50 result rows using GROUP BY. The analyst adds `HAVING COUNT(*) > 1`. The result now returns 12 rows. What do these 12 rows represent?
+
+- A) The 12 rows with the highest count values
+- B) The 12 groups where more than one row in the source data contributed to that group
+- C) The 12 duplicate rows detected in the source table
+- D) The 12 groups where at least two different customers placed orders
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - **Why B is correct:** `HAVING COUNT(*) > 1` filters GROUP BY groups where the aggregated row count exceeds 1. The 12 remaining groups each had two or more source rows matching the GROUP BY key — meaning those groups were built from more than one row.
+  - **Why A is incorrect:** HAVING filters groups that meet the condition; it does not sort or select the highest-count groups specifically. Groups with count = 1 are excluded, but among the qualifying groups, there is no ordering by count implied.
+  - **Why C is incorrect:** Detecting duplicate rows in the source requires `df.duplicated()` in pandas or specific deduplication logic. `HAVING COUNT(*) > 1` on a GROUP BY result identifies groups with multiple rows, which may or may not correspond to duplicates depending on the GROUP BY columns.
+  - **Why D is incorrect:** Whether each group involves multiple customers depends on what column is in GROUP BY. `COUNT(*)` counts rows, not distinct customers. The answer would only involve customers if `COUNT(DISTINCT customer_id) > 1` were used.

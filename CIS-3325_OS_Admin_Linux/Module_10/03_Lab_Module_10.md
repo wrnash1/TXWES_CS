@@ -518,3 +518,31 @@ Submit the following:
 | GPG check failed | Import the GPG key: `sudo rpm --import URL` or check `apt-key list` |
 | `debsums: command not found` | Install with `sudo apt install debsums` |
 | `apt-file: command not found` | Install with `sudo apt install apt-file && sudo apt-file update` |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Package Integrity Audit Script
+
+Write a shell script that performs a security-focused integrity audit of installed packages, identifying packages whose files have been modified since installation.
+
+1. On an Ubuntu/Debian system, install `debsums` if not present: `sudo apt install debsums`. On a RHEL system, `rpm -Va` is built in. Write a script `~/pkg_audit.sh` that detects the distribution using `ID` from `/etc/os-release` and runs the appropriate verification tool: `debsums -s 2>/dev/null` (silent mode, report errors only) on Debian/Ubuntu, or `rpm -Va 2>/dev/null` on RHEL/Rocky. Capture the output with command substitution and count the number of failed files.
+2. Add logic to filter the results: for RPM output, ignore lines where the only change is modification time (`^.......T`) because time-only changes on config files are expected. Use `grep -v "^\.......T"` to filter these out. Print the count of truly suspicious changes and the full filtered list.
+3. Enhance the script to cross-reference any suspicious binary paths against a known-safe list. Create a file `~/known_safe_modifications.txt` with paths to files you know are legitimately modified (e.g., `/etc/passwd`, `/etc/hosts`). Filter the audit output to exclude lines containing any path from this file using a `while read` loop and `grep -v`.
+4. Schedule the script to run weekly using `cron`. Add a line to your user crontab (`crontab -e`) to run the script every Sunday at 3 AM and append output to `/var/log/pkg_audit.log`: `0 3 * * 0 /bin/bash ~/pkg_audit.sh >> /var/log/pkg_audit.log 2>&1`. Verify the crontab entry with `crontab -l`.
+
+### Challenge 2: Custom Repository Setup and Package Pinning
+
+Configure a local package mirror or repository, add it to the system, and use package pinning (on Debian) or version locking (on RHEL) to prevent a specific package from being upgraded.
+
+1. On Ubuntu: install `apt-file` and update its database: `sudo apt install apt-file && sudo apt-file update`. Use it to find which package provides a specific file you know exists but whose package you don't know: `apt-file search /usr/bin/dig`. Record the result. On RHEL: use `dnf provides /usr/bin/dig` for the equivalent operation.
+2. Pin a package version on Ubuntu to prevent it from being upgraded. Install `nginx` if not present: `sudo apt install nginx`. Record the installed version: `apt-cache policy nginx | head -3`. Create a pinning file: `echo -e "Package: nginx\nPin: version $(nginx -v 2>&1 | grep -oP '[0-9]+\.[0-9]+\.[0-9]+')*\nPin-Priority: 1001" | sudo tee /etc/apt/preferences.d/nginx-pin`. Verify the pin is active: `apt-cache policy nginx` — the installed version should now show higher priority.
+3. On RHEL: achieve version locking with `dnf versionlock`. Install the plugin if needed: `sudo dnf install 'dnf-command(versionlock)'`. Lock the current kernel version: `sudo dnf versionlock add kernel`. Verify: `sudo dnf versionlock list`. Attempt `sudo dnf update kernel` — it should report the package is locked.
+4. Test that the lock works on Ubuntu: run `sudo apt upgrade nginx` and verify it reports the package is held back or already at maximum pinned version. Then remove the pin (`sudo rm /etc/apt/preferences.d/nginx-pin`) and run `apt-cache policy nginx` again to confirm the pin is gone. On RHEL: remove the lock with `sudo dnf versionlock delete kernel` and verify.
+
+### Reflection Questions
+
+1. A developer argues that software should always be installed from source because "you know exactly what you're getting." An operations engineer argues that packages should always come from distribution repositories. Describe the specific security, operational, and maintainability tradeoffs of each approach, and identify the scenarios where each is the better choice.
+
+2. Package signature verification (GPG) provides authenticity and integrity guarantees. However, a valid GPG signature only proves the package was signed by the key that signed it — not that the key itself is trustworthy. Describe the complete chain of trust from a package maintainer's keypair to your system verifying a downloaded package, and identify the single weakest link in this chain from an attack perspective.

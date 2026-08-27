@@ -244,3 +244,19 @@ Answer these questions in your own words to verify comprehension before attempti
 6. A company is deploying a critical e-commerce platform update on a major sales day. They need near-instantaneous rollback capability if problems occur. Which deployment approach is most appropriate and why?
 
 7. What does the ITIL 4 guiding principle "Optimize and Automate" say about the sequence of optimization and automation?
+
+---
+
+## Supplemental Resources
+
+**1. AXELOS — ITIL 4 Release Management Practice Overview**
+<https://www.axelos.com/resource-hub/blog/itil-4-release-management>
+Official AXELOS description of the Release and Deployment Management practice within the ITIL 4 framework, covering the purpose, key activities, deployment approaches, and relationship to Change Enablement. Essential reference for Foundation exam preparation.
+
+**2. Martin Fowler — Continuous Delivery and Deployment Pipeline Patterns**
+<https://martinfowler.com/delivery.html>
+Authoritative practitioner resource on continuous delivery, deployment pipeline design, blue-green deployments, canary releases, and feature flags. Fowler's writing bridges the gap between ITIL 4 conceptual frameworks and modern DevOps deployment engineering practices.
+
+**3. Google SRE Book — Release Engineering**
+<https://sre.google/sre-book/release-engineering/>
+Google's Site Reliability Engineering book chapter on release engineering covers deployment automation, rollback strategies, release versioning, and post-deployment monitoring at scale. Freely available online and directly relevant to the deployment pipeline and PIR concepts covered in this module.

@@ -230,6 +230,22 @@ For the exam, know these threat hunting topics:
 
 ---
 
+## 9. Supplemental Resources
+
+**1. MITRE ATT&CK Navigator**
+<https://mitre-attack.github.io/attack-navigator/>
+The free, browser-based tool for visualizing MITRE ATT&CK coverage. Analysts use the Navigator to create heat maps showing which techniques are covered by existing detections, which techniques a known threat group uses, and where coverage gaps exist. For threat hunting, the Navigator is the primary planning tool: load a threat actor group layer, overlay your detection coverage layer, and the uncovered techniques become your hunt priority list. The Navigator documentation and the pre-built group layers (available for APT groups and financially motivated actors) are directly applicable to the lab scenario and exam questions.
+
+**2. SANS Threat Hunting Survey and Hunt Methodology Papers**
+<https://www.sans.org/blog/category/threat-hunting/>
+SANS's collection of threat hunting research, methodology papers, and practitioner guides. Key resources include the annual SANS Threat Hunting Survey (which documents how real SOC teams structure hunts, what tools they use, and their maturity levels) and technique-specific hunting guides. The SANS hunting posts consistently demonstrate the hypothesis-driven hunt loop in action with real examples using Splunk SPL, KQL, and Elastic EQL — directly reinforcing the querying approach practiced in this module's lab.
+
+**3. Florian Roth's Sigma Rule Repository**
+<https://github.com/SigmaHQ/sigma>
+Sigma is an open, vendor-neutral format for SIEM detection rules, similar to how Snort rules describe network threats for IDS platforms. The SigmaHQ repository contains thousands of community-contributed detection rules mapped to MITRE ATT&CK techniques, covering Windows process execution, PowerShell abuse, credential dumping, lateral movement, and dozens of other hunt categories. Reviewing Sigma rules for ATT&CK techniques you are hunting teaches you what telemetry fields to query, what field values indicate malicious activity, and how experienced practitioners express detection logic — directly supporting both hunt query development and the detection engineering deliverables required in the lab.
+
+---
+
 ## Required Resources
 
 - MITRE ATT&CK Enterprise Matrix — attack.mitre.org (free)

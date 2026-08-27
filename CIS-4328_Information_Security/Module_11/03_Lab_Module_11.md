@@ -196,4 +196,67 @@ Submit a lab report containing:
 
 ---
 
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Advanced Incident Timeline Reconstruction and Attribution Analysis
+
+A managed security services provider (MSSP) has been engaged to investigate a suspected breach at a manufacturing company. The company produces proprietary industrial control system (ICS) components with significant intellectual property value. The MSSP has collected the following additional artifact sets beyond those available to internal analysts.
+
+**Artifact Set D — VPN Gateway Logs:**
+
+```text
+2026-06-15 23:04:11 UTC | VPN_AUTH_SUCCESS | User: m.chen | Source IP: 185.220.101.14 | Country: RU | MFA: bypassed (token reuse)
+2026-06-15 23:07:44 UTC | VPN_AUTH_SUCCESS | User: m.chen | Source IP: 185.220.101.14 | Tunnel duration: 4h 22m
+2026-06-16 03:29:55 UTC | VPN_DISCONNECT | User: m.chen | Bytes transferred: 47.3 GB outbound
+```
+
+**Artifact Set E — EDR Process Tree (from engineering workstation ENG-MC-07):**
+
+```text
+[23:08:31] explorer.exe (PID 2144)
+  └── cmd.exe (PID 7822) - spawned via scheduled task
+        └── powershell.exe -exec bypass -enc [base64] (PID 9103)
+              └── 7z.exe a -p secret123 C:\Temp\archive.7z C:\Projects\ICS_Designs\ (PID 11204)
+              └── net.exe use \\10.0.8.44\share$ /user:DOMAIN\svc_backup (PID 11398)
+              └── robocopy.exe C:\Temp\ \\10.0.8.44\share$ /E (PID 11512)
+```
+
+**Artifact Set F — DNS Query Log (from ENG-MC-07):**
+
+```text
+2026-06-15 23:09:01 UTC | Query: api.github-updates.net | Response: 185.220.101.14
+2026-06-15 23:09:02 UTC | Query: api.github-updates.net | Response: 185.220.101.14
+[repeated 847 times at 17-second intervals over 4 hours]
+```
+
+1. Reconstruct the complete attack timeline from VPN authentication through data staging and exfiltration. For each phase of the attack, identify: the MITRE ATT&CK tactic, a specific technique name (IDs not required), the artifact that provides evidence, and the defender action that could have interrupted the attack at that phase.
+
+2. The VPN log shows `MFA: bypassed (token reuse)`. Research and explain the specific MFA attack technique this represents, describe how it works mechanically, and identify which MFA authenticator type is immune to this attack and why.
+
+3. Artifact Set F shows 847 DNS queries to the same IP at 17-second intervals over four hours. Name this activity, explain its purpose in the attack chain, and describe two network-level detective controls that would have generated alerts on this pattern. For each control, specify what threshold or signature would trigger the alert.
+
+4. The manufacturing company wants to assess whether this incident constitutes a reportable breach under the NIST Cybersecurity Framework and any applicable US federal law. The stolen data includes blueprints for ICS components used in US power grid infrastructure. Identify: the specific federal regulation or executive order that applies to ICS/critical infrastructure data, the reporting obligation and timeline, and the government agency that must be notified.
+
+### Challenge 2: IR Plan Development and Tabletop Exercise Design
+
+A regional hospital network with three campuses has no formal IR plan. They have experienced two incidents in the past year: a phishing-based compromise of a radiology technician's account and a ransomware attack that encrypted a file server containing non-PHI administrative documents. Neither incident was handled with a documented procedure — the IT team responded informally.
+
+1. Design a complete IR plan framework for this hospital network. Your framework must address all four NIST SP 800-61 phases and include: for Preparation — the minimum viable IR team roles (list six roles with a one-sentence description of each), the three most critical tools that must be in the jump kit, and the two external relationships that must be established before an incident; for Detection and Analysis — the three log sources that must be aggregated into a SIEM for healthcare environments and a classification matrix with at least four incident categories and their corresponding severity levels; for Containment/Eradication/Recovery — the specific authority levels required to approve network isolation of a clinical system, and the backup verification requirement before any clinical system is restored; for Post-Incident Activity — the minimum content requirements for the post-incident report.
+
+2. Design a one-hour tabletop exercise for this hospital's IR team based on the following scenario: At 2:00 AM on a Saturday, the hospital's on-call IT technician receives automated alerts that all workstations on the nursing floors are displaying ransom notes. The hospital's EHR system appears unaffected. The technician is the only IT staff member available. Design the exercise with: an opening scenario inject, four sequential decision points spaced 10 minutes apart (each inject should escalate the scenario), a debrief question for each decision point that reveals a gap in the current (nonexistent) IR plan, and a list of five specific gaps the exercise is designed to surface.
+
+3. After the tabletop exercise, the hospital's CISO asks you to prioritize the five gaps identified. Create a risk-tiered remediation roadmap organizing the five gaps into three tiers (immediate — 0 to 30 days, short-term — 30 to 90 days, long-term — 90 to 180 days). For each gap, specify: the specific IR plan artifact or process that addresses it, the HIPAA Security Rule section that requires it, and the estimated staff effort to implement.
+
+4. The hospital's legal counsel asks whether the ransomware incident from last year required HIPAA breach notification. The encrypted file server contained only administrative files (budget spreadsheets, vendor contracts, HR schedules) — no PHI. Apply HIPAA's breach notification risk assessment framework (the four-factor test) to determine whether notification was required, and explain what additional investigation the hospital should have conducted at the time to document the risk assessment.
+
+### Reflection Questions
+
+1. After completing both challenges, explain why dwell time — the period between initial compromise and detection — is the single most impactful metric for determining the severity of a security breach outcome. Use the manufacturing company incident from Challenge 1 to illustrate: what additional harm occurred during the 4+ hours of undetected access that would not have occurred if detection happened within 15 minutes, and identify the two specific detective controls whose absence most directly contributed to the extended dwell time.
+
+2. In Challenge 2, you designed an IR plan for a hospital with no formal procedures. A board member argues that paying for an IR retainer with an MSSP is unnecessary because "we have IT staff who can handle incidents." Identify three specific IR capabilities that an MSSP retainer provides that an internal IT team cannot replicate without dedicated investment, explain the concept of "IR readiness" and why it cannot be improvised during an active incident, and describe what a minimum viable IR program looks like for a 500-employee organization that cannot afford a full MSSP retainer.
+
+---
+
 *End of Lab — Module 11*

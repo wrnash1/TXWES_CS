@@ -124,6 +124,33 @@ Submit to the Canvas assignment portal by the module due date.
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Estimation Scale Comparison
+
+The HealthTrack team is considering switching from Fibonacci story points to T-shirt sizes for a new product vision workshop with non-technical executives. Evaluate this decision:
+
+1. Estimate the five stories from Part 1 using T-shirt sizes (XS, S, M, L, XL). Map each T-shirt size to a Fibonacci equivalent (e.g., XS=1, S=3, M=5, L=8, XL=13) and show both representations.
+2. Calculate what the team's velocity would look like using this T-shirt scale for Sprints 1–3 (using the original point velocities of 24, 31, 29 and your mapping).
+3. Identify one type of conversation where T-shirt sizes are genuinely superior to Fibonacci points, and one where Fibonacci points are superior. Justify each in two to three sentences.
+4. Write a two-paragraph recommendation to the Product Owner on whether to switch, covering short-term planning accuracy and long-term velocity tracking implications.
+
+### Challenge 2: Velocity Normalization Analysis
+
+The HealthTrack team has experienced two disrupted Sprints in their history: Sprint 4 (velocity=18, two developers out sick) and Sprint 7 (velocity=15, major production incident required team attention). Their remaining Sprints had velocities of 28, 31, 29, 32, 30, 33.
+
+1. Calculate the team's average velocity two ways: including all eight Sprints, and excluding the two disrupted Sprints. Show both calculations.
+2. Write a three-to-five sentence analysis explaining which average is more useful for Sprint 9 planning and why. Consider whether disrupted Sprints reflect the team's true capacity.
+3. Propose a formal policy for the team's velocity calculation: under what conditions (if any) should a Sprint's velocity be excluded from the rolling average? Write the policy as three to four bullet points that the team could agree to in a Retrospective.
+4. Explain how this policy connects to the Scrum value of Transparency and the empirical pillar of Inspection.
+
+### Reflection Questions
+
+1. Story points were designed to capture complexity, effort, and uncertainty together in one number. In practice, teams often conflate story points with hours. What specific team behaviors or management requests cause this conflation, and what is the Scrum Master's role in preventing it?
+2. The "#NoEstimates" movement argues that teams should stop estimating story points and instead count stories completed per Sprint as their velocity. What are the strongest arguments for and against this approach? Under what team maturity conditions might counting stories be more accurate than story points?
+
+---
+
 ## Rubric Summary
 
 | Component | Points |

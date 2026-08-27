@@ -124,3 +124,25 @@ Your PDF lab report must include:
 | **Total** | **100** |
 
 **Submission:** Upload both the `.pkt` file AND the PDF report to Canvas Module 01 Lab Assignment by Sunday, October 25 at 11:59 PM CST.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: OSPF Type 7 to Type 5 LSA Translation
+Add a seventh router (R7) to your existing topology as an NSSA ASBR in a new Area 2. Connect R7 to R3 (the existing ABR), making R3 also an ABR for Area 2. Configure Area 2 as NSSA. On R7, redistribute a static route (192.0.2.0/24) into OSPF. Verify the following:
+1. On R7, confirm the redistributed route generates a Type 7 LSA: `show ip ospf database nssa-external`.
+2. On R3 (the ABR), confirm it translates the Type 7 LSA into a Type 5 LSA for the backbone: `show ip ospf database external`.
+3. On R1 (Area 1), confirm the external route 192.0.2.0/24 appears as `O E2` in the routing table.
+4. Document why the Type 7-to-Type 5 translation only happens at the ABR and not at the ASBR itself.
+
+### Challenge 2: EIGRP Unequal-Cost Load Balancing with Variance
+On the existing EIGRP portion of your topology (R4, R5, R6), add a second path between R5 and R4 through a new router R8 with a higher-cost link (configure a loopback on R8 representing a higher-delay path). Configure `variance 2` in the EIGRP topology base on R5. Verify:
+1. `show ip eigrp topology` on R5 — identify the Successor and confirm the alternate path meets the Feasibility Condition.
+2. `show ip route eigrp` on R5 — confirm both paths appear in the routing table (unequal-cost load balancing active).
+3. `show ip eigrp traffic` — confirm packets are being distributed across both paths.
+4. Deliberately set variance to 1 (no unequal-cost LB) and observe the routing table revert to a single path.
+
+### Reflection Questions
+1. The NSSA design allows an area with its own ASBR to still minimize Type 5 LSA flooding from the backbone. What is the specific trade-off compared to a Totally NSSA area, and when would a network designer choose NSSA over Totally NSSA?
+2. EIGRP unequal-cost load balancing distributes traffic inversely proportional to metric — paths with lower metrics carry proportionally more traffic. In an enterprise WAN design with links of 1 Gbps and 100 Mbps between the same two sites, what are the implications of enabling variance-based load balancing, and what operational problem could arise if the 100 Mbps link becomes congested?

@@ -597,6 +597,95 @@ Upload all 5 screenshots (or 4 screenshots + exam confirmation) to Canvas.
 
 ---
 
+## Part 9 — Challenge Exercise
+
+These optional steps integrate the full breadth of the course into advanced programs. They are not required for the lab grade but provide excellent PCAP exam preparation and portfolio-quality code.
+
+### Step 9.1 — Comprehensive Data Pipeline
+
+Build a program that combines dictionaries, list comprehensions, exception handling, and modules into a single data processing pipeline.
+
+```bash
+nano pipeline.py
+```
+
+Write a program that:
+
+1. Defines a list of raw student record strings in the format `"Name,Score1,Score2,Score3"` (include at least 8 students with some malformed entries).
+2. Parses each record using string methods, catching `ValueError` for malformed data and skipping bad records with a warning message.
+3. Stores valid records as a dictionary: `{name: [scores]}`.
+4. Uses a dictionary comprehension to compute `{name: average}` for each student.
+5. Uses `sorted()` with a lambda key to rank students from highest to lowest average.
+6. Uses `math.ceil()` and `math.floor()` from the `math` module to bracket each average into a letter grade band.
+7. Prints a formatted leaderboard using f-strings with field-width alignment.
+
+**Expected behavior:**
+
+```text
+[Warning] Skipping malformed record: 'BadRecord'
+[Warning] Skipping malformed record: 'Another,bad'
+
+=== Student Leaderboard ===
+Rank  Name            Average  Grade
+   1  Alice           94.33    A
+   2  Bob             87.67    B
+   ...
+```
+
+> **SCREENSHOT 6 REQUIRED:** Screenshot of `pipeline.py` running with at least 6 ranked students and at least one warning. Save as `lab16_screenshot_06_pipeline.png`.
+
+---
+
+### Step 9.2 — Full OOP Hierarchy with All Patterns
+
+Build a complete, self-contained OOP program demonstrating every major pattern from Modules 14–15.
+
+```bash
+nano bank.py
+```
+
+Implement a banking system with the following requirements:
+
+1. **`Account` (base class):** `__init__(owner, balance=0)`, `__str__`, `__repr__`, `deposit(amount)`, `withdraw(amount)` — raise `ValueError` for negative amounts or insufficient funds. Track a class variable `_count` incremented on each instantiation. Add a `@classmethod total_accounts()` and a `@staticmethod validate_amount(amount)`.
+
+2. **`SavingsAccount(Account)`:** Adds `interest_rate` attribute. Override `withdraw` to enforce a minimum balance of `100`. Add `apply_interest()` method that multiplies `balance` by `(1 + interest_rate)`.
+
+3. **`CheckingAccount(Account)`:** Adds `overdraft_limit` attribute. Override `withdraw` to allow overdraft up to the limit (balance can go negative down to `-overdraft_limit`).
+
+4. **`PremiumAccount(SavingsAccount, CheckingAccount)`:** Inherits from both. Uses cooperative `super()`. Override `__str__` to label the account as `Premium`. Print `PremiumAccount.__mro__` to verify the resolution order.
+
+5. In `if __name__ == '__main__'`: create one of each account type, demonstrate all methods, catch the exceptions from invalid operations, and verify `isinstance()` relationships across the hierarchy.
+
+> **SCREENSHOT 7 REQUIRED:** Screenshot of `bank.py` running showing all four account types, the MRO output, and at least two caught exceptions. Save as `lab16_screenshot_07_bank.png`.
+
+---
+
+### Step 9.3 — Module Introspection and Self-Documenting Code
+
+Build a program that uses Python's introspection tools to analyze its own classes at runtime.
+
+```bash
+nano introspect.py
+```
+
+Write a program that:
+
+1. Imports `inspect`, `sys`, and `math`.
+2. Defines at least three classes (you may reuse classes from earlier steps).
+3. Iterates over all classes defined in the current module using `inspect.getmembers(sys.modules[__name__], inspect.isclass)`.
+4. For each class, prints:
+   - The class name
+   - Its `__mro__` chain (class names only, not full repr)
+   - All public methods (names not starting with `_`) using `inspect.getmembers(cls, predicate=inspect.isfunction)`
+   - The docstring of each method (first line only, or `'(no docstring)'` if absent)
+5. For one class, use `inspect.signature()` to print the parameter names and default values of each method.
+
+This exercise demonstrates how Python's own tooling works — the same approach used by documentation generators, IDEs, and testing frameworks.
+
+> **SCREENSHOT 8 REQUIRED:** Screenshot of `introspect.py` showing the class introspection output including MRO, method list, and at least one method signature. Save as `lab16_screenshot_08_introspect.png`.
+
+---
+
 ## Troubleshooting Guide
 
 **`capstone.py` fails with `NotImplementedError`.**

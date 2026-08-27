@@ -286,4 +286,72 @@ Good luck.
 
 ---
 
+---
+
+## Part 9 — Challenge Exercise
+
+These advanced steps extend the Module 16 exam prep lab with cross-domain scenario analysis, a timed subnetting sprint, and a performance-based question simulation.
+
+### Challenge Step 1: Cross-Domain Scenario Analysis
+
+For each scenario below, identify (a) the affected Network+ exam domain, (b) the specific technology or concept at fault, and (c) the corrective action. Write your answers in table format in your lab report.
+
+1. A branch office switch receives BPDUs from a workstation connected to an access port, causing repeated STP topology changes and MAC address table flushes that briefly disrupt all traffic on the floor.
+
+2. A technician runs `show interfaces GigabitEthernet0/1` and sees: Input errors: 112,000 / Late collisions: 34,000 / Duplex: Half / Speed: 1000Mb/s.
+
+3. An IP phone is assigned 169.254.47.12 despite a Voice DHCP pool being configured on the router. The phone port has `switchport voice vlan 20` configured but the router sub-interface for VLAN 20 is administratively shut down.
+
+4. All workstations on a floor can reach the internet but cannot reach the file server at 10.10.30.50. The workstations are on 10.10.20.0/24 and there is no static or dynamic route for 10.10.30.0/24 on the distribution switch.
+
+5. A wireless user connects to the corporate SSID and is prompted for credentials. After entering the correct username and password, they receive an "Authentication failed" error. The RADIUS server log shows "EAP-TLS certificate expired."
+
+**Challenge Question 1:** For scenario 5 (expired EAP-TLS certificate), trace the full 802.1X authentication path from the wireless client to the RADIUS server. Identify at which step the failure occurs, what the RADIUS server sends back to the authenticator, and what the authenticator does to the client's switch port as a result.
+
+### Challenge Step 2: Timed Subnetting Sprint
+
+Set a timer for 15 minutes. Without a calculator — mental math or pencil-and-paper only — complete all six subnetting problems. Stop when the timer expires and grade yourself.
+
+1. Network: 172.16.0.0/20 — What is the subnet mask in dotted decimal? How many usable hosts per subnet?
+
+2. Host IP: 10.50.100.200/22 — What is the network address? What is the broadcast address? Is 10.50.103.255 in the same subnet?
+
+3. You need to subnet 192.168.5.0/24 to support exactly 6 subnets with at least 25 hosts each. What is the minimum prefix length? How many hosts per subnet?
+
+4. A point-to-point WAN link needs exactly 2 usable host addresses. What CIDR prefix provides this with no waste?
+
+5. How many /27 subnets can be carved from a single /22 network?
+
+6. Host A: 192.168.100.65/26. Host B: 192.168.100.100/26. Are they in the same subnet? Show your work by identifying each host's network address.
+
+**Challenge Question 2:** Subnetting is tested on both the multiple-choice and performance-based portions of the Network+ exam. Explain the binary relationship between CIDR prefix length and the number of available host addresses. Why does each additional bit borrowed from the host portion halve the number of hosts but double the number of subnets?
+
+### Challenge Step 3: Performance-Based Question Simulation
+
+The following three items simulate Network+ performance-based questions (PBQs). For each, write a complete answer — not just a choice, but a full explanation with commands, configurations, or diagrams as appropriate.
+
+**PBQ 1 — ACL Troubleshooting:**
+
+A Cisco router has the following ACL applied inbound on the interface facing the internet:
+
+```
+access-list 100 permit tcp any host 203.0.113.10 eq 443
+access-list 100 permit tcp any host 203.0.113.10 eq 80
+access-list 100 deny ip any any
+```
+
+Users report they cannot reach the company mail server at 203.0.113.10 via SMTP (port 25). The web server on the same IP works fine. Identify the problem and write the corrected ACL entry to add SMTP access while maintaining existing rules.
+
+**PBQ 2 — VLAN and Trunking Design:**
+
+You are adding a third switch (Switch3) to an existing two-switch network. Switch3 needs to carry VLAN 10 (DATA), VLAN 20 (VOICE), and VLAN 30 (MANAGEMENT) across its uplink to Switch1. Write the complete Cisco IOS configuration for the trunk port on Switch3, including the interface command, trunk mode, allowed VLANs, and native VLAN assignment (use VLAN 99 as native).
+
+**PBQ 3 — DR Planning Decision:**
+
+A company's critical ERP system has an RTO of 2 hours and an RPO of 30 minutes. The current backup strategy is a nightly full backup to tape at 11 PM with offsite transport the next morning. Identify two specific ways this backup strategy fails to meet the stated RTO and RPO requirements, and propose a replacement strategy that satisfies both objectives. Name the specific technology mechanism for each component of your solution.
+
+**Challenge Question 3:** Performance-based questions (PBQs) appear at the beginning of the CompTIA Network+ exam. Many candidates skip PBQs and return to them after completing multiple-choice questions. Explain the strategic reasoning behind this approach — what specific risk does a PBQ create for time management, and under what circumstances should a candidate choose to attempt PBQs in order rather than skipping them?
+
+---
+
 CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash

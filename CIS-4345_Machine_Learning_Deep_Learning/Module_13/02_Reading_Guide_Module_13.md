@@ -347,3 +347,16 @@ Answer these before the quiz:
 ## Next Module Preview
 
 Module 14 covers deploying trained models: TensorFlow Serving, the SavedModel format, TFLite for mobile, and REST API wrapping. You will take the models trained in Module 13 and serve them via a local Flask endpoint.
+
+---
+
+## 9. Supplemental Resources
+
+**1. [TensorFlow Time Series Forecasting Tutorial](https://www.tensorflow.org/tutorials/structured_data/time_series)**
+The definitive official TensorFlow tutorial for time series, covering single-step and multi-step forecasting with dense networks, CNNs, LSTMs, and autoregressive RNNs on the Jena climate dataset. Directly aligned with TF Developer Certificate exam content including windowing, normalization, and the `WindowGenerator` utility class.
+
+**2. [fast.ai Practical Deep Learning — Tabular and Time Series](https://course.fast.ai/Lessons/lesson6.html)**
+fast.ai's practical approach to time series with PyTorch, covering feature engineering, seasonality, embeddings for temporal features, and the `TimeseriesDataLoaders` API. Provides a valuable alternative perspective on the same core concepts covered in this module.
+
+**3. [Papers With Code — Time Series Forecasting Benchmark](https://paperswithcode.com/task/time-series-forecasting)**
+State-of-the-art benchmark tracking for time series forecasting tasks, including N-BEATS, Temporal Fusion Transformer, PatchTST, and other modern architectures. Useful for understanding how far beyond basic LSTM/CNN the research frontier has progressed.

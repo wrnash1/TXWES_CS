@@ -356,3 +356,115 @@ Submit all deliverables as a single document or PDF via Canvas LMS.
 | Object lifecycle management (Part 5) | 15 | Three lifecycle rules applied; gsutil output confirms |
 | Cost cap design (Part 6) | 10 | All four specification points addressed; IAM permissions correct |
 | **Total** | **100** | |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Automated VM Schedule with Instance Schedules
+
+Configure a Compute Engine resource policy that automatically stops a VM at the end of the workday and starts it each morning, eliminating overnight idle costs without writing any custom code.
+
+1. Create a test VM to apply the schedule to:
+
+```bash
+export PROJECT_ID=$(gcloud config get-value project)
+gcloud compute instances create schedule-test-vm \
+  --zone=us-central1-a \
+  --machine-type=e2-micro \
+  --image-family=debian-11 \
+  --image-project=debian-cloud
+```
+
+1. Create an instance schedule resource policy (stop at 6 PM, start at 8 AM, Monday–Friday):
+
+```bash
+gcloud compute resource-policies create instance-schedule lab15-schedule \
+  --region=us-central1 \
+  --vm-start-schedule="0 8 * * MON-FRI" \
+  --vm-stop-schedule="0 18 * * MON-FRI" \
+  --timezone="America/Chicago"
+```
+
+1. Attach the schedule policy to the VM:
+
+```bash
+gcloud compute instances add-resource-policies schedule-test-vm \
+  --zone=us-central1-a \
+  --resource-policies=lab15-schedule
+```
+
+1. Verify the policy is attached:
+
+```bash
+gcloud compute instances describe schedule-test-vm \
+  --zone=us-central1-a \
+  --format="value(resourcePolicies)"
+```
+
+1. Grant the Compute Engine service account permission to start and stop the VM (required for instance schedules to function):
+
+```bash
+PROJECT_NUMBER=$(gcloud projects describe $PROJECT_ID \
+  --format='value(projectNumber)')
+gcloud projects add-iam-policy-binding $PROJECT_ID \
+  --member="serviceAccount:service-${PROJECT_NUMBER}@compute-system.iam.gserviceaccount.com" \
+  --role="roles/compute.instanceAdmin.v1"
+```
+
+### Challenge 2: Billing Anomaly Detection with Log-Based Alerting
+
+Create a Cloud Monitoring alerting policy that fires when Compute Engine costs in the BigQuery billing export exceed a daily threshold, using a scheduled BigQuery query and a Cloud Monitoring custom metric.
+
+1. Create a scheduled BigQuery query that runs daily and writes the result to a summary table:
+
+```bash
+bq mk --dataset \
+  --location=US \
+  ${PROJECT_ID}:billing_alerts
+
+bq mk --table \
+  ${PROJECT_ID}:billing_alerts.daily_compute_cost \
+  date:DATE,daily_cost:FLOAT64
+```
+
+1. Create a scheduled query in BigQuery (requires BigQuery Data Transfer Service):
+
+```bash
+gcloud services enable bigquerydatatransfer.googleapis.com
+```
+
+Navigate to BigQuery → Scheduled Queries → Create and use the following SQL (replace the billing export table name with your actual table):
+
+```sql
+INSERT INTO `YOUR_PROJECT.billing_alerts.daily_compute_cost`
+SELECT
+  DATE(usage_start_time) AS date,
+  ROUND(SUM(cost), 2) AS daily_cost
+FROM `YOUR_PROJECT.billing_export.gcp_billing_export_v1_XXXXXXXX`
+WHERE
+  service.description = 'Compute Engine'
+  AND DATE(usage_start_time) = DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY)
+GROUP BY date;
+```
+
+Set the schedule to run daily at 6:00 AM.
+
+1. Create a log-based metric in Cloud Logging that counts entries when a Cloud Function (triggered by the scheduled query completion) logs a high-cost warning. As an alternative approach, use Cloud Monitoring custom metrics:
+
+```bash
+gcloud monitoring metrics-scopes create \
+  --project=${PROJECT_ID}
+
+# Document the metric descriptor you would create for tracking daily_cost:
+# Type: custom.googleapis.com/billing/daily_compute_cost
+# Kind: GAUGE
+# Value type: DOUBLE
+# Unit: USD
+```
+
+### Reflection Questions
+
+1. In Challenge 1, the instance schedule uses cron syntax (`0 8 * * MON-FRI`). Explain what would happen to the VM if the schedule tries to start it at 8 AM but the VM is already in RUNNING state (perhaps started manually by a developer). Does the schedule produce an error, skip the action, or attempt to restart the VM?
+
+2. In Challenge 2, there is an inherent delay between when billing costs are incurred and when they appear in the BigQuery billing export (typically 24–48 hours). How does this latency affect the usefulness of a daily cost anomaly alert, and what operational adjustment would you make to account for it when setting the alert threshold?

@@ -223,3 +223,225 @@ A function makes exactly one recursive call on half the input and does O(1) work
 - *Why B is correct:* Time: the recurrence T(n) = T(n/2) + O(1) resolves to O(log n) — log₂(n) recursive calls before reaching the base case. Space: each call adds one frame to the call stack, and there are log n calls active simultaneously at the deepest point. Even though no extra data structures are used, the recursive call stack consumes O(log n) auxiliary space.
 - *Why C is incorrect:* The time complexity is correct (O(log n)), but the space is wrong. Recursion always uses stack space proportional to the maximum depth. With log n levels of recursion, space is O(log n), not O(1). O(1) space would require an iterative implementation.
 - *Why D is incorrect:* O(n) time is wrong for the same reason as A — the function halves its input at every call and reaches the base case after log n steps.
+
+---
+
+### Question 11
+
+**Each question is worth 5 points.**
+
+What does Theta notation Θ(f(n)) signify, as distinct from Big-O notation O(f(n))?
+
+- A) Θ(f(n)) is a stricter upper bound than O(f(n)) because it excludes constant factors
+- B) Θ(f(n)) means the algorithm's growth rate is bounded both above and below by f(n) — it is a tight bound
+- C) Θ(f(n)) describes the best-case runtime, while O(f(n)) describes worst-case
+- D) Θ(f(n)) and O(f(n)) are interchangeable; both denote upper bounds
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Both Θ and O drop constant factors. The distinction is not about strictness of constants but about whether the bound is one-sided (upper only, O) or two-sided (upper and lower, Θ).
+- *Why B is correct:* Θ(f(n)) means there exist positive constants c₁, c₂, and n₀ such that c₁·f(n) ≤ T(n) ≤ c₂·f(n) for all n ≥ n₀. Both the upper bound (O) and lower bound (Ω) match f(n). This is the tight or exact asymptotic bound.
+- *Why C is incorrect:* Best-case and worst-case refer to input scenarios. Θ describes the asymptotic growth for a specific case — it does not distinguish between best and worst inputs.
+- *Why D is incorrect:* O(f(n)) is only an upper bound — the algorithm could run faster. Θ(f(n)) is strictly tighter because it also guarantees the algorithm cannot run asymptotically faster than f(n).
+
+---
+
+### Question 12
+
+Consider the following code. What is its time complexity?
+
+```python
+def process(arr):
+    n = len(arr)
+    i = 1
+    while i < n:
+        for j in range(n):
+            print(arr[i], arr[j])
+        i *= 2
+```
+
+- A) O(n²)
+- B) O(n log n)
+- C) O(log n)
+- D) O(n)
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* O(n²) would require the outer loop to run n times. Here the outer loop runs only log₂(n) times because `i` doubles each iteration (1, 2, 4, 8, … until i ≥ n).
+- *Why B is correct:* The outer `while` loop runs log₂(n) times (doubling `i` each time). For each outer iteration, the inner `for` loop runs n times. Total iterations = n × log n = O(n log n). This is the hallmark pattern of O(n log n): one loop that halves/doubles and one linear loop nested inside.
+- *Why C is incorrect:* O(log n) would require only the outer loop with no inner work. The O(n) inner `for` loop multiplies the log factor by n.
+- *Why D is incorrect:* O(n) would require a single linear pass. The nested structure multiplies costs — log n outer iterations each doing n work yields n log n total.
+
+---
+
+### Question 13
+
+Which of the following recurrences corresponds to an O(n²) algorithm?
+
+- A) T(n) = T(n/2) + O(n)
+- B) T(n) = T(n − 1) + O(n)
+- C) T(n) = 2T(n/2) + O(n)
+- D) T(n) = T(n − 1) + O(1)
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* T(n) = T(n/2) + O(n) solves to O(n) by the Master Theorem (Case 3 or geometric series: n + n/2 + n/4 + … ≈ 2n). This is not quadratic.
+- *Why B is correct:* T(n) = T(n−1) + O(n) expands as: T(n) = O(n) + O(n−1) + O(n−2) + … + O(1) = O(n(n+1)/2) = O(n²). This is the recurrence for selection sort or insertion sort's worst case — reduce by 1 each level, do O(n) work each level.
+- *Why C is incorrect:* T(n) = 2T(n/2) + O(n) is the merge sort recurrence, which solves to O(n log n) by the Master Theorem.
+- *Why D is incorrect:* T(n) = T(n−1) + O(1) expands as n additions of O(1) = O(n). This is linear — e.g., iterative factorial or tail-recursive sum.
+
+---
+
+### Question 14
+
+A function processes an n×n matrix using three nested loops each from 0 to n. What is the time complexity?
+
+- A) O(n²)
+- B) O(n³)
+- C) O(3n)
+- D) O(n log n)
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* O(n²) is produced by two nested loops each running 0 to n. A third nested loop adds another factor of n, making it n × n × n = n³.
+- *Why B is correct:* Three nested loops each iterating n times produce n³ total iterations. This is O(n³) — cubic complexity. The classic example is naive matrix multiplication.
+- *Why C is incorrect:* O(3n) = O(n). Three sequential (not nested) loops over n elements would yield 3n total operations, which simplifies to O(n). Nesting multiplies; sequencing adds.
+- *Why D is incorrect:* O(n log n) requires a halving structure inside a linear loop (like merge sort). Three flat nested loops produce no such logarithmic reduction.
+
+---
+
+### Question 15
+
+What is the time complexity of looking up a key in a Python dictionary (`d[key]`) in the average case?
+
+- A) O(n) — the dictionary scans all keys linearly
+- B) O(log n) — the dictionary uses a balanced BST internally
+- C) O(1) amortized — hash tables provide constant-time average lookup
+- D) O(n log n) — hashing requires sorting keys first
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Python's `dict` is a hash table, not a linked list or array. A hash table computes the bucket index from the key's hash value in O(1), then checks one or a few entries — not all n entries.
+- *Why B is incorrect:* Python's `dict` uses open-addressing hash tables, not balanced BSTs. BST lookup is O(log n); hash table lookup is O(1) average.
+- *Why C is correct:* A hash table computes `hash(key) % capacity` to find the bucket in O(1). With a good hash function and low load factor, collisions are rare and lookup remains O(1) amortized. Python's dict is highly optimized and achieves near-constant lookup even for large n. Worst case (all keys collide) is O(n), but this is negligible in practice.
+- *Why D is incorrect:* Hash functions compute a numeric value from a key in O(1) (for fixed-size keys). No sorting is involved. Sorting is an entirely separate operation with O(n log n) complexity.
+
+---
+
+### Question 16
+
+An algorithm has two phases: Phase 1 runs in O(n log n) and Phase 2 runs in O(n²). What is the overall time complexity?
+
+- A) O(n log n + n²) = O(n² + n log n)
+- B) O(n²) — the dominant term rules
+- C) O(n³ log n) — the phases multiply
+- D) O(2n²) — they add because they are sequential
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Writing O(n log n + n²) is technically valid but not simplified. In asymptotic analysis, we drop lower-order terms. Since n² grows faster than n log n for all n > 1, the sum simplifies to O(n²).
+- *Why B is correct:* When sequential phases have different complexities, the overall complexity is the maximum (dominant) term. O(n²) dominates O(n log n) because n²/( n log n) = n/log n → ∞ as n → ∞. The smaller term becomes negligible at scale.
+- *Why C is incorrect:* Sequential phases add their costs, not multiply them. Multiplication applies to nested operations. Running one O(n log n) algorithm followed by one O(n²) algorithm costs O(n log n) + O(n²), not O(n³ log n).
+- *Why D is incorrect:* O(2n²) simplifies to O(n²). The coefficient 2 is a constant factor and is dropped per Big-O rules. Even if both phases were O(n²), the sum would still be O(n²), not O(2n²).
+
+---
+
+### Question 17
+
+What is the space complexity of iterative binary search on a sorted array?
+
+- A) O(n) — the array must be copied
+- B) O(log n) — the search range halves each iteration
+- C) O(1) — only a fixed number of pointer variables are used
+- D) O(n log n) — sorting the array first is required
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Iterative binary search does not copy the input array. It operates in-place using two index variables (`low` and `high`). The array is already given as input and is not counted toward auxiliary space.
+- *Why B is incorrect:* O(log n) space applies to recursive binary search — each recursive call adds a frame to the call stack, and there are log n levels. The iterative version uses a loop instead of recursion, eliminating stack frames.
+- *Why C is correct:* Iterative binary search uses exactly three variables: `low`, `high`, and `mid`. These are scalar integers regardless of n. O(1) auxiliary space — this is one of the key advantages of the iterative implementation over the recursive one.
+- *Why D is incorrect:* Binary search requires the array to already be sorted. If sorting is needed, it adds O(n log n) time, but this question asks about the binary search algorithm itself, which assumes a sorted input.
+
+---
+
+### Question 18
+
+Which scenario best illustrates an O(n!) time complexity?
+
+- A) Searching for an element in a sorted array using binary search
+- B) Generating all possible orderings (permutations) of n distinct elements
+- C) Merging two sorted arrays of size n/2 each
+- D) Finding the nth Fibonacci number using dynamic programming
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Binary search on a sorted array is O(log n) — it halves the search space each step.
+- *Why B is correct:* The number of permutations of n distinct elements is n! = n × (n−1) × (n−2) × … × 1. Any algorithm that enumerates all permutations must generate n! outputs and therefore runs in O(n!) time. This is the slowest complexity class in common use, appearing in brute-force solutions to the Traveling Salesman Problem and similar combinatorial problems.
+- *Why C is incorrect:* Merging two sorted arrays of total size n is O(n) — a single linear pass comparing front elements of each array.
+- *Why D is incorrect:* Dynamic programming computes Fibonacci by storing previously computed values. The time complexity is O(n) (n subproblems, each O(1) with memoization) and space is O(n) for the memo table.
+
+---
+
+### Question 19
+
+A developer claims their algorithm is O(n) time. Under what condition would this claim be misleading even if technically correct?
+
+- A) The algorithm has a very large constant factor, such as 10⁹ × n operations
+- B) The algorithm uses O(n) space, which is always worse than O(1) space
+- C) The algorithm is only O(n) in the best case but O(n²) in the worst case
+- D) The algorithm sorts its input before processing, adding hidden O(n log n) cost
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* A large constant factor is a valid concern for practical performance, but it does not make the O(n) claim technically wrong. The constant is dropped in Big-O analysis because it is hardware/implementation dependent. A truly large constant might matter in practice, but option C is a more direct example of a technically misleading (though not incorrect) claim.
+- *Why B is incorrect:* O(n) space is not "always worse" than O(1) space — it depends on context. The time-space tradeoff often makes O(n) space acceptable. This statement is a false universal claim.
+- *Why C is correct:* Big-O by convention refers to worst-case unless otherwise specified. If an algorithm is O(n) best-case but O(n²) worst-case, claiming "O(n)" without qualification is misleading. The interviewer hears "worst-case O(n)" when none was stated. Always clarify: "O(n) average case, O(n²) worst case."
+- *Why D is incorrect:* If sorting is part of the algorithm, its O(n log n) cost must be included in the overall analysis. An algorithm that sorts first is O(n log n), not O(n). This would be an incorrect claim, not merely a misleading one — the sorting cost cannot be hidden.
+
+---
+
+### Question 20
+
+What is the time complexity of the following Python code, where `n = len(arr)` and `arr` contains integers?
+
+```python
+def has_pair_with_sum(arr, target):
+    seen = set()
+    for num in arr:
+        if target - num in seen:
+            return True
+        seen.add(num)
+    return False
+```
+
+- A) O(n²) — for each element, we search the entire set
+- B) O(n log n) — set membership uses a sorted structure
+- C) O(n) — single pass; set lookup and insert are O(1) amortized
+- D) O(1) — the function returns as soon as a pair is found
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Set membership (`in`) on a Python `set` is O(1) amortized — not O(n). Python's `set` is a hash table. The loop runs n times, each iteration doing O(1) set operations, yielding O(n) total.
+- *Why B is incorrect:* Python's `set` is a hash table, not a balanced BST or sorted structure. BST membership is O(log n); hash set membership is O(1) amortized. There is no sorting happening here.
+- *Why C is correct:* The `for` loop iterates n times. Each iteration does two O(1) amortized hash table operations: `target - num in seen` (lookup) and `seen.add(num)` (insert). Total time = n × O(1) = O(n). This is the standard hash-set pattern for the "pair with target sum" problem.
+- *Why D is incorrect:* O(1) would mean the function takes a constant amount of time regardless of input size. In the worst case (no pair exists), the loop runs all n iterations. The early-return optimizes the best case, but Big-O refers to worst-case unless stated otherwise.

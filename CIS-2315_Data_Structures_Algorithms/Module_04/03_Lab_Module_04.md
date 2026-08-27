@@ -397,3 +397,21 @@ Submit to Canvas:
 | Subsets | 2ⁿ results; record current at every recursive call |
 | Permutations | n! results; use `used` set to prevent reuse |
 | Constraint pruning | Add validity check before recurse; prunes invalid branches early |
+
+---
+
+## Part 9 — Challenge Exercise
+
+These steps are **optional** and ungraded. They are designed for students who want to deepen their understanding beyond the core lab.
+
+### 9.1 — N-Queens (LeetCode #51)
+
+Solve the N-Queens problem: place n queens on an n×n chessboard so no two queens share the same row, column, or diagonal. Use backtracking: iterate over columns in each row; before placing a queen, check that no previously placed queen attacks the candidate position using three sets (`cols`, `pos_diag` = row+col, `neg_diag` = row−col). When a complete board is formed, format it as a list of strings and append to results. Return all valid configurations. Implement the solution, verify it returns 2 solutions for n=4 and 92 solutions for n=8, and add a comment explaining why the three sets (`cols`, `pos_diag`, `neg_diag`) suffice to check all attack directions.
+
+### 9.2 — Combination Sum with Duplicate Elimination
+
+LeetCode #40 (Combination Sum II) gives an array with possible duplicates and asks for all unique combinations that sum to a target, where each number may be used at most once. The key insight is sorting the input and skipping duplicate elements at the same recursion level (`if i > start and candidates[i] == candidates[i-1]: continue`). Implement the solution, trace it on `candidates = [2, 5, 2, 1, 2], target = 5`, and write a detailed comment explaining why the skip condition `i > start` (rather than `i > 0`) is critical — specifically, why it allows the same value to appear at different levels of the recursion tree but not twice at the same level.
+
+### 9.3 — Memoization vs Tabulation Performance Comparison
+
+Implement three versions of the `coin_change` problem (LeetCode #322 — find minimum coins to make an amount): (1) naive recursive with no memoization, (2) top-down recursive with `@lru_cache`, and (3) bottom-up iterative tabulation with a `dp` array. Benchmark all three on `coins = [1, 5, 10, 25]` for amounts 50, 100, 200, and 500. Record runtimes. Confirm that the naive version becomes infeasibly slow, and that the memoized and tabulation versions are both O(amount × len(coins)) but differ in constant factors and stack depth. Document your findings as comments.

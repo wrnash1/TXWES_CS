@@ -138,6 +138,24 @@ Tip 8: Acceptance criteria (whether in Given/When/Then or use case format) serve
 
 ---
 
+## 7. Supplemental Resources
+
+The following free, open-access resources go deeper on Module 10 topics:
+
+**1. "Writing Good Use Cases" — Alistair Cockburn**
+<http://alistair.cockburn.us/Writing+effective+use+cases>
+Alistair Cockburn (an Agile Manifesto signatory) is the leading authority on use case writing. His free online resources cover use case structure, goal levels, and the relationship between use cases and user stories. The site contains multiple free articles and chapters.
+
+**2. "Non-Functional Requirements" — IEEE Software Engineering Body of Knowledge (SWEBOK)**
+<https://www.computer.org/education/bodies-of-knowledge/software-engineering>
+The IEEE SWEBOK provides an authoritative, free reference for software engineering fundamentals including requirements classification. The Requirements chapter covers functional vs. non-functional requirements, quality attributes, and elicitation techniques. The full guide is available as a free PDF download.
+
+**3. "Agile Requirements" — Agile Alliance**
+<https://www.agilealliance.org/agile101/agile-glossary/requirements/>
+The Agile Alliance's resources on requirements in Agile contexts. Covers how Agile teams handle requirements discovery, validation, and change management differently from traditional methods. Includes references to user stories, acceptance criteria, and backlog management practices.
+
+---
+
 ## 6. Study Checklist
 
 - [ ] Define requirements engineering and state its five core activities

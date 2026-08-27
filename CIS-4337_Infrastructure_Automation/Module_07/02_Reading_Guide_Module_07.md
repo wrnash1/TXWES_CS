@@ -351,5 +351,21 @@ Mastery of variable precedence and the distinction between sensitive storage vs.
 
 ---
 
+## 8. Supplemental Resources
+
+**1. Terraform Input Variables Reference**
+<https://developer.hashicorp.com/terraform/language/values/variables>
+Complete reference for all variable block arguments including `nullable`, `sensitive`, and `validation`. Includes the full variable value precedence table and examples for each source type.
+
+**2. Terraform Output Values Reference**
+<https://developer.hashicorp.com/terraform/language/values/outputs>
+Documents all output block arguments, how sensitive outputs behave in CLI and state, and how outputs are consumed across module boundaries. Covers the `precondition` argument added in Terraform 1.2.
+
+**3. Terraform Local Values Reference**
+<https://developer.hashicorp.com/terraform/language/values/locals>
+Explains the `locals` block syntax, when locals are evaluated in the dependency graph, and guidance on avoiding over-use of locals that reduces configuration clarity.
+
+---
+
 *Texas Wesleyan University — CIS-4337 Infrastructure Automation*
 *Proprietary and Confidential. Not for disclosure outside of authorized course participants.*

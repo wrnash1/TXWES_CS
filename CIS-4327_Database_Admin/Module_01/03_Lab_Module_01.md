@@ -389,3 +389,26 @@ Confirm all items are included in your submission before uploading.
 ---
 
 Reference: cloud.google.com/learn
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Covering Index and Index-Only Scan
+
+1. Add 10,000 additional rows to the `order_items` table using a `generate_series()` INSERT to simulate realistic table volume.
+2. Run `EXPLAIN ANALYZE` on a query that selects `order_id` and `unit_price` from `order_items` WHERE `product_id = 2` and observe whether the plan uses a Seq Scan or Index Scan.
+3. Create a covering index: `CREATE INDEX idx_oi_product_covering ON order_items (product_id) INCLUDE (order_id, unit_price);`
+4. Run `ANALYZE order_items;` then re-run the same `EXPLAIN ANALYZE` and confirm the plan changes to an Index Only Scan, noting the reduction in actual time.
+
+### Challenge 2: Enforcing Business Rules with a CHECK Constraint and Trigger
+
+1. Add a `discount_pct` column to the `order_items` table: `ALTER TABLE order_items ADD COLUMN discount_pct NUMERIC(5,2) NOT NULL DEFAULT 0 CHECK (discount_pct >= 0 AND discount_pct < 100);`
+2. Attempt to INSERT a row with `discount_pct = 110` and record the constraint violation error.
+3. Write a `CREATE FUNCTION` and `CREATE TRIGGER` in PostgreSQL that automatically sets `discount_pct = 0` whenever a row is inserted with a NULL discount value, and test it with an INSERT that omits the `discount_pct` column.
+4. Verify the trigger fired by querying the newly inserted row and confirming `discount_pct = 0`.
+
+### Reflection Questions
+
+1. After adding the covering index in Challenge 1, what specific change appeared in the EXPLAIN ANALYZE output that confirmed the database no longer needed to access the table heap, and why does eliminating heap access improve performance?
+2. In a production system with millions of order items, what are the trade-offs of adding many covering indexes — specifically how do they affect INSERT and UPDATE performance, and how would you decide which queries justify a covering index versus a standard index?

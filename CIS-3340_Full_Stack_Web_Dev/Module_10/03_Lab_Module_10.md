@@ -411,3 +411,96 @@ Submit your `lab10-cart` folder zipped (excluding `node_modules`). Required file
 | No console errors; providers correctly nested in main.jsx | 10 |
 | Code quality: no direct mutation, consistent naming | 5 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Persist Cart to localStorage with a Reducer Middleware Pattern
+
+Add persistence so the cart survives a page reload without changing the reducer's pure function contract.
+
+1. Update `CartContext.jsx` to initialize state from `localStorage` and write back on every change. Replace the `useReducer` call and add a persistence effect:
+
+```jsx
+const saved = localStorage.getItem('txwes_cart');
+const initialCart = saved ? JSON.parse(saved) : { items: [] };
+
+export function CartProvider({ children }) {
+  const [state, dispatch] = useReducer(cartReducer, initialCart);
+
+  // Persist to localStorage whenever items change
+  useEffect(() => {
+    localStorage.setItem('txwes_cart', JSON.stringify({ items: state.items }));
+  }, [state.items]);
+
+  // ... rest of provider unchanged
+}
+```
+
+1. Add `useEffect` to the import at the top of `CartContext.jsx`: `import { createContext, useContext, useReducer, useMemo, useEffect } from 'react';`
+1. Test persistence: add two books to the cart, reload the page, and verify the cart items are still present. Open DevTools → Application → Local Storage to confirm the `txwes_cart` key exists with the correct JSON.
+1. Add a `try/catch` around the `JSON.parse` call so a corrupted `localStorage` value does not crash the app on load:
+
+```jsx
+function loadCart() {
+  try {
+    const saved = localStorage.getItem('txwes_cart');
+    return saved ? JSON.parse(saved) : { items: [] };
+  } catch {
+    return { items: [] };
+  }
+}
+
+const [state, dispatch] = useReducer(cartReducer, loadCart());
+```
+
+### Challenge 2: Genre Filter with a Separate FilterContext
+
+Add a genre filter to the catalog using a dedicated `FilterContext` so the `ProductCatalog` component does not re-render when unrelated state (cart, theme) changes.
+
+1. Create `src/context/FilterContext.jsx`:
+
+```jsx
+import { createContext, useContext, useState, useMemo } from 'react';
+
+const FilterContext = createContext(null);
+
+export function FilterProvider({ children }) {
+  const [genre, setGenre] = useState('All');
+
+  const value = useMemo(() => ({ genre, setGenre }), [genre]);
+
+  return <FilterContext.Provider value={value}>{children}</FilterContext.Provider>;
+}
+
+export function useFilter() {
+  const ctx = useContext(FilterContext);
+  if (!ctx) throw new Error('useFilter must be used within a FilterProvider');
+  return ctx;
+}
+```
+
+1. Add `<FilterProvider>` inside `main.jsx` wrapping `<App />` (inside `CartProvider`).
+1. In `ProductCatalog.jsx`, import `useFilter` and filter the product list before rendering:
+
+```jsx
+import { useFilter } from '../context/FilterContext';
+
+function ProductCatalog() {
+  const { genre, setGenre } = useFilter();
+  const { data: products, isLoading, isError, error } = useQuery({ ... });
+
+  const genres = ['All', ...new Set((products || []).map(p => p.genre))];
+  const visible = genre === 'All' ? products : products.filter(p => p.genre === genre);
+
+  // ... render genre buttons and filtered list
+}
+```
+
+1. Render genre filter buttons above the product list. Clicking a genre button calls `setGenre(g)`. Verify that filtering works and that the cart badge count does not flicker or reset when the genre changes (confirming the two contexts are independent).
+
+### Reflection Questions
+
+1. The `localStorage` persistence in Challenge 1 is implemented as a `useEffect` that runs after every render where `state.items` changed. Why is it important that this side effect lives in `useEffect` rather than inside the reducer itself?
+2. Splitting cart state and filter state into separate contexts prevents cross-contamination of re-renders. If you later need the filter state and the cart items in the same component (for example, to show "3 items in cart matching your filter"), what two options do you have, and what are the trade-offs of each?

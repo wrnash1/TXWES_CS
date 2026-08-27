@@ -234,3 +234,247 @@ print(chr(ord('a') + 3))
 - *Why B is incorrect:* `ord('B')` = 66, `ord('A')` = 65. `66 - 65 = 1`, not `2`. The first output is wrong.
 - *Why C is correct:* `ord('B') - ord('A')` = `66 - 65` = `1`. `ord('a') + 3` = `97 + 3` = `100`. `chr(100)` = `'d'`. Output: `1` then `'d'`.
 - *Why D is incorrect:* Both values are wrong. `ord('B') - ord('A')` = 1 (not 2), and `chr(ord('a') + 3)` = `'d'` (not `'c'`).
+
+---
+
+### Question 11
+
+What is the output of this code?
+
+```python
+s = 'Mississippi'
+print(s.count('ss'))
+print(s.find('ss'))
+print(s.rfind('ss'))
+```
+
+- A) `2` then `2` then `5`
+- B) `2` then `3` then `6`
+- C) `3` then `2` then `5`
+- D) `2` then `2` then `2`
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- *Why A is correct:* `'ss'` appears at index 2 (`Mi[ss]issippi`) and index 5 (`Missi[ss]ippi`) — count is 2. `.find('ss')` returns the first occurrence index: 2. `.rfind('ss')` returns the last occurrence index: 5.
+- *Why B is incorrect:* `.find('ss')` returns `2`, not `3`. Index 3 is the character `'i'`, not the start of `'ss'`.
+- *Why C is incorrect:* The count of non-overlapping `'ss'` is `2`, not `3`. There are only two `'ss'` substrings in `'Mississippi'`.
+- *Why D is incorrect:* `.rfind()` searches from the right and returns the index of the last occurrence. The last `'ss'` starts at index 5, not index 2.
+
+---
+
+### Question 12
+
+What is the output of this code?
+
+```python
+words = ['one', 'two', 'three']
+print(', '.join(words))
+print(' '.join(reversed(words)))
+```
+
+- A) `'one, two, three'` then `'three two one'`
+- B) `one, two, three` then `three two one`
+- C) `one two three` then `three, two, one`
+- D) `['one', 'two', 'three']` then `['three', 'two', 'one']`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `print()` does not add surrounding quotes to strings. The output is the string content without quotes.
+- *Why B is correct:* `', '.join(words)` → `'one, two, three'`. `reversed(words)` reverses the list; `' '.join(reversed(words))` → `'three two one'`. `print()` outputs both without quotes.
+- *Why C is incorrect:* This swaps the separators. The first join uses `', '` (comma-space), the second uses `' '` (space only).
+- *Why D is incorrect:* `.join()` returns a single string, not a list representation. Lists are only displayed with brackets when using `repr()` or printing the list object directly.
+
+---
+
+### Question 13
+
+What does `'  hello world  '.strip().split()` return?
+
+- A) `['hello', 'world']`
+- B) `['  hello', 'world  ']`
+- C) `['hello world']`
+- D) `['', 'hello', 'world', '']`
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- *Why A is correct:* `.strip()` removes the leading and trailing whitespace → `'hello world'`. Then `.split()` (no argument) splits on any whitespace and ignores multiple spaces → `['hello', 'world']`.
+- *Why B is incorrect:* `.strip()` is applied before `.split()`, removing the surrounding spaces. The split receives a clean string with no leading/trailing whitespace.
+- *Why C is incorrect:* `.split()` with no argument splits on all whitespace. The result is a list of words, not a single-element list containing the whole phrase.
+- *Why D is incorrect:* Empty strings at the ends are produced by `.split(' ')` with an explicit space delimiter. `.strip()` followed by `.split()` produces no empty strings.
+
+---
+
+### Question 14
+
+What is the output of this code?
+
+```python
+s = 'Hello, World!'
+print(s.lower().replace('world', 'python').title())
+```
+
+- A) `Hello, Python!`
+- B) `hello, python!`
+- C) `Hello, World!`
+- D) `HELLO, PYTHON!`
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- *Why A is correct:* Method chains execute left to right. `s.lower()` → `'hello, world!'`. `.replace('world', 'python')` → `'hello, python!'`. `.title()` capitalizes the first letter of each "word" (sequence of letters/digits) → `'Hello, Python!'`.
+- *Why B is incorrect:* `.title()` is applied last, capitalizing the first letter of each word. The final result is title case, not all lowercase.
+- *Why C is incorrect:* `.lower()` converts to lowercase first, then `.replace('world', 'python')` substitutes successfully (case-insensitive match only works because `.lower()` was called first).
+- *Why D is incorrect:* No `.upper()` is called in the chain. `.title()` capitalizes only the first letter of each word, not the entire string.
+
+---
+
+### Question 15
+
+What does `'Python'.zfill(10)` return?
+
+- A) `'Python    '`
+- B) `'    Python'`
+- C) `'0000Python'`
+- D) `'Python0000'`
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `.zfill()` pads with zeros, not spaces. Space-padding on the right is done with `.ljust()`.
+- *Why B is incorrect:* `.zfill()` pads with zeros, not spaces. Space-padding on the left is done with `.rjust()`.
+- *Why C is correct:* `.zfill(width)` pads the string on the left with `'0'` characters until the total width is reached. `'Python'` has 6 characters; `10 - 6 = 4` zeros are prepended → `'0000Python'`.
+- *Why D is incorrect:* `.zfill()` adds zeros to the left (leading zeros), not the right. Right-padding with zeros would require `.ljust(10, '0')`.
+
+---
+
+### Question 16
+
+What is the output of this code?
+
+```python
+text = 'first:second:third:fourth'
+parts = text.split(':', 2)
+print(len(parts), parts[-1])
+```
+
+- A) `4 fourth`
+- B) `3 third:fourth`
+- C) `2 third`
+- D) `3 fourth`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `.split(':', 2)` performs at most 2 splits, producing at most 3 parts — not 4. A split with no limit would produce 4 parts.
+- *Why B is correct:* `.split(':', 2)` splits at the first two `':'` characters only. Result: `['first', 'second', 'third:fourth']`. `len(parts) = 3`. `parts[-1] = 'third:fourth'`.
+- *Why C is incorrect:* `len(parts) = 3`, not 2. Two splits produce three parts. And `parts[-1]` is `'third:fourth'` — the unsplit remainder.
+- *Why D is incorrect:* `parts[-1]` is `'third:fourth'` (the entire unsplit remainder after 2 splits), not just `'fourth'`.
+
+---
+
+### Question 17
+
+What is the output of this code?
+
+```python
+s = 'abcABC123'
+print(s.isalpha())
+print(s.isalnum())
+print('abc123'.isalpha())
+```
+
+- A) `True` then `True` then `True`
+- B) `True` then `True` then `False`
+- C) `False` then `True` then `False`
+- D) `False` then `False` then `False`
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `s.isalpha()` returns `False` because `s` contains digits (`'1'`, `'2'`, `'3'`), which are not alphabetic characters.
+- *Why B is incorrect:* `s.isalpha()` is `False` (digits are present). The first value cannot be `True`.
+- *Why C is correct:* `'abcABC123'.isalpha()` → `False` (digits present). `'abcABC123'.isalnum()` → `True` (all letters or digits, no other characters). `'abc123'.isalpha()` → `False` (digits are not alphabetic).
+- *Why D is incorrect:* `'abcABC123'.isalnum()` returns `True` — every character is either a letter or a digit, which satisfies `.isalnum()`.
+
+---
+
+### Question 18
+
+What is the output of `'hello world'.startswith(('hi', 'hell', 'hey'))`?
+
+- A) `False` — `.startswith()` only accepts a single string
+- B) `True`
+- C) `TypeError: expected str, not tuple`
+- D) `['hi', 'hell', 'hey']`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `.startswith()` accepts either a string or a **tuple of strings**. It returns `True` if the string starts with any of the given prefixes.
+- *Why B is correct:* `.startswith(('hi', 'hell', 'hey'))` checks all three prefixes. `'hello world'` starts with `'hell'`, so the result is `True`.
+- *Why C is incorrect:* Passing a tuple to `.startswith()` is explicitly supported. `TypeError` would only occur if you passed a list (`list` is not accepted — only `tuple` or `str`).
+- *Why D is incorrect:* `.startswith()` always returns a `bool` (`True` or `False`), never a list.
+
+---
+
+### Question 19
+
+What is the output of this code?
+
+```python
+name = '  Alice  '
+formatted = f'Hello, {name.strip().upper()}!'
+print(formatted)
+print(len(name.strip()))
+```
+
+- A) `Hello,   ALICE  !` then `9`
+- B) `Hello, ALICE!` then `5`
+- C) `Hello, ALICE!` then `9`
+- D) `Hello, alice!` then `5`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `.strip()` removes the surrounding spaces before `.upper()` is applied. The f-string uses the stripped-and-uppercased result, not the original padded value.
+- *Why B is correct:* `name.strip()` → `'Alice'`. `.upper()` → `'ALICE'`. f-string → `'Hello, ALICE!'`. `name.strip()` is `'Alice'` (5 characters). `len('Alice') = 5`.
+- *Why C is incorrect:* `len(name.strip())` measures the stripped string (`'Alice'`), which has 5 characters — not 9 (which is the length of the original `'  Alice  '`).
+- *Why D is incorrect:* `.upper()` is called after `.strip()`. The result is uppercase `'ALICE'`, not lowercase.
+
+---
+
+### Question 20
+
+What is the output of this code?
+
+```python
+s = 'racecar'
+print(s == s[::-1])
+print(s[0] == s[-1])
+```
+
+- A) `True` then `False`
+- B) `False` then `True`
+- C) `True` then `True`
+- D) `False` then `False`
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `s[0]` is `'r'` and `s[-1]` is `'r'` — they are equal. The second expression is `True`, not `False`.
+- *Why B is incorrect:* `'racecar'[::-1]` is `'racecar'` (a palindrome). `s == s[::-1]` is `True`, not `False`.
+- *Why C is correct:* `'racecar'` is a palindrome — it reads the same forwards and backwards. `s[::-1]` = `'racecar'` = `s`, so `s == s[::-1]` is `True`. `s[0]` = `'r'` and `s[-1]` = `'r'`, so `s[0] == s[-1]` is also `True`.
+- *Why D is incorrect:* Both expressions evaluate to `True`. `'racecar'` is a classic palindrome example used in many Python courses and exams.

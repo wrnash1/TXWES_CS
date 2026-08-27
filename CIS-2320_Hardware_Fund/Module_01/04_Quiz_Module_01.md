@@ -205,3 +205,203 @@ A technician needs to replace a failed PSU. They open the old PSU's case to insp
 - *Why A is incorrect:* Warranty concerns are irrelevant when the unit is already failed and being discarded. More importantly, the real risk is physical — the warranty answer trivializes a lethal hazard.
 - *Why C is incorrect:* While a spinning fan could cause minor cuts, it is not the primary danger. The stored high-voltage charge in the capacitors is the lethal risk.
 - *Why D is incorrect:* PSU transformers do produce electromagnetic fields, but they are not strong enough to erase magnetic storage at normal distances. This is not the reason to avoid opening a PSU.
+
+---
+
+### Question 11
+
+A technician is about to install a new SSD into a PC. They work on a carpet-covered floor and do not have an ESD wrist strap. Which of the following is the BEST alternative ESD mitigation step?
+
+- A) Work quickly so the static charge does not have time to build up
+- B) Touch an unpainted metal surface of the PC chassis frequently throughout the installation
+- C) Place the SSD on the anti-static bag's outer surface while preparing the drive bay
+- D) Blow compressed air over the SSD to neutralize surface charge before installation
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why B is correct:* Periodically touching the unpainted metal interior of the chassis equalizes the technician's static potential with the chassis ground. This is the recommended alternative when a wrist strap is unavailable. It must be done on unpainted metal — paint is an insulator.
+- *Why A is incorrect:* Static charge builds as quickly as a person moves. Working faster does not reduce the charge — it may actually increase it by creating more friction with carpet and clothing.
+- *Why C is incorrect:* The outer surface of an anti-static bag can accumulate and hold charge. Placing a component on the outside of the bag — rather than inside it — can expose the component to the very charge the bag was designed to prevent.
+- *Why D is incorrect:* Compressed air can create a triboelectric (friction-based) charge on the component surface. It is used for dust removal, not static mitigation.
+
+---
+
+### Question 12
+
+Which of the following describes an M.2 slot's key configuration that supports ONLY NVMe (PCIe) SSDs and is NOT backward compatible with SATA-based M.2 drives?
+
+- A) B key
+- B) B+M key
+- C) M key
+- D) E key
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why C is correct:* An M-key M.2 slot supports PCIe/NVMe drives exclusively. The physical notch on the left side of the connector accepts only M-keyed devices. Most modern motherboards use M-key slots for high-speed NVMe SSDs.
+- *Why A is incorrect:* A B-key slot supports SATA-based M.2 drives and some PCIe x2 NVMe drives. It is the older configuration less common on modern motherboards.
+- *Why B is incorrect:* A B+M keyed drive has notches at both positions and fits in both B-key and M-key slots, providing backward compatibility. It is the drive key type, not a slot that restricts to NVMe only.
+- *Why D is incorrect:* The E key is used for Wi-Fi and Bluetooth M.2 cards (CNVi interface), not for storage drives.
+
+---
+
+### Question 13
+
+A system technician installs two identical 16 GB DDR4 sticks into a motherboard with four DIMM slots. Slots are numbered 1–4, with slots 1 and 3 colored gray and slots 2 and 4 colored black. To enable dual-channel operation, where should the modules be installed?
+
+- A) Slots 1 and 2 (adjacent slots, same side)
+- B) Slots 1 and 3 (matching-color slots)
+- C) Slots 2 and 4 (matching-color slots)
+- D) Either B or C, depending on which pair the motherboard manual specifies as the primary dual-channel pair
+
+**Correct Answer:** D
+
+**Distractor Analysis:**
+
+- *Why D is correct:* Dual-channel is enabled by installing matching modules in the correctly paired slots — always consult the motherboard manual. Most boards use slots 2 and 4 as the primary dual-channel pair when only two modules are installed (because they connect to different memory channels on the CPU). Some boards prefer 1 and 3. The color-coded guide gives the visual cue, but the manual provides the authoritative answer.
+- *Why A is incorrect:* Installing modules in adjacent slots (1 and 2) typically places both sticks on the same memory channel, which does not enable dual-channel mode. They would run in single-channel.
+- *Why B is incorrect:* While slots 1 and 3 are the same color (suggesting they are a matched pair), many boards designate slots 2 and 4 as the recommended pair for two-module configurations. Choosing B without verifying the manual could yield single-channel performance.
+- *Why C is incorrect:* Same reasoning as B — slots 2 and 4 are often correct, but the board manual must confirm the specific pairing before installation.
+
+---
+
+### Question 14
+
+Which of the following voltages does a standard ATX PSU provide to PC components? (Select the combination that is MOST accurate for the A+ exam.)
+
+- A) +3.3V, +5V, +12V, and −12V
+- B) +5V, +12V, and +24V
+- C) +12V and +5V only
+- D) +3.3V, +5V, +12V, −12V, and +5VSB
+
+**Correct Answer:** D
+
+**Distractor Analysis:**
+
+- *Why D is correct:* A standard ATX PSU provides +3.3V (logic circuits), +5V (drives, older components), +12V (motors, CPU VRMs, PCIe), −12V (legacy serial ports), and +5VSB (standby voltage that keeps the motherboard powered for wake-on-LAN even when "off"). The A+ exam includes −12V and +5VSB in the full voltage rail list.
+- *Why A is incorrect:* This answer omits +5VSB. The standby rail is explicitly tested on the A+ exam and enables features such as wake-on-LAN and USB charging when the system is powered off.
+- *Why B is incorrect:* +24V is not an ATX output rail. The 24-pin connector carries multiple voltages — it is not a single 24V rail.
+- *Why C is incorrect:* This omits multiple required rails (+3.3V, −12V, +5VSB). While +12V and +5V are the most heavily loaded rails, the others exist and are tested.
+
+---
+
+### Question 15
+
+A technician is replacing a CPU in an LGA1700 socket and accidentally bends two of the socket pins. What is the most likely consequence?
+
+- A) The CPU is damaged and must be replaced
+- B) The motherboard is damaged and may require replacement
+- C) The thermal paste bond is broken and overheating will occur at next boot
+- D) The bent pins will self-correct when the CPU retention bracket is tightened
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why B is correct:* In LGA (Land Grid Array) sockets, the pins are on the motherboard socket — not on the CPU. Bending those pins damages the motherboard socket, which is far more expensive to repair or replace than a CPU. This is a key A+ exam distinction between LGA and PGA sockets.
+- *Why A is incorrect:* The CPU has flat contact pads in LGA design — there are no pins on the CPU. The CPU itself is not the component damaged by bending socket pins.
+- *Why C is incorrect:* Thermal paste and the heat sink seating are unrelated to bent socket pins. Overheating is a separate issue caused by improper thermal interface, not pin damage.
+- *Why D is incorrect:* Bent socket pins do not self-correct under pressure from the retention bracket. Attempting to force the CPU onto bent pins further damages both the socket and the CPU pads.
+
+---
+
+### Question 16
+
+What is the purpose of standoff screws when mounting a motherboard in a PC case?
+
+- A) They hold the CPU retention bracket in place during shipping
+- B) They elevate the motherboard off the case floor to prevent electrical short circuits between the motherboard traces and the metal case
+- C) They adjust the PCIe slot height to align with expansion card brackets
+- D) They secure the PSU to the case wall without requiring additional screws
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why B is correct:* Standoffs are threaded brass or aluminum spacers that screw into the case mounting plate first. The motherboard then screws into the standoffs, elevating the PCB surface off the metal case by ~5mm. Without standoffs, the PCB solder joints and traces on the back of the motherboard would contact the metal case, causing short circuits.
+- *Why A is incorrect:* CPU retention brackets are secured to the motherboard directly with dedicated screws or clips. Standoffs have nothing to do with CPU mounting hardware.
+- *Why C is incorrect:* PCIe slot height is determined by the motherboard and case design. Standoffs set the motherboard at the correct I/O shield height — they do not independently adjust PCIe bracket alignment.
+- *Why D is incorrect:* The PSU is mounted to the case using its own four screws at the rear panel. Standoffs are only used for the motherboard.
+
+---
+
+### Question 17
+
+A PC powers on and the CPU fan spins, but there is no POST beep and no video output. Which of the following is the MOST likely cause related to hardware covered in Module 01?
+
+- A) The operating system files are corrupted
+- B) The GPU driver is outdated
+- C) RAM is not properly seated in the DIMM slots
+- D) The SATA data cable is disconnected from the storage drive
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why C is correct:* A system that powers on but does not complete POST (no beep or video) most commonly indicates a RAM seating issue. During POST, the system must detect and initialize RAM before it can display anything on screen. Improperly seated RAM causes POST to halt immediately. The A+ exam frequently uses this symptom to test RAM troubleshooting knowledge.
+- *Why A is incorrect:* OS corruption causes errors after POST completes. If there is no POST and no video at all, the OS has not been reached yet.
+- *Why B is incorrect:* GPU driver issues occur at the OS level, after the system has booted. They cause display problems in Windows, not a complete failure before POST.
+- *Why D is incorrect:* A disconnected SATA data cable prevents the OS from loading from the drive, but POST would still complete and display an error such as "No boot device found." The system would still show video output.
+
+---
+
+### Question 18
+
+When labeling cable connections on an ATX motherboard, a student correctly notes that the 4-pin or 8-pin square connector near the CPU socket is NOT the same as the 24-pin ATX connector. What is the specific function of the 4/8-pin connector?
+
+- A) It provides power specifically to the CPU voltage regulator modules (VRMs)
+- B) It provides standby power to the motherboard when the system is turned off
+- C) It connects the front panel power button to the motherboard
+- D) It provides dedicated power to the PCIe x16 slot for the GPU
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- *Why A is correct:* The 4-pin (or 8-pin EPS) connector near the CPU socket delivers +12V power specifically to the CPU's Voltage Regulator Modules (VRMs). The VRMs step down the +12V to the precise lower voltages the CPU cores require (typically 1–1.5V). High-end CPUs draw significant amperage and need this dedicated supply rather than sharing the 24-pin bus.
+- *Why B is incorrect:* Standby power (+5VSB) is delivered through the 24-pin ATX connector. The 4/8-pin CPU connector is only active when the system is running.
+- *Why C is incorrect:* The front panel power button connects via a 2-pin header at the bottom of the motherboard (part of the front panel connector group). It is a signal wire, not a power connector.
+- *Why D is incorrect:* The PCIe x16 slot receives some power through the motherboard (delivered via the 24-pin connector), but discrete GPUs requiring more power use a separate 6-pin or 8-pin PCIe power connector from the PSU — which plugs directly into the GPU, not the motherboard.
+
+---
+
+### Question 19
+
+Which of the following best describes the difference between volatile and non-volatile memory, and correctly categorizes RAM and an NVMe SSD?
+
+- A) Both RAM and NVMe SSD are volatile — both lose data without power
+- B) RAM is volatile (loses data without power); NVMe SSD is non-volatile (retains data without power)
+- C) RAM is non-volatile because it retains BIOS configuration; NVMe SSD is volatile because it requires a power cycle to write new data
+- D) Both RAM and NVMe SSD are non-volatile because both use solid-state technology
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why B is correct:* Volatile memory requires constant power to retain data — RAM stores active program data in capacitor-based cells that discharge when power is removed. Non-volatile memory retains data without power through persistent physical state changes in NAND flash cells. NVMe SSDs use NAND flash and retain data after power loss.
+- *Why A is incorrect:* NVMe SSDs are non-volatile. They are designed specifically to persist data across power cycles — that is their primary purpose as a storage device.
+- *Why C is incorrect:* RAM does not retain BIOS settings. The CMOS battery and UEFI flash storage retain BIOS settings. RAM is a temporary working memory that loses all content when the system powers down.
+- *Why D is incorrect:* "Solid-state" refers to the absence of moving parts, not to non-volatility. DRAM (used in RAM modules) is solid-state technology but is volatile. Non-volatility is determined by the storage mechanism, not the presence or absence of moving parts.
+
+---
+
+### Question 20
+
+A technician needs to move a workstation across the building to a new office. The system was recently upgraded with a discrete GPU. When the technician sets up the PC at the new desk and connects the monitor to the motherboard's built-in video port, there is no display output. What is the MOST likely explanation?
+
+- A) The monitor cable was damaged during transport
+- B) The discrete GPU disabled the integrated graphics in the BIOS, so video output only works through the GPU's ports
+- C) The CMOS battery died during transport, resetting the video output settings
+- D) The PCIe x16 slot lost power because the GPU's PCIe power cable came loose
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why B is correct:* When a discrete GPU is installed, many motherboards automatically disable the CPU's integrated graphics in BIOS/UEFI. The monitor must be connected to the discrete GPU's display ports (HDMI, DisplayPort) — not the motherboard's rear I/O video port. This is a very common A+ scenario tested in Domain 3.
+- *Why A is incorrect:* Cable damage is possible but statistically uncommon from a normal office move. More importantly, the more likely explanation is the integrated graphics being disabled — the A+ exam trains you to identify the most probable cause first.
+- *Why C is incorrect:* CMOS batteries do not die from being moved. They are coin cells rated for 3–7 years of standby use. Even if the battery died, it would cause incorrect date/time — not a video output failure.
+- *Why D is incorrect:* A loose PCIe power cable would cause the GPU to fail to initialize (often accompanied by a POST beep code), but the question states the PC is connecting to the motherboard's port — the GPU's power status is not the issue here.

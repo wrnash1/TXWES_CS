@@ -296,6 +296,22 @@ The exam tests automation concepts at the conceptual and application level:
 
 ---
 
+## 9. Supplemental Resources
+
+**1. Python `requests` Library Documentation**
+<https://docs.python-requests.org/en/latest/>
+The official documentation for the `requests` HTTP library — the standard tool for REST API calls in Python security scripts. The documentation covers making GET and POST requests, reading JSON responses, setting headers for API key authentication, handling HTTP error codes (including 429 rate limits), and using sessions for efficient repeated queries. Working through the quickstart section and the authentication chapter builds the foundational skills needed to complete any security API integration task, including VirusTotal, Shodan, and SIEM API queries.
+
+**2. regex101.com — Interactive Regular Expression Tester**
+<https://regex101.com>
+A free, browser-based regular expression development and testing tool. Paste a sample log line and build a regex pattern interactively — the tool highlights which characters are matched, explains each component of the pattern in plain English, and shows capture groups and their extracted values. For security analysts learning to parse log files (firewall logs, Windows event exports, Sysmon output), regex101 dramatically shortens the iteration cycle for building extraction patterns. The site supports Python (re module) flavor, which ensures patterns tested here work directly in Python scripts.
+
+**3. Palo Alto Cortex XSOAR Playbook Documentation**
+<https://cortex.pan.dev/docs/xsoar/playbooks>
+The official documentation for Cortex XSOAR (formerly Demisto), one of the most widely deployed SOAR platforms in enterprise SOCs. The playbook documentation covers trigger configuration, task types (automated, conditional, manual), integration connector setup, and case management. Even for teams using Splunk SOAR or Microsoft Sentinel automation, the conceptual architecture documented here — enrichment tasks, conditional branching, action tasks, and sub-playbooks — applies across all SOAR platforms and directly maps to the playbook design concepts tested on the CySA+ exam.
+
+---
+
 ## Required Resources
 
 - Python Standard Library Documentation — docs.python.org (free)

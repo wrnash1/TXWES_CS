@@ -627,6 +627,217 @@ Zip all 5 screenshots and upload to the Canvas Module 12 Lab Assignment.
 
 ---
 
+## Part 9 — Challenge Exercise
+
+These steps are optional and ungraded. They extend exception handling to production-relevant patterns.
+
+### Step 9.1 — Exception Hierarchy Explorer
+
+Use Python's built-in class inspection to visualize the exception hierarchy, then verify that `isinstance()` correctly implements the "is-a" relationship that drives `except` clause matching.
+
+```bash
+nano exc_hierarchy.py
+```
+
+```python
+# exc_hierarchy.py
+# Explore the exception inheritance hierarchy
+
+
+def mro_chain(exc_class):
+    '''Return the method resolution order as a list of class names.'''
+    return [cls.__name__ for cls in exc_class.__mro__]
+
+
+# Show hierarchy for common exception types
+exceptions_to_inspect = [
+    ValueError, TypeError, IndexError, KeyError,
+    ZeroDivisionError, FileNotFoundError, RecursionError,
+    KeyboardInterrupt, SystemExit,
+]
+
+print(f'{"Exception":<25} {"Inheritance chain"}')
+print('-' * 70)
+for exc in exceptions_to_inspect:
+    chain = ' → '.join(mro_chain(exc))
+    print(f'{exc.__name__:<25} {chain}')
+
+# Verify isinstance() behavior — this is how except clauses match
+print('\ninstanceof checks:')
+e = ValueError('test')
+for parent in [ValueError, Exception, BaseException]:
+    print(f'  isinstance(ValueError_instance, {parent.__name__}): {isinstance(e, parent)}')
+
+# Demonstrate that KeyboardInterrupt is NOT caught by except Exception
+print('\nKeyboardInterrupt is subclass of Exception:', issubclass(KeyboardInterrupt, Exception))
+print('KeyboardInterrupt is subclass of BaseException:', issubclass(KeyboardInterrupt, BaseException))
+```
+
+```bash
+python3 exc_hierarchy.py
+```
+
+Observe that `FileNotFoundError → OSError → Exception → BaseException → object` and that `KeyboardInterrupt` bypasses `Exception`, explaining why `except Exception:` does not prevent Ctrl+C from working.
+
+### Step 9.2 — Retry Decorator Using Exception Handling
+
+Build a decorator that automatically retries a function up to N times when a specified exception is raised. This pattern is widely used for network calls, database queries, and file locks.
+
+```bash
+nano retry_decorator.py
+```
+
+```python
+# retry_decorator.py
+# Retry decorator using exception handling
+
+
+import time
+import random
+
+
+def retry(max_attempts=3, exceptions=(Exception,), delay=0.1):
+    '''Decorator: retry the wrapped function up to max_attempts times.'''
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            last_exc = None
+            for attempt in range(1, max_attempts + 1):
+                try:
+                    result = func(*args, **kwargs)
+                    if attempt > 1:
+                        print(f'  Succeeded on attempt {attempt}')
+                    return result
+                except exceptions as e:
+                    last_exc = e
+                    print(f'  Attempt {attempt}/{max_attempts} failed: {e}')
+                    if attempt < max_attempts:
+                        time.sleep(delay)
+            raise last_exc
+        return wrapper
+    return decorator
+
+
+# Simulate a flaky function (fails first 2 calls, succeeds on 3rd)
+call_count = 0
+
+@retry(max_attempts=4, exceptions=(ConnectionError,), delay=0.05)
+def flaky_connect(host):
+    global call_count
+    call_count += 1
+    if call_count < 3:
+        raise ConnectionError(f'timeout connecting to {host} (attempt {call_count})')
+    return f'Connected to {host}'
+
+
+print('Testing flaky_connect:')
+result = flaky_connect('db.example.com')
+print(f'Result: {result}')
+
+# Test exhausted retries
+call_count = 0
+
+@retry(max_attempts=2, exceptions=(ValueError,), delay=0.05)
+def always_fails():
+    raise ValueError('permanent failure')
+
+print('\nTesting always_fails (should exhaust retries):')
+try:
+    always_fails()
+except ValueError as e:
+    print(f'Caught after retries exhausted: {e}')
+```
+
+```bash
+python3 retry_decorator.py
+```
+
+### Step 9.3 — Context Manager Using try/finally
+
+The `with` statement relies on the `__enter__` and `__exit__` protocol — but you can understand the same cleanup guarantee using `try/finally`. Build a manual resource manager and then convert it to a proper context manager.
+
+```bash
+nano context_mgr.py
+```
+
+```python
+# context_mgr.py
+# Manual resource management vs. context manager protocol
+
+
+class ManagedResource:
+    '''Simulates a resource (file, DB connection, lock) that needs cleanup.'''
+
+    def __init__(self, name):
+        self.name = name
+        self.open = False
+
+    def acquire(self):
+        self.open = True
+        print(f'  [{self.name}] acquired')
+
+    def release(self):
+        self.open = False
+        print(f'  [{self.name}] released')
+
+    # Context manager protocol
+    def __enter__(self):
+        self.acquire()
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.release()
+        # Return False to propagate exceptions; True to suppress
+        return False
+
+    def do_work(self, fail=False):
+        if not self.open:
+            raise RuntimeError(f'{self.name} is not acquired')
+        if fail:
+            raise ValueError('work failed mid-operation')
+        print(f'  [{self.name}] work done')
+
+
+# Manual try/finally pattern
+print('=== Manual try/finally ===')
+r = ManagedResource('manual')
+try:
+    r.acquire()
+    r.do_work()
+finally:
+    r.release()
+
+# Manual with failure
+print('\n=== Manual try/finally with exception ===')
+r2 = ManagedResource('manual-fail')
+try:
+    r2.acquire()
+    r2.do_work(fail=True)
+except ValueError as e:
+    print(f'  Caught: {e}')
+finally:
+    r2.release()
+
+# Using context manager protocol (with statement)
+print('\n=== with statement (context manager) ===')
+with ManagedResource('context-mgr') as r3:
+    r3.do_work()
+
+print('\n=== with statement + exception ===')
+try:
+    with ManagedResource('context-fail') as r4:
+        r4.do_work(fail=True)
+except ValueError as e:
+    print(f'  Caught outside with block: {e}')
+```
+
+```bash
+python3 context_mgr.py
+```
+
+Observe that in every case — success or exception — the resource is released. The `with` statement guarantees cleanup just as `try/finally` does, but with cleaner syntax.
+
+---
+
 ## Troubleshooting Guide
 
 **`except` clause not catching the exception you expect.**

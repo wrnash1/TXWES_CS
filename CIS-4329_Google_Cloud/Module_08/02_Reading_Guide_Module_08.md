@@ -199,3 +199,19 @@ Course: CIS-4329 Google Cloud Platform | Texas Wesleyan University | Professor N
 Certification Target: Google Cloud Associate Cloud Engineer
 
 Reference: cloud.google.com/learn
+
+---
+
+## 9. Supplemental Resources
+
+**1. Google Cloud Documentation — Cloud SQL Overview**
+<https://cloud.google.com/sql/docs/introduction>
+Official introduction to Cloud SQL covering supported database engines (MySQL, PostgreSQL, SQL Server), instance tiers, high availability configuration, read replicas, and connection methods including the Cloud SQL Auth Proxy.
+
+**2. Google Cloud Skills Boost — Cloud SQL for PostgreSQL: Qwik Start**
+<https://www.cloudskillsboost.google/focuses/937>
+Hands-on lab walking through creating a Cloud SQL for PostgreSQL instance, connecting via Cloud Shell, creating databases and tables, and running queries — directly applicable to the ACE exam scenario questions.
+
+**3. Google Cloud Documentation — Firestore Data Model**
+<https://firebase.google.com/docs/firestore/data-model>
+Comprehensive guide to the Firestore document-collection data model, including nested collections, document size limits, and the distinction between Native mode and Datastore mode that is a recurring ACE exam topic.

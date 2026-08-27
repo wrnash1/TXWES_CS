@@ -295,3 +295,80 @@ Export your Packet Tracer file (.pka) and submit via the course LMS. Include a s
 1. `show port-security interface gi0/2` output with a non-zero violation count
 2. `show ip dhcp snooping binding` showing at least one DHCP entry
 3. `show ip arp inspection` showing DAI enabled on VLAN 10
+
+---
+
+## Part 9 — Challenge Exercise
+
+This optional challenge extends the lab to CCNA exam difficulty. Complete all steps and include deliverables in your submission for up to 20 bonus points.
+
+### Challenge Step 1: Simulate and Detect a DHCP Starvation Attack with Rate Limiting
+
+Add a second PC (Attacker-PC) to the topology connected to an untrusted access port on SW1. Simulate a DHCP starvation attack by configuring Attacker-PC to rapidly request DHCP addresses using spoofed MAC addresses (in Packet Tracer, this can be approximated by rapid DHCP renewal requests from multiple VMs or by using the command prompt to flush and renew repeatedly).
+
+Apply DHCP snooping rate limiting to prevent the attack:
+
+```ios
+SW1(config)# interface GigabitEthernet0/4
+SW1(config-if)# ip dhcp snooping limit rate 15
+```
+
+Observe the port behavior when the rate limit is exceeded. Check:
+
+```ios
+SW1# show ip dhcp snooping statistics
+SW1# show interfaces GigabitEthernet0/4 status
+```
+
+If the port enters err-disabled state due to rate limit violation, configure automatic recovery:
+
+```ios
+SW1(config)# errdisable recovery cause dhcp-rate-limit
+SW1(config)# errdisable recovery interval 60
+```
+
+Document the snooping statistics output before and after rate limiting. Explain in 3–4 sentences how DHCP starvation attacks differ from rogue DHCP server attacks, and why rate limiting and trust ports address different attack vectors within the DHCP snooping feature.
+
+### Challenge Step 2: Configure TACACS+ for Device Administration with Command Authorization
+
+Extend the existing AAA configuration to use TACACS+ for command-level authorization. Configure two privilege levels: level 7 for help-desk staff (read-only show commands only) and level 15 for network engineers (full access).
+
+```ios
+SW1(config)# tacacs server TACACS-SRV
+SW1(config-server-tacacs)# address ipv4 10.0.0.51
+SW1(config-server-tacacs)# key TacacsKey456
+
+SW1(config)# aaa authorization exec default group tacacs+ local
+SW1(config)# aaa authorization commands 7 default group tacacs+ local
+SW1(config)# aaa authorization commands 15 default group tacacs+ local
+
+SW1(config)# privilege exec level 7 show
+SW1(config)# privilege exec level 7 ping
+```
+
+Test the configuration by logging in with a level-7 account and verifying that `show` commands succeed but configuration commands are rejected. Then log in with a level-15 account and verify full access. Use `show aaa servers` to confirm both RADIUS and TACACS+ servers are responding. Document the output and explain in 2–3 sentences why TACACS+ is preferred over RADIUS specifically for command-level authorization in device administration scenarios.
+
+### Challenge Step 3: Configure and Verify 802.1X with MAB Fallback
+
+Extend the 802.1X configuration on SW1 to support MAC Authentication Bypass (MAB) as a fallback for non-802.1X devices. Configure the port to attempt 802.1X first, then fall back to MAB after a timeout if no EAP response is received.
+
+```ios
+SW1(config)# interface GigabitEthernet0/6
+SW1(config-if)# switchport mode access
+SW1(config-if)# switchport access vlan 10
+SW1(config-if)# authentication order dot1x mab
+SW1(config-if)# authentication priority dot1x mab
+SW1(config-if)# authentication port-control auto
+SW1(config-if)# authentication timer restart 15
+SW1(config-if)# dot1x pae authenticator
+SW1(config-if)# mab
+```
+
+Connect a non-802.1X device (such as the IP phone or printer in the topology) to Gi0/6. Observe the authentication process using:
+
+```ios
+SW1# debug authentication all
+SW1# show authentication sessions interface GigabitEthernet0/6 detail
+```
+
+Document the session output showing the MAB authentication method and the assigned VLAN. Explain in 3–4 sentences the operational sequence when MAB fallback occurs: what triggers the fallback, how the switch uses the device's MAC address as both the username and password when contacting RADIUS, and what security considerations exist when deploying MAB in an enterprise environment.

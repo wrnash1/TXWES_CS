@@ -368,3 +368,70 @@ Submit a PDF containing:
 | Part 5: pg_stat_statements query and interpretation | 20 |
 | Part 6: MySQL slow query log enabled and analyzed | 15 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Covering Index and Index Only Scan
+
+1. On your PostgreSQL performance database, create a query that selects `customer_id` and `order_date` from `orders` filtered by `status = 'pending'`, and capture its `EXPLAIN (ANALYZE, BUFFERS)` output before any new index exists. Record `Heap Fetches` from the output.
+
+2. Create a covering index:
+
+   ```sql
+   CREATE INDEX idx_orders_status_covering
+   ON orders (status)
+   INCLUDE (customer_id, order_date);
+   ```
+
+3. Re-run `EXPLAIN (ANALYZE, BUFFERS)` on the same query. Confirm the plan now shows `Index Only Scan` and that `Heap Fetches` is 0 or near-zero. Calculate the percentage improvement in execution time.
+
+4. Run the following to see how much of the table the index covers compared to a full B-tree index:
+
+   ```sql
+   SELECT pg_size_pretty(pg_relation_size('idx_orders_status_covering')) AS covering_index_size,
+          pg_size_pretty(pg_relation_size('orders')) AS table_size;
+   ```
+
+### Challenge 2: Diagnosing and Resolving a work_mem Disk Spill
+
+1. Set `work_mem` very low for your session to force a disk spill on a sort-heavy query:
+
+   ```sql
+   SET work_mem = '64kB';
+   EXPLAIN (ANALYZE, BUFFERS)
+   SELECT customer_id, SUM(total_amount)
+   FROM orders
+   GROUP BY customer_id
+   ORDER BY SUM(total_amount) DESC;
+   ```
+
+   Record the `Batches` count in the Hash Aggregate or Sort node and the `temp written` value in the Buffers line.
+
+2. Increase `work_mem` to 64 MB and re-run the same query:
+
+   ```sql
+   SET work_mem = '64MB';
+   EXPLAIN (ANALYZE, BUFFERS)
+   SELECT customer_id, SUM(total_amount)
+   FROM orders
+   GROUP BY customer_id
+   ORDER BY SUM(total_amount) DESC;
+   ```
+
+   Record whether `Batches` drops to 1 and whether temp blocks disappear.
+
+3. Query `pg_stat_statements` to find the query and compare `temp_blks_written` before and after:
+
+   ```sql
+   SELECT query, calls, temp_blks_written, mean_exec_time
+   FROM pg_stat_statements
+   WHERE query ILIKE '%SUM(total_amount)%'
+   ORDER BY temp_blks_written DESC;
+   ```
+
+### Reflection Questions
+
+1. After completing Challenge 1, explain why an Index Only Scan with `Heap Fetches = 0` is faster than an Index Scan followed by heap access, referencing the visibility map and how PostgreSQL decides whether a heap fetch is needed.
+2. In Challenge 2 you artificially lowered `work_mem` to force a spill. In production, what strategy would you use to determine the appropriate `work_mem` setting — considering that it multiplies per operation per connection — and how would you use `pg_stat_statements` to identify which queries most benefit from a higher value?

@@ -283,4 +283,22 @@ board before the deadline.
 
 ---
 
+## Part 9 — Challenge Exercise
+
+This section is optional and not separately graded. It extends the lab into advanced BPMN modeling and process improvement practice aligned with ECBA exam competencies.
+
+### Challenge Step 1: Subprocess Expansion
+
+Select one task from your To-Be BPMN diagram that involves multiple internal steps (for example, "Process Hold Request" or "Notify Member"). Expand it into a fully detailed collapsed subprocess by creating a separate sub-process diagram. Your sub-process diagram must include: a None Start Event, at least three tasks, at least one gateway, and an End Event. Ensure the sub-process is balanced — every data input needed from the parent process is represented as a data input to the sub-process, and every output produced is returned to the parent. Add a plus-sign marker to the task in the parent diagram to indicate the collapsed subprocess. This exercise practices the BPMN subprocess concept and the scope boundaries that separate parent and child process flows.
+
+### Challenge Step 2: Performance Measurement Framework
+
+Using the improvement annotations you created in Task 3, design a formal performance measurement framework for the To-Be library book return process. For each improvement identified, define: the metric name, how it will be measured (data source and collection method), the As-Is baseline value, the To-Be target value, and the measurement frequency. Present your framework as a table. Then write a one-paragraph explanation of how this framework connects BABOK Solution Evaluation (KA 7) to the BPMN process model — specifically, how process models enable measurement of solution value after deployment.
+
+### Challenge Step 3: Error Handling Extension
+
+Review your To-Be BPMN diagram and identify at least two failure scenarios that are not currently modeled (for example: the book barcode does not scan, the patron's card is expired, or the system is offline during check-in). For each failure scenario, add the appropriate BPMN error handling element to your diagram — either an interrupting boundary event on the relevant task, an error end event, or an exception flow using an Exclusive Gateway. Document each addition with a note explaining: what triggers the exception, which BPMN element type handles it, and what the expected outcome is. This exercise practices complete process modeling that accounts for real-world failure conditions, not just the happy path.
+
+---
+
 *Lab Activity — Module 09 | CIS-3312 Systems Analysis and Design | Texas Wesleyan University*

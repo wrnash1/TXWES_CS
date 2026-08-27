@@ -296,3 +296,19 @@ aws rds create-db-snapshot \
 ## References
 
 All certification study materials and exam registration: <aws.amazon.com/certification>
+
+---
+
+## 9. Supplemental Resources
+
+**1. AWS Documentation — Amazon RDS User Guide**
+https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html
+Comprehensive guide covering RDS DB engines, Multi-AZ deployment, Read Replicas, automated backups, point-in-time recovery, encryption, and RDS Proxy — the authoritative reference for all RDS topics on the SAA-C03 exam.
+
+**2. AWS Skill Builder — Amazon Aurora: Service Introduction**
+https://skillbuilder.aws/learn/course/external/view/elearning/1162/amazon-aurora-service-introduction
+Free course covering Aurora's architecture differentiators — shared storage, Fast Cloning, Global Database, Serverless v2, and reader endpoint load balancing — directly aligned to Module 06 Aurora concepts.
+
+**3. AWS Documentation — Choosing Between Amazon Aurora and Amazon RDS**
+https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.CreateInstance.html
+AWS guidance on Aurora vs. standard RDS selection criteria covering throughput, failover time, storage architecture, and compatibility — essential for the SAA-C03 database selection scenarios tested in this module.

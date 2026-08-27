@@ -266,3 +266,75 @@ Compile all parts into a single PDF or Word document. Name your file: `Lab03_Las
 | D | Outlier Detection | 20 |
 | E | Validation and Final Report | 15 |
 | **Total** | | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Automated Cleaning Pipeline Function
+
+Encapsulate the entire cleaning workflow into a reusable Python function and test it against a second "dirty" dataset.
+
+1. Write a function `clean_customer_data(df)` that accepts a raw DataFrame and performs the following steps in order: (a) deduplicates on `email` keeping the most recent row (sort by `signup_date` descending first), (b) strips whitespace and applies title case to all string columns, (c) standardizes the `region` column using a mapping dictionary that converts common variants to canonical North/South/East/West/Unknown values, (d) converts `signup_date` to datetime, (e) applies median imputation to `purchase_amount` and `age`, (f) removes rows where `age` exceeds 120 or is less than 0, and (g) runs all five assertions from Part E. Return the cleaned DataFrame.
+2. Create a second test DataFrame with at least 8 rows that contains at least three of the original quality problems (duplicates, inconsistent region, missing values). Pass it to `clean_customer_data()`, print the before and after summaries, and verify all assertions pass.
+
+```python
+def clean_customer_data(df):
+    df = df.copy()
+    # (a) Dedup on email, keep most recent
+    df["signup_date"] = pd.to_datetime(df["signup_date"], infer_datetime_format=True)
+    df = df.sort_values("signup_date", ascending=False).drop_duplicates(
+        subset=["email"], keep="first"
+    )
+    # (b) Strip + title case all string columns
+    str_cols = df.select_dtypes("object").columns
+    df[str_cols] = df[str_cols].apply(lambda s: s.str.strip().str.title())
+    # (c) Region standardization
+    region_map = {"Us": "North", "N/A": "Unknown", "South ": "South"}  # extend as needed
+    df["region"] = df["region"].replace(region_map).fillna("Unknown")
+    # (d) Already converted above
+    # (e) Median imputation
+    df["purchase_amount"] = df["purchase_amount"].fillna(df["purchase_amount"].median())
+    df["age"] = df["age"].fillna(df["age"].median())
+    # (f) Remove impossible ages
+    df = df[df["age"].between(0, 120)]
+    # (g) Assertions
+    assert df["email"].nunique() == len(df), "Duplicate emails remain"
+    assert df["age"].between(0, 120).all(), "Invalid age values"
+    assert (df["purchase_amount"] >= 0).all(), "Negative purchase amounts"
+    assert df["purchase_amount"].isnull().sum() == 0, "Null purchase amounts"
+    return df.reset_index(drop=True)
+```
+
+### Challenge 2: Feature Engineering for a Sales Dashboard
+
+Using the fully cleaned DataFrame from Part E, engineer four new analytical columns and produce a summary report.
+
+1. Create the following derived columns: `days_since_signup` (integer days from `signup_date` to today using `pd.Timestamp.today()`), `purchase_tier` (binned `purchase_amount` into Low/Medium/High using `pd.cut()`), `is_high_value` (boolean: True when `purchase_amount` > the 75th percentile), and `signup_quarter` (quarter number 1–4 extracted from `signup_date`).
+2. Produce a grouped summary table showing, for each `loyalty_tier` × `purchase_tier` combination: the count of customers, mean `days_since_signup`, and proportion who are `is_high_value`. Print the result as a formatted DataFrame.
+3. Write two sentences interpreting the most interesting pattern you observe in the summary table.
+
+```python
+today = pd.Timestamp.today()
+df_clean["days_since_signup"] = (today - df_clean["signup_date"]).dt.days
+p75 = df_clean["purchase_amount"].quantile(0.75)
+df_clean["purchase_tier"] = pd.cut(
+    df_clean["purchase_amount"],
+    bins=[0, 100, 500, float("inf")],
+    labels=["Low", "Medium", "High"]
+)
+df_clean["is_high_value"] = df_clean["purchase_amount"] > p75
+df_clean["signup_quarter"] = df_clean["signup_date"].dt.quarter
+
+summary = df_clean.groupby(["loyalty_tier", "purchase_tier"], observed=True).agg(
+    customer_count=("customer_id", "count"),
+    avg_days_since_signup=("days_since_signup", "mean"),
+    pct_high_value=("is_high_value", "mean")
+).round(2)
+print(summary)
+```
+
+### Reflection Questions
+
+1. In Challenge 1, you sorted by `signup_date` descending before deduplicating with `keep="first"`. How does this differ from using `keep="last"` on the unsorted DataFrame? When would the choice of which duplicate to retain materially affect an analysis result?
+2. In Challenge 2, the `purchase_tier` column was created from a continuous variable using `pd.cut()`. What analytical capability does this binned column provide that the raw `purchase_amount` column does not? Give a specific example of a business question that is easier to answer with the binned column.

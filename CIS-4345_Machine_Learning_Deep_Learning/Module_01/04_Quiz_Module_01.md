@@ -213,3 +213,183 @@ The TensorFlow Developer Certificate exam requires candidates to build Keras mod
 - *Why A is incorrect:* A single sigmoid neuron outputs a probability between 0 and 1 for a binary (two-class) problem. It cannot represent probabilities across 10 separate classes. Using this output layer would collapse all 10 classes into a single binary decision.
 - *Why C is incorrect:* ReLU is not a valid output activation for classification. It does not produce probabilities and can output any non-negative value. MSE is a regression loss and is not appropriate for multi-class classification because it does not penalize the model for incorrect class assignments correctly.
 - *Why D is incorrect:* Two output neurons with binary_crossentropy is designed for binary classification, not 10-class classification. This configuration would attempt to treat the problem as two independent binary decisions rather than a single 10-way mutually exclusive choice.
+
+---
+
+### Question 11 (5 points)
+
+Which optimizer is most commonly recommended as a default for training deep neural networks due to its adaptive learning rate and momentum properties?
+
+- A) Stochastic Gradient Descent (SGD) with no momentum
+- B) Adam (Adaptive Moment Estimation)
+- C) Newton's Method
+- D) Coordinate Descent
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Adam combines the benefits of AdaGrad (adaptive per-parameter learning rates) and RMSProp (exponential moving average of squared gradients) with momentum. It generally converges faster than vanilla SGD and requires minimal hyperparameter tuning, making it the practical default for most deep learning tasks.
+  - *Why A is incorrect:* Vanilla SGD without momentum converges slowly and is sensitive to the learning rate choice. While it can achieve competitive results with careful tuning and learning rate schedules, it is not the recommended default for beginners.
+  - *Why C is incorrect:* Newton's Method requires computing the full Hessian matrix (second-order derivatives), which is computationally intractable for neural networks with millions of parameters.
+  - *Why D is incorrect:* Coordinate Descent optimizes one parameter at a time while holding others fixed. It is impractical for high-dimensional neural network weight spaces and is not used in standard deep learning frameworks.
+
+---
+
+### Question 12 (5 points)
+
+A regression model predicts house prices. After training, the Mean Absolute Error (MAE) on the training set is $8,000 and the MAE on the test set is $9,200. What does this most likely indicate?
+
+- A) The model is severely overfitting and requires substantial regularization.
+- B) The model generalizes well — the small gap between training and test error is acceptable.
+- C) The model is underfitting and needs more layers.
+- D) The dataset has class imbalance that must be corrected with SMOTE.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* A difference of only $1,200 between training MAE ($8,000) and test MAE ($9,200) represents a small generalization gap (about 15%). Both values are in the same range, indicating the model has learned a pattern that transfers well to unseen data — a sign of good generalization, not overfitting.
+  - *Why A is incorrect:* Severe overfitting would produce a very small training error paired with a dramatically higher test error (e.g., training MAE $1,000 vs. test MAE $40,000). The values here are close, ruling out severe overfitting.
+  - *Why C is incorrect:* Underfitting produces high error on both training and test sets. The pattern here (similar train and test error) is not diagnostic of underfitting.
+  - *Why D is incorrect:* SMOTE (Synthetic Minority Over-sampling Technique) addresses class imbalance in classification problems. This is a regression problem with a continuous target (price), so class imbalance and SMOTE are not applicable.
+
+---
+
+### Question 13 (5 points)
+
+In k-fold cross-validation with k=5, how many times is the model trained and what fraction of data is used for validation in each fold?
+
+- A) Trained 1 time; 20% validation
+- B) Trained 5 times; 20% validation each fold
+- C) Trained 5 times; 80% validation each fold
+- D) Trained 10 times; 10% validation each fold
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* In 5-fold cross-validation, the data is split into 5 equal-sized folds. The model is trained 5 times: each time, 4 folds (80%) form the training set and 1 fold (20%) forms the validation set. Each fold serves as the validation set exactly once, giving an unbiased performance estimate with full data utilization.
+  - *Why A is incorrect:* If the model were trained only once, it would be a simple hold-out validation, not cross-validation. The defining feature of k-fold cross-validation is the k separate training runs.
+  - *Why C is incorrect:* In 5-fold CV, each fold is 1/5 = 20% of the data, not 80%. The 80% figure is the training fraction, not the validation fraction.
+  - *Why D is incorrect:* This describes 10-fold cross-validation, not 5-fold. With k=5, exactly 5 training runs occur, each using 20% for validation.
+
+---
+
+### Question 14 (5 points)
+
+Which of the following is the correct Keras definition of a multi-layer perceptron for binary classification with two hidden layers of 128 and 64 neurons?
+
+- A) `Sequential([Dense(128), Dense(64), Dense(2, activation='softmax')])`
+- B) `Sequential([Dense(128, activation='relu'), Dense(64, activation='relu'), Dense(1, activation='sigmoid')])`
+- C) `Sequential([Dense(128, activation='sigmoid'), Dense(64, activation='sigmoid'), Dense(1, activation='relu')])`
+- D) `Sequential([Dense(128, activation='softmax'), Dense(64, activation='softmax'), Dense(1)])`
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* ReLU activation is standard for hidden layers because it introduces non-linearity, is computationally efficient, and mitigates the vanishing gradient problem. For binary classification, the output layer uses a single neuron with sigmoid activation, producing a probability between 0 and 1.
+  - *Why A is incorrect:* Hidden layers without activations are linear transformations — the entire network collapses to a single linear function regardless of depth. A 2-neuron softmax output is for 2-class multi-class classification and requires `sparse_categorical_crossentropy`.
+  - *Why C is incorrect:* Sigmoid hidden layers suffer from the vanishing gradient problem — gradients shrink exponentially through sigmoid neurons, making deep networks very slow to train. ReLU is preferred for hidden layers.
+  - *Why D is incorrect:* Softmax in hidden layers forces units to compete against each other and is only appropriate for the output layer of a multi-class classifier. A linear final neuron outputs a raw logit, not a probability.
+
+---
+
+### Question 15 (5 points)
+
+What is the purpose of the `random_state` parameter in scikit-learn functions like `train_test_split` and `RandomForestClassifier`?
+
+- A) It controls how quickly the random number generator runs, affecting training speed.
+- B) It seeds the random number generator so that results are reproducible across runs.
+- C) It limits the model to use only a random subset of features during each training step.
+- D) It sets the initial learning rate for the optimizer used during training.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* `random_state` seeds Python's (and NumPy's) pseudo-random number generator. When the same seed is used, all random operations — shuffling, splitting, initialization — produce identical results. This is essential for reproducibility: another researcher running the same code gets the same model and evaluation.
+  - *Why A is incorrect:* `random_state` has no effect on computational speed. It only determines the sequence of random numbers generated, not how fast those numbers are computed.
+  - *Why C is incorrect:* The `max_features` parameter of `RandomForestClassifier` controls the fraction of features considered at each split. `random_state` seeds the RNG used for that random selection but does not directly limit features.
+  - *Why D is incorrect:* The learning rate is set through the `learning_rate` parameter of the optimizer (e.g., `tf.keras.optimizers.Adam(learning_rate=0.001)`). `random_state` has nothing to do with optimization.
+
+---
+
+### Question 16 (5 points)
+
+A dataset has a feature "income" ranging from $20,000 to $500,000 and a feature "age" ranging from 18 to 90. Which preprocessing step should be applied before training a neural network?
+
+- A) One-hot encode both features to create binary indicator variables.
+- B) Apply feature scaling (StandardScaler or MinMaxScaler) to bring both features to similar ranges.
+- C) Drop the "income" feature because its large values will cause numerical overflow.
+- D) Convert both features to categorical bins before model training.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Neural networks use gradient descent. When features have vastly different scales, the loss surface becomes elongated and ill-conditioned — gradients for the small-scale feature are much smaller than for the large-scale feature, causing slow or oscillating convergence. Scaling ensures all features contribute equally to gradient updates.
+  - *Why A is incorrect:* One-hot encoding is for categorical variables (e.g., color = {red, blue, green}). Income and age are continuous numerical variables that should be scaled, not one-hot encoded.
+  - *Why C is incorrect:* Modern float32 representations handle values up to ~3.4×10^38. An income of $500,000 causes no overflow. The issue is gradient scale imbalance, not numerical overflow.
+  - *Why D is incorrect:* Binning continuous features into categories destroys ordinal information and reduces signal available to the model. Scaling is the correct approach for continuous numerical features.
+
+---
+
+### Question 17 (5 points)
+
+Which evaluation metric is most appropriate when false negatives are much more costly than false positives, such as in a cancer screening test?
+
+- A) Accuracy
+- B) Precision
+- C) Recall
+- D) Specificity
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - *Why C is correct:* Recall = TP / (TP + FN). A false negative in cancer screening means telling a sick patient they are healthy — a potentially fatal outcome. High recall minimizes false negatives by ensuring the model catches as many true positive cases as possible, even at the cost of more false positives.
+  - *Why A is incorrect:* Accuracy weights all errors equally. On an imbalanced cancer dataset (e.g., 95% healthy), a model predicting "healthy" for everyone would achieve 95% accuracy while catching zero cancer cases — a dangerous outcome.
+  - *Why B is incorrect:* Precision = TP / (TP + FP). Precision minimizes false positives. While precision matters in some contexts (e.g., spam filtering), in cancer screening the priority is not missing true cases, which is recall's domain.
+  - *Why D is incorrect:* Specificity = TN / (TN + FP) — it measures how well the model identifies true negatives (healthy patients). While useful, specificity does not directly measure the false negative rate, which is the primary concern in life-critical screening.
+
+---
+
+### Question 18 (5 points)
+
+In neural network training, what is a "training epoch"?
+
+- A) One forward pass through a single training example.
+- B) One complete pass through the entire training dataset.
+- C) One update of the model's weights using a mini-batch of samples.
+- D) The total number of layers in the network.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* An epoch is one complete cycle through all training examples. If the training set has 10,000 samples and the batch size is 100, then one epoch consists of 100 gradient update steps (iterations). Training typically runs for many epochs (e.g., 50–200) to allow the model to converge.
+  - *Why A is incorrect:* A single forward pass through one sample is not an epoch. In stochastic gradient descent (batch size = 1), it is one gradient update step. The term "epoch" always refers to the full dataset cycle.
+  - *Why C is incorrect:* This describes one training step or iteration (a mini-batch update). An epoch contains many such steps: n_samples / batch_size steps per epoch.
+  - *Why D is incorrect:* The number of layers describes the network depth or architecture, not a temporal unit of training. Depth is a design choice made before training begins.
+
+---
+
+### Question 19 (5 points)
+
+What does `model.evaluate(X_test, y_test)` return in Keras, and when should it be called?
+
+- A) It returns the model's weights and should be called after every epoch.
+- B) It returns the loss and metric values on the provided data and should be called once on the held-out test set after training is complete.
+- C) It returns predictions (class probabilities) for X_test and should be called during training.
+- D) It computes the gradient of the loss with respect to all weights and updates them.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* `model.evaluate()` runs a forward pass (no weight updates) over the provided data and returns the loss value followed by any metrics specified in `model.compile(metrics=[...])`. It should be called exactly once on the test set after all training and hyperparameter decisions are finalized.
+  - *Why A is incorrect:* Model weights are accessed via `model.get_weights()`. Calling `evaluate()` after every epoch on the test set violates the principle of keeping the test set unseen — use `validation_data` in `model.fit()` instead.
+  - *Why C is incorrect:* Predictions are obtained with `model.predict(X_test)`, which returns per-sample class probabilities (or logits). `model.evaluate()` returns scalar metrics, not per-sample predictions.
+  - *Why D is incorrect:* This describes the backpropagation step inside `model.fit()`. `model.evaluate()` is a read-only operation — it computes metrics but does not modify any weights.
+
+---
+
+### Question 20 (5 points)
+
+A machine learning engineer wants to predict the selling price of a car (a continuous dollar amount) from its features. Which combination of output layer and loss function is correct for this regression task in Keras?
+
+- A) `Dense(1, activation='sigmoid')` with `binary_crossentropy`
+- B) `Dense(1)` (no activation) with `mean_squared_error`
+- C) `Dense(1, activation='softmax')` with `categorical_crossentropy`
+- D) `Dense(1, activation='relu')` with `sparse_categorical_crossentropy`
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Regression tasks require predicting a continuous real-valued output. A single output neuron with no activation (linear) can output any real number, which is appropriate for an unbounded quantity like price. MSE penalizes the squared difference between predicted and actual price, providing a smooth gradient signal for regression.
+  - *Why A is incorrect:* Sigmoid outputs values in (0, 1). Car prices can be any positive number far exceeding 1.0. Binary crossentropy is a classification loss designed for probabilities, not continuous targets.
+  - *Why C is incorrect:* Softmax produces a probability distribution over discrete classes. It is designed for multi-class classification. A single softmax neuron always outputs 1.0, which is useless for regression.
+  - *Why D is incorrect:* ReLU in the output layer clips all predicted prices to be non-negative. `sparse_categorical_crossentropy` is a classification loss for integer class labels and is incompatible with a continuous regression target.

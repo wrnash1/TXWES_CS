@@ -238,3 +238,69 @@ $password = ConvertTo-SecureString "P@ssw0rd123!" -AsPlainText -Force
 Install-ADDSForest -DomainName "corp.local" -SafeModeAdministratorPassword $password `
     -InstallDns -Force
 ```
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: FSMO Role Transfer via PowerShell
+
+Practice transferring FSMO roles between Domain Controllers using PowerShell. In a real environment this is done when decommissioning a DC or optimizing role placement. In a single-DC lab, you will simulate the process by transferring a role to itself and observing the behavior.
+
+1. Identify which DC currently holds the PDC Emulator role:
+
+   ```powershell
+   (Get-ADDomain).PDCEmulator
+   ```
+
+2. Attempt to move the RID Master role to the same DC using `Move-ADDirectoryServerOperationMasterRole`. Run the command and observe the confirmation prompt:
+
+   ```powershell
+   Move-ADDirectoryServerOperationMasterRole -Identity "SRV-CORE-01" -OperationMasterRole RIDMaster
+   ```
+
+3. After accepting the prompt, verify the role is still held by `SRV-CORE-01`:
+
+   ```powershell
+   Get-ADDomain | Select-Object RIDMaster
+   ```
+
+4. In your lab notes, document the full syntax needed to transfer ALL five FSMO roles simultaneously to a target DC named `SRV-CORE-02` (hypothetical). Explain why you would need the `-Force` parameter if the current role holder is offline.
+
+### Challenge 2: Protect and Unprotect an OU from Accidental Deletion
+
+Active Directory OUs are protected from accidental deletion by default. Explore this protection mechanism and learn how to manage it.
+
+1. Create a test OU named `TempOU` with accidental deletion protection enabled:
+
+   ```powershell
+   New-ADOrganizationalUnit -Name "TempOU" -Path "DC=corp,DC=local" `
+       -ProtectedFromAccidentalDeletion $true
+   ```
+
+2. Attempt to delete the OU with the standard removal command and observe the error:
+
+   ```powershell
+   Remove-ADOrganizationalUnit -Identity "OU=TempOU,DC=corp,DC=local" -Confirm:$false
+   ```
+
+3. Disable the deletion protection, then successfully remove the OU:
+
+   ```powershell
+   Set-ADOrganizationalUnit -Identity "OU=TempOU,DC=corp,DC=local" `
+       -ProtectedFromAccidentalDeletion $false
+   Remove-ADOrganizationalUnit -Identity "OU=TempOU,DC=corp,DC=local" -Confirm:$false
+   ```
+
+4. Verify the OU no longer exists:
+
+   ```powershell
+   Get-ADOrganizationalUnit -Filter {Name -eq "TempOU"}
+   ```
+
+   The command should return no output.
+
+### Reflection Questions
+
+1. When would you choose to seize an FSMO role rather than transfer it? What is the risk of seizing a role from a DC that is merely temporarily offline versus permanently failed?
+2. The `ProtectedFromAccidentalDeletion` flag sets an explicit deny ACE on the OU object. Why is it important to enable this protection on production OUs, and what types of mistakes in production environments has this feature historically prevented?

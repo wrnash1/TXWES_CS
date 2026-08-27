@@ -392,3 +392,74 @@ Submit to Canvas:
 | All nine test cases verified (screenshot table) | 5 |
 | Code uses consistent REST conventions (status codes, no verbs in URLs) | 5 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: PATCH Endpoint and Input Sanitization
+
+Add a PATCH endpoint that partially updates a book's fields, and add input sanitization to all write endpoints.
+
+1. Add a PATCH route after the PUT route in `index.js`:
+
+```javascript
+app.patch('/api/books/:id', (req, res) => {
+  const id = parseInt(req.params.id);
+  if (isNaN(id)) return res.status(400).json({ error: 'ID must be a number' });
+  const index = books.findIndex(b => b.id === id);
+  if (index === -1) return res.status(404).json({ error: 'Book not found', code: 'BOOK_NOT_FOUND' });
+  const { title, author, year } = req.body;
+  if (title !== undefined) books[index].title = title;
+  if (author !== undefined) books[index].author = author;
+  if (year !== undefined) books[index].year = year;
+  res.status(200).json(books[index]);
+});
+```
+
+1. Add a sanitization helper at the top of `index.js` that trims and truncates string fields to prevent abnormally long inputs:
+
+```javascript
+function sanitizeBook({ title, author, year }) {
+  return {
+    title:  typeof title  === 'string' ? title.trim().slice(0, 200)  : title,
+    author: typeof author === 'string' ? author.trim().slice(0, 100) : author,
+    year:   year != null ? parseInt(year) : null
+  };
+}
+```
+
+1. Apply `sanitizeBook(req.body)` inside your POST and PUT handlers before creating or replacing a book.
+1. Test the PATCH endpoint in Thunder Client: send `PATCH /api/books/1` with only `{ "year": 2024 }` and verify the title and author are unchanged while the year updates.
+
+### Challenge 2: Request Timing Middleware and Structured Logging
+
+Replace the simple console.log logger with a structured JSON logger that records request duration.
+
+1. Replace the `requestLogger` middleware with a version that captures the response finish time:
+
+```javascript
+const requestLogger = (req, res, next) => {
+  const start = Date.now();
+  res.on('finish', () => {
+    const duration = Date.now() - start;
+    console.log(JSON.stringify({
+      ts: new Date().toISOString(),
+      method: req.method,
+      path: req.path,
+      status: res.statusCode,
+      ms: duration
+    }));
+  });
+  next();
+};
+```
+
+1. Restart the server with `npm run dev` and make five requests through Thunder Client.
+1. Copy the JSON log lines from the terminal and paste them into a new file called `sample-logs.json` (as a JSON array by wrapping them in `[...]` with commas between entries).
+1. Open `sample-logs.json` in VS Code and verify it is valid JSON using the built-in JSON formatter (Shift+Alt+F).
+
+### Reflection Questions
+
+1. The structured JSON logger emits one log line per request as a complete JSON object. Why is this format preferred over plain text log lines when logs are collected by a service like AWS CloudWatch Logs Insights?
+2. The PATCH implementation only updates fields that are explicitly present in `req.body`. What would happen if you used `||` instead of `!== undefined` to check for field presence — and which book field would be impossible to set to a falsy value like `0` or `""`?

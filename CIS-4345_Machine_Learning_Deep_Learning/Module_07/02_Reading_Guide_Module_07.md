@@ -295,3 +295,16 @@ Work through each item before attempting the quiz.
 - [ ] Complete the Module 07 Lab.
 
 - [ ] Proceed to the Module 07 Quiz.
+
+---
+
+## 9. Supplemental Resources
+
+**1. [CS231n Convolutional Neural Networks for Visual Recognition — Stanford](https://cs231n.github.io/convolutional-networks/)**
+The definitive open-access lecture notes on CNNs from Stanford's CS231n course. Covers the convolution operation, pooling, spatial dimensions, and parameter sharing with detailed diagrams. Highly recommended as a companion to this reading guide.
+
+**2. [TensorFlow Keras Conv2D Layer Documentation](https://www.tensorflow.org/api_docs/python/tf/keras/layers/Conv2D)**
+Official TensorFlow documentation for `tf.keras.layers.Conv2D`. Covers every argument (`filters`, `kernel_size`, `strides`, `padding`, `activation`, `kernel_regularizer`) with usage examples. Essential reference for the TF Developer Certificate exam.
+
+**3. [PyTorch CNN Tutorial — Training a Classifier](https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html)**
+Hands-on PyTorch tutorial that builds a CNN for CIFAR-10 classification from scratch. Provides a useful contrast to the Keras implementation in this module and reinforces CNN architecture concepts from a different framework perspective.

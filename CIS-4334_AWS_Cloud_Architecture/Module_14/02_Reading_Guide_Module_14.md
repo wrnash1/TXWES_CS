@@ -267,3 +267,19 @@ Tags must be activated in the AWS Billing and Cost Management console before the
 - VPC Gateway Endpoints for S3 and DynamoDB eliminate NAT gateway charges and data transfer fees
 - Compute Optimizer requires 14 days of CloudWatch data; it does NOT analyze ECS EC2 tasks (only Fargate)
 - AWS Budgets can take automated actions (apply IAM policy, stop instances) when thresholds are breached
+
+---
+
+## 10. Supplemental Resources
+
+**1. AWS Documentation — AWS Cost Management User Guide**
+https://docs.aws.amazon.com/cost-management/latest/userguide/what-is-costmanagement.html
+Comprehensive reference for Cost Explorer, AWS Budgets, Cost and Usage Reports, Savings Plans, and Reserved Instances — the primary documentation source for all cost visibility and commitment purchasing topics in Module 14 and on the SAA-C03 exam.
+
+**2. AWS Skill Builder — AWS Cloud Financial Management Fundamentals**
+https://skillbuilder.aws/learn/course/external/view/elearning/1922/aws-cloud-financial-management-fundamentals
+Free course covering FinOps on AWS including rightsizing, tagging strategies, Savings Plans, cost allocation, and the AWS Cost Optimization pillar of the Well-Architected Framework — directly supporting the Module 14 curriculum.
+
+**3. AWS Documentation — AWS Compute Optimizer User Guide**
+https://docs.aws.amazon.com/compute-optimizer/latest/ug/what-is-compute-optimizer.html
+Authoritative guide to Compute Optimizer recommendation types (EC2 instances, Auto Scaling groups, Lambda, EBS volumes, ECS on Fargate), required IAM permissions, and how to interpret finding risk levels — the reference for rightsizing and instance optimization questions in this module.

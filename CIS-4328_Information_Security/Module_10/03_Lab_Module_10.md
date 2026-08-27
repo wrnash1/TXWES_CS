@@ -255,4 +255,81 @@ Submit a lab report containing:
 
 ---
 
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Secure Code Review and Vulnerability Chain Analysis
+
+A fintech startup has asked you to review the security of their loan application API. The following pseudocode represents key sections of their codebase. Analyze each snippet and answer the questions that follow.
+
+**Snippet A — Loan Status Endpoint:**
+
+```python
+@app.route('/api/loan/status')
+def loan_status():
+    loan_id = request.args.get('loan_id')
+    query = "SELECT * FROM loans WHERE loan_id = '" + loan_id + "'"
+    result = db.execute(query)
+    return jsonify(result)
+```
+
+**Snippet B — Document Retrieval Endpoint:**
+
+```python
+@app.route('/api/document')
+def get_document():
+    filename = request.args.get('file')
+    path = '/var/app/documents/' + filename
+    with open(path, 'rb') as f:
+        return send_file(f)
+```
+
+**Snippet C — External Data Fetch:**
+
+```python
+@app.route('/api/fetch-rate')
+def fetch_rate():
+    url = request.args.get('source_url')
+    response = requests.get(url)
+    return response.text
+```
+
+**Snippet D — Password Reset:**
+
+```python
+def reset_password(email):
+    token = str(random.randint(1000, 9999))
+    db.store_reset_token(email, token)
+    send_email(email, f'Your reset code is: {token}')
+```
+
+1. For each snippet (A through D), identify: the OWASP Top 10 category violated, the specific attack an adversary would use to exploit it, a concrete attack payload or scenario demonstrating the exploit, and the corrected code using secure implementation practices. Present your analysis for each snippet in a structured format.
+
+2. An attacker chains Snippets A and B together in a single attack session. First, they use Snippet A's vulnerability to enumerate the `loan_id` values belonging to another customer, and then use Snippet B's vulnerability to retrieve the PDF loan agreement for that customer. Trace the full attack chain step by step. For each step, identify: what the attacker sends, what the server returns, and what OWASP category is being exploited. Then explain why addressing only one of the two vulnerabilities does not fully protect the customer's document.
+
+3. The startup's CISO asks you to estimate the CVSS v3.1 Base Score for the vulnerability in Snippet C. Using the CVSS v3.1 scoring rubric (Attack Vector, Attack Complexity, Privileges Required, User Interaction, Scope, Confidentiality/Integrity/Availability Impact), assign a score and justify each metric selection. Then compare this score to the vulnerability in Snippet D and explain why Snippet D may be more dangerous in practice despite having a lower theoretical CVSS score.
+
+4. The startup wants to add security gates to their CI/CD pipeline to detect all four vulnerabilities before they reach production. For each of the four snippets, identify whether a SAST tool, a DAST tool, or both would detect the vulnerability in an automated pipeline scan, and explain the detection mechanism each tool type uses for that specific vulnerability class.
+
+### Challenge 2: Threat Modeling and SDLC Integration
+
+A healthcare SaaS company is building a patient portal that allows patients to view lab results, message their physician, and request prescription refills. The portal is a React single-page application (SPA) with a REST API backend. Patient data is subject to HIPAA. You have been engaged as the security architect for the design phase.
+
+1. Conduct a STRIDE threat model for the patient portal. For each STRIDE category, identify at least two specific threats relevant to this application's architecture (SPA + REST API + HIPAA data), the system component at risk, the attack mechanism, and the specific security control that mitigates it. Present your threat model in a table with columns for STRIDE Category, Threat Description, Affected Component, and Mitigation.
+
+2. The development team uses a React SPA. A junior developer proposes using `dangerouslySetInnerHTML` in React to render physician notes that contain formatting. Explain why this creates a stored XSS risk in a healthcare context, describe the specific patient harm that could result from session cookie theft via XSS in a HIPAA-regulated portal, and provide the correct React implementation pattern that preserves the formatting requirement without introducing XSS risk.
+
+3. The product team requests a "share lab results" feature that lets patients generate a shareable link to a specific lab result. The link will be accessible without login for 72 hours. Design the security requirements for this feature. Your design must address: how the share token is generated (algorithm and entropy requirements), how the 72-hour expiration is enforced, what data is included in the shared view versus withheld, rate limiting on share link generation, and how the organization demonstrates HIPAA compliance for this feature (what audit log entries are required).
+
+4. Three months after launch, a DAST scan discovers that the prescription refill endpoint is vulnerable to CSRF — an attacker who tricks a logged-in patient into visiting a malicious page can submit a refill request on their behalf. The engineering lead argues that adding CSRF protection will require a two-week refactor. As the security architect, write a prioritized remediation plan that includes: an immediate compensating control deployable in hours, the root cause of the CSRF vulnerability in SPA architectures, the correct long-term fix (specify whether SameSite cookie attribute, CSRF token, or double-submit cookie pattern is most appropriate for this SPA architecture and why), and a post-fix verification step using DAST.
+
+### Reflection Questions
+
+1. After completing both challenges, explain why application security cannot be achieved through testing alone, even if a development team runs both SAST and DAST on every commit. Address the specific vulnerability categories that SAST and DAST cannot reliably detect (business logic flaws, insecure design, improper authorization), explain why these require threat modeling and security requirements during the design phase, and describe the concept of "residual risk" — the risk that remains even after testing — and how a mature DevSecOps program manages it through defense-in-depth controls like WAF, runtime application self-protection (RASP), and anomaly detection.
+
+2. In Challenge 1, the SSRF vulnerability in Snippet C received a high CVSS score, but Snippet D's weak password reset token may be more dangerous in practice. This illustrates a limitation of CVSS as a sole risk metric. Identify two additional factors beyond CVSS Base Score that a security team should use when prioritizing remediation, explain how the KEV catalog addresses one of those factors, and describe a scenario where a CVSS 5.0 Medium vulnerability should be patched before a CVSS 9.8 Critical vulnerability in the same organization's environment.
+
+---
+
 *End of Lab — Module 10*

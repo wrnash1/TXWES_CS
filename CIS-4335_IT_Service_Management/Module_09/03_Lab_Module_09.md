@@ -257,4 +257,40 @@ Before submitting, verify:
 
 ---
 
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Problem Record Lifecycle Simulation
+
+An e-commerce company's checkout service has experienced the following events over the past 30 days:
+
+- Day 1: Checkout fails for 12% of users for 45 minutes. Service restored by restarting the payment gateway. Incident INC-0441 closed.
+- Day 9: Same symptom. 8% of users affected for 30 minutes. Service restored by restart. Incident INC-0489 closed.
+- Day 17: Same symptom. 20% of users affected for 90 minutes during peak traffic. INC-0522 closed.
+- Day 18: Problem record PRB-0088 raised.
+- Day 22: Root cause identified — a connection pool exhaustion bug triggered under high concurrency. Workaround: scheduled restart every 6 hours during peak periods.
+- Day 30: Permanent fix (vendor patch) deployed and verified. Service stable.
+
+For this scenario:
+
+1. At Day 18, write a complete problem record with fields: Problem ID, Description, Linked Incidents, Priority, Assigned To (role), and Status.
+2. At Day 22, update the record to reflect the known error state. Write the KEDB entry including: Known Error ID, Root Cause Summary, Workaround Steps, Impacted Services, and Permanent Fix Status.
+3. At Day 30, describe what happens to the problem record and KEDB entry. Write two sentences for each.
+
+### Challenge 2: Change Risk and Rollback Planning
+
+A university IT department has received a change request to migrate the student portal from an on-premises server to a cloud provider. The migration involves moving the application, database, and file storage. The migration window is proposed for a Saturday at 2 AM during winter break.
+
+1. Classify this change (standard, normal, or emergency) and justify your classification in two sentences.
+2. Identify four specific risks for this change. For each risk, rate it (High/Medium/Low) and describe one mitigation action.
+3. Write a rollback plan with at least five numbered steps. Include a trigger condition that would initiate the rollback and a decision authority (who decides to roll back).
+
+### Reflection Questions
+
+1. ITIL 4 describes Problem Management as having both reactive and proactive modes. Which mode is more valuable to an organization in the long run, and why? Support your argument with a specific example of what proactive problem management prevents.
+2. Some IT organizations skip formal Change Enablement for "small" changes, arguing that the process adds bureaucracy without adding safety. Based on this module, construct a counter-argument using at least one real-world example (historical or hypothetical) of an unauthorized or poorly managed "small" change that caused a significant incident.
+
+---
+
 Module 09 Lab | CIS-4335 IT Service Management | Texas Wesleyan University

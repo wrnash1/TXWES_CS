@@ -327,4 +327,20 @@ Unauthorized reconnaissance may violate: Computer Fraud and Abuse Act (18 U.S.C.
 
 ---
 
+---
+
+## 11. Supplemental Resources
+
+**1. theHarvester — Official GitHub Repository and Documentation**
+[https://github.com/laramies/theHarvester](https://github.com/laramies/theHarvester)
+The official theHarvester repository includes usage documentation, supported data sources, and API key configuration. Reading the source documentation ensures accurate understanding of what each `-b` source collects and how to interpret output — directly applicable to Module 05 lab work.
+
+**2. OSINT Framework — Categorized Intelligence Tool Directory**
+[https://osintframework.com/](https://osintframework.com/)
+A comprehensive tree of OSINT tools organized by target type (username, email, domain, IP, social networks). Reviewing the DNS and domain branches reinforces the passive reconnaissance tool landscape covered in Module 05 and introduces additional professional resources beyond the core tools.
+
+**3. Hunter.io — Email Format Discovery and Verification**
+[https://hunter.io/](https://hunter.io/)
+Hunter.io allows testers to identify the email format used by an organization and verify whether specific email addresses are publicly known. The free tier supports a limited number of queries suitable for lab exercises, directly illustrating the email format discovery concepts covered in Module 05 Section 5.
+
 **Proprietary and Confidential. Not for disclosure outside of Texas Wesleyan University course use.**

@@ -277,3 +277,17 @@ Verify deletion in the Portal after 5-10 minutes.
 **NSG association fails:** Verify the NSG and subnet are in the same resource group and the names match exactly (case-sensitive in some CLI versions).
 
 **VM does not get an IP in the correct subnet:** Verify the `--vnet-name` and `--subnet` parameters exactly match the names you created.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: NSG Flow Log Analysis
+Enable NSG flow logs on the NSG you created in the lab. Use `az network watcher flow-log create` to configure flow logging to an Azure Storage account (create a Basic storage account using `az storage account create` if needed). Generate some traffic by accessing the VM or attempting a blocked connection, then wait 5–10 minutes for logs to appear. Download a raw flow log JSON blob from the storage account and manually identify one allowed and one denied flow entry in the log. Document the source IP, destination IP, destination port, protocol, and decision (A=allow, D=deny) for each entry. Clean up the flow log configuration and storage account when complete.
+
+### Challenge 2: Hub-and-Spoke Peering with Route Verification
+Without deploying a firewall, build a minimal hub-and-spoke topology: create three VNets (one hub, two spokes) with non-overlapping address spaces, peer each spoke to the hub with `allowForwardedTraffic` enabled, and attempt to reach a VM in Spoke B from a VM in Spoke A via the hub. Document whether traffic flows and explain why it does or does not succeed without UDRs and a network virtual appliance in the hub. Specify exactly what additional Azure resource and configuration would be required to make spoke-to-spoke traffic flow through the hub.
+
+### Reflection Questions
+1. In the lab you created an NSG rule allowing SSH (port 22) from any source. In a production environment, why is `*` (any) an inappropriate source for SSH access, and what two NSG source configurations would be more secure? What Azure service eliminates the need for inbound SSH rules entirely?
+2. VNet peering is described as non-transitive — traffic between Spoke A and Spoke B does not automatically flow through the Hub VNet. What is the architectural implication of this for organizations with dozens of spoke VNets? How does the hub-and-spoke pattern with Azure Firewall or an NVA address this limitation, and what is the trade-off in terms of latency and cost?

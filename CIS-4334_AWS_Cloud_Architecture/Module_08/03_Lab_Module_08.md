@@ -317,4 +317,24 @@ Compile all deliverables into a single PDF or Word document labeled clearly by t
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: S3 Replication Configuration
+Configure S3 Same-Region Replication (SRR) between two buckets to practice replication setup and observe replication behavior.
+1. Create a source bucket and a destination bucket (both in the same Region) with versioning enabled on both: `aws s3api create-bucket --bucket <source-name> --region us-east-1` and `aws s3api put-bucket-versioning --bucket <source-name> --versioning-configuration Status=Enabled`. Repeat for the destination.
+2. Create an IAM role for S3 replication with a trust policy for s3.amazonaws.com and a permissions policy granting `s3:GetReplicationConfiguration`, `s3:ListBucket`, `s3:GetObjectVersion`, and `s3:ReplicateObject` on the source, and `s3:ReplicateObject` on the destination.
+3. Configure replication on the source bucket: `aws s3api put-bucket-replication --bucket <source-name> --replication-configuration file://replication.json` (write the replication.json with the destination ARN and IAM role ARN).
+4. Upload a test object to the source bucket and verify it appears in the destination within 60 seconds: `aws s3 ls s3://<destination-name>/`. Document whether pre-existing objects were replicated and why.
+
+### Challenge 2: EBS Snapshot and AMI Creation
+Create an EBS snapshot and build a custom AMI to understand the golden image workflow.
+1. Create a gp3 EBS volume (1 GB is sufficient): `aws ec2 create-volume --size 1 --volume-type gp3 --availability-zone us-east-1a --encrypted`. Record the VolumeId.
+2. Create a snapshot of the volume: `aws ec2 create-snapshot --volume-id <volume-id> --description "Lab08 challenge snapshot"`. Wait for the snapshot status to become `completed`: `aws ec2 describe-snapshots --snapshot-ids <snapshot-id> --query "Snapshots[*].State"`.
+3. Register a new AMI from the snapshot: `aws ec2 register-image --name "lab08-custom-ami" --architecture x86_64 --root-device-name /dev/xvda --block-device-mappings '[{"DeviceName":"/dev/xvda","Ebs":{"SnapshotId":"<snapshot-id>","VolumeSize":1,"VolumeType":"gp3"}}]' --virtualization-type hvm`.
+4. Describe the new AMI: `aws ec2 describe-images --image-ids <ami-id>`. Record the AMI ID and the block device mapping showing the snapshot association. Clean up: deregister the AMI and delete the snapshot and volume.
+
+### Reflection Questions
+1. After completing Challenge 1, explain why pre-existing objects in the source bucket are NOT automatically replicated when replication is first configured. What specific AWS feature must you use to replicate existing objects, and what does this tell you about how replication works at the S3 service level?
+2. Based on Challenge 2, explain how EBS snapshots enable the "golden image" AMI pattern described in the Module 07 reading guide. How does the relationship between snapshots and AMIs support the AWS Well-Architected Framework Reliability pillar design principle of "use automation to make architectural experimentation easier"?
+
 *Proprietary and Confidential. Not for disclosure outside of Texas Wesleyan University.*

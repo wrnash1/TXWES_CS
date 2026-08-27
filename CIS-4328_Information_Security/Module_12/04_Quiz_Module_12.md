@@ -232,4 +232,196 @@ D) An external forensic vendor, because internal staff have a conflict of intere
 
 ---
 
+---
+
+## Question 11
+
+A forensic investigator discovers a steganography tool in the suspect's Downloads folder. The investigator suspects that sensitive documents were hidden inside image files before being sent to an external email address. Which technique does steganography use to conceal data?
+
+- A) Encrypting data with a symmetric key and storing the ciphertext as a file
+- B) Embedding data within the least significant bits of image pixel values so the visual change is imperceptible
+- C) Compressing data using a lossless algorithm and renaming the output file with a .jpg extension
+- D) Encoding data in Base64 and appending it to the end of an image file after the EOF marker
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- Why A is incorrect: Encryption protects data confidentiality but does not hide the existence of the data. Encrypted files are visible as files. Steganography's goal is to conceal the fact that a message exists at all, not merely to protect its contents.
+- Why C is incorrect: Renaming a compressed archive with a .jpg extension is file extension manipulation, not steganography. The file would not visually display as an image and could be identified immediately by examining magic bytes.
+- Why D is incorrect: Appending data after the EOF marker is a simple hiding technique but is trivially detectable by examining file size and the bytes after the expected end-of-file marker. True steganography modifies the carrier file's existing structure.
+
+---
+
+## Question 12
+
+An investigator is examining a Windows system and needs to recover deleted browser history files. The files were deleted three weeks ago. The NTFS volume has been in continuous use since the deletion. Which factor MOST significantly reduces the likelihood of recovering the deleted files?
+
+- A) The NTFS Master File Table (MFT) records are removed when files are deleted
+- B) The deleted file's data blocks may have been overwritten by subsequent file writes during three weeks of use
+- C) NTFS encrypts deleted file data to prevent unauthorized recovery
+- D) Windows Defender automatically wipes deleted files to prevent privacy violations
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- Why A is incorrect: NTFS MFT records are not immediately removed when a file is deleted — the MFT entry is marked as available for reuse. The entry itself may persist for some time, and tools like MFTECmd can parse deleted MFT records to identify file metadata even after deletion.
+- Why C is incorrect: NTFS does not encrypt deleted file data. Standard NTFS deletion simply marks blocks as unallocated. BitLocker encrypts the entire volume, but this applies equally to active and deleted data.
+- Why D is incorrect: Windows Defender does not wipe deleted files. Windows Defender is an antimalware tool. Secure file deletion requires explicit use of tools like sdelete or the Cipher /W command.
+
+---
+
+## Question 13
+
+A mobile forensics examiner is attempting to acquire data from a locked iOS device seized in a criminal investigation. The device is running the current iOS version and has USB Restricted Mode enabled. What does USB Restricted Mode prevent?
+
+- A) Charging the device via USB
+- B) USB data connections to forensic acquisition tools if the device has not been unlocked for more than one hour
+- C) Cellular network connections while the device is connected to a computer
+- D) All data transmission including Bluetooth when the screen is locked
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- Why A is incorrect: USB Restricted Mode affects data connections only, not power delivery. Charging still functions normally through a locked USB Restricted Mode device.
+- Why C is incorrect: USB Restricted Mode has no effect on cellular network connectivity. The device continues to make and receive calls and data connections over the cellular network regardless of USB connection state.
+- Why D is incorrect: USB Restricted Mode specifically restricts USB data connections. Bluetooth connectivity is governed by separate settings and is not affected by USB Restricted Mode.
+
+---
+
+## Question 14
+
+A cloud forensics investigator needs to collect logs from a SaaS email platform for a data exfiltration investigation. The organization does not own or control the underlying cloud infrastructure. What is the PRIMARY challenge unique to cloud forensics compared to traditional on-premises investigations?
+
+- A) Cloud log files use proprietary binary formats that require vendor-specific tools to parse
+- B) Logs stored in the cloud are automatically deleted after 24 hours by law
+- C) The investigator cannot independently verify that logs are complete and unmodified without cooperation from the cloud provider
+- D) Cloud services do not generate authentication or access logs
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- Why A is incorrect: Major cloud providers (Microsoft 365, Google Workspace, AWS) export logs in standard formats such as JSON, CSV, and Common Log Format. Proprietary binary formats are not the primary challenge.
+- Why B is incorrect: There is no universal law requiring log deletion after 24 hours. Cloud providers retain logs according to their configurable retention policies, which may range from days to years depending on tier and configuration.
+- Why D is incorrect: Cloud services generate extensive authentication and access logs. Azure AD, Google Workspace Admin, and AWS CloudTrail all produce detailed audit logs. Access to these logs, not their absence, is the forensic challenge.
+
+---
+
+## Question 15
+
+A forensic examiner is investigating a SQLite database file recovered from a suspect's mobile device. The examiner needs to recover records that were deleted from a table. Which characteristic of SQLite's storage format makes this possible?
+
+- A) SQLite keeps a complete transaction log of all DELETE statements in a separate .log file
+- B) SQLite's page-based storage allocates pages for reuse without immediately overwriting deleted row data, leaving remnant data in database pages
+- C) SQLite requires a recycle bin confirmation before permanently removing any record
+- D) SQLite automatically creates encrypted backups of all tables before any DELETE operation
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- Why A is incorrect: SQLite does maintain a write-ahead log (WAL) for transaction durability, but this log is not a forensic archive — it is overwritten as the database cycles through pages. Deleted record remnants in the database page structure are the primary recovery mechanism.
+- Why C is incorrect: SQLite is a database engine used by applications, not an operating system with a recycle bin. DELETE operations execute immediately without user confirmation within the database engine.
+- Why D is incorrect: SQLite does not create encrypted backups before DELETE operations. SQLite's storage model is based on B-tree pages — when rows are deleted, the page space is marked as free for reuse but the data may persist until overwritten by a subsequent write.
+
+---
+
+## Question 16
+
+During a Windows forensic investigation, the examiner exports the HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run registry key and finds an unfamiliar entry pointing to `C:\Users\Public\svchost32.exe`. What does this registry key represent and why is this finding significant?
+
+- A) A critical Windows kernel driver that should not be removed
+- B) A user preference setting for display scaling on high-DPI monitors
+- C) An autorun entry that executes the specified program at every system startup — the unusual path suggests a persistence mechanism planted by an attacker
+- D) A Windows Update service binary scheduled to run once after a recent patch installation
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- Why A is incorrect: The Run key is not for kernel drivers. Drivers are loaded through the HKLM\SYSTEM\CurrentControlSet\Services registry path. The Run key is specifically for user-mode programs that launch at logon.
+- Why B is incorrect: Display scaling preferences are stored in HKCU\Control Panel\Desktop and related paths, not in the Run key. The Run key has no role in display configuration.
+- Why D is incorrect: Windows Update uses its own service mechanisms and does not typically place binaries in C:\Users\Public\. The path C:\Users\Public\ is a user-accessible shared folder, not a standard Windows system directory — placing executables there is a common attacker technique to avoid detection heuristics that focus on system directories.
+
+---
+
+## Question 17
+
+A network forensics examiner is reviewing a PCAP file captured during a suspected data exfiltration incident. The examiner observes large volumes of outbound DNS TXT record queries averaging 200 bytes each, sent at regular 30-second intervals to a single external domain. Normal DNS queries on this network are under 50 bytes. What technique does this pattern most likely represent?
+
+- A) DNS amplification attack where the attacker is using the internal resolver to flood external targets
+- B) DNS tunneling where data is encoded within DNS query fields to exfiltrate data through a permitted protocol
+- C) DNS poisoning where the attacker is injecting false records into the local DNS cache
+- D) A misconfigured DNS server performing zone transfers at 30-second intervals
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- Why A is incorrect: A DNS amplification attack sends queries to external DNS resolvers to generate large responses directed at a victim. The queries originate from spoofed source IPs and target open resolvers — the pattern would not show regular 30-second intervals from a single internal host to one external domain.
+- Why C is incorrect: DNS cache poisoning involves injecting forged DNS responses into a resolver's cache. It does not produce outbound query traffic from a client at regular intervals. Cache poisoning targets the response path, not the query path.
+- Why D is incorrect: DNS zone transfers (AXFR) are initiated by secondary DNS servers and transfer all zone records, not individual TXT queries. Zone transfers occur infrequently (on change notification or at scheduled intervals), and legitimate zone transfers are large bulk transfers, not regular small queries.
+
+---
+
+## Question 18
+
+An examiner is reviewing Windows Prefetch files (`C:\Windows\Prefetch\`) during an investigation. The suspect claims they never ran a particular executable. The examiner finds a .pf file for the executable with a last execution timestamp from the date in question. What does the presence of this Prefetch file prove?
+
+- A) The executable is currently running on the system
+- B) The executable was executed on the system on the date recorded in the Prefetch file
+- C) The executable was downloaded from the internet and stored in the Downloads folder
+- D) The executable was flagged as malicious by Windows Defender
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- Why A is incorrect: Prefetch files are created and updated when an executable runs — they are historical records, not indicators of current execution state. A Prefetch file persists long after the program exits.
+- Why C is incorrect: Prefetch files track execution, not download origin. There is no download location metadata in a Prefetch file. Browser history, zone identifier alternate data streams (ADS), and download manager logs are the sources for download origin information.
+- Why D is incorrect: Windows Defender detections are logged in separate event logs and the Defender scan history, not in Prefetch files. Prefetch files are created by the Superfetch/SysMain service to optimize future application load times.
+
+---
+
+## Question 19
+
+A forensic investigator is analyzing network traffic and discovers that a compromised workstation is connecting outbound to an HTTPS URL on port 443 at randomized 5–15 minute intervals. The connections are short (under 2 seconds), transfer minimal data, and the domain was registered 48 hours before the observed traffic. What attacker technique does this pattern describe?
+
+- A) SQL injection probing the organization's external web application
+- B) Command and control (C2) beaconing using HTTPS to blend with legitimate web traffic
+- C) A misconfigured auto-update service checking for software patches
+- D) DNS-over-HTTPS (DoH) resolver traffic from a privacy-focused browser
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- Why A is incorrect: SQL injection attacks target a web application server, not outbound connections from a workstation to an external HTTPS endpoint. SQL injection appears as inbound traffic to the organization's web server, not outbound periodic connections.
+- Why C is incorrect: Legitimate auto-update services connect to known vendor domains (windowsupdate.com, update.microsoft.com, etc.) that have established long-term registrations. A 48-hour-old domain is a strong indicator of a newly created attacker-controlled infrastructure — legitimate software vendors do not use recently registered domains for update services.
+- Why D is incorrect: DoH traffic from browsers targets known DoH providers (1.1.1.1, 8.8.8.8, dns.google) with consistent connection patterns. The combination of randomized intervals, minimal data transfer, and a 48-hour-old domain is not consistent with DoH resolver behavior.
+
+---
+
+## Question 20
+
+A forensics examiner reviews a suspect's hard drive and finds that a directory contains dozens of .jpg files. When the examiner opens several of these files, they display normal-looking photographs. However, threat intelligence indicates that this suspect used steganography to hide encrypted data inside image files. Which approach would allow the examiner to determine whether hidden data is present in these images?
+
+- A) Rename the files with a .zip extension and attempt to open them as archives
+- B) Compute the SHA-256 hash of each file and compare it against known-good JPEG hashes
+- C) Use a steganography detection tool (steganalysis) to analyze statistical anomalies in pixel data that indicate data has been embedded
+- D) Review the EXIF metadata of each image using a metadata viewer to find embedded documents
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- Why A is incorrect: Renaming a JPEG with a .zip extension will not reveal steganographic content — the embedded data is distributed across pixel values, not stored as a concatenated archive after the JPEG data. A steganographic JPEG would not open as a valid ZIP file.
+- Why B is incorrect: Comparing SHA-256 hashes against known-good values would detect file modification but is impractical for detecting steganography. There is no database of known-good hashes for every possible legitimate JPEG. Two images that appear visually identical but contain different steganographic payloads would produce different hashes — but this comparison does not reveal which image has hidden data.
+- Why D is incorrect: EXIF metadata is stored in a standard header structure and contains camera, date, location, and settings data. Steganographic tools embed data in pixel values (LSB encoding), not in EXIF fields. Reviewing EXIF metadata will not detect LSB steganography.
+
+---
+
 *End of Quiz — Module 12*

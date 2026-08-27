@@ -350,7 +350,28 @@ loadData().catch(err => showError(err.message));
 
 ---
 
-## 6. JSE Certification Exam Tips
+## 6. Supplemental Resources
+
+The following free, openly available resources extend and reinforce the topics covered in this module.
+
+- **[MDN Web Docs — Promise.allSettled()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled)**
+  Full reference for `Promise.allSettled` including the result object format (`{ status, value/reason }`), comparison with `Promise.all`, and use cases for handling mixed success/failure responses.
+
+- **[MDN Web Docs — AbortController](https://developer.mozilla.org/en-US/docs/Web/API/AbortController)**
+  Complete reference for `AbortController` and `AbortSignal`. Covers the browser pattern for cancelling fetch requests, identifying `AbortError` in catch blocks, and using a single controller to cancel multiple requests simultaneously.
+
+- **[MDN Web Docs — JSON.stringify()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify)**
+  Full reference for `JSON.stringify` including the replacer function, space argument, `toJSON()` method override, which values are omitted or converted, and circular reference behavior.
+
+- **[javascript.info — Promise API](https://javascript.info/promise-api)**
+  Covers all four Promise combinators (`all`, `allSettled`, `race`, `any`) with clear comparison tables, worked examples, and practical guidance on which to use in each scenario.
+
+- **[javascript.info — Async/await](https://javascript.info/async-await)**
+  Deep dive into `async`/`await` patterns including error handling, parallel execution with `Promise.all`, and real-world fetch patterns. Complements Module 13's introduction with practical production-style examples.
+
+---
+
+## 7. JSE Certification Exam Tips
 
 1. **Sequential `await` vs `Promise.all`** — sequential forces operations to run one after another; `Promise.all` runs them concurrently. Know when each is correct.
 
@@ -374,7 +395,7 @@ loadData().catch(err => showError(err.message));
 
 ---
 
-## 7. Study Checklist
+## 8. Study Checklist
 
 - [ ] Watch the Module 14 video lecture by Professor Nash.
 - [ ] Read [MDN — Promise.allSettled()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled).

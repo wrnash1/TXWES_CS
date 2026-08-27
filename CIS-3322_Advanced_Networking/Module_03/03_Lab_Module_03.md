@@ -284,3 +284,53 @@ Submit the following as a single PDF or Word document in Canvas:
 | Troubleshooting Scenarios | 25 | Correct diagnosis and resolution (A=8, B=8, C=9) |
 
 Partial credit is awarded for demonstrably attempted but incomplete work.
+
+---
+
+## Part 9 — Challenge Exercise
+
+This optional challenge extends the lab to CCNA exam difficulty. Complete all steps and include deliverables in your submission for up to 20 bonus points.
+
+### Challenge Step 1: Configure OSPFv3 for Dynamic IPv6 Route Exchange
+
+Remove the static routes from both R1 and R2. Configure OSPFv3 (IPv6 OSPF) on both routers so that all connected IPv6 networks are dynamically advertised:
+
+```ios
+R1# configure terminal
+R1(config)# ipv6 router ospf 1
+R1(config-rtr)# router-id 1.1.1.1
+R1(config-rtr)# exit
+R1(config)# interface GigabitEthernet0/0
+R1(config-if)# ipv6 ospf 1 area 0
+R1(config-if)# interface Serial0/0/0
+R1(config-if)# ipv6 ospf 1 area 0
+```
+
+Repeat on R2 with router-id 2.2.2.2. Verify the OSPF adjacency forms and routes are exchanged:
+
+```ios
+R1# show ipv6 ospf neighbor
+R1# show ipv6 route ospf
+```
+
+Document the neighbor state (should reach FULL) and confirm that R1 now sees R2's connected networks as OSPF routes (marked "O") rather than static routes.
+
+### Challenge Step 2: Verify NDP Operation and Analyze Neighbor Cache
+
+Initiate a ping from PC-A to PC-B to populate the NDP neighbor cache on R1. Then inspect the neighbor cache:
+
+```ios
+R1# show ipv6 neighbors
+```
+
+Identify the state of each entry (REACH, STALE, DELAY, or PROBE). In your deliverable, explain the IPv6 NDP state machine: describe what causes a REACH entry to transition to STALE, and what triggers a PROBE state. Compare this behavior to ARP in IPv4 (2–3 sentences each).
+
+### Challenge Step 3: Configure and Test IPv6 Default Route with Recursive Next-Hop
+
+On R1, configure a default IPv6 route pointing toward R2's global unicast address on the serial link:
+
+```ios
+R1(config)# ipv6 route ::/0 Serial0/0/0 2001:DB8:ACAD:3::2
+```
+
+Verify it appears in the routing table as `S ::/0`. Then change the next-hop to R2's link-local address and confirm the route requires the exit interface to be specified. Document the error that occurs when the exit interface is omitted and explain in 2–3 sentences why link-local next-hops require explicit exit interface specification in IPv6 but global unicast next-hops do not.

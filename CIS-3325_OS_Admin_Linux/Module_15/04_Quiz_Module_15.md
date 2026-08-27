@@ -166,6 +166,156 @@ Which tool would an administrator use to run an automated CIS Benchmark assessme
 
 ---
 
+**Question 11** (5 points)
+
+An administrator runs `ausearch -k shadow_watch -ts today` to search audit logs. What does the `-ts today` option do?
+
+- A) It filters results to events tagged with the `today` key.
+- B) It limits results to audit events that occurred since the start of today.
+- C) It sorts the output by timestamp in descending order.
+- D) It converts timestamps from epoch format to human-readable format.
+
+**Correct Answer: B**
+
+*Explanation: `-ts` (time start) filters audit records to only those occurring after the specified time. `today` is a special value meaning midnight of the current day. Other valid values include `yesterday`, `recent` (last 10 minutes), a specific time like `10:00:00`, or an epoch timestamp. This makes `ausearch` output manageable on busy systems with large audit logs.*
+
+---
+
+**Question 12** (5 points)
+
+Which `semanage` command displays all current custom SELinux file context mappings that have been added (not part of the default policy)?
+
+- A) `semanage fcontext -l`
+- B) `semanage fcontext --list-custom`
+- C) `semanage fcontext -l -C`
+- D) `restorecon -nl /`
+
+**Correct Answer: C**
+
+*Explanation: `semanage fcontext -l` lists ALL context mappings including default policy entries (thousands of lines). Adding `-C` (customizations only) restricts output to administrator-added mappings, making it easy to audit what custom contexts are in place. This is essential for documentation and troubleshooting custom directory configurations.*
+
+---
+
+**Question 13** (5 points)
+
+A PAM module is configured with the `requisite` control flag. If this module fails, what happens?
+
+- A) Authentication continues evaluating the rest of the stack, and the failure is accumulated.
+- B) Authentication fails immediately and no further modules in the stack are evaluated.
+- C) The failure is logged but authentication continues and can still succeed.
+- D) Authentication is retried up to three times before failing.
+
+**Correct Answer: B**
+
+*Explanation: The `requisite` control flag causes immediate failure — if the module fails, PAM stops evaluating the rest of the stack immediately and returns a failure. This differs from `required` (which marks failure but continues evaluating all modules before returning failure) and `optional` (which ignores module failure). `requisite` is used for hard pre-conditions like MFA or account status checks.*
+
+---
+
+**Question 14** (5 points)
+
+Which command shows the SELinux context of all processes related to the `httpd` service?
+
+- A) `seinfo httpd`
+- B) `ps -eZ | grep httpd`
+- C) `getfattr httpd`
+- D) `sestatus -v httpd`
+
+**Correct Answer: B**
+
+*Explanation: `ps -eZ` shows all running processes with their SELinux security context in the first column (domain). Filtering with `grep httpd` shows only httpd-related processes and their context labels. This reveals whether the processes are running in the expected domain (e.g., `httpd_t`) or an unexpected one. `getfattr` retrieves extended attributes of files, not processes.*
+
+---
+
+**Question 15** (5 points)
+
+A system administrator wants to require users to use a hardware TOTP authenticator for SSH logins in addition to their password. Which PAM module provides this capability?
+
+- A) `pam_tally2.so`
+- B) `pam_google_authenticator.so`
+- C) `pam_faillock.so`
+- D) `pam_cracklib.so`
+
+**Correct Answer: B**
+
+*Explanation: `pam_google_authenticator.so` (from the google-authenticator-libpam package) provides TOTP (Time-based One-Time Password) multi-factor authentication. When configured, it requires users to enter a time-based code from an authenticator app (Google Authenticator, Authy, etc.) in addition to their password. `pam_tally2` and `pam_faillock` track failed logins and implement lockouts. `pam_cracklib` enforces password complexity.*
+
+---
+
+**Question 16** (5 points)
+
+An AppArmor profile is in enforce mode for the `nginx` service. The service fails to start with a permission error. Where should the administrator look first to identify which specific file access is being blocked?
+
+- A) `/var/log/nginx/error.log`
+- B) `/etc/apparmor.d/usr.sbin.nginx`
+- C) `/var/log/syslog` or `journalctl` for DENIED messages
+- D) `aa-status` output
+
+**Correct Answer: C**
+
+*Explanation: AppArmor logs denied operations to the system log (`/var/log/syslog` on Debian/Ubuntu, or accessible via `journalctl -k` for kernel messages). The log entries show `DENIED` with the specific file path, operation type, and profile name. The profile file (option B) shows what IS allowed, not what was denied. `aa-status` shows which profiles are loaded and in what mode.*
+
+---
+
+**Question 17** (5 points)
+
+A security baseline requires that the `/tmp` directory be mounted with `noexec,nosuid,nodev`. What is the primary security benefit of the `noexec` option specifically?
+
+- A) It prevents files in `/tmp` from being owned by setuid binaries.
+- B) It prevents binaries placed in `/tmp` from being executed directly, blocking a common malware staging technique.
+- C) It prevents new filesystems from being mounted under `/tmp`.
+- D) It prevents processes running from `/tmp` from accessing `/dev` devices.
+
+**Correct Answer: B**
+
+*Explanation: `noexec` prevents execution of binaries from the mounted filesystem. Attackers frequently upload malware to world-writable directories like `/tmp` and then execute it. With `noexec`, a file can be written to `/tmp` but running it directly (e.g., `/tmp/evil.sh`) is blocked. Note that `noexec` does not prevent shell interpretation (`bash /tmp/evil.sh` would still work), but it raises the bar for opportunistic attacks.*
+
+---
+
+**Question 18** (5 points)
+
+An administrator runs `ausearch -m AVC -ts recent` and sees many AVC denials for the `httpd_t` domain trying to connect to the network. Before filing a bug report or permanently enabling the boolean, which command would temporarily allow this access to verify it resolves the issue?
+
+- A) `setenforce 0`
+- B) `setsebool httpd_can_network_connect on`
+- C) `semanage boolean -M httpd_can_network_connect --on`
+- D) `semodule --disable-policy httpd`
+
+**Correct Answer: B**
+
+*Explanation: `setsebool httpd_can_network_connect on` (without `-P`) changes the boolean for the current session only — a reboot or `setsebool httpd_can_network_connect off` reverts it. This allows the administrator to confirm that enabling this boolean resolves the application issue before making the change permanent with `-P`. Option A disables ALL SELinux enforcement globally, which is too broad for testing a specific denial.*
+
+---
+
+**Question 19** (5 points)
+
+A security audit finds a world-writable directory with the sticky bit set. What does the sticky bit on a directory prevent?
+
+- A) It prevents any user from writing files to the directory.
+- B) It prevents files in the directory from being executed.
+- C) It prevents users from deleting or renaming files owned by other users, even though the directory is writable.
+- D) It forces all files created in the directory to inherit the directory's group ownership.
+
+**Correct Answer: C**
+
+*Explanation: The sticky bit on a directory means that users can create and write files in the directory, but can only delete or rename files they own. Other users' files are protected even in a world-writable directory. This is why `/tmp` (mode `1777`) allows any user to write files but prevents users from deleting each other's files. Option D describes SGID, not the sticky bit.*
+
+---
+
+**Question 20** (5 points)
+
+Which tool generates a hardening report by comparing a running system's configuration against the CIS (Center for Internet Security) benchmarks for Linux?
+
+- A) `lynis`
+- B) `fail2ban-client`
+- C) `tripwire`
+- D) `ossec`
+
+**Correct Answer: A**
+
+*Explanation: Lynis is an open-source security auditing tool that performs a system hardening audit and checks against CIS benchmarks and other security standards. It produces a scored report with findings, warnings, and recommendations. Tripwire is a file integrity monitoring tool. fail2ban is a log-based IP blocker. OSSEC is a host-based intrusion detection system.*
+
+---
+
 ### Answer Key
 
 | Question | Answer |
@@ -180,3 +330,13 @@ Which tool would an administrator use to run an automated CIS Benchmark assessme
 | 8 | B |
 | 9 | B |
 | 10 | C |
+| 11 | B |
+| 12 | C |
+| 13 | B |
+| 14 | B |
+| 15 | B |
+| 16 | C |
+| 17 | B |
+| 18 | B |
+| 19 | C |
+| 20 | A |

@@ -200,6 +200,22 @@ Key fields in an AppArmor denial message:
 
 ---
 
+## 9. Supplemental Resources
+
+**1. [SELinux User's and Administrator's Guide — Red Hat](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/using_selinux/index)**
+https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/using_selinux/index
+Red Hat's official SELinux guide for RHEL 9, covering enforcing/permissive modes, file context management with semanage and restorecon, boolean administration, AVC denial analysis with audit2why, and port context management.
+
+**2. [AppArmor Documentation — Ubuntu](https://documentation.ubuntu.com/server/how-to/security/apparmor/)**
+https://documentation.ubuntu.com/server/how-to/security/apparmor/
+Ubuntu's official AppArmor administration guide covering profile modes, aa-genprof and aa-logprof workflows, apparmor_parser usage, and reading denial messages from the kernel journal.
+
+**3. [Linux Security Modules (LSM) — kernel.org](https://www.kernel.org/doc/html/latest/security/lsm.html)**
+https://www.kernel.org/doc/html/latest/security/lsm.html
+The kernel documentation for the Linux Security Modules framework that underpins both SELinux and AppArmor, explaining how MAC hooks integrate with the kernel's permission checking path and why MAC decisions occur after DAC checks.
+
+---
+
 ### Study Checklist
 
 Before the quiz and lab, confirm you can do all of the following without looking them up:

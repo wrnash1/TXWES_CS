@@ -209,3 +209,33 @@ Accepted formats: PDF, DOCX, or Google Docs link with comment access enabled.
 If you are uncertain about a USB speed or connector type, the Reading Guide Section 1-2 tables provide complete reference information. For KVM troubleshooting, Section 4 of the Reading Guide includes a troubleshooting table. For MFA factor categories, Section 5 includes the complete factor classification table.
 
 Do not cite fabricated URLs. Base all answers on module content and professormesser.com or comptia.org if additional reference is needed.
+
+---
+
+## Part 9 — Challenge Exercise
+
+These advanced steps are optional and are not included in the standard grading rubric.
+
+### Challenge Step 1 — USB Device Enumeration with USBDeview
+
+Download the free portable utility USBDeview from NirSoft ([https://www.nirsoft.net/utils/usb_devices_view.html](https://www.nirsoft.net/utils/usb_devices_view.html)) and run it on any available Windows computer:
+
+1. Launch USBDeview and locate the columns: Device Name, Device Type, USB Class/Subclass, Speed, VID (Vendor ID), and PID (Product ID). Identify at least three currently connected USB devices and record their VID, PID, reported speed (1.1 / 2.0 / 3.0 / 3.1), and device type (HID, Mass Storage, Hub, etc.).
+1. Filter the list to show only Mass Storage devices (USB drives or external drives). For each one, record whether the reported speed matches the port's capability — if a USB 3.0 drive reports 480 Mbps, identify whether the cable, the port, or the hub in the path is the likely bottleneck, using the chain-of-speed rule (overall speed = slowest link).
+1. Write 2–3 sentences explaining how the VID (Vendor ID) and PID (Product ID) values are used by the operating system during USB enumeration to select the correct driver, and what troubleshooting step a technician should take when a device shows "Unknown Device" in Device Manager despite the VID/PID being visible in USBDeview.
+
+### Challenge Step 2 — KVM Switch Signal Path Diagram
+
+Draw or diagram (on paper, in a drawing tool, or in a table in your document) a complete KVM switch deployment for three computers and two users at adjacent desks sharing one KVM:
+
+1. Desk A user needs to control: PC-1 (Windows 11 workstation) and PC-2 (Linux server headless — keyboard/mouse only, no monitor output needed). Desk B user needs to control: PC-3 (Windows 10 workstation) and PC-1 shared with Desk A. Your diagram must show every cable run (video, USB keyboard, USB mouse), label each cable type and version, and identify which KVM ports are shared between the two users.
+1. Identify one hardware limitation this configuration will encounter regarding PC-1 shared access (hint: consider what happens when both users attempt to switch to PC-1 simultaneously), and describe the administrative policy or hardware solution that resolves it.
+1. Calculate the total number of physical cable runs required to implement this deployment (count every individual cable segment from device to KVM input), and explain in one sentence why a KVM switch reduces cable count compared to fully independent peripheral sets for each PC.
+
+### Challenge Step 3 — MFA Factor Bypass Attack Research
+
+Research the concept of "MFA fatigue" (also called MFA push bombing) and the countermeasures used against it:
+
+1. Define MFA fatigue in your own words (2–3 sentences): explain what authentication factor category it exploits, what type of peripheral or device the victim uses to approve or deny authentication, and why the attack does not require the attacker to know the victim's password alone.
+1. Research and describe two hardware-based countermeasures that eliminate MFA fatigue attacks by requiring physical presence verification: (a) FIDO2 hardware security keys (such as YubiKey) and (b) number-matching push notifications requiring the user to read and enter a code. For each, state which MFA factor category it represents and why it defeats the fatigue attack.
+1. Write one sentence explaining why a smart card reader (PIV/CAC authentication) is inherently immune to MFA fatigue attacks, referencing the specific authentication mechanism that requires physical access to the card itself.

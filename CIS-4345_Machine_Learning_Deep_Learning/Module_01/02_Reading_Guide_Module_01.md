@@ -192,3 +192,19 @@ The `stratify=y` argument ensures class proportions are preserved in both splits
 - Take the Module 01 quiz.
 - Post to the Module 01 discussion board by Wednesday at 11:59 PM.
 - Respond to at least two classmates by Sunday at 11:59 PM.
+
+---
+
+## 9. Supplemental Resources
+
+**1. Google Machine Learning Crash Course**
+<https://developers.google.com/machine-learning/crash-course>
+Google's free, self-paced course covering ML fundamentals including supervised learning, loss functions, gradient descent, and overfitting. Includes interactive coding exercises and visual explanations ideal for reinforcing Module 01 concepts.
+
+**2. scikit-learn User Guide — Model Selection and Evaluation**
+<https://scikit-learn.org/stable/model_selection.html>
+Official scikit-learn documentation for train-test splitting, cross-validation, and evaluation metrics. Contains runnable examples for `train_test_split`, `StratifiedKFold`, and `StandardScaler` directly relevant to this module's lab.
+
+**3. TensorFlow Developer Certificate Candidate Handbook**
+<https://www.tensorflow.org/certificate>
+The official exam guide describing the five problem categories, scoring criteria, and development environment requirements. Reading this before Module 01 ensures all subsequent modules are studied with the exam objectives in mind.

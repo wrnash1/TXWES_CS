@@ -129,3 +129,29 @@ B. An IT director advocates using the existing ticketing system rather than purc
 ## Submission Instructions
 
 Compile all four exercises into a single document with clear headings. Label each numbered item before your response. Submit to the Module 04 Lab assignment in Canvas by the posted deadline.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Principle Violation Audit
+
+Review the following five organizational behaviors. For each one, identify which Guiding Principle (or principles) is being violated, name the principle(s), and write two sentences explaining the specific violation and its likely consequence.
+
+1. An IT team designs a new self-service portal in complete secrecy and announces it to end users the day it launches.
+2. A service manager proposes using a machine learning tool to triage all incident tickets, including complex multi-system outages that require experienced engineer judgment.
+3. A healthcare IT department discards its existing change management documentation and starts the redesign entirely from a blank template purchased from a consulting firm.
+4. After launching a new service, the IT team makes no adjustments for six months, stating they will review everything at the annual planning session.
+5. An ITSM improvement team adds twelve new approval steps to the incident escalation process to ensure thorough oversight.
+
+### Challenge 2: Principle-Based Process Redesign
+
+A university IT department currently requires students who have forgotten their student ID number to submit a physical paper form to the registrar's office, wait three business days, and then call the IT help desk to have their account manually linked.
+
+1. Apply a minimum of three Guiding Principles to redesign this process. For each principle applied, describe specifically what would change in the process and why.
+2. Write a 100-word justification paragraph explaining how your redesigned process better serves the student (service consumer) and the university (service provider) simultaneously, using ITIL 4 value co-creation terminology.
+
+### Reflection Questions
+
+1. The principle "Think and Work Holistically" requires considering how a change in one area of a service affects other connected areas. Describe a real or hypothetical situation where an IT team applied a change in isolation and caused an unintended problem elsewhere. Identify which principle was violated and what should have been done differently.
+2. Of the seven Guiding Principles, which one do you find most difficult to apply consistently in a real work environment, and why? Support your answer with a specific scenario where that principle would be challenging to follow under time pressure or budget constraints.

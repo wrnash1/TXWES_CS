@@ -161,3 +161,33 @@ Compile your complete lab report as a single document. The report must include c
 Label all screenshots with a caption identifying what the screenshot shows. Written answers must be in complete sentences. Bullet lists are acceptable for settings tables and connector identification lists.
 
 Late submissions receive a 10-point deduction per day unless an extension has been approved by Professor Nash before the deadline.
+
+---
+
+## Part 9 — Challenge Exercise
+
+These advanced steps are optional and are not included in the standard grading rubric.
+
+### Challenge Step 1 — Email Protocol Packet Analysis with Wireshark
+
+Download and install Wireshark (free at wireshark.org) on any available computer that has access to a mail client sending or receiving email:
+
+1. Start a Wireshark capture on the active network interface. Configure or open a mail client and trigger a mail check (receive) or send operation. Stop the capture after the operation completes. Apply the filter `tcp.port == 143 or tcp.port == 993 or tcp.port == 110 or tcp.port == 995 or tcp.port == 25 or tcp.port == 587` to isolate email protocol traffic. Document which port(s) you observe traffic on and whether the connection uses TLS (look for a TLS handshake in the packet stream before any IMAP/SMTP commands appear).
+1. If you capture unencrypted IMAP traffic (port 143), follow the TCP stream and document what you can read in plaintext — specifically whether you can see the username, any commands (SELECT, FETCH, LIST), or message content. If all traffic is TLS-encrypted (port 993), document why the application data is not visible in Wireshark and explain in 1–2 sentences what the TLS record layer headers reveal about the session even when content is encrypted.
+1. Write 2–3 sentences explaining the security implication of an employee using an unencrypted POP3 or IMAP mail client on a corporate guest Wi-Fi network, referencing specifically what an attacker with Wireshark on the same network segment could observe.
+
+### Challenge Step 2 — MDM Policy Research and Configuration Simulation
+
+Research a free MDM platform (Microsoft Intune 90-day trial, Jamf Now (free tier for up to 3 devices), or ManageEngine Mobile Device Manager Plus free edition) and document or simulate configuring a basic BYOD policy:
+
+1. Research and document the minimum policy settings that a corporate IT administrator should configure for a BYOD smartphone enrollment: required screen lock PIN/biometric, automatic screen lock timeout, remote wipe capability, minimum OS version requirement, and prohibition of jailbroken/rooted devices. For each setting, explain in one sentence why it is included in a minimum BYOD policy.
+1. Research what happens to the corporate data container and personal data when a remote wipe command is issued on a BYOD device enrolled in a container-model MDM (vs. a fully managed device). Document whether personal photos, personal apps, and contacts are wiped in each model, and identify which wipe type a privacy-conscious employee should request before unenrolling their personal device from corporate MDM.
+1. Research and describe the "MAM without enrollment" (Mobile Application Management without full device enrollment) feature available in Microsoft Intune — specifically how it allows corporate app policies (data encryption, copy-paste restrictions, screenshot blocking) to be applied to apps like Outlook on a personal phone without enrolling the full device in MDM. Explain in 2–3 sentences why this model is a useful compromise for organizations with BYOD employees who are unwilling to enroll their personal phones.
+
+### Challenge Step 3 — Cellular and Wi-Fi Band Research
+
+Research the frequency bands used by the major US carriers for 5G and document the performance differences between Sub-6 GHz and mmWave deployments:
+
+1. Look up the current 5G frequency bands used by two major US carriers (AT&T, Verizon, or T-Mobile) and build a comparison table with columns: Carrier, Band Name, Frequency Range, Theoretical Peak Download Speed, Typical Real-World Speed, and Coverage Range. Include at least one Sub-6 GHz band and one mmWave (24 GHz+ ) band per carrier.
+1. Research why mmWave 5G has limited building penetration and explain the physics: reference the relationship between signal frequency, wavelength, and the ability of the signal to diffract around and through obstacles. Explain why a smartphone user walking from an outdoor plaza into a building lobby may instantly lose mmWave 5G coverage and fall back to Sub-6 GHz 5G or LTE.
+1. Research Wi-Fi 6E (802.11ax on 6 GHz) and document: the available channel width, the frequency range, and the maximum theoretical throughput improvement over Wi-Fi 6 on 5 GHz. Write 2–3 sentences explaining why a 6 GHz Wi-Fi 6E network offers less interference than a 2.4 GHz or 5 GHz network and why it requires newer client devices that the 2.4 GHz and 5 GHz bands do not.

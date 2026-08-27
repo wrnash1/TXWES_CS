@@ -352,3 +352,24 @@ Q19: This is a poor suggestion. Adding more layers will increase overfitting, no
 ## Deliverable
 
 Submit a single document (PDF or Word) showing all calculations in Part A with intermediate steps, your answers to all scenarios and questions, and your name, course section, and date at the top. Upload to the Module 04 Lab Assignment in Canvas by the posted due date.
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Activation Function Comparison
+
+1. Using Python and numpy, implement the sigmoid, tanh, and ReLU activation functions from scratch (no sklearn or torch). For each, write a single function that accepts a numpy array and returns the transformed values.
+2. Generate an input array from -5 to 5 in steps of 0.1 using `numpy.arange`. Apply all three functions and plot the outputs on the same graph using matplotlib, with each function in a different color and a legend.
+3. Identify the input range where sigmoid and tanh produce near-zero gradients (the "saturation zone"). Explain in two sentences why this saturation zone causes the vanishing gradient problem in deep networks.
+4. Explain in two sentences why ReLU became the default hidden-layer activation despite its "dying ReLU" limitation where neurons can permanently output zero.
+
+### Challenge 2: Build and Train a Simple MLP on the Iris Dataset
+
+1. Using scikit-learn, load the `iris` dataset and split it into 70% training / 30% test using `train_test_split` with `random_state=42`.
+2. Train a `MLPClassifier` with one hidden layer of 10 neurons, `max_iter=500`, and `random_state=42`. Report test accuracy.
+3. Experiment with two architectural changes: (a) add a second hidden layer of 10 neurons, and (b) increase the first hidden layer to 50 neurons. Train and report test accuracy for each variant.
+4. Apply dropout regularization by setting `alpha=0.01` (L2 penalty in scikit-learn's MLP) on the best-performing architecture. Report whether regularization improved or changed test accuracy.
+
+### Reflection Questions
+
+1. Based on Challenge 1, explain to a student who has not taken this course why a neural network with only linear activations (no sigmoid, tanh, or ReLU) cannot learn non-linear patterns like the XOR function.
+2. In Challenge 2, if your MLP achieved high training accuracy but low test accuracy, which techniques from Module 04 would you apply first, and in what order would you try them?

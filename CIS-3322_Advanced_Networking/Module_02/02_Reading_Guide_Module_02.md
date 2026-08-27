@@ -184,3 +184,19 @@ Work through each item before taking the quiz.
 
 - Cisco CCNA certification training information: cisco.com/c/en/us/training-events/training-certifications
 - Free CCNA study notes and video summaries: professormesser.com
+
+---
+
+## 10. Supplemental Resources
+
+The following open educational resources extend subnetting and VLSM concepts to CCNA exam depth. All resources are freely available.
+
+1. **Cisco Networking Academy — CCNA: Introduction to Networks** (skillsforall.com): Module 11 of this free course covers IP addressing and subnetting with interactive exercises and auto-graded subnet calculation problems that simulate CCNA exam format.
+
+2. **Jeremy's IT Lab — Subnetting (Days 7–9)** (youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ): These three video lessons teach the block-size shortcut method, VLSM design, and route summarization. Jeremy's approach to rapid subnet calculation is widely used by CCNA candidates.
+
+3. **Subnetting Practice — subnettingpractice.com**: A free drill tool that generates random subnetting problems at varying difficulty levels. Practice is the only way to reach the speed required on the CCNA exam, where subnetting questions must be solved in under 90 seconds.
+
+4. **Cisco Learning Network — IP Addressing Study Group** (learningnetwork.cisco.com): The Cisco Learning Network community forums include thousands of subnetting practice problems and worked solutions posted by CCNA candidates and certified engineers.
+
+5. **GNS3 Academy — Free Subnetting Course** (academy.gns3.com): The GNS3 Academy offers a free subnetting course with video lessons and downloadable topology files for practicing IP addressing configurations on virtual routers, complementing the Packet Tracer approach used in this course.

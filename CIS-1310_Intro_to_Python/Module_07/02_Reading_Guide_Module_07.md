@@ -369,7 +369,31 @@ Watch Episode 10 of the [Python for Everybody Course Playlist](https://www.youtu
 
 ---
 
-## 9. Lab and Command Preview
+## 9. Supplemental Resources
+
+**1. Official Python 3 Docs — Tuples and Sequences**
+[https://docs.python.org/3/tutorial/datastructures.html#tuples-and-sequences](https://docs.python.org/3/tutorial/datastructures.html#tuples-and-sequences)
+The authoritative specification for tuple creation (including the trailing-comma rule for single-element tuples), packing, unpacking, and sequence operations. The note on tuple immutability and when to use tuples vs. lists is PCAP-testable.
+
+**2. Official Python 3 Docs — Sets**
+[https://docs.python.org/3/tutorial/datastructures.html#sets](https://docs.python.org/3/tutorial/datastructures.html#sets)
+Covers set creation, `add()`, `remove()`, `discard()`, and all four set algebra operators. The section on set comprehensions is directly applicable to PCAP questions.
+
+**3. Official Python 3 Docs — Sorting How-To Guide**
+[https://docs.python.org/3/howto/sorting.html](https://docs.python.org/3/howto/sorting.html)
+The definitive guide to Python sorting. Covers `key=` functions, lambda keys, multi-field sorting with tuples, `reverse=True`, and the stability guarantee. This guide is written by Python core developers and is the standard reference for PCAP exam sorting topics.
+
+**4. Python for Everybody — Chapter 10: Tuples**
+[https://www.py4e.com/html3/10-tuples](https://www.py4e.com/html3/10-tuples)
+Free textbook chapter on tuples, comparison with lists, tuple assignment, and using tuples in loops. Includes discussion of `items()` with tuples in dictionary iteration — a preview of Module 10.
+
+**5. Real Python — Sets in Python**
+[https://realpython.com/python-sets/](https://realpython.com/python-sets/)
+A comprehensive free article on sets covering all operations, frozen sets, set comprehensions, and performance characteristics. The comparison table of set vs. list vs. dict membership test speed is valuable professional context.
+
+---
+
+## 10. Lab and Command Preview
 
 | Task | What You Will Do |
 |---|---|

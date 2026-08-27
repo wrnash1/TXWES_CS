@@ -327,7 +327,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
 ---
 
-## 8. JSE Certification Exam Tips
+## 8. Supplemental Resources
+
+The following free, openly available resources extend and reinforce the topics covered in this module.
+
+- **[Eloquent JavaScript — Chapter 15: Handling Events](https://eloquentjavascript.net/15_event.html)**
+  The primary OER textbook chapter for this module. Covers event handlers, propagation, default actions, key events, mouse events, scroll events, focus/blur, and debouncing, with extensive worked examples.
+
+- **[MDN Web Docs — Introduction to events](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Events)**
+  Comprehensive guide covering event handlers, event objects, `addEventListener`, event bubbling and capture, event delegation, and removing listeners. Includes interactive examples and comparisons of all three handler registration approaches.
+
+- **[MDN Web Docs — Event reference](https://developer.mozilla.org/en-US/docs/Web/Events)**
+  Complete reference for all standard DOM events organized by category (mouse, keyboard, form, document, window). Use this as a lookup for any event type's full specification.
+
+- **[MDN Web Docs — Element.closest()](https://developer.mozilla.org/en-US/docs/Web/API/Element/closest)**
+  Full reference for `closest` including the selector syntax, traversal direction, return value, and examples using it with event delegation to handle nested element structures.
+
+- **[javascript.info — Introduction to browser events](https://javascript.info/introduction-browser-events)**
+  Clear, beginner-friendly coverage of event handlers, the event object, bubbling and capturing, `stopPropagation`, and `preventDefault`, with interactive diagrams showing event flow through the DOM tree.
+
+---
+
+## 9. JSE Certification Exam Tips
 
 1. **`addEventListener` vs `onclick`** — `addEventListener` supports multiple listeners; `onclick` overwrites. In all new code, use `addEventListener`.
 
@@ -351,7 +372,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 ---
 
-## 9. Study Checklist
+## 10. Study Checklist
 
 - [ ] Watch the Module 12 video lecture by Professor Nash.
 - [ ] Read Chapter 15 (Handling Events) of [Eloquent JavaScript](https://eloquentjavascript.net/15_event.html).

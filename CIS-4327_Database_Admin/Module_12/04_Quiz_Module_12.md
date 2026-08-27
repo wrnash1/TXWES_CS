@@ -190,3 +190,199 @@ Distractor analysis: A is incorrect because slot reservations prevent the develo
 ---
 
 Reference: cloud.google.com/learn
+
+---
+
+### Question 11 (5 points)
+
+A BigQuery table with 800 billion rows is clustered by `country_code` and `product_category`. A query filters on `WHERE product_category = 'Electronics'` but does NOT filter on `country_code`. Will BigQuery use the clustering to prune blocks?
+
+A) No — clustering pruning requires a filter on the first cluster column (`country_code`) before the second cluster column can be used.
+B) Yes — BigQuery can use clustering pruning on any cluster column regardless of order when using equality filters.
+C) No — clustering only works when the table is also partitioned; without a partition filter, clustering is ignored.
+D) Yes — BigQuery always reads only one cluster block per query regardless of filter order.
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- B) BigQuery clustering follows a prefix-based pruning model similar to composite B-tree indexes; skipping the first cluster column (`country_code`) means BigQuery cannot use the clustering sort order to skip blocks for `product_category` alone.
+- C) Clustering can be applied to non-partitioned tables and still provides block-level pruning within the table; lack of partitioning does not disable clustering, though the combination of both is recommended for large tables.
+- D) Cluster block pruning is not limited to one block; the optimizer skips blocks whose metadata indicates they cannot contain matching rows, but this is based on the sort order of cluster columns, not a fixed count.
+
+---
+
+### Question 12 (5 points)
+
+A BigQuery table has `partition_expiration_days = 180`. A row was inserted on January 1, 2025. What happens to that partition on July 1, 2025 (180 days later)?
+
+A) The partition is automatically deleted by BigQuery, removing all rows in that partition permanently.
+B) The partition is moved to a cold storage tier but remains queryable at higher cost.
+C) BigQuery issues an alert but takes no automatic action; a manual `DELETE` is required.
+D) The partition is archived to Cloud Storage automatically.
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- B) BigQuery does not have a tiered "cold storage" concept for partitions; `partition_expiration_days` causes permanent deletion, not archival to a cheaper storage class.
+- C) BigQuery partition expiration is fully automatic; no manual intervention or alerting is involved — the partition is deleted without warning.
+- D) BigQuery does not automatically export expired partitions to Cloud Storage; if data must be retained beyond the expiration window, it must be exported manually before expiration.
+
+---
+
+### Question 13 (5 points)
+
+Which BigQuery feature allows a query against a base table to transparently read pre-aggregated results from a materialized view, reducing bytes scanned without any change to the query text?
+
+A) Authorized views
+B) Smart tuning (automatic query rewriting)
+C) Slot reservations
+D) BI Engine acceleration
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A) Authorized views control cross-dataset access permissions; they do not rewrite queries to read from materialized views or reduce bytes scanned.
+- C) Slot reservations allocate dedicated compute capacity; they affect query throughput and isolation but do not rewrite query plans to use materialized views.
+- D) BI Engine provides in-memory acceleration for dashboarding tools by caching data, but it is separate from the smart tuning optimizer that rewrites queries to read from materialized views.
+
+---
+
+### Question 14 (5 points)
+
+A data engineer runs the following BigQuery query to check cost before executing:
+
+```sql
+SELECT * FROM dataset.events WHERE event_date = '2025-06-01'
+```
+
+Which method allows them to estimate bytes scanned without actually running the query?
+
+A) Run the query with `SELECT COUNT(*)` instead and multiply by average row size.
+B) Use the BigQuery query validator in the Cloud Console or `bq query --dry_run` to get a bytes estimate without executing.
+C) Check `INFORMATION_SCHEMA.TABLES` for the total table size and divide by partition count.
+D) Enable `require_partition_filter` and catch the error message which includes a cost estimate.
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- A) Running `COUNT(*)` still executes a query and incurs cost; it also does not directly translate to bytes scanned for the filtered query.
+- C) `INFORMATION_SCHEMA.TABLES` reports total table size, not the bytes that would be scanned for a specific filtered query; dividing by partition count is an approximation, not the actual estimate.
+- D) `require_partition_filter` returns an error for queries without a partition filter; the error message does not include a cost estimate and `SELECT *` with the date filter already satisfies the partition filter requirement.
+
+---
+
+### Question 15 (5 points)
+
+A company ingests streaming data into BigQuery using the Storage Write API. They need to ensure that exactly-once semantics are maintained — duplicate records must not appear even if the pipeline retries failed writes. Which Storage Write API mode provides this guarantee?
+
+A) Default stream (best-effort delivery with possible duplicates on retry)
+B) Committed stream (immediate visibility, no exactly-once guarantee)
+C) Buffered stream (staged writes, no exactly-once guarantee)
+D) Exclusive stream with `offset`-based row deduplication (exactly-once via offset tracking)
+
+**Correct Answer:** D
+
+**Distractor Analysis:**
+
+- A) The default stream uses best-effort delivery and does not deduplicate retries; it is suitable for use cases where occasional duplicates are acceptable.
+- B) The committed stream makes rows immediately visible after each write but does not provide exactly-once semantics; retrying a failed write can produce duplicates.
+- C) The buffered stream stages rows for batch commit but also lacks the offset-based tracking needed for exactly-once guarantees.
+
+---
+
+### Question 16 (5 points)
+
+A BigQuery user runs a query that joins two very large tables. The query returns the correct results but scans 4 TB more than expected. INFORMATION_SCHEMA shows no partition pruning occurred on the second table. What is the most likely cause?
+
+A) The join key column in the second table is not the partition column, so no partition pruning applies to the join probe side.
+B) The second table is clustered but not partitioned, so all blocks are scanned.
+C) BigQuery disabled partition pruning for joins as a cost control measure.
+D) The second table's partition filter was applied after the join, causing a full scan.
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- B) A clustered-only table still benefits from clustering-based block pruning on filter columns; however, if no filter matches the cluster columns, a full scan occurs — this is a plausible but secondary cause compared to the more precise explanation that the join key is not the partition key.
+- C) BigQuery does apply partition pruning to join operations when the join condition or WHERE clause includes the partition column; there is no feature that disables pruning for joins.
+- D) Partition pruning in BigQuery is evaluated at query planning time based on filters visible to the optimizer; filters in WHERE clauses are pushed down before scanning, not applied after joins.
+
+---
+
+### Question 17 (5 points)
+
+An analyst needs to recover a BigQuery table to its state at exactly 6:00 AM today after a batch job accidentally overwrote rows at 7:00 AM. It is currently 9:00 AM. Which SQL statement restores the table?
+
+A) `CREATE OR REPLACE TABLE dataset.orders AS SELECT * FROM dataset.orders FOR SYSTEM_TIME AS OF TIMESTAMP('2025-06-01 06:00:00 UTC');`
+B) `RESTORE TABLE dataset.orders TO TIMESTAMP '2025-06-01 06:00:00';`
+C) `ROLLBACK TABLE dataset.orders;`
+D) `UNDROP TABLE dataset.orders;`
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- B) `RESTORE TABLE` is not a valid BigQuery SQL command; point-in-time recovery is performed with `FOR SYSTEM_TIME AS OF` inside a `CREATE OR REPLACE TABLE ... AS SELECT` statement.
+- C) `ROLLBACK TABLE` does not exist in BigQuery SQL; BigQuery does not support multi-statement transactions with rollback at the table level in standard DML.
+- D) `UNDROP TABLE` is a Snowflake-specific command; BigQuery does not have this syntax. Recovering a dropped table in BigQuery requires time travel before the table is fully expired.
+
+---
+
+### Question 18 (5 points)
+
+A data warehouse team queries a 30 TB BigQuery table daily. They want to reduce query costs by 80% without changing the table schema or losing any data. The queries always filter by a single month's data. Which approach achieves this?
+
+A) Partition the table by `month` (or by `date` with monthly queries filtered by month range) so each query only scans the relevant month's data — approximately 1/12 of 30 TB per query.
+B) Enable BI Engine on the table to cache compressed results in memory.
+C) Convert the table to a view that limits rows to the past 30 days.
+D) Increase slot reservations so queries run faster and cost less per second.
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- B) BI Engine caches data for sub-second dashboard queries but does not reduce bytes billed on-demand; cost is still charged based on bytes scanned before BI Engine caching applies.
+- C) Converting to a view with a 30-day filter changes the data visible to queries and loses historical data access; the requirement explicitly states no data must be lost.
+- D) Slot reservations affect compute capacity and query speed but do not change bytes scanned; on-demand pricing charges for bytes scanned regardless of how fast the query runs.
+
+---
+
+### Question 19 (5 points)
+
+A BigQuery MERGE statement fails with the error: `"Merge failed because more than one source row matched the same target row."` What is the cause and the correct fix?
+
+A) The source query in the MERGE contains duplicate keys matching the same target row; deduplicate the source with a subquery using `SELECT DISTINCT` or `ROW_NUMBER()` before the MERGE.
+B) The target table requires a primary key constraint to be added before MERGE can run.
+C) MERGE in BigQuery requires the source table to be a temporary table, not a subquery.
+D) The MERGE condition must use an inequality operator (`<>`) instead of equality (`=`).
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- B) BigQuery does not enforce primary key constraints at the storage layer; MERGE does not require them and they do not resolve the duplicate source row error.
+- C) BigQuery supports MERGE with inline subqueries as the source; there is no requirement for the source to be a physical temporary table.
+- D) The MERGE `ON` condition must use equality to match source and target rows; changing to inequality would produce logically incorrect results and does not resolve the duplicate source row issue.
+
+---
+
+### Question 20 (5 points)
+
+A company uses BigQuery for both OLAP analytics and as the backend for a real-time dashboard that refreshes every 30 seconds. Users report that the dashboard is slow and expensive. Which BigQuery feature is most appropriate for the real-time dashboard use case?
+
+A) BI Engine — an in-memory analysis service that caches BigQuery data and answers dashboard queries in milliseconds without scanning the full table on each refresh.
+B) Increase slot reservations to 10,000 slots so the dashboard queries run faster.
+C) Enable `require_partition_filter` on all tables to force dashboard queries to scan less data.
+D) Move the dashboard data to a Cloud Spanner table for low-latency reads.
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- B) More slots reduce queue time and increase parallelism but do not eliminate the per-query scan cost or reduce latency to the millisecond range needed for 30-second refresh dashboards; BI Engine provides sub-second response times that slot reservations alone cannot.
+- C) `require_partition_filter` reduces bytes scanned per query but does not reduce latency to sub-second; dashboard tools often issue queries without easily controllable partition filters, making this a poor fit.
+- D) Moving data to Cloud Spanner is a viable option for some low-latency use cases but requires a full data migration, schema redesign, and ongoing synchronization from BigQuery; BI Engine works natively with existing BigQuery tables and requires no migration.

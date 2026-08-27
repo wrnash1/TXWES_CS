@@ -166,6 +166,156 @@ A Linux administrator is configuring a server and runs `hostnamectl set-hostname
 
 ---
 
+**Question 11** (5 points)
+
+An administrator wants to add a static route to reach the `192.168.100.0/24` network via gateway `10.0.0.1` on interface `ens3`, persistently using NetworkManager. Which command is correct?
+
+- A) `ip route add 192.168.100.0/24 via 10.0.0.1 dev ens3`
+- B) `nmcli connection modify ens3 +ipv4.routes "192.168.100.0/24 10.0.0.1"`
+- C) `route add -net 192.168.100.0/24 gw 10.0.0.1 dev ens3`
+- D) `ip route add 192.168.100.0/24 gw 10.0.0.1`
+
+**Correct Answer: B**
+
+*Explanation: `nmcli connection modify` with `+ipv4.routes` adds a persistent static route to the NetworkManager connection profile. After running this command, the connection must be reactivated with `nmcli connection up ens3`. Option A adds a route immediately but non-persistently. Option C uses the deprecated `route` command. Option D uses invalid `gw` syntax for `ip route`.*
+
+---
+
+**Question 12** (5 points)
+
+Which command shows the current state of all network interfaces including their IP addresses, MAC addresses, and operational state using the modern iproute2 toolset?
+
+- A) `ifconfig -a`
+- B) `ip addr show`
+- C) `ip link show`
+- D) `nmcli device status`
+
+**Correct Answer: B**
+
+*Explanation: `ip addr show` (or `ip a`) displays all interfaces with their IP addresses, MAC addresses, and operational state. `ip link show` shows interface state and MAC addresses but NOT IP addresses. `nmcli device status` shows connection states but not IP address details. `ifconfig` is deprecated.*
+
+---
+
+**Question 13** (5 points)
+
+A firewall administrator needs to allow SSH access only from the subnet `10.10.5.0/24` using firewalld rich rules. Which command is correct?
+
+- A) `firewall-cmd --zone=public --add-service=ssh --source=10.10.5.0/24`
+- B) `firewall-cmd --zone=public --add-rich-rule='rule family="ipv4" source address="10.10.5.0/24" service name="ssh" accept'`
+- C) `firewall-cmd --zone=public --add-rich-rule='accept service ssh from 10.10.5.0/24'`
+- D) `firewall-cmd --zone=public --add-source=10.10.5.0/24 --add-service=ssh`
+
+**Correct Answer: B**
+
+*Explanation: Source-restricted service rules require firewalld's rich rule syntax. The correct format specifies `family`, `source address`, `service name`, and the action. Option A's `--source` flag controls zone assignment, not per-rule source filtering. Option C uses invalid syntax. Option D combines source zone assignment with service allowance, which has different semantics (all traffic from that source gets the zone's policy).*
+
+---
+
+**Question 14** (5 points)
+
+What does `dig +short google.com` return that `nslookup google.com` does not provide by default?
+
+- A) The authoritative DNS server name
+- B) Only the resolved IP addresses with no other output
+- C) The full DNS query and response headers
+- D) The TTL value for each record
+
+**Correct Answer: B**
+
+*Explanation: `dig +short` produces minimal output — just the answer records, one per line, with no headers, statistics, or metadata. This makes it useful in scripts. `nslookup` outputs server information, the queried name, and the address in a formatted display. `dig` without `+short` shows full query details including authority and additional sections.*
+
+---
+
+**Question 15** (5 points)
+
+A sysadmin runs `ss -s` on a server experiencing network issues. What type of information does this command display?
+
+- A) A list of all established connections with process names
+- B) Summary statistics showing counts of connections in each state (ESTAB, TIME-WAIT, CLOSE-WAIT, etc.)
+- C) The contents of the socket buffer for each active connection
+- D) The routing table organized by socket
+
+**Correct Answer: B**
+
+*Explanation: `ss -s` (summary) displays aggregate statistics — total sockets, TCP connections by state (ESTAB, SYN-SENT, SYN-RECV, FIN-WAIT, TIME-WAIT, CLOSE-WAIT, etc.), and UDP/raw socket counts. This provides a quick health overview without listing individual connections. To list connections with processes, use `ss -tp` or `ss -tlnp`.*
+
+---
+
+**Question 16** (5 points)
+
+An administrator sets `PermitRootLogin prohibit-password` in `/etc/ssh/sshd_config`. What does this setting allow?
+
+- A) Root login is completely disabled.
+- B) Root can log in with an SSH key but not with a password.
+- C) Root can log in with a password but not an SSH key.
+- D) Root login is allowed from localhost only.
+
+**Correct Answer: B**
+
+*Explanation: `prohibit-password` (also written as `without-password` in older versions) disables password and keyboard-interactive authentication for root while still allowing public key authentication. This is a common hardening practice that allows automated root access via keys while preventing brute-force password attacks against the root account.*
+
+---
+
+**Question 17** (5 points)
+
+What is the purpose of the `~/.ssh/known_hosts` file?
+
+- A) It stores the user's private SSH keys for automatic loading.
+- B) It stores the public host keys of servers the user has connected to, enabling detection of changed or spoofed servers.
+- C) It lists the IP addresses of hosts the user is authorized to connect to.
+- D) It stores SSH session logs for auditing purposes.
+
+**Correct Answer: B**
+
+*Explanation: `known_hosts` stores the public key fingerprints of SSH servers the user has connected to. On the next connection, the client verifies that the server's host key matches the stored fingerprint — a mismatch triggers a "WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED" error, alerting to a possible man-in-the-middle attack or server rebuild. It does not contain user keys (those are in `id_rsa`, `id_ed25519`, etc.).*
+
+---
+
+**Question 18** (5 points)
+
+Which `/etc/hosts` entry format is correct for assigning two aliases to an IP address?
+
+- A) `192.168.1.10 webserver alias1 alias2`
+- B) `192.168.1.10 webserver; alias1; alias2`
+- C) `192.168.1.10 webserver, alias1, alias2`
+- D) `192.168.1.10 webserver` on one line and `192.168.1.10 alias1 alias2` on another
+
+**Correct Answer: A**
+
+*Explanation: `/etc/hosts` format is: `IP_ADDRESS canonical_name [alias1] [alias2] ...` — all on one line, separated by whitespace. Multiple aliases are space-separated. Semicolons and commas are not valid delimiters. While option D would also work (multiple entries for the same IP are allowed), option A is the canonical single-line format.*
+
+---
+
+**Question 19** (5 points)
+
+A server has `NetworkManager` managing connections. An administrator directly edits `/etc/sysconfig/network-scripts/ifcfg-ens3` to add a DNS server. After saving, the change does not take effect. What is the most likely reason?
+
+- A) DNS must be configured in `/etc/resolv.conf` directly.
+- B) NetworkManager must be restarted or the connection reactivated to read the updated file.
+- C) The `ifcfg` file format does not support DNS configuration.
+- D) `/etc/sysconfig/` files are read-only when NetworkManager is active.
+
+**Correct Answer: B**
+
+*Explanation: NetworkManager reads connection profile files at startup or when a connection is activated, not continuously. Direct edits to profile files require either `nmcli connection reload` followed by `nmcli connection up ens3`, or a restart of NetworkManager itself. Simply editing the file does not cause NetworkManager to apply the changes immediately.*
+
+---
+
+**Question 20** (5 points)
+
+An administrator uses `tcpdump -i ens3 -nn -c 50 'host 10.0.1.15 and tcp port 80'` to capture packets. What does the `-nn` flag do?
+
+- A) Captures 50 packets twice for redundancy.
+- B) Prevents tcpdump from resolving IP addresses to hostnames and port numbers to service names.
+- C) Enables verbose output with two levels of detail.
+- D) Suppresses all output and writes only to the capture file.
+
+**Correct Answer: B**
+
+*Explanation: In tcpdump, `-n` suppresses DNS hostname resolution and `-nn` additionally suppresses port-to-service-name resolution (so port 80 appears as `80` rather than `http`). Using `-nn` is a best practice in troubleshooting because name resolution can add significant delay to packet capture and can itself alter the network traffic being observed.*
+
+---
+
 ### Answer Key
 
 | Question | Answer |
@@ -180,3 +330,13 @@ A Linux administrator is configuring a server and runs `hostnamectl set-hostname
 | 8 | B |
 | 9 | B |
 | 10 | C |
+| 11 | B |
+| 12 | B |
+| 13 | B |
+| 14 | B |
+| 15 | B |
+| 16 | B |
+| 17 | B |
+| 18 | A |
+| 19 | B |
+| 20 | B |

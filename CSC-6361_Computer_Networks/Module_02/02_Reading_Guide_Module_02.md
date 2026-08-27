@@ -126,3 +126,19 @@ show interfaces port-channel 1         ! Logical interface statistics
 4. **EtherChannel vs. Single Uplink:** The main campus distribution switches currently have a single 10G uplink to the core. A junior engineer proposes adding a second 10G link in an EtherChannel for redundancy. A senior engineer argues that two 10G routed L3 links with OSPF would be better. Evaluate both arguments and state which you would choose.
 
 **Citation Requirement:** Cite at least one Cisco design guide, IEEE standard reference, or HIPAA/NIST networking security publication.
+
+---
+
+## 9. Supplemental Resources
+
+**1. IEEE 802.1D-2004 — Spanning Tree Protocol Standard (Overview via Cisco)**
+https://www.cisco.com/c/en/us/support/docs/lan-switching/spanning-tree-protocol/5234-5.html
+Cisco's comprehensive STP overview document covers the original 802.1D standard, the election algorithm, port states, and timer interactions. Essential for understanding why RSTP was designed as an improvement and what specific problems it solved.
+
+**2. Cisco VTP Best Practices and Version 3 Overview**
+https://www.cisco.com/c/en/us/support/docs/lan-switching/vtp/98154-conf-vtp.html
+Covers VTP version 1, 2, and 3 configuration with emphasis on the revision-number risk that destroyed countless production networks. Explains why VTPv3 primary server design and VTP Transparent mode are now the recommended enterprise practices.
+
+**3. NIST SP 800-125B — Secure Virtual Network Configuration for Virtual Machine (VM) Protection**
+https://csrc.nist.gov/publications/detail/sp/800-125b/final
+While focused on virtualization, this NIST publication covers VLAN segmentation security requirements including VLAN hopping attack mitigations, native VLAN risks, and network isolation principles — directly applicable to the HIPAA medical device isolation requirement in this module's discussion prompt.

@@ -246,3 +246,17 @@ Verify deletion in the Portal after 5 minutes.
 **Authentication error on blob upload:** Run `az storage account show-connection-string --name [account-name] --resource-group [rg-name]` and use the connection string with `--connection-string` parameter instead of `--account-name`.
 
 **Cool tier set-tier command fails:** The `set-tier` command on individual blobs requires the account to support blob-level tiering. GPv2 StorageV2 accounts support this. Verify your account was created with `--kind StorageV2`.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Lifecycle Management Policy
+Create a Blob Storage Lifecycle Management policy on your storage account that performs the following transitions automatically: move blobs in the `uploads` container to Cool tier after 30 days, move them to Archive tier after 90 days, and delete them after 365 days. Use `az storage account management-policy create` with a JSON policy definition file. Document the full JSON policy definition you created and confirm the policy was created successfully with `az storage account management-policy show`. Explain in 2-3 sentences how this policy would affect the monthly storage cost for a blob uploaded today if it is never manually accessed or deleted.
+
+### Challenge 2: SAS Token Security Comparison
+Generate three different SAS tokens for the same blob: (1) an account-level SAS with full permissions and no expiry, (2) a service-level SAS scoped to one container with read-only permission and a 1-hour expiry, and (3) a User Delegation SAS signed with your Entra ID identity rather than an account key (use `az storage blob generate-sas` with `--as-user --auth-mode login`). Compare the three tokens by examining their query string parameters and document: which token type is most secure and why, what the `se` parameter represents in all three, and why Microsoft recommends User Delegation SAS over account-key-signed SAS for user-facing scenarios.
+
+### Reflection Questions
+1. In the lab you changed a blob's access tier from Hot to Cool using `az storage blob set-tier`. Azure charges an early deletion fee if a Cool tier blob is deleted before 30 days. How does this early deletion fee affect the cost model for a workload that must frequently promote blobs back to Hot tier within days of being cooled? At what approximate access frequency does staying in Hot tier become cheaper than moving to Cool tier?
+2. A colleague argues that using storage account keys for application authentication is simpler than configuring Managed Identity and RBAC. What are two specific security risks of using storage account keys for application access, and what Azure-native authentication mechanism eliminates both risks without requiring the application to store any credentials?

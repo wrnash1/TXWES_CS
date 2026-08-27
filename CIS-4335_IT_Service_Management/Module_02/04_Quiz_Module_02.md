@@ -160,3 +160,153 @@ An organization's incident management practice consistently bypasses the Engage 
 Correct answer: B
 
 Distractor analysis: B is correct because the Engage activity provides understanding of stakeholder needs and maintains communication — skipping it means resolutions may occur without fully understanding user needs, and patterns in stakeholder feedback will not be captured, undermining improvement. A is incorrect because incident management bypasses do not directly impact deployment capability. C is incorrect because governance authority is not dependent on individual SVC activity execution. D is incorrect because ITIL 4 does not describe any automatic deletion mechanism in the CIR.
+
+---
+
+## Question 11 (5 points)
+
+Which SVC activity is primarily responsible for sourcing or constructing the components needed to deliver a service?
+
+* A) Plan
+* B) Obtain/Build
+* C) Deliver and Support
+* D) Design and Transition
+
+Correct answer: B
+
+Distractor analysis: B is correct because Obtain/Build covers acquiring or developing service components — hardware, software, documentation, or knowledge — needed to deliver services. A is incorrect because Plan establishes direction and portfolio decisions but does not source or construct components. C is incorrect because Deliver and Support focuses on live service operation, not component acquisition. D is incorrect because Design and Transition creates and validates service designs and manages their controlled introduction to the live environment, not the sourcing of individual components.
+
+---
+
+## Question 12 (5 points)
+
+The ITIL 4 Continual Improvement Register (CIR) is best described as:
+
+* A) A formal document that defines service level targets for all production services
+* B) A log used to record, prioritize, and track improvement initiatives across the organization
+* C) A governance policy that mandates regular audits of all IT practices
+* D) A technical configuration database that records software versions and patch states
+
+Correct answer: B
+
+Distractor analysis: B is correct because the CIR is a tool for capturing and managing improvement ideas and initiatives at any level of the organization. A is incorrect because service level targets belong in a Service Level Agreement or service catalog entry, not the CIR. C is incorrect because a governance policy mandates behavior but does not track improvement ideas. D is incorrect because a configuration database (CMDB) tracks asset and configuration item states, not improvement initiatives.
+
+---
+
+## Question 13 (5 points)
+
+Which of the following correctly describes the relationship between the Service Value Chain and ITIL 4 practices?
+
+* A) Practices replace the SVC activities for organizations using Agile methods.
+* B) The SVC defines what activities are performed; practices provide the resources and capabilities to perform them.
+* C) Practices govern the SVC; any SVC activity must be approved by a practice owner.
+* D) The SVC and practices are entirely independent and have no interaction.
+
+Correct answer: B
+
+Distractor analysis: B is correct because the SVC provides the operating model (what activities to do) while practices supply the people, processes, tools, and knowledge (how to do them). A is incorrect because practices and the SVC complement each other in all methodological contexts, including Agile. C is incorrect because governance, not practices, provides oversight; practices are operational resources, not approval authorities. D is incorrect because practices and SVC activities interact closely — each SVC activity relies on one or more practices.
+
+---
+
+## Question 14 (5 points)
+
+An organization has clear strategic objectives but repeatedly fails to communicate them to operational teams, resulting in projects that conflict with organizational priorities. Which SVS component is most deficient?
+
+* A) Guiding Principles
+* B) Service Value Chain — Deliver and Support activity
+* C) Governance
+* D) Continual Improvement
+
+Correct answer: C
+
+Distractor analysis: C is correct because governance is responsible for directing the organization and ensuring that strategic objectives are communicated, understood, and enforced at all levels. A is incorrect because Guiding Principles are decision-making heuristics, not the mechanism for communicating strategy. B is incorrect because Deliver and Support is an operational SVC activity, not responsible for top-down strategic communication. D is incorrect because Continual Improvement addresses ongoing enhancement, not the initial communication of strategic direction.
+
+---
+
+## Question 15 (5 points)
+
+A company deploys a new employee onboarding service that involves IT provisioning, HR documentation, and facilities setup. The coordinated series of steps spanning all three departments is best described in ITIL 4 as:
+
+* A) A practice
+* B) A governance policy
+* C) A value stream
+* D) An SVC component
+
+Correct answer: C
+
+Distractor analysis: C is correct because a value stream is a specific series of steps an organization follows to create and deliver a service to a consumer — crossing departmental and SVC activity boundaries as needed. A is incorrect because a practice is a set of organizational resources, not a description of a specific end-to-end sequence. B is incorrect because a governance policy establishes rules and accountability, not a delivery sequence. D is incorrect because the SVC is the model containing the activities; the specific sequenced path through those activities is a value stream.
+
+---
+
+## Question 16 (5 points)
+
+Which ITIL 4 Guiding Principle advises an organization to make its work visible to all stakeholders rather than keeping decisions and progress within individual teams?
+
+* A) Think and Work Holistically
+* B) Focus on Value
+* C) Collaborate and Promote Visibility
+* D) Keep It Simple and Practical
+
+Correct answer: C
+
+Distractor analysis: C is correct because "Collaborate and Promote Visibility" explicitly calls for sharing information, making work visible, and avoiding information silos so that everyone can contribute and make informed decisions. A is incorrect because Think and Work Holistically addresses considering the entire system, not specifically the sharing of information and visibility. B is incorrect because Focus on Value concerns ensuring actions contribute to stakeholder outcomes, not the visibility of work. D is incorrect because Keep It Simple and Practical is about eliminating unnecessary complexity, not information sharing.
+
+---
+
+## Question 17 (5 points)
+
+In the ITIL 4 SVS, the "Plan" SVC activity primarily contributes to which of the following?
+
+* A) Monitoring live services for incidents and degradation
+* B) Ensuring a shared understanding of the organization's vision, direction, and portfolio
+* C) Sourcing and building new service components from vendors
+* D) Transitioning newly developed services into the live environment
+
+Correct answer: B
+
+Distractor analysis: B is correct because the Plan activity is about establishing a shared understanding of organizational vision, direction, and current portfolio for all four dimensions. A is incorrect because monitoring live services is a function of Deliver and Support. C is incorrect because sourcing and building components belongs to Obtain/Build. D is incorrect because transitioning services to live environments is the responsibility of Design and Transition.
+
+---
+
+## Question 18 (5 points)
+
+Which statement correctly describes how ITIL 4's SVS supports DevOps practices?
+
+* A) The SVS prevents DevOps adoption by requiring governance approval for every deployment.
+* B) The SVS is incompatible with DevOps because ITIL 4 requires sequential process execution.
+* C) The SVS is deliberately designed to integrate with DevOps by enabling flexible, non-prescriptive value streams.
+* D) DevOps replaces the SVS in organizations that adopt continuous deployment.
+
+Correct answer: C
+
+Distractor analysis: C is correct because ITIL 4 was explicitly designed to integrate with DevOps — the non-prescriptive SVC, flexible value streams, and embedded Continual Improvement all align with DevOps principles. A is incorrect because ITIL 4 does not require governance approval for every deployment; change enablement practices can accommodate continuous delivery. B is incorrect because the SVC is explicitly not sequential. D is incorrect because DevOps is a cultural and technical approach that complements ITIL 4's management framework.
+
+---
+
+## Question 19 (5 points)
+
+What is the purpose of the "Improve" activity in the Service Value Chain?
+
+* A) To source new service components from external suppliers
+* B) To ensure continual improvement of all products, services, and practices across all SVC activities
+* C) To communicate service updates to end users and stakeholders
+* D) To manage the financial authorization for improvement projects
+
+Correct answer: B
+
+Distractor analysis: B is correct because the Improve activity exists to embed continual improvement throughout all SVC activities — ensuring that every part of value creation is regularly evaluated and enhanced. A is incorrect because sourcing components is the role of Obtain/Build. C is incorrect because stakeholder communication belongs to the Engage activity. D is incorrect because financial authorization is a governance function, not the purpose of the Improve SVC activity.
+
+---
+
+## Question 20 (5 points)
+
+A service management consultant recommends that an organization avoid duplicating effort by reusing existing documentation, workflows, and tools where possible before building new ones. Which ITIL 4 Guiding Principle is being applied?
+
+* A) Progress Iteratively with Feedback
+* B) Optimize and Automate
+* C) Start Where You Are
+* D) Think and Work Holistically
+
+Correct answer: C
+
+Distractor analysis: C is correct because "Start Where You Are" directs organizations to assess existing capabilities, tools, and workflows and reuse what works before building or buying new solutions. A is incorrect because Progress Iteratively with Feedback concerns breaking work into increments with feedback loops, not the reuse of existing assets. B is incorrect because Optimize and Automate focuses on efficiency improvements and automation adoption, not specifically the reuse of existing capabilities. D is incorrect because Think and Work Holistically is about considering the entire system's interactions, not about reuse of current assets.

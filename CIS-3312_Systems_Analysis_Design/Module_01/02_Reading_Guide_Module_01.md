@@ -179,3 +179,29 @@ Supplemental reading:
 - [ ] Watch the Module 01 video lecture.
 - [ ] Complete the Module 01 lab activity before attempting the quiz.
 - [ ] Post your initial discussion response by Wednesday at 11:59 PM.
+
+---
+
+## 9. Supplemental Resources
+
+The following open educational resources provide additional depth on module topics. All resources are freely accessible without login or purchase.
+
+1. **IIBA BABOK Guide v3 Summary — Business Analysis Body of Knowledge Overview**
+   <https://www.iiba.org/career-resources/a-business-analysis-professionals-foundation-for-success/babok/>
+   Focus: Official IIBA landing page for BABOK Guide v3; use to verify KA definitions and BACCM concepts directly from the source. Review the overview materials and download the exam blueprint.
+
+2. **Systems Analysis and Design — Open Textbook (University of Minnesota Libraries)**
+   <https://open.umn.edu/opentextbooks/textbooks/systems-analysis-and-design>
+   Focus: Chapters 1–2 cover SDLC phases, the role of the systems analyst, and stakeholder identification. This is the primary ZTC textbook for the course.
+
+3. **SDLC Phases Explained — GeeksForGeeks**
+   <https://www.geeksforgeeks.org/software-development-life-cycle-sdlc/>
+   Focus: Concise walkthrough of all five SDLC phases with diagrams. Use as a quick-reference companion while reading the OER textbook.
+
+4. **Introduction to Business Analysis — OpenLearn (The Open University)**
+   <https://www.open.edu/openlearn/money-business/business-strategy-studies/introduction-business-analysis/content-section-0>
+   Focus: Free university-level course covering the BA role, stakeholder analysis, and requirements fundamentals. Excellent for students new to the BA profession.
+
+5. **IEEE Glossary of Software Engineering Terminology (IEEE Std 610.12)**
+   <https://ieeexplore.ieee.org/document/159342>
+   Focus: Authoritative definitions for "system," "requirements," "verification," and "validation" as used in technical certification exams. Access via any university library proxy or the IEEE Xplore free abstract pages.

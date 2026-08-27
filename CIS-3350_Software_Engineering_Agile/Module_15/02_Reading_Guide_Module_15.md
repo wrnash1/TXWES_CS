@@ -182,6 +182,24 @@ Tip 8: Metrics serve the team's self-management. When metrics serve management c
 
 ---
 
+## 9. Supplemental Resources
+
+The following free, open-access resources go deeper on Module 15 topics:
+
+**1. "Velocity" — Mountain Goat Software (Mike Cohn)**
+<https://www.mountaingoatsoftware.com/blog/know-exactly-what-velocity-means-to-your-scrum-team>
+A free blog post from Mike Cohn clarifying what velocity is, what it is not, and the most common misuses. Directly addresses the anti-patterns of cross-team comparison and velocity as a management target. Relevant to the lab's metric anti-pattern analysis tasks.
+
+**2. "Little's Law Applied to Agile Development" — Agile Alliance**
+<https://www.agilealliance.org/resources/experience-reports/littles-law-applied-to-agile-development/>
+A free Agile Alliance article that applies Little's Law to software development teams with worked numerical examples. Explains how WIP limits reduce cycle time using the same math covered in this module. Particularly useful for the flow metrics and CFD analysis tasks in Part 3 of the lab.
+
+**3. "Cumulative Flow Diagrams" — Agile Alliance Glossary**
+<https://www.agilealliance.org/glossary/cfd/>
+A free reference entry explaining Cumulative Flow Diagrams — how to read them, what widening bands indicate, and how to use CFDs to identify bottlenecks. Includes example diagrams showing healthy flow versus bottleneck patterns, directly supporting the visual interpretation skills required for this module.
+
+---
+
 ## 8. Study Checklist
 
 - [ ] Define velocity and calculate it from a sample Sprint scenario

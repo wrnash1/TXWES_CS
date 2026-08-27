@@ -206,5 +206,187 @@ D. Pass the password using `-var="db_password=..."` in the pipeline script store
 
 ---
 
+---
+
+### Question 11 (5 points)
+
+Which of the following is a valid `validation` block condition for a variable `var.cidr_block` that must be a /16, /24, or /28 prefix?
+
+A. `var.cidr_block == "/16" || var.cidr_block == "/24" || var.cidr_block == "/28"`
+B. `contains(["/16", "/24", "/28"], regex("/(\\d+)$", var.cidr_block)[0])`
+C. `can(regex("^10\\.\\d+\\.\\d+\\.\\d+/(16|24|28)$", var.cidr_block))`
+D. `type(var.cidr_block) == "cidr"`
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why C is correct: `can(regex(...))` returns `true` if the regex matches and `false` if it fails — making it safe to use in a validation condition. The pattern anchors the string and allows only the specified prefix lengths.
+  - Why A is incorrect: Comparing the variable to bare strings like `"/16"` would never match because `var.cidr_block` is a full CIDR string like `"10.0.0.0/16"`, not just the prefix length.
+  - Why B is incorrect: The `regex()` function returns a string, not a list, when using a single capture group. This syntax is incorrect and would produce an error.
+  - Why D is incorrect: Terraform does not have a `cidr` type. The type system only includes `string`, `number`, `bool`, and collection types.
+
+---
+
+### Question 12 (5 points)
+
+A `variable "tags"` is declared with `type = map(string)`. A caller supplies `tags = { Name = "web", Env = "prod" }`. Which expression correctly adds a third tag `ManagedBy = "terraform"` to the merged set without modifying the input variable?
+
+A. `var.tags["ManagedBy"] = "terraform"`
+B. `var.tags + { ManagedBy = "terraform" }`
+C. `merge(var.tags, { ManagedBy = "terraform" })`
+D. `concat(var.tags, { ManagedBy = "terraform" })`
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why C is correct: `merge()` combines two or more maps, with later arguments taking precedence for duplicate keys. This is the standard pattern for adding default tags to a caller-supplied tag map.
+  - Why A is incorrect: HCL does not support mutable assignment of map values. Variable values are immutable once set. This is also not valid HCL syntax.
+  - Why B is incorrect: The `+` operator is not supported for maps in Terraform. It is used for numeric addition.
+  - Why D is incorrect: `concat()` operates on lists, not maps. Passing a map to `concat()` produces a type error.
+
+---
+
+### Question 13 (5 points)
+
+What is the correct output command to extract just the raw value of an output named `db_endpoint` so it can be captured into a shell variable without surrounding quotes?
+
+A. `terraform output db_endpoint`
+B. `terraform output -json db_endpoint`
+C. `terraform output -raw db_endpoint`
+D. `terraform output --plain db_endpoint`
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why C is correct: `terraform output -raw <name>` prints the value with no surrounding quotation marks, making it suitable for direct capture by shell command substitution: `ENDPOINT=$(terraform output -raw db_endpoint)`.
+  - Why A is incorrect: `terraform output db_endpoint` prints the value with surrounding quotes for string types, which would include the quotes in the shell variable.
+  - Why B is incorrect: `-json` outputs a JSON structure, which includes the value type and quotes. It requires further parsing (e.g., with `jq`) to extract a raw string.
+  - Why D is incorrect: `--plain` is not a valid `terraform output` flag.
+
+---
+
+### Question 14 (5 points)
+
+A variable is declared with `nullable = false`. What happens if a caller explicitly passes `null` for this variable?
+
+A. Terraform silently converts `null` to the variable's `default` value.
+B. Terraform ignores the `null` and uses an empty string.
+C. Terraform produces an error because `null` is not allowed when `nullable = false`.
+D. Terraform accepts `null` and treats it as `false` for boolean variables or `0` for numeric variables.
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why C is correct: `nullable = false` prevents a variable from being set to `null`. If a caller attempts to pass `null`, Terraform produces a validation error. This is used when a module requires a non-null value to function correctly.
+  - Why A is incorrect: Terraform does not automatically substitute the `default` value when `nullable = false` is violated. It raises an error instead.
+  - Why B is incorrect: Terraform does not silently coerce `null` to an empty string. Type coercion in Terraform is explicit, and `null` is never treated as an empty string.
+  - Why D is incorrect: Terraform does not perform type-specific coercions for `null`. The `nullable = false` constraint simply rejects any `null` value.
+
+---
+
+### Question 15 (5 points)
+
+A `locals` block defines `is_prod = var.environment == "prod"`. Which conditional expression correctly selects `"t3.large"` for production and `"t3.micro"` for all other environments?
+
+A. `if local.is_prod then "t3.large" else "t3.micro"`
+B. `local.is_prod == true ? "t3.large" : "t3.micro"`
+C. `local.is_prod ? "t3.large" : "t3.micro"`
+D. `select(local.is_prod, "t3.large", "t3.micro")`
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why C is correct: The HCL ternary operator `condition ? true_value : false_value` is the correct syntax. `local.is_prod` evaluates to a boolean, so it can be used directly as the condition.
+  - Why A is incorrect: `if/then/else` is not valid HCL expression syntax. HCL uses the ternary operator for conditional expressions.
+  - Why B is incorrect: While `local.is_prod == true` is technically valid (it evaluates to the same boolean), the explicit `== true` comparison is redundant and unnecessarily verbose. Answer C is more correct and canonical.
+  - Why D is incorrect: `select()` is not a Terraform built-in function. The ternary operator handles conditional selection.
+
+---
+
+### Question 16 (5 points)
+
+You need to pass a list of strings `["10.0.1.0/24", "10.0.2.0/24"]` as a variable value from the command line. Which syntax is correct?
+
+A. `terraform plan -var="subnets=10.0.1.0/24,10.0.2.0/24"`
+B. `terraform plan -var='subnets=["10.0.1.0/24","10.0.2.0/24"]'`
+C. `terraform plan -var="subnets=[10.0.1.0/24, 10.0.2.0/24]"`
+D. `terraform plan -var-list="subnets=10.0.1.0/24,10.0.2.0/24"`
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why B is correct: When passing a list value using the `-var` flag, the value must be valid HCL or JSON. `'["10.0.1.0/24","10.0.2.0/24"]'` is a valid JSON array. Single quotes in the shell prevent the inner double quotes from being interpreted by the shell.
+  - Why A is incorrect: A bare comma-separated string is not interpreted as a list — it would be treated as a single string value and would fail the `list(string)` type constraint.
+  - Why C is incorrect: The strings in the list must be quoted. Without quotes around the CIDR values, Terraform cannot parse them as string values.
+  - Why D is incorrect: `-var-list` is not a valid Terraform CLI flag.
+
+---
+
+### Question 17 (5 points)
+
+What is the result of declaring two `locals` blocks in the same Terraform configuration, each defining a different local name?
+
+A. Terraform errors because only one `locals` block is allowed per configuration.
+B. Both blocks are valid. Terraform merges all `locals` blocks together into a single namespace.
+C. The second `locals` block overrides all local values defined in the first block.
+D. Each `locals` block creates a separate local namespace, accessed with different prefixes.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why B is correct: A Terraform configuration can contain multiple `locals` blocks. All local values from all `locals` blocks are merged into one namespace and accessed uniformly with `local.<name>`. The only restriction is that the same name cannot be defined in two different `locals` blocks.
+  - Why A is incorrect: Multiple `locals` blocks are explicitly supported. This is a common pattern for organizing groups of related local values across different files.
+  - Why C is incorrect: The second block does not override the first. If the same name appears in two blocks, Terraform raises a duplicate definition error.
+  - Why D is incorrect: All local values share a single `local.` namespace regardless of which `locals` block they are defined in.
+
+---
+
+### Question 18 (5 points)
+
+Which statement about the `output` block's `depends_on` argument is correct?
+
+A. `depends_on` in an output block causes the output value to be computed only after the listed resources are applied.
+B. `depends_on` in an output block prevents the output from being shown until the entire apply completes.
+C. `depends_on` is not a valid argument in `output` blocks — it is only valid in `resource` and `data` blocks.
+D. `depends_on` in an output block forces the output to be re-evaluated on every plan regardless of state.
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - Why A is correct: The `depends_on` argument in an `output` block creates an explicit dependency, ensuring the listed resources are fully applied before the output value is computed and displayed. This is used when an output value does not directly reference a resource attribute but relies on side effects of that resource.
+  - Why B is incorrect: All outputs are shown after apply completes. `depends_on` affects the ordering of evaluation, not the timing of display.
+  - Why C is incorrect: `depends_on` is valid in `output` blocks as well as `resource` and `data` blocks. Terraform added this support to handle indirect output dependencies.
+  - Why D is incorrect: `depends_on` has no effect on the plan frequency. Output re-evaluation is driven by changes to the values the output references.
+
+---
+
+### Question 19 (5 points)
+
+A team has a variable `region` with default `"us-east-1"` in the `variable` block, `"us-west-2"` in `terraform.tfvars`, and `"eu-west-1"` in a `production.auto.tfvars` file. No CLI flags are used. Which value does Terraform use?
+
+A. `"us-east-1"` from the default
+B. `"us-west-2"` from `terraform.tfvars`
+C. `"eu-west-1"` from `production.auto.tfvars`
+D. Terraform errors because the variable is defined in multiple sources
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why C is correct: `*.auto.tfvars` files have higher precedence than `terraform.tfvars`. When both are present, the auto-loading `.auto.tfvars` value wins. The precedence order (low to high) is: default → `terraform.tfvars` → `*.auto.tfvars` → `-var-file` → `-var` → `TF_VAR_`.
+  - Why A is incorrect: The default is the lowest-precedence source. Any external source overrides it.
+  - Why B is incorrect: `terraform.tfvars` is overridden by `*.auto.tfvars` files.
+  - Why D is incorrect: Terraform does not error when a variable is set in multiple sources. It resolves the conflict deterministically using the precedence order.
+
+---
+
+### Question 20 (5 points)
+
+What is the purpose of the `can()` function when used inside a variable `validation` block condition?
+
+A. It cancels the current apply if the condition is false.
+B. It wraps an expression that might produce an error and returns `true` if it succeeds or `false` if it fails, preventing the condition from throwing an error.
+C. It checks whether a variable has been declared in the current module scope.
+D. It enables cancellation of long-running provider API calls during validation.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why B is correct: `can(expression)` evaluates the expression and returns `true` if it evaluates without error, or `false` if evaluation produces any error. This is essential in validation blocks where functions like `regex()` throw errors on non-matching input rather than returning a falsy value — wrapping them in `can()` makes them safe to use as boolean conditions.
+  - Why A is incorrect: `can()` does not cancel or abort any operation. It is purely an error-trapping boolean expression evaluator.
+  - Why C is incorrect: Checking whether a variable exists in scope is not a runtime function. `can()` evaluates arbitrary expressions for success or failure.
+  - Why D is incorrect: `can()` has no interaction with provider API calls or I/O operations. It operates on pure HCL expression evaluation.
+
+---
+
 *Texas Wesleyan University — CIS-4337 Infrastructure Automation*
 *Proprietary and Confidential. Not for disclosure outside of authorized course participants.*

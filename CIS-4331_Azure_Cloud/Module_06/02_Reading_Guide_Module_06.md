@@ -397,3 +397,19 @@ Reference: learn.microsoft.com/en-us/cli/azure/storage
 - [ ] Take Quiz Module 06
 - [ ] Post Discussion Module 06 initial post by Wednesday 11:59 PM
 - [ ] Respond to two classmates by Sunday 11:59 PM
+
+---
+
+## 9. Supplemental Resources
+
+**1. Microsoft Learn — Azure Blob Storage documentation**
+https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blobs-introduction
+Complete reference for Blob Storage including blob types (Block, Append, Page), access tiers (Hot/Cool/Cold/Archive), lifecycle management policies, versioning, and object replication.
+
+**2. Microsoft Learn — Azure Storage redundancy**
+https://learn.microsoft.com/en-us/azure/storage/common/storage-redundancy
+Detailed explanation of all redundancy options (LRS, ZRS, GRS, RA-GRS, GZRS, RA-GZRS) with durability percentages, replication mechanics, and guidance for choosing the right redundancy for each workload.
+
+**3. Microsoft Learn — Grant limited access to Azure Storage resources using SAS**
+https://learn.microsoft.com/en-us/azure/storage/common/storage-sas-overview
+Covers the three types of SAS tokens (Account SAS, Service SAS, User Delegation SAS), SAS signing keys, permissions scope, expiry configuration, and security best practices for temporary delegated access.

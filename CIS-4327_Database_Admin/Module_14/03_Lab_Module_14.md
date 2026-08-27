@@ -379,6 +379,65 @@ gcloud sql instances delete lab14-mysql-dest --quiet
 
 ---
 
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: DMS Validation Query — Row-Level Checksum Comparison
+
+1. After your DMS migration completes the initial load, run the following row-count validation query on both source and Cloud SQL target for each table in your migration:
+
+   ```sql
+   -- Run on source MySQL
+   SELECT table_name, table_rows
+   FROM information_schema.tables
+   WHERE table_schema = 'ecomm_db'
+   ORDER BY table_name;
+   ```
+
+2. For a deeper validation, compute a checksum of the `orders` table on both source and target. On MySQL (source):
+
+   ```sql
+   CHECKSUM TABLE orders;
+   ```
+
+   On Cloud SQL for PostgreSQL (target), compute an equivalent MD5 aggregate:
+
+   ```sql
+   SELECT MD5(STRING_AGG(CAST(order_id AS TEXT) || CAST(total_amount AS TEXT)
+              ORDER BY order_id)) AS table_checksum
+   FROM orders;
+   ```
+
+3. Document any discrepancies and explain whether they could be caused by timing (CDC lag) or by actual data conversion errors.
+
+4. Design a validation query that would detect DECIMAL-to-FLOAT precision loss for the `total_amount` column by comparing values rounded to 2 decimal places on both systems.
+
+### Challenge 2: Simulate a Minimal-Downtime Cutover with Lag Measurement
+
+1. While your DMS CDC job is running, continuously insert rows on the source to simulate live application traffic:
+
+   ```sql
+   -- Run on source MySQL (repeat every 5 seconds)
+   INSERT INTO orders (customer_id, product_id, order_date, total_amount, status)
+   SELECT FLOOR(RAND() * 1000) + 1, FLOOR(RAND() * 100) + 1,
+          CURDATE(), ROUND(RAND() * 500, 2), 'pending'
+   FROM dual;
+   ```
+
+2. Monitor replication lag in the DMS Console. Record the lag value every 30 seconds for 5 minutes.
+
+3. Stop the source inserts and measure how quickly the lag drops to zero. Record the time from last source write to lag reaching 0.
+
+4. Describe the exact sequence of steps you would execute in a real production cutover based on what you observed, including: when to stop application writes, what lag threshold triggers the cutover, and how to verify the target is fully caught up before switching connection strings.
+
+### Reflection Questions
+
+1. In Challenge 1, you found that computing an exact checksum on PostgreSQL requires a different approach than MySQL's `CHECKSUM TABLE`. What does this difference reveal about the challenges of heterogeneous migration validation, and what third-party or purpose-built tools would you use in a production migration to automate row-level data comparison?
+2. In Challenge 2, you observed the lag drain time after stopping source writes. If the production application has a SLA requiring less than 60 seconds of write unavailability during cutover, and your measured lag drain time is 45 seconds, what buffer does this leave? What factors could cause the actual cutover to take longer than the lab measurement?
+
+---
+
 Module 14 Lab — CIS-4327 Database Administration
 
 Texas Wesleyan University | Proprietary and Confidential. Not for disclosure outside of course participants.

@@ -203,3 +203,203 @@ Distractor Analysis:
 - *Why A is incorrect:* Under budget requires CPI > 1.0. A CPI of 0.92 is below 1.0, indicating over budget, not under budget.
 - *Why C is incorrect:* CPI = 0.92 is over budget (not under). The SPI interpretation of ahead of schedule is correct, but the cost interpretation is wrong.
 - *Why D is incorrect:* SPI = 1.05 indicates ahead of schedule (not behind). The cost interpretation of over budget is correct, but the schedule interpretation is wrong.
+
+---
+
+## Question 11
+
+A project has a Budget at Completion (BAC) of $200,000, Planned Value (PV) of $80,000, Earned Value (EV) of $70,000, and Actual Cost (AC) of $85,000. What is the Schedule Variance (SV)?
+
+- A) -$15,000 (behind schedule)
+- B) +$10,000 (ahead of schedule)
+- C) -$10,000 (behind schedule)
+- D) +$15,000 (ahead of schedule)
+
+**Correct Answer:** C) -$10,000 (behind schedule)
+
+**Distractor Analysis:**
+
+- *Why C is correct:* SV = EV - PV = $70,000 - $80,000 = -$10,000. A negative SV means the project has earned less value than planned — it is behind schedule.
+- *Why A is incorrect:* -$15,000 would result from CV = EV - AC = $70,000 - $85,000 = -$15,000. That is the Cost Variance, not Schedule Variance.
+- *Why B is incorrect:* A positive SV would require EV > PV. Here EV ($70,000) < PV ($80,000), so SV is negative.
+- *Why D is incorrect:* $15,000 positive is the CV in absolute terms but with the wrong sign; it also uses the wrong formula for SV.
+
+---
+
+## Question 12
+
+Using the same values from Question 11 (BAC=$200,000, EV=$70,000, AC=$85,000), what is the Cost Performance Index (CPI)?
+
+- A) 1.21
+- B) 0.88
+- C) 0.82
+- D) 1.14
+
+**Correct Answer:** C) 0.82
+
+**Distractor Analysis:**
+
+- *Why C is correct:* CPI = EV / AC = $70,000 / $85,000 = 0.824, rounded to 0.82. A CPI below 1.0 means the project is getting less than $1.00 of value for every $1.00 spent — it is over budget.
+- *Why A is incorrect:* 1.21 would indicate under budget performance; it does not result from any standard EVM formula using these values.
+- *Why B is incorrect:* 0.88 = SPI = EV / PV = $70,000 / $80,000. This is the Schedule Performance Index, not the CPI.
+- *Why D is incorrect:* 1.14 = AC / EV = $85,000 / $70,000 — the formula is inverted. CPI = EV / AC, not AC / EV.
+
+---
+
+## Question 13
+
+A project manager wants to estimate the total cost at completion using the assumption that all remaining work will be performed at the BUDGETED cost rate (current variances are considered atypical). Which EAC formula should she use?
+
+- A) EAC = BAC / CPI
+- B) EAC = AC + ETC
+- C) EAC = AC + (BAC - EV)
+- D) EAC = AC + [(BAC - EV) / CPI]
+
+**Correct Answer:** C) EAC = AC + (BAC - EV)
+
+**Distractor Analysis:**
+
+- *Why C is correct:* EAC = AC + (BAC - EV) assumes the remaining work (BAC - EV = ETC) will be completed at the original budgeted rate. This formula is used when the current variance is believed to be a one-time event that will not recur.
+- *Why A is incorrect:* EAC = BAC / CPI assumes the current CPI will continue for all remaining work. This is the formula for the "typical" variance assumption — the opposite of what the question describes.
+- *Why B is incorrect:* EAC = AC + ETC is the generic formula, not a specific EAC variant. It requires a separately estimated ETC value rather than using a formula-based ETC.
+- *Why D is incorrect:* EAC = AC + [(BAC - EV) / CPI] assumes the current CPI AND SPI will both persist for remaining work. This is the most pessimistic EAC formula.
+
+---
+
+## Question 14
+
+The project sponsor asks the project manager what it will cost to complete the remaining work if performance continues at the current rate. Which EVM metric should the PM report?
+
+- A) VAC (Variance at Completion)
+- B) ETC (Estimate to Complete)
+- C) EAC (Estimate at Completion)
+- D) TCPI (To-Complete Performance Index)
+
+**Correct Answer:** B) ETC (Estimate to Complete)
+
+**Distractor Analysis:**
+
+- *Why B is correct:* ETC is the expected cost to complete ALL remaining project work from the current point. The question asks specifically what it will cost from now to completion — that is ETC = EAC - AC.
+- *Why A is incorrect:* VAC (Variance at Completion = BAC - EAC) tells you how far over or under budget the project is expected to finish — not what it costs to finish the remaining work.
+- *Why C is incorrect:* EAC is the expected total cost at the END of the project (including what has already been spent). The sponsor is asking only about the remaining cost, not the total.
+- *Why D is incorrect:* TCPI is an efficiency ratio showing what CPI is needed going forward to meet the original BAC or EAC target. It is a performance target, not a cost forecast.
+
+---
+
+## Question 15
+
+What does the To-Complete Performance Index (TCPI) measure?
+
+- A) The cost efficiency achieved so far on the project
+- B) The CPI required for all remaining work to stay within the approved budget
+- C) The total amount of budget remaining at the current time
+- D) The schedule efficiency required to hit the planned completion date
+
+**Correct Answer:** B) The CPI required for all remaining work to stay within the approved budget.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* TCPI = (BAC - EV) / (BAC - AC). It answers the question: "To finish within budget, how efficiently must we perform the remaining work?" A TCPI > 1.0 means the team must work more efficiently than it has been — often a red flag.
+- *Why A is incorrect:* CPI measures cost efficiency achieved to date, not what is needed going forward.
+- *Why C is incorrect:* Budget remaining = BAC - AC is a simpler calculation that does not account for earned value or required future performance.
+- *Why D is incorrect:* TCPI is a cost metric, not a schedule metric. Schedule efficiency is measured by SPI and related formulas.
+
+---
+
+## Question 16
+
+Which of the following best describes "contingency reserve" in project cost management?
+
+- A) Funds held by senior management for unplanned changes outside the project scope
+- B) Budget set aside for known risks that have been identified and assigned a probability of occurrence
+- C) The difference between the project's BAC and its current EAC
+- D) Funds used to cover cost overruns discovered during project closure
+
+**Correct Answer:** B) Budget set aside for known risks that have been identified and assigned a probability of occurrence.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* Contingency reserve is planned reserve allocated for "known unknowns" — risks identified in the Risk Register. It is included in the Cost Baseline and controlled by the project manager.
+- *Why A is incorrect:* Funds held by senior management for unplanned or out-of-scope events describe management reserve — which is NOT part of the Cost Baseline.
+- *Why C is incorrect:* The difference between BAC and EAC is Variance at Completion (VAC) — a performance metric, not a reserve definition.
+- *Why D is incorrect:* Contingency reserve is planned before project execution, not discovered at closure. Using reserve at closure may be appropriate, but that is not its definition.
+
+---
+
+## Question 17
+
+A project manager reports an SPI of 0.78 to the steering committee. Which of the following plain-language translations is CORRECT?
+
+- A) The project is spending 78 cents for every dollar of work completed — it is under budget.
+- B) The project has completed only 78% of the work that was planned to be done by this point in time — it is behind schedule.
+- C) The project will cost 78% more than originally planned by the time it finishes.
+- D) The project has delivered 78% of the total planned scope.
+
+**Correct Answer:** B) The project has completed only 78% of the work that was planned to be done by this point in time — it is behind schedule.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* SPI = EV / PV. An SPI of 0.78 means only $0.78 of planned work has been completed for every $1.00 of work that should have been done — the project is behind schedule.
+- *Why A is incorrect:* That description matches CPI (cost efficiency), not SPI. Spending per dollar of work completed is a cost metric, not a schedule metric.
+- *Why C is incorrect:* A cost overrun percentage describes a cost variance metric, not SPI.
+- *Why D is incorrect:* SPI at a point in time compares EV to PV at that moment — it does not represent the percentage of total planned scope delivered. Total scope progress would be measured differently (percent complete).
+
+---
+
+## Question 18
+
+Which estimating technique produces the MOST accurate cost estimate and requires a complete, detailed WBS?
+
+- A) Analogous estimating
+- B) Parametric estimating
+- C) Rough Order of Magnitude (ROM)
+- D) Bottom-up estimating
+
+**Correct Answer:** D) Bottom-up estimating
+
+**Distractor Analysis:**
+
+- *Why D is correct:* Bottom-up estimating requires every work package in the WBS to be individually estimated, then summed. It is the most time-consuming but also the most accurate technique.
+- *Why A is incorrect:* Analogous estimating uses historical data from similar past projects — it is fast but least accurate, typically used in early project phases.
+- *Why B is incorrect:* Parametric estimating multiplies a unit rate by a quantity metric (e.g., $50/hour × 200 hours). It is more accurate than analogous but less accurate than bottom-up because it relies on standard unit rates that may not match the specific work package.
+- *Why C is incorrect:* ROM (Rough Order of Magnitude) is the roughest estimate, with an accuracy range of -25% to +75%. It is used for initial budget requests, not for detailed project planning.
+
+---
+
+## Question 19
+
+A project's BAC is $500,000 and the current EAC is $575,000. What is the Variance at Completion (VAC), and what does it mean?
+
+- A) VAC = +$75,000; the project is projected to finish under budget.
+- B) VAC = -$75,000; the project is projected to finish over budget by $75,000.
+- C) VAC = $575,000; the project's revised total budget.
+- D) VAC = 0.87; the CPI needed to bring the project back on budget.
+
+**Correct Answer:** B) VAC = -$75,000; the project is projected to finish over budget by $75,000.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* VAC = BAC - EAC = $500,000 - $575,000 = -$75,000. A negative VAC means the project is projected to overrun its original budget.
+- *Why A is incorrect:* A positive VAC would require EAC < BAC. Since EAC > BAC here, VAC is negative (over budget, not under).
+- *Why C is incorrect:* $575,000 is the EAC itself — not the VAC. VAC is the difference between BAC and EAC, not EAC itself.
+- *Why D is incorrect:* 0.87 is a ratio — it looks like a TCPI or CPI value, not VAC. VAC is expressed in dollars, not as a ratio.
+
+---
+
+## Question 20
+
+A project manager is preparing a cost performance report and calculates that EV = $120,000, AC = $130,000, PV = $115,000. Which statement is TRUE about this project?
+
+- A) The project is under budget and ahead of schedule.
+- B) The project is over budget and behind schedule.
+- C) The project is over budget and ahead of schedule.
+- D) The project is under budget and behind schedule.
+
+**Correct Answer:** C) The project is over budget and ahead of schedule.
+
+**Distractor Analysis:**
+
+- *Why C is correct:* CV = EV - AC = $120,000 - $130,000 = -$10,000 (over budget, since negative). SV = EV - PV = $120,000 - $115,000 = +$5,000 (ahead of schedule, since positive). Both conditions can coexist.
+- *Why A is incorrect:* CV is negative ($120K - $130K = -$10K), indicating over budget, not under budget.
+- *Why B is incorrect:* SV is positive ($120K - $115K = +$5K), indicating ahead of schedule, not behind.
+- *Why D is incorrect:* Under budget requires CV > 0 (EV > AC). Here EV < AC, so the project is over budget.

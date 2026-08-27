@@ -366,3 +366,23 @@ gcloud transfer jobs create \
 - Lifecycle management: cloud.google.com/storage/docs/lifecycle
 - Signed URLs: cloud.google.com/storage/docs/access-control/signed-urls
 - Storage Transfer Service: cloud.google.com/storage-transfer/docs
+
+## 9. Supplemental Resources
+
+**1. Google Cloud Documentation — Cloud Storage Storage Classes**
+<https://cloud.google.com/storage/docs/storage-classes>
+Detailed comparison of Standard, Nearline, Coldline, and Archive storage
+classes including minimum storage durations, retrieval fees, and use case
+guidance. Essential for ACE exam cost optimization questions.
+
+**2. Google Cloud Skills Boost — Cloud Storage: Qwik Start**
+<https://www.cloudskillsboost.google/focuses/1836>
+Hands-on lab covering bucket creation, object upload, access control
+configuration, and lifecycle policy setup using both the Console and
+`gcloud storage` CLI commands.
+
+**3. Google Cloud Documentation — Object Lifecycle Management**
+<https://cloud.google.com/storage/docs/lifecycle>
+Complete reference for lifecycle configuration rules including all supported
+conditions (`age`, `createdBefore`, `isLive`, `matchesStorageClass`,
+`numNewerVersions`) and action types with JSON and YAML examples.

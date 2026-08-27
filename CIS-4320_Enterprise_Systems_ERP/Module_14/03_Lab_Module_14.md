@@ -233,6 +233,33 @@ Before submitting, verify you have included:
 
 ---
 
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Executive KPI Dashboard Design for a Multi-Channel Retailer
+
+A multi-channel retailer (online + physical stores, $180M annual revenue) is replacing its spreadsheet-based weekly executive report with a Salesforce dashboard. The executive team includes the CEO, CFO, VP of Sales, and VP of Operations. Each executive currently receives a different 40-row spreadsheet on Monday morning. The head of analytics has been asked to consolidate these into role-appropriate dashboards.
+
+1. Apply the 1-3-10 Rule and the "5–7 top-level KPI" principle to design the KPI set for the VP of Sales dashboard. Identify five KPIs the VP of Sales should see at the top level, specify whether each is a leading or lagging indicator, define the measurable target for each, and identify the Salesforce object or field that is the data source.
+2. The CFO wants a single number on her dashboard showing "Total Closed-Won Revenue This Quarter." Explain the difference between a Salesforce Summary Report and a Matrix Report, and identify which report type should back this specific dashboard component and why. Then describe what additional context (trend, target, benchmark) should appear alongside the number to make it actionable.
+3. The CEO requests a dashboard that shows performance for the entire company — but the CEO's Salesforce role is not above all sales rep roles in the hierarchy (the org was set up with a flat role structure). The CEO cannot see all Opportunity records. Describe two options the Salesforce administrator has to give the CEO full company-wide visibility on the dashboard without granting System Administrator access: one using the running-user configuration and one using a Salesforce permission.
+4. Three months after launch, the VP of Operations reports that the "On-Time Delivery Rate" KPI on their dashboard has shown 97% for six consecutive weeks without changing. Investigation reveals the field used to calculate on-time delivery is a checkbox that nobody has updated since go-live. Describe this as a data quality failure using the appropriate data quality dimension, and design a two-part solution: (a) a Salesforce automation to enforce the field is updated when a shipment is marked delivered, and (b) a monitoring report that surfaces records where the delivery date passed but the checkbox is still unchecked.
+
+### Challenge 2: SAP and Salesforce Integrated Reporting Architecture
+
+A manufacturing company uses SAP S/4HANA for ERP (finance, procurement, inventory) and Salesforce for CRM (accounts, opportunities, cases). The leadership team wants a unified "Order-to-Cash" dashboard showing the complete customer journey from Salesforce opportunity to SAP invoice payment. The analytics team must design the architecture.
+
+1. Map the data elements required for the Order-to-Cash dashboard to their source system. For each of the following metrics, identify whether the data lives in Salesforce, SAP S/4HANA, or must be calculated by joining both: (a) Opportunity Win Rate by Sales Rep, (b) Average Days from Opportunity Close to SAP Invoice Posted, (c) Customer Invoice Open Balance (AR), (d) Days Sales Outstanding (DSO) by Customer, (e) Customer Satisfaction Score from Case Resolution.
+2. The analytics team proposes three integration architecture options: (A) nightly export of SAP data to Salesforce custom objects and report in Salesforce; (B) use SAP Analytics Cloud with a live connection to S/4HANA and an API connector to Salesforce; (C) build a custom data warehouse in Snowflake and ETL both systems into it. For each option, describe one key advantage and one key disadvantage. Then recommend one option and justify the recommendation.
+3. The Order-to-Cash dashboard should show a KPI called "Average Order-to-Cash Cycle Time" (from Opportunity Close Date in Salesforce to Payment Clearing Date in SAP). Define the exact data fields needed from each system, explain the join key that links a Salesforce Opportunity to its corresponding SAP billing document, and describe how a mismatch in the join key (e.g., different order number formats between systems) would affect the metric.
+4. After three months of operation, the dashboard shows that Average Order-to-Cash Cycle Time increased from 22 days to 31 days in June. The CFO asks the analytics team to determine whether the increase is driven by slower SAP payment collection, slower Salesforce-to-SAP order handoff, or a mix. Describe the drill-down analysis steps the team would take, identifying which sub-metrics to examine and which system each sub-metric comes from.
+
+### Reflection Questions
+
+1. In Challenge 1, the "5–7 top-level KPI" principle conflicts with the reality that executives often request more metrics than this. When an executive asks for 15 KPIs on their dashboard, what is the analytically correct response — and how would you explain to a non-technical executive why fewer metrics on a dashboard actually improve decision-making rather than reducing information?
+2. In Challenge 2, the Order-to-Cash dashboard required data from two separate enterprise systems with different data models. The join key connecting a Salesforce Opportunity to a SAP billing document depends on both systems using the same order number. In practice, order numbers often get reformatted or truncated as they flow between systems. What data governance practice — established at the time of integration design rather than after the fact — would prevent this join key problem from arising?
+
 *End of Lab — Module 14*
 
 **Certification Alignment:** Salesforce Administrator / SAP S/4HANA Essentials

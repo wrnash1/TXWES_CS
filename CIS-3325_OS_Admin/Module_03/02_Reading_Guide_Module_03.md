@@ -238,6 +238,36 @@ and su. Unexpected SUID files can indicate compromise.
 
 ---
 
+## 9. Supplemental Resources
+
+**1. The Linux Command Line — William Shotts (Chapter 9: Permissions)**
+URL: https://linuxcommand.org/tlcl.php
+Coverage: Covers chmod, chown, umask, and special bits with worked examples. The chapter
+explains the octal notation system and symbolic notation side by side.
+
+**2. Linux man pages online — chmod(1), chown(1), umask(2)**
+URL: https://man7.org/linux/man-pages/man1/chmod.1.html
+Coverage: Authoritative reference for chmod symbolic and numeric modes, chown user:group
+syntax, and the umask system call. Read the DESCRIPTION and EXAMPLES sections for both
+chmod and chown.
+
+**3. TLDP — Linux Security HOWTO: File Permissions**
+URL: https://tldp.org/HOWTO/Security-HOWTO/file-security.html
+Coverage: Explains SUID/SGID/sticky bit security implications in production environments.
+Covers how attackers exploit misconfigured SUID binaries and best practices for auditing.
+
+**4. Red Hat Documentation — Managing file permissions**
+URL: https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/configuring_basic_system_settings/managing-file-permissions_configuring-basic-system-settings
+Coverage: RHEL 9 guide covering standard permissions, ACLs with setfacl/getfacl, and
+default ACL inheritance for shared directories. Directly relevant to the SGID shared
+directory pattern used in the lab.
+
+**5. ArchWiki — Access Control Lists**
+URL: https://wiki.archlinux.org/title/Access_Control_Lists
+Coverage: Comprehensive guide to POSIX ACLs including setfacl, getfacl, default ACLs,
+mask entries, and how ACLs interact with standard Unix permissions. Covers the ACL mask
+concept which determines the effective permissions for named users and groups.
+
 ### Required Reading
 
 Read chapters 9 and 10 of The Linux Command Line by William Shotts (linuxcommand.org/tlcl.php),

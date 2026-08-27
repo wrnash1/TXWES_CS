@@ -552,6 +552,211 @@ Zip all 5 screenshots and upload to the Canvas Module 13 Lab Assignment.
 
 ---
 
+## Part 9 — Challenge Exercise
+
+These steps are optional and ungraded. They extend module concepts to real packaging and introspection patterns.
+
+### Step 9.1 — Introspect a Standard Library Module
+
+Use Python's built-in introspection tools (`dir()`, `help()`, `inspect`, and `sys.modules`) to explore a module's contents, understand what was loaded, and locate source files.
+
+```bash
+python3
+```
+
+```python
+>>> import math
+>>> import inspect
+>>> import sys
+
+# What is math's source?
+>>> print(math.__file__)
+
+# List all public names
+>>> public = [name for name in dir(math) if not name.startswith('_')]
+>>> print(len(public), 'public names:', public[:8], '...')
+
+# Find all callables (functions)
+>>> funcs = [name for name in public if callable(getattr(math, name))]
+>>> print('Functions:', funcs)
+
+# Get signature of a function
+>>> print(inspect.signature(math.log))
+
+# Confirm the module is cached
+>>> print('math in sys.modules:', 'math' in sys.modules)
+>>> print('Same object:', sys.modules['math'] is math)
+```
+
+Observe that `math.__file__` ends with `.so` or `.pyd` (compiled C extension) on most platforms — meaning `math` is not a pure Python file. Compare with a pure Python module like `random`:
+
+```python
+>>> import random
+>>> print(random.__file__)
+```
+
+Exit the REPL: `exit()`
+
+### Step 9.2 — Build a Multi-Module Package with `__init__.py`
+
+Create a small package named `shapes` with two submodules and a public API defined in `__init__.py`.
+
+```bash
+mkdir shapes
+```
+
+```bash
+nano shapes/__init__.py
+```
+
+```python
+# shapes/__init__.py
+# Public API for the shapes package
+
+from shapes.circle import Circle
+from shapes.rectangle import Rectangle
+
+__all__ = ['Circle', 'Rectangle']
+__version__ = '1.0.0'
+```
+
+```bash
+nano shapes/circle.py
+```
+
+```python
+# shapes/circle.py
+import math
+
+
+class Circle:
+    def __init__(self, radius):
+        if radius <= 0:
+            raise ValueError(f'Radius must be positive, got {radius}')
+        self.radius = radius
+
+    def area(self):
+        return math.pi * self.radius ** 2
+
+    def perimeter(self):
+        return 2 * math.pi * self.radius
+
+    def __repr__(self):
+        return f'Circle(radius={self.radius})'
+```
+
+```bash
+nano shapes/rectangle.py
+```
+
+```python
+# shapes/rectangle.py
+
+
+class Rectangle:
+    def __init__(self, width, height):
+        if width <= 0 or height <= 0:
+            raise ValueError('Dimensions must be positive')
+        self.width = width
+        self.height = height
+
+    def area(self):
+        return self.width * self.height
+
+    def perimeter(self):
+        return 2 * (self.width + self.height)
+
+    def is_square(self):
+        return self.width == self.height
+
+    def __repr__(self):
+        return f'Rectangle(width={self.width}, height={self.height})'
+```
+
+```bash
+nano test_shapes.py
+```
+
+```python
+# test_shapes.py
+from shapes import Circle, Rectangle, __version__
+
+print(f'shapes package version: {__version__}')
+
+c = Circle(5)
+print(f'{c}: area={c.area():.2f}, perimeter={c.perimeter():.2f}')
+
+r = Rectangle(4, 6)
+print(f'{r}: area={r.area()}, perimeter={r.perimeter()}, square={r.is_square()}')
+
+sq = Rectangle(5, 5)
+print(f'{sq}: square={sq.is_square()}')
+
+# Verify ValueError
+try:
+    bad = Circle(-1)
+except ValueError as e:
+    print(f'Caught: {e}')
+```
+
+```bash
+python3 test_shapes.py
+```
+
+### Step 9.3 — Inspect sys.path and Add a Module at Runtime
+
+Understand how Python resolves imports by inspecting and modifying `sys.path` at runtime.
+
+```bash
+nano path_demo.py
+```
+
+```python
+# path_demo.py
+import sys
+import os
+
+print('Current sys.path:')
+for i, p in enumerate(sys.path):
+    print(f'  [{i}] {p!r}')
+
+# Create a temporary directory and module at runtime
+import tempfile
+
+tmpdir = tempfile.mkdtemp()
+module_path = os.path.join(tmpdir, 'greetings.py')
+
+with open(module_path, 'w') as f:
+    f.write("def hello(name): return f'Hello from temp dir, {name}!'\n")
+    f.write("GREETING = 'Hi!'\n")
+
+print(f'\nCreated temp module at: {module_path}')
+
+# Add tmpdir to sys.path so Python can find 'greetings'
+sys.path.insert(0, tmpdir)
+
+import greetings
+print(f'Imported: {greetings.__file__}')
+print(greetings.hello('Alice'))
+print(f'GREETING = {greetings.GREETING!r}')
+
+# Demonstrate that sys.modules caches it
+print(f'\ngreetings in sys.modules: {"greetings" in sys.modules}')
+
+# Clean up
+import shutil
+shutil.rmtree(tmpdir)
+print('Temp directory cleaned up.')
+```
+
+```bash
+python3 path_demo.py
+```
+
+Observe that inserting at index 0 of `sys.path` gives the highest priority — it is checked before the standard library. This is how local modules can shadow standard library names (and why you should never name your files `math.py`, `random.py`, etc.).
+
+---
+
 ## Troubleshooting Guide
 
 **`ModuleNotFoundError: No module named 'geometry'`**

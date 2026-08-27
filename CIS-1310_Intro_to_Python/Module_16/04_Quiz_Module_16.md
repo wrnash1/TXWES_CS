@@ -326,3 +326,334 @@ print(v2.count)
 - *Why B is incorrect:* After `v1.count = 99`, `v1.count` is `99` (instance variable shadows class variable on `v1`). The printed values are `3`, `3`, `3`, `3` — but the description does not capture the state of `v1.count` after the assignment.
 - *Why C is correct:* `Vehicle.count` is incremented to `3` by three constructions. `v1.count` reads the class variable: `3`. `v1.count = 99` creates an instance variable on `v1` — class variable unchanged. `Vehicle.count` is still `3`. `v2.count` has no instance variable, still reads class variable: `3`. The printed output is `3`, `3`, `3`, `3` — and as a side note, `v1.count` is now `99` (shadowed).
 - *Why D is incorrect:* Option D is worded identically to option B — the distinction is the explanatory note in option C that captures what actually happened to `v1.count`. The correct answer is C because it accurately identifies that `v1.count = 99` creates an instance variable (shadowing) while leaving the class variable untouched.
+
+---
+
+### Question 11
+
+What is the output of this code?
+
+```python
+s = 'abcde'
+print(s[1:4])
+print(s[::-1])
+print(s[::2])
+```
+
+- A) `bcd`, `edcba`, `ace`
+- B) `bcd`, `abcde`, `ace`
+- C) `bcde`, `edcba`, `ace`
+- D) `bcd`, `edcba`, `abce`
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- *Why A is correct:* `s[1:4]` extracts indices 1, 2, 3 → `'bcd'`. `s[::-1]` reverses the entire string → `'edcba'`. `s[::2]` takes every second character starting at index 0 → indices 0, 2, 4 → `'ace'`.
+- *Why B is incorrect:* `s[::-1]` reverses the string to `'edcba'`, not `'abcde'`. A step of `−1` reads right to left.
+- *Why C is incorrect:* `s[1:4]` stops before index 4 (exclusive upper bound), returning `'bcd'` not `'bcde'`. Slices follow the half-open interval `[start, stop)`.
+- *Why D is incorrect:* `s[::2]` selects indices 0, 2, 4 — letters `a`, `c`, `e` — which is `'ace'`, not `'abce'`.
+
+---
+
+### Question 12
+
+What is the output of this code?
+
+```python
+def make_adder(n):
+    return lambda x: x + n
+
+add5 = make_adder(5)
+add10 = make_adder(10)
+
+print(add5(3))
+print(add10(3))
+print(add5(add10(1)))
+```
+
+- A) `8`, `13`, `16`
+- B) `8`, `13`, `14`
+- C) `5`, `10`, `16`
+- D) `8`, `13`, `8`
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- *Why A is correct:* `add5(3)` → `3 + 5 = 8`. `add10(3)` → `3 + 10 = 13`. `add5(add10(1))`: inner `add10(1)` → `11`; outer `add5(11)` → `16`. Closures capture `n` at definition time.
+- *Why B is incorrect:* `add5(add10(1))` = `add5(11)` = `16`, not `14`. `add10(1)` evaluates to `11`, not `4`.
+- *Why C is incorrect:* `add5(3)` is `3 + 5 = 8`, not `5`. The lambda adds `x` to the captured `n`, not just returns `n`.
+- *Why D is incorrect:* `add10(3)` is `13` not `8`, and `add5(add10(1))` evaluates the inner call first (`11`) then adds `5` → `16`.
+
+---
+
+### Question 13
+
+What is the output of this code?
+
+```python
+data = {'x': [1, 2, 3], 'y': [4, 5]}
+copy = data.copy()
+copy['x'].append(99)
+copy['z'] = [6]
+
+print(data['x'])
+print('z' in data)
+```
+
+- A) `[1, 2, 3, 99]` then `False`
+- B) `[1, 2, 3]` then `False`
+- C) `[1, 2, 3, 99]` then `True`
+- D) `[1, 2, 3]` then `True`
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- *Why A is correct:* `.copy()` creates a **shallow** copy — a new dict, but the values (the lists) are shared references. `copy['x'].append(99)` mutates the shared list, so `data['x']` also becomes `[1, 2, 3, 99]`. `copy['z'] = [6]` adds a new key only to `copy` — `data` is unaffected, so `'z' in data` is `False`.
+- *Why B is incorrect:* Shallow copy means the list objects inside are shared. Mutating `copy['x']` (via `.append`) also changes `data['x']` because both point to the same list object.
+- *Why C is incorrect:* `copy['z'] = [6]` only modifies `copy`, not `data`. Adding a key to the copy does not affect the original dict.
+- *Why D is incorrect:* Both errors from B and C combined. `.append` does mutate the shared inner list, and adding `'z'` to `copy` does not touch `data`.
+
+---
+
+### Question 14
+
+What is the output of this code?
+
+```python
+class Base:
+    def greet(self):
+        return 'Hello from Base'
+
+class Child(Base):
+    def greet(self):
+        return super().greet() + ' and Child'
+
+class GrandChild(Child):
+    def greet(self):
+        return super().greet() + ' and GrandChild'
+
+print(GrandChild().greet())
+```
+
+- A) `Hello from Base and GrandChild`
+- B) `Hello from Base and Child and GrandChild`
+- C) `Hello from Base`
+- D) `Hello from Base and Child`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `GrandChild.greet()` calls `super().greet()` which is `Child.greet()`. `Child.greet()` itself calls `super().greet()` (i.e., `Base.greet()`). The chain unwinds: Base returns `'Hello from Base'`, Child appends `' and Child'`, GrandChild appends `' and GrandChild'`.
+- *Why B is correct:* MRO for GrandChild is `GrandChild → Child → Base → object`. `GrandChild.greet()` calls `Child.greet()` via `super()`, which calls `Base.greet()` via `super()`. Result builds up: `'Hello from Base'` + `' and Child'` + `' and GrandChild'`.
+- *Why C is incorrect:* Each level extends the parent result. `Child` and `GrandChild` do not discard the parent return — they append to it.
+- *Why D is incorrect:* `GrandChild.greet()` adds `' and GrandChild'` to whatever `Child.greet()` returned, so the final string includes all three levels.
+
+---
+
+### Question 15
+
+What is the output of this code?
+
+```python
+nums = [4, 2, 7, 1, 9, 3]
+nums.sort()
+print(nums)
+result = sorted(nums, key=lambda x: -x)
+print(result)
+print(nums)
+```
+
+- A) `[1, 2, 3, 4, 7, 9]`, `[9, 7, 4, 3, 2, 1]`, `[1, 2, 3, 4, 7, 9]`
+- B) `[1, 2, 3, 4, 7, 9]`, `[9, 7, 4, 3, 2, 1]`, `[9, 7, 4, 3, 2, 1]`
+- C) `[4, 2, 7, 1, 9, 3]`, `[9, 7, 4, 3, 2, 1]`, `[4, 2, 7, 1, 9, 3]`
+- D) `[1, 2, 3, 4, 7, 9]`, `[1, 2, 3, 4, 7, 9]`, `[1, 2, 3, 4, 7, 9]`
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- *Why A is correct:* `nums.sort()` sorts in place → `[1, 2, 3, 4, 7, 9]`. `sorted(nums, key=lambda x: -x)` creates a new list sorted by negative value (descending) → `[9, 7, 4, 3, 2, 1]`. `sorted()` never modifies the original — `nums` is still `[1, 2, 3, 4, 7, 9]`.
+- *Why B is incorrect:* `sorted()` returns a new list and does not mutate `nums`. The third print still shows the ascending-sorted `nums`, not the descending `result`.
+- *Why C is incorrect:* `nums.sort()` modifies `nums` in place — the first print shows the sorted list, not the original order.
+- *Why D is incorrect:* `key=lambda x: -x` negates each value before comparison, reversing the sort order. The result is descending `[9, 7, 4, 3, 2, 1]`, not ascending.
+
+---
+
+### Question 16
+
+What is the output of this code?
+
+```python
+def count_vowels(text):
+    vowels = set('aeiouAEIOU')
+    return sum(1 for ch in text if ch in vowels)
+
+words = ['Python', 'is', 'great']
+results = list(map(lambda w: (w, count_vowels(w)), words))
+print(results)
+```
+
+- A) `[('Python', 1), ('is', 1), ('great', 2)]`
+- B) `[('Python', 2), ('is', 1), ('great', 2)]`
+- C) `[('Python', 1), ('is', 2), ('great', 2)]`
+- D) `[1, 1, 2]`
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- *Why A is correct:* `count_vowels('Python')` → `'o'` is the only vowel (1). `count_vowels('is')` → `'i'` is the only vowel (1). `count_vowels('great')` → `'e'` and `'a'` (2). `map` with the lambda produces a tuple `(word, count)` for each. `list(map(...))` collects them.
+- *Why B is incorrect:* `'Python'` contains only one vowel: `'o'`. The `'y'` is not in the vowel set `'aeiouAEIOU'`, so the count is 1, not 2.
+- *Why C is incorrect:* `'is'` contains only `'i'` — one vowel. The count is 1, not 2.
+- *Why D is incorrect:* The `map` lambda returns a tuple `(word, count)` for each word, not just the integer count. The result is a list of tuples.
+
+---
+
+### Question 17
+
+What is the output of this code?
+
+```python
+class Stack:
+    def __init__(self):
+        self._items = []
+
+    def push(self, item):
+        self._items.append(item)
+        return self
+
+    def pop(self):
+        return self._items.pop()
+
+    def __len__(self):
+        return len(self._items)
+
+s = Stack()
+s.push(1).push(2).push(3)
+print(len(s))
+print(s.pop())
+print(len(s))
+```
+
+- A) `3`, `3`, `2`
+- B) `3`, `1`, `2`
+- C) `1`, `3`, `0`
+- D) `TypeError` — `push` returns `self`, not `Stack`
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- *Why A is correct:* `push` appends the item and returns `self` for chaining. After `s.push(1).push(2).push(3)`, `_items = [1, 2, 3]`. `len(s)` calls `__len__` → `3`. `s.pop()` calls `list.pop()` with no argument, which removes and returns the **last** element → `3`. After pop, `_items = [1, 2]`, so `len(s)` → `2`.
+- *Why B is incorrect:* `list.pop()` with no argument removes the **last** item, not the first. The last item pushed was `3`, so `s.pop()` returns `3`, not `1`.
+- *Why C is incorrect:* Three items were pushed, so `len(s)` starts at `3`. The chain `push(1).push(2).push(3)` completes all three pushes before any print.
+- *Why D is incorrect:* Returning `self` from a method is a valid Python pattern enabling method chaining. `self` is the same `Stack` instance — there is no `TypeError`.
+
+---
+
+### Question 18
+
+What is the output of this code?
+
+```python
+words = ['banana', 'apple', 'cherry', 'date', 'elderberry']
+result = sorted(words, key=lambda w: (len(w), w))
+print(result[0])
+print(result[-1])
+print(len(result))
+```
+
+- A) `'apple'`, `'elderberry'`, `5`
+- B) `'date'`, `'elderberry'`, `5`
+- C) `'apple'`, `'banana'`, `5`
+- D) `'date'`, `'cherry'`, `5`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Sorting by `(len(w), w)` orders primarily by length, then alphabetically within equal lengths. `'apple'` has length 5. `'date'` has length 4, which is shorter — so `'date'` sorts first, not `'apple'`.
+- *Why B is correct:* Lengths: `date`=4, `apple`=5, `banana`=6, `cherry`=6, `elderberry`=10. Primary sort by length puts `'date'` first (shortest). For the two length-6 words (`banana` and `cherry`), the secondary alphabetical sort places `banana` before `cherry`. The sorted order is `['date', 'apple', 'banana', 'cherry', 'elderberry']`. `result[0]` = `'date'`, `result[-1]` = `'elderberry'`, `len(result)` = `5`.
+- *Why C is incorrect:* `result[-1]` is the last element after sorting by `(length, alpha)`. `'elderberry'` (length 10) is the longest word and sorts last, not `'banana'`.
+- *Why D is incorrect:* `result[-1]` is `'elderberry'` (length 10), not `'cherry'` (length 6). Longer words sort after shorter words with this key.
+
+---
+
+### Question 19
+
+What is the output of this code?
+
+```python
+def mystery(lst):
+    if len(lst) <= 1:
+        return lst
+    pivot = lst[0]
+    less = [x for x in lst[1:] if x <= pivot]
+    greater = [x for x in lst[1:] if x > pivot]
+    return mystery(less) + [pivot] + mystery(greater)
+
+print(mystery([3, 6, 1, 8, 2, 9, 4]))
+```
+
+- A) `[3, 6, 1, 8, 2, 9, 4]`
+- B) `[1, 2, 3, 4, 6, 8, 9]`
+- C) `[9, 8, 6, 4, 3, 2, 1]`
+- D) `[1, 3, 2, 4, 6, 8, 9]`
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `mystery` is a recursive function that partitions around a pivot and recombines — this is quicksort. The function returns a sorted list, not the original order.
+- *Why B is correct:* This is a recursive quicksort implementation. `pivot = 3`. `less = [1, 2]` (elements ≤ 3 from the rest), `greater = [6, 8, 9, 4]` (elements > 3). Recursion sorts each partition; the final result is the fully sorted list `[1, 2, 3, 4, 6, 8, 9]`.
+- *Why C is incorrect:* The function sorts ascending. Elements `<= pivot` go to `less` (placed first), which produces ascending order, not descending.
+- *Why D is incorrect:* `[1, 3, 2, 4, 6, 8, 9]` is not fully sorted — `2` appears after `3`. The recursion fully sorts all partitions, so every element ends up in ascending position.
+
+---
+
+### Question 20
+
+What is the output of this code?
+
+```python
+class Formatter:
+    prefix = '>> '
+
+    def __init__(self, text):
+        self.text = text
+
+    def __str__(self):
+        return f'{self.prefix}{self.text}'
+
+    def __repr__(self):
+        return f'Formatter({self.text!r})'
+
+    @classmethod
+    def from_upper(cls, text):
+        return cls(text.upper())
+
+f1 = Formatter('hello')
+f2 = Formatter.from_upper('world')
+items = [f1, f2]
+print(str(f1))
+print(repr(f2))
+print(items)
+```
+
+- A) `>> hello`, `Formatter('WORLD')`, `[Formatter('hello'), Formatter('WORLD')]`
+- B) `>> hello`, `Formatter('WORLD')`, `[>> hello, >> WORLD]`
+- C) `hello`, `Formatter('world')`, `[Formatter('hello'), Formatter('world')]`
+- D) `>> hello`, `>> WORLD`, `[>> hello, >> WORLD]`
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- *Why A is correct:* `str(f1)` calls `__str__` → `'>> hello'`. `repr(f2)` calls `__repr__` → `'Formatter(\'WORLD\')'`. Printing a list uses `repr()` for each element (not `str()`), so `items` displays as `[Formatter('hello'), Formatter('WORLD')]`.
+- *Why B is incorrect:* Printing a list calls `repr()` on each element, not `str()`. The list display uses `__repr__`, not `__str__`, so the `>>` prefixes do not appear in the list output.
+- *Why C is incorrect:* `from_upper` converts the text to uppercase: `'world'.upper()` → `'WORLD'`. `f2.text` is `'WORLD'`, so `repr(f2)` shows `Formatter('WORLD')`, not `Formatter('world')`.
+- *Why D is incorrect:* `repr(f2)` explicitly calls `__repr__`, which returns `'Formatter(\'WORLD\')'`. Only `__str__` returns the `>>` prefixed format. The two dunder methods produce different output.

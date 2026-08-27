@@ -248,4 +248,20 @@ Work through each item before proceeding to the lab.
 
 ---
 
+## 9. Supplemental Resources
+
+**1. HashiCorp Terraform Introduction**
+<https://developer.hashicorp.com/terraform/intro>
+The official introduction to Terraform covering the core IaC concepts, declarative model, and the Write-Plan-Apply workflow. This is the primary reference for Domain 1 of the Terraform Associate 003 exam.
+
+**2. Terraform Language Documentation — Syntax Overview**
+<https://developer.hashicorp.com/terraform/language/syntax/configuration>
+Covers HCL block syntax, argument syntax, identifiers, and comments. Essential reference for understanding how `.tf` files are structured before writing your first configuration.
+
+**3. Terraform State Documentation**
+<https://developer.hashicorp.com/terraform/language/state>
+Explains the purpose of the state file, what it contains, the risks of sensitive data in state, and why remote backends are preferred for team use. Directly maps to Module 01 quiz questions on `terraform.tfstate`.
+
+---
+
 Module 01 Reading Guide — CIS-4337 Infrastructure Automation — Texas Wesleyan University

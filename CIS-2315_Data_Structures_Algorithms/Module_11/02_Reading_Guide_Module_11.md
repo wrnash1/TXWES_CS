@@ -187,6 +187,27 @@ The answer is the maximum distance across all nodes — the last node to receive
 
 ---
 
+## 9. Supplemental Resources
+
+The following free, openly licensed resources reinforce the concepts in this module. All are zero-cost and require no account to access.
+
+1. **VisuAlgo — Dijkstra's Algorithm Visualization** — [https://visualgo.net/en/sssp](https://visualgo.net/en/sssp)
+   Animated step-by-step visualization of Dijkstra's algorithm on a weighted graph, showing the priority queue state, distance updates, and the sequence of node extractions. Select "Dijkstra" mode.
+
+2. **Khan Academy — Dijkstra's Algorithm** — [https://www.khanacademy.org/computing/computer-science/algorithms/graph-search/a/dijkstras-algorithm](https://www.khanacademy.org/computing/computer-science/algorithms/graph-search/a/dijkstras-algorithm)
+   Free article covering the algorithm step by step with a worked example, pseudocode, and explanation of the greedy proof of correctness.
+
+3. **OpenDSA — Shortest Path Chapter** — [https://opendsa-server.cs.vt.edu/ODSA/Books/Everything/html/Dijkstra.html](https://opendsa-server.cs.vt.edu/ODSA/Books/Everything/html/Dijkstra.html)
+   Free interactive OER textbook with embedded Dijkstra exercises, complexity analysis, and a comparison with Bellman-Ford for negative-weight graphs.
+
+4. **NeetCode — Dijkstra's Algorithm (YouTube)** — [https://www.youtube.com/watch?v=XEb7_z5dG3c](https://www.youtube.com/watch?v=XEb7_z5dG3c)
+   Free video walkthrough of Dijkstra's algorithm on the Network Delay Time problem (LeetCode #743), with step-by-step heap trace and code implementation in Python.
+
+5. **MIT OCW 6.006 — Dijkstra's Algorithm Lecture** — [https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/](https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/)
+   MIT lecture notes and video on Dijkstra's algorithm including the formal proof of correctness (why greedy works), the role of non-negative edge weights, and the time complexity with a binary heap vs Fibonacci heap.
+
+---
+
 ## 8. Study Checklist
 
 - [ ] Watch the Module 11 video lecture by Professor Nash.

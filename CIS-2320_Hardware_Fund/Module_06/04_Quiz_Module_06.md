@@ -195,3 +195,193 @@ Distractor Analysis:
 - Why A is incorrect: "BOOTMGR is missing" is a storage or boot configuration error (corrupted boot partition, wrong boot device selected in BIOS). It is a software or drive issue, not a PSU symptom.
 - Why C is incorrect: A DRIVER_IRQL_NOT_LESS_OR_EQUAL blue screen is a driver compatibility or memory access violation issue. This points to a software (driver) problem following a recent driver update, not a PSU failure.
 - Why D is incorrect: A network connectivity failure after installing a new network adapter points to a driver, configuration, or hardware compatibility issue with the NIC — not a PSU power delivery failure.
+
+---
+
+### Question 11
+
+What does the 80 Plus Gold certification guarantee about a PSU?
+
+- A) The PSU provides at least 80W of clean power per output rail without voltage ripple
+- B) The PSU is at least 87–90% efficient at 20%, 50%, and 100% of rated load
+- C) The PSU will operate for at least 80,000 hours before failure under standard load conditions
+- D) The PSU output voltages remain within 80% of rated values under full load
+
+Correct Answer: B — 80 Plus Gold requires 87% efficiency at 20% load, 90% at 50% load, and 87% at 100% load. At 90% efficiency, a 650W DC output system draws ~722W from the AC wall outlet; the remaining ~72W is wasted as heat inside the PSU.
+
+Distractor Analysis:
+
+- Why A is incorrect: The "80" in 80 Plus refers to efficiency percentage, not wattage per rail. Voltage ripple is a separate specification not covered by the 80 Plus rating.
+- Why C is incorrect: 80 Plus certification has no bearing on the PSU rated lifespan in hours. MTBF is a separate manufacturer specification.
+- Why D is incorrect: Output voltage regulation is a separate ATX specification. The 80 Plus rating is purely an efficiency measurement.
+
+---
+
+### Question 12
+
+A semi-modular PSU differs from a fully modular PSU in which way?
+
+- A) A semi-modular PSU has fixed efficiency; a fully modular PSU efficiency changes based on which cables are attached
+- B) A semi-modular PSU has some cables permanently attached while other cables are detachable; a fully modular PSU has all cables detachable
+- C) A semi-modular PSU can only power one GPU; a fully modular PSU supports multi-GPU configurations
+- D) A semi-modular PSU has a semi-passive fan that spins only at 50% load; a fully modular PSU fan runs at all times
+
+Correct Answer: B — Semi-modular PSUs permanently attach the most commonly used cables (24-pin ATX and 4/8-pin CPU power) since these are always required, while optional cables (SATA, PCIe, Molex) remain modular/detachable.
+
+Distractor Analysis:
+
+- Why A is incorrect: Modularity has no effect on efficiency ratings. Both PSU types of the same efficiency tier will have the same certification regardless of cable design.
+- Why C is incorrect: GPU support is determined by available PCIe power connectors and total wattage, not by whether the PSU is semi or fully modular.
+- Why D is incorrect: Semi-passive fan behavior is a separate feature found on some premium PSUs. It is independent of modular cable design.
+
+---
+
+### Question 13
+
+A PSU is rated at 80 Plus Bronze (85% efficiency at 50% load). A system draws 400W DC. How many watts does the PSU draw from the AC wall outlet?
+
+- A) 400W — efficiency ratings only apply to the output side
+- B) 340W — the PSU uses 85% of its rated capacity
+- C) 471W — AC input equals DC output divided by the efficiency ratio
+- D) 460W — the 85% efficiency means 15% is added as a flat overhead
+
+Correct Answer: C — Efficiency = DC Output / AC Input. Rearranging: AC Input = 400W / 0.85 = 470.6W ≈ 471W. The ~71W difference is dissipated as heat inside the PSU.
+
+Distractor Analysis:
+
+- Why A is incorrect: Efficiency means the input is greater than the output. A 100% efficient PSU would draw exactly 400W; at 85% efficiency the wall draw must be higher.
+- Why B is incorrect: 340W = 400W × 0.85 — this calculates 85% of the output, implying the PSU draws less from the wall than it delivers, which is thermodynamically impossible.
+- Why D is incorrect: 400W × 1.15 = 460W, and this multiplication formula is an approximation that diverges from the correct division formula. The correct method is to divide by the efficiency ratio.
+
+---
+
+### Question 14
+
+Which PSU protection feature prevents damage when an output voltage rises significantly above its rated value?
+
+- A) OCP (Over Current Protection)
+- B) OVP (Over Voltage Protection)
+- C) OTP (Over Temperature Protection)
+- D) SCP (Short Circuit Protection)
+
+Correct Answer: B — OVP monitors each output rail and triggers a shutdown if any rail exceeds its rated voltage by more than the specified tolerance. A failed voltage regulator inside the PSU can spike a rail, and without OVP that overvoltage would destroy motherboard components, CPUs, and drives.
+
+Distractor Analysis:
+
+- Why A is incorrect: OCP shuts the PSU down if current draw on a rail exceeds rated amperage. This protects against overloads, not overvoltage conditions.
+- Why C is incorrect: OTP shuts the PSU down when internal temperature exceeds a safe threshold, not when output voltage rises above rated values.
+- Why D is incorrect: SCP detects a short circuit (low resistance, high current event) and shuts down immediately. This is a current event, not a voltage rise event.
+
+---
+
+### Question 15
+
+A CPU runs at 92°C under sustained load using the stock cooler. The case has filtered front intake fans but no rear exhaust fans. What is the MOST likely cause?
+
+- A) The stock cooler is not rated for the CPU TDP at any ambient temperature
+- B) Hot air expelled by the CPU cooler fan has no escape path and recirculates inside the sealed case
+- C) The front intake fans are creating positive pressure that compresses air and raises its temperature
+- D) The case filters are blocking all airflow to the CPU
+
+Correct Answer: B — Without exhaust fans, hot air heated by the CPU and GPU accumulates inside the case. The CPU fan moves heat off the heat sink, but that hot air stays trapped. Adding a rear exhaust fan creates a front-to-rear airflow path that removes heat from the case.
+
+Distractor Analysis:
+
+- Why A is incorrect: Stock coolers are rated for the CPU TDP under normal airflow conditions. The problem here is case airflow design, not the cooler intrinsic rating.
+- Why C is incorrect: Positive pressure does not compress air in a case to a degree that raises temperature through compression. Cases are not sealed pressure vessels.
+- Why D is incorrect: Filters reduce airflow somewhat but do not completely block it when fans are operating. The primary issue is the absence of any exhaust path.
+
+---
+
+### Question 16
+
+A technician performs an ATX bench test by shorting pins 16 and ground on the 24-pin connector. The PSU fan spins and all voltages measure correctly. What does this indicate?
+
+- A) The PSU is confirmed faulty and must be replaced
+- B) The PSU is functioning normally; the fault is elsewhere — motherboard, power switch, or front panel header
+- C) The PSU will only work in bench-test mode
+- D) The PSU OCP is triggered by the motherboard and must be reset
+
+Correct Answer: B — The ATX bench test simulates the signal the motherboard sends to turn on the PSU. If the PSU powers on with correct output voltages when this signal is applied directly, the PSU is working. The fault is upstream: the power button, motherboard, or front panel header wiring.
+
+Distractor Analysis:
+
+- Why A is incorrect: A PSU that powers on correctly with correct voltage outputs during the bench test is not faulty. The test specifically isolates the PSU to confirm it operates correctly.
+- Why C is incorrect: There is no "bench-test mode." The PSU operates via the same PS_ON signal in both scenarios.
+- Why D is incorrect: OCP triggers when a downstream component draws too much current. It does not block power button signaling.
+
+---
+
+### Question 17
+
+How do you identify the air intake versus exhaust side of a case fan using only the fan frame?
+
+- A) The side with the fan blade hub facing outward is always the intake side
+- B) The arrow printed on the fan frame points in the direction air moves through the fan
+- C) The side with visible fan blade edges is always the exhaust side
+- D) The label on the fan only shows the model number; determine airflow by spinning the fan manually
+
+Correct Answer: B — The airflow direction arrow on the fan frame is the reliable field method. If the arrow points toward the case interior, the fan is an intake; if it points outward, the fan is an exhaust.
+
+Distractor Analysis:
+
+- Why A is incorrect: The orientation of the hub depends on which side you view and does not consistently indicate intake vs. exhaust across all fan designs.
+- Why C is incorrect: Determining airflow from blade edge appearance is unreliable and varies by fan design. The printed arrow is the definitive indicator.
+- Why D is incorrect: Manually spinning a fan creates a weak breeze that is difficult to reliably interpret for direction.
+
+---
+
+### Question 18
+
+A customer reports a high-pitched whining noise that increases with system load, coming from inside the case. What is the MOST likely source?
+
+- A) A failing CPU fan bearing producing resonance under load
+- B) Coil whine from PSU or GPU VRM inductors vibrating at high frequency under varying electrical load
+- C) The optical drive spinning up to read a disc
+- D) The HDD read/write head seeking rapidly due to fragmented files
+
+Correct Answer: B — Coil whine occurs when inductors in a PSU or VRM vibrate at audible frequencies under varying electrical load. The sound scales with load because higher current creates stronger mechanical vibration in the coil windings.
+
+Distractor Analysis:
+
+- Why A is incorrect: A failing fan bearing produces a low-frequency grinding or rattling sound, not a high-pitched whine. Fan bearing noise tends to be constant rather than load-dependent.
+- Why C is incorrect: Optical drive spin-up produces a brief mechanical whirring sound, not a continuous high-pitched whine that scales with CPU/GPU load.
+- Why D is incorrect: HDD head seeking produces a clicking or clunking sound, not a high-pitched electrical whine.
+
+---
+
+### Question 19
+
+A technician replaces a failed 750W PSU with a 450W unit. The system powers on but immediately shuts off. What is the MOST likely cause?
+
+- A) The 450W PSU firmware is incompatible with the motherboard
+- B) The 450W PSU is insufficient for the system power requirements and its OCP/OPP protection triggers at startup
+- C) The 24-pin ATX connector on the replacement PSU is reversing polarity on the motherboard
+- D) The replacement PSU efficiency rating is too low, causing it to overheat within seconds
+
+Correct Answer: B — Replacing a 750W PSU with a 450W unit in a system that required 750W causes the replacement PSU OCP or OPP (Over Power Protection) to trigger immediately when the system draws more current than the PSU can safely supply.
+
+Distractor Analysis:
+
+- Why A is incorrect: PSUs do not have motherboard-specific firmware requiring compatibility initialization. They supply regulated DC voltages per ATX standards.
+- Why C is incorrect: The 24-pin ATX connector is keyed and can only be inserted in one orientation. Polarity reversal is physically prevented by the connector design.
+- Why D is incorrect: A lower efficiency rating generates more heat over time, not an instant shutdown. Efficiency affects heat output, not instantaneous power delivery capability.
+
+---
+
+### Question 20
+
+Which PSU protection feature most directly prevents damage to a motherboard if a GPU PCIe power connector develops an internal short circuit?
+
+- A) OVP (Over Voltage Protection)
+- B) OTP (Over Temperature Protection)
+- C) SCP (Short Circuit Protection)
+- D) NLO (No Load Operation) protection
+
+Correct Answer: C — SCP monitors output rails for near-zero resistance conditions indicating a short circuit. When a PCIe connector shorts, resistance drops and current surges. SCP immediately shuts the PSU down, preventing overcurrent from flowing through the motherboard and PCIe slot.
+
+Distractor Analysis:
+
+- Why A is incorrect: OVP triggers when voltage rises above rated values. A short circuit causes voltage to collapse, not rise. OVP would not trigger during a short circuit event.
+- Why B is incorrect: OTP triggers when internal temperature exceeds a threshold — a thermal response that takes time to develop. It does not provide immediate protection against a sudden high-current short.
+- Why D is incorrect: NLO protection applies when a PSU is powered on with no load attached. It is not relevant to a short circuit protection scenario.

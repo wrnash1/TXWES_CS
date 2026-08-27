@@ -311,3 +311,19 @@ Work through each item before taking the Module 09 quiz.
 - Cisco CCNA certification training information: cisco.com/c/en/us/training-events/training-certifications
 - Free CCNA study notes and practice questions: professormesser.com
 - Cisco IOS ACL configuration guide: cisco.com/c/en/us/support/docs/security/ios-firewall/23602-confaccesslists.html
+
+---
+
+## 11. Supplemental Resources
+
+The following open educational resources extend ACL concepts to CCNA exam depth. All resources are freely available.
+
+1. **Cisco Networking Academy — CCNA: Enterprise Networking, Security, and Automation, Chapter 4 (ACL Concepts)** (skillsforall.com): This free chapter covers standard and extended ACL configuration, wildcard mask calculation, ACL placement rules, and the named ACL line-editing workflow with interactive Packet Tracer activities.
+
+2. **Jeremy's IT Lab — ACLs (Days 34–35)** (youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ): Two video lessons covering standard ACLs, extended ACLs, named ACL syntax, placement rules, VTY `access-class`, and IPv6 ACL differences. Jeremy's ACL series includes exam-style scenario walkthroughs and wildcard mask drills.
+
+3. **Cisco Learning Network — ACL Study Group** (learningnetwork.cisco.com): Community discussion threads covering ACL placement traps, implicit deny behavior, wildcard mask edge cases, and CCNA exam scenario questions. The ACL troubleshooting threads are particularly useful for understanding common exam-style misconfigurations.
+
+4. **Cisco IOS Security Configuration Guide — Access Control Lists** (cisco.com): Cisco's official security configuration guide covering extended ACL syntax for all protocol types, reflexive ACLs, time-based ACLs, and `show access-lists` counter interpretation with complete CLI examples.
+
+5. **PacketLife.net — ACL Cheat Sheet** (packetlife.net/media/library/20/access_control_lists.pdf): A freely available one-page reference card covering standard and extended ACL syntax, wildcard mask quick calculations, ACL placement guidelines, and common protocol/port numbers tested on the CCNA exam.

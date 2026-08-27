@@ -358,3 +358,65 @@ Submit a PDF containing:
 | Part 5: Auth Proxy installed and connection verified | 20 |
 | Part 6 (optional): Failover completed with timing recorded | 10 bonus |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Binary Log Analysis and PITR Simulation
+
+Enable binary logging and simulate a point-in-time recovery scenario.
+
+```bash
+# Enable binary log on Cloud SQL via gcloud
+gcloud sql instances patch $INSTANCE_NAME \
+  --database-flags=binlog_expire_logs_seconds=86400 \
+  --project=$PROJECT_ID
+```
+
+Then complete the following steps:
+
+1. Connect to the instance and record the current binary log position: `SHOW MASTER STATUS;` — note the `File` and `Position` values. Insert 10 rows into the `products` table and record the timestamp.
+2. Simulate data loss by running `DELETE FROM labdb.products WHERE product_id > 5;` and record the exact timestamp.
+3. Use `gcloud sql instances restore-backup` with `--restore-database-name` to restore to a point 30 seconds before the delete. After restore, verify the deleted rows are present and write a paragraph explaining the role of the binary log in the recovery.
+
+### Challenge 2: Diagnosing and Reducing Replication Lag
+
+Simulate replication lag and apply tuning to reduce it.
+
+First, generate a heavy write workload on the primary to create lag on the replica:
+
+```sql
+-- Run on primary: insert 50,000 rows in a single transaction
+START TRANSACTION;
+INSERT INTO products (product_name, price, category)
+SELECT CONCAT('BulkItem_', n),
+       ROUND(RAND() * 100, 2),
+       'bulk'
+FROM (SELECT a.N + b.N * 100 + 1 AS n
+      FROM (SELECT 0 AS N UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4
+            UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) a
+      CROSS JOIN
+           (SELECT 0 AS N UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4
+            UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) b
+      LIMIT 50000) nums;
+COMMIT;
+```
+
+Then complete the following steps:
+
+1. Immediately after the commit, connect to the replica and run `SHOW REPLICA STATUS\G` every 5 seconds for 60 seconds. Record the `Seconds_Behind_Source` values and plot the trend (a simple table of timestamp and lag value is sufficient).
+2. Apply the following replica flag to enable parallel replication threads, then repeat the bulk insert and lag measurement to observe the difference:
+
+```bash
+gcloud sql instances patch lab-mysql-replica \
+  --database-flags=replica_parallel_workers=4 \
+  --project=$PROJECT_ID
+```
+
+3. Compare the lag reduction between single-threaded and 4-worker parallel replication and write two sentences explaining why parallel replication reduces lag for workloads with independent transactions.
+
+### Reflection Questions
+
+1. In Challenge 1, if the binary log was not enabled before the accidental DELETE, what is the earliest point in time you could restore to, and what data loss would result compared to a full PITR recovery?
+2. In Challenge 2, parallel replication cannot eliminate lag caused by a single large transaction (like the 50,000-row INSERT in one COMMIT). Explain why — specifically what property of a single transaction prevents it from being applied in parallel.

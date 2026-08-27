@@ -204,3 +204,183 @@ Which of the following statements about the curse of dimensionality is correct?
 - *Why A is incorrect:* More features do not always improve accuracy. Irrelevant features add noise, and high dimensionality increases sparsity and overfitting risk.
 - *Why C is incorrect:* The curse of dimensionality affects all machine learning approaches. Distance-based classical methods like KNN are particularly vulnerable.
 - *Why D is incorrect:* The number of training examples needed grows exponentially with dimensionality. Practically, adding enough examples to fully counter high dimensionality is infeasible.
+
+---
+
+### Question 11 (5 points)
+
+A data scientist runs DBSCAN on a geographic dataset of store locations and finds that some points are labeled as noise (label = -1). What does the noise label indicate in DBSCAN?
+
+- A) The points were incorrectly loaded and should be removed from the dataset.
+- B) The points do not belong to any dense region and cannot be assigned to any cluster.
+- C) The points are the cluster centroids and will be used for future assignment of new data.
+- D) The points belong to the largest cluster but are flagged as lower-confidence members.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* In DBSCAN, a noise point (also called an outlier) is a point that does not have enough neighbors within the epsilon radius to qualify as a core point and is not within epsilon of any core point. It belongs to no cluster and is assigned label -1.
+  - *Why A is incorrect:* Noise in DBSCAN is a meaningful classification result, not a data error. These points may represent genuine outliers with business significance (e.g., unusual store locations).
+  - *Why C is incorrect:* DBSCAN does not use centroids. That concept belongs to K-means. DBSCAN defines clusters through density reachability.
+  - *Why D is incorrect:* DBSCAN does not assign confidence levels to cluster members. Points either belong to a cluster or are labeled noise.
+
+---
+
+### Question 12 (5 points)
+
+Which of the following scenarios is MOST appropriate for hierarchical clustering rather than K-means?
+
+- A) Segmenting 2 million e-commerce customers into exactly 5 known marketing segments as quickly as possible.
+- B) Exploring the natural grouping structure of 200 biological specimens where the number of groups is unknown and a tree-based visualization of relationships is needed.
+- C) Partitioning sensor readings from 500,000 IoT devices into 3 operational categories.
+- D) Reducing the dimensionality of 300 gene expression features before a classification task.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Hierarchical clustering does not require specifying K in advance and produces a dendrogram — a tree-based visualization of cluster relationships at multiple levels of granularity. This is ideal for exploratory biological analysis with unknown group structure.
+  - *Why A is incorrect:* K-means is faster and more scalable for large datasets when the desired number of clusters is known. Hierarchical clustering on 2 million records would be computationally prohibitive.
+  - *Why C is incorrect:* Large-scale partitioning into a fixed number of categories with speed as a priority favors K-means.
+  - *Why D is incorrect:* Dimensionality reduction is the purpose of PCA, not clustering algorithms.
+
+---
+
+### Question 13 (5 points)
+
+A machine learning team applies PCA to a 50-feature dataset and retains components explaining 95% of variance. They then train a logistic regression model on the reduced features. What is the PRIMARY benefit of this PCA preprocessing step?
+
+- A) PCA guarantees the logistic regression model will achieve higher accuracy than without preprocessing.
+- B) PCA removes correlated and low-variance features, reducing overfitting risk and computational cost while retaining most information.
+- C) PCA converts the numerical features into categorical variables, making them compatible with logistic regression.
+- D) PCA ensures that the logistic regression model does not require a train-test split.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* PCA reduces correlated and low-variance dimensions into a compact set of uncorrelated components. This lowers the risk of overfitting from irrelevant features and speeds up training while retaining 95% of the original information.
+  - *Why A is incorrect:* PCA does not guarantee higher accuracy. In some cases the 5% dropped variance contains signal, and PCA may slightly reduce accuracy. The primary benefit is efficiency and generalization, not guaranteed accuracy improvement.
+  - *Why C is incorrect:* PCA transforms numerical features into different numerical features (principal components). It does not convert numerical to categorical data.
+  - *Why D is incorrect:* PCA has no effect on the requirement for a train-test split. Good evaluation practice requires a split regardless of preprocessing.
+
+---
+
+### Question 14 (5 points)
+
+What does "inertia" (within-cluster sum of squares) measure in K-means, and what does a lower inertia value indicate?
+
+- A) Inertia measures the distance between cluster centroids; lower inertia means clusters are farther apart.
+- B) Inertia measures total squared distances from each point to its assigned centroid; lower inertia means points are closer to their centroids and clusters are more compact.
+- C) Inertia measures the total number of iterations required for convergence; lower inertia means faster training.
+- D) Inertia measures model accuracy on labeled validation data; lower inertia means better predictions.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Inertia is the sum of squared Euclidean distances from each data point to the centroid of its assigned cluster, summed across all clusters. Lower inertia indicates more compact, tightly grouped clusters.
+  - *Why A is incorrect:* Inter-cluster distances are measured by metrics like the Davies-Bouldin index, not inertia. Inertia measures within-cluster distances only.
+  - *Why C is incorrect:* Inertia has nothing to do with training speed or iteration count. It is a cluster quality measure, not a computational efficiency measure.
+  - *Why D is incorrect:* K-means is unsupervised. There is no labeled validation data, and inertia measures geometric compactness, not prediction accuracy.
+
+---
+
+### Question 15 (5 points)
+
+An analyst wants to reduce a high-dimensional genomics dataset to two dimensions specifically to create a scatter plot that reveals how data points group visually — with no intention of using the result as input to another algorithm. Which technique is MOST appropriate?
+
+- A) PCA
+- B) K-means
+- C) t-SNE
+- D) DBSCAN
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - *Why C is correct:* t-SNE is specifically designed for high-dimensional data visualization. It preserves local neighborhood structure and produces 2D plots that reveal cluster patterns far more clearly than PCA for complex datasets. It is the correct choice when visualization — not downstream modeling — is the goal.
+  - *Why A is incorrect:* PCA can reduce to 2D but preserves global variance structure, not local neighborhood relationships. For visualization of cluster patterns, t-SNE typically produces more interpretable plots.
+  - *Why B is incorrect:* K-means performs clustering (group assignment), not dimensionality reduction for visualization.
+  - *Why D is incorrect:* DBSCAN performs density-based clustering, not dimensionality reduction. It produces cluster labels, not a 2D visualization.
+
+---
+
+### Question 16 (5 points)
+
+A data scientist is comparing the quality of three different K-means solutions (K=3, K=5, K=7) using the silhouette score. The scores are: K=3: 0.68, K=5: 0.71, K=7: 0.52. Which K should be selected and why?
+
+- A) K=3, because fewer clusters always produce higher-quality results.
+- B) K=7, because more clusters always explain more of the data's structure.
+- C) K=5, because it has the highest silhouette score, indicating the best balance of cohesion and separation.
+- D) K=3, because the WCSS is lowest for the smallest K value.
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - *Why C is correct:* The silhouette score measures intra-cluster cohesion relative to inter-cluster separation. K=5 achieves the highest score (0.71), indicating that with 5 clusters, data points are most tightly grouped within their clusters relative to neighboring clusters.
+  - *Why A is incorrect:* Fewer clusters do not always produce better silhouette scores. K=3 (0.68) scores lower than K=5 (0.71), disproving this claim.
+  - *Why B is incorrect:* More clusters do not guarantee better cluster quality. K=7 (0.52) performs worse than K=5, showing that over-segmentation reduces cluster coherence.
+  - *Why D is incorrect:* WCSS always decreases with more clusters, so K=3 would not have the lowest WCSS. Silhouette score — not WCSS alone — is used to compare K values here.
+
+---
+
+### Question 17 (5 points)
+
+Which of the following best describes the purpose of the Azure Anomaly Detector cognitive service?
+
+- A) It trains custom clustering models on structured datasets uploaded to Azure.
+- B) It applies pre-built time series anomaly detection to identify unusual patterns in sequential data without requiring custom model training.
+- C) It performs principal component analysis on tabular datasets to reduce feature dimensionality.
+- D) It builds classification models to distinguish normal from anomalous data using labeled training examples.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* Azure Anomaly Detector is a prebuilt Cognitive Service that detects anomalies in time series data through a REST API. No custom model training is required. It is used for monitoring metrics, KPIs, and sequential sensor readings.
+  - *Why A is incorrect:* Custom clustering model training is the domain of Azure Machine Learning, not a Cognitive Service. Azure Anomaly Detector is a prebuilt API.
+  - *Why C is incorrect:* PCA is a statistical algorithm implemented in ML libraries. Azure Anomaly Detector does not perform PCA.
+  - *Why D is incorrect:* Azure Anomaly Detector is unsupervised — it does not require labeled anomaly examples. It detects deviations from learned normal patterns.
+
+---
+
+### Question 18 (5 points)
+
+A manufacturing plant has sensor data for 10,000 machines with 80 sensor readings per machine. The team finds that the clustering model runs slowly and many clusters appear to merge at high K values. Which preprocessing step would MOST directly address this problem?
+
+- A) Increase K to create more clusters.
+- B) Apply PCA to reduce the 80 sensor readings to the top components explaining 90% of variance before clustering.
+- C) Switch from K-means to a supervised classification algorithm.
+- D) Remove all data points that fall below the median sensor value.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* 80 features in a distance-based algorithm like K-means leads to the curse of dimensionality — distances become less meaningful and cluster separation degrades. PCA reduces the feature space to the most informative components, improving cluster quality and training speed.
+  - *Why A is incorrect:* Increasing K makes the computational problem worse, not better. More clusters in high dimensions would further degrade quality.
+  - *Why C is incorrect:* If no labeled data exists, supervised classification is not applicable. The problem is dimensionality, not task type.
+  - *Why D is incorrect:* Removing data based on median value is an arbitrary data removal strategy that destroys information without addressing the dimensionality problem.
+
+---
+
+### Question 19 (5 points)
+
+What is the key difference between how K-means and DBSCAN handle outlier data points?
+
+- A) K-means ignores outliers entirely; DBSCAN includes them in the largest cluster.
+- B) K-means assigns every point to the nearest centroid including outliers; DBSCAN explicitly labels outliers as noise and excludes them from clusters.
+- C) Both algorithms handle outliers identically by assigning them to the nearest cluster.
+- D) DBSCAN removes outliers before training; K-means requires manual outlier removal as a preprocessing step.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* K-means forces every point into the nearest cluster regardless of how isolated it is, so outliers distort centroid positions. DBSCAN identifies points that do not belong to any dense region and labels them as noise (label -1), producing more robust clusters.
+  - *Why A is incorrect:* K-means does not ignore outliers — it includes them in the nearest cluster, where they can significantly distort the centroid.
+  - *Why C is incorrect:* The algorithms handle outliers fundamentally differently. This is one of DBSCAN's primary advantages over K-means.
+  - *Why D is incorrect:* DBSCAN does not remove points before training; it identifies and labels them as noise during the clustering process itself. Neither algorithm requires manual outlier removal as a prerequisite.
+
+---
+
+### Question 20 (5 points)
+
+After performing dimensionality reduction with PCA, which of the following statements about the principal components is TRUE?
+
+- A) Each principal component is a randomly selected subset of the original features.
+- B) Principal components are ordered by the amount of variance they explain, and each component is orthogonal (uncorrelated) to all others.
+- C) The first principal component always explains 100% of the variance in the original data.
+- D) Principal components retain the original feature names and can be interpreted the same way as the original variables.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - *Why B is correct:* PCA constructs components as linear combinations of original features along directions of maximum variance. They are ordered (PC1 explains the most variance, PC2 the second most, etc.) and are mathematically orthogonal, meaning they are uncorrelated with one another.
+  - *Why A is incorrect:* Principal components are computed linear combinations of all original features, not randomly selected subsets. Each component involves contributions from all original variables.
+  - *Why C is incorrect:* If the first component explained 100% of variance, all features would be perfectly correlated. In practice, variance is distributed across multiple components.
+  - *Why D is incorrect:* Principal components are abstract mathematical constructs — linear combinations of original features. They do not have the same names or direct interpretations as the original variables.

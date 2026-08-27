@@ -284,3 +284,19 @@ print(f"CV accuracy: {scores.mean():.3f} +/- {scores.std():.3f}")
 * **scikit-learn documentation** — [scikit-learn.org/stable](https://scikit-learn.org/stable/)
 * **StatQuest with Josh Starmer — ML fundamentals playlist** — [youtube.com/c/joshstarmer](https://www.youtube.com/c/joshstarmer)
 * **Hands-On Machine Learning with Scikit-Learn — free preview** — Aurélien Géron, O'Reilly
+
+---
+
+## 9. Supplemental Resources
+
+**1. scikit-learn — Model Evaluation and Scoring**
+<https://scikit-learn.org/stable/modules/model_evaluation.html>
+The official scikit-learn reference for all classification and regression metrics — precision, recall, F1, ROC AUC, confusion matrix, and cross-validation scoring. Essential for understanding when to use each metric and how to interpret the outputs that Module 14 labs produce.
+
+**2. Google Developers ML Crash Course — Logistic Regression and Classification**
+<https://developers.google.com/machine-learning/crash-course/logistic-regression/video-lecture>
+A free, self-paced video module covering logistic regression, decision thresholds, precision-recall tradeoffs, and the ROC curve with interactive visualizations. Reinforces the classification concepts and evaluation framework covered in Module 14.
+
+**3. Towards Data Science — Understanding the Bias-Variance Tradeoff**
+<https://towardsdatascience.com/understanding-the-bias-variance-tradeoff-165e6942b229>
+A clear, visual explanation of the bias-variance tradeoff — the foundational concept behind overfitting, underfitting, and model complexity selection. Directly supports the Module 14 discussion of training vs. test accuracy gaps and when to use regularization or pruning.

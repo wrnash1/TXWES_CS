@@ -452,4 +452,244 @@ Distractor Analysis:
 
 ---
 
-End of Quiz — Module 16 | 20 Questions | 100 Points
+---
+
+## Question 21
+
+A network engineer receives a complaint that PC-A can reach PC-B within the same VLAN but cannot reach PC-C in a different VLAN. Both PCs receive valid IP addresses and correct default gateways from DHCP. OSPFv2 is running between the access switches and the core switch. What is the most likely root cause?
+
+A. The trunk port connecting the access switch to the core switch does not allow PC-C's VLAN.
+
+B. PC-A's ARP cache is stale and needs to be cleared.
+
+C. The default gateway IP on the SVI for PC-A's VLAN is not reachable because OSPFv2 is down.
+
+D. PAT is translating PC-A's packets and removing the destination MAC address.
+
+Correct Answer: A — Intra-VLAN connectivity works (PC-A to PC-B) but inter-VLAN connectivity fails. With correct IP addresses and gateways, the most likely Layer 2 cause is that PC-C's VLAN is not allowed on the trunk connecting the switches. If the trunk does not carry VLAN traffic for PC-C's VLAN, frames never reach the routing engine. Verify with `show interfaces trunk` on the core switch.
+
+Distractor Analysis:
+
+* B — A stale ARP cache affects a specific host-to-host communication attempt but would not produce the consistent symptom of all inter-VLAN traffic failing for PC-A. ARP issues resolve on the next ARP refresh cycle.
+* C — If OSPFv2 were down, all inter-VLAN routing would fail for all hosts. The scenario is specific to PC-A failing to reach PC-C, making a VLAN configuration issue more likely than a global OSPF outage.
+* D — PAT only translates addresses on the NAT router's outside interface for internet-bound traffic. It does not affect inter-VLAN communication on the internal network.
+
+---
+
+## Question 22
+
+A network engineer runs `show ip route` on R1 and sees:
+
+```text
+S*   0.0.0.0/0 [1/0] via 203.0.113.254
+O    192.168.10.0/24 [110/2] via 10.0.0.2, GigabitEthernet0/0
+C    10.0.0.0/30 is directly connected, GigabitEthernet0/0
+```
+
+A packet arrives for destination 8.8.8.8. Which entry does the router use and why?
+
+A. The router drops the packet because 8.8.8.8 does not match any specific route.
+
+B. The router uses the OSPF route to 192.168.10.0/24 because OSPF is the most trusted protocol.
+
+C. The router uses the static default route `S* 0.0.0.0/0` because it matches all destinations not covered by more specific routes.
+
+D. The router uses the connected route to 10.0.0.0/30 because directly connected routes have administrative distance 0.
+
+Correct Answer: C — The default route `0.0.0.0/0` matches any destination. It is the gateway of last resort. When a packet's destination matches no more specific route, the router uses the default route. 8.8.8.8 does not match 192.168.10.0/24 or 10.0.0.0/30, so the default route is the match. The packet is forwarded to 203.0.113.254.
+
+Distractor Analysis:
+
+* A — Routers do not drop packets just because no specific host or subnet route exists. The default route `0.0.0.0/0` is specifically designed to match any destination and prevent this drop.
+* B — Longest prefix match is the routing decision rule, not protocol trustworthiness. The OSPF route matches only 192.168.10.0/24 prefixes and does not match 8.8.8.8.
+* D — While connected routes have AD 0, the connected route 10.0.0.0/30 does not match 8.8.8.8. The router uses longest prefix match, not lowest AD, as the primary selection criterion when multiple routes exist for the same destination.
+
+---
+
+## Question 23
+
+Which of the following correctly describes the purpose of the Spanning Tree Protocol in an enterprise network?
+
+A. STP prevents routing loops in Layer 3 networks by poisoning routes that form cycles.
+
+B. STP prevents Layer 2 forwarding loops by placing redundant switch paths into a blocking state.
+
+C. STP provides load balancing across all active redundant links between switches.
+
+D. STP encrypts traffic on trunk ports to prevent VLAN hopping between switches.
+
+Correct Answer: B — STP (and RSTP/PVST+) solves the Layer 2 broadcast storm problem created by redundant switch paths. Without STP, a broadcast frame would loop indefinitely around a redundant topology. STP elects a root bridge and calculates a loop-free tree by blocking all redundant paths except the lowest-cost path to the root. Blocked ports can unblock if the primary path fails.
+
+Distractor Analysis:
+
+* A — Route poisoning is a distance-vector routing protocol mechanism for preventing Layer 3 routing loops (used in RIP). STP operates at Layer 2 and has no knowledge of IP routes.
+* C — Basic STP does not load balance — it blocks redundant links entirely. Load balancing across VLANs is possible with PVST+ by placing different VLANs on different root bridges, but STP's primary purpose is loop prevention, not load balancing.
+* D — STP has no encryption capability. 802.1AE (MACsec) provides Layer 2 encryption. VLAN hopping prevention is addressed by native VLAN configuration and port hardening, not STP.
+
+---
+
+## Question 24
+
+An engineer runs `show ip ospf neighbor` on R1 and sees no output. R1's OSPF configuration appears correct. Which of the following would NOT cause this symptom?
+
+A. The interface connecting to the neighbor is configured as a passive interface.
+
+B. The OSPF area number on R1's connecting interface does not match the neighbor's area number.
+
+C. The OSPF process ID on R1 (router ospf 1) is different from the neighbor's process ID (router ospf 2).
+
+D. The MTU on R1's interface is 1500 but the neighbor's interface MTU is 9000.
+
+Correct Answer: C — The OSPF process ID is locally significant and does not need to match between neighbors. Two routers with `router ospf 1` and `router ospf 99` will still form an adjacency as long as area IDs, Hello/Dead timers, subnet masks, and MTU match. This is a commonly tested OSPF misconception.
+
+Distractor Analysis:
+
+* A — A passive interface does not send or receive OSPF Hello packets. If the connecting interface is passive on either router, adjacency cannot form — this IS a valid cause.
+* B — OSPF requires both ends of a link to be in the same area. An area mismatch prevents adjacency — this IS a valid cause.
+* D — An MTU mismatch causes the OSPF adjacency to get stuck in the Exstart or Exchange state rather than reaching Full. If the mismatch is severe, the adjacency may never complete — this IS a valid cause.
+
+---
+
+## Question 25
+
+A PAT-enabled router is receiving requests from inside hosts to reach external servers. An inside host at 192.168.1.100 port 54321 has an active translation. The same host then opens a new connection from port 54321 to a different external server. How does PAT handle this?
+
+A. PAT rejects the second connection because port 54321 is already in use by the first translation.
+
+B. PAT creates a second translation entry with a different inside global port number to distinguish the two sessions.
+
+C. PAT merges both connections into the same translation entry sharing port 54321.
+
+D. PAT drops the second connection until the first translation times out.
+
+Correct Answer: B — PAT tracks sessions using the combination of inside local IP + inside local port + outside destination IP + outside destination port. When the same inside host opens a connection to a different server, the outside destination is different, so PAT creates a separate translation entry. Each session is uniquely identified in the translation table. The inside global port may be reassigned or kept the same depending on whether there is a port conflict on the outside.
+
+Distractor Analysis:
+
+* A — PAT does not reject connections based on port reuse on the inside local side. Port uniqueness is maintained on the inside global (public) side. Multiple inside sessions can use the same local port number.
+* C — PAT never merges translation entries. Each session has its own row in the NAT translation table with unique identifying information.
+* D — PAT does not queue or hold connections pending timeout. It handles multiple simultaneous connections continuously.
+
+---
+
+## Question 26
+
+A network engineer is implementing IPv6 on a campus network. All routers are configured with OSPFv3. A PC on one subnet can ping its local router's IPv6 address but cannot reach a PC on a different subnet. The engineer checks `show ipv6 route` on the intermediate router and sees no OSPFv3 routes. What is the most likely cause?
+
+A. IPv6 unicast routing is not enabled on the router (`ipv6 unicast-routing` is missing).
+
+B. OSPFv3 uses a different multicast address than OSPFv2 and the router has blocked it.
+
+C. The PC's link-local address is being used as the next-hop and cannot be routed between subnets.
+
+D. OSPFv3 requires GRE tunnels between all routers to carry IPv6 routing updates.
+
+Correct Answer: A — `ipv6 unicast-routing` must be explicitly enabled on Cisco IOS routers before IPv6 routing (including OSPFv3) functions. Without this command, the router processes IPv6 packets only for its directly connected interfaces and does not forward or participate in dynamic IPv6 routing protocols. This is the IPv6 equivalent of the `ip routing` command on Layer 3 switches.
+
+Distractor Analysis:
+
+* B — OSPFv3 does use different multicast addresses (FF02::5 for All OSPF Routers, FF02::6 for All DR Routers) compared to OSPFv2. However, these are well-known link-local multicast addresses that are handled correctly by default. Blocking them would require an explicit ACL.
+* C — Link-local addresses are never used as next-hops for inter-subnet routing in the user data plane. When OSPFv3 learns routes, it uses the link-local next-hop of the neighboring router, not the PC's link-local address.
+* D — OSPFv3 runs natively over IPv6 without GRE tunnels. GRE tunneling for IPv6 is one of several IPv6 transition mechanisms (like 6to4) but is not required for OSPFv3 operation.
+
+---
+
+## Question 27
+
+A Cisco CCNA candidate reviews a network diagram showing a hub-and-spoke topology with eight spoke sites. How many virtual circuits (or logical connections) are required for full mesh connectivity between all nine sites (1 hub + 8 spokes)?
+
+A. 8
+
+B. 16
+
+C. 36
+
+D. 72
+
+Correct Answer: C — The formula for full mesh connections is n(n-1)/2 where n is the number of sites. For 9 sites: 9 × 8 / 2 = 36 unique connections required. Full mesh ensures every site has a direct path to every other site without traversing the hub. This number grows rapidly — 36 connections for 9 sites demonstrates why hub-and-spoke is commonly preferred for cost and operational simplicity.
+
+Distractor Analysis:
+
+* A — 8 connections describes only the hub-and-spoke model where each spoke connects only to the hub. Full mesh requires many more connections.
+* B — 16 is not produced by the full mesh formula for any common network size near 9. It may represent a miscalculation doubling the spoke count.
+* D — 72 = 9 × 8 (without dividing by 2). This counts each connection twice (once from each endpoint). The correct formula divides by 2 because each link is shared between two endpoints.
+
+---
+
+## Question 28
+
+A switch has the following port security configuration on GigabitEthernet0/5:
+
+```text
+Maximum MAC Addresses: 3
+Total MAC Addresses: 3
+Configured MAC Addresses: 1
+Sticky MAC Addresses: 2
+Violation Mode: Restrict
+```
+
+A fourth device connects to the port. What happens?
+
+A. The port shuts down because the maximum is exceeded.
+
+B. The fourth device's frames are dropped; the violation counter increments; a syslog message is generated.
+
+C. The fourth device's MAC address replaces the oldest sticky entry.
+
+D. The fourth device is allowed because the configured MAC is static and does not count against the maximum.
+
+Correct Answer: B — The maximum is 3 MACs (1 configured static + 2 learned sticky). With violation mode set to restrict, any frame from a fourth (unknown) MAC is dropped silently and the violation counter increments with a syslog message. The port does not shut down in restrict mode. The configured and sticky MACs all count toward the maximum.
+
+Distractor Analysis:
+
+* A — Port shutdown (err-disabled) only occurs in shutdown violation mode, not restrict. The configuration shows restrict mode.
+* C — Port security does not implement a MAC aging or replacement algorithm. Sticky MACs become static entries in the running config. A new MAC exceeding the maximum is a violation event.
+* D — All MAC address types (configured, sticky, and dynamically learned) count toward the maximum. There is no exception for configured static MACs.
+
+---
+
+## Question 29
+
+A network engineer is troubleshooting a WAN link between two routers. `show interface Serial0/0/0` shows the line protocol is up but `show ip ospf neighbor` shows no neighbors. All other OSPF settings appear correct. What is the most likely cause?
+
+A. The serial interface does not support OSPF — use a GRE tunnel instead.
+
+B. The interface is configured as passive-interface in the OSPF process.
+
+C. The serial clock rate has not been set on the DCE end of the cable.
+
+D. The OSPF Dead interval has expired because the Hello interval was changed on only one router.
+
+Correct Answer: D — If the Hello timer is changed on one router but not the other, the Hello packets from one router will be ignored by the neighbor (different Hello interval = OSPF rejects the neighbor). Since the Dead timer is typically 4x the Hello interval, if the Hello interval does not match, adjacency cannot form. The line protocol being `up` confirms the physical/data-link layer is working — the issue is at the OSPF protocol layer.
+
+Distractor Analysis:
+
+* A — Serial interfaces fully support OSPF. They form point-to-point OSPF adjacencies without the need for GRE. This is a common lab topology for OSPF practice.
+* C — If the clock rate were missing on the DCE end, the serial interface line protocol would be `down`, not `up`. The scenario states line protocol is up, ruling out a clock rate issue.
+* B — Passive interface prevents Hello packets from being sent or received. If the interface were passive, it is a valid cause of no neighbors. However, the question specifies "all other OSPF settings appear correct" — a passive interface misconfiguration is implied as ruled out, making the timer mismatch the better answer for a more subtle misconfiguration.
+
+---
+
+## Question 30
+
+An enterprise network is undergoing a security audit. The auditor identifies that all management access to core switches uses Telnet on VTY lines. Which combination of changes improves the security of management access?
+
+A. Replace Telnet with SSH, restrict VTY access with an ACL, and enable `service password-encryption`.
+
+B. Replace Telnet with TFTP for configuration transfers and disable all VTY lines.
+
+C. Configure a banner MOTD and increase the VTY timeout to 30 minutes.
+
+D. Enable port security on all access ports and change the enable secret password.
+
+Correct Answer: A — This addresses the three most critical management security concerns: (1) SSH replaces Telnet, providing encrypted management sessions instead of cleartext; (2) an ACL on the VTY lines restricts which source IP addresses can initiate SSH sessions; (3) `service password-encryption` encrypts all plaintext passwords in the running configuration. Together these form a comprehensive management plane hardening posture.
+
+Distractor Analysis:
+
+* B — TFTP is an unencrypted file transfer protocol — replacing Telnet with TFTP does not improve interactive management security. Disabling all VTY lines would prevent any remote management, which is operationally unacceptable.
+* C — A banner MOTD provides a legal disclaimer but does not encrypt sessions or restrict access. Increasing the VTY timeout to 30 minutes actually worsens security by leaving idle sessions open longer.
+* D — Port security and enable secret are both good security practices but address different vectors. Port security protects switch ports from unauthorized physical devices. Changing the enable password improves privilege escalation security. Neither addresses the Telnet management session encryption problem identified in the audit.
+
+---
+
+End of Quiz — Module 16 | 30 Questions | 150 Points

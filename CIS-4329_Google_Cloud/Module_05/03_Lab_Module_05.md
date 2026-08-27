@@ -375,6 +375,91 @@ gcloud compute networks delete lab05-vpc --quiet
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: VPC Flow Logs Analysis
+
+Enable VPC flow logs on your lab subnet and analyze the captured traffic
+after generating some network activity.
+
+1. Enable flow logs on the `lab05-web-subnet` subnet:
+
+```bash
+gcloud compute networks subnets update lab05-web-subnet \
+  --region=$REGION \
+  --enable-flow-logs \
+  --logging-aggregation-interval=INTERVAL_5_SEC \
+  --logging-flow-sampling=0.5 \
+  --logging-metadata=INCLUDE_ALL_METADATA
+```
+
+1. Generate traffic to one of the web VMs (use its external IP):
+
+```bash
+WEB_IP=$(gcloud compute instances describe lab05-web-vm-1 \
+  --zone=$ZONE --format='value(networkInterfaces[0].accessConfigs[0].natIP)')
+for i in $(seq 1 20); do curl -s http://$WEB_IP > /dev/null; done
+echo "Traffic generation complete"
+```
+
+1. Query the VPC flow logs in Cloud Logging:
+
+```bash
+gcloud logging read \
+  'logName="projects/'$PROJECT_ID'/logs/compute.googleapis.com%2Fvpc_flows"' \
+  --limit=10 \
+  --format="table(timestamp,jsonPayload.connection.src_ip,jsonPayload.connection.dest_ip,jsonPayload.bytes_sent)"
+```
+
+1. In the Cloud Console, navigate to **Network Intelligence > Flow Logs** to
+   view the traffic visualization.
+
+### Challenge 2: Cloud Armor WAF Policy
+
+Attach a Cloud Armor security policy to the load balancer backend service
+and verify that a simulated XSS attack is blocked.
+
+1. Create a security policy with the OWASP XSS preconfigured rule:
+
+```bash
+gcloud compute security-policies create lab05-waf-policy \
+  --description="Lab05 WAF policy"
+
+gcloud compute security-policies rules create 1000 \
+  --security-policy=lab05-waf-policy \
+  --expression="evaluatePreconfiguredExpr('xss-stable')" \
+  --action=deny-403 \
+  --description="Block XSS attacks"
+```
+
+1. Attach the policy to the backend service:
+
+```bash
+gcloud compute backend-services update lab05-web-backend \
+  --security-policy=lab05-waf-policy \
+  --global
+```
+
+1. Send a simulated XSS request and confirm the 403 response:
+
+```bash
+LB_IP=$(gcloud compute forwarding-rules describe lab05-forwarding-rule \
+  --global --format='value(IPAddress)')
+curl -i "http://$LB_IP/?q=<script>alert(1)</script>"
+```
+
+### Reflection Questions
+
+1. The VPC flow log you enabled uses a 50% sampling rate. What does this mean
+   for the completeness of the traffic data you see in Cloud Logging, and when
+   would you increase the sampling rate to 100%?
+2. The Cloud Armor WAF rule blocked the XSS request with a 403 response before
+   it reached your backend VM. At what layer of the load balancer architecture
+   does Cloud Armor enforce its policies, and why does this placement provide
+   better protection than filtering at the application layer?
+
+---
+
 End of Lab — Module 05
 
 Course: CIS-4329 Google Cloud Computing | Texas Wesleyan University | Professor Nash

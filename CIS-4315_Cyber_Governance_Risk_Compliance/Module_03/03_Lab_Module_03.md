@@ -200,3 +200,45 @@ Submit a single document (PDF or Word) containing all four tasks. Your submissio
 ## Academic Integrity Notice
 
 This lab requires original analysis. Your threat scenarios, context descriptions, and essay must reflect your own reasoning applied to the LSRMC scenario. Copying framework definitions verbatim from readings without applying them to the scenario will not receive credit. Cite any external sources you consult using APA format.
+
+---
+
+## Part 9 — Challenge Exercise
+
+These challenges extend the Module 03 lab with advanced framework application tasks. Complete both challenges and the reflection questions for up to 15 bonus points.
+
+---
+
+### Challenge 1: Framework Selection Under Constraints
+
+**Scenario**: Lone Star Regional Medical Center has received a grant to implement a formal risk management program. The grant requires the hospital to select a single primary risk management framework and document the rationale for the selection. Three board members have each championed a different framework: one favors NIST RMF (citing the hospital's federal funding and HIPAA obligations), one favors ISO 31000 (citing its international applicability as the hospital considers a telemedicine partnership with a Canadian institution), and one favors FAIR (citing the need to justify security investment to the CFO in financial terms).
+
+**Step 1**: Evaluate each board member's argument. For each of the three frameworks, identify two genuine strengths and one genuine limitation in the context of LSRMC's specific situation.
+
+**Step 2**: Write a one-page recommendation memo addressed to the Board of Directors. Recommend one primary framework and one complementary secondary framework (to be used for a specific purpose). Justify your recommendation using the framework selection criteria from the Module 03 Reading Guide. Your recommendation must acknowledge and respond to the concerns raised by the board members who did not favor your primary selection.
+
+**Step 3**: Identify one scenario in which your recommended primary framework would be insufficient on its own, and explain how the complementary secondary framework fills that gap.
+
+---
+
+### Challenge 2: NIST RMF Step-by-Step Application
+
+Lone Star Regional Medical Center is deploying a new cloud-based patient portal that will store and transmit electronic Protected Health Information (ePHI) for approximately 40,000 patients. Apply the first four NIST RMF steps to this system.
+
+**Step 1 — Categorize**: Using FIPS 199 criteria, determine the impact level for confidentiality, integrity, and availability for this system. Justify each determination with a specific consequence statement (e.g., "A loss of confidentiality could result in...").
+
+**Step 2 — Select**: Based on your impact level determination, identify which NIST SP 800-53 control baseline applies (Low, Moderate, or High). List five specific controls from that baseline that are particularly critical for a cloud-hosted patient portal and explain why each one matters for this system.
+
+**Step 3 — Implement**: For two of the five controls you selected, describe how LSRMC would implement the control in the context of a cloud-hosted SaaS portal (where some controls are the cloud vendor's responsibility and some are LSRMC's). Use the shared responsibility model to assign each control implementation step.
+
+**Step 4 — Assess**: Identify two assessment methods (from NIST SP 800-53A) you would use to verify that one of your five controls is operating effectively. Describe what evidence the assessor would collect and what a passing versus failing assessment finding would look like.
+
+---
+
+### Reflection Questions
+
+Answer each reflection question in four to six sentences.
+
+1. The NIST RMF, ISO 31000, OCTAVE Allegro, and FAIR frameworks all address risk management but approach it differently. A colleague asks: "If NIST RMF is the most detailed and structured, why would any organization choose ISO 31000 instead?" Write a response that explains when ISO 31000's principles-based approach is more appropriate than NIST RMF's prescriptive step structure.
+
+2. FAIR quantifies risk in financial terms, which some security managers find appealing for business case development. However, critics argue that FAIR's precision can create false confidence in the accuracy of the estimates. Explain both the value and the limitation of financial risk quantification, and describe what governance safeguards should accompany FAIR-based risk estimates when they are presented to executive leadership.

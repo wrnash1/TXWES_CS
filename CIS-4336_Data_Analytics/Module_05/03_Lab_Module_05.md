@@ -248,3 +248,93 @@ Compile all deliverables into a single PDF: calculations for Part A, code and ou
 | C | Visualization | 25 |
 | D | Applied Interpretation | 20 |
 | **Total** | | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Comparative Distribution Analysis
+
+Extend the Dataset B analysis to compare salary distributions across two dimensions simultaneously.
+
+1. Using the `df` DataFrame from Part B, compute a summary table that shows, for each department, the following statistics for `annual_salary`: mean, median, standard deviation, IQR, skewness, and outlier count (values outside 1.5×IQR bounds). Print the table. Then add a `mean_median_gap` column defined as `mean - median` and sort by that column descending.
+2. Create a 2×2 subplot figure: top-left shows a histogram of `annual_salary` colored by department (use `plt.hist()` with `alpha=0.5` for each department in a loop); top-right shows side-by-side box plots per department; bottom-left shows a scatter plot of `years_experience` vs `annual_salary` with points colored by department; bottom-right shows a bar chart of mean salary per department with error bars showing ±1 standard deviation. Save the figure as `challenge_distributions.png`.
+
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+
+dept_summary = df.groupby("department")["annual_salary"].agg(
+    mean="mean", median="median", std="std",
+    q1=lambda x: x.quantile(0.25), q3=lambda x: x.quantile(0.75)
+).assign(
+    iqr=lambda d: d["q3"] - d["q1"],
+    skewness=df.groupby("department")["annual_salary"].skew()
+).round(2)
+dept_summary["mean_median_gap"] = dept_summary["mean"] - dept_summary["median"]
+print(dept_summary.sort_values("mean_median_gap", ascending=False))
+
+fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+depts = sorted(df["department"].unique())
+colors = ["steelblue", "coral", "seagreen"]
+for dept, color in zip(depts, colors):
+    subset = df[df["department"] == dept]["annual_salary"]
+    axes[0,0].hist(subset, bins=8, alpha=0.5, label=dept, color=color)
+axes[0,0].set_title("Salary Histogram by Dept"); axes[0,0].legend()
+dept_data = [df[df["department"]==d]["annual_salary"].values for d in depts]
+axes[0,1].boxplot(dept_data, labels=depts, patch_artist=True)
+axes[0,1].set_title("Box Plots by Dept")
+for dept, color in zip(depts, colors):
+    sub = df[df["department"]==dept]
+    axes[1,0].scatter(sub["years_experience"], sub["annual_salary"],
+                      label=dept, color=color, alpha=0.7)
+axes[1,0].set_title("Experience vs Salary"); axes[1,0].legend()
+means = [df[df["department"]==d]["annual_salary"].mean() for d in depts]
+stds  = [df[df["department"]==d]["annual_salary"].std()  for d in depts]
+axes[1,1].bar(depts, means, yerr=stds, capsize=5, color=colors, alpha=0.8)
+axes[1,1].set_title("Mean Salary ± 1 SD")
+plt.tight_layout()
+plt.savefig("challenge_distributions.png", dpi=100)
+plt.show()
+```
+
+### Challenge 2: Rolling Statistics for Time-Series Salary Trends
+
+Simulate a time-series of monthly revenue figures and apply rolling window statistics.
+
+1. Create a pandas Series of 24 monthly revenue values (simulate realistic data with an upward trend plus random noise using `np.random.seed(42)` and `np.random.normal()`). Compute the 3-month and 6-month rolling mean and standard deviation. Plot all four lines on a single chart with labeled lines. Save as `rolling_stats.png`.
+2. Identify the month with the highest 3-month rolling standard deviation (most volatile 3-month window) and the month with the lowest (most stable). Write two sentences interpreting what these windows might indicate in a real business context.
+
+```python
+np.random.seed(42)
+months = pd.date_range("2022-01", periods=24, freq="MS")
+revenue = pd.Series(
+    50000 + np.arange(24) * 1000 + np.random.normal(0, 5000, 24),
+    index=months
+)
+r3_mean = revenue.rolling(3).mean()
+r6_mean = revenue.rolling(6).mean()
+r3_std  = revenue.rolling(3).std()
+r6_std  = revenue.rolling(6).std()
+
+plt.figure(figsize=(12, 5))
+plt.plot(revenue, label="Monthly Revenue", color="gray", alpha=0.6)
+plt.plot(r3_mean, label="3-mo Rolling Mean", color="steelblue")
+plt.plot(r6_mean, label="6-mo Rolling Mean", color="coral")
+plt.fill_between(revenue.index,
+                 r3_mean - r3_std, r3_mean + r3_std,
+                 alpha=0.15, color="steelblue", label="3-mo ±1 SD")
+plt.title("Monthly Revenue with Rolling Statistics")
+plt.xlabel("Month"); plt.ylabel("Revenue ($)")
+plt.legend(); plt.tight_layout()
+plt.savefig("rolling_stats.png", dpi=100)
+plt.show()
+
+print("Most volatile 3-mo window:", r3_std.idxmax())
+print("Most stable 3-mo window:", r3_std.dropna().idxmin())
+```
+
+### Reflection Questions
+
+1. In Challenge 1, the `mean_median_gap` column measures how much the mean exceeds the median within each department. Which department shows the largest gap, and what specific feature of that department's salary data causes the gap? How should a compensation analyst report that department's "typical" salary?
+2. In Challenge 2, a wide rolling standard deviation window signals a volatile period. In a real business context, what external factors might cause a spike in the rolling standard deviation of monthly revenue? What statistical action would you take to decide whether the volatility represents a true trend change or random noise?

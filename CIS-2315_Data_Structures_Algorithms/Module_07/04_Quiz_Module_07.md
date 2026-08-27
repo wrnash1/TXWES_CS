@@ -205,3 +205,215 @@ Compared to quicksort, what is the key advantage of heap sort in terms of worst-
 - *Why B is correct:* Heap sort guarantees O(n log n) in the worst case because every sift-down is bounded by tree height O(log n), regardless of input. Quicksort's worst case is O(n²) when the pivot selection consistently produces unbalanced partitions — for example, on already-sorted input with a naive first-element pivot.
 - *Why C is incorrect:* Heap sort uses O(1) auxiliary space (sorting in place); quicksort uses O(log n) average stack space for recursion (O(n) worst case). The space comparison is the opposite of what this option claims.
 - *Why D is incorrect:* Heap sort is **not** stable — elements with equal values may be reordered during the sift-down phase. Merge sort is the canonical stable O(n log n) sort. Quicksort can also be made stable with extra space, but neither heap sort nor standard quicksort preserves equal-element order.
+
+---
+
+### Question 11
+
+**Each question is worth 5 points.**
+
+In a min-heap stored as an array, what is the index of the right child of the node at index `i`?
+
+- A) `2i`
+- B) `2i + 1`
+- C) `2i + 2`
+- D) `(i - 1) // 2`
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `2i` is the left child formula in a 1-indexed array (where the root is at index 1). For 0-indexed arrays (Python's convention), the formulas shift: left child = `2i + 1`, right child = `2i + 2`.
+- *Why B is incorrect:* `2i + 1` is the index of the left child in a 0-indexed array.
+- *Why C is correct:* In a 0-indexed array: left child of node at `i` is at `2i + 1`; right child is at `2i + 2`. Parent is at `(i - 1) // 2`. For i=0 (root): left = 1, right = 2. For i=1: left = 3, right = 4. These formulas are fundamental to array-based heap implementation.
+- *Why D is incorrect:* `(i - 1) // 2` is the parent formula. The parent of node `i` is at `(i - 1) // 2`.
+
+---
+
+### Question 12
+
+What is the minimum number of elements that must be in a min-heap of height 4 (where height is the number of edges from root to the deepest leaf)?
+
+- A) 4
+- B) 8
+- C) 16
+- D) 31
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* 4 is the height itself. A tree with only 4 nodes can have various heights; the relationship between minimum nodes and height is 2^h.
+- *Why B is incorrect:* A complete binary tree of height 3 has at least 2³ = 8 nodes... but for height 4, the minimum (complete) configuration starts from 2⁴.
+- *Why C is correct:* The minimum number of nodes in a heap of height h is achieved by the smallest complete binary tree reaching that height: 2^h nodes minimum (a full tree of height h−1 plus one node at level h). For height 4: minimum nodes = 2⁴ = 16. A heap with 15 nodes has height 3; adding the 16th node creates a tree of height 4.
+- *Why D is incorrect:* 31 = 2⁵ − 1 is the maximum number of nodes in a perfect binary tree of height 4 (all levels completely filled). This is the maximum, not the minimum.
+
+---
+
+### Question 13
+
+A min-heap contains the values `[1, 3, 2, 7, 5, 4, 6]`. After calling `heappop()`, what is the new root?
+
+- A) `2`
+- B) `3`
+- C) `4`
+- D) `7`
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- *Why A is correct:* `heappop()` removes the root (1) and replaces it with the last element (6). The heap array becomes `[6, 3, 2, 7, 5, 4]`. Sift-down on 6: compare children 3 (index 1) and 2 (index 2) — 2 is smaller, swap 6 and 2 → `[2, 3, 6, 7, 5, 4]`. Next, sift-down on 6 at index 2: children are 4 (index 5). 4 < 6, swap → `[2, 3, 4, 7, 5, 6]`. No more children. New root = 2.
+- *Why B is incorrect:* 3 is at index 1 and does not become the root. After sift-down, 2 (originally at index 2) becomes the root because it is the second-smallest element.
+- *Why C is incorrect:* 4 ends up as the right child of the root (index 2) after sift-down, not as the root itself.
+- *Why D is incorrect:* 7 is near the bottom of the heap and does not move during this sift-down sequence.
+
+---
+
+### Question 14
+
+Why does Python's `heapq` module implement only a min-heap, and how do you simulate a max-heap?
+
+- A) Python's `heapq` supports both; use `heapq.maxheap()` for max-heap behavior
+- B) Python's `heapq` is min-heap only; simulate max-heap by storing negated values and negating on retrieval
+- C) Python's `heapq` is min-heap only; simulate max-heap by reversing the output array after each `heappop`
+- D) Python's `heapq` is min-heap only; convert to max-heap by calling `heapq.heapify` with the `reverse=True` parameter
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Python's `heapq` module has no `maxheap()` function. It provides only min-heap behavior through `heappush`, `heappop`, and `heapify`.
+- *Why B is correct:* The standard Python idiom for max-heap: push `-val` instead of `val`. The min-heap will maintain the most-negative value at the top — which corresponds to the maximum original value. On retrieval, negate: `-heappop(heap)`. This is O(log n) per operation, identical to a native max-heap.
+- *Why C is incorrect:* Reversing the output array after each `heappop` has O(n) cost per pop and would not produce correct heap ordering on subsequent operations.
+- *Why D is incorrect:* `heapq.heapify` has no `reverse` parameter. The function signature is `heapq.heapify(x)` — no keyword arguments are supported.
+
+---
+
+### Question 15
+
+What is the time complexity of finding the K smallest elements from an array of n elements using a max-heap of size K?
+
+- A) O(n log n)
+- B) O(n log K)
+- C) O(K log n)
+- D) O(n + K)
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* O(n log n) would be the cost of sorting the entire array. Using a heap of size K is asymptotically better when K << n.
+- *Why B is correct:* Build the initial max-heap from the first K elements: O(K). For each of the remaining n−K elements: compare with the heap maximum (O(1)), and if smaller, replace (heapreplace: O(log K)). Total: O(K + (n−K) log K) = O(n log K). For K << n, log K << log n, making this much faster than O(n log n).
+- *Why C is incorrect:* O(K log n) would imply K heap operations each costing log n. But heap operations cost log K (heap size K), not log n.
+- *Why D is incorrect:* O(n + K) would require a linear-time selection algorithm (like quickselect). The heap approach is O(n log K), not linear.
+
+---
+
+### Question 16
+
+`heapq.heapify([5, 3, 8, 1, 4])` is called. What value is at index 0 after the call?
+
+- A) `5` — the original first element
+- B) `8` — the maximum value floats to the top
+- C) `1` — the minimum value is the root of a min-heap
+- D) `3` — the average of all values
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `heapify` rearranges the array in-place to satisfy the min-heap property. The original first element (5) is not guaranteed to remain at index 0.
+- *Why B is incorrect:* `heapq` is a min-heap. The minimum value becomes the root, not the maximum.
+- *Why C is correct:* `heapq.heapify` transforms the array into a valid min-heap in O(n) time. In a min-heap, the smallest element is always at index 0 (the root). The smallest value in `[5, 3, 8, 1, 4]` is 1, so after `heapify`, `heap[0] == 1`.
+- *Why D is incorrect:* Heaps are not sorted by averages. The root is always the minimum (for min-heap) or maximum (for max-heap), not the average.
+
+---
+
+### Question 17
+
+In the Merge K Sorted Lists problem (LeetCode #23), why is a min-heap of size K used instead of repeatedly scanning all K list heads?
+
+- A) A min-heap guarantees the result is sorted; scanning does not
+- B) A min-heap finds the minimum of K elements in O(log K) instead of O(K), reducing total time from O(NK) to O(N log K)
+- C) A min-heap uses less memory than storing K list head pointers
+- D) A min-heap automatically advances list pointers; scanning requires manual iteration
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* Both approaches can produce a sorted merged list. The heap approach doesn't change the correctness of the merge — it reduces the time to find the minimum at each step.
+- *Why B is correct:* At each step, you need the minimum among K current list heads. Linear scan: O(K) per step. For N total elements: O(NK). Min-heap of K elements: O(log K) per push/pop. For N total elements: O(N log K). When K is large (e.g., K=1,000 and N=1,000,000), O(NK) = O(10⁹) vs O(N log K) ≈ O(10⁷). The heap provides a 100× speedup in this case.
+- *Why C is incorrect:* A min-heap of K tuples uses the same O(K) space as K head pointers. Memory is not the differentiator.
+- *Why D is incorrect:* Both approaches require manually advancing the pointer of the list whose head was selected. The heap does not automate this — you push the next node from the selected list after popping.
+
+---
+
+### Question 18
+
+What does the following code compute?
+
+```python
+import heapq
+data = [3, 1, 4, 1, 5, 9, 2, 6]
+heapq.heapify(data)
+result = []
+while data:
+    result.append(heapq.heappop(data))
+print(result)
+```
+
+- A) The original list unchanged
+- B) The list sorted in ascending order
+- C) The list sorted in descending order
+- D) Only the three smallest elements
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `heapify` rearranges the list in place, and `heappop` removes elements in sorted order. The result is not the original list.
+- *Why B is correct:* `heapq.heappop` always removes and returns the minimum element. Calling it repeatedly until the heap is empty extracts elements in ascending sorted order. This is essentially heap sort (using a min-heap). For `[3, 1, 4, 1, 5, 9, 2, 6]`: result = `[1, 1, 2, 3, 4, 5, 6, 9]`.
+- *Why C is incorrect:* Descending order would require a max-heap (or negating values). This code uses a min-heap, which produces ascending order.
+- *Why D is incorrect:* The `while data:` loop continues until the heap is empty — all 8 elements are extracted, not just 3.
+
+---
+
+### Question 19
+
+What is the time complexity of `heapq.nlargest(k, iterable)` for finding the K largest elements?
+
+- A) O(n) always
+- B) O(n log k)
+- C) O(n log n)
+- D) O(k log n)
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* O(n) would require a linear-time selection algorithm like quickselect, which Python's `heapq.nlargest` does not use for general iterables. For special cases (k=1 or k close to n), Python may optimize, but the general complexity is O(n log k).
+- *Why B is correct:* `heapq.nlargest(k, iterable)` maintains a min-heap of size k. For each of the n elements, it compares with the heap minimum and replaces if larger — O(log k) per element. Total: O(n log k). This is asymptotically better than sorting (O(n log n)) when k << n.
+- *Why C is incorrect:* O(n log n) is the cost of sorting the entire iterable. `heapq.nlargest` does better than full sorting when k is small.
+- *Why D is incorrect:* O(k log n) would apply if you searched a sorted array for k elements. The heap approach iterates all n elements and maintains a heap of size k — resulting in O(n log k).
+
+---
+
+### Question 20
+
+After building a min-heap from `[9, 4, 7, 1, 2]` using `heapq.heapify`, which of the following is guaranteed to be true?
+
+- A) The array is fully sorted in ascending order
+- B) The first element `heap[0]` equals the minimum value in the original array
+- C) Elements at even indices are smaller than elements at odd indices
+- D) Each element is smaller than all elements to its right
+
+**Correct Answer:** B
+
+**Distractor Analysis:**
+
+- *Why A is incorrect:* `heapify` produces a valid heap, not a fully sorted array. A heap satisfies the parent ≤ children property, but siblings at the same level can be in any order. The resulting array `[1, 2, 7, 4, 9]` (one valid arrangement) is not fully sorted.
+- *Why B is correct:* The min-heap property guarantees the minimum element is at the root (index 0). For any valid min-heap, `heap[0]` is the global minimum. This is the entire purpose of the heap data structure.
+- *Why C is incorrect:* The heap property relates parents to children (index i to 2i+1 and 2i+2), not even indices to odd indices. Even-indexed nodes are not necessarily smaller than odd-indexed nodes.
+- *Why D is incorrect:* The heap property only requires each node to be ≤ its direct children, not ≤ all elements to its right. Elements to the right may be in any order relative to elements to the left, as long as every parent-child relationship satisfies the heap property.

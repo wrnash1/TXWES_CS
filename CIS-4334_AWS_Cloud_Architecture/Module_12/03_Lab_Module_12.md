@@ -386,3 +386,25 @@ Delete resources in this order to avoid dependency errors:
 - Screenshot of completed Step Functions execution with all states green
 - Screenshot of SQS message in `order-archive-queue`
 - Written answers to all four reflection questions
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Lambda Concurrency Behavior Under Load
+Observe Lambda throttling and Reserved Concurrency limits using concurrent invocations.
+1. Deploy a simple Lambda function that sleeps for 5 seconds and returns a timestamp: use the inline code `import time; def handler(e,c): time.sleep(5); return {"statusCode":200,"body":"ok"}`. Set a low Reserved Concurrency of 3: `aws lambda put-function-concurrency --function-name <fn-name> --reserved-concurrent-executions 3`.
+2. Invoke the function 10 times nearly simultaneously using a loop: `for i in $(seq 1 10); do aws lambda invoke --function-name <fn-name> --invocation-type Event /dev/null & done; wait`. Check the function's CloudWatch metrics for `Throttles` within 2 minutes: `aws cloudwatch get-metric-statistics --namespace AWS/Lambda --metric-name Throttles --dimensions Name=FunctionName,Value=<fn-name> --start-time $(date -u -d '5 minutes ago' +%Y-%m-%dT%H:%M:%SZ) --end-time $(date -u +%Y-%m-%dT%H:%M:%SZ) --period 60 --statistics Sum`.
+3. Remove the Reserved Concurrency cap: `aws lambda delete-function-concurrency --function-name <fn-name>`. Repeat the 10 concurrent invocations and compare the Throttles metric. Document the difference in behavior.
+4. Calculate: if this function averages 5 seconds per invocation and the business requires processing 600 orders per minute with zero throttling, what minimum Reserved Concurrency is needed? Show your calculation.
+
+### Challenge 2: Step Functions Error Handling with Catch and Retry
+Add resilient error handling to a Step Functions state machine using Catch and Retry configurations.
+1. Create a Lambda function named `flaky-fn` that randomly fails 50% of the time: `import random; def handler(e,c): if random.random() < 0.5: raise Exception("Random failure"); return {"result": "success"}`.
+2. Create a Step Functions state machine with a single Task state calling `flaky-fn`. Add a Retry configuration: `"Retry": [{"ErrorEquals": ["States.ALL"], "IntervalSeconds": 2, "MaxAttempts": 3, "BackoffRate": 2}]`. Execute the state machine 5 times and record how many succeed on the first attempt versus requiring retries: `aws stepfunctions start-execution --state-machine-arn <arn> --name test-$(date +%s)`.
+3. Add a Catch configuration to the Task state that routes failures after all retries to a fallback Pass state returning `{"result": "fallback triggered"}`. Re-execute and verify that no execution fails — either the Task succeeds or the Catch handles the failure gracefully.
+4. Examine the execution history of one run that triggered retries: `aws stepfunctions get-execution-history --execution-arn <arn>`. Identify the event types that appear for each retry attempt and explain what the `TaskScheduled`, `TaskFailed`, and `TaskSucceeded` events represent in the execution timeline.
+
+### Reflection Questions
+1. After completing Challenge 1, explain the difference between Reserved Concurrency and Provisioned Concurrency in terms of what problem each solves. A Lambda function serves a latency-sensitive customer-facing API — which type of concurrency configuration would you apply and why? Reference the AWS Well-Architected Framework Performance Efficiency pillar in your answer.
+2. Based on Challenge 2, explain how Step Functions Retry with exponential backoff implements the Reliability pillar principle of "design for failure." Compare this approach to implementing retry logic inside the Lambda function itself — what does Step Functions provide that application-level retry code cannot, particularly in the context of idempotency and workflow visibility?

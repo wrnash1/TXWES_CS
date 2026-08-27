@@ -348,3 +348,25 @@ This is cleaner than adding the `authenticate` middleware to every individual ro
 - [ ] Implement a four-parameter global error handler
 - [ ] Forward errors to the error handler using `next(err)`
 - [ ] Filter query parameters with `req.query` and handle type conversion
+
+---
+
+## 11. Supplemental Resources
+
+The following free, open-access resources go deeper on Module 08 topics:
+
+**1. Express.js Official Guide — Using Middleware**
+[https://expressjs.com/en/guide/using-middleware.html](https://expressjs.com/en/guide/using-middleware.html)
+The authoritative Express documentation covering application-level middleware, router-level middleware, error-handling middleware, and built-in middleware — directly aligned to the middleware pipeline and factory patterns built in Lab 08.
+
+**2. Express.js Official Guide — Router**
+[https://expressjs.com/en/4x/api.html#router](https://expressjs.com/en/4x/api.html#router)
+The full API reference for `express.Router()` including `router.param()`, `router.route()`, `router.use()`, and mounting behavior — essential for understanding how the books and authors routers in Lab 08 interact with the main app.
+
+**3. MDN Web Docs — Cross-Origin Resource Sharing (CORS)**
+[https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)
+A comprehensive reference explaining the browser CORS mechanism, preflight requests, credentialed requests, and the response headers (`Access-Control-Allow-Origin`, etc.) that the `cors()` middleware sets — foundational for debugging CORS errors in Module 08 and AWS API Gateway in Module 14.
+
+**4. npm — cors package documentation**
+[https://www.npmjs.com/package/cors](https://www.npmjs.com/package/cors)
+The official documentation for the `cors` npm package covering configuration options (`origin`, `methods`, `credentials`, `allowedHeaders`), per-route usage, and preflight handling — the exact package configured in the Lab 08 `index.js` refactor.

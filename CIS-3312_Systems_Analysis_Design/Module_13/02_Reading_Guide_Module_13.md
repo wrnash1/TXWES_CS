@@ -323,4 +323,41 @@ Answer these before attempting the quiz.
 
 ---
 
+## Supplemental Resources
+
+The following open educational resources extend module content on prototyping, UI/UX
+design, and design validation. All are freely accessible without login or purchase.
+
+1. **Nielsen's 10 Usability Heuristics — Nielsen Norman Group**
+   <https://www.nngroup.com/articles/ten-usability-heuristics/>
+   Focus: The authoritative source for Nielsen's ten heuristics with detailed explanations
+   and illustrated examples for each. Essential reference for the heuristic evaluation task
+   in Part 3 of the lab and for ECBA exam preparation.
+
+2. **Prototyping for BA — IIBA BABOK Technique Overview**
+   <https://www.iiba.org/standards-and-resources/babok/>
+   Focus: The BABOK Guide's prototyping technique description covering purpose, elements,
+   usage considerations, and knowledge area alignment. Reinforces how prototyping fits into
+   the Elicitation and Requirements Analysis knowledge areas tested on the ECBA exam.
+
+3. **Wireframing and Mockup Best Practices — Balsamiq Blog**
+   <https://balsamiq.com/learn/articles/wireframing-best-practices/>
+   Focus: Practical guidance on creating effective wireframes including annotation
+   conventions, fidelity decisions, and when to use each artifact type. Directly supports
+   the wireframe creation tasks in Part 1 of the lab.
+
+4. **Usability Testing — Nielsen Norman Group Introduction**
+   <https://www.nngroup.com/articles/usability-testing-101/>
+   Focus: Comprehensive introduction to usability testing methodology including participant
+   selection, task scenario writing, think-aloud protocol facilitation, and findings
+   documentation. Supports the design validation session plan in Part 4 of the lab.
+
+5. **Web Content Accessibility Guidelines (WCAG) Overview — W3C**
+   <https://www.w3.org/WAI/standards-guidelines/wcag/>
+   Focus: The official WCAG standard overview explaining accessibility requirements for
+   digital interfaces. Reinforces Section 4.3 of this reading guide on accessibility as
+   a requirements concern and supports writing complete non-functional requirements.
+
+---
+
 *Module 13 Reading Guide | CIS-3312 Systems Analysis and Design | Texas Wesleyan University*

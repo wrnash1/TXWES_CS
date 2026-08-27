@@ -364,6 +364,22 @@ az aks create \
 
 ---
 
+## 9. Supplemental Resources
+
+**1. Microsoft Learn — Azure App Service overview**
+https://learn.microsoft.com/en-us/azure/app-service/overview
+Covers App Service plan tiers, supported language runtimes, deployment methods (GitHub Actions, zip deploy, FTP), deployment slots, auto-scaling rules, and VNet integration — essential for both AZ-900 and AZ-104 exam prep.
+
+**2. Microsoft Learn — Azure Functions hosting options**
+https://learn.microsoft.com/en-us/azure/azure-functions/functions-scale
+Detailed comparison of the Consumption, Flex Consumption, Premium, and Dedicated (App Service) hosting plans — including cold start behavior, pre-warmed instances, scale limits, and cost model for each plan.
+
+**3. Microsoft Learn — Choose an Azure compute service**
+https://learn.microsoft.com/en-us/azure/architecture/guide/technology-choices/compute-decision-tree
+Azure Architecture Center decision tree for selecting between VMs, App Service, Functions, Container Apps, AKS, and other compute services based on workload characteristics — the authoritative reference for compute service selection questions.
+
+---
+
 ## Required Reading Resources
 
 - Azure Virtual Machines overview: learn.microsoft.com/en-us/azure/virtual-machines/overview

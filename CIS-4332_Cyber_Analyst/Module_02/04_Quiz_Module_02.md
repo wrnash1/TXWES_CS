@@ -211,3 +211,203 @@ Distractor Analysis:
 - B is correct. STIX (Structured Threat Information Expression) provides a standardized, machine-readable format for expressing threat intelligence content. TAXII (Trusted Automated Exchange of Intelligence Information) provides the transport mechanism for sharing STIX data between organizations and systems.
 - C is incorrect. STIX can express any type of threat intelligence — actors, campaigns, TTPs, indicators, and more. Neither STIX nor TAXII is limited to a single indicator category.
 - D is incorrect. Both STIX and TAXII are open, community-developed standards, not proprietary commercial products.
+
+---
+
+## Question 11 (5 points)
+
+An analyst is reviewing a MITRE ATT&CK Group profile for a threat actor known to target financial institutions. The profile lists 23 techniques across 8 tactics. How should the analyst use this information most effectively to improve the organization's defenses?
+
+- A) Block every IP address and domain listed in the group's infrastructure section
+- B) Use the listed techniques to identify detection gaps by cross-referencing them against existing SIEM rules and visibility coverage
+- C) Share the group profile publicly to warn other financial institutions immediately
+- D) Implement a new IPS signature for each of the 23 techniques listed
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A is incorrect. Blocking infrastructure IOCs provides temporary low-pyramid protection. The threat actor can trivially move to new infrastructure. The higher-value action is improving technique-level detection.
+- B is correct. Cross-referencing the ATT&CK Group profile against existing detection coverage is a gap analysis — it identifies which of the adversary's known techniques the organization cannot currently detect or prevent, enabling prioritized detection engineering.
+- C is incorrect. The profile may be marked TLP:AMBER or sourced from proprietary intelligence. Additionally, broad public sharing should follow applicable TLP markings and sharing agreements.
+- D is incorrect. IPS signatures are network-level controls; many ATT&CK techniques describe host-based or non-network behaviors that cannot be addressed with IPS signatures alone.
+
+---
+
+## Question 12 (5 points)
+
+Which ATT&CK tactic describes the phase in which an adversary attempts to avoid detection by disabling security tools, clearing logs, or masquerading malicious processes as legitimate ones?
+
+- A) Persistence
+- B) Defense Evasion
+- C) Collection
+- D) Exfiltration
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A is incorrect. Persistence (TA0003) describes techniques used to maintain access across system reboots or credential changes — not to evade detection after access is gained.
+- B is correct. Defense Evasion (TA0005) includes techniques such as disabling security software, clearing Windows Event Logs, masquerading process names, and using obfuscation to avoid detection. This is one of the most populated tactic categories in ATT&CK.
+- C is incorrect. Collection (TA0009) describes techniques used to gather data of interest to the adversary prior to exfiltration. It does not involve evading detection mechanisms.
+- D is incorrect. Exfiltration (TA0010) describes techniques used to move data out of the victim environment. Avoiding detection before exfiltration occurs falls under Defense Evasion.
+
+---
+
+## Question 13 (5 points)
+
+A CTI analyst receives a report from an external partner with the TLP marking TLP:RED. Which action is appropriate?
+
+- A) Share the report with the entire security team via the team Slack channel
+- B) Add the indicators to the organization's public threat sharing platform (ISAC)
+- C) Treat the information as restricted to the individuals present at the meeting or call for which it was shared, and do not distribute it further
+- D) Forward the report to senior management for awareness since they have higher authority to handle sensitive intelligence
+
+Correct Answer: C
+
+Distractor Analysis:
+
+- A is incorrect. TLP:RED prohibits sharing outside of the specific recipients identified by the original sharer. Distributing to the broader security team violates the marking.
+- B is correct when understood in context: TLP:RED explicitly prohibits sharing beyond the named recipients. Sharing to a public platform is a direct violation.
+- C is correct. TLP:RED is the most restrictive marking — information is strictly limited to the individuals who received it in the original communication. It must not be forwarded or shared in any way without explicit permission from the originator.
+- D is incorrect. Seniority or authority does not override TLP markings. The restriction applies regardless of the recipient's organizational role.
+
+---
+
+## Question 14 (5 points)
+
+In the Diamond Model of intrusion analysis, what do the four vertices represent?
+
+- A) Reconnaissance, Weaponization, Delivery, Exploitation
+- B) Adversary, Capability, Infrastructure, Victim
+- C) Confidentiality, Integrity, Availability, Authentication
+- D) Tactical, Operational, Strategic, Administrative
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A is incorrect. These are the first four phases of the Cyber Kill Chain, not the Diamond Model vertices.
+- B is correct. The Diamond Model describes every intrusion event using four vertices: the Adversary (who is attacking), the Capability (the tools and techniques used), the Infrastructure (the systems and networks leveraged), and the Victim (who is being attacked). These relationships help analysts pivot from known facts to unknown elements of an intrusion.
+- C is incorrect. Confidentiality, Integrity, and Availability are the CIA Triad. Authentication is a security mechanism, not a CIA pillar or Diamond Model vertex.
+- D is incorrect. These are CTI intelligence types based on time horizon and audience — not the Diamond Model structure.
+
+---
+
+## Question 15 (5 points)
+
+An analyst wants to programmatically ingest a threat intelligence feed and automatically create SIEM rules when new indicators are published. Which two standards enable this automation pipeline?
+
+- A) CVSS and EPSS
+- B) STIX and TAXII
+- C) MITRE ATT&CK and the Cyber Kill Chain
+- D) TLP and ISAC
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A is incorrect. CVSS (Common Vulnerability Scoring System) and EPSS (Exploit Prediction Scoring System) are vulnerability scoring standards, not threat intelligence exchange formats.
+- B is correct. STIX provides the machine-readable format for expressing threat intelligence (IOCs, TTPs, campaigns, actors), and TAXII provides the transport protocol for automated delivery of that data between systems. Together they enable the described automation pipeline.
+- C is incorrect. MITRE ATT&CK and the Cyber Kill Chain are conceptual frameworks for understanding adversary behavior. They are not data exchange protocols and do not support automated indicator ingestion.
+- D is incorrect. TLP is a sharing classification marking, not a data format. ISAC (Information Sharing and Analysis Center) is an organization type, not a technical standard.
+
+---
+
+## Question 16 (5 points)
+
+Which of the following best describes the purpose of the ATT&CK sub-technique structure?
+
+- A) Sub-techniques represent entirely separate attack chains that are independent of their parent technique
+- B) Sub-techniques provide more specific implementation details of a parent technique, enabling more precise detection rule development
+- C) Sub-techniques are only applicable to nation-state threat actors and do not apply to cybercriminal groups
+- D) Sub-techniques replace the parent technique ID and should not be cited together
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A is incorrect. Sub-techniques are not independent attack chains. They are specific variations of a parent technique — the parent and sub-technique share the same tactic context.
+- B is correct. Sub-techniques (identified by a decimal extension, e.g., T1547.001) specify how a parent technique is implemented. For example, T1547 covers Boot or Logon Autostart Execution; T1547.001 specifies Registry Run Keys specifically. This granularity enables more targeted detection rules.
+- C is incorrect. ATT&CK applies to all threat actors — nation-state, cybercriminal, hacktivist, and others. Sub-techniques are documented across all group types.
+- D is incorrect. Both the parent technique and the sub-technique ID are cited together in ATT&CK documentation and are used together in threat intelligence reports and detection mapping exercises.
+
+---
+
+## Question 17 (5 points)
+
+An analyst is writing a detection rule for a specific ATT&CK technique. Which data source listed in the ATT&CK technique entry tells the analyst where to look in their log environment?
+
+- A) The Mitigations section
+- B) The Detection section, which lists relevant data sources and component types
+- C) The Procedure Examples section, which lists specific malware families
+- D) The Groups section, which lists known threat actors using the technique
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A is incorrect. The Mitigations section lists defensive controls that can prevent the technique — not the data sources an analyst needs to detect it.
+- B is correct. The Detection section of an ATT&CK technique entry lists the relevant data sources (e.g., Process, Network Traffic, File) and data components (e.g., Process Creation, Network Connection Creation) that analysts should monitor to detect the technique. This is the starting point for detection engineering.
+- C is incorrect. Procedure Examples document specific malware or tool implementations of the technique. They provide useful context but do not describe what log sources to enable.
+- D is incorrect. The Groups section identifies threat actors who have used the technique. It informs threat modeling and actor-specific hunting but does not describe detection data sources.
+
+---
+
+## Question 18 (5 points)
+
+A threat intelligence report describes a campaign where attackers send spear-phishing emails containing malicious Microsoft Office documents with embedded macros that execute PowerShell commands upon opening. Which ATT&CK tactic does the PowerShell execution represent?
+
+- A) Initial Access
+- B) Execution
+- C) Persistence
+- D) Lateral Movement
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A is incorrect. Initial Access (TA0001) describes how the attacker first enters the environment — in this case, the spear-phishing email (T1566.001) represents Initial Access. The PowerShell execution occurs after access is achieved.
+- B is correct. Execution (TA0002) describes techniques that run adversary-controlled code on a local or remote system. PowerShell (T1059.001) is a canonical Execution technique. Running the macro-launched PowerShell script is an Execution action.
+- C is incorrect. Persistence describes maintaining access across system events. Simply executing PowerShell does not establish persistence — additional actions like creating a scheduled task would be required.
+- D is incorrect. Lateral Movement describes moving between systems in the environment. The PowerShell execution described occurs on the initially compromised host, not on a secondary target.
+
+---
+
+## Question 19 (5 points)
+
+Which intelligence lifecycle phase involves evaluating collected data for source reliability and determining whether it answers the original intelligence requirement?
+
+- A) Direction
+- B) Processing
+- C) Analysis
+- D) Dissemination
+
+Correct Answer: C
+
+Distractor Analysis:
+
+- A is incorrect. Direction is the first phase — it defines the intelligence requirements and questions that the CTI effort must answer. It does not evaluate collected data.
+- B is incorrect. Processing normalizes and deduplicates raw data so it can be efficiently analyzed. It converts data into a workable format but does not answer the intelligence question or evaluate reliability.
+- C is correct. Analysis is the phase where processed data is examined for reliability, relevance, and meaning. Analysts evaluate source credibility, corroborate findings across sources, and produce judgments that answer the original requirement. This is the core intellectual work of CTI.
+- D is incorrect. Dissemination delivers finished intelligence to consumers. It occurs after analysis is complete.
+
+---
+
+## Question 20 (5 points)
+
+A cybersecurity team creates a heat map showing which ATT&CK techniques they have active detections for versus which ones have no coverage. What is this activity called?
+
+- A) Threat actor profiling
+- B) ATT&CK Navigator gap analysis
+- C) Incident response planning
+- D) Vulnerability remediation prioritization
+
+Correct Answer: B
+
+Distractor Analysis:
+
+- A is incorrect. Threat actor profiling involves researching a specific adversary's known techniques, infrastructure, and targets — not mapping the defender's own detection coverage.
+- B is correct. The ATT&CK Navigator is the official tool for creating technique heat maps. Using it to compare existing detection coverage against the full technique matrix — identifying covered versus uncovered techniques — is known as a gap analysis. This is a core threat-informed defense activity.
+- C is incorrect. Incident response planning defines procedures for handling confirmed incidents. It does not involve mapping detection coverage against the ATT&CK matrix.
+- D is incorrect. Vulnerability remediation prioritization involves ranking patching actions based on CVSS scores, exploitability, and asset criticality — a separate vulnerability management activity.

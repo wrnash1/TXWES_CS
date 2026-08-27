@@ -347,3 +347,55 @@ Submit your `.ipynb` file to the Module 13 Lab assignment on Canvas.
 | Forecast visualization | 15 |
 | Written reflection | 15 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Autoregressive Multi-Step Forecasting
+
+Extend your LSTM model to produce a 7-step forecast using an autoregressive approach, where each predicted step is fed back as input for the next prediction.
+
+1. Take your trained single-step LSTM model and implement an autoregressive forecasting loop. Starting from a seed window of `window_size` observations, predict one step ahead, append the prediction to the input window, slide the window forward, and repeat:
+
+   ```python
+   def forecast_autoreg(model, seed_window, n_steps, scaler):
+       predictions = []
+       window = seed_window.copy()  # shape (window_size,)
+       for _ in range(n_steps):
+           x = window[-30:].reshape(1, 30, 1)  # adjust to your window_size
+           pred = model.predict(x, verbose=0)[0, 0]
+           predictions.append(pred)
+           window = np.append(window, pred)
+       return scaler.inverse_transform(
+           np.array(predictions).reshape(-1, 1)).flatten()
+   ```
+
+2. Run 7-step autoregressive forecasts for 20 different seed windows from the test set. Compute both MAE at each horizon step (horizon 1 through 7) and plot the error as a function of forecast horizon. Observe whether error grows monotonically with horizon distance.
+3. Compare the autoregressive 7-step MAE against the direct multi-output approach from the Module 10 challenge (if completed) or against simply repeating the 1-step prediction 7 times without feedback.
+4. In a Markdown cell, explain the "error accumulation" phenomenon in autoregressive forecasting and describe one architectural choice that can mitigate it.
+
+### Challenge 2: Adding Fourier Features for Seasonality
+
+Augment your multivariate forecasting model with Fourier (sinusoidal) time features to help the model learn periodic patterns without needing a very large window.
+
+1. For a daily time series with weekly seasonality, create two Fourier features for the weekly period:
+
+   ```python
+   import numpy as np
+
+   def add_fourier_features(series, period=7):
+       t = np.arange(len(series))
+       sin_feat = np.sin(2 * np.pi * t / period)
+       cos_feat = np.cos(2 * np.pi * t / period)
+       return np.column_stack([series, sin_feat, cos_feat])
+   ```
+
+2. Stack these features with your original univariate series to create a 3-feature multivariate input. Update your LSTM `input_shape` to `(window_size, 3)` and retrain.
+3. Compare the model with and without Fourier features using MAE on the test set. Also try reducing the `window_size` from 30 to 14 — does adding Fourier features allow a smaller window to achieve similar accuracy?
+4. In a Markdown cell, explain why explicit Fourier features help RNNs learn seasonal patterns more efficiently than relying on the LSTM to discover periodicity from raw values alone.
+
+### Reflection Questions
+
+1. In your autoregressive forecast, at which horizon step (1 through 7) did the MAE first exceed twice the 1-step MAE? What does the rate of error growth tell you about the predictability horizon of your specific time series, and how would you use this information when deciding the maximum useful forecast horizon for a production deployment?
+2. After adding Fourier features, was the model able to maintain similar accuracy with a smaller window (14 vs. 30 steps)? Discuss the tradeoff between domain-informed feature engineering (manually adding Fourier features) and end-to-end learning (letting the LSTM discover periodicity from raw data) in terms of data efficiency and generalizability.

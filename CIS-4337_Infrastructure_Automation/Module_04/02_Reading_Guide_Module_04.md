@@ -269,4 +269,20 @@ import {
 
 ---
 
+## 11. Supplemental Resources
+
+**1. Terraform S3 Backend Reference**
+<https://developer.hashicorp.com/terraform/language/settings/backends/s3>
+Complete reference for all S3 backend arguments including `encrypt`, `dynamodb_table`, `kms_key_id`, and `assume_role`. Includes the DynamoDB table creation instructions and the exact `LockID` attribute requirement tested on the exam.
+
+**2. Terraform State Command Reference**
+<https://developer.hashicorp.com/terraform/cli/commands/state>
+Documents all `terraform state` subcommands: `list`, `show`, `mv`, `rm`, `pull`, `push`. Each subcommand page includes usage examples and flags. Essential reference for the state manipulation exercises in this lab.
+
+**3. Terraform Import Documentation**
+<https://developer.hashicorp.com/terraform/cli/import>
+Covers both the classic `terraform import` CLI command and the declarative `import` block introduced in Terraform 1.5. Explains the pre-requisite resource block requirement and the post-import reconciliation workflow.
+
+---
+
 Module 04 Reading Guide — CIS-4337 Infrastructure Automation — Texas Wesleyan University

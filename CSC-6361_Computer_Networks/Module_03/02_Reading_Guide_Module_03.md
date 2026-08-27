@@ -115,3 +115,19 @@ show sdwan bfd sessions             ! View BFD session state per transport
 4. **The MPLS Parallel Period:** During the transition, you will likely run both MPLS and SD-WAN simultaneously. How does SD-WAN handle the coexistence of MPLS and internet transports? What is a TLOC, and how does it enable this?
 
 **Citation:** Cite RFC 3031 (MPLS) or the Cisco SD-WAN Design Guide, or both.
+
+---
+
+## 9. Supplemental Resources
+
+**1. IETF RFC 4271 — A Border Gateway Protocol 4 (BGP-4)**
+https://datatracker.ietf.org/doc/html/rfc4271
+BGP is the control plane that carries VPNv4 routes between MPLS PE routers (MP-BGP). Understanding BGP fundamentals — UPDATE messages, path attributes, and session establishment — is essential context for the MPLS L3VPN model described in RFC 4364.
+
+**2. Cisco DMVPN Design and Implementation Guide (Free)**
+https://www.cisco.com/c/en/us/td/docs/solutions/Enterprise/WAN_and_MAN/DMVPN/DMVPN_2.html
+DMVPN (Dynamic Multipoint VPN) extends the GRE/IPsec concepts from this module into a scalable hub-and-spoke design where branch-to-branch tunnels build dynamically without pre-configuration. Understanding DMVPN Phase 1, 2, and 3 represents the production evolution of the static GRE topology built in this module's lab.
+
+**3. IETF RFC 5996 — Internet Key Exchange Protocol Version 2 (IKEv2)**
+https://datatracker.ietf.org/doc/html/rfc5996
+IKEv2 is the modern replacement for IKEv1/ISAKMP configured in the lab. This RFC defines the complete IKEv2 exchange — understanding the differences between IKEv1 and IKEv2 (fewer round trips, built-in EAP support, mobility/multihoming extensions) is directly tested on the CCNP ENCOR exam.

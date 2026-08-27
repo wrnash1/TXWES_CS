@@ -33,7 +33,7 @@ cd ~/tf-lab-09
 
 Your structure should look like:
 
-```
+```text
 tf-lab-09/
   modules/
     app_config/
@@ -510,6 +510,75 @@ rm -rf output/ .terraform/
 | `for_each` module instantiation implemented correctly | 20 |
 | Clean destroy with no errors | 5 |
 | **Total** | **100** |
+
+---
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Versioned Module with Git Source and Submodule Composition
+
+Practice sourcing a module from a public Git repository and composing it with a local module.
+
+**Step A.** In a new directory `~/tf-lab-09-git/`, create a `main.tf` that sources the public `terraform-aws-modules/terraform-aws-iam` repository using a Git HTTPS source pinned to a specific tag. Since no AWS credentials are available, use the source string only to practice the syntax — set `count = 0` on the module block so Terraform performs no API calls. Your module block should look like:
+
+```hcl
+module "iam_policy" {
+  source = "git::https://github.com/terraform-aws-modules/terraform-aws-iam.git//modules/iam-policy?ref=v5.39.0"
+  count  = 0
+}
+```
+
+1. Run `terraform init` and confirm that Terraform clones the repository and installs the module into `.terraform/modules/`.
+2. Inspect `.terraform/modules/` to locate the downloaded module files. Note the directory structure Terraform uses to store Git-sourced modules.
+3. Change `?ref=v5.39.0` to `?ref=v5.38.0` in the source string. Run `terraform init` again. Observe whether Terraform detects the change and re-downloads the module.
+4. Record in a `lab_notes.txt` file: what is the advantage of pinning to a commit hash (e.g., `?ref=abc1234`) versus a tag (e.g., `?ref=v5.39.0`) from a security and reproducibility standpoint?
+
+### Challenge 2: Module Abstraction — Hide `for_each` Inside the Module
+
+Redesign the `app_config` module to accept a `map(object(...))` of services and create all config files internally, removing the need for `for_each` on the module block in the root.
+
+**Step A.** Add a new variable to `modules/app_config/variables.tf`:
+
+```hcl
+variable "services" {
+  type = map(object({
+    port           = number
+    replicas       = number
+    extra_env_vars = map(string)
+  }))
+  description = "Map of service name to service configuration"
+  default     = {}
+}
+```
+
+**Step B.** Add a `for_each` resource inside `modules/app_config/main.tf` that iterates over `var.services` to create one `local_file` per service:
+
+```hcl
+resource "local_file" "service_configs" {
+  for_each        = var.services
+  filename        = "${path.root}/output/${each.key}-${var.environment}-config.json"
+  content         = jsonencode({
+    service     = each.key
+    environment = var.environment
+    port        = each.value.port
+    replicas    = each.value.replicas
+    env_vars    = each.value.extra_env_vars
+  })
+  file_permission = "0644"
+}
+```
+
+1. Add an output `service_config_paths` to `modules/app_config/outputs.tf` that exposes `{ for k, v in local_file.service_configs : k => v.filename }`.
+2. Update the root `main.tf` to call the module once (no `for_each` on the module block), passing the full `services` map.
+3. Apply and verify that all individual service config files are created in `output/`.
+4. Compare this design (internal `for_each`) with the previous design (external `for_each` on the module block). Record in `lab_notes.txt`: when is each approach preferable, and what is lost in terms of Terraform state addressing when you hide iteration inside the module?
+
+### Reflection Questions
+
+1. In this lab the root module orchestrates two child modules (`app_config` and `environment_info`) and passes outputs from one as inputs to another. Explain why Terraform can create `module.api` and `module.worker` in parallel but must wait for both to complete before creating `module.env_info`. What mechanism enforces this ordering?
+2. The lab used `for_each` on a module block to create three service instances from a single module call. Describe a scenario where using `count` on a module block would be more appropriate than `for_each`, and a scenario where `for_each` is strongly preferred. What operational problem arises when you switch from `count` to `for_each` (or vice versa) on an existing module block that already has state?
 
 ---
 

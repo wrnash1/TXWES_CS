@@ -292,3 +292,25 @@ For the Elastic Beanstalk API endpoint, attach an ACM certificate to the load ba
 - [ ] Add `ssl: { rejectUnauthorized: false }` to the `pg` Pool for RDS connections
 - [ ] Run the schema SQL on RDS and verify the Express API can query it
 - [ ] Confirm the deployed full-stack app loads, authenticates, and persists data end-to-end
+
+---
+
+## 11. Supplemental Resources
+
+The following free, open-access resources go deeper on Module 14 topics:
+
+**1. AWS Documentation — Hosting a Static Website on Amazon S3**
+[https://docs.aws.amazon.com/AmazonS3/latest/userguide/WebsiteHosting.html](https://docs.aws.amazon.com/AmazonS3/latest/userguide/WebsiteHosting.html)
+The official AWS guide for S3 static website hosting covering bucket policy configuration, index and error document settings, and the difference between S3 REST endpoint and S3 website endpoint — directly aligned to Part 2 of Lab 14 and the SPA routing fix covered in Section 2 of this guide.
+
+**2. AWS Documentation — Amazon CloudFront Developer Guide**
+[https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Introduction.html](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Introduction.html)
+The complete CloudFront reference covering distribution setup, custom error responses, cache behavior configuration, TTL settings, invalidation paths, and HTTPS with ACM — covers all CloudFront concepts in Section 3 of this guide and the CDN caching questions on the DVA-C02 exam.
+
+**3. AWS Documentation — Elastic Beanstalk Node.js Platform**
+[https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_nodejs.html](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_nodejs.html)
+The official Elastic Beanstalk documentation for deploying Node.js applications — covers platform versions, `package.json` requirements, environment property configuration, deployment zip structure, and the Nginx reverse proxy configuration — directly aligned to Section 5 of this guide and Part 3 of Lab 14.
+
+**4. AWS Documentation — Amazon RDS for PostgreSQL**
+[https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_PostgreSQL.html](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_PostgreSQL.html)
+The official RDS PostgreSQL documentation covering instance creation, VPC and security group configuration, Multi-AZ setup, automated backups, and SSL connection requirements — directly aligned to Section 6 of this guide, the `ssl: { rejectUnauthorized: false }` pattern, and the RDS security questions on the DVA-C02 exam.

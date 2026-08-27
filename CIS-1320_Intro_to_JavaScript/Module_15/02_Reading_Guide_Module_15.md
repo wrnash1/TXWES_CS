@@ -330,7 +330,28 @@ Guard clauses at the top of functions catch invalid input immediately with a cle
 
 ---
 
-## 8. JSE Certification Exam Tips
+## 8. Supplemental Resources
+
+The following free, openly available resources extend and reinforce the topics covered in this module.
+
+- **[MDN Web Docs — Error](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error)**
+  Complete reference for the `Error` constructor, the six built-in error types (`SyntaxError`, `ReferenceError`, `TypeError`, `RangeError`, `URIError`, `EvalError`), the `name`/`message`/`stack` properties, and creating custom error classes with `extends Error`.
+
+- **[MDN Web Docs — try...catch](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch)**
+  Full reference for the `try/catch/finally` statement. Covers `catch` binding, optional `catch` binding (ES2019), `finally` execution guarantees, and interaction between `return` and `finally`.
+
+- **[javascript.info — Error handling, "try...catch"](https://javascript.info/try-catch)**
+  Clear walkthrough of the try/catch/finally mechanics, the error object, rethrowing, and custom error classes. Includes exercises on building a validation error hierarchy with `instanceof` dispatch.
+
+- **[Chrome Developers — Debug JavaScript](https://developer.chrome.com/docs/devtools/javascript/)**
+  Official Google guide to debugging JavaScript in Chrome DevTools. Covers setting line breakpoints, conditional breakpoints, logpoints, stepping controls, the Scope and Watch panels, and the Call Stack.
+
+- **[MDN Web Docs — console](https://developer.mozilla.org/en-US/docs/Web/API/console)**
+  Complete reference for all `console` methods — `log`, `warn`, `error`, `table`, `group`/`groupEnd`, `time`/`timeEnd`, `assert`, `count`, `dir`, `trace`. Includes browser compatibility and styling with `%c`.
+
+---
+
+## 9. JSE Certification Exam Tips
 
 1. **Know all six error types** — `SyntaxError`, `ReferenceError`, `TypeError`, `RangeError`, `URIError`, `EvalError`. Know which situation triggers each.
 
@@ -354,7 +375,7 @@ Guard clauses at the top of functions catch invalid input immediately with a cle
 
 ---
 
-## 9. Study Checklist
+## 10. Study Checklist
 
 - [ ] Watch the Module 15 video lecture by Professor Nash.
 - [ ] Read [MDN — Error](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error).

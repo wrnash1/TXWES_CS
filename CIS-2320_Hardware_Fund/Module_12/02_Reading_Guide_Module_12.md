@@ -214,3 +214,29 @@ WAPs connect to switch ports and bridge wireless clients into the wired LAN at L
 
 - Professor Messer's CompTIA A+ Core 1 (220-1101) Study Notes — Network Infrastructure Devices section: professormesser.com
 - CompTIA A+ Certification Exam Objectives (220-1101) — available at comptia.org
+
+---
+
+## 9. Supplemental Resources
+
+The following free resources supplement Module 12 content on network infrastructure devices, switching, routing, and wireless access points.
+
+1. **Professor Messer — CompTIA A+ Core 1 (220-1101) Network Infrastructure Devices**
+   URL: [https://www.professormesser.com/free-a-plus-training/220-1101/220-1101-video/](https://www.professormesser.com/free-a-plus-training/220-1101/220-1101-video/)
+   Relevance: Free video lectures covering hubs, switches, routers, access points, firewalls, patch panels, and PoE standards aligned to Domain 2.2. Professor Messer's OSI layer association mnemonics are particularly useful for the device classification questions that appear on the A+ exam.
+
+1. **Cisco Networking Academy — Packet Tracer Free Simulation Software**
+   URL: [https://www.netacad.com/courses/packet-tracer](https://www.netacad.com/courses/packet-tracer)
+   Relevance: Cisco's free network simulation tool allows students to build virtual networks with routers, switches, access points, and end devices. Hands-on practice building the rack topology from Lab 12 (modem → firewall → router → switch → patch panel) in Packet Tracer reinforces device role understanding without requiring physical hardware.
+
+1. **GNS3 — Free Open-Source Network Simulator**
+   URL: [https://www.gns3.com/](https://www.gns3.com/)
+   Relevance: GNS3 is a free, open-source network emulator used by professionals and students to simulate real router and switch operating systems. Unlike Packet Tracer, GNS3 supports importing actual Cisco IOS, Juniper JunOS, and other vendor firmware images for high-fidelity simulation. Useful for exploring VLAN configuration, inter-VLAN routing, and managed switch features covered in Module 12.
+
+1. **Wireshark — Free Network Packet Analyzer**
+   URL: [https://www.wireshark.org/](https://www.wireshark.org/)
+   Relevance: Wireshark is the industry-standard free packet capture and analysis tool. Using Wireshark to capture ARP broadcasts, DHCP transactions, and ICMP ping packets on a real or simulated network provides hands-on context for understanding how switches, routers, and DHCP servers interact — directly reinforcing the network infrastructure concepts in this module.
+
+1. **Subnet-Calculator.com — Free IPv4 Subnet Calculator**
+   URL: [https://www.subnet-calculator.com/](https://www.subnet-calculator.com/)
+   Relevance: Free browser-based tool for calculating subnet masks, network addresses, broadcast addresses, and host ranges. Understanding subnetting is a prerequisite for router configuration and VLAN design, both of which are core topics in Module 12 and on the A+ Core 1 exam.

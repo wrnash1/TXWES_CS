@@ -197,3 +197,29 @@ Risk owners are assigned to the team member best positioned to monitor and respo
 - [ ] Complete the Module 09 Lab activity
 - [ ] Take the Module 09 Quiz
 - [ ] Post Module 09 Discussion initial response by Wednesday at 11:59 PM
+
+---
+
+## 9. Supplemental Resources
+
+The following free, openly licensed resources extend the concepts in this module. All links are publicly accessible — no account or purchase required.
+
+1. **Project Management Open Textbook — Chapter 11: Risk Management**
+   *BC Campus OpenEd* — [opentextbc.ca/projectmanagement — Chapter 11](https://opentextbc.ca/projectmanagement/chapter/chapter-11-project-risk-management/)
+   Covers all six Risk Management processes, the probability-impact matrix, risk response strategies, and the Risk Register structure with IT-sector examples.
+
+2. **PMI — Practice Standard for Project Risk Management (Overview)**
+   *Project Management Institute* — [pmi.org/pmbok-guide-standards/practice-guides/risk-management](https://www.pmi.org/pmbok-guide-standards/practice-guides/risk-management)
+   PMI's official risk management guidance. Covers threat and opportunity response strategies, risk registers, and quantitative analysis tools tested on PK0-005.
+
+3. **Risk Register Template and Guide — ProjectManager.com (Free)**
+   [projectmanager.com/blog/risk-register](https://www.projectmanager.com/blog/risk-register)
+   Step-by-step guide to building a Risk Register with downloadable template. Directly supports the Module 09 lab risk register activity.
+
+4. **YouTube — "Risk Management Explained" (Mike Clayton / OnlinePMCourses)**
+   [youtube.com/watch?v=IP7aBBSwq3Y](https://www.youtube.com/watch?v=IP7aBBSwq3Y)
+   18-minute video covering risk identification, qualitative analysis, probability-impact matrix scoring, and all five threat response strategies with examples.
+
+5. **Probability-Impact Matrix Interactive Tool — PM Study Circle**
+   [pmstudycircle.com/probability-impact-matrix](https://pmstudycircle.com/probability-and-impact-matrix/)
+   Free interactive tool for practicing risk scoring and prioritization — excellent preparation for calculation-based questions on the Module 09 quiz.

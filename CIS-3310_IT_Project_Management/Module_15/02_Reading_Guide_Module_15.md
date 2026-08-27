@@ -347,3 +347,29 @@ Use this checklist to confirm your readiness before the quiz and Project+ exam.
 *End of Reading Guide — Module 15*
 
 *Texas Wesleyan University — CIS-3310 IT Project Management*
+
+---
+
+## 9. Supplemental Resources
+
+The following free, openly licensed resources extend the concepts in this module. All links are publicly accessible — no account or purchase required.
+
+1. **Agile Manifesto — Original Text and Twelve Principles (Free)**
+   *Agile Alliance* — [agilemanifesto.org](https://agilemanifesto.org)
+   The primary source document for all Agile frameworks. Read the four values and twelve principles directly. Every Project+ Agile question traces back to this document.
+
+2. **Scrum Guide 2020 — Official Free Reference**
+   *Scrum.org* — [scrumguides.org/scrum-guide.html](https://scrumguides.org/scrum-guide.html)
+   The definitive, freely downloadable Scrum framework reference. Covers all three roles, five events, three artifacts, and the commitments (Definition of Done, Sprint Goal, Product Goal) tested on Project+ and Scrum certifications.
+
+3. **Kanban University — Kanban Method Overview (Free)**
+   *Kanban University* — [kanban.university/kanban-development-method](https://kanban.university/kanban-development-method/)
+   Official overview of the Kanban method including WIP limits, flow metrics, and cycle time principles. Directly supports the Kanban vs. Scrum comparison tested in Module 15.
+
+4. **PMI Agile Practice Guide — Free Download (PMI Member or OpenEd version)**
+   *Project Management Institute* — [pmi.org/pmbok-guide-standards/practice-guides/agile](https://www.pmi.org/pmbok-guide-standards/practice-guides/agile)
+   PMI's official guide to Agile, hybrid, and iterative approaches aligned with PMBOK. Covers hybrid lifecycle patterns and the PM's evolving role in Agile environments — both tested on Project+.
+
+5. **Mountain Goat Software — User Stories and Story Points Guide (Free)**
+   *Mike Cohn* — [mountaingoatsoftware.com/agile/user-stories](https://www.mountaingoatsoftware.com/agile/user-stories)
+   Comprehensive free guide to writing user stories, applying the INVEST criteria, sizing with story points, and running Planning Poker. Directly supports the Module 15 lab backlog construction and estimation exercises.

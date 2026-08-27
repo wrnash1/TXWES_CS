@@ -191,3 +191,29 @@ The Hartwell operations manager says: "I don't understand why we need all these 
 2. Name your file: `Lab06_LastName_FirstName.pdf`
 3. Upload to Canvas under "Lab 06 — Supply Chain Management Integrations."
 4. Deadline: See course schedule in Canvas. Late submissions lose 10 points per day.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: MRP Master Data Configuration Design
+
+A contract electronics manufacturer is implementing SAP MM. They produce three product categories: (1) standard circuit boards (high volume, predictable demand, 20+ vendors available), (2) custom ASIC chips (made-to-order, single-source vendor, 12-week lead time), and (3) passive components (very high volume, commodity, safety stock approach). You are configuring the material master MRP views.
+
+1. For each product category, specify the recommended MRP type (reorder point, MRP, consumption-based, make-to-order), lot-sizing procedure, and safety stock strategy. Justify each choice with reference to the product's demand characteristics.
+2. For the custom ASIC chips, calculate the required reorder point given: average weekly consumption = 50 units, planned delivery time = 84 days (12 weeks), safety stock = 2 weeks of average consumption.
+3. Design the source list configuration for the standard circuit boards: identify what information would be stored for each of the 20+ vendors, and explain how SAP uses the source list during automatic purchase order creation.
+4. Explain why using Moving Average Price (rather than Standard Price) is more appropriate for the passive components category, and describe one scenario where Standard Price would be preferred even for high-volume commodities.
+
+### Challenge 2: Supply Chain Disruption Response Planning
+
+An automotive parts supplier experiences a sudden shortage of a critical steel alloy due to a supplier bankruptcy. The company has 15 days of stock remaining for the alloy, three alternative suppliers (none pre-qualified), and production commitments to three major customers in the next 30 days.
+
+1. Define the immediate (0-48 hour) actions the supply chain team should take in the ERP system, specifying which SAP transactions are involved and what data must be updated.
+2. Map the cross-module impacts of the shortage on SD (customer commitments), PP (production scheduling), FI (accruals for premium sourcing costs), and MM (emergency procurement). For each module, identify one specific document or configuration that must be created or changed.
+3. Design a vendor qualification checklist with six criteria for emergency supplier approval. For each criterion, explain why it matters in a 48-hour qualification scenario versus a standard 3-month qualification process.
+
+### Reflection Questions
+
+1. MRP is often described as a "push" planning system — it schedules production based on forecasted demand. How does this create risk in volatile demand environments, and what more advanced planning approach (think beyond standard MRP) would address this limitation?
+2. The supply chain disruption scenario required cross-module coordination between SD, PP, MM, and FI. In a company without integrated ERP, how would this same disruption be managed, and what specific information gaps would make the response slower and less accurate?

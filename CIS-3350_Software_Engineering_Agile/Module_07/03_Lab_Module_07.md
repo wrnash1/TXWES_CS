@@ -134,6 +134,32 @@ Submit to the Canvas assignment portal by the module due date.
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Behavior-Driven Development Story-to-Test Mapping
+
+The Given/When/Then acceptance criteria format was designed to be directly executable as automated tests. Select two of your rewritten stories from Part 3 and for each one:
+
+1. Write three acceptance criteria in Given/When/Then format — one happy path, one edge case, and one failure/error case.
+2. Describe in plain English (no code required) what automated test would verify each criterion. Name the type of test (unit, integration, end-to-end) and the tool you would use (e.g., pytest, JUnit, Selenium, Cypress).
+3. Explain how having these three acceptance criteria written before development begins changes the way a Developer would approach implementing the story. What would they build first? What would they test first?
+
+### Challenge 2: Story Map Construction
+
+A Story Map is a two-dimensional visualization of a product's user stories organized by user activity (horizontal axis) and detail/priority (vertical axis). Build a simple Story Map for a university course registration system:
+
+1. Identify four to five user activities that a student performs during course registration (these become your horizontal "backbone" — e.g., Browse Courses, Select Course, Review Schedule, Register, Confirm).
+2. Under each activity, write two to three user stories at different levels of detail: the most essential (row 1), the important-but-not-critical (row 2), and the nice-to-have (row 3).
+3. Draw a "release cut" horizontal line that separates what would be included in a Minimum Viable Product (MVP) release from what would be deferred.
+4. Write a two-to-three sentence justification for where you drew the MVP cut and which user activities absolutely must work for the system to be usable.
+
+### Reflection Questions
+
+1. The Three Cs model says a user story is a "promise for a conversation, not a specification." What are the risks of teams treating the written story card as the complete requirement, skipping the conversation? Give a specific example of how this could go wrong.
+2. Technical debt stories (e.g., "Refactor the authentication service") are real work that belongs in the backlog, but they are hard to write as user stories with a clear benefit. How should a Product Owner and Developers handle technical debt items in the backlog without violating the spirit of the user story format?
+
+---
+
 ## Rubric Summary
 
 | Component | Points |

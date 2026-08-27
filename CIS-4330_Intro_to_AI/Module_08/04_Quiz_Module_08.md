@@ -254,4 +254,247 @@ B. Extractive summarization, because it selects existing sentences from the sour
 
 ---
 
+---
+
+## Question 11 (5 points)
+
+Azure AI Language's opinion mining feature is enabled when calling the sentiment analysis endpoint. What additional information does opinion mining return compared to standard sentiment analysis?
+
+A. The language of the document and the detected dialect region.
+
+B. Aspect-level sentiment — which specific features or attributes of a subject are evaluated positively or negatively, along with who expressed the opinion.
+
+C. A count of positive, negative, and neutral words in each sentence.
+
+D. A translation of the document into English before sentiment scoring.
+
+### Q11 — Correct Answer
+
+B. Aspect-level sentiment — which specific features or attributes of a subject are evaluated positively or negatively, along with who expressed the opinion.
+
+### Q11 — Distractor Analysis
+
+- A is incorrect: Language detection is a separate feature and is not what opinion mining adds. Dialect information is not returned.
+- C is incorrect: Standard sentiment analysis and opinion mining both use contextual embeddings, not word counts. Neither returns a count of sentiment-labeled individual words.
+- D is incorrect: Translation is Azure AI Translator's function. Sentiment analysis operates on the text in its original language; translation is not part of the pipeline.
+
+---
+
+## Question 12 (5 points)
+
+A developer builds a CLU model with four intents: BookFlight, CancelFlight, CheckStatus, and None. During testing, the model frequently predicts BookFlight for utterances that should match CancelFlight. What is the most likely cause and best remedy?
+
+A. The CLU service has a known bug that confuses flight-related intents.
+
+B. The utterances for BookFlight and CancelFlight are too similar; adding more varied and distinctive training utterances for each intent will help the model distinguish them.
+
+C. The None intent has too many utterances, causing the model to ignore the flight intents.
+
+D. Four intents exceed the maximum supported by CLU.
+
+### Q12 — Correct Answer
+
+B. The utterances for BookFlight and CancelFlight are too similar; adding more varied and distinctive training utterances for each intent will help the model distinguish them.
+
+### Q12 — Distractor Analysis
+
+- A is incorrect: The described confusion is a standard model training quality issue, not a service bug.
+- C is incorrect: The None intent should contain diverse out-of-scope utterances. Having sufficient None utterances improves the model; it does not cause confusion between in-scope intents.
+- D is incorrect: CLU supports hundreds of intents. Four intents is well within the supported range.
+
+---
+
+## Question 13 (5 points)
+
+What is entity linking in Azure AI Language, and how does it differ from standard NER?
+
+A. Entity linking assigns a custom label to any word in the text; NER only finds proper nouns.
+
+B. Entity linking disambiguates recognized entities by connecting them to a knowledge base entry (e.g., linking "Paris" to the Wikipedia article for Paris, France vs. Paris, Texas); NER only identifies and categorizes entity mentions without disambiguation.
+
+C. Entity linking extracts only numerical entities such as dates and prices; NER extracts person names and organizations.
+
+D. Entity linking and NER are synonyms for the same operation in Azure AI Language.
+
+### Q13 — Correct Answer
+
+B. Entity linking disambiguates recognized entities by connecting them to a knowledge base entry (e.g., linking "Paris" to the Wikipedia article for Paris, France vs. Paris, Texas); NER only identifies and categorizes entity mentions without disambiguation.
+
+### Q13 — Distractor Analysis
+
+- A is incorrect: NER recognizes a broad range of entity types (not just proper nouns), and entity linking is not about assigning custom labels.
+- C is incorrect: NER covers many types including people, organizations, locations, dates, and quantities. Entity linking covers recognized entities that map to knowledge base entries, not exclusively numbers.
+- D is incorrect: They are distinct features. NER produces category labels; entity linking produces knowledge base identifiers (URLs). Both are available in Azure AI Language but return different data.
+
+---
+
+## Question 14 (5 points)
+
+A legal firm processes thousands of contracts containing names, dates, and monetary amounts. They need a solution that can automatically detect and replace all person names with the placeholder `[REDACTED]` before the documents are stored. Which feature of Azure AI Language should they use?
+
+A. Named entity recognition — the detected entities can be used to filter sensitive content.
+
+B. Key phrase extraction — important phrases including names will be returned.
+
+C. PII entity recognition with redaction — the API returns both the detected PII and a redacted version of the text.
+
+D. Abstractive summarization — the summary will omit personally identifiable information.
+
+### Q14 — Correct Answer
+
+C. PII entity recognition with redaction — the API returns both the detected PII and a redacted version of the text.
+
+### Q14 — Distractor Analysis
+
+- A is incorrect: Standard NER identifies entity categories but does not produce a redacted version of the text. The firm would need to implement their own find-and-replace logic from NER output.
+- B is incorrect: Key phrase extraction returns important phrases for understanding content; it does not identify or redact PII specifically.
+- D is incorrect: Abstractive summarization generates shortened versions of text. It does not systematically identify PII or guarantee that names are excluded from the output.
+
+---
+
+## Question 15 (5 points)
+
+A news media organization wants to build a chatbot that answers readers' questions about breaking news stories. The knowledge base will be updated hourly from articles. Which Azure AI Language service is most appropriate?
+
+A. CLU — train intents for each article topic.
+
+B. Azure AI Language Question Answering — import articles as knowledge sources and query against extracted Q&A pairs.
+
+C. Azure AI Translator — translate questions to match stored article language.
+
+D. Azure AI Language PII detection — scan articles for sensitive information before storing.
+
+### Q15 — Correct Answer
+
+B. Azure AI Language Question Answering — import articles as knowledge sources and query against extracted Q&A pairs.
+
+### Q15 — Distractor Analysis
+
+- A is incorrect: Training CLU intents for thousands of articles is impractical and would require constant retraining. Question Answering is designed for knowledge retrieval at scale.
+- C is incorrect: Translation is for converting between languages. If the reader and articles share the same language, translation is irrelevant. Even if languages differ, translation alone does not answer questions.
+- D is incorrect: PII detection protects personal data. It does not answer reader questions or build a chatbot knowledge base.
+
+---
+
+## Question 16 (5 points)
+
+Which of the following NLP preprocessing steps is MOST important before training a traditional machine learning text classifier (not a transformer-based model)?
+
+A. Applying PII redaction to remove personal information from training documents.
+
+B. Tokenization, stopword removal, and TF-IDF vectorization to convert text into numerical feature vectors the model can process.
+
+C. Running abstractive summarization to shorten all training documents to 100 words.
+
+D. Translating all training documents into English using Azure AI Translator.
+
+### Q16 — Correct Answer
+
+B. Tokenization, stopword removal, and TF-IDF vectorization to convert text into numerical feature vectors the model can process.
+
+### Q16 — Distractor Analysis
+
+- A is incorrect: PII redaction is a privacy preprocessing step for sensitive data, not a requirement for training a text classifier. It does not convert text into numerical features.
+- C is incorrect: Summarizing training documents to 100 words would lose the signals needed for accurate classification. Preprocessing for traditional ML focuses on feature representation, not compression.
+- D is incorrect: Translating to English is relevant only for multilingual scenarios. Traditional ML classifiers can be trained in any language as long as the feature representation is consistent.
+
+---
+
+## Question 17 (5 points)
+
+A CLU model's training evaluation shows F1 scores of 0.95 for BookRoom and 0.62 for CancelRoom. A developer examines the labeled utterances and finds that CancelRoom has only 8 training examples while BookRoom has 47. What action will most likely improve CancelRoom's F1 score?
+
+A. Lower the probability threshold for the CancelRoom intent specifically.
+
+B. Add more labeled training utterances for CancelRoom (at least 20-30 diverse examples).
+
+C. Delete the CancelRoom intent and combine it with the None intent.
+
+D. Retrain the model without any training data changes.
+
+### Q17 — Correct Answer
+
+B. Add more labeled training utterances for CancelRoom (at least 20-30 diverse examples).
+
+### Q17 — Distractor Analysis
+
+- A is incorrect: Lowering the probability threshold increases recall but also increases false positives (predicting CancelRoom when other intents should match). The root cause — insufficient training data — is not addressed by threshold changes.
+- C is incorrect: Merging CancelRoom into None would make the bot unable to recognize and respond to genuine cancellation requests.
+- D is incorrect: Retraining without any data changes will produce the same model. The training data imbalance is the root cause and must be addressed.
+
+---
+
+## Question 18 (5 points)
+
+An Azure AI Language sentiment analysis call processes a customer complaint: "The product arrived on time, but the packaging was completely damaged and the manual was missing." Which sentiment output best represents this document?
+
+A. Positive sentiment — the product arrived on time.
+
+B. Negative sentiment — the complaint outweighs the positive aspect.
+
+C. Mixed sentiment — with sentence-level scores: first sentence positive (on-time delivery), second and third sentences negative (packaging and missing manual).
+
+D. Neutral sentiment — the document contains both positive and negative words in equal measure.
+
+### Q18 — Correct Answer
+
+C. Mixed sentiment — with sentence-level scores: first sentence positive (on-time delivery), second and third sentences negative (packaging and missing manual).
+
+### Q18 — Distractor Analysis
+
+- A is incorrect: The document contains significant negative content. A positive overall label would misrepresent the customer's experience.
+- B is incorrect: While negative aspects dominate, the Azure AI Language service also provides sentence-level and aspect-level detail. Simply labeling the document negative loses the distinction that timely delivery was a positive experience.
+- D is incorrect: Neutral sentiment indicates lack of positive or negative opinion. This document expresses clear positive and negative opinions. Neutral applies to factual or opinion-free text.
+
+---
+
+## Question 19 (5 points)
+
+Custom Translator differs from the standard Azure AI Translator service in which important way?
+
+A. Custom Translator is used for speech translation; the standard service only translates text.
+
+B. Custom Translator allows organizations to upload domain-specific parallel text to fine-tune translation quality for specialized vocabulary (e.g., legal, medical, engineering terminology).
+
+C. Custom Translator is free for all Azure customers; the standard service requires a paid plan.
+
+D. Custom Translator replaces CLU for intent recognition tasks.
+
+### Q19 — Correct Answer
+
+B. Custom Translator allows organizations to upload domain-specific parallel text to fine-tune translation quality for specialized vocabulary (e.g., legal, medical, engineering terminology).
+
+### Q19 — Distractor Analysis
+
+- A is incorrect: Both services handle text translation. Azure AI Speech Service handles speech translation. Neither Custom Translator nor the standard Translator is for speech.
+- C is incorrect: Custom Translator has training compute costs. It is not free. The standard Translator has a free tier for general translation; Custom Translator is a premium offering.
+- D is incorrect: Custom Translator is purely for language translation. CLU handles conversational intent recognition. These are completely different capabilities.
+
+---
+
+## Question 20 (5 points)
+
+A compliance officer needs to identify every email address, phone number, and credit card number in 50,000 customer service transcripts stored in Azure Blob Storage. The officer wants automated detection reports without modifying the original files. Which approach best meets this need?
+
+A. Use Azure AI Language PII entity recognition to scan the transcripts and return detected PII entities with their positions — without enabling redaction.
+
+B. Use Azure AI Language NER with the standard pre-built categories.
+
+C. Use Azure AI Language sentiment analysis to flag emotionally sensitive conversations.
+
+D. Use Azure AI Language extractive summarization to condense each transcript before manual review.
+
+### Q20 — Correct Answer
+
+A. Use Azure AI Language PII entity recognition to scan the transcripts and return detected PII entities with their positions — without enabling redaction.
+
+### Q20 — Distractor Analysis
+
+- A is correct because PII detection specifically targets sensitive data types like email addresses, phone numbers, and credit card numbers. The redaction feature can be disabled so the original files remain unchanged while the compliance report captures entity positions.
+- B is incorrect: Standard NER detects general entity categories (Person, Organization, Location). It does not specifically target PII data types like credit card numbers or phone numbers.
+- C is incorrect: Sentiment analysis measures emotional tone. It does not identify PII data types.
+- D is incorrect: Summarization condenses content. It does not detect or report PII entity locations for compliance purposes.
+
+---
+
 End of Quiz — Module 08

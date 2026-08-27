@@ -330,4 +330,27 @@ After submitting, delete the resource group to avoid charges.
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Multi-Language NLP Pipeline
+
+1. Using the Azure AI Language SDK or REST API, submit the same short paragraph (3-4 sentences of your choice) in three different languages — English, Spanish, and one additional language of your choice. For each, call: (a) language detection, (b) sentiment analysis, and (c) key phrase extraction.
+2. Build a summary table with columns: Language, Detected Language (name + confidence), Sentiment Label, Top 3 Key Phrases. Populate it from your API responses.
+3. Translate the non-English texts to English using Azure AI Translator, then re-run sentiment analysis on the translated versions. Compare the sentiment scores to the direct-language scores from step 1.
+4. Explain in 2-3 sentences why sentiment analysis scores might differ between the original language and the translated version, and which approach (direct-language vs. translate-then-analyze) is generally more reliable.
+
+### Challenge 2: CLU Intent Coverage Gap Analysis
+
+1. Review your CLU model from Part E of the lab. Design 10 test utterances that were NOT part of your training data — including at least 2 utterances that should map to each of your defined intents, and at least 2 that should be classified as None.
+2. Submit all 10 utterances to your deployed CLU model and record the top predicted intent and confidence score for each.
+3. For any utterance that was misclassified (wrong intent predicted) or correctly predicted with low confidence (below 0.70), analyze why. Is the utterance semantically ambiguous? Is the training set for that intent too small or not diverse enough?
+4. Write a prioritized list of 3 improvements (additional utterances to add, intents to split, or entities to define) that would most improve your model based on the gap analysis.
+
+### Reflection Questions
+
+1. Based on Challenge 1, what does the difference in key phrases extracted from Spanish vs. English versions of the same content reveal about how language-specific tokenization and stopword rules affect NLP outputs?
+2. Based on Challenge 2, explain to a product manager why NLP model deployment is not a one-time event — what ongoing maintenance activities are needed to keep a CLU model accurate as user language evolves?
+
+---
+
 End of Lab 08

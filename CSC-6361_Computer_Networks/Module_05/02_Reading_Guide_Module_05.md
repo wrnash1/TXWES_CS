@@ -147,3 +147,23 @@ The hospital's WAN is 100 Mbps shared between all applications. At peak hours, b
 4. **Automation Argument:** The hospital IT director asks why you want to spend time learning Python scripting instead of using the GUI. Write a concise but technically substantive argument for why network automation is valuable specifically in a healthcare network environment.
 
 **Citation:** Cite RFC 2474 (DiffServ), RFC 5798 (VRRP), or Cisco QoS Design Guide.
+
+---
+
+## 9. Supplemental Resources
+
+**1. Cisco QoS Design Guide**
+https://www.cisco.com/c/en/us/td/docs/solutions/Enterprise/WAN_and_MAN/QoS_SRND/QoS-SRND-Book.html
+Comprehensive Cisco QoS design reference covering classification, marking, queuing, and congestion management for enterprise WAN.
+
+**2. RFC 3246 — Expedited Forwarding PHB**
+https://datatracker.ietf.org/doc/html/rfc3246
+The definitive specification for EF (DSCP 46) behavior, including the strict rate contract requirement.
+
+**3. Ansible Network Automation Documentation**
+https://docs.ansible.com/ansible/latest/network/index.html
+Official Ansible documentation for network automation modules including ios_config, ios_command, and resource modules.
+
+**4. Cisco DevNet — NETCONF/YANG Learning Lab**
+https://developer.cisco.com/learning/modules/intro-device-level-interfaces/
+Hands-on labs for NETCONF, RESTCONF, and YANG model-driven programmability on Cisco IOS-XE.

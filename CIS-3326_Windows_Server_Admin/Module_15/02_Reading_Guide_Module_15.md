@@ -491,4 +491,26 @@ remains the exam-standard answer for identifying a disk bottleneck.
 
 ---
 
+## 16. Supplemental Resources
+
+The following free, open-access resources go deeper on Module 15 topics:
+
+**1. Microsoft Learn — Monitor Windows Server performance**
+<https://learn.microsoft.com/en-us/training/modules/monitor-windows-server-performance/>
+Hands-on module covering Task Manager, Resource Monitor, Performance Monitor, Data Collector Sets, and event log analysis with sandbox exercises aligned to AZ-800.
+
+**2. Microsoft Docs — Get-Counter cmdlet reference**
+<https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.diagnostics/get-counter>
+Full documentation for `Get-Counter` including counter path syntax, instance wildcards, `SampleInterval`, `MaxSamples`, `Continuous` mode, and exporting counter data with `Export-Counter`.
+
+**3. Microsoft Learn — Implement Desired State Configuration (DSC)**
+<https://learn.microsoft.com/en-us/training/modules/implement-desired-state-configuration/>
+Covers DSC architecture, LCM configuration modes (ApplyOnly, ApplyAndMonitor, ApplyAndAutoCorrect), Push vs. Pull delivery, resource types, `DependsOn` ordering, and MOF compilation.
+
+**4. Microsoft Docs — Windows PowerShell Desired State Configuration overview**
+<https://learn.microsoft.com/en-us/powershell/scripting/dsc/overview>
+Complete DSC reference including the DSC resource model, configuration data, partial configurations, troubleshooting with `Get-DscConfigurationStatus`, and `Test-DscConfiguration`.
+
+---
+
 *Review all sections before beginning Lab 15, Quiz 15, and Discussion 15.*

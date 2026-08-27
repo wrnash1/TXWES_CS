@@ -186,3 +186,29 @@ In 100-150 words, describe a real or hypothetical business process from a field 
 2. Name your file: `Lab02_LastName_FirstName.pdf`
 3. Upload to Canvas under "Lab 02 — Business Process Management."
 4. Deadline: See course schedule in Canvas. Late submissions lose 10 points per day unless an extension is approved by Professor Nash in advance.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Multi-Department BPMN with Exception Handling
+
+A regional bank's loan origination process involves four departments: Customer Service, Credit Analysis, Legal, and Finance. The process must handle three exception paths: (1) incomplete application → return to customer, (2) credit score below threshold → automatic rejection, (3) legal review flags a compliance issue → escalate to VP.
+
+1. Draw a complete BPMN 2.0 diagram with four swimlanes, at least two exclusive gateways (one for credit score routing, one for legal review outcome), one timer intermediate event (legal review must complete within 3 business days or escalate automatically), and clearly labeled start and end events.
+2. Identify two places in the diagram where a parallel gateway could reduce total cycle time by running steps concurrently, and explain the tradeoff of doing so.
+3. Annotate the diagram with estimated cycle times for each step. Calculate total cycle time for the "happy path" (no exceptions) and the longest exception path.
+4. List three data fields that must be passed between swimlane handoffs and identify which ERP or CRM system would own each field as its system of record.
+
+### Challenge 2: Process KPI Dashboard Design
+
+You have been asked to build a process performance measurement framework for the purchase order approval process studied in Lab 02.
+
+1. Define five KPIs for the PO approval process. For each KPI, specify: the metric name, how it is calculated, the data source (which SAP transaction or table), the target value, and the alert threshold that should trigger an escalation.
+2. Identify which two KPIs are leading indicators (predict future problems) versus lagging indicators (report past outcomes), and explain why the distinction matters for process management.
+3. Describe how a Salesforce dashboard or SAP Analytics Cloud report could visualize each KPI, specifying the chart type most appropriate for each metric.
+
+### Reflection Questions
+
+1. In the bank loan process, the timer escalation after 3 days adds complexity to the BPMN diagram. Under what circumstances is it worth this added complexity, and when might a simpler manual follow-up be preferable?
+2. Which of the five KPIs you designed in Challenge 2 would be most difficult to collect from existing systems, and what data quality or integration work would be required to make it measurable?

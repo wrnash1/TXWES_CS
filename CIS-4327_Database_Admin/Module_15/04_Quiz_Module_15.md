@@ -165,3 +165,193 @@ Distractor analysis: A is incorrect because Cloud SQL instances do not require a
 ---
 
 Reference: cloud.google.com/learn
+
+---
+
+### Question 11 (5 points)
+
+A Cloud SQL for PostgreSQL instance is running out of storage during peak hours due to large transaction logs and temporary files. The DBA wants Cloud SQL to automatically increase storage when usage reaches 90% without manual intervention. Which configuration achieves this?
+
+A) Enable `automatic storage increase` on the Cloud SQL instance with a storage increase limit set to the maximum needed capacity.
+B) Create a Cloud Monitoring alert on `database/disk/utilization > 0.90` that triggers a Cloud Function to resize the instance.
+C) Set `max_wal_size` to a larger value in Cloud SQL flags to allow WAL to grow without triggering storage limits.
+D) Enable scheduled snapshots to free up space before the 90% threshold is reached.
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- B) While a Cloud Function-triggered resize is technically possible, it is operationally complex and introduces automation lag; Cloud SQL's built-in automatic storage increase is the purpose-built, immediate solution.
+- C) `max_wal_size` controls the maximum WAL size before a checkpoint is forced; it does not prevent total storage from filling up and does not automatically increase provisioned disk capacity.
+- D) Scheduled snapshots back up data for recovery purposes; they do not free disk space on the running instance — they add snapshot storage, which is billed separately.
+
+---
+
+### Question 12 (5 points)
+
+A DBA is reviewing a Cloud SQL for PostgreSQL `pg_stat_activity` query and sees many connections with `state = 'idle in transaction'` and `wait_event_type = 'Lock'`. What does this indicate and what is the most appropriate action?
+
+A) The connections are waiting to acquire locks held by long-running open transactions; investigate and terminate the blocking transaction using `SELECT pg_terminate_backend(pid)`.
+B) The connections are idle and waiting for new queries from the application; this is normal connection pool behavior.
+C) The connections have exceeded `idle_in_transaction_session_timeout`; they will be terminated automatically in 30 seconds.
+D) The connections are blocked by autovacuum holding an exclusive lock; pause autovacuum on the affected table.
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- B) `idle in transaction` is distinct from `idle` — `idle` means the session has no open transaction; `idle in transaction` means the session is inside an explicit transaction that has not committed or rolled back, which is a concerning state for locks.
+- C) `idle_in_transaction_session_timeout` will terminate such sessions if configured with a non-zero value, but this does not indicate the connections will resolve on their own in 30 seconds — the default is 0 (disabled), meaning they persist indefinitely.
+- D) Autovacuum holds only `ShareUpdateExclusiveLock`, which does not block regular DML; it is unlikely to be the cause of lock waits that show `Lock` wait events in `pg_stat_activity`.
+
+---
+
+### Question 13 (5 points)
+
+A team uses Terraform to manage Cloud SQL instances. They need to rotate the `postgres` user password without downtime. Which Terraform approach correctly handles this?
+
+A) Update the `password` attribute in the `google_sql_user` resource and run `terraform apply`; Cloud SQL updates the password without restarting the instance.
+B) Destroy and recreate the `google_sql_user` resource with a new password using `terraform taint`.
+C) Terraform cannot manage database user passwords; they must be rotated manually via `gcloud sql users set-password`.
+D) Use `terraform refresh` to pull the current password from Cloud SQL into the state file before updating.
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- B) Destroying and recreating the user would drop the user and all associated grants, potentially causing an outage; `terraform apply` on a changed `password` attribute performs an in-place update without recreating the user.
+- C) Terraform's `google_sql_user` resource does manage passwords; the `password` attribute is writable and applied via `terraform apply` without manual `gcloud` commands.
+- D) `terraform refresh` reads current resource state from GCP into the state file but cannot read the current password (it is write-only and not returned by the API); refreshing before an apply is unnecessary for a password update.
+
+---
+
+### Question 14 (5 points)
+
+A Cloud Monitoring dashboard shows that `database/postgresql/num_backends` has been at 98 out of `max_connections = 100` for the past 6 hours. The DBA adds `max_connections = 200` as a Cloud SQL flag. What happens immediately after applying this change?
+
+A) The Cloud SQL instance restarts to apply the new `max_connections` value; new connections can reach 200 after the restart.
+B) The `max_connections` change is applied live without a restart; 200 connections are immediately available.
+C) The flag change is queued for the next maintenance window and will not take effect until then.
+D) Cloud SQL automatically rejects the change because `max_connections = 200` exceeds the instance's memory capacity.
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- B) `max_connections` is a PostgreSQL parameter that requires a server restart to take effect; it cannot be changed live. Cloud SQL applies the flag change and restarts the instance, which causes a brief connection interruption.
+- C) Database flag changes in Cloud SQL take effect immediately (with a restart for parameters that require it), not at the next maintenance window; maintenance windows apply to scheduled software updates, not manual flag changes.
+- D) Cloud SQL validates that `max_connections` is within the supported range for the instance tier but does not reject values below the tier maximum; 200 connections is well within limits for most instance tiers.
+
+---
+
+### Question 15 (5 points)
+
+A Terraform `google_sql_database_instance` resource has `deletion_protection = true` set. A DBA attempts `terraform destroy`. What happens?
+
+A) Terraform returns an error: the API rejects the delete request because `deletion_protection` is enabled at the Cloud SQL level.
+B) Terraform succeeds but Cloud SQL marks the instance for deletion with a 7-day retention period.
+C) Terraform's `lifecycle { prevent_destroy = true }` overrides the Cloud SQL deletion protection, but `deletion_protection = true` does not affect Terraform.
+D) Terraform disables `deletion_protection` automatically before deleting the instance.
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- B) Cloud SQL does not have a 7-day deletion retention period (that is BigQuery time travel); `deletion_protection = true` causes the API call to be rejected immediately.
+- C) `deletion_protection` in the Terraform resource maps to the Cloud SQL API flag; when set to `true`, any delete API call (including from Terraform) is rejected by the Cloud SQL API regardless of Terraform-level `lifecycle` settings.
+- D) Terraform does not automatically modify `deletion_protection` before destruction; it submits the delete request, which is rejected by Cloud SQL. To destroy the instance, the DBA must first set `deletion_protection = false` and apply, then run `terraform destroy`.
+
+---
+
+### Question 16 (5 points)
+
+A DBA wants to receive an alert when any Cloud SQL instance in a GCP project has been without a successful backup for more than 24 hours. Which Cloud Monitoring approach creates this alert?
+
+A) Create a metric absence alert on `database/backup/last_successful_backup_time` that fires if the metric has not been reported for 24 hours.
+B) Query `INFORMATION_SCHEMA.BACKUP_HISTORY` in Cloud SQL every hour and alert if the last backup is older than 24 hours.
+C) Enable Admin Activity audit logs and filter for backup creation events; alert if no backup event appears in 24 hours.
+D) Set a Cloud Scheduler job to verify backups via `gcloud sql backups list` every hour and publish a custom metric.
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- B) `INFORMATION_SCHEMA.BACKUP_HISTORY` is a SQL Server system table, not a Cloud SQL feature; Cloud SQL does not expose backup history through a SQL query interface.
+- C) Admin Activity logs do capture backup events, but building a 24-hour absence alert from log events requires a log-based metric with an absence condition, which is more complex than using the built-in backup metric; Cloud Monitoring's native metric is the simpler and more reliable approach.
+- D) While a Cloud Scheduler + custom metric approach works, it requires building and maintaining custom automation; the built-in Cloud Monitoring metric is available natively and requires no custom code.
+
+---
+
+### Question 17 (5 points)
+
+A Terraform configuration manages a Cloud SQL instance. A developer manually adds a database flag directly in the Cloud Console (not via Terraform). What will happen the next time `terraform apply` is run?
+
+A) Terraform detects the configuration drift and reverts the manually added flag to match the Terraform configuration.
+B) Terraform imports the manual change into the state file and the flag becomes part of the managed configuration.
+C) Terraform ignores the manual change because it was made outside Terraform's scope.
+D) Terraform generates an error because the state and actual configuration are out of sync.
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- B) Terraform does not automatically import manual changes into the state file; `terraform import` is a manual command. On `terraform apply`, Terraform computes the diff between its state and the desired configuration and applies changes to reconcile them, which means reverting the manual flag.
+- C) Terraform does not ignore drift unless `lifecycle { ignore_changes = [...] }` is specifically configured for the `database_flags` attribute; by default, all attributes are managed.
+- D) State/configuration divergence does not cause an error in Terraform; it causes a plan showing changes to reconcile the drift, which is applied on `terraform apply`.
+
+---
+
+### Question 18 (5 points)
+
+A Cloud SQL for PostgreSQL instance shows a `database/disk/utilization` metric of 0.95 (95%) in Cloud Monitoring. The DBA checks the database and confirms that data size is only 40% of provisioned storage. What is the most likely cause of the high disk utilization?
+
+A) Write-Ahead Log (WAL) files and temporary files are consuming the remaining 55% of disk space, which is separate from data file size.
+B) Cloud SQL is pre-allocating storage for future growth as part of automatic storage management.
+C) The 40% data size is measured before compression; the actual uncompressed data is 95% of disk.
+D) Cloud SQL read replicas are stored on the same disk as the primary, causing shared storage utilization.
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- B) Cloud SQL does not pre-allocate large chunks of storage; automatic storage increase only adds storage when usage is high, not in advance.
+- C) PostgreSQL does not use transparent compression for heap storage; data stored in tables occupies its uncompressed size on disk.
+- D) Cloud SQL read replicas are separate instances with their own storage; they do not share disk with the primary instance.
+
+---
+
+### Question 19 (5 points)
+
+A team's Cloud Monitoring dashboard shows that a Cloud SQL for PostgreSQL instance's `database/replication/replica_lag` metric is steadily increasing over an 8-hour period, currently showing 3,200 seconds of lag. What is the most appropriate immediate action?
+
+A) Scale up the read replica's machine type to increase its write throughput so it can apply WAL faster than the primary generates it.
+B) Delete and recreate the read replica from scratch to reset the lag counter.
+C) Increase `max_wal_senders` on the primary to allow more replication connections.
+D) Promote the read replica to primary to stop the lag accumulation.
+
+**Correct Answer:** A
+
+**Distractor Analysis:**
+
+- B) Deleting and recreating the replica recreates it from a fresh base backup, temporarily clearing the lag, but does not fix the root cause (insufficient replica compute); the lag will accumulate again if the replica tier is unchanged.
+- C) `max_wal_senders` on Cloud SQL is a managed parameter; increasing it does not affect the replica's ability to apply WAL — the bottleneck is the replica's write throughput, not the number of sender connections.
+- D) Promoting the read replica converts it to an independent primary, permanently severing it from the original primary's replication stream; this removes the replica entirely and does not resolve the lag issue.
+
+---
+
+### Question 20 (5 points)
+
+A security engineer wants to ensure that all Terraform-managed Cloud SQL instances in a project have `backup_configuration.enabled = true`. Which Google Cloud service can automatically detect and alert on Cloud SQL instances that are not compliant with this requirement without modifying Terraform code?
+
+A) Cloud Security Command Center with a custom finding for Cloud SQL backup configuration.
+B) Cloud Asset Inventory with Organization Policy constraints that enforce backup configuration.
+C) Security Health Analytics in Security Command Center, which includes a managed detector for Cloud SQL instances with backups disabled.
+D) Cloud Armor, which enforces database configuration policies at the network layer.
+
+**Correct Answer:** C
+
+**Distractor Analysis:**
+
+- A) Cloud Security Command Center supports custom findings but requires writing a custom integration; Security Health Analytics provides built-in managed detectors for common misconfigurations including disabled backups, without custom code.
+- B) Organization Policy constraints control what configurations are allowed when resources are created or modified; they can enforce backup settings but do not audit existing resources that were created before the constraint was applied.
+- D) Cloud Armor is a WAF and DDoS protection service for HTTP workloads; it has no capability to inspect or enforce Cloud SQL configuration settings.

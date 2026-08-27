@@ -404,3 +404,175 @@ Answer these in a markdown cell in your notebook:
 **BatchNorm non-trainable params seem too high or low:** Each BatchNorm layer on `Dense(N)` adds `2*N` non-trainable params (mean and variance). A model with three BatchNorm layers on Dense(256), Dense(128), Dense(64) adds `2*(256+128+64) = 896` non-trainable params.
 
 **Dropout inference predictions differ between calls:** Verify you are calling `model.predict()` not `model(x, training=True)`. The `predict()` method always runs in inference mode.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Comparing EarlyStopping Patience Values
+
+Train the same dropout model four times with `patience` values of 5, 10, 20, and 50, and compare how the chosen stopping epoch and final test accuracy differ across runs.
+
+```python
+import numpy as np
+import tensorflow as tf
+from sklearn.datasets import make_classification
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+import matplotlib.pyplot as plt
+
+np.random.seed(42)
+tf.random.set_seed(42)
+
+X, y = make_classification(n_samples=5000, n_features=30, n_informative=15,
+                            n_redundant=5, random_state=42)
+y = y.astype(np.float32)
+
+X_temp, X_test, y_temp, y_test = train_test_split(X, y, test_size=0.15, random_state=42)
+X_train, X_val, y_train, y_val = train_test_split(X_temp, y_temp, test_size=0.18, random_state=42)
+
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train).astype(np.float32)
+X_val   = scaler.transform(X_val).astype(np.float32)
+X_test  = scaler.transform(X_test).astype(np.float32)
+
+def build_dropout(input_dim):
+    model = tf.keras.Sequential([
+        tf.keras.layers.Dense(256, activation='relu', input_shape=(input_dim,)),
+        tf.keras.layers.Dropout(0.4),
+        tf.keras.layers.Dense(128, activation='relu'),
+        tf.keras.layers.Dropout(0.3),
+        tf.keras.layers.Dense(64, activation='relu'),
+        tf.keras.layers.Dropout(0.2),
+        tf.keras.layers.Dense(1, activation='sigmoid')
+    ])
+    model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    return model
+
+patience_values = [5, 10, 20, 50]
+results = {}
+
+for p in patience_values:
+    tf.random.set_seed(42)
+    model = build_dropout(X_train.shape[1])
+    cb = [
+        tf.keras.callbacks.EarlyStopping(
+            monitor='val_loss', patience=p, restore_best_weights=True
+        )
+    ]
+    hist = model.fit(X_train, y_train, epochs=300, batch_size=64,
+                     validation_data=(X_val, y_val), callbacks=cb, verbose=0)
+    stopped_epoch = len(hist.history['loss'])
+    _, test_acc = model.evaluate(X_test, y_test, verbose=0)
+    results[p] = {'stopped_epoch': stopped_epoch, 'test_acc': test_acc}
+    print(f"patience={p:3d} | stopped at epoch {stopped_epoch:3d} | test acc={test_acc:.4f}")
+
+# Plot: stopped epoch and test accuracy by patience
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 4))
+ax1.bar([str(p) for p in patience_values], [results[p]['stopped_epoch'] for p in patience_values], color='steelblue')
+ax1.set_title('Stopped Epoch by Patience')
+ax1.set_xlabel('Patience')
+ax1.set_ylabel('Epoch')
+
+ax2.bar([str(p) for p in patience_values], [results[p]['test_acc'] for p in patience_values], color='coral')
+ax2.set_ylim(0.8, 1.0)
+ax2.set_title('Test Accuracy by Patience')
+ax2.set_xlabel('Patience')
+ax2.set_ylabel('Accuracy')
+
+plt.tight_layout()
+plt.savefig('patience_comparison.png', dpi=100)
+plt.show()
+```
+
+1. Which patience value produced the best test accuracy? Was there a large difference between the best and worst?
+2. Did higher patience consistently lead to better test accuracy, or did diminishing returns appear? Explain why a very high patience value (50) might not always outperform a moderate one (10 or 20).
+
+### Challenge 2: Learning Rate Schedule vs. ReduceLROnPlateau
+
+Compare two training runs on the same architecture: one using a fixed Adam learning rate of 0.001, and one using `ExponentialDecay`. Plot the learning rate over epochs for the scheduled run and compare final validation accuracy.
+
+```python
+import tensorflow as tf
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Reuse X_train, X_val, X_test, y_train, y_val, y_test from Challenge 1
+
+def build_model(input_dim):
+    model = tf.keras.Sequential([
+        tf.keras.layers.Dense(256, activation='relu', input_shape=(input_dim,)),
+        tf.keras.layers.Dropout(0.3),
+        tf.keras.layers.Dense(128, activation='relu'),
+        tf.keras.layers.Dropout(0.2),
+        tf.keras.layers.Dense(1, activation='sigmoid')
+    ])
+    return model
+
+# Run 1: Fixed LR
+tf.random.set_seed(42)
+model_fixed = build_model(X_train.shape[1])
+model_fixed.compile(optimizer=tf.keras.optimizers.Adam(0.001),
+                    loss='binary_crossentropy', metrics=['accuracy'])
+hist_fixed = model_fixed.fit(X_train, y_train, epochs=80, batch_size=64,
+                              validation_data=(X_val, y_val), verbose=0)
+
+# Run 2: ExponentialDecay schedule
+tf.random.set_seed(42)
+steps_per_epoch = len(X_train) // 64
+schedule = tf.keras.optimizers.schedules.ExponentialDecay(
+    initial_learning_rate=0.005,
+    decay_steps=steps_per_epoch * 10,   # decay every 10 epochs
+    decay_rate=0.7,
+    staircase=True
+)
+model_sched = build_model(X_train.shape[1])
+model_sched.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=schedule),
+                    loss='binary_crossentropy', metrics=['accuracy'])
+
+# Track LR per epoch with a custom callback
+lr_history = []
+class LRTracker(tf.keras.callbacks.Callback):
+    def on_epoch_end(self, epoch, logs=None):
+        lr_history.append(float(self.model.optimizer.learning_rate(
+            self.model.optimizer.iterations)))
+
+hist_sched = model_sched.fit(X_train, y_train, epochs=80, batch_size=64,
+                              validation_data=(X_val, y_val),
+                              callbacks=[LRTracker()], verbose=0)
+
+# Plot comparison
+fig, axes = plt.subplots(1, 3, figsize=(18, 4))
+
+axes[0].plot(hist_fixed.history['val_accuracy'], label='Fixed LR')
+axes[0].plot(hist_sched.history['val_accuracy'], label='Exp Decay')
+axes[0].set_title('Val Accuracy Comparison')
+axes[0].set_xlabel('Epoch')
+axes[0].legend()
+
+axes[1].plot(hist_fixed.history['val_loss'], label='Fixed LR')
+axes[1].plot(hist_sched.history['val_loss'], label='Exp Decay')
+axes[1].set_title('Val Loss Comparison')
+axes[1].set_xlabel('Epoch')
+axes[1].legend()
+
+axes[2].plot(lr_history, color='green')
+axes[2].set_title('Learning Rate (Exp Decay)')
+axes[2].set_xlabel('Epoch')
+axes[2].set_ylabel('LR')
+
+plt.tight_layout()
+plt.savefig('lr_schedule_comparison.png', dpi=100)
+plt.show()
+
+print(f"Fixed LR  final val_acc: {hist_fixed.history['val_accuracy'][-1]:.4f}")
+print(f"Exp Decay final val_acc: {hist_sched.history['val_accuracy'][-1]:.4f}")
+```
+
+1. At which epoch does the `ExponentialDecay` schedule produce its largest step-down in learning rate? Does the validation loss curve show a corresponding improvement after that step-down?
+2. `ReduceLROnPlateau` is reactive (fires when improvement stalls) while `ExponentialDecay` is proactive (fires on a fixed schedule). Describe a training scenario where each approach would be preferable over the other.
+
+### Part 9 Reflection Questions
+
+1. In Challenge 1, setting `patience=5` stops training quickly but may discard a model that would have improved further. Setting `patience=50` risks overfitting before stopping. What is the practical tradeoff, and how does `restore_best_weights=True` change this tradeoff?
+2. In Challenge 2, the `LRTracker` callback reads `self.model.optimizer.learning_rate(self.model.optimizer.iterations)` to get the current scheduled LR. Why is calling the schedule object as a function (passing the step count) necessary rather than reading `learning_rate` directly as a scalar attribute?

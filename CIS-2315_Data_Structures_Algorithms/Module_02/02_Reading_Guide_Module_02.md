@@ -340,6 +340,27 @@ class LRUCache:
 
 ---
 
+## 9. Supplemental Resources
+
+The following free, openly licensed resources reinforce the concepts in this module. All are zero-cost and require no account to access.
+
+1. **VisuAlgo — Linked List Visualizations** — [https://visualgo.net/en/list](https://visualgo.net/en/list)
+   Step-by-step animated visualizations of singly and doubly linked list insertions, deletions, and searches. Watch the pointer arrows update in real time to build intuition before coding.
+
+2. **OpenDSA — Lists Chapter** — [https://opendsa-server.cs.vt.edu/ODSA/Books/Everything/html/ListADT.html](https://opendsa-server.cs.vt.edu/ODSA/Books/Everything/html/ListADT.html)
+   Interactive OER textbook chapter covering list ADTs, singly linked lists, and doubly linked lists with embedded practice exercises and complexity analysis.
+
+3. **LeetCode Explore: Linked List** — [https://leetcode.com/explore/learn/card/linked-list/](https://leetcode.com/explore/learn/card/linked-list/)
+   Free LeetCode learning card with explanations, code examples, and practice problems specifically covering singly linked lists, doubly linked lists, and two-pointer techniques. No premium required.
+
+4. **CS50 — Week 5: Data Structures (Harvard)** — [https://cs50.harvard.edu/x/2024/weeks/5/](https://cs50.harvard.edu/x/2024/weeks/5/)
+   Free Harvard lecture covering linked lists from first principles with memory diagrams showing exactly how pointers work at the memory address level.
+
+5. **Abdul Bari — Linked Lists Playlist (YouTube)** — [https://www.youtube.com/watch?v=NobHlGUjV3g](https://www.youtube.com/watch?v=NobHlGUjV3g)
+   Clear video explanations of singly and doubly linked list operations with diagram-based walkthroughs of insertion, deletion, and reversal algorithms.
+
+---
+
 ## 8. Study Checklist
 
 - [ ] Watch the Module 02 video lecture by Professor Nash.

@@ -294,4 +294,20 @@ The 96% accuracy looks impressive, but precision of 57% means more than 4 in 10 
 
 ---
 
+## 9. Supplemental Resources
+
+**1. scikit-learn User Guide — Supervised Learning**
+<https://scikit-learn.org/stable/supervised_learning.html>
+The official scikit-learn documentation covering decision trees, random forests, and classification evaluation metrics (precision, recall, F1, confusion matrix) with worked examples and API references — directly aligned with Module 08 predictive modeling topics.
+
+**2. Google Developers Machine Learning Crash Course — Classification**
+<https://developers.google.com/machine-learning/crash-course/classification/video-lecture>
+A free, self-paced course unit covering threshold tuning, precision-recall tradeoffs, ROC curves, and the AUC metric with interactive exercises and visualizations. Reinforces the model evaluation concepts required for the Data+ exam.
+
+**3. Towards Data Science — Apriori Algorithm Explained**
+<https://towardsdatascience.com/apriori-association-rule-mining-explanation-and-python-implementation-290b42afdfc6>
+A practical walkthrough of the Apriori algorithm with Python code using the `mlxtend` library, covering support, confidence, and lift with a real grocery basket dataset. Useful for the association rule mining portion of Module 08 and Data+ Domain 2.
+
+---
+
 End of Module 08 Reading Guide

@@ -210,4 +210,186 @@ Distractor Analysis:
 
 ---
 
+---
+
+### Question 11 (5 points)
+
+What is the effect of running `terraform init -upgrade` compared to plain `terraform init`?
+
+- A) It destroys all managed resources and recreates them from scratch using the latest provider versions.
+- B) It forces re-download of provider plugins to the latest versions allowed by the declared version constraints, even if a cached version already exists.
+- C) It migrates the state file from a local backend to a remote backend automatically.
+- D) It upgrades the Terraform CLI binary to the latest stable release.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why B is correct: The `-upgrade` flag tells `terraform init` to check for newer provider versions within the declared constraints and update the lock file. Plain `terraform init` reuses cached providers when they already satisfy the constraints.
+  - Why A is incorrect: `terraform init -upgrade` only affects provider plugin downloads. It does not touch infrastructure resources or the state file.
+  - Why C is incorrect: Backend migration requires the `-migrate-state` or `-reconfigure` flag; `-upgrade` has no effect on backend configuration.
+  - Why D is incorrect: `terraform init` does not upgrade the Terraform CLI itself. The CLI is updated by downloading a new binary from HashiCorp or using a version manager like `tfenv`.
+
+---
+
+### Question 12 (5 points)
+
+A CI/CD pipeline runs `terraform plan -out=tfplan` and stores the result as a pipeline artifact. A human reviewer approves the artifact. The pipeline then runs `terraform apply tfplan`. Why is this pattern preferred over running `terraform apply -auto-approve` directly?
+
+- A) The saved plan file compresses the configuration to reduce network transfer time during apply.
+- B) Applying a saved plan ensures the exact changes reviewed and approved are the ones executed, with no possibility of a re-plan introducing new changes between review and apply.
+- C) `terraform apply tfplan` bypasses provider API calls, making the apply phase faster.
+- D) The saved plan file contains credentials embedded at plan time, so the apply phase does not require environment variables.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why B is correct: Between a `terraform plan` run and a subsequent `terraform apply` (without a saved plan), cloud state can change — someone else may have applied a different change. A saved plan file locks the exact diff, guaranteeing the apply executes only what was reviewed.
+  - Why A is incorrect: The saved plan is a binary file for correctness and security, not for compression purposes. It does not reduce network transfer during apply.
+  - Why C is incorrect: `terraform apply tfplan` still makes provider API calls to execute the changes. It skips only the re-plan phase, not the actual API interactions.
+  - Why D is incorrect: Saved plan files do not embed credentials. Credentials must still be provided at apply time via environment variables or the provider configuration.
+
+---
+
+### Question 13 (5 points)
+
+Which of the following files should be added to `.gitignore` in a Terraform project?
+
+- A) `main.tf` and `variables.tf`
+- B) `.terraform.lock.hcl`
+- C) `.terraform/` directory and `terraform.tfstate`
+- D) `outputs.tf` and `versions.tf`
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why C is correct: The `.terraform/` directory contains downloaded provider binaries (large, platform-specific, reproducible via `init`) and should not be committed. `terraform.tfstate` may contain sensitive values and should not be in version control; use a remote backend instead.
+  - Why A is incorrect: `.tf` files are the source code of your configuration and must be committed to version control. They are the entire point of treating infrastructure as code.
+  - Why B is incorrect: `.terraform.lock.hcl` should be committed. It pins provider versions for reproducible installs across the team and CI/CD.
+  - Why D is incorrect: `outputs.tf` and `versions.tf` are source files that belong in version control just like `main.tf`.
+
+---
+
+### Question 14 (5 points)
+
+In a `terraform plan` output, the `<=` symbol appears next to a block. What does this indicate?
+
+- A) A resource will be destroyed and a new one created with the same configuration.
+- B) A data source will be read from the provider during the apply phase.
+- C) A resource attribute will decrease in value compared to its current state.
+- D) The resource is being moved to a different module address in the state file.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why B is correct: The `<=` symbol indicates a data source read. Data sources in Terraform retrieve information from provider APIs without creating or modifying resources. They are read during the plan or apply phase.
+  - Why A is incorrect: Destroy-and-recreate is shown with `-/+`. The `<=` symbol has nothing to do with replacement operations.
+  - Why C is incorrect: Terraform plan symbols represent resource lifecycle actions, not numerical comparisons of attribute values.
+  - Why D is incorrect: Module address moves are handled with `moved` blocks and show differently in plan output. `<=` specifically denotes data source reads.
+
+---
+
+### Question 15 (5 points)
+
+What happens to the `.terraform.lock.hcl` file when you add a new provider to `required_providers` and run `terraform init`?
+
+- A) The existing lock file is deleted and replaced with a new one containing only the new provider.
+- B) The new provider's version and checksums are added to the existing lock file while existing entries are preserved.
+- C) Terraform prompts you to manually edit the lock file to add the new provider entry.
+- D) The lock file is unchanged; it only updates when you run `terraform init -upgrade`.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why B is correct: `terraform init` adds new provider entries to the lock file incrementally. Existing locked versions are preserved, and new providers are appended with their selected version and integrity checksums.
+  - Why A is incorrect: Deleting existing lock entries would break reproducibility for already-locked providers. Terraform updates the file additively.
+  - Why C is incorrect: The lock file is maintained automatically by Terraform. Users should not manually edit it.
+  - Why D is incorrect: Plain `terraform init` does update the lock file when new providers are added. `-upgrade` is only needed to update versions for existing providers.
+
+---
+
+### Question 16 (5 points)
+
+You run `terraform apply` without the `-auto-approve` flag. What does Terraform do before making any changes?
+
+- A) It immediately begins creating resources in the order they appear in the configuration file.
+- B) It displays the execution plan and requires you to type `yes` to confirm before proceeding.
+- C) It sends an approval request email to the team's infrastructure administrator.
+- D) It checks whether a saved plan file named `tfplan` exists and uses it automatically if found.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why B is correct: When run interactively without `-auto-approve`, `terraform apply` re-runs the plan phase, displays the proposed changes, and requires explicit `yes` confirmation before executing any changes. This is a safety gate.
+  - Why A is incorrect: Terraform always computes and displays the plan before acting, even in interactive mode. It does not begin changes immediately.
+  - Why C is incorrect: Terraform has no built-in email approval workflow. External approval gates are implemented at the CI/CD pipeline level, not within Terraform itself.
+  - Why D is incorrect: `terraform apply` does not automatically detect a `tfplan` file. You must explicitly pass the filename: `terraform apply tfplan`.
+
+---
+
+### Question 17 (5 points)
+
+Which version constraint syntax means "any version in the 5.x range, but not 6.0 or higher"?
+
+- A) `>= 5.0, < 5.9`
+- B) `= 5.0`
+- C) `~> 5.0`
+- D) `> 5.0`
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why C is correct: The pessimistic constraint operator `~>` with a version like `5.0` means `>= 5.0, < 6.0`. It allows any patch and minor release within the 5.x line but prevents upgrading to 6.0.
+  - Why A is incorrect: `>= 5.0, < 5.9` would exclude versions 5.9.x and above within the 5.x range. This is more restrictive than the typical intent of allowing all 5.x versions.
+  - Why B is incorrect: `= 5.0` pins to exactly version 5.0.0 and prevents any updates, including security patches in the 5.x line.
+  - Why D is incorrect: `> 5.0` allows version 6.0 and beyond, which is wider than intended for a constraint meant to stay within the 5.x major line.
+
+---
+
+### Question 18 (5 points)
+
+A colleague runs `terraform plan` and sees the message: `Error: No configuration files`. What is the most likely cause?
+
+- A) The `terraform.tfstate` file has been deleted.
+- B) The `.terraform/` directory is missing because `init` was not run.
+- C) Terraform is being run from a directory that contains no `.tf` files.
+- D) The provider version specified in `required_providers` does not exist in the registry.
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why C is correct: "No configuration files" means Terraform cannot find any `.tf` files in the current working directory. The most common cause is running the command from the wrong directory.
+  - Why A is incorrect: A missing state file does not produce "No configuration files." Terraform would treat all declared resources as new and plan to create them.
+  - Why B is incorrect: A missing `.terraform/` directory produces "Required plugins are not installed" or a similar provider initialization error, not "No configuration files."
+  - Why D is incorrect: An invalid provider version in the registry produces an error during `terraform init`, not during `terraform plan`, and the message would reference the provider registry lookup failure.
+
+---
+
+### Question 19 (5 points)
+
+What does `terraform show` display when run after a successful `terraform apply`?
+
+- A) The raw JSON contents of the `.terraform.lock.hcl` file.
+- B) The human-readable representation of the current state — all managed resources and their current attribute values.
+- C) A diff between the previous state and the current state showing only what changed in the last apply.
+- D) The list of all Terraform commands available in the current CLI version.
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - Why B is correct: `terraform show` reads `terraform.tfstate` and renders its contents in human-readable form, showing all managed resources and their current attributes. It can also be used to display a saved plan file: `terraform show tfplan`.
+  - Why A is incorrect: The lock file is an HCL file, not JSON, and `terraform show` does not display it. The lock file is read directly in your editor.
+  - Why C is incorrect: Terraform does not produce a changelog diff of consecutive applies. The state file reflects current state only. History tracking requires external tooling or Terraform Cloud's state versioning feature.
+  - Why D is incorrect: Listing available CLI commands is the job of `terraform help` or `terraform -help`, not `terraform show`.
+
+---
+
+### Question 20 (5 points)
+
+After running `terraform destroy`, what state does the `terraform.tfstate` file reflect?
+
+- A) The file is automatically deleted by `terraform destroy`.
+- B) The file retains the last-known resource attributes as a backup in case of accidental destruction.
+- C) The file's `resources` array is empty, indicating that no resources are currently managed.
+- D) The file is renamed to `terraform.tfstate.backup` and a new empty file is created in its place.
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - Why C is correct: After a successful `terraform destroy`, all resources are removed from cloud infrastructure and the state file is updated to reflect zero managed resources. The file itself remains; only its `resources` array becomes empty.
+  - Why A is incorrect: `terraform destroy` does not delete the state file. The file is updated to show an empty resource set, which allows Terraform to be run again in the same directory without reinitializing.
+  - Why B is incorrect: The state file is not kept as a backup after destroy; it is updated to reflect the current (empty) state. A `terraform.tfstate.backup` file is created before each apply or destroy to preserve the previous state, but the main file is updated.
+  - Why D is incorrect: While Terraform does create a `.backup` file before applying changes, the main `terraform.tfstate` file is updated in place rather than being replaced by an empty new file.
+
+---
+
 Module 02 Quiz — CIS-4337 Infrastructure Automation — Texas Wesleyan University

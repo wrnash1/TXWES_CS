@@ -292,3 +292,19 @@ Complete before attempting the quiz:
 - Complete Lab 12.
 - Post to Discussion Forum 12 by Wednesday at 11:59 PM.
 - Complete Quiz 12 (10 questions).
+
+---
+
+## 9. Supplemental Resources
+
+**1. Salesforce Trailhead — Data Management**
+<https://trailhead.salesforce.com/content/learn/modules/lex_implementation_data_management>
+Official Salesforce learning module covering Data Import Wizard, Data Loader, External IDs, duplicate management, and data quality best practices. Directly maps to the Salesforce migration tools and validation concepts tested in this module's quiz and Lab 12.
+
+**2. SAP Learning — Data Migration with SAP S/4HANA Migration Cockpit**
+<https://learning.sap.com/learning-journeys/migrate-data-with-sap-s-4hana-migration-cockpit>
+Official SAP learning journey for the SAP Migration Cockpit tool. Covers template-based migration, staging tables, mapping rules, and error log analysis — the primary SAP migration tool covered in Section 3 of this Reading Guide and tested in Lab 12's SAP migration scenarios.
+
+**3. DAMA International — Data Management Body of Knowledge (DMBOK)**
+<https://www.dama.org/cpages/body-of-knowledge>
+The Data Management Association's Body of Knowledge defines the six data quality dimensions (Completeness, Accuracy, Consistency, Validity, Uniqueness, Timeliness) that form the standard framework for data quality assessment in migration projects. Relevant to the Transform phase quality gate design covered in Section 2 of this Reading Guide.

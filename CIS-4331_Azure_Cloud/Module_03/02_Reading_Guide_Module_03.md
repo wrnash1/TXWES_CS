@@ -359,3 +359,19 @@ Reference: learn.microsoft.com/en-us/cli/azure/vm
 - [ ] Take Quiz Module 03
 - [ ] Post Discussion Module 03 initial post by Wednesday 11:59 PM
 - [ ] Respond to two classmates by Sunday 11:59 PM
+
+---
+
+## 9. Supplemental Resources
+
+**1. Microsoft Learn — Azure Virtual Machines documentation**
+https://learn.microsoft.com/en-us/azure/virtual-machines/overview
+The official Azure VM documentation hub covering VM creation, sizing, availability options, disks, networking, and management — the primary reference for all VM topics on AZ-104 and AZ-900.
+
+**2. Microsoft Learn — Virtual Machine Scale Sets overview**
+https://learn.microsoft.com/en-us/azure/virtual-machine-scale-sets/overview
+Complete coverage of Scale Set orchestration modes, autoscale configuration, upgrade policies, and the Application Health extension for zero-downtime deployments.
+
+**3. Microsoft Learn — Azure VM sizes and types**
+https://learn.microsoft.com/en-us/azure/virtual-machines/sizes/overview
+The definitive reference for all Azure VM size families, including naming convention breakdown, attribute letters (s, d, a, m), and selection guidance for compute-optimized, memory-optimized, storage-optimized, and GPU workloads.

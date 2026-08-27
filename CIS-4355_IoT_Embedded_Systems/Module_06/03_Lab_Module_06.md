@@ -374,3 +374,30 @@ Submit the following to the course LMS by the due date:
 **Serial output garbled:** Baud rate in Serial Monitor must match `Serial.begin()` value exactly.
 
 **ESP32 crashing on ISR:** Add `IRAM_ATTR` to your ISR function declaration.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: FreeRTOS Dual-Task Sensor System (ESP32)
+
+Extend the Part C sketch to run sensor sampling and serial reporting as separate FreeRTOS tasks pinned to different cores.
+
+1. Create a task named `sensorTask` pinned to Core 1 with stack size 4096. This task reads the potentiometer ADC every 250 ms, updates a shared `volatile uint16_t g_adcAvg` running average, and calls `vTaskDelay(pdMS_TO_TICKS(250))` instead of `delay()`.
+2. Create a task named `reportTask` pinned to Core 0 with stack size 2048. This task reads `g_pressCount` and `g_adcAvg` every 500 ms and prints the formatted row to Serial. Use `portENTER_CRITICAL()` / `portEXIT_CRITICAL()` around the read of `g_pressCount` instead of `noInterrupts()`/`interrupts()`, and explain in a comment why this is the preferred approach in a FreeRTOS context.
+3. Remove the sampling and reporting logic from `loop()` entirely. Verify that the Serial Monitor output continues to print at the expected rate and that button presses still increment the counter correctly.
+4. Use `uxTaskGetStackHighWaterMark(NULL)` inside each task to print the minimum free stack words remaining after 10 iterations. Explain what would happen if the stack size was set too small.
+
+### Challenge 2: EEPROM/NVS Persistent Counter
+
+Make the button press counter survive a power cycle by storing it in non-volatile memory.
+
+1. On the Arduino Uno: use the `EEPROM` library. In `setup()`, read the stored count from address 0 (stored as a `uint32_t` across four bytes using `EEPROM.get()`). Initialize `g_pressCount` to this value. In the ISR (or a save routine called from `loop()` when count changes), write the updated value back using `EEPROM.put(0, g_pressCount)`.
+2. On the ESP32: use the `Preferences` library instead of `EEPROM`. In `setup()`, open a namespace `"counters"`, read key `"presses"` as `uint32_t`, and initialize `g_pressCount`. Save the value back when it changes using `prefs.putUInt("presses", g_pressCount)`.
+3. Power-cycle the device and verify the counter resumes from the saved value. Screenshot the Serial Monitor showing a non-zero starting count.
+4. In 3–5 sentences, explain the EEPROM write endurance limit (approximately 100,000 write cycles on AVR) and describe an optimization strategy — such as write-coalescing or a dirty-flag pattern — that would extend the EEPROM lifetime for a device that accumulates thousands of button presses per day.
+
+### Reflection Questions
+
+1. Part C used `noInterrupts()`/`interrupts()` to safely read the 32-bit `g_pressCount` from `loop()`. Why is this necessary on an 8-bit AVR but arguably less critical on the 32-bit ESP32 (though still a good practice)?
+2. After completing Challenge 1, did moving sensor sampling to a dedicated FreeRTOS task change the timing accuracy of your 250 ms sample interval compared to the `millis()`-based approach in Part C? Explain why FreeRTOS `vTaskDelay()` may introduce small timing variations and how `vTaskDelayUntil()` would improve accuracy.

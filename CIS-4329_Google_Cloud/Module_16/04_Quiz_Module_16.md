@@ -199,3 +199,173 @@ Distractor Analysis:
 - Why A is incorrect: `allUsers` does not mean all authenticated GCP users. `allAuthenticatedUsers` means all users authenticated with a Google account. `allUsers` means literally all internet users — no authentication required.
 - Why C is incorrect: `allUsers` is not scoped to an organization's Workspace domain. Domain-restricted sharing (limiting to specific domains) uses the `domain:DOMAIN` member type in IAM (e.g., `domain:example.com`), which requires authentication with that domain. `allUsers` has no domain restriction whatsoever.
 - Why D is incorrect: This describes the difference between `allUsers` and `allAuthenticatedUsers`. The question's `allUsers` means unauthenticated public access. `allAuthenticatedUsers` would require at minimum a Google account — a partial improvement but still inappropriate for sensitive customer data. The correct answer is to remove public access entirely.
+
+---
+
+### Question 11 (5 points)
+
+A GCP project uses a custom VPC. An engineer creates a new Compute Engine VM but the VM cannot reach the internet or other VMs in the same VPC. No firewall rules have been configured yet. What is the most likely cause?
+
+- A) The VM does not have a public IP address — external IP is required for VMs to communicate within a VPC
+- B) Custom VPCs do not have default firewall rules; without explicit allow rules, all ingress and egress traffic is implicitly denied by the VPC's implied deny rule
+- C) The VM is in the wrong zone — VMs can only communicate with other VMs in the same zone
+- D) Custom VPCs require VPC peering to be enabled before any VM-to-VM communication is allowed
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) External IP addresses are for communication outside GCP's network (to the public internet). VMs in the same VPC communicate via internal IP regardless of whether they have external IPs. The absence of an external IP affects internet reachability but not intra-VPC communication.
+  - C) VMs in the same VPC subnet can communicate regardless of zone. VPC networks span all zones in a region; zone isolation applies to infrastructure availability, not networking.
+  - D) VPC peering connects two separate VPC networks. VMs within the same VPC do not require peering — they share the same network by definition.
+
+---
+
+### Question 12 (5 points)
+
+An organization's GKE cluster runs workloads that require reading from Cloud Spanner. Currently the node pool's default service account is `[project-number]-compute@developer.gserviceaccount.com` and the pods are failing with `PERMISSION_DENIED` errors. The simplest secure fix that follows GCP best practices is:
+
+- A) Grant `roles/spanner.databaseReader` to the Compute Engine default service account at the project level
+- B) Enable Workload Identity on the cluster; create a dedicated GCP service account with `roles/spanner.databaseReader`; bind it to the Kubernetes service account used by the pods; remove any Spanner permissions from the default Compute Engine service account
+- C) Add the Spanner API scope (`https://www.googleapis.com/auth/spanner.data`) to the GKE node pool and restart the pool
+- D) Generate a service account JSON key with `roles/spanner.databaseReader` and mount it as a Kubernetes Secret in the pod
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Granting permissions to the Compute Engine default service account grants those permissions to every VM and pod in the project that uses the default service account — a violation of least privilege. If any other pod is compromised, it could also access Spanner.
+  - C) Adding an OAuth scope to the node pool expands what all pods on those nodes can access and still requires the service account to have the IAM role. More importantly, this approach grants Spanner scope to all pods on the node — not just the intended workload. Workload Identity is the more granular and secure solution.
+  - D) JSON key files are long-lived credentials that can be leaked from Kubernetes Secrets (which are only base64-encoded by default). Workload Identity eliminates the need for key files entirely and is the GCP-recommended approach.
+
+---
+
+### Question 13 (5 points)
+
+A team runs a Cloud Composer (Apache Airflow) DAG on a nightly schedule that queries BigQuery and writes results to Cloud Storage. The DAG is failing with a quota exceeded error specifically for BigQuery concurrent interactive query slots. What is the most appropriate resolution?
+
+- A) Switch the BigQuery queries from interactive to batch priority — batch queries are queued and do not consume interactive slot quota
+- B) Increase the number of Cloud Composer worker nodes so more queries can run in parallel
+- C) Move the BigQuery dataset to a different region with higher default quota
+- D) Purchase BigQuery flat-rate slots and assign them to a reservation for the Cloud Composer project
+
+- **Correct Answer:** A
+- **Distractor Analysis:**
+  - B) Cloud Composer worker nodes process Airflow task scheduling and execution. Adding more workers increases DAG task parallelism but does not change the BigQuery query slot quota. The quota error is in BigQuery, not in Composer's capacity to execute tasks.
+  - C) BigQuery interactive query quotas are per-project and are not region-dependent in a way that moving a dataset would resolve. Regional quotas apply to specific operations but the concurrent interactive query limit is project-wide.
+  - D) Purchasing flat-rate slots resolves slot capacity for high-volume predictable workloads. However, switching to batch priority (Option A) is simpler, free, and directly addresses the "concurrent interactive query" quota issue by moving queries out of the interactive quota pool.
+
+---
+
+### Question 14 (5 points)
+
+A GCP organization administrator wants to ensure that all new GCP projects created in the organization automatically inherit a specific set of firewall rules that block outbound connections to known malicious IP ranges. What is the correct architectural approach?
+
+- A) Create a firewall rule in each project after it is created using a manual checklist
+- B) Use a Terraform module in a CI/CD pipeline that is triggered whenever a new project is detected via Cloud Asset Inventory change events
+- C) Use a Shared VPC — attach all projects to a host project that contains the organization-wide firewall rules; Shared VPC firewall rules in the host project apply to all service projects
+- D) Set a Cloud Billing budget alert that notifies the security team when a new project is created so they can manually apply rules
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) Manual checklists are error-prone and do not ensure automatic inheritance. A new project could be used for days before the security team applies the firewall rules.
+  - B) Terraform in a CI/CD pipeline is a valid IaC approach but is more complex to implement and maintain than Shared VPC. It also introduces a window between project creation and Terraform run during which the project has no firewall rules.
+  - D) Cloud Billing budgets track spending, not resource creation events. Budget alerts cannot be configured to fire on new project creation.
+
+---
+
+### Question 15 (5 points)
+
+An engineer runs `gcloud container clusters create my-cluster --zone=us-central1-a --num-nodes=3` and the command returns an error: `Insufficient regional quota to satisfy request: resource "CPUS" ... needed 6, available 4`. What is the cause and resolution?
+
+- A) The GKE cluster node machine type requires more than 4 vCPUs per node; switch to a smaller machine type
+- B) The GCP project has a CPU quota limit of 4 vCPUs in us-central1; the requested 3 nodes × default 2 vCPU machine type (e2-medium) = 6 vCPUs exceeds the regional quota; request a quota increase via the Cloud Console Quotas page
+- C) The `--num-nodes=3` flag requires a minimum of 9 vCPUs; reduce to `--num-nodes=2`
+- D) The zone us-central1-a has reached capacity; retry in us-central1-b
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) The error specifically says the project needs 6 CPUs but only 4 are available in the quota. This is a project-level CPU quota limit, not a machine-type sizing issue. The default machine type for GKE clusters is e2-medium (2 vCPUs), so 3 nodes × 2 vCPUs = 6 vCPUs.
+  - C) The vCPU count is determined by the number of nodes × vCPUs per node machine type, not by a per-node fixed requirement. There is no 9-vCPU minimum for `--num-nodes=3`.
+  - D) Zone capacity exhaustion produces a different error message (ZONE_RESOURCE_POOL_EXHAUSTED or similar). A quota error explicitly names the quota resource and shows needed vs. available counts — this is a project quota issue, not zone capacity.
+
+---
+
+### Question 16 (5 points)
+
+A company is planning to move their application from AWS to GCP. In AWS, they use Auto Scaling Groups with Launch Templates. What is the equivalent GCP construct for managing a group of identical VMs that automatically scales based on load?
+
+- A) GKE node pools with Cluster Autoscaler
+- B) Managed Instance Groups (MIGs) with autoscaling configured via an instance template — the instance template defines the VM configuration and the MIG manages scaling based on CPU utilization, load balancing metrics, or Cloud Monitoring metrics
+- C) Cloud Run services with concurrency-based scaling
+- D) App Engine Standard with `automatic_scaling` configuration in `app.yaml`
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) GKE node pools with Cluster Autoscaler manage the VMs that run GKE worker nodes, but the application runs in containers on top of those nodes. This adds a Kubernetes orchestration layer that is not equivalent to the simpler VM-level Auto Scaling Group pattern.
+  - C) Cloud Run is a serverless container platform, not a VM management service. It does not use instance templates or manage Compute Engine VMs — it manages container instances on Google's managed infrastructure.
+  - D) App Engine Standard is a platform-as-a-service for web applications with specific language runtimes. It does not provide control over individual VM instances, machine types, or the level of configuration flexibility offered by instance templates.
+
+---
+
+### Question 17 (5 points)
+
+A team needs to store application configuration data that changes infrequently and must be accessible to Cloud Run services with sub-millisecond latency reads. The data is key-value pairs (approximately 500 KB total). What GCP service is most appropriate?
+
+- A) Cloud Storage — store configuration as a JSON file and read it on each request
+- B) Cloud Spanner — use Spanner's globally consistent relational model for configuration data
+- C) Memorystore for Redis — store configuration as Redis hash or string values; Cloud Run services read from Memorystore via Serverless VPC Access with microsecond-level latency
+- D) Firestore — store configuration as a Firestore document and use the Firestore client SDK for real-time updates
+
+- **Correct Answer:** C
+- **Distractor Analysis:**
+  - A) Cloud Storage reads involve HTTP API calls with typical latency in the range of tens to hundreds of milliseconds — far above sub-millisecond. Reading configuration from Cloud Storage on every request would add significant latency to each application request.
+  - B) Cloud Spanner is a globally distributed relational database optimized for large-scale transactional workloads. Its query latency is typically single-digit milliseconds for simple lookups — fast, but not sub-millisecond. It is also significantly over-engineered for 500 KB of infrequently changing configuration data.
+  - D) Firestore provides single-digit millisecond read latency for document reads, which is close to the requirement. However, Memorystore (Redis) specifically provides sub-millisecond in-memory access and is the canonical GCP service for low-latency key-value lookups. Firestore is better suited for real-time sync to mobile/web clients than for application configuration caching.
+
+---
+
+### Question 18 (5 points)
+
+A Cloud Build pipeline fails at the step that deploys a container image to Cloud Run. The error in the build logs is: `ERROR: (gcloud.run.deploy) PERMISSION_DENIED: Permission 'run.services.create' denied on resource`. What is the correct fix?
+
+- A) Add `--allow-unauthenticated` to the Cloud Run deploy command — the permission error is caused by authentication, not authorization
+- B) Grant `roles/run.admin` (or `roles/run.developer`) to the Cloud Build service account (`[PROJECT_NUMBER]@cloudbuild.gserviceaccount.com`) at the project level
+- C) Enable the Cloud Run API in the project — the permission denied error means the API is not enabled
+- D) Grant `roles/owner` to the Cloud Build service account to ensure it has all permissions
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) `--allow-unauthenticated` controls whether end-users can invoke the Cloud Run service without authentication. It does not affect Cloud Build's permission to create or update the service itself. The error is a Cloud Build IAM authorization error during deployment, not an invocation authentication issue.
+  - C) If the Cloud Run API were not enabled, the error would be `SERVICE_DISABLED: The API is not enabled` or similar. A `PERMISSION_DENIED` on `run.services.create` specifically means the API is reachable but the calling identity lacks the IAM permission.
+  - D) Granting `roles/owner` to the Cloud Build service account violates least privilege. The correct fix grants only the Cloud Run deployment permission needed (`roles/run.admin` or `roles/run.developer`). Granting Owner access to a CI/CD service account gives it full destructive control over all project resources.
+
+---
+
+### Question 19 (5 points)
+
+A GCP organization has enabled VPC Service Controls and created a service perimeter around three projects containing sensitive BigQuery datasets. A data analyst in a project outside the perimeter needs read access to a specific BigQuery table inside the perimeter. What is the correct way to grant this access without moving the analyst's project into the perimeter?
+
+- A) Grant `roles/bigquery.dataViewer` on the specific table to the analyst — IAM grants override VPC Service Controls
+- B) Create an Access Level in VPC Service Controls that allows the analyst's identity; add an ingress rule to the service perimeter that allows the analyst's identity with the Access Level to call the BigQuery API on the protected resources
+- C) Share the dataset publicly so external analysts can access it without needing perimeter membership
+- D) Move the analyst's workstation IP to the same subnet as the perimeter projects using a VPN connection
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) VPC Service Controls check both IAM and perimeter membership. An IAM grant alone is insufficient to access resources inside a service perimeter from outside the perimeter. Both checks must pass. IAM does not override VPC Service Controls.
+  - C) Making a sensitive dataset public defeats the purpose of protecting it with VPC Service Controls and creates a critical data exposure security incident.
+  - D) VPC Service Controls evaluate the access context (identity, device, IP) of the requesting principal, not just network routing. Routing a workstation's traffic through a VPN does not satisfy a service perimeter's access requirements without an explicit Access Level or perimeter membership.
+
+---
+
+### Question 20 (5 points)
+
+During an ACE exam review session, a student is given this scenario: "A company needs a managed database that stores JSON documents, scales automatically, requires no schema management, and supports real-time data synchronization to mobile clients." The student must select from Cloud SQL, Cloud Spanner, Bigtable, and Firestore. What is the correct answer and what two constraints from the scenario uniquely identify it?
+
+- A) Cloud SQL — it supports JSON column types and real-time replication to read replicas
+- B) Firestore — the two constraints are "JSON document model" (Firestore stores documents as JSON-like structures in collections) and "real-time synchronization to mobile clients" (Firestore's onSnapshot listener provides native real-time sync to iOS, Android, and web SDKs)
+- C) Bigtable — it stores semi-structured data and supports low-latency reads for mobile clients
+- D) Cloud Spanner — it provides automatic scaling and global consistency suitable for mobile backends
+
+- **Correct Answer:** B
+- **Distractor Analysis:**
+  - A) Cloud SQL stores relational data in tables with a fixed schema. It supports JSONB columns in PostgreSQL mode but requires schema definition and does not natively support real-time client synchronization. Cloud SQL read replicas are for read scaling, not client-push real-time sync.
+  - C) Bigtable is a NoSQL wide-column store optimized for high-throughput time-series or IoT data with very low latency at scale. It does not use a document model and has no native mobile client SDK for real-time sync. It requires a custom application layer between Bigtable and mobile clients.
+  - D) Cloud Spanner is a globally distributed relational database with ACID transactions at scale. It uses a relational (not document) model, requires schema definition, and has no native real-time sync capability to mobile clients. Its design target is global relational consistency, not mobile backend flexibility.

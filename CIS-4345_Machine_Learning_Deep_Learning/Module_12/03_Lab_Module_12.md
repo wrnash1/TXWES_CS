@@ -418,3 +418,59 @@ Submit a Jupyter notebook (.ipynb) with all cells executed containing:
 ---
 
 *End of Lab — Module 12*
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Bayesian Optimization Search
+
+Replace your Hyperband tuner with a Bayesian optimization search and compare the efficiency of both approaches.
+
+1. Configure a `kt.BayesianOptimization` tuner using the same `build_model(hp)` function from the lab. Use `max_trials=30` and `num_initial_points=5`. Search over the same hyperparameter space (learning rate, number of units, dropout rate):
+
+   ```python
+   import keras_tuner as kt
+   bayes_tuner = kt.BayesianOptimization(
+       build_model,
+       objective='val_accuracy',
+       max_trials=30,
+       num_initial_points=5,
+       directory='bayes_search',
+       project_name='cifar_bayes'
+   )
+   bayes_tuner.search(x_train, y_train, epochs=15,
+                      validation_split=0.1,
+                      callbacks=[tf.keras.callbacks.EarlyStopping(patience=3)])
+   ```
+
+2. Record the best validation accuracy found by Bayesian optimization vs. Hyperband (from the main lab). Record how many trials each required to reach within 1% of its best result.
+3. Retrieve the best hyperparameters from both searches and build final models. Train each final model to convergence (50 epochs, EarlyStopping patience=5) and compare test accuracy.
+4. In a Markdown cell, explain the key difference between Bayesian optimization (surrogate model-guided search) and Hyperband (compute-efficient random search with successive halving). For which scenario would you prefer each?
+
+### Challenge 2: Quantization-Aware Training
+
+Implement quantization-aware training (QAT) and compare the accuracy of QAT vs. post-training quantization on the same model.
+
+1. Apply QAT to the best model found by your tuner:
+
+   ```python
+   import tensorflow_model_optimization as tfmot
+   qat_model = tfmot.quantization.keras.quantize_model(best_model)
+   qat_model.compile(
+       optimizer=tf.keras.optimizers.Adam(1e-5),
+       loss='sparse_categorical_crossentropy',
+       metrics=['accuracy']
+   )
+   qat_model.fit(x_train, y_train, epochs=5,
+                 validation_split=0.1, batch_size=64)
+   ```
+
+2. Convert the QAT model to TFLite (it produces a fully integer-quantized model automatically without needing a representative dataset). Compare QAT TFLite accuracy against the post-training dynamic range quantization TFLite model from the main lab.
+3. Measure and report the `.tflite` file size for both approaches. Use `os.path.getsize()` to get file sizes in bytes.
+4. In a Markdown cell, explain why QAT typically produces higher accuracy than post-training quantization, and in what production scenario the extra QAT training time is worth the improved accuracy.
+
+### Reflection Questions
+
+1. Across your Hyperband, RandomSearch, and Bayesian optimization experiments, which search strategy found the best validation accuracy? Which was most efficient (best accuracy per trial)? Does your data support the common recommendation to use Hyperband for large search spaces and Bayesian optimization for smaller ones?
+2. After applying quantization, which layers of your model experienced the largest accuracy degradation (hint: you can probe this by running integer inference on individual layer outputs)? What property of a layer's weight distribution makes it more sensitive to int8 quantization, and how does QAT mitigate this?

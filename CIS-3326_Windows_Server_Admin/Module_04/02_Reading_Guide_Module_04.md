@@ -367,3 +367,25 @@ MANAGEMENT OPERATION:
 - [Understanding AD security groups](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/understand-security-groups)
 - [Group Managed Service Accounts overview](https://learn.microsoft.com/en-us/windows-server/security/group-managed-service-accounts/group-managed-service-accounts-overview)
 - [Fine-Grained Password Policies](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/get-started/adac/introduction-to-active-directory-administrative-center-enhancements--level-100-#fine_grained_pswd_policy_mgmt)
+
+---
+
+## 9. Supplemental Resources
+
+The following free, open-access resources go deeper on Module 04 topics:
+
+**1. Microsoft Learn — Manage AD DS users, groups, and computers**
+<https://learn.microsoft.com/en-us/training/modules/manage-active-directory-domain-services-users-groups-computers/>
+Guided module with sandbox exercises covering user account creation, group scope selection, AGDLP nesting, and account lifecycle operations using both GUI and PowerShell.
+
+**2. Microsoft Docs — Active Directory security groups reference**
+<https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/understand-security-groups>
+Complete reference for all built-in AD security groups (Domain Admins, Enterprise Admins, etc.), their default rights, and membership rules. Essential for understanding privilege boundaries tested on AZ-800.
+
+**3. Microsoft Learn — Implement Group Managed Service Accounts**
+<https://learn.microsoft.com/en-us/training/modules/implement-group-managed-service-accounts/>
+Step-by-step coverage of KDS Root Key creation, gMSA deployment, and multi-server password retrieval configuration — directly supporting Questions 5 and 10 in this module.
+
+**4. Microsoft Docs — Fine-Grained Password Policy step-by-step guide**
+<https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/get-started/adac/introduction-to-active-directory-administrative-center-enhancements--level-100->
+Shows how to create and apply Password Settings Objects using Active Directory Administrative Center and PowerShell, including precedence conflict resolution examples.

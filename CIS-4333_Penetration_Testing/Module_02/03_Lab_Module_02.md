@@ -162,3 +162,20 @@ Submit the following to the Canvas LMS assignment portal:
 ---
 
 *This lab is for authorized educational purposes only. All scenarios, organizations, and documents are fictional. No actual systems are tested.*
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Multi-Jurisdiction RoE Analysis
+
+The fictional client CodeBridge Solutions from Scenario 2.3 now wants to expand testing to include servers physically located in Germany and the United Kingdom. Draft a one-page addendum to their RoE that addresses: which additional laws apply (GDPR, UK Computer Misuse Act), what data handling provisions must change, and what additional client authorizations or legal reviews are required before testing those systems. Format your addendum as a professional amendment document with a signatures block.
+
+### Challenge 2: Incident Response Tabletop — Unauthorized Access Discovery
+
+Using the active breach scenario from Scenario 3.2 as a basis, write a step-by-step incident handling procedure that the penetration testing firm would follow from the moment the breach evidence is discovered through the final decision about whether to resume testing. Your procedure should include: exact notification chain (who is contacted in what order), evidence preservation steps, client communication language, and the criteria for deciding whether testing resumes or terminates.
+
+### Reflection Questions
+
+1. How does the minimal footprint principle protect the client, protect the tester, and protect third parties whose data may exist on tested systems? Give a specific example for each of the three parties.
+2. A colleague argues that because penetration testing firms carry errors and omissions insurance, they do not need to worry about strict compliance with RoE data handling and notification requirements. Evaluate this argument using the legal concepts covered in Module 02.

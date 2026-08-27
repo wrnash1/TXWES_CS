@@ -353,4 +353,61 @@ Submit the following on Canvas:
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Enforce Commit Message Policy with a commit-msg Hook
+
+Add a `commit-msg` hook via the pre-commit framework that rejects commits whose message does not begin with a Jira-style ticket reference (e.g., `PROJ-1234:`).
+
+1. Add the following custom hook entry to your `.pre-commit-config.yaml`:
+
+```yaml
+  - repo: local
+    hooks:
+      - id: commit-msg-jira
+        name: Require Jira ticket prefix
+        language: pygrep
+        entry: '^[A-Z]+-[0-9]+:'
+        stages: [commit-msg]
+        args: ['--negate']
+```
+
+1. Run `pre-commit install --hook-type commit-msg` to register the commit-msg stage.
+2. Attempt a commit without a ticket prefix (e.g., `git commit -m "fix bug"`) and verify it is rejected.
+3. Retry with a valid message (e.g., `git commit -m "PROJ-42: fix null pointer in auth module"`) and verify it succeeds.
+
+### Challenge 2: Add gitleaks to a GitHub Actions CI Pipeline as a Blocking Gate
+
+Configure a GitHub Actions workflow that runs gitleaks on every pull request targeting `main`, using the full repository history, and fails the PR if any secrets are detected.
+
+1. Create `.github/workflows/secret-scan.yml` in the `lab02-branch-protection` repository.
+2. Use the `gitleaks/gitleaks-action@v2` action with `fetch-depth: 0` to scan full history.
+3. Set the workflow to trigger on `pull_request` events targeting `main`.
+4. In the branch protection settings for `main`, add the `Secrets Detection` status check as a required check. Attempt to open a PR from a branch that contains a fake AWS key (committed with `--no-verify`) and observe the PR blocked by the failing status check.
+
+```yaml
+name: Secret Scanning Gate
+on:
+  pull_request:
+    branches: [main]
+jobs:
+  gitleaks:
+    name: Secrets Detection
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
+
+### Reflection Questions
+
+1. You now have three layers of secrets detection: a pre-commit hook, a CI pipeline job, and GitHub's native push protection. If push protection is already blocking secrets at the server, why should the pre-commit hook and CI job still be maintained? What does each layer provide that the others do not?
+2. The commit-msg hook enforces a ticket reference policy, but `git commit --no-verify` bypasses it. Design a server-side control (using GitHub branch protection or a GitLab push rule) that enforces this same policy without relying on client-side hooks. What are the trade-offs of moving this enforcement server-side?
+
+---
+
 Lab 02 | CIS-4350 | Texas Wesleyan University | Professor Nash

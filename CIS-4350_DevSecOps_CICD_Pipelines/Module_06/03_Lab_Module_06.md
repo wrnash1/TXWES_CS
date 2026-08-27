@@ -464,4 +464,44 @@ Submit the following on Canvas:
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Write a Conftest Policy for Cost and Security Governance
+
+Extend the Conftest policies from this lab to enforce a combined security and cost-governance rule: no EC2 instance may use an instance type larger than `t3.large` unless it has a tag `environment = "production"`.
+
+1. Write a new Rego policy file `policies/terraform/instance_size.rego` with the following logic:
+
+```rego
+package terraform.instance_size
+
+deny[msg] {
+  resource := input.resource_changes[_]
+  resource.type == "aws_instance"
+  instance_type := resource.change.after.instance_type
+  not startswith(instance_type, "t3.")
+  resource.change.after.tags.environment != "production"
+  msg := sprintf("Instance type '%v' requires environment=production tag", [instance_type])
+}
+```
+
+1. Create two test Terraform files: one that should pass (t3.medium with no production tag) and one that should fail (m5.xlarge with no production tag). Verify Conftest correctly passes and fails each.
+2. Extend the `iac-security.yml` CI workflow to run this new policy check as part of the Conftest job.
+
+### Challenge 2: Detect Configuration Drift with Terraform Plan
+
+Simulate configuration drift by manually modifying infrastructure (using `aws localstack` or documenting a hypothetical scenario) and use `terraform plan` to detect the divergence.
+
+1. Apply your Terraform configuration to a local environment (using LocalStack for AWS emulation or a free-tier AWS account).
+2. Manually modify one resource outside of Terraform (e.g., change a security group rule via the AWS CLI or LocalStack CLI).
+3. Run `terraform plan -refresh-only` and capture the output showing the drift.
+4. Document in your lab report: the changed resource, how terraform plan detected the drift, and what the remediation command would be to reconcile state.
+
+### Reflection Questions
+
+1. Your IaC CI pipeline catches a publicly-accessible S3 bucket before deployment. However, a team member created the same bucket manually via the AWS console 6 months ago, and no scan has ever checked it. What tools and processes would you implement to detect and remediate security misconfigurations that exist in already-deployed infrastructure (not just new IaC changes)?
+2. Sentinel `hard-mandatory` policies are absolute — no user can override them. A production incident requires an emergency change that would violate a Sentinel policy (e.g., temporarily opening a port for incident response). Describe the process your organization should have in place to handle emergency changes that conflict with hard policy, including governance, documentation, and rollback requirements.
+
+---
+
 Lab 06 | CIS-4350 | Texas Wesleyan University | Professor Nash

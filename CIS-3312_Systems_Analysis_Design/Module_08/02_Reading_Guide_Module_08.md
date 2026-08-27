@@ -337,4 +337,30 @@ Work through each item before attempting the quiz.
 
 ---
 
+---
+
+## 9. Supplemental Resources
+
+The following open educational resources extend module content on use case modeling and user stories. All are freely accessible without login or purchase.
+
+1. **UML Use Case Diagram Reference — OMG Unified Modeling Language Specification**
+   <https://www.omg.org/spec/UML/>
+   Focus: The official OMG UML specification governing use case diagram notation. Review the use case diagram chapter for authoritative definitions of include, extend, and generalization as tested on the ECBA exam.
+
+2. **Story Mapping — Jeff Patton & Associates**
+   <https://www.jpattonassociates.com/user-story-mapping/>
+   Focus: The originator of user story mapping explains the technique, the backbone concept, and how slicing produces MVP and release plans. Directly supports the story map lab task.
+
+3. **Fully Dressed Use Case Template — Alistair Cockburn**
+   <https://alistair.cockburn.us/use-cases/>
+   Focus: The Cockburn use case template with field-by-field descriptions. Use this as a reference when completing the fully dressed specification tasks in the lab.
+
+4. **INVEST Criteria for User Stories — Agile Alliance**
+   <https://www.agilealliance.org/glossary/invest/>
+   Focus: Official Agile Alliance definition and explanation of all six INVEST criteria with examples of stories that pass and fail each criterion. Essential reference for the story evaluation tasks.
+
+5. **Acceptance Criteria: Examples and Best Practices — Thoughtworks**
+   <https://www.thoughtworks.com/en-us/insights/blog/writing-acceptance-criteria-user-stories>
+   Focus: Practical guide to writing Given-When-Then acceptance criteria with worked examples in a software development context. Directly supports the acceptance criteria writing tasks in the lab.
+
 *Reading Guide — Module 08 | CIS-3312 Systems Analysis and Design | Texas Wesleyan University*

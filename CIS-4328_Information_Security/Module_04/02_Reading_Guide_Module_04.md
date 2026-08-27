@@ -218,6 +218,22 @@ Work through these questions after completing the readings. They are designed to
 
 ---
 
+## 9. Supplemental Resources
+
+**1. MITRE ATT&CK Enterprise Matrix**
+<https://attack.mitre.org/matrices/enterprise/>
+The authoritative adversary tactics, techniques, and procedures (TTPs) framework covering the full attack lifecycle from Initial Access through Impact. Directly supports Module 04 topics including malware categories, C2 beaconing, persistence mechanisms, and supply chain attacks — each maps to specific ATT&CK technique IDs used in the lab.
+
+**2. CISA Known Exploited Vulnerabilities (KEV) Catalog**
+<https://www.cisa.gov/known-exploited-vulnerabilities-catalog>
+CISA's continuously updated list of CVEs being actively exploited in the wild, with required remediation deadlines for federal agencies. Use it to observe how zero-day vulnerabilities transition to known/exploited status once publicly disclosed, and to understand why patch prioritization is driven by active exploitation evidence rather than CVSS score alone.
+
+**3. VirusTotal — File and URL Analysis**
+<https://www.virustotal.com>
+A free multi-engine file and URL analysis service used operationally by security teams to check file hashes, domain reputation, and URL safety against dozens of antivirus engines simultaneously. Directly supports the Module 04 lab IoC analysis tasks and reinforces the real-world use of file hash and network IoC categories.
+
+---
+
 ## Review Checklist
 
 Before moving to the Module 04 quiz and lab, verify you can do each of the following without notes:

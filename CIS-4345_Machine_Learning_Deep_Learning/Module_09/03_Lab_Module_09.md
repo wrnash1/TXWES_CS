@@ -360,3 +360,64 @@ Submit the following to Canvas:
 Texas Wesleyan University — CIS-4345 Machine Learning and Deep Learning
 
 Proprietary and Confidential. Not for disclosure outside of Texas Wesleyan University.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Pre-trained GloVe Embeddings
+
+Replace the randomly initialized `Embedding` layer in your bag-of-embeddings model with pre-trained GloVe vectors and compare the impact on accuracy and training speed.
+
+1. Download the GloVe 50-dimensional vectors (`glove.6B.50d.txt`) from `https://nlp.stanford.edu/projects/glove/`. Build an embedding matrix by looking up each word in your tokenizer's `word_index` against the GloVe file:
+
+   ```python
+   import numpy as np
+   embeddings_index = {}
+   with open('glove.6B.50d.txt', encoding='utf-8') as f:
+       for line in f:
+           values = line.split()
+           word = values[0]
+           embeddings_index[word] = np.asarray(values[1:], dtype='float32')
+
+   vocab_size = len(tokenizer.word_index) + 1
+   embedding_matrix = np.zeros((vocab_size, 50))
+   for word, i in tokenizer.word_index.items():
+       vec = embeddings_index.get(word)
+       if vec is not None:
+           embedding_matrix[i] = vec
+   ```
+
+2. Load the matrix into the `Embedding` layer using the `weights` argument and freeze it with `trainable=False`:
+
+   ```python
+   embedding_layer = tf.keras.layers.Embedding(
+       vocab_size, 50, weights=[embedding_matrix],
+       input_length=200, trainable=False
+   )
+   ```
+
+3. Train the GloVe model for 10 epochs and compare its learning curves (accuracy vs. epoch) against the randomly initialized embedding model from Part 1. Note which model reaches 85% validation accuracy faster.
+4. Then set `trainable=True` and fine-tune the GloVe model for 5 more epochs. Record whether fine-tuning improves or hurts performance.
+
+### Challenge 2: Attention-Weighted Sentence Representation
+
+Instead of averaging all token embeddings with `GlobalAveragePooling1D`, implement a simple attention mechanism that weights each token's embedding by its importance.
+
+1. After the `Embedding` layer, add a `Dense(1)` layer that produces a scalar score for each token position, then apply softmax across the sequence dimension to get attention weights. Multiply these weights by the embeddings and sum to get the attended representation:
+
+   ```python
+   # After embedding layer output shape: (batch, 200, 64)
+   attention_scores = tf.keras.layers.Dense(1, activation='tanh')(embedded)  # (batch, 200, 1)
+   attention_weights = tf.keras.layers.Softmax(axis=1)(attention_scores)      # (batch, 200, 1)
+   attended = tf.reduce_sum(embedded * attention_weights, axis=1)             # (batch, 64)
+   ```
+
+2. Build this as a Keras Functional API model (not Sequential), compile with `binary_crossentropy`, and train for 15 epochs.
+3. After training, extract the attention weights for 5 test reviews and print the top 3 highest-weighted words for each. Verify that the most-attended words align intuitively with the sentiment (e.g., "terrible", "masterpiece", "boring").
+4. Compare this model's validation accuracy against the `GlobalAveragePooling1D` baseline from Part 1.
+
+### Reflection Questions
+
+1. When loading pre-trained GloVe embeddings, some words in your vocabulary will not appear in the GloVe file (the `embeddings_index.get(word)` call returns `None`). For these missing words, the embedding matrix row is left as all zeros. What are the consequences of this zero initialization, and what is a better alternative for initializing the embeddings of out-of-vocabulary GloVe words?
+2. In your attention weight visualization, did the model consistently attend to sentiment-bearing words (adjectives, adverbs like "not")? What limitation of this simple dot-product attention mechanism might explain cases where the attended words do not seem meaningful, and how does the multi-head self-attention in Transformer models address this limitation?

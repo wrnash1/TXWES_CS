@@ -311,3 +311,25 @@ footer   { grid-area: footer; }
 - [ ] Be able to center an element using both Flexbox and `margin: auto`
 - [ ] Complete Lab 02 with DevTools Grid overlay verification
 - [ ] Complete Quiz 02 and Discussion 02 before the module deadline
+
+---
+
+## 10. Supplemental Resources
+
+The following free, open-access resources go deeper on Module 02 topics:
+
+**1. MDN Web Docs — CSS Flexible Box Layout**
+[https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_flexible_box_layout](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_flexible_box_layout)
+The authoritative reference for all Flexbox container and item properties, with interactive examples for `justify-content`, `align-items`, `flex-wrap`, and the `flex` shorthand.
+
+**2. MDN Web Docs — CSS Grid Layout**
+[https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_grid_layout](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_grid_layout)
+Comprehensive documentation covering grid tracks, named template areas, implicit vs. explicit grids, the `fr` unit, and the `repeat()` function with `auto-fill` and `auto-fit`.
+
+**3. CSS-Tricks — A Complete Guide to Flexbox**
+[https://css-tricks.com/snippets/css/a-guide-to-flexbox/](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
+A widely-referenced visual guide illustrating every Flexbox property with diagrams. Particularly useful for understanding the main axis vs. cross axis distinction before exams.
+
+**4. CSS-Tricks — A Complete Guide to CSS Grid**
+[https://css-tricks.com/snippets/css/complete-guide-grid/](https://css-tricks.com/snippets/css/complete-guide-grid/)
+The companion visual guide to CSS Grid, covering `grid-template-areas`, line-based placement, the `minmax()` function, and the difference between `auto-fill` and `auto-fit` with diagrams.

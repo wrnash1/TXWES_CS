@@ -328,4 +328,28 @@ Compile a single PDF or Word lab report with four sections.
 
 ---
 
-*Lab Line Count: 180 | Module 15 — Emerging AI Technologies*
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Multi-Agent ReAct Pipeline with Tool Use
+
+1. Using the OpenAI Python SDK (or Azure OpenAI), implement a simple ReAct agent loop from scratch without using a framework. The agent should handle the following task: "Find the current population of Texas, calculate what percentage of the US population that represents, and summarize the result in one sentence." Give the agent access to two tools: a `web_search(query)` stub that returns a pre-defined JSON response with population figures, and a `calculator(expression)` stub that evaluates a Python arithmetic expression string.
+2. Implement the ReAct loop: each iteration calls the model with the conversation history, parses the model's output for either a `Thought:` / `Action:` pair or a `Final Answer:` token, executes the indicated tool if an action is requested, appends the `Observation:` result to the conversation history, and repeats until a final answer is produced. Cap iterations at 10 to prevent infinite loops.
+3. Log each iteration: round number, model output, tool called (if any), tool result, and token count consumed. Measure total token consumption across the full reasoning chain.
+4. Modify the agent to require human approval before any tool call: print the proposed tool call and prompt the user to type `approve` or `reject`. If rejected, append a message indicating the tool call was rejected and ask the model to reason differently. Test with one rejection mid-chain and observe how the agent adapts. Write a 3–4 sentence reflection on what this human-in-the-loop pattern reveals about the trade-off between agent autonomy and safety.
+
+### Challenge 2: Edge Deployment Benchmark — ONNX vs PyTorch
+
+1. Train a small convolutional neural network (`Conv2d → ReLU → MaxPool → Linear`) on the CIFAR-10 dataset for 5 epochs using PyTorch. Record training accuracy and test accuracy. Save the model in PyTorch `.pt` format.
+2. Export the model to ONNX format using `torch.onnx.export`. Load the ONNX model using `onnxruntime.InferenceSession`. Run inference on 1,000 test images using both the PyTorch model and the ONNX Runtime model. Record inference latency (total and per-image) for each.
+3. Apply dynamic INT8 quantization to the PyTorch model using `torch.quantization.quantize_dynamic`. Export the quantized model to ONNX. Measure inference latency and model file size for: (a) original PyTorch, (b) original ONNX, (c) quantized ONNX. Build a comparison table: Format | Model Size (MB) | Latency per Image (ms) | Test Accuracy.
+4. Write a 3–4 sentence recommendation: If you were deploying this model to a Raspberry Pi 4 (ARM CPU, no GPU, 4 GB RAM) for real-time image classification at 10 fps, which format and configuration would you choose? What accuracy-latency-size tradeoff are you accepting, and how does this relate to the edge AI design principles from Module 15?
+
+### Reflection Questions
+
+1. After completing Challenge 1, explain why capping the ReAct loop at a maximum number of iterations is a safety requirement rather than just a practical engineering constraint. What could happen in a production agentic system with no iteration cap when the model encounters a task it cannot complete with the available tools?
+
+2. Based on Challenge 2, explain why INT8 quantization may reduce accuracy for some model architectures but not others. What property of a model's weight distribution determines whether quantization causes significant accuracy loss, and what does this imply about when quantization should be applied in a production edge AI deployment pipeline?
+
+---
+
+Lab Line Count: 180 | Module 15 — Emerging AI Technologies

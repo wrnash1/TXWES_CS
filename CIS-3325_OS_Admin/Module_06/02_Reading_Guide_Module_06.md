@@ -268,3 +268,38 @@ Before the quiz and lab, confirm you can do all of the following without looking
 - Explain what daemon-reload does and when it is required
 - Identify the correct location for administrator unit file overrides
 - Use journalctl to view service logs, filter by time, and follow in real time
+
+---
+
+## 9. Supplemental Resources
+
+**1. Linux man pages — ps(1), top(1), kill(1), nice(1), renice(1)**
+URL: https://man7.org/linux/man-pages/man1/ps.1.html
+Coverage: The ps man page PROCESS STATE CODES section documents every STAT code (R, S, D,
+Z, T, I, W, X). The kill man page lists all signal numbers and names. Essential reference
+for interpreting process output and sending the correct signal.
+
+**2. systemd documentation — systemctl(1)**
+URL: https://www.freedesktop.org/software/systemd/man/systemctl.html
+Coverage: Complete systemctl reference covering all subcommands including start, stop,
+restart, reload, enable, disable, mask, daemon-reload, and daemon-reexec. Explains the
+difference between enable/disable (boot persistence) and start/stop (runtime state).
+
+**3. TLDP — Linux Processes HOWTO**
+URL: https://tldp.org/LDP/tlk/kernel/processes.html
+Coverage: Explains how the Linux kernel manages processes including scheduling, context
+switching, process states, and the fork/exec model. Background reading for understanding
+why zombie processes exist and how orphan adoption works.
+
+**4. Red Hat Documentation — Managing systemd services**
+URL: https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/configuring_basic_system_settings/managing-system-services-with-systemctl_configuring-basic-system-settings
+Coverage: RHEL 9 guide for managing services with systemctl, creating drop-in override
+files, understanding unit dependencies, and using systemctl list-units to audit running
+services. Covers the /etc/systemd/system/ override directory pattern.
+
+**5. Arch Wiki — systemd/Journal**
+URL: https://wiki.archlinux.org/title/Systemd/Journal
+Coverage: Comprehensive journalctl reference covering all filtering options (--since,
+--until, -u, -p, -b, -k, -f, -n), persistent journal configuration, journal size limits,
+and forwarding journal entries to syslog. The most complete freely available journalctl
+guide outside the man page.

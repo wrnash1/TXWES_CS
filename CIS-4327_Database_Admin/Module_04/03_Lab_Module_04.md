@@ -257,3 +257,66 @@ gcloud spanner instances delete txwes-spanner-lab --quiet
 ---
 
 Reference: cloud.google.com/learn
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Demonstrating Hotspot vs. Distributed Insert Performance
+
+Create two tables — one with a sequential INT64 primary key and one with a UUID STRING(36) key — and compare insert throughput.
+
+```sql
+CREATE TABLE HotspotOrders (
+    OrderId     INT64  NOT NULL,
+    CustomerId  STRING(36) NOT NULL,
+    OrderDate   DATE   NOT NULL,
+    Amount      FLOAT64 NOT NULL
+) PRIMARY KEY (OrderId);
+
+CREATE TABLE DistributedOrders (
+    OrderId     STRING(36) NOT NULL DEFAULT (GENERATE_UUID()),
+    CustomerId  STRING(36) NOT NULL,
+    OrderDate   DATE       NOT NULL,
+    Amount      FLOAT64    NOT NULL
+) PRIMARY KEY (OrderId);
+```
+
+Then complete the following steps:
+
+1. Use the Cloud Spanner Workload Generator (or insert 1000 rows via the gcloud `spanner rows insert` command in a loop) into both tables. Record the wall-clock time for each batch.
+2. In the Google Cloud Console, navigate to your Spanner instance's **Monitoring** tab and capture a screenshot of the CPU utilization per split chart during each insert batch. Identify which table shows CPU concentration on a single split vs. distribution across splits.
+3. Write a two-paragraph analysis: the first paragraph explains the tablet-split mechanism that causes the hotspot; the second paragraph describes two alternative primary key designs (bit-reversal prefix, hash prefix) and when each is appropriate.
+
+### Challenge 2: Covering Index Optimization for a Reporting Query
+
+In your lab Spanner database, create a secondary index without STORING and observe a back-join, then add STORING and confirm it is eliminated.
+
+```sql
+-- Create index without STORING
+CREATE INDEX IdxOrderByCustomer ON Orders (CustomerId);
+
+-- Run a query that requires a back-join (projects OrderDate not in index)
+SELECT CustomerId, OrderDate, TotalAmount
+FROM   Orders@{FORCE_INDEX=IdxOrderByCustomer}
+WHERE  CustomerId = 'C001';
+```
+
+Then complete the following steps:
+
+1. Run `EXPLAIN` on the query above and record whether a back-join to the base table appears in the execution plan.
+2. Drop the index and recreate it with STORING, then re-run the same query with `FORCE_INDEX=IdxOrderByCustomer` and capture the new EXPLAIN output:
+
+```sql
+DROP INDEX IdxOrderByCustomer;
+
+CREATE INDEX IdxOrderByCustomer ON Orders (CustomerId)
+    STORING (OrderDate, TotalAmount);
+```
+
+3. Confirm the back-join is eliminated in the new plan and write one paragraph explaining the performance difference.
+
+### Reflection Questions
+
+1. In Challenge 1, what specific metric in the Cloud Spanner Monitoring tab most clearly showed that write load was unevenly distributed across splits for the sequential-key table, and what would an ideal distribution look like?
+2. In Challenge 2, under what conditions would adding a STORING clause to a secondary index be counterproductive — that is, when does the extra storage cost of STORING outweigh its read performance benefit?

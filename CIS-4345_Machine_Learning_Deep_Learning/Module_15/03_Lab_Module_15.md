@@ -394,3 +394,72 @@ Before submitting, confirm your notebook contains:
 | Transformer classifier built and tested | 15 |
 | Written responses (Q1.1, Q2.1, Q3.1) | 10 |
 | **Total** | **100** |
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Convolutional VAE with Latent Space Arithmetic
+
+Upgrade the dense VAE from Part 2 to use convolutional layers and demonstrate latent space arithmetic on Fashion MNIST.
+
+1. Replace the dense encoder and decoder with convolutional equivalents. Use `Conv2D` with stride 2 for downsampling in the encoder and `Conv2DTranspose` with stride 2 for upsampling in the decoder. Keep the 2D latent bottleneck for visualization:
+
+   ```python
+   # Convolutional encoder (input shape: 28x28x1)
+   vae_enc_in = tf.keras.Input(shape=(28, 28, 1))
+   x = tf.keras.layers.Conv2D(32, 3, strides=2, padding='same', activation='relu')(vae_enc_in)
+   x = tf.keras.layers.Conv2D(64, 3, strides=2, padding='same', activation='relu')(x)
+   x = tf.keras.layers.Flatten()(x)
+   x = tf.keras.layers.Dense(64, activation='relu')(x)
+   mu = tf.keras.layers.Dense(VAE_LATENT, name='mu')(x)
+   log_var = tf.keras.layers.Dense(VAE_LATENT, name='log_var')(x)
+   z = Sampling()([mu, log_var])
+   conv_vae_encoder = tf.keras.Model(vae_enc_in, [mu, log_var, z], name='conv_vae_encoder')
+   ```
+
+2. Build the convolutional decoder to mirror the encoder: Dense → Reshape → Conv2DTranspose stacks → sigmoid output at 28×28×1.
+3. Retrain using the same `VAE` custom model class but pass `x_train` (shaped `(N, 28, 28, 1)`) instead of flattened data. Compare final reconstruction quality (visually) against the dense VAE.
+4. Select three classes from Fashion MNIST (e.g., T-shirt=0, Trouser=1, Sneaker=7). Encode 50 examples from each class to get their `mu` vectors. Compute the class-mean latent vectors `z_tshirt`, `z_trouser`, `z_sneaker`. Decode `z_tshirt - z_trouser + z_sneaker` and display the result. In a Markdown cell, explain what latent space arithmetic implies about the structure the VAE has learned.
+
+### Challenge 2: Multi-Head Attention Visualization on a Real Sentence
+
+Implement a full multi-head attention module and visualize how different heads attend to different parts of a sentence.
+
+1. Implement a `MultiHeadAttention` layer from scratch (without using `tf.keras.layers.MultiHeadAttention`). The layer should accept `q`, `k`, `v` inputs, project each to `num_heads` sub-spaces, apply scaled dot-product attention independently in each head, concatenate results, and apply the output projection:
+
+   ```python
+   class ManualMultiHeadAttention(tf.keras.layers.Layer):
+       def __init__(self, d_model, num_heads):
+           super().__init__()
+           assert d_model % num_heads == 0
+           self.num_heads = num_heads
+           self.d_k = d_model // num_heads
+           self.W_q = tf.keras.layers.Dense(d_model)
+           self.W_k = tf.keras.layers.Dense(d_model)
+           self.W_v = tf.keras.layers.Dense(d_model)
+           self.W_o = tf.keras.layers.Dense(d_model)
+
+       def split_heads(self, x, batch_size):
+           x = tf.reshape(x, (batch_size, -1, self.num_heads, self.d_k))
+           return tf.transpose(x, perm=[0, 2, 1, 3])
+
+       def call(self, q, k, v):
+           b = tf.shape(q)[0]
+           Q = self.split_heads(self.W_q(q), b)
+           K = self.split_heads(self.W_k(k), b)
+           V = self.split_heads(self.W_v(v), b)
+           output, weights = scaled_dot_product_attention(Q, K, V)
+           output = tf.transpose(output, perm=[0, 2, 1, 3])
+           output = tf.reshape(output, (b, -1, self.num_heads * self.d_k))
+           return self.W_o(output), weights
+   ```
+
+2. Instantiate `ManualMultiHeadAttention(d_model=32, num_heads=4)`. Pass a random input tensor of shape `(1, 8, 32)` (batch=1, seq_len=8, d_model=32) as q, k, and v. Retrieve the attention weights tensor of shape `(1, num_heads, 8, 8)`.
+3. Plot a 2×2 grid of heatmaps — one per attention head — showing the 8×8 weight matrix for each head. Label axes with token indices 0–7. Observe whether different heads attend to different patterns even with random weights.
+4. In a Markdown cell, explain why multiple heads attending to different subspaces provides more expressive power than a single attention head with the full `d_model` dimension. Reference the concept of "representation subspaces."
+
+### Reflection Questions
+
+1. In the convolutional VAE, the encoder compresses 784 input values into a 2D latent vector. As you increase `VAE_LATENT` from 2 to 32, what tradeoff emerges between reconstruction quality and the ability to visualize and interpret the latent space? At what dimensionality does the VAE become practically useful for generation vs. easily visualizable?
+2. In your multi-head attention visualization, did any two heads show identical or near-identical attention patterns? What would it mean for training efficiency if all heads converged to the same pattern, and what regularization techniques exist to encourage head diversity?

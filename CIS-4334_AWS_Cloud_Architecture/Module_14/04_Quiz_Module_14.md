@@ -244,3 +244,235 @@ B is correct. S3 One Zone-IA stores data in a single Availability Zone at a lowe
 C is incorrect. Glacier Instant Retrieval has a lower per-GB storage cost than One Zone-IA but charges a per-GB retrieval fee. Images that are "rarely" — not "almost never" — accessed would accumulate retrieval charges that exceed the storage savings.
 
 D is incorrect. Intelligent-Tiering adds a per-object monitoring fee. For objects with a known access pattern (frequently accessed initially, rarely after 60 days), a Lifecycle policy to One Zone-IA is more cost-effective than paying the monitoring fee for dynamic tiering.
+
+---
+
+### Question 11 (5 points)
+
+A company runs a stateless web application on EC2 instances behind an Application Load Balancer. The application handles unpredictable traffic spikes and requires the lowest possible compute cost. Which EC2 purchasing option provides the greatest discount while keeping the application running during spikes?
+
+A. On-Demand Instances exclusively — they scale quickly and have no commitment
+
+B. Reserved Instances for 100% of the baseline load, with Spot Instances for additional capacity managed by an Auto Scaling group
+
+C. Spot Instances exclusively — they offer up to 90% discount and Auto Scaling will replace interrupted instances
+
+D. Dedicated Hosts for the baseline with On-Demand for spikes — Dedicated Hosts provide the best per-hour pricing
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect. On-Demand Instances have no discount and are the most expensive option for sustained baseline traffic. They are appropriate for unpredictable short-term workloads, not steady-state production baselines.
+- B is correct. Reserving capacity for the predictable baseline provides the largest sustained discount (up to 72% with 1-year Standard RIs). Spot Instances handle burst traffic at up to 90% discount. Auto Scaling manages Spot interruptions gracefully for a stateless application. This combination achieves the lowest blended cost.
+- C is incorrect. Spot-only architectures risk availability when AWS reclaims capacity across all Spot pools during regional demand spikes. A stateless web application serving production traffic needs guaranteed baseline capacity — pure Spot is appropriate for batch or fault-tolerant workloads, not customer-facing applications requiring consistent availability.
+- D is incorrect. Dedicated Hosts are the most expensive EC2 option — designed for software licensing requirements (Oracle, SQL Server per-socket licensing). They do not provide cost savings for general compute workloads.
+
+---
+
+### Question 12 (5 points)
+
+A company's AWS bill shows $8,000/month in NAT Gateway data processing charges. Their architecture has EC2 instances in private subnets that primarily access Amazon S3 and DynamoDB. What is the most cost-effective architectural change?
+
+A. Move the EC2 instances to public subnets to eliminate NAT Gateway traffic
+
+B. Add VPC Gateway Endpoints for S3 and DynamoDB to route that traffic within the VPC without NAT charges
+
+C. Replace the NAT Gateway with a NAT instance on a t3.micro to reduce hourly costs
+
+D. Enable S3 Transfer Acceleration to bypass the NAT Gateway for S3 traffic
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect. Moving instances to public subnets creates significant security exposure — private subnets exist to prevent direct internet access to backend resources. This is an architectural regression, not a cost optimization.
+- B is correct. VPC Gateway Endpoints for S3 and DynamoDB are free — they route traffic directly from the VPC to those services without traversing the NAT Gateway. If S3 and DynamoDB traffic represents the majority of NAT processing charges, this change can eliminate most of the $8,000 monthly cost with no downside.
+- C is incorrect. Replacing a managed NAT Gateway with a NAT instance reduces hourly costs but still charges full data processing fees for all traffic. It also introduces operational overhead (patching, HA configuration) and does not address the root cause.
+- D is incorrect. S3 Transfer Acceleration speeds up transfers between clients and S3 over long distances — it does not route traffic away from the NAT Gateway and actually adds additional per-GB charges on top of existing costs.
+
+---
+
+### Question 13 (5 points)
+
+A startup uses AWS Cost Explorer to analyze their spending. They notice that EC2 costs vary significantly month to month and want to purchase Reserved Instances. They have 2 years of usage history showing consistent 24/7 use of `m5.large` instances in `us-east-1`. Which RI purchase provides the highest discount?
+
+A. 1-year, No Upfront, Standard RI
+
+B. 3-year, All Upfront, Standard RI
+
+C. 1-year, All Upfront, Convertible RI
+
+D. 3-year, No Upfront, Convertible RI
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect. 1-year No Upfront provides the lowest discount of all RI options — roughly 36–40% for an m5.large. It has the highest effective hourly rate among Standard RIs.
+- B is correct. 3-year All Upfront Standard RIs provide the maximum possible discount — up to 72% for an m5.large compared to On-Demand. Paying the full 3-year cost upfront eliminates the financing premium that No Upfront and Partial Upfront carry, maximizing total savings for a confirmed, stable workload.
+- C is incorrect. Convertible RIs trade flexibility (ability to change instance family, OS, tenancy) for a lower discount compared to Standard RIs. For a stable, well-understood workload with 2 years of consistent usage history, the flexibility premium is unnecessary.
+- D is incorrect. Convertible 3-year No Upfront provides a worse discount than Standard 3-year All Upfront on both dimensions — Convertible reduces discount, and No Upfront increases effective hourly rate.
+
+---
+
+### Question 14 (5 points)
+
+A company wants to understand which AWS services are driving the most cost growth month-over-month across multiple linked accounts in their AWS Organization. They need line-item detail down to the resource level (individual EC2 instance IDs and S3 bucket names). Which AWS tool provides this granularity?
+
+A. AWS Cost Explorer with "Group by: Service" filter
+
+B. AWS Budgets with a cost budget and daily alert cadence
+
+C. AWS Cost and Usage Report (CUR) delivered to S3 and queried with Amazon Athena
+
+D. AWS Trusted Advisor Cost Optimization checks
+
+**Correct Answer: C**
+
+**Distractor Analysis:**
+
+- A is incorrect. Cost Explorer provides service-level and account-level breakdowns with up to 12 months of history, but it does not drill down to individual resource IDs (instance IDs, bucket names). It is a visualization tool, not a raw billing data source.
+- B is incorrect. Budgets alerts on threshold breaches for forecasted or actual spend — it does not provide resource-level cost attribution or trend analysis.
+- C is correct. The AWS Cost and Usage Report is the most granular billing dataset AWS provides. It includes line items per resource ID (EC2 instance, S3 bucket, RDS instance), per hour, with usage type, tags, and blended/unblended costs. Delivered to S3 and queried with Athena, it enables any level of aggregation or drill-down needed for cost attribution.
+- D is incorrect. Trusted Advisor Cost Optimization checks flag specific issues (underutilized EC2 instances, idle RDS) but do not provide month-over-month trend data or per-resource cost breakdowns.
+
+---
+
+### Question 15 (5 points)
+
+A company runs hundreds of EC2 instances across multiple regions. They want to automatically identify underutilized instances and receive recommendations for downsizing without manually analyzing CloudWatch metrics. Which AWS service provides this?
+
+A. AWS Cost Explorer RI recommendations
+
+B. AWS Compute Optimizer
+
+C. AWS Trusted Advisor low-utilization EC2 check (requires Business support)
+
+D. Amazon CloudWatch automatic dashboards
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect. Cost Explorer RI recommendations identify opportunities to purchase Reserved Instances for current On-Demand usage — they do not analyze workload CPU/memory patterns to recommend instance size changes.
+- B is correct. AWS Compute Optimizer uses machine learning to analyze 14 days of CloudWatch utilization metrics (CPU, memory via CloudWatch Agent, network, disk) and recommends optimal instance types and sizes. It identifies over-provisioned instances and suggests specific downsizing actions with estimated savings.
+- C is incorrect. Trusted Advisor's low-utilization EC2 check flags instances with less than 10% average CPU utilization over 4 days — a useful signal, but far less sophisticated than Compute Optimizer's ML-based multi-metric analysis and specific rightsizing recommendations.
+- D is incorrect. CloudWatch automatic dashboards display current metrics but do not perform utilization analysis or generate optimization recommendations.
+
+---
+
+### Question 16 (5 points)
+
+A company purchases a 1-year EC2 Instance Savings Plan for 10 $/hour of compute spend. In a given hour, their actual EC2 spend is 14 $/hour. How does the Savings Plan apply?
+
+A. The first 10 $/hour is covered at the Savings Plan discounted rate; the remaining 4 $/hour is charged at On-Demand rates
+
+B. The entire 14 $/hour is covered at the Savings Plan discounted rate because the plan applies retroactively to all usage
+
+C. The Savings Plan does not apply because actual spend exceeds the committed amount
+
+D. The first 10 $/hour is free; the remaining 4 $/hour is charged at a 50% discount
+
+**Correct Answer: A**
+
+**Distractor Analysis:**
+
+- A is correct. Savings Plans apply a discounted rate to compute usage up to the committed $/hour amount. Usage beyond the commitment continues at standard On-Demand rates. In this case, the first $10 of compute is discounted by the Savings Plan; the additional $4 is billed at On-Demand pricing.
+- B is incorrect. Savings Plans do not retroactively cover all usage in an hour when the commitment is exceeded. The commitment is a ceiling, not a blanket discount on all spend in that hour.
+- C is incorrect. Exceeding the committed amount does not invalidate the Savings Plan. The plan always applies its discount to usage up to the commitment level, regardless of total spend.
+- D is incorrect. Savings Plans do not make committed usage free — they apply a discounted rate (e.g., 30–66% off On-Demand depending on plan type and term). The remaining usage above the commitment is On-Demand, not half-price.
+
+---
+
+### Question 17 (5 points)
+
+A data engineering team runs Apache Spark jobs on EMR every night from midnight to 4 AM. The cluster is idle for the remaining 20 hours each day. Which cost optimization approach reduces the EMR cluster cost by the greatest amount?
+
+A. Purchase Reserved Instances for all EMR core nodes
+
+B. Terminate the cluster after each job completes and recreate it before the next job using a scheduled EventBridge rule and Step Functions
+
+C. Move the EMR cluster to a smaller instance type to reduce the per-hour cost
+
+D. Enable EMR Managed Scaling to reduce the number of core nodes during idle periods
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect. Reserving instances for nodes that are idle 20 hours per day would guarantee payment for unused capacity. RI discounts reduce hourly cost but do not eliminate cost during idle hours — making an idle cluster more expensive to reserve than to terminate.
+- B is correct. Transient EMR clusters (terminate after job, recreate before next job) eliminate all EC2, EMR, and EBS costs during the 20 idle hours each day. For a batch workload with a predictable schedule, this reduces effective cost to approximately 17% of a continuously running cluster (4 active hours / 24 total hours).
+- C is incorrect. A smaller instance type reduces per-hour cost but still charges for 20 idle hours. The cost reduction is proportional to the size reduction — far less than the ~83% savings from eliminating idle hours entirely.
+- D is incorrect. EMR Managed Scaling adjusts the number of task nodes based on workload, but core nodes (minimum cluster size) remain running. It does not terminate the cluster or eliminate charges during the 20 idle hours.
+
+---
+
+### Question 18 (5 points)
+
+A company activates cost allocation tags in the AWS Billing console and tags all resources with `Project` and `CostCenter` keys. After 30 days, the finance team reports that 40% of costs in Cost Explorer still show as untagged. What is the most likely reason?
+
+A. Cost allocation tags only work for EC2 and S3 — other services are not supported
+
+B. Some AWS service charges (data transfer, support fees, certain managed service costs) cannot be tagged at the resource level and appear as untagged
+
+C. Tags must be applied retroactively to all historical usage for them to appear in Cost Explorer
+
+D. The tags were activated after resources were created and AWS does not apply tags to running resources
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect. Cost allocation tags are supported across most AWS services — EC2, RDS, S3, Lambda, and many others. The limitation is not service coverage.
+- B is correct. Certain AWS charges are not attributable to a specific tagged resource — data transfer charges, AWS Support fees, free tier credits, tax charges, and some managed service overhead costs appear without resource-level tags. Additionally, services like Route 53 hosted zones and some global features may not support resource tagging, contributing to untagged cost percentages in Cost Explorer.
+- C is incorrect. Tags apply from the moment they are activated and resources are tagged going forward. Historical costs before tag activation remain untagged, but new charges from tagged resources show up correctly without retroactive application needed.
+- D is incorrect. Cost allocation tags activated in Billing apply to all currently tagged resources going forward — AWS does not require re-tagging running resources after activation. The tags are read from current resource metadata, not at resource creation time.
+
+---
+
+### Question 19 (5 points)
+
+A company is evaluating whether to commit to a 1-year Compute Savings Plan or continue with On-Demand pricing for their Lambda and Fargate workloads. Their Lambda invocation spend has been consistently $1,200/month for the past 6 months with minimal variation. Which analysis should drive the decision?
+
+A. Purchase the Savings Plan only if the 1-year commitment cost is less than 12 months of On-Demand spend
+
+B. Compare the effective hourly rate discount of the Savings Plan against the expected usage, then calculate the break-even point
+
+C. Never purchase Savings Plans for Lambda — Reserved Concurrency is the cost control mechanism for Lambda
+
+D. Purchase the Savings Plan only if the workload can be migrated to EC2 Instances within the commitment period
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect. The 1-year commitment cost is always less than 12 months of On-Demand for the same usage level — that is the definition of a discount. The real analysis is whether the committed spend level matches expected actual usage, because unused commitment is wasted spend.
+- B is correct. Compute Savings Plans apply a discount rate (e.g., 17% for Lambda, up to 52% for EC2) to eligible compute usage. The break-even analysis compares committed $/hour against expected actual $/hour usage. For $1,200/month of stable Lambda spend, a Compute Savings Plan commitment covering that usage level will save approximately 17% ($204/month) with minimal risk given the consistent usage history.
+- C is incorrect. Compute Savings Plans explicitly cover Lambda compute costs (GB-seconds and request charges). Reserved Concurrency caps maximum concurrency but does not reduce Lambda per-invocation cost.
+- D is incorrect. Compute Savings Plans cover Lambda, Fargate, and EC2 compute interchangeably — there is no requirement to migrate to EC2. The plan automatically applies the discount to whichever eligible compute service is used.
+
+---
+
+### Question 20 (5 points)
+
+A company uses S3 Intelligent-Tiering for all objects in a large data lake. Objects range in size from 1 KB to 50 GB. A cost review shows the Intelligent-Tiering monitoring fee is unexpectedly high. What configuration change reduces the monitoring cost without losing the tiering benefit for large objects?
+
+A. Switch all objects to S3 Standard-IA — it does not charge a monitoring fee
+
+B. Configure an S3 Lifecycle policy to transition objects smaller than 128 KB to S3 Standard instead of Intelligent-Tiering
+
+C. Disable Intelligent-Tiering and manually move objects between storage classes using a Lambda function
+
+D. Enable S3 Batch Operations to consolidate small objects into large archive files before uploading
+
+**Correct Answer: B**
+
+**Distractor Analysis:**
+
+- A is incorrect. S3 Standard-IA charges a per-GB retrieval fee and has a 30-day minimum storage duration — for frequently accessed or short-lived objects, Standard-IA costs more than Standard. It also does not automatically tier objects.
+- B is correct. S3 Intelligent-Tiering charges a per-object monitoring fee for every object regardless of size. For objects smaller than 128 KB, the monitoring fee typically exceeds any storage savings from tiering. Routing small objects to S3 Standard via Lifecycle policy eliminates their monitoring fees while preserving Intelligent-Tiering's benefit for the large objects where storage savings justify the monitoring cost.
+- C is incorrect. Manual tiering via Lambda introduces operational complexity, requires custom code, and is prone to access pattern mismatches. It eliminates the Intelligent-Tiering monitoring fee but at significant operational cost.
+- D is incorrect. S3 Batch Operations processes objects at scale (copying, tagging, restoring) but does not consolidate small objects into larger files — that would require application-level changes and would alter the data structure of the lake.
+
+---

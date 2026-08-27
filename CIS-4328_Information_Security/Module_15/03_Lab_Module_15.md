@@ -154,4 +154,33 @@ Format your submission with clear section headers. Label each answer with its qu
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: SIEM Correlation Rule Design and Alert Triage
+
+Using the scenario data from Part B, design three new SIEM correlation rules to address attack patterns not currently covered by the existing rule set. For each rule, specify:
+
+1. A descriptive rule name and the attack technique it detects (reference the MITRE ATT&CK technique ID and name).
+2. The specific log sources and event fields the rule monitors (e.g., Windows Event ID 4625, source IP, account name, time window).
+3. The threshold conditions that trigger the alert (e.g., "more than 10 events matching condition X within 5 minutes from the same source IP").
+4. The severity level you would assign (Critical/High/Medium/Low) and the justification for that level.
+5. A brief SOAR playbook outline (3–5 automated steps) that should execute when this rule fires.
+
+Then: select one of your three rules and write a full analyst investigation checklist — the step-by-step questions a Tier 1 analyst should answer to determine whether the alert is a true positive or false positive, and the escalation criteria for routing to Tier 2.
+
+### Challenge 2: Vulnerability Management Program Gap Analysis
+
+A company's IT security team has been running Nessus uncredentialed scans monthly against their 180-server environment. The most recent scan found 12 critical, 38 high, and 194 medium vulnerabilities. The CISO states that last quarter the numbers were identical — no improvement. Investigation reveals: patches are being applied but not re-scanned for verification; the patch team prioritizes by age of finding rather than CVSS score; three servers are excluded from scanning because "they are too old to scan safely"; and there is no formal patch SLA documented.
+
+1. Identify four specific program failures and classify each as a people, process, or technology gap.
+2. Design a corrected patch management workflow with at least seven steps. For each step, specify who is responsible (role), what artifact is produced, and what tool supports the step.
+3. Write a one-page KPI/KRI dashboard proposal for the CISO that includes: five metrics to track (with definitions and measurement frequency), two threshold values that would trigger an executive escalation, and one metric that directly measures whether patching is actually reducing vulnerability exposure over time.
+
+### Reflection Questions
+
+1. A SOC manager argues that reducing false positives is more important than reducing false negatives, because alert fatigue causes analysts to miss real incidents. A peer argues the opposite — that missing real incidents (false negatives) is always worse than extra work from false positives. Evaluate both positions and describe how you would balance this trade-off when tuning SIEM correlation rules.
+2. An organization's MTTD has improved from 72 hours to 4 hours over the past year, but MTTR remains at 48 hours. What does this pattern tell you about the organization's security operations maturity, and which specific capability investments would most effectively drive MTTR down?
+
+---
+
 End of Lab — Module 15

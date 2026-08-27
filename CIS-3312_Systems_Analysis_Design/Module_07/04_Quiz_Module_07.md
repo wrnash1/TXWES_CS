@@ -205,3 +205,203 @@ A systems analyst is documenting requirements for a hospital patient scheduling 
 - *Why A is incorrect:* Response time is not a security characteristic. Security requirements address confidentiality, integrity, authentication, authorization, and audit. Slow response times may correlate with certain security events, but response time thresholds are performance specifications, not security controls.
 - *Why B is incorrect:* Availability requirements specify the percentage of time the system must be operational — for example, "the system shall be available 99.5% of monthly scheduled hours." Availability is about uptime, not response speed. A 1-second threshold specifies speed, not availability.
 - *Why D is incorrect:* Usability requirements address how easily users can learn and use the system — ease of navigation, task completion rates, learnability, and error recovery. Response time affects user experience, but it is classified as a performance requirement, not a usability requirement. Usability typically addresses the design of the interface and interaction model, not the system's technical processing speed.
+
+---
+
+### Question 11
+
+A BA documents the following requirement after a stakeholder interview: "The system shall allow managers to approve purchase orders." Three months later, a compliance auditor discovers that the business rule is actually that only managers whose spending authority exceeds the purchase order value can approve it — a rule the stakeholder assumed was obvious but never stated. Which elicitation problem does this illustrate?
+
+- A) The BA used the wrong elicitation technique — observation would have caught this rule.
+- B) The stakeholder provided a stated requirement that masked an unstated business rule the BA failed to uncover through probing.
+- C) The BA violated the BABOK governance process by accepting requirements without change control approval.
+- D) The requirement was verified but not validated, causing the gap to remain undiscovered.
+
+**Correct Answer:** B) The stakeholder stated a surface-level requirement without articulating the embedded business rule, and the BA did not probe deeply enough to uncover it.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* Unstated requirements are one of the most common and costly elicitation failures. Experienced stakeholders often omit rules they consider obvious — they assume the BA understands the business context as well as they do. The BA's job is to ask probing questions ("Are there any conditions under which a manager cannot approve?" or "What determines whether a manager is authorized to approve?") that surface the hidden business rules embedded in simple statements.
+- *Why A is incorrect:* Observation might have revealed the approval workflow in action, but it would not reliably surface an edge-case business rule about spending authority limits without the BA specifically probing for it. The core problem is incomplete elicitation, not wrong technique selection.
+- *Why C is incorrect:* Change control governs changes to baselined requirements; this scenario describes a requirements gap discovered before implementation, not a post-baseline change. Governance is not the issue here.
+- *Why D is incorrect:* Verification checks that requirements are well-formed; validation checks that they address the right business need. Neither would catch an unstated rule that was never documented — the gap existed in elicitation, before any verification or validation activity.
+
+---
+
+### Question 12
+
+A BA is using focus groups to gather requirements for a consumer-facing mobile application. After the session, the BA notes that three vocal participants dominated the conversation and several quieter participants rarely contributed. What should the BA do to supplement the focus group findings?
+
+- A) Accept the focus group results as representative — vocal participants typically have the strongest opinions and most relevant experience.
+- B) Conduct individual follow-up interviews with the participants who did not contribute to the focus group to gather their perspectives.
+- C) Repeat the focus group with only the quiet participants and discard the original session results.
+- D) Use document analysis to find documentation that confirms the vocal participants' stated requirements.
+
+**Correct Answer:** B) Follow-up individual interviews with under-represented participants address the participation imbalance from the focus group.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* Focus groups are vulnerable to social dynamics — dominant personalities, groupthink, and reluctance to disagree publicly. Quiet participants often hold views that differ from the vocal majority, and those differences may represent important requirements or risks. Individual follow-up interviews eliminate the social pressure and give each participant space to express their genuine views. This combination of focus group and individual interview is a best practice for mitigating focus group limitations.
+- *Why A is incorrect:* Vocal participants are not more reliable than quiet ones — they are simply more confident or willing to speak in group settings. Requirements collected from a biased group sample may not represent the actual user population's needs.
+- *Why C is incorrect:* Discarding a completed focus group session wastes the investment and throws away the perspectives of the participants who did contribute. Supplementing the session with follow-up is more efficient than replacement.
+- *Why D is incorrect:* Document analysis reviews existing artifacts; it cannot surface the unexpressed views of participants who were present in a focus group but chose not to speak.
+
+---
+
+### Question 13
+
+Which of the following is the primary risk of beginning system design before requirements have been formally confirmed by stakeholders?
+
+- A) The design team may use the wrong diagramming tool, producing artifacts in a format stakeholders cannot read.
+- B) Design decisions made against unconfirmed requirements may have to be fully reworked if the requirements change after stakeholder review.
+- C) Stakeholders will be unable to review design artifacts because they have not approved the requirements yet.
+- D) The project manager cannot create a project schedule without confirmed requirements.
+
+**Correct Answer:** B) Unconfirmed requirements that change after design begins force costly rework of design artifacts that were built on incorrect foundations.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* The cost of defect correction increases dramatically as a project advances — a requirements error caught during elicitation costs a fraction of the same error caught during design, and a tiny fraction of the cost when caught during testing or after deployment. Beginning design on unconfirmed requirements means that when stakeholders review and change the requirements, every design decision made against those requirements must be revisited, revised, or discarded.
+- *Why A is incorrect:* Diagramming tool selection is an operational concern that does not represent the fundamental risk of designing against unconfirmed requirements.
+- *Why C is incorrect:* There is no formal rule preventing stakeholders from reviewing design artifacts before requirements are confirmed; this describes a process preference, not the primary risk.
+- *Why D is incorrect:* Project managers routinely create preliminary schedules before requirements are confirmed; the schedule can be refined as requirements stabilize. The inability to schedule is a minor inconvenience compared to the design rework risk.
+
+---
+
+### Question 14
+
+During an observation session, a BA notices that a warehouse receiving clerk consistently skips the system's "Quality Check" step and marks items as received without completing the inspection. When the BA asks the clerk why, the clerk says "That step always times out after 10 seconds and I have to re-enter everything — it's faster to skip it." What type of finding has the BA discovered, and what should happen next?
+
+- A) A usability defect in the current system and an implicit functional requirement that the new system must complete quality check validation without timeout interruptions.
+- B) A compliance violation — the BA should escalate to legal and halt the project.
+- C) An assumption — the BA should document that quality checks are not performed and treat this as a stakeholder preference.
+- D) An elicitation error — the BA observed the wrong process and should reschedule the observation.
+
+**Correct Answer:** A) A usability defect in the current system that is generating a workaround, surfacing an implicit requirement for the new system.
+
+**Distractor Analysis:**
+
+- *Why A is correct:* The observation has revealed a current-state workaround caused by a system usability defect. This is exactly the type of finding that justifies observation as an elicitation technique — the clerk cannot describe this in a survey or interview because it is an automatic habit. The new system has an implicit requirement: the quality check step must not interrupt the workflow with timeouts. Without observation, this requirement would never be discovered, and the new system might replicate the same defect.
+- *Why B is incorrect:* While skipping quality checks may have compliance implications, the BA's role is to document the finding and surface it as a requirement — not to halt the project or escalate to legal unilaterally. The BA should document the finding and raise it with the appropriate stakeholders.
+- *Why C is incorrect:* A documented workaround to a broken system step is not a stakeholder preference — it is a symptom of a real system problem that must be addressed in the new design. Treating it as a preference would result in the new system perpetuating the same broken workflow.
+- *Why D is incorrect:* The BA has discovered exactly the kind of insight that observation is designed to surface. This is a successful elicitation result, not an error.
+
+---
+
+### Question 15
+
+A BA is preparing for an elicitation workshop with 12 stakeholders representing four departments. Two departments have a known, long-standing conflict over a specific business process. What preparation step is most important for this particular workshop?
+
+- A) Create a comprehensive slide deck presenting the BA's recommended solution to the conflict so stakeholders can react to a concrete proposal.
+- B) Pre-interview the conflicting stakeholders individually to understand each side's position, identify the underlying interests behind their stated positions, and prepare facilitation strategies for managing the conflict during the workshop.
+- C) Assign a senior manager to attend and make the final decision on the conflict during the session.
+- D) Exclude one of the two conflicting departments from the workshop to avoid derailing the session.
+
+**Correct Answer:** B) Pre-workshop individual conversations to understand each side's underlying interests and prepare conflict facilitation strategies.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* Effective conflict facilitation requires understanding both sides' positions and the underlying interests that drive them. Pre-workshop interviews allow the BA to identify common ground, anticipate the specific flashpoints, and prepare facilitation moves — reframing questions, separating positions from interests, identifying areas of agreement first. Walking into a known conflict without preparation is the surest way to have the workshop derailed.
+- *Why A is incorrect:* Presenting a BA-recommended solution to a stakeholder conflict would be perceived as taking sides and would likely escalate the conflict rather than resolve it. The BA's role is to facilitate stakeholder decision-making, not to make the decision.
+- *Why C is incorrect:* Having a manager make the decision during the session removes ownership from the stakeholders and typically produces compliance without commitment. Stakeholders who feel their concerns were overruled will be difficult to engage throughout the project.
+- *Why D is incorrect:* Excluding a stakeholder group because they are in conflict guarantees that their requirements will be missing from the outcome — which is a worse result than managing the conflict.
+
+---
+
+### Question 16
+
+Which BABOK Guide v3 task specifically addresses the BA's responsibility to ensure that stakeholders are collaborating effectively and that interpersonal barriers to requirements quality are being managed?
+
+- A) Prepare for Elicitation — planning which techniques and materials to use before a session
+- B) Manage Stakeholder Collaboration — facilitating productive working relationships and managing interpersonal dynamics that affect BA work
+- C) Plan Stakeholder Engagement — identifying stakeholders and planning how to interact with them
+- D) Communicate Business Analysis Information — ensuring requirements are distributed to the right audiences in the right format
+
+**Correct Answer:** B) Manage Stakeholder Collaboration addresses the ongoing facilitation of productive working relationships throughout elicitation.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* BABOK KA 4 includes "Manage Stakeholder Collaboration" as a distinct task focused on ensuring that stakeholders are working together effectively — managing conflict, fostering trust, handling resistance, and maintaining the conditions for high-quality requirements work. It is the task that addresses the human side of elicitation.
+- *Why A is incorrect:* Prepare for Elicitation covers logistical and content preparation before a session — selecting techniques, reviewing documents, preparing questions. It does not address managing interpersonal dynamics during the project.
+- *Why C is incorrect:* Plan Stakeholder Engagement (KA 2) creates the initial stakeholder register and engagement approach. It is planning-phase work, not ongoing collaboration management during elicitation.
+- *Why D is incorrect:* Communicate Business Analysis Information addresses how requirements and BA findings are shared with stakeholders — format, timing, and channels. It does not address interpersonal dynamics or collaboration barriers.
+
+---
+
+### Question 17
+
+A project team has completed requirements elicitation for a new human resources system. The BA discovers a stakeholder was missed during the initial identification process: the organization's external payroll service provider must integrate with the new HR system. What is the most significant risk this omission creates?
+
+- A) The project will be delayed because the external provider's requirements will need to be gathered during the design phase.
+- B) Integration requirements for the external payroll provider are missing from the requirements baseline, creating a high risk of integration failures at deployment.
+- C) The stakeholder register must be updated, which requires change control board approval and restarts the elicitation phase.
+- D) The BA will receive a poor performance review for the missed stakeholder.
+
+**Correct Answer:** B) Missing integration requirements from the external provider create a high-risk gap that will likely produce integration failures at deployment.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* External system integrators are a category of stakeholder that is frequently overlooked during initial identification because they are not internal organizational members. The payroll provider must exchange data with the new HR system — data formats, API specifications, authentication requirements, and timing constraints must all be defined. If these requirements are missing from the baseline, the development team will build the HR system without accounting for integration, and the failure will only be discovered during integration testing or after go-live.
+- *Why A is incorrect:* While delay is a possible consequence, it is a symptom, not the primary risk. The primary risk is the technical integration gap, which can cause system failures regardless of schedule.
+- *Why C is incorrect:* The Stakeholder Register is a BA planning document, not a requirements artifact. Adding a stakeholder does not require change control board approval; it requires updating the register and initiating elicitation with the new stakeholder.
+- *Why D is incorrect:* Performance consequences are not a technical risk to the project. The significant risk is the integration gap in the requirements, not the BA's evaluation.
+
+---
+
+### Question 18
+
+Which of the following is the most accurate description of an "evolutionary prototype" in contrast to a "throwaway prototype"?
+
+- A) An evolutionary prototype is built quickly to gather stakeholder feedback and is then discarded; a throwaway prototype is kept and refined into the final system.
+- B) An evolutionary prototype is intended to be refined and eventually become the deliverable system; a throwaway prototype is built for elicitation or validation and discarded after feedback is gathered.
+- C) An evolutionary prototype is always higher fidelity (coded) than a throwaway prototype, which is always a paper sketch.
+- D) Evolutionary prototypes are used in Agile projects; throwaway prototypes are used in Waterfall projects.
+
+**Correct Answer:** B) An evolutionary prototype is refined into the production system; a throwaway prototype is discarded after its feedback purpose is served.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* BABOK and software engineering literature define the distinction clearly: a throwaway (also called a "rapid" or "horizontal") prototype is built quickly to elicit reactions and feedback, then discarded — it is not intended to become the system. An evolutionary (also called "incremental") prototype is iteratively refined based on stakeholder feedback until it becomes the production system. The choice between them has significant technical implications: throwaway prototypes can use any technology; evolutionary prototypes must be built with production-quality code from the start.
+- *Why A is incorrect:* This reverses the definitions of the two prototype types.
+- *Why C is incorrect:* Fidelity (paper vs. coded) is a separate dimension from throwaway vs. evolutionary. A high-fidelity coded prototype can still be throwaway; a low-fidelity paper prototype can sometimes be the starting point of an evolutionary approach.
+- *Why D is incorrect:* Both prototype types are used in both Agile and Waterfall contexts. The choice is based on intent (retain or discard), not on methodology.
+
+---
+
+### Question 19
+
+A BA sends a post-interview confirmation memo to a stakeholder summarizing eight requirements captured during the interview. The stakeholder responds: "Items 3 and 7 are correct. Items 1, 2, and 5 need minor wording adjustments. Items 4 and 6 are completely wrong — I never said those. Item 8 is correct but I forgot to mention that it only applies to orders placed on weekdays." What does this response demonstrate about the value of the confirmation step?
+
+- A) The interview was poorly conducted and should be redone completely.
+- B) The confirmation step caught two incorrect requirements and one incomplete requirement before they entered the requirements baseline, preventing costly downstream errors.
+- C) The BA must not have taken notes during the interview, causing the errors.
+- D) The stakeholder is being difficult and changing their requirements after the interview.
+
+**Correct Answer:** B) The confirmation step caught errors before they entered the baseline — demonstrating exactly why BABOK requires post-elicitation confirmation.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* This is a textbook illustration of why the "Confirm Elicitation Results" task exists in BABOK KA 4. Items 4 and 6 were incorrect — if they had entered the requirements baseline without confirmation, they would have driven incorrect design, development, and test cases. Item 8 was incomplete — a critical business rule (weekdays only) would have been missed. Catching these issues at the confirmation stage costs almost nothing to fix; catching them during testing would cost significantly more.
+- *Why A is incorrect:* Some degree of misunderstanding in complex requirements interviews is normal, not evidence that the entire interview must be redone. The confirmation process is specifically designed to catch and correct these normal errors.
+- *Why C is incorrect:* Note-taking quality is one possible factor but is not the only cause of interview documentation errors. Misinterpretation, ambiguity, and complex domain concepts all contribute. The confirmation step catches errors regardless of their cause.
+- *Why D is incorrect:* Item 8 is an addition (a condition the stakeholder forgot to mention), not a change of mind. Items 4 and 6 are corrections to errors — the stakeholder did not say those things. This is standard, expected post-interview behavior that the confirmation process is designed to accommodate.
+
+---
+
+### Question 20
+
+A BA has completed elicitation for a new supply chain system. The requirements specification contains 247 requirements. The BA has confirmed all requirements with stakeholders. The project manager now asks: "How do we know all the requirements are still valid when we begin design in three months?" Which BA activity addresses this concern?
+
+- A) Re-interview all stakeholders every two weeks to detect any requirement changes.
+- B) Maintain the requirements baseline through BABOK KA 6 Requirements Life Cycle Management, which tracks requirement status, changes, and continued validity throughout the project.
+- C) Accept that requirements will not change during a three-month design phase and proceed without further monitoring.
+- D) Convert all requirements to user stories and move to an Agile approach where requirements are managed through sprint planning.
+
+**Correct Answer:** B) BABOK KA 6 Requirements Life Cycle Management governs the ongoing validity, traceability, and controlled change of requirements after the baseline is established.
+
+**Distractor Analysis:**
+
+- *Why B is correct:* Requirements Life Cycle Management (KA 6) specifically addresses the concern the PM has raised. After baseline approval, KA 6 tasks include: maintaining requirements, managing requirement changes through a controlled process, and re-validating requirements when the business context changes. This is not a one-time activity — requirements are actively managed from baseline approval through deployment.
+- *Why A is incorrect:* Re-interviewing all stakeholders every two weeks is operationally impractical for 247 requirements with multiple stakeholders. KA 6 provides a structured, efficient process for managing requirement validity without constant full re-elicitation.
+- *Why C is incorrect:* Business requirements routinely change during a design phase as stakeholders learn more, business conditions shift, or regulatory changes occur. Assuming they will not change is not a management strategy — it is wishful thinking.
+- *Why D is incorrect:* Switching methodology mid-project to address a requirements management concern is a major project decision that requires full stakeholder and sponsor agreement. KA 6 applies regardless of methodology; the PM's concern can be addressed without changing the project approach.

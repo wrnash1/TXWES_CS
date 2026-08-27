@@ -289,3 +289,29 @@ Recommended Actions: List three specific recommendations — one for immediate I
 ## Academic Integrity Notice
 
 All scenario data and artifact content in this lab is fabricated for educational purposes. All work must be your own. Reference professormesser.com and comptia.org for additional study context.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Order of Volatility Decision Under Time Pressure
+
+You arrive on-scene at a compromised Windows workstation at 09:47 AM. The system is powered on and logged in. The user is present and reports seeing the screen "flicker" and an unknown window open briefly 20 minutes ago. A USB thumb drive of unknown ownership is plugged in. No forensic tools are pre-staged on the workstation.
+
+1. List the first six evidence collection actions in the correct order of volatility, specifying the tool you would use for each step (e.g., `winpmem` for RAM, `FTK Imager` for disk) and estimating the time requirement for each step.
+2. The user asks if they should restart the computer because it "might clear the virus." Write a one-paragraph response explaining why restarting is contraindicated at this stage and what evidence would be permanently lost.
+3. The USB drive is of unknown provenance. Describe the forensic handling procedure for the USB drive — including whether to remove it, when, and what documentation is required.
+4. You discover the workstation lacks any pre-installed forensic tools and the organization's forensic kit is 45 minutes away. Identify two built-in Windows tools that can be used for initial volatile data capture and describe what data each captures.
+
+### Challenge 2: Chain of Custody Challenge
+
+During evidence handling for this investigation, the following events occurred: (1) RAM image was collected to the examiner's personal external hard drive rather than evidence media; (2) the examiner emailed the SHA-256 hash of the disk image to the case manager without recording it in the evidence log first; (3) a second analyst accessed the original RAM image file to run a Volatility analysis without documenting the access; (4) the USB drive was placed in a standard zip-lock bag rather than an anti-static evidence bag.
+
+1. For each of the four chain of custody failures, identify the specific issue, explain the legal or investigative consequence, and describe the correct procedure that should have been followed.
+2. Which of the four failures most seriously jeopardizes the admissibility of the evidence in a legal proceeding, and why?
+3. Write a corrective chain of custody log entry for the RAM image access in event (3), filling in all required fields (date/time, accessor, action, reason, hash verification status).
+
+### Reflection Questions
+
+1. Explain why a forensic image (bit-for-bit copy with hash verification) is required rather than a simple file copy when collecting a disk image for investigation, and describe what a hash mismatch between the original and the copy would indicate.
+2. Describe a realistic scenario where an analyst would need to choose between preserving volatile evidence and following an established IR playbook step that requires system isolation — and explain how you would resolve this conflict.

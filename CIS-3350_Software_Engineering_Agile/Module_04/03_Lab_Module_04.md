@@ -139,6 +139,36 @@ Submit to the Canvas assignment portal by the module due date.
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Sprint Goal Quality Audit
+
+Review the following five Sprint Goals written by fictional teams and evaluate each one:
+
+1. "Complete PBI-12, PBI-14, PBI-15, and PBI-18."
+2. "Make the app faster."
+3. "Enable campus event organizers to publish events and students to RSVP so that the spring activities fair can use CampusConnect as its official registration system."
+4. "Fix all critical bugs found in Sprint 5 testing."
+5. "Improve the backend so developers are happy with the codebase."
+
+For each Sprint Goal: identify one specific flaw (or confirm it is strong), rewrite it as an improved Sprint Goal if it is flawed, and cite the specific quality criterion from the Reading Guide that it violates or satisfies.
+
+### Challenge 2: Sprint Planning Meeting Design
+
+Design a complete two-hour Sprint Planning agenda for a two-week Sprint for the CampusConnect team. Your agenda must:
+
+1. Allocate time in minutes to each of the three Sprint Planning topics and justify the allocation.
+2. Identify two specific inputs that should be prepared before Sprint Planning begins and who is responsible for each.
+3. Write the facilitation steps the Scrum Master should take to keep the event productive if the team begins debating a technical approach that could consume the entire timebox.
+4. Define what "done" looks like at the end of the Sprint Planning event — what must exist for the team to leave the room confidently?
+
+### Reflection Questions
+
+1. The Scrum Guide says velocity is a guide, not a guarantee. Describe a scenario where blindly following historical velocity would lead a team to make a poor Sprint Planning decision. What additional information should Developers consider beyond velocity when determining Sprint capacity?
+2. The Daily Scrum is described as a Developer event, yet research consistently shows that teams whose Scrum Masters attend the Daily Scrum passively (without speaking) have better outcomes than teams whose Scrum Masters skip it entirely. Why might passive Scrum Master presence improve Daily Scrum quality even when the Scrum Master says nothing?
+
+---
+
 ## Rubric Summary
 
 | Component | Points |

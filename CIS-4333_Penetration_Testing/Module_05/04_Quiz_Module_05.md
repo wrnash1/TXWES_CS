@@ -213,3 +213,193 @@ A penetration tester is conducting reconnaissance and wants to enumerate all pub
 ---
 
 **Proprietary and Confidential. Not for disclosure outside of Texas Wesleyan University course use.**
+
+---
+
+### Question 11 (5 points)
+
+A tester uses `recon-ng` during passive reconnaissance. Which of the following best describes how `recon-ng` differs from `theHarvester`?
+
+- A) `recon-ng` is an active network scanner; `theHarvester` is a passive OSINT collector
+- B) `recon-ng` is a modular Python framework with a Metasploit-like interface that aggregates OSINT from many sources via interchangeable modules; `theHarvester` is a focused single-purpose tool for collecting emails, subdomains, and hostnames
+- C) `recon-ng` only searches LinkedIn; `theHarvester` only searches Google
+- D) Both tools are identical — `recon-ng` is simply the updated version of `theHarvester`
+
+- **Correct Answer:** B
+
+- **Distractor Analysis:**
+  - Why B is correct: `recon-ng` follows a Metasploit-style modular architecture with workspaces, modules for dozens of data sources, and a structured database for storing findings. `theHarvester` is a focused, simpler tool that queries specific sources for emails, subdomains, and hostnames. They are complementary tools with different architectures and use cases.
+  - Why A is incorrect: Both tools are passive OSINT collectors. `recon-ng` does not send active probes to target systems — it queries third-party data sources.
+  - Why C is incorrect: Both tools query multiple sources. `recon-ng` has modules for LinkedIn, Shodan, Bing, Google, and many others. `theHarvester` also supports multiple sources via its `-b` flag.
+  - Why D is incorrect: `recon-ng` and `theHarvester` are entirely separate tools with different architectures, authors, and design philosophies. Neither is an update of the other.
+
+---
+
+### Question 12 (5 points)
+
+During passive reconnaissance a tester queries `crt.sh` and discovers that the target organization has a certificate issued for `vpn.internal.targetcorp.com`. What is the significance of this finding?
+
+- A) It confirms the VPN service is vulnerable to certificate-based attacks and should be immediately exploited
+- B) It reveals an internal hostname that suggests a VPN gateway may exist, which becomes a priority target for active scanning during the authorized testing phase
+- C) Certificate transparency records are unreliable because certificates are often issued for systems that no longer exist
+- D) The finding is irrelevant unless the tester can also obtain the private key associated with the certificate
+
+- **Correct Answer:** B
+
+- **Distractor Analysis:**
+  - Why B is correct: A certificate issued for `vpn.internal.targetcorp.com` reveals that a VPN gateway likely exists at that hostname. VPN gateways are high-value targets because they provide remote access to the internal network. This OSINT finding shapes active scanning priorities during the authorized testing phase.
+  - Why A is incorrect: Discovering a hostname via certificate transparency does not confirm any vulnerability. It identifies a potential target for further investigation — not an immediately exploitable system.
+  - Why C is incorrect: Certificate transparency logs are cryptographically verified and highly reliable. While some certificates may be issued for systems that are later decommissioned, the finding is worth investigating rather than dismissing.
+  - Why D is incorrect: The private key is not needed to exploit most VPN gateway vulnerabilities. The hostname discovery itself is the reconnaissance value — it enables targeted scanning, CVE research, and exploitation planning.
+
+---
+
+### Question 13 (5 points)
+
+A penetration tester discovers through OSINT that the target organization recently experienced a significant data breach that was publicly reported. How does this information affect the reconnaissance phase?
+
+- A) It is irrelevant — past breaches have no bearing on current penetration testing
+- B) It may indicate previously exposed credentials that could still be valid, unpatched vulnerabilities that enabled the breach, or persistent attacker access that the tester may encounter during the engagement
+- C) The tester should report the breach to law enforcement before proceeding with the engagement
+- D) The existence of a prior breach means the current engagement should focus exclusively on social engineering
+
+- **Correct Answer:** B
+
+- **Distractor Analysis:**
+  - Why B is correct: A prior breach is high-value OSINT. Breach reports often identify specific vulnerabilities or attack vectors used, exposed credentials may still be in use, and organizations that suffered breaches sometimes have lingering unpatched systems. This intelligence directly shapes the testing methodology and prioritization.
+  - Why A is incorrect: Historical breach intelligence is specifically valuable reconnaissance data. Organizations that have been breached once are statistically more likely to have persistent security gaps that a penetration test should evaluate.
+  - Why C is incorrect: Reporting a publicly known breach to law enforcement is not the tester's obligation — the breach is already known and reported. The tester's job is to use the intelligence professionally within the authorized scope.
+  - Why D is incorrect: Prior breach intelligence informs all testing phases, not just social engineering. It is most immediately useful for identifying specific technical vulnerabilities and potentially exposed credentials.
+
+---
+
+### Question 14 (5 points)
+
+Which Google dork operator would a penetration tester use to search specifically for pages containing a particular word in the URL path of a target domain?
+
+- A) `site:targetcorp.com filetype:admin`
+- B) `inurl:admin site:targetcorp.com`
+- C) `intitle:admin site:targetcorp.com`
+- D) `cache:targetcorp.com admin`
+
+- **Correct Answer:** B
+
+- **Distractor Analysis:**
+  - Why B is correct: `inurl:` matches pages where the specified text appears in the URL path. Combined with `site:`, this finds pages on the target domain whose URL contains "admin" — commonly revealing admin panels, admin directories, or administrative API endpoints.
+  - Why A is incorrect: `filetype:admin` is not a valid Google dork operator. `filetype:` is used with file extensions (e.g., `filetype:pdf`), not with words like "admin."
+  - Why C is incorrect: `intitle:` matches pages where the specified text appears in the HTML page title, not the URL. This could find pages titled "Admin" but would miss admin URLs with different titles.
+  - Why D is incorrect: `cache:` retrieves a cached version of a specific URL. It does not search for pages containing a keyword in the URL path.
+
+---
+
+### Question 15 (5 points)
+
+A tester discovers through WHOIS that the target organization's domain registrar contact email is `it-admin@targetcorp.com` and the technical contact phone number is publicly listed. Why might this information be documented in the reconnaissance notes?
+
+- A) The email and phone number can be used to authenticate to domain management portals without additional credentials
+- B) The contact information identifies a named technical employee and a direct contact channel — valuable for social engineering simulation if explicitly authorized, and for understanding the target's IT organizational structure
+- C) WHOIS contact information is never accurate because most organizations use privacy protection services
+- D) The phone number should be called immediately to verify that it is still active before continuing reconnaissance
+
+- **Correct Answer:** B
+
+- **Distractor Analysis:**
+  - Why B is correct: Named technical contacts reveal real employees and their roles. In engagements where social engineering is in scope, this information identifies high-value targets for pretexting. Even without social engineering scope, understanding the IT contact structure informs threat modeling and organizational mapping.
+  - Why A is incorrect: WHOIS contact information does not provide authentication credentials. Domain management portals require proper authentication — a contact email or phone number alone does not grant access.
+  - Why C is incorrect: While many organizations do use WHOIS privacy protection, many do not, and historical WHOIS records often contain real contact information even when current records are masked. This data is worth documenting and verifying.
+  - Why D is incorrect: Calling the phone number without authorization is a social engineering activity that requires explicit scope approval. It is not a standard passive reconnaissance step and could constitute unauthorized contact with the target.
+
+---
+
+### Question 16 (5 points)
+
+Which of the following best describes the reconnaissance value of analyzing a target organization's SPF, DKIM, and DMARC DNS records together?
+
+- A) They reveal the organization's internal Active Directory structure and domain controller hostnames
+- B) Together they reveal the organization's email infrastructure (sending sources, signing keys, and enforcement policy), indicating susceptibility to email spoofing and the effectiveness of email security controls
+- C) SPF, DKIM, and DMARC records only affect inbound email and provide no outbound intelligence value
+- D) These records can only be read by mail servers — penetration testers cannot access them directly
+
+- **Correct Answer:** B
+
+- **Distractor Analysis:**
+  - Why B is correct: SPF identifies authorized sending sources (revealing cloud providers and mail infrastructure). DKIM reveals whether emails are cryptographically signed. DMARC reveals the enforcement policy (none/quarantine/reject) and reporting address. Together they tell the tester how susceptible the domain is to spoofing — critical intelligence for authorized phishing simulation planning.
+  - Why A is incorrect: SPF/DKIM/DMARC records relate to email authentication and do not reveal Active Directory structure or domain controller hostnames. Active Directory enumeration requires different techniques.
+  - Why C is incorrect: SPF, DKIM, and DMARC records are publicly readable DNS TXT records. Any tool that queries DNS — including `dig` and `nslookup` — can retrieve them. They are not limited to mail server access.
+  - Why D is incorrect: DNS TXT records are publicly accessible. `dig TXT targetcorp.com` retrieves SPF records. `dig TXT _dmarc.targetcorp.com` retrieves DMARC records. These are standard passive reconnaissance queries.
+
+---
+
+### Question 17 (5 points)
+
+A tester performs OSINT and finds the target organization's headquarters address, a photo of the building's entrance on the company website, and the name of their physical security vendor from a LinkedIn post by an employee. What type of reconnaissance does this represent, and how might it be used in an authorized engagement?
+
+- A) This is active reconnaissance because the tester visited the physical location to observe it
+- B) This is passive OSINT that could inform a physical security assessment if that component is authorized in the RoE — enabling the tester to understand entry point layout and security vendor products before any authorized physical testing begins
+- C) Physical reconnaissance findings are outside the scope of any penetration test and should be discarded
+- D) This information should be shared with law enforcement as it indicates the organization may be planning a physical security audit
+
+- **Correct Answer:** B
+
+- **Distractor Analysis:**
+  - Why B is correct: Gathering public information about physical premises from the organization's own website and employee social media posts is passive OSINT. If physical security testing is authorized in the RoE, this intelligence informs entry point analysis, understanding of installed security products, and social engineering pretext development.
+  - Why A is incorrect: The tester reviewed publicly available online sources — the company website and LinkedIn. No physical visit occurred, making this passive reconnaissance.
+  - Why C is incorrect: Physical security intelligence is a standard and legitimate component of comprehensive penetration testing engagements. Many organizations specifically request physical security assessments alongside network testing.
+  - Why D is incorrect: Reviewing publicly available information about an organization's facilities does not constitute a reportable concern. This is standard OSINT practice within authorized engagement boundaries.
+
+---
+
+### Question 18 (5 points)
+
+During passive reconnaissance, a tester uses `theHarvester -d targetcorp.com -b linkedin` and discovers 47 employee profiles including titles like "Senior Network Engineer" and "Cloud Infrastructure Architect." What specific reconnaissance value do job titles provide?
+
+- A) Job titles allow the tester to immediately guess those employees' passwords using common password patterns
+- B) Job titles reveal organizational roles and technical responsibilities, helping map who manages specific systems — useful for understanding decision-making chains and identifying technically privileged individuals who may be targets for social engineering if authorized
+- C) Job titles on LinkedIn are never accurate and this information should not be used in the engagement
+- D) LinkedIn job titles can only be used for social engineering and have no value for technical network penetration testing
+
+- **Correct Answer:** B
+
+- **Distractor Analysis:**
+  - Why B is correct: Job titles map organizational structure and technical responsibility. A "Senior Network Engineer" likely administers network infrastructure. A "Cloud Infrastructure Architect" likely manages cloud environments. This intelligence shapes threat modeling, identifies high-privilege targets for authorized social engineering, and informs which systems to prioritize during technical testing.
+  - Why A is incorrect: Job titles do not reveal passwords. Password guessing based on personal information requires much more specific data (pet names, birthdays, etc.) and would constitute an unauthorized attack technique unless credential testing is specifically authorized.
+  - Why C is incorrect: LinkedIn profiles are a standard and widely used OSINT source. While not 100% accurate, they are reliable enough to inform organizational mapping and are explicitly recognized as an OSINT source in PT0-002 exam objectives.
+  - Why D is incorrect: Technical job titles have direct value for network penetration testing — they identify who administers specific systems, which informs escalation paths, pivot targets, and exploitation prioritization.
+
+---
+
+### Question 19 (5 points)
+
+What is the primary security risk of a domain with no DMARC record at all, as discovered during DNS reconnaissance?
+
+- A) The absence of a DMARC record prevents the domain from sending any email
+- B) Without a DMARC record, there is no email authentication policy in place, meaning anyone can send spoofed emails appearing to come from that domain with no automatic rejection or quarantine
+- C) A missing DMARC record makes the domain's MX records invisible to external mail servers
+- D) The absence of DMARC only affects internal email routing and has no impact on external spoofing risk
+
+- **Correct Answer:** B
+
+- **Distractor Analysis:**
+  - Why B is correct: DMARC provides receiving mail servers with instructions for handling messages that fail SPF or DKIM checks. Without any DMARC record, there is no policy — receiving servers make their own decisions, and many will deliver spoofed emails. This makes the domain susceptible to email spoofing attacks including phishing campaigns using the organization's domain name.
+  - Why A is incorrect: DMARC governs how receiving servers handle authentication failures — it has no effect on whether the legitimate domain can send email.
+  - Why C is incorrect: MX records are independent of DMARC. The absence of a DMARC record has no effect on MX record visibility or resolution.
+  - Why D is incorrect: DMARC specifically addresses external email spoofing. It is an outbound reputation control that protects external recipients from receiving spoofed emails. Its absence is primarily an external risk.
+
+---
+
+### Question 20 (5 points)
+
+A penetration tester discovers during OSINT that a target organization's website source code (visible in a browser's View Source) contains HTML comments including version strings for the framework and a commented-out test endpoint: `<!-- TEST API: /api/v1/internal/test-auth-bypass -->`. What is the correct professional response to this finding?
+
+- A) Immediately send requests to the test endpoint to confirm whether it is still accessible before documenting the finding
+- B) Document the finding precisely (source location, comment text, potential risk) and include it in the reconnaissance notes; testing the endpoint requires authorization and would occur during the active testing phase if it falls within scope
+- C) Discard the finding because HTML comments in public source are not considered vulnerabilities
+- D) Notify the client immediately and halt all reconnaissance because the endpoint name suggests a security bypass
+
+- **Correct Answer:** B
+
+- **Distractor Analysis:**
+  - Why B is correct: The HTML comment is a passive OSINT finding — it was discovered by reading publicly available page source without touching the server. It should be documented precisely with its source and potential risk. Testing whether the endpoint is live and accessible is an active reconnaissance or exploitation activity requiring authorization under the RoE.
+  - Why A is incorrect: Sending requests to the endpoint before documenting it or confirming authorization is active reconnaissance/testing against a specific target path — this must be authorized before proceeding.
+  - Why C is incorrect: Exposed version strings and internal endpoint paths in public HTML source are legitimate reconnaissance findings. They may reveal specific versions for CVE research and suggest forgotten internal endpoints that could present security risks.
+  - Why D is incorrect: The finding is significant but does not warrant halting reconnaissance. The correct response is precise documentation followed by inclusion in the planned active testing phase — not an emergency stop of the engagement.

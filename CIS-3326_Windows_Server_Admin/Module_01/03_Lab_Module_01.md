@@ -244,3 +244,64 @@ New-NetIPAddress -InterfaceAlias "Ethernet" `
 ```
 
 If the adapter name is not "Ethernet," run `Get-NetAdapter` to find the correct name and substitute it in all commands.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: In-Place Edition Detection and DISM Upgrade Simulation
+
+Explore how DISM reports the current edition and what an in-place upgrade would require, without actually changing your evaluation installation.
+
+1. Run the following command to display the current edition target name that DISM recognizes on your Server Core VM:
+
+   ```powershell
+   DISM /online /Get-CurrentEdition
+   ```
+
+   Record the `Current Edition` value shown in the output.
+
+2. Run the following command to list all editions that the installed Windows image can be upgraded to:
+
+   ```powershell
+   DISM /online /Get-TargetEditions
+   ```
+
+   Note which target editions appear. Identify whether `ServerDatacenter` is listed as a valid upgrade target from your current edition.
+
+3. Research and document in your lab notes: What additional parameter would you need to supply to complete a real Standard-to-Datacenter upgrade with DISM? Why does the command require the `/AcceptEula` flag, and what would happen if you omitted the product key argument?
+
+4. Take a screenshot of both DISM command outputs and include it with your lab deliverables.
+
+### Challenge 2: WinRM Listener Verification and Security Hardening
+
+After enabling PowerShell remoting, harden and verify the WinRM listener configuration.
+
+1. Run the following command to display all configured WinRM listeners and identify which transport (HTTP or HTTPS) and port are active:
+
+   ```powershell
+   winrm enumerate winrm/config/listener
+   ```
+
+   Note the listening port number and transport protocol.
+
+2. Run the following command to view the full WinRM service configuration, including MaxConcurrentOperationsPerUser and AllowRemoteAccess settings:
+
+   ```powershell
+   winrm get winrm/config
+   ```
+
+3. Restrict WinRM to accept connections only from your host-only network subnet by running:
+
+   ```powershell
+   Set-Item WSMan:\localhost\Service\IPv4Filter "192.168.10.*"
+   ```
+
+   Verify the filter was applied by running `winrm get winrm/config/service` and confirming the IPv4Filter value.
+
+4. Take a screenshot of the listener output and the applied IPv4Filter value.
+
+### Reflection Questions
+
+1. After running `DISM /online /Get-TargetEditions`, what did you observe about the upgrade path? Based on the Reading Guide, explain why a downgrade from Datacenter to Standard is not listed as a target edition option.
+2. Restricting WinRM to a specific IP filter is a defense-in-depth measure. Describe a real-world scenario where an attacker who gained network access to a different subnet could exploit an unrestricted WinRM listener, and explain how the IPv4Filter setting mitigates that risk.

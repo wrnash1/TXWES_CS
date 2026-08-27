@@ -217,4 +217,38 @@ Before submitting, verify:
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Firewall Rule Audit and Zero Trust Gap Analysis
+
+A mid-size e-commerce company has engaged you for a network security assessment. Their network has a single perimeter firewall, a flat internal network with no segmentation, and a remote access SSL VPN. All 200 employees use the VPN when working remotely and gain full subnet access upon connection. The following policy gaps have been documented by a junior analyst.
+
+1. The perimeter firewall has no egress filtering rules. Any internal host can initiate outbound connections to any destination on any port. Explain the three specific attack scenarios this enables — command-and-control beaconing, data exfiltration, and lateral movement facilitation — and write three specific egress rules (in table format) that would reduce risk while permitting normal business operations such as web browsing, email, and DNS resolution.
+
+2. The company's VPN grants full network access to all subnets upon authentication. A developer account is compromised, and the attacker uses the VPN to scan and access the finance database server. Trace the attack path step by step: initial compromise → VPN authentication → network access → database reconnaissance → data extraction. For each step, identify which zero-trust principle would have broken the attack chain and what specific control implements that principle.
+
+3. The company wants to prioritize their security improvements using a risk-tiered approach. Using the CISA Zero Trust Maturity Model pillars (Identity, Devices, Networks, Applications/Workloads, Data), assign each of the following gaps to the appropriate pillar and rank all five by risk priority (1 = highest). Justify each ranking with a specific threat scenario. The gaps are: no MFA on VPN; no device compliance checking; no internal VLAN segmentation; no application-level access control (all apps accessible once on VPN); no data classification labels on file shares.
+
+4. After reviewing the network, you recommend replacing the SSL VPN with a ZTNA solution. The CIO asks: "What does ZTNA actually verify before granting access that our current VPN does not?" Write a concise comparison (in table format) covering: what is verified at access time, granularity of access granted, visibility into access events, and how a compromised account is contained under each model.
+
+### Challenge 2: Network Segmentation Design and IDS Tuning
+
+A regional bank with 300 employees operates the following infrastructure: branch teller workstations, ATM network, back-office servers (loan processing, HR, finance), a public-facing web portal, an internal development environment, and a data center with core banking systems. The current network is entirely flat — all systems share a single subnet.
+
+1. Design a segmented network architecture for this bank. Define at least six network zones, identify which systems belong in each zone, and for each zone boundary specify whether you would implement a firewall, VLAN-only segmentation, or microsegmentation — and justify each choice based on the risk profile of the systems in adjacent zones.
+
+2. The bank's compliance team reports that PCI DSS requires the cardholder data environment (CDE) to be isolated from all other networks with access controls and monitoring. Identify which of your proposed zones would be classified as the CDE, describe the specific firewall rules required at the CDE boundary (in table format, at least four rules), and explain why a flat network architecture fails PCI DSS Section 1.3 requirements.
+
+3. The bank's IDS generates an average of 800 alerts per day. The SOC has two analysts and can investigate approximately 40 alerts per day thoroughly. Describe three specific IDS tuning strategies that would reduce alert volume without increasing the false negative rate. For each strategy, explain: what change is made, why it reduces volume, and what residual risk it introduces.
+
+4. After implementing VLAN segmentation, the bank's security team discovers that the ATM network and the teller workstation network are in different VLANs but an attacker who compromises a teller workstation can still reach ATM management interfaces. Explain two specific techniques an attacker could use to cross VLAN boundaries despite segmentation, and for each technique identify the specific control that prevents it.
+
+### Reflection Questions
+
+1. After completing both challenges, explain why network segmentation alone is insufficient to achieve zero trust, even when every department has its own VLAN with firewall rules between them. Address the specific gap that microsegmentation fills, the specific gap that identity-aware access control fills, and why the combination of all three layers (VLAN segmentation + microsegmentation + identity verification) is required to satisfy the zero-trust principle of "never trust, always verify."
+
+2. In Challenge 1, you analyzed egress filtering as a control against command-and-control beaconing and data exfiltration. A network engineer argues that since all C2 traffic now uses HTTPS on port 443, egress filtering is ineffective because you cannot block port 443 without breaking all web traffic. Identify two specific controls beyond port-based egress filtering that address HTTPS-based C2 and exfiltration, explain the mechanism by which each control detects or blocks the malicious traffic despite it using standard HTTPS, and describe the operational tradeoffs each control introduces.
+
+---
+
 Module 07 Lab — End

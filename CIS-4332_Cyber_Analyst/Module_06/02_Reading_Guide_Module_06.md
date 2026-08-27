@@ -325,3 +325,19 @@ Exam Tip 8: SOAR integration allows automated enrichment and response triggered 
 - [ ] Complete the Module 06 Lab
 - [ ] Complete the Module 06 Quiz
 - [ ] Post initial response to the Module 06 Discussion by Wednesday at 11:59 PM
+
+---
+
+## 9. Supplemental Resources
+
+**1. Microsoft Sentinel — KQL Quick Reference and Learning Path**
+<https://learn.microsoft.com/en-us/azure/data-explorer/kql-quick-reference>
+Microsoft's official KQL quick reference covering query operators, aggregation functions, and time-window operations. The learning path also includes interactive practice environments. Working through KQL exercises is essential for building the query fluency tested in the Module 06 lab and on the CySA+ exam's SIEM scenario questions.
+
+**2. Splunk — SIEM Use Case Library (Splunk Security Essentials)**
+<https://splunkbase.splunk.com/app/3435>
+Splunk Security Essentials is a free Splunk app providing a library of detection use cases mapped to MITRE ATT&CK. Each use case includes the SPL query, data requirements, and expected alert behavior. Browsing the use cases — even without a running Splunk instance — illustrates how production correlation rules are structured for real-world attack patterns.
+
+**3. CISA — SOAR Capability Fact Sheet**
+<https://www.cisa.gov/sites/default/files/publications/CISA_Cyber_Essentials_Toolkit_6.pdf>
+CISA's guidance document covering security orchestration and automation for organizations building or maturing SOC capabilities. Reading this alongside Section 7 of this guide reinforces when SOAR automation is appropriate, what tasks are best automated versus reserved for human judgment, and how automation supports faster response metrics.

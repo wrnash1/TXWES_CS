@@ -260,6 +260,24 @@ When you are unsure of a PSM I answer:
 
 ---
 
+## 11. Supplemental Resources
+
+The following free, open-access resources are essential for PSM I exam preparation:
+
+**1. "The Scrum Guide (2020)" — Scrum.org**
+<https://scrumguides.org/scrum-guide.html>
+The official and only authoritative source for the PSM I exam. The 2020 version is 13 pages. Read it at least twice — once for content and once to understand the reasoning behind each element. Every PSM I question traces back to language or principles in this document. Available free in multiple languages.
+
+**2. "Scrum Open Assessment" — Scrum.org**
+<https://www.scrum.org/open-assessments/scrum-open>
+The official free practice assessment from Scrum.org. The question bank rotates; take it multiple times until you score above 95 percent consistently. The questions are representative of PSM I difficulty and style. No registration required for the free Scrum Open.
+
+**3. "Agile Manifesto Principles" — Agilemanifesto.org**
+<https://agilemanifesto.org/principles.html>
+The original twelve Agile Manifesto principles. PSM I questions occasionally cite specific principles — particularly Principles 1, 2, 4, 5, 7, 9, 10, and 12. Reading these alongside the Scrum Guide clarifies the philosophical foundation that the Scrum Guide's practices are built upon.
+
+---
+
 ## 10. Study Checklist
 
 - [ ] Read the 2020 Scrum Guide twice (scrum.org/resources/scrum-guide)

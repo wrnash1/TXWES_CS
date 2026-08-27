@@ -315,3 +315,120 @@ Submit the following to Canvas by the module deadline:
 **Predictions do not match:** Confirm both models use identical activation functions. A sigmoid in the NumPy code but ReLU in Keras (or vice versa) will produce different outputs.
 
 **sklearn not found:** Run `pip install scikit-learn` in your environment or Colab cell.
+
+---
+
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Visualizing the Effect of Activation Functions on Gradient Flow
+
+Build three identical 5-layer networks differing only in hidden-layer activation (sigmoid, tanh, ReLU) and compare how gradients propagate back to the first layer during training.
+
+```python
+import tensorflow as tf
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.datasets import make_classification
+from sklearn.preprocessing import StandardScaler
+
+X, y = make_classification(n_samples=1000, n_features=20, random_state=42)
+X = StandardScaler().fit_transform(X).astype(np.float32)
+y = y.astype(np.float32)
+
+def build_deep_model(activation):
+    return tf.keras.Sequential([
+        tf.keras.layers.Dense(64, activation=activation, input_shape=(20,)),
+        tf.keras.layers.Dense(64, activation=activation),
+        tf.keras.layers.Dense(64, activation=activation),
+        tf.keras.layers.Dense(64, activation=activation),
+        tf.keras.layers.Dense(1, activation='sigmoid')
+    ])
+
+results = {}
+for act in ['sigmoid', 'tanh', 'relu']:
+    model = build_deep_model(act)
+    model.compile(optimizer='adam', loss='binary_crossentropy')
+    X_tf = tf.constant(X)
+    y_tf = tf.constant(y)
+    with tf.GradientTape() as tape:
+        preds = model(X_tf, training=True)
+        loss  = tf.reduce_mean(tf.keras.losses.binary_crossentropy(y_tf, tf.squeeze(preds)))
+    grads = tape.gradient(loss, model.trainable_variables)
+    # Gradient norm for the FIRST layer's weight matrix
+    first_layer_grad_norm = tf.norm(grads[0]).numpy()
+    results[act] = first_layer_grad_norm
+    print(f"{act:8s} | first-layer gradient norm: {first_layer_grad_norm:.6f}")
+
+activations = list(results.keys())
+norms = [results[a] for a in activations]
+plt.bar(activations, norms, color=['steelblue', 'coral', 'green'])
+plt.title('First-Layer Gradient Norm by Activation Function')
+plt.ylabel('L2 Norm of Gradient')
+plt.tight_layout()
+plt.savefig('gradient_norms.png', dpi=100)
+plt.show()
+```
+
+1. Compare the first-layer gradient norms across the three activations. Which activation gives the largest gradient signal in the first layer?
+2. Train each model for 20 epochs and compare final validation accuracy. Does the activation with the largest gradient norm also converge fastest?
+
+### Challenge 2: Custom Training Loop with GradientTape
+
+Implement a full training loop from scratch using `tf.GradientTape` — no `model.fit()` — and verify that training loss decreases correctly.
+
+```python
+import tensorflow as tf
+import numpy as np
+
+tf.random.set_seed(42)
+X_train = tf.constant(X[:800], dtype=tf.float32)
+y_train = tf.constant(y[:800], dtype=tf.float32)
+X_val   = tf.constant(X[800:], dtype=tf.float32)
+y_val   = tf.constant(y[800:], dtype=tf.float32)
+
+model = tf.keras.Sequential([
+    tf.keras.layers.Dense(64, activation='relu', input_shape=(20,)),
+    tf.keras.layers.Dense(32, activation='relu'),
+    tf.keras.layers.Dense(1, activation='sigmoid')
+])
+optimizer  = tf.keras.optimizers.Adam(learning_rate=0.001)
+loss_fn    = tf.keras.losses.BinaryCrossentropy()
+train_losses, val_losses = [], []
+
+EPOCHS = 30
+BATCH  = 32
+
+for epoch in range(EPOCHS):
+    # Shuffle
+    idx = np.random.permutation(len(X_train))
+    epoch_loss = []
+    for i in range(0, len(idx), BATCH):
+        xb = tf.gather(X_train, idx[i:i+BATCH])
+        yb = tf.gather(y_train, idx[i:i+BATCH])
+        with tf.GradientTape() as tape:
+            preds = model(xb, training=True)
+            loss  = loss_fn(yb, tf.squeeze(preds))
+        grads = tape.gradient(loss, model.trainable_variables)
+        optimizer.apply_gradients(zip(grads, model.trainable_variables))
+        epoch_loss.append(loss.numpy())
+    train_losses.append(np.mean(epoch_loss))
+    val_preds = model(X_val, training=False)
+    val_losses.append(loss_fn(y_val, tf.squeeze(val_preds)).numpy())
+    if (epoch + 1) % 5 == 0:
+        print(f"Epoch {epoch+1:3d} | train_loss={train_losses[-1]:.4f} | val_loss={val_losses[-1]:.4f}")
+
+plt.figure(figsize=(8, 4))
+plt.plot(train_losses, label='Train Loss')
+plt.plot(val_losses,   label='Val Loss', linestyle='--')
+plt.title('Custom Training Loop — Loss Curve')
+plt.xlabel('Epoch'); plt.ylabel('BCE Loss'); plt.legend()
+plt.tight_layout(); plt.savefig('custom_loop_curve.png', dpi=100); plt.show()
+```
+
+1. Confirm the training loss decreases over 30 epochs by inspecting the printed output.
+2. Compare the final validation loss from this custom loop to running `model.fit()` on the same model — they should be similar if the batch size and optimizer match.
+
+### Reflection Questions
+
+1. In Challenge 1, sigmoid and tanh both suffered from smaller first-layer gradients than ReLU in a 5-layer network. At what network depth does this difference become practically significant, and what architectural solution (besides switching to ReLU) could help?
+2. The custom training loop in Challenge 2 gives complete control over every step. In a production training scenario, what are two specific reasons you might prefer the custom loop over `model.fit()`, and what are two reasons you would prefer `model.fit()`?

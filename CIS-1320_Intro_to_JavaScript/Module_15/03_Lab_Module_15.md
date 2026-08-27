@@ -638,6 +638,166 @@ function demoDebugger() {
 
 ---
 
+## Part 9 — Challenge Exercise
+
+This section is **optional**. It extends the lab with advanced problems that apply error handling and debugging techniques in more demanding scenarios.
+
+### Step 9.1 — Error Hierarchy with Multiple Custom Types
+
+Design a three-level error hierarchy for a data processing application. Each custom error class must set `this.name`, call `super(message)`, and add meaningful custom properties:
+
+```javascript
+// Base application error
+class AppError extends Error {
+  constructor(message, code) {
+    super(message);
+    this.name = 'AppError';
+    this.code = code;
+  }
+}
+
+// Validation errors — user input problems
+class ValidationError extends AppError {
+  constructor(message, field, value) {
+    super(message, 'VALIDATION');
+    this.name = 'ValidationError';
+    this.field = field;
+    this.value = value;
+  }
+}
+
+// Database errors — storage/retrieval problems
+class DatabaseError extends AppError {
+  constructor(message, query) {
+    super(message, 'DATABASE');
+    this.name = 'DatabaseError';
+    this.query = query;
+  }
+}
+```
+
+Write a `processRecord(record)` function that:
+
+1. Throws `ValidationError` if `record.email` does not contain `@`
+2. Throws `ValidationError` if `record.age` is not a positive number
+3. Throws `DatabaseError` if `record.id` is `null`
+4. Returns `'processed'` if all checks pass
+
+Write a dispatcher that catches each error type with `instanceof` and logs a tailored message:
+
+```javascript
+const records = [
+  { id: 1,    email: 'alice@example.com', age: 30 },   // valid
+  { id: 2,    email: 'not-an-email',      age: 25 },   // ValidationError
+  { id: 3,    email: 'bob@example.com',   age: -5 },   // ValidationError
+  { id: null, email: 'carol@example.com', age: 28 },   // DatabaseError
+];
+
+records.forEach(record => {
+  try {
+    processRecord(record);
+    console.log(`Record ${record.id}: OK`);
+  } catch (err) {
+    if (err instanceof ValidationError) {
+      console.error(`Validation [${err.field}]: ${err.message}`);
+    } else if (err instanceof DatabaseError) {
+      console.error(`Database error: ${err.message}`);
+    } else {
+      throw err;   // rethrow anything unexpected
+    }
+  }
+});
+```
+
+Verify that `new ValidationError('bad', 'email', 'x') instanceof AppError` returns `true` — demonstrating that the multi-level inheritance chain works correctly with `instanceof`.
+
+### Step 9.2 — `console.time` Profiling Comparison
+
+Use `console.time` / `console.timeEnd` to benchmark two different implementations of the same algorithm and identify the faster approach:
+
+```javascript
+function generateData(n) {
+  return Array.from({ length: n }, (_, i) => ({
+    id: i,
+    value: Math.random() * 1000,
+    label: `item-${i}`
+  }));
+}
+
+const data = generateData(100000);
+
+// Approach A: filter then map
+console.time('filter-then-map');
+const resultA = data
+  .filter(item => item.value > 500)
+  .map(item => item.label);
+console.timeEnd('filter-then-map');
+
+// Approach B: single reduce
+console.time('reduce');
+const resultB = data.reduce((acc, item) => {
+  if (item.value > 500) acc.push(item.label);
+  return acc;
+}, []);
+console.timeEnd('reduce');
+
+console.assert(resultA.length === resultB.length, 'Results should have same length');
+```
+
+Run this several times and record the timings. Add a third approach using a plain `for` loop and compare all three. Write a brief comment in the code identifying which is fastest on your machine and hypothesizing why.
+
+### Step 9.3 — Global Error Handler
+
+Implement a global error handler that catches all unhandled errors and unhandled Promise rejections, logs them with full context, and displays a user-friendly message in the UI:
+
+```javascript
+// 1. Catch synchronous errors not caught by any try/catch
+window.addEventListener('error', event => {
+  const { message, filename, lineno, colno, error } = event;
+
+  console.error('Uncaught error:', {
+    message,
+    location: `${filename}:${lineno}:${colno}`,
+    stack: error?.stack
+  });
+
+  document.getElementById('global-error-banner').textContent =
+    'An unexpected error occurred. Please refresh the page.';
+  document.getElementById('global-error-banner').style.display = 'block';
+
+  event.preventDefault();   // prevents default browser error display
+});
+
+// 2. Catch unhandled Promise rejections
+window.addEventListener('unhandledrejection', event => {
+  console.error('Unhandled rejection:', event.reason);
+
+  document.getElementById('global-error-banner').textContent =
+    'A background operation failed: ' + (event.reason?.message ?? 'Unknown error');
+  document.getElementById('global-error-banner').style.display = 'block';
+
+  event.preventDefault();
+});
+```
+
+Add a `<div id="global-error-banner" style="display:none; background:red; color:white; padding:10px;"></div>` to your HTML. Then trigger both handlers:
+
+```javascript
+// Trigger synchronous uncaught error
+setTimeout(() => {
+  undeclaredFunction();   // ReferenceError — not wrapped in try/catch
+}, 500);
+
+// Trigger unhandled rejection
+setTimeout(() => {
+  Promise.reject(new Error('Background task failed'));
+}, 1000);
+```
+
+Observe the error banner appear twice (once for each). Then wrap each in a `try/catch` and confirm the global handler no longer fires for those cases.
+
+---
+
 ## Summary
 
 | Concept | Key Point |

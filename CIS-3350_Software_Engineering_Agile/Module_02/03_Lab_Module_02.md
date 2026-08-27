@@ -132,6 +132,32 @@ Submit to the Canvas assignment portal by the module due date.
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: Manifesto Stress Test — Edge Cases
+
+The Agile Manifesto was written with collaborative, creative software development in mind. Apply it to three edge-case scenarios where the values create tension or ambiguity:
+
+1. Select any two of the four Manifesto values. Construct a realistic project scenario where honoring one value fully would make it harder to honor the other. Write two to three sentences describing the tension.
+2. For each tension you identified, describe what a senior Agile practitioner would actually do in practice — not which value "wins," but how they would balance the two.
+3. Identify one of the twelve principles that most directly helps resolve each tension and explain why.
+
+### Challenge 2: Rewrite Alpha Squad's Process
+
+Using the Alpha Squad profile from Part 3, rewrite their development process as a set of six bullet points that fully align with the Agile Manifesto values and principles. Each bullet must:
+
+1. Directly replace one of Alpha Squad's current dysfunctional practices.
+2. Name the specific value or principle it addresses.
+3. Be specific enough that Alpha Squad could actually implement it next Sprint (not generic advice like "be more Agile").
+4. Conclude with a one-paragraph prediction: if Alpha Squad implemented all six changes simultaneously, which metric (Sprint Goal achievement rate, team morale, stakeholder trust) would improve first and why?
+
+### Reflection Questions
+
+1. The Manifesto says "we value the items on the left more" — but in your own project or team experience (or a hypothetical), can you identify a situation where the right-side items (documentation, processes, contracts, plans) were genuinely the more important priority? What does that tell you about the limits of any set of values?
+2. Principle 5 says to "build projects around motivated individuals." What specific things can a Scrum Master or manager do to create and maintain the environment and support that principle calls for?
+
+---
+
 ## Rubric Summary
 
 | Component | Points |

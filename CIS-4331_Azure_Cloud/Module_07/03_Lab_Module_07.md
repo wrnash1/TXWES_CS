@@ -337,4 +337,18 @@ Submit the following items to Canvas by the due date:
 
 ---
 
+## Part 9 — Challenge Exercise
+
+### Challenge 1: App Service Deployment Slots
+Upgrade your App Service plan to Standard (S1) using `az appservice plan update --sku S1`. Create a staging deployment slot with `az webapp deployment slot create --slot staging`. Deploy a modified version of your HTML page (change the heading text to "Staging Environment") to the staging slot using zip deploy targeting the slot. Verify the staging URL shows the modified content while the production URL still shows the original. Then perform a slot swap using `az webapp deployment slot swap --slot staging` and confirm both URLs now show swapped content. Document each CLI command and its output. Swap the slots back and explain in 2-3 sentences what zero-downtime means in the context of a slot swap operation.
+
+### Challenge 2: Azure Functions HTTP Trigger
+Using Azure Cloud Shell or the Azure CLI, create a Function App on the Consumption plan (`az functionapp create --consumption-plan-location eastus --runtime python --functions-version 4`). Using the Azure Portal's in-browser editor or Azure Functions Core Tools, create an HTTP-triggered Python function that accepts a `name` query parameter and returns `Hello, {name}! From Azure Functions.` Test the function endpoint using `curl` with and without the `name` parameter. Document the function URL, the test output, and the approximate response time for the first invocation versus subsequent invocations. Explain what the response time difference illustrates about cold starts on the Consumption plan.
+
+### Reflection Questions
+1. In the lab you deployed the same web content to both a VM (running nginx) and App Service (using zip deploy). The VM required SSH access, package installation, and service configuration while App Service required only a single CLI command. A colleague argues that the extra steps for the VM give more control and are worth the effort for all workloads. For which specific types of workloads is that extra OS-level control genuinely necessary, and for which workloads is it unnecessary overhead?
+2. Azure Functions on the Consumption plan scale to zero when idle, which eliminates cost during quiet periods but introduces cold start latency. Describe a production workload where cold start latency is acceptable and the scale-to-zero cost savings justify using the Consumption plan, and a separate workload where cold start latency is unacceptable and the Premium plan's pre-warmed instances are required despite the higher cost.
+
+---
+
 *Lab 07 — Module 07: Azure Compute Services | CIS-4331 | Texas Wesleyan University*

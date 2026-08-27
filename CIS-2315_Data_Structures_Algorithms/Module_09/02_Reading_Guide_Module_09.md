@@ -252,6 +252,27 @@ def has_cycle_directed(graph):
 
 ---
 
+## 9. Supplemental Resources
+
+The following free, openly licensed resources reinforce the concepts in this module. All are zero-cost and require no account to access.
+
+1. **VisuAlgo — Graph Visualizations** — [https://visualgo.net/en/graphds](https://visualgo.net/en/graphds)
+   Interactive visualization of directed and undirected graph representations, including adjacency list and adjacency matrix views. Build and modify graphs interactively to observe how the two representations differ.
+
+2. **OpenDSA — Graphs Chapter** — [https://opendsa-server.cs.vt.edu/ODSA/Books/Everything/html/GraphIntro.html](https://opendsa-server.cs.vt.edu/ODSA/Books/Everything/html/GraphIntro.html)
+   Free interactive OER textbook covering graph terminology (vertices, edges, directed, weighted), adjacency representations, and degree analysis with embedded exercises.
+
+3. **CS50 — Graphs Lecture (Harvard)** — [https://cs50.harvard.edu/ai/2024/weeks/3/](https://cs50.harvard.edu/ai/2024/weeks/3/)
+   Harvard's free CS50 AI lecture on graph search, covering graph representations and traversal strategies with clear diagrams. No enrollment required.
+
+4. **Khan Academy — Graph Representation** — [https://www.khanacademy.org/computing/computer-science/algorithms/graph-representation/a/representing-graphs](https://www.khanacademy.org/computing/computer-science/algorithms/graph-representation/a/representing-graphs)
+   Free Khan Academy article covering adjacency lists and adjacency matrices with space complexity analysis and when to use each representation.
+
+5. **NeetCode — Graphs Playlist (YouTube)** — [https://www.youtube.com/playlist?list=PLot-Xpze53ldBT_7QA8NVot219jFNr_GI](https://www.youtube.com/playlist?list=PLot-Xpze53ldBT_7QA8NVot219jFNr_GI)
+   Free video solutions for common graph representation and traversal problems including Number of Islands, Clone Graph, and Course Schedule, each with clear adjacency list construction and traversal walkthroughs.
+
+---
+
 ## 8. Study Checklist
 
 - [ ] Watch the Module 09 video lecture by Professor Nash.
