@@ -1,0 +1,97 @@
+[
+  {
+    "scene_title": "Introduction",
+    "slide_background_prompt": "Topic: Introduction",
+    "speech_script": "Welcome back. This is Part 2 of Module 15 on Network Documentation and Policies. In Part 1 we covered network diagrams, IP address management, and change management. Now we cover the policy framework that governs how networks are used and protected: acceptable use policies, service level agreements, and disaster recovery documentation."
+  },
+  {
+    "scene_title": "Section 1: Acceptable Use Policies",
+    "slide_background_prompt": "Topic: Section 1: Acceptable Use Policies",
+    "speech_script": "An Acceptable Use Policy, or AUP, is a formal document that defines how an organization's network, systems, and internet access may and may not be used. Every organization with network-connected users should have an AUP."
+  },
+  {
+    "scene_title": "Why AUPs Matter for Network Administrators",
+    "slide_background_prompt": "Topic: Why AUPs Matter for Network Administrators",
+    "speech_script": "As a network administrator, you are frequently asked to implement technical controls that enforce AUP provisions \u2014 content filters, application controls, bandwidth throttling, and monitoring systems. Understanding what the AUP requires is essential for configuring these systems correctly.\n\nAUPs also establish the legal and organizational framework for taking action when users violate policy \u2014 accessing prohibited content, downloading unauthorized software, or misusing company bandwidth. Without a signed AUP, organizations have limited recourse against policy violators."
+  },
+  {
+    "scene_title": "Typical AUP Provisions",
+    "slide_background_prompt": "Topic: Typical AUP Provisions",
+    "speech_script": "An AUP typically addresses:\n\n- Permitted use: What the network is for \u2014 business use, authorized personal use within specified limits.\n- Prohibited activities: What is explicitly not allowed. Common examples: illegal downloads, accessing adult or gambling content on company resources, running personal businesses on company equipment, bypassing security controls (VPN split tunneling, personal hotspots to avoid content filters).\n- Privacy notice: A statement that the organization monitors network activity and that users should have no expectation of privacy on company systems.\n- Consequences: What happens if the policy is violated \u2014 disciplinary action up to and including termination; potential legal action for illegal activity.\n- Security responsibilities: User obligations \u2014 keeping passwords secure, locking workstations, not installing unauthorized software.\n- BYOD provisions: Rules for personally-owned devices connecting to the corporate network (if permitted).\n- Remote access: Policies governing VPN use, home network security requirements for remote workers."
+  },
+  {
+    "scene_title": "AUP Acknowledgment",
+    "slide_background_prompt": "Topic: AUP Acknowledgment",
+    "speech_script": "The AUP has legal value only if users have signed or acknowledged it. Best practice: require employees to sign the AUP on hire, and re-sign annually when the policy is updated. Electronic acknowledgment (clicking \"I Accept\" on a captive portal during onboarding) is also valid and often more practical."
+  },
+  {
+    "scene_title": "Section 2: Service Level Agreements",
+    "slide_background_prompt": "Topic: Section 2: Service Level Agreements",
+    "speech_script": "A Service Level Agreement, or SLA, is a contract between a service provider and a customer defining the expected level of service. Network administrators work with SLAs in two contexts:\n\n- As a consumer of carrier SLAs (guarantees from your ISP, MPLS provider, or cloud provider)\n- As a provider of internal SLAs (commitments to internal business units)"
+  },
+  {
+    "scene_title": "Key SLA Metrics",
+    "slide_background_prompt": "Topic: Key SLA Metrics",
+    "speech_script": "Availability is the percentage of time a service is operational. Expressed as a percentage \u2014 typically called \"nines.\"\n\nAvailability   Annual Downtime  \n   \n  99% (two nines)   87.6 hours  \n  99.9% (three nines)   8.76 hours  \n  99.99% (four nines)   52.6 minutes  \n  99.999% (five nines)   5.26 minutes\n\nMost enterprise SLAs target 99.99% or better for critical systems. Five-nines (99.999%) is the gold standard for carrier-grade services.\n\nMTBF is the average time between failure events for a system or component. Higher MTBF means more reliable hardware. Used when selecting hardware for critical deployments.\n\nMTBF = Total operational time / Number of failures\n\nFor example, if a switch operates for 50,000 hours before failing once, its MTBF is 50,000 hours. This does not mean the switch will definitely last 50,000 hours \u2014 it is a statistical average.\n\nMTTR is the average time to restore a failed system. Includes detection, diagnosis, repair, and restoration time.\n\nMTTR = Total repair time / Number of repairs\n\nReducing MTTR requires: rapid detection (monitoring and alerting), effective troubleshooting procedures, available spare parts, and skilled personnel.\n\nRTO is the maximum acceptable time for a system to be restored after a failure or disaster. Defined in the organization's business continuity plan.\n\nFor example: \"The payroll system must be restored within 4 hours of any failure.\" That 4 hours is the RTO.\n\nNetwork design must support the RTO \u2014 if the RTO is 4 hours, WAN failover must be achievable within that window.\n\nRPO is the maximum acceptable amount of data loss measured in time. Defined in the business continuity plan alongside RTO.\n\nFor example: \"We can tolerate losing at most 15 minutes of transaction data.\" That 15 minutes is the RPO \u2014 backups must occur at least every 15 minutes to meet this objective.\n\nRPO drives backup frequency and replication requirements."
+  },
+  {
+    "scene_title": "Carrier SLA Provisions",
+    "slide_background_prompt": "Topic: Carrier SLA Provisions",
+    "speech_script": "When evaluating a carrier WAN or internet service SLA, look for:\n\n- Availability guarantee (e.g., 99.99% uptime)\n- Latency commitment (e.g., average latency under 50 ms)\n- Packet loss commitment (e.g., less than 0.1%)\n- Jitter commitment (e.g., less than 10 ms average)\n- Mean Time to Repair (e.g., 4-hour MTTR for major circuit outages)\n- Service credits: What compensation the carrier provides if they miss SLA metrics. Typically a percentage of monthly recurring charges."
+  },
+  {
+    "scene_title": "Section 3: Disaster Recovery Documentation",
+    "slide_background_prompt": "Topic: Section 3: Disaster Recovery Documentation",
+    "speech_script": "Disaster Recovery (DR) documentation defines how the organization responds to and recovers from major failures \u2014 extended power outages, natural disasters, ransomware attacks, or catastrophic hardware failures."
+  },
+  {
+    "scene_title": "Business Impact Analysis",
+    "slide_background_prompt": "Topic: Business Impact Analysis",
+    "speech_script": "Before writing a DR plan, organizations conduct a Business Impact Analysis (BIA). The BIA identifies:\n\n- Which business processes are most critical\n- What happens to the business if each process fails\n- How long each process can be interrupted before causing unacceptable business impact\n- The RTO and RPO for each process\n\nThe BIA output drives the DR design \u2014 high-impact, low-tolerance processes get the most investment in redundancy and rapid recovery."
+  },
+  {
+    "scene_title": "DR Site Types",
+    "slide_background_prompt": "Topic: DR Site Types",
+    "speech_script": "A hot site is a fully equipped, operational facility that mirrors the production environment. All hardware is running; data is replicated in real time. Failover can happen within minutes.\n\nCost: Very high \u2014 you are running duplicate production infrastructure.\n\nUse case: Financial services, healthcare, any organization where downtime costs are catastrophic.\n\nA warm site has hardware pre-installed and configured but data must be restored from backup or synchronization. Failover takes hours to a day.\n\nCost: Moderate \u2014 hardware is maintained but not fully operational.\n\nUse case: Organizations with RTO measured in hours rather than minutes.\n\nA cold site is a facility with power, space, and network connectivity but no pre-installed hardware. Equipment must be procured and installed during the disaster. Failover takes days to weeks.\n\nCost: Low \u2014 minimal infrastructure maintained.\n\nUse case: Organizations with RPOs and RTOs measured in days; non-critical workloads."
+  },
+  {
+    "scene_title": "DR Plan Components",
+    "slide_background_prompt": "Topic: DR Plan Components",
+    "speech_script": "A complete DR plan includes:\n\n- Purpose and scope: What scenarios the plan covers.\n- Recovery team and roles: Who is responsible for what during a disaster. Contact list with 24/7 phone numbers.\n- Activation criteria: What conditions trigger the DR plan (e.g., primary data center inaccessible for more than X hours).\n- Recovery procedures: Step-by-step technical procedures for each critical system. Written clearly enough for someone who did not design the system.\n- Communication plan: How the team communicates during a disaster. What information is provided to stakeholders and when.\n- Vendor and carrier contacts: Critical contacts for hardware vendors, ISPs, and carrier circuits.\n- Testing schedule: DR plans that are never tested are not real DR plans. Annual or semi-annual tests are standard practice.\n- Plan maintenance: Who reviews and updates the plan, and when."
+  },
+  {
+    "scene_title": "DR Testing Methods",
+    "slide_background_prompt": "Topic: DR Testing Methods",
+    "speech_script": "- Tabletop exercise: The team walks through the DR plan verbally, discussing what each person would do during a hypothetical scenario. Low cost, no system disruption. Good for identifying gaps in the plan.\n- Walkthrough test: Team members perform their assigned tasks up to the point of actual failover. Verifies procedures without actual production impact.\n- Simulation test: A simulated disaster is declared and the team activates DR procedures in a controlled environment. Actual failover may be tested.\n- Full interruption test: Production systems are actually failed over to the DR site. Highest confidence but highest risk and cost. Requires careful scheduling and stakeholder approval."
+  },
+  {
+    "scene_title": "Section 4: Network Policies Reference",
+    "slide_background_prompt": "Topic: Section 4: Network Policies Reference",
+    "speech_script": "Several additional policies are important for network administrators. These may appear on the Network+ exam."
+  },
+  {
+    "scene_title": "Password Policy",
+    "slide_background_prompt": "Topic: Password Policy",
+    "speech_script": "Defines requirements for user and administrator passwords:\n\n- Minimum length (typically 12+ characters for network device credentials)\n- Complexity requirements (uppercase, lowercase, numbers, special characters)\n- Expiration interval\n- Account lockout after failed attempts\n- Prohibition on password reuse\n\nNetwork device default passwords must always be changed before deployment."
+  },
+  {
+    "scene_title": "Remote Access Policy",
+    "slide_background_prompt": "Topic: Remote Access Policy",
+    "speech_script": "Defines how users and administrators connect to the network remotely:\n\n- Approved VPN clients and protocols\n- Multi-factor authentication requirements\n- Split tunneling \u2014 permitted or prohibited\n- Device health requirements (endpoint must have current antivirus, OS patches)\n- Acceptable use restrictions while connected remotely"
+  },
+  {
+    "scene_title": "Incident Response Policy",
+    "slide_background_prompt": "Topic: Incident Response Policy",
+    "speech_script": "Defines how the organization responds to security incidents:\n\n- Incident classification (severity levels)\n- Incident response team and contact information\n- Escalation procedures\n- Evidence preservation requirements\n- Reporting obligations (regulatory, legal)\n- Post-incident review requirements"
+  },
+  {
+    "scene_title": "Physical Security Policy",
+    "slide_background_prompt": "Topic: Physical Security Policy",
+    "speech_script": "Addresses physical access to network infrastructure:\n\n- Server room and data center access controls (key cards, biometrics)\n- Visitor escort requirements\n- Hardware removal authorization\n- Clean desk requirements\n- Equipment disposal procedures"
+  },
+  {
+    "scene_title": "Summary of Part 2",
+    "slide_background_prompt": "Topic: Summary of Part 2",
+    "speech_script": "Key points from Part 2:\n\n- AUPs define permitted and prohibited network use, establish privacy expectations, and must be signed by users.\n- SLA metrics: Availability (nines), MTBF, MTTR, RTO, and RPO. Know the downtime equivalents for 99%, 99.9%, 99.99%, and 99.999% availability.\n- Disaster recovery sites: Hot (real-time, expensive), Warm (hours, moderate cost), Cold (days, low cost). DR plans must be tested \u2014 tabletop, walkthrough, simulation, full interruption.\n- Additional policies: Password policy, remote access policy, incident response policy, physical security policy.\n\nModule 15 is complete. Work through the Reading Guide, Lab, Quiz, and Discussion. Module 16 is our final module \u2014 a comprehensive Network+ exam preparation session covering all domains."
+  }
+]

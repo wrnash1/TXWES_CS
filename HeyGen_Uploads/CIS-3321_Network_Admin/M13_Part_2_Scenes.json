@@ -1,0 +1,102 @@
+[
+  {
+    "scene_title": "Introduction",
+    "slide_background_prompt": "Topic: Introduction",
+    "speech_script": "Welcome back to Part 2 of Module 13. In Part 1 we covered VoIP fundamentals, codecs, SIP architecture and call flow, H.323, and RTP. Now we focus on what the network administrator must do to ensure voice and video calls actually work well \u2014 Quality of Service, jitter buffers, the key performance metrics the exam tests, and practical UC platform considerations."
+  },
+  {
+    "scene_title": "Section 1: Why QoS Is Critical for Voice and Video",
+    "slide_background_prompt": "Topic: Section 1: Why QoS Is Critical for Voice and Video",
+    "speech_script": "When voice and video packets share network infrastructure with ordinary data traffic, they face a fundamental problem: other traffic doesn't care about delay. A large file transfer doesn't notice if its packets are delayed 200 milliseconds. A conversation does.\n\nThe human ear and brain are remarkably sensitive to inconsistent delay. Even a call with perfect audio quality on average will feel choppy and unnatural if packets arrive at inconsistent intervals.\n\nThis is why network engineers implement Quality of Service \u2014 QoS \u2014 mechanisms to give voice and video traffic preferential treatment. QoS does not add bandwidth. Instead, it manages how existing bandwidth is shared, ensuring that real-time traffic always gets the queue position, forwarding priority, and bandwidth guarantee it needs."
+  },
+  {
+    "scene_title": "Section 2: Key Performance Metrics for Real-Time Traffic",
+    "slide_background_prompt": "Topic: Section 2: Key Performance Metrics for Real-Time Traffic",
+    "speech_script": "Before covering QoS mechanisms, you must understand the four performance metrics that matter for voice and video. The Network+ exam tests these definitions and their acceptable thresholds directly."
+  },
+  {
+    "scene_title": "Latency (Delay)",
+    "slide_background_prompt": "Topic: Latency (Delay)",
+    "speech_script": "Latency is the time it takes for a packet to travel from source to destination. In a voice call, latency affects how natural the conversation feels.\n\nThe ITU-T G.114 standard recommends a one-way latency of no more than 150 ms for acceptable voice quality. Up to 400 ms is the absolute maximum \u2014 above 400 ms, callers start talking over each other constantly.\n\nSources of latency in VoIP:\n\n- Propagation delay: Speed of light through the medium\n- Serialization delay: Time to place bits on the wire\n- Processing delay: Codec compression/decompression time\n- Queuing delay: Time packets wait in router/switch queues\n- Network delay: Routing through multiple hops\n\nOf these, queuing delay is the one QoS can control."
+  },
+  {
+    "scene_title": "Jitter",
+    "slide_background_prompt": "Topic: Jitter",
+    "speech_script": "Jitter is variation in latency \u2014 the inconsistency of packet arrival times. Even if average latency is acceptable, high jitter causes voice audio to sound choppy because packets arrive in bursts rather than at regular intervals.\n\nAcceptable jitter for voice: under 30 ms.\n\nJitter is addressed by the jitter buffer at the receiving endpoint (covered shortly)."
+  },
+  {
+    "scene_title": "Packet Loss",
+    "slide_background_prompt": "Topic: Packet Loss",
+    "speech_script": "Packet loss occurs when packets are dropped \u2014 typically due to congestion in router queues. UDP does not retransmit lost packets, so lost voice packets result in audio dropouts.\n\nAcceptable packet loss for voice: under 1%.\n\nAt higher loss rates, voice quality degrades noticeably. VoIP codecs use concealment algorithms to hide brief losses, but sustained packet loss degrades calls severely."
+  },
+  {
+    "scene_title": "Bandwidth",
+    "slide_background_prompt": "Topic: Bandwidth",
+    "speech_script": "Voice calls require a consistent, reserved amount of bandwidth for the duration of the call. If bandwidth is not available, packets get delayed or dropped \u2014 increasing latency and packet loss.\n\nKnow the codec bandwidth requirements:\n\n- G.711: approximately 87 Kbps per call (including IP/UDP/RTP overhead at 20 ms)\n- G.729: approximately 31 Kbps per call (including overhead)\n- HD video (720p): approximately 1.5\u20133 Mbps per stream\n- HD video (1080p): approximately 3\u20136 Mbps per stream"
+  },
+  {
+    "scene_title": "Section 3: Jitter Buffers",
+    "slide_background_prompt": "Topic: Section 3: Jitter Buffers",
+    "speech_script": "The jitter buffer is a component in VoIP endpoints and media gateways that compensates for variable packet arrival times.\n\nHow it works: incoming RTP packets are held briefly in a buffer before being played out. The buffer smooths out arrival-time variations \u2014 if packets arrive in a burst, the buffer absorbs them; if packets arrive late, the buffer provides continuity.\n\nJitter buffer trade-off: larger buffers absorb more jitter but add more delay. Smaller buffers minimize delay but may not compensate for high jitter.\n\nMost modern endpoints use adaptive jitter buffers that dynamically adjust the buffer depth based on observed network conditions \u2014 growing when jitter increases, shrinking when conditions improve."
+  },
+  {
+    "scene_title": "Section 4: QoS Mechanisms",
+    "slide_background_prompt": "Topic: Section 4: QoS Mechanisms",
+    "speech_script": "Now let us cover the actual QoS mechanisms. These are testable on the Network+ exam."
+  },
+  {
+    "scene_title": "Packet Marking \u2014 DSCP",
+    "slide_background_prompt": "Topic: Packet Marking \u2014 DSCP",
+    "speech_script": "Differentiated Services Code Point (DSCP) is the primary QoS marking mechanism for IP networks. DSCP uses the 6-bit DSCP field in the IP header's Type of Service (ToS) byte to mark packets with their forwarding class.\n\nKey DSCP values:\n\n- EF (Expedited Forwarding) \u2014 DSCP 46 (101110): The highest priority class. Used for voice RTP media. Guarantees low latency, low jitter, low loss. Voice packets should always be marked EF.\n- AF41, AF42, AF43 (Assured Forwarding): Used for video conferencing. AF41 has highest drop preference within the AF4 class.\n- CS3 (Class Selector 3): Used for call signaling (SIP, H.225).\n- BE (Best Effort) \u2014 DSCP 0: Default. No special treatment. Ordinary data traffic.\n\nDSCP is a per-hop behavior \u2014 each router and switch in the path must be configured to honor DSCP markings and apply appropriate scheduling and queuing policies."
+  },
+  {
+    "scene_title": "Layer 2 Marking \u2014 CoS",
+    "slide_background_prompt": "Topic: Layer 2 Marking \u2014 CoS",
+    "speech_script": "Class of Service (CoS) is the Layer 2 QoS marking mechanism for Ethernet. It uses the 3-bit Priority Code Point (PCP) field in the 802.1Q VLAN tag header.\n\nCoS values range from 0 (lowest) to 7 (highest):\n\n- CoS 5: Voice RTP\n- CoS 4: Video conferencing\n- CoS 3: Call signaling\n- CoS 0: Best-effort data\n\nCoS markings are used within switched LAN segments. At Layer 3 boundaries (routers), CoS is typically mapped to DSCP and vice versa."
+  },
+  {
+    "scene_title": "Traffic Classification",
+    "slide_background_prompt": "Topic: Traffic Classification",
+    "speech_script": "Before you can prioritize traffic, you must identify it. Classification methods:\n\n- Port-based: Classify based on UDP/TCP port numbers. SIP typically uses UDP port 5060. RTP uses dynamically assigned UDP ports in the range 16384\u201332767 (Cisco) or 1024\u201365535 (varies by vendor).\n- DSCP-based: Trust incoming DSCP markings from endpoints.\n- Deep Packet Inspection (DPI): Inspect application-layer content to identify traffic \u2014 used when port-based classification is insufficient.\n- NBAR (Network-Based Application Recognition): Cisco proprietary DPI classification engine."
+  },
+  {
+    "scene_title": "Queuing Mechanisms",
+    "slide_background_prompt": "Topic: Queuing Mechanisms",
+    "speech_script": "After classification and marking, queuing determines how packets are scheduled for transmission on congested interfaces.\n\n- Priority Queuing (PQ): Strict priority \u2014 higher-priority queues are always served before lower-priority queues. Voice gets absolute priority. Risk: lower-priority queues can starve.\n- Low Latency Queuing (LLQ): Cisco's recommended mechanism for VoIP. Combines strict priority for voice with Class-Based Weighted Fair Queuing (CBWFQ) for other traffic classes. Voice gets a dedicated, policed bandwidth allocation; other classes share remaining bandwidth proportionally.\n- Weighted Fair Queuing (WFQ): Allocates bandwidth proportionally based on weights. No strict priority.\n- FIFO (First In, First Out): No differentiation \u2014 all packets served in order received. Default on high-speed interfaces. Insufficient for voice.\n\nFor the exam: LLQ is the recommended QoS queuing strategy for networks with VoIP traffic."
+  },
+  {
+    "scene_title": "Traffic Shaping and Policing",
+    "slide_background_prompt": "Topic: Traffic Shaping and Policing",
+    "speech_script": "- Traffic shaping: Delays excess traffic by buffering packets until the rate falls within the defined limit. Smooths bursts. Introduces delay but no packet drop.\n- Traffic policing: Drops or re-marks packets that exceed the defined rate. Immediate \u2014 no buffering. Causes packet loss for bursts.\n\nShaping is preferred for data traffic. Policing is appropriate for enforcing SLAs at network edges."
+  },
+  {
+    "scene_title": "Call Admission Control",
+    "slide_background_prompt": "Topic: Call Admission Control",
+    "speech_script": "Call Admission Control (CAC) prevents oversubscription of WAN bandwidth by voice calls. When a new call would exceed the configured voice bandwidth limit, CAC rejects the call with a busy signal rather than allowing the call and degrading quality for all existing calls.\n\nCAC is configured on IP PBX systems and WAN edge routers. Without CAC, a single congested WAN link can degrade call quality for all concurrent calls simultaneously."
+  },
+  {
+    "scene_title": "Section 5: VoIP Bandwidth Planning",
+    "slide_background_prompt": "Topic: Section 5: VoIP Bandwidth Planning",
+    "speech_script": "To plan bandwidth for VoIP, use this formula:\n\nTotal VoIP bandwidth = Number of concurrent calls \u00d7 Bandwidth per call (including overhead)\n\nExample:\nA branch office makes 50 concurrent calls using G.729:\n\n50 \u00d7 31 Kbps = 1,550 Kbps = approximately 1.55 Mbps\n\nThis assumes bidirectional calls \u2014 you need 1.55 Mbps in each direction.\n\nAdd overhead for signaling traffic (SIP messages): typically 5\u201310% of voice bandwidth.\n\nAdd overhead for codec variation and burst: typically 20% buffer.\n\nFinal planned bandwidth: 1,550 Kbps \u00d7 1.25 = approximately 1.94 Mbps. Round up to 2 Mbps reserved for voice."
+  },
+  {
+    "scene_title": "Voice VLAN",
+    "slide_background_prompt": "Topic: Voice VLAN",
+    "speech_script": "Best practice is to place VoIP phones on a dedicated Voice VLAN, separate from the data VLAN. Benefits:\n\n- QoS marking can be applied consistently to all voice VLAN traffic\n- Security isolation \u2014 voice traffic is not on the same broadcast domain as user data\n- Simplifies troubleshooting \u2014 voice traffic is identifiable by VLAN\n\nMost enterprise IP phones support \"inline VLAN\" \u2014 the phone connects to a switch port configured for a data VLAN (for an attached PC) and a voice VLAN simultaneously. The phone tags its own traffic with the voice VLAN ID."
+  },
+  {
+    "scene_title": "Network Address Translation Issues",
+    "slide_background_prompt": "Topic: Network Address Translation Issues",
+    "speech_script": "NAT is problematic for SIP and H.323 because VoIP signaling messages embed IP addresses in the application payload (SDP bodies, H.323 header fields). NAT changes the IP header but does not update the embedded application-layer addresses \u2014 causing the media stream to be sent to the wrong address.\n\nSolutions:\n\n- ALG (Application Layer Gateway): NAT device inspects SIP/H.323 packets and rewrites embedded addresses. Included in most routers but can be unreliable.\n- STUN (Session Traversal Utilities for NAT): Client-side mechanism to discover external IP address and port. Used heavily in WebRTC applications.\n- Session Border Controller (SBC): Enterprise-grade device that handles NAT traversal, security, and protocol normalization for SIP trunks."
+  },
+  {
+    "scene_title": "Firewall Considerations",
+    "slide_background_prompt": "Topic: Firewall Considerations",
+    "speech_script": "SIP and H.323 use dynamically negotiated UDP ports for RTP media. Traditional stateless ACLs cannot handle this well \u2014 you would need to open a wide range of UDP ports, which is a security risk.\n\nSolutions:\n\n- Stateful inspection: The firewall tracks SIP signaling and automatically opens the negotiated RTP port pairs.\n- Session Border Controller: Terminates SIP sessions at the enterprise edge, normalizing media ports.\n- Application Layer Gateway: Built into many enterprise firewalls."
+  },
+  {
+    "scene_title": "Summary of Part 2",
+    "slide_background_prompt": "Topic: Summary of Part 2",
+    "speech_script": "Key points from Part 2:\n\n- Latency, jitter, packet loss, and bandwidth are the four metrics that define VoIP/video quality. Acceptable thresholds: latency under 150 ms, jitter under 30 ms, packet loss under 1%.\n- Jitter buffers smooth out variable packet arrival at the receiver \u2014 adaptive jitter buffers adjust dynamically.\n- DSCP is the Layer 3 QoS marking field. EF (DSCP 46) is used for voice RTP. CoS is the Layer 2 marking in 802.1Q headers.\n- LLQ is the recommended queuing mechanism for VoIP \u2014 strict priority for voice, CBWFQ for other classes.\n- CAC prevents bandwidth oversubscription by blocking new calls when the limit is reached.\n- Voice VLANs isolate voice traffic. NAT and firewalls require special handling (ALG, STUN, SBC, stateful inspection).\n\nModule 13 is complete. Complete the Reading Guide, Lab, Quiz, and Discussion to reinforce these concepts. Module 14 covers the CompTIA Network+ troubleshooting methodology and hardware troubleshooting."
+  }
+]

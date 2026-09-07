@@ -1,0 +1,82 @@
+[
+  {
+    "scene_title": "Segment 1 \u2014 Introduction: Why Risk Management Is Central to Security (2 minutes)",
+    "slide_background_prompt": "Topic: Segment 1 \u2014 Introduction: Why Risk Management Is Central to Security (2 minutes)",
+    "speech_script": "Welcome to Module 13, Risk Management. This module ties together everything we have studied in this course. Every security decision we make \u2014 every firewall rule, access control policy, encryption standard, and incident response procedure \u2014 is ultimately a risk management decision. We are trying to reduce risk to an acceptable level at a justifiable cost.\n\nRisk management is explicitly tested throughout the Security+ exam, not just in a single domain. You will see risk concepts in questions about governance, compliance, vulnerability management, and security architecture. Understanding risk thinking is what separates a security professional who can make defensible decisions from someone who just runs checklists.\n\nFor this module we focus on Security+ Domain 5 (Governance, Risk, and Compliance) and related objectives in Domain 2."
+  },
+  {
+    "scene_title": "Segment 2 \u2014 Core Risk Concepts (5 minutes)",
+    "slide_background_prompt": "Topic: Segment 2 \u2014 Core Risk Concepts (5 minutes)",
+    "speech_script": "Risk management begins with a shared vocabulary. These terms have specific technical meanings that differ from everyday usage."
+  },
+  {
+    "scene_title": "The Risk Equation",
+    "slide_background_prompt": "Topic: The Risk Equation",
+    "speech_script": "Risk = Threat \u00d7 Vulnerability \u00d7 Impact\n\nThis is the fundamental formula and the lens through which every risk analysis is performed.\n\nThreat is any circumstance or event with the potential to cause harm to a system. Threats are external to the organization and largely outside your control. Examples:\n\n- A nation-state actor targeting your industry\n- A ransomware criminal group\n- A natural disaster (hurricane, flood)\n- A disgruntled insider\n- A vendor with access to your systems\n\nYou cannot eliminate most threats. You can reduce your exposure to them.\n\nVulnerability is a weakness in a system, process, or control that a threat can exploit. Vulnerabilities are internal to your environment and largely within your control. Examples:\n\n- An unpatched operating system with a known CVE\n- A firewall misconfiguration that allows unnecessary inbound traffic\n- Weak password policy that permits short passwords\n- Lack of MFA on privileged accounts\n- An untrained employee susceptible to phishing\n\nYou cannot eliminate all vulnerabilities, but reducing vulnerabilities is the primary lever security teams control.\n\nImpact is the magnitude of harm that would result if a threat successfully exploits a vulnerability. Impact is measured in terms of:\n\n- Confidentiality impact \u2014 unauthorized disclosure of sensitive data\n- Integrity impact \u2014 unauthorized modification of data or systems\n- Availability impact \u2014 disruption of system or service availability\n- Financial impact \u2014 direct costs (breach notification, forensics, remediation) and indirect costs (regulatory fines, litigation, reputational damage, lost business)\n\nWhen threat is high, vulnerability is high, and impact is high \u2014 risk is high. Reducing any one of these three factors reduces overall risk."
+  },
+  {
+    "scene_title": "Key Risk Concepts",
+    "slide_background_prompt": "Topic: Key Risk Concepts",
+    "speech_script": "Asset \u2014 anything of value to the organization: hardware, software, data, intellectual property, reputation, personnel. Risk management begins with identifying and valuing assets.\n\nRisk Appetite \u2014 the amount of risk an organization is willing to accept in pursuit of its objectives. An organization with low risk appetite (a nuclear power plant) accepts very little risk and invests heavily in controls. An organization with high risk appetite (a startup) accepts more risk to move faster. Risk appetite is a business decision made by executive leadership, not by the security team.\n\nRisk Tolerance \u2014 the specific acceptable variation around the risk appetite. If the risk appetite is \"low financial exposure from security incidents,\" the risk tolerance might be \"no single incident will cost more than $500,000.\"\n\nRisk Threshold \u2014 the point at which risk becomes unacceptable and requires mandatory treatment. Risks above the threshold must be addressed. Risks below the threshold are acceptable.\n\nResidual Risk \u2014 the risk that remains after security controls have been applied. No control eliminates risk entirely. The goal is to reduce risk to a level within the organization's risk tolerance.\n\nInherent Risk \u2014 the risk that exists in the absence of any controls. Inherent risk is the baseline before you do anything about it."
+  },
+  {
+    "scene_title": "Risk Likelihood vs. Probability",
+    "slide_background_prompt": "Topic: Risk Likelihood vs. Probability",
+    "speech_script": "Likelihood \u2014 a qualitative assessment of how often a threat event might occur. Typically rated: Low / Medium / High or using a numeric scale.\n\nProbability \u2014 a quantitative expression of likelihood as a number between 0 and 1, or as a frequency (e.g., once every five years = annual probability of 0.2 = 20%).\n\nIn qualitative risk analysis, likelihood is a category. In quantitative analysis, likelihood is expressed numerically. We will cover this distinction in detail in the next segment."
+  },
+  {
+    "scene_title": "Segment 3 \u2014 Risk Response Strategies (4 minutes)",
+    "slide_background_prompt": "Topic: Segment 3 \u2014 Risk Response Strategies (4 minutes)",
+    "speech_script": "Once risks are identified and assessed, you must decide what to do about each one. There are four risk response strategies. Security+ tests all four, and you must know them by their correct names."
+  },
+  {
+    "scene_title": "Risk Avoidance",
+    "slide_background_prompt": "Topic: Risk Avoidance",
+    "speech_script": "Risk avoidance means eliminating the activity or condition that creates the risk. You avoid the risk by not doing the thing that creates it.\n\nExample: An organization evaluates launching a mobile banking application. The security team assesses the risk as too high given current development capabilities and the regulatory environment. The organization decides NOT to launch the mobile app \u2014 avoiding the risk entirely.\n\nAvoidance is appropriate when the risk is unacceptably high and no other strategy reduces it to an acceptable level. It is not always practical \u2014 an organization cannot avoid all risk and still conduct business."
+  },
+  {
+    "scene_title": "Risk Transference (Risk Transfer)",
+    "slide_background_prompt": "Topic: Risk Transference (Risk Transfer)",
+    "speech_script": "Risk transference means shifting the financial impact of a risk to another party. The risk itself does not go away \u2014 the liability for its financial consequences moves.\n\nThe most common form of risk transference in security is cyber insurance. An organization purchases a policy that reimburses costs associated with a breach (forensic investigation, breach notification, legal defense, regulatory fines in some cases, business interruption losses). The insurer assumes the financial risk.\n\nThird-party contracts are another transference mechanism: service level agreements (SLAs) with vendors that include financial penalties for security failures transfer some risk back to the vendor.\n\nLimitation: Cyber insurance does not transfer the reputational damage, regulatory scrutiny, or customer loss that follows a breach. It only addresses financial impact."
+  },
+  {
+    "scene_title": "Risk Mitigation",
+    "slide_background_prompt": "Topic: Risk Mitigation",
+    "speech_script": "Risk mitigation means implementing controls to reduce the likelihood, the vulnerability, or the impact of a risk. This is the most common risk response in security.\n\nExamples:\n\n- Patching a vulnerability \u2014 reduces vulnerability (makes it harder to exploit)\n- Implementing MFA \u2014 reduces likelihood of credential-based attack succeeding\n- Encrypting data at rest \u2014 reduces impact (exfiltrated encrypted data is less valuable)\n- Network segmentation \u2014 limits lateral movement (reduces impact of initial compromise)\n\nMitigation does not eliminate risk \u2014 it reduces it to a level within the risk tolerance. The residual risk after mitigation must be acceptable."
+  },
+  {
+    "scene_title": "Risk Acceptance",
+    "slide_background_prompt": "Topic: Risk Acceptance",
+    "speech_script": "Risk acceptance means acknowledging a risk and deliberately choosing not to address it further. This is appropriate when:\n\n- The cost of mitigation exceeds the expected cost of the risk occurring\n- The risk is below the organization's risk threshold\n- The organization has limited resources and the risk does not merit priority treatment\n\nDocumented risk acceptance is critical. A risk that is not mitigated must have explicit documentation that it was reviewed, assessed, and consciously accepted \u2014 not just forgotten. This documentation protects the organization and individuals from liability.\n\nRisk acceptance is NOT the same as ignoring risk. If leadership accepts a risk, they must understand what they are accepting and sign off on it formally."
+  },
+  {
+    "scene_title": "A Fifth Response: Risk Exemption vs. Acknowledgment",
+    "slide_background_prompt": "Topic: A Fifth Response: Risk Exemption vs. Acknowledgment",
+    "speech_script": "Some frameworks distinguish between formal acceptance (leadership reviewed and consciously accepted) and exemption (a specific exception to a security policy is granted for a defined period with specific conditions and an expiration date). Security+ primarily tests the four core strategies."
+  },
+  {
+    "scene_title": "Segment 4 \u2014 Quantitative vs. Qualitative Risk Analysis (4 minutes)",
+    "slide_background_prompt": "Topic: Segment 4 \u2014 Quantitative vs. Qualitative Risk Analysis (4 minutes)",
+    "speech_script": "There are two broad approaches to risk analysis: quantitative and qualitative. Both are valid. The choice depends on the availability of data, the audience, and the purpose of the analysis."
+  },
+  {
+    "scene_title": "Quantitative Risk Analysis",
+    "slide_background_prompt": "Topic: Quantitative Risk Analysis",
+    "speech_script": "Quantitative analysis expresses risk in financial terms. It requires numerical inputs and produces a dollar-value output \u2014 making risk directly comparable to security investment costs.\n\nKey quantitative terms:\n\nAV (Asset Value) \u2014 the monetary value of the asset being protected. A database containing 1 million customer credit card records has a different AV than a laptop.\n\nEF (Exposure Factor) \u2014 the percentage of asset value lost if a specific threat occurs. If the threat is ransomware and it would encrypt 60% of your data, EF = 0.60.\n\nSLE (Single Loss Expectancy) = AV \u00d7 EF\n\nThis is the expected financial loss from a single occurrence of the threat. Example: AV = $1,000,000, EF = 0.60, therefore SLE = $600,000.\n\nARO (Annual Rate of Occurrence) \u2014 how often you expect the threat to occur per year. If ransomware attacks happen once every two years, ARO = 0.5.\n\nALE (Annual Loss Expectancy) = SLE \u00d7 ARO\n\nThis is the expected annual financial loss from this threat. Example: SLE = $600,000, ARO = 0.5, therefore ALE = $300,000.\n\nCost-Benefit Analysis for Security Controls:\n\nIf a security control costs $50,000 per year and reduces the ALE from $300,000 to $100,000, the control saves $200,000/year \u2014 a clear positive return on investment. If the control costs $350,000/year, it costs more than the risk it mitigates and the economics favor acceptance.\n\nValue of the Safeguard = ALE before control \u2212 ALE after control \u2212 Annual cost of control\n\nLimitations of quantitative analysis:\n\n- Requires reliable historical data on occurrence rates and loss values \u2014 often difficult to obtain\n- The false precision of exact numbers can provide unwarranted confidence\n- Takes significant time and resources to perform rigorously"
+  },
+  {
+    "scene_title": "Qualitative Risk Analysis",
+    "slide_background_prompt": "Topic: Qualitative Risk Analysis",
+    "speech_script": "Qualitative analysis uses descriptive scales rather than financial numbers. It is faster, requires less data, and is more accessible to non-financial stakeholders.\n\nRisk Matrix \u2014 the primary tool of qualitative analysis. A matrix plots likelihood (Low/Medium/High) against impact (Low/Medium/High) to produce a risk rating:\n\nLow Impact   Medium Impact   High Impact  \n     \n  High Likelihood   Medium   High   Critical  \n  Medium Likelihood   Low   Medium   High  \n  Low Likelihood   Low   Low   Medium\n\nRisks in the Critical and High zones require priority treatment. Risks in the Low zone may be accepted.\n\nLimitations of qualitative analysis:\n\n- Subjective \u2014 different analysts may rate the same risk differently\n- Cannot directly compare risk cost to control cost\n- May mask differences between risks in the same category (two \"High\" risks may differ enormously in actual dollar impact)"
+  },
+  {
+    "scene_title": "Using Both Together",
+    "slide_background_prompt": "Topic: Using Both Together",
+    "speech_script": "In practice, mature organizations use qualitative analysis for initial risk screening (to identify which risks deserve deeper attention) and quantitative analysis for high-priority risks where the investment in rigorous analysis is justified."
+  },
+  {
+    "scene_title": "Module 13 Part 1 Summary",
+    "slide_background_prompt": "Topic: Module 13 Part 1 Summary",
+    "speech_script": "The foundation of risk management:\n\n- Risk = Threat \u00d7 Vulnerability \u00d7 Impact \u2014 understanding which factor to reduce is the key to efficient security investment\n- Risk appetite, tolerance, threshold, inherent risk, and residual risk are distinct concepts with specific meanings\n- Four risk response strategies: avoidance (don't do the risky thing), transference (cyber insurance, contracts), mitigation (apply controls), acceptance (document and consciously accept)\n- Quantitative analysis: AV \u2192 EF \u2192 SLE \u2192 ARO \u2192 ALE \u2192 cost-benefit analysis of controls\n- Qualitative analysis: risk matrix mapping likelihood vs. impact to risk rating\n- Both approaches have strengths and limitations; mature programs combine them\n\nIn Part 2 we cover the risk register, Business Impact Analysis (BIA), and security controls classification. See you there.\n\nEnd of Part 1 Script"
+  }
+]

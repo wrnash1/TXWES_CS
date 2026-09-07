@@ -1,0 +1,82 @@
+[
+  {
+    "scene_title": "Opening \u2014 Part 2",
+    "slide_background_prompt": "Topic: Opening \u2014 Part 2",
+    "speech_script": "Welcome back to Module 12. In Part 1 we covered the forensic process, write blockers, and disk imaging tools. In Part 2 we turn to what happens after collection: memory analysis, log analysis, and the legal and ethical framework that governs the entire discipline."
+  },
+  {
+    "scene_title": "Section 1 \u2014 Memory Analysis",
+    "slide_background_prompt": "Memory analysis diagram \u2014 RAM contents taxonomy",
+    "speech_script": "RAM analysis is one of the highest-value forensic activities in modern investigations. In RAM at the moment of capture you can find:\n\n- Running processes: Every process executing on the system, including hidden malware that does not appear in normal process listings.\n- Network connections: Open and recently closed TCP/UDP connections \u2014 who was the machine talking to?\n- Loaded DLLs and modules: Libraries loaded by processes, including injected malicious modules.\n- Encryption keys: Symmetric encryption keys held in RAM by encrypted volume managers (BitLocker, VeraCrypt) and by ransomware.\n- Plaintext passwords: Credentials cached by LSASS (Windows Local Security Authority Subsystem Service).\n- Command history: Recent commands run in cmd.exe or PowerShell, even if the terminal was closed.\n- Artifacts of code injection: Malicious code injected into legitimate process memory space."
+  },
+  {
+    "scene_title": "Memory Acquisition Tools",
+    "slide_background_prompt": "Topic: Memory Acquisition Tools",
+    "speech_script": "WinPmem is an open-source memory acquisition driver for Windows. It creates a raw memory image that can be analyzed with Volatility.\n\nDumpIt (from Magnet Forensics) is a single-executable memory acquisition tool for Windows. It requires no installation and produces a raw memory dump with a single click, making it ideal for IR jump kits.\n\nFTK Imager can also acquire memory from the live Windows target via its \"Capture Memory\" function."
+  },
+  {
+    "scene_title": "Volatility Framework",
+    "slide_background_prompt": "Topic: Volatility Framework",
+    "speech_script": "Volatility is an open-source memory forensics framework written in Python. It is the industry standard tool for analyzing RAM images. Volatility supports dozens of plugins that extract specific types of information from memory images.\n\nKey Volatility commands:\n\n- volatility -f memory.dmp imageinfo \u2014 identifies the operating system and profile to use for analysis\n- volatility -f memory.dmp --profile=Win10x6419041 pslist \u2014 lists running processes\n- volatility -f memory.dmp --profile=Win10x6419041 pstree \u2014 shows process parent-child relationships (useful for detecting process injection)\n- volatility -f memory.dmp --profile=Win10x6419041 netscan \u2014 shows network connections from memory\n- volatility -f memory.dmp --profile=Win10x6419041 hashdump \u2014 extracts NTLM password hashes from LSASS\n- volatility -f memory.dmp --profile=Win10x6419041 malfind \u2014 finds memory regions with execute permissions that may contain injected code"
+  },
+  {
+    "scene_title": "Section 2 \u2014 Log Analysis",
+    "slide_background_prompt": "Log analysis diagram \u2014 log sources and correlation",
+    "speech_script": "Logs are the narrative record of what happened on a system. Without logs, an investigation is working blind. With comprehensive logs, an investigator can reconstruct an attacker's actions step by step."
+  },
+  {
+    "scene_title": "Windows Event Logs",
+    "slide_background_prompt": "Topic: Windows Event Logs",
+    "speech_script": "Windows records security events in the Security Event Log. Critical Event IDs for forensic investigation:\n\n- 4624 \u2014 Successful logon\n- 4625 \u2014 Failed logon\n- 4648 \u2014 Logon using explicit credentials (pass-the-hash indicator)\n- 4720 \u2014 User account created\n- 4728/4732 \u2014 User added to security group\n- 4688 \u2014 Process creation (requires audit policy to be enabled)\n- 4698 \u2014 Scheduled task created (persistence mechanism)\n- 7045 \u2014 New service installed (persistence mechanism)\n- 1102 \u2014 Audit log cleared (attacker covering tracks)\n\nWindows Event Log files have the extension .evtx and can be analyzed with the built-in Event Viewer, PowerShell, or dedicated forensic tools like Eric Zimmermann's tools (EvtxECmd, Timeline Explorer)."
+  },
+  {
+    "scene_title": "Linux Logs",
+    "slide_background_prompt": "Topic: Linux Logs",
+    "speech_script": "Linux systems store logs in /var/log/. Key files:\n\n- /var/log/auth.log or /var/log/secure \u2014 authentication events (SSH logins, sudo usage)\n- /var/log/syslog or /var/log/messages \u2014 general system events\n- /var/log/apache2/access.log \u2014 web server access\n- /var/log/lastlog \u2014 last login record per user\n- .bashhistory \u2014 command history per user account"
+  },
+  {
+    "scene_title": "Web Server Logs",
+    "slide_background_prompt": "Topic: Web Server Logs",
+    "speech_script": "Web server access logs record every HTTP request received. Format (Combined Log Format):\n\n192.168.1.100 - - [01/Jun/2026:14:23:11 +0000] \"GET /admin/login.php HTTP/1.1\" 200 1452 \"-\" \"sqlmap/1.7\"\n\nFields: client IP, ident, user, timestamp, request, response code, bytes, referer, user agent.\n\nThe user agent in this example \u2014 sqlmap/1.7 \u2014 is an immediate red flag. SQLmap is an automated SQL injection tool. A legitimate user's browser would not appear as sqlmap."
+  },
+  {
+    "scene_title": "Log Correlation and Timeline",
+    "slide_background_prompt": "Topic: Log Correlation and Timeline",
+    "speech_script": "Effective log analysis correlates events across multiple sources on a common timeline. This is called timeline analysis. The investigator:\n\n1. Collects logs from all relevant sources (endpoint, web server, DNS, firewall, Active Directory).\n2. Normalizes timestamps to a single timezone (UTC is the standard).\n3. Merges events into a unified timeline.\n4. Reconstructs the attacker's actions in sequence.\n\nA SIEM performs this correlation automatically during operations. In forensic investigations, tools like Plaso (log2timeline) automate timeline creation from raw forensic images and log files."
+  },
+  {
+    "scene_title": "Section 3 \u2014 File System Forensics",
+    "slide_background_prompt": "File system metadata diagram \u2014 MAC times",
+    "speech_script": "File systems record metadata about every file. This metadata is valuable forensic evidence.\n\nMAC times refer to three timestamps:\n\n- M-time (Modified): When the file content was last changed.\n- A-time (Accessed): When the file was last read.\n- C-time (Changed / Creation): When the file's metadata was last changed (Unix) or when the file was created (Windows).\n\nAttackers and forensic investigators both pay close attention to MAC times. Timestomping is the practice of modifying MAC times to obscure when malicious files were created or modified. Evidence of timestomping can itself be significant \u2014 it indicates an attacker who was aware of forensic investigation and attempted to cover their tracks.\n\nDeleted files: When a file is deleted, in most file systems only the directory entry pointing to the file is removed. The actual data blocks are marked as available for reuse but are not overwritten until new data is written. Forensic tools can recover deleted files from unallocated space until those blocks are overwritten.\n\nFile carving: File carving recovers files based on known file signatures (magic bytes at the beginning of the file) rather than file system entries. It can recover files even when file system metadata is damaged or deleted."
+  },
+  {
+    "scene_title": "Section 4 \u2014 Legal Considerations",
+    "slide_background_prompt": "Legal framework diagram \u2014 authorization sources",
+    "speech_script": "Digital forensic investigations operate within a legal framework that defines what investigators may access and how. Unauthorized access \u2014 even by a well-meaning investigator \u2014 can constitute a crime and render evidence inadmissible."
+  },
+  {
+    "scene_title": "Authorization Sources",
+    "slide_background_prompt": "Topic: Authorization Sources",
+    "speech_script": "Three primary sources of authorization:\n\n1. Consent: The owner of a system or account voluntarily permits access. Employees typically consent to investigation of company-owned systems through acceptable use policy agreements. This is the most common basis for corporate investigations.\n\n2. Search warrant: A judge issues a warrant authorizing law enforcement to search specific systems or accounts for specified evidence. Warrants must describe what is to be searched and what evidence is sought \u2014 they are not blanket authorizations.\n\n3. Exigent circumstances: Emergency situations that justify immediate action without a warrant \u2014 typically when evidence is about to be destroyed or someone is in imminent danger."
+  },
+  {
+    "scene_title": "Privacy Laws Affecting Forensics",
+    "slide_background_prompt": "Topic: Privacy Laws Affecting Forensics",
+    "speech_script": "- ECPA (Electronic Communications Privacy Act): Governs access to stored electronic communications and prohibits interception without authorization.\n- CFAA (Computer Fraud and Abuse Act): Prohibits unauthorized access to computer systems. Investigators must ensure their access is authorized.\n- GDPR: Requires that personal data of EU residents be processed lawfully. Forensic collection of EU employee data must comply with GDPR lawful basis requirements."
+  },
+  {
+    "scene_title": "Corporate Investigations",
+    "slide_background_prompt": "Topic: Corporate Investigations",
+    "speech_script": "In corporate settings, HR and legal must be involved early. Acceptable use policies that employees sign upon joining typically include language authorizing the company to monitor and investigate company-owned devices and systems. This consent language is the legal basis for most corporate digital forensic investigations.\n\nInvestigations involving suspected crimes \u2014 fraud, intellectual property theft, extortion \u2014 should be coordinated with legal counsel who can determine whether law enforcement involvement is appropriate and when."
+  },
+  {
+    "scene_title": "Section 5 \u2014 Forensic Report Writing",
+    "slide_background_prompt": "Forensic report structure template",
+    "speech_script": "The forensic report is the examiner's testimony on paper. It must be:\n\n- Complete: All methods, tools, and findings documented.\n- Accurate: Every factual claim supportable by evidence.\n- Clear: Understandable to a non-technical judge, jury, or executive.\n- Objective: The examiner reports what the evidence shows, not what a client wants to hear.\n\nA forensic report structure typically includes:\n\n1. Case identification and examiner credentials.\n2. Executive summary.\n3. Scope and objectives.\n4. Evidence received \u2014 descriptions, hash values, chain of custody.\n5. Methodology \u2014 tools used, acquisition process.\n6. Findings \u2014 detailed narrative of what was discovered.\n7. Conclusions \u2014 what the evidence means.\n8. Appendices \u2014 hash logs, tool verification reports, supporting exhibits."
+  },
+  {
+    "scene_title": "Closing",
+    "slide_background_prompt": "Topic: Closing",
+    "speech_script": "Digital forensics is the science that turns raw technical evidence into actionable, defensible conclusions. Every technique we covered \u2014 memory acquisition, log analysis, file carving, MAC time analysis \u2014 serves the ultimate goal: producing findings that can withstand the most adversarial examination.\n\nFor Security+, know the forensic process stages, understand write blockers and their purpose, know what dd and FTK Imager do, understand the order of volatility, and be able to describe the legal bases that authorize forensic investigations.\n\nComplete the Reading Guide, Lab, Quiz, and Discussion for Module 12. Module 13 is Risk Management \u2014 bringing together threat, vulnerability, and impact into a structured decision framework. I'll see you there.\n\nEnd of Part 2"
+  }
+]

@@ -1,0 +1,62 @@
+[
+  {
+    "scene_title": "Texas Wesleyan University | Professor Nash",
+    "slide_background_prompt": "Topic: Texas Wesleyan University | Professor Nash",
+    "speech_script": "Estimated Runtime: 11\u201313 minutes"
+  },
+  {
+    "scene_title": "[INTRO]",
+    "slide_background_prompt": "Topic: [INTRO]",
+    "speech_script": "Welcome back. In Part 1 we covered how switches work, VLANs, 802.1Q trunking, and Spanning Tree Protocol through RSTP and PortFast. In Part 2, we cover EtherChannel link aggregation, the specific Cisco IOS commands for VLAN and trunk configuration, and how to interpret the output of the key show commands for troubleshooting."
+  },
+  {
+    "scene_title": "[SECTION 1: ETHERCHANNEL \u2014 THE PROBLEM IT SOLVES]",
+    "slide_background_prompt": "Topic: [SECTION 1: ETHERCHANNEL \u2014 THE PROBLEM IT SOLVES]",
+    "speech_script": "Here is a common scenario: you have two distribution switches connected by four physical links. You want to use all four links for throughput. The problem is STP. With four links between the same two switches, STP sees a loop and blocks three of the four ports. Only one link is active. You have four times the hardware but one-quarter the potential bandwidth.\n\nEtherChannel solves this. EtherChannel bundles multiple physical links into a single logical link. STP sees the bundle as one link, so no ports are blocked. All physical links are active and carry traffic simultaneously.\n\nAdditional benefits: if one physical link in the bundle fails, EtherChannel automatically redistributes traffic across the remaining links. The logical link stays up. STP reconvergence is not triggered."
+  },
+  {
+    "scene_title": "[SECTION 2: ETHERCHANNEL LOAD BALANCING]",
+    "slide_background_prompt": "Topic: [SECTION 2: ETHERCHANNEL LOAD BALANCING]",
+    "speech_script": "EtherChannel does not send each frame down all four links at once. It selects which physical link to use for each flow based on a hashing algorithm. The hash can be based on:\n\n- Source MAC address\n- Destination MAC address\n- Source and destination MAC address (XOR hash)\n- Source IP address\n- Destination IP address\n- Source and destination IP address\n\nThe specific hash method is configurable and affects load distribution. If all traffic comes from the same source MAC, all traffic flows down the same physical link regardless of how many are in the bundle. The goal is to configure the hash so traffic is spread across links.\n\nEtherChannel does not load-balance on a per-packet basis \u2014 it load-balances on a per-flow basis. All packets in the same conversation (same source/destination pair) follow the same physical link. This preserves packet ordering."
+  },
+  {
+    "scene_title": "[SECTION 3: LACP AND PAGP]",
+    "slide_background_prompt": "Topic: [SECTION 3: LACP AND PAGP]",
+    "speech_script": "Two protocols negotiate EtherChannel formation:\n\nLACP (Link Aggregation Control Protocol) \u2014 IEEE 802.3ad standard. Works between devices from any vendor. Preferred in multi-vendor environments. Port modes: Active (sends LACP negotiation messages) and Passive (responds but does not initiate). Both sides cannot be Passive \u2014 at least one must be Active.\n\nPAgP (Port Aggregation Protocol) \u2014 Cisco proprietary. Only works between Cisco devices. Port modes: Desirable (actively negotiates) and Auto (responds but does not initiate). Both sides cannot be Auto.\n\nStatic (On mode) \u2014 No negotiation protocol. Both sides are forced to form an EtherChannel without LACP or PAgP. Both sides must be set to On. Risk: if one side is misconfigured, no protocol detects the error.\n\nFor the CompTIA Network+ exam, know that LACP is the open-standard protocol and that an Active/Active or Active/Passive combination forms the channel."
+  },
+  {
+    "scene_title": "[SECTION 4: CISCO VLAN CONFIGURATION COMMANDS]",
+    "slide_background_prompt": "Topic: [SECTION 4: CISCO VLAN CONFIGURATION COMMANDS]",
+    "speech_script": "Now let's look at the actual commands for configuring VLANs on a Cisco switch.\n\nCreating a VLAN and naming it:\n\ncisco\nvlan 10\n name Finance\n!\nvlan 20\n name HR\n!\nvlan 30\n name Engineering\n\nAssigning a port as an access port in VLAN 10:\n\ncisco\ninterface FastEthernet0/1\n switchport mode access\n switchport access vlan 10\n\nConfiguring a trunk port:\n\ncisco\ninterface GigabitEthernet0/1\n switchport mode trunk\n switchport trunk encapsulation dot1q\n switchport trunk allowed vlan 10,20,30\n switchport trunk native vlan 999\n\nNote: On older Cisco switches you must specify the encapsulation (dot1q) before setting the mode to trunk. On newer switches, dot1Q is the only option and this step may be automatic.\n\nVerifying VLAN configuration:\n\ncisco\nshow vlan brief\nshow interfaces trunk\nshow interfaces FastEthernet0/1 switchport"
+  },
+  {
+    "scene_title": "[SECTION 5: CISCO STP CONFIGURATION AND VERIFICATION]",
+    "slide_background_prompt": "Topic: [SECTION 5: CISCO STP CONFIGURATION AND VERIFICATION]",
+    "speech_script": "Viewing STP topology:\n\ncisco\nshow spanning-tree\nshow spanning-tree vlan 10\nshow spanning-tree summary\n\nThe output shows the Root Bridge ID, each port's role (Root, Designated, Alternate), and each port's state (Forwarding, Blocking, Discarding).\n\nConfiguring the Root Bridge \u2014 set the priority lower than the default 32768:\n\ncisco\nspanning-tree vlan 10 priority 4096\n\nOr use the macro that sets it automatically:\n\ncisco\nspanning-tree vlan 10 root primary\nspanning-tree vlan 10 root secondary\n\nEnabling PortFast and BPDU Guard on an access port:\n\ncisco\ninterface FastEthernet0/5\n spanning-tree portfast\n spanning-tree bpduguard enable\n\nEnabling BPDU Guard globally on all PortFast-enabled ports:\n\ncisco\nspanning-tree portfast bpduguard default"
+  },
+  {
+    "scene_title": "[SECTION 6: CISCO ETHERCHANNEL CONFIGURATION]",
+    "slide_background_prompt": "Topic: [SECTION 6: CISCO ETHERCHANNEL CONFIGURATION]",
+    "speech_script": "Configuring an LACP EtherChannel on interfaces Fa0/1 through Fa0/4:\n\ncisco\ninterface range FastEthernet0/1 - 4\n switchport mode trunk\n channel-group 1 mode active\n\nThis creates a logical Port-Channel interface (Port-Channel1). Configure VLAN and trunk settings on the Port-Channel interface, not on the individual physical interfaces:\n\ncisco\ninterface Port-Channel1\n switchport mode trunk\n switchport trunk allowed vlan 10,20,30\n\nVerifying EtherChannel:\n\ncisco\nshow etherchannel summary\nshow etherchannel port-channel\nshow interfaces Port-Channel1\n\nThe summary output shows the channel group number, protocol (LACP/PAgP), and whether each physical port is bundled (P) or standalone (I). A port shown as (D) is down."
+  },
+  {
+    "scene_title": "[SECTION 7: STP MANIPULATION ATTACKS]",
+    "slide_background_prompt": "Topic: [SECTION 7: STP MANIPULATION ATTACKS]",
+    "speech_script": "Just as DHCP has rogue server attacks and OSPF has rogue route injection, STP has its own attack: Root Bridge manipulation.\n\nAn attacker connects a device to the network and sends BPDU packets with a very low Bridge Priority \u2014 lower than the legitimate Root Bridge. Other switches accept these as superior BPDUs and elect the attacker's device as the new Root Bridge.\n\nThe impact: switches recalculate their port roles based on the new Root Bridge. Traffic paths change. If the attacker is now in the forwarding path, traffic passes through their device \u2014 enabling interception, modification, or denial of service.\n\nMitigations:\n\nBPDU Guard \u2014 On all access ports using PortFast. If a BPDU is received on a PortFast-enabled port, the port err-disables immediately.\n\nRoot Guard \u2014 Prevents a port from becoming a Root Port. If a superior BPDU is received on a Root Guard-enabled port, the port is placed in root-inconsistent state (not forwarding). Appropriate for ports facing downstream switches where you want to ensure the upstream root never changes.\n\nBPDU Filter \u2014 Suppresses BPDUs on PortFast ports (use with caution \u2014 disabling BPDUs entirely on a port means no STP protection at all if a switch is connected)."
+  },
+  {
+    "scene_title": "[SECTION 8: LAYER 2 SWITCH SECURITY \u2014 PORT SECURITY]",
+    "slide_background_prompt": "Topic: [SECTION 8: LAYER 2 SWITCH SECURITY \u2014 PORT SECURITY]",
+    "speech_script": "MAC address flooding is a Layer 2 attack. An attacker sends frames with thousands of fake source MAC addresses. The switch's MAC address table fills up. When the table is full, the switch can no longer learn new addresses and begins flooding all traffic to all ports \u2014 essentially turning the switch into a hub. The attacker receives a copy of all traffic.\n\nPort Security prevents this. Port Security limits the number of MAC addresses allowed on a switch port. When the limit is exceeded, the port takes a security action:\n\nShutdown (default) \u2014 Port is placed in err-disabled state.\n\nRestrict \u2014 Frames from unauthorized MACs are dropped; a security violation counter increments; an SNMP trap can be sent.\n\nProtect \u2014 Frames from unauthorized MACs are dropped silently; no counter or trap.\n\nPort Security configuration:\n\ncisco\ninterface FastEthernet0/3\n switchport mode access\n switchport port-security\n switchport port-security maximum 2\n switchport port-security violation shutdown\n switchport port-security mac-address sticky\n\nThe sticky keyword causes the switch to automatically learn and permanently record the MAC addresses seen on that port, saving them to running configuration."
+  },
+  {
+    "scene_title": "[SECTION 9: TROUBLESHOOTING VLAN AND TRUNK ISSUES]",
+    "slide_background_prompt": "Topic: [SECTION 9: TROUBLESHOOTING VLAN AND TRUNK ISSUES]",
+    "speech_script": "Common VLAN and trunk issues and the commands to diagnose them:\n\nIssue 1: Host cannot communicate with others in same VLAN.\n\n- Run show vlan brief \u2014 verify the port is assigned to the correct VLAN and the VLAN is active.\n- Run show interfaces FastEthernetX switchport \u2014 verify the port is in access mode.\n\nIssue 2: Traffic between switches on a VLAN fails.\n\n- Run show interfaces trunk \u2014 verify the trunk is up, the encapsulation is 802.1Q, and the VLAN is in the \"VLANs allowed and active\" list.\n- Check that the native VLAN matches on both ends \u2014 a native VLAN mismatch causes STP issues and traffic errors.\n\nIssue 3: VLAN not passing over trunk.\n\n- Verify the VLAN is in the allowed VLAN list: switchport trunk allowed vlan add 20\n- Verify the VLAN exists in the VLAN database on both switches.\n\nIssue 4: Port stuck in err-disabled state.\n\n- Show the reason: show interfaces FastEthernetX status \u2014 shows \"err-disabled\" and reason.\n- Common causes: BPDU Guard triggered, Port Security violation, loopback detection.\n- Recovery: Fix the root cause, then shutdown and no shutdown to re-enable."
+  },
+  {
+    "scene_title": "[SUMMARY \u2014 PART 2]",
+    "slide_background_prompt": "Topic: [SUMMARY \u2014 PART 2]",
+    "speech_script": "In Part 2 we covered:\n\n- EtherChannel: purpose, load balancing by flow, LACP vs. PAgP, static On mode\n- Cisco VLAN configuration: creating VLANs, access ports, trunk ports\n- STP configuration: setting Root Bridge priority, PortFast, BPDU Guard, Root Guard\n- EtherChannel configuration with LACP, the Port-Channel interface, and verification commands\n- STP manipulation attacks and mitigations\n- Port Security: MAC flooding defense, violation modes, sticky MAC learning\n- Troubleshooting VLANs and trunks using show vlan, show interfaces trunk, and show spanning-tree\n\nModule 11 topics cover a significant portion of CompTIA Network+ Domain 2 (Network Implementation). Make sure you understand VLAN tagging, the STP election process, RSTP port roles, and EtherChannel negotiation protocols before the exam.\n\nSee you in the lab.\n\nCIS-3321 Network Administration   Texas Wesleyan University   Professor Nash"
+  }
+]

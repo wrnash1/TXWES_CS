@@ -1,0 +1,82 @@
+[
+  {
+    "scene_title": "Segment 1 \u2014 Introduction to Digital Forensics (2 minutes)",
+    "slide_background_prompt": "Topic: Segment 1 \u2014 Introduction to Digital Forensics (2 minutes)",
+    "speech_script": "Welcome to Module 12, Digital Forensics. If incident response is the operational response to a security event, digital forensics is the scientific process that tells you what actually happened. Forensics answers the questions that matter for legal proceedings, insurance claims, and organizational accountability: What was accessed? What was taken? How did the attacker get in? How long were they there? Who did it?\n\nFor Security+, digital forensics content falls within Domain 4 (Operations and Incident Response), specifically exam objectives related to digital forensics tools, concepts, and proper evidence handling. You will also encounter forensics in legal and compliance contexts.\n\nThe term \"digital forensics\" comes from the legal concept of forensic science \u2014 science applied to legal questions. That legal grounding is important: everything you do in a forensic investigation must be defensible in court. Sloppy technique does not just produce bad analysis \u2014 it can get evidence thrown out and allow criminals to escape accountability."
+  },
+  {
+    "scene_title": "Segment 2 \u2014 The Forensic Process (5 minutes)",
+    "slide_background_prompt": "Topic: Segment 2 \u2014 The Forensic Process (5 minutes)",
+    "speech_script": "The forensic process parallels the incident response lifecycle but is more rigorously defined from a scientific and legal standpoint. The standard forensic process has five phases:"
+  },
+  {
+    "scene_title": "Phase 1: Identification",
+    "slide_background_prompt": "Topic: Phase 1: Identification",
+    "speech_script": "Identification means recognizing that a crime or security incident has occurred and that digital evidence may exist. This includes:\n\n- Identifying potential evidence sources (computers, servers, mobile devices, cloud accounts, network devices, IoT devices)\n- Determining the scope of the investigation\n- Identifying legal authority to collect evidence (internal investigation vs. law enforcement involvement)\n- Documenting the initial scene state\n\nBefore touching anything, document everything you see. Photograph the workspace, screen contents, physical connections, and the position of devices. Your actions from the moment you arrive at the scene are part of the evidence record."
+  },
+  {
+    "scene_title": "Phase 2: Preservation",
+    "slide_background_prompt": "Topic: Phase 2: Preservation",
+    "speech_script": "Preservation means protecting evidence from modification, destruction, or contamination. This is the phase where write blockers become critical.\n\nWrite blockers are hardware or software devices that prevent any writes to storage media during examination. When you connect a suspect hard drive to your forensics workstation, the operating system will attempt to mount the drive, update access timestamps, and potentially write data. A write blocker sits between the drive and the forensics workstation, allowing reads but blocking all write operations.\n\nHardware write blockers are preferred for serious investigations because they operate at the hardware level and are not dependent on software configurations. Common hardware write blockers include devices from Tableau (owned by Guidance Software / OpenText) and WiebeTech.\n\nSoftware write blockers are also used \u2014 the Linux dd command with appropriate flags, or the Windows write-protect registry key. However, software write blockers are more susceptible to operator error or software bugs.\n\nHash verification establishes the integrity of evidence at the moment of collection. Before and after imaging a drive, calculate MD5 and SHA-256 hashes of the original media. If the hashes match the hashes of your forensic image, you have mathematically proven that the image is an exact copy. If any bit has changed \u2014 whether by accident or tampering \u2014 the hash will differ."
+  },
+  {
+    "scene_title": "Phase 3: Collection",
+    "slide_background_prompt": "Topic: Phase 3: Collection",
+    "speech_script": "Collection means acquiring evidence in a forensically sound manner. The primary collection technique is disk imaging.\n\nDisk imaging creates a bit-for-bit copy of the entire storage media, including all partitions, unallocated space, slack space, and deleted file remnants. This is fundamentally different from a file copy: a file copy only captures allocated files. A forensic image captures everything on the physical media.\n\ndd \u2014 the classic Unix/Linux disk imaging command \u2014 is widely used in forensics:\n\nbash\ndd if=/dev/sdb of=/forensics/case001/sdb.img bs=512 conv=noerror,sync\n\nHere, if (input file) is the suspect drive, of (output file) is the destination image file, bs is the block size, and conv=noerror,sync tells dd to continue past read errors rather than stopping.\n\nAfter imaging, hash the image and compare to the hash of the original. Document both hashes in the chain of custody.\n\nFTK Imager \u2014 AccessData's FTK Imager is a free Windows-based tool widely used in both academic and commercial forensics. It provides a GUI interface for creating forensic images, calculating hashes, and preserving evidence. It supports multiple image formats:\n\n- E01 (Expert Witness Format) \u2014 the most common forensic image format; supports compression and splitting into multiple files; includes metadata about the acquisition\n- RAW (dd format) \u2014 a flat binary copy; universally supported but larger; no built-in metadata\n- AFF (Advanced Forensics Format) \u2014 an open-source format with built-in compression and metadata\n\nFor mobile device collection, specialized tools are used: Cellebrite UFED, Oxygen Forensics Detective, and Magnet AXIOM are industry standards. Mobile forensics involves additional complexities: passcode locks, encrypted storage, cloud backups, and proprietary file systems."
+  },
+  {
+    "scene_title": "Phase 4: Analysis",
+    "slide_background_prompt": "Topic: Phase 4: Analysis",
+    "speech_script": "Analysis means examining the collected evidence to answer investigation questions. Analysis is always performed on forensic images or copies \u2014 never on the original evidence. This is non-negotiable.\n\nWe will cover analysis in depth in Part 2, including file system analysis, memory forensics, and log analysis."
+  },
+  {
+    "scene_title": "Phase 5: Reporting",
+    "slide_background_prompt": "Topic: Phase 5: Reporting",
+    "speech_script": "Reporting means documenting the findings in a clear, accurate, and legally defensible format. The forensic report must:\n\n- Document the investigation scope and methodology\n- Describe every tool used and its version\n- Present findings in plain language accessible to non-technical readers (judges, juries, executives)\n- Include supporting evidence (screenshots, hash values, extracted artifacts)\n- Be reproducible \u2014 another examiner with the same evidence and tools should reach the same conclusions\n- Be accurate \u2014 do not overstate certainty; use language like \"consistent with\" rather than absolute conclusions where uncertainty exists"
+  },
+  {
+    "scene_title": "Segment 3 \u2014 Write Blockers and Disk Imaging Deep Dive (4 minutes)",
+    "slide_background_prompt": "Topic: Segment 3 \u2014 Write Blockers and Disk Imaging Deep Dive (4 minutes)",
+    "speech_script": "Let us go deeper on write blockers and imaging because these are fundamental to forensic technique."
+  },
+  {
+    "scene_title": "Why Write Blockers Are Non-Negotiable",
+    "slide_background_prompt": "Topic: Why Write Blockers Are Non-Negotiable",
+    "speech_script": "When Windows mounts a volume, it updates the Last Accessed timestamps on files. When macOS mounts a drive, it creates hidden .DSStore files and spotlight index entries. When any OS mounts a drive with a dirty filesystem flag, it attempts repairs. Every one of these actions modifies the original evidence.\n\nThe defense in any criminal or civil case will challenge the integrity of digital evidence. A write blocker is your technical proof that you did not modify the evidence. Without one, opposing counsel can argue that your investigation itself caused the modifications you are attributing to the suspect.\n\nThe forensic workflow for media examination:\n\n1. Document the evidence as received (photograph, record serial number, note physical condition)\n2. Connect the suspect media through a hardware write blocker\n3. Calculate the MD5 and SHA-256 hash of the original media BEFORE imaging\n4. Create the forensic image\n5. Calculate the hash of the forensic image\n6. Compare hash of original to hash of image \u2014 they must match\n7. Store the original media in sealed, tamper-evident packaging\n8. Perform all analysis on the forensic image copy"
+  },
+  {
+    "scene_title": "dd vs. FTK Imager \u2014 Practical Comparison",
+    "slide_background_prompt": "Topic: dd vs. FTK Imager \u2014 Practical Comparison",
+    "speech_script": "dd strengths:\n\n- Available on any Linux/Unix system\n- Free and open source\n- Highly scriptable\n- Produces a raw image that any tool can read\n\ndd weaknesses:\n\n- No GUI \u2014 operator errors are easy (accidentally reversing if and of destroys evidence)\n- No progress indication (dcfldd is an enhanced version that adds progress and hashing)\n- Large image files (no built-in compression)\n\nFTK Imager strengths:\n\n- GUI interface reduces operator error risk\n- Calculates hashes automatically during imaging\n- Supports multiple output formats including compressed E01\n- Can image to multiple destinations simultaneously\n- Includes a basic file browser for triage\n- Free to download\n\nFTK Imager weaknesses:\n\n- Windows only (though Linux-based options exist)\n- Not open source\n- E01 format is tied to commercial vendors' toolsets (though widely supported)"
+  },
+  {
+    "scene_title": "Live vs. Dead Acquisition",
+    "slide_background_prompt": "Topic: Live vs. Dead Acquisition",
+    "speech_script": "Dead acquisition \u2014 imaging a powered-off system's storage media. The traditional forensic approach. Volatile data is lost, but the disk state is stable and will not change.\n\nLive acquisition \u2014 collecting evidence from a running system. Captures volatile data (RAM, network connections, running processes) but risks modifying the system state during collection. Required when volatile evidence is critical or when the system cannot be powered off without significant business disruption.\n\nThe modern forensic approach often uses both: capture RAM and volatile state first (live), then image the disk (can be done with the system still running or after a controlled shutdown)."
+  },
+  {
+    "scene_title": "Segment 4 \u2014 Memory Forensics Introduction (4 minutes)",
+    "slide_background_prompt": "Topic: Segment 4 \u2014 Memory Forensics Introduction (4 minutes)",
+    "speech_script": "Memory forensics \u2014 the analysis of RAM dumps \u2014 has become one of the most important areas of digital forensics because modern malware often operates primarily or entirely in memory, leaving minimal disk artifacts."
+  },
+  {
+    "scene_title": "Why Memory Is Forensically Valuable",
+    "slide_background_prompt": "Topic: Why Memory Is Forensically Valuable",
+    "speech_script": "System memory contains:\n\n- Running processes \u2014 every executing process and its memory space\n- Network connections \u2014 all open and recently closed network connections\n- Encryption keys \u2014 keys actively in use are stored in memory in plaintext (BitLocker keys, VeraCrypt keys, SSL session keys)\n- Credentials \u2014 passwords, tokens, and hashes in use by processes\n- Malware artifacts \u2014 injected code, rootkits, and fileless malware that never wrote to disk\n- Clipboard contents \u2014 whatever was last copied\n- Browser history and sessions \u2014 recently viewed URLs, active session tokens\n- Command history \u2014 recently executed commands\n\nFileless malware is a particular concern. Fileless attacks use legitimate system tools (PowerShell, WMI, mshta.exe) to execute malicious code that never writes to disk. Traditional disk forensics would find no malware artifacts. Memory forensics reveals the malicious code running in process memory."
+  },
+  {
+    "scene_title": "Memory Acquisition Tools",
+    "slide_background_prompt": "Topic: Memory Acquisition Tools",
+    "speech_script": "WinPmem \u2014 open source Windows memory acquisition tool. Creates a raw memory dump.\n\nMagnet RAM Capture \u2014 free Windows tool from Magnet Forensics. Creates raw memory images.\n\nVolatility Foundation RAM Capture \u2014 for Linux-based acquisition.\n\nLiME (Linux Memory Extractor) \u2014 a Linux loadable kernel module for acquiring memory from Linux systems.\n\nFTK Imager \u2014 can capture memory as well as disk images."
+  },
+  {
+    "scene_title": "Volatility Framework \u2014 The Standard Memory Analysis Tool",
+    "slide_background_prompt": "Topic: Volatility Framework \u2014 The Standard Memory Analysis Tool",
+    "speech_script": "Volatility is the industry-standard open-source framework for memory analysis. It runs on Linux, macOS, and Windows and supports memory images from Windows, Linux, and macOS.\n\nKey Volatility commands (Volatility 3 syntax):\n\n- windows.pslist \u2014 list running processes\n- windows.cmdline \u2014 show command line arguments for each process\n- windows.netscan \u2014 list network connections (including recently closed)\n- windows.dlllist \u2014 list DLLs loaded by each process\n- windows.malfind \u2014 scan for memory regions with suspicious characteristics (executable, writable, not backed by a file on disk \u2014 a classic indicator of injected code)\n- windows.dumpfiles \u2014 extract files from memory\n- windows.hashdump \u2014 extract NTLM password hashes\n\nThe output of windows.malfind is particularly powerful: it identifies memory regions that have the characteristics of injected shellcode or process hollowing, which are techniques used by advanced malware to hide in legitimate process memory."
+  },
+  {
+    "scene_title": "Module 12 Part 1 Summary",
+    "slide_background_prompt": "Topic: Module 12 Part 1 Summary",
+    "speech_script": "The foundational forensic process and its most critical techniques:\n\n- Five phases: Identification, Preservation, Collection, Analysis, Reporting\n- Write blockers \u2014 hardware devices that prevent any writes to suspect media during examination; non-negotiable for legally defensible forensics\n- Disk imaging with dd and FTK Imager creates bit-for-bit copies; MD5/SHA-256 hashes verify integrity\n- Dead acquisition is more stable; live acquisition captures volatile data; modern practice often uses both\n- Memory forensics with Volatility reveals fileless malware, encryption keys, credentials, and network connections that disk forensics cannot see\n\nIn Part 2 we cover log analysis, file system forensics concepts, and legal considerations. See you there.\n\nEnd of Part 1 Script"
+  }
+]

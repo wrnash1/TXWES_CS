@@ -1,0 +1,97 @@
+[
+  {
+    "scene_title": "Introduction",
+    "slide_background_prompt": "Topic: Introduction",
+    "speech_script": "Welcome to Module 15 of CIS-3321 Network Administration. I am Professor Nash. This module covers network documentation and organizational policies \u2014 topics that might seem less exciting than configuring routers and troubleshooting switches, but are absolutely essential for running a professional network environment.\n\nHere is the reality: the best-designed network in the world is only as manageable as its documentation. When a critical link fails at 2 AM, the on-call technician needs to know exactly what is connected where, what the IP addressing scheme is, and what the change history looks like. Without documentation, that technician is guessing in the dark.\n\nDocumentation and policies also make up a measurable portion of the CompTIA Network+ N10-008 exam \u2014 specifically Domain 3 (Network Operations) and Domain 5 (Network Troubleshooting).\n\nPart 1 covers network diagrams, IP address management, and change management. Part 2 covers acceptable use policies, service level agreements, and disaster recovery documentation."
+  },
+  {
+    "scene_title": "Section 1: Network Diagrams",
+    "slide_background_prompt": "Topic: Section 1: Network Diagrams",
+    "speech_script": "Network diagrams are the foundation of network documentation. They provide a visual representation of the network's physical and logical structure."
+  },
+  {
+    "scene_title": "Logical Diagrams",
+    "slide_background_prompt": "Topic: Logical Diagrams",
+    "speech_script": "A logical diagram shows how devices communicate at the network layer \u2014 IP addressing, routing, VLANs, and logical traffic flows \u2014 without necessarily showing the physical location of devices or the actual cable paths.\n\nWhat a logical diagram includes:\n\n- Device names (hostnames) and device types (shown with standard icons)\n- IP address assignments (network addresses and individual interface addresses)\n- VLAN IDs and names\n- Routing protocols and major routes\n- WAN connections with bandwidth and circuit IDs\n- Network boundaries (internet, DMZ, internal, cloud)\n\nLogical diagrams are used for:\n\n- Planning network changes \u2014 visualizing the impact before making changes\n- Troubleshooting \u2014 understanding traffic paths\n- Onboarding new staff \u2014 orienting them to the network architecture\n- Security reviews \u2014 identifying trust boundaries and exposure points"
+  },
+  {
+    "scene_title": "Physical Diagrams",
+    "slide_background_prompt": "Topic: Physical Diagrams",
+    "speech_script": "A physical diagram shows the actual physical connections and locations:\n\n- Which device connects to which other device and via what port\n- Rack locations and physical hardware layout\n- Cable types and patch panel connections\n- Building floors, server rooms, and wiring closets\n\nPhysical diagrams are used for:\n\n- Cable plant management\n- Hardware replacement planning\n- Physical security assessments\n- Data center and rack layout planning"
+  },
+  {
+    "scene_title": "Standard Diagram Symbols",
+    "slide_background_prompt": "Topic: Standard Diagram Symbols",
+    "speech_script": "Network diagrams use standardized icons to represent device types. While not legally required, using standard icons makes diagrams universally readable. Common standards come from Cisco, Microsoft Visio, and network diagram software like Lucidchart, draw.io, and NetBox.\n\nStandard device representations:\n\n- Router: Cylinder with an arrow circle\n- Switch: Rectangle with arrows pointing in multiple directions\n- Firewall: Brick wall symbol or flame icon\n- Server: Tower or rack-mount box\n- Cloud: Cloud shape (internet or provider cloud services)\n- Workstation: Desktop or laptop icon\n- Wireless AP: Antenna with wave lines"
+  },
+  {
+    "scene_title": "Diagram Maintenance",
+    "slide_background_prompt": "Topic: Diagram Maintenance",
+    "speech_script": "Diagrams that are not kept current become liabilities \u2014 they mislead troubleshooters and planners. Best practices:\n\n- Update diagrams whenever a physical change is made (new device, cable move, configuration change).\n- Version-control diagrams \u2014 keep change history.\n- Store diagrams in a shared location accessible to the team.\n- Review diagrams at regular intervals \u2014 quarterly or annually \u2014 to catch undocumented drift."
+  },
+  {
+    "scene_title": "Why IP Address Management Matters",
+    "slide_background_prompt": "Topic: Why IP Address Management Matters",
+    "speech_script": "IP address management, commonly called IPAM, is the process of planning, tracking, and managing IP address space within a network. Without IPAM, organizations experience:\n\n- IP address conflicts (two devices with the same IP)\n- Accidental overlap of subnets during network expansion\n- Unknown device counts leading to subnet exhaustion\n- Inability to troubleshoot because no one knows what has what IP"
+  },
+  {
+    "scene_title": "Manual IPAM \u2014 Spreadsheets",
+    "slide_background_prompt": "Topic: Manual IPAM \u2014 Spreadsheets",
+    "speech_script": "The simplest IPAM approach is a spreadsheet. A well-maintained IP address spreadsheet documents:\n\n- Subnet address and mask (e.g., 192.168.10.0/24)\n- Subnet purpose (e.g., \"Marketing floor, VLAN 10\")\n- Gateway address\n- DHCP range (start and end)\n- Static assignments \u2014 hostname, IP, MAC, device type, location\n- Date last updated\n\nLimitations of spreadsheets:\n\n- Manual \u2014 easily becomes out of date\n- No automated discovery or conflict detection\n- No integration with DNS or DHCP\n- Does not scale well beyond a few hundred addresses"
+  },
+  {
+    "scene_title": "IPAM Software",
+    "slide_background_prompt": "Topic: IPAM Software",
+    "speech_script": "Enterprise organizations use dedicated IPAM software that integrates DNS, DHCP, and IP management \u2014 called DDI (DNS, DHCP, IPAM). Examples: Infoblox, SolarWinds IPAM, phpIPAM (open source), NetBox (open source).\n\nIPAM software features:\n\n- Automated discovery of active addresses on the network\n- Conflict detection and alerts\n- DHCP server integration \u2014 automatically records leases\n- DNS integration \u2014 automatically creates/removes DNS records\n- Subnet utilization reporting \u2014 shows percentage of subnets in use\n- Audit trail \u2014 records who made what change when"
+  },
+  {
+    "scene_title": "Subnetting Documentation",
+    "slide_background_prompt": "Topic: Subnetting Documentation",
+    "speech_script": "Document every subnet with:\n\n- Network address and prefix length\n- Usable host range\n- Broadcast address\n- VLAN association\n- Physical location (building, floor, rack)\n- Purpose (server farm, user access, management, DMZ)\n- DHCP configuration (yes/no, server address, scope range, exclusions)\n\nThis documentation is critical when expanding the network \u2014 you need to know which address space is available for new subnets."
+  },
+  {
+    "scene_title": "Section 3: Change Management",
+    "slide_background_prompt": "Topic: Section 3: Change Management",
+    "speech_script": "Change management is the formal process for requesting, reviewing, approving, implementing, and documenting changes to a production network. It is one of the most important operational disciplines in enterprise networking."
+  },
+  {
+    "scene_title": "Why Change Management Is Critical",
+    "slide_background_prompt": "Topic: Why Change Management Is Critical",
+    "speech_script": "The majority of network outages are caused by changes \u2014 configuration modifications, software updates, hardware replacements. Change management does not prevent changes; it makes changes safer by requiring planning, peer review, and rollback preparation."
+  },
+  {
+    "scene_title": "Change Management Components",
+    "slide_background_prompt": "Topic: Change Management Components",
+    "speech_script": "A Change Request is the formal document initiating a change. It includes:\n\n- Description of the proposed change\n- Business justification (why is this change needed?)\n- Systems affected\n- Risk assessment (low/medium/high risk)\n- Rollback plan (how to undo the change if it fails)\n- Implementation steps\n- Test plan (how to verify success)\n- Maintenance window (when the change will be made)\n- Required approvals\n\nThe Change Advisory Board is a group that reviews and approves change requests. Typically includes representatives from IT operations, security, application teams, and business stakeholders. The CAB meets regularly \u2014 often weekly \u2014 to review pending changes.\n\n- Standard change: Pre-approved, routine, low-risk change. Follows an established procedure. Examples: adding a user account, rebooting a server per scheduled maintenance. Does not require CAB approval each time.\n- Normal change: Requires CAB review and approval. Scheduled in advance. Examples: VLAN configuration change, router upgrade, firewall rule modification.\n- Emergency change: Urgent fix required immediately due to a major outage or security incident. Expedited approval process. Must still be documented after implementation.\n\nEvery normal and emergency change must have a documented rollback plan \u2014 the specific steps to restore the previous configuration if the change causes problems. This is not optional. A change without a rollback plan should not be approved."
+  },
+  {
+    "scene_title": "Change Management Best Practices",
+    "slide_background_prompt": "Topic: Change Management Best Practices",
+    "speech_script": "- Never make changes to production without a change record.\n- Implement changes during maintenance windows (typically nights or weekends when traffic is lowest).\n- Test changes in a lab or staging environment before production when possible.\n- Communicate planned changes to stakeholders in advance.\n- Document what actually happened \u2014 not just what was planned."
+  },
+  {
+    "scene_title": "Section 4: Configuration Management",
+    "slide_background_prompt": "Topic: Section 4: Configuration Management",
+    "speech_script": "Related to change management is configuration management \u2014 the ongoing documentation of device configurations."
+  },
+  {
+    "scene_title": "Device Configuration Backups",
+    "slide_background_prompt": "Topic: Device Configuration Backups",
+    "speech_script": "Every network device configuration should be backed up regularly and after every change. Methods:\n\n- Manual: Copy running-config to a file \u2014 simple but prone to being skipped.\n- TFTP: Device pushes config to a TFTP server \u2014 can be automated.\n- Network configuration management tools: RANCID, Oxidized, SolarWinds Network Configuration Manager \u2014 automatically back up device configs on a schedule and detect changes."
+  },
+  {
+    "scene_title": "Configuration Baseline",
+    "slide_background_prompt": "Topic: Configuration Baseline",
+    "speech_script": "A baseline configuration is the known-good, approved starting state for a device type or network segment. Deviations from the baseline indicate unauthorized changes or drift.\n\nChange detection tools alert administrators when a running configuration differs from the last-approved baseline. This is particularly important for security compliance \u2014 detecting unauthorized access or configuration modifications."
+  },
+  {
+    "scene_title": "Configuration Documentation",
+    "slide_background_prompt": "Topic: Configuration Documentation",
+    "speech_script": "Document for each network device:\n\n- Hostname and management IP address\n- Device type and model\n- Firmware/OS version\n- Physical location (building, room, rack, unit)\n- Interface assignments (what is connected to each port)\n- VLAN assignments\n- Routing protocols configured\n- Access control lists applied\n- Date of last configuration change and who made it"
+  },
+  {
+    "scene_title": "Summary of Part 1",
+    "slide_background_prompt": "Topic: Summary of Part 1",
+    "speech_script": "Key points from Part 1:\n\n- Network diagrams include logical (IP addressing, VLANs, routing) and physical (connections, locations, ports) types. Both must be maintained.\n- IP Address Management (IPAM) tracks subnet allocation and individual IP assignments. Enterprise IPAM integrates DNS, DHCP, and IP tracking.\n- Change management requires formal Change Requests, CAB review, rollback plans, and documentation for every production change.\n- Configuration management includes regular backups, baseline comparison, and per-device documentation.\n\nIn Part 2, we will cover acceptable use policies, service level agreements, disaster recovery documentation, and other policies that network administrators must understand and implement."
+  }
+]

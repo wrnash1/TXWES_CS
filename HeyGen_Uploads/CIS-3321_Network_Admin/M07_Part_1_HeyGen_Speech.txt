@@ -1,0 +1,58 @@
+Welcome to Module 07. I'm Professor Nash. Up to this point in the course we have focused on local area networks — the devices, cables, protocols, and wireless standards that connect machines inside a single building or campus. This module expands the scope. Wide Area Networks connect sites across cities, countries, and continents. Cloud connectivity extends the enterprise network into provider-managed infrastructure. And VPN technologies allow remote users and branch offices to use public internet infrastructure securely as if they were inside the corporate network.
+
+Part 1 covers WAN technology types — the physical and logical services carriers provide — and cloud service and deployment models. Part 2 covers VPN technologies, IPsec modes, and remote access solutions.
+
+A Wide Area Network is any network that spans a geographic area too large for LAN technologies — connecting offices in different cities, states, or countries using carrier-provided services.
+
+The key WAN technologies you need to know for the exam:
+
+MPLS (Multiprotocol Label Switching) — A carrier service where packets are forwarded based on short path labels rather than IP addresses. MPLS enables traffic engineering and guaranteed Quality of Service (QoS) with defined traffic classes. It is the enterprise standard for branch office connectivity when guaranteed latency and uptime are required — critical for VoIP, video conferencing, and ERP traffic. MPLS runs on dedicated carrier infrastructure, not the public internet.
+
+DSL (Digital Subscriber Line) — Broadband over traditional copper telephone lines. ADSL (Asymmetric DSL) provides faster download speeds than upload. Distance-limited — performance degrades beyond approximately 18,000 feet from the carrier's central office. Best-effort service with no QoS guarantees. Used for small offices and home-office users. Maximum practical speed is typically 20–40 Mbps downstream.
+
+Cable / DOCSIS — Broadband over cable television coaxial infrastructure. DOCSIS (Data Over Cable Service Interface Specification) modems connect to the cable provider's headend. Bandwidth is shared with neighbors on the same cable segment, meaning peak-hour congestion is possible. Speeds can reach several hundred Mbps downstream. Also a best-effort service.
+
+Metro Ethernet — A carrier service that delivers Ethernet connectivity between sites in the same metropolitan area over the carrier's fiber infrastructure. The customer sees a simple Ethernet interface — the carrier handles the underlying transport. Metro Ethernet provides high bandwidth (typically 100 Mbps to 10 Gbps) with defined SLAs. Common for connecting buildings in the same city.
+
+SD-WAN (Software-Defined WAN) — A modern approach that uses software control to intelligently route traffic across multiple WAN connections (MPLS, internet, LTE) based on real-time conditions and application policy. SD-WAN can prioritize VoIP traffic over a dedicated link and route bulk data over cheaper internet links simultaneously. Increasingly common in enterprise deployments as a replacement for or complement to MPLS.
+
+> Network+ Exam Tip: MPLS provides guaranteed QoS. DSL and cable are best-effort. When a scenario requires guaranteed latency for VoIP or video, MPLS is the answer. When a scenario describes a remote employee using a home connection, DSL or cable is the implied WAN type.
+
+Let me define the key circuit types you need to recognize:
+
+Leased Line (T1/T3) — A dedicated point-to-point circuit with fixed bandwidth between two sites. T1 provides 1.544 Mbps across 24 DS0 channels. T3 provides 44.736 Mbps. Leased lines guarantee dedicated bandwidth — no sharing with other customers. More expensive than shared services; used for critical, guaranteed-bandwidth connections.
+
+Circuit-Switched — A dedicated path is established on demand for the duration of a session, then released. The original telephone network (PSTN) is circuit-switched. ISDN (Integrated Services Digital Network) is a legacy digital circuit-switched technology. Modern use case: dial-on-demand backup links.
+
+Packet-Switched — Data is divided into packets that share network infrastructure with other customers. MPLS, Frame Relay (legacy), and ATM (legacy) are packet-switched. This is the dominant WAN model today.
+
+Frame Relay — A legacy packet-switched WAN technology using virtual circuits. Defined by Committed Information Rate (CIR). Largely replaced by MPLS and Metro Ethernet. Still appears on the Network+ exam for recognition purposes.
+
+ATM (Asynchronous Transfer Mode) — A legacy cell-switched technology using fixed 53-byte cells. Used in older backbone networks and some DSL infrastructure. Largely historical but exam-relevant.
+
+Cloud computing has transformed how organizations acquire and consume IT infrastructure. The three service models define who is responsible for what:
+
+IaaS (Infrastructure as a Service) — The cloud provider delivers virtualized compute (VMs), storage, and networking. The customer installs and manages the operating system, patches it, installs middleware, and runs applications. Examples: AWS EC2, Azure Virtual Machines, Google Compute Engine. Best for: organizations that need flexible compute resources but want control over the OS and software stack.
+
+PaaS (Platform as a Service) — The provider manages the infrastructure, OS, middleware, and runtime environment. The customer deploys and manages only the application code and data. Examples: AWS Elastic Beanstalk, Azure App Service, Google App Engine. Best for: development teams that want to focus on writing code without managing servers or OS patching.
+
+SaaS (Software as a Service) — The provider manages and delivers a complete application. The customer only configures settings and uses the software through a browser or client. Examples: Microsoft 365, Salesforce, Google Workspace. Best for: business applications where the organization does not need to customize the underlying code.
+
+> Network+ Exam Tip: The key distinction is the boundary of customer responsibility. IaaS — you manage OS and up. PaaS — you manage application and data only. SaaS — you configure and use. When a scenario says "the team wants to deploy code without managing virtual machines," the answer is PaaS.
+
+The deployment model describes who owns and operates the cloud infrastructure:
+
+Public Cloud — Infrastructure owned and operated by a third-party provider, shared among multiple customers (tenants). Resources are allocated and billed on demand. Advantages: no capital expense, rapid elasticity, pay-per-use. Providers: AWS, Microsoft Azure, Google Cloud Platform.
+
+Private Cloud — Infrastructure dedicated to a single organization. Can be on-premises or hosted by a provider exclusively for that organization. Provides greater control and security for regulated industries (healthcare, finance, government). Higher cost than public cloud.
+
+Hybrid Cloud — A combination of public and private cloud environments connected by secure links. Organizations keep sensitive workloads in the private cloud while bursting to the public cloud for variable demand.
+
+Community Cloud — Shared infrastructure among organizations with common requirements — for example, federal agencies sharing a government-authorized cloud, or healthcare organizations sharing a HIPAA-compliant platform.
+
+In Part 2, we move to VPN technologies — IPsec, SSL/TLS VPN, tunneling protocols, and remote access architectures.
+
+- Professor Messer's free CompTIA Network+ N10-008 Study Course: professormesser.com
+- CompTIA official Network+ exam objectives: comptia.org
+
+End of Part 1

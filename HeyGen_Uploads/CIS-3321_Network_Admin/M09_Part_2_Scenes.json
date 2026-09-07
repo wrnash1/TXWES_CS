@@ -1,0 +1,27 @@
+[
+  {
+    "scene_title": "Section 1: Part 2 Introduction",
+    "slide_background_prompt": "Professor Nash on camera",
+    "speech_script": "Welcome back to Module 09. In Part 1 we covered DNS record types, the resolution hierarchy, and the DHCP DORA process. Now in Part 2 we add NTP for time synchronization and NAT for address translation. NTP and NAT both appear frequently on the Network+ exam, and NAT in particular has three subtypes you need to distinguish."
+  },
+  {
+    "scene_title": "Section 2: NTP \u2014 Network Time Protocol",
+    "slide_background_prompt": "Topic: Section 2: NTP \u2014 Network Time Protocol",
+    "speech_script": "NTP \u2014 Network Time Protocol \u2014 synchronizes clocks across all devices in a network. Accurate time is not just a convenience \u2014 it is a security requirement.\n\nWhy time synchronization matters:\n\nAuthentication and certificates \u2014 TLS certificates have valid-from and valid-to dates. A device with a clock off by more than a few minutes may reject valid certificates or accept expired ones. Kerberos authentication, used in Active Directory, fails if the time difference between client and server exceeds five minutes.\n\nLog correlation \u2014 When investigating a security incident across multiple devices, accurate timestamps allow reconstruction of the event sequence. If each device has a different time, log correlation becomes impossible.\n\nReplay attack prevention \u2014 IPsec and Kerberos use timestamps to reject replayed authentication packets. Without accurate time, replay protection fails.\n\nNTP uses a hierarchical stratum model. Stratum 0 is the reference clock (GPS receiver or atomic clock). Stratum 0 devices are not on the network \u2014 they feed time to Stratum 1 servers directly. Stratum 1 servers synchronize to Stratum 0. Stratum 2 servers synchronize to Stratum 1. Most enterprise network devices synchronize to Stratum 2 or Stratum 3 servers.\n\nNTP uses UDP port 123. Stratum 16 indicates unsynchronized.\n\n> Network+ Exam Tip: NTP uses UDP port 123. Stratum 1 is most accurate on the network. Kerberos fails if clock skew exceeds 5 minutes."
+  },
+  {
+    "scene_title": "Section 3: NAT \u2014 Network Address Translation",
+    "slide_background_prompt": "Topic: Section 3: NAT \u2014 Network Address Translation",
+    "speech_script": "NAT \u2014 Network Address Translation \u2014 modifies IP address information in packet headers as traffic passes through a router, allowing private-addressed devices to use public IP addresses for internet access.\n\nThe three types you must know:\n\nStatic NAT \u2014 A one-to-one permanent mapping between a single private IP and a single public IP. Used when an internal server must be reachable from the internet at a specific public IP. Example: web server at 192.168.1.10 permanently mapped to 203.0.113.10.\n\nDynamic NAT \u2014 Maps private IPs to a pool of public IPs on demand. The mapping is created when a client initiates a connection and released when it ends. Requires as many public IPs as concurrent outside connections.\n\nPAT (Port Address Translation) / NAT Overload \u2014 Maps many private IPs to a single public IP using unique source port numbers to track each session. This is how home routers and most enterprise edge routers work. When an internal host at 192.168.1.10 port 1500 sends traffic outbound, the NAT router rewrites the source IP to the public IP and assigns a unique translated source port. Return traffic is forwarded back using the translation table.\n\nInside local \u2014 The private IP of an internal host as seen from the inside network.\n\nInside global \u2014 The public IP of an internal host as seen from outside after translation.\n\n> Network+ Exam Tip: PAT (NAT Overload) allows thousands of internal hosts to share a single public IP. Static NAT is always the answer when an internal server must be reachable at a fixed public address."
+  },
+  {
+    "scene_title": "Section 4: IPAM and DNS/DHCP Integration",
+    "slide_background_prompt": "Topic: Section 4: IPAM and DNS/DHCP Integration",
+    "speech_script": "IPAM \u2014 IP Address Management \u2014 is a framework for tracking IP address allocation, DNS records, and DHCP scope utilization across an enterprise network.\n\nDynamic DNS (DDNS) \u2014 When DHCP assigns a new address to a client, it can automatically notify the DNS server to create or update the A and PTR records. This keeps DNS synchronized with DHCP assignments without manual updates.\n\nDHCP starvation \u2014 An attack where a malicious device sends large numbers of DHCP Discover messages with spoofed MAC addresses, exhausting all available addresses in the DHCP scope. DHCP Snooping (covered in Module 08) mitigates this attack.\n\nModule 09 key takeaways: DNS resolves hostnames using a hierarchical query process. DHCP automates address assignment using the DORA sequence. NTP uses UDP 123 and the stratum hierarchy. PAT (NAT Overload) allows many private IPs to share one public IP. Dynamic DNS keeps A and PTR records current as DHCP assignments change.\n\nModule 10 covers routing protocols \u2014 static routes, OSPF, and BGP."
+  },
+  {
+    "scene_title": "Additional Resources",
+    "slide_background_prompt": "Topic: Additional Resources",
+    "speech_script": "- Professor Messer's free CompTIA Network+ N10-008 Study Course: professormesser.com\n- CompTIA official Network+ exam objectives: comptia.org\n\nEnd of Part 2"
+  }
+]

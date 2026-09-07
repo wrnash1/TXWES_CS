@@ -1,0 +1,112 @@
+[
+  {
+    "scene_title": "Introduction",
+    "slide_background_prompt": "Topic: Introduction",
+    "speech_script": "Welcome back to Part 2 of Module 16. In Part 1 we reviewed Domains 1 and 2. Now we cover Domains 3, 4, and 5 \u2014 and conclude with the exam strategy guidance that will help you perform your best on test day."
+  },
+  {
+    "scene_title": "Section 1: Domain 3 Review \u2014 Network Operations (17%)",
+    "slide_background_prompt": "Topic: Section 1: Domain 3 Review \u2014 Network Operations (17%)",
+    "speech_script": "Domain 3 covers how networks are monitored, managed, and maintained in production."
+  },
+  {
+    "scene_title": "Network Monitoring Tools",
+    "slide_background_prompt": "Topic: Network Monitoring Tools",
+    "speech_script": "Key monitoring tools and their purposes:\n\n- SNMP (Simple Network Management Protocol): Collects performance data and configuration information from managed devices. UDP ports 161 (queries) and 162 (traps). Versions: SNMPv1/v2c (insecure, community strings), SNMPv3 (authentication and encryption \u2014 always preferred).\n- Syslog: Collects log messages from network devices. UDP port 514. Severity levels 0\u20137 (0=Emergency, 7=Debug).\n- NetFlow/IPFIX: Collects traffic flow statistics \u2014 source/destination IP, port, protocol, byte count. Used for bandwidth analysis and security forensics.\n- NTP (Network Time Protocol): Synchronizes clocks across all network devices. UDP port 123. Consistent timestamps are critical for log correlation. Hierarchy: Stratum 0 (atomic clock) \u2192 Stratum 1 (primary time server) \u2192 Stratum 2 (secondary) and so on.\n- SNMP traps: Unsolicited notifications from devices to the SNMP manager when a threshold is crossed or an event occurs."
+  },
+  {
+    "scene_title": "Network Documentation and Policies",
+    "slide_background_prompt": "Topic: Network Documentation and Policies",
+    "speech_script": "From Module 15 \u2014 key exam points:\n\n- Logical diagrams show IP addressing and routing; physical diagrams show ports and cables.\n- Change management types: Standard (pre-approved), Normal (CAB review), Emergency (expedited).\n- SLA metrics: Availability (99.99% = 52.6 minutes downtime/year), MTBF, MTTR, RTO, RPO.\n- IPAM tracks IP address assignments; DDI integrates DNS, DHCP, and IPAM."
+  },
+  {
+    "scene_title": "High Availability Concepts",
+    "slide_background_prompt": "Topic: High Availability Concepts",
+    "speech_script": "- Redundancy: Duplicate components eliminate single points of failure.\n- Load balancing: Distributes traffic across multiple servers or links for both redundancy and performance.\n- NIC teaming: Multiple physical NICs aggregated into one logical interface \u2014 bandwidth and redundancy.\n- Clustering: Multiple servers providing the same service; if one fails, others continue.\n- Cold/Warm/Hot standby: Cold = no readiness, Warm = some readiness, Hot = instant failover."
+  },
+  {
+    "scene_title": "Section 2: Domain 4 Review \u2014 Network Security (20%)",
+    "slide_background_prompt": "Topic: Section 2: Domain 4 Review \u2014 Network Security (20%)",
+    "speech_script": "Domain 4 is the second-largest domain. Security topics are woven throughout the exam."
+  },
+  {
+    "scene_title": "Common Network Attacks",
+    "slide_background_prompt": "Topic: Common Network Attacks",
+    "speech_script": "Know these attack types:\n\n- DoS (Denial of Service): Overwhelms a target to prevent legitimate use. A DDoS uses multiple sources.\n- Man-in-the-Middle (MitM): Attacker intercepts communication between two parties. ARP poisoning and rogue Wi-Fi AP are classic MitM setups.\n- ARP Poisoning: Attacker sends fraudulent ARP replies, associating their MAC address with a legitimate IP, redirecting traffic through the attacker.\n- DNS Poisoning: Corrupts DNS cache with fraudulent records, redirecting users to attacker-controlled servers.\n- VLAN Hopping: Attacker gains access to VLANs they should not reach via DTP trunk negotiation or double-tagging.\n- Spoofing: Forging the source IP, MAC, or other identity field in packets.\n- Replay attack: Attacker captures and retransmits a previously valid packet.\n- Deauthentication attack: Wi-Fi attack sending forged deauth frames to disconnect clients. Used to capture the WPA2 handshake for offline cracking."
+  },
+  {
+    "scene_title": "Firewalls",
+    "slide_background_prompt": "Topic: Firewalls",
+    "speech_script": "- Packet filter: Stateless rules based on IP address, port, and protocol. Layer 3/4.\n- Stateful inspection firewall: Tracks connection state \u2014 allows return traffic automatically. Layer 4.\n- Application-aware (NGFW): Deep packet inspection at Layer 7 \u2014 identifies applications regardless of port. Intrusion prevention, URL filtering, malware inspection.\n- WAF (Web Application Firewall): Protects web applications from SQL injection, XSS, and other HTTP-layer attacks.\n\nNetwork zones: Internet \u2192 DMZ \u2192 Internal. The DMZ hosts public-facing servers (web, email, DNS). Internal network is not directly reachable from the internet."
+  },
+  {
+    "scene_title": "VPNs",
+    "slide_background_prompt": "Topic: VPNs",
+    "speech_script": "- IPsec: Suite of protocols for Layer 3 VPN. Two modes: Transport (encrypts payload only) and Tunnel (encrypts entire original packet). Uses AH (authentication) and ESP (encryption).\n- SSL/TLS VPN: Uses SSL/TLS for encryption. Clientless (web browser) or full-tunnel (client application). HTTPS port 443 \u2014 typically traverses firewalls without issues.\n- Split tunneling: VPN configuration where only corporate-destined traffic goes through the VPN; internet traffic goes directly. Security risk \u2014 local network could be a pivot point."
+  },
+  {
+    "scene_title": "Authentication Protocols",
+    "slide_background_prompt": "Topic: Authentication Protocols",
+    "speech_script": "- RADIUS: UDP ports 1812/1813 (or legacy 1645/1646). Centralized authentication for network access (Wi-Fi, VPN, switch/router login). Encrypts only the password in the access-request.\n- TACACS+: TCP port 49. Cisco proprietary (though open implementations exist). Encrypts entire payload. Separates authentication, authorization, and accounting \u2014 preferred for device administration.\n- 802.1X: Port-based Network Access Control. Uses EAP (Extensible Authentication Protocol) with a RADIUS backend. Three components: Supplicant (client), Authenticator (switch/AP), Authentication Server (RADIUS).\n- LDAP/AD: Directory services for user authentication. LDAP port 389; LDAPS port 636."
+  },
+  {
+    "scene_title": "Wireless Security",
+    "slide_background_prompt": "Topic: Wireless Security",
+    "speech_script": "- WEP: Broken. Never use.\n- WPA/TKIP: Flawed. Do not use for new deployments.\n- WPA2/AES-CCMP: Current minimum standard. Personal (PSK) and Enterprise (802.1X).\n- WPA3/SAE: Simultaneous Authentication of Equals \u2014 resistant to offline dictionary attacks. Required for Wi-Fi 6 certification."
+  },
+  {
+    "scene_title": "Section 3: Domain 5 Review \u2014 Network Troubleshooting (22%)",
+    "slide_background_prompt": "Topic: Section 3: Domain 5 Review \u2014 Network Troubleshooting (22%)",
+    "speech_script": "Domain 5 is the largest domain by weight. Troubleshooting questions test applied knowledge."
+  },
+  {
+    "scene_title": "The CompTIA Seven-Step Model",
+    "slide_background_prompt": "Topic: The CompTIA Seven-Step Model",
+    "speech_script": "The seven steps in order:\n\n1. Identify the problem\n2. Establish a theory of probable cause\n3. Test the theory\n4. Establish a plan of action\n5. Implement the solution or escalate\n6. Verify full system functionality\n7. Document findings, actions, and outcomes\n\nNever skip Step 7. The exam tests whether you know the order and purpose of every step."
+  },
+  {
+    "scene_title": "Wired Troubleshooting",
+    "slide_background_prompt": "Topic: Wired Troubleshooting",
+    "speech_script": "Common cable faults tested: open circuit, short circuit, crosstalk, split pair, reversed pair, attenuation.\n\nTools: Basic cable tester (continuity), cable certifier (performance + TDR), tone generator/probe (cable tracing), optical power meter (fiber attenuation), VFL (visual fault locator for fiber).\n\nKey symptom patterns:\n\n- No link = physical layer failure\n- Slow speed + late collisions = duplex mismatch\n- 169.254.x.x APIPA = DHCP failure\n- Can ping by IP, not by name = DNS failure\n- All works except one application = firewall/port blocking"
+  },
+  {
+    "scene_title": "Wireless Troubleshooting",
+    "slide_background_prompt": "Topic: Wireless Troubleshooting",
+    "speech_script": "- Poor signal: Physical distance, obstacles, antenna orientation. Use a wireless site survey tool to identify coverage gaps.\n- Interference: Other APs on the same channel, microwave ovens, cordless phones (2.4 GHz). Use Wi-Fi analyzer to identify channel congestion. Move to 5 GHz non-overlapping channels.\n- Authentication failures: Wrong PSK, expired certificates (802.1X), RADIUS server unreachable.\n- Captive portal issues: DNS must resolve and HTTP must be accessible before TLS redirect."
+  },
+  {
+    "scene_title": "Diagnostic Command Reference",
+    "slide_background_prompt": "Topic: Diagnostic Command Reference",
+    "speech_script": "Symptom   Best Command   What to Look For  \n    \n  Wrong IP   ipconfig /all   169.254.x.x, wrong subnet, wrong gateway  \n  Unreachable host   ping   TTL exceeded, Destination Unreachable, Request Timeout  \n  Routing issue   traceroute / tracert   Where the path dies or shows high latency  \n  DNS failure   nslookup / dig   No answer, SERVFAIL, wrong server responding  \n  Port blocked   netstat -an   Expected port not in LISTENING state  \n  ARP issue   arp -a   Missing or incomplete ARP entry  \n  Bandwidth problem   iperf / speedtest   Actual vs. expected throughput"
+  },
+  {
+    "scene_title": "Time Management",
+    "slide_background_prompt": "Topic: Time Management",
+    "speech_script": "You have 90 minutes for up to 90 questions \u2014 approximately 1 minute per question.\n\n- Performance-based questions (PBQs) appear first and take longer. Many candidates flag them and skip to multiple-choice questions first, then return.\n- Multiple-choice questions: read all four options before choosing. Eliminate clearly wrong answers first.\n- If unsure, eliminate two options and make your best guess \u2014 there is no penalty for wrong answers."
+  },
+  {
+    "scene_title": "Scenario Question Approach",
+    "slide_background_prompt": "Topic: Scenario Question Approach",
+    "speech_script": "The majority of difficult questions on Network+ are scenario-based. The scenario describes a situation, and you must select the best answer.\n\nSteps for scenario questions:\n\n1. Read the question stem first \u2014 know what is being asked before reading the scenario.\n2. Read the scenario \u2014 identify the symptoms, what works, what does not work, and any recent changes.\n3. Apply the OSI model \u2014 identify the most likely layer of failure given the symptoms.\n4. Eliminate impossible answers \u2014 if ping by IP works, eliminate physical and routing answers.\n5. Choose the best answer \u2014 the most specific, correct, and actionable option."
+  },
+  {
+    "scene_title": "Memorization Priority",
+    "slide_background_prompt": "Topic: Memorization Priority",
+    "speech_script": "If you have limited study time, prioritize these high-frequency topics:\n\n- Port numbers \u2014 the full table from this module\n- Subnetting \u2014 /24 through /30 host counts by memory\n- OSI layer to protocol mapping\n- STP port states and convergence times\n- VPN types \u2014 IPsec modes, SSL VPN, split tunneling\n- Wireless standards \u2014 802.11a/b/g/n/ac/ax speeds and bands\n- SNMP \u2014 ports 161/162, SNMPv3 for security\n- CompTIA seven-step troubleshooting model \u2014 order and purpose"
+  },
+  {
+    "scene_title": "What the Exam Does Not Test",
+    "slide_background_prompt": "Topic: What the Exam Does Not Test",
+    "speech_script": "Network+ is an entry-level certification. Do not over-study:\n\n- Deep BGP configuration\n- MPLS label distribution protocol specifics\n- Advanced cryptography mathematics\n- Vendor-specific CLI syntax (Cisco commands appear but only at a general level)"
+  },
+  {
+    "scene_title": "Final Week Preparation",
+    "slide_background_prompt": "Topic: Final Week Preparation",
+    "speech_script": "- Take at least two full-length practice exams under timed conditions.\n- Review every wrong answer \u2014 understand why the correct answer is correct.\n- Focus on your weakest domain \u2014 not your strongest.\n- Get a full night of sleep before the exam. Sleep deprivation impairs test performance more than most people realize.\n- Arrive early at the testing center. Bring two forms of ID."
+  },
+  {
+    "scene_title": "Section 5: Congratulations",
+    "slide_background_prompt": "Topic: Section 5: Congratulations",
+    "speech_script": "You have completed all sixteen modules of CIS-3321 Network Administration. You have covered:\n\n- Physical networking, cabling standards, and the OSI model\n- Ethernet switching, VLANs, and Spanning Tree\n- IP addressing \u2014 IPv4, subnetting, and IPv6\n- Routing protocols \u2014 static, OSPF, EIGRP, BGP concepts\n- Wireless networking \u2014 standards, security, and design\n- Network security \u2014 firewalls, VPNs, authentication, attacks\n- Cloud computing, virtualization, and SDN\n- Wide area networks \u2014 MPLS, SD-WAN, cellular, satellite\n- Unified communications and QoS\n- Network troubleshooting methodology\n- Network documentation and policies\n\nYou are prepared for both the CompTIA Network+ N10-008 exam and for entry-level network administration work.\n\nComplete the Reading Guide review, the 20-question practice exam in the Quiz, the Lab self-assessment, and the Discussion to finalize your exam preparation.\n\nGood luck. You have earned it."
+  }
+]

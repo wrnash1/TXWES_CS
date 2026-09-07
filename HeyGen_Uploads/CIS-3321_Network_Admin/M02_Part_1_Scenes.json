@@ -1,0 +1,42 @@
+[
+  {
+    "scene_title": "Section 1: Introduction",
+    "slide_background_prompt": "Professor Nash on camera with module title card",
+    "speech_script": "Welcome to Module 02. I'm Professor Nash. In Module 01, we learned the OSI model as a theoretical reference framework. In this module, we shift to the TCP/IP model \u2014 the protocol suite that actually runs the internet. While every network administrator knows the OSI model as a diagnostic and design tool, the TCP/IP model is what you work with every single day when you configure devices, troubleshoot protocols, and capture traffic.\n\nPart 1 covers the TCP/IP model structure, how it compares to the OSI model, and the critical protocols at each layer \u2014 including IP, TCP, UDP, and ICMP. Part 2 covers application-layer protocols and their port numbers in depth, which is one of the highest-tested topic areas on the Network+ exam."
+  },
+  {
+    "scene_title": "Section 2: The TCP/IP Model \u2014 Four Layers",
+    "slide_background_prompt": "Topic: Section 2: The TCP/IP Model \u2014 Four Layers",
+    "speech_script": "The TCP/IP model was developed by the U.S. Department of Defense in the 1970s as the underlying framework for ARPANET \u2014 the precursor to the modern internet. Unlike the OSI model, TCP/IP is not just a reference framework. It is an actual working protocol suite used on every network device in existence today.\n\nThe TCP/IP model has four layers.\n\nThe Network Access Layer combines the functions of OSI Layers 1 and 2. This is where physical transmission and frame-level addressing happen. Ethernet, Wi-Fi (802.11), and ARP (Address Resolution Protocol) operate at this layer.\n\nThe Internet Layer corresponds to OSI Layer 3. This is where IP (Internet Protocol) operates. IP provides logical addressing and routing \u2014 it is responsible for getting packets from a source host to a destination host across multiple networks. ICMP (Internet Control Message Protocol) also lives at the Internet layer.\n\nThe Transport Layer corresponds to OSI Layer 4. TCP and UDP operate here.\n\nThe Application Layer encompasses OSI Layers 5, 6, and 7. All application-facing protocols live here \u2014 HTTP, HTTPS, FTP, SMTP, DNS, DHCP, SNMP, SSH, and more."
+  },
+  {
+    "scene_title": "Section 3: Internet Protocol \u2014 IP in Detail",
+    "slide_background_prompt": "Topic: Section 3: Internet Protocol \u2014 IP in Detail",
+    "speech_script": "IP is the core protocol of the internet. Every packet crossing a network carries an IP header with critical fields.\n\nThe Source IP Address (32 bits for IPv4) identifies where the packet came from.\n\nThe Destination IP Address (32 bits) identifies where the packet is going. Every router along the path reads this field to make its forwarding decision.\n\nThe TTL (Time to Live) field specifies how many router hops a packet can traverse before being discarded. Each router decrements the TTL by one. When TTL reaches zero, the router drops the packet and sends an ICMP \"Time Exceeded\" message back to the source. This prevents packets from looping through the network forever.\n\nThe Protocol field tells the receiving host what Layer 4 protocol is carried in the payload. Protocol 6 equals TCP. Protocol 17 equals UDP. Protocol 1 equals ICMP.\n\n> Network+ Exam Tip: The TTL field is directly related to how traceroute works. The traceroute command sends packets with TTL values starting at 1, then 2, then 3, and so on. Each router that receives a packet with TTL equal to 1 drops it and returns an ICMP Time Exceeded message, revealing that router's IP address. This is how traceroute maps the path hop by hop."
+  },
+  {
+    "scene_title": "Section 4: TCP \u2014 Reliable Transport",
+    "slide_background_prompt": "Topic: Section 4: TCP \u2014 Reliable Transport",
+    "speech_script": "TCP is the protocol that makes the internet reliable. When you download a file, send an email, or load a web page, TCP ensures every byte arrives in the correct order and that any lost segments are retransmitted.\n\nThe TCP three-way handshake establishes a connection before data is transferred.\n\nStep 1 \u2014 SYN. The client sends a TCP segment with the SYN (Synchronize) flag set to the server. This says \"I want to open a connection, and here is my starting sequence number.\"\n\nStep 2 \u2014 SYN-ACK. The server responds with a segment that has both the SYN and ACK flags set. This says \"I received your SYN, here is my starting sequence number, and I acknowledge yours.\"\n\nStep 3 \u2014 ACK. The client sends a final ACK to the server, confirming receipt of the server's SYN. The connection is now established and data transfer begins.\n\nTCP uses sequence numbers and acknowledgements throughout the data transfer phase. If an ACK is not received within a timeout period, TCP retransmits the missing segment. This is why TCP is called \"reliable\" \u2014 not because the network is reliable, but because TCP adds the mechanisms to detect and recover from lost data."
+  },
+  {
+    "scene_title": "Section 5: UDP \u2014 Fast Connectionless Transport",
+    "slide_background_prompt": "Topic: Section 5: UDP \u2014 Fast Connectionless Transport",
+    "speech_script": "UDP sacrifices reliability for speed. It sends data and does not wait for acknowledgements. There is no handshake and no retransmission mechanism.\n\nWhy would you use UDP? Because for real-time applications, a retransmitted packet is worse than a lost one. If you are on a VoIP call and a voice packet is delayed 300 milliseconds for retransmission, it creates an audible glitch. It is better to skip that packet and continue. The same logic applies to live video streaming, online gaming, and DNS queries.\n\nUDP is also used for broadcast and multicast protocols like DHCP discovery, where establishing individual TCP connections to every potential client would be inefficient."
+  },
+  {
+    "scene_title": "Section 6: ICMP \u2014 Network Diagnostics",
+    "slide_background_prompt": "ICMP message type table \u2014 Type 0: Echo Reply, Type 3: Destination Unreachable, Type 8: Echo Request, Type 11: Time Exceeded",
+    "speech_script": "ICMP (Internet Control Message Protocol) operates at the Internet layer of the TCP/IP model, which corresponds to OSI Layer 3. It does not carry user data \u2014 it carries error messages and operational information between network devices.\n\nThe two ICMP messages you will use constantly are Echo Request (Type 8) and Echo Reply (Type 0). These are the messages sent and received by the ping command.\n\nWhen ping sends an Echo Request and receives an Echo Reply, you have confirmed Layer 3 IP connectivity to that host. When ping returns \"Destination Unreachable\" (Type 3), it means no route exists to the destination or the destination host refused the connection. When ping returns \"Time Exceeded\" (Type 11), it means the TTL expired in transit \u2014 this is the foundation of how traceroute works.\n\n> Network+ Exam Tip: ICMP is not TCP or UDP. It is a separate protocol carried directly within IP. Its Protocol field value in the IP header is 1. ICMP has no port number. On exam questions about ping and traceroute, the answer always involves ICMP."
+  },
+  {
+    "scene_title": "Section 7: Part 1 Summary",
+    "slide_background_prompt": "Summary bullet list",
+    "speech_script": "In Part 1, we covered the TCP/IP model's four layers and how they map to the OSI model. We examined IP header fields that govern routing and TTL behavior. We walked through the TCP three-way handshake and TCP's reliable delivery mechanism. We compared TCP and UDP and explained why both protocols exist. We covered ICMP and its role in diagnostic tools including ping and traceroute.\n\nIn Part 2, we go deep on application-layer protocols and their port numbers \u2014 the most directly tested area on the Network+ exam."
+  },
+  {
+    "scene_title": "Additional Resources",
+    "slide_background_prompt": "Topic: Additional Resources",
+    "speech_script": "- Professor Messer's free CompTIA Network+ N10-008 Study Course: professormesser.com\n- CompTIA official Network+ exam objectives: comptia.org\n\nEnd of Part 1"
+  }
+]

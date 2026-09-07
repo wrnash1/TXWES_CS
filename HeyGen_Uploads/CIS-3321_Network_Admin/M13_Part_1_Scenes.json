@@ -1,0 +1,107 @@
+[
+  {
+    "scene_title": "Introduction",
+    "slide_background_prompt": "Topic: Introduction",
+    "speech_script": "Welcome to Module 13 of CIS-3321 Network Administration. I am Professor Nash. This module covers Unified Communications and Collaboration \u2014 the technologies that carry voice, video, and real-time data across IP networks.\n\nIf you have ever used Microsoft Teams, Zoom, or a VoIP desk phone at work, you have already been a consumer of the technologies we cover here. The question for network administrators is not whether to support these technologies, but how to support them well \u2014 because the network requirements for real-time communication are significantly different from those for ordinary data traffic.\n\nPart 1 covers VoIP architecture, the SIP and H.323 protocols, and the specific network characteristics that real-time communication requires. Part 2 covers Quality of Service mechanisms, bandwidth planning, UC platforms, and practical design considerations.\n\nThis material maps to Domain 1 and Domain 2 of the CompTIA Network+ N10-008 exam."
+  },
+  {
+    "scene_title": "Section 1: What Is Unified Communications?",
+    "slide_background_prompt": "Topic: Section 1: What Is Unified Communications?",
+    "speech_script": "Unified Communications, or UC, is the integration of multiple communication services into a single coherent platform. Rather than having separate systems for voice calls, video meetings, instant messaging, voicemail, and email, a UC platform brings them together under one interface.\n\nThe \"unified\" aspect matters for the network because all of these services now traverse the same IP network infrastructure \u2014 the same switches, routers, and WAN links that carry file transfers and web browsing. This convergence creates both efficiency and complexity.\n\nCommon UC platform components:\n\n- Voice over IP (VoIP) calling\n- Video conferencing\n- Instant messaging and presence (showing online/available/busy status)\n- Voicemail with email integration (unified messaging)\n- Web and desktop sharing (collaboration)\n- Mobile integration (extending desk phone to smartphones)\n\nExamples of UC platforms: Microsoft Teams, Cisco Unified Communications Manager (CUCM), Avaya Aura, Zoom Phone, RingCentral."
+  },
+  {
+    "scene_title": "Section 2: Voice over IP \u2014 Fundamentals",
+    "slide_background_prompt": "Topic: Section 2: Voice over IP \u2014 Fundamentals",
+    "speech_script": "Voice over IP, or VoIP, transmits voice calls as digital data packets over an IP network rather than through a traditional circuit-switched telephone network (PSTN)."
+  },
+  {
+    "scene_title": "How VoIP Works",
+    "slide_background_prompt": "Topic: How VoIP Works",
+    "speech_script": "In a traditional PSTN call, analog voice signals travel over dedicated copper circuits. VoIP replaces this with a digital process:\n\n1. The analog voice signal from a microphone is digitized by an Analog-to-Digital Converter (ADC).\n2. The digital audio is compressed by a voice codec (coder-decoder) to reduce bandwidth.\n3. The compressed audio is packetized \u2014 broken into small packets \u2014 and sent across the IP network using the Real-time Transport Protocol (RTP).\n4. At the receiving end, packets are reassembled, decoded, and converted back to analog audio by a Digital-to-Analog Converter (DAC).\n\nThis entire process introduces delay \u2014 called latency \u2014 and must happen fast enough that the conversation feels natural to both parties."
+  },
+  {
+    "scene_title": "VoIP Codecs",
+    "slide_background_prompt": "Topic: VoIP Codecs",
+    "speech_script": "A codec compresses and decompresses audio. The choice of codec determines both audio quality and bandwidth consumption.\n\nCommon VoIP codecs:\n\n- G.711: The most common codec. Provides toll-quality voice (PSTN-equivalent). Uncompressed \u2014 uses 64 Kbps per call. Two variants: G.711a (A-law, used in Europe) and G.711u (mu-law, used in North America and Japan).\n- G.729: Compressed codec. Uses 8 Kbps per call \u2014 8x more bandwidth-efficient than G.711. Audio quality is slightly lower but acceptable for most business calls. Widely used over WAN links where bandwidth is constrained.\n- G.722: Wideband codec. Uses 64 Kbps but captures a broader frequency range than G.711, resulting in higher-definition audio \u2014 \"HD voice.\" Used in modern UC endpoints.\n- Opus: Modern, versatile open-source codec used in WebRTC, Zoom, and many modern UC platforms. Adapts bitrate dynamically from 6 Kbps to 510 Kbps."
+  },
+  {
+    "scene_title": "Bandwidth Per VoIP Call",
+    "slide_background_prompt": "Topic: Bandwidth Per VoIP Call",
+    "speech_script": "The codec bandwidth is just the payload \u2014 you must also add protocol headers:\n\n- RTP header: 12 bytes\n- UDP header: 8 bytes\n- IP header: 20 bytes\n- Ethernet header: 14 bytes (Layer 2)\n\nWith G.711 (10 ms packetization interval, 80-byte payload), total per-packet size is approximately 134 bytes. With 100 packets per second (10 ms interval), that is approximately 107.2 Kbps including overhead \u2014 often rounded to 87.2 Kbps for planning at 20 ms intervals.\n\nFor exam purposes, remember: G.711 = approximately 87 Kbps per call (with overhead at 20 ms) and G.729 = approximately 24\u201331 Kbps per call with overhead."
+  },
+  {
+    "scene_title": "Section 3: SIP \u2014 Session Initiation Protocol",
+    "slide_background_prompt": "Topic: Section 3: SIP \u2014 Session Initiation Protocol",
+    "speech_script": "SIP is the dominant VoIP signaling protocol. The Network+ exam tests SIP heavily."
+  },
+  {
+    "scene_title": "What SIP Does",
+    "slide_background_prompt": "Topic: What SIP Does",
+    "speech_script": "SIP is an application-layer signaling protocol defined in RFC 3261. It handles the establishment, modification, and termination of communication sessions. SIP is responsible for:\n\n- Locating users (address resolution)\n- Signaling call setup \u2014 \"ring the phone\"\n- Negotiating call parameters \u2014 what codec to use, which port for media\n- Tearing down calls \u2014 hanging up\n\nSIP does not carry the actual voice audio \u2014 that is handled by RTP. SIP is the \"signaling\" protocol; RTP is the \"media\" protocol."
+  },
+  {
+    "scene_title": "SIP Architecture",
+    "slide_background_prompt": "Topic: SIP Architecture",
+    "speech_script": "SIP uses a client-server model with several key components:\n\n- SIP User Agent (UA): An endpoint that initiates or receives SIP sessions. A SIP phone, softphone application, or video conference endpoint is a UA.\n- SIP Proxy Server: Routes SIP requests between UAs. Receives a REGISTER or INVITE and forwards it toward the destination.\n- SIP Registrar: A server that accepts REGISTER requests from UAs and records their current location (IP address and port). Allows the proxy to find users.\n- SIP Redirect Server: Responds to SIP requests with the contact address of the called party, redirecting the UA to contact that address directly.\n- Back-to-Back User Agent (B2BUA): Acts as both a UA client and server \u2014 terminates one SIP session and creates a new one. IP PBX systems typically function as B2BUAs."
+  },
+  {
+    "scene_title": "Key SIP Methods",
+    "slide_background_prompt": "Topic: Key SIP Methods",
+    "speech_script": "SIP messages use request methods similar to HTTP:\n\n- REGISTER: UA registers its current address with the registrar.\n- INVITE: Initiate a call \u2014 \"I want to establish a session with you.\"\n- ACK: Acknowledges the final response to INVITE \u2014 completes the three-way handshake.\n- BYE: Terminates an established session.\n- CANCEL: Cancels a pending INVITE before it is answered.\n- OPTIONS: Queries the capabilities of a SIP server or endpoint."
+  },
+  {
+    "scene_title": "SIP Response Codes",
+    "slide_background_prompt": "Topic: SIP Response Codes",
+    "speech_script": "SIP uses numeric response codes modeled after HTTP:\n\n- 1xx: Provisional \u2014 100 Trying, 180 Ringing\n- 2xx: Success \u2014 200 OK\n- 3xx: Redirection \u2014 302 Moved Temporarily\n- 4xx: Client error \u2014 400 Bad Request, 401 Unauthorized, 486 Busy Here\n- 5xx: Server error \u2014 503 Service Unavailable\n- 6xx: Global failure \u2014 600 Busy Everywhere"
+  },
+  {
+    "scene_title": "SIP Call Flow \u2014 Basic Example",
+    "slide_background_prompt": "Topic: SIP Call Flow \u2014 Basic Example",
+    "speech_script": "1. Phone A sends INVITE to SIP Proxy.\n2. Proxy sends INVITE to Phone B.\n3. Phone B sends 180 Ringing back through proxy.\n4. Phone B is answered \u2014 sends 200 OK.\n5. Phone A sends ACK.\n6. RTP media stream flows directly between Phone A and Phone B.\n7. Either party sends BYE to terminate.\n8. The other party responds 200 OK.\n\nThis pattern \u2014 INVITE / 180 Ringing / 200 OK / ACK \u2014 is tested directly on the Network+ exam."
+  },
+  {
+    "scene_title": "SDP \u2014 Session Description Protocol",
+    "slide_background_prompt": "Topic: SDP \u2014 Session Description Protocol",
+    "speech_script": "When a SIP INVITE is sent, it carries an SDP (Session Description Protocol) body that describes the media parameters: what codecs are supported, the IP address and UDP port for RTP, and the media type. SDP negotiation ensures both endpoints agree on the audio format before the call begins."
+  },
+  {
+    "scene_title": "Section 4: H.323 \u2014 The Legacy Standard",
+    "slide_background_prompt": "Topic: Section 4: H.323 \u2014 The Legacy Standard",
+    "speech_script": "H.323 is an older ITU-T standard for multimedia communication over packet networks. While largely replaced by SIP in modern deployments, it still exists in many enterprise voice systems and appears on the Network+ exam."
+  },
+  {
+    "scene_title": "H.323 Architecture",
+    "slide_background_prompt": "Topic: H.323 Architecture",
+    "speech_script": "H.323 uses a hierarchical architecture with specific component names:\n\n- Terminal: An H.323 endpoint (IP phone, video conference unit).\n- Gateway: Translates between H.323 networks and other networks (such as PSTN). Critical for connecting VoIP to the traditional phone network.\n- Gatekeeper: Optional but important component. Provides address translation, admission control, and bandwidth management. All H.323 calls can be routed through the gatekeeper.\n- Multipoint Control Unit (MCU): Enables multipoint conferences \u2014 bridges multiple H.323 endpoints into a conference call."
+  },
+  {
+    "scene_title": "H.323 Protocols",
+    "slide_background_prompt": "Topic: H.323 Protocols",
+    "speech_script": "H.323 is actually a suite of protocols:\n\n- H.225: Call signaling and setup (equivalent to SIP for setup)\n- H.245: Call control \u2014 negotiates media channels and codecs\n- RAS (Registration, Admission, Status): Communication between terminals and the gatekeeper\n- RTP/RTCP: Media transport (same as SIP uses)"
+  },
+  {
+    "scene_title": "H.323 vs. SIP",
+    "slide_background_prompt": "Topic: H.323 vs. SIP",
+    "speech_script": "Feature   H.323   SIP  \n    \n  Origin   ITU-T (1996)   IETF (1999)  \n  Architecture   Complex, hierarchical   Simple, peer-to-peer capable  \n  Message format   Binary ASN.1   Text-based (like HTTP)  \n  Firewall friendliness   Difficult (dynamic ports)   Better (but still challenging)  \n  Modern usage   Legacy enterprise, video endpoints   Dominant modern standard  \n  Extensibility   Limited   Highly extensible\n\nFor the exam: SIP is the modern dominant standard. H.323 is legacy. Both use RTP for media transport."
+  },
+  {
+    "scene_title": "Section 5: RTP and RTCP",
+    "slide_background_prompt": "Topic: Section 5: RTP and RTCP",
+    "speech_script": "Regardless of whether SIP or H.323 is used for signaling, the actual voice and video data is carried by RTP."
+  },
+  {
+    "scene_title": "RTP \u2014 Real-time Transport Protocol",
+    "slide_background_prompt": "Topic: RTP \u2014 Real-time Transport Protocol",
+    "speech_script": "RTP (RFC 3550) provides end-to-end delivery services for real-time data including audio and video. RTP runs over UDP because:\n\n- UDP has lower overhead than TCP (no connection setup, no retransmission)\n- Real-time media cannot wait for retransmission \u2014 a late packet is worse than a lost packet for voice\n- The application layer handles any necessary error correction\n\nRTP headers include:\n\n- Payload type: identifies the codec (G.711, G.729, etc.)\n- Sequence number: allows the receiver to detect missing or out-of-order packets\n- Timestamp: enables synchronization and jitter buffer operation"
+  },
+  {
+    "scene_title": "RTCP \u2014 RTP Control Protocol",
+    "slide_background_prompt": "Topic: RTCP \u2014 RTP Control Protocol",
+    "speech_script": "RTCP runs alongside RTP (on the next consecutive UDP port) and provides quality feedback:\n\n- Reports on packet loss, jitter, and round-trip delay\n- Sender Reports (SR): generated by the transmitter with statistics\n- Receiver Reports (RR): generated by receivers with quality metrics\n- RTCP data is used for monitoring call quality and troubleshooting"
+  },
+  {
+    "scene_title": "Summary of Part 1",
+    "slide_background_prompt": "Topic: Summary of Part 1",
+    "speech_script": "Key points from Part 1:\n\n- Unified Communications converges voice, video, messaging, and collaboration onto a single IP network.\n- VoIP converts voice to digital packets using codecs. G.711 = ~87 Kbps, G.729 = ~31 Kbps per call including headers.\n- SIP is the dominant signaling protocol. Key methods: INVITE, ACK, BYE, REGISTER, CANCEL.\n- SIP call flow: INVITE \u2192 180 Ringing \u2192 200 OK \u2192 ACK \u2192 RTP media \u2192 BYE \u2192 200 OK.\n- H.323 is the legacy ITU-T standard with Terminals, Gateways, Gatekeepers, and MCUs.\n- RTP carries the actual media using UDP. RTCP provides quality feedback statistics.\n\nIn Part 2, we will cover Quality of Service mechanisms \u2014 how to make sure voice and video get the network treatment they require \u2014 along with bandwidth planning formulas, jitter buffers, and UC platform design considerations.\n\nSee you in Part 2."
+  }
+]

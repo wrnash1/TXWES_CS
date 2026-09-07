@@ -1,0 +1,77 @@
+[
+  {
+    "scene_title": "Introduction",
+    "slide_background_prompt": "Topic: Introduction",
+    "speech_script": "Welcome to Module 16 \u2014 our final module and your launch preparation for the CompTIA Network+ N10-008 exam. I am Professor Nash, and this is where we bring everything together.\n\nOver the past fifteen modules you have built a comprehensive foundation in network administration. This module does three things: first, we systematically review all five exam domains with emphasis on the highest-weight topics; second, we discuss exam strategy \u2014 how to approach question types, manage time, and avoid common traps; third, you will complete 20 practice questions in the quiz to simulate exam conditions.\n\nPart 1 covers Domain 1 (Networking Concepts) and Domain 2 (Infrastructure) \u2014 the two largest domains by exam weight. Part 2 covers Domains 3, 4, and 5, exam strategy, and final preparation guidance.\n\nLet us begin."
+  },
+  {
+    "scene_title": "What the N10-008 Exam Looks Like",
+    "slide_background_prompt": "Topic: What the N10-008 Exam Looks Like",
+    "speech_script": "- Maximum of 90 questions (multiple choice and performance-based)\n- 90 minutes to complete\n- Passing score: 720 out of 900\n- Available in English, Japanese, and Portuguese\n- Can be taken at a Pearson VUE testing center or via online proctored testing"
+  },
+  {
+    "scene_title": "Five Domains and Their Weights",
+    "slide_background_prompt": "Topic: Five Domains and Their Weights",
+    "speech_script": "Domain   Title   Exam Weight  \n    \n  1   Networking Concepts   23%  \n  2   Infrastructure   18%  \n  3   Network Operations   17%  \n  4   Network Security   20%  \n  5   Network Troubleshooting   22%\n\nNote that Domain 5 (Troubleshooting) is slightly larger than Domain 1. Do not overlook it."
+  },
+  {
+    "scene_title": "Performance-Based Questions",
+    "slide_background_prompt": "Topic: Performance-Based Questions",
+    "speech_script": "Network+ includes performance-based questions (PBQs) that ask you to perform a task rather than select from four options. Common PBQ types:\n\n- Drag-and-drop topology building\n- Matching protocols to port numbers\n- Identifying the correct OSI layer for a given function\n- Selecting the correct network device for a scenario\n- Completing a subnetting worksheet\n\nPBQs appear at the beginning of the exam and typically take more time. Many candidates skip them initially and return after completing the multiple-choice questions."
+  },
+  {
+    "scene_title": "Section 2: Domain 1 Review \u2014 Networking Concepts (23%)",
+    "slide_background_prompt": "Topic: Section 2: Domain 1 Review \u2014 Networking Concepts (23%)",
+    "speech_script": "Domain 1 is the conceptual foundation. If you understand these topics deeply, they also support your success in every other domain."
+  },
+  {
+    "scene_title": "OSI and TCP/IP Models",
+    "slide_background_prompt": "Topic: OSI and TCP/IP Models",
+    "speech_script": "The OSI model has seven layers; the TCP/IP model has four. You must map protocols to their correct layers.\n\nOSI to protocol mapping for the exam:\n\n- Layer 1 (Physical): Ethernet physical, DSL, cable, fiber \u2014 the medium itself\n- Layer 2 (Data Link): Ethernet (802.3), Wi-Fi (802.11), ARP, STP, VLANs (802.1Q)\n- Layer 3 (Network): IP (v4 and v6), ICMP, OSPF, EIGRP, BGP\n- Layer 4 (Transport): TCP, UDP\n- Layer 5 (Session): NetBIOS, RPC \u2014 rarely tested directly\n- Layer 6 (Presentation): SSL/TLS, JPEG, MPEG \u2014 data formatting and encryption negotiation\n- Layer 7 (Application): HTTP, HTTPS, FTP, SFTP, SSH, DNS, DHCP, SMTP, SNMP, NTP, SIP, H.323, RDP"
+  },
+  {
+    "scene_title": "IPv4 Addressing",
+    "slide_background_prompt": "Topic: IPv4 Addressing",
+    "speech_script": "Subnetting is tested on virtually every Network+ exam. You must be able to:\n\n- Determine the network address, broadcast address, and usable host range for any subnet\n- Calculate the number of hosts per subnet (2^n - 2 where n = host bits)\n- Identify the correct subnet mask for a given number of required hosts or subnets\n- Identify CIDR notation (/24, /25, /26, /27, /28, /29, /30)\n\nKey CIDR reference:\n\n- /24 = 255.255.255.0 \u2192 254 hosts\n- /25 = 255.255.255.128 \u2192 126 hosts\n- /26 = 255.255.255.192 \u2192 62 hosts\n- /27 = 255.255.255.224 \u2192 30 hosts\n- /28 = 255.255.255.240 \u2192 14 hosts\n- /29 = 255.255.255.248 \u2192 6 hosts\n- /30 = 255.255.255.252 \u2192 2 hosts (point-to-point links)\n\nPrivate address ranges (RFC 1918): 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16\n\nAPIPA: 169.254.0.0/16 \u2014 assigned when DHCP fails\n\nLoopback: 127.0.0.0/8 (127.0.0.1 is the standard loopback address)"
+  },
+  {
+    "scene_title": "IPv6",
+    "slide_background_prompt": "Topic: IPv6",
+    "speech_script": "IPv6 addresses are 128 bits, written as eight groups of four hexadecimal digits separated by colons.\n\nKey IPv6 address types:\n\n- Global unicast: 2000::/3 \u2014 publicly routable, equivalent to public IPv4\n- Link-local: fe80::/10 \u2014 non-routable, used for communication within a single link (auto-assigned)\n- Loopback: ::1/128\n- Unspecified: ::/128 \u2014 source address in DAD (Duplicate Address Detection)\n- Multicast: ff00::/8 \u2014 replaces broadcast in IPv6\n\nIPv6 abbreviation rules:\n\n- Leading zeros in a group can be omitted: 0001 \u2192 1\n- One consecutive group of all-zero groups can be replaced with :: (only once per address)\n\nDHCPv6 vs. SLAAC: IPv6 hosts can get addresses via DHCPv6 (stateful, like DHCPv4) or SLAAC (Stateless Address Autoconfiguration \u2014 derives address from network prefix + EUI-64 or random interface ID)."
+  },
+  {
+    "scene_title": "Port Numbers",
+    "slide_background_prompt": "Topic: Port Numbers",
+    "speech_script": "The exam requires memorization of well-known port numbers:\n\nPort   Protocol   Service  \n    \n  20   TCP   FTP Data  \n  21   TCP   FTP Control  \n  22   TCP   SSH, SFTP, SCP  \n  23   TCP   Telnet  \n  25   TCP   SMTP  \n  53   TCP/UDP   DNS  \n  67/68   UDP   DHCP (server/client)  \n  69   UDP   TFTP  \n  80   TCP   HTTP  \n  110   TCP   POP3  \n  119   TCP   NNTP  \n  123   UDP   NTP  \n  143   TCP   IMAP  \n  161/162   UDP   SNMP  \n  389   TCP/UDP   LDAP  \n  443   TCP   HTTPS  \n  445   TCP   SMB  \n  465/587   TCP   SMTPS / SMTP Submission  \n  514   UDP   Syslog  \n  636   TCP   LDAPS  \n  993   TCP   IMAPS  \n  995   TCP   POP3S  \n  1433   TCP   MS SQL Server  \n  1521   TCP   Oracle Database  \n  3306   TCP   MySQL  \n  3389   TCP   RDP  \n  5060   TCP/UDP   SIP  \n  5061   TCP   SIP over TLS"
+  },
+  {
+    "scene_title": "Routing Concepts",
+    "slide_background_prompt": "Topic: Routing Concepts",
+    "speech_script": "Routing protocol classifications:\n\n- Static routing: Manually configured routes. No overhead, no automatic failover.\n- Dynamic routing: Protocols automatically discover routes and adapt to topology changes.\n- Interior Gateway Protocol (IGP): Routing within an autonomous system \u2014 OSPF, EIGRP, RIP.\n- Exterior Gateway Protocol (EGP): Routing between autonomous systems \u2014 BGP.\n- Distance vector: Makes decisions based on hop count and distance \u2014 RIP.\n- Link state: Each router has a complete map of the topology \u2014 OSPF, IS-IS.\n- Hybrid: Combines distance vector and link state \u2014 EIGRP.\n\nAdministrative distance (lower = preferred):\n\n- Connected: 0\n- Static: 1\n- EIGRP: 90\n- OSPF: 110\n- RIP: 120\n- External EIGRP: 170"
+  },
+  {
+    "scene_title": "Section 3: Domain 2 Review \u2014 Infrastructure (18%)",
+    "slide_background_prompt": "Topic: Section 3: Domain 2 Review \u2014 Infrastructure (18%)",
+    "speech_script": "Domain 2 covers the physical and logical components of network infrastructure."
+  },
+  {
+    "scene_title": "Switching",
+    "slide_background_prompt": "Topic: Switching",
+    "speech_script": "Critical switching concepts:\n\n- VLAN: Logical segmentation at Layer 2. Traffic in different VLANs is isolated. Inter-VLAN routing requires a Layer 3 device.\n- 802.1Q trunking: Carries multiple VLANs on a single link using VLAN tags. Native VLAN is untagged.\n- STP (802.1D): Prevents Layer 2 loops by blocking redundant paths. Root bridge election based on lowest bridge ID (priority + MAC). Port states: Blocking \u2192 Listening \u2192 Learning \u2192 Forwarding.\n- RSTP (802.1w): Rapid STP \u2014 faster convergence (sub-second) than original STP.\n- PortFast: Configures an access port to bypass STP states \u2014 for end-device ports only.\n- EtherChannel (LACP): Bundles multiple physical links into one logical link. Increases bandwidth and provides redundancy."
+  },
+  {
+    "scene_title": "Wireless",
+    "slide_background_prompt": "Topic: Wireless",
+    "speech_script": "Key wireless standards:\n\nStandard   Band   Max Speed   Notes  \n     \n  802.11a   5 GHz   54 Mbps   Legacy; less interference  \n  802.11b   2.4 GHz   11 Mbps   Legacy; widely adopted  \n  802.11g   2.4 GHz   54 Mbps   Backward compatible with b  \n  802.11n   2.4/5 GHz   600 Mbps   MIMO; dual-band  \n  802.11ac   5 GHz   3.5 Gbps   MU-MIMO; beamforming  \n  802.11ax   2.4/5/6 GHz   9.6 Gbps   Wi-Fi 6; OFDMA; high density\n\nSecurity standards: WEP (broken), WPA (TKIP, flawed), WPA2 (AES/CCMP \u2014 enterprise standard), WPA3 (SAE \u2014 current best practice).\n\nWireless frequencies and channels: 2.4 GHz has 11 channels in North America; non-overlapping channels are 1, 6, 11. 5 GHz has many more non-overlapping channels \u2014 less interference."
+  },
+  {
+    "scene_title": "WAN Technologies",
+    "slide_background_prompt": "Topic: WAN Technologies",
+    "speech_script": "Key exam WAN distinctions:\n\n- T1: 1.544 Mbps leased line\n- T3: 44.736 Mbps leased line\n- MPLS: Label-switched, any-to-any VPN, traffic engineering \u2014 carrier-managed\n- SD-WAN: Software-defined, multi-transport, application-aware routing\n- Metro Ethernet \u2014 E-Line: Point-to-point Ethernet service\n- Metro Ethernet \u2014 E-LAN: Multipoint-to-multipoint Ethernet service\n- DSL: Copper local loop \u2014 ADSL asymmetric, VDSL higher speed/shorter range\n- Cable (DOCSIS): Shared-medium coaxial \u2014 DOCSIS 3.1 supports 10 Gbps\n- GEO satellite: ~35,000 km altitude \u2014 600+ ms latency \u2014 not suitable for real-time\n- LEO satellite (Starlink): ~550 km altitude \u2014 20\u201340 ms latency \u2014 viable for remote sites"
+  },
+  {
+    "scene_title": "Summary of Part 1",
+    "slide_background_prompt": "Topic: Summary of Part 1",
+    "speech_script": "Key review points from Part 1:\n\n- Domain 1 (23%): OSI layers and protocol mapping, IPv4 subnetting, IPv6 address types, port numbers (memorize the table), routing protocols and administrative distance.\n- Domain 2 (18%): VLANs, 802.1Q trunking, STP/RSTP, wireless standards (speeds and bands), WAN technologies matched to use cases.\n\nIn Part 2, we cover Domains 3 (Operations), 4 (Security), and 5 (Troubleshooting), then discuss exam strategy and final preparation tips."
+  }
+]

@@ -1,0 +1,157 @@
+Network automation is no longer optional for enterprise network engineers. CCNP ENCOR includes automation topics, and every major employer expects engineers to understand scripting, APIs, and infrastructure-as-code tools.
+
+The Core Problem:
+A large enterprise might have 500 network devices. If you need to change the NTP server on every device, manual CLI on each one takes days. A typo on any single device creates a configuration drift problem. Automation makes changes:
+- Fast: Execute on all 500 devices in seconds.
+- Consistent: Same configuration is applied identically everywhere.
+- Auditable: All changes are in version-controlled code.
+- Repeatable: Run the same playbook in dev, staging, and production.
+
+Netmiko — SSH-based Network Automation (Free, Open Source):
+Netmiko is the most widely used Python library for automating Cisco CLI devices via SSH. It handles SSH connection management, device type detection, and command output parsing.
+
+python
+from netmiko import ConnectHandler
+
+device = {
+    "devicetype": "ciscoios",
+    "host": "192.168.1.1",
+    "username": "admin",
+    "password": "Admin@Secure1",
+    "secret": "enablesecret",
+}
+
+with ConnectHandler(device) as netconnect:
+    netconnect.enable()
+    output = netconnect.sendcommand("show ip route")
+    print(output)
+    
+    # Send configuration commands
+    configcommands = [
+        "ntp server 10.10.10.100",
+        "logging 10.10.10.200",
+    ]
+    netconnect.sendconfigset(configcommands)
+    print("Configuration applied successfully")
+
+Scaling with a Device List:
+python
+from netmiko import ConnectHandler
+
+devices = [
+    {"devicetype": "ciscoios", "host": "10.0.1.1", "username": "admin", "password": "Admin@Secure1"},
+    {"devicetype": "ciscoios", "host": "10.0.1.2", "username": "admin", "password": "Admin@Secure1"},
+    {"devicetype": "ciscoios", "host": "10.0.1.3", "username": "admin", "password": "Admin@Secure1"},
+]
+
+configcommands = ["ntp server 10.10.10.100", "logging 10.10.10.200"]
+
+for device in devices:
+    with ConnectHandler(device) as conn:
+        conn.sendconfigset(configcommands)
+        print(f"Configured {device['host']}")
+
+This script pushes the same NTP and logging configuration to 3 routers simultaneously — and would scale to 500 with the same code.
+
+TextFSM and ntc-templates — Parsing CLI Output:
+show ip route returns unstructured text. TextFSM and the NTC templates library convert CLI output into structured Python data (lists and dictionaries):
+python
+output = netconnect.sendcommand("show ip bgp summary", usetextfsm=True)
+
+for neighbor in output:
+    print(f"BGP Neighbor: {neighbor['neighbor']}   State: {neighbor['state']}")
+
+Ansible is an agentless automation framework. No software needs to be installed on the network devices — Ansible connects via SSH (or API) from a control node and pushes changes.
+
+Ansible Inventory File (hosts.ini):
+ini
+[routers]
+192.168.1.1  ansibleuser=admin  ansiblepassword=Admin@Secure1  ansiblenetworkos=ios
+192.168.1.2  ansibleuser=admin  ansiblepassword=Admin@Secure1  ansiblenetworkos=ios
+
+[switches]
+192.168.2.1  ansibleuser=admin  ansiblepassword=Admin@Secure1  ansiblenetworkos=ios
+
+Ansible Playbook — Configure NTP on All Devices:
+yaml
+
+- name: Configure NTP on All Network Devices
+  hosts: routers,switches
+  gatherfacts: no
+  connection: networkcli
+
+tasks:
+    - name: Set NTP Server
+      cisco.ios.iosntpglobal:
+        config:
+          servers:
+            - server: "10.10.10.100"
+              prefer: true
+        state: merged
+
+- name: Set logging host
+      cisco.ios.iosloggingglobal:
+        config:
+          hosts:
+            - hostname: "10.10.10.200"
+        state: merged
+
+- name: Verify NTP status
+      cisco.ios.ioscommand:
+        commands:
+          - show ntp status
+      register: ntpoutput
+
+- name: Display NTP output
+      debug:
+        var: ntpoutput.stdoutlines
+
+Run this playbook against all routers and switches with:
+
+ansible-playbook -i hosts.ini configurentp.yml
+
+> Graduate Note: Ansible is idempotent — running the same playbook multiple times produces the same result without duplicate changes. If the NTP server is already configured, Ansible confirms the state is correct and takes no action. This is a key difference from simple shell scripts.
+
+Ansible Roles:
+For complex network configurations, Ansible supports roles — a structured directory layout that organizes tasks, variables, templates, and handlers into reusable modules. A baselinehardening role could apply the full CIS IOS benchmark across all devices by running ansible-playbook site.yml.
+
+REST APIs on Modern Cisco Devices:
+IOS-XE (17.x+) supports RESTCONF, a REST API that exposes network configuration as JSON or XML resources. This allows automation tools, scripts, and orchestration platforms to configure network devices via HTTP — no CLI needed.
+
+python
+import requests
+import json
+
+url = "https://192.168.1.1/restconf/data/ietf-interfaces:interfaces"
+headers = {"Content-Type": "application/yang-data+json", "Accept": "application/yang-data+json"}
+auth = ("admin", "Admin@Secure1")
+
+response = requests.get(url, headers=headers, auth=auth, verify=False)
+interfaces = response.json()
+print(json.dumps(interfaces, indent=2))
+
+patchurl = "https://192.168.1.1/restconf/data/ietf-interfaces:interfaces/interface=GigabitEthernet1"
+payload = {
+    "ietf-interfaces:interface": {
+        "name": "GigabitEthernet1",
+        "description": "WAN-Link-to-ISP"
+    }
+}
+requests.patch(patchurl, headers=headers, auth=auth, json=payload, verify=False)
+
+NETCONF and YANG:
+NETCONF is an XML-based protocol for network configuration management. YANG (Yet Another Next Generation) defines the data models — the structured schema of network configuration data. Together, NETCONF/YANG provide a vendor-neutral, structured approach to network configuration that is the foundation of modern network automation.
+
+! Enable NETCONF on Cisco IOS-XE
+netconf-yang
+restconf
+
+The Module 05 lab covers two components:
+1. QoS: Configure a DiffServ QoS policy using MQC (LLQ for voice, CBWFQ for data). Apply it to the WAN interface of a router. Verify traffic classification.
+2. HSRP: Configure HSRP on two distribution switches with preemption. Verify Active/Standby state. Simulate Active router failure and confirm standby takes over.
+
+The Python automation exercises are provided as code walkthroughs in the Reading Guide (Packet Tracer does not support Python/NETCONF).
+
+Assignments due: Sunday, November 22, 2026 at 11:59 PM CST
+
+End of Part 2 — Module 05

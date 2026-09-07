@@ -1,0 +1,52 @@
+[
+  {
+    "scene_title": "Texas Wesleyan University | Professor Nash",
+    "slide_background_prompt": "Topic: Texas Wesleyan University | Professor Nash",
+    "speech_script": "Estimated Runtime: 12\u201314 minutes"
+  },
+  {
+    "scene_title": "[INTRO]",
+    "slide_background_prompt": "Topic: [INTRO]",
+    "speech_script": "Welcome to Module 12. This module covers network virtualization and Software-Defined Networking \u2014 technologies that have fundamentally changed how enterprise networks are designed, deployed, and managed. These concepts are increasingly prominent in the CompTIA Network+ exam and represent the direction the industry has been moving for the past decade.\n\nBy the end of these two videos, you will understand virtual networking components, how hypervisors create virtual machines, what virtual switches do, how network functions are virtualized, and how SDN separates the control plane from the data plane."
+  },
+  {
+    "scene_title": "[SECTION 1: WHY VIRTUALIZATION MATTERS]",
+    "slide_background_prompt": "Topic: [SECTION 1: WHY VIRTUALIZATION MATTERS]",
+    "speech_script": "For most of computing history, one application ran on one physical server. An email server was a box. A file server was a box. A database was a box. This was simple but wasteful. A typical server ran at 5\u201315% CPU utilization most of the time, but occupied the same rack space, power, and cooling as a fully utilized server.\n\nVirtualization changes this. Virtualization allows multiple operating system instances \u2014 called virtual machines (VMs) \u2014 to run simultaneously on a single physical host. Each VM believes it has its own dedicated hardware. A single modern server can run 20, 50, or 100 VMs simultaneously, depending on workload.\n\nThe benefits:\n\n- Server consolidation: fewer physical machines\n- Rapid provisioning: new VMs can be deployed in minutes\n- Isolation: VMs are logically isolated from each other even on the same host\n- Portability: VMs can be moved between physical hosts (live migration)\n- Disaster recovery: VM snapshots and replication enable fast recovery"
+  },
+  {
+    "scene_title": "[SECTION 2: HYPERVISORS \u2014 TYPE 1 AND TYPE 2]",
+    "slide_background_prompt": "Topic: [SECTION 2: HYPERVISORS \u2014 TYPE 1 AND TYPE 2]",
+    "speech_script": "The software layer that creates and manages VMs is called a hypervisor \u2014 also called a Virtual Machine Monitor (VMM).\n\nType 1 Hypervisor (Bare-Metal Hypervisor) \u2014 Runs directly on the physical hardware. There is no host operating system \u2014 the hypervisor is the base layer. Examples: VMware ESXi, Microsoft Hyper-V (server version), Citrix Hypervisor (XenServer), KVM (Linux kernel-based). Used in enterprise data centers. Best performance because no intermediate OS overhead.\n\nType 2 Hypervisor (Hosted Hypervisor) \u2014 Runs as an application on top of a host operating system. The host OS runs first, then the hypervisor runs within it. Examples: VMware Workstation, Oracle VirtualBox, Parallels Desktop. Used for development, testing, and labs. Lower performance than Type 1 due to the host OS layer.\n\nFor the CompTIA Network+ exam: know the difference between Type 1 (bare-metal, direct hardware access) and Type 2 (hosted, runs on top of an OS), and examples of each."
+  },
+  {
+    "scene_title": "[SECTION 3: VIRTUAL MACHINES AND VIRTUAL HARDWARE]",
+    "slide_background_prompt": "Topic: [SECTION 3: VIRTUAL MACHINES AND VIRTUAL HARDWARE]",
+    "speech_script": "Each virtual machine has virtualized versions of physical hardware components:\n\nVirtual CPU (vCPU) \u2014 A logical processing unit allocated from the physical CPU. Multiple VMs share physical CPU cores through scheduling.\n\nVirtual RAM \u2014 A portion of the physical host's memory allocated to a VM. VMs are isolated from each other's memory.\n\nVirtual NIC (vNIC) \u2014 A software-defined network interface card. Each VM has one or more vNICs. The vNIC connects to a virtual switch on the hypervisor.\n\nVirtual Disk (VMDK, VHD) \u2014 A file on the host's storage system that appears to the VM as a physical hard drive.\n\nVirtual machine templates and snapshots: A template is a VM image used to rapidly deploy new VMs with a pre-configured OS. A snapshot captures the current state of a VM at a point in time \u2014 it can be used for quick rollback after a software change."
+  },
+  {
+    "scene_title": "[SECTION 4: VIRTUAL SWITCHES]",
+    "slide_background_prompt": "Topic: [SECTION 4: VIRTUAL SWITCHES]",
+    "speech_script": "When VMs on the same host communicate with each other, they do not need to go through a physical switch. The hypervisor includes a virtual switch (vSwitch) that handles inter-VM traffic entirely in software.\n\nA virtual switch operates like a physical switch: it learns MAC addresses and forwards frames only to the appropriate virtual port. This allows VMs to communicate at Layer 2 speeds without hitting the physical network.\n\nKey virtual switch concepts:\n\nvSwitch uplinks \u2014 Physical NICs on the host that connect the virtual switch to the physical network. External traffic from VMs flows through these uplinks.\n\nPort groups \u2014 Named groups of virtual ports on a vSwitch, typically mapped to a specific VLAN. A VM connected to a port group labeled VLAN 20 will have its traffic tagged for VLAN 20 when it leaves through the physical uplink.\n\nVMware vSphere uses the vSphere Standard Switch (VSS) and the more advanced vSphere Distributed Switch (VDS) that spans multiple hosts. Microsoft Hyper-V uses the Hyper-V Virtual Switch. Both support VLANs through 802.1Q tagging, just like physical switches."
+  },
+  {
+    "scene_title": "[SECTION 5: NETWORK FUNCTION VIRTUALIZATION (NFV)]",
+    "slide_background_prompt": "Topic: [SECTION 5: NETWORK FUNCTION VIRTUALIZATION (NFV)]",
+    "speech_script": "Network Function Virtualization (NFV) takes physical network appliances \u2014 firewalls, routers, load balancers, IDS/IPS, WAN accelerators \u2014 and replaces them with software instances running on commodity hardware.\n\nInstead of buying a dedicated firewall appliance for each branch office, you deploy a virtual firewall (vFirewall) as a VM in a data center or cloud. Instead of a physical load balancer, you run a virtual load balancer on the same hardware as your application servers.\n\nNFV benefits:\n\n- Hardware cost reduction: commodity x86 servers instead of purpose-built appliances\n- Elastic scaling: spin up additional instances during high load, scale down during off-peak\n- Faster deployment: a new virtual firewall takes minutes; a new physical appliance takes weeks\n- Centralized management: all network functions managed from a single orchestration platform\n\nNFV is deployed and managed using orchestration systems such as VMware NSX, OpenStack, or cloud-native platforms like AWS and Azure."
+  },
+  {
+    "scene_title": "[SECTION 6: CONTAINERS AND MICROSERVICES]",
+    "slide_background_prompt": "Topic: [SECTION 6: CONTAINERS AND MICROSERVICES]",
+    "speech_script": "Containers are a lighter-weight form of virtualization compared to VMs. Where a VM includes a full OS installation plus the application, a container shares the host OS kernel and includes only the application and its dependencies.\n\nKey differences from VMs:\n\n- Containers start in seconds; VMs take minutes to boot\n- Containers use far less memory and disk than VMs\n- Multiple containers share one OS kernel\n- Containers are more portable but provide less isolation than VMs\n\nDocker is the most common container runtime. Kubernetes (K8s) is the orchestration platform for managing large numbers of containers across multiple hosts.\n\nFor the Network+ exam, understand that containers share the host OS kernel while VMs include their own OS. This is the key architectural difference."
+  },
+  {
+    "scene_title": "[SECTION 7: VIRTUAL NETWORKING COMPONENTS SUMMARY]",
+    "slide_background_prompt": "Topic: [SECTION 7: VIRTUAL NETWORKING COMPONENTS SUMMARY]",
+    "speech_script": "Let's summarize the virtual networking components you need to know:\n\nHypervisor \u2014 Creates and manages VMs. Type 1 (bare-metal) or Type 2 (hosted).\n\nVirtual Machine (VM) \u2014 A software instance of a complete computer. Has virtual CPU, RAM, NIC, and disk.\n\nVirtual Switch (vSwitch) \u2014 A software switch on the hypervisor. Connects VMs to each other and to physical networks through uplinks.\n\nVirtual NIC (vNIC) \u2014 The VM's network interface. Connects to a virtual switch port group.\n\nPort Group \u2014 A named group of virtual ports associated with a VLAN.\n\nNFV \u2014 Network functions (firewall, router, load balancer) implemented as software VMs instead of physical hardware.\n\nContainer \u2014 A lightweight, OS-level virtualization that packages an application and its dependencies. Shares the host OS kernel.\n\nIn Part 2, we cover Software-Defined Networking (SDN), the control plane vs. data plane separation, SDN controllers, overlay networks, and how these technologies apply to cloud networking."
+  },
+  {
+    "scene_title": "[SUMMARY \u2014 PART 1]",
+    "slide_background_prompt": "Topic: [SUMMARY \u2014 PART 1]",
+    "speech_script": "In Part 1 we covered:\n\n- The business case for virtualization: server consolidation, rapid provisioning, isolation\n- Type 1 vs. Type 2 hypervisors: bare-metal versus hosted\n- Virtual hardware components: vCPU, vNIC, virtual disk, VM templates and snapshots\n- Virtual switches: how VMs communicate internally and connect to physical networks\n- NFV: replacing physical network appliances with software instances\n- Containers vs. VMs: shared OS kernel versus full OS per instance\n\nSee you in Part 2.\n\nCIS-3321 Network Administration   Texas Wesleyan University   Professor Nash"
+  }
+]

@@ -1,0 +1,37 @@
+[
+  {
+    "scene_title": "Section 1: Part 2 Introduction",
+    "slide_background_prompt": "Professor Nash on camera",
+    "speech_script": "Welcome back to Module 03. In Part 1 we covered IPv4 address structure, classful addressing, RFC 1918 private ranges, and binary conversion. Now in Part 2 we tackle CIDR notation and the core subnetting calculations you will need for both the exam and your career. I am going to walk you through a step-by-step process, then we will do several practice problems together. Have your pencil ready."
+  },
+  {
+    "scene_title": "Section 2: CIDR Notation and the Subnet Table",
+    "slide_background_prompt": "Topic: Section 2: CIDR Notation and the Subnet Table",
+    "speech_script": "CIDR (Classless Inter-Domain Routing) notation expresses the subnet mask as a prefix length \u2014 the number of consecutive 1 bits in the mask. A /24 means 24 bits are 1 (the network portion), and 8 bits are 0 (the host portion).\n\nThe key formula you need is: Usable hosts = 2 to the power of (host bits) minus 2. We subtract 2 to exclude the network address (all host bits zero) and the broadcast address (all host bits one).\n\nFor a /26: 32 minus 26 equals 6 host bits. 2 to the power of 6 equals 64. Minus 2 equals 62 usable hosts.\n\nThe \"block size\" shortcut: subtract the last octet of the subnet mask from 256. For /26, mask is 192 in the last octet. 256 minus 192 equals 64. The subnets within a /24 that use a /26 mask start at 0, 64, 128, and 192.\n\nThis block size approach is the fastest way to identify which subnet an address belongs to. Memorize the table I just showed you \u2014 /24 through /30. These cover the vast majority of exam questions."
+  },
+  {
+    "scene_title": "Section 3: Four-Step Subnet Calculation Process",
+    "slide_background_prompt": "Four-step process listed vertically: Step 1 \u2014 Identify the CIDR prefix and calculate block size. Step 2 \u2014 Find the network address. Step 3 \u2014 Find the broadcast address. Step 4 \u2014 Identify the usable host range.",
+    "speech_script": "Here is the four-step process I want you to use for every subnet calculation problem.\n\nStep 1: Identify the CIDR prefix and calculate the block size. Block size equals 256 minus the interesting octet of the subnet mask. For /26, mask is 192, block size is 64.\n\nStep 2: Find the network address. Look at the interesting octet of the IP address. Find the largest multiple of the block size that does not exceed that octet. That is your network address.\n\nStep 3: Find the broadcast address. Take the network address in the interesting octet and add the block size minus 1. That gives you the broadcast.\n\nStep 4: The usable host range is everything between the network address and the broadcast address.\n\nLet me walk through a complete example.\n\nGiven: IP address 192.168.1.75 with mask 255.255.255.224 (/27).\n\nStep 1: /27, mask is 224, block size = 256 - 224 = 32.\n\nStep 2: The interesting octet is the last one (75). Multiples of 32: 0, 32, 64, 96. The largest multiple of 32 that does not exceed 75 is 64. Network address = 192.168.1.64.\n\nStep 3: Broadcast = 64 + 32 - 1 = 95. Broadcast address = 192.168.1.95.\n\nStep 4: Usable range = 192.168.1.65 through 192.168.1.94.\n\nThat is 30 usable hosts (2 to the power of 5 minus 2 = 30). The host at 192.168.1.75 is within this range, so it is valid."
+  },
+  {
+    "scene_title": "Section 4: Exam-Style Practice Problems",
+    "slide_background_prompt": "Problem set with three IP addresses and masks",
+    "speech_script": "Let's do three more practice problems at exam pace.\n\nProblem 1: Host IP 10.50.20.130, mask 255.255.255.192 (/26).\n\nBlock size: 256 - 192 = 64. Interesting octet = 130. Multiples of 64: 0, 64, 128. Largest not exceeding 130 = 128. Network = 10.50.20.128. Broadcast = 128 + 64 - 1 = 191. So broadcast = 10.50.20.191. Usable range = 10.50.20.129 through 10.50.20.190. Host 130 is valid.\n\nProblem 2: Host IP 172.16.5.100, mask 255.255.255.240 (/28).\n\nBlock size: 256 - 240 = 16. Interesting octet = 100. Multiples of 16: 0, 16, 32, 48, 64, 80, 96, 112. Largest not exceeding 100 = 96. Network = 172.16.5.96. Broadcast = 96 + 16 - 1 = 111. So broadcast = 172.16.5.111. Usable range = 172.16.5.97 through 172.16.5.110. 14 usable hosts.\n\nProblem 3: Two routers connected by a point-to-point link. What mask provides exactly 2 usable host addresses with minimal waste?\n\nBlock size 4, /30, mask 255.255.255.252. 2 to the power of 2 minus 2 = 2 usable hosts. This is the standard mask for point-to-point router links. One address for each router interface, zero waste.\n\n> Network+ Exam Tip: The /30 subnet for point-to-point links is one of the most frequently tested subnetting scenarios. If you see a scenario involving two routers connected directly, /30 is almost always the correct answer."
+  },
+  {
+    "scene_title": "Section 5: Number of Subnets vs. Hosts",
+    "slide_background_prompt": "Table showing borrowed bits, number of subnets, hosts per subnet. Starting from /24: borrow 1 bit = 2 subnets, 126 hosts each. Borrow 2 = 4 subnets, 62 hosts. Borrow 3 = 8 subnets, 30 hosts. Borrow 4 = 16 subnets, 14 hosts.",
+    "speech_script": "When you subnet a network, you borrow bits from the host portion of the address. Each bit you borrow doubles the number of subnets but halves the number of hosts per subnet.\n\nStarting from a /24 (254 usable hosts, one subnet):\n\nBorrow 1 bit \u2192 /25 \u2192 2 subnets, 126 hosts each.\n\nBorrow 2 bits \u2192 /26 \u2192 4 subnets, 62 hosts each.\n\nBorrow 3 bits \u2192 /27 \u2192 8 subnets, 30 hosts each.\n\nBorrow 4 bits \u2192 /28 \u2192 16 subnets, 14 hosts each.\n\nThe formula for number of subnets is 2 to the power of borrowed bits. The formula for hosts per subnet is 2 to the power of remaining host bits minus 2.\n\nDesign principle: always choose the smallest subnet that accommodates your host count plus some growth room. Avoid over-provisioning to conserve address space."
+  },
+  {
+    "scene_title": "Section 6: Lab Preview and Module Closing",
+    "slide_background_prompt": "Lab preview \u2014 subnet calculation worksheet",
+    "speech_script": "In this week's lab, you will work through a set of subnet calculation exercises \u2014 given an IP address and mask, you will determine the network address, broadcast address, usable range, and number of hosts. You will also configure IP addresses on Packet Tracer virtual hosts to verify your calculations by testing connectivity.\n\nBefore the lab, memorize the /24 through /30 subnet table from the reading guide. Practice at least ten problems with different addresses and masks.\n\nKey module takeaways: IPv4 is 32 bits in four octets. The subnet mask separates network bits from host bits. RFC 1918 defines three private ranges. The four-step calculation gives you network address, broadcast, and host range for any subnet. Block size equals 256 minus the interesting octet.\n\nIn Module 04 we transition to IPv6 \u2014 128-bit addresses, hexadecimal notation, and the transition mechanisms that allow IPv4 and IPv6 to coexist."
+  },
+  {
+    "scene_title": "Additional Resources",
+    "slide_background_prompt": "Topic: Additional Resources",
+    "speech_script": "- Professor Messer's free CompTIA Network+ N10-008 Study Course: professormesser.com\n- CompTIA official Network+ exam objectives: comptia.org\n\nEnd of Part 2"
+  }
+]
