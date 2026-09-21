@@ -8,5 +8,5 @@ Welcome to **CSC-6361: Advanced Computer Networks (Graduate Level)**! Please int
 3. **Semester Goal:** One specific technical skill or concept you are excited to master in this course.
 
 ### Deadlines:
-* **Initial Post:** Due **Sunday, August 30 by 11:59 PM CT** (Census Engagement Requirement).
+* **Initial Post:** Due **Sunday, October 25 by 11:59 PM CT** (Census Engagement Requirement).
 * **Peer Replies:** Reply to at least two classmates with constructive, encouraging feedback (50+ words each).

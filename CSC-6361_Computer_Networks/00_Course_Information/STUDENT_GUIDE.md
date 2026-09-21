@@ -14,12 +14,14 @@ This guide will walk you through everything you need to know to succeed from Day
 
 ## Step 1 — Set Up Your Tools (Before October 19)
 
-### Install Cisco Packet Tracer (Free)
-All lab exercises require Cisco Packet Tracer, a free network simulation tool from Cisco.
-1. Go to [https://www.netacad.com/courses/packet-tracer](https://www.netacad.com/courses/packet-tracer)
-2. Create a free NetAcad account (use your TXWES email).
-3. Download and install Packet Tracer for your operating system (Windows, Mac, or Linux).
-4. Launch Packet Tracer and verify it opens correctly before Module 01 opens.
+### Install Cisco Packet Tracer (Free via Introductory Course)
+All lab exercises require Cisco Packet Tracer, the industry-standard desktop network simulator.
+1. Go to the free introductory tutorial: [Cisco Skills for All: Getting Started with Cisco Packet Tracer](https://skillsforall.com/course/getting-started-cisco-packet-tracer)
+2. Register a free account using your Texas Wesleyan email (`@txwes.edu`).
+3. Complete the brief tutorial to download the installer for your operating system (Windows, Mac, or Linux).
+4. Launch Packet Tracer, log in with your credentials, check **"Keep me logged in"**, and verify the simulator opens correctly.
+
+> **Important Course Model Note:** You do **not** need to log onto NetAcad or Skills for All to complete this course. The introductory tutorial is used solely to obtain and activate Packet Tracer. All course readings, lectures, quizzes, and discussions are hosted 100% inside this Canvas course!
 
 ### Create a Free Cisco Learning Network Account
 The Cisco Learning Network is a free community with study groups, forums, and official CCNP resources.
@@ -117,7 +119,7 @@ A timed Canvas quiz with CCNP Enterprise-style scenario questions covering all 7
 
 | Resource | URL |
 |---|---|
-| Cisco Packet Tracer (Free) | https://www.netacad.com/courses/packet-tracer |
+| Cisco Packet Tracer (Free) | https://skillsforall.com/course/getting-started-cisco-packet-tracer |
 | Cisco Learning Network | https://learningnetwork.cisco.com |
 | Cisco DevNet Learning Labs | https://developer.cisco.com/learning/ |
 | Cisco Skills For All | https://skillsforall.com/ |

@@ -13,10 +13,10 @@ This course operates under a **Zero Textbook Cost (ZTC)** model. No commercial t
 
 | Resource | URL | Notes |
 |---|---|---|
-| **Cisco Skills for All** (formerly NetAcad) | https://skillsforall.com/ | Free CCNP-level courses and lab content |
+| **Cisco Packet Tracer** | https://skillsforall.com/course/getting-started-cisco-packet-tracer | Free desktop network simulator — required for all weekly labs (download via free tutorial) |
+| **Canvas Course LMS** | https://txwes.instructure.com | 100% self-contained home for all reading guides, video scripts, quizzes & discussions |
 | **Cisco Learning Network** | https://learningnetwork.cisco.com/ | CCNP study community, official exam blueprints |
 | **Cisco DevNet Learning Labs** | https://developer.cisco.com/learning/ | Free automation labs (Python, Ansible, REST APIs) |
-| **Cisco Packet Tracer** | https://www.netacad.com/courses/packet-tracer | Free network simulation — required for all labs |
 | **IETF RFC Repository** | https://www.ietf.org/rfc/ | Official protocol standards (primary technical reference) |
 | **Cisco Documentation** | https://www.cisco.com/c/en/us/support/index.html | Free official configuration guides and command references |
 
@@ -28,7 +28,6 @@ This course operates under a **Zero Textbook Cost (ZTC)** model. No commercial t
 - **IETF RFC 2328** — OSPF Version 2: https://datatracker.ietf.org/doc/html/rfc2328
 - **IETF RFC 7868** — Cisco's EIGRP Informational RFC: https://datatracker.ietf.org/doc/html/rfc7868
 - **Cisco IOS OSPF Configuration Guide** (free): https://www.cisco.com/c/en/us/support/index.html → search "OSPF Configuration Guide"
-- **Cisco Skills for All:** "Enterprise Networking, Security, and Automation" — Module: IP Routing
 
 ### Module 02 — Campus Network Design: VLANs, STP & EtherChannel
 - **IEEE 802.1Q** (VLAN Tagging) overview via Cisco docs
@@ -63,7 +62,7 @@ This course operates under a **Zero Textbook Cost (ZTC)** model. No commercial t
 
 ### Module 07 — Troubleshooting, Capstone & Final
 - **Cisco Network Troubleshooting Guide** (free): https://www.cisco.com/
-- **Cisco Packet Tracer Student Guide** (free, via NetAcad)
+- **Cisco Packet Tracer Student Guide** (free desktop simulator)
 - Review all prior module resources for capstone lab preparation
 
 ---
