@@ -26,7 +26,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 ---
 
 ### SEGMENT 1: Introduction — Why Data Modeling Matters (0:00–2:00)

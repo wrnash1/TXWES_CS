@@ -210,8 +210,6 @@ A covers foundational data concepts and infrastructure. B covers data collection
 
 ---
 
----
-
 ### Question 11 (5 points)
 
 A financial analyst builds a dashboard showing only one metric: net revenue for the current month with a green/red indicator versus last month. A colleague argues the dashboard should include 12 more KPIs. What dashboard design principle does the colleague's suggestion violate?

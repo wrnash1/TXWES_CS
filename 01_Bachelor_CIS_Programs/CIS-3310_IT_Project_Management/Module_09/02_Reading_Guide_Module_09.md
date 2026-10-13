@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-3310 IT Project Management
 **Certification Alignment:** CompTIA Project+ (PK0-005) | PMBOK 6th and 7th Editions
 **Prepared by:** Professor Nash | Texas Wesleyan University
@@ -304,8 +301,6 @@ The following free, openly licensed resources extend the concepts in this module
 5. **Probability-Impact Matrix Interactive Tool — PM Study Circle**
    [pmstudycircle.com/probability-impact-matrix](https://pmstudycircle.com/probability-and-impact-matrix/)
    Free interactive tool for practicing risk scoring and prioritization — excellent preparation for calculation-based questions on the Module 09 quiz.
-
-
 
 ---
 

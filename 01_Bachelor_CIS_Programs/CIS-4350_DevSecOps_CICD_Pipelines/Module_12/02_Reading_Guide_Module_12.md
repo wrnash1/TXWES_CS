@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4350 DevSecOps and CI/CD Pipelines
 
 ## Certification Alignment: DevSecOps Professional (DSOE)
@@ -299,8 +296,6 @@ The Center for Internet Security's authoritative benchmark for Kubernetes cluste
 ---
 
 Reading Guide — Module 12 | CIS-4350 | Texas Wesleyan University | Professor Nash
-
-
 
 ---
 

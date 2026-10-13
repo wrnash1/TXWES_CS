@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-3312 Systems Analysis and Design
 **Certification Alignment:** IIBA ECBA (Entry Certificate in Business Analysis)
 **Prepared by:** Professor Nash | Texas Wesleyan University
@@ -286,8 +283,6 @@ The following open educational resources provide additional depth on module topi
 5. **IEEE Glossary of Software Engineering Terminology (IEEE Std 610.12)**
    <https://ieeexplore.ieee.org/document/159342>
    Focus: Authoritative definitions for "system," "requirements," "verification," and "validation" as used in technical certification exams. Access via any university library proxy or the IEEE Xplore free abstract pages.
-
-
 
 ---
 

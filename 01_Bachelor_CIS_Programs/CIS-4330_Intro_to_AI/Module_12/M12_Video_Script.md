@@ -8,15 +8,6 @@
 
 ---
 
-## Production Notes
-
-- **Runtime Target:** 28–32 minutes
-- **Slide Deck:** M12_Slides.pptx
-- **Screen Recording:** Azure Machine Learning Studio live demo
-- **Tone:** Conversational, professional; use real-world analogies
-
----
-
 ## SEGMENT 1 — Hook and Module Overview (Slides 1–3) [3 min]
 
 [ON CAMERA]

@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-1310 Introduction to Python
 
 **Certification Alignment:** PCAP — Certified Associate in Python Programming (Python Institute)
@@ -503,8 +500,6 @@ A comprehensive free article on sets covering all operations, frozen sets, set c
 - [ ] Review all 7 Certification Exam Tips in Section 6.
 - [ ] Preview the lab tasks in Section 9.
 - [ ] Proceed to the Module 07 Lab Activity.
-
-
 
 ---
 

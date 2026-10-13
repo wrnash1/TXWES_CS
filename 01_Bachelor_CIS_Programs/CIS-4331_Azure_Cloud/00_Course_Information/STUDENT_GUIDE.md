@@ -51,7 +51,6 @@ Below is the study roadmap for every course in our computer science and computer
 | :--- | :--- | :--- | :--- |
 | **CIS-4331: Azure Cloud** | Microsoft Azure Fundamentals (AZ-900) | Understand cloud economics (CAPEX vs OPEX) and resource hierarchies (Subscriptions, Resource Groups). | [Microsoft Learn: AZ-900 Path](https://learn.microsoft.com/) |
 
-
 ---
 
 ## 5. Final Exam Certification Policy (Module 16)

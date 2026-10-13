@@ -17,7 +17,6 @@ Assume the executive role of Chief Technology Officer (CTO) or Principal Enterpr
 **Peer Critiques (2 required, due Sunday at 11:59 PM CT):**
 Critically challenge at least two colleagues' technical frameworks using empirical data, edge-case failure modes, and counter-examples from published literature.
 
-
 ---
 
 ### Comprehensive SACSCOC RSI Grading Rubric (100 Points Total)

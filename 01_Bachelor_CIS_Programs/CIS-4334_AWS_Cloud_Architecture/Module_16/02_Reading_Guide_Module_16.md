@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4334 AWS Cloud Architecture
 
 ## Texas Wesleyan University | Professor Nash
@@ -352,8 +349,6 @@ Official AWS practice question set for SAA-C03 developed by AWS. Provides timed 
 **3. AWS Documentation — SAA-C03 Exam Guide**
 https://d1.awsstatic.com/training-and-certification/docs-sa-assoc/AWS-Certified-Solutions-Architect-Associate_Exam-Guide.pdf
 The official exam guide published by AWS, listing all in-scope services, technologies, and task statements for each domain. Use this document to confirm your study coverage and identify any service categories you have not yet reviewed.
-
-
 
 ---
 

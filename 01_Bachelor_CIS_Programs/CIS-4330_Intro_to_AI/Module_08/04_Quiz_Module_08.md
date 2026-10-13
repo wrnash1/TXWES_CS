@@ -254,8 +254,6 @@ B. Extractive summarization, because it selects existing sentences from the sour
 
 ---
 
----
-
 ## Question 11 (5 points)
 
 Azure AI Language's opinion mining feature is enabled when calling the sentiment analysis endpoint. What additional information does opinion mining return compared to standard sentiment analysis?

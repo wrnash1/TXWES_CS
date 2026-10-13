@@ -7,7 +7,6 @@ Construct an operational prototype demonstrating the core concepts of Emerging T
 - Stress-testing benchmark script capturing throughput (req/sec) and p99 latency.
 - Comprehensive technical report summarizing findings and architectural trade-offs.
 
-
 ---
 
 ### Hands-On Technical Execution Blueprint & Laboratory Tasks

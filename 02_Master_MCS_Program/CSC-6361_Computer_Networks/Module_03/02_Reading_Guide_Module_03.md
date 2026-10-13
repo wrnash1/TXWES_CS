@@ -78,8 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
 ## CSC-6361 Advanced Computer Networks | Graduate Level
 ## Week 3: November 2–8, 2026
 
@@ -212,8 +210,6 @@ DMVPN (Dynamic Multipoint VPN) extends the GRE/IPsec concepts from this module i
 **3. IETF RFC 5996 — Internet Key Exchange Protocol Version 2 (IKEv2)**
 https://datatracker.ietf.org/doc/html/rfc5996
 IKEv2 is the modern replacement for IKEv1/ISAKMP configured in the lab. This RFC defines the complete IKEv2 exchange — understanding the differences between IKEv1 and IKEv2 (fewer round trips, built-in EAP support, mobility/multihoming extensions) is directly tested on the CCNP ENCOR exam.
-
-
 
 ---
 

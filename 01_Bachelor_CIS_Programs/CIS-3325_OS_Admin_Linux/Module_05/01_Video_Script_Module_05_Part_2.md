@@ -26,16 +26,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
----
-
-## Production Notes
-
-- **Screen recording**: Terminal emulator (dark theme, 18pt font)
-- **Demonstrations**: Run actual monitoring commands; show /proc virtual filesystem contents
-- **Slide overlays**: nice value scale shown as graphic; cron syntax table shown as reference
-- **Pacing**: Allow vmstat/iostat output to scroll several lines before explaining
-
 ---
 
 ## SEGMENT 1 — Opening and Recap (0:00–1:00)

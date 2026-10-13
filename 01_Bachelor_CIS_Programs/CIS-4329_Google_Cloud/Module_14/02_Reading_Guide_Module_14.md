@@ -78,8 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
 ## Course: CIS-4329 – Google Cloud Administration (Google Cloud Associate Cloud Engineer)
 
 ---
@@ -162,8 +160,6 @@ Detailed explanation of how Sustained Use Discounts automatically apply to N1/N2
 **3. Google Cloud Documentation — Export Billing Data to BigQuery**
 <https://cloud.google.com/billing/docs/how-to/export-data-bigquery>
 Step-by-step setup guide for enabling Cloud Billing export to BigQuery, including the dataset location requirements, the difference between Standard and Detailed usage exports, and example SQL queries for analyzing costs by project, service, and label.
-
-
 
 ---
 

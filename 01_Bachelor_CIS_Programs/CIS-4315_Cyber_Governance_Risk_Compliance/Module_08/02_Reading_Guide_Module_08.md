@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4315 Cyber Governance, Risk, and Compliance
 
 **Certification Alignment:** ISACA CISM — Domain 3: Information Security Program
@@ -363,8 +360,6 @@ Description: Free SANS Institute publication defining five stages of security aw
 **Anti-Phishing Working Group (APWG) — Phishing Activity Trends Reports**
 URL: https://apwg.org/resources/apwg-reports/
 Description: Free quarterly reports from the APWG documenting current phishing attack trends, lure themes, target industries, and attack infrastructure. These reports provide current threat intelligence for designing realistic phishing simulations and for calibrating training content to reflect the actual attacks employees are most likely to encounter — supporting the phishing simulation design principles in Section 5 of this module.
-
-
 
 ---
 

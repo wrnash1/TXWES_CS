@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## CIS-3325 OS Administration | Texas Wesleyan University
 
 **Certification Alignment:** CompTIA Linux+ (XK0-005)
@@ -386,8 +383,6 @@ URL: https://wiki.archlinux.org/title/GRUB
 Coverage: The most comprehensive freely available GRUB2 reference. Covers BIOS vs UEFI
 installation, grub.cfg generation, kernel parameters, and rescue procedures. Distribution-
 agnostic and kept current by the Arch Linux community.
-
-
 
 ---
 

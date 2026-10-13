@@ -171,8 +171,6 @@ Distractor Analysis:
 
 ---
 
----
-
 **Question 11**
 An organization wants to use Azure AI services to automatically detect unusual patterns in server telemetry data — such as unexpected spikes in CPU usage or sudden drops in request throughput — without providing labeled examples of what "anomalous" looks like. Which Azure AI service is purpose-built for this use case?
 *   A) Azure Machine Learning AutoML — because anomaly detection is a supervised classification task that requires labeled examples of normal and anomalous behavior.

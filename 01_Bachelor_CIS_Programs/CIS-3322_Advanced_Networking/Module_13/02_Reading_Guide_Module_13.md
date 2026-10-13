@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-3322 Advanced Networking
 
 ## Texas Wesleyan University | Professor Nash
@@ -529,8 +526,6 @@ The following open educational resources extend network security fundamentals to
 4. **Cisco IOS Security Configuration Guide — AAA** (cisco.com): Cisco's official guide covering `aaa new-model`, RADIUS and TACACS+ server configuration, method lists, fallback behavior, and command authorization for device administration with complete CLI examples.
 
 5. **Cisco Identity Services Engine (ISE) Documentation** (cisco.com/c/en/us/products/security/identity-services-engine): Overview documentation for Cisco ISE covering its role as a RADIUS/policy server, 802.1X with PEAP and EAP-TLS, MAB for non-802.1X devices, VLAN assignment from RADIUS attributes, and posture assessment — all concepts referenced in CCNA Security domain questions.
-
-
 
 ---
 

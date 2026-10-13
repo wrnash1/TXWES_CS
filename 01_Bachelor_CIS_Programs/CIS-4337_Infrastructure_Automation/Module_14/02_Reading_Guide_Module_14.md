@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4337 Infrastructure Automation
 
 ## Texas Wesleyan University | Professor Nash
@@ -426,8 +423,6 @@ A HashiCorp tutorial demonstrating practical multi-provider configurations, cove
 ---
 
 End of Module 14 Reading Guide
-
-
 
 ---
 

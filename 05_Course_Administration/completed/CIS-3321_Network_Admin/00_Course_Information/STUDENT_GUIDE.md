@@ -51,7 +51,6 @@ Below is the study roadmap for every course in our computer science and computer
 | :--- | :--- | :--- | :--- |
 | **CIS-3321: Network Admin** | CompTIA Network+ (N10-008) | Practice binary-to-decimal math for subnetting; trace routing paths using `traceroute`. | [Professor Messer Network+](https://www.professormesser.com/) |
 
-
 ---
 
 ## 5. Final Exam Certification Policy (Module 16)

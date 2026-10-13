@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-4334 AWS Cloud Architecture
 **Certification Target:** AWS Solutions Architect Associate (SAA-C03)
 
@@ -388,8 +385,6 @@ Free course covering EC2 instance types, purchasing options, EBS volumes, and th
 **3. AWS Documentation — Elastic Load Balancing Features Comparison**
 https://aws.amazon.com/elasticloadbalancing/features/
 Official feature comparison page for ALB, NLB, GWLB, and CLB — essential reference for the SAA-C03 load balancer selection questions covered in this module.
-
-
 
 ---
 

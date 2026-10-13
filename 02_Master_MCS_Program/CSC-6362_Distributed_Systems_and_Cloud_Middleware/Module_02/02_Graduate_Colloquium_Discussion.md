@@ -7,7 +7,6 @@ Critically analyze the trade-offs inherent in Physical vs. Logical Clocks, Lampo
 2. Evaluate potential edge cases and failure domains.
 3. Critique the proposals of at least two peers using empirical performance arguments.
 
-
 ---
 
 ### Comprehensive SACSCOC RSI Grading Rubric (100 Points Total)

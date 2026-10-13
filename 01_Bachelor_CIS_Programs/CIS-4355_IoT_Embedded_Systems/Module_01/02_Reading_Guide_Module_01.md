@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-4355 IoT and Embedded Systems
 **Instructor:** Professor Nash
 **Certification Target:** CompTIA IoT+ Domain 1
@@ -286,8 +283,6 @@ The home page for all OWASP IoT security resources, including the IoT Top 10, th
 ---
 
 End of Reading Guide – Module 01
-
-
 
 ---
 

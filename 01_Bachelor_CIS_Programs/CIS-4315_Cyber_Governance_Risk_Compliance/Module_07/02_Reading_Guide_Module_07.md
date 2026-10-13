@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4315 Cyber Governance, Risk, and Compliance
 
 **Certification Alignment:** ISACA CISM — Domain 3: Information Security Program
@@ -430,8 +427,6 @@ Description: The Center for Internet Security's free Controls v8 publication pro
 **NIST CSF 2.0 — Quick Start Guides**
 URL: https://www.nist.gov/cyberframework/getting-started
 Description: NIST's free collection of Quick Start Guides for CSF 2.0, including guides for small businesses, enterprise risk management integration, and supply chain risk management. These practical guides demonstrate how the six CSF functions are applied in real organizational contexts and include worked examples of CSF Current and Target Profiles — directly supporting the CSF Profiles and Tiers content in Section 4 of this module.
-
-
 
 ---
 

@@ -232,8 +232,6 @@ D) Up to 2 hours of data will be lost because the RPO provides automatic backup 
 
 ---
 
----
-
 ## Question 11
 
 A security manager calculates the ALE for a web application vulnerability as $320,000 per year. A web application firewall (WAF) costs $45,000 per year and is expected to reduce the ALE to $80,000. What is the Value of Safeguard for the WAF?

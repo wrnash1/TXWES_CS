@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-3322 Advanced Networking
 **Certification Alignment:** Cisco CCNA 200-301 (Domain 2: Network Access - 20%)
 **Prepared by:** Professor Nash | Texas Wesleyan University
@@ -291,8 +288,6 @@ The following open educational resources extend VLAN and switching concepts to C
 4. **Cisco Packet Tracer Labs — VLAN Configuration Activities** (skillsforall.com/course/getting-started-cisco-packet-tracer): Pre-built Packet Tracer activities for VLAN configuration, trunk verification, and access port troubleshooting are available through the Cisco Networking Academy, all aligned with CCNA Domain 2 objectives.
 
 5. **GNS3 Documentation — Ethernet Switching Labs** (docs.gns3.com): GNS3 provides free virtual lab guides for switch configuration including VLAN trunking, DTP, and VTP lab topologies that can be run without physical hardware.
-
-
 
 ---
 

@@ -26,7 +26,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 ---
 
 ## Segment 1 — Introduction: Why Risk Management Is Central to Security (2 minutes)

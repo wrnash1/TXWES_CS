@@ -276,8 +276,6 @@ D. Escalate to the board of directors for a decision on whether business continu
 
 ---
 
----
-
 ### Question 11 (5 points)
 
 A threat hunter reviewing SIEM logs notices that a workstation has been executing PowerShell commands that spawn encoded base64 strings every four hours for the past six days. No antivirus alert has fired. Which detection concept best describes why the AV has not alerted, and which detection technology is most suited to identifying this behavior?

@@ -18,7 +18,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Course:** CIS-4355 IoT and Embedded Systems
 
 **Institution:** Texas Wesleyan University | Professor Nash
@@ -222,11 +221,3 @@ In Module 08 we move to sensor integration. You will connect temperature, humidi
 See you there.
 
 ---
-
-## PRODUCTION NOTES
-
-- B-roll: Wireshark capture of MQTT packets, HiveMQ dashboard with live message flow, ESP32 serial monitor showing successful publish
-- Slide: QoS comparison table with animated send/acknowledge arrows for each level
-- Demo: Live mosquitto_sub terminal window showing messages arriving from ESP32
-- Closed captions: verify MQTT, CoAP, CBOR, PubSubClient, QoS, idempotent, 6LoWPAN, PUBACK
-- Run time target: 22 minutes

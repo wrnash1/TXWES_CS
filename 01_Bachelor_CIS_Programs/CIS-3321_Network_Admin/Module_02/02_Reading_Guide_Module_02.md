@@ -1,6 +1,5 @@
 # Reading Guide: Module 02 – TCP/IP Model and Network Protocols
 
-
 <!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 <div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
   <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
@@ -330,8 +329,6 @@ Relevance: Wireshark's public sample capture library includes DHCP DORA exchange
 ---
 
 *CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash*
-
-
 
 ---
 

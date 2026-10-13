@@ -20,23 +20,9 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Estimated Duration:** 24–28 minutes
 **Certification Alignment:** Technical Interview Readiness (LeetCode / HackerRank)
 **Recorded by:** Professor Nash | Texas Wesleyan University
-
----
-
-> **PRODUCTION NOTES FOR INSTRUCTOR:**
->
-> - Use VS Code + Python terminal for all [DEMO] sections.
-> - [PAUSE] = 2 seconds of silence.
-> - The key concept: DP requires two properties — optimal substructure and overlapping subproblems. Emphasize both. Greedy has optimal substructure but not (necessarily) overlapping subproblems; DP has both.
-> - Fibonacci is the entry point — trace the naive recursion tree to show exponential overlap, then show memoization collapses it to O(n).
-> - Coin Change is the canonical DP problem for interviews. Walk the recurrence derivation carefully: dp[i] = min over all coins c of (dp[i-c] + 1).
-> - LCS is the canonical 2D DP table problem. Draw the full table for "abcde" / "ace".
-> - Distinguish memoization (top-down, recursive) from tabulation (bottom-up, iterative). Both produce the same answers; tabulation avoids recursion depth issues.
-> - Common mistakes: forgetting base cases, off-by-one on table size, confusing dp[i] (ways to make i) with dp[i] (minimum coins for i).
 
 ---
 

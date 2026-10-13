@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4333 Penetration Testing
 
 ## Texas Wesleyan University | Professor Nash
@@ -438,8 +435,6 @@ Document All Findings --> Attack Surface Map
 
 ---
 
----
-
 ## 9. Supplemental Resources
 
 **1. Nmap Network Scanning — Official Reference Guide**
@@ -455,8 +450,6 @@ The official enum4linux repository includes usage documentation, flag reference,
 This SANS white paper on SNMP security covers community string vulnerabilities, SNMPv3 configuration, and enumeration risks. It provides the defensive context for understanding why SNMP misconfigurations (default community strings, SNMPv1/v2c exposure) are high-priority findings during a scanning phase.
 
 **Proprietary and Confidential. Not for disclosure outside of Texas Wesleyan University course use.**
-
-
 
 ---
 

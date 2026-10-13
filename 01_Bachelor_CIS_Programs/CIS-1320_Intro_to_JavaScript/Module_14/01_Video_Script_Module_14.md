@@ -20,24 +20,9 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Estimated Duration:** 20–24 minutes
 **Certification Alignment:** JSE — Certified Associate in JavaScript Programming (OpenEDG / JS Institute)
 **Recorded by:** Professor Nash | Texas Wesleyan University
-
----
-
-> **PRODUCTION NOTES FOR INSTRUCTOR:**
->
-> - Use VS Code + Chrome DevTools (Console + Network tabs) for all [DEMO] sections.
-> - [PAUSE] = 2 seconds of silence.
-> - Module 13 introduced Promises and `async/await`. Module 14 deepens the practice: sequential vs parallel patterns, Promise combinators beyond `Promise.all`, error handling strategies, `AbortController` for fetch cancellation, and `JSON.stringify`/`JSON.parse` for working with API data.
-> - The sequential vs parallel performance comparison is highly visual — show the timer output to make the difference concrete.
-> - `AbortController` is modern and practical — keep the demo brief but include it.
-> - `JSON.stringify` / `JSON.parse` are tested on the JSE exam. Cover the `replacer`/`reviver` briefly but focus on the common use cases.
-> - `localStorage` with JSON — a natural practical combination. The lab uses this.
-> - Unhandled Promise rejections: warn students. Node prints a warning; browsers may silently swallow them in older code. Always have a `.catch` or `try/catch`.
-> - Do not cover `XMLHttpRequest` — it is fully legacy.
 
 ---
 

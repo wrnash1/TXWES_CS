@@ -22,18 +22,9 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Certification Alignment:** ITIL 4 Foundation
 **Estimated Duration:** 22–25 minutes
 **Recorded by:** Professor Nash
-
----
-
-## Production Notes
-
-- Slides advance on each bracketed cue.
-- [SHOW DIAGRAM] cues indicate points where a visual must appear on screen.
-- [PAUSE] cues indicate natural break points for student note-taking.
 
 ---
 

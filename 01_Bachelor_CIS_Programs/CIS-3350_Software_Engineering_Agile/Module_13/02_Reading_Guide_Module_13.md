@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-3350 Software Engineering and Agile
 
 **Certification Alignment:** PSM I (Professional Scrum Master I) – Scrum.org
@@ -261,10 +258,6 @@ A free comprehensive guide to DevOps culture, practices, and tooling from Atlass
 - [ ] Connect CI/CD pipeline criteria to the Definition of Done
 - [ ] Explain why a broken build is an emergency in CI culture
 - [ ] Complete this module's Lab and Quiz
-
----
-
-
 
 ---
 

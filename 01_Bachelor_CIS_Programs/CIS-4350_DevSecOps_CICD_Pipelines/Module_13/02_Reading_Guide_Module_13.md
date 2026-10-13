@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4350 DevSecOps and CI/CD Pipelines
 
 ## Texas Wesleyan University | Professor Nash
@@ -392,8 +389,6 @@ The official Conftest documentation covering installation, `conftest test` usage
 ---
 
 *CIS-4350 DevSecOps and CI/CD Pipelines | Texas Wesleyan University | Professor Nash*
-
-
 
 ---
 

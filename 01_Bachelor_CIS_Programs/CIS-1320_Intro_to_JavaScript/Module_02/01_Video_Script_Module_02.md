@@ -20,20 +20,9 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Estimated Duration:** 14–17 minutes
 **Certification Alignment:** JSE — Certified Associate in JavaScript Programming (OpenEDG / JS Institute)
 **Recorded by:** Professor Nash | Texas Wesleyan University
-
----
-
-> **PRODUCTION NOTES FOR INSTRUCTOR:**
->
-> - Use the browser DevTools Console for all [DEMO] sections — no HTML file needed, just the console.
-> - [PAUSE] = hold 2 seconds of silence.
-> - The hoisting demo is the highest-value section. Run it slowly and narrate each line.
-> - The `const` with objects demo surprises students — linger on it.
-> - Emphasize from the start: use `const` by default, `let` when you need to reassign, never use `var`.
 
 ---
 

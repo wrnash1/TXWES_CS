@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4355 IoT and Embedded Systems
 
 ## Texas Wesleyan University | Professor Nash
@@ -293,8 +290,6 @@ Espressif's reference for ESP32-specific FreeRTOS extensions, including the dual
 **3. Digikey / Richard Barry — "Mastering the FreeRTOS Real Time Kernel" (Free PDF)**
 [https://www.freertos.org/Documentation/RTOS_book.html](https://www.freertos.org/Documentation/RTOS_book.html)
 The definitive free textbook on FreeRTOS authored by the creator of FreeRTOS, Richard Barry, and made available through the FreeRTOS website. Chapters 4 (Queue Management), 7 (Resource Management / Mutexes), and 8 (Event Groups) provide deeper coverage of the queue, semaphore, mutex, and priority inversion topics covered in this module, including worked code examples for all synchronization patterns.
-
-
 
 ---
 

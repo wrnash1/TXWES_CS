@@ -22,7 +22,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 Estimated Runtime: 12–14 minutes
 
 ---

@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4320 Enterprise Systems and ERP | Texas Wesleyan University
 
 ## Instructor: Professor Nash
@@ -389,8 +386,6 @@ The Association for Supply Chain Management (ASCM) offers the CSCP certification
 **3. MIT OpenCourseWare — Supply Chain Planning and Inventory Management**
 <https://ocw.mit.edu/courses/15-762j-supply-chain-planning/>
 Free MIT course materials on supply chain planning, including MRP logic, safety stock calculations, and demand forecasting. Provides the theoretical foundation behind SAP's MRP algorithms covered in this module.
-
-
 
 ---
 

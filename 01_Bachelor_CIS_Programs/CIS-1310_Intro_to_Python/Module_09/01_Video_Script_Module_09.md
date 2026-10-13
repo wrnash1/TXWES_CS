@@ -20,20 +20,9 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Estimated Duration:** 14–16 minutes
 **Certification Alignment:** PCAP — Certified Associate in Python Programming (Python Institute)
 **Recorded by:** Professor Nash | Texas Wesleyan University
-
----
-
-> **PRODUCTION NOTES FOR INSTRUCTOR:**
->
-> - Use screen-share for all [DEMO] sections — run live in Ubuntu terminal/REPL.
-> - [PAUSE] = hold 2 seconds of silence.
-> - Draw the LEGB stack diagram before running the nested function demo.
-> - Trace the factorial recursion on a slide (n=4 → n=3 → n=2 → n=1 → n=0) before coding it.
-> - Demonstrate the RecursionError with a deliberately non-terminating recursive function.
 
 ---
 
@@ -325,7 +314,6 @@ Namespaces are why Python can have variables with the same name in different sco
 # Demonstrates closures and recursion together
 # Module 09 Lab — CIS-1310
 
-
 def make_counter(start=0, step=1):
     '''Create a counter closure.'''
     count = start
@@ -341,14 +329,12 @@ def make_counter(start=0, step=1):
 
     return increment, reset
 
-
 def count_down(n):
     '''Recursively print a countdown from n to 0.'''
     if n < 0:
         return
     print(n, end=' ')
     count_down(n - 1)
-
 
 # Test counter closure
 inc, rst = make_counter(start=0, step=5)

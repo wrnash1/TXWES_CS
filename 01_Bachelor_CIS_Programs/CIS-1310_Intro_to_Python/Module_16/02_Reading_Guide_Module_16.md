@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-1310 Introduction to Python
 
 **Certification Alignment:** PCAP — Certified Associate in Python Programming (Python Institute)
@@ -526,8 +523,6 @@ The Python Institute's free OpenEDG Education Platform offers the "Python Essent
 - [ ] Complete the Module 16 Lab (comprehensive coding practice).
 - [ ] Complete the Module 16 Quiz (final practice exam questions).
 - [ ] Schedule your PCAP exam.
-
-
 
 ---
 

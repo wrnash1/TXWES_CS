@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-2320 Hardware Fundamentals (CompTIA A+ Core 1 — 220-1101)
 
 ---
@@ -385,8 +382,6 @@ The following free resources are specifically selected for final exam preparatio
 1. **ExamCompass — Free CompTIA A+ Core 1 Practice Exam Simulator**
    URL: [https://www.examcompass.com/comptia/a-plus-certification/a-plus-core-1-practice-tests](https://www.examcompass.com/comptia/a-plus-certification/a-plus-core-1-practice-tests)
    Relevance: ExamCompass provides a free browser-based practice exam simulator with timed question sets across all A+ Core 1 domains. Simulating exam conditions (90 questions, 90 minutes, no reference materials) during final preparation is the most effective way to identify remaining knowledge gaps and build confidence with the exam format before test day.
-
-
 
 ---
 

@@ -20,21 +20,9 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Estimated Duration:** 14–16 minutes
 **Certification Alignment:** PCAP — Certified Associate in Python Programming (Python Institute)
 **Recorded by:** Professor Nash | Texas Wesleyan University
-
----
-
-> **PRODUCTION NOTES FOR INSTRUCTOR:**
->
-> - Use screen-share for all [DEMO] sections — run live in Ubuntu terminal/REPL.
-> - [PAUSE] = hold 2 seconds of silence.
-> - Draw the inheritance hierarchy on the whiteboard before coding: Animal → Dog/Cat. Show the parent class at the top and arrows pointing down to child classes.
-> - Demonstrate `super().__init__()` by first showing what happens when you forget it — the parent attributes do not exist, causing AttributeError.
-> - Show polymorphism with a list of mixed Animal objects calling `.speak()` — this is the clearest demonstration of why polymorphism matters.
-> - Run the Method Resolution Order demo: `Dog.__mro__` — show the actual tuple.
 
 ---
 

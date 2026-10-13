@@ -176,8 +176,6 @@ D. 1.50
 
 ---
 
----
-
 ## Question 11 (5 points)
 
 Given TP = 80, TN = 750, FP = 20, FN = 50, what is the model's recall?

@@ -27,7 +27,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 - [ ] Title slide loaded: "Module 04 - Active Reconnaissance - Nmap and Enumeration"
 - [ ] Kali Linux VM running with Nmap installed
 - [ ] Lab network isolated — Nmap demos run against authorized lab targets only

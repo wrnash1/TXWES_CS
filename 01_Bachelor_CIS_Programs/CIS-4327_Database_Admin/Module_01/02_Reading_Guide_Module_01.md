@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4327 Database Administration
 
 ## Texas Wesleyan University — Professor Nash
@@ -358,8 +355,6 @@ Covers instance configuration, connection options, high availability, read repli
 **3. Use The Index, Luke — A Guide to Database Performance for Developers**
 https://use-the-index-luke.com/
 A free, vendor-neutral reference covering B-tree index internals, composite index column ordering, partial indexes, and how execution plans change with and without indexes.
-
-
 
 ---
 

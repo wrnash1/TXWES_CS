@@ -20,24 +20,9 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Estimated Duration:** 21–25 minutes
 **Certification Alignment:** Technical Interview Readiness (LeetCode / HackerRank)
 **Recorded by:** Professor Nash | Texas Wesleyan University
-
----
-
-> **PRODUCTION NOTES FOR INSTRUCTOR:**
->
-> - Use VS Code + Python terminal for all [DEMO] sections.
-> - [PAUSE] = 2 seconds of silence.
-> - Draw the heap as a tree first, then show the array mapping. Students must see both representations.
-> - Heapify direction matters: sift-up for insert (push up from a leaf), sift-down for extract-min (push down from root). Draw both paths explicitly.
-> - Python's `heapq` is a min-heap. For a max-heap, negate values (push `-val`, negate on pop). Demonstrate this explicitly — it trips up many students.
-> - K-th largest / smallest element is the most common heap interview pattern. Show the K-size heap approach.
-> - Merge K sorted lists: classic interview problem using a heap. Walk through the algorithm.
-> - The array index formula (children at 2i+1 and 2i+2, parent at (i-1)//2) must be memorized.
-> - Common mistakes: confusing min-heap with max-heap, forgetting that heap sort is O(n log n) in all cases (not O(n log n) average like quicksort), misidentifying parent/child indices.
 
 ---
 

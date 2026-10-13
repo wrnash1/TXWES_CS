@@ -20,7 +20,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Recorded by:** Professor Nash | Texas Wesleyan University
 **Certification Alignment:** CompTIA Linux+ (XK0-005)
 **Estimated Duration:** 14 minutes

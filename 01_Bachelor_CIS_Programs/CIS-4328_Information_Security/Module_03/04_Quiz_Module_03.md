@@ -17,8 +17,6 @@ D) Place the database server in the DMZ and the web server on the internal netwo
 
 ---
 
----
-
 **Question 2**
 Alice wants to send a highly confidential contract to Bob over an untrusted network. She wants to ensure that *only* Bob can read the contract. Using asymmetric cryptography, whose key should Alice use to encrypt the document?
 A) Alice's Private Key
@@ -30,8 +28,6 @@ D) Bob's Public Key
     *   *Why A is incorrect:* Encrypting with Alice's private key creates a digital signature — anyone holding Alice's public key (which is publicly available) can decrypt it, providing no confidentiality.
     *   *Why B is incorrect:* A sender does not encrypt with their own public key. Public keys are used by others to encrypt messages intended for the key owner.
     *   *Why C is incorrect:* Alice does not have access to Bob's private key, and private keys must never be shared. Only Bob's private key can decrypt something encrypted with Bob's public key.
-
----
 
 ---
 

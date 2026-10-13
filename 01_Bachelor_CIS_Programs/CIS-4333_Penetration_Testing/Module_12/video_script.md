@@ -8,15 +8,6 @@
 
 ---
 
-## Production Notes
-
-- **Runtime Target:** 28–32 minutes
-- **Segments:** 6
-- **Visual Aids:** Access control system diagrams, physical security layers diagram, RFID reader photos
-- **Lab Environment:** Concept-only — no physical trespass. Lab uses documented methodology and case analysis.
-
----
-
 ## Segment 1: Physical Security in the Pen Test Framework (Lines 1–35)
 
 [SLIDE: Module 12 Title Card]

@@ -27,7 +27,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 Welcome to Module 05. I am Professor Nash. In Module 04 we learned the application-layer protocols that IoT systems use: MQTT, CoAP, HTTP/REST. Now we go one layer deeper — the radio technologies that physically carry those messages.
 
 Radio selection is one of the most consequential engineering decisions in any IoT deployment. The wrong choice means dead batteries, out-of-range devices, or bills for cellular data that eclipse the value of the sensor data being collected.

@@ -20,23 +20,9 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Estimated Duration:** 22–26 minutes
 **Certification Alignment:** Technical Interview Readiness (LeetCode / HackerRank)
 **Recorded by:** Professor Nash | Texas Wesleyan University
-
----
-
-> **PRODUCTION NOTES FOR INSTRUCTOR:**
->
-> - Use VS Code + Python terminal for all [DEMO] sections.
-> - [PAUSE] = 2 seconds of silence.
-> - Draw the hash table as a fixed-size array with index labels 0–7. Show the hash function mapping a key to a bucket index visually.
-> - Collision resolution: draw both chaining (linked list at a bucket) and open addressing (linear probe stepping) on the whiteboard before coding.
-> - Python `dict` and `set` are hash tables — confirm this explicitly for students. Use them as reference implementations throughout.
-> - The Two Sum problem is the canonical hash map interview problem. Walk it slowly — it is the most common interview problem of all.
-> - Load factor and resize: students often forget that O(1) average assumes bounded load factor. Make this explicit.
-> - Common mistakes: confusing O(1) average with O(1) worst case, not handling None/null keys carefully, forgetting to count frequency correctly in anagram problems.
 
 ---
 

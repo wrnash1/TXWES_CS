@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4335 IT Service Management
 
 ## Texas Wesleyan University | Professor Nash
@@ -333,8 +330,6 @@ Management it may be addressing symptoms rather than root causes.
 
 ---
 
----
-
 ## Supplemental Resources
 
 **1. AXELOS — ITIL 4 Problem Management Practice**
@@ -352,8 +347,6 @@ A practitioner guide covering the 5 Whys, fishbone diagram, and fault tree analy
 ---
 
 Module 09 Reading Guide | CIS-4335 IT Service Management | Texas Wesleyan University
-
-
 
 ---
 

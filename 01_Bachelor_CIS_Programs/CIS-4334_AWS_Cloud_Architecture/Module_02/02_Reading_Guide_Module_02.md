@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-4334 AWS Cloud Architecture
 **Certification Target:** AWS Solutions Architect Associate (SAA-C03)
 
@@ -485,8 +482,6 @@ Curated AWS Skill Builder learning plan covering IAM, access management, and sec
 **3. AWS Documentation — IAM Best Practices**
 https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html
 Official AWS IAM best practices guide covering least privilege, role usage, MFA enforcement, permission boundaries, and credential management — essential reading for both the exam and production IAM configuration.
-
-
 
 ---
 

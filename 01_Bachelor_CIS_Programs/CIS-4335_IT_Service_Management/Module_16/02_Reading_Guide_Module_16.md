@@ -1,6 +1,5 @@
 # Reading Guide: Module 16 — ITIL 4 Foundation Exam Preparation
 
-
 <!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 <div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
   <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
@@ -18,7 +17,6 @@
   </div>
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
-
 
 ## Course: CIS-4335 IT Service Management
 
@@ -352,8 +350,6 @@ Official ITIL 4 Foundation sample exam with answer rationale from AXELOS. Provid
 **3. IT Revolution — The ITIL 4 Create, Deliver and Support Overview**
 <https://itrevolution.com/articles/itil-4-foundation/>
 IT Revolution's overview of ITIL 4 Foundation, written for practitioners coming from Agile and DevOps backgrounds. Covers how ITIL 4 differs from previous versions, why it coexists with DevOps, and the key conceptual shifts (SVS, four dimensions, guiding principles) that the Foundation exam tests most heavily.
-
-
 
 ---
 

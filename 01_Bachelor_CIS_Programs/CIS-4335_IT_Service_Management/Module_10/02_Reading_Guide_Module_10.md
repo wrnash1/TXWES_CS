@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4335 IT Service Management
 
 ## Texas Wesleyan University | Professor Nash
@@ -382,8 +379,6 @@ ceiling of experience is pursued.
 
 ---
 
----
-
 ## Supplemental Resources
 
 **1. AXELOS — ITIL 4 Service Level Management Practice**
@@ -401,8 +396,6 @@ A practitioner guide covering SLA design, breach prevention, escalation automati
 ---
 
 Module 10 Reading Guide | CIS-4335 IT Service Management | Texas Wesleyan University
-
-
 
 ---
 

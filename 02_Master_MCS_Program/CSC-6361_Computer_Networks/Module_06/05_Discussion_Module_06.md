@@ -99,7 +99,6 @@ Initial Post Due: Wednesday, December 9, 2026 at 11:59 PM CST
 
 Peer Responses Due: Sunday, December 13, 2026 at 11:59 PM CST
 
-
 ---
 
 ### Comprehensive SACSCOC RSI Grading Rubric (100 Points Total)

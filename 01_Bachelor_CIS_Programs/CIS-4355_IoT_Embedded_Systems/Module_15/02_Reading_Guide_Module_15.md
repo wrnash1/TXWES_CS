@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4355 IoT and Embedded Systems
 
 ## Texas Wesleyan University | Professor Nash
@@ -342,8 +339,6 @@ InfluxDB's documentation covers the column-oriented storage model, high-cardinal
 **3. Espressif Systems — ESP-IDF Over-the-Air Updates (OTA) API Reference**
 [https://docs.espressif.com/projects/esp-idf/en/stable/esp32/api-reference/system/ota.html](https://docs.espressif.com/projects/esp-idf/en/stable/esp32/api-reference/system/ota.html)
 Espressif's official OTA API documentation covering the A/B partition scheme, the `esp_ota_begin()` / `esp_ota_write()` / `esp_ota_end()` download pipeline, `esp_ota_set_boot_partition()`, `esp_ota_mark_app_valid_cancel_rollback()`, the bootloader's rollback detection logic, and resumable downloads via `esp_https_ota_perform()` with HTTP Range requests. This is the authoritative reference for the ESP32-specific OTA mechanics described in Section 3 and directly corresponds to the OTA simulation in the lab exercise.
-
-
 
 ---
 

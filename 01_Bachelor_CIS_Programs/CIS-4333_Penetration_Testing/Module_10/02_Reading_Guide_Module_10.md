@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4333 Penetration Testing
 
 **Certification Alignment:** CompTIA PenTest+ (PT0-002)
@@ -254,8 +251,6 @@ This objective explicitly lists SQL injection, XSS, command injection, directory
 
 ---
 
----
-
 ## 9. Supplemental Resources
 
 **1. PortSwigger Web Security Academy — SQL Injection and XSS Labs**
@@ -271,8 +266,6 @@ HackTricks is a comprehensive community-maintained reference for web application
 The OWASP Web Security Testing Guide provides formal test case methodology for every vulnerability class in Module 10, including test objective, how to test, and remediation guidance for each. It is the authoritative reference document used by professional penetration testers and provides the testing methodology that the PT0-002 exam scenarios are based on.
 
 *End of Module 10 Reading Guide*
-
-
 
 ---
 

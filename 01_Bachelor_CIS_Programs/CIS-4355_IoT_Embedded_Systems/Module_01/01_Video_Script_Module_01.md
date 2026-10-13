@@ -27,7 +27,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 Welcome to Module 01 of CIS-4355. I am Professor Nash, and today we are covering IoT Architecture – the foundational framework that every IoT practitioner and every CompTIA IoT+ exam candidate must understand before anything else.
 
 Think about how many connected devices surround you right now: your phone, a smart thermostat, a fitness tracker, the building's environmental sensors. None of those devices works in isolation. Each one is part of a layered system that moves raw physical data all the way up to a business application that makes a decision. That chain – from sensor to screen – is what we call IoT architecture.

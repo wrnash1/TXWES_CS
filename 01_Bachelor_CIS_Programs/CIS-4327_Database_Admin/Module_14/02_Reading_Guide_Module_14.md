@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4327 Database Administration
 
 ## Texas Wesleyan University | Professor Nash
@@ -415,8 +412,6 @@ choose between DMS, Datastream, BigQuery DTS, and manual approaches.
 
 ---
 
----
-
 ## 9. Supplemental Resources
 
 The following free, open-access resources support Module 14 topics:
@@ -438,8 +433,6 @@ Architecture guidance for planning migration phases, choosing between one-time a
 Module 14 Reading Guide — CIS-4327 Database Administration
 
 Texas Wesleyan University | Proprietary and Confidential. Not for disclosure outside of course participants.
-
-
 
 ---
 

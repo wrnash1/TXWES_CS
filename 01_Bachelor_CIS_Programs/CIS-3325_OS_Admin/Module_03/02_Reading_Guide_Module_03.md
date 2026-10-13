@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## CIS-3325 OS Administration | Texas Wesleyan University
 
 **Certification Alignment:** CompTIA Linux+ (XK0-005)
@@ -353,8 +350,6 @@ concept which determines the effective permissions for named users and groups.
 
 Read chapters 9 and 10 of The Linux Command Line by William Shotts (linuxcommand.org/tlcl.php),
 covering permissions, ownership, and the special permission bits in depth.
-
-
 
 ---
 

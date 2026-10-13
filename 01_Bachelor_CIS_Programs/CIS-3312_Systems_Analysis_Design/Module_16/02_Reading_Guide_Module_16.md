@@ -78,8 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
 ## Course: CIS-3312 Systems Analysis & Design (IIBA ECBA)
 
 ---
@@ -190,8 +188,6 @@ review. All are freely accessible without login or purchase unless noted.
 ---
 
 *Module 16 Reading Guide | CIS-3312 Systems Analysis and Design | Texas Wesleyan University*
-
-
 
 ---
 

@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-4331 Azure Cloud | Texas Wesleyan University
 **Instructor:** Professor Nash
 **AZ-900 Domain:** Describe Azure management and governance (30-35% of exam)
@@ -403,8 +400,6 @@ Module 13 Reading Guide | CIS-4331 Azure Cloud | Texas Wesleyan University
 2. Application Insights overview — application performance monitoring, telemetry types, dependency tracking, and availability tests: https://learn.microsoft.com/en-us/azure/azure-monitor/app/app-insights-overview
 
 3. Azure Service Health documentation — service issue notifications, planned maintenance alerts, health history, and health advisories: https://learn.microsoft.com/en-us/azure/service-health/overview
-
-
 
 ---
 

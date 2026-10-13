@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-3326 Windows Server Administration
 
 ## Texas Wesleyan University | Professor Nash
@@ -425,8 +422,6 @@ Deep-dive reference on FSMO role placement best practices, common failure scenar
 **4. Microsoft Learn — Understand Kerberos authentication in Active Directory**
 <https://learn.microsoft.com/en-us/windows-server/security/kerberos/kerberos-authentication-overview>
 Official Kerberos protocol overview including ticket lifecycle, clock skew tolerances, and troubleshooting authentication failures — covers the exact concepts tested in Questions 7 and 18.
-
-
 
 ---
 

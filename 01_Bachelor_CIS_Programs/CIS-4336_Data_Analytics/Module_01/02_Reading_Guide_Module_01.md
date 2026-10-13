@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-4336 Data Analytics — Texas Wesleyan University
 **Instructor:** Professor Nash
 **Certification Alignment:** CompTIA Data+ DA0-001 — Domain 1: Data Concepts and Environments
@@ -270,9 +267,6 @@ Work through each item before moving to the Lab and Quiz.
 
 ---
 
-
----
-
 ## 3. Deep-Dive Conceptual Architecture & Theoretical Foundations
 
 ### 3.1 Foundational Invariants & Core Principles
@@ -382,7 +376,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
 
 ## Additional Resources
 

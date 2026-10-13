@@ -296,8 +296,6 @@ TryHackMe periodically updates room content. If specific tasks differ from the l
 
 ---
 
----
-
 ## Part 9 — Challenge Exercise
 
 ### Challenge 1: Multi-Vulnerability DVWA Exploitation Chain

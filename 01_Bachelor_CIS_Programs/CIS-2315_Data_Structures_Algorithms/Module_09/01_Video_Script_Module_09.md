@@ -20,23 +20,9 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Estimated Duration:** 22–26 minutes
 **Certification Alignment:** Technical Interview Readiness (LeetCode / HackerRank)
 **Recorded by:** Professor Nash | Texas Wesleyan University
-
----
-
-> **PRODUCTION NOTES FOR INSTRUCTOR:**
->
-> - Use VS Code + Python terminal for all [DEMO] sections.
-> - [PAUSE] = 2 seconds of silence.
-> - Draw the graph as a diagram first (nodes as circles, edges as lines or arrows), then show how it maps to an adjacency list and adjacency matrix.
-> - Always show both directed and undirected versions side-by-side for the same example graph.
-> - Weighted vs. unweighted: introduce weights in the adjacency list as tuples `(neighbor, weight)`.
-> - The adjacency list is the dominant representation in interview problems. Emphasize that Python's `defaultdict(list)` is the standard way to build one.
-> - Common mistakes: forgetting to add both directions for undirected graphs, confusing directed and undirected degrees, using an adjacency matrix for sparse graphs (O(V²) space waste).
-> - Vocabulary matters: vertex/node, edge/arc, directed/undirected, weighted/unweighted, degree, path, cycle, connected component.
 
 ---
 

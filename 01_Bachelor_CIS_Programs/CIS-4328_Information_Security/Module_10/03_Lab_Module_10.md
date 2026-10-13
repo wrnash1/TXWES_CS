@@ -255,8 +255,6 @@ Submit a lab report containing:
 
 ---
 
----
-
 ## Part 9 — Challenge Exercise
 
 ### Challenge 1: Secure Code Review and Vulnerability Chain Analysis

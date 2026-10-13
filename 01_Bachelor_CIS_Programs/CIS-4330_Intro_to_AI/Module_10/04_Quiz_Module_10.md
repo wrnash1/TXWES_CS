@@ -254,8 +254,6 @@ B. The model hallucinated the response, generating plausible-sounding but fabric
 
 ---
 
----
-
 ## Question 11 (5 points)
 
 What is the context window of a large language model, and why is it an important constraint for RAG applications?

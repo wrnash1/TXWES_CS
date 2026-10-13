@@ -27,7 +27,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 Welcome back. I am Professor Nash and this is Module 05: VPC — Subnets, Route Tables, Security Groups, and Network ACLs.
 
 The Virtual Private Cloud is your private network in AWS. Everything you run in AWS lives inside a VPC or connects to one. Understanding VPC architecture is foundational to the SAA-C03 exam — network design questions appear in every domain because security, performance, and resilience all depend on how your network is structured.

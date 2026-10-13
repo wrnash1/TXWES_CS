@@ -20,19 +20,9 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Estimated Duration:** 14–16 minutes
 **Certification Alignment:** PCAP — Certified Associate in Python Programming (Python Institute)
 **Recorded by:** Professor Nash | Texas Wesleyan University
-
----
-
-> **PRODUCTION NOTES FOR INSTRUCTOR:**
->
-> - Use screen-share for all [DEMO] sections — run live in Ubuntu terminal/REPL.
-> - [PAUSE] = hold 2 seconds of silence.
-> - Trace the call stack on the slide when demonstrating return values and multiple returns.
-> - Show the `*args` and `**kwargs` demos slowly — these require careful explanation.
 
 ---
 

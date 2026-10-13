@@ -20,7 +20,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 ### Instructor: Professor Nash | CompTIA Security+ SY0-701 Alignment
 
 ### Estimated Duration: 13 minutes

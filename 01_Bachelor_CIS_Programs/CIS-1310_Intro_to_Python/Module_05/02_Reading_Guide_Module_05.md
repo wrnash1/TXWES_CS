@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-1310 Introduction to Python
 
 **Certification Alignment:** PCAP — Certified Associate in Python Programming (Python Institute)
@@ -439,8 +436,6 @@ Covers `while` loops, infinite loop patterns, `break`/`continue`/`else`, and com
 - [ ] Review all 7 Certification Exam Tips in Section 6.
 - [ ] Preview the lab tasks in Section 9.
 - [ ] Proceed to the Module 05 Lab Activity.
-
-
 
 ---
 

@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4331_Azure_Cloud (Microsoft Azure Fundamentals (AZ-900))
 
 ---
@@ -151,8 +148,6 @@ In this final module, your lab activities focus on exam preparation rather than 
 2. John Savill's AZ-900 Study Cram (YouTube) — comprehensive video review of all AZ-900 exam domains in a structured study format: https://www.youtube.com/watch?v=tQp1YkB2Tgs
 
 3. Microsoft Azure free account — create a free Azure account to get hands-on practice with all services covered in the AZ-900 exam: https://azure.microsoft.com/en-us/free/
-
-
 
 ---
 

@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-3350 Software Engineering and Agile
 
 ## Texas Wesleyan University | Professor Nash
@@ -485,8 +482,6 @@ The original Gang of Four book table of contents and sample chapters are freely 
 **3. "The Command Pattern" — SourceMaking**
 <https://sourcemaking.com/design_patterns/command>
 A free deep dive into the Command pattern with diagrams, multiple implementation examples, and a clear explanation of how CommandHistory enables undo/redo. Particularly useful for the lab's Command implementation tasks. Covers the pattern's connection to transaction management and macro recording.
-
-
 
 ---
 

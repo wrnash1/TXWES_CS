@@ -20,24 +20,9 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Estimated Duration:** 18–22 minutes
 **Certification Alignment:** JSE — Certified Associate in JavaScript Programming (OpenEDG / JS Institute)
 **Recorded by:** Professor Nash | Texas Wesleyan University
-
----
-
-> **PRODUCTION NOTES FOR INSTRUCTOR:**
->
-> - Use VS Code + Live Server + Chrome DevTools for all [DEMO] sections. The Elements panel and Event Listeners tab in DevTools are useful for confirming listeners are registered.
-> - [PAUSE] = 2 seconds of silence.
-> - The event object is the conceptual core — every listener receives it, and `event.target` is how you identify what was clicked. Spend time here.
-> - Event bubbling is JSE-tested. The visual: event fires on innermost element and bubbles up through ancestors. `event.stopPropagation()` is the escape hatch.
-> - Event delegation is the key practical pattern — one listener on the parent instead of one per child. The `event.target.closest()` technique makes this clean.
-> - `removeEventListener` requires the exact same function reference — cannot use inline arrows. This is a common mistake.
-> - `DOMContentLoaded` — brief mention: scripts in `<head>` that reference DOM elements must wait for the DOM to be ready. Scripts at the end of `<body>` (as used in the labs) do not have this problem.
-> - `input` vs `change` event distinction: `input` fires on every keystroke; `change` fires on blur. Worth demonstrating on a text field.
-> - Do not cover `this` inside event handlers deeply — Module 09 established that arrow functions capture lexical `this`. Keep focus on `event.target`.
 
 ---
 

@@ -339,8 +339,6 @@ eight business rules before finalizing your diagram.
 
 ---
 
----
-
 ## Part 9 — Challenge Exercise
 
 This section is optional and not separately graded. It extends the lab into advanced data

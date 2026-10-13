@@ -358,7 +358,6 @@ nano documented_functions.py
 
 import math
 
-
 def circle_area(radius: float) -> float:
     '''Calculate the area of a circle.
 
@@ -373,7 +372,6 @@ def circle_area(radius: float) -> float:
         raise ValueError(f'Radius cannot be negative: {radius}')
     return math.pi * radius ** 2
 
-
 def celsius_to_fahrenheit(celsius: float) -> float:
     '''Convert a temperature from Celsius to Fahrenheit.
 
@@ -383,7 +381,6 @@ def celsius_to_fahrenheit(celsius: float) -> float:
         Temperature in degrees Fahrenheit.
     '''
     return celsius * 9 / 5 + 32
-
 
 def describe_person(name: str, age: int, city: str = 'Unknown') -> str:
     '''Build a description string for a person.
@@ -396,7 +393,6 @@ def describe_person(name: str, age: int, city: str = 'Unknown') -> str:
         A formatted description string.
     '''
     return f'{name}, age {age}, from {city}'
-
 
 # --- Test the functions
 if __name__ == '__main__':
@@ -451,28 +447,23 @@ nano calculator.py
 # Interactive calculator using dispatch table and functions
 # Module 08 Lab — CIS-1310
 
-
 def add(a: float, b: float) -> float:
     '''Return a + b.'''
     return a + b
-
 
 def subtract(a: float, b: float) -> float:
     '''Return a - b.'''
     return a - b
 
-
 def multiply(a: float, b: float) -> float:
     '''Return a * b.'''
     return a * b
-
 
 def divide(a: float, b: float) -> float:
     '''Return a / b. Raises ValueError for division by zero.'''
     if b == 0:
         raise ValueError('Division by zero is undefined.')
     return a / b
-
 
 def calculate(a: float, op: str, b: float) -> float:
     '''Dispatch an arithmetic operation.
@@ -495,7 +486,6 @@ def calculate(a: float, op: str, b: float) -> float:
     if op not in operations:
         raise ValueError(f'Unknown operator: "{op}". Use +, -, *, /')
     return operations[op](a, b)
-
 
 def main():
     '''Run the interactive calculator loop.'''
@@ -523,7 +513,6 @@ def main():
             print(f'  = {result}')
         except ValueError as e:
             print(f'  Error: {e}')
-
 
 main()
 ```
@@ -570,7 +559,6 @@ nano stats.py
 # Demonstrates *args for variable-length input
 # Module 08 Lab — CIS-1310
 
-
 def statistics(*scores: float) -> dict:
     '''Compute basic statistics for any number of scores.
 
@@ -592,7 +580,6 @@ def statistics(*scores: float) -> dict:
         'minimum': min(scores),
         'maximum': max(scores),
     }
-
 
 # Test with different numbers of arguments
 test_cases = [

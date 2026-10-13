@@ -26,17 +26,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
----
-
-## Production Notes
-
-- Camera: Professor Nash on-screen for introductions and transitions
-- Screen capture: VS Code with Express project open, Postman for API testing
-- Use [SHOW CODE] for VS Code; [SHOW BROWSER] for Postman; [PAUSE] for slides
-- Have `jsonwebtoken` and `bcryptjs` installed in the demo project
-- Postman collection pre-loaded with auth flow requests
-
 ---
 
 ## Section 1: Introduction — Why REST and Why Auth? (0:00 – 1:30)

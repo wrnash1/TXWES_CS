@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4350 DevSecOps and CI/CD Pipelines
 
 ## Certification Alignment: DevSecOps Professional (DSOE)
@@ -257,8 +254,6 @@ GitHub's guide to secrets management in Actions, covering secret scoping (reposi
 ---
 
 Reading Guide — Module 09 | CIS-4350 | Texas Wesleyan University | Professor Nash
-
-
 
 ---
 

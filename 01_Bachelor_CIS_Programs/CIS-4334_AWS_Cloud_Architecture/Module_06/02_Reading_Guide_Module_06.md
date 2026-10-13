@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-4334 AWS Cloud Architecture
 **Certification Target:** AWS Solutions Architect Associate (SAA-C03)
 
@@ -393,8 +390,6 @@ Free course covering Aurora's architecture differentiators — shared storage, F
 **3. AWS Documentation — Choosing Between Amazon Aurora and Amazon RDS**
 https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.CreateInstance.html
 AWS guidance on Aurora vs. standard RDS selection criteria covering throughput, failover time, storage architecture, and compatibility — essential for the SAA-C03 database selection scenarios tested in this module.
-
-
 
 ---
 

@@ -55,7 +55,6 @@ After posting your recommendation, respond to two classmates whose position diff
 | Peer responses — substantive, technically advances discussion | 10 |
 | **Total** | **100** |
 
-
 ---
 
 ### Comprehensive SACSCOC RSI Grading Rubric (100 Points Total)

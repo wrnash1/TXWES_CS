@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-3310 IT Project Management
 
 ## Texas Wesleyan University | Professor Nash
@@ -512,8 +509,6 @@ The following free, openly licensed resources extend the concepts in this module
 5. **Project Management Open Textbook — Full Course Reference (Free)**
    *BC Campus OpenEd* — [opentextbc.ca/projectmanagement](https://opentextbc.ca/projectmanagement/)
    The complete open-access project management textbook covering all knowledge areas. Use the chapter index to revisit any module topic before the Project+ exam. Freely downloadable as PDF for offline study.
-
-
 
 ---
 

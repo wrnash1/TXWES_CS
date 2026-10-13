@@ -26,7 +26,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 ---
 
 ## SEGMENT 1 — Opening (0:00–1:30)

@@ -22,20 +22,7 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Certification Alignment:** Microsoft Windows Server Administration
-
----
-
-## Production Notes
-
-**Recorded by:** Professor Nash | Texas Wesleyan University
-
-**Estimated runtime:** 13–15 minutes
-
-**Part 1 focus:** Concepts — PowerShell pipeline, objects vs. text, cmdlet
-syntax, common verbs, filtering and formatting, working with services,
-processes, and event logs.
 
 ---
 

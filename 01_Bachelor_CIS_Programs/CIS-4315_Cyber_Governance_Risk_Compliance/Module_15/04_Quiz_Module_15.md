@@ -208,8 +208,6 @@ Distractor Analysis:
 
 ---
 
----
-
 ### Question 11 (5 points)
 
 An organization operating in the EU collects biometric data from employees for physical access control at its data centers. Under GDPR, biometric data used for uniquely identifying natural persons is classified as a special category of personal data. Which statement correctly describes the organization's obligations?

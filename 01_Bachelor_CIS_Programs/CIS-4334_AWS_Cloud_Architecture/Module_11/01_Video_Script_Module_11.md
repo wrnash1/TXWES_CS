@@ -27,7 +27,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 Welcome back. I am Professor Nash and this is Module 11: Containers: ECS, EKS, and Container Architecture.
 
 Containers have changed how applications are packaged, deployed, and scaled on AWS. The SAA-C03 exam tests containers in the context of choosing the right compute model — when to use Lambda, when to use EC2, and when to use containers. You need to understand Amazon ECS, Amazon EKS, and AWS Fargate well enough to match each to a given architectural scenario.

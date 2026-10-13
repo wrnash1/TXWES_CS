@@ -51,7 +51,6 @@ Below is the study roadmap for every course in our computer science and computer
 | :--- | :--- | :--- | :--- |
 | **CIS-3322: Adv Networking** | Cisco CCNA (200-301) | Simulate VLANs, Spanning Tree, OSPF, and EtherChannels inside Cisco Packet Tracer. | [Cisco Skills for All Portal](https://skillsforall.com/) |
 
-
 ---
 
 ## 5. Final Exam Certification Policy (Module 16)

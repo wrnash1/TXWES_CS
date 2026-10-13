@@ -1,6 +1,5 @@
 # Reading Guide: Module 06 — Identity and Access Management
 
-
 <!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 <div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
   <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
@@ -54,7 +53,6 @@
 
 </svg>
 </div>
-
 
 ## CIS-4328 Information Security | Texas Wesleyan University
 
@@ -342,8 +340,6 @@ Before taking the Module 06 quiz, verify you can do each of the following withou
 ---
 
 Module 06 Reading Guide — End
-
-
 
 ---
 

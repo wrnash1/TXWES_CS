@@ -402,11 +402,9 @@ nano input_validator.py
 # Demonstrates exception handling with user input validation
 # Module 12 Lab — CIS-1310
 
-
 class OutOfRangeError(ValueError):
     '''Raised when a number is outside an acceptable range.'''
     pass
-
 
 def get_integer(prompt, min_val=None, max_val=None):
     '''Prompt until a valid integer in range [min_val, max_val] is entered.
@@ -434,7 +432,6 @@ def get_integer(prompt, min_val=None, max_val=None):
             print(f'  Invalid input: {e}. Try again.')
         else:
             return value    # only runs if no exception occurred
-
 
 def safe_calculate(expr):
     '''Safely evaluate a simple "a op b" expression string.
@@ -464,7 +461,6 @@ def safe_calculate(expr):
         return None
     finally:
         print(f'  safe_calculate({expr!r}) called')
-
 
 # --- Non-interactive demos (for screenshot)
 print('=== safe_calculate demos ===')
@@ -522,7 +518,6 @@ nano exception_demo.py
 # Demonstrates the exception hierarchy and catching at different levels
 # Module 12 Lab — CIS-1310
 
-
 def trigger(exception_type):
     '''Trigger a specific exception type by name.'''
     if exception_type == 'ValueError':
@@ -537,7 +532,6 @@ def trigger(exception_type):
         'a' + 1
     elif exception_type == 'AttributeError':
         (42).nonexistent_method()
-
 
 # Demonstrate hierarchy: ValueError is caught by except Exception
 print('=== Catching ValueError with except Exception ===')
@@ -572,13 +566,11 @@ for name in exceptions:
 # Demonstrate finally + return interaction
 print('\n=== finally with return ===')
 
-
 def finally_return():
     try:
         return 'try value'
     finally:
         print('  finally executed before return')
-
 
 result = finally_return()
 print(f'  caller received: {result!r}')
@@ -643,11 +635,9 @@ nano exc_hierarchy.py
 # exc_hierarchy.py
 # Explore the exception inheritance hierarchy
 
-
 def mro_chain(exc_class):
     '''Return the method resolution order as a list of class names.'''
     return [cls.__name__ for cls in exc_class.__mro__]
-
 
 # Show hierarchy for common exception types
 exceptions_to_inspect = [
@@ -691,10 +681,8 @@ nano retry_decorator.py
 # retry_decorator.py
 # Retry decorator using exception handling
 
-
 import time
 import random
-
 
 def retry(max_attempts=3, exceptions=(Exception,), delay=0.1):
     '''Decorator: retry the wrapped function up to max_attempts times.'''
@@ -716,7 +704,6 @@ def retry(max_attempts=3, exceptions=(Exception,), delay=0.1):
         return wrapper
     return decorator
 
-
 # Simulate a flaky function (fails first 2 calls, succeeds on 3rd)
 call_count = 0
 
@@ -727,7 +714,6 @@ def flaky_connect(host):
     if call_count < 3:
         raise ConnectionError(f'timeout connecting to {host} (attempt {call_count})')
     return f'Connected to {host}'
-
 
 print('Testing flaky_connect:')
 result = flaky_connect('db.example.com')
@@ -763,7 +749,6 @@ nano context_mgr.py
 # context_mgr.py
 # Manual resource management vs. context manager protocol
 
-
 class ManagedResource:
     '''Simulates a resource (file, DB connection, lock) that needs cleanup.'''
 
@@ -795,7 +780,6 @@ class ManagedResource:
         if fail:
             raise ValueError('work failed mid-operation')
         print(f'  [{self.name}] work done')
-
 
 # Manual try/finally pattern
 print('=== Manual try/finally ===')

@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-2315 Data Structures & Algorithms
 
 **Certification Alignment:** Technical Interview Readiness (LeetCode / HackerRank)
@@ -300,8 +297,6 @@ The following free, openly licensed resources reinforce the concepts in this mod
 - [ ] Attempt LeetCode #1631 (Path With Minimum Effort) as a stretch goal.
 - [ ] Complete the Module 11 Lab.
 - [ ] Complete the Module 11 Quiz.
-
-
 
 ---
 

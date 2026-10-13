@@ -26,7 +26,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 Welcome back to CIS-4337 Infrastructure Automation. I am Professor Nash. In Module 01 we established why Infrastructure as Code exists and what problems it solves. In this module we go hands-on with the Terraform CLI and walk through every stage of the core workflow in detail.
 
 By the end of this video you will be able to execute the full Terraform workflow from a blank directory to deployed resources and back to destroyed infrastructure. You will understand what each CLI command does, how to read an execution plan, what plan output symbols mean, and how to use saved plan files in a CI/CD pipeline context.

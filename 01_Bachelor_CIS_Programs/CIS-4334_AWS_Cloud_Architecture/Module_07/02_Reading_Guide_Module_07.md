@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4334 AWS Cloud Architecture
 
 ## Texas Wesleyan University | Professor Nash
@@ -458,8 +455,6 @@ https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html
 Official reference for all EC2 instance families including compute, memory, storage, accelerated computing, and network-optimized types — with vCPU counts, memory, and use case descriptions for SAA-C03 instance selection questions.
 
 *Proprietary and Confidential. Not for disclosure outside of Texas Wesleyan University.*
-
-
 
 ---
 

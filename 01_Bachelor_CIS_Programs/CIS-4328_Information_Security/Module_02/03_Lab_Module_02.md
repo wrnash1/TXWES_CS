@@ -162,8 +162,6 @@ Label each part clearly. Include your full name and student ID on all submitted 
 
 ---
 
----
-
 ## Part 9 — Challenge Exercise
 
 ### Challenge 1: Live Phishing Infrastructure Analysis

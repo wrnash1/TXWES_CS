@@ -214,8 +214,6 @@ Distractor Analysis:
 
 ---
 
----
-
 ### Question 11 (5 points)
 
 What does the expression `flatten([["a", "b"], ["c"], ["d", "e"]])` return?

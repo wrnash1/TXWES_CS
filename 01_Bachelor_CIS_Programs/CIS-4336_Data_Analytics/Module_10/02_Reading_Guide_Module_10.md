@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4336 Data Analytics
 
 ## Texas Wesleyan University | Professor Nash
@@ -421,8 +418,6 @@ IBM's reference guide covering the six core data quality dimensions (accuracy, c
 ---
 
 End of Module 10 Reading Guide
-
-
 
 ---
 

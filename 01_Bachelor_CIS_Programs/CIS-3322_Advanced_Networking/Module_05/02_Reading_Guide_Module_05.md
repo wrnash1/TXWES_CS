@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-3322 Advanced Networking
 **Certification Alignment:** Cisco CCNA 200-301 (Domain 2: Network Access - 20%)
 **Prepared by:** Professor Nash | Texas Wesleyan University
@@ -287,8 +284,6 @@ The following open educational resources extend STP and RSTP concepts to CCNA ex
 4. **Cisco Packet Tracer — STP Lab Activities** (skillsforall.com): The Cisco Networking Academy provides dedicated Packet Tracer labs for observing root bridge election, blocking port determination, and BPDU Guard trigger behavior — all directly applicable to the Module 05 lab.
 
 5. **IEEE 802.1D Standard Overview — Wikipedia** (en.wikipedia.org/wiki/Spanning_Tree_Protocol): A freely accessible reference summarizing the IEEE 802.1D and 802.1w RSTP standards, port states comparison, and timer definitions. Useful for quick reference when reviewing exam prep materials.
-
-
 
 ---
 

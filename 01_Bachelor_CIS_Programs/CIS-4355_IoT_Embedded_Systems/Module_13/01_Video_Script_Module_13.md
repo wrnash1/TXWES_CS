@@ -22,7 +22,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 Certification Alignment: IoT Fundamentals / Embedded Systems
 
 **Estimated Duration:** 15–18 minutes

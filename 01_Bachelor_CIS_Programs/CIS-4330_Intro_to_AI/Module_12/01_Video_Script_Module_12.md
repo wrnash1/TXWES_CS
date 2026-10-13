@@ -20,7 +20,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Instructor:** Professor Nash
 **Estimated Duration:** 20-24 minutes
 **AI-900 Domain:** Describe AI workloads and considerations (15-20%)

@@ -366,8 +366,6 @@ Answer these in a text file named `reflection.txt` and submit with your delivera
 
 ---
 
----
-
 ## Part 9 — Challenge Exercise
 
 ### Challenge 1: Variable Sets and Multi-Workspace Credential Sharing

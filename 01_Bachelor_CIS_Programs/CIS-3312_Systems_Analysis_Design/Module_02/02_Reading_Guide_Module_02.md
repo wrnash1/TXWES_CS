@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-3312 Systems Analysis and Design
 **Certification Alignment:** IIBA ECBA (Entry Certificate in Business Analysis)
 **Prepared by:** Professor Nash | Texas Wesleyan University
@@ -276,8 +273,6 @@ The following open educational resources extend module content. All are freely a
 5. **Requirements Management and Governance — TechRepublic**
    <https://www.techrepublic.com/article/requirements-management-best-practices/>
    Focus: Practical overview of requirements governance practices including change control, version management, and approval workflows. Supplements the governance concepts in Section 1.3 of this guide.
-
-
 
 ---
 

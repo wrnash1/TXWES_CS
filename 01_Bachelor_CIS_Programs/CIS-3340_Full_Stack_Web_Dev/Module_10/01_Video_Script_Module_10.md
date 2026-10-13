@@ -26,17 +26,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
----
-
-## Production Notes
-
-- Camera: Professor Nash on-screen for introductions and transitions
-- Screen capture: VS Code with React project, browser with React DevTools
-- Use [SHOW CODE] for VS Code; [SHOW BROWSER] for browser; [PAUSE] for slides
-- Have a multi-component React app open to demonstrate prop drilling
-- React DevTools extension installed in Chrome
-
 ---
 
 ## Section 1: Introduction — The State Management Problem (0:00 – 2:00)

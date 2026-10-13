@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4331 Azure Cloud Computing
 
 ## Texas Wesleyan University | Professor Nash
@@ -410,8 +407,6 @@ Azure supports GDPR compliance through the Data Processing Addendum (contractual
 2. Azure compliance documentation — overview of compliance offerings, regulatory frameworks supported, and compliance resources by industry and region: https://learn.microsoft.com/en-us/azure/compliance/
 
 3. Microsoft Purview compliance portal documentation — data classification, sensitivity labels, compliance score, and regulatory compliance assessment tools: https://learn.microsoft.com/en-us/purview/purview-compliance-portal
-
-
 
 ---
 

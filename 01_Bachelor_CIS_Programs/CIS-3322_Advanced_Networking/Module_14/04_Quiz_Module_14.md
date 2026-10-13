@@ -234,8 +234,6 @@ Distractor Analysis:
 
 ---
 
----
-
 ## Question 11
 
 An 802.11ac wireless client associates with an AP and negotiates a connection using only a single spatial stream with a 40 MHz channel. A second client associates with the same AP using three spatial streams with an 80 MHz channel. What correctly describes the difference in their maximum PHY rates?

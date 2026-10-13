@@ -24,7 +24,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 ---
 
 ### Opening — Welcome and Course Context

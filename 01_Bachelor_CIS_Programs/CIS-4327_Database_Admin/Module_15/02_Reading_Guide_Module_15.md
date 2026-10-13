@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4327 Database Administration
 
 ## Texas Wesleyan University | Professor Nash
@@ -414,8 +411,6 @@ attribute to meet a stated requirement.
 
 ---
 
----
-
 ## 9. Supplemental Resources
 
 The following free, open-access resources support Module 15 topics:
@@ -437,8 +432,6 @@ Covers creating alerting policies with threshold conditions, duration settings, 
 Module 15 Reading Guide — CIS-4327 Database Administration
 
 Texas Wesleyan University | Proprietary and Confidential. Not for disclosure outside of course participants.
-
-
 
 ---
 

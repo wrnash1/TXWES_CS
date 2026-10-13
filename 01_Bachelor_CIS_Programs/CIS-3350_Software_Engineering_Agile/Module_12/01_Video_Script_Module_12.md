@@ -26,17 +26,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
----
-
-### Production Notes
-
-- Camera: Instructor on screen for introduction and all section transitions
-- Slides: Title cards for each section heading; UML diagrams shown alongside code
-- [SHOW CODE] tags indicate cuts to code panels (JavaScript examples)
-- [PAUSE] tags indicate natural stopping points for student reflection
-- [SHOW DIAGRAM] tags indicate cuts to UML class diagrams
-
 ---
 
 ### Introduction (0:00 – 1:30)

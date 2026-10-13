@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-2320 Hardware Fundamentals | Texas Wesleyan University
 
 **Certification Alignment:** CompTIA A+ Core 1 (220-1101) — Domain 3.5
@@ -96,7 +93,6 @@ These topics are directly tested on the CompTIA A+ Core 1 (220-1101) exam under 
 ---
 
 ### 1. High-Yield Glossary
-
 
 <div style="text-align: center; margin: 24px 0;">
 <svg viewBox="0 0 800 520" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="max-width: 800px; background:#0f172a; border-radius:10px; border:2px solid #1b365d; font-family:-apple-system, sans-serif;">
@@ -164,7 +160,6 @@ These topics are directly tested on the CompTIA A+ Core 1 (220-1101) exam under 
   <text x="400" y="485" fill="#f8fafc" font-size="12" font-weight="bold" text-anchor="middle">⚡ CompTIA A+ Blueprint Key Fact: Micro-ATX (9.6" × 9.6") is backward-compatible with standard ATX desktop cases.</text>
 </svg>
 </div>
-
 
 #### ATX (Advanced Technology eXtended)
 
@@ -425,7 +420,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
 
 ## Additional Resources
 

@@ -345,8 +345,6 @@ bq rm -r -f ${PROJECT_ID}:cis4327_lab
 
 ---
 
----
-
 ## Part 9 — Challenge Exercise
 
 ### Challenge 1: Time Travel Point-in-Time Recovery

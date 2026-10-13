@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4329 Google Cloud Computing
 
 **Certification Alignment:** Google Cloud Associate Cloud Engineer (ACE)
@@ -468,8 +465,6 @@ tested on the ACE exam.
 The official Kubernetes documentation for core objects: Pods, Deployments,
 Services, Ingress, ConfigMaps, Secrets, and PersistentVolumeClaims. GKE
 is fully Kubernetes-conformant, so upstream docs apply directly.
-
-
 
 ---
 

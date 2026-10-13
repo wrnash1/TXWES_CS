@@ -207,8 +207,6 @@ D. Both A and C are correct.
 
 ---
 
----
-
 **Question 11**
 
 A shared `/tmp/uploads` directory has permissions `drwxrwxrwt`. A user named `carol` created the file `/tmp/uploads/report.txt`. Another user `dave` (who is not root) attempts to delete `report.txt` using `rm /tmp/uploads/report.txt`. What happens?

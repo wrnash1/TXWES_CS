@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4333 Penetration Testing
 
 **Certification Alignment:** CompTIA PenTest+ (PT0-002)
@@ -264,8 +261,6 @@ Post-exploitation is explicitly tested including: privilege escalation (Linux an
 
 ---
 
----
-
 ## 9. Supplemental Resources
 
 **1. GTFOBins — Unix Binary Privilege Escalation Reference**
@@ -281,8 +276,6 @@ PEASS-ng provides LinPEAS and WinPEAS — automated privilege escalation enumera
 HackTricks provides comprehensive methodology for both Linux and Windows privilege escalation, covering SUID, sudo, cron jobs, capabilities, token impersonation, service misconfigurations, and kernel exploits. It is organized as a field reference for active engagements and supplements all Module 12 privilege escalation techniques with real-world payload examples.
 
 *End of Module 12 Reading Guide*
-
-
 
 ---
 

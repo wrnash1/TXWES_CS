@@ -51,7 +51,6 @@ Below is the study roadmap for every course in our computer science and computer
 | :--- | :--- | :--- | :--- |
 | **CIS-4337: Infra Automation** | Terraform Associate | Write declarative configuration files; examine deployment patterns using `terraform plan`. | [HashiCorp Developer Portal](https://developer.hashicorp.com/) |
 
-
 ---
 
 ## 5. Final Exam Certification Policy (Module 16)

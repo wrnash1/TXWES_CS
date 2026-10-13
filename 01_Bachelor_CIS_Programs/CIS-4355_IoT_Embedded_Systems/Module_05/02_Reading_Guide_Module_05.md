@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-4355 IoT and Embedded Systems
 **Instructor:** Professor Nash
 **Certification Target:** CompTIA IoT+ Domain 3
@@ -266,8 +263,6 @@ The GSMA industry group's resource page for NB-IoT, including deployment guides,
 ---
 
 End of Reading Guide – Module 05
-
-
 
 ---
 

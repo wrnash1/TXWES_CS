@@ -26,16 +26,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
----
-
-## Production Notes
-
-- **Screen recording**: Terminal emulator (dark theme, 18pt font)
-- **Demonstrations**: Build a realistic log-parsing scenario across all tools
-- **Slide overlays**: Syntax templates displayed as callout boxes
-- **Pacing**: Explain output before moving to next command
-
 ---
 
 ## SEGMENT 1 — Opening and Recap (0:00–1:00)

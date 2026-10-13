@@ -27,7 +27,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 Welcome to Module 06. I am Professor Nash. This module covers the Continual Improvement practice — one of the 14 General Management Practices in ITIL 4 and arguably the most fundamental because it applies to everything else.
 
 By the end of this module you will be able to state the purpose of the Continual Improvement practice, apply the seven-step Continual Improvement Model to a real scenario, explain what the Continual Improvement Register is and how it is used, distinguish between the Continual Improvement practice and the Improve SVC activity, and connect continual improvement to specific Guiding Principles.

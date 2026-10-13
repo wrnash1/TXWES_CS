@@ -34,7 +34,6 @@ class TreeNode:
     def __repr__(self):
         return f'TreeNode({self.value})'
 
-
 def make_tree(values):
     """
     Build a complete binary tree from a list (level-order).
@@ -77,13 +76,11 @@ def inorder(root):
         return []
     return inorder(root.left) + [root.value] + inorder(root.right)
 
-
 def preorder(root):
     """Root → Left → Right — O(n)"""
     if root is None:
         return []
     return [root.value] + preorder(root.left) + preorder(root.right)
-
 
 def postorder(root):
     """Left → Right → Root — O(n)"""
@@ -124,7 +121,6 @@ def level_order(root):
         if node.right:
             queue.append(node.right)
     return result
-
 
 def level_order_levels(root):
     """Return a list of lists, one list per level — O(n)"""

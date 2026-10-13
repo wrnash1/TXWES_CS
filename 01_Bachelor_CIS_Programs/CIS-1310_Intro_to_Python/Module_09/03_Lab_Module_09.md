@@ -436,7 +436,6 @@ nano scope_demo.py
 # Demonstrates closures and recursion together
 # Module 09 Lab — CIS-1310
 
-
 def make_counter(start=0, step=1):
     '''Create a counter closure with optional reset.'''
     count = start
@@ -452,7 +451,6 @@ def make_counter(start=0, step=1):
 
     return increment, reset
 
-
 def count_down(n):
     '''Recursively print a countdown from n to 0.'''
     if n < 0:
@@ -460,13 +458,11 @@ def count_down(n):
     print(n, end=' ')
     count_down(n - 1)
 
-
 def factorial(n):
     '''Return n factorial recursively.'''
     if n == 0:
         return 1
     return n * factorial(n - 1)
-
 
 # --- Counter closure demo
 inc, rst = make_counter(start=0, step=5)
@@ -538,20 +534,17 @@ nano recursion_demo.py
 # Demonstrates multiple recursive patterns
 # Module 09 Lab — CIS-1310
 
-
 def list_sum(lst):
     '''Return the sum of a list using recursion.'''
     if not lst:
         return 0
     return lst[0] + list_sum(lst[1:])
 
-
 def fibonacci(n):
     '''Return the nth Fibonacci number using recursion.'''
     if n <= 1:
         return n
     return fibonacci(n - 1) + fibonacci(n - 2)
-
 
 def flatten(nested):
     '''Flatten one level of nesting in a list.'''
@@ -562,7 +555,6 @@ def flatten(nested):
     if isinstance(first, list):
         return first + rest
     return [first] + rest
-
 
 # --- list_sum
 print('list_sum tests:')
@@ -582,10 +574,8 @@ print(' ', flatten([[10, 20], [30], 40]))
 # --- RecursionError demo (safe — caught with try/except)
 print('\nRecursionError demo (caught safely):')
 
-
 def no_base(n):
     return no_base(n - 1)
-
 
 try:
     no_base(1)
@@ -657,13 +647,11 @@ nano memo_fib.py
 import functools
 import time
 
-
 def fibonacci_slow(n):
     '''Naive recursive Fibonacci — exponential time.'''
     if n <= 1:
         return n
     return fibonacci_slow(n - 1) + fibonacci_slow(n - 2)
-
 
 @functools.lru_cache(maxsize=None)
 def fibonacci_fast(n):
@@ -671,7 +659,6 @@ def fibonacci_fast(n):
     if n <= 1:
         return n
     return fibonacci_fast(n - 1) + fibonacci_fast(n - 2)
-
 
 # Compare runtimes for n=35
 n = 35
@@ -709,7 +696,6 @@ nano event_dispatcher.py
 # event_dispatcher.py
 # Demonstrates closures storing mutable state (a list of callbacks)
 
-
 def make_event():
     '''Return (on, fire) — an event registration and trigger pair.'''
     listeners = []
@@ -724,7 +710,6 @@ def make_event():
             listener(*args, **kwargs)
 
     return on, fire
-
 
 # Create two independent events
 on_login, fire_login = make_event()
@@ -763,7 +748,6 @@ nano tree_print.py
 # tree_print.py
 # Recursive tree printer — demonstrates recursion on nested dicts
 
-
 def print_tree(node, prefix='', is_last=True):
     '''Recursively print a nested dict as a directory tree.'''
     connector = '└── ' if is_last else '├── '
@@ -777,7 +761,6 @@ def print_tree(node, prefix='', is_last=True):
                 print_tree(subtree, prefix + extension, True)
     else:
         print(prefix + connector + str(node))
-
 
 filesystem = {
     'home': {

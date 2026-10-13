@@ -26,16 +26,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
----
-
-## Production Notes
-
-- Slides: Risk register table shown as animated build; probability-impact matrix shown as color-coded grid
-- Graphics: Risk response strategy decision tree; risk lifecycle diagram
-- Tone: Practical and scenario-driven — connect every concept to a real IT project context
-- Screen segment: Walk through a partial risk register live in a spreadsheet
-
 ---
 
 ## Segment 1 — Introduction: Why Risk Management Fails (0:00–2:30)

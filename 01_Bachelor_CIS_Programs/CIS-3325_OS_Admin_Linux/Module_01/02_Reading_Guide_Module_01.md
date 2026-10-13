@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-3325 OS Administration Linux
 
 ## Texas Wesleyan University | Professor Nash
@@ -204,8 +201,6 @@ The official text of the GNU General Public License v3 and accompanying explanat
 
 **3. [Ubuntu Server Official Documentation — Installation Guide](https://ubuntu.com/server/docs/installation)**
 Canonical's official Ubuntu Server installation documentation. Covers the subiquity installer step-by-step, network configuration during install, and post-install verification steps directly relevant to the Module 1 lab.
-
-
 
 ---
 

@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-1310 Introduction to Python
 
 **Certification Alignment:** PCAP — Certified Associate in Python Programming (Python Institute)
@@ -423,8 +420,6 @@ The original design document for f-strings, accepted for Python 3.6. Reading the
 - [ ] Review the Certification Exam Tips in Section 4.
 - [ ] Preview the lab tasks in Section 7.
 - [ ] Proceed to the Module 03 Lab Activity.
-
-
 
 ---
 

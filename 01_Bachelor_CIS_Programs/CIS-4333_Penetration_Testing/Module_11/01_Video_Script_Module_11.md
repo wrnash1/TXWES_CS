@@ -26,7 +26,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 ---
 
 ## Segment 1 — Introduction (0:00–1:30)

@@ -26,7 +26,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 ---
 
 ### SEGMENT 1: Introduction — What Is a Data Flow Diagram? (0:00–2:00)

@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4355 IoT and Embedded Systems
 
 ## Texas Wesleyan University | Professor Nash
@@ -346,8 +343,6 @@ Microsoft's official AZ-220 study guide on Microsoft Learn provides the skills m
 **3. CompTIA IoT+ Certification Exam Objectives (CY0-001)**
 [https://www.comptia.org/certifications/iot](https://www.comptia.org/certifications/iot)
 CompTIA's official IoT+ exam objectives page lists the four exam domains (IoT Hardware and Devices, IoT Networking and Connectivity, IoT Data Management, and IoT Security), each sub-objective with percentage weight, and links to the official study guide and practice exam resources. Reviewing the objectives against course modules confirms which areas require targeted review versus areas where course content already exceeds the exam baseline — particularly useful for students who want to take the IoT+ exam quickly as an early credential before specializing in an AWS or Azure certification track.
-
-
 
 ---
 

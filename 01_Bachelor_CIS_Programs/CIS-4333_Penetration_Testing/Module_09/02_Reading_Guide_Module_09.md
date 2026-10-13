@@ -1,6 +1,5 @@
 # Reading Guide: Module 09 — Web Application Penetration Testing
 
-
 <!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 <div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
   <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
@@ -18,7 +17,6 @@
   </div>
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
-
 
 ## Course: CIS-4333 Penetration Testing
 
@@ -412,8 +410,6 @@ ffuf -u https://TARGET/FUZZ -w /usr/share/seclists/Discovery/Web-Content/api-end
 
 ---
 
----
-
 ## 11. Supplemental Resources
 
 **1. OWASP Web Security Testing Guide (WSTG)**
@@ -429,8 +425,6 @@ PortSwigger's free Web Security Academy provides hands-on interactive labs for S
 DVWA is the primary lab target for Module 09 and the industry-standard web application security training platform. The GitHub repository includes full setup documentation, security level configuration, and vulnerability descriptions for each module. Setting up DVWA locally as a persistent lab environment enables ongoing practice beyond the scheduled lab activity.
 
 **Proprietary and Confidential. Not for disclosure outside of Texas Wesleyan University course use.**
-
-
 
 ---
 

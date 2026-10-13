@@ -26,7 +26,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 ---
 
 ## SEGMENT 1: Introduction — Why Agile? (0:00–2:30)
@@ -362,5 +361,4 @@ preparation and capstone. I'll see you there.
 
 *Total estimated duration: 22–24 minutes*
 
-*Production notes: Scrum event diagram in Segment 3 should animate each ceremony in sprint order.*
 *Kanban board in Segment 5 should show a live demo of moving cards with WIP limit enforcement.*

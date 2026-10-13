@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-4335 IT Service Management — Texas Wesleyan University
 **Instructor:** Professor Nash
 **Certification Alignment:** ITIL 4 Foundation
@@ -362,8 +359,6 @@ A downloadable reference of all ITIL 4 terms and their official definitions. Use
 **3. ServiceNow — What Is ITSM?**
 <https://www.servicenow.com/products/itsm/what-is-itsm.html>
 A practitioner-focused introduction to IT service management from the industry's leading ITSM platform vendor. Bridges the gap between framework theory (ITIL 4) and how ITSM concepts are implemented in real enterprise software tools.
-
-
 
 ---
 

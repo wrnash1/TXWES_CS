@@ -24,16 +24,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
----
-
-## Pre-Production Notes
-
-- Slide deck: 28 slides
-- Diagrams: ETL pipeline flow, data migration project phases, data quality dimensions, cutover timeline, Salesforce Data Loader vs. Data Import Wizard comparison
-- Key terms on screen: ETL, Extract, Transform, Load, Data Cleansing, Deduplication, Data Profiling, Cutover, Cutback Plan, Upsert, External ID, Staging Area, Reconciliation
-- End card: Lab 12, Quiz 12, Discussion Forum 12
-
 ---
 
 ## [00:00 – 02:00] Opening Hook

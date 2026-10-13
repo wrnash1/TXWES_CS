@@ -78,8 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
 ## Course: CIS-4345_Machine_Learning_Deep_Learning (TensorFlow Developer Certificate)
 
 ---
@@ -151,8 +149,6 @@ Official TensorFlow documentation listing every built-in loss function with math
 **3. StatQuest: Logistic Regression (YouTube)**
 <https://www.youtube.com/watch?v=yIYKR4sgzI8>
 Clear visual explanation of the sigmoid function, log-odds, and binary crossentropy from first principles. Covers why MSE is a poor choice for classification and how the logistic loss surface ensures convexity — the conceptual foundation behind Module 03's key exam tips.
-
-
 
 ---
 

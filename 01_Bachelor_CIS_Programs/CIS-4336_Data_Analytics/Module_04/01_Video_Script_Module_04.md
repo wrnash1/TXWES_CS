@@ -27,7 +27,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 Welcome back to CIS-4336. I am Professor Nash, and this is Module 04: Relational Databases and SQL for Analytics.
 
 SQL — Structured Query Language — is the most important tool in an analyst's technical toolkit. It is the lingua franca of data: every major database platform, cloud warehouse, and BI tool either uses SQL directly or translates to it behind the scenes. The CompTIA Data+ exam expects you to read, write, and interpret SQL queries, and this module gives you that foundation.

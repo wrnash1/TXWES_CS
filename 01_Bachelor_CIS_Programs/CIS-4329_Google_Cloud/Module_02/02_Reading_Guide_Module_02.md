@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4329 Google Cloud Computing
 
 **Certification Alignment:** Google Cloud Associate Cloud Engineer (ACE)
@@ -497,8 +494,6 @@ Boost trial or subscription.
 Official best practice guidance covering service account security, Workload
 Identity Federation, and organizational IAM governance patterns from Google's
 architecture team.
-
-
 
 ---
 

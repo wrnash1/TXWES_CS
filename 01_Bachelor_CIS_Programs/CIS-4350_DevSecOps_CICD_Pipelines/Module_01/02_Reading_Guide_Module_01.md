@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4350 DevSecOps and CI/CD Pipelines
 
 ## Texas Wesleyan University | Professor Nash
@@ -408,8 +405,6 @@ NIST's framework for integrating security practices into the software developmen
 ---
 
 Reading Guide — Module 01 | CIS-4350 | Texas Wesleyan University
-
-
 
 ---
 

@@ -232,8 +232,6 @@ D) Post-Incident Activity — by documenting the gap in the lessons learned repo
 
 ---
 
----
-
 ## Question 11
 
 A forensic analyst is investigating a compromised Linux server. The analyst needs to determine what processes were running at the time of compromise and what network connections they had established. The server has since been rebooted for operational reasons. Which evidence source is no longer available due to the reboot?

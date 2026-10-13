@@ -20,21 +20,9 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Estimated Duration:** 28–32 minutes
 **Certification Alignment:** Technical Interview Readiness (LeetCode / HackerRank)
 **Recorded by:** Professor Nash | Texas Wesleyan University
-
----
-
-> **PRODUCTION NOTES FOR INSTRUCTOR:**
->
-> - This is a review lecture — no new algorithms. Emphasize patterns and connections across modules.
-> - Use VS Code to show quick implementations from memory, demonstrating interview-style coding.
-> - [PAUSE] = 2 seconds of silence.
-> - Structure: walk through the six major algorithm families covered in this course, stating the canonical LeetCode problem for each, the key implementation detail, and the complexity.
-> - Emphasize the "pattern recognition" skill: given a new problem, which family does it belong to?
-> - End with 5 interview strategies: think aloud, start with brute force, optimize, test on examples, ask clarifying questions.
 
 ---
 

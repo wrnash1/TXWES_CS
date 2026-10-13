@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4327 Database Administration
 
 ## Texas Wesleyan University — Professor Nash
@@ -322,8 +319,6 @@ Explains TrueTime's role in achieving external consistency, discusses how Spanne
 **3. Cloud Spanner — Best Practices for Schema Design**
 https://cloud.google.com/spanner/docs/best-practice-large-scale
 Google's official guide for avoiding hotspots, choosing primary key strategies (UUIDs, hash prefixes, bit-reversal), and designing interleaved tables for production workloads.
-
-
 
 ---
 

@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-3322 Advanced Networking
 
 ## Texas Wesleyan University | Professor Nash
@@ -462,8 +459,6 @@ The following open educational resources extend DHCP and DNS concepts to CCNA ex
 4. **Cisco IOS DHCP Snooping Configuration Guide** (cisco.com): Cisco's official guide covering DHCP snooping configuration, trust port designation, Option 82, the snooping binding database, and integration with Dynamic ARP Inspection (DAI). Includes CLI examples for multi-VLAN deployments.
 
 5. **RFC 2131 — Dynamic Host Configuration Protocol** (rfc-editor.org/rfc/rfc2131): The authoritative IETF specification for DHCPv4, including the full DORA message exchange, relay agent behavior, `giaddr` field definition, and lease lifecycle management. The message format section is particularly useful for understanding what each DHCP packet field contains.
-
-
 
 ---
 

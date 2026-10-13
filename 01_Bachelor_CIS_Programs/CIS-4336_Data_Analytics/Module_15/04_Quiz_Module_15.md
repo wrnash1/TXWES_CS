@@ -210,8 +210,6 @@ A covers foundational data concepts and technology environments. B covers data c
 
 ---
 
----
-
 ### Question 11 (5 points)
 
 Under GDPR, which legal basis most commonly applies when a user voluntarily submits their email address through a website registration form to receive a newsletter?

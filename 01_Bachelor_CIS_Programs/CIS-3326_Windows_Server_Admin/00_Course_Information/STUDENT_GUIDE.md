@@ -51,7 +51,6 @@ Below is the study roadmap for every course in our computer science and computer
 | :--- | :--- | :--- | :--- |
 | **CIS-3326: Windows Server** | Microsoft Server Administration | Work with active configurations; build Active Directory trees and manage Group Policy Objects. | [Microsoft Learn: Server Path](https://learn.microsoft.com/) |
 
-
 ---
 
 ## 5. Final Exam Certification Policy (Module 16)

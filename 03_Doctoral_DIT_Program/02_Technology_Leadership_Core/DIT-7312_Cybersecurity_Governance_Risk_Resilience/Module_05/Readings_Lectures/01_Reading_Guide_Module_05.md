@@ -1,6 +1,5 @@
 # Reading Guide: Module 05 — Incident Response Orchestration & Digital Forensics Readiness
 
-
 <!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 <div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
   <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
@@ -40,8 +39,6 @@ NIST CSF 2.0 Respond Function, NIST SP 800-61 Rev. 3, forensic sound extraction,
 ### Guiding Doctoral Questions for Reflection
 * How does executive leadership substantiate 'reasonable security' under heightened regulatory enforcement?
 * What quantitative metrics best communicate technical risk exposure to a non-technical Board of Directors?
-
-
 
 ---
 

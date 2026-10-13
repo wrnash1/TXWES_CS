@@ -51,7 +51,6 @@ Below is the study roadmap for every course in our computer science and computer
 | :--- | :--- | :--- | :--- |
 | **CIS-3350: Software Engineering & Agile** | Professional Scrum Master (PSM I) | Practice Scrum events, define user stories with story points, study SOLID design patterns. | [Official Scrum Guide (scrumguides.org)](https://scrumguides.org/) |
 
-
 ---
 
 ## 5. Final Exam Certification Policy (Module 16)

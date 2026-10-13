@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-3340 Full Stack Web Development
 **Certification Alignment:** AWS Certified Developer — Associate (DVA-C02)
 **Texas Wesleyan University | Professor Nash**
@@ -433,8 +430,6 @@ The official `jsonwebtoken` package documentation covering `jwt.sign()` options 
 **4. AWS Documentation — API Gateway Lambda Authorizer**
 [https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-use-lambda-authorizer.html](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-use-lambda-authorizer.html)
 The official AWS documentation for Lambda authorizers covering token-based vs request-based authorizers, IAM policy output format, TTL caching of authorization decisions, and the relationship between the authorizer function and the backend Lambda — the production-scale equivalent of the `authenticate` middleware built in Lab 13.
-
-
 
 ---
 

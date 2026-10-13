@@ -20,35 +20,9 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Estimated Duration:** 22-24 minutes
 **Certification Alignment:** CompTIA A+ Core 1 (220-1101) — Domain 3.5: Given a scenario, install and configure motherboards, CPUs, and add-on cards
 **Recorded by:** Professor Nash | Texas Wesleyan University
-
----
-
-## Production Notes
-
-**SHOW COMPONENT cues** indicate points where the camera should cut to or overlay a close-up of the physical component being described. Have the following components staged before recording:
-
-- One full-size ATX motherboard (any generation)
-- One Micro-ATX motherboard
-- One Mini-ITX motherboard (if available; otherwise use reference image)
-- A ruler or measuring tape for dimension demonstration
-- A PCIe x1, x4, and x16 card or slot close-up image
-- A CR2032 CMOS battery
-- A CMOS clear jumper block
-
-**Key exam traps to call out explicitly during recording:**
-
-- PCIe physical backward compatibility (smaller card fits larger slot — allowed)
-- CMOS battery symptom (date/time reset, not a no-boot scenario)
-- Micro-ATX fits ATX cases, but Mini-ITX does NOT reliably fit ATX cases without an adapter
-
-**Safety notes:**
-
-- Remind students to use an ESD strap or touch a grounded metal surface before handling any motherboard
-- Never force-insert an expansion card; align the card with the slot guide rail before seating
 
 ---
 
@@ -75,7 +49,6 @@ Let's get into it."
 **[CAMERA: Cut to component table]**
 
 **[SHOW COMPONENT: Place ATX motherboard flat on the table. Hold up a ruler showing the 12-inch length and 9.6-inch width]**
-
 
 <div style="text-align: center; margin: 24px 0;">
 <svg viewBox="0 0 800 520" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="max-width: 800px; background:#0f172a; border-radius:10px; border:2px solid #1b365d; font-family:-apple-system, sans-serif;">
@@ -143,7 +116,6 @@ Let's get into it."
   <text x="400" y="485" fill="#f8fafc" font-size="12" font-weight="bold" text-anchor="middle">⚡ CompTIA A+ Blueprint Key Fact: Micro-ATX (9.6" × 9.6") is backward-compatible with standard ATX desktop cases.</text>
 </svg>
 </div>
-
 
 "This is an ATX motherboard. ATX stands for Advanced Technology eXtended, and it has been the standard full-size desktop form factor since 1995. The dimensions are 12 inches by 9.6 inches. When you pick up any standard full tower or mid tower desktop case, this is the board it was designed to hold.
 

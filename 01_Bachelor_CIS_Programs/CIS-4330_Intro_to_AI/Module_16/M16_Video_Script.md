@@ -8,15 +8,6 @@
 
 ---
 
-## Production Notes
-
-- **Runtime Target:** 30–35 minutes
-- **Slide Deck:** M16_Slides.pptx
-- **Graphics:** Domain percentage wheel; exam strategy checklist; concept maps for each domain
-- **Tone:** Confident, energizing, direct; this is the pre-game speech
-
----
-
 ## SEGMENT 1 — Welcome and Context (Slides 1–3) [3 min]
 
 [ON CAMERA]

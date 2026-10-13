@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-4335 IT Service Management — Texas Wesleyan University
 **Instructor:** Professor Nash
 **Certification Alignment:** ITIL 4 Foundation
@@ -318,8 +315,6 @@ A practitioner article applying the PESTLE framework to IT governance and risk c
 **3. CIO.com — IT Change Management and People Dimension**
 <https://www.cio.com/article/change-management-in-it-projects.html>
 A practitioner guide on managing people-side challenges during IT service transformations. Directly relevant to the Organizations and People dimension and how culture, training, and role clarity affect service outcomes.
-
-
 
 ---
 

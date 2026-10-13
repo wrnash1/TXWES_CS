@@ -26,7 +26,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 ---
 
 ### SEGMENT 1: Introduction — Why Process Models Matter (0:00–2:00)

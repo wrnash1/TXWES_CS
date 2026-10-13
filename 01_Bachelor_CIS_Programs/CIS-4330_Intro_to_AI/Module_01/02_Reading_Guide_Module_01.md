@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4330 Introduction to AI | Texas Wesleyan University
 
 **AI-900 Domain:** Describe Artificial Intelligence workloads and considerations (15-20%)
@@ -328,8 +325,6 @@ A free, self-paced course from Google covering supervised learning, gradient des
 **3. IBM SkillsBuild — AI Fundamentals**
 <https://skillsbuild.org/learn/artificial-intelligence>
 A free beginner-level AI curriculum from IBM covering AI history, machine learning types, ethics, and real-world applications. Provides an alternative perspective on the same foundational concepts covered in Module 01, reinforcing the AI vs. ML vs. DL hierarchy and responsible AI principles.
-
-
 
 ---
 

@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4336 Data Analytics
 
 ## Texas Wesleyan University | Professor Nash
@@ -381,8 +378,6 @@ A free, self-paced video module covering logistic regression, decision threshold
 **3. Towards Data Science — Understanding the Bias-Variance Tradeoff**
 <https://towardsdatascience.com/understanding-the-bias-variance-tradeoff-165e6942b229>
 A clear, visual explanation of the bias-variance tradeoff — the foundational concept behind overfitting, underfitting, and model complexity selection. Directly supports the Module 14 discussion of training vs. test accuracy gaps and when to use regularization or pruning.
-
-
 
 ---
 

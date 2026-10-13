@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-1320 Introduction to JavaScript
 
 **Certification Alignment:** JSE — Certified Associate in JavaScript Programming (OpenEDG / JS Institute)
@@ -550,8 +547,6 @@ The JSE (Certified Associate in JavaScript Programming) exam is delivered by the
 - [ ] Memorize the `defer` vs. `async` comparison table above.
 - [ ] Complete the Module 01 Lab.
 - [ ] Complete the Module 01 Quiz.
-
-
 
 ---
 

@@ -18,7 +18,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Course:** CIS-4355 IoT and Embedded Systems
 
 **Institution:** Texas Wesleyan University | Professor Nash
@@ -241,12 +240,3 @@ In Module 11 we move to edge computing — where intelligence moves from the clo
 See you there.
 
 ---
-
-## PRODUCTION NOTES
-
-- Screen capture: AWS IoT Core console showing Thing creation, certificate download, policy attachment
-- Screen capture: MQTT test client in AWS console showing incoming messages from ESP32
-- Screen capture: Rules Engine SQL editor with sample rule
-- Demo: ESP32 Serial Monitor connecting to AWS IoT Core with TLS
-- Closed captions: verify IoT Core, mTLS, X.509, Device Shadow, AMQP, DPS, DynamoDB, Lambda, SNS
-- Run time target: 22 minutes

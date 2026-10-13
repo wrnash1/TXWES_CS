@@ -20,21 +20,9 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Estimated Duration:** 22-24 minutes
 **Certification Alignment:** CompTIA A+ Core 1 (220-1101) — Domain 3.7 (Printer Types and Technologies), Domain 5.7 (Printer Troubleshooting)
 **Recorded by:** Professor Nash | Texas Wesleyan University
-
----
-
-### Production Notes
-
-> SHOW SLIDE: Title card — "Module 15: Printers and Imaging | CIS-2320 Hardware Fundamentals"
-> KEY EXAM TRAP 1: The EP process step order is tested directly. Students commonly place "Cleaning" at the end only — it actually occurs at the beginning of the next cycle AND at the end of the current cycle. The official A+ sequence starts with Cleaning.
-> KEY EXAM TRAP 2: Students confuse fuser failure (smearing) with transfer failure (faint/incomplete). The symptom determines the stage: smearing = fusing problem; faint output = transferring problem.
-> KEY EXAM TRAP 3: Direct thermal printers have NO ink and NO ribbon. A blank receipt is almost always loaded paper backward — coated side must face the printhead.
-> KEY EXAM TRAP 4: Drum units and corona wires belong to LASER printers only. Never assign these components to inkjet printers on the exam.
-> PRODUCTION NOTE: Display the six EP steps as a persistent on-screen graphic throughout Section 2. Highlight the active step in each explanation. This visual reinforcement is critical for retention.
 
 ---
 

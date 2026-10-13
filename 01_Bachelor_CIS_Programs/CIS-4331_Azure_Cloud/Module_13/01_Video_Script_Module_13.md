@@ -27,7 +27,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 By the end of this video you will be able to:
 
 - Describe what Azure Monitor does and what data it collects

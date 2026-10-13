@@ -210,8 +210,6 @@ Distractor Analysis:
 
 ---
 
----
-
 ### Question 11 (5 points)
 
 What is the correct syntax to reference the `id` attribute of the data source `data "aws_ami" "latest" {}` within the same configuration?

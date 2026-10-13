@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-3326 Windows Server Administration
 
 ## Texas Wesleyan University | Professor Nash
@@ -374,8 +371,6 @@ Covers ReFS features including integrity checksums, block clone for Hyper-V, all
 **4. Microsoft Docs — Data Deduplication overview**
 <https://learn.microsoft.com/en-us/windows-server/storage/data-deduplication/overview>
 Full reference for Data Deduplication including supported workloads, savings rate calculations, optimization job scheduling, and integration with Storage Spaces and iSCSI volumes.
-
-
 
 ---
 

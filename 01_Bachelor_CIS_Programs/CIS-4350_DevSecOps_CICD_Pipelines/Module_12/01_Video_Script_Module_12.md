@@ -26,7 +26,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 ---
 
 ### SEGMENT 1 — Introduction (0:00–2:00)
@@ -311,14 +310,3 @@ In the next module we cover Compliance as Code — how to use Open Policy Agent 
 See you there.
 
 ---
-
-### PRODUCTION NOTES
-
-- Screen share: `kubectl apply` of RBAC manifests and `kubectl auth can-i` verification
-- Demo: Applying default-deny NetworkPolicy and showing blocked cross-pod communication
-- Screen share: Security Context fields in a Deployment manifest
-- Demo: PodSecurity namespace label enforcement rejecting a root container
-- Screen share: Checkov GitHub Actions job with CKV_K8S_* findings in Code Scanning
-- Slide: RBAC object type hierarchy (ServiceAccount → RoleBinding → Role)
-- Slide: Network Policy allow-list model diagram
-- Slide: Security Context field reference table

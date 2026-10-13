@@ -20,22 +20,9 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Estimated Duration:** 22–26 minutes
 **Certification Alignment:** Technical Interview Readiness (LeetCode / HackerRank)
 **Recorded by:** Professor Nash | Texas Wesleyan University
-
----
-
-> **PRODUCTION NOTES FOR INSTRUCTOR:**
->
-> - Use VS Code + Python terminal for all [DEMO] sections.
-> - [PAUSE] = 2 seconds of silence.
-> - Draw the recursion tree for merge sort on a 8-element array. Students must see the split levels and the merge levels separately.
-> - Binary search: draw the search space halving at each step. Emphasize the `mid = left + (right - left) // 2` formula to avoid integer overflow (relevant in Java/C++ interviews, good habit in Python too).
-> - The Master Theorem is for analysis, not implementation. Introduce it with the T(n) = aT(n/b) + f(n) pattern; do not over-formalize.
-> - Common interview patterns: binary search on answer (not just on sorted arrays), merge sort for inversion count.
-> - Common mistakes: off-by-one errors in binary search (`left < right` vs `left <= right`), not returning `mid` when found, using `left + right // 2` without parentheses.
 
 ---
 

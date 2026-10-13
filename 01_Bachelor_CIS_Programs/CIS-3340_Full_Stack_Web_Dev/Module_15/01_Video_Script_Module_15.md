@@ -26,17 +26,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
----
-
-## Production Notes
-
-- Camera: Professor Nash on-screen for introductions and transitions
-- Screen capture: VS Code with Socket.io project, browser showing live chat demo
-- Use [SHOW CODE] for VS Code; [SHOW BROWSER] for browser demo; [PAUSE] for slides
-- Have `socket.io` installed on server, `socket.io-client` in React project
-- Two browser windows open side-by-side to demonstrate real-time message delivery
-
 ---
 
 ## Section 1: Introduction — Why WebSockets? (0:00 – 1:30)

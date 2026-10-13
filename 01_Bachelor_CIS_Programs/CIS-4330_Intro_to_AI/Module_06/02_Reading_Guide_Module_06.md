@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4330 Introduction to AI | Texas Wesleyan University
 
 **AI-900 Domain:** Describe features of Computer Vision workloads on Azure (15-20%)
@@ -304,8 +301,6 @@ Free introductory courses from the team behind the OpenCV library covering image
 **3. MIT OpenCourseWare — 6.869: Advances in Computer Vision (lecture notes)**
 <https://ocw.mit.edu/courses/6-869-advances-in-computer-vision-spring-2022/>
 Freely available lecture notes and slides from MIT's advanced computer vision course. Covers CNNs, segmentation, detection, and generative models at a rigorous level — useful for students who want to understand the underlying techniques that power Azure Computer Vision.
-
-
 
 ---
 

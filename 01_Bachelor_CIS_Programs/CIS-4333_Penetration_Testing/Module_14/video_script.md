@@ -8,15 +8,6 @@
 
 ---
 
-## Production Notes
-
-- **Runtime Target:** 28–32 minutes
-- **Segments:** 6
-- **Visual Aids:** Scope of work template, rules of engagement example, bug bounty policy comparison
-- **Lab Environment:** Contract review and SOW writing exercise — no live systems
-
----
-
 ## Segment 1: Why Legal Knowledge Is Not Optional (Lines 1–35)
 
 [SLIDE: Module 14 Title Card]

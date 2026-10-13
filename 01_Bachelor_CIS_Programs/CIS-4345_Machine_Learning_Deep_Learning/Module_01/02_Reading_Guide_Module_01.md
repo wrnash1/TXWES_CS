@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-4345 Machine Learning and Deep Learning
 
 **Institution:** Texas Wesleyan University
@@ -289,8 +286,6 @@ Official scikit-learn documentation for train-test splitting, cross-validation, 
 **3. TensorFlow Developer Certificate Candidate Handbook**
 <https://www.tensorflow.org/certificate>
 The official exam guide describing the five problem categories, scoring criteria, and development environment requirements. Reading this before Module 01 ensures all subsequent modules are studied with the exam objectives in mind.
-
-
 
 ---
 

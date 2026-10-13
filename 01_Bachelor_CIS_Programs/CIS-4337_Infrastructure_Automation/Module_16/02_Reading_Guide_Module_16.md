@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4337 Infrastructure Automation
 
 ## Texas Wesleyan University | Professor Nash
@@ -510,8 +507,6 @@ Official sample questions released by HashiCorp for the Terraform Associate 003 
 ---
 
 End of Module 16 Reading Guide
-
-
 
 ---
 

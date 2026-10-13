@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4315 Cyber Governance, Risk, and Compliance
 
 ## Texas Wesleyan University | Professor Nash
@@ -365,8 +362,6 @@ Description: ISACA's official COBIT 2019 documentation, available free to ISACA 
 **ISO/IEC 27001:2022 Overview — ISO.org**
 URL: https://www.iso.org/standard/27001
 Description: The official ISO page for the ISO/IEC 27001:2022 standard. Explains the ISMS structure and the relationship between ISO 27001 requirements and ISO 27002 controls. Useful for understanding how the standard translates governance requirements into an auditable management system.
-
-
 
 ---
 

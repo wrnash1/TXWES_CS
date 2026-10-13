@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Reading Guide — Module 06: Data Sources and Terraform Functions
 
 ### Course Alignment: HashiCorp Terraform Associate 003
@@ -373,8 +370,6 @@ Covers dynamic block syntax, the `iterator` argument, `for_each` behavior inside
 ---
 
 Module 06 Reading Guide — CIS-4337 Infrastructure Automation — Texas Wesleyan University
-
-
 
 ---
 

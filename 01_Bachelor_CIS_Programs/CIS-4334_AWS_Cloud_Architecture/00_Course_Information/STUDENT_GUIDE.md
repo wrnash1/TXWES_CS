@@ -51,7 +51,6 @@ Below is the study roadmap for every course in our computer science and computer
 | :--- | :--- | :--- | :--- |
 | **CIS-4334: AWS Architecture** | AWS Solutions Architect - Associate | Build highly-available patterns using Elastic Load Balancers (ELBs) and Auto Scaling Groups (ASGs). | [AWS Official Documentation](https://aws.amazon.com/documentation/) |
 
-
 ---
 
 ## 5. Final Exam Certification Policy (Module 16)

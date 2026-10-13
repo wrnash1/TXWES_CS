@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-4334 AWS Cloud Architecture
 **Certification Target:** AWS Solutions Architect Associate (SAA-C03)
 
@@ -429,8 +426,6 @@ Free course covering VPC design, subnet architecture, security controls, and con
 **3. AWS Documentation — Security Groups vs Network ACLs Comparison**
 https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Security.html
 Official comparison of Security Groups and Network ACLs covering stateful vs stateless behavior, rule evaluation, and appropriate use cases — essential study material for the security comparison questions on SAA-C03.
-
-
 
 ---
 

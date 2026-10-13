@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4350 DevSecOps and CI/CD Pipelines
 
 ## Texas Wesleyan University | Professor Nash
@@ -553,8 +550,6 @@ Official Falco documentation for writing and customizing detection rules, includ
 ---
 
 Reading Guide — Module 05 | CIS-4350 | Texas Wesleyan University | Professor Nash
-
-
 
 ---
 

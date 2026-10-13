@@ -26,17 +26,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
----
-
-## Production Notes
-
-- Camera: Professor Nash on-screen for introductions and transitions
-- Screen capture: VS Code with React project open, browser with React DevTools
-- Use [SHOW CODE] for VS Code; [SHOW BROWSER] for browser output; [PAUSE] for slide transitions
-- Have Vite project scaffolded before recording
-- Chrome with React DevTools extension installed
-
 ---
 
 ## Section 1: Introduction — Why React? (0:00 – 1:30)

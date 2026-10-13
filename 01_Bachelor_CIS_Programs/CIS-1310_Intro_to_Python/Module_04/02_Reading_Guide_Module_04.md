@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-1310 Introduction to Python
 
 **Certification Alignment:** PCAP — Certified Associate in Python Programming (Python Institute)
@@ -490,8 +487,6 @@ Covers all comparison operators including chained comparisons (`a < b < c`), ide
 - [ ] Review all 7 Certification Exam Tips in Section 5.
 - [ ] Preview the lab tasks in Section 8.
 - [ ] Proceed to the Module 04 Lab Activity.
-
-
 
 ---
 

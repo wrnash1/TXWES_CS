@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4331 Azure Cloud Computing
 
 ## Texas Wesleyan University | Professor Nash
@@ -465,8 +462,6 @@ Explains the difference between Service Endpoints and Private Endpoints, how Pri
 - ExpressRoute overview: learn.microsoft.com/en-us/azure/expressroute/expressroute-introduction
 - Application Gateway overview: learn.microsoft.com/en-us/azure/application-gateway/overview
 - Azure Load Balancer overview: learn.microsoft.com/en-us/azure/load-balancer/load-balancer-overview
-
-
 
 ---
 

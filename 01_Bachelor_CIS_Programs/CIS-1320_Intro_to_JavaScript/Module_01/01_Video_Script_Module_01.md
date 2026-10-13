@@ -20,20 +20,9 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Estimated Duration:** 14–16 minutes
 **Certification Alignment:** JSE — Certified Associate in JavaScript Programming (OpenEDG / JS Institute)
 **Recorded by:** Professor Nash | Texas Wesleyan University
-
----
-
-> **PRODUCTION NOTES FOR INSTRUCTOR:**
->
-> - Use screen-share for all [DEMO] sections. Open VS Code and Chrome side-by-side.
-> - [PAUSE] = hold 2 seconds of silence for emphasis or student note-taking.
-> - Keep DevTools open throughout the demos — normalize it as part of the workflow.
-> - Emphasize the `defer` pattern early. Students will use it in every lab this semester.
-> - End with a clear summary of what the lab will ask them to do.
 
 ---
 

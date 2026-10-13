@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4327 Database Administration
 
 **Certification Alignment:** Google Cloud Professional Database Engineer
@@ -392,8 +389,6 @@ Detailed descriptions of all InnoDB configuration variables including innodb_buf
 **3. Cloud SQL Query Insights — Documentation**
 https://cloud.google.com/sql/docs/mysql/using-query-insights
 Guide to using Cloud SQL's built-in Query Insights feature for identifying slow queries, visualizing query plans, and monitoring query performance on Cloud SQL for MySQL instances.
-
-
 
 ---
 

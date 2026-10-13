@@ -26,7 +26,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 ---
 
 ### SEGMENT 1 — Introduction (0:00–2:00)
@@ -189,12 +188,3 @@ In the next module we cover Security Champions and DevSecOps Culture — how to 
 See you there.
 
 ---
-
-### PRODUCTION NOTES
-
-- Screen share: OWASP Threat Dragon web app — draw a simple DFD for a CI/CD pipeline live
-- Demo: Adding STRIDE threats to each component in Threat Dragon
-- Slide: STRIDE table — six categories, violated properties, and CI/CD control mapping
-- Slide: DFD element type diagram (process, data store, external entity, data flow, trust boundary)
-- Demo: Exporting Threat Dragon model as JSON and committing to a Git repository
-- Slide: Threat model output → CI/CD control traceability matrix

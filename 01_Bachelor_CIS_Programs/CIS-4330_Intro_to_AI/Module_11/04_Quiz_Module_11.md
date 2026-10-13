@@ -254,8 +254,6 @@ C. Humans and organizations deploying AI are answerable for how those systems be
 
 ---
 
----
-
 ## Question 11 (5 points)
 
 A generative AI writing assistant used in a hiring context produces job description text that consistently uses masculine pronouns and male-coded language (e.g., "he will lead the team," "a strong man for the role"). The system was trained on historical job postings without filtering for gendered language. Which bias type best describes this problem?

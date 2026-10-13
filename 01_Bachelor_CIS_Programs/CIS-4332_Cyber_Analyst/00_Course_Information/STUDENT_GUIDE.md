@@ -51,7 +51,6 @@ Below is the study roadmap for every course in our computer science and computer
 | :--- | :--- | :--- | :--- |
 | **CIS-4332: Cyber Analyst** | CompTIA CySA+ | Read and query server logs using regex tools (`grep`); analyze raw network traffic logs (`PCAP`). | [CertifyBreakfast CySA+ Series](https://youtube.com) |
 
-
 ---
 
 ## 5. Final Exam Certification Policy (Module 16)

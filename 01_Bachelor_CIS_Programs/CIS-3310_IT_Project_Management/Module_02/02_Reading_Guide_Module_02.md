@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-3310 IT Project Management
 **Certification Alignment:** CompTIA Project+ (PK0-005) | PMBOK 6th and 7th Editions
 **Prepared by:** Professor Nash | Texas Wesleyan University
@@ -270,8 +267,6 @@ The following free, openly licensed resources extend the concepts in this module
 5. **Stakeholder Analysis Tutorial — MindTools (Free)**
    [mindtools.com/stakeholder-analysis](https://www.mindtools.com/aol0rms/stakeholder-analysis)
    Step-by-step guide to building a Power/Interest Grid and planning stakeholder engagement strategies — directly supports the Module 02 lab.
-
-
 
 ---
 

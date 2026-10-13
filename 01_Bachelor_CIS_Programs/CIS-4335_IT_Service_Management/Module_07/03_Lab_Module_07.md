@@ -209,8 +209,6 @@ Before submitting, verify:
 
 ---
 
----
-
 ## Part 9 — Challenge Exercise
 
 ### Challenge 1: Value Stream Comparison

@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4327 Database Administration
 
 ## Texas Wesleyan University — Professor Nash
@@ -291,8 +288,6 @@ Explains how to read Key Visualizer heatmaps, interpret hotspot signatures, and 
 **3. Bigtable Whitepaper — Chang et al., Google (2006)**
 https://research.google/pubs/pub27898/
 The original academic paper describing the Bigtable wide-column storage model, tablet architecture, and compaction design — foundational reading for understanding Bigtable's internals at the exam level.
-
-
 
 ---
 

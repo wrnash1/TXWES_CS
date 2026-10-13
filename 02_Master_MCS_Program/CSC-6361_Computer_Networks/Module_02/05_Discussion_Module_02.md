@@ -59,7 +59,6 @@ After posting your initial recommendation, respond to two classmates whose recom
 | Peer responses — substantive, advances discussion | 10 |
 | **Total** | **100** |
 
-
 ---
 
 ### Comprehensive SACSCOC RSI Grading Rubric (100 Points Total)

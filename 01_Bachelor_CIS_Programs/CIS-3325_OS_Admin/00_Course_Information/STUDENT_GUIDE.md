@@ -51,7 +51,6 @@ Below is the study roadmap for every course in our computer science and computer
 | :--- | :--- | :--- | :--- |
 | **CIS-3325: OS Admin** | LPI Linux Essentials (010-160) | Rely on the CLI terminal; read manual pages directly using the `man` command (e.g., `man chmod`). | [LPI Free Learning Portal](https://learning.lpi.org/) |
 
-
 ---
 
 ## 5. Final Exam Certification Policy (Module 16)

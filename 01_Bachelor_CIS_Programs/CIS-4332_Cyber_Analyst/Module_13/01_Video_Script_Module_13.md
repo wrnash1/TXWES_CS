@@ -22,7 +22,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Certification Alignment:** CompTIA CySA+ (CS0-003)
 
 ---

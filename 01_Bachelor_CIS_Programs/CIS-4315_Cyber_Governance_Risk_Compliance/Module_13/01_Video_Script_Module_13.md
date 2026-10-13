@@ -26,7 +26,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 ---
 
 ### [00:00 – 01:30] Opening and Learning Objectives
@@ -214,15 +213,3 @@ For the CISM exam, focus on the relationship between BIA outputs and strategy se
 In Module 14, we move to Disaster Recovery Management — DR site types, failover procedures, cloud DR architectures, and backup strategies. I will see you there."
 
 ---
-
-### Production Notes
-
-- **Slides:** Minimum 18-point font. All diagrams need alt-text as scripted.
-
-- **On-screen timers:** Display elapsed time in lower-left corner.
-
-- **Caption file:** SRT format required for LMS upload.
-
-- **B-roll suggestions:** Data center footage, network diagram overlays, tabletop exercise imagery.
-
-- **Exam callout graphic:** Use a distinct gold banner for all CISM exam tips.

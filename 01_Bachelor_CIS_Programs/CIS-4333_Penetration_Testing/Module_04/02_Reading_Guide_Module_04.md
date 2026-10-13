@@ -78,8 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
 ## Course: CIS-4333_Penetration_Testing (CompTIA PenTest+)
 
 ---
@@ -152,8 +150,6 @@ TryHackMe's Nmap rooms provide guided, hands-on practice with every major scan t
 **3. Hack The Box Academy — Network Enumeration with Nmap**
 [https://academy.hackthebox.com/course/preview/network-enumeration-with-nmap](https://academy.hackthebox.com/course/preview/network-enumeration-with-nmap)
 HTB Academy's Nmap module covers scan types, NSE scripting, output formats, and firewall evasion techniques at a depth aligned to eJPT and OSCP preparation. The free tier includes enough content to reinforce all PT0-002 Nmap objectives covered in Module 04.
-
-
 
 ---
 

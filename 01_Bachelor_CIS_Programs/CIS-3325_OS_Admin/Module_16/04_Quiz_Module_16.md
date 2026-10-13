@@ -17,8 +17,6 @@ D) lvresize -L +5G /dev/vg_data/lv_data && xfs_growfs /dev/vg_data/lv_data
 
 ---
 
----
-
 **Question 2**
 An administrator is troubleshooting a failed SSH connection to a server. Running `ssh -v user@server` shows the connection reaches the authentication stage but fails with "Permission denied (publickey)." The user's `~/.ssh/` directory has permissions `755`. What is the most likely cause and fix?
 A) The SSH daemon is not running. Start it with `systemctl start sshd`.
@@ -30,8 +28,6 @@ D) Port 22 is blocked by the firewall. Run `firewall-cmd --permanent --add-servi
     *   *Why A is incorrect:* If the SSH daemon were not running, the connection would fail at the TCP level — the client would not reach the authentication stage. The scenario states authentication was reached, confirming `sshd` is active.
     *   *Why C is incorrect:* SSH keys do not expire by default. There is no built-in expiration mechanism for RSA key pairs generated with `ssh-keygen`. Key age is not a valid cause of authentication failure.
     *   *Why D is incorrect:* If port 22 were blocked by a firewall, the connection would time out before reaching authentication. Again, the scenario confirms the authentication stage was reached, ruling out a firewall block.
-
----
 
 ---
 

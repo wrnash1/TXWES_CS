@@ -26,7 +26,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 ---
 
 ## SEGMENT 1 — Introduction: What MM Does and Why It Matters (0:00–2:30)

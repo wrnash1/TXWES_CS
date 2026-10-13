@@ -8,14 +8,6 @@
 
 ---
 
-## Production Notes
-
-**Duration:** Approximately 25–30 minutes
-**Format:** Lecture with slide transitions and case study references
-**Segments:** 6 segments with natural pause points
-
----
-
 ## Segment 1: Introduction — Why Methodology Matters (Lines 1–40)
 
 [SLIDE: Title card — "Module 15: ERP Implementation Methodology"]

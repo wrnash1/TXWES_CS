@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-3322 Advanced Networking
 
 ## Texas Wesleyan University | Professor Nash
@@ -408,8 +405,6 @@ The following open educational resources extend ACL concepts to CCNA exam depth.
 4. **Cisco IOS Security Configuration Guide — Access Control Lists** (cisco.com): Cisco's official security configuration guide covering extended ACL syntax for all protocol types, reflexive ACLs, time-based ACLs, and `show access-lists` counter interpretation with complete CLI examples.
 
 5. **PacketLife.net — ACL Cheat Sheet** (packetlife.net/media/library/20/access_control_lists.pdf): A freely available one-page reference card covering standard and extended ACL syntax, wildcard mask quick calculations, ACL placement guidelines, and common protocol/port numbers tested on the CCNA exam.
-
-
 
 ---
 

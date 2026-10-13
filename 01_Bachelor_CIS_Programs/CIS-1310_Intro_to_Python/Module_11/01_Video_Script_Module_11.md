@@ -20,21 +20,9 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Estimated Duration:** 14–16 minutes
 **Certification Alignment:** PCAP — Certified Associate in Python Programming (Python Institute)
 **Recorded by:** Professor Nash | Texas Wesleyan University
-
----
-
-> **PRODUCTION NOTES FOR INSTRUCTOR:**
->
-> - Use screen-share for all [DEMO] sections — run live in Ubuntu terminal/REPL.
-> - [PAUSE] = hold 2 seconds of silence.
-> - Show the immutability demo before any method demos — it resets the student's mental model.
-> - Emphasize `.find()` vs `.index()` side-by-side — this is a guaranteed PCAP trap.
-> - Emphasize `.join()` syntax — called on the separator, not the list. Show the wrong way first.
-> - Run `text_cleaner.py` live so students see a realistic string-processing pipeline.
 
 ---
 
@@ -336,7 +324,6 @@ print(chr(97))      # a
 # Demonstrates a realistic string processing pipeline
 # Module 11 Lab — CIS-1310
 
-
 def clean_line(line):
     '''Strip whitespace, convert to lowercase, replace punctuation.'''
     line = line.strip()
@@ -344,7 +331,6 @@ def clean_line(line):
     for char in '.,!?;:':
         line = line.replace(char, '')
     return line
-
 
 def word_stats(text):
     '''Return a dict of word count stats for cleaned text.'''
@@ -355,7 +341,6 @@ def word_stats(text):
         'longest': max(words, key=len) if words else '',
         'contains_python': 'python' in words,
     }
-
 
 # Test input
 sample = '  Python is great. Python is powerful!  '

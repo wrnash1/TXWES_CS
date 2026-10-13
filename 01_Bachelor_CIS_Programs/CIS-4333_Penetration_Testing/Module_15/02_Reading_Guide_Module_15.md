@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4333 Penetration Testing
 
 ## Texas Wesleyan University | Professor Nash
@@ -280,8 +277,6 @@ Section 4 of this NIST publication covers post-testing activities including clea
 
 **3. [Penetration Testing Execution Standard (PTES) — Post-Exploitation and Reporting](http://www.pentest-standard.org/index.php/Reporting)**
 The PTES reporting section defines industry expectations for post-engagement documentation including cleanup attestation format, evidence handling procedures, and the structure of findings with remediation recommendations. Use this alongside the reading guide to understand how professional engagements are formally closed.
-
-
 
 ---
 

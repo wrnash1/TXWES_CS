@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-4335 IT Service Management — Texas Wesleyan University
 **Instructor:** Professor Nash
 **Certification Alignment:** ITIL 4 Foundation
@@ -347,8 +344,6 @@ A practitioner guide to value stream mapping as applied to IT service management
 **3. Atlassian — Incident Management Best Practices**
 <https://www.atlassian.com/incident-management/incident-response>
 A detailed practitioner resource covering the full incident management lifecycle from detection through post-incident review. Directly maps to the Deliver and Support and Improve SVC activities that are central to this module.
-
-
 
 ---
 

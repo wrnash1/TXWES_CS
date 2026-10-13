@@ -26,16 +26,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
----
-
-## Production Notes
-
-- Slides: Contract type comparison table shown as animated build; make-or-buy decision tree diagram
-- Graphics: Procurement process flow from planning through closure; risk distribution visualization for contract types
-- Tone: Practical and scenario-driven — connect procurement decisions to real IT project context
-- Screen segment: Walk through a sample Statement of Work structure and source selection matrix
-
 ---
 
 ## Segment 1 — Introduction: Why Procurement Decisions Shape Project Outcomes (0:00–2:30)

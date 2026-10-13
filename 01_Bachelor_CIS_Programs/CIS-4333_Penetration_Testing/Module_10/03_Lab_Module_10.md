@@ -243,8 +243,6 @@ Submit all screenshots and finding records as a single PDF or ZIP file to the Ca
 
 ---
 
----
-
 ## Part 9 — Challenge Exercise
 
 ### Challenge 1: Blind SQL Injection Time-Based Extraction

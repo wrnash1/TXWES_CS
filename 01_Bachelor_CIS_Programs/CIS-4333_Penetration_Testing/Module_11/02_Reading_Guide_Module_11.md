@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4333 Penetration Testing
 
 **Certification Alignment:** CompTIA PenTest+ (PT0-002)
@@ -264,8 +261,6 @@ This objective explicitly tests: WPA cracking, evil twin attacks, deauthenticati
 
 ---
 
----
-
 ## 9. Supplemental Resources
 
 **1. Aircrack-ng Official Documentation and Wiki**
@@ -281,8 +276,6 @@ The hcxtools repository documents the modern WPA2 PMKID capture-and-crack workfl
 TryHackMe's Wifi Hacking 101 room provides guided hands-on practice with the full aircrack-ng workflow — monitor mode, handshake capture, and offline cracking — in a browser-accessible environment that does not require physical wireless hardware. Completing this room reinforces all Module 11 lab exercises and builds command-line fluency with wireless assessment tools.
 
 *End of Module 11 Reading Guide*
-
-
 
 ---
 

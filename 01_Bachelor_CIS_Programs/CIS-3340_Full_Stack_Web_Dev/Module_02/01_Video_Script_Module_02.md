@@ -7,36 +7,6 @@
 
 ---
 
-## Production Notes
-
-<!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
-<div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
-  <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
-    <div>
-      <span style="background: #d9a74a; color: #0f172a; font-weight: 800; font-size: 11px; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Vendor Video Lecture</span>
-      <strong style="margin-left: 10px; font-size: 14px;">freeCodeCamp &bull; Full Stack Web Development for Beginners &bull; Module 02</strong>
-    </div>
-    <a href="https://www.youtube.com/watch?v=nu_pCVPKzTk" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
-  </div>
-  <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #0f172a;">
-    <iframe src="https://www.youtube.com/embed/nu_pCVPKzTk" title="freeCodeCamp &bull; Full Stack Web Development for Beginners" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-  </div>
-  <div style="padding: 12px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 13px; color: #475569;">
-    <strong>Recommended Viewing:</strong> <em>freeCodeCamp &bull; Full Stack Web Development for Beginners</em>. This vendor-aligned lecture stream reinforces this module's theoretical principles, certification blueprints, and hands-on laboratory benchmarks.
-  </div>
-</div>
-<!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
-
-
-- Camera: Professor Nash on-screen for introductions and transitions
-- Screen capture: VS Code with CSS file open; Chrome with DevTools layout overlay visible
-- Use [SHOW CODE] cue to switch to full-screen VS Code
-- Use [SHOW BROWSER] cue to switch to full-screen Chrome with Flexbox or Grid overlay enabled
-- Enable the CSS Grid overlay in Chrome DevTools during grid demonstrations
-- Keep a second browser tab with the unstyled HTML from Module 01 for before/after comparison
-
----
-
 ## Section 1: Introduction - Why CSS Layout Matters [00:00 - 03:30]
 
 Welcome back. I am Professor Nash. In Module 01 we built a semantically correct HTML5 page — a clean, well-structured document that machines can read and understand. Today in Module 02 we make it look like a real application.

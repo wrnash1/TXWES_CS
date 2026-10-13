@@ -219,8 +219,6 @@ A penetration tester has a Meterpreter session on a compromised Windows host and
 
 ---
 
----
-
 ### Question 11
 
 A tester runs `sudo -l` on a compromised Linux host and sees `(root) NOPASSWD: /usr/bin/find`. How can this sudo misconfiguration be exploited to obtain a root shell?

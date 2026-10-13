@@ -272,8 +272,6 @@ Compile all deliverables into a single document labeled clearly by task number. 
 
 ---
 
----
-
 ## Part 9 — Challenge Exercise
 
 ### Challenge 1: DynamoDB On-Demand vs. Provisioned Capacity Analysis

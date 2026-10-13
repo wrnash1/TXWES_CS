@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-1310 Introduction to Python
 
 **Certification Alignment:** PCAP — Certified Associate in Python Programming (Python Institute)
@@ -507,8 +504,6 @@ The design document for the bare `*` syntax that forces keyword-only arguments. 
 - [ ] Review all 7 Certification Exam Tips in Section 4.
 - [ ] Preview the lab tasks in Section 7.
 - [ ] Proceed to the Module 08 Lab Activity.
-
-
 
 ---
 

@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4345 Machine Learning and Deep Learning
 
 ## Texas Wesleyan University | Professor Nash
@@ -617,8 +614,6 @@ Official TF documentation covering all three post-training quantization modes: d
 
 **3. [scikit-learn Hyperparameter Tuning — GridSearchCV and RandomizedSearchCV](https://scikit-learn.org/stable/modules/grid_search.html)**
 Scikit-learn's comprehensive guide to hyperparameter search for classical ML models. Covers `GridSearchCV`, `RandomizedSearchCV`, cross-validation scoring, and `pipeline` integration. Provides a useful contrast to Keras Tuner's approach and is directly applicable to the scikit-learn portions of the course.
-
-
 
 ---
 

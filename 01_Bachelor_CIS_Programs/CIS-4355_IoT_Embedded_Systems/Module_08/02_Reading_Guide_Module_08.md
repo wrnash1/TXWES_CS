@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-4355 IoT and Embedded Systems
 
 **Institution:** Texas Wesleyan University | Professor Nash
@@ -454,8 +451,6 @@ Espressif's official ADC API documentation for the Arduino-ESP32 core. Explains 
 **3. NXP UM10204 — I2C-Bus Specification and User Manual**
 [https://www.nxp.com/docs/en/user-guide/UM10204.pdf](https://www.nxp.com/docs/en/user-guide/UM10204.pdf)
 The authoritative I2C specification from NXP covering bus speeds (Standard/Fast/Fast-Plus/High-Speed), pull-up resistor calculation, address allocation, and multi-master arbitration. Essential reference for understanding the address conflict and resistor loading issues discussed in Section 2.
-
-
 
 ---
 

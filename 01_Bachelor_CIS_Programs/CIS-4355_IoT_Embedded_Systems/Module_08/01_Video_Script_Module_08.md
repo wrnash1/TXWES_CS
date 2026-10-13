@@ -18,7 +18,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Course:** CIS-4355 IoT and Embedded Systems
 
 **Institution:** Texas Wesleyan University | Professor Nash
@@ -315,11 +314,3 @@ In Module 09 we move to wireless networking: Wi-Fi, Bluetooth BLE, Zigbee, Z-Wav
 See you there.
 
 ---
-
-## PRODUCTION NOTES
-
-- B-roll: I2C bus on oscilloscope showing SDA/SCL waveforms; BMP280 chip close-up; LDR in light vs darkness
-- Demo: Arduino Serial Plotter showing raw ADC vs EMA smoothed value side-by-side
-- Demo: Serial Monitor output of multi-sensor logger updating every 5 seconds
-- Closed captions: verify I2C, SPI, MOSI, MISO, NTC, Steinhart-Hart, EMA, BMP280, DHT22, LDR
-- Run time target: 21 minutes

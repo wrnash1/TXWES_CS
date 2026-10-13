@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4331 Azure Cloud Computing
 
 ## Texas Wesleyan University | Professor Nash
@@ -513,8 +510,6 @@ Covers the unified analytics workspace architecture including Dedicated SQL Pool
 - Azure Database for MySQL: learn.microsoft.com/en-us/azure/mysql/flexible-server/overview
 - Azure Synapse Analytics: learn.microsoft.com/en-us/azure/synapse-analytics/overview-what-is
 - Microsoft Learn AZ-900 database module: learn.microsoft.com/en-us/training/modules/azure-database-fundamentals/
-
-
 
 ---
 

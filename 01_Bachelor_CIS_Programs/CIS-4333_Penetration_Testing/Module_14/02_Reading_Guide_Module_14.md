@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4333 Penetration Testing
 
 ## Texas Wesleyan University | Professor Nash
@@ -271,8 +268,6 @@ The OWASP Web Security Testing Guide includes a dedicated reporting chapter cove
 **3. TCM Security — Writing a Pentest Report (Free Course Sample)**
 https://tcm-sec.com/practical-ethical-hacking-course/
 TCM Security's Practical Ethical Hacking course includes a well-regarded module on professional report writing, covering executive summary tone, finding format, and client communication. The course is frequently recommended by working penetration testers as a practical supplement to certification study materials.
-
-
 
 ---
 

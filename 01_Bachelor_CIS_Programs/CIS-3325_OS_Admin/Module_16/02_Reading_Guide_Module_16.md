@@ -78,8 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
 ## Course: CIS-3325_OS_Admin (CompTIA Linux+ XK0-005)
 
 ---
@@ -153,8 +151,6 @@ Free video study guide covering all XK0-005 exam objectives with short, focused 
 **4. Linux Foundation — Free Training Courses**
 https://training.linuxfoundation.org/resources/?_sft_content_type=free-course
 The Linux Foundation's catalog of free courses including Introduction to Linux (LFS101x), which provides an excellent comprehensive review of topics spanning all four exam domains.
-
-
 
 ---
 

@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4327 Database Administration
 
 **Certification Alignment:** Google Cloud Professional Database Engineer
@@ -520,8 +517,6 @@ Community-maintained tuning guide covering practical recommendations for shared_
 **3. PgBouncer Documentation — Configuration Reference**
 https://www.pgbouncer.org/config.html
 Official PgBouncer configuration reference covering all pgbouncer.ini parameters, pooling mode trade-offs, auth_type options, and pool sizing strategies.
-
-
 
 ---
 

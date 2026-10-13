@@ -26,16 +26,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
----
-
-## Production Notes
-
-- Slides should advance on each [SHOW SLIDE] marker
-- Allow natural pause time at each [PAUSE] marker (2–3 seconds)
-- Recommended: screen-record forensic tool demos in a VM snapshot
-- Use callout boxes on slides for legal and chain-of-custody warnings
-
 ---
 
 ## Opening — Welcome and Context (approximately 2 minutes)

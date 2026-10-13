@@ -51,7 +51,6 @@ Below is the study roadmap for every course in our computer science and computer
 | :--- | :--- | :--- | :--- |
 | **CIS-4345: Machine Learning & Deep Learning** | TensorFlow Developer Certificate | Construct ML pipelines using scikit-learn, train neural networks in Keras, tune hyperparameters. | [Scikit-Learn & TensorFlow Docs](https://scikit-learn.org/) |
 
-
 ---
 
 ## 5. Final Exam Certification Policy (Module 16)

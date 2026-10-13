@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-3322 Advanced Networking
 
 ## Texas Wesleyan University | Professor Nash
@@ -387,8 +384,6 @@ The following open educational resources extend NAT and PAT concepts to CCNA exa
 4. **Cisco IOS IP Addressing Services Configuration Guide — NAT** (cisco.com): Cisco's official configuration guide covering static NAT, dynamic NAT with pools, PAT, hairpinning, NAT virtual interface, and `debug ip nat` output interpretation with full CLI examples.
 
 5. **Packet Tracer Skills Integration Challenge — NAT** (Cisco Networking Academy): Free Packet Tracer activity files from the Networking Academy that include pre-built NAT topologies for configuring static NAT for a DMZ server, PAT for LAN users, and verifying connectivity from a simulated internet host.
-
-
 
 ---
 

@@ -207,8 +207,6 @@ AMQP is described as an enterprise-grade IoT backend messaging protocol. Which o
 
 ---
 
----
-
 ### Question 11 (5 points)
 
 A Mosquitto broker is configured with `allow_anonymous true` in its configuration file. What is the security implication of this setting?

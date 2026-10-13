@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4334 AWS Cloud Architecture
 
 ## Texas Wesleyan University | Professor Nash
@@ -364,8 +361,6 @@ Free course covering FinOps on AWS including rightsizing, tagging strategies, Sa
 **3. AWS Documentation — AWS Compute Optimizer User Guide**
 https://docs.aws.amazon.com/compute-optimizer/latest/ug/what-is-compute-optimizer.html
 Authoritative guide to Compute Optimizer recommendation types (EC2 instances, Auto Scaling groups, Lambda, EBS volumes, ECS on Fargate), required IAM permissions, and how to interpret finding risk levels — the reference for rightsizing and instance optimization questions in this module.
-
-
 
 ---
 

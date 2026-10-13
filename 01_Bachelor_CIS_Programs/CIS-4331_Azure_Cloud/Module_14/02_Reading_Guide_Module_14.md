@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4331 Azure Cloud Computing
 
 ## Texas Wesleyan University | Professor Nash
@@ -400,8 +397,6 @@ If a recommendation is not applicable — for example, a VM is intentionally idl
 2. Azure Cost Management + Billing documentation — analyzing, monitoring, and optimizing Azure spending with budgets, cost analysis, and recommendations: https://learn.microsoft.com/en-us/azure/cost-management-billing/cost-management-billing-overview
 
 3. Azure Reserved Virtual Machine Instances documentation — understanding reservation discounts, scope, exchange, and cancellation policies: https://learn.microsoft.com/en-us/azure/cost-management-billing/reservations/save-compute-costs-reservations
-
-
 
 ---
 

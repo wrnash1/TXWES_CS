@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4335 IT Service Management
 
 ## Texas Wesleyan University | Professor Nash
@@ -390,8 +387,6 @@ Internal audits are dry runs — they identify gaps before external auditors do.
 ---
 
 *End of Module 14 Reading Guide — approximately 265 lines*
-
-
 
 ---
 

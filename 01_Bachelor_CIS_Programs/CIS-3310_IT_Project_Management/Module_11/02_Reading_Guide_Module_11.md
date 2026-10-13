@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-3310 IT Project Management
 
 ## Texas Wesleyan University | Professor Nash
@@ -350,8 +347,6 @@ The following free, openly licensed resources extend the concepts in this module
 5. **Risk Register Template — ProjectManager.com (Free Download)**
    [projectmanager.com/templates/risk-register-template](https://www.projectmanager.com/templates/risk-register-template)
    Professional Risk Register template with all standard fields: ID, description, probability, impact, score, owner, trigger, response strategy, and status. Usable directly in the Module 11 lab.
-
-
 
 ---
 

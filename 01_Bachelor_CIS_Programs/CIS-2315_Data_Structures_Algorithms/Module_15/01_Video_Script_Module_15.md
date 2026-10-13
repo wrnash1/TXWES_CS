@@ -20,23 +20,9 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Estimated Duration:** 22–26 minutes
 **Certification Alignment:** Technical Interview Readiness (LeetCode / HackerRank)
 **Recorded by:** Professor Nash | Texas Wesleyan University
-
----
-
-> **PRODUCTION NOTES FOR INSTRUCTOR:**
->
-> - Use VS Code + Python terminal for all [DEMO] sections.
-> - [PAUSE] = 2 seconds of silence.
-> - The key concept for Trie: it trades space for search speed. Insert and search are both O(L) where L is the word length — independent of how many words are stored.
-> - Sliding window is the dominant string interview pattern. Emphasize: expand right pointer, contract left pointer when the window violates the constraint.
-> - Walk `lengthOfLongestSubstring` carefully — the "move left to char_after_duplicate" shortcut is the key insight.
-> - For Minimum Window Substring, two counters (required vs. formed) are essential — trace the window on "ADOBECODEBANC" explicitly.
-> - Longest Palindromic Substring: expand-around-center is O(n²) and dead simple — preferred over Manacher's in interviews.
-> - Common mistakes: off-by-one in sliding window (using `>` vs `>=`), forgetting to handle even-length palindromes in expand-around-center.
 
 ---
 

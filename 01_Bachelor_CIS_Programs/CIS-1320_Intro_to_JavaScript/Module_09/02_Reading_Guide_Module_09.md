@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-1320 Introduction to JavaScript
 
 **Certification Alignment:** JSE — Certified Associate in JavaScript Programming (OpenEDG / JS Institute)
@@ -401,8 +398,6 @@ The following free, openly available resources extend and reinforce the topics c
 - [ ] Write a `flatMap` example and compare it to the equivalent `map` output.
 - [ ] Complete the Module 09 Lab.
 - [ ] Complete the Module 09 Quiz.
-
-
 
 ---
 

@@ -27,7 +27,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **[INSTRUCTOR ON CAMERA — title card: "Module 05: Azure Virtual Networking"]**
 
 Welcome to Module 05. I'm Professor Nash. Today we cover Azure Virtual Networking — the connective tissue that links every Azure service together and connects your cloud resources to your on-premises environment and the internet.

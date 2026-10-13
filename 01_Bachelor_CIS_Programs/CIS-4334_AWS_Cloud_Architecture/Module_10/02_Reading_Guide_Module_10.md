@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-4334 AWS Cloud Architecture
 **Certification Target:** AWS Solutions Architect Associate (SAA-C03)
 **Module:** 10 of 16
@@ -273,8 +270,6 @@ Comprehensive guide to EventBridge event buses, rules, targets, and event patter
 ---
 
 *Proprietary and Confidential. Not for disclosure outside of Texas Wesleyan University.*
-
-
 
 ---
 

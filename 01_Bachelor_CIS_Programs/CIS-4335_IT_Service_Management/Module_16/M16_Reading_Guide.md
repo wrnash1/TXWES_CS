@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4335 IT Service Management
 
 ## Texas Wesleyan University | Professor Nash
@@ -502,8 +499,6 @@ Answer these before consulting notes:
 ---
 
 *End of Module 16 Reading Guide — approximately 265 lines*
-
-
 
 ---
 

@@ -27,7 +27,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 Welcome back to CIS-4355. I am Professor Nash. In Module 01 we built the architectural framework for IoT systems. Now in Module 02 we zoom into the Perception layer and get hands-on with the two most widely used hardware platforms in IoT education and prototyping: the Arduino and the Raspberry Pi.
 
 These two platforms represent two fundamentally different approaches to embedded computing. Understanding when to use each one — and why — is a skill that appears in interview questions, capstone projects, and on the CompTIA IoT+ exam.

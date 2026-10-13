@@ -21,7 +21,6 @@ Construct an evidence-based implementation or executive blueprint addressing the
 #### Submission Format
 Submit your formal technical report as a compiled PDF or Markdown document with annotated system telemetry, configuration code, and verified logs.
 
-
 ---
 
 ### Hands-On Technical Execution Blueprint & Laboratory Tasks

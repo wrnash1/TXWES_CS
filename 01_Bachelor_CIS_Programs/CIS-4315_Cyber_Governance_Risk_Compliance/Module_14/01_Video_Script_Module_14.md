@@ -26,7 +26,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 ---
 
 ### [00:00 – 01:30] Opening and Learning Objectives
@@ -224,15 +223,3 @@ For the CISM exam, focus on the cost-versus-speed tradeoffs among site types, th
 This concludes Module 14. Together, Modules 13 and 14 give you the complete Business Continuity and Disaster Recovery framework you need for the CISM exam. I'll see you in Module 15."
 
 ---
-
-### Production Notes
-
-- **Slides:** Minimum 18-point font. All diagrams need alt-text as scripted.
-
-- **On-screen timers:** Display elapsed time in lower-left corner.
-
-- **Caption file:** SRT format required for LMS upload.
-
-- **B-roll suggestions:** Data center failover footage, AWS and Azure console screenshots (with test accounts), backup progress bar animations.
-
-- **Exam callout graphic:** Use a distinct gold banner for all CISM exam tips.

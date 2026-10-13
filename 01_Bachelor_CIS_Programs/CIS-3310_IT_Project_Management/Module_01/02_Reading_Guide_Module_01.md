@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-3310 IT Project Management
 **Certification Alignment:** CompTIA Project+ (PK0-005) | PMBOK 6th and 7th Editions
 **Prepared by:** Professor Nash | Texas Wesleyan University
@@ -309,8 +306,6 @@ The following free, openly licensed resources extend the concepts in this module
 5. **Khan Academy — "What is Project Management?"**
    [khanacademy.org — What is Project Management?](https://www.khanacademy.org/computing/computers-and-internet/x1bacd820c5e4194d:program-your-device/x1bacd820c5e4194d:project-management/a/what-is-project-management)
    Accessible introductory reading with interactive questions. Suitable for students who want additional foundational reinforcement before tackling the PMI framework in depth.
-
-
 
 ---
 

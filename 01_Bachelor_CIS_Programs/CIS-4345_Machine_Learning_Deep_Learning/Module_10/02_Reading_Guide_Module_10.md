@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4345 Machine Learning and Deep Learning
 
 ## Texas Wesleyan University | Professor Nash
@@ -501,8 +498,6 @@ Official TensorFlow tutorial covering the complete time series pipeline: windowi
 
 **3. [Illustrated Guide to LSTMs and GRUs — Towards Data Science](https://towardsdatascience.com/illustrated-guide-to-lstms-and-gru-s-a-step-by-step-explanation-44e9eb85bf21)**
 Step-by-step visual walkthrough of LSTM and GRU computations with animated diagrams. Covers the intuition behind each gate and the mathematical update equations. Particularly useful for understanding the GRU's simplified two-gate structure compared to LSTM's four-gate design.
-
-
 
 ---
 

@@ -22,20 +22,7 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Certification Alignment:** Microsoft Windows Server Administration
-
----
-
-## Production Notes
-
-**Recorded by:** Professor Nash | Texas Wesleyan University
-
-**Estimated runtime:** 13–15 minutes
-
-**Part 1 focus:** Concepts — monitoring tools (Task Manager, Resource Monitor,
-Performance Monitor, Event Viewer), key performance counters, performance
-baselines, Data Collector Sets, and event log management.
 
 ---
 

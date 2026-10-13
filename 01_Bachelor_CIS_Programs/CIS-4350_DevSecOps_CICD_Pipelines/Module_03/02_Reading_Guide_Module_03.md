@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4350 DevSecOps and CI/CD Pipelines
 
 ## Texas Wesleyan University | Professor Nash
@@ -457,8 +454,6 @@ The SARIF (Static Analysis Results Interchange Format) specification and referen
 ---
 
 Reading Guide — Module 03 | CIS-4350 | Texas Wesleyan University | Professor Nash
-
-
 
 ---
 

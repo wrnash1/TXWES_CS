@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-2315 Data Structures & Algorithms
 
 **Certification Alignment:** Technical Interview Readiness (LeetCode / HackerRank)
@@ -324,8 +321,6 @@ The following free, openly licensed resources reinforce the concepts in this mod
 - [ ] Identify which Red-Black property is violated in a given example tree.
 - [ ] Complete the Module 06 Lab.
 - [ ] Complete the Module 06 Quiz.
-
-
 
 ---
 

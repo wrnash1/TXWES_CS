@@ -20,22 +20,9 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Estimated Duration:** 20–24 minutes
 **Certification Alignment:** Technical Interview Readiness (LeetCode / HackerRank)
 **Recorded by:** Professor Nash | Texas Wesleyan University
-
----
-
-> **PRODUCTION NOTES FOR INSTRUCTOR:**
->
-> - Use VS Code + Python terminal for all [DEMO] sections.
-> - [PAUSE] = 2 seconds of silence.
-> - Linked lists are the first pointer-based data structure. Spend time on the mental model of nodes and references before writing any code — draw the boxes-and-arrows diagram explicitly.
-> - The two-pointer / fast-slow pointer technique is a top interview pattern. Introduce it here in the context of cycle detection and finding the middle node — students will use it again in trees and graphs.
-> - Common mistakes: losing the reference before updating it (causing memory leaks / lost nodes), off-by-one on head/tail updates, not handling the empty list case.
-> - Python note: `None` plays the role of null pointer. Draw the distinction from arrays — no random access by index.
-> - Doubly linked lists: keep the bi-directional update rule clear (`prev`, `next`, both pointers). The lab has students implement both.
 
 ---
 

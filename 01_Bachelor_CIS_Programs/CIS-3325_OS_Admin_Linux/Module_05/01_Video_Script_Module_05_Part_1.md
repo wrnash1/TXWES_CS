@@ -26,16 +26,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
----
-
-## Production Notes
-
-- **Screen recording**: Terminal emulator (dark theme, 18pt font)
-- **Demonstrations**: Show live ps output and top interactively; use a background sleep process as a controllable target
-- **Slide overlays**: Process state table shown as a callout during state discussion
-- **Pacing**: Allow top/htop to run for several seconds before narrating interactive commands
-
 ---
 
 ## SEGMENT 1 — Opening and Context (0:00–1:30)

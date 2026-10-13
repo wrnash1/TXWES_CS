@@ -202,8 +202,6 @@ D. Replace `terraform.workspace` with a new input variable `var.environment` tha
 
 ---
 
----
-
 ### Question 11 (5 points)
 
 A developer runs `terraform workspace select prod` and then immediately runs `terraform apply` without reviewing the plan. Which workspace-related risk does this scenario illustrate?

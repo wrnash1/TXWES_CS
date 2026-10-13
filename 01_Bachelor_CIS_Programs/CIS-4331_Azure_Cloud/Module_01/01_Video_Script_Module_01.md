@@ -27,7 +27,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **[INSTRUCTOR ON CAMERA — title card: "Module 01: Cloud Computing Concepts"]**
 
 Welcome to CIS-4331 Azure Cloud. I am Professor Nash, and this is Module 01, where we lay the entire foundation for everything that follows in this course and on the AZ-900 certification exam.

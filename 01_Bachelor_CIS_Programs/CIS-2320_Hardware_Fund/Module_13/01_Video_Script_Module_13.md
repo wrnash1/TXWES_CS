@@ -7,48 +7,6 @@
 
 ---
 
-## Production Notes
-
-<!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
-<div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
-  <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
-    <div>
-      <span style="background: #d9a74a; color: #0f172a; font-weight: 800; font-size: 11px; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Vendor Video Lecture</span>
-      <strong style="margin-left: 10px; font-size: 14px;">Professor Messer &bull; CompTIA A+ (220-1101 / 220-1102) Complete Course &bull; Module 13</strong>
-    </div>
-    <a href="https://www.youtube.com/playlist?list=PLG49S3nxzAnlGHY8ObL8DiyP3AIu9vdnH" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
-  </div>
-  <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #0f172a;">
-    <iframe src="https://www.youtube.com/embed/videoseries?list=PLG49S3nxzAnlGHY8ObL8DiyP3AIu9vdnH" title="Professor Messer &bull; CompTIA A+ (220-1101 / 220-1102) Complete Course" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-  </div>
-  <div style="padding: 12px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 13px; color: #475569;">
-    <strong>Recommended Viewing:</strong> <em>Professor Messer &bull; CompTIA A+ (220-1101 / 220-1102) Complete Course</em>. This vendor-aligned lecture stream reinforces this module's theoretical principles, certification blueprints, and hands-on laboratory benchmarks.
-  </div>
-</div>
-<!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
-
-
-**Components to have on camera or in slides:**
-
-- Laptop (bottom panel removed or consumer laptop with removable back)
-- Labeled diagram of laptop interior: battery, Wi-Fi card, RAM slots, M.2 SSD slot, ZIF connector
-- Physical samples or close-up images: ZIF cable and locking connector, MHF4 antenna connector on Wi-Fi card
-- Side-by-side image: removable battery vs integrated battery
-- Image of LVDS/eDP video cable routing through hinge
-- DC barrel jack — functional and damaged (for comparison)
-- ESD wrist strap and non-conductive spudger
-
-**Key exam traps to call out verbally:**
-
-- Battery removal is ALWAYS the mandatory first step before any internal laptop service
-- MHF4 antenna connectors must be pried off with a spudger — never pulled by the cable
-- ZIF connector locks must be flipped up before sliding out the flex cable — forcing it breaks the lock
-- Intermittent charging that changes with cable angle = DC power jack failure, not battery failure
-- LVDS is the older display cable standard; eDP is the modern standard — both are tested
-- Laptop RAM is SO-DIMM, not full-size DIMM — the form factor is different from desktop RAM
-
----
-
 ## [00:00 - 02:30] Section 1 — Introduction and Safety Foundation
 
 <div style="text-align: center; margin: 24px 0;">

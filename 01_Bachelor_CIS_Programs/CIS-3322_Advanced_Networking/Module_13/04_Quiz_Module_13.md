@@ -234,8 +234,6 @@ Distractor Analysis:
 
 ---
 
----
-
 ## Question 11
 
 An engineer runs `show port-security interface GigabitEthernet0/3` and sees the violation count is 47, but the port is still operational. Which violation mode is configured?

@@ -22,20 +22,7 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Certification Alignment:** Microsoft Windows Server Administration
-
----
-
-## Production Notes
-
-**Recorded by:** Professor Nash | Texas Wesleyan University
-
-**Estimated runtime:** 13–15 minutes
-
-**Part 1 focus:** Concepts — Windows Defender Firewall with Advanced Security,
-BitLocker Drive Encryption, Encrypting File System (EFS), and how these three
-security layers work together to protect Windows Server.
 
 ---
 

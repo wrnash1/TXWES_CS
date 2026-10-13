@@ -8,15 +8,6 @@
 
 ---
 
-## Production Notes
-
-- **Runtime Target:** 28–32 minutes
-- **Slide Deck:** M13_Slides.pptx
-- **Graphics:** Industry case study cards; ROI formula walkthrough; build-vs-buy matrix
-- **Tone:** Strategic and managerial; accessible to non-technical students
-
----
-
 ## SEGMENT 1 — Hook and Module Overview (Slides 1–3) [3 min]
 
 [ON CAMERA]

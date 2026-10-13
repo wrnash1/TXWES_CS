@@ -295,8 +295,6 @@ Submit all of the following in a single ZIP file or folder:
 
 ---
 
----
-
 ## Part 9 — Challenge Exercise
 
 ### Challenge 1: Multi-Region Distribution Deep Dive

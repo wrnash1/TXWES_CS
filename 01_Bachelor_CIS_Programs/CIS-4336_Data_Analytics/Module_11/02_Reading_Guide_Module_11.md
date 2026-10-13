@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4336 Data Analytics
 
 ## Texas Wesleyan University | Professor Nash
@@ -518,8 +515,6 @@ An interactive tutorial covering correlated and non-correlated subqueries with p
 ---
 
 End of Module 11 Reading Guide
-
-
 
 ---
 

@@ -18,7 +18,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Course:** CIS-4355 IoT and Embedded Systems
 
 **Institution:** Texas Wesleyan University | Professor Nash
@@ -234,11 +233,3 @@ In Module 10 we take these connected devices to the cloud. We will configure AWS
 See you there.
 
 ---
-
-## PRODUCTION NOTES
-
-- B-roll: nRF Sniffer showing BLE advertisement packets; LoRa gateway on rooftop; phone BLE scanner showing ESP32 device
-- Slide: wireless technology comparison table with range circles visualization
-- Demo: ESP32 connecting to Wi-Fi and printing RSSI; BLE scanner on phone showing advertised device name
-- Closed captions: verify LoRaWAN, NB-IoT, LTE-M, GATT, BLE, Zigbee, Z-Wave, chirp spread spectrum
-- Run time target: 21 minutes

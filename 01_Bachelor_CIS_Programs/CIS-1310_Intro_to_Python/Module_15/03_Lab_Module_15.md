@@ -272,7 +272,6 @@ nano shapes.py
 
 import math
 
-
 class Shape:
     '''Base class for all shapes.'''
 
@@ -296,7 +295,6 @@ class Shape:
     def __str__(self):
         return f'{type(self).__name__}(color={self.color!r})'
 
-
 class Circle(Shape):
     '''A circle defined by radius.'''
 
@@ -314,7 +312,6 @@ class Circle(Shape):
 
     def __str__(self):
         return f'Circle(radius={self.radius}, color={self.color!r})'
-
 
 class Rectangle(Shape):
     '''A rectangle defined by width and height.'''
@@ -336,7 +333,6 @@ class Rectangle(Shape):
         return (f'Rectangle(width={self.width}, height={self.height}, '
                 f'color={self.color!r})')
 
-
 class Square(Rectangle):
     '''A square — a rectangle with equal sides.'''
 
@@ -346,7 +342,6 @@ class Square(Rectangle):
 
     def __str__(self):
         return f'Square(side={self.side}, color={self.color!r})'
-
 
 class Triangle(Shape):
     '''A right triangle defined by base and height.'''
@@ -369,16 +364,13 @@ class Triangle(Shape):
         return (f'Triangle(base={self.base}, height={self.height}, '
                 f'color={self.color!r})')
 
-
 def total_area(shapes):
     '''Return the sum of areas for a list of shapes.'''
     return sum(s.area() for s in shapes)
 
-
 def largest_shape(shapes):
     '''Return the shape with the greatest area.'''
     return max(shapes, key=lambda s: s.area())
-
 
 if __name__ == '__main__':
     shapes = [
@@ -488,7 +480,6 @@ nano vehicles.py
 # Demonstrates a three-level inheritance hierarchy
 # Module 15 Lab — CIS-1310
 
-
 class Vehicle:
     '''Base class for all vehicles.'''
 
@@ -512,7 +503,6 @@ class Vehicle:
     def __str__(self):
         return f'{self.describe()} @ {self.speed_kmh} km/h'
 
-
 class Car(Vehicle):
     '''A car with a number of doors.'''
 
@@ -525,7 +515,6 @@ class Car(Vehicle):
 
     def honk(self):
         return f'{self.make} {self.model}: Beep beep!'
-
 
 class ElectricCar(Car):
     '''An electric car with a battery range.'''
@@ -545,7 +534,6 @@ class ElectricCar(Car):
     def __str__(self):
         return (f'{self.describe()} | charge={self._charge_pct}% | '
                 f'speed={self.speed_kmh} km/h')
-
 
 if __name__ == '__main__':
     v = Vehicle('Generic', 'Transport', 2010)
@@ -671,7 +659,6 @@ nano abstract_shape.py
 from abc import ABC, abstractmethod
 import math
 
-
 class Shape(ABC):
     '''Abstract base class for all shapes.'''
 
@@ -689,7 +676,6 @@ class Shape(ABC):
                 f'area={self.area():.4f}, '
                 f'perimeter={self.perimeter():.4f}')
 
-
 class Circle(Shape):
     def __init__(self, radius):
         self.radius = radius
@@ -699,7 +685,6 @@ class Circle(Shape):
 
     def perimeter(self):
         return 2 * math.pi * self.radius
-
 
 class Rectangle(Shape):
     def __init__(self, width, height):
@@ -712,7 +697,6 @@ class Rectangle(Shape):
     def perimeter(self):
         return 2 * (self.width + self.height)
 
-
 class Triangle(Shape):
     def __init__(self, a, b, c):
         self.a, self.b, self.c = a, b, c
@@ -723,7 +707,6 @@ class Triangle(Shape):
 
     def perimeter(self):
         return self.a + self.b + self.c
-
 
 # Attempt to instantiate abstract class
 try:
@@ -759,7 +742,6 @@ nano mixin_demo.py
 # Mixin classes for cross-cutting behavior
 import json
 
-
 class LogMixin:
     '''Adds a log() method that prefixes messages with the class name.'''
     _log_entries = None
@@ -778,7 +760,6 @@ class LogMixin:
         self._ensure_log()
         return list(self._log_entries)
 
-
 class SerializeMixin:
     '''Adds to_json() and from_dict() class method.'''
 
@@ -787,7 +768,6 @@ class SerializeMixin:
             k: v for k, v in self.__dict__.items()
             if not k.startswith('_')
         }, indent=2)
-
 
 class User(LogMixin, SerializeMixin):
     def __init__(self, name, email):
@@ -800,7 +780,6 @@ class User(LogMixin, SerializeMixin):
         self.email = new_email
         self.log(f'Email changed from {old!r} to {new_email!r}')
 
-
 class Product(LogMixin, SerializeMixin):
     def __init__(self, name, price):
         self.name = name
@@ -810,7 +789,6 @@ class Product(LogMixin, SerializeMixin):
     def apply_discount(self, pct):
         self.price = round(self.price * (1 - pct / 100), 2)
         self.log(f'Applied {pct}% discount → ${self.price}')
-
 
 u = User('Alice', 'alice@example.com')
 u.update_email('alice@newdomain.com')
@@ -840,7 +818,6 @@ nano observer_pattern.py
 # observer_pattern.py
 # Observer pattern: publisher/subscriber using OOP
 
-
 class Publisher:
     '''Base publisher that can notify subscribers.'''
 
@@ -856,7 +833,6 @@ class Publisher:
         for sub in self._subscribers:
             sub.update(event, data, source=self.name)
 
-
 class Subscriber:
     '''Abstract subscriber — subclasses must implement update().'''
 
@@ -866,11 +842,9 @@ class Subscriber:
     def update(self, event, data, source):
         raise NotImplementedError(f'{type(self).__name__} must implement update()')
 
-
 class EmailSubscriber(Subscriber):
     def update(self, event, data, source):
         print(f'  [EMAIL to {self.name}] {source} → {event}: {data}')
-
 
 class LogSubscriber(Subscriber):
     def __init__(self, name):
@@ -881,7 +855,6 @@ class LogSubscriber(Subscriber):
         entry = f'{source}:{event}:{data}'
         self.history.append(entry)
         print(f'  [LOG by {self.name}] recorded: {entry}')
-
 
 class StockMarket(Publisher):
     def __init__(self):
@@ -895,7 +868,6 @@ class StockMarket(Publisher):
             self.notify('price_alert', f'{symbol}: {old} → {price}')
         else:
             self.notify('price_update', f'{symbol}: {price}')
-
 
 market = StockMarket()
 email_user = EmailSubscriber('alice@example.com')

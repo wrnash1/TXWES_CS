@@ -216,36 +216,29 @@ nano geometry.py
 
 import math
 
-
 def circle_area(radius):
     '''Return the area of a circle with given radius.'''
     if radius < 0:
         raise ValueError(f'Radius cannot be negative: {radius}')
     return math.pi * radius ** 2
 
-
 def circle_circumference(radius):
     '''Return the circumference of a circle with given radius.'''
     return 2 * math.pi * radius
-
 
 def rectangle_area(width, height):
     '''Return the area of a rectangle.'''
     return width * height
 
-
 def rectangle_perimeter(width, height):
     '''Return the perimeter of a rectangle.'''
     return 2 * (width + height)
-
 
 def triangle_area(base, height):
     '''Return the area of a triangle.'''
     return 0.5 * base * height
 
-
 SHAPE_NAMES = ['circle', 'rectangle', 'triangle']
-
 
 if __name__ == '__main__':
     print('Testing geometry module:')
@@ -420,7 +413,6 @@ import os
 import sys
 from datetime import datetime, date, timedelta
 
-
 def math_demos():
     print('=== math module ===')
     print(f'  math.sqrt(2)       = {math.sqrt(2):.6f}')
@@ -430,7 +422,6 @@ def math_demos():
     print(f'  math.log(100, 10)  = {math.log(100, 10):.1f}')
     print(f'  math.pi            = {math.pi:.10f}')
     print()
-
 
 def random_demos():
     random.seed(42)    # fixed seed for reproducible output
@@ -445,7 +436,6 @@ def random_demos():
     print(f'  shuffle([1-5])     = {lst}')
     print()
 
-
 def os_demos():
     print('=== os module ===')
     print(f'  getcwd()           = {os.getcwd()}')
@@ -457,7 +447,6 @@ def os_demos():
     stem, ext = os.path.splitext(name)
     print(f'  splitext           = stem={stem!r}, ext={ext!r}')
     print()
-
 
 def datetime_demos():
     print('=== datetime module ===')
@@ -472,7 +461,6 @@ def datetime_demos():
     print(f'  days since 1990-06-15 = {age_days}')
     print()
 
-
 def sys_demos():
     print('=== sys module ===')
     print(f'  sys.version        = {sys.version.split()[0]}')
@@ -480,7 +468,6 @@ def sys_demos():
     print(f'  sys.path[0]        = {sys.path[0]!r}')
     print(f'  sys.path entries   = {len(sys.path)}')
     print()
-
 
 if __name__ == '__main__':
     math_demos()
@@ -628,7 +615,6 @@ nano shapes/circle.py
 # shapes/circle.py
 import math
 
-
 class Circle:
     def __init__(self, radius):
         if radius <= 0:
@@ -651,7 +637,6 @@ nano shapes/rectangle.py
 
 ```python
 # shapes/rectangle.py
-
 
 class Rectangle:
     def __init__(self, width, height):

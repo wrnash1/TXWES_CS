@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4320 Enterprise Systems and ERP
 
 ## Texas Wesleyan University | Professor Nash
@@ -426,8 +423,6 @@ The ASCM CPIM certification covers Manufacturing Resource Planning (MRP II) theo
 **3. SAP Help Portal — Production Orders in SAP S/4HANA**
 <https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/production-planning>
 Official SAP documentation for Production Planning. Covers Production Order lifecycle management (statuses CRTD through CLSD), operation confirmation, movement types for Goods Issue and Goods Receipt, and the PP-MM-FI-CO integration points — essential reference for understanding the accounting entries and integration flows analyzed in Lab 11.
-
-
 
 ---
 

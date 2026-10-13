@@ -202,8 +202,6 @@ D. Input variables accept any type; outputs only support string values.
 
 ---
 
----
-
 ### Question 11 (5 points)
 
 A team runs `terraform init` and then checks in `.terraform.lock.hcl` to version control. A second developer checks out the repository and runs `terraform init`. What is the effect of the committed lock file on the second developer's environment?

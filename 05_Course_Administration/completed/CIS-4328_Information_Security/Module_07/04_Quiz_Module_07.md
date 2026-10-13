@@ -192,8 +192,6 @@ D. Alert the SIEM and permit the connection pending manual review
 
 ---
 
----
-
 ### Question 11
 
 A stateful firewall differs from a packet-filtering firewall primarily because a stateful firewall:

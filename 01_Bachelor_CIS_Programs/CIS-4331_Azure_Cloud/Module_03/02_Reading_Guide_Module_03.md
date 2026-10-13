@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-4331 Azure Cloud | Texas Wesleyan University
 **Instructor:** Professor Nash
 **AZ-900 Domain:** Describe Azure Architecture and Services (35-40% of exam)
@@ -456,8 +453,6 @@ Complete coverage of Scale Set orchestration modes, autoscale configuration, upg
 **3. Microsoft Learn — Azure VM sizes and types**
 https://learn.microsoft.com/en-us/azure/virtual-machines/sizes/overview
 The definitive reference for all Azure VM size families, including naming convention breakdown, attribute letters (s, d, a, m), and selection guidance for compute-optimized, memory-optimized, storage-optimized, and GPU workloads.
-
-
 
 ---
 

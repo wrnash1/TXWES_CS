@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4327 Database Administration
 
 ## Texas Wesleyan University | Professor Nash
@@ -392,8 +389,6 @@ tradeoffs (e.g., "Which configuration meets both compliance and operational requ
 
 ---
 
----
-
 ## 9. Supplemental Resources
 
 The following free, open-access resources support Module 13 topics:
@@ -415,8 +410,6 @@ Explains how to enable RLS on a table, create policies with `USING` and `WITH CH
 Module 13 Reading Guide — CIS-4327 Database Administration
 
 Texas Wesleyan University | Proprietary and Confidential. Not for disclosure outside of course participants.
-
-
 
 ---
 

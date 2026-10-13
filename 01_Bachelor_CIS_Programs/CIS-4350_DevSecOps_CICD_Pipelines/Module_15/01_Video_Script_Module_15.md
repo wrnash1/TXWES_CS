@@ -26,7 +26,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 ---
 
 ### SEGMENT 1 — Introduction (0:00–2:30)
@@ -164,14 +163,3 @@ In the final module — Module 16 — we consolidate everything across all fifte
 See you in Module 16.
 
 ---
-
-### PRODUCTION NOTES
-
-- Slide: Security Champion model diagram — Champion role connecting development team to central security team
-- Slide: DORA four metrics with elite performer benchmarks
-- Slide: Security KPIs layered on DORA (MTTD, MTTR-security, escape rate, pass rate)
-- Slide: OWASP SAMM five business functions with maturity level scale
-- Slide: DSOMM four levels overview
-- Slide: Three failure modes of DevSecOps transformation
-- Screen share: OWASP SAMM online assessment tool (https://owaspsamm.org/assessment/)
-- Screen share: DSOMM interactive spreadsheet or OWASP DSOMM tool

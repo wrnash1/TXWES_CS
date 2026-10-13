@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4320 Enterprise Systems and ERP | Texas Wesleyan University
 
 ## Instructor: Professor Nash
@@ -388,8 +385,6 @@ Free openSAP course on the SAP S/4HANA Universal Journal and how it unifies FI a
 **3. AICPA — Understanding Internal Controls in ERP Financial Systems**
 <https://www.aicpa.org/resources/article/internal-controls-erp>
 Professional resource from the American Institute of CPAs on how ERP financial controls (three-way match, period locking, segregation of duties) satisfy audit and compliance requirements. Relevant to the financial controls content in this module and the broader compliance themes in Module 15.
-
-
 
 ---
 

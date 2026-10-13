@@ -254,8 +254,6 @@ Before submitting, verify:
 
 ---
 
----
-
 ## Part 9 — Challenge Exercise
 
 ### Challenge 1: Shift-Left Capability Gap Analysis

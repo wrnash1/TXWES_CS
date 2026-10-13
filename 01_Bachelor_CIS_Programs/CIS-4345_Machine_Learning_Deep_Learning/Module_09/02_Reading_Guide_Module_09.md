@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4345 Machine Learning and Deep Learning
 
 ## Texas Wesleyan University | Professor Nash
@@ -461,8 +458,6 @@ Jeremy Howard's practical NLP lessons from fast.ai, covering tokenization, trans
 
 **3. [GloVe: Global Vectors for Word Representation](https://nlp.stanford.edu/projects/glove/)**
 Stanford NLP's GloVe project page, offering pre-trained word vectors (50d, 100d, 200d, 300d) trained on Wikipedia and Common Crawl. Includes the original paper and download links. Directly applicable to the technique of loading pre-trained embeddings into a Keras `Embedding` layer with `trainable=False`.
-
-
 
 ---
 

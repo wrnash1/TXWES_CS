@@ -8,15 +8,6 @@
 
 ---
 
-## Production Notes
-
-- **Runtime Target:** 28–32 minutes
-- **Slide Deck:** M14_Slides.pptx
-- **Graphics:** Attack taxonomy diagram; differential privacy illustration; compliance checklist
-- **Tone:** Serious but accessible; use concrete attack examples
-
----
-
 ## SEGMENT 1 — Hook and Module Overview (Slides 1–3) [3 min]
 
 [ON CAMERA]

@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-3340 Full Stack Web Development
 **Certification Alignment:** AWS Certified Developer - Associate (DVA-C02)
 **Texas Wesleyan University | Professor Nash**
@@ -447,8 +444,6 @@ A free, structured course section covering the event loop, callbacks, Promises, 
 **4. web.dev — Cross-Origin Resource Sharing (CORS)**
 [https://web.dev/articles/cross-origin-resource-sharing](https://web.dev/articles/cross-origin-resource-sharing)
 Google's in-depth article on CORS preflight requests, simple vs. preflighted requests, and the specific headers required — essential background for connecting browser fetch calls to AWS API Gateway endpoints.
-
-
 
 ---
 

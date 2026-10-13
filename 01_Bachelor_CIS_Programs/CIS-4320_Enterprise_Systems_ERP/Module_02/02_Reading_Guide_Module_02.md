@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4320 Enterprise Systems and ERP | Texas Wesleyan University
 
 ## Instructor: Professor Nash
@@ -373,8 +370,6 @@ The official OMG BPMN 2.0 specification page. The quick reference card downloada
 **3. Salesforce Trailhead — Flow Builder: Advanced Concepts**
 <https://trailhead.salesforce.com/content/learn/modules/flow-builder>
 Extends the introductory Flow content with subflows, fault paths, and scheduled automation — the Salesforce equivalents of BPMN intermediate events and escalation patterns. Relevant to Questions 6 and 14 in the module quiz.
-
-
 
 ---
 

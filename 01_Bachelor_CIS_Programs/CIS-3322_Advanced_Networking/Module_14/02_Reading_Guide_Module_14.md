@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-3322 Advanced Networking
 
 ## Texas Wesleyan University | Professor Nash
@@ -385,8 +382,6 @@ The following open educational resources extend wireless networking concepts to 
 4. **Cisco Wireless LAN Controller Configuration Guide** (cisco.com): Cisco's official WLC configuration guide covering WLAN creation, AP group configuration, RF profiles, RRM automatic channel selection, and FlexConnect deployment with CLI and GUI configuration examples.
 
 5. **Wi-Fi Alliance — Wi-Fi Certified WPA3 Technology Overview** (wi-fi.org): The Wi-Fi Alliance's public technical overview of WPA3 covering SAE (Simultaneous Authentication of Equals), WPA3-Enterprise 192-bit mode, OWE (Opportunistic Wireless Encryption), and the security improvements over WPA2 — directly aligned to CCNA Security Fundamentals domain questions about wireless security.
-
-
 
 ---
 

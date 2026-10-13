@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-1310 Introduction to Python
 
 **Certification Alignment:** PCAP — Certified Associate in Python Programming (Python Institute)
@@ -571,8 +568,6 @@ A thorough free article on the `@property` decorator — Python's idiomatic way 
 - [ ] Practice `isinstance()` and `type()` on built-in types and your own class.
 - [ ] Review all 7 Certification Exam Tips in Section 4.
 - [ ] Proceed to the Module 14 Lab Activity.
-
-
 
 ---
 

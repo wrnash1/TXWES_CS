@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-1310 Introduction to Python
 
 **Certification Alignment:** PCAP — Certified Associate in Python Programming (Python Institute)
@@ -533,8 +530,6 @@ A focused deep-dive into Python's `super()` function — how it uses the MRO, ho
 - [ ] Practice `isinstance()` across the hierarchy: child object passed as parent type.
 - [ ] Review all 7 Certification Exam Tips in Section 4.
 - [ ] Proceed to the Module 15 Lab Activity.
-
-
 
 ---
 

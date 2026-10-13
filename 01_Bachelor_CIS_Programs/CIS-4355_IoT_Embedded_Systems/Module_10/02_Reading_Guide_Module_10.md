@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-4355 IoT and Embedded Systems
 
 **Institution:** Texas Wesleyan University | Professor Nash
@@ -448,8 +445,6 @@ Microsoft's reference for Azure IoT Hub Device Twins, including the desired/repo
 **3. NIST SP 800-213 — IoT Device Cybersecurity Guidance for the Federal Government**
 [https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-213.pdf](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-213.pdf)
 NIST's IoT device security baseline covering device identity, configuration management, data protection, and logical access controls. Provides the policy-level framework behind the technical controls (mTLS, X.509, Device Shadow policies) covered throughout this module.
-
-
 
 ---
 

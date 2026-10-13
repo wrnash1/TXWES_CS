@@ -24,16 +24,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
----
-
-## Pre-Production Notes
-
-- Slide deck: 34 slides
-- Diagrams: Salesforce Admin exam topic wheel (weighted categories), SAP S/4HANA Essentials topic map, implementation lifecycle comparison (ASAP vs. Salesforce), security model layers side-by-side, capstone scenario flow chart
-- Key terms on screen: Salesforce Administrator Exam, SAP S/4HANA Essentials, Configuration vs. Customization, OWD, Role Hierarchy, Sharing Rules, ASAP, Business Blueprint, Fit-Gap, Cutover, Hypercare, KPI, Report Types, Data Quality
-- End card: Lab 16, Quiz 16, Discussion Forum 16, Course Completion
-
 ---
 
 ## [00:00 – 02:30] Opening — The Finish Line

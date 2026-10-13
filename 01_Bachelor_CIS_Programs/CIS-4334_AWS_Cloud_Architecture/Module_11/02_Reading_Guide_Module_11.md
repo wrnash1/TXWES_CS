@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4334 AWS Cloud Architecture
 
 ## Texas Wesleyan University | Professor Nash
@@ -512,8 +509,6 @@ https://docs.aws.amazon.com/kms/latest/developerguide/rotate-keys.html
 Detailed explanation of automatic and on-demand KMS key rotation, how previous key material is retained for decryption, and the difference between CMK rotation and key deletion — the definitive reference for KMS questions in this module and on the exam.
 
 *Proprietary and Confidential. Not for disclosure outside of Texas Wesleyan University.*
-
-
 
 ---
 

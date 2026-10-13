@@ -22,7 +22,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Certification Alignment:** Cisco CCNA 200-301
 
 ---

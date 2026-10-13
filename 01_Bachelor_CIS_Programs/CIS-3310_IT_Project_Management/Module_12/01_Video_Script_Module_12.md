@@ -26,16 +26,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
----
-
-## Production Notes
-
-- Slides: RACI matrix shown as animated table build; stakeholder register table revealed row by row
-- Graphics: Power-Interest grid as four-quadrant diagram; communication channels formula visual
-- Tone: Practical and interpersonal — this module is about human dynamics, not just paperwork
-- Screen segment: Walk through a RACI matrix construction in a spreadsheet
-
 ---
 
 ## Segment 1 — Introduction: Communication Is the PM's Primary Job (0:00–2:30)

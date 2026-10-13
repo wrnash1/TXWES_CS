@@ -7,55 +7,6 @@
 
 ---
 
-## Production Notes
-
-<!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
-<div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
-  <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
-    <div>
-      <span style="background: #d9a74a; color: #0f172a; font-weight: 800; font-size: 11px; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Vendor Video Lecture</span>
-      <strong style="margin-left: 10px; font-size: 14px;">Professor Messer &bull; CompTIA A+ (220-1101 / 220-1102) Complete Course &bull; Module 08</strong>
-    </div>
-    <a href="https://www.youtube.com/playlist?list=PLG49S3nxzAnlGHY8ObL8DiyP3AIu9vdnH" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
-  </div>
-  <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #0f172a;">
-    <iframe src="https://www.youtube.com/embed/videoseries?list=PLG49S3nxzAnlGHY8ObL8DiyP3AIu9vdnH" title="Professor Messer &bull; CompTIA A+ (220-1101 / 220-1102) Complete Course" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-  </div>
-  <div style="padding: 12px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 13px; color: #475569;">
-    <strong>Recommended Viewing:</strong> <em>Professor Messer &bull; CompTIA A+ (220-1101 / 220-1102) Complete Course</em>. This vendor-aligned lecture stream reinforces this module's theoretical principles, certification blueprints, and hands-on laboratory benchmarks.
-  </div>
-</div>
-<!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
-
-
-**Slides needed:**
-
-- Slide 1: Title card — "Module 08: Custom PC Configurations"
-- Slide 2: Four build types overview (CAD/Workstation, Virtualization Host, Gaming PC, NAS/Home Server)
-- Slide 3: CAD workstation specs table — professional GPU vs. consumer GPU comparison
-- Slide 4: Virtualization host requirements — core count and RAM allocation math
-- Slide 5: Gaming PC build priorities — GPU tier chart by resolution
-- Slide 6: NAS/Home Server — RAID level comparison table (RAID 1, 5, 6, 10)
-- Slide 7: A+ exam scenario decision tree — matching workload to build type
-- Slide 8: End card with study resources
-
-**Components to show on camera (if available):**
-
-- [SHOW COMPONENT] NVIDIA Quadro or AMD Radeon Pro GPU (or printed spec sheet)
-- [SHOW COMPONENT] ECC vs. standard DDR4 RAM modules side by side
-- [SHOW COMPONENT] Multiple HDDs representing a NAS drive array
-- [SHOW COMPONENT] High-end consumer GPU (gaming) vs. professional GPU label comparison
-
-**Key exam traps to address in the script:**
-
-- Virtualization hosts do NOT need a powerful GPU unless GPU passthrough is explicitly stated
-- Consumer gaming GPUs lack certified drivers for professional CAD software
-- RAID 0 is NOT redundant — never recommend it for data that must be protected
-- ECC RAM is required by ZFS-based NAS builds; regular RAM causes silent data corruption under ZFS
-- Type of GPU (consumer vs. professional) is tested on the exam — not just performance tier
-
----
-
 ## [00:00 - 02:30] Introduction and Module Overview
 
 [SHOW SLIDE: Title card — "Module 08: Custom PC Configurations"]

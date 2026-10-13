@@ -483,8 +483,6 @@ Also delete the S3 state bucket and DynamoDB lock table if you created them for 
 
 ---
 
----
-
 ## Part 9 — Challenge Exercise
 
 ### Challenge 1: OIDC Authentication Upgrade

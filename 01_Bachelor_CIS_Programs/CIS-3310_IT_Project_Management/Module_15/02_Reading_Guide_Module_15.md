@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-3310 IT Project Management
 
 ## Texas Wesleyan University | Professor Nash
@@ -454,8 +451,6 @@ The following free, openly licensed resources extend the concepts in this module
 5. **Mountain Goat Software — User Stories and Story Points Guide (Free)**
    *Mike Cohn* — [mountaingoatsoftware.com/agile/user-stories](https://www.mountaingoatsoftware.com/agile/user-stories)
    Comprehensive free guide to writing user stories, applying the INVEST criteria, sizing with story points, and running Planning Poker. Directly supports the Module 15 lab backlog construction and estimation exercises.
-
-
 
 ---
 

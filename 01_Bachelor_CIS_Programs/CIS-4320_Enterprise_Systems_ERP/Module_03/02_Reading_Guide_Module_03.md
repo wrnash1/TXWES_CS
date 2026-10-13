@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4320 Enterprise Systems and ERP | Texas Wesleyan University
 
 ## Instructor: Professor Nash
@@ -368,8 +365,6 @@ SAP's official S/4HANA product page with whitepapers on TCO, migration paths fro
 **3. Salesforce — AppExchange Overview and Ecosystem**
 <https://appexchange.salesforce.com>
 The live AppExchange marketplace. Browsing the ERP integration category demonstrates how Salesforce extends into back-office functions through partner applications — directly relevant to the deployment model comparison in this module.
-
-
 
 ---
 

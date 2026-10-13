@@ -26,13 +26,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
----
-
-## Production Notes
-
-[INSTRUCTOR: Deliver at a measured pace. Pause at each [PAUSE] marker for 2–3 seconds. Advance slides at each [SHOW SLIDE] marker. Display diagrams at each [SHOW DIAGRAM] marker.]
-
 ---
 
 ## Opening — Welcome and Context (Minutes 0–2)

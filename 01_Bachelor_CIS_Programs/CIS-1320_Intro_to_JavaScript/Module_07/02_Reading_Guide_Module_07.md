@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-1320 Introduction to JavaScript
 
 **Certification Alignment:** JSE — Certified Associate in JavaScript Programming (OpenEDG / JS Institute)
@@ -513,8 +510,6 @@ The following free, openly available resources extend and reinforce the topics c
 - [ ] Iterate an object with `Object.entries()` and destructuring in the loop header.
 - [ ] Complete the Module 07 Lab.
 - [ ] Complete the Module 07 Quiz.
-
-
 
 ---
 

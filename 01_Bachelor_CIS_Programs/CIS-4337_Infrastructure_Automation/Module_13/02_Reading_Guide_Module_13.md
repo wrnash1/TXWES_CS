@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4337 Infrastructure Automation
 
 ## Texas Wesleyan University | Professor Nash
@@ -424,8 +421,6 @@ A HashiCorp tutorial on building least-privilege IAM policies using `aws_iam_pol
 ---
 
 End of Module 13 Reading Guide
-
-
 
 ---
 

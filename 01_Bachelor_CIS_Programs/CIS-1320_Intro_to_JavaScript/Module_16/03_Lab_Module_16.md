@@ -185,8 +185,6 @@ The four bugs involve: error handling best practice, array method return value, 
 
 ---
 
-
-
 | Requirement | Points |
 |---|---|
 | Score report PDF submitted with required information | Full credit |

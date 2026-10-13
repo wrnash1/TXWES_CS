@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4350 DevSecOps and CI/CD Pipelines
 
 ## Texas Wesleyan University | Professor Nash
@@ -464,8 +461,6 @@ The recommended tool for rewriting Git history to remove accidentally committed 
 ---
 
 Reading Guide — Module 02 | CIS-4350 | Texas Wesleyan University | Professor Nash
-
-
 
 ---
 

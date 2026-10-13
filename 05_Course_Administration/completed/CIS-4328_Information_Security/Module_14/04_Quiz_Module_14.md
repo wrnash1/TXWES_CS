@@ -164,8 +164,6 @@ Explanation: The data owner is the business role accountable for the data — th
 
 ---
 
----
-
 ### Question 11 (5 points)
 
 A security architect is reviewing the governance document hierarchy for a financial services firm. The document being reviewed states: "All production firewall rule changes must be submitted via the change management portal at least 48 hours before implementation, tested in a staging environment, and approved by both the Security Operations Manager and the Network Engineering Lead before deployment." Which type of governance document is this?

@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4329 Google Cloud Computing
 
 **Certification Alignment:** Google Cloud Associate Cloud Engineer (ACE)
@@ -465,8 +462,6 @@ architectures.
 Official comparison of App Engine Standard versus Flexible environments
 covering runtime support, scaling behavior, pricing model, and guidance on
 which to use for specific workload requirements.
-
-
 
 ---
 

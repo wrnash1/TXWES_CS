@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-3340 Full Stack Web Development
 
 ## Texas Wesleyan University | Professor Nash
@@ -508,8 +505,6 @@ The official `useReducer` API reference with worked examples of the reducer patt
 **4. Redux Toolkit Official Documentation — Why Redux Toolkit**
 [https://redux-toolkit.js.org/introduction/why-rtk-is-redux-today](https://redux-toolkit.js.org/introduction/why-rtk-is-redux-today)
 The Redux team's explanation of when to use Redux Toolkit versus the Context API, covering `createSlice`, Immer-powered mutation syntax, and RTK Query — directly relevant to the Context vs Redux decision framework in Section 5.
-
-
 
 ---
 

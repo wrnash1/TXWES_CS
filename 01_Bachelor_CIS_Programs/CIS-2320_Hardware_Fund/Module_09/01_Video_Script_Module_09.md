@@ -20,41 +20,9 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Estimated Duration:** 22-24 minutes
 **Certification Alignment:** CompTIA A+ Core 1 (220-1101) — Domain 3.2 and Domain 1.2
 **Recorded by:** Professor Nash | Texas Wesleyan University
-
----
-
-## Production Notes
-
-**Slides needed:**
-
-- Slide 1: Title card — "Module 09: Peripheral Devices and Interfaces"
-- Slide 2: USB version comparison table (2.0, 3.0, 3.1 Gen 1, 3.1 Gen 2, 3.2, USB4)
-- Slide 3: USB connector type chart — Type-A, Type-B, Mini-B, Micro-B, Type-C (photos or diagrams)
-- Slide 4: Thunderbolt version comparison (TB1 through TB4) with lightning bolt icon callout
-- Slide 5: KVM switch diagram — two PCs sharing one keyboard, monitor, mouse
-- Slide 6: Authentication factors chart — something you know / have / are
-- Slide 7: Smart card vs. biometric scanner — use case comparison table
-- Slide 8: End card with study resources
-
-**Components to show on camera (if available):**
-
-- [SHOW COMPONENT] USB Type-A male connector (blue USB 3.0 and white USB 2.0 side by side)
-- [SHOW COMPONENT] USB Type-C cable
-- [SHOW COMPONENT] Thunderbolt cable (with lightning bolt icon visible)
-- [SHOW COMPONENT] USB fingerprint reader or smart card reader
-- [SHOW COMPONENT] KVM switch device or diagram printout
-
-**Key exam traps to address in the script:**
-
-- USB Type-C is a connector shape, NOT a speed standard — a Type-C port can deliver USB 2.0 speeds
-- Thunderbolt 3 and 4 use the USB-C physical connector but are not USB-C cables
-- USB 3.0 blue color coding is on ports and connectors — use this to identify version quickly
-- Smart card = "something you have"; biometric = "something you are" — these are tested as MFA factors
-- KVM switches are hardware-agnostic; they do not require matching OS on connected computers
 
 ---
 

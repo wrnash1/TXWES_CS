@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4315 Cyber Governance, Risk, and Compliance
 
 **Certification Alignment:** ISACA CISM — Domain 3: Information Security Program
@@ -390,8 +387,6 @@ Description: ISACA's official CISM exam preparation resources for Domain 3, cove
 **CIS Controls v8 — Implementation Groups and Safeguards**
 URL: https://www.cisecurity.org/controls/v8
 Description: The Center for Internet Security's free Controls v8 publication organizes 153 safeguards across 18 control families into three Implementation Groups based on organizational maturity and resources. This is directly applicable to Module 06's discussion of phased security program development — Implementation Group 1 represents foundational controls, Groups 2 and 3 represent progressively mature capabilities. Free download available at the CIS website.
-
-
 
 ---
 

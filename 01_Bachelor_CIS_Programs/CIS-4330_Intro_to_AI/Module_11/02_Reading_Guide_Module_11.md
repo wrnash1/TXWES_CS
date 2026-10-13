@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4330 Introduction to Artificial Intelligence
 
 ## Texas Wesleyan University | Professor Nash
@@ -366,8 +363,6 @@ The US National Institute of Standards and Technology's AI Risk Management Frame
 ---
 
 End of Reading Guide — Module 11
-
-
 
 ---
 

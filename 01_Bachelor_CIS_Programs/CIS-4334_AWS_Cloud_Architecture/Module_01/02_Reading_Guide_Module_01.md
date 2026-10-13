@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-4334 AWS Cloud Architecture
 **Certification Target:** AWS Solutions Architect Associate (SAA-C03)
 
@@ -350,8 +347,6 @@ Free foundational course covering AWS global infrastructure, the Shared Responsi
 **3. AWS Well-Architected Framework — Reliability Pillar Whitepaper**
 https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/welcome.html
 Official AWS whitepaper on the Reliability pillar, including multi-AZ and multi-Region design patterns, fault isolation boundaries, and recovery objectives — essential background for applying Module 01 infrastructure concepts to real architectural decisions.
-
-
 
 ---
 

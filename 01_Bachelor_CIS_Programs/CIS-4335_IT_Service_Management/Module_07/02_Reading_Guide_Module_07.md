@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4335 IT Service Management
 
 ## Texas Wesleyan University | Professor Nash
@@ -415,8 +412,6 @@ involved. Answer: Engage (request received), Plan (budget/approval), Obtain/Buil
 
 ---
 
----
-
 ## Supplemental Resources
 
 **1. AXELOS — ITIL 4 Service Value Chain Activities**
@@ -434,8 +429,6 @@ An industry practitioner overview of value stream management as applied in ITSM 
 ---
 
 Module 07 Reading Guide | CIS-4335 IT Service Management | Texas Wesleyan University
-
-
 
 ---
 

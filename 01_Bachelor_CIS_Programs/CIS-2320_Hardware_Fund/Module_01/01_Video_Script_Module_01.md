@@ -20,22 +20,9 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Estimated Duration:** 20–24 minutes
 **Certification Alignment:** CompTIA A+ Core 1 (220-1101)
 **Recorded by:** Professor Nash | Texas Wesleyan University
-
----
-
-> **PRODUCTION NOTES FOR INSTRUCTOR:**
->
-> - Record with a disassembled desktop PC on the desk for visual reference. Show actual components when naming them.
-> - [PAUSE] = 2 seconds of silence.
-> - [SHOW COMPONENT] = hold component toward camera.
-> - Key emphasis: ESD damage is invisible and cumulative. A spark you cannot feel can destroy a CPU worth hundreds of dollars.
-> - The CompTIA A+ exam tests component recognition by sight — show each component clearly.
-> - Safety procedure order matters on the exam: Power down → Unplug → Press power button → ESD strap → Open case.
-> - Common exam trap: "leaving the power cable in while the strip is off" — this is wrong. Unplug the cord.
 
 ---
 

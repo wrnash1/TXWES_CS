@@ -367,8 +367,6 @@ DFD simply shows the data flows. Keep those two modeling techniques separate.
 
 ---
 
----
-
 ## Part 9 — Challenge Exercise
 
 This section is optional and not separately graded. It extends the lab into advanced DFD and data dictionary practice aligned with ECBA exam competencies.

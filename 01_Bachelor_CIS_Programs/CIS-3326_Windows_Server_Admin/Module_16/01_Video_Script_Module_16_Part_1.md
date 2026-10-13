@@ -22,21 +22,7 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Certification Alignment:** Microsoft Windows Server Administration
-
----
-
-## Production Notes
-
-**Recorded by:** Professor Nash | Texas Wesleyan University
-
-**Estimated runtime:** 14–16 minutes
-
-**Part 1 focus:** Capstone review of Modules 1–8 — Windows Server installation,
-Active Directory, Group Policy, DNS, DHCP, certificates, Remote Desktop Services,
-and Hyper-V. Exam-oriented summary of highest-yield topics, threshold values, and
-PowerShell commands.
 
 ---
 

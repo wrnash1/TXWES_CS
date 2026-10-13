@@ -51,7 +51,6 @@ Below is the study roadmap for every course in our computer science and computer
 | :--- | :--- | :--- | :--- |
 | **CIS-2315: Data Structures & Algorithms** | LeetCode / HackerRank Technical Interviews | Trace recursion calls, write out pointer swaps on paper, analyze complexity of loops. | [OpenDSA (opendsa-server.cs.vt.edu)](https://opendsa-server.cs.vt.edu/) |
 
-
 ---
 
 ## 5. Final Exam Certification Policy (Module 16)

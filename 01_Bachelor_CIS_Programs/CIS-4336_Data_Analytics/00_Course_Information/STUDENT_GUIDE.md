@@ -51,7 +51,6 @@ Below is the study roadmap for every course in our computer science and computer
 | :--- | :--- | :--- | :--- |
 | **CIS-4336: Data Analytics** | CompTIA Data+ (DA0-001) | Clean datasets containing null variables; construct query joins and build database dashboard metrics. | [CompTIA Data+ Resource Hub](https://www.comptia.org/) |
 
-
 ---
 
 ## 5. Final Exam Certification Policy (Module 16)

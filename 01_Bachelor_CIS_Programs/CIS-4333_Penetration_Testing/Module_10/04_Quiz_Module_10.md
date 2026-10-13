@@ -208,8 +208,6 @@ A developer is fixing a SQL injection vulnerability. Their current code concaten
 
 ---
 
----
-
 **Question 11**
 
 A tester submits `?page=../../../../etc/passwd` to a web application that includes files based on a URL parameter. The response contains Linux user account entries. Which vulnerability class is this, and which OWASP Top 10 category does it fall under?

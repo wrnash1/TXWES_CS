@@ -27,7 +27,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **[INSTRUCTOR ON CAMERA — title card: "Module 06: Azure Storage Services"]**
 
 Welcome to Module 06. I'm Professor Nash. Today we cover Azure Storage Services — the foundation for data persistence in the cloud. Every application we have discussed so far — VMs, containers, App Service — needs to store data somewhere. Azure Storage provides that somewhere in multiple forms, each optimized for different data types and access patterns.

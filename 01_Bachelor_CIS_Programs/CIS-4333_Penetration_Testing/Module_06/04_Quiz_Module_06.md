@@ -218,8 +218,6 @@ What information has been revealed and how should the tester use it?
 
 ---
 
----
-
 ### Question 11
 
 A tester runs `nmap -sU -p 161 192.168.1.50` and the port is reported as `open|filtered`. What does this state indicate?

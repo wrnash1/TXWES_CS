@@ -27,7 +27,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 Welcome back to CIS-4336. I am Professor Nash, and this is Module 03: Data Cleaning and Transformation.
 
 Every data analyst will tell you the same thing: the majority of their time is spent not on analysis, but on cleaning. Industry surveys consistently put the proportion of analyst time spent on data preparation at 60 to 80 percent. That is not a complaint — it reflects the reality that real-world data is messy, inconsistent, and incomplete.

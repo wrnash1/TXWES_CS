@@ -20,7 +20,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 ### Topic: Cloud Run and App Engine — Serverless Compute
 
 ### Estimated Duration: 12–14 minutes

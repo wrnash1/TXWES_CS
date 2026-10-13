@@ -51,7 +51,6 @@ Below is the study roadmap for every course in our computer science and computer
 | :--- | :--- | :--- | :--- |
 | **CIS-4333: Pentesting** | CompTIA PenTest+ | Run scans using Nmap stealth switches (`-sS`); practice building payloads in the Metasploit console. | [TryHackMe PenTest+ Path](https://tryhackme.com/) |
 
-
 ---
 
 ## 5. Final Exam Certification Policy (Module 16)

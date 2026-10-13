@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4330 Introduction to AI | Texas Wesleyan University
 
 **AI-900 Domain:** Describe fundamental principles of machine learning on Azure (20-25%)
@@ -342,8 +339,6 @@ An interactive visual essay explaining how t-SNE parameters affect output and th
 **3. Towards Data Science — PCA Explained Visually**
 <https://towardsdatascience.com/a-one-stop-shop-for-principal-component-analysis-5582fb7e0a9c>
 A comprehensive illustrated guide to Principal Component Analysis covering the math, interpretation of components, explained variance, and practical guidelines for choosing how many components to retain. Complements the Module 03 dimensionality reduction content.
-
-
 
 ---
 

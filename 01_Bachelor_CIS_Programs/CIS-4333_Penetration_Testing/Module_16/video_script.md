@@ -8,15 +8,6 @@
 
 ---
 
-## Production Notes
-
-- **Runtime Target:** 30–35 minutes
-- **Segments:** 7
-- **Visual Aids:** PT0-002 domain breakdown pie chart, tool mapping tables, exam strategy slides, PBQ walkthrough diagram
-- **Lab Environment:** Capstone written assessment — no live systems
-
----
-
 ## Segment 1: Course Retrospective and Exam Overview (Lines 1–35)
 
 [SLIDE: Module 16 Title Card]

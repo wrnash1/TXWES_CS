@@ -1,7 +1,6 @@
 
 # Reading Guide — Module 03: Application Attacks and Software Vulnerabilities
 
-
 <!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 <div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
   <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
@@ -71,7 +70,6 @@
 
 </svg>
 </div>
-
 
 ## CIS-4328 Information Security | Texas Wesleyan University
 
@@ -279,8 +277,6 @@ The US government repository of vulnerability data using the CVE standard and CV
 Texas Wesleyan University — CIS-4328 Information Security — Module 03 Reading Guide
 
 Proprietary and Confidential. Not for disclosure outside of authorized course use.
-
-
 
 ---
 

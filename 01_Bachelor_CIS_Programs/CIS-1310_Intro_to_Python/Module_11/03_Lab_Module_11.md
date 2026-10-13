@@ -422,7 +422,6 @@ nano text_cleaner.py
 # Realistic string processing pipeline
 # Module 11 Lab — CIS-1310
 
-
 def clean_line(line):
     '''Strip whitespace, lowercase, remove punctuation.'''
     line = line.strip()
@@ -431,14 +430,12 @@ def clean_line(line):
         line = line.replace(char, '')
     return line
 
-
 def word_frequency(text):
     '''Return a dict mapping each word to its count.'''
     freq = {}
     for word in clean_line(text).split():
         freq[word] = freq.get(word, 0) + 1
     return freq
-
 
 def summarize(text):
     '''Print a text analysis summary.'''
@@ -454,7 +451,6 @@ def summarize(text):
         print(f'Longest  : {max(words, key=len)}')
         top = sorted(freq.items(), key=lambda p: p[1], reverse=True)[:3]
         print(f'Top 3    : {top}')
-
 
 # Sample inputs
 lines = [
@@ -535,7 +531,6 @@ nano string_ops.py
 # string_ops.py
 # Demonstrates string operators, formatting, and ord/chr
 # Module 11 Lab — CIS-1310
-
 
 # String operators
 a = 'Hello'
@@ -753,18 +748,15 @@ nano string_checks.py
 
 import string
 
-
 def is_pangram(sentence):
     '''Return True if sentence contains every letter a-z.'''
     letters_used = set(sentence.lower())
     return set(string.ascii_lowercase).issubset(letters_used)
 
-
 def is_anagram(s1, s2):
     '''Return True if s1 and s2 are anagrams (same letters, any order).'''
     clean = lambda s: sorted(s.lower().replace(' ', ''))
     return clean(s1) == clean(s2)
-
 
 def letter_frequency(s):
     '''Return sorted list of (letter, count) for letters in s.'''
@@ -774,7 +766,6 @@ def letter_frequency(s):
         if ch.isalpha():
             freq[ch] = freq.get(ch, 0) + 1
     return sorted(freq.items())
-
 
 # Pangram tests
 sentences = [

@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-3326 Windows Server Administration
 
 ## Texas Wesleyan University | Professor Nash
@@ -470,8 +467,6 @@ Step-by-step coverage of KDS Root Key creation, gMSA deployment, and multi-serve
 **4. Microsoft Docs — Fine-Grained Password Policy step-by-step guide**
 <https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/get-started/adac/introduction-to-active-directory-administrative-center-enhancements--level-100->
 Shows how to create and apply Password Settings Objects using Active Directory Administrative Center and PowerShell, including precedence conflict resolution examples.
-
-
 
 ---
 

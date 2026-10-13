@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4329 Google Cloud Computing
 
 **Certification Alignment:** Google Cloud Associate Cloud Engineer (ACE)
@@ -467,8 +464,6 @@ configuration, and lifecycle policy setup using both the Console and
 Complete reference for lifecycle configuration rules including all supported
 conditions (`age`, `createdBefore`, `isLive`, `matchesStorageClass`,
 `numNewerVersions`) and action types with JSON and YAML examples.
-
-
 
 ---
 

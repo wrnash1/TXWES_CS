@@ -8,14 +8,6 @@
 
 ---
 
-## Production Notes
-
-**Duration:** Approximately 25–30 minutes
-**Format:** Lecture with slide transitions and demonstration walkthroughs
-**Segments:** 6 segments with natural pause points
-
----
-
 ## Segment 1: Introduction — Security as a Business Problem (Lines 1–40)
 
 [SLIDE: Title card — "Module 13: ERP Security and Access Control"]

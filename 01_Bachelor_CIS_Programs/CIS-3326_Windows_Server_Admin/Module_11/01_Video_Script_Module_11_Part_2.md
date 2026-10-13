@@ -22,20 +22,7 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Certification Alignment:** Microsoft Windows Server Administration
-
----
-
-## Production Notes
-
-**Recorded by:** Professor Nash | Texas Wesleyan University
-
-**Estimated runtime:** 11–13 minutes
-
-**Part 2 focus:** PowerShell and GUI demos — configure Windows Defender Firewall
-rules, enable BitLocker with TPM, back up recovery keys to AD, configure EFS on
-a file, verify data recovery agent. Exam tips and lab preview.
 
 ---
 

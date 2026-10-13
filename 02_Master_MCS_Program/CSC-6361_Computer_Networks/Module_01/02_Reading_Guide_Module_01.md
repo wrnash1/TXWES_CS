@@ -78,8 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
 ## CSC-6361 Advanced Computer Networks | Graduate Level
 ## Week 1: October 19–25, 2026
 
@@ -217,8 +215,6 @@ Defines the SNMP MIB objects for OSPF v2. Useful for understanding what operatio
 **3. Cisco EIGRP Technology White Paper — "Introduction to EIGRP"**
 https://www.cisco.com/c/en/us/support/docs/ip/enhanced-interior-gateway-routing-protocol-eigrp/16406-eigrp-toc.html
 Comprehensive Cisco white paper covering DUAL algorithm internals, metric calculation, Named Mode, and redistribution — written at CCNP depth and freely available without registration.
-
-
 
 ---
 

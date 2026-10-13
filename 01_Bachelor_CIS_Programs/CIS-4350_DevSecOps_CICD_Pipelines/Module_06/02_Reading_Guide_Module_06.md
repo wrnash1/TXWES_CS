@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4350 DevSecOps and CI/CD Pipelines
 
 ## Texas Wesleyan University | Professor Nash
@@ -449,8 +446,6 @@ Reference documentation for the Sentinel policy-as-code language used with Terra
 ---
 
 Reading Guide — Module 06 | CIS-4350 | Texas Wesleyan University | Professor Nash
-
-
 
 ---
 

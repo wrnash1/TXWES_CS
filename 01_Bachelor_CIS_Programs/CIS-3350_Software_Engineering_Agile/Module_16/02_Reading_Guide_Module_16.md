@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-3350 Software Engineering and Agile
 
 **Certification Alignment:** PSM I (Professional Scrum Master I) – Scrum.org
@@ -371,10 +368,6 @@ The original twelve Agile Manifesto principles. PSM I questions occasionally cit
 - [ ] Explain what the Scrum Master does and does not do
 - [ ] Take the Scrum.org Scrum Open assessment and score above 95 percent consistently
 - [ ] Complete this module's Lab and Quiz
-
----
-
-
 
 ---
 

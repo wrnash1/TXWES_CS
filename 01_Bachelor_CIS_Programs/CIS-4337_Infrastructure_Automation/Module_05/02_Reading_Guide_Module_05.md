@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Reading Guide — Module 05: Modules — Creating and Using Reusable Modules
 
 ### Course Alignment: HashiCorp Terraform Associate 003
@@ -386,8 +383,6 @@ The public module registry. Browse community and verified modules for AWS, Azure
 ---
 
 Module 05 Reading Guide — CIS-4337 Infrastructure Automation — Texas Wesleyan University
-
-
 
 ---
 

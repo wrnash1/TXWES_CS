@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-3350 Software Engineering and Agile
 **Certification Alignment:** PSM I (Professional Scrum Master I) – Scrum.org
 **Instructor:** Professor Nash | Texas Wesleyan University
@@ -287,10 +284,6 @@ A free, open-source tool that generates structured retrospective plans using ove
 - [ ] Identify which Agile Manifesto principle justifies each event
 - [ ] State the order of all five Sprint events from memory
 - [ ] Complete this module's Lab and Quiz
-
----
-
-
 
 ---
 

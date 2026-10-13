@@ -26,7 +26,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 ---
 
 ### Introduction
@@ -152,12 +151,3 @@ In this first part we covered:
 In Part 2 we cover billing export to BigQuery, the Recommender service, cost optimization strategies for Compute Engine, Cloud Storage, and managed services, and the GCP free tier.
 
 ---
-
-### PRODUCTION NOTES
-
-- Slide: GCP billing hierarchy diagram (Organization → Billing Account → Projects)
-- Slide: IAM billing roles table with scope and use cases
-- Slide: Budget alert configuration diagram showing Pub/Sub + Cloud Function pattern
-- Slide: CUD vs. SUD comparison table
-- Screen share: Cloud Console — Cloud Billing → Budgets and Alerts — creating a budget with multiple thresholds
-- Screen share: Compute Engine → Committed Use Discounts dashboard

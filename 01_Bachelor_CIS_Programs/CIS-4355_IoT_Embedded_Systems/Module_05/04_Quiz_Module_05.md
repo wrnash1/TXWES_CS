@@ -207,8 +207,6 @@ A BLE asset-tracking beacon is deployed in a hospital supply room. A security re
 
 ---
 
----
-
 ### Question 11 (5 points)
 
 A LoRaWAN gateway has a GPS receiver and records the precise receive time for every uplink frame. Which network function uses this timestamp data to determine which gateway received the uplink first?

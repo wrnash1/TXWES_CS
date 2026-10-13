@@ -27,7 +27,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 Welcome back. I am Professor Nash and this is Module 04: S3 — Storage Classes, Lifecycle Policies, and Security.
 
 Amazon S3 is the most-used storage service in AWS and one of the most tested services on the SAA-C03 exam. S3 stores virtually everything — application assets, backups, data lake files, static websites, CloudTrail logs, CloudFormation templates. Understanding S3's storage classes, lifecycle management, and security model is not optional.

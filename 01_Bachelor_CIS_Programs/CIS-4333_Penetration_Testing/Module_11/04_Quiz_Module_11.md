@@ -208,8 +208,6 @@ A penetration tester conducts wireless reconnaissance and identifies a target ne
 
 ---
 
----
-
 **Question 11**
 
 A tester captures a WPA2-Personal four-way handshake using airodump-ng. They attempt to crack it with `aircrack-ng -w /usr/share/wordlists/rockyou.txt handshake.cap` but the passphrase is not in the wordlist. What is the next appropriate step?

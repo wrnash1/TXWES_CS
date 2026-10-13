@@ -153,9 +153,6 @@
 </svg>
 </div>
 
-
-
-
 ## Course: CIS-2320 Hardware Fundamentals (CompTIA A+ Core 1, 220-1101)
 
 **Certification Domain:** 1.1 — Install and configure laptop hardware | 3.1 — Install and configure storage devices and display components
@@ -340,8 +337,6 @@ Complete the Reading Guide glossary review before beginning the lab.
 5. **DisplayPort Bandwidth Calculator (Free Tool)**
    URL: [https://www.displayninja.com/displayport-bandwidth-calculator/](https://www.displayninja.com/displayport-bandwidth-calculator/)
    Relevance: Interactive calculator that shows whether a given resolution, refresh rate, and color depth combination fits within a specific DisplayPort or HDMI version's bandwidth. Useful for the lab challenge exercise on bandwidth calculations.
-
-
 
 ---
 

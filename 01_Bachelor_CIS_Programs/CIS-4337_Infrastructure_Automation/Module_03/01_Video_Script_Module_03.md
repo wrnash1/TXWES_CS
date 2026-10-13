@@ -26,7 +26,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 Welcome back to CIS-4337. I am Professor Nash. In the first two modules we established what IaC is and how the Terraform workflow operates. In this module we go deep into the language itself: HashiCorp Configuration Language, or HCL.
 
 By the end of this video you will understand every major HCL block type — `terraform`, `provider`, `resource`, `variable`, `output`, and `locals` — and how they work together. You will write a complete `main.tf` with an AWS provider, variable declarations, and an EC2 instance resource. You will also understand resource meta-arguments: `depends_on`, `count`, `for_each`, `provider`, and `lifecycle`.

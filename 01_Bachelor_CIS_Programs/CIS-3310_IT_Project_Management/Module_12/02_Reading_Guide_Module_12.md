@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-3310 IT Project Management
 
 ## Texas Wesleyan University | Professor Nash
@@ -357,8 +354,6 @@ The following free, openly licensed resources extend the concepts in this module
 5. **Kickoff Meeting Agenda Template — ProjectManager.com (Free)**
    [projectmanager.com/blog/project-kickoff-meeting](https://www.projectmanager.com/blog/project-kickoff-meeting)
    Free kickoff meeting agenda template with best practice guidance. Useful context for understanding the kickoff as a formal process artifact tested on the Project+ exam.
-
-
 
 ---
 

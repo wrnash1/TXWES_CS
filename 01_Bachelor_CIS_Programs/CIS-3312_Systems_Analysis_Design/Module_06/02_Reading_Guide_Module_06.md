@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-3312 Systems Analysis and Design
 **Certification Alignment:** IIBA ECBA (Entry Certificate in Business Analysis)
 **Prepared by:** Professor Nash | Texas Wesleyan University
@@ -287,8 +284,6 @@ The following open educational resources extend module content on DFDs and ERDs.
 5. **Data Dictionary Best Practices — TechTarget**
    <https://www.techtarget.com/searchdatamanagement/definition/data-dictionary>
    Focus: Plain-language explanation of data dictionary structure, purpose, and content standards. Reinforces Section 1.12 and the data dictionary entries required in the lab.
-
-
 
 ---
 

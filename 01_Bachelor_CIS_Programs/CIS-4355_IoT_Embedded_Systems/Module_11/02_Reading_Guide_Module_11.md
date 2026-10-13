@@ -78,8 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
 ## Course: CIS-4355_IoT_Embedded_Systems (IoT & Embedded Security (General Principles))
 
 ---
@@ -148,8 +146,6 @@ Microsoft's documentation for Azure Device Update (ADU), covering staged OTA rol
 **3. ESP-IDF OTA Update Guide — esp_https_ota and Secure Boot**
 [https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/system/ota.html](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/system/ota.html)
 Espressif's reference for the ESP32 OTA update framework, including `esp_https_ota()`, A/B partition configuration, rollback on boot failure, and integration with Secure Boot for firmware signature verification. Essential reading for the embedded OTA implementation aspects of this module.
-
-
 
 ---
 

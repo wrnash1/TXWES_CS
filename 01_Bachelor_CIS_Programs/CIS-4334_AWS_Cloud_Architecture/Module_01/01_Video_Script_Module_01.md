@@ -27,7 +27,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 Welcome to CIS-4334, AWS Cloud Architecture. I am Professor Nash, and this is Module 01: AWS Global Infrastructure and Core Services Overview.
 
 Before we get into the technical content, let me tell you why this module matters. The AWS Solutions Architect Associate exam — exam code SAA-C03 — tests your ability to design resilient, high-performing, secure, and cost-optimized architectures on AWS. Every single design decision you will make on that exam traces back to the foundational concepts we cover today. If you do not understand Regions, Availability Zones, and the Shared Responsibility Model cold, you will miss questions on every other topic in this course.

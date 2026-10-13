@@ -20,21 +20,9 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Estimated Duration:** 16–19 minutes
 **Certification Alignment:** JSE — Certified Associate in JavaScript Programming (OpenEDG / JS Institute)
 **Recorded by:** Professor Nash | Texas Wesleyan University
-
----
-
-> **PRODUCTION NOTES FOR INSTRUCTOR:**
->
-> - Use DevTools Console for all [DEMO] sections.
-> - [PAUSE] = 2 seconds of silence.
-> - The hoisting demo (function declaration vs expression) is the highest-value exam content — show both errors side by side.
-> - For the arrow function demos, write the full-form first and then progressively shorten to the concise form so students see the transformation.
-> - The `this` keyword behavior difference between regular and arrow functions is a common interview trap — mention it briefly but note it is covered more deeply in the Objects module.
-> - Parameters vs arguments: use the analogy "parameter is the label on the box; argument is what you put in the box."
 
 ---
 

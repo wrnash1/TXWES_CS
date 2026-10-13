@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-3350 Software Engineering and Agile
 
 **Certification Alignment:** PSM I (Professional Scrum Master I) – Scrum.org
@@ -246,10 +243,6 @@ The Agile Alliance's resources on requirements in Agile contexts. Covers how Agi
 - [ ] Describe two ways non-functional requirements are handled in Scrum
 - [ ] Explain what requirements traceability is and how Agile teams achieve it without a formal matrix
 - [ ] Complete this module's Lab and Quiz
-
----
-
-
 
 ---
 

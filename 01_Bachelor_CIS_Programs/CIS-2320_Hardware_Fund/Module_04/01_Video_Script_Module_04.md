@@ -20,36 +20,9 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Estimated Duration:** 20–22 minutes
 **Certification Alignment:** CompTIA A+ Core 1 (220-1101) — Domain 3.3: Given a scenario, install RAM types
 **Recorded by:** Professor Nash | Texas Wesleyan University
-
----
-
-## Production Notes
-
-Stage the following components before recording:
-
-- One DDR4 DIMM (288-pin desktop)
-- One DDR5 DIMM if available (288-pin desktop, different notch position)
-- One DDR4 SODIMM (260-pin laptop)
-- A motherboard with visible, color-coded RAM slots (ideally 4-slot board showing A1/A2/B1/B2)
-- A laptop with the service panel removed showing SODIMM slots (or a reference image)
-
-Key exam traps to call out explicitly:
-
-- DDR4 and DDR5 both have 288 pins on the DIMM form factor — the notch position distinguishes them, not pin count
-- Dual-channel requires paired slots (A1+B1 or A2+B2), NOT adjacent slots (A1+A2)
-- SODIMM inserts at approximately 45 degrees, then presses flat — different from DIMM which presses straight down
-- ECC RAM is not interchangeable with non-ECC on consumer boards
-
-Safety notes:
-
-- Always wear an ESD strap before handling RAM modules
-- Hold RAM by the edges; never touch the gold edge contacts
-- Press straight down evenly on both ends of a DIMM — uneven pressure can crack the PCB
-- For SODIMM, insert at the correct angle before pressing down — forcing at the wrong angle bends the contacts
 
 ---
 

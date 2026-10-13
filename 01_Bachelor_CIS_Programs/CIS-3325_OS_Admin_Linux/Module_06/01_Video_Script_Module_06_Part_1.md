@@ -26,16 +26,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
----
-
-## Production Notes
-
-- **Screen recording**: Terminal emulator (dark theme, 18pt font); use a VM with an unpartitioned spare disk for live demos
-- **Demonstrations**: Use /dev/sdb (the second disk in the VM) as the demo target; narrate all destructive operations clearly before executing
-- **Slide overlays**: MBR vs GPT comparison table; fstab field diagram
-- **Safety warning**: Display a red "DEMO DISK ONLY" banner during fdisk/mkfs/mount demos
-
 ---
 
 ## SEGMENT 1 — Opening and Context (0:00–1:30)

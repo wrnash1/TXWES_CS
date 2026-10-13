@@ -313,8 +313,6 @@ Distractor Analysis:
 
 ---
 
----
-
 ### Question 11
 
 A DFD for an insurance claims system shows the following: External Entity "Claimant" → Process 1.0 "Submit Claim" → Data Store DS-1 "Claims." A second path shows Process 1.0 → External Entity "Fraud Detection Service." Which DFD element is missing for the Fraud Detection Service path to be correctly modeled?

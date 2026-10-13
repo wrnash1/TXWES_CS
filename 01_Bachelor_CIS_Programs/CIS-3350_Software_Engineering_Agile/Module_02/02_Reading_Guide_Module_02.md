@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-3350 Software Engineering and Agile
 **Certification Alignment:** PSM I (Professional Scrum Master I) – Scrum.org
 **Instructor:** Professor Nash | Texas Wesleyan University
@@ -244,10 +241,6 @@ A curated, free glossary of Agile terms maintained by the Agile Alliance. Useful
 - [ ] Explain the three most common Manifesto misinterpretations in your own words
 - [ ] Read the Agile Manifesto (both values and principles) at the official source referenced in the Scrum Guide
 - [ ] Complete this module's Quiz and Discussion Forum
-
----
-
-
 
 ---
 

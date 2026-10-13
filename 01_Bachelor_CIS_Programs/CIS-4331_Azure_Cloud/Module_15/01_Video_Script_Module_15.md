@@ -22,16 +22,7 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Certification Alignment:** Microsoft Azure Fundamentals (AZ-900)
-
----
-
-## Production Notes
-
-**Estimated Runtime:** 28–32 minutes
-**Slide Deck:** Module_15_Slides.pptx
-**Visual Aids:** Microsoft Trust Center screenshot, Azure Policy definition editor, Blueprints workflow diagram, Purview data map, compliance dashboard
 
 ---
 

@@ -27,7 +27,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 Welcome to CIS-4336 Data Analytics. I am Professor Nash, and this is Module 01: Data Analytics Fundamentals and Data Types.
 
 This module sets the foundation for everything that follows in the course. Before you can analyze data, clean it, visualize it, or build dashboards, you need to understand what data actually is — how it is classified, where it lives, and why those classifications matter in professional practice.

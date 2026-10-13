@@ -252,8 +252,6 @@ preserve fairness and equal information.
 
 ---
 
----
-
 ## Question 11
 
 Under which contract type does the BUYER bear the MOST cost risk?

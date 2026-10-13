@@ -210,8 +210,6 @@ A covers data fundamentals and infrastructure. B addresses some cleaning concept
 
 ---
 
----
-
 ### Question 11 (5 points)
 
 An analyst has a DataFrame with a `date` column stored as object (string) dtype. After calling `pd.to_datetime(df['date'])`, what new capability becomes available?

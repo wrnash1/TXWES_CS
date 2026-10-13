@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-3322 Advanced Networking
 
 ## Texas Wesleyan University | Professor Nash
@@ -407,8 +404,6 @@ The following open educational resources extend WAN technologies and remote acce
 4. **Cisco SD-WAN Design Guide** (cisco.com): Cisco's publicly available SD-WAN design documentation covering the vManage/vSmart/vBond/vEdge architecture, zero-touch provisioning workflow, BFD-based path monitoring, and application-aware routing policy configuration with reference topologies.
 
 5. **PacketLife.net — IPsec Cheat Sheet** (packetlife.net): A freely available quick reference covering IPsec protocol stack (IKE, AH, ESP), Phase 1 and Phase 2 parameters, Tunnel vs Transport mode differences, and pre-shared key vs certificate authentication — all aligned to CCNA exam testable content.
-
-
 
 ---
 

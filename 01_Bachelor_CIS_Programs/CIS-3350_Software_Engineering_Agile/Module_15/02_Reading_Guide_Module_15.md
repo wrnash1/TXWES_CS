@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-3350 Software Engineering and Agile
 
 **Certification Alignment:** PSM I (Professional Scrum Master I) – Scrum.org
@@ -292,10 +289,6 @@ A free reference entry explaining Cumulative Flow Diagrams — how to read them,
 - [ ] Identify at least four metric anti-patterns and explain the consequence of each
 - [ ] Connect Sprint Burndown, velocity, and lead time to specific Scrum events
 - [ ] Complete this module's Lab and Quiz
-
----
-
-
 
 ---
 

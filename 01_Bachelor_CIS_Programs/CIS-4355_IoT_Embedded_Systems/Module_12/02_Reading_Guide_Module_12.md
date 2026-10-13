@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4355 IoT and Embedded Systems
 
 ## Texas Wesleyan University | Professor Nash
@@ -320,8 +317,6 @@ Mozilla's SSL Configuration Generator provides up-to-date, vetted TLS cipher sui
 **3. Espressif ESP-IDF Security Guide — Secure Boot V2 and Flash Encryption**
 [https://docs.espressif.com/projects/esp-idf/en/latest/esp32/security/security.html](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/security/security.html)
 Espressif's official security guide for the ESP32 platform covers the full Secure Boot V2 eFuse burning process, flash encryption configuration, and the relationship between these two controls in a hardened production build. This reference directly supports Section 4 of this guide on firmware signing and the ESP32 secure boot implementation, and is essential reading before the lab's firmware signing simulation.
-
-
 
 ---
 

@@ -1,6 +1,5 @@
 # Reading Guide: Module 09 - Authentication - MFA, SSO, and Biometrics
 
-
 <!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 <div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
   <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
@@ -132,8 +131,6 @@ A practical reference covering secure authentication implementation including pa
 - [ ] Watch the authentication video lectures in [Professor Messer's SY0-701 Course Playlist](https://www.youtube.com/playlist?list=PLG49S3nxzAnl4Q7y9umx51bbtILyD4Syy).
 - [ ] Memorize: MFA = two different factor categories; CER = FAR equals FRR crossover; SAML = enterprise SSO; OAuth = delegated authorization.
 - [ ] Proceed to the weekly hands-on lab activity.
-
-
 
 ---
 

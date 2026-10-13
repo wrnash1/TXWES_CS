@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-3350 Software Engineering and Agile
 **Certification Alignment:** PSM I (Professional Scrum Master I) – Scrum.org
 **Instructor:** Professor Nash | Texas Wesleyan University
@@ -284,10 +281,6 @@ A free, practical guide to splitting user stories with a flowchart decision tree
 - [ ] Identify five common user story mistakes and rewrite one poorly written story to fix all five
 - [ ] State whether user stories are required by the Scrum Guide (they are not)
 - [ ] Complete this module's Lab and Quiz
-
----
-
-
 
 ---
 

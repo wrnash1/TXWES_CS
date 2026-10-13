@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-3326 Windows Server Administration
 
 ## Texas Wesleyan University | Professor Nash
@@ -380,8 +377,6 @@ Full reference for Windows LAPS including schema extension, GPO configuration, A
 **4. Microsoft Docs — Credential Guard overview**
 <https://learn.microsoft.com/en-us/windows/security/identity-protection/credential-guard/credential-guard>
 Technical deep-dive on Credential Guard including Virtualization-Based Security architecture, how LSAIso protects NTLM hashes and Kerberos tickets, hardware requirements, and Pass-the-Hash/Pass-the-Ticket attack prevention.
-
-
 
 ---
 

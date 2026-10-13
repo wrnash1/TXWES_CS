@@ -308,7 +308,6 @@ nano word_counter.py
 # Classic dictionary accumulator pattern
 # Module 10 Lab — CIS-1310
 
-
 def count_words(text):
     '''Return a frequency dictionary for words in text.'''
     words = text.lower().split()
@@ -317,11 +316,9 @@ def count_words(text):
         frequency[word] = frequency.get(word, 0) + 1
     return frequency
 
-
 def top_words(freq, n=5):
     '''Return the n most common words as a sorted list of (word, count) tuples.'''
     return sorted(freq.items(), key=lambda pair: pair[1], reverse=True)[:n]
-
 
 # Test with sample text
 sample = (
@@ -398,7 +395,6 @@ nano student_grades.py
 # Nested dictionaries for student records
 # Module 10 Lab — CIS-1310
 
-
 def create_roster():
     '''Return a sample student roster as a nested dictionary.'''
     return {
@@ -409,11 +405,9 @@ def create_roster():
         'Eve':   {'grades': [88, 91, 85, 90], 'major': 'CS', 'year': 2},
     }
 
-
 def average(grades):
     '''Return the average of a list of grades.'''
     return sum(grades) / len(grades)
-
 
 def print_report(roster):
     '''Print a formatted grade report.'''
@@ -424,18 +418,15 @@ def print_report(roster):
         status = 'Passing' if avg >= 70 else 'At Risk'
         print(f'{name:<10} {info["major"]:<10} {info["year"]:<6} {avg:<10.1f} {status}')
 
-
 def cs_students(roster):
     '''Return a dict of only CS students.'''
     return {name: info for name, info in roster.items()
             if info['major'] == 'CS'}
 
-
 def class_average(roster):
     '''Return the average grade across all students.'''
     all_averages = [average(info['grades']) for info in roster.values()]
     return sum(all_averages) / len(all_averages)
-
 
 # Run the program
 roster = create_roster()
@@ -652,10 +643,8 @@ grades = {
     'Eve':    [85, 88, 82, 90, 87],
 }
 
-
 def average(scores):
     return sum(scores) / len(scores)
-
 
 # Build summary dict: {name: {'avg': ..., 'high': ..., 'low': ...}}
 summary = {

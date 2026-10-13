@@ -8,14 +8,6 @@
 
 ---
 
-## Production Notes
-
-**Duration:** Approximately 25–30 minutes
-**Format:** Lecture with slide transitions and live demonstration walkthroughs
-**Segments:** 6 segments with natural pause points
-
----
-
 ## Segment 1: Introduction — From Data to Decisions (Lines 1–40)
 
 [SLIDE: Title card — "Module 14: ERP Reporting and Business Intelligence"]

@@ -208,8 +208,6 @@ A penetration tester installs a Linux cron-based reverse shell during an authori
 
 ---
 
----
-
 **Question 11**
 
 A tester has a Meterpreter session on a compromised host with two network interfaces: `eth0` (10.10.10.50, accessible from attacker) and `eth1` (192.168.50.1, internal network). After running `run post/multi/manage/autoroute -s 192.168.50.0/24`, a tester wants to use `proxychains nmap` to scan 192.168.50.0/24. What additional step is required?

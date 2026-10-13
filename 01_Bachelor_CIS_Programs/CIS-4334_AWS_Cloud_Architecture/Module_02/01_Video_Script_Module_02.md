@@ -27,7 +27,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 Welcome back to CIS-4334. I am Professor Nash, and this is Module 02: IAM — Identity and Access Management.
 
 If there is one service that underpins every other service in AWS, it is IAM. Every API call made to AWS — whether from the console, the CLI, or an application — is authenticated and authorized through IAM. Get IAM wrong and your architecture is insecure regardless of how well-designed everything else is. Get IAM right and you have a solid security foundation for everything we build in this course.

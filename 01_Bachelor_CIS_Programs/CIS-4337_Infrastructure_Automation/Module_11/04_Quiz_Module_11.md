@@ -202,8 +202,6 @@ D. In an environment variable that persists across shell sessions
 
 ---
 
----
-
 ### Question 11 (5 points)
 
 A Terraform Cloud workspace has a VCS integration configured to trigger runs on pushes to the `main` branch. A developer pushes a commit that modifies only a `README.md` file. What happens?

@@ -192,8 +192,6 @@ D. The impact is limited to TLS certificates; code signing and email certificate
 
 ---
 
----
-
 ### Question 11
 
 A developer implements a file integrity monitoring system and wants to detect any unauthorized modification to a critical configuration file. Which property of a cryptographic hash function makes it suitable for this purpose?

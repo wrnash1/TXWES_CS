@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-3340 Full Stack Web Development
 **Certification Alignment:** AWS Certified Developer - Associate (DVA-C02)
 **Texas Wesleyan University | Professor Nash**
@@ -414,8 +411,6 @@ A widely-referenced visual guide illustrating every Flexbox property with diagra
 **4. CSS-Tricks — A Complete Guide to CSS Grid**
 [https://css-tricks.com/snippets/css/complete-guide-grid/](https://css-tricks.com/snippets/css/complete-guide-grid/)
 The companion visual guide to CSS Grid, covering `grid-template-areas`, line-based placement, the `minmax()` function, and the difference between `auto-fill` and `auto-fit` with diagrams.
-
-
 
 ---
 

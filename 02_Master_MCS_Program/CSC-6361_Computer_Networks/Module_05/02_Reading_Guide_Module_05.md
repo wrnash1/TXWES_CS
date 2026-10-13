@@ -78,8 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
 ## CSC-6361 Advanced Computer Networks | Graduate Level
 ## Week 5: November 16–22, 2026
 
@@ -248,8 +246,6 @@ Official Ansible documentation for network automation modules including ios_conf
 **4. Cisco DevNet — NETCONF/YANG Learning Lab**
 https://developer.cisco.com/learning/modules/intro-device-level-interfaces/
 Hands-on labs for NETCONF, RESTCONF, and YANG model-driven programmability on Cisco IOS-XE.
-
-
 
 ---
 

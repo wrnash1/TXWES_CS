@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4334 AWS Cloud Architecture
 
 ## Texas Wesleyan University | Professor Nash
@@ -428,8 +425,6 @@ Free course covering Lambda invocation models, execution lifecycle, concurrency 
 **3. AWS Documentation — AWS Step Functions Developer Guide**
 https://docs.aws.amazon.com/step-functions/latest/dg/welcome.html
 Authoritative guide to Step Functions Standard and Express workflows, Amazon States Language, error handling with Catch and Retry, and integration patterns with Lambda, DynamoDB, and SQS — the reference for the orchestration patterns covered in Section 9.
-
-
 
 ---
 

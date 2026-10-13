@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-3340 Full Stack Web Development
 **Certification Alignment:** AWS Certified Developer - Associate (DVA-C02)
 **Texas Wesleyan University | Professor Nash**
@@ -371,8 +368,6 @@ The official WCAG 2.1 quick reference filterable by principle (POUR) and conform
 **4. Google Search Central — Beginner's Guide to SEO**
 [https://developers.google.com/search/docs/fundamentals/seo-starter-guide](https://developers.google.com/search/docs/fundamentals/seo-starter-guide)
 Google's official starter guide covering title tags, meta descriptions, structured data, and how Googlebot crawls and indexes HTML pages — directly applicable to the SEO concepts in this module.
-
-
 
 ---
 

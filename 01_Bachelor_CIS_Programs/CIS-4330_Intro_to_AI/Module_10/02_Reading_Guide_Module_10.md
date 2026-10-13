@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4330 Introduction to Artificial Intelligence
 
 ## Texas Wesleyan University | Professor Nash
@@ -431,8 +428,6 @@ A free one-hour conceptual lecture by AI researcher Andrej Karpathy explaining h
 ---
 
 End of Reading Guide — Module 10
-
-
 
 ---
 

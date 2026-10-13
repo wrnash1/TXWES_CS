@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-1320 Introduction to JavaScript
 
 **Certification Alignment:** JSE — Certified Associate in JavaScript Programming (OpenEDG / JS Institute)
@@ -509,8 +506,6 @@ The following free, openly available resources extend and reinforce the topics c
 - [ ] Run the `??` vs `||` examples from Section 4 with `count = 0`.
 - [ ] Complete the Module 04 Lab.
 - [ ] Complete the Module 04 Quiz.
-
-
 
 ---
 

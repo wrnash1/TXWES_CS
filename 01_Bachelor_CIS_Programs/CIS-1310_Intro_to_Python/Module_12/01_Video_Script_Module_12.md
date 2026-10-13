@@ -20,21 +20,9 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Estimated Duration:** 14–16 minutes
 **Certification Alignment:** PCAP — Certified Associate in Python Programming (Python Institute)
 **Recorded by:** Professor Nash | Texas Wesleyan University
-
----
-
-> **PRODUCTION NOTES FOR INSTRUCTOR:**
->
-> - Use screen-share for all [DEMO] sections — run live in Ubuntu terminal/REPL.
-> - [PAUSE] = hold 2 seconds of silence.
-> - Draw the try→except→else→finally execution flow on a whiteboard before the code demos.
-> - Show the "broad before specific" ordering bug live — let it fail silently, then fix it.
-> - Run the finally-with-return demo — students are always surprised that finally still executes.
-> - Run `input_validator.py` interactively so students see the loop behavior with bad input.
 
 ---
 
@@ -370,7 +358,6 @@ Always use `except SomeSpecificError:` in production code. Use `except Exception
 # Demonstrates try-except-else-finally with user input
 # Module 12 Lab — CIS-1310
 
-
 def get_positive_integer(prompt):
     '''Prompt until a positive integer is entered. Return the integer.'''
     while True:
@@ -385,7 +372,6 @@ def get_positive_integer(prompt):
         finally:
             print('  (attempt complete)')
 
-
 def divide_safely(a, b):
     '''Divide a by b with full exception handling.'''
     try:
@@ -398,7 +384,6 @@ def divide_safely(a, b):
         return result
     finally:
         print(f'  divide_safely({a}, {b}) — cleanup')
-
 
 # Demo the input validator (interactive)
 print('=== Positive Integer Input Validator ===')

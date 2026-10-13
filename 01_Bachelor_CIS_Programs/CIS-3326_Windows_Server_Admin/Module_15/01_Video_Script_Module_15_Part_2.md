@@ -22,21 +22,7 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Certification Alignment:** Microsoft Windows Server Administration
-
----
-
-## Production Notes
-
-**Recorded by:** Professor Nash | Texas Wesleyan University
-
-**Estimated runtime:** 11–13 minutes
-
-**Part 2 focus:** PowerShell and GUI demos — `Get-Counter`, `Get-Process`,
-creating Data Collector Sets, filtering Event Viewer, PowerShell-based
-performance monitoring, identifying bottlenecks from counter data. Exam tips
-and lab preview.
 
 ---
 

@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-3322 Advanced Networking
 **Certification Alignment:** Cisco CCNA 200-301 (Domain 1: Network Fundamentals - 20%)
 **Prepared by:** Professor Nash | Texas Wesleyan University
@@ -270,8 +267,6 @@ The following open educational resources extend the concepts covered in this mod
 4. **Professor Messer — CompTIA and Cisco Free Study Guides** (professormesser.com): While primarily CompTIA-focused, Professor Messer's networking fundamentals notes on topology types, OSI model, and physical vs. logical topology are directly applicable to CCNA Domain 1 content.
 
 5. **Cisco Packet Tracer Tutorials — Network Topologies Lab** (skillsforall.com/course/getting-started-cisco-packet-tracer): This beginner tutorial guides you through building star, mesh, and three-tier topologies in Packet Tracer and is a strong companion to the Module 01 lab activity.
-
-
 
 ---
 

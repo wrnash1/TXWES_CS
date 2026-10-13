@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Reading Guide — Module 01: IaC Concepts and Benefits
 
 ### Course Alignment: HashiCorp Terraform Associate 003
@@ -346,8 +343,6 @@ Explains the purpose of the state file, what it contains, the risks of sensitive
 ---
 
 Module 01 Reading Guide — CIS-4337 Infrastructure Automation — Texas Wesleyan University
-
-
 
 ---
 

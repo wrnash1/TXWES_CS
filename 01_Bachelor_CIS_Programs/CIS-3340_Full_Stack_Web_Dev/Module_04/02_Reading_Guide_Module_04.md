@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-3340 Full Stack Web Development
 **Certification Alignment:** AWS Certified Developer - Associate (DVA-C02)
 **Texas Wesleyan University | Professor Nash**
@@ -436,8 +433,6 @@ A free, interactive course section covering DOM navigation, element manipulation
 **4. web.dev — Storage for the web**
 [https://web.dev/articles/storage-for-the-web](https://web.dev/articles/storage-for-the-web)
 Google's guide comparing `localStorage`, `sessionStorage`, IndexedDB, and Cache API — including storage limits, eviction policies, and best practices relevant to the dark mode persistence feature in Lab 04.
-
-
 
 ---
 

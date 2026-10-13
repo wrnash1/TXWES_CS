@@ -27,7 +27,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 By the end of this video you will be able to:
 
 - Explain what Azure Policy does and how policies, initiatives, and assignments work together

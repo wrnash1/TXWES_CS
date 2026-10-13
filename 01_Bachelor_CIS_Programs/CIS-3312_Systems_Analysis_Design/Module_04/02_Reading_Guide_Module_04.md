@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-3312 Systems Analysis and Design
 **Certification Alignment:** IIBA ECBA (Entry Certificate in Business Analysis)
 **Prepared by:** Professor Nash | Texas Wesleyan University
@@ -287,8 +284,6 @@ The following open educational resources extend module content on requirements a
 5. **IEEE 29148:2018 Systems and Software Engineering — Requirements Engineering (Overview)**
    <https://www.iso.org/standard/72089.html>
    Focus: ISO/IEEE standard for requirements engineering processes and documentation. Access the standard through your university library proxy. Review the abstract and scope sections to understand how IEEE vocabulary aligns with BABOK terminology used in this module.
-
-
 
 ---
 

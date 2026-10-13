@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4335 IT Service Management
 
 ## Texas Wesleyan University | Professor Nash
@@ -409,8 +406,6 @@ Third-party disposal vendors should hold recognized certifications:
 ---
 
 *End of Module 13 Reading Guide — approximately 265 lines*
-
-
 
 ---
 

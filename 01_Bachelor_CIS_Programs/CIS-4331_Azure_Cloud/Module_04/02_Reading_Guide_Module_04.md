@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-4331 Azure Cloud | Texas Wesleyan University
 **Instructor:** Professor Nash
 **AZ-900 Domain:** Describe Azure Architecture and Services (35-40% of exam)
@@ -453,8 +450,6 @@ In-depth explanation of AKS clusters, node pools, pods, Deployments, Services, a
 **3. Microsoft Learn — Azure Container Apps overview**
 https://learn.microsoft.com/en-us/azure/container-apps/overview
 Covers Container Apps environments, scale rules, KEDA-based event-driven autoscaling, scale-to-zero behavior, and the distinction between Container Apps and AKS for teams choosing between managed and unmanaged Kubernetes.
-
-
 
 ---
 

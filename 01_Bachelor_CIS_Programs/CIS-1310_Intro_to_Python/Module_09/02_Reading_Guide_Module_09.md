@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-1310 Introduction to Python
 
 **Certification Alignment:** PCAP — Certified Associate in Python Programming (Python Institute)
@@ -593,8 +590,6 @@ A free article explaining how to decompose problems into base case and recursive
 - [ ] Read Chapter 4 of *Python for Everybody* at py4e.com.
 - [ ] Review all 7 Certification Exam Tips in Section 5.
 - [ ] Proceed to the Module 09 Lab Activity.
-
-
 
 ---
 

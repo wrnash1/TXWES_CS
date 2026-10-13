@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4350 DevSecOps and CI/CD Pipelines
 
 ## Certification Alignment: DevSecOps Professional (DSOE)
@@ -256,8 +253,6 @@ GitHub's official guide to uploading SARIF files from container scanners and oth
 ---
 
 Reading Guide — Module 11 | CIS-4350 | Texas Wesleyan University | Professor Nash
-
-
 
 ---
 

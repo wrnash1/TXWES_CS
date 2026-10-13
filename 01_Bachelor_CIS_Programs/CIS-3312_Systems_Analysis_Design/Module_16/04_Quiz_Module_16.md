@@ -228,8 +228,6 @@ A BA has completed the entire systems analysis and design process for a new ente
 
 ---
 
----
-
 **Question 16**
 A BA is preparing to elicit requirements from a diverse group of stakeholders that includes end users, IT staff, and senior executives. The BA knows that executives have limited availability, that end users need to demonstrate their current workflow, and that IT staff need to provide technical constraints in writing. Which combination of elicitation techniques best matches each stakeholder group to the most appropriate method?
 

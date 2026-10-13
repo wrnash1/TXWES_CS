@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-1320 Introduction to JavaScript
 
 **Certification Alignment:** JSE — Certified Associate in JavaScript Programming (OpenEDG / JS Institute)
@@ -449,8 +446,6 @@ The following free, openly available resources extend and reinforce the topics c
 - [ ] Test `cloneNode(true)` on a card element — confirm text content is preserved. Then add a click listener to the original and confirm the clone does not fire it.
 - [ ] Complete the Module 11 Lab.
 - [ ] Complete the Module 11 Quiz.
-
-
 
 ---
 

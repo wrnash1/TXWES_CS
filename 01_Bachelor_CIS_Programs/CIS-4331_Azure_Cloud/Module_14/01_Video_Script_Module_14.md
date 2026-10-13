@@ -22,16 +22,7 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Certification Alignment:** Microsoft Azure Fundamentals (AZ-900)
-
----
-
-## Production Notes
-
-**Estimated Runtime:** 28–32 minutes
-**Slide Deck:** Module_14_Slides.pptx
-**Visual Aids:** Pricing Calculator screenshot, TCO Calculator walkthrough, Cost Management dashboard, budget alert workflow
 
 ---
 

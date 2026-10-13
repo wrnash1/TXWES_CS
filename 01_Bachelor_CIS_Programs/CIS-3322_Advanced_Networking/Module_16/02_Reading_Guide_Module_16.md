@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-3322 Advanced Networking
 
 ## Texas Wesleyan University | Professor Nash
@@ -469,8 +466,6 @@ The following open educational resources support final CCNA 200-301 exam prepara
 4. **Neil Anderson's CCNA 200-301 Complete Course** (udemy.com): Udemy's highest-rated CCNA course (also sold as "The Complete Networking Fundamentals Course") by Network Engineer Neil Anderson — comprehensive lab-based instruction with real device configuration examples covering all exam domains.
 
 5. **Boson NetSim and ExSim** (boson.com): Industry-standard CCNA practice exams (ExSim-Max) and network simulator (NetSim) that replicate actual exam question style and difficulty. Free practice questions are available; paid full exams are widely used by candidates in the final weeks before exam day.
-
-
 
 ---
 

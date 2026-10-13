@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-3326 Windows Server Administration
 
 ## Texas Wesleyan University | Professor Nash
@@ -495,8 +492,6 @@ Complete functional level feature matrix from Windows Server 2003 through curren
 **4. Microsoft Docs — Deploy a Read-Only Domain Controller**
 <https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/deploy/rodc/install-a-windows-server-2012-active-directory-read-only-domain-controller--rodc---level-200->
 Detailed RODC deployment guide covering Password Replication Policy configuration, pre-staging, and branch office security considerations aligned to AZ-800 exam scenarios.
-
-
 
 ---
 

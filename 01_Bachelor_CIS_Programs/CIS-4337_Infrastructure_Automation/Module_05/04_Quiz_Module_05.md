@@ -210,8 +210,6 @@ Distractor Analysis:
 
 ---
 
----
-
 ### Question 11 (5 points)
 
 Which of the following is a valid local path source for a module located in a subdirectory named `compute` inside the current project?

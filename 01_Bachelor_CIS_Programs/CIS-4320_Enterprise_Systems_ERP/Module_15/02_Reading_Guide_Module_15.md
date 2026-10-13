@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4320 Enterprise Systems and ERP
 
 ## Texas Wesleyan University | Professor Nash
@@ -443,8 +440,6 @@ Before attending Lab 15, complete the following:
 
 ---
 
----
-
 ## 9. Supplemental Resources
 
 **1. Prosci — ADKAR Change Management Model**
@@ -462,8 +457,6 @@ Official Salesforce module covering the Discover, Define, Design, Build, Test, a
 *End of Reading Guide — Module 15*
 
 **Certification Alignment:** Salesforce Administrator / SAP S/4HANA Essentials
-
-
 
 ---
 

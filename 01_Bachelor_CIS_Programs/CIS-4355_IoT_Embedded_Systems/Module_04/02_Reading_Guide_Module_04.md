@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-4355 IoT and Embedded Systems
 **Instructor:** Professor Nash
 **Certification Target:** CompTIA IoT+ Domain 3
@@ -260,8 +257,6 @@ The complete API reference for the Paho MQTT Python library used in the Module 0
 ---
 
 End of Reading Guide – Module 04
-
-
 
 ---
 

@@ -298,8 +298,6 @@ Set a timeout: `nikto -h TARGET_IP -timeout 10`. This limits each request to 10 
 
 ---
 
----
-
 ## Part 9 — Challenge Exercise
 
 ### Challenge 1: Phased Scan Workflow Analysis

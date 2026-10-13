@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## CIS-3325 OS Administration | Texas Wesleyan University
 
 **Certification Alignment:** CompTIA Linux+ (XK0-005)
@@ -354,8 +351,6 @@ sed, and find. Foundational knowledge for all future scripting modules.
 URL: https://wiki.archlinux.org/title/File_permissions_and_attributes
 Coverage: Hard links vs. symbolic links, inode numbers, special bits, and the relationship
 between directory permissions and file access. Complements the linking concepts in this module.
-
-
 
 ---
 

@@ -285,8 +285,6 @@ tighter than SLA targets?
 
 ---
 
----
-
 ### Question 11 (5 points)
 
 A cloud hosting company signs a contract with a corporate client promising 99.95% monthly availability for the client's e-commerce platform. The hosting company relies on a network provider whose contract guarantees 99.9% uptime. What problem does this arrangement create?

@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4336 Data Analytics
 
 ## Texas Wesleyan University | Professor Nash
@@ -392,8 +389,6 @@ A practical walkthrough of the Apriori algorithm with Python code using the `mlx
 ---
 
 End of Module 08 Reading Guide
-
-
 
 ---
 

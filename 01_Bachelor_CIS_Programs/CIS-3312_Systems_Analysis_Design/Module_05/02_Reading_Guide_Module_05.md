@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-3312 Systems Analysis and Design
 **Certification Alignment:** IIBA ECBA (Entry Certificate in Business Analysis)
 **Prepared by:** Professor Nash | Texas Wesleyan University
@@ -291,8 +288,6 @@ The following open educational resources extend module content on use case model
 5. **Cockburn Use Case Template — Alistair Cockburn**
    <https://alistair.cockburn.us/use-cases/>
    Focus: The original Cockburn use case template used throughout this module for the use case specification format. Review the template structure and the distinction between main success scenario and alternate/exception flows.
-
-
 
 ---
 

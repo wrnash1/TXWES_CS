@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## CIS-3325 OS Administration | Texas Wesleyan University
 
 **Certification Alignment:** CompTIA Linux+ (XK0-005)
@@ -383,8 +380,6 @@ URL: https://man7.org/linux/man-pages/man8/pam_pwquality.8.html
 Coverage: Documents all password quality parameters including minlen, dcredit, ucredit,
 lcredit, and ocredit. Essential for understanding how to enforce enterprise password
 complexity policies using PAM on both Debian and Red Hat family systems.
-
-
 
 ---
 

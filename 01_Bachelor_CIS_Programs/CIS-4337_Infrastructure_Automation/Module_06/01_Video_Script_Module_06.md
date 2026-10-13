@@ -26,7 +26,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 Welcome back to CIS-4337. I am Professor Nash. In this module we cover two powerful capabilities that every production Terraform configuration uses: data sources and built-in functions.
 
 By the end of this video you will be able to write `data` blocks to query existing infrastructure, understand how data source results are referenced, use the most important Terraform built-in functions, and use `terraform console` to test expressions interactively.

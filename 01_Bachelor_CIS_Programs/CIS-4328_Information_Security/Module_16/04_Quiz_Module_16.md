@@ -12,8 +12,6 @@ Instructions: Select the single best answer for each question. All ten questions
 
 ---
 
----
-
 **Question 1**
 A penetration tester discovers that a web application constructs SQL queries by directly concatenating user input into the query string. By entering the value `' OR '1'='1` into the login field, the tester is able to bypass authentication and access all user accounts in the database. The development team asks the tester to recommend the single most effective remediation. Which control should the tester recommend?
 A) Deploy a web application firewall (WAF) to detect and block SQL injection payloads at the network perimeter.
@@ -28,8 +26,6 @@ D) Require all users to authenticate with MFA before accessing the application.
 
 ---
 
----
-
 **Question 2**
 A CISO reviews a security incident report and notes the following timeline: Day 1 — security analysts deployed honeypots and updated incident response playbooks. Day 3 — SIEM alerts triggered on anomalous outbound traffic from a finance workstation. Day 4 — the workstation was isolated from the network. Day 6 — malware was removed and the OS was reimaged. Day 7 — the workstation was returned to service. Day 10 — the team held a meeting to document lessons learned and identify three new detection rules. Which NIST IR phase occurred on Day 10?
 A) Preparation
@@ -41,8 +37,6 @@ D) Post-Incident Activity
     *   *Why A is incorrect:* Preparation (Day 1 — deploying honeypots and updating playbooks) occurred before the incident was detected. The Day 10 activity occurs after the incident is fully resolved, which is characteristic of Post-Incident Activity, not Preparation.
     *   *Why B is incorrect:* Detection and Analysis (Day 3 — SIEM alert on anomalous traffic) was the phase where analysts confirmed the incident. The Day 10 retrospective meeting occurs after all four active response phases are complete.
     *   *Why C is incorrect:* Containment (Day 4 — isolation), Eradication (Day 6 — malware removal and reimaging), and Recovery (Day 7 — return to service) were all completed before Day 10. The lessons-learned meeting is the defining activity of the Post-Incident Activity phase.
-
----
 
 ---
 

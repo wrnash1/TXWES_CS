@@ -26,7 +26,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 Hello and welcome to CIS-4337 Infrastructure Automation at Texas Wesleyan University. I am Professor Nash, and this first module lays the intellectual foundation for everything that follows: Infrastructure as Code, commonly abbreviated IaC.
 
 By the end of this video you will be able to define Infrastructure as Code, explain the specific problems it solves, articulate its core benefits, distinguish between the declarative and imperative approaches, and place Terraform in the broader ecosystem of automation tools. You will also understand why the Terraform Associate 003 certification exam places IaC concepts in its very first domain.

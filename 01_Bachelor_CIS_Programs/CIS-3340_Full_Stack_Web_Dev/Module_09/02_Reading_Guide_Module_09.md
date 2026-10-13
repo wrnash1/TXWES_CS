@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-3340 Full Stack Web Development
 **Certification Alignment:** AWS Certified Developer - Associate (DVA-C02)
 **Texas Wesleyan University | Professor Nash**
@@ -468,8 +465,6 @@ A concise explanation of SQL injection attacks and why parameterized queries (`$
 **4. AWS Documentation — Amazon RDS for PostgreSQL**
 [https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_PostgreSQL.html](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_PostgreSQL.html)
 The official AWS guide for deploying PostgreSQL on RDS, covering Multi-AZ setup, automated backups, VPC configuration, and RDS Proxy — the managed deployment target for the Node.js/PostgreSQL application built in this module and deployed in Module 14.
-
-
 
 ---
 

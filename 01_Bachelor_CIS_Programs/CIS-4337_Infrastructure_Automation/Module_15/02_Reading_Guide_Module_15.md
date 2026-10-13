@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4337 Infrastructure Automation
 
 ## Texas Wesleyan University | Professor Nash
@@ -528,8 +525,6 @@ The official guide to non-destructive Terraform refactoring using `moved` blocks
 ---
 
 End of Module 15 Reading Guide
-
-
 
 ---
 

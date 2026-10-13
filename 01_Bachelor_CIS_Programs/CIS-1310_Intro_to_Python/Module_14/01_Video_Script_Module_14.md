@@ -20,21 +20,9 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Estimated Duration:** 14–16 minutes
 **Certification Alignment:** PCAP — Certified Associate in Python Programming (Python Institute)
 **Recorded by:** Professor Nash | Texas Wesleyan University
-
----
-
-> **PRODUCTION NOTES FOR INSTRUCTOR:**
->
-> - Use screen-share for all [DEMO] sections — run live in Ubuntu terminal/REPL.
-> - [PAUSE] = hold 2 seconds of silence.
-> - Draw a class-to-object diagram on the whiteboard: the class is a blueprint, instances are the houses built from it.
-> - Demonstrate the `self` TypeError live — call an instance method and forget `self` — students need to see this error.
-> - Show instance variable vs class variable sharing live: modify a class variable through one instance and show it affects all instances.
-> - Run `__str__` before and after adding it so students see the default `<__main__.Dog object at 0x...>` output transform into something readable.
 
 ---
 

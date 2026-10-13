@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4329 Google Cloud Computing
 
 **Certification Alignment:** Google Cloud Associate Cloud Engineer (ACE)
@@ -492,8 +489,6 @@ rules, and VM connectivity testing using the gcloud CLI and Cloud Console.
 Comprehensive guide to all GCP load balancer types with a feature comparison
 table, decision tree for selecting the right load balancer, and component
 architecture diagrams for the Global HTTP(S) Load Balancer.
-
-
 
 ---
 

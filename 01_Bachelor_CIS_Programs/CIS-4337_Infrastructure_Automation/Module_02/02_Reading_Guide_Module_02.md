@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Reading Guide — Module 02: Terraform Workflow
 
 ### Course Alignment: HashiCorp Terraform Associate 003
@@ -395,8 +392,6 @@ Explains the `.terraform.lock.hcl` format, what checksums are recorded, when to 
 ---
 
 Module 02 Reading Guide — CIS-4337 Infrastructure Automation — Texas Wesleyan University
-
-
 
 ---
 

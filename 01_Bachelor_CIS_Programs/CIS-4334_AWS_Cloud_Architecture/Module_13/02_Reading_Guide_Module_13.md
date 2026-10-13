@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4334 AWS Cloud Architecture
 
 ## Texas Wesleyan University | Professor Nash
@@ -418,8 +415,6 @@ Free course covering CloudWatch, X-Ray, CloudTrail, and AWS Config — supportin
 **3. AWS Documentation — AWS CloudTrail User Guide**
 https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-user-guide.html
 Authoritative guide to CloudTrail trail configuration, event types (management, data, Insights), log file integrity validation, and multi-region trail setup — the definitive reference for audit logging requirements and compliance scenarios in this module.
-
-
 
 ---
 

@@ -315,8 +315,6 @@ Reconnect with `sudo openvpn username.ovpn`. TryHackMe machines time out after a
 
 ---
 
----
-
 ## Part 9 — Challenge Exercise
 
 ### Challenge 1: Privilege Escalation Path Documentation

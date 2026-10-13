@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-4355 IoT and Embedded Systems
 **Instructor:** Professor Nash
 **Certification Target:** CompTIA IoT+ Domain 2
@@ -289,8 +286,6 @@ The official usage guide for the RPi.GPIO Python library covering `setmode()`, `
 ---
 
 End of Reading Guide – Module 02
-
-
 
 ---
 

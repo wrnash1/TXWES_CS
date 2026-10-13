@@ -229,8 +229,6 @@ Download the OpenVPN config from your TryHackMe account settings and connect wit
 
 ---
 
----
-
 ## Part 9 — Challenge Exercise
 
 ### Challenge 1: Email Format Inference and Username List Construction

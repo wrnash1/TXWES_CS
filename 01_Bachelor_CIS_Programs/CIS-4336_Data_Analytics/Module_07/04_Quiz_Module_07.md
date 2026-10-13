@@ -176,8 +176,6 @@ D. `r = 0.77`
 
 ---
 
----
-
 ## Question 11 (5 points)
 
 A dataset has a mean of 80 and a standard deviation of 10. According to the empirical rule, approximately what percentage of values fall between 60 and 100?

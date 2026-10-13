@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-3310 IT Project Management
 **Certification Alignment:** CompTIA Project+ (PK0-005) | PMBOK 6th and 7th Editions
 **Prepared by:** Professor Nash | Texas Wesleyan University
@@ -290,8 +287,6 @@ The following free, openly licensed resources extend the concepts in this module
 5. **Herzberg and Maslow Motivation Theories — MindTools (Free)**
    [mindtools.com/herzbergs-motivation-hygiene-theory](https://www.mindtools.com/a3mwjqf/herzbergs-motivation-hygiene-theory)
    Clear comparison of Herzberg's hygiene factors vs. motivators and how they relate to Maslow's hierarchy — a commonly tested pair on the Project+ exam.
-
-
 
 ---
 

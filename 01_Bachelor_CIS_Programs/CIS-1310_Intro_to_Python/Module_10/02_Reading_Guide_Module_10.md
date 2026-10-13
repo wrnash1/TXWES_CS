@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-1310 Introduction to Python
 
 **Certification Alignment:** PCAP — Certified Associate in Python Programming (Python Institute)
@@ -502,8 +499,6 @@ Focused article on all iteration patterns: keys, values, `.items()`, filtered it
 - [ ] Read the Data Structures — Dictionaries page in the official Python 3 docs.
 - [ ] Review all 7 Certification Exam Tips in Section 4.
 - [ ] Proceed to the Module 10 Lab Activity.
-
-
 
 ---
 

@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-4355 IoT and Embedded Systems
 
 **Institution:** Texas Wesleyan University | Professor Nash
@@ -594,8 +591,6 @@ The definitive reference for the AVR C library used by the Arduino Uno. Covers i
 **3. FreeRTOS API Reference**
 [https://www.freertos.org/a00106.html](https://www.freertos.org/a00106.html)
 The official FreeRTOS API documentation covering `xTaskCreatePinnedToCore()`, `vTaskDelay()`, `pdMS_TO_TICKS()`, queues, semaphores, and mutexes. The ESP32 Arduino core runs FreeRTOS v10. This reference is required for any multi-task ESP32 firmware beyond the examples in Section 7.
-
-
 
 ---
 

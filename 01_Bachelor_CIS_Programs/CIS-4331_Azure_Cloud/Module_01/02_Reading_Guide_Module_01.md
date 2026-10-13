@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-4331 Azure Cloud | Texas Wesleyan University
 **Instructor:** Professor Nash
 **AZ-900 Domain:** Describe Cloud Concepts (25-30% of exam)
@@ -467,8 +464,6 @@ Covers high availability, scalability, elasticity, reliability, security, govern
 **3. Microsoft Azure Shared Responsibility in the Cloud**
 https://learn.microsoft.com/en-us/azure/security/fundamentals/shared-responsibility
 The official Microsoft documentation defining the shared responsibility model with a layer-by-layer breakdown for IaaS, PaaS, and SaaS. Recommended reading for both the AZ-900 exam and real-world cloud security conversations.
-
-
 
 ---
 

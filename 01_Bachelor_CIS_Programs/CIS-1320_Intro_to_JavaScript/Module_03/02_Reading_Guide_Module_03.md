@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-1320 Introduction to JavaScript
 
 **Certification Alignment:** JSE — Certified Associate in JavaScript Programming (OpenEDG / JS Institute)
@@ -475,7 +472,6 @@ The following free, openly available resources extend and reinforce the topics c
 
 ## 11. Study Checklist
 
-
 - [ ] Watch the Module 03 video lecture by Professor Nash.
 - [ ] Read Chapter 1 (Values, Types, and Operators) of [Eloquent JavaScript](https://eloquentjavascript.net/01_values.html).
 - [ ] Read the MDN article on [JavaScript data types and data structures](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures).
@@ -484,8 +480,6 @@ The following free, openly available resources extend and reinforce the topics c
 - [ ] Predict the output of `1 + 2 + '3'` and `'1' + 2 + 3` before running them, then verify.
 - [ ] Complete the Module 03 Lab.
 - [ ] Complete the Module 03 Quiz.
-
-
 
 ---
 

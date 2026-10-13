@@ -20,20 +20,9 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Estimated Duration:** 15–18 minutes
 **Certification Alignment:** JSE — Certified Associate in JavaScript Programming (OpenEDG / JS Institute)
 **Recorded by:** Professor Nash | Texas Wesleyan University
-
----
-
-> **PRODUCTION NOTES FOR INSTRUCTOR:**
->
-> - Use DevTools Console for all [DEMO] sections.
-> - [PAUSE] = 2 seconds of silence.
-> - The `<` vs `<=` off-by-one demo is the highest-value exam content — write the iteration table on screen.
-> - For the infinite loop demo, show it briefly in the console, then immediately close the tab to demonstrate the browser freeze — emphasize "this is why we check conditions carefully."
-> - The `for...of` vs `for...in` distinction surprises students — emphasize that `for...in` gives string keys, not values.
 
 ---
 

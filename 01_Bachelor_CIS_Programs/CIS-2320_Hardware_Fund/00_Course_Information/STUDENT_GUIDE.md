@@ -51,7 +51,6 @@ Below is the study roadmap for every course in our computer science and computer
 | :--- | :--- | :--- | :--- |
 | **CIS-2320: Hardware Fund** | CompTIA A+ (Core 1 & Core 2) | Use visual reference diagrams to identify motherboard slots, RAM form factors, and cable pinouts. | [Professor Messer A+ Course](https://www.professormesser.com/) |
 
-
 ---
 
 ## 5. Final Exam Certification Policy (Module 16)

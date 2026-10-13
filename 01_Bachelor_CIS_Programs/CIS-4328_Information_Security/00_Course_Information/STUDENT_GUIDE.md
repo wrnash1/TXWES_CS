@@ -51,7 +51,6 @@ Below is the study roadmap for every course in our computer science and computer
 | :--- | :--- | :--- | :--- |
 | **CIS-4328: Info Security** | CompTIA Security+ (SY0-701) | Analyze threat vectors using real intelligence datasets; learn port configurations for SSL/TLS. | [Professor Messer Security+](https://www.professormesser.com/) |
 
-
 ---
 
 ## 5. Final Exam Certification Policy (Module 16)

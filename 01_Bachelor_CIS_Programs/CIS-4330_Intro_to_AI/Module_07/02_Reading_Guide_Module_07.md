@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4330 Introduction to Artificial Intelligence
 
 ## Texas Wesleyan University | Professor Nash
@@ -403,8 +400,6 @@ Microsoft's open-source Responsible AI Toolbox repository, which provides tools 
 ---
 
 End of Reading Guide — Module 07
-
-
 
 ---
 

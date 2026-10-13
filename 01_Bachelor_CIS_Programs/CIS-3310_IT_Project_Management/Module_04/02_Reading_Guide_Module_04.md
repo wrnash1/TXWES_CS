@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-3310 IT Project Management
 **Certification Alignment:** CompTIA Project+ (PK0-005) | PMBOK 6th and 7th Editions
 **Prepared by:** Professor Nash | Texas Wesleyan University
@@ -323,8 +320,6 @@ The following free, openly licensed resources extend the concepts in this module
 5. **PERT/CPM Calculator — PM Study Circle**
    [pmstudycircle.com/pert-cpm](https://pmstudycircle.com/pert-and-cpm/)
    Interactive examples and formula drills for PERT three-point estimating and CPM float calculations — excellent practice before the quiz.
-
-
 
 ---
 

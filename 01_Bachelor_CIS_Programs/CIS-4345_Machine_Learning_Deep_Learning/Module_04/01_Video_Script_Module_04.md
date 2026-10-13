@@ -26,7 +26,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 ---
 
 ## Pre-Roll Slide (on screen while intro plays)
@@ -349,11 +348,3 @@ Complete the quiz and post to the discussion board by Sunday at midnight.
 See you in Module 5.
 
 ---
-
-## Production Notes
-
-- B-roll: animated neuron firing graphic during Segment 2
-- Screen capture: all code segments recorded at 1080p, font size 18 or larger
-- Slides: dark background, high contrast text — export as PDF for accessibility
-- Closed captions required for all segments
-- Annotations: highlight each line of code as it is discussed

@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4345 Machine Learning and Deep Learning
 
 ## Texas Wesleyan University | Professor Nash
@@ -462,8 +459,6 @@ Official TensorFlow tutorial building a convolutional VAE on MNIST from scratch,
 
 **3. [Hugging Face — Fine-Tuning BERT for Text Classification](https://huggingface.co/docs/transformers/training)**
 Practical guide to loading pretrained BERT variants via the Transformers library, tokenizing inputs with `AutoTokenizer`, fine-tuning with the `Trainer` API, and evaluating with standard metrics. Demonstrates the same transfer learning workflow covered in Section 6 of this reading guide using the production-grade Hugging Face ecosystem.
-
-
 
 ---
 

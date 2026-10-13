@@ -20,22 +20,9 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Estimated Duration:** 16–19 minutes
 **Certification Alignment:** JSE — Certified Associate in JavaScript Programming (OpenEDG / JS Institute)
 **Recorded by:** Professor Nash | Texas Wesleyan University
-
----
-
-> **PRODUCTION NOTES FOR INSTRUCTOR:**
->
-> - Use DevTools Console for all [DEMO] sections.
-> - [PAUSE] = 2 seconds of silence.
-> - Module 08 introduced `map`, `filter`, and `reduce`. Module 09 deepens the callback concept: what is a callback, how are functions passed as values, and how do `forEach`, `every`, `some`, and `flat`/`flatMap` fit in.
-> - The callback concept demo (passing a named function vs inline arrow) is the conceptual core of this module — spend time on it.
-> - `every` and `some` short-circuit behavior is tested on the JSE exam — write an example that makes the short-circuit visible (e.g., a callback with a `console.log`).
-> - `forEach` vs `map` distinction: `forEach` returns `undefined`, `map` returns a new array. This appears on the exam.
-> - Closures are introduced briefly here — just enough to explain why the callback "remembers" variables from its outer scope. Full closure module comes later.
 
 ---
 

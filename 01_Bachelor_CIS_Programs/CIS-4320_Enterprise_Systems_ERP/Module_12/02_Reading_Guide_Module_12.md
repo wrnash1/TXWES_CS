@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4320 Enterprise Systems and ERP | Texas Wesleyan University
 
 ## Instructor: Professor Nash
@@ -389,8 +386,6 @@ Official SAP learning journey for the SAP Migration Cockpit tool. Covers templat
 **3. DAMA International — Data Management Body of Knowledge (DMBOK)**
 <https://www.dama.org/cpages/body-of-knowledge>
 The Data Management Association's Body of Knowledge defines the six data quality dimensions (Completeness, Accuracy, Consistency, Validity, Uniqueness, Timeliness) that form the standard framework for data quality assessment in migration projects. Relevant to the Transform phase quality gate design covered in Section 2 of this Reading Guide.
-
-
 
 ---
 

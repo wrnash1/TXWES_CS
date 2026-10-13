@@ -27,7 +27,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 Welcome to Module 03. I am Professor Nash. In Module 02 you wired up hardware and ran blink sketches. Now we go deeper into the programming side of embedded systems. By the end of this module you will be able to write real sensor-reading code in both C (for Arduino) and MicroPython (for microcontrollers that run MicroPython, such as the ESP32 and Raspberry Pi Pico).
 
 By the end of this video you will be able to:

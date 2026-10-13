@@ -26,7 +26,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 ---
 
 ### Introduction
@@ -128,12 +127,3 @@ In this first part we reviewed:
 In Part 2 we cover Domains 3, 4, and 5 — deploying, ensuring success, and configuring access — plus exam strategy and twenty practice question review.
 
 ---
-
-### PRODUCTION NOTES
-
-- Slide: GCP resource hierarchy diagram (Organization → Folders → Projects → Resources)
-- Slide: IAM role types comparison table (primitive, predefined, custom)
-- Slide: Compute service decision table
-- Slide: Storage service decision table
-- Slide: Networking service comparison (VPN vs. Interconnect, global vs. regional load balancing)
-- Screen share: Cloud Console IAM page showing role assignment at bucket level vs. project level

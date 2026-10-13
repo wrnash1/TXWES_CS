@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4333 Penetration Testing
 
 ## Texas Wesleyan University | Professor Nash
@@ -472,8 +469,6 @@ Post-exploitation techniques map to these ATT&CK tactics:
 
 ---
 
----
-
 ## 10. Supplemental Resources
 
 **1. GTFOBins — Linux Privilege Escalation via Misconfigured Binaries**
@@ -489,8 +484,6 @@ The LOLBAS project catalogs Windows binaries, scripts, and libraries that can be
 TryHackMe's privilege escalation rooms provide guided hands-on practice with SUID abuse, sudo misconfigurations, writable paths, cron job exploitation, and Windows token impersonation against dedicated vulnerable machines. Completing these rooms reinforces all Module 08 lab exercises and builds proficiency with the tools and techniques required for PT0-002 Domain 3.
 
 **Proprietary and Confidential. Not for disclosure outside of Texas Wesleyan University course use.**
-
-
 
 ---
 

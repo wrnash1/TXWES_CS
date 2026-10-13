@@ -27,7 +27,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 Welcome back. I am Professor Nash and this is Module 03: EC2 — Instance Types, Auto Scaling, and Load Balancing.
 
 EC2 is AWS's primary compute service and a major focus of the SAA-C03 exam. Whether you are designing for cost, performance, availability, or resilience, EC2 decision-making appears in every domain. By the end of this module you will be able to:

@@ -206,8 +206,6 @@ D. Pass the password using `-var="db_password=..."` in the pipeline script store
 
 ---
 
----
-
 ### Question 11 (5 points)
 
 Which of the following is a valid `validation` block condition for a variable `var.cidr_block` that must be a /16, /24, or /28 prefix?

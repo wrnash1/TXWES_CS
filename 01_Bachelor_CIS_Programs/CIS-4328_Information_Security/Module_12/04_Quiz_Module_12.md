@@ -232,8 +232,6 @@ D) An external forensic vendor, because internal staff have a conflict of intere
 
 ---
 
----
-
 ## Question 11
 
 A forensic investigator discovers a steganography tool in the suspect's Downloads folder. The investigator suspects that sensitive documents were hidden inside image files before being sent to an external email address. Which technique does steganography use to conceal data?

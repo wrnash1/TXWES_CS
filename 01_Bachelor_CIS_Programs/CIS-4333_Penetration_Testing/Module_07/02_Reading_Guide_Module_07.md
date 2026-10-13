@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4333 Penetration Testing
 
 ## Texas Wesleyan University | Professor Nash
@@ -410,8 +407,6 @@ This documentation becomes the evidence base for the penetration test report.
 
 ---
 
----
-
 ## 10. Supplemental Resources
 
 **1. Metasploit Unleashed — Free Offensive Security Course**
@@ -427,8 +422,6 @@ The official Metasploit documentation from Rapid7 includes module development gu
 TryHackMe's Metasploit introduction room provides guided hands-on practice with the Metasploit console, module configuration, payload delivery, and Meterpreter commands against live vulnerable machines. Completing the room series reinforces all Module 07 lab skills in a safe, pre-authorized environment.
 
 **Proprietary and Confidential. Not for disclosure outside of Texas Wesleyan University course use.**
-
-
 
 ---
 

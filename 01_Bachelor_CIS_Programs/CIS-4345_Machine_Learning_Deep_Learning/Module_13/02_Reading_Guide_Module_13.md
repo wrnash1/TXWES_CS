@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4345 Machine Learning and Deep Learning
 
 ## Texas Wesleyan University | Professor Nash
@@ -441,8 +438,6 @@ fast.ai's practical approach to time series with PyTorch, covering feature engin
 
 **3. [Papers With Code — Time Series Forecasting Benchmark](https://paperswithcode.com/task/time-series-forecasting)**
 State-of-the-art benchmark tracking for time series forecasting tasks, including N-BEATS, Temporal Fusion Transformer, PatchTST, and other modern architectures. Useful for understanding how far beyond basic LSTM/CNN the research frontier has progressed.
-
-
 
 ---
 

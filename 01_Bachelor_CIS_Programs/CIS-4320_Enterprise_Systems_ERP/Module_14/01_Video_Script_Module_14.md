@@ -24,16 +24,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
----
-
-## Pre-Production Notes
-
-- Slide deck: 30 slides
-- Diagrams: Salesforce report types matrix, dashboard layout with components, Einstein Analytics flow, SAP BW architecture, KPI hierarchy pyramid, data quality impact chain
-- Key terms on screen: Report, Dashboard, KPI, Einstein Analytics, SAP BW, BEx Analyzer, OLTP vs. OLAP, Data Quality, Executive Dashboard, Drill-Down, Tabular Report, Summary Report, Matrix Report, Joined Report
-- End card: Lab 14, Quiz 14, Discussion Forum 14
-
 ---
 
 ## [00:00 – 02:00] Opening Hook

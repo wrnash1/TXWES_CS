@@ -27,7 +27,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **[INSTRUCTOR ON CAMERA — title card: "Module 03: Azure Virtual Machines and Scale Sets"]**
 
 Welcome to Module 03. I'm Professor Nash. Today we get hands-on with the most fundamental Azure compute service: Azure Virtual Machines. This is the IaaS workhorse — the service that gives you a full virtual server in Azure that you control from the OS up.

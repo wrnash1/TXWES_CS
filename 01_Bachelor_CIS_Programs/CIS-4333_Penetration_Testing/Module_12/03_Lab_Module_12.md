@@ -304,8 +304,6 @@ Submit all content as a single PDF or ZIP file to the Canvas assignment portal.
 
 ---
 
----
-
 ## Part 9 — Challenge Exercise
 
 ### Challenge 1: Cross-Platform Privilege Escalation Comparison

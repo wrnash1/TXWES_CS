@@ -113,7 +113,6 @@ def fib_naive(n):
         return n
     return fib_naive(n - 1) + fib_naive(n - 2)
 
-
 def fib_memo(n, memo=None):
     """
     Memoized Fibonacci — O(n) time, O(n) space.
@@ -126,7 +125,6 @@ def fib_memo(n, memo=None):
         return memo[n]
     memo[n] = fib_memo(n - 1, memo) + fib_memo(n - 2, memo)
     return memo[n]
-
 
 from functools import lru_cache
 

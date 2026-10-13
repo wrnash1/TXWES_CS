@@ -210,8 +210,6 @@ A shows a 45-point gap between training and test accuracy — a clear overfittin
 
 ---
 
----
-
 ### Question 11 (5 points)
 
 A logistic regression model predicts the probability of a customer making a purchase. The default decision threshold is 0.5. An analyst lowers the threshold to 0.3. What is the effect on the model's precision and recall?

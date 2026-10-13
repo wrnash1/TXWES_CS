@@ -232,8 +232,6 @@ D) SCA (Software Composition Analysis)
 
 ---
 
----
-
 ## Question 11
 
 A developer receives a bug report that users can access administrative functions by navigating directly to `/admin/deleteUser?id=42` without any authentication check. The navigation link to this page is hidden from normal users, but the endpoint itself enforces no access control. Which term describes the developer's flawed security assumption?

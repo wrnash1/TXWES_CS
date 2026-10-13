@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4345 Machine Learning and Deep Learning
 
 ## Texas Wesleyan University | Professor Nash
@@ -389,8 +386,6 @@ Official TensorFlow documentation for `tf.keras.layers.Conv2D`. Covers every arg
 
 **3. [PyTorch CNN Tutorial — Training a Classifier](https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html)**
 Hands-on PyTorch tutorial that builds a CNN for CIFAR-10 classification from scratch. Provides a useful contrast to the Keras implementation in this module and reinforces CNN architecture concepts from a different framework perspective.
-
-
 
 ---
 

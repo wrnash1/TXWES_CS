@@ -24,16 +24,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
----
-
-## Pre-Production Notes
-
-- Slide deck: 32 slides
-- Diagrams: SAP ASAP methodology phases (Waterfall arc), Salesforce implementation lifecycle (Discover/Define/Design/Build/Test/Deploy hexagonal flow), change management resistance curve (Kübler-Ross adaptation), cutover checklist timeline, hypercare dashboard mockup, parallel run vs. big-bang cutover comparison
-- Key terms on screen: ASAP, Business Blueprint, Realization, Go-Live, Discover, Define, Design, Build, Test, Deploy, Change Management, Cutover, Hypercare, User Acceptance Testing, Parallel Run, Big Bang, Fit-Gap Analysis, Configuration Workbook
-- End card: Lab 15, Quiz 15, Discussion Forum 15
-
 ---
 
 ## [00:00 – 02:30] Opening Hook

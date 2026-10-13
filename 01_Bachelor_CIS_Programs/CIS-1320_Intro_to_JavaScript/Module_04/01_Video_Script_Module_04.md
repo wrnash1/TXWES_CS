@@ -20,20 +20,9 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Estimated Duration:** 14–17 minutes
 **Certification Alignment:** JSE — Certified Associate in JavaScript Programming (OpenEDG / JS Institute)
 **Recorded by:** Professor Nash | Texas Wesleyan University
-
----
-
-> **PRODUCTION NOTES FOR INSTRUCTOR:**
->
-> - Use DevTools Console for short demos; use VS Code + browser for the switch fall-through demo.
-> - [PAUSE] = 2 seconds of silence.
-> - The `switch` fall-through demo is high-value — show it with and without `break` explicitly.
-> - The assignment-in-condition trap (`if (x = 5)`) always surprises students — run it live.
-> - Spend real time on the ternary operator. Students find it intimidating until they see it as just an if/else that returns a value.
 
 ---
 

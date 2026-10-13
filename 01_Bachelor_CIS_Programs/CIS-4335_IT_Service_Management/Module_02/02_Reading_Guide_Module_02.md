@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-4335 IT Service Management — Texas Wesleyan University
 **Instructor:** Professor Nash
 **Certification Alignment:** ITIL 4 Foundation
@@ -378,8 +375,6 @@ A detailed reference covering all six Service Value Chain activities with descri
 **3. Atlassian — DevOps and ITSM Integration**
 <https://www.atlassian.com/itsm/itil>
 A practitioner-oriented guide explaining how ITIL 4 and DevOps complement each other. Useful for understanding why the SVS was designed to support Agile and DevOps environments and how value streams apply in real software delivery organizations.
-
-
 
 ---
 

@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-3325 OS Administration Linux
 
 ## Texas Wesleyan University | Professor Nash
@@ -420,8 +417,6 @@ Expect exam questions on:
 
 ---
 
----
-
 ## 9. Supplemental Resources
 
 **1. [Vim Adventures — Interactive vim Tutorial](https://vim-adventures.com/)**
@@ -436,8 +431,6 @@ The complete sed manual page from the Linux man-pages project. Covers all sed co
 ---
 
 *End of Module 04 Reading Guide*
-
-
 
 ---
 

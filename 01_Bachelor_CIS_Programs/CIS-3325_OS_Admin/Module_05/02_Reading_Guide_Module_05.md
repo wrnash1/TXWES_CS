@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## CIS-3325 OS Administration | Texas Wesleyan University
 
 **Certification Alignment:** CompTIA Linux+ (XK0-005)
@@ -364,8 +361,6 @@ URL: https://tldp.org/HOWTO/RPM-HOWTO/
 Coverage: Classic introduction to RPM package management covering package building,
 querying, verifying, and dependency resolution. Useful background for understanding
 why rpm -V output codes exist and what each attribute means.
-
-
 
 ---
 

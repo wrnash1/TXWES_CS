@@ -20,22 +20,9 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Estimated Duration:** 20–24 minutes
 **Certification Alignment:** Technical Interview Readiness (LeetCode / HackerRank)
 **Recorded by:** Professor Nash | Texas Wesleyan University
-
----
-
-> **PRODUCTION NOTES FOR INSTRUCTOR:**
->
-> - Use VS Code + Python terminal for all [DEMO] sections.
-> - [PAUSE] = 2 seconds of silence.
-> - Stacks and queues are the two most fundamental abstract data types after arrays. Introduce each with a physical analogy first — stack of plates, printer queue — then build directly to code. Do not skip the analogy; it anchors the abstract definitions.
-> - Monotonic stack is a top interview pattern — go slowly on the Daily Temperatures example. Draw the stack state at each step.
-> - Students often confuse `deque` pronunciation ("deck") and its import path. Say it aloud: "from collections import deque — pronounced 'deck'."
-> - The two-stack queue is a classic interview construction problem. Walk through both versions: `put`-heavy and `get`-heavy implementations.
-> - Common mistakes: popping from an empty stack (always check before pop), confusing `append`/`pop` (stack) vs `appendleft`/`pop` (deque for queue), using a plain list as a queue (O(n) dequeue due to shifting).
 
 ---
 

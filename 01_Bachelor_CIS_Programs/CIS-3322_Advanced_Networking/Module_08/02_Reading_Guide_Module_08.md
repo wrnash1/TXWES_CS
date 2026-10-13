@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-3322 Advanced Networking
 **Certification Alignment:** Cisco CCNA 200-301 (Domain 3: IP Connectivity - 25%)
 **Prepared by:** Professor Nash | Texas Wesleyan University
@@ -274,8 +271,6 @@ The following open educational resources extend OSPFv2 concepts to CCNA exam dep
 4. **Cisco IOS OSPF Configuration Guide** (cisco.com): Cisco's official IOS configuration guide for OSPF covers all configuration commands, network statement syntax, passive interface behavior, and authentication options with complete CLI examples.
 
 5. **GNS3 Academy — Free OSPF Lab Course** (academy.gns3.com): Free video lessons and GNS3 topology files for OSPFv2 multi-router lab configurations, allowing hands-on practice with neighbor state troubleshooting, DR/BDR observation, and cost manipulation outside of Packet Tracer's limitations.
-
-
 
 ---
 

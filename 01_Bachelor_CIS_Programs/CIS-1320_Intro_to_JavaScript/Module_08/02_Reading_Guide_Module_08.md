@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-1320 Introduction to JavaScript
 
 **Certification Alignment:** JSE — Certified Associate in JavaScript Programming (OpenEDG / JS Institute)
@@ -505,8 +502,6 @@ The following free, openly available resources extend and reinforce the topics c
 - [ ] Demonstrate the variable swap using array destructuring.
 - [ ] Complete the Module 08 Lab.
 - [ ] Complete the Module 08 Quiz.
-
-
 
 ---
 

@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4315 Cyber Governance, Risk, and Compliance
 
 ## Texas Wesleyan University | Professor Nash
@@ -380,8 +377,6 @@ Description: ISACA's annual survey of security professionals covering workforce 
 **SANS Reading Room: Building a Security Strategy**
 URL: https://www.sans.org/reading-room/
 Description: The SANS Reading Room hosts practitioner-authored white papers on security strategy development, current state assessment methodology, and roadmap construction. Search for "security strategy" or "security program development" to find papers aligned with this module's topics.
-
-
 
 ---
 

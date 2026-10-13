@@ -22,16 +22,7 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Certification Alignment:** IIBA ECBA
-
----
-
-## Production Notes
-
-- **Runtime Target:** 20–24 minutes
-- **Format:** Lecture with structured BABOK review, exam strategy, and career guidance
-- **Slides:** Approximately 28 slides
 
 ---
 

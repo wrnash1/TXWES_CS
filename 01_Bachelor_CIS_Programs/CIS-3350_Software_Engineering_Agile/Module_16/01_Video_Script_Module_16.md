@@ -18,7 +18,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Course:** CIS-3350 Software Engineering and Agile
 
 **Certification Alignment:** PSM I (Professional Scrum Master I) – Scrum.org
@@ -26,15 +25,6 @@
 **Estimated Duration:** 22 minutes
 
 **Recorded by:** Professor Nash | Texas Wesleyan University
-
----
-
-## Production Notes
-
-- Camera: Instructor on screen throughout — this is a direct-address review session
-- Slides: Key term callouts, exam tip cards, and Scrum framework summary diagram
-- [SHOW DIAGRAM] tags indicate cuts to prepared visual assets
-- Exam tip cards should be visually distinct and consistently styled
 
 ---
 

@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-1320 Introduction to JavaScript
 
 **Certification Alignment:** JSE — Certified Associate in JavaScript Programming (OpenEDG / JS Institute)
@@ -448,8 +445,6 @@ The following free, openly available resources extend and reinforce the topics c
 - [ ] Write a toggle that uses `classList.toggle` to switch a class — define the class in a `<style>` tag and confirm it works.
 - [ ] Complete the Module 10 Lab.
 - [ ] Complete the Module 10 Quiz.
-
-
 
 ---
 

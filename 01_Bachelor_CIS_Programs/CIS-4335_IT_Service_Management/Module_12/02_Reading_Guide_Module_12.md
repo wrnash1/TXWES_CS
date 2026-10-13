@@ -1,6 +1,5 @@
 # Reading Guide: Module 12 — Release and Deployment Management
 
-
 <!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 <div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
   <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
@@ -18,7 +17,6 @@
   </div>
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
-
 
 ## Course: CIS-4335 IT Service Management
 
@@ -280,8 +278,6 @@ Authoritative practitioner resource on continuous delivery, deployment pipeline 
 **3. Google SRE Book — Release Engineering**
 <https://sre.google/sre-book/release-engineering/>
 Google's Site Reliability Engineering book chapter on release engineering covers deployment automation, rollback strategies, release versioning, and post-deployment monitoring at scale. Freely available online and directly relevant to the deployment pipeline and PIR concepts covered in this module.
-
-
 
 ---
 

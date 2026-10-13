@@ -27,7 +27,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 Welcome to Module 04. I am Professor Nash. This module is one of the most protocol-heavy in the course, and it is heavily tested on the CompTIA IoT+ exam. We are going to cover MQTT, CoAP, HTTP/REST, and Zigbee — four protocols that together cover the vast majority of real-world IoT deployments.
 
 By the end of this video you will be able to:

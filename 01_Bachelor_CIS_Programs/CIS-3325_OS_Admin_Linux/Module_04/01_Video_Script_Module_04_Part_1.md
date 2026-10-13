@@ -26,16 +26,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
----
-
-## Production Notes
-
-- **Screen recording**: Terminal emulator (dark theme, 18pt font)
-- **Demonstrations**: All commands typed live; errors shown and corrected intentionally
-- **Slide overlays**: Key shortcuts displayed as callout boxes during demos
-- **Pacing**: Pause 2 seconds after each command output before continuing narration
-
 ---
 
 ## SEGMENT 1 — Opening and Context (0:00–1:30)

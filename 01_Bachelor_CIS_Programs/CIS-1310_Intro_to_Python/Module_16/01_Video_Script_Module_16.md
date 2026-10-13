@@ -20,20 +20,9 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Estimated Duration:** 18–22 minutes
 **Certification Alignment:** PCAP — Certified Associate in Python Programming (Python Institute)
 **Recorded by:** Professor Nash | Texas Wesleyan University
-
----
-
-> **PRODUCTION NOTES FOR INSTRUCTOR:**
->
-> - Use screen-share for all [DEMO] sections — run quick code snippets to reinforce each trap.
-> - [PAUSE] = hold 2 seconds of silence.
-> - This script is longer than typical modules — it is a full course review. Consider recording in two parts: Part 1 (00:00–10:00) covering language fundamentals, Part 2 (10:00–end) covering OOP and exam strategy.
-> - Emphasize the "trap" patterns — these are the questions students miss most on PCAP.
-> - End with actionable exam-day advice: schedule, question strategy, time management.
 
 ---
 

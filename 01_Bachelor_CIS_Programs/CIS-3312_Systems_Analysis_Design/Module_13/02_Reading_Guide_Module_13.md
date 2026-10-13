@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-3312 Systems Analysis and Design
 
 ## Texas Wesleyan University | Professor Nash
@@ -442,8 +439,6 @@ design, and design validation. All are freely accessible without login or purcha
 ---
 
 *Module 13 Reading Guide | CIS-3312 Systems Analysis and Design | Texas Wesleyan University*
-
-
 
 ---
 

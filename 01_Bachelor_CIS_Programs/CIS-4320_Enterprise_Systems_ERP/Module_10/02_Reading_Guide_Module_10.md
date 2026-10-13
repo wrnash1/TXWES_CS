@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4320 Enterprise Systems and ERP
 
 ## Texas Wesleyan University | Professor Nash
@@ -382,8 +379,6 @@ The ASCM (formerly APICS) CPIM certification body of knowledge covers MRP logic,
 **3. SAP Help Portal — Inventory Management and Physical Inventory**
 <https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/inventory-management>
 Official SAP product documentation for Inventory Management. Covers movement types, material documents, valuation classes, and G/L account determination via the Account Determination framework (OBYC) — essential reference for understanding how SAP MM posting logic works and how Valuation Class maps to G/L accounts.
-
-
 
 ---
 

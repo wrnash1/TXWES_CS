@@ -51,7 +51,6 @@ Below is the study roadmap for every course in our computer science and computer
 | :--- | :--- | :--- | :--- |
 | **CIS-4350: DevSecOps & CI/CD Pipelines** | Certified DevSecOps Professional (CDP) | Write GitHub Actions YAML pipelines, run SAST/DAST/SCA scanners, deploy secure containers. | [DevSecOps Reference Architecture](https://www.devsecops.org/) |
 
-
 ---
 
 ## 5. Final Exam Certification Policy (Module 16)

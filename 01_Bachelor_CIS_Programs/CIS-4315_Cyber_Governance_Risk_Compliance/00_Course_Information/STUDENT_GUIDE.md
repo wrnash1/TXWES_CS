@@ -51,7 +51,6 @@ Below is the study roadmap for every course in our computer science and computer
 | :--- | :--- | :--- | :--- |
 | **CIS-4315: Cyber Governance, Risk & Compliance** | ISACA Certified Information Security Manager (CISM) | Apply NIST RMF steps, perform ALE quantitative risk calculations, review GDPR and SOC 2 guidelines. | [NIST Cybersecurity Framework](https://www.nist.gov/cyberframework) |
 
-
 ---
 
 ## 5. Final Exam Certification Policy (Module 16)

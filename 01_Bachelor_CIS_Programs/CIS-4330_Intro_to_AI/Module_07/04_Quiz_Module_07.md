@@ -254,8 +254,6 @@ A. Azure AI Vision — Spatial Analysis
 
 ---
 
----
-
 ## Question 11 (5 points)
 
 A developer calls the Azure AI Vision Analyze Image API with the `objects` feature enabled. How does the output of the `objects` feature differ from the `tags` feature?

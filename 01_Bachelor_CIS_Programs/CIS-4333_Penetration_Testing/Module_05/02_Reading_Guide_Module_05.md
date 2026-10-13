@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4333 Penetration Testing
 
 ## Texas Wesleyan University | Professor Nash
@@ -408,8 +405,6 @@ Unauthorized reconnaissance may violate: Computer Fraud and Abuse Act (18 U.S.C.
 
 ---
 
----
-
 ## 11. Supplemental Resources
 
 **1. theHarvester — Official GitHub Repository and Documentation**
@@ -425,8 +420,6 @@ A comprehensive tree of OSINT tools organized by target type (username, email, d
 Hunter.io allows testers to identify the email format used by an organization and verify whether specific email addresses are publicly known. The free tier supports a limited number of queries suitable for lab exercises, directly illustrating the email format discovery concepts covered in Module 05 Section 5.
 
 **Proprietary and Confidential. Not for disclosure outside of Texas Wesleyan University course use.**
-
-
 
 ---
 

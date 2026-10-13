@@ -207,8 +207,6 @@ A Raspberry Pi GPIO pin is connected directly to the output of a 5V sensor. The 
 
 ---
 
----
-
 ### Question 11 (5 points)
 
 A developer needs to read a 12-bit ADC with a 3.3 V reference voltage. What is the voltage resolution (voltage represented by one LSB step)?

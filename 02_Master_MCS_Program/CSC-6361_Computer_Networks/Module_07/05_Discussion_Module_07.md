@@ -121,7 +121,6 @@ Peer Responses Due: Sunday, December 13, 2026 at 11:59 PM CST
 
 This is the final graded assignment for CSC-6361 Advanced Computer Networks. Final course grades will be posted within one week of December 13. Good luck, and congratulations on completing the course.
 
-
 ---
 
 ### Comprehensive SACSCOC RSI Grading Rubric (100 Points Total)

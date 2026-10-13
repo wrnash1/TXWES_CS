@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-1310 Introduction to Python
 
 **Certification Alignment:** PCAP — Certified Associate in Python Programming (Python Institute)
@@ -499,8 +496,6 @@ A focused article on Python's `assert` statement — when to use it, `AssertionE
 - [ ] Read the Errors and Exceptions page in the official Python 3 docs.
 - [ ] Review all 7 Certification Exam Tips in Section 4.
 - [ ] Proceed to the Module 12 Lab Activity.
-
-
 
 ---
 

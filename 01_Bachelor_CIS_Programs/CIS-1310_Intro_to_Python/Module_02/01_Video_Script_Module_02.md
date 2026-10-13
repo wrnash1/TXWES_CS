@@ -20,17 +20,9 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Estimated Duration:** 14–16 minutes
 **Certification Alignment:** PCAP — Certified Associate in Python Programming (Python Institute)
 **Recorded by:** Professor Nash | Texas Wesleyan University
-
----
-
-> **PRODUCTION NOTES FOR INSTRUCTOR:**
-> - Use screen-share for all [DEMO] sections — run everything live in the Python REPL inside Ubuntu.
-> - [PAUSE] markers = hold 2 seconds before continuing.
-> - Show the exact output after each REPL entry — students will pause and type along.
 
 ---
 

@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-3350 Software Engineering and Agile
 **Certification Alignment:** PSM I (Professional Scrum Master I) – Scrum.org
 **Instructor:** Professor Nash | Texas Wesleyan University
@@ -297,10 +294,6 @@ A practitioner-focused blog post by a leading Scrum trainer on how to write effe
 - [ ] Explain the distinction between the Sprint Goal (fixed) and the Sprint Backlog scope (flexible)
 - [ ] State who owns the Sprint Backlog and who can modify it during the Sprint
 - [ ] Complete this module's Lab and Quiz
-
----
-
-
 
 ---
 

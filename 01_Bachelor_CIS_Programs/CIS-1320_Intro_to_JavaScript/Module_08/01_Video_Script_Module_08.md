@@ -20,22 +20,9 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Estimated Duration:** 18–21 minutes
 **Certification Alignment:** JSE — Certified Associate in JavaScript Programming (OpenEDG / JS Institute)
 **Recorded by:** Professor Nash | Texas Wesleyan University
-
----
-
-> **PRODUCTION NOTES FOR INSTRUCTOR:**
->
-> - Use DevTools Console for all [DEMO] sections.
-> - [PAUSE] = 2 seconds of silence.
-> - This module was listed as "Midterm Prep & Arrays" in the skeleton — treat it as the full Arrays module. The midterm review material is embedded in the lab's reflection section.
-> - The `map`, `filter`, and `reduce` trio is the highest-value exam content — spend equal time on all three and emphasize that they do NOT mutate the original array.
-> - For `reduce`, show the accumulator table step-by-step on screen — this is the part students find hardest.
-> - Spread operator demo: show both the copy-without-reference case and the merge case side by side.
-> - Array destructuring appears on the JSE exam — show the positional nature clearly.
 
 ---
 

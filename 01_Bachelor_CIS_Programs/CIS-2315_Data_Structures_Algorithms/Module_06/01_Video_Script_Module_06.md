@@ -20,23 +20,9 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Estimated Duration:** 22–26 minutes
 **Certification Alignment:** Technical Interview Readiness (LeetCode / HackerRank)
 **Recorded by:** Professor Nash | Texas Wesleyan University
-
----
-
-> **PRODUCTION NOTES FOR INSTRUCTOR:**
->
-> - Use VS Code + Python terminal for all [DEMO] sections.
-> - [PAUSE] = 2 seconds of silence.
-> - This module is conceptually heavier than Module 05. The goal is not to have students implement a full Red-Black tree from scratch — that is a multi-week topic. The goal is: understand why self-balancing trees exist, what rotations do, and what the height guarantee means.
-> - Draw every rotation on the board before writing code. Students who can draw a rotation have understood it.
-> - AVL balance factor: height(right) - height(left). Values -1, 0, +1 are balanced. Outside triggers rotation.
-> - Red-Black properties (5 rules) are the most testable content in this module. State them clearly.
-> - Interview context: Red-Black trees are behind Python `sortedcontainers`, Java `TreeMap`, C++ `std::map`. Students must know this connection.
-> - Common mistakes: confusing which rotation (LL/LR/RL/RR), forgetting to update heights after rotation.
 
 ---
 

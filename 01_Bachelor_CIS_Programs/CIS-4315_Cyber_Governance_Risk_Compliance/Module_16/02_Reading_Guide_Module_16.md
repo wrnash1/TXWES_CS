@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4315 Cyber Governance, Risk, and Compliance
 
 ## Texas Wesleyan University | Professor Nash
@@ -159,8 +156,6 @@ The updated NIST CSF 2.0 introduces the Govern function and provides a comprehen
 **3. ISACA — CISM Practice Question Database (QAE)**
 <https://www.isaca.org/bookstore/cism-exam-resources/cqcism>
 ISACA's official question and answer explanations database provides scenario-based practice questions aligned to each CISM domain. Completing 150 or more practice questions from the QAE database is the most reliable predictor of CISM exam readiness and directly reinforces the scenario-analysis skills tested throughout this course.
-
-
 
 ---
 

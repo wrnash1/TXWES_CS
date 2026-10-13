@@ -270,8 +270,6 @@ Which event category and appropriate response BEST match this scenario?
 
 ---
 
----
-
 ### Question 11 (5 points)
 
 An IT organization's service desk receives a ticket from a user who cannot access the company VPN. The agent verifies the user's credentials are correct, confirms the VPN service is operational, and discovers the user's device certificate has expired. The agent renews the certificate and the user connects successfully in under ten minutes.

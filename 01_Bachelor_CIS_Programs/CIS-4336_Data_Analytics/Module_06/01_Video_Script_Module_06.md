@@ -27,7 +27,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 Welcome back to CIS-4336. I am Professor Nash, and this is Module 06: Statistical Analysis — Inferential Statistics and Hypothesis Testing.
 
 In Module 05 we described data. In this module we draw conclusions from it. Inferential statistics is the branch of statistics that uses sample data to make inferences about a larger population, and to evaluate whether observed patterns are real or likely due to chance.

@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-3350 Software Engineering and Agile
 
 **Certification Alignment:** PSM I (Professional Scrum Master I) – Scrum.org
@@ -274,10 +271,6 @@ An accessible Agile Alliance article applying Little's Law to software developme
 - [ ] Explain what Scrumban is and give two examples of how a Scrum team might incorporate Kanban practices
 - [ ] Explain the connection between Lean's pull principle and Scrum's Sprint Planning
 - [ ] Complete this module's Lab and Quiz
-
----
-
-
 
 ---
 

@@ -27,7 +27,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 - [ ] Title slide loaded: "Module 01 - Penetration Testing Methodology and Scoping"
 - [ ] Terminal window open with dark theme
 - [ ] Sample RoE template document ready to display

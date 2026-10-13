@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4330 Introduction to AI | Texas Wesleyan University
 
 **AI-900 Domain:** Describe fundamental principles of machine learning on Azure (20-25%)
@@ -321,8 +318,6 @@ A free YouTube series that explains supervised learning concepts — decision tr
 **3. Towards Data Science — Understanding the Bias-Variance Tradeoff**
 <https://towardsdatascience.com/understanding-the-bias-variance-tradeoff-165e6942b229>
 An accessible article explaining overfitting, underfitting, and the bias-variance tradeoff with diagrams. Supplements the Module 02 reading guide section on model evaluation and directly supports the quiz and lab content on interpreting training vs. validation performance.
-
-
 
 ---
 

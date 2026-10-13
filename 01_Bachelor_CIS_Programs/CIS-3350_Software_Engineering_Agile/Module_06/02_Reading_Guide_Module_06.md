@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-3350 Software Engineering and Agile
 **Certification Alignment:** PSM I (Professional Scrum Master I) – Scrum.org
 **Instructor:** Professor Nash | Texas Wesleyan University
@@ -294,10 +291,6 @@ A detailed Scrum.org blog post explaining when, why, and how refinement should o
 - [ ] Explain the difference between ordering and prioritization
 - [ ] Describe four common Product Backlog problems and how to address each
 - [ ] Complete this module's Lab (write a 10-item Product Backlog for a hypothetical product) and Quiz
-
----
-
-
 
 ---
 

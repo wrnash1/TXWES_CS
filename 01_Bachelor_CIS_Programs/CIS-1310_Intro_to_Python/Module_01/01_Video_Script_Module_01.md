@@ -25,15 +25,6 @@
 
 ---
 
-> **PRODUCTION NOTES FOR INSTRUCTOR:**
-> - Record in segments matching the timestamps below.
-> - Use a screen-share or split-screen for all [DEMO] and [SHOW SCREEN] sections.
-> - Slides referenced below should match the section headings.
-> - [PAUSE] markers = hold 2 seconds of silence before continuing.
-> - [DEMO] markers = switch to live terminal or VS Code screen share.
-
----
-
 ## [00:00 – 00:50] Opening — Welcome & Course Overview
 
 **[INSTRUCTOR ON CAMERA — Title card: "Module 01 | Python Basics & Local Environment | CIS-1310"]**

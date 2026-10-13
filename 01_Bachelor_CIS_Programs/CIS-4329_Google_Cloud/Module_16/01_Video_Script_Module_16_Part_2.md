@@ -26,7 +26,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 ---
 
 ### Introduction
@@ -259,12 +258,3 @@ Use the Reading Guide practice questions and the twenty quiz questions to identi
 Good luck on the ACE exam. It has been a fantastic semester.
 
 ---
-
-### PRODUCTION NOTES
-
-- Slide: Five ACE exam domains with approximate question weight per domain
-- Slide: gcloud command structure cheat sheet (compute instances create, container clusters, run deploy, sql instances)
-- Slide: IAM best practices summary (least privilege, predefined roles, Workload Identity)
-- Slide: Two-constraint exam method steps with example
-- Slide: Common distractor patterns with examples
-- Screen share: GKE Workload Identity configuration walkthrough

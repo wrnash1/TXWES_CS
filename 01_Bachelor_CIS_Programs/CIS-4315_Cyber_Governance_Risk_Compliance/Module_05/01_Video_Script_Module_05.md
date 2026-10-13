@@ -26,15 +26,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
----
-
-## Production Notes
-
-- Slides: 19 slides total
-- Recording environment: lecture capture with slide overlay
-- Use decision tree diagrams for risk treatment options; highlight cost-benefit formula
-
 ---
 
 ## Opening Segment (2 minutes)

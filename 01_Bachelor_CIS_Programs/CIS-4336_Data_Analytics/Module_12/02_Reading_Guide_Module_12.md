@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4336 Data Analytics
 
 ## Texas Wesleyan University | Professor Nash
@@ -512,8 +509,6 @@ An in-depth tutorial covering `groupby`, `agg`, `transform`, and `apply` with pr
 **3. Towards Data Science — Exploratory Data Analysis with Python (Seaborn and Matplotlib)**
 <https://towardsdatascience.com/exploratory-data-analysis-with-pandas-508a93f8c3c5>
 A walkthrough of a complete EDA workflow using pandas, matplotlib, and seaborn — covering histograms, pairplots, correlation heatmaps, and box plots. Bridges the gap between individual function calls and a full analytical workflow, matching the lab deliverables in Module 12.
-
-
 
 ---
 

@@ -47,7 +47,6 @@ At peak hours, the WAN link is saturated and Teams video quality drops dramatica
 | Peer responses — substantive | 5 |
 | **Total** | **100** |
 
-
 ---
 
 ### Comprehensive SACSCOC RSI Grading Rubric (100 Points Total)

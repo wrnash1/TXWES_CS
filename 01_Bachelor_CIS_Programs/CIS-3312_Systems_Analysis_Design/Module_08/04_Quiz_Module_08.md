@@ -287,8 +287,6 @@ D. An actor who is not yet defined and will be identified in a later analysis ph
 
 ---
 
----
-
 ### Question 11
 
 A BA writes the following user story: "As a library member, I want to place a hold on a checked-out book, so that I am notified when it becomes available." The product owner asks the BA to verify it passes INVEST. Which criterion is most at risk if no acceptance criteria are written for this story?

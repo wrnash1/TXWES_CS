@@ -26,15 +26,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
----
-
-## Production Notes
-
-- Slides: 20 slides total
-- Recording environment: lecture capture with slide overlay
-- Display risk matrix diagrams and formula tables clearly; use zoom for formula slides
-
 ---
 
 ## Opening Segment (2 minutes)

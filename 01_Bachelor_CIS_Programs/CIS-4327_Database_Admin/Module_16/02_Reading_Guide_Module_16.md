@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4327 Database Administration
 
 ## Texas Wesleyan University | Professor Nash
@@ -350,8 +347,6 @@ verify you can confidently explain:
 
 ---
 
----
-
 ## 9. Supplemental Resources
 
 The following free, open-access resources support Module 16 capstone topics:
@@ -373,8 +368,6 @@ Free hands-on labs, courses, and quests aligned to the Professional Cloud Databa
 Module 16 Reading Guide — CIS-4327 Database Administration
 
 Texas Wesleyan University | Proprietary and Confidential. Not for disclosure outside of course participants.
-
-
 
 ---
 

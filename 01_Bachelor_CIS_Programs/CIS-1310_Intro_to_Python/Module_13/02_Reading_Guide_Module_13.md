@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-1310 Introduction to Python
 
 **Certification Alignment:** PCAP — Certified Associate in Python Programming (Python Institute)
@@ -550,8 +547,6 @@ The official guide to installing Python packages with pip, using virtual environ
 - [ ] Use `dir()` and `help()` to explore `math`, `random`, and `os`.
 - [ ] Review all 7 Certification Exam Tips in Section 4.
 - [ ] Proceed to the Module 13 Lab Activity.
-
-
 
 ---
 

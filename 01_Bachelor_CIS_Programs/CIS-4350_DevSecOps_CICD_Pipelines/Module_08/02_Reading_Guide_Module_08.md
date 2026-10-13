@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4350 DevSecOps and CI/CD Pipelines
 
 ## Texas Wesleyan University | Professor Nash
@@ -424,8 +421,6 @@ Comprehensive documentation for the Sigstore project (cosign, Fulcio, Rekor). Co
 ---
 
 Reading Guide — Module 08 | CIS-4350 | Texas Wesleyan University | Professor Nash
-
-
 
 ---
 

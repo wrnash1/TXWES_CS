@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## CIS-4329: Google Cloud Platform | Texas Wesleyan University
 
 ### Topic: Cloud Run, App Engine, and Cloud Functions — Serverless Compute
@@ -296,8 +293,6 @@ Hands-on lab walking through creating a Cloud SQL for PostgreSQL instance, conne
 **3. Google Cloud Documentation — Firestore Data Model**
 <https://firebase.google.com/docs/firestore/data-model>
 Comprehensive guide to the Firestore document-collection data model, including nested collections, document size limits, and the distinction between Native mode and Datastore mode that is a recurring ACE exam topic.
-
-
 
 ---
 

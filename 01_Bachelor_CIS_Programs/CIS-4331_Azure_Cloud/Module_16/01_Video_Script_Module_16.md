@@ -22,16 +22,7 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Certification Alignment:** Microsoft Azure Fundamentals (AZ-900)
-
----
-
-## Production Notes
-
-**Estimated Runtime:** 30–35 minutes
-**Slide Deck:** Module_16_Slides.pptx
-**Visual Aids:** AZ-900 domain breakdown chart, exam interface screenshot, question stem analysis examples, answer elimination walkthrough
 
 ---
 

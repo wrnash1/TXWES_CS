@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## CSC-6361 Advanced Computer Networks | Graduate Level
 
 ## Week: Nov 23 – Dec 1, 2026 | Due: Tuesday, December 1, 2026 (Extended — Thanksgiving Week)
@@ -297,8 +294,6 @@ The EVPN specification. Focus on Sections 3 (terminology), 5 (NLRI formats), and
 [https://developer.cisco.com/learning/modules/dnac-1/](https://developer.cisco.com/learning/modules/dnac-1/)
 
 Hands-on labs for Cisco DNA Center and SD-Access, covering VXLAN-LISP campus fabric — complements the SD-WAN material with the campus overlay perspective.
-
-
 
 ---
 

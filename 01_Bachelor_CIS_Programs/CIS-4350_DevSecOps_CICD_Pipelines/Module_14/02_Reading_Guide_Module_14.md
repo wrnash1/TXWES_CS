@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4350 DevSecOps and CI/CD Pipelines
 
 ## Certification Alignment: DevSecOps Professional (DSOE)
@@ -265,8 +262,6 @@ The OWASP cheat sheet covering threat modeling process steps, DFD construction g
 ---
 
 Reading Guide — Module 14 | CIS-4350 | Texas Wesleyan University | Professor Nash
-
-
 
 ---
 

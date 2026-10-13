@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4336 Data Analytics
 
 ## Texas Wesleyan University | Professor Nash
@@ -399,8 +396,6 @@ A free YouTube channel by a CompTIA-certified instructor with domain-by-domain w
 **3. Whizlabs — CompTIA Data+ Practice Tests**
 <https://www.whizlabs.com/comptia-data-plus>
 A paid practice exam platform offering timed, scored mock exams aligned to the DA0-001 exam objectives with detailed answer explanations. Completing at least two full practice exams under timed conditions is one of the highest-value preparation activities before scheduling the real exam.
-
-
 
 ---
 

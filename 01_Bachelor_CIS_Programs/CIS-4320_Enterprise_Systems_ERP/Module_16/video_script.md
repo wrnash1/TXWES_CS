@@ -8,14 +8,6 @@
 
 ---
 
-## Production Notes
-
-**Duration:** Approximately 30–35 minutes
-**Format:** Comprehensive review lecture with integrated practice questions
-**Segments:** 6 segments — Salesforce Admin review, SAP essentials review, integrated topics, exam strategy, capstone preview, course close
-
----
-
 ## Segment 1: Introduction — The Final Stretch (Lines 1–35)
 
 [SLIDE: Title card — "Module 16: ERP Certification Exam Preparation and Capstone"]

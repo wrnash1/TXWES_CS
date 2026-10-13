@@ -27,7 +27,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 Welcome to Module 04. I am Professor Nash. Today we give the seven ITIL 4 Guiding Principles the dedicated, in-depth treatment they deserve.
 
 You have seen the Guiding Principles listed in Modules 01, 02, and 03. In every one of those modules they appeared as part of a broader topic. Today they are the topic. The Foundation exam devotes significant question weight to the Guiding Principles — not just asking you to name them, but asking you to recognize which principle applies in a described scenario.

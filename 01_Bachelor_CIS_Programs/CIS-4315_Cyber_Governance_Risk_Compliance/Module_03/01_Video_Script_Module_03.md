@@ -26,15 +26,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
----
-
-## Production Notes
-
-- Slides: 18 slides total
-- Recording environment: lecture capture with slide overlay
-- Use pointer tool to highlight framework diagrams
-
 ---
 
 ## Opening Segment (2 minutes)

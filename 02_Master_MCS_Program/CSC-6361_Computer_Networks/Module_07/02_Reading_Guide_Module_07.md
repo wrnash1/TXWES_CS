@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## CSC-6361 Advanced Computer Networks | Graduate Level
 
 ## Week 7: November 30 – December 11, 2026 | Due: December 11, 2026
@@ -271,8 +268,6 @@ Free network simulation platform for practicing all course topics with real Cisc
 [https://www.boson.com/practice-exam/350-401-cisco-ccnp-encor-practice-exam](https://www.boson.com/practice-exam/350-401-cisco-ccnp-encor-practice-exam)
 
 The highest-quality commercial practice exam for CCNP ENCOR. Each question includes a detailed explanation of why each answer is correct or incorrect — essential for identifying knowledge gaps. Not free, but worth the investment if you are serious about certification.
-
-
 
 ---
 

@@ -27,7 +27,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 - [ ] Title slide loaded: "Module 02 - Rules of Engagement and Legal Considerations"
 - [ ] Terminal window ready for document examples
 - [ ] CFAA statutory language excerpt prepared

@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4345 Machine Learning and Deep Learning
 
 ## Texas Wesleyan University | Professor Nash
@@ -503,8 +500,6 @@ Comprehensive TensorFlow guide to building performant data pipelines. Covers `ma
 
 **3. [Papers With Code — Image Data Augmentation Survey](https://paperswithcode.com/task/data-augmentation)**
 Curated list of state-of-the-art augmentation papers and benchmarks, including CutMix, MixUp, AutoAugment, and RandAugment. Useful for understanding how modern augmentation strategies extend beyond basic flips and rotations to achieve significant accuracy gains.
-
-
 
 ---
 

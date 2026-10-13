@@ -20,24 +20,9 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Estimated Duration:** 18–22 minutes
 **Certification Alignment:** JSE — Certified Associate in JavaScript Programming (OpenEDG / JS Institute)
 **Recorded by:** Professor Nash | Texas Wesleyan University
-
----
-
-> **PRODUCTION NOTES FOR INSTRUCTOR:**
->
-> - Use a simple HTML file in VS Code + Live Server for all [DEMO] sections. Chrome DevTools Elements panel is essential — show the live DOM tree updating as JavaScript runs.
-> - [PAUSE] = 2 seconds of silence.
-> - The tree metaphor is the conceptual core — spend time on it before any code.
-> - `getElementById` vs `querySelector` distinction: both select by ID but `querySelector` is more versatile and is the modern choice. Explain why both are taught.
-> - Emphasize: `innerHTML` can execute injected scripts (XSS risk) — introduce this awareness now, not later.
-> - The distinction between `textContent` and `innerHTML` is exam-tested. Show both with a concrete `<strong>` tag example.
-> - `classList` API is preferred over directly assigning `element.className`. Show both so students understand older code they will encounter.
-> - `style` property: direct inline style setting. Briefly introduce — CSS classes via `classList` are the preferred pattern.
-> - End with a clear mental model: HTML is parsed → DOM tree is built → JavaScript reads and writes that tree → browser re-renders.
 
 ---
 

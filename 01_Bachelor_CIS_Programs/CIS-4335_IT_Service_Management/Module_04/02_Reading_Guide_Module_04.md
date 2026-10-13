@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-4335 IT Service Management — Texas Wesleyan University
 **Instructor:** Professor Nash
 **Certification Alignment:** ITIL 4 Foundation
@@ -337,8 +334,6 @@ A practitioner-focused article from one of the world's leading ITSM training org
 **3. Lean IT — Optimize Before You Automate**
 <https://leanit.org/optimize-before-automate>
 A short practitioner guide on the relationship between process simplification and automation — directly aligned with the Optimize and Automate Guiding Principle. Reinforces why automating a poorly designed process produces faster failures.
-
-
 
 ---
 

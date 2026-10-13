@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-2315 Data Structures & Algorithms
 
 **Certification Alignment:** Technical Interview Readiness (LeetCode / HackerRank)
@@ -397,8 +394,6 @@ The following free, openly licensed resources reinforce the concepts in this mod
 - [ ] Complete the Module 14 Lab.
 - [ ] Complete the Module 14 Quiz.
 - [ ] Solve LeetCode #70, #322, #198, #1143.
-
-
 
 ---
 

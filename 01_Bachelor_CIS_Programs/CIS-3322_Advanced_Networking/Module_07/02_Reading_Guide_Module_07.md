@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-3322 Advanced Networking
 **Certification Alignment:** Cisco CCNA 200-301 (Domain 3: IP Connectivity - 25%)
 **Prepared by:** Professor Nash | Texas Wesleyan University
@@ -327,8 +324,6 @@ The following open educational resources extend inter-VLAN routing concepts to C
 4. **Cisco Packet Tracer — Inter-VLAN Routing Lab Files** (skillsforall.com): Pre-built Packet Tracer activities are available for both ROAS and SVI configurations. These labs guide students through complete configurations and verification steps matching the Module 07 lab objectives.
 
 5. **Cisco IOS Configuration Guide — Configuring SVIs** (cisco.com): Cisco's official documentation for configuring Switched Virtual Interfaces on Catalyst multilayer switches, covering SVI state requirements, IP address assignment, and `ip routing` interaction.
-
-
 
 ---
 

@@ -51,7 +51,6 @@ Below is the study roadmap for every course in our computer science and computer
 | :--- | :--- | :--- | :--- |
 | **CIS-3312: Systems Analysis & Design** | IIBA Entry Certificate in Business Analysis (ECBA) | Draw DFDs (Data Flow Diagrams), construct ERDs, write use cases and requirements. | [IIBA BABOK Guide](https://www.iiba.org/) |
 
-
 ---
 
 ## 5. Final Exam Certification Policy (Module 16)

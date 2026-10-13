@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4333_Penetration_Testing (CompTIA PenTest+)
 
 ---
@@ -158,8 +155,6 @@ The 2021 OWASP Top 10 is directly referenced in PT0-002 web application attack o
 
 **3. [MITRE ATT&CK Framework — Enterprise Matrix](https://attack.mitre.org/)**
 The MITRE ATT&CK Enterprise matrix maps adversary tactics and techniques that align directly to PT0-002's Attacks & Exploits domain. Reviewing the Persistence, Privilege Escalation, Lateral Movement, and Exfiltration tactic categories reinforces the post-exploitation concepts covered in Modules 10 through 13 and helps candidates answer scenario questions that reference attacker TTPs.
-
-
 
 ---
 

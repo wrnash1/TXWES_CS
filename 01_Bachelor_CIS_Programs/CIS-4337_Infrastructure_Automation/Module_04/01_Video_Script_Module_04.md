@@ -26,7 +26,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 Welcome back to CIS-4337. I am Professor Nash. In Module 03 we wrote complete HCL configurations with providers, resources, and variables. In this module we focus on one of the most important and most misunderstood concepts in Terraform: state.
 
 By the end of this video you will understand what the state file is, why it exists, how it is structured, the risks of poor state management, how remote backends solve those risks, how to configure the S3 backend with DynamoDB locking, and how to use the `terraform state` subcommands to manage state safely.

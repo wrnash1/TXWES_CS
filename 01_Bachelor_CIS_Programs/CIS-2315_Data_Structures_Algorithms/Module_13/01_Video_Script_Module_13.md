@@ -20,22 +20,9 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Estimated Duration:** 22–26 minutes
 **Certification Alignment:** Technical Interview Readiness (LeetCode / HackerRank)
 **Recorded by:** Professor Nash | Texas Wesleyan University
-
----
-
-> **PRODUCTION NOTES FOR INSTRUCTOR:**
->
-> - Use VS Code + Python terminal for all [DEMO] sections.
-> - [PAUSE] = 2 seconds of silence.
-> - The key concept: greedy makes locally optimal choices. Emphasize that greedy only works when local optimality guarantees global optimality — this requires a correctness proof, usually exchange argument.
-> - Walk through the exchange argument for Activity Selection explicitly: "suppose the optimal solution doesn't take the earliest-finishing activity — swap it in, the result is no worse."
-> - Jump Game I and II are the canonical greedy LeetCode problems. Trace both carefully.
-> - Common mistakes: applying greedy to a DP problem (the 0/1 knapsack is NOT greedy), not sorting correctly before a greedy pass.
-> - Distinguish greedy (one pass, locally optimal) from DP (all subproblems, globally optimal via table).
 
 ---
 

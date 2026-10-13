@@ -262,8 +262,6 @@ Compile all deliverables into a single PDF or Word document labeled clearly by t
 
 ---
 
----
-
 ## Part 9 — Challenge Exercise
 
 ### Challenge 1: Instance Refresh with Minimal Disruption

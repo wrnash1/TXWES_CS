@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-3322 Advanced Networking
 
 ## Texas Wesleyan University | Professor Nash
@@ -456,8 +453,6 @@ The following open educational resources extend automation and programmability c
 4. **Cisco Networking Academy — Cisco DevNet Associate Fundamentals** (skillsforall.com): Free course covering REST API concepts, HTTP methods, JSON data structures, Python for networking, and introduction to YANG models. Overlaps with CCNA automation content and provides a deeper programmability foundation.
 
 5. **Ansible for Network Automation Documentation** (docs.ansible.com/ansible/latest/network): Ansible's official network automation documentation covering cisco.ios collection modules, playbook structure for network devices, connection types (network_cli, netconf, httpapi), and idempotency behavior — free reference for understanding the Ansible concepts tested on the CCNA exam.
-
-
 
 ---
 

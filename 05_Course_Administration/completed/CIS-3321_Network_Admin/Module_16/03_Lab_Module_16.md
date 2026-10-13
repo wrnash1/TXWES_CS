@@ -286,8 +286,6 @@ Good luck.
 
 ---
 
----
-
 ## Part 9 — Challenge Exercise
 
 These advanced steps extend the Module 16 exam prep lab with cross-domain scenario analysis, a timed subnetting sprint, and a performance-based question simulation.

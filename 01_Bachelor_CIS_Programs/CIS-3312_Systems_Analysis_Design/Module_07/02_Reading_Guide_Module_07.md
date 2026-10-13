@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-3312 Systems Analysis and Design
 
 ## Texas Wesleyan University | Professor Nash
@@ -353,8 +350,6 @@ The following open educational resources extend module content on elicitation te
 5. **Focus Group Research Methodology — Research Methods Knowledge Base**
    <https://conjointly.com/kb/focus-groups/>
    Focus: Academic-quality explanation of focus group strengths, limitations (dominance effects, groupthink), and best practices. Reinforces the focus group technique content and the limitation discussed in Question 12 of the quiz.
-
-
 
 ---
 

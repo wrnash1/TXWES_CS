@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4336 Data Analytics
 
 ## Texas Wesleyan University | Professor Nash
@@ -368,8 +365,6 @@ The original Google research page introducing model cards as a tool for ethical 
 **3. FTC — Understanding the Fair Credit Reporting Act (for Data Analysts)**
 <https://www.ftc.gov/business-guidance/privacy-security/credit-reporting>
 The FTC's guidance on FCRA obligations for organizations that use consumer data in decisions about credit, employment, housing, and insurance. Directly relevant to the bias-in-algorithmic-decision-making and regulatory compliance topics covered in Module 15.
-
-
 
 ---
 

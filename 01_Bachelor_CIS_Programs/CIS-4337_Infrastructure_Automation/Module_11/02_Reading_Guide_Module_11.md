@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4337 Infrastructure Automation
 
 ## Texas Wesleyan University | Professor Nash
@@ -481,8 +478,6 @@ The Sentinel documentation specific to Terraform Cloud integration, covering the
 
 *Texas Wesleyan University — CIS-4337 Infrastructure Automation*
 *Proprietary and Confidential. Not for disclosure outside of authorized course participants.*
-
-
 
 ---
 

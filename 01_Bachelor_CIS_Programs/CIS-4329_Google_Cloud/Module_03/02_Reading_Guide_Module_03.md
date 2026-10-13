@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4329 Google Cloud Computing
 
 **Certification Alignment:** Google Cloud Associate Cloud Engineer (ACE)
@@ -502,8 +499,6 @@ autoscaling directly relevant to the ACE exam.
 Official guide covering MIG creation, rolling updates, autohealing, and
 autoscaling configuration with detailed examples for both zonal and regional
 MIG deployments.
-
-
 
 ---
 

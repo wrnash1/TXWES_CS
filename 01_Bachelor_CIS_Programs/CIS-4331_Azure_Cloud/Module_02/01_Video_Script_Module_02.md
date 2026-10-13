@@ -27,7 +27,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **[INSTRUCTOR ON CAMERA — title card: "Module 02: Azure Physical Architecture"]**
 
 Welcome back. I'm Professor Nash, and this is Module 02. We are moving from the conceptual world of cloud computing into the physical world of Azure — the actual buildings, power systems, fiber networks, and geographic distribution that make Azure work at global scale.

@@ -20,22 +20,9 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Estimated Duration:** 20–24 minutes
 **Certification Alignment:** Technical Interview Readiness (LeetCode / HackerRank)
 **Recorded by:** Professor Nash | Texas Wesleyan University
-
----
-
-> **PRODUCTION NOTES FOR INSTRUCTOR:**
->
-> - Use VS Code + Python terminal for all [DEMO] sections.
-> - [PAUSE] = 2 seconds of silence.
-> - This module establishes the language every technical interview uses. Students who cannot express complexity cannot pass coding screens, even if their code is correct.
-> - The key mental models: (1) Big-O as "what happens as input grows large"; (2) dropping constants and lower-order terms; (3) the complexity hierarchy table; (4) reading loops and recursion to determine class.
-> - Show real Python timing with `time.perf_counter()` — seeing 600ms vs 10ms for the same logical problem is memorable.
-> - Do NOT go deep into formal proofs or Master Theorem derivation in the video — save that for the reading guide. Keep the video focused on pattern recognition.
-> - The space complexity section is often undertaught. Give it equal time — interviewers ask about it as often as time complexity.
 
 ---
 

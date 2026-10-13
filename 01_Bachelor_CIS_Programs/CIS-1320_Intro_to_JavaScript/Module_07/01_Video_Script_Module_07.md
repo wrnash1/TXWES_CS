@@ -20,21 +20,9 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Estimated Duration:** 17–20 minutes
 **Certification Alignment:** JSE — Certified Associate in JavaScript Programming (OpenEDG / JS Institute)
 **Recorded by:** Professor Nash | Texas Wesleyan University
-
----
-
-> **PRODUCTION NOTES FOR INSTRUCTOR:**
->
-> - Use DevTools Console for all [DEMO] sections.
-> - [PAUSE] = 2 seconds of silence.
-> - The dot vs bracket notation demo should show a case where bracket notation is required (dynamic key lookup, key with a space) to motivate why both forms exist.
-> - The `this` keyword demo is the most important new concept — show the broken version (arrow function method) before the working version (regular function method) so students understand why the rule exists.
-> - Destructuring and shorthand are exam content — take time on both. Show the "old way" first so the shorthand feels like a simplification, not magic.
-> - Optional chaining (`?.`) is ES2020 content that appears on the JSE exam — write the null-check version first, then replace it with `?.` to show the improvement.
 
 ---
 

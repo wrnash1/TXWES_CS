@@ -308,8 +308,6 @@ Metasploitable's FTP may not have credentials matching the wordlist. This is exp
 
 ---
 
----
-
 ## Part 9 — Challenge Exercise
 
 ### Challenge 1: Exploitation Documentation and Impact Analysis

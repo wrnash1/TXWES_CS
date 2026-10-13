@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4320 Enterprise Systems and ERP | Texas Wesleyan University
 
 ## Instructor: Professor Nash
@@ -339,8 +336,6 @@ Official Salesforce-curated trailmix that maps directly to the Salesforce Certif
 **3. SAP Learning — Introduction to ERP and SAP System Overview**
 <https://learning.sap.com/learning-journeys/discover-sap-s-4hana>
 SAP's official learning journey for S/4HANA discovery. Covers the business case for ERP, the HANA in-memory database advantage, and the SAP module landscape. Free with SAP Universal ID registration.
-
-
 
 ---
 

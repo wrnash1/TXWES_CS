@@ -11,7 +11,6 @@ Welcome to **CSC-6361: Advanced Computer Networks (Graduate Level)**! Please int
 * **Initial Post:** Due **Sunday, October 25 by 11:59 PM CT** (Census Engagement Requirement).
 * **Peer Replies:** Reply to at least two classmates with constructive, encouraging feedback (50+ words each).
 
-
 ---
 
 ### Comprehensive SACSCOC RSI Grading Rubric (100 Points Total)

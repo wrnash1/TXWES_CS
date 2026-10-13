@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-1320 Introduction to JavaScript
 
 **Certification Alignment:** JSE — Certified Associate in JavaScript Programming (OpenEDG / JS Institute)
@@ -489,8 +486,6 @@ The following free, openly available resources extend and reinforce the topics c
 - [ ] Store preferences in `localStorage` with `JSON.stringify` and retrieve with `JSON.parse`.
 - [ ] Complete the Module 14 Lab.
 - [ ] Complete the Module 14 Quiz.
-
-
 
 ---
 

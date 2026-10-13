@@ -51,7 +51,6 @@ Below is the study roadmap for every course in our computer science and computer
 | :--- | :--- | :--- | :--- |
 | **CIS-1310: Intro to Python** | PCAP (Certified Associate in Python Programming) | Write scripts from scratch; use the interactive shell (`python3`) to test syntax. | [Python Institute (edube.org)](https://edube.org/) |
 
-
 ---
 
 ## 5. Final Exam Certification Policy (Module 16)

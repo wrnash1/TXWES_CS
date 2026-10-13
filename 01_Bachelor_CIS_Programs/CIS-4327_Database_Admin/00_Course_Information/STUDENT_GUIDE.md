@@ -51,7 +51,6 @@ Below is the study roadmap for every course in our computer science and computer
 | :--- | :--- | :--- | :--- |
 | **CIS-4327: Database Admin** | GCP Professional Database Engineer | Build relational structures; analyze query execution times and configure high-availability replicas. | [GCP Architecture Center](https://cloud.google.com/architecture) |
 
-
 ---
 
 ## 5. Final Exam Certification Policy (Module 16)

@@ -26,7 +26,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 ---
 
 ### SEGMENT 1 — Introduction (0:00–2:00)
@@ -277,11 +276,3 @@ In the next module we cover Threat Modeling in DevSecOps — using the STRIDE fr
 See you there.
 
 ---
-
-### PRODUCTION NOTES
-
-- Screen share: OPA playground at play.openpolicyagent.org with Rego evaluation
-- Demo: Conftest scan on a Kubernetes YAML with PCI-DSS policy violations
-- Demo: Gatekeeper ConstraintTemplate deployment and admission webhook test
-- Slide: OPA evaluation model diagram (input + policy = decision)
-- Slide: SOC 2 / PCI-DSS control-to-Rego mapping table

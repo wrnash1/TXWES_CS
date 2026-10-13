@@ -18,7 +18,6 @@ Scholars, in this doctoral seminar, you are asked to assume the role of Chief In
 * **Initial Contribution (Thursday 11:59 PM CT):** Minimum 500 words, citing at least two peer-reviewed sources and one federal/international standard.
 * **Peer Critique (Sunday 11:59 PM CT):** Engage with at least two colleagues. Your responses should challenge assumptions, introduce counter-examples, or probe edge-case architectural failure modes.
 
-
 ---
 
 ### Comprehensive SACSCOC RSI Grading Rubric (100 Points Total)

@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4337 Infrastructure Automation
 
 ## Texas Wesleyan University | Professor Nash
@@ -408,8 +405,6 @@ The Checkov policy index for Terraform covering all `CKV_AWS_*`, `CKV_AZURE_*`, 
 ---
 
 End of Module 12 Reading Guide
-
-
 
 ---
 

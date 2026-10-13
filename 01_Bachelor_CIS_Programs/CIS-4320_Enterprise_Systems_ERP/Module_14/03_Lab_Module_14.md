@@ -233,8 +233,6 @@ Before submitting, verify you have included:
 
 ---
 
----
-
 ## Part 9 — Challenge Exercise
 
 ### Challenge 1: Executive KPI Dashboard Design for a Multi-Channel Retailer

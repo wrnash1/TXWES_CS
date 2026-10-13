@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4336 Data Analytics
 
 ## Texas Wesleyan University | Professor Nash
@@ -386,8 +383,6 @@ Google's official quickstart for Looker Studio (formerly Data Studio), a free BI
 **3. Harvard Business Review — The Art of Data Storytelling**
 <https://hbr.org/2013/04/how-to-tell-a-story-with-data>
 A practitioner-focused HBR article on structuring data narratives for executive audiences — covering context, insight, and call-to-action framing. Supports the data storytelling and audience communication skills tested in Module 13 and essential for real-world BI analyst roles.
-
-
 
 ---
 

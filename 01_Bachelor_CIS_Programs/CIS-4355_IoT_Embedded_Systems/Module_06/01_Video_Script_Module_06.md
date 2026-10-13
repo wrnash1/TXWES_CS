@@ -18,7 +18,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Course:** CIS-4355 IoT and Embedded Systems
 
 **Institution:** Texas Wesleyan University | Professor Nash
@@ -366,11 +365,3 @@ In Module 07, we move up the stack to IoT communication protocols — MQTT, CoAP
 See you there.
 
 ---
-
-## PRODUCTION NOTES
-
-- Slide transitions: cut between code segments, fade between hardware demonstrations
-- B-roll needed: close-up of Uno and ESP32 boards, USB cable insertion, LED fading demo, oscilloscope PWM waveform
-- Serial Monitor window capture: show live output when button pressed
-- Closed captions: auto-generate, verify technical terms (GPIO, PWM, ISR, SRAM, FreeRTOS)
-- Run time target: 22 minutes

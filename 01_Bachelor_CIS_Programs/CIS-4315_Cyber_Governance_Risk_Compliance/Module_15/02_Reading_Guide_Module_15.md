@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4315 Cyber Governance, Risk, and Compliance
 
 ## Texas Wesleyan University | Professor Nash
@@ -425,8 +422,6 @@ Use this checklist to verify your readiness for the Module 15 quiz and the cours
 
 ---
 
----
-
 ## 9. Supplemental Resources
 
 **1. IAPP — Introduction to U.S. Privacy Law**
@@ -442,8 +437,6 @@ The official PCI SSC resource hub includes the full PCI-DSS v4.0 standard, SAQ f
 NIST's voluntary privacy risk management framework that complements NIST CSF. Provides a structured approach to identifying and managing privacy risks that aligns with GDPR, CCPA, and other privacy regulation requirements covered in this module. Useful for understanding how privacy governance integrates with broader cybersecurity governance.
 
 End of Reading Guide — Module 15
-
-
 
 ---
 

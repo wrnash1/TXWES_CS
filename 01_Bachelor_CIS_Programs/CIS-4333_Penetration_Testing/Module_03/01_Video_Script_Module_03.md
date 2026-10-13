@@ -27,7 +27,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 - [ ] Title slide loaded: "Module 03 - OSINT and Passive Reconnaissance"
 - [ ] Browser tabs open: WHOIS lookup, Shodan, Google search
 - [ ] Terminal window ready for theHarvester and Maltego demos

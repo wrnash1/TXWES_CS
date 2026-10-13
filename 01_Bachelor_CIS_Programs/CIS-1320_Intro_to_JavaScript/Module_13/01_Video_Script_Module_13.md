@@ -20,25 +20,9 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Estimated Duration:** 20–24 minutes
 **Certification Alignment:** JSE — Certified Associate in JavaScript Programming (OpenEDG / JS Institute)
 **Recorded by:** Professor Nash | Texas Wesleyan University
-
----
-
-> **PRODUCTION NOTES FOR INSTRUCTOR:**
->
-> - Use VS Code + Chrome DevTools (Console tab) for all [DEMO] sections. The Network tab is useful for showing real fetch requests.
-> - [PAUSE] = 2 seconds of silence.
-> - The single-threaded event loop is the conceptual foundation — spend at least 90 seconds on this before any code. Students often misunderstand async as "running in parallel." Clarify: JS is single-threaded; async just means "don't block while waiting."
-> - `setTimeout` and `setInterval` as the first async demonstrations — they're familiar and visible without network dependency.
-> - Promise states (pending/fulfilled/rejected) — draw the three-state diagram or write it on screen. This is tested.
-> - `async/await` is syntactic sugar over Promises — make this explicit. Show a `.then()` chain, then show the equivalent `async/await`, side by side.
-> - `fetch` is the primary use case for Promises in the browser. Use `https://jsonplaceholder.typicode.com/todos/1` as the demo endpoint — it's stable and free.
-> - Error handling: always cover `try/catch` with `async/await` AND `.catch()` with `.then()`. Both are tested.
-> - `Promise.all` — include a brief demo. Common exam topic.
-> - Avoid `XMLHttpRequest` — it is legacy. `fetch` is the modern API.
 
 ---
 

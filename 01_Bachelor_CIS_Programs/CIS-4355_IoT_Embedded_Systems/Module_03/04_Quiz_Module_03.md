@@ -207,8 +207,6 @@ An embedded developer needs to read a 10-bit ADC value on an Arduino Uno and map
 
 ---
 
----
-
 ### Question 11 (5 points)
 
 Which C declaration is correct for a memory-mapped hardware register at address `0x40020C14` on a 32-bit ARM microcontroller, ensuring the compiler always reads and writes it from hardware memory?

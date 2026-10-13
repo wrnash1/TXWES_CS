@@ -423,8 +423,6 @@ Submit a document containing:
 
 ---
 
----
-
 ## Part 9 — Challenge Exercise
 
 ### Challenge 1: Log-Based Metric for Long-Running Transactions

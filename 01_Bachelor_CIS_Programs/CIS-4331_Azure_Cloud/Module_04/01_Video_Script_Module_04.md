@@ -27,7 +27,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **[INSTRUCTOR ON CAMERA — title card: "Module 04: Azure Container Services"]**
 
 Welcome to Module 04. I'm Professor Nash. Today we cover containers — one of the most transformative technologies in modern cloud computing. If virtual machines from Module 03 are like renting a full apartment, containers are like renting a single furnished room. They are faster to start, more efficient to run, and perfectly portable between environments.

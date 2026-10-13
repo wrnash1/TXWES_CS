@@ -8,15 +8,6 @@
 
 ---
 
-## Production Notes
-
-- **Runtime Target:** 28–32 minutes
-- **Segments:** 6
-- **Visual Aids:** Wireshark captures, Aircrack-ng terminal output, network diagrams
-- **Lab Environment:** Isolated wireless lab with authorized access points only
-
----
-
 ## Segment 1: Introduction and Legal Foundations (Lines 1–35)
 
 [SLIDE: Module 10 Title Card]

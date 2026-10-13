@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4320_Enterprise_Systems_ERP (Salesforce Certified Associate / SAP Certified Associate)
 
 ---
@@ -156,8 +153,6 @@ In this week's final review activities, you will complete the following:
 3. **openSAP — SAP S/4HANA Enterprise Management — Certification Preparation**
    <https://open.sap.com/courses/s4h16>
    A free MOOC-style course on the openSAP platform that covers the SAP S/4HANA business processes tested on associate-level certification exams. Includes video lectures, weekly assignments, and a final exam simulation. Particularly useful for students who need structured review of the Procure-to-Pay, Order-to-Cash, and Record-to-Report process chains that appear as scenario questions on the SAP exam.
-
-
 
 ---
 

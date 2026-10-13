@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-3340 Full Stack Web Development
 
 ## Texas Wesleyan University | Professor Nash
@@ -485,8 +482,6 @@ Complete reference for HTTP authentication schemes including Bearer tokens and t
 **4. AWS Documentation — Amazon Cognito — User Pools**
 [https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools.html](https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools.html)
 The official AWS Cognito documentation covering user pool setup, token types (ID token, access token, refresh token), Lambda authorizer integration, and the hosted UI — the production equivalent of the `bcrypt + JWT` auth system built in Lab 12 and a key DVA-C02 exam topic.
-
-
 
 ---
 

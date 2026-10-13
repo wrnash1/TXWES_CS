@@ -51,7 +51,6 @@ Below is the study roadmap for every course in our computer science and computer
 | :--- | :--- | :--- | :--- |
 | **CIS-4320: Enterprise Systems & ERP** | Salesforce / SAP Certified Associate | Map business processes with BPMN, audit Separation of Duties (SoD), execute ETL data migrations. | [Salesforce Trailhead](https://trailhead.salesforce.com/) |
 
-
 ---
 
 ## 5. Final Exam Certification Policy (Module 16)

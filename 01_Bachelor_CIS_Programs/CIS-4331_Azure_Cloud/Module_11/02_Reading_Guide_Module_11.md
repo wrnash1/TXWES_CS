@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4331 Azure Cloud Computing
 
 ## Texas Wesleyan University | Professor Nash
@@ -533,8 +530,6 @@ Covers all policy effects (Audit, Deny, Append, Modify, DeployIfNotExists, Audit
 **3. Microsoft Learn — Microsoft Entra Conditional Access documentation**
 https://learn.microsoft.com/en-us/entra/identity/conditional-access/overview
 Explains the Conditional Access policy structure (Assignments: users/apps/conditions; Access controls: grant/session), named locations, sign-in risk conditions, device compliance requirements, and the relationship between Security Defaults and Conditional Access policies.
-
-
 
 ---
 

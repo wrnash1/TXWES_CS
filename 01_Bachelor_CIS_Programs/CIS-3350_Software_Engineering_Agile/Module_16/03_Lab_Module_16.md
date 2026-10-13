@@ -468,8 +468,6 @@ Submit the following:
 
 ---
 
----
-
 ## Part 9 — Challenge Exercise
 
 ### Challenge 1: Extended Mock Assessment — Hard Questions

@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4320 Enterprise Systems and ERP | Texas Wesleyan University
 
 ## Instructor: Professor Nash
@@ -377,8 +374,6 @@ The definitive explanation of the ADKAR change management model from Prosci, its
 **3. Salesforce Trailhead — Sandbox Basics**
 <https://trailhead.salesforce.com/content/learn/modules/starting_force_com/starting_developer_console>
 Covers Salesforce sandbox types (Developer, Developer Pro, Partial Copy, Full) and their role in the implementation lifecycle. Understanding sandbox use in deployment pipelines is tested in both Salesforce Associate and Administrator certification exams.
-
-
 
 ---
 

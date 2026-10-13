@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-3326 Windows Server Administration
 
 ## Texas Wesleyan University | Professor Nash
@@ -475,8 +472,6 @@ Covers how to interpret Event Viewer Group Policy operational log entries — th
 **4. Microsoft Docs — Back up and restore Group Policy Objects**
 <https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-r2-and-2012/jj717227(v=ws.11)>
 Official guidance on `Backup-GPO`, `Restore-GPO`, and the `dcgpofix` utility for recovering default domain policies — directly relevant to Question 19 and safe change-management practices.
-
-
 
 ---
 

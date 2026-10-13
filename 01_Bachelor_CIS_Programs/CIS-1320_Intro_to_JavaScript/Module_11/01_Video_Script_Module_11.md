@@ -20,24 +20,9 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Estimated Duration:** 18–22 minutes
 **Certification Alignment:** JSE — Certified Associate in JavaScript Programming (OpenEDG / JS Institute)
 **Recorded by:** Professor Nash | Texas Wesleyan University
-
----
-
-> **PRODUCTION NOTES FOR INSTRUCTOR:**
->
-> - Use VS Code + Live Server + Chrome DevTools for all [DEMO] sections. Keep the Elements panel visible while running code so students see the DOM update live.
-> - [PAUSE] = 2 seconds of silence.
-> - Module 10 covered selecting and reading. Module 11 covers creating, inserting, removing, and cloning — plus building from templates. The key progression: students can now build entire UI structures from data.
-> - `createElement` + `appendChild` vs `insertAdjacentHTML` — both demonstrated; discuss when each is appropriate (safety vs convenience).
-> - `removeChild` vs `remove()` — both shown; `remove()` is modern and simpler.
-> - The `<template>` element is not JSE-required but is practical — keep the demo brief.
-> - `document.createTextNode` — mention but prefer `textContent` for setting text.
-> - The list builder demo (Part 4) ties together all concepts — spend time here to give students a model they can adapt.
-> - `innerHTML` for building structures from static strings is acceptable in controlled code (no user data), but call out the distinction.
 
 ---
 

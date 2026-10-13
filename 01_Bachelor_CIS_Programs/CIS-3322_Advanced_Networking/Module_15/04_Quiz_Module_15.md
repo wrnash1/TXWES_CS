@@ -234,8 +234,6 @@ Distractor Analysis:
 
 ---
 
----
-
 ## Question 11
 
 A network engineer writes a Python script using the `requests` library to retrieve device information from Cisco DNA Center. The script returns a 401 HTTP status code. What is the most likely cause?

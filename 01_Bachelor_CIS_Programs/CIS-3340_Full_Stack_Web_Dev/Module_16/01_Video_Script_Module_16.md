@@ -26,16 +26,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
----
-
-## Production Notes
-
-- Camera: Professor Nash on-screen throughout — no screen capture needed for this module
-- Use [PAUSE] for slides; [SHOW CODE] only for the brief code review segments
-- Slide deck: exam domain breakdown, service mapping table, rapid-fire review cards
-- Have DVA-C02 exam guide PDF on screen for domain breakdown section
-
 ---
 
 ## Section 1: Introduction — The Finish Line (0:00 – 1:30)

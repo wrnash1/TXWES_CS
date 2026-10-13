@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-3350 Software Engineering and Agile
 **Certification Alignment:** PSM I (Professional Scrum Master I) – Scrum.org
 **Recorded by:** Professor Nash | Texas Wesleyan University
@@ -272,10 +269,6 @@ The original peer-reviewed paper introducing the Spiral model and the cost-of-ch
 - [ ] Explain the three pillars of empiricism and connect each to a specific Scrum event or artifact
 - [ ] Explain why Scrum is designed for complex rather than complicated problems
 - [ ] Read the "Purpose of the Scrum Guide" and "Scrum Theory" sections of the 2020 Scrum Guide at scrum.org
-
----
-
-
 
 ---
 

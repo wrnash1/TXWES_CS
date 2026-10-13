@@ -20,24 +20,9 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Estimated Duration:** 23–27 minutes
 **Certification Alignment:** Technical Interview Readiness (LeetCode / HackerRank)
 **Recorded by:** Professor Nash | Texas Wesleyan University
-
----
-
-> **PRODUCTION NOTES FOR INSTRUCTOR:**
->
-> - Use VS Code + Python terminal for all [DEMO] sections.
-> - [PAUSE] = 2 seconds of silence.
-> - Draw the graph on the whiteboard, then trace BFS and DFS level by level / step by step before showing code. Students must see the traversal order before reading it in code.
-> - BFS: emphasize the queue (FIFO) and level-by-level expansion. Use a concrete graph with labeled levels.
-> - DFS: emphasize the stack (LIFO, or call stack for recursion) and going deep before wide. Show both iterative (explicit stack) and recursive versions.
-> - BFS finds the **shortest path in an unweighted graph**. State this clearly — it is a key interview fact.
-> - Topological sort is DFS-based. Walk through the post-order finish time intuition.
-> - Common mistakes: forgetting to mark nodes as visited before pushing to the queue (causes duplicate processing), using a list instead of deque for BFS (O(n) pop from front), recursion depth limit for DFS on large graphs.
-> - Number of Islands is the canonical BFS/DFS interview problem. Trace it on a small grid.
 
 ---
 

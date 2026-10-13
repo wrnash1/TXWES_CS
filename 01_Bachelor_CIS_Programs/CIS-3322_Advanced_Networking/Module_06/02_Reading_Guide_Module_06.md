@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-3322 Advanced Networking
 **Certification Alignment:** Cisco CCNA 200-301 (Domain 2: Network Access - 20%)
 **Prepared by:** Professor Nash | Texas Wesleyan University
@@ -283,8 +280,6 @@ The following open educational resources extend EtherChannel and link aggregatio
 4. **Cisco IOS Configuration Guide — EtherChannel** (cisco.com): Cisco's official IOS configuration guide for EtherChannel covers all supported load balancing methods, LACP system priority, port priority, and hot-standby port behavior with CLI examples.
 
 5. **GNS3 Labs — EtherChannel with LACP** (gns3.com/marketplace/featured): GNS3 community lab files for EtherChannel with LACP on Cisco IOS virtual routers and switches, allowing testing of multi-link aggregation without physical hardware.
-
-
 
 ---
 

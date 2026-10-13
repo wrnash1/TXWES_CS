@@ -26,7 +26,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 ---
 
 ## Pre-Roll Slide (on screen while intro plays)
@@ -424,10 +423,3 @@ Quiz and discussion are due Sunday at midnight.
 See you in Module 6.
 
 ---
-
-## Production Notes
-
-- Screen capture: all code demonstrations at 1080p, font size 18 or larger
-- Pause on `model.summary()` output long enough for students to read each line
-- Annotate the Functional API tensor flow diagram to show data path from Input to Model
-- Closed captions required for all segments

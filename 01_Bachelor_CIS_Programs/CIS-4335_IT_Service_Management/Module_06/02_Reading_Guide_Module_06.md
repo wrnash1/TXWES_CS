@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-4335 IT Service Management — Texas Wesleyan University
 **Instructor:** Professor Nash
 **Certification Alignment:** ITIL 4 Foundation
@@ -342,8 +339,6 @@ A practitioner guide covering how to define, collect, and use metrics to evaluat
 **3. Lean IT Association — Applying Lean to IT Service Improvement**
 <https://leanit.org/lean-itsm>
 An overview of how Lean principles (waste elimination, flow, continuous improvement) complement the ITIL 4 Continual Improvement practice. Provides practical examples of improvement techniques such as Kaizen events and value stream analysis that can be used within the ITIL model.
-
-
 
 ---
 

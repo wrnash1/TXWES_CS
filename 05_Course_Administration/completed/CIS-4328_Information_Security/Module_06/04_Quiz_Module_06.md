@@ -192,8 +192,6 @@ D. Insider threat
 
 ---
 
----
-
 ### Question 11
 
 A user authenticates to a web application using SAML 2.0. The application never directly handles the user's credentials. Instead, the user is redirected to their organization's identity provider, authenticates there, and a signed XML assertion is returned to the application. Which component is the service provider in this scenario?

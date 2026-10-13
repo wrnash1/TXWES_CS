@@ -348,8 +348,6 @@ Also delete the KMS key alias and schedule the KMS key for deletion (minimum 7-d
 
 ---
 
----
-
 ## Part 9 — Challenge Exercise
 
 ### Challenge 1: Vault Dynamic Secrets Integration

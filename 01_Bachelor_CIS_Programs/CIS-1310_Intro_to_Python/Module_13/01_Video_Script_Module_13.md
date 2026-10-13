@@ -20,21 +20,9 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Estimated Duration:** 14–16 minutes
 **Certification Alignment:** PCAP — Certified Associate in Python Programming (Python Institute)
 **Recorded by:** Professor Nash | Texas Wesleyan University
-
----
-
-> **PRODUCTION NOTES FOR INSTRUCTOR:**
->
-> - Use screen-share for all [DEMO] sections — run live in Ubuntu terminal/REPL.
-> - [PAUSE] = hold 2 seconds of silence.
-> - Show the `import math` vs `from math import sqrt` namespace difference live — this is an exam question.
-> - Demonstrate the `__name__ == '__main__'` guard by running a file directly and then importing it.
-> - Create a two-file custom module example so students see how splitting code across files works.
-> - Run `pip install requests` and show the virtual environment workflow — students will encounter pip immediately in any real project.
 
 ---
 

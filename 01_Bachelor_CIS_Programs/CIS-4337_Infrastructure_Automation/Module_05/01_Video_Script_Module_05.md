@@ -26,7 +26,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 Welcome back to CIS-4337. I am Professor Nash. Modules are one of Terraform's most powerful features. They are also one of the most tested topics on the Associate 003 exam.
 
 By the end of this video you will understand what a Terraform module is, why modules exist, how to create a module with the correct file structure, how to call a module from a root configuration, how module inputs and outputs work, and how to use modules from the public Terraform Registry.

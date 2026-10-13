@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4327 Database Administration
 
 ## Texas Wesleyan University | Professor Nash
@@ -420,8 +417,6 @@ and security patterns.
 
 ---
 
----
-
 ## 9. Supplemental Resources
 
 The following free, open-access resources support Module 12 topics:
@@ -443,8 +438,6 @@ Explains the `FOR SYSTEM_TIME AS OF` clause, the 7-day time travel window, fail-
 Module 12 Reading Guide — CIS-4327 Database Administration
 
 Texas Wesleyan University | Proprietary and Confidential. Not for disclosure outside of course participants.
-
-
 
 ---
 

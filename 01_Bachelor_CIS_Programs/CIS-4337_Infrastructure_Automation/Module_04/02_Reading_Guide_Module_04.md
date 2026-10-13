@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Reading Guide — Module 04: Terraform State — Local and Remote Backends
 
 ### Course Alignment: HashiCorp Terraform Associate 003
@@ -367,8 +364,6 @@ Covers both the classic `terraform import` CLI command and the declarative `impo
 ---
 
 Module 04 Reading Guide — CIS-4337 Infrastructure Automation — Texas Wesleyan University
-
-
 
 ---
 

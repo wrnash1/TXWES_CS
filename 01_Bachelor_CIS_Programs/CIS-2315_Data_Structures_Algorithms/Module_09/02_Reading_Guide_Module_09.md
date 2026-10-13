@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-2315 Data Structures & Algorithms
 
 **Certification Alignment:** Technical Interview Readiness (LeetCode / HackerRank)
@@ -365,8 +362,6 @@ The following free, openly licensed resources reinforce the concepts in this mod
 - [ ] Implement `has_cycle_undirected` and test on a graph with a cycle and a tree.
 - [ ] Complete the Module 09 Lab.
 - [ ] Complete the Module 09 Quiz.
-
-
 
 ---
 

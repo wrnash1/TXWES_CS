@@ -27,7 +27,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 Hello, everyone, and welcome to Module 01 of CIS-4335 IT Service Management. I am Professor Nash, and I am glad you are here. This is the first module of the course, and it is also one of the most important — because what we cover today forms the conceptual foundation for everything that follows for the next fifteen weeks.
 
 By the end of this video, you will be able to define IT service management and explain why organizations adopt it, describe the evolution of ITIL from its origins through ITIL 4, explain the core concept of value co-creation, and identify the key components of the ITIL 4 framework at a high level.

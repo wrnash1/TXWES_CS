@@ -22,7 +22,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Certification Alignment:** CompTIA Data+ (DA0-001)
 
 **Estimated Duration:** 18–22 minutes

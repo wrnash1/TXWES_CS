@@ -27,7 +27,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 Welcome to Module 05. I am Professor Nash. In Module 02 we introduced the Service Value Chain as the operating model at the heart of the SVS. Today we go much deeper. We will examine each of the six SVC activities in detail, understand what inputs and outputs each activity works with, and explore how activities combine into value streams that serve specific organizational purposes.
 
 By the end of this module you will be able to describe the purpose, inputs, and outputs of each of the six SVC activities; explain how the Improve activity differs from the others; describe how value streams combine SVC activities for specific scenarios; and connect SVC activities to specific ITIL 4 practices.

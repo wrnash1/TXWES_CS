@@ -216,8 +216,6 @@ Format: Submit as a single PDF or Word document. Use the section headings from t
 
 ---
 
----
-
 ## Part 9 — Challenge Exercise
 
 ### Challenge 1: Multi-Framework Breach Notification Gap Analysis

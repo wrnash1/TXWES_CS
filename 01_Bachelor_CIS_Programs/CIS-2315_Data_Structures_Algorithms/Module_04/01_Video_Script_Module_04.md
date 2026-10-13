@@ -20,22 +20,9 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Estimated Duration:** 22–26 minutes
 **Certification Alignment:** Technical Interview Readiness (LeetCode / HackerRank)
 **Recorded by:** Professor Nash | Texas Wesleyan University
-
----
-
-> **PRODUCTION NOTES FOR INSTRUCTOR:**
->
-> - Use VS Code + Python terminal for all [DEMO] sections.
-> - [PAUSE] = 2 seconds of silence.
-> - Recursion is the hardest mental leap in the first half of this course. Spend time on the call stack diagram — draw it vertically with each frame labeled. Students who can draw the call stack for `factorial(4)` have understood recursion.
-> - The three-question framework (base case? progress toward base case? trust the return value?) is the practical anchor. Return to it for every recursive function written.
-> - Backtracking is the most interview-dense topic in the module. The template — choose, recurse, unchoose — applies directly to Subsets, Permutations, and Generate Parentheses. Make the template explicit before showing any code.
-> - Memoization: show the naive Fibonacci call tree first (draw it), then show how memoization collapses it. The visual is essential.
-> - Common mistakes: missing base case (infinite recursion), not returning the recursive result, mutating shared state without undoing it in backtracking.
 
 ---
 

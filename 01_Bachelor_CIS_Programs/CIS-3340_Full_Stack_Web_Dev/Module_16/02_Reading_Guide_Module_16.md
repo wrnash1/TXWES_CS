@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-3340 Full Stack Web Development
 
 ## Texas Wesleyan University | Professor Nash
@@ -401,8 +398,6 @@ The official SAM reference covering the `Transform` declaration, `AWS::Serverles
 **4. AWS CodePipeline User Guide**
 [https://docs.aws.amazon.com/codepipeline/latest/userguide/welcome.html](https://docs.aws.amazon.com/codepipeline/latest/userguide/welcome.html)
 The official CodePipeline reference covering pipeline stages (Source, Build, Deploy), integration with CodeBuild for build specs and test reports, CodeDeploy deployment strategies (in-place, blue/green, canary, linear), Lambda weighted aliases for canary deployments, and AppSpec file structure — covers the CI/CD patterns in Domain 3 and the deployment strategy comparison in Section 6.
-
-
 
 ---
 

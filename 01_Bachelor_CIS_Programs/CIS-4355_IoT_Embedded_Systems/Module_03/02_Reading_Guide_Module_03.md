@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-4355 IoT and Embedded Systems
 **Instructor:** Professor Nash
 **Certification Target:** CompTIA IoT+ Domain 2
@@ -262,8 +259,6 @@ A browser-based simulator supporting Arduino C sketches and MicroPython on ESP32
 ---
 
 End of Reading Guide – Module 03
-
-
 
 ---
 

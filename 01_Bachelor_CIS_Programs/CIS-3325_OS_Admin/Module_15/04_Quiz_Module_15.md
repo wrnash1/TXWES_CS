@@ -17,8 +17,6 @@ D) Containers require more RAM than VMs because each container loads a complete 
 
 ---
 
----
-
 **Question 2**
 An administrator runs `docker run -d -p 8080:80 nginx` on a Linux server. What does the `-p 8080:80` flag accomplish?
 A) It limits the container's CPU usage to 80% with a burst cap of 8080 MHz.
@@ -30,8 +28,6 @@ D) It sets the container's hostname to `8080` and assigns it to network `80`.
     *   *Why A is incorrect:* CPU resource limits are set with `--cpus` or `--cpu-shares` flags, not with `-p`. The `-p` flag is exclusively for port mapping between host and container.
     *   *Why C is incorrect:* Volume mounts use the `-v` flag with the syntax `-v /host/path:/container/path`. The `-p` flag has no relationship to filesystem mounts.
     *   *Why D is incorrect:* Container hostname is set with `--hostname` and network assignment uses `--network`. The `-p` flag performs port publishing only and does not affect the container's network identity.
-
----
 
 ---
 

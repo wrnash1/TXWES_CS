@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-3310 IT Project Management
 
 ## Texas Wesleyan University | Professor Nash
@@ -375,8 +372,6 @@ The following free, openly licensed resources extend the concepts in this module
 5. **Control Chart Tutorial — StatisticsHowTo (Free)**
    [statisticshowto.com/control-chart](https://www.statisticshowto.com/control-chart/)
    Clear explanation of UCL/LCL calculation, the Rule of Seven, and how to interpret out-of-control signals. Includes visual examples for all common control chart patterns.
-
-
 
 ---
 

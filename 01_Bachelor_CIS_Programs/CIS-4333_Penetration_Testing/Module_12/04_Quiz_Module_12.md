@@ -220,8 +220,6 @@ A penetration tester uses the LOLBAS technique with `certutil.exe` on a compromi
 
 ---
 
----
-
 **Question 11**
 
 A tester on a compromised Linux host runs `cat /etc/crontab` and finds: `* * * * * root /tmp/cleanup.sh`. The file `/tmp/cleanup.sh` is world-writable. What privilege escalation path does this create?

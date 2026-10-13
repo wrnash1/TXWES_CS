@@ -380,7 +380,6 @@ nano bank_account.py
 # Demonstrates a complete class with encapsulation
 # Module 14 Lab — CIS-1310
 
-
 class BankAccount:
     '''A simple bank account with deposit, withdraw, and balance inquiry.'''
 
@@ -438,7 +437,6 @@ class BankAccount:
     def __repr__(self):
         return (f'BankAccount(owner={self.owner!r}, '
                 f'balance={self._balance!r})')
-
 
 if __name__ == '__main__':
     print(f'=== {BankAccount.bank_name} ===')
@@ -548,7 +546,6 @@ nano student.py
 # A Student class with grade tracking
 # Module 14 Lab — CIS-1310
 
-
 class Student:
     '''Represents a student with a name, ID, and collection of grades.'''
 
@@ -599,7 +596,6 @@ class Student:
 
     def __repr__(self):
         return f'Student(name={self.name!r}, student_id={self.student_id!r})'
-
 
 if __name__ == '__main__':
     s1 = Student('Alice Johnson', 'S001')
@@ -690,7 +686,6 @@ nano temperature.py
 # temperature.py
 # Temperature class with full comparison support
 
-
 class Temperature:
     '''Represents a temperature with unit conversion.'''
 
@@ -748,7 +743,6 @@ class Temperature:
             return self._celsius - other._celsius  # difference in degrees
         return Temperature(self._celsius - other)
 
-
 # Test all comparisons
 freezing = Temperature(0)
 boiling = Temperature(100)
@@ -790,7 +784,6 @@ nano date_class.py
 # date_class.py
 # Date class with classmethod factory methods and staticmethod utilities
 import datetime
-
 
 class Date:
     '''A date with alternative constructors.'''
@@ -839,7 +832,6 @@ class Date:
             return (self.year, self.month, self.day) == (other.year, other.month, other.day)
         return NotImplemented
 
-
 # Test
 d1 = Date(2025, 7, 4)
 d2 = Date.from_string('2025-07-04')
@@ -870,13 +862,11 @@ nano slots_demo.py
 # Compare memory usage: regular class vs __slots__
 import sys
 
-
 class Point:
     '''Regular class — has __dict__ per instance.'''
     def __init__(self, x, y):
         self.x = x
         self.y = y
-
 
 class PointSlots:
     '''Slotted class — no __dict__, fixed attributes only.'''
@@ -885,7 +875,6 @@ class PointSlots:
     def __init__(self, x, y):
         self.x = x
         self.y = y
-
 
 # Measure per-instance size
 p = Point(1, 2)

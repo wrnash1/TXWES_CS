@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-4334 AWS Cloud Architecture
 **Certification Target:** AWS Solutions Architect Associate (SAA-C03)
 
@@ -529,8 +526,6 @@ Free course covering S3 fundamentals, access control, lifecycle management, encr
 **3. AWS Documentation — S3 Object Lock Overview**
 https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock-overview.html
 Comprehensive guide to S3 Object Lock Governance and Compliance modes, retention policies, and legal hold — essential for understanding WORM compliance requirements tested on the SAA-C03 exam.
-
-
 
 ---
 

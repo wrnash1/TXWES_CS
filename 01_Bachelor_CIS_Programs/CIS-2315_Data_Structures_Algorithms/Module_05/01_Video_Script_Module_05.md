@@ -20,23 +20,9 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Estimated Duration:** 22–26 minutes
 **Certification Alignment:** Technical Interview Readiness (LeetCode / HackerRank)
 **Recorded by:** Professor Nash | Texas Wesleyan University
-
----
-
-> **PRODUCTION NOTES FOR INSTRUCTOR:**
->
-> - Use VS Code + Python terminal for all [DEMO] sections.
-> - [PAUSE] = 2 seconds of silence.
-> - Draw every tree on the whiteboard/slide before coding. Students who can draw a tree and annotate left/right children understand the structure. Students who cannot will struggle with every traversal.
-> - Traversal order is the hardest concept — inorder, preorder, postorder. Use the same tree (1-2-3-4-5) for all three and trace each one. The visual comparison makes the difference.
-> - Level-order (BFS) is the most common interview traversal. Use a queue; never mention it without drawing the queue state.
-> - BST property: left < root < right. Emphasize that inorder traversal of a valid BST produces a sorted sequence — this is how you validate a BST.
-> - BST delete has three cases. Spend extra time on the successor case (node has two children). It is the hardest and most frequently tested.
-> - Common mistakes: forgetting to `return` the recursive call result, confusing inorder/preorder, not handling None nodes in recursive calls.
 
 ---
 

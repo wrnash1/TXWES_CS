@@ -20,38 +20,9 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Estimated Duration:** 21–23 minutes
 **Certification Alignment:** CompTIA A+ Core 1 (220-1101) — Domain 3.5: Given a scenario, install and configure motherboards, CPUs, and add-on cards
 **Recorded by:** Professor Nash | Texas Wesleyan University
-
----
-
-## Production Notes
-
-Stage the following components before recording:
-
-- One Intel LGA socket motherboard (LGA1700 or similar) — show the pin array in the socket
-- One AMD PGA socket motherboard (AM4 or similar) — show the pins on the CPU underside
-- One CPU (Intel or AMD) — show the triangle alignment marker on the corner
-- A tube of thermal paste (standard grey compound)
-- A stock Intel or AMD heatsink-fan (HSF) assembly
-- An aftermarket tower cooler (e.g., Noctua or Cooler Master) if available
-- A 4-pin PWM fan cable for the CPU_FAN header demonstration
-
-Key exam traps to call out explicitly:
-
-- LGA pins are on the motherboard socket (not the CPU); PGA pins are on the processor
-- BGA means soldered — no field replacement possible; distinct from LGA and PGA
-- Thermal paste: pea-sized dot only, do not spread manually
-- CPU fan header: BIOS monitors it — missing fan signal triggers shutdown, not just a warning
-- Hyper-Threading / SMT: threads are not the same as physical cores
-
-Safety notes:
-
-- Never touch the underside of an LGA CPU (the contact pads) or the pins in an LGA socket
-- Always handle a CPU by its edges with an ESD strap or after grounding yourself
-- Never apply downward force when seating a PGA CPU — zero insertion force (ZIF) socket requires no pressure to seat; only the lever applies clamping force
 
 ---
 

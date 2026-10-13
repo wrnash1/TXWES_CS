@@ -513,8 +513,6 @@ rm -rf output/ .terraform/
 
 ---
 
----
-
 ## Part 9 — Challenge Exercise
 
 ### Challenge 1: Versioned Module with Git Source and Submodule Composition

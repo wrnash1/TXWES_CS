@@ -1,6 +1,5 @@
 # Reading Guide: Module 13 — IT Asset Management
 
-
 <!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 <div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
   <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
@@ -18,7 +17,6 @@
   </div>
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
-
 
 ## Course: CIS-4335 IT Service Management
 
@@ -236,8 +234,6 @@ The authoritative U.S. government standard for data sanitization methods — cle
 **3. ITAM Forum — Software Asset Management Best Practices**
 <https://www.itassetmanagement.net/best-practices/>
 Practitioner-focused resource from the IT Asset Management Forum covering SAM program maturity, license reconciliation workflows, vendor audit preparation, and over/under-licensing risk management. Provides real-world context for the SAM concepts covered in this module.
-
-
 
 ---
 

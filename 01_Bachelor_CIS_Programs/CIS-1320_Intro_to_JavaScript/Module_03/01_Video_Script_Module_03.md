@@ -20,20 +20,9 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Estimated Duration:** 15–18 minutes
 **Certification Alignment:** JSE — Certified Associate in JavaScript Programming (OpenEDG / JS Institute)
 **Recorded by:** Professor Nash | Texas Wesleyan University
-
----
-
-> **PRODUCTION NOTES FOR INSTRUCTOR:**
->
-> - Use DevTools Console for all [DEMO] sections — run every example live.
-> - [PAUSE] = 2 seconds of silence.
-> - The type coercion and `==` vs `===` sections are the highest-value exam content — go slowly.
-> - Run the `1 + 2 + '3'` vs `'1' + 2 + 3` demo and make students predict the output before showing it.
-> - The `typeof null` quirk always generates questions — address it directly.
 
 ---
 

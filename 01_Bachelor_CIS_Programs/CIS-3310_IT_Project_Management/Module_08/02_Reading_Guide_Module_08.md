@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-3310 IT Project Management
 **Certification Alignment:** CompTIA Project+ (PK0-005) | PMBOK 6th and 7th Editions
 **Prepared by:** Professor Nash | Texas Wesleyan University
@@ -287,8 +284,6 @@ The following free, openly licensed resources extend the concepts in this module
 5. **Communication Channels Formula Drill — PM Exam SmartNotes (Free)**
    [pmexamsmartnotes.com/communication-channels-formula](https://www.pmexamsmartnotes.com/communication-channels-formula/)
    Interactive formula practice for N(N-1)/2 with examples at various team sizes — essential preparation for calculation questions on the Module 08 quiz.
-
-
 
 ---
 

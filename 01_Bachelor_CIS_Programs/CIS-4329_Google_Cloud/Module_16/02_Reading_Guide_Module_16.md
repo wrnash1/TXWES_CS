@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4329 Google Cloud Computing
 
 ## Texas Wesleyan University | Professor Nash
@@ -609,8 +606,6 @@ Google's official hands-on ACE certification learning path including Qwiklabs fo
 **3. Google Cloud Documentation — IAM Overview**
 <https://cloud.google.com/iam/docs/overview>
 Comprehensive reference for GCP IAM covering the resource hierarchy, role types (primitive, predefined, custom), service accounts, allow policies, deny policies, and IAM conditions — the most heavily tested ACE exam domain. Particular focus on the distinction between predefined and primitive roles and the Workload Identity pattern for key-free service authentication.
-
-
 
 ---
 

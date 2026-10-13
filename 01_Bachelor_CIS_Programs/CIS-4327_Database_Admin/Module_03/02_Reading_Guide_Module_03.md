@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4327 Database Administration
 
 ## Texas Wesleyan University — Professor Nash
@@ -305,8 +302,6 @@ Source code, release binaries, and detailed setup instructions for the Cloud SQL
 **3. PostgreSQL — pg_audit Extension Documentation**
 https://github.com/pgaudit/pgaudit
 Documentation and configuration reference for the pgaudit extension used with Cloud SQL for PostgreSQL, covering log classes, object auditing, and session auditing modes.
-
-
 
 ---
 

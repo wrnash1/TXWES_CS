@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4320 Enterprise Systems and ERP
 
 ## Texas Wesleyan University | Professor Nash
@@ -477,8 +474,6 @@ Official SAP learning journey for SAP Analytics Cloud. Covers connecting to SAP 
 Tableau's visual analysis guidebook covers chart type selection, cognitive load reduction, dashboard design for executive audiences, and data storytelling principles — the theoretical foundation for the dashboard design principles in Section 7 of this Reading Guide. Applicable to Salesforce dashboards, SAC stories, and any BI platform.
 
 **Certification Alignment:** Salesforce Administrator / SAP S/4HANA Essentials
-
-
 
 ---
 

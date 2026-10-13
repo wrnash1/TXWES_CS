@@ -223,8 +223,6 @@ Submit all screenshots and the finding report as a single PDF or ZIP file to the
 
 ---
 
----
-
 ## Part 9 — Challenge Exercise
 
 ### Challenge 1: Wireless Assessment Documentation Report

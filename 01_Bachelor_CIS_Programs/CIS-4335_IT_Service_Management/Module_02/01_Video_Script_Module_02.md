@@ -27,7 +27,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 Welcome back, everyone. I am Professor Nash, and this is Module 02 of CIS-4335 IT Service Management. In Module 01 we laid the groundwork — we defined services, explained value co-creation, introduced the ITIL history, and got a bird's-eye view of the ITIL 4 framework.
 
 Today we go deeper into the single most important structural concept in ITIL 4: the Service Value System. By the end of this module you will be able to describe all five components of the SVS and explain how they interact, explain the purpose and six activities of the Service Value Chain, describe what a value stream is and why it matters, and explain the relationship between the SVS and organizational agility.

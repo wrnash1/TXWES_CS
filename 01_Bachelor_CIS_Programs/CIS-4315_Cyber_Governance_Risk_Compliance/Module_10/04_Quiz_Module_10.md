@@ -276,8 +276,6 @@ D. The IRP development should be led by the IT department rather than the securi
 
 ---
 
----
-
 ### Question 11 (5 points)
 
 An organization discovers that its Incident Response Plan was last updated eighteen months ago, before the company migrated its primary systems to a hybrid cloud environment. The plan's containment procedures reference on-premises network isolation tools that are no longer deployed. What is the most appropriate immediate action?

@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-1310 Introduction to Python
 
 **Certification Alignment:** PCAP — Certified Associate in Python Programming (Python Institute)
@@ -371,8 +368,6 @@ Work through in order:
 - [ ] Review the Certification Exam Tips in Section 4.
 - [ ] Preview the lab tasks in Section 7.
 - [ ] Proceed to the Module 02 Lab Activity.
-
-
 
 ---
 

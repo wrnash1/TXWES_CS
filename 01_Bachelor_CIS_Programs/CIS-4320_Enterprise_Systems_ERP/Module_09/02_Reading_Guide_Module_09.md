@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4320 Enterprise Systems and ERP
 
 ## Texas Wesleyan University | Professor Nash
@@ -445,8 +442,6 @@ Official SAP product documentation. The FI section provides detailed explanation
 **3. AICPA — Revenue Recognition and Financial Reporting Standards (ASC 606 / IFRS 15)**
 <https://www.aicpa.org/resources/article/revenue-recognition>
 Resource covering how revenue recognition standards affect how ERP systems must be configured to comply with ASC 606 and IFRS 15. Relevant to the financial statement generation content in this module and the compliance themes in Module 15.
-
-
 
 ---
 

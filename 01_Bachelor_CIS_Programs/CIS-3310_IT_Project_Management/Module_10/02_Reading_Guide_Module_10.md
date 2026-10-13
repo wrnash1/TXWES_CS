@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-3310 IT Project Management
 
 ## Texas Wesleyan University | Professor Nash
@@ -323,8 +320,6 @@ The following free, openly licensed resources extend the concepts in this module
 5. **EVM Explained — ClearlyAgile (Free Article)**
    [clearlyagile.com/agile-blog/earned-value-management](https://www.clearlyagile.com/agile-blog/earned-value-management)
    Plain-language EVM explainer that covers how EVM applies in both predictive and hybrid agile contexts — useful for students heading into Module 12 (Agile) after mastering EVM.
-
-
 
 ---
 

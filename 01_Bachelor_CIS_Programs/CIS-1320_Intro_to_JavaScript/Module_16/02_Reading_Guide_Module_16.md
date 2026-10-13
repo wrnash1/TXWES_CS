@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-1320 Introduction to JavaScript
 
 **Certification Alignment:** JSE — Certified Associate in JavaScript Programming (OpenEDG / JS Institute)
@@ -562,8 +559,6 @@ The following free, openly available resources are ideal for final exam preparat
 - [ ] Write five small programs from memory: a closure counter, a Promise chain, an async/await fetch, an event-delegated list, and a custom error class.
 - [ ] Read [MDN JavaScript Guide](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide) sections for any topics that feel uncertain.
 - [ ] Schedule and complete the JSE exam (see Lab 16).
-
-
 
 ---
 

@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-3340 Full Stack Web Development
 **Certification Alignment:** AWS Certified Developer - Associate (DVA-C02)
 **Texas Wesleyan University | Professor Nash**
@@ -468,8 +465,6 @@ Google's free responsive design course covering the viewport, media queries, typ
 **4. The Odin Project — Responsive Design**
 [https://www.theodinproject.com/lessons/node-path-advanced-html-and-css-introduction-to-responsive-design](https://www.theodinproject.com/lessons/node-path-advanced-html-and-css-introduction-to-responsive-design)
 A free, project-based lesson covering mobile-first methodology, natural responsiveness, and responsive images with hands-on exercises that complement the Lab 03 hamburger navigation work.
-
-
 
 ---
 

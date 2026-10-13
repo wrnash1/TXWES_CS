@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-3350 Software Engineering and Agile
 
 **Certification Alignment:** PSM I (Professional Scrum Master I) – Scrum.org
@@ -263,10 +260,6 @@ A free catalog of code refactoring techniques closely related to design patterns
 - [ ] Describe the God Object anti-pattern and explain why it slows Sprint velocity
 - [ ] Connect Agile Manifesto Principle 9 to the business value of design patterns in Scrum
 - [ ] Complete this module's Lab and Quiz
-
----
-
-
 
 ---
 

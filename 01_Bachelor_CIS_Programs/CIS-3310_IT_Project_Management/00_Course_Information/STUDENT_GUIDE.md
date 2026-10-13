@@ -51,7 +51,6 @@ Below is the study roadmap for every course in our computer science and computer
 | :--- | :--- | :--- | :--- |
 | **CIS-3310: IT Project Management** | CompTIA Project+ / PMI CAPM | Develop WBS structures, compute critical paths using float times, map RACI matrices. | [PMI PMBOK Guide](https://www.pmi.org/) |
 
-
 ---
 
 ## 5. Final Exam Certification Policy (Module 16)

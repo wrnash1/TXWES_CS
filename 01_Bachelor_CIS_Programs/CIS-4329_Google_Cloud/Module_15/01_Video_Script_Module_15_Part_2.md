@@ -26,7 +26,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 ---
 
 ### Introduction
@@ -193,13 +192,3 @@ In Module 16 — the final module — we review all ACE exam domains, work throu
 See you there.
 
 ---
-
-### PRODUCTION NOTES
-
-- Slide: Billing export to BigQuery setup flow diagram
-- Screen share: BigQuery billing dataset — run a sample SQL query showing top costs by project/service
-- Slide: Recommender service — five recommender types with icons
-- Screen share: Cloud Console — Compute Engine → Recommendations panel showing VM rightsizing suggestion
-- Slide: Cloud Storage class comparison table (access frequency, minimum duration, use case)
-- Slide: ACE exam cost scenario decision tree (workload type → discount strategy)
-- Slide: GCP Always Free tier limits table

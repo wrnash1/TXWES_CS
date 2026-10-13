@@ -8,15 +8,6 @@
 
 ---
 
-## Production Notes
-
-- **Runtime Target:** 28–32 minutes
-- **Segments:** 6
-- **Visual Aids:** GoPhish dashboard screenshots, phishing email examples (authorized), campaign metrics
-- **Lab Environment:** Isolated GoPhish server, authorized test domain only
-
----
-
 ## Segment 1: The Human Element in Security (Lines 1–35)
 
 [SLIDE: Module 11 Title Card]

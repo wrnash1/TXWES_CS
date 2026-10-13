@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4330 Introduction to Artificial Intelligence
 
 ## Texas Wesleyan University | Professor Nash
@@ -404,8 +401,6 @@ A free web-based demo of Stanford's CoreNLP pipeline showing tokenization, POS t
 ---
 
 End of Reading Guide — Module 08
-
-
 
 ---
 

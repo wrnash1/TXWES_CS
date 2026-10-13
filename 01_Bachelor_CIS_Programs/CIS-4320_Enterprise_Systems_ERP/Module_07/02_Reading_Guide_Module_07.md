@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4320 Enterprise Systems and ERP | Texas Wesleyan University
 
 ## Instructor: Professor Nash
@@ -439,8 +436,6 @@ Covers the Service Cloud Case lifecycle, Entitlements, Milestones, Knowledge, an
 **3. Salesforce Help — Opportunity Forecasting and Pipeline Management**
 <https://help.salesforce.com/s/articleView?id=sf.forecasts3_overview.htm>
 Official Salesforce documentation on the Collaborative Forecasting module — covering forecast categories, quota tracking, and manager override capabilities. Directly relevant to Questions 3, 10, and 14 on forecast amount calculations.
-
-
 
 ---
 

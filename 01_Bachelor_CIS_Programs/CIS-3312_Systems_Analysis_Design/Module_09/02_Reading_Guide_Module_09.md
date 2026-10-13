@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-3312 Systems Analysis and Design
 
 ## Texas Wesleyan University | Professor Nash
@@ -482,7 +479,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
 
-
 ## Study Checklist
 
 Work through each item before attempting the quiz.
@@ -517,8 +513,6 @@ Work through each item before attempting the quiz.
 | Subprocess | Activity containing a complete internal process |
 | Terminate End | End event that kills all active process paths immediately |
 | To-Be Model | Process diagram showing the improved future state |
-
----
 
 ---
 

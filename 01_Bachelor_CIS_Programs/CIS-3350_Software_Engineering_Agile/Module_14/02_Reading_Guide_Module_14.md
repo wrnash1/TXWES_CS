@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-3350 Software Engineering and Agile
 
 **Certification Alignment:** PSM I (Professional Scrum Master I) – Scrum.org
@@ -284,10 +281,6 @@ A widely read free white paper describing how Spotify structured their engineeri
 - [ ] Compare SAFe and LeSS on product ownership, backlog structure, and coordination overhead
 - [ ] Connect both frameworks to Scrum's three pillars of empiricism
 - [ ] Complete this module's Lab and Quiz
-
----
-
-
 
 ---
 

@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4331 Azure Cloud Computing
 
 ## Texas Wesleyan University | Professor Nash
@@ -469,8 +466,6 @@ Azure Architecture Center decision tree for selecting between VMs, App Service, 
 - Azure Container Instances: learn.microsoft.com/en-us/azure/container-instances/container-instances-overview
 - Azure Kubernetes Service: learn.microsoft.com/en-us/azure/aks/intro-kubernetes
 - Microsoft Learn AZ-900 compute module: learn.microsoft.com/en-us/training/modules/describe-azure-compute-networking-services/
-
-
 
 ---
 

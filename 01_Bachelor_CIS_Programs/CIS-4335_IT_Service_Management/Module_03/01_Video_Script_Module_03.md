@@ -27,7 +27,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 Welcome back. This is Module 03, and today we cover the Four Dimensions of Service Management — one of the most consistently tested topic areas on the ITIL 4 Foundation exam.
 
 By the end of this module you will be able to name and describe all four dimensions of service management, explain why each dimension must be considered for every service and practice, apply the four dimensions to real-world scenarios to identify which dimension a problem belongs to, and describe the role of external factors — the PESTLE model — in shaping service management decisions.

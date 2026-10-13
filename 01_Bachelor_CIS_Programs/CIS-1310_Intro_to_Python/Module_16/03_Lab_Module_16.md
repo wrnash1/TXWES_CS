@@ -237,7 +237,6 @@ nano capstone.py
 import math
 import random
 
-
 # ── OOP Hierarchy ──────────────────────────────────────────────
 
 class Shape:
@@ -258,7 +257,6 @@ class Shape:
     def __str__(self):
         return self.describe()
 
-
 class Circle(Shape):
     def __init__(self, radius, color='black'):
         super().__init__(color)
@@ -268,7 +266,6 @@ class Circle(Shape):
 
     def area(self):
         return math.pi * self.radius ** 2
-
 
 class Rectangle(Shape):
     def __init__(self, width, height, color='black'):
@@ -281,7 +278,6 @@ class Rectangle(Shape):
     def area(self):
         return self.width * self.height
 
-
 class Square(Rectangle):
     def __init__(self, side, color='black'):
         super().__init__(side, side, color)
@@ -291,13 +287,11 @@ class Square(Rectangle):
         return (f'Square(side={self.side}, color={self.color!r}, '
                 f'area={self.area():.4f})')
 
-
 # ── Functions ──────────────────────────────────────────────────
 
 def total_area(shapes):
     '''Return sum of areas.'''
     return sum(s.area() for s in shapes)
-
 
 def classify_shapes(shapes):
     '''Return a dict mapping class name to count.'''
@@ -307,7 +301,6 @@ def classify_shapes(shapes):
         counts[key] = counts.get(key, 0) + 1
     return counts
 
-
 def largest_and_smallest(shapes):
     '''Return (largest, smallest) by area. Raises ValueError if empty.'''
     if not shapes:
@@ -316,7 +309,6 @@ def largest_and_smallest(shapes):
     smallest = min(shapes, key=lambda s: s.area())
     return largest, smallest
 
-
 def safe_create_circle(radius, color='black'):
     '''Create a Circle, catching ValueError for invalid radius.'''
     try:
@@ -324,7 +316,6 @@ def safe_create_circle(radius, color='black'):
     except ValueError as e:
         print(f'  [Warning] Could not create circle: {e}')
         return None
-
 
 # ── Main ───────────────────────────────────────────────────────
 
@@ -508,7 +499,6 @@ QUESTIONS = [
     },
 ]
 
-
 def run_quiz(questions):
     score = 0
     wrong = []
@@ -540,7 +530,6 @@ def run_quiz(questions):
         for q in wrong:
             print(f'  - {q["q"]}')
             print(f'    {q["hint"]}')
-
 
 if __name__ == '__main__':
     run_quiz(QUESTIONS)

@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-3310 IT Project Management
 **Certification Alignment:** CompTIA Project+ (PK0-005) | PMBOK 6th and 7th Editions
 **Prepared by:** Professor Nash | Texas Wesleyan University
@@ -298,8 +295,6 @@ The following free, openly licensed resources extend the concepts in this module
 5. **Scope Creep vs. Gold Plating — PM Study Circle**
    [pmstudycircle.com/scope-creep-vs-gold-plating](https://pmstudycircle.com/scope-creep-vs-gold-plating/)
    Concise explanation of the difference between scope creep and gold plating with exam-focused examples. Targets one of the most commonly missed distinctions on the Project+ exam.
-
-
 
 ---
 

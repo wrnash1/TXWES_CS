@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-3322 Advanced Networking
 **Certification Alignment:** Cisco CCNA 200-301 (Domain 1: Network Fundamentals - 20%)
 **Prepared by:** Professor Nash | Texas Wesleyan University
@@ -281,8 +278,6 @@ The following open educational resources extend subnetting and VLSM concepts to 
 4. **Cisco Learning Network — IP Addressing Study Group** (learningnetwork.cisco.com): The Cisco Learning Network community forums include thousands of subnetting practice problems and worked solutions posted by CCNA candidates and certified engineers.
 
 5. **GNS3 Academy — Free Subnetting Course** (academy.gns3.com): The GNS3 Academy offers a free subnetting course with video lessons and downloadable topology files for practicing IP addressing configurations on virtual routers, complementing the Packet Tracer approach used in this course.
-
-
 
 ---
 

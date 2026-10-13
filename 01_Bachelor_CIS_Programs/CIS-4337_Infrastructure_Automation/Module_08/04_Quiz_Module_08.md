@@ -203,8 +203,6 @@ D. Ignores the local state and starts with an empty state in S3.
 
 ---
 
----
-
 ### Question 11 (5 points)
 
 A developer runs `terraform state mv module.old_name module.new_name` after renaming a `module` block label in the configuration. What is the purpose of this operation?

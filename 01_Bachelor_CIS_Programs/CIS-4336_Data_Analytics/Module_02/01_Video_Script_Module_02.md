@@ -27,7 +27,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 Welcome back to CIS-4336. I am Professor Nash, and this is Module 02: Data Collection and Data Sources.
 
 In Module 01 we established what data is and how to classify it. Now we need to answer the practical question every analyst faces at the start of every project: where does the data come from, and how do we get it?

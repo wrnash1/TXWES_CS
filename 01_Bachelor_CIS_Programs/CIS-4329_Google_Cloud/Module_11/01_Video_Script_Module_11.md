@@ -26,7 +26,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 ## See: 01_Video_Script_Module_11_Part_2.md (Terraform)
 
 ## Certification Alignment: Google Cloud Associate Cloud Engineer (ACE)

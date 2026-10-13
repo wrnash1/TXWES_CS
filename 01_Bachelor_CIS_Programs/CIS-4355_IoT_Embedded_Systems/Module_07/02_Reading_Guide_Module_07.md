@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-4355 IoT and Embedded Systems
 
 **Institution:** Texas Wesleyan University | Professor Nash
@@ -450,8 +447,6 @@ The CoAP specification. Sections 4 (message format), 5 (request-response semanti
 **3. Eclipse Mosquitto Broker Documentation**
 [https://mosquitto.org/documentation/](https://mosquitto.org/documentation/)
 Configuration reference for the Mosquitto broker used in the Module 07 lab. Covers `listener`, `allow_anonymous`, `password_file`, `acl_file`, `max_keepalive`, `max_queued_messages`, and TLS configuration. The `mosquitto_pub` and `mosquitto_sub` command-line tools are documented here.
-
-
 
 ---
 

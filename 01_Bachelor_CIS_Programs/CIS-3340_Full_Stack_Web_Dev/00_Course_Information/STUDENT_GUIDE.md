@@ -51,7 +51,6 @@ Below is the study roadmap for every course in our computer science and computer
 | :--- | :--- | :--- | :--- |
 | **CIS-3340: Full Stack Web Dev** | AWS Certified Developer - Associate | Inspect HTTP payloads, write REST APIs using Express, deploy to AWS EC2. | [Mozilla Developer Network (developer.mozilla.org)](https://developer.mozilla.org/) |
 
-
 ---
 
 ## 5. Final Exam Certification Policy (Module 16)

@@ -26,16 +26,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
----
-
-## Production Notes
-
-- Slides: Use clean slide deck with formula callouts highlighted in yellow
-- Screen recording: Show spreadsheet calculations live during Segment 6
-- Graphics: Timeline bar chart with PV/EV/AC overlays
-- Tone: Conversational but precise — students should feel comfortable with math
-
 ---
 
 ## Segment 1 — Introduction and Why EVM Matters (0:00–2:30)

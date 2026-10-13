@@ -20,7 +20,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 ### Topic: Cloud Functions, Platform Selection, and gcloud Commands
 
 ### Estimated Duration: 10–12 minutes

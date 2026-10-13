@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-4331 Azure Cloud | Texas Wesleyan University
 **Instructor:** Professor Nash
 **AZ-900 Domain:** Describe Azure Architecture and Services (35-40% of exam)
@@ -517,8 +514,6 @@ Deep dive into NSG rule structure, default rules, priority evaluation, effective
 **3. Microsoft Learn — Azure VPN Gateway documentation**
 https://learn.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-about-vpngateways
 Explains Site-to-Site, Point-to-Site, and VNet-to-VNet gateway types, SKU tiers, BGP routing, and the distinction between VPN Gateway and ExpressRoute for hybrid connectivity.
-
-
 
 ---
 

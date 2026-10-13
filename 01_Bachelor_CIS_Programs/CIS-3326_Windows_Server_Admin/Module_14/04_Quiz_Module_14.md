@@ -162,8 +162,6 @@ An administrator wants to verify that Credential Guard is running on a Windows S
 
 ---
 
----
-
 ### Question 11 (5 points)
 
 An administrator wants to view the current Windows Defender antivirus definition

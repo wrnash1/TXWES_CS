@@ -18,7 +18,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Course:** CIS-4345 Machine Learning and Deep Learning
 
 **Institution:** Texas Wesleyan University

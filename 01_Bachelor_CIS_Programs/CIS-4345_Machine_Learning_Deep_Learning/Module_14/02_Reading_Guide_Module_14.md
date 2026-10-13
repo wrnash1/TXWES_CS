@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4345 Machine Learning and Deep Learning
 
 ## Texas Wesleyan University | Professor Nash
@@ -529,8 +526,6 @@ Comprehensive official guide comparing all four TFLite quantization strategies (
 
 **3. [FastAPI — Build APIs with Python](https://fastapi.tiangolo.com/)**
 FastAPI is the modern alternative to Flask for ML model serving, offering automatic OpenAPI documentation, type validation with Pydantic, and async request handling. Widely used in production ML systems and increasingly preferred over Flask for new projects.
-
-
 
 ---
 

@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4331 Azure Cloud Computing
 
 ## Texas Wesleyan University | Professor Nash
@@ -513,8 +510,6 @@ Overview of the Data Box product family (Data Box Disk, Data Box, Data Box Heavy
 - Azure Files overview: learn.microsoft.com/en-us/azure/storage/files/storage-files-introduction
 - Azure Data Box: learn.microsoft.com/en-us/azure/databox/data-box-overview
 - Microsoft Learn AZ-900 storage module: learn.microsoft.com/en-us/training/modules/describe-azure-storage-services/
-
-
 
 ---
 

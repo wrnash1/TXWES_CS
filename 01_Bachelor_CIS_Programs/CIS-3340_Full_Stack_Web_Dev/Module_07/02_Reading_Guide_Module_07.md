@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-3340 Full Stack Web Development
 **Certification Alignment:** AWS Certified Developer - Associate (DVA-C02)
 **Texas Wesleyan University | Professor Nash**
@@ -490,8 +487,6 @@ Complete reference for all HTTP methods including safe and idempotent semantics 
 **4. freeCodeCamp — Node.js and Express for Beginners**
 [https://www.freecodecamp.org/news/free-8-hour-node-express-course/](https://www.freecodecamp.org/news/free-8-hour-node-express-course/)
 A free video-based course covering project setup, middleware, routing, and error handling in Express — useful supplemental reference for students who prefer video walkthroughs alongside the reading guide and lab.
-
-
 
 ---
 

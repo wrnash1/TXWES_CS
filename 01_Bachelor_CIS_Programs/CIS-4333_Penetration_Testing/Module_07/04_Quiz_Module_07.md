@@ -212,8 +212,6 @@ During a penetration test, a tester discovers a buffer overflow vulnerability in
 
 ---
 
----
-
 ### Question 11
 
 A tester runs `use auxiliary/scanner/portscan/tcp` in Metasploit and sets `RHOSTS 192.168.1.0/24`. What type of Metasploit module is this, and how does it differ from an exploit module?

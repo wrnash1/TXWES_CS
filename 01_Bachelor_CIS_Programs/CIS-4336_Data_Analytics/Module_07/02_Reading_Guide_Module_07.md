@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4336 Data Analytics
 
 ## Texas Wesleyan University | Professor Nash
@@ -444,8 +441,6 @@ An interactive browser tool that lets you add data points to a scatter plot and 
 ---
 
 End of Module 07 Reading Guide
-
-
 
 ---
 

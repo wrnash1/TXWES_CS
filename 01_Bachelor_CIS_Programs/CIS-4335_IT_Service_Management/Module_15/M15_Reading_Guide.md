@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4335 IT Service Management
 
 ## Texas Wesleyan University | Professor Nash
@@ -375,8 +372,6 @@ From an ITIL perspective, the platform engineering team is essentially deliverin
 ---
 
 *End of Module 15 Reading Guide — approximately 265 lines*
-
-
 
 ---
 

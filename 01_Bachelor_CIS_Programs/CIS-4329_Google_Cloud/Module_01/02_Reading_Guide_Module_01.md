@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4329 Google Cloud Computing
 
 **Certification Alignment:** Google Cloud Associate Cloud Engineer (ACE)
@@ -496,8 +493,6 @@ core navigation. Free with a Skills Boost subscription or free trial credits.
 Official guidance from Google on structuring folders, projects, and billing
 accounts for enterprise environments, including naming conventions and
 governance recommendations.
-
-
 
 ---
 

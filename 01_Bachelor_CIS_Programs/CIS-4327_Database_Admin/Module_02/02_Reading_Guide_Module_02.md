@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4327 Database Administration
 
 ## Texas Wesleyan University — Professor Nash
@@ -336,8 +333,6 @@ Explains ERD symbols including Crow's Foot cardinality markers, entity types, an
 **3. Google Cloud — Choosing Between Cloud SQL and Cloud Spanner**
 https://cloud.google.com/blog/topics/developers-practitioners/choosing-between-cloud-sql-and-cloud-spanner
 Discusses schema design trade-offs when selecting between Cloud SQL and Cloud Spanner, including how normalization and interleaving factor into Google Cloud architecture decisions.
-
-
 
 ---
 

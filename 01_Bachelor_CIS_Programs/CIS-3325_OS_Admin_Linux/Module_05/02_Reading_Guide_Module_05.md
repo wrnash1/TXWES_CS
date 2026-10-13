@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-3325 OS Administration Linux
 
 ## Texas Wesleyan University | Professor Nash
@@ -437,8 +434,6 @@ Expect exam questions on:
 
 ---
 
----
-
 ## 9. Supplemental Resources
 
 **1. [man7.org — proc(5) Virtual Filesystem](https://man7.org/linux/man-pages/man5/proc.5.html)**
@@ -453,8 +448,6 @@ An interactive web tool that parses and explains crontab expressions in plain En
 ---
 
 *End of Module 05 Reading Guide*
-
-
 
 ---
 

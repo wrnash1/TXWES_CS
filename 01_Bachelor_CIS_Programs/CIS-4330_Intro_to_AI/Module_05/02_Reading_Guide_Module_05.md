@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4330 Introduction to AI | Texas Wesleyan University
 
 **AI-900 Domain:** Describe features of Natural Language Processing workloads on Azure (15-20%)
@@ -337,8 +334,6 @@ A concise reference glossary of NLP-specific terms including tokenization, embed
 **3. Microsoft Research — Responsible AI for NLP (blog)**
 <https://www.microsoft.com/en-us/research/blog/responsible-ai-for-natural-language-processing/>
 A Microsoft Research blog post examining fairness, bias, and responsible AI considerations specific to NLP applications. Directly connects Module 05 content to the AI-900 responsible AI domain and reinforces quiz content on NLP bias scenarios.
-
-
 
 ---
 

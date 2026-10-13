@@ -207,8 +207,6 @@ An engineer is designing a factory monitoring system where vibration sensors gen
 
 ---
 
----
-
 ### Question 11 (5 points)
 
 Which serial communication protocol uses a master-slave topology, requires only two wires (SDA and SCL), and supports multiple devices sharing the same bus using unique 7-bit addresses?

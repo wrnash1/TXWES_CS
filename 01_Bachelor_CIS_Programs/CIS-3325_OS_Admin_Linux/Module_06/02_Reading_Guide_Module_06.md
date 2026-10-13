@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-3325 OS Administration Linux
 
 ## Texas Wesleyan University | Professor Nash
@@ -488,8 +485,6 @@ Expect exam questions on:
 
 ---
 
----
-
 ## 9. Supplemental Resources
 
 **1. [Red Hat — A Practical Guide to LVM](https://www.redhat.com/sysadmin/lvm-vs-partitioning)**
@@ -504,8 +499,6 @@ The official smartmontools documentation wiki. Covers all SMART attribute defini
 ---
 
 *End of Module 06 Reading Guide*
-
-
 
 ---
 

@@ -20,7 +20,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Instructor:** Professor Nash
 **Estimated Duration:** 20-24 minutes
 **AI-900 Domain:** Describe fundamental principles of machine learning on Azure (20-25%)

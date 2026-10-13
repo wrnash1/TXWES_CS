@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-2315 Data Structures & Algorithms
 
 **Certification Alignment:** Technical Interview Readiness (LeetCode / HackerRank)
@@ -371,8 +368,6 @@ The following free, openly licensed resources reinforce the concepts in this mod
 - [ ] Write out the time and space complexity of 10 code snippets from memory.
 - [ ] Complete the Module 01 Lab — benchmark O(n) vs O(n²) and annotate a LeetCode solution.
 - [ ] Complete the Module 01 Quiz.
-
-
 
 ---
 

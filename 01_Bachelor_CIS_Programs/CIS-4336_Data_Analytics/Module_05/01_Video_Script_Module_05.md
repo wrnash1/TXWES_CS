@@ -27,7 +27,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 Welcome back to CIS-4336. I am Professor Nash, and this is Module 05: Statistical Foundations — Descriptive Statistics.
 
 Statistics is the mathematical language of data analysis. You cannot interpret data correctly, choose the right analytical method, or communicate findings accurately without a working knowledge of statistics. This module covers descriptive statistics — the branch that summarizes and describes what is in a dataset, before any inference or prediction.

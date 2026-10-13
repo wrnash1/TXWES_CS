@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-1320 Introduction to JavaScript
 
 **Certification Alignment:** JSE — Certified Associate in JavaScript Programming (OpenEDG / JS Institute)
@@ -465,8 +462,6 @@ The following free, openly available resources extend and reinforce the topics c
 - [ ] Add a new `<li>` to the list after the listener was registered — confirm the new item is also handled.
 - [ ] Complete the Module 12 Lab.
 - [ ] Complete the Module 12 Quiz.
-
-
 
 ---
 

@@ -208,8 +208,6 @@ Distractor Analysis:
 
 ---
 
----
-
 ### Question 11 (5 points)
 
 A Scrum Team's Sprint Retrospective consistently produces a list of 8–10 improvement items, but by the following Sprint Review none of the improvements have been implemented. What is the most likely root cause?

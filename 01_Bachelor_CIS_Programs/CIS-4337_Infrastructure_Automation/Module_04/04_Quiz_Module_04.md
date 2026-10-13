@@ -210,8 +210,6 @@ Distractor Analysis:
 
 ---
 
----
-
 ### Question 11 (5 points)
 
 What is the purpose of the `serial` field in the Terraform state file?

@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-3325 OS Administration Linux
 
 **Certification Alignment:** CompTIA Linux+ (XK0-005)
@@ -649,8 +646,6 @@ The official Debian APT documentation. Explains the relationship between dpkg, a
 
 **3. [How to Install Software from Source on Linux — It's FOSS](https://itsfoss.com/install-software-from-source-code/)**
 A practical walkthrough of the `./configure && make && sudo make install` workflow with clear explanations of what each step does, common configure flags like `--prefix`, and why `checkinstall` is recommended over bare `make install`. Includes troubleshooting for common build errors such as missing development libraries, which directly prepares students for the source compilation challenge in this module's lab.
-
-
 
 ---
 

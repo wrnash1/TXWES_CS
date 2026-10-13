@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-3310 IT Project Management
 **Certification Alignment:** CompTIA Project+ (PK0-005) | PMBOK 6th and 7th Editions
 **Prepared by:** Professor Nash | Texas Wesleyan University
@@ -298,8 +295,6 @@ The following free, openly licensed resources extend the concepts in this module
 5. **Cost of Quality Calculator and Guide — iSixSigma (Free)**
    [isixsigma.com/methodology/cost-of-quality](https://www.isixsigma.com/methodology/cost-of-quality-coq/)
    Detailed breakdown of prevention, appraisal, internal failure, and external failure costs with calculation examples — directly supports the COQ classification activity in the Module 06 lab.
-
-
 
 ---
 

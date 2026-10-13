@@ -1,6 +1,5 @@
 # Reading Guide: Module 10 — Network Services
 
-
 <!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 <div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
   <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
@@ -18,7 +17,6 @@
   </div>
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
-
 
 ## Course: CIS-3321 Network Administration
 
@@ -371,7 +369,6 @@ To confirm mastery before proceeding to this module's laboratory exercises and s
 ## 7. Faculty Synthesis & Academic Reflection
 > *"True mastery in computing and technology leadership is not measured by the ability to recite definitions, but by the ability to diagnose anomalous system behavior, defend architectural trade-offs under rigorous peer review, and build systems that remain resilient in the face of uncertainty."*  
 > — **Department of Computer Science & Information Systems, Texas Wesleyan University**
-
 
 ## Study Checklist
 

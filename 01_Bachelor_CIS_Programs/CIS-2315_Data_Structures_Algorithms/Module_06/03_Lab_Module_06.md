@@ -35,11 +35,9 @@ class AVLNode:
     def __repr__(self):
         return f'AVLNode({self.key}, h={self.height})'
 
-
 def height(node):
     """Return height of node; 0 if None."""
     return node.height if node else 0
-
 
 def get_balance(node):
     """
@@ -47,7 +45,6 @@ def get_balance(node):
     -1 to +1: balanced. < -1 or > +1: unbalanced.
     """
     return height(node.right) - height(node.left) if node else 0
-
 
 def update_height(node):
     """Recompute height from children."""
@@ -199,7 +196,6 @@ def inorder(root):
     if not root:
         return []
     return inorder(root.left) + [root.key] + inorder(root.right)
-
 
 def tree_height(root):
     return height(root)

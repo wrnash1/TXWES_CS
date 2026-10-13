@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-3340 Full Stack Web Development
 
 ## Texas Wesleyan University | Professor Nash
@@ -541,8 +538,6 @@ The official `helmet` package documentation listing all security headers it sets
 **4. npm — morgan documentation**
 [https://www.npmjs.com/package/morgan](https://www.npmjs.com/package/morgan)
 The official `morgan` HTTP request logger documentation covering predefined formats (`dev`, `combined`, `tiny`), custom token definitions, and writing to a file stream — aligns to the `morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev')` pattern in the lab.
-
-
 
 ---
 

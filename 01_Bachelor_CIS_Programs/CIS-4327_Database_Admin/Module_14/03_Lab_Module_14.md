@@ -379,8 +379,6 @@ gcloud sql instances delete lab14-mysql-dest --quiet
 
 ---
 
----
-
 ## Part 9 — Challenge Exercise
 
 ### Challenge 1: DMS Validation Query — Row-Level Checksum Comparison

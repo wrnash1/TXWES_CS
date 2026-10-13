@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4320 Enterprise Systems and ERP | Texas Wesleyan University
 
 ## Instructor: Professor Nash
@@ -360,8 +357,6 @@ The Society for Human Resource Management's HR Technology resource hub. Provides
 **3. openSAP — Introduction to SAP SuccessFactors**
 <https://open.sap.com/courses/sfsf1>
 Free openSAP course introducing SuccessFactors modules, integration with SAP S/4HANA, and the Employee Central data model. Directly relevant to the payroll integration and cross-module data flow content in this module.
-
-
 
 ---
 

@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4355 IoT and Embedded Systems
 
 ## Texas Wesleyan University | Professor Nash
@@ -324,8 +321,6 @@ Edge Impulse is the leading end-to-end TinyML development platform that automate
 **3. Pete Warden & Daniel Situnayake — "TinyML: Machine Learning with TensorFlow Lite on Arduino and Ultra-Low-Power Microcontrollers" (O'Reilly)**
 [https://www.oreilly.com/library/view/tinyml/9781492052036/](https://www.oreilly.com/library/view/tinyml/9781492052036/)
 The definitive textbook on TinyML by the authors of TensorFlow Lite Micro, covering the complete pipeline from data collection through model training, quantization, and microcontroller deployment. Chapters 7–10 cover keyword spotting (the "yes/no" model used in the lab), Chapters 11–13 cover person detection, and the appendices detail the MFCC feature pipeline and tensor arena sizing methodology referenced throughout this module.
-
-
 
 ---
 

@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4350 DevSecOps and CI/CD Pipelines
 
 ## Texas Wesleyan University | Professor Nash
@@ -311,8 +308,6 @@ Google's annual research report on software delivery performance benchmarks, cov
 ---
 
 Reading Guide — Module 15 | CIS-4350 | Texas Wesleyan University | Professor Nash
-
-
 
 ---
 

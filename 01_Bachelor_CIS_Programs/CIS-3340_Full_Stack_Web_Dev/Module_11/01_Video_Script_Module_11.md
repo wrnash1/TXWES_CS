@@ -26,17 +26,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
----
-
-## Production Notes
-
-- Camera: Professor Nash on-screen for introductions and transitions
-- Screen capture: VS Code with Node project open, Terminal for npm commands, Postman or Thunder Client for API testing
-- Use [SHOW CODE] for VS Code; [SHOW TERMINAL] for terminal; [SHOW BROWSER] for Postman/Thunder Client
-- Have Node.js 18+ installed; verify with `node --version`
-- Pre-create a blank project folder before recording
-
 ---
 
 ## Section 1: Introduction — The Node.js Runtime (0:00 – 2:30)

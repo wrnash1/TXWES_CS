@@ -240,8 +240,6 @@ D. Launch configurations are required for ELB integration; launch templates are 
 
 ---
 
----
-
 ### Question 11 (5 points)
 
 A company runs a stateful web application on EC2 instances behind an ALB. Users report being logged out when requests route to different instances. Which ALB feature should the architect enable?

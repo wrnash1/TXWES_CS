@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-3340 Full Stack Web Development
 **Certification Alignment:** AWS Certified Developer - Associate (DVA-C02)
 **Texas Wesleyan University | Professor Nash**
@@ -451,8 +448,6 @@ A comprehensive reference explaining the browser CORS mechanism, preflight reque
 **4. npm — cors package documentation**
 [https://www.npmjs.com/package/cors](https://www.npmjs.com/package/cors)
 The official documentation for the `cors` npm package covering configuration options (`origin`, `methods`, `credentials`, `allowedHeaders`), per-route usage, and preflight handling — the exact package configured in the Lab 08 `index.js` refactor.
-
-
 
 ---
 

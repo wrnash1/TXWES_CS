@@ -20,24 +20,9 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Estimated Duration:** 22–26 minutes
 **Certification Alignment:** Technical Interview Readiness (LeetCode / HackerRank)
 **Recorded by:** Professor Nash | Texas Wesleyan University
-
----
-
-> **PRODUCTION NOTES FOR INSTRUCTOR:**
->
-> - Use VS Code + Python terminal for all [DEMO] sections.
-> - [PAUSE] = 2 seconds of silence.
-> - Draw the weighted graph on the whiteboard first. Show the dist table being updated step by step before coding.
-> - Dijkstra is BFS with a priority queue instead of a regular queue. State this analogy explicitly.
-> - Emphasize: Dijkstra requires non-negative edge weights. Negative weights break the greedy argument.
-> - Python: use `heapq` with `(distance, node)` tuples. Demonstrate why order matters for tuple comparison.
-> - The "lazy deletion" pattern: when a stale `(dist, node)` pair is popped, skip it if `dist > current best`. This is the standard interview implementation.
-> - Network Delay Time (LeetCode #743) is the canonical Dijkstra interview problem. Walk through it step by step.
-> - Common mistakes: forgetting to initialize dist to infinity, not skipping stale heap entries, confusing weighted and unweighted shortest path.
 
 ---
 

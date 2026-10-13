@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4320 Enterprise Systems and ERP | Texas Wesleyan University
 
 ## Instructor: Professor Nash
@@ -379,8 +376,6 @@ Official SAP learning journey covering SAP S/4HANA security fundamentals: user a
 **3. ISACA — COBIT 2019 Framework: IT General Controls and Access Management**
 <https://www.isaca.org/resources/cobit>
 ISACA's COBIT framework provides the governance and control objectives for IT systems including ERP security. Covers Separation of Duties principles, access control design, audit trail requirements, and SOX ITGC compliance — the conceptual foundation for the security principles applied to both SAP and Salesforce in this module.
-
-
 
 ---
 

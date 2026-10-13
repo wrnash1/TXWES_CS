@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-4331 Azure Cloud | Texas Wesleyan University
 **Instructor:** Professor Nash
 **AZ-900 Domain:** Describe Azure Architecture and Services (35-40% of exam)
@@ -438,8 +435,6 @@ Full list of Azure region pairs, explanation of why region pairs exist, and the 
 **3. Microsoft Learn — Organize and manage multiple Azure subscriptions**
 https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/organize-subscriptions
 Cloud Adoption Framework guidance on designing subscription and management group hierarchies for enterprise environments, with decision trees for subscription design patterns.
-
-
 
 ---
 

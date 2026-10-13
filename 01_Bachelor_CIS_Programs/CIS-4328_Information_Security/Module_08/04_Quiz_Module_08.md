@@ -192,8 +192,6 @@ D. Requiring biometric authentication for all remote desktop sessions
 
 ---
 
----
-
 ### Question 11
 
 An organization's EDR platform detects that a process named `svchost.exe` is running from the path `C:\Users\Public\svchost.exe` and is making outbound connections to an external IP address. Why is this detection significant, and what category of threat does this represent?

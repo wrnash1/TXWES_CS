@@ -20,21 +20,9 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Estimated Duration:** 22–26 minutes
 **Certification Alignment:** JSE — Certified Associate in JavaScript Programming (OpenEDG / JS Institute)
 **Recorded by:** Professor Nash | Texas Wesleyan University
-
----
-
-> **PRODUCTION NOTES FOR INSTRUCTOR:**
->
-> - This is the final module. The tone should be encouraging and confident — students have covered the full curriculum.
-> - Use slides for the domain review sections. No live coding demos are needed, but console snippets are appropriate for the tricky-question walkthroughs.
-> - Structure: brief intro → JSE exam overview → domain-by-domain rapid review → tricky question types → exam day advice → closing.
-> - Keep each domain rapid — this is a memory jog, not reteaching. Students have the reading guides for depth.
-> - The "tricky question types" section is high-value — focus on the patterns that distinguish correct answers from plausible-but-wrong distractors.
-> - End on an encouraging note. Many students underestimate their readiness at this stage.
 
 ---
 

@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-4355 IoT and Embedded Systems
 
 **Institution:** Texas Wesleyan University | Professor Nash
@@ -425,8 +422,6 @@ Free online course from Nordic Semiconductor covering the BLE stack in depth: GA
 **3. Zigbee Alliance — Zigbee Specification Overview**
 [https://zigbeealliance.org/solution/zigbee/](https://zigbeealliance.org/solution/zigbee/)
 The Connectivity Standards Alliance (formerly Zigbee Alliance) overview of the Zigbee protocol stack, device types (Coordinator, Router, End Device), network topologies, and application profiles. Covers the AES-128 security model and the 65,000-node addressing space discussed in Section 3 of this guide.
-
-
 
 ---
 

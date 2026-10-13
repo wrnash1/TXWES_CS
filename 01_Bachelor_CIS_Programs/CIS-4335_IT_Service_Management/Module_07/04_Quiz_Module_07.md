@@ -271,8 +271,6 @@ which activity?
 
 ---
 
----
-
 ### Question 11 (5 points)
 
 A multinational retailer is preparing to deploy a new point-of-sale system across 200 stores. The IT team completes vendor selection, procures the hardware, installs the software, integrates it with the inventory management system, and runs parallel testing before the first store goes live.

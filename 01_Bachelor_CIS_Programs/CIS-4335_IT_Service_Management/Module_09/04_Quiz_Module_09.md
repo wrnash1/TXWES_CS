@@ -290,8 +290,6 @@ Which type of problem management activity is this?
 
 ---
 
----
-
 ### Question 11 (5 points)
 
 A problem record has been open for three weeks. The root cause has been identified — a buggy third-party library — but the vendor has not yet released a patch. The team has documented a workaround that temporarily mitigates the impact. What is the correct ITIL 4 status for this problem record?

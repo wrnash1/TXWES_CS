@@ -26,7 +26,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 ---
 
 ## SEGMENT 1: Welcome to the Final Module (0:00–2:00)
@@ -358,6 +357,5 @@ Good luck on your exam, and congratulations on completing CIS-3310.
 
 *Total estimated duration: 22–24 minutes*
 
-*Production notes: Domain weight pie chart in Segment 2 should be animated to highlight each domain.*
 *EVM formula table in Segment 4 should appear as a printable reference card graphic.*
 *Final slide should include Professor Nash contact information and exam scheduling link.*

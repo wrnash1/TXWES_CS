@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-2315 Data Structures & Algorithms
 
 **Certification Alignment:** Technical Interview Readiness (LeetCode / HackerRank)
@@ -383,8 +380,6 @@ The following free, openly licensed resources support final exam preparation and
 - [ ] Practice explaining the DP subproblem definition for Coin Change and LCS aloud.
 - [ ] Register for the Technical Interview Readiness certification exam.
 - [ ] Submit certification score report to Canvas (Module 16 Lab assignment).
-
-
 
 ---
 

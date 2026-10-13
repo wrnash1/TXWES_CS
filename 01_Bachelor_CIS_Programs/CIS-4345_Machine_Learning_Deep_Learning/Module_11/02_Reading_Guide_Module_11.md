@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4345 Machine Learning and Deep Learning
 
 ## Texas Wesleyan University | Professor Nash
@@ -508,8 +505,6 @@ Official TF Hub tutorial showing how to use pre-built image feature vector modul
 
 **3. [Papers With Code — ImageNet Benchmark](https://paperswithcode.com/sota/image-classification-on-imagenet)**
 State-of-the-art ImageNet classification leaderboard tracking accuracy, parameter count, and FLOPs for all major architectures including EfficientNet, ViT, ConvNeXt, and others. Useful for comparing the accuracy-efficiency tradeoffs of pretrained models when selecting a base for transfer learning.
-
-
 
 ---
 

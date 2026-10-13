@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-3326 Windows Server Administration
 
 ## Texas Wesleyan University | Professor Nash
@@ -428,8 +425,6 @@ Covers Azure Hybrid Benefit, hybrid activation, and connecting on-premises Windo
 **4. Microsoft Tech Community — Windows Server Blog**
 <https://techcommunity.microsoft.com/category/windows-server/blog/windowsserverblog>
 Official Microsoft blog for Windows Server release announcements, edition changes, and servicing channel updates. Useful for staying current on LTSC lifecycle dates and new edition features.
-
-
 
 ---
 

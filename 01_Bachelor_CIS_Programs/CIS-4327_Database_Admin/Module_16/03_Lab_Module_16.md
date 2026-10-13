@@ -265,8 +265,6 @@ Submit a single document (PDF or Google Doc) containing:
 
 ---
 
----
-
 ## Part 9 — Challenge Exercise
 
 ### Challenge 1: End-to-End Architecture Validation

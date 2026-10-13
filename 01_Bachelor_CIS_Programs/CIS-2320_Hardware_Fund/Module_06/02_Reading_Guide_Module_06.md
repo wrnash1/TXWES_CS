@@ -153,9 +153,6 @@
 </svg>
 </div>
 
-
-
-
 ## Course: CIS-2320 Hardware Fundamentals (CompTIA A+ Core 1, 220-1101)
 
 **Certification Domain:** 3.5 — Install and configure motherboards, CPUs, and add-on cards | 5.2 — Troubleshoot problems related to motherboards, RAM, CPUs, and power
@@ -357,8 +354,6 @@ Complete the Reading Guide glossary review before beginning the lab.
 5. **GamersNexus — PSU Teardown and Review Series (Free Videos)**
    URL: [https://www.gamersnexus.net/reviews/power-supplies](https://www.gamersnexus.net/reviews/power-supplies)
    Relevance: In-depth PSU reviews and teardowns from a technically rigorous hardware review site. Useful background for understanding the difference between quality and budget PSU designs, voltage ripple, and protection feature implementation.
-
-
 
 ---
 

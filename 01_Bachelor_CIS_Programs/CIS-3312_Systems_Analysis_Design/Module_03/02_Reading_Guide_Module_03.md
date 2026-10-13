@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-3312 Systems Analysis and Design
 **Certification Alignment:** IIBA ECBA (Entry Certificate in Business Analysis)
 **Prepared by:** Professor Nash | Texas Wesleyan University
@@ -268,8 +265,6 @@ The following open educational resources extend module content on elicitation te
 5. **Writing Effective Interview Questions for Requirements Gathering — Bridging the Gap**
    <https://www.bridging-the-gap.com/elicitation-questions/>
    Focus: Practical guide to open-ended, closed-ended, and probing question design for stakeholder interviews. Directly supports Part 2 of the lab (Interview Question Design).
-
-
 
 ---
 

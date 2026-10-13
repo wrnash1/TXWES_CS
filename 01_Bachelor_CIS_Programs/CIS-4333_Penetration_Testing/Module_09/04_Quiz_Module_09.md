@@ -254,8 +254,6 @@ The tester's original account is a standard user without admin rights. The API a
 
 ---
 
----
-
 ### Question 11
 
 A tester intercepts an HTTP request in Burp Suite and observes the cookie: `session=eyJ1c2VyX2lkIjogMSwgInJvbGUiOiAidXNlciJ9`. They base64-decode it and receive `{"user_id": 1, "role": "user"}`. What vulnerability exists and what is the exploitation approach?

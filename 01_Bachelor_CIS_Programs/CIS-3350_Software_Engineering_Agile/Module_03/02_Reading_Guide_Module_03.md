@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-3350 Software Engineering and Agile
 **Certification Alignment:** PSM I (Professional Scrum Master I) – Scrum.org
 **Instructor:** Professor Nash | Texas Wesleyan University
@@ -291,10 +288,6 @@ The companion overview page for Sutherland's book, co-written by a Scrum co-crea
 - [ ] State the five Scrum values from memory
 - [ ] Read the complete 2020 Scrum Guide at scrum.org before taking the Module 03 quiz
 - [ ] Complete the Module 03 Lab (Scrum Framework Diagram fill-in exercise)
-
----
-
-
 
 ---
 

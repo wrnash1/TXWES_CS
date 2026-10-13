@@ -24,16 +24,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
----
-
-## Pre-Production Notes
-
-- Slide deck: 28 slides
-- Diagrams: Salesforce security layers (OWD, Role Hierarchy, Sharing Rules, FLS), SAP authorization object structure, SoD conflict example (vendor-to-payment fraud), audit trail flow, Profile vs. Permission Set comparison
-- Key terms on screen: Separation of Duties, Least Privilege, Role, Profile, Permission Set, OWD, Sharing Rule, FLS, SAP Authorization Object, SoD, Audit Log, SM20
-- End card: Lab 13, Quiz 13, Discussion Forum 13
-
 ---
 
 ## [00:00 – 02:00] Opening Hook

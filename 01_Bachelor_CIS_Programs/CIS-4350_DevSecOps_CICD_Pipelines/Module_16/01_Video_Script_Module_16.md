@@ -26,7 +26,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 ---
 
 ### SEGMENT 1 — Introduction (0:00–2:00)
@@ -218,13 +217,3 @@ For your final exam preparation: complete the twenty practice questions in the r
 It has been a great semester. Good luck on the DSOE exam. I will see you there.
 
 ---
-
-### PRODUCTION NOTES
-
-- Slide: Complete domain map — all four exam domains with key tools per domain
-- Slide: Pipeline capstone diagram (full sequence from pre-commit to runtime monitoring)
-- Slide: STRIDE to pipeline control traceability matrix (from Module 14 — revisit here)
-- Slide: DORA + security KPI summary table with elite benchmarks
-- Slide: Four distractor pattern types with examples
-- Screen share: GitHub Actions workflow YAML showing all four pipeline stages
-- Screen share: OPA Gatekeeper ConstraintTemplate for image signing verification

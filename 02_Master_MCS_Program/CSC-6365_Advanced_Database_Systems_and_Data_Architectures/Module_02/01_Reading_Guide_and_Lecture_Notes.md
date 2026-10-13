@@ -1,6 +1,5 @@
 # Module 02: Advanced Query Execution & Cost-Based Optimization — Reading Guide & Lecture Notes
 
-
 <!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 <div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
   <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
@@ -33,8 +32,6 @@
 ## 3. In-Depth Lecture Notes & Conceptual Analysis
 ### Architectural Core: Relational Algebra Optimization, Physical Plan Generation, Join Algorithms (Hash, Merge, Index-Nested)
 Graduate computing systems require understanding the trade-offs between computational overhead, network latency, and transactional correctness. 
-
-
 
 ---
 

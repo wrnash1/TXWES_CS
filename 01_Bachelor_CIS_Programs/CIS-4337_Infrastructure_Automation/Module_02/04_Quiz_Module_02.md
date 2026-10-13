@@ -210,8 +210,6 @@ Distractor Analysis:
 
 ---
 
----
-
 ### Question 11 (5 points)
 
 What is the effect of running `terraform init -upgrade` compared to plain `terraform init`?

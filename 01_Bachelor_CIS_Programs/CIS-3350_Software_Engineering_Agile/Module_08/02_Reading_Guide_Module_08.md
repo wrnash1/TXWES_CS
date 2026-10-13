@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-3350 Software Engineering and Agile
 **Certification Alignment:** PSM I (Professional Scrum Master I) – Scrum.org
 **Instructor:** Professor Nash | Texas Wesleyan University
@@ -282,10 +279,6 @@ The Agile Alliance's canonical glossary entry on Planning Poker. Covers the tech
 - [ ] Describe five estimation anti-patterns and how to address each
 - [ ] State whether the Scrum Guide mandates story points (it does not)
 - [ ] Complete this module's Lab (Planning Poker simulation) and Quiz
-
----
-
-
 
 ---
 

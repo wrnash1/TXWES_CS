@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4330 Introduction to AI | Texas Wesleyan University
 
 **AI-900 Domain:** Describe fundamental principles of machine learning on Azure (20-25%)
@@ -312,8 +309,6 @@ The official PyTorch beginner tutorial covering tensors, autograd, neural networ
 **3. Distill.pub — A Neural Network Playground (TensorFlow Playground)**
 <https://playground.tensorflow.org/>
 An interactive browser-based tool for experimenting with neural network architectures, activation functions, learning rates, and regularization on toy datasets in real time. Ideal for building intuition about how architectural choices affect learning without writing any code.
-
-
 
 ---
 

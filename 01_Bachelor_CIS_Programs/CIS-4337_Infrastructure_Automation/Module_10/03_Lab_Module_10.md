@@ -445,8 +445,6 @@ rm -rf ~/tf-lab-10/
 
 ---
 
----
-
 ## Part 9 — Challenge Exercise
 
 ### Challenge 1: CI/CD Ephemeral Workspace Simulation

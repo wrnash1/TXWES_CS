@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4350 DevSecOps and CI/CD Pipelines
 
 ## Texas Wesleyan University | Professor Nash
@@ -497,8 +494,6 @@ The CNCF Security Technical Advisory Group's comprehensive whitepaper on cloud n
 ---
 
 Reading Guide — Module 16 | CIS-4350 | Texas Wesleyan University | Professor Nash
-
-
 
 ---
 

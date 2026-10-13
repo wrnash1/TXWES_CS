@@ -27,7 +27,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 Welcome back. I am Professor Nash and this is Module 06: RDS and Aurora — Managed Relational Databases.
 
 Relational databases are at the core of most enterprise applications. AWS offers Amazon RDS as a managed relational database service supporting six database engines, and Amazon Aurora as AWS's own high-performance cloud-native relational engine. The SAA-C03 exam tests your ability to choose between RDS and Aurora, configure high availability and read scaling, design backup and recovery strategies, and understand when a managed database is the right choice versus running a database on EC2.

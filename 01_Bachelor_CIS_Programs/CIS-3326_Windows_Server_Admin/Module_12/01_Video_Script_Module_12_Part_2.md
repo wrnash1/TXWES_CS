@@ -22,20 +22,7 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Certification Alignment:** Microsoft Windows Server Administration
-
----
-
-## Production Notes
-
-**Recorded by:** Professor Nash | Texas Wesleyan University
-
-**Estimated runtime:** 11–13 minutes
-
-**Part 2 focus:** Functions, error handling, script files, exporting output,
-PowerShell Remoting, scheduled tasks, and server health reporting scripts.
-Exam tips and lab preview.
 
 ---
 

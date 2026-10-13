@@ -1,6 +1,5 @@
 # Reading Guide: Module 15 — Emerging AI Technologies
 
-
 <!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 <div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
   <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
@@ -18,7 +17,6 @@
   </div>
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
-
 
 ## Course: CIS-4330 Introduction to Artificial Intelligence
 
@@ -403,8 +401,6 @@ The complete text of the EU AI Act as adopted in 2024. Includes the risk tier de
 ---
 
 Reading Guide Line Count: 265 | Module 15 — Emerging AI Technologies
-
-
 
 ---
 

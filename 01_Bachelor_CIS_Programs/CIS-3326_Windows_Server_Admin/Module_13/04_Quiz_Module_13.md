@@ -162,8 +162,6 @@ You need to secure sensitive files on a shared file server so that even the loca
 
 ---
 
----
-
 ### Question 11 (5 points)
 
 An administrator creates a Storage Spaces pool with five 2 TB disks and creates

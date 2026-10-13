@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-3325 OS Administration Linux
 
 **Certification Alignment:** CompTIA Linux+ (XK0-005)
@@ -676,8 +673,6 @@ ShellCheck is an online and command-line linter for shell scripts that identifie
 
 **3. [Google Shell Style Guide](https://google.github.io/styleguide/shellguide.html)**
 Google's internal shell scripting style guide, published publicly. Provides opinionated but well-reasoned guidance on when to use bash vs other tools, function naming conventions, variable quoting, error handling patterns, and script structure. The section on "When to use Shell" is particularly relevant for understanding the limits of shell scripting. Following a consistent style guide is a key professional skill assessed in the CompTIA Linux+ exam objectives for scripting.
-
-
 
 ---
 

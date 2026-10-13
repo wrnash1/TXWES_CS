@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-4331 Azure Cloud | Texas Wesleyan University
 **Instructor:** Professor Nash
 **AZ-900 Domain:** Describe Azure Architecture and Services (35-40% of exam)
@@ -494,8 +491,6 @@ Detailed explanation of all redundancy options (LRS, ZRS, GRS, RA-GRS, GZRS, RA-
 **3. Microsoft Learn — Grant limited access to Azure Storage resources using SAS**
 https://learn.microsoft.com/en-us/azure/storage/common/storage-sas-overview
 Covers the three types of SAS tokens (Account SAS, Service SAS, User Delegation SAS), SAS signing keys, permissions scope, expiry configuration, and security best practices for temporary delegated access.
-
-
 
 ---
 

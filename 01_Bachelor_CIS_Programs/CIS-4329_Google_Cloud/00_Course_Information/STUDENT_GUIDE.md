@@ -51,7 +51,6 @@ Below is the study roadmap for every course in our computer science and computer
 | :--- | :--- | :--- | :--- |
 | **CIS-4329: Google Cloud** | Google Cloud Associate Cloud Engineer | Deploy virtual instances via the `gcloud` CLI; structure regional subnets in global VPC networks. | [Google Cloud Skills Boost](https://www.cloudskillsboost.google/) |
 
-
 ---
 
 ## 5. Final Exam Certification Policy (Module 16)

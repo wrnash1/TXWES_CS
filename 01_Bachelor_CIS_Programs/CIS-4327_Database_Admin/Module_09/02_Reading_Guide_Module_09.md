@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4327 Database Administration
 
 **Certification Alignment:** Google Cloud Professional Database Engineer
@@ -430,8 +427,6 @@ Complete reference for MySQL Group Replication, including single-primary mode, P
 
 **4. [Google Cloud — Cloud SQL High Availability Overview](https://cloud.google.com/sql/docs/postgres/high-availability)**
 Official documentation for Cloud SQL HA architecture, failover behavior, regional persistent disk replication, and RTO/RPO characteristics.
-
-
 
 ---
 

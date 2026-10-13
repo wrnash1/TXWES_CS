@@ -1,6 +1,5 @@
 # Reading Guide: Module 15 — DevOps, Agile, and ITIL 4 Integration
 
-
 <!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 <div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
   <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
@@ -18,7 +17,6 @@
   </div>
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
-
 
 ## Course: CIS-4335 IT Service Management
 
@@ -272,8 +270,6 @@ The foundational text on SLOs and error budgets from Google's Site Reliability E
 **3. Mik Kersten — Project to Product: Value Stream Mapping in Technology**
 <https://projecttoproduct.org>
 Companion resource to the Project to Product book, which applies Value Stream Mapping to technology delivery. Covers flow metrics, value stream identification, and the transition from project-centric to product-centric IT delivery models. Provides practical context for the VSM and flow concepts covered in this module.
-
-
 
 ---
 

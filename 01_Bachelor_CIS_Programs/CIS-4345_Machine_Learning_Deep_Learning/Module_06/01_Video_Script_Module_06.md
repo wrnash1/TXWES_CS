@@ -26,7 +26,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 ---
 
 ## Pre-Roll Slide (on screen while intro plays)
@@ -431,10 +430,3 @@ Quiz and discussion are due Sunday at midnight.
 See you in Module 7.
 
 ---
-
-## Production Notes
-
-- Screen capture: all code at 1080p, font size 18 or larger
-- Pause on training output logs to let students read epoch-by-epoch metrics
-- Show ReduceLROnPlateau verbose output on screen during the callbacks demo
-- Closed captions required for all segments

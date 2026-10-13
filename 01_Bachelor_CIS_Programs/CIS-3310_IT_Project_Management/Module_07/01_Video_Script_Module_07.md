@@ -7,43 +7,6 @@
 
 ---
 
-## Production Notes
-
-<!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
-<div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
-  <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
-    <div>
-      <span style="background: #d9a74a; color: #0f172a; font-weight: 800; font-size: 11px; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Vendor Video Lecture</span>
-      <strong style="margin-left: 10px; font-size: 14px;">Google Career Certificates &bull; IT Project Management &bull; Module 07</strong>
-    </div>
-    <a href="https://www.youtube.com/playlist?list=PLnWPid_vGmUaA620wv1XP0c05G4DiG6Jz" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
-  </div>
-  <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #0f172a;">
-    <iframe src="https://www.youtube.com/embed/videoseries?list=PLnWPid_vGmUaA620wv1XP0c05G4DiG6Jz" title="Google Career Certificates &bull; IT Project Management" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-  </div>
-  <div style="padding: 12px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 13px; color: #475569;">
-    <strong>Recommended Viewing:</strong> <em>Google Career Certificates &bull; IT Project Management</em>. This vendor-aligned lecture stream reinforces this module's theoretical principles, certification blueprints, and hands-on laboratory benchmarks.
-  </div>
-</div>
-<!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
-
-
-**Key exam traps to address in this lecture:**
-
-- Tuckman's stages: Storming is NOT where teams fight indefinitely — it is a normal, temporary stage leading to Norming
-- RACI: only one "A" (Accountable) per task — multiple Rs are fine; "I" is not the same as "C"
-- Resource leveling extends the schedule; crashing shortens it — students mix these up
-- Conflict resolution: Collaborate/Problem-solve is ALWAYS the preferred PMI approach; Forcing/Directing is least preferred
-
-**Visual aid cues:**
-
-- [SHOW SLIDE] Tuckman's five stages in sequence with PM actions at each stage
-- [SHOW SLIDE] RACI matrix example for an IT project
-- [SHOW SLIDE] Conflict resolution techniques ranked by PMI preference
-- [SHOW SLIDE] Resource histogram showing over-allocation
-
----
-
 ## Section 1: Welcome and Module Overview [00:00 – 03:00]
 
 Welcome back to CIS-3310. I am Professor Nash, and this is Module 07: Resource Management and Team Building. Every project runs on people. You can have the best scope statement and the most detailed schedule in the world, but if you cannot acquire, develop, and manage a team effectively, nothing gets done.

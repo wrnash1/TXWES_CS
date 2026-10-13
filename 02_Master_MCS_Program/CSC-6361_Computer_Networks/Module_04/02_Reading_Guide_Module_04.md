@@ -78,8 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
 ## CSC-6361 Advanced Computer Networks | Graduate Level
 ## Week 4: November 9–15, 2026
 
@@ -275,8 +273,6 @@ The original RADIUS protocol specification — essential reading for understandi
 **4. Cisco White Paper — Control Plane Policing**
 https://www.cisco.com/c/en/us/support/docs/quality-of-service-qos/qos-policing/116664-technote-qos-00.html
 Technical explanation of CoPP design principles, rate-limit categories, and configuration examples.
-
-
 
 ---
 

@@ -311,8 +311,6 @@ Distractor Analysis:
 
 ---
 
----
-
 ### Question 11
 
 A BPMN diagram for a patient intake process shows a task "Verify Insurance" followed by an Exclusive Gateway with two outgoing sequence flows: one labeled "Coverage Confirmed" and one labeled "No Coverage Found." Which element is missing that makes the gateway technically incomplete?

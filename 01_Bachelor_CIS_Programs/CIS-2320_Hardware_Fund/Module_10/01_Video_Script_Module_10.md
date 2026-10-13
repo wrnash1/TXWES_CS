@@ -20,42 +20,9 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Estimated Duration:** 22-24 minutes
 **Certification Alignment:** CompTIA A+ Core 1 (220-1101) — Domain 5.3 | CompTIA A+ Core 2 (220-1102) — Domain 3.1
 **Recorded by:** Professor Nash | Texas Wesleyan University
-
----
-
-## Production Notes
-
-**Slides needed:**
-
-- Slide 1: Title card — "Module 10: Troubleshooting Boot Issues"
-- Slide 2: The four boot stages diagram — Power On → POST → Bootloader → OS Load
-- Slide 3: POST failure indicators — beep codes, on-screen codes, motherboard LED indicators
-- Slide 4: AMI vs. Award/Phoenix beep code reference table (common patterns)
-- Slide 5: BSOD anatomy — stop code, module name, memory address, QR code
-- Slide 6: Common BSOD stop codes table with root cause
-- Slide 7: UEFI boot order navigation screenshot (generic UEFI interface)
-- Slide 8: Boot failure decision tree — which stage failed and what to check
-- Slide 9: End card with study resources
-
-**Components to show on camera (if available):**
-
-- [SHOW COMPONENT] Motherboard with diagnostic LED array (Q-Code display or POST LEDs)
-- [SHOW COMPONENT] PC with side panel off — pointing to RAM slots for reseating demo
-- [SHOW COMPONENT] Bootable USB drive
-- [SHOW COMPONENT] Screenshot of a BSOD on screen (printed or displayed)
-
-**Key exam traps to address in the script:**
-
-- "Operating System Not Found" after drive swap = boot order issue, not OS corruption
-- Beep codes before video output means GPU has NOT been initialized — POST is still running
-- BSOD means POST and bootloader completed — the OS loaded before the crash
-- A blank screen with no beeps and no display can mean GPU failure OR power delivery issue — not just the same thing
-- UEFI Secure Boot can prevent booting from unsigned USB drives — must be temporarily disabled for recovery media
-- Continuous beeping patterns are almost always RAM — single isolated beeps have different meanings
 
 ---
 

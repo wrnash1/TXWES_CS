@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4334 AWS Cloud Architecture
 
 ## Texas Wesleyan University | Professor Nash
@@ -448,8 +445,6 @@ https://docs.aws.amazon.com/whitepapers/latest/aws-overview/database.html
 AWS overview of all managed database services (RDS, Aurora, DynamoDB, ElastiCache, Redshift, Neptune, DocumentDB, Keyspaces) with use case guidance — the comprehensive reference for database service selection questions on SAA-C03.
 
 *Proprietary and Confidential. Not for disclosure outside of Texas Wesleyan University.*
-
-
 
 ---
 

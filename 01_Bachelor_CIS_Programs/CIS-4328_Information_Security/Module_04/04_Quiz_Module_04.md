@@ -192,8 +192,6 @@ D. Legacy vulnerability
 
 ---
 
----
-
 ### Question 11
 
 A user reports that their computer is running unusually slowly. Investigation reveals that a background process is consuming high CPU and GPU resources at night, generating outbound connections to a cryptocurrency mining pool. No files were encrypted and no data appears stolen. Which malware category BEST describes this threat?

@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-3326 Windows Server Administration
 
 ## Texas Wesleyan University | Professor Nash
@@ -423,8 +420,6 @@ The official exam skills outline listing every tested topic area with relative w
 **4. Microsoft Q&A — Windows Server Administration community**
 <https://learn.microsoft.com/en-us/answers/topics/windows-server.html>
 Community Q&A forum for Windows Server administration questions. Useful for reviewing real-world troubleshooting scenarios that mirror the applied reasoning tested on the AZ-800 exam.
-
-
 
 ---
 

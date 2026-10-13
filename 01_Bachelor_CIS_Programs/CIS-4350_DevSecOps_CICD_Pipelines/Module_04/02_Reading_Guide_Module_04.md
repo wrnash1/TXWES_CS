@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4350 DevSecOps and CI/CD Pipelines
 
 ## Texas Wesleyan University | Professor Nash
@@ -449,8 +446,6 @@ Official documentation for cosign, including keyless signing with OIDC, SBOM att
 ---
 
 Reading Guide — Module 04 | CIS-4350 | Texas Wesleyan University | Professor Nash
-
-
 
 ---
 

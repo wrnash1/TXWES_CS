@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-3322 Advanced Networking
 **Certification Alignment:** Cisco CCNA 200-301 (Domain 1: Network Fundamentals - 20%)
 **Prepared by:** Professor Nash | Texas Wesleyan University
@@ -286,8 +283,6 @@ The following open educational resources extend IPv6 addressing and configuratio
 4. **ARIN IPv6 Wiki — Free Educational IPv6 Resources** (arin.net/resources/guide/ipv6): The American Registry for Internet Numbers (ARIN) provides free IPv6 tutorials, address type reference charts, and transition mechanism documentation aligned with current CCNA exam objectives.
 
 5. **Packet Tracer IPv6 Configuration Lab Tutorials** (skillsforall.com/course/getting-started-cisco-packet-tracer): The Cisco Networking Academy offers guided Packet Tracer tutorials specifically for IPv6 routing configuration, including SLAAC verification, static route troubleshooting, and neighbor discovery inspection — all directly applicable to this lab activity.
-
-
 
 ---
 

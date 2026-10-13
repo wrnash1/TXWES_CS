@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4335 IT Service Management
 
 ## Texas Wesleyan University | Professor Nash
@@ -365,8 +362,6 @@ upon — the event-to-incident pipeline was broken; no proactive escalation occu
 
 ---
 
----
-
 ## Supplemental Resources
 
 **1. AXELOS — ITIL 4 Incident Management Practice**
@@ -384,8 +379,6 @@ A comprehensive, freely available incident response handbook used by technology 
 ---
 
 Module 08 Reading Guide | CIS-4335 IT Service Management | Texas Wesleyan University
-
-
 
 ---
 

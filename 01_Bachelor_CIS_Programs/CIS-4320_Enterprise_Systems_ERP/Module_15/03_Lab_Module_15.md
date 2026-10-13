@@ -163,8 +163,6 @@ Before submitting, verify your document contains:
 
 ---
 
----
-
 ## Part 9 — Challenge Exercise
 
 ### Challenge 1: Implementation Failure Post-Mortem Analysis

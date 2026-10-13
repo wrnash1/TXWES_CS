@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-3340 Full Stack Web Development
 
 ## Texas Wesleyan University | Professor Nash
@@ -521,8 +518,6 @@ The official AWS reference for API Gateway WebSocket APIs covering the `$connect
 **4. Socket.io Documentation — Rooms**
 [https://socket.io/docs/v4/rooms/](https://socket.io/docs/v4/rooms/)
 The Socket.io official reference for rooms covering `socket.join()`, `socket.leave()`, `io.to(room).emit()`, `socket.to(room).emit()`, auto-generated socket ID rooms, and the difference between the sender-inclusive and sender-exclusive broadcast variants — directly reinforces Section 4 of this guide and the user-room notification pattern in Lab 15.
-
-
 
 ---
 

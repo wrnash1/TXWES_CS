@@ -51,7 +51,6 @@ Below is the study roadmap for every course in our computer science and computer
 | :--- | :--- | :--- | :--- |
 | **CIS-4355: IoT & Embedded Systems** | IoT & Embedded Security (General Principles) | Connect GPIO interfaces, use I2C and SPI buses, audit MQTT communications. | [OWASP IoT Security Project](https://owasp.org/www-project-internet-of-things/) |
 
-
 ---
 
 ## 5. Final Exam Certification Policy (Module 16)

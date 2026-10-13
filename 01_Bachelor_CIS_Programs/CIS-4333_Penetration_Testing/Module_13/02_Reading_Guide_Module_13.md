@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4333 Penetration Testing
 
 **Certification Alignment:** CompTIA PenTest+ (PT0-002)
@@ -281,8 +278,6 @@ The Offensive Security PEN-200 (OSCP) course covers pivoting extensively as a co
 ---
 
 *End of Module 13 Reading Guide*
-
-
 
 ---
 

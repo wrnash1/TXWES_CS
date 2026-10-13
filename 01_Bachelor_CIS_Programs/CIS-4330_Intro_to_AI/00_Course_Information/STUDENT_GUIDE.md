@@ -51,7 +51,6 @@ Below is the study roadmap for every course in our computer science and computer
 | :--- | :--- | :--- | :--- |
 | **CIS-4330: Intro to AI** | Azure AI Fundamentals (AI-900) | Prepare datasets using Pandas DataFrames; evaluate model accuracy, precision, and recall metrics. | [Microsoft Learn: AI-900 Path](https://learn.microsoft.com/) |
 
-
 ---
 
 ## 5. Final Exam Certification Policy (Module 16)

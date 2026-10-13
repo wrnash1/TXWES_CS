@@ -26,16 +26,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
----
-
-## Production Notes
-
-- Slides: Ishikawa diagram built progressively on screen; Pareto chart animated with cumulative percentage line
-- Graphics: QA vs. QC comparison visual; process improvement cycle (PDCA)
-- Tone: Practical and process-oriented — connect diagrams to real IT defect scenarios
-- Screen segment: Walk through a simple Pareto chart construction in a spreadsheet
-
 ---
 
 ## Segment 1 — Introduction: Quality Is Not Testing (0:00–2:30)

@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Reading Guide — Module 03: HCL Syntax — Providers, Resources, and Variables
 
 ### Course Alignment: HashiCorp Terraform Associate 003
@@ -496,8 +493,6 @@ Explains when to use `locals` versus `variables`, how to compose local expressio
 ---
 
 Module 03 Reading Guide — CIS-4337 Infrastructure Automation — Texas Wesleyan University
-
-
 
 ---
 

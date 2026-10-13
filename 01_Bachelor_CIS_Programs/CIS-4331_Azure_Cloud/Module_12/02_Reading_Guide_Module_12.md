@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-4331 Azure Cloud | Texas Wesleyan University
 **Instructor:** Professor Nash
 **AZ-900 Domain:** Describe Azure management and governance (30-35% of exam)
@@ -412,8 +409,6 @@ Module 12 Reading Guide | CIS-4331 Azure Cloud | Texas Wesleyan University
 2. Management Groups documentation — organizing subscriptions into a hierarchy for unified governance and policy inheritance: https://learn.microsoft.com/en-us/azure/governance/management-groups/overview
 
 3. Microsoft Purview data governance documentation — scanning, classifying, and cataloging data assets across hybrid and multi-cloud environments: https://learn.microsoft.com/en-us/purview/purview
-
-
 
 ---
 

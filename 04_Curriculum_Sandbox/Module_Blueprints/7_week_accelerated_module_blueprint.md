@@ -4,8 +4,6 @@
 ## Module Architecture Overview (4-Part Standard)
 Every weekly module across undergraduate foundations, MCS, and DIT programs follows a uniform, 4-part structure:
 
-
-
 ---
 
 ### Part 1: Reading Guide & Lecture Notes ()

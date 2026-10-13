@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-1310 Introduction to Python
 
 **Certification Alignment:** PCAP — Certified Associate in Python Programming (Python Institute)
@@ -550,8 +547,6 @@ A comprehensive free article on Python strings covering indexing, slicing, all m
 - [ ] Read the String Methods page in the official Python 3 docs.
 - [ ] Review all 7 Certification Exam Tips in Section 4.
 - [ ] Proceed to the Module 11 Lab Activity.
-
-
 
 ---
 

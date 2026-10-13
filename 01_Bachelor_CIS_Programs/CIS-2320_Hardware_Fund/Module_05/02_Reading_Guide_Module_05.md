@@ -161,9 +161,6 @@
 </svg>
 </div>
 
-
-
-
 ## Course: CIS-2320 Hardware Fundamentals (CompTIA A+ Core 1, 220-1101)
 
 **Certification Domain:** 3.1 — Given a scenario, install and configure storage devices | 5.3 — Given a scenario, troubleshoot hard drives and RAID arrays
@@ -342,8 +339,6 @@ Complete the Reading Guide glossary review before beginning the lab.
 5. **Backblaze Hard Drive Stats (Free Open Data)**
    URL: [https://www.backblaze.com/cloud-storage/resources/hard-drive-test-data](https://www.backblaze.com/cloud-storage/resources/hard-drive-test-data)
    Relevance: Real-world HDD failure rate data from a cloud storage provider operating tens of thousands of drives. Provides data-driven context for understanding HDD vs. SSD reliability differences discussed in the reading guide.
-
-
 
 ---
 

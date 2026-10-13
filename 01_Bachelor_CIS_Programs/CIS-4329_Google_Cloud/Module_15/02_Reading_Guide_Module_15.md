@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4329 Google Cloud Computing
 
 ## Texas Wesleyan University | Professor Nash
@@ -345,8 +342,6 @@ Full reference for Cloud Storage Object Lifecycle Management rules including all
 **3. Google Cloud Documentation — GCP Recommender Overview**
 <https://cloud.google.com/recommender/docs/overview>
 Overview of all Recommender types available in GCP including VM Rightsizing, Idle VM, Unattached Disk, Idle IP Address, CUD Recommender, and IAM Recommender — covering how recommendations are generated from utilization data, how to access them via gcloud CLI and Cloud Console, and the mark-claimed/mark-dismissed workflow for tracking recommendation actions.
-
-
 
 ---
 

@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4350 DevSecOps and CI/CD Pipelines
 
 ## Texas Wesleyan University | Professor Nash
@@ -428,8 +425,6 @@ CISA's official SBOM resources page, including minimum element guidance, VEX doc
 ---
 
 Reading Guide — Module 07 | CIS-4350 | Texas Wesleyan University | Professor Nash
-
-
 
 ---
 

@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4336 Data Analytics
 
 ## Texas Wesleyan University | Professor Nash
@@ -351,8 +348,6 @@ A comprehensive introduction to Apache Kafka covering topics, partitions, consum
 ---
 
 End of Module 09 Reading Guide
-
-
 
 ---
 

@@ -20,20 +20,9 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Estimated Duration:** 22-24 minutes
 **Certification Alignment:** CompTIA A+ Core 1 (220-1101) — Domain 1.3 (Mobile Device Connectivity), Domain 2.7 (Network Protocols and Ports)
 **Recorded by:** Professor Nash | Texas Wesleyan University
-
----
-
-### Production Notes
-
-> SHOW SLIDE: Title card — "Module 14: Mobile Device Connectivity | CIS-2320 Hardware Fundamentals"
-> KEY EXAM TRAP 1: Students confuse "5G cellular" with "5 GHz Wi-Fi" — both share the "5G" label but are completely unrelated technologies. Address this directly.
-> KEY EXAM TRAP 2: Students mix up IMAP and POP3 port numbers. Emphasize that IMAP uses 143/993 and POP3 uses 110/995, and both are for INCOMING mail only.
-> KEY EXAM TRAP 3: Students forget that USB Type-C is a connector shape, NOT a speed standard. USB Type-C can carry USB 2.0, USB 3.2, or Thunderbolt — the port's protocol determines the speed, not the connector shape alone.
-> PRODUCTION NOTE: Use a split-screen layout for all port number tables. Keep the email port table visible on screen while discussing SMTP to reinforce memory.
 
 ---
 

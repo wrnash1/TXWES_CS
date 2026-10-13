@@ -8,15 +8,6 @@
 
 ---
 
-## Production Notes
-
-- **Runtime Target:** 28–32 minutes
-- **Segments:** 6
-- **Visual Aids:** Report structure diagram, CVSS calculator screenshot, sample findings (redacted), executive summary example
-- **Lab Environment:** Report writing exercise using documented fictional findings
-
----
-
 ## Segment 1: Why Reporting Is the Deliverable (Lines 1–35)
 
 [SLIDE: Module 13 Title Card]

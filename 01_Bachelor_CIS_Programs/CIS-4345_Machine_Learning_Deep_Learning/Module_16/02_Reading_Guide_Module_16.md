@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4345_Machine_Learning_Deep_Learning (TensorFlow Developer Certificate)
 
 ---
@@ -159,8 +156,6 @@ A four-course specialization by Laurence Moroney (Google Brain) that directly ma
 
 **3. [Keras API Documentation — Layers, Losses, Callbacks](https://keras.io/api/)**
 The primary open-internet reference permitted during the exam. Key sections to bookmark: `tf.keras.layers` (Embedding, LSTM, Conv2D, Dense), `tf.keras.losses` (BinaryCrossentropy, SparseCategoricalCrossentropy), `tf.keras.callbacks` (EarlyStopping, ModelCheckpoint, ReduceLROnPlateau), and `tf.keras.applications` (MobileNetV2, VGG16, ResNet50). Practicing navigation of this documentation under time pressure is as important as knowing the API itself.
-
-
 
 ---
 

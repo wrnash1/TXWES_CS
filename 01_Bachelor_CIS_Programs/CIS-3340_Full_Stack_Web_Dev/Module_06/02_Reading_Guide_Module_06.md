@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 **Course:** CIS-3340 Full Stack Web Development
 **Certification Alignment:** AWS Certified Developer - Associate (DVA-C02)
 **Texas Wesleyan University | Professor Nash**
@@ -406,8 +403,6 @@ The original academic source defining the six REST architectural constraints. Re
 **4. Stripe API Reference — Idempotency Keys**
 [https://stripe.com/docs/api/idempotent_requests](https://stripe.com/docs/api/idempotent_requests)
 Stripe's production documentation for idempotency keys — the real-world implementation of the POST idempotency pattern discussed in Section 6 of this reading guide, with code examples in multiple languages.
-
-
 
 ---
 

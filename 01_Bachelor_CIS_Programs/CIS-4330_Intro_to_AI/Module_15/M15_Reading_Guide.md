@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4330 Introduction to Artificial Intelligence
 
 ## Texas Wesleyan University | Professor Nash
@@ -406,8 +403,6 @@ Specifically:
 ---
 
 *Reading Guide prepared by Professor Nash | Texas Wesleyan University | CIS-4330*
-
-
 
 ---
 

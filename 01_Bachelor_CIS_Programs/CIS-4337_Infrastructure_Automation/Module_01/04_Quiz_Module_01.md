@@ -210,8 +210,6 @@ Distractor Analysis:
 
 ---
 
----
-
 ### Question 11 (5 points)
 
 Which Terraform CLI command should always be run first when working in a new or cloned configuration directory?

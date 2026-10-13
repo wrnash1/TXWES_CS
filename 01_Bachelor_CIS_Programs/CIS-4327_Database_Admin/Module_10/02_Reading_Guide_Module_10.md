@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4327 Database Administration
 
 **Certification Alignment:** Google Cloud Professional Database Engineer
@@ -427,8 +424,6 @@ Explains MySQL EXPLAIN output columns including `type`, `key`, `rows`, and the `
 
 **4. [Google Cloud — Query Insights for Cloud SQL](https://cloud.google.com/sql/docs/postgres/query-insights-overview)**
 Overview of Cloud SQL Performance Insights (Query Insights), including how to enable it, interpret top queries by latency, and use wait event data to diagnose bottlenecks.
-
-
 
 ---
 

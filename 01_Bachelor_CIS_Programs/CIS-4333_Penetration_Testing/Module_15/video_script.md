@@ -8,15 +8,6 @@
 
 ---
 
-## Production Notes
-
-- **Runtime Target:** 30–35 minutes
-- **Segments:** 7
-- **Visual Aids:** Cloud architecture diagram, ICS/SCADA network diagram, mobile testing setup, API testing tool screenshots
-- **Lab Environment:** Web application and API testing in an authorized lab environment
-
----
-
 ## Segment 1: Introduction to Specialized Environments (Lines 1–30)
 
 [SLIDE: Module 15 Title Card]

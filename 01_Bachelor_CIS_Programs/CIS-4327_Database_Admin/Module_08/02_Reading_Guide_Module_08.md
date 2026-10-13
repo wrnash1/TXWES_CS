@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4327 Database Administration
 
 **Certification Alignment:** Google Cloud Professional Database Engineer
@@ -441,8 +438,6 @@ Official reference for all pg_dump flags, output formats (plain, custom, directo
 **3. Google Cloud Blog — Database Backup Best Practices on GCP**
 https://cloud.google.com/blog/products/databases/best-practices-for-cloud-sql-operational-guidelines
 Discusses RPO/RTO design decisions, PITR configuration, CMEK for backup encryption, and backup validation strategies for Cloud SQL workloads.
-
-
 
 ---
 

@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4330 Introduction to Artificial Intelligence
 
 ## Texas Wesleyan University | Professor Nash
@@ -363,8 +360,6 @@ Microsoft Research's guidelines for building responsible conversational AI syste
 ---
 
 End of Reading Guide — Module 09
-
-
 
 ---
 

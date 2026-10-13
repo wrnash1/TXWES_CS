@@ -51,7 +51,6 @@ Below is the study roadmap for every course in our computer science and computer
 | :--- | :--- | :--- | :--- |
 | **CIS-1320: Intro to JavaScript** | JSE (Certified Associate in JavaScript Programming) | Write code daily; use the browser console or Node.js to execute scripts. | [JS Institute (edube.org)](https://edube.org/) |
 
-
 ---
 
 ## 5. Final Exam Certification Policy (Module 16)

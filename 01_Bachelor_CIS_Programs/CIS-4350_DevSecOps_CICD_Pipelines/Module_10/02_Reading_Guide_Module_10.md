@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4350 DevSecOps and CI/CD Pipelines
 
 ## Certification Alignment: DevSecOps Professional (DSOE)
@@ -259,8 +256,6 @@ Wiz's research blog covers real-world cloud attack paths, toxic combination anal
 ---
 
 Reading Guide — Module 10 | CIS-4350 | Texas Wesleyan University | Professor Nash
-
-
 
 ---
 

@@ -7,43 +7,6 @@
 
 ---
 
-## Production Notes
-
-<!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
-<div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
-  <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
-    <div>
-      <span style="background: #d9a74a; color: #0f172a; font-weight: 800; font-size: 11px; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Vendor Video Lecture</span>
-      <strong style="margin-left: 10px; font-size: 14px;">Google Career Certificates &bull; IT Project Management &bull; Module 01</strong>
-    </div>
-    <a href="https://www.youtube.com/playlist?list=PLnWPid_vGmUaA620wv1XP0c05G4DiG6Jz" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
-  </div>
-  <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #0f172a;">
-    <iframe src="https://www.youtube.com/embed/videoseries?list=PLnWPid_vGmUaA620wv1XP0c05G4DiG6Jz" title="Google Career Certificates &bull; IT Project Management" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-  </div>
-  <div style="padding: 12px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 13px; color: #475569;">
-    <strong>Recommended Viewing:</strong> <em>Google Career Certificates &bull; IT Project Management</em>. This vendor-aligned lecture stream reinforces this module's theoretical principles, certification blueprints, and hands-on laboratory benchmarks.
-  </div>
-</div>
-<!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
-
-
-**Key exam traps to address in this lecture:**
-
-- Students confuse "temporary" with "short" — a 5-year infrastructure build is still a project
-- Students confuse Process Groups with lifecycle phases — these are not the same thing
-- "Operations" questions on the exam always highlight ongoing, repetitive, no-end-date activities
-- The PMI Knowledge Areas (10 total) are different from Process Groups (5 total) — examiners exploit this confusion
-
-**Visual aid cues:**
-
-- [SHOW SLIDE] Triple Constraint triangle diagram
-- [SHOW SLIDE] 5 Process Groups in overlapping circles
-- [SHOW SLIDE] Project vs. Operations comparison table
-- [SHOW SLIDE] PMI Knowledge Areas list (10 areas)
-
----
-
 ## Section 1: Welcome and Course Overview [00:00 – 04:00]
 
 Hello, everyone, and welcome to CIS-3310 IT Project Management here at Texas Wesleyan University. I am Professor Nash, and I am excited to kick off what I think is one of the most practical and immediately applicable courses in the Computer Information Systems program.

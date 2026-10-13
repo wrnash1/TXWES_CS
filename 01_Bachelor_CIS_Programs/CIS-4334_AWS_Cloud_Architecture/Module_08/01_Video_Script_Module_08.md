@@ -27,7 +27,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 Welcome back. I am Professor Nash and this is Module 08: Lambda and Serverless Architecture.
 
 AWS Lambda is the foundational service of the AWS serverless computing model. It is tested heavily on the SAA-C03 exam because it represents a fundamentally different approach to running application code — no servers to manage, automatic scaling, and pay-per-execution pricing. Understanding Lambda, how it integrates with other AWS services, and when to choose it over EC2 is essential exam knowledge.

@@ -452,8 +452,6 @@ Distractor Analysis:
 
 ---
 
----
-
 ## Question 21
 
 A network engineer receives a complaint that PC-A can reach PC-B within the same VLAN but cannot reach PC-C in a different VLAN. Both PCs receive valid IP addresses and correct default gateways from DHCP. OSPFv2 is running between the access switches and the core switch. What is the most likely root cause?

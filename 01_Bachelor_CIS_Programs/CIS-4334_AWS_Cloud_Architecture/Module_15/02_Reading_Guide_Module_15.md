@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4334 AWS Cloud Architecture
 
 ## Texas Wesleyan University | Professor Nash
@@ -364,8 +361,6 @@ Free course covering the 7 Rs migration strategies, AWS Migration Hub, Applicati
 **3. AWS Documentation — AWS Transit Gateway User Guide**
 https://docs.aws.amazon.com/vpc/latest/tgw/what-is-transit-gateway.html
 Authoritative guide to Transit Gateway attachments, route tables, inter-region peering, VPN integration, and Direct Connect Gateway association — the definitive reference for the hub-and-spoke hybrid connectivity architecture patterns covered in this module.
-
-
 
 ---
 

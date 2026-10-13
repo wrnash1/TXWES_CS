@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4334 AWS Cloud Architecture
 
 ## Texas Wesleyan University | Professor Nash
@@ -476,8 +473,6 @@ https://docs.aws.amazon.com/whitepapers/latest/aws-storage-services-overview/wel
 AWS whitepaper comparing all storage services (S3, EBS, EFS, FSx, Storage Gateway, Snowball) by use case, performance, durability, and access patterns — the definitive reference for storage service selection scenarios on SAA-C03.
 
 *Proprietary and Confidential. Not for disclosure outside of Texas Wesleyan University.*
-
-
 
 ---
 

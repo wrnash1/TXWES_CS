@@ -184,8 +184,6 @@ Part A selected answers for reference:
 
 ---
 
----
-
 ## Part 9 — Challenge Exercise
 
 ### Challenge 1: Threat Actor Motivation Mapping

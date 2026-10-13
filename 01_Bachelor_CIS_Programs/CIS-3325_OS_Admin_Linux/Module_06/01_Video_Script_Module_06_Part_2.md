@@ -26,16 +26,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
----
-
-## Production Notes
-
-- **Screen recording**: Terminal emulator; use VM with spare physical volumes for LVM demo
-- **Demonstrations**: Show complete LVM workflow — pvcreate through lvextend
-- **Slide overlays**: LVM architecture diagram (PV → VG → LV); RAID level comparison table
-- **Pacing**: LVM commands have verbose output — allow screen to settle before continuing narration
-
 ---
 
 ## SEGMENT 1 — Opening and Recap (0:00–1:00)

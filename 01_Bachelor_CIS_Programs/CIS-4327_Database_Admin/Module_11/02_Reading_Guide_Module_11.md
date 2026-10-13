@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-4327 Database Administration
 
 **Certification Alignment:** Google Cloud Professional Database Engineer
@@ -427,8 +424,6 @@ Covers Spanner secondary index syntax including `STORING`, `NULL_FILTERED`, and 
 
 **4. [BigQuery Documentation — Introduction to Partitioned Tables](https://cloud.google.com/bigquery/docs/partitioned-tables)**
 Explains BigQuery date, timestamp, and integer range partitioning, partition pruning mechanics, and how to write WHERE clauses that enable partition elimination.
-
-
 
 ---
 

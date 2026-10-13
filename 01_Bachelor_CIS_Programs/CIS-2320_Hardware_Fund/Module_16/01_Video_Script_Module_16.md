@@ -20,21 +20,9 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Estimated Duration:** 22-24 minutes
 **Certification Alignment:** CompTIA A+ Core 1 (220-1101) — All Domains (Comprehensive Review)
 **Recorded by:** Professor Nash | Texas Wesleyan University
-
----
-
-### Production Notes
-
-> SHOW SLIDE: Title card — "Module 16: Final Exam Preparation | CIS-2320 Hardware Fundamentals"
-> KEY EXAM TRAP 1: Students select "efficiency rating" as why a PSU cannot power a system. The correct answer is always wattage (total capacity), not efficiency. Efficiency rating (80 Plus tiers) describes how much wall power is wasted as heat, not how much the PSU can deliver.
-> KEY EXAM TRAP 2: Students choose HDMI for daisy-chaining monitors. DisplayPort MST is the only mainstream display connector that supports daisy-chaining. HDMI cannot.
-> KEY EXAM TRAP 3: Students place RAM in adjacent slots (A1/A2) instead of paired slots (A1/B1) for dual-channel. The motherboard color-coding and manual specify the correct paired slots.
-> KEY EXAM TRAP 4: Students confuse Cat6 and Cat6a for 10 Gbps runs. Cat6 supports 10 Gbps only to 55 meters; Cat6a supports 10 Gbps to the full 100-meter standard. Any run over 55 meters at 10 Gbps requires Cat6a.
-> PRODUCTION NOTE: Use a domain-map graphic on screen throughout this review session. Highlight each domain as it is discussed. The visual reminder of "which domain owns this topic" reinforces exam strategy alongside content recall.
 
 ---
 

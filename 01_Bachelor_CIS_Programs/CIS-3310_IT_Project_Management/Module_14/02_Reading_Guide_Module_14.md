@@ -78,9 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
-
 ## Course: CIS-3310 IT Project Management
 
 ## Texas Wesleyan University | Professor Nash
@@ -326,8 +323,6 @@ The following free, openly licensed resources extend the concepts in this module
 5. **Smartsheet — RFP vs. RFQ vs. IFB: A Plain-Language Guide (Free)**
    [smartsheet.com/content/rfp-vs-rfq](https://www.smartsheet.com/content/rfp-vs-rfq)
    Side-by-side comparison of the three primary solicitation document types with guidance on when each is appropriate — covers the award criteria differences tested on the Project+ exam.
-
-
 
 ---
 

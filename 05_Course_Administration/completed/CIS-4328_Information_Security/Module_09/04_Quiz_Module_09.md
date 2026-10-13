@@ -17,8 +17,6 @@ D) This is an example of SSO because the employee only approves one notification
 
 ---
 
----
-
 **Question 2**
 A security administrator is comparing two biometric fingerprint scanners for deployment at a secure facility. Scanner A has a False Acceptance Rate (FAR) of 0.001% and a False Rejection Rate (FRR) of 5%. Scanner B has an FAR of 1% and an FRR of 0.5%. The facility's primary concern is preventing unauthorized individuals from gaining physical access. Which scanner should be deployed and why?
 A) Scanner B, because its lower FRR means fewer legitimate users will be inconvenienced at the door.
@@ -30,8 +28,6 @@ D) Scanner A, because a lower CER always indicates the system with the smaller F
     *   *Why A is incorrect:* When the primary concern is security (preventing unauthorized access), minimizing the FAR takes priority over minimizing the FRR. A lower FRR improves convenience for legitimate users but does not address the threat of impostors being accepted.
     *   *Why C is incorrect:* Scanner B has a higher FAR (1%), which means it incorrectly accepts impostors more often — this is the opposite of what a security-focused facility needs. Overall accuracy is measured by the CER, not FAR alone.
     *   *Why D is incorrect:* The CER (Crossover Error Rate) is the point where FAR equals FRR and is used to compare overall system accuracy between scanners — it is not calculated simply from the FAR value, and a lower FAR alone does not imply a lower CER.
-
----
 
 ---
 

@@ -78,8 +78,6 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
-
 ## CSC-6361 Advanced Computer Networks | Graduate Level
 ## Week 2: October 26 – November 1, 2026
 
@@ -223,8 +221,6 @@ Covers VTP version 1, 2, and 3 configuration with emphasis on the revision-numbe
 **3. NIST SP 800-125B — Secure Virtual Network Configuration for Virtual Machine (VM) Protection**
 https://csrc.nist.gov/publications/detail/sp/800-125b/final
 While focused on virtualization, this NIST publication covers VLAN segmentation security requirements including VLAN hopping attack mitigations, native VLAN risks, and network isolation principles — directly applicable to the HIPAA medical device isolation requirement in this module's discussion prompt.
-
-
 
 ---
 

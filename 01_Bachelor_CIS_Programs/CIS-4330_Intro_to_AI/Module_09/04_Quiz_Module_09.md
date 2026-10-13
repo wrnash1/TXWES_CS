@@ -254,8 +254,6 @@ B. To enable multi-turn conversations by linking answers to related follow-up qu
 
 ---
 
----
-
 ## Question 11 (5 points)
 
 What is Active Learning in the context of Azure AI Language Question Answering?

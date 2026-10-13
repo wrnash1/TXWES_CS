@@ -30,7 +30,6 @@
 </svg>
 </div>
 
-
 <!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 <div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
   <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
@@ -48,7 +47,6 @@
   </div>
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
-
 
 ---
 
@@ -77,8 +75,6 @@ The transition to modern enterprise computing architectures requires continuous 
 * **Correctness & Consistency:** Ensuring state synchronization under split-brain and network partition scenarios.
 * **Resilience & Fault Isolation:** Designing decoupled subsystems with circuit breakers, graceful degradation, and automated health checks.
 * **Fiduciary & Regulatory Compliance:** Maintaining defensible audit trails, role-based governance, and risk oversight compliant with federal mandates.
-
-
 
 ---
 

@@ -20,22 +20,9 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
-
 **Estimated Duration:** 20–24 minutes
 **Certification Alignment:** JSE — Certified Associate in JavaScript Programming (OpenEDG / JS Institute)
 **Recorded by:** Professor Nash | Texas Wesleyan University
-
----
-
-> **PRODUCTION NOTES FOR INSTRUCTOR:**
->
-> - Use VS Code + Chrome DevTools (Console + Sources tabs) for all [DEMO] sections.
-> - [PAUSE] = 2 seconds of silence.
-> - This module covers two distinct but related skills: error handling in code (try/catch/throw/custom errors) and debugging tools (DevTools, console methods, debugger statement).
-> - For the DevTools demo, use a simple browser page — the lab's `index.html` works well. Show the Sources panel with an actual breakpoint so students see the debugger in a real context.
-> - The JSE exam tests: error type names and when each occurs, try/catch/finally behavior, throw mechanics, and custom Error subclasses.
-> - `console.table` and `console.group` are genuinely useful — show real examples, not trivial ones.
-> - Do NOT spend time on `window.onerror` or `process.on('uncaughtException')` — those are out of scope for JSE.
 
 ---
 

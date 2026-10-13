@@ -164,8 +164,6 @@ Explanation: MTTD reflects detection speed. Outdated rules and suppressed alerts
 
 ---
 
----
-
 ### Question 11 (5 points)
 
 A SOC analyst reviews SIEM logs and finds the following sequence on a single workstation within a 12-minute window: 847 failed authentication events against the domain controller, followed by one successful authentication, followed by the execution of `net user /add` and `net localgroup administrators` commands. Which kill chain stage does the successful authentication and command execution represent?
