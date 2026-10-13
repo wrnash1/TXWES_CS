@@ -8,6 +8,25 @@
 
 ## Section 1: Introduction — 0:00–1:30
 
+<!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+<div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
+  <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+      <span style="background: #d9a74a; color: #0f172a; font-weight: 800; font-size: 11px; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Vendor Video Lecture</span>
+      <strong style="margin-left: 10px; font-size: 14px;">Jeff Geerling &bull; Ansible 101 Enterprise Infrastructure Automation &bull; Module 01</strong>
+    </div>
+    <a href="https://www.youtube.com/playlist?list=PL2_OBreMn7FqZkvMYt6ATmgC0KAGGJNAN" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
+  </div>
+  <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #0f172a;">
+    <iframe src="https://www.youtube.com/embed/videoseries?list=PL2_OBreMn7FqZkvMYt6ATmgC0KAGGJNAN" title="Jeff Geerling &bull; Ansible 101 Enterprise Infrastructure Automation" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  </div>
+  <div style="padding: 12px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 13px; color: #475569;">
+    <strong>Recommended Viewing:</strong> <em>Jeff Geerling &bull; Ansible 101 Enterprise Infrastructure Automation</em>. This vendor-aligned lecture stream reinforces this module's theoretical principles, certification blueprints, and hands-on laboratory benchmarks.
+  </div>
+</div>
+<!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+
+
 Hello and welcome to CIS-4337 Infrastructure Automation at Texas Wesleyan University. I am Professor Nash, and this first module lays the intellectual foundation for everything that follows: Infrastructure as Code, commonly abbreviated IaC.
 
 By the end of this video you will be able to define Infrastructure as Code, explain the specific problems it solves, articulate its core benefits, distinguish between the declarative and imperative approaches, and place Terraform in the broader ecosystem of automation tools. You will also understand why the Terraform Associate 003 certification exam places IaC concepts in its very first domain.

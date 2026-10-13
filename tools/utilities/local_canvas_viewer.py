@@ -481,6 +481,129 @@ class CanvasViewerHandler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(html.encode("utf-8"))
 
+def extract_slides_for_item(course_path, item_rel, content):
+    slides = []
+    course_name = os.path.basename(course_path).replace('_', ' ')
+    
+    # Check if item is a lecture, script, or reading guide
+    item_l = item_rel.lower()
+    is_lecture = any(k in item_l for k in ['video', 'reading', 'lecture', 'script', 'notes'])
+    if not is_lecture:
+        return []
+
+    # 1. Video scripts with timestamped sections or SHOW SLIDE tags
+    sections = re.findall(r'(##\s+\[(.*?)\]\s+(.*?)\n([\s\S]*?)(?=\n##\s+\[|\Z))', content)
+    if sections:
+        doc_title_m = re.search(r'#\s+(.*?)\n(?:##\s+(.*?)\n)?', content)
+        t1 = doc_title_m.group(1).strip() if doc_title_m else "Lecture Presentation"
+        t2 = doc_title_m.group(2).strip() if (doc_title_m and doc_title_m.group(2)) else course_name
+        slides.append({
+            "title": t2,
+            "subtitle": f"{t1} • Texas Wesleyan University",
+            "bullets": [
+                "Texas Wesleyan University — Department of Computer Science & Information Technology",
+                "Master Interactive Presentation & Slide Deck Viewer",
+                "Use the [◀ Previous] and [Next ▶] buttons or keyboard Arrow Left / Right keys to navigate.",
+                "Synchronized with module video lecture, lab benchmarks, and certification blueprints."
+            ]
+        })
+        for full_sec, ts, sec_title, sec_body in sections:
+            slide_m = re.findall(r'\[SHOW SLIDE:?\s*[\"“]?(.*?)[\"”]?\]', sec_body, re.IGNORECASE)
+            heading = slide_m[0] if slide_m else sec_title
+            
+            raw_paras = [p.strip() for p in sec_body.split('\n\n') if p.strip()]
+            bullets = []
+            for p in raw_paras:
+                if p.startswith('>') or p.startswith('---') or p.startswith('```') or (p.startswith('**[') and p.endswith(']**')):
+                    continue
+                clean = re.sub(r'[\*\`\#]', '', p).strip('" ')
+                sents = re.split(r'(?<=[.!?])\s+', clean)
+                for s in sents:
+                    s = s.strip()
+                    if len(s) > 25 and not s.startswith('<'):
+                        bullets.append(s[:150] + ('...' if len(s) > 150 else ''))
+                        if len(bullets) >= 4:
+                            break
+                if len(bullets) >= 4:
+                    break
+            if not bullets:
+                bullets = ["Core technical principles, theoretical framework, and laboratory mastery."]
+            slides.append({
+                "title": heading,
+                "subtitle": f"Section [{ts}] • {sec_title}",
+                "bullets": bullets
+            })
+        return slides
+
+    # 2. Reading Guides: extract conceptual headings
+    rg_sections = re.findall(r'(##\s+([0-9]+\.\s+.*?|[A-Z].*?)\n([\s\S]*?)(?=\n##\s+|\Z))', content)
+    if rg_sections:
+        doc_title_m = re.search(r'#\s+(.*?)\n', content)
+        t1 = doc_title_m.group(1).strip() if doc_title_m else "Module Reading Guide"
+        slides.append({
+            "title": t1,
+            "subtitle": f"{course_name} • Texas Wesleyan University",
+            "bullets": [
+                "Texas Wesleyan University — Department of Computer Science & Information Technology",
+                "Module Core Architecture & Theoretical Slide Summary",
+                "Use the [◀ Previous] and [Next ▶] buttons or keyboard Arrow Left / Right keys to navigate.",
+                "Mastery review companion for textbook readings and laboratory applications."
+            ]
+        })
+        for full_sec, sec_title, sec_body in rg_sections[:12]:
+            clean_title = re.sub(r'^[0-9]+\.\s*', '', sec_title).strip()
+            raw_paras = [p.strip() for p in sec_body.split('\n\n') if p.strip()]
+            bullets = []
+            for p in raw_paras:
+                if p.startswith('>') or p.startswith('---') or p.startswith('```') or p.startswith('<'):
+                    continue
+                clean = re.sub(r'[\*\`\#\|]', '', p).strip('" ')
+                sents = re.split(r'(?<=[.!?])\s+', clean)
+                for s in sents:
+                    s = s.strip()
+                    if len(s) > 25 and not s.startswith('<'):
+                        bullets.append(s[:150] + ('...' if len(s) > 150 else ''))
+                        if len(bullets) >= 4:
+                            break
+                if len(bullets) >= 4:
+                    break
+            if bullets:
+                slides.append({
+                    "title": clean_title,
+                    "subtitle": f"Domain Blueprint • {sec_title}",
+                    "bullets": bullets
+                })
+        if len(slides) > 1:
+            return slides
+
+    # 3. Fallback: Parse Course Master PPTX
+    import zipfile
+    import xml.etree.ElementTree as ET
+    pptx_dir = os.path.join(course_path, 'PowerPoints')
+    if os.path.exists(pptx_dir):
+        pptx_files = [os.path.join(pptx_dir, f) for f in os.listdir(pptx_dir) if f.endswith('.pptx')]
+        if pptx_files:
+            try:
+                with zipfile.ZipFile(pptx_files[0], 'r') as z:
+                    slide_names = [n for n in z.namelist() if re.match(r'^ppt/slides/slide\d+\.xml$', n)]
+                    slide_names.sort(key=lambda s: int(re.search(r'\d+', s).group(0)))
+                    for sname in slide_names:
+                        tree = ET.fromstring(z.read(sname))
+                        paras = []
+                        for p in tree.iter('{http://schemas.openxmlformats.org/drawingml/2006/main}p'):
+                            t = ''.join([elem.text for elem in p.iter('{http://schemas.openxmlformats.org/drawingml/2006/main}t') if elem.text])
+                            if t.strip():
+                                paras.append(t.strip())
+                        if paras:
+                            slides.append({
+                                "title": paras[0],
+                                "subtitle": "Master Course Presentation Deck",
+                                "bullets": paras[1:] if len(paras) > 1 else ["Course syllabus and curriculum alignment."]
+                            })
+            except Exception as e:
+                pass
+    return slides
+
     def render_item(self, course_rel, item_rel):
         course_path = os.path.join(BASE_DIR, course_rel)
         item_path = os.path.join(course_path, item_rel)
@@ -495,48 +618,150 @@ class CanvasViewerHandler(BaseHTTPRequestHandler):
         item_title = os.path.basename(item_path).replace('.md', '').replace('_', ' ')
         rendered_html = md_to_html(content)
 
+        slides_data = extract_slides_for_item(course_path, item_rel, content)
+        slides_json = json.dumps(slides_data) if slides_data else "[]"
+        slides_count = len(slides_data)
+
+        slide_deck_html = ""
+        if slides_count > 0:
+            slide_deck_html = f"""
+<div class="slide-deck-container" id="presentationViewer">
+  <div class="slide-deck-header">
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <span class="slide-deck-badge">Interactive Presentation</span>
+      <strong style="color: #ffffff; font-size: 14px;">PowerPoint Slide Deck Companion</strong>
+    </div>
+    <div class="slide-counter-badge" id="slideCounterBadge">Slide 1 of {slides_count}</div>
+  </div>
+  <div class="slide-canvas">
+    <div class="slide-watermark">TEXAS WESLEYAN</div>
+    <div class="slide-inner">
+      <div class="slide-header-box">
+        <div class="slide-meta-label" id="slideSubtitle">Texas Wesleyan University</div>
+        <h2 class="slide-title-text" id="slideTitle">Loading Presentation...</h2>
+      </div>
+      <div class="slide-body-box">
+        <ul class="slide-bullet-list" id="slideBulletList"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="slide-deck-controls">
+    <div style="display: flex; gap: 8px;">
+      <button type="button" class="slide-btn" id="prevSlideBtn" onclick="prevSlide()">◀ Previous</button>
+      <button type="button" class="slide-btn slide-btn-primary" id="nextSlideBtn" onclick="nextSlide()">Next ▶</button>
+    </div>
+    <div class="slide-keyboard-hint">💡 Tip: Use Left / Right arrow keys to navigate slides</div>
+    <div>
+      <button type="button" class="slide-btn" onclick="toggleFullscreen()">⛶ Fullscreen</button>
+    </div>
+  </div>
+</div>
+"""
+
         is_quiz = "quiz" in item_path.lower() or "assessment" in item_path.lower()
-        interactive_script = """
+        interactive_script = f"""
 <script>
-document.addEventListener('DOMContentLoaded', () => {
+const slidesData = {slides_json};
+let currentSlideIdx = 0;
+
+function renderSlide(idx) {{
+  if (!slidesData || slidesData.length === 0) return;
+  if (idx < 0) idx = 0;
+  if (idx >= slidesData.length) idx = slidesData.length - 1;
+  currentSlideIdx = idx;
+
+  const s = slidesData[idx];
+  document.getElementById('slideTitle').textContent = s.title || 'Slide ' + (idx + 1);
+  document.getElementById('slideSubtitle').textContent = s.subtitle || 'Texas Wesleyan University';
+  document.getElementById('slideCounterBadge').textContent = 'Slide ' + (idx + 1) + ' of ' + slidesData.length;
+
+  const listEl = document.getElementById('slideBulletList');
+  listEl.innerHTML = '';
+  (s.bullets || []).forEach(b => {{
+    const li = document.createElement('li');
+    li.textContent = b;
+    listEl.appendChild(li);
+  }});
+
+  const prevBtn = document.getElementById('prevSlideBtn');
+  const nextBtn = document.getElementById('nextSlideBtn');
+  if (prevBtn) prevBtn.disabled = (idx === 0);
+  if (nextBtn) nextBtn.disabled = (idx === slidesData.length - 1);
+}}
+
+function prevSlide() {{
+  if (currentSlideIdx > 0) {{
+    renderSlide(currentSlideIdx - 1);
+  }}
+}}
+
+function nextSlide() {{
+  if (currentSlideIdx < slidesData.length - 1) {{
+    renderSlide(currentSlideIdx + 1);
+  }}
+}}
+
+function toggleFullscreen() {{
+  const elem = document.getElementById('presentationViewer');
+  if (!document.fullscreenElement) {{
+    elem.requestFullscreen().catch(err => {{}});
+  }} else {{
+    document.exitFullscreen();
+  }}
+}}
+
+document.addEventListener('keydown', (e) => {{
+  if (e.key === 'ArrowRight' || e.key === 'PageDown') {{
+    nextSlide();
+  }} else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {{
+    prevSlide();
+  }}
+}});
+
+document.addEventListener('DOMContentLoaded', () => {{
+  if (slidesData.length > 0) {{
+    renderSlide(0);
+  }}
+
   const lists = document.querySelectorAll('ul');
-  lists.forEach(ul => {
+  lists.forEach(ul => {{
+    if (ul.id === 'slideBulletList') return;
     const items = ul.querySelectorAll('li');
     let isMCQ = false;
-    items.forEach(li => {
+    items.forEach(li => {{
       const text = li.innerText.trim();
-      if (/^[A-D]\\)/.test(text)) {
+      if (/^[A-D]\\)/.test(text)) {{
         isMCQ = true;
-      }
-    });
-    if (isMCQ) {
+      }}
+    }});
+    if (isMCQ) {{
       ul.classList.add('mcq-options');
-      items.forEach(li => {
+      items.forEach(li => {{
         const text = li.innerText.trim();
         const isCorrect = text.includes('✅') || text.includes('Correct');
         li.classList.add('mcq-option');
-        li.addEventListener('click', () => {
+        li.addEventListener('click', () => {{
           items.forEach(i => i.classList.remove('selected', 'correct', 'incorrect'));
           li.classList.add('selected');
-          if (isCorrect) {
+          if (isCorrect) {{
             li.classList.add('correct');
-          } else {
+          }} else {{
             li.classList.add('incorrect');
-          }
-        });
-      });
-    }
-  });
-});
+          }}
+        }});
+      }});
+    }}
+  }});
+}});
 </script>
 <style>
-.mcq-options { list-style: none !important; margin: 12px 0 24px 0 !important; }
-.mcq-option { padding: 10px 16px; margin-bottom: 8px; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer; transition: all 0.15s ease; background: #f8fafc; }
-.mcq-option:hover { background: #e2e8f0; border-color: #94a3b8; }
-.mcq-option.correct { background: #dcfce7 !important; border-color: #22c55e !important; color: #166534 !important; font-weight: bold; }
-.mcq-option.incorrect { background: #fee2e2 !important; border-color: #ef4444 !important; color: #991b1b !important; }
+.mcq-options {{ list-style: none !important; margin: 12px 0 24px 0 !important; }}
+.mcq-option {{ padding: 10px 16px; margin-bottom: 8px; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer; transition: all 0.15s ease; background: #f8fafc; }}
+.mcq-option:hover {{ background: #e2e8f0; border-color: #94a3b8; }}
+.mcq-option.correct {{ background: #dcfce7 !important; border-color: #22c55e !important; color: #166534 !important; font-weight: bold; }}
+.mcq-option.incorrect {{ background: #fee2e2 !important; border-color: #ef4444 !important; color: #991b1b !important; }}
 </style>
-""" if is_quiz else ""
+"""
 
         html = f"""<!DOCTYPE html>
 <html lang="en">
@@ -581,6 +806,154 @@ document.addEventListener('DOMContentLoaded', () => {
   th, td {{ padding: 10px 14px; border: 1px solid var(--border-color); text-align: left; }}
   th {{ background: #f8fafc; color: var(--txwes-navy); font-weight: 600; }}
   tr:nth-child(even) {{ background: #f8fafc; }}
+
+  /* Slide Deck Viewer Styles */
+  .slide-deck-container {{
+    background: #0F172A;
+    border-radius: 12px;
+    border: 2px solid #1E293B;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.25);
+    margin: 28px 0;
+    overflow: hidden;
+    color: #F8FAFC;
+    position: relative;
+  }}
+  .slide-deck-header {{
+    background: var(--txwes-navy);
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--txwes-gold);
+  }}
+  .slide-deck-badge {{
+    background: var(--txwes-gold);
+    color: #0F172A;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 3px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }}
+  .slide-counter-badge {{
+    background: rgba(255, 255, 255, 0.15);
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 14px;
+  }}
+  .slide-canvas {{
+    background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+    min-height: 380px;
+    padding: 40px 48px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }}
+  .slide-watermark {{
+    position: absolute;
+    bottom: 20px;
+    right: 28px;
+    font-size: 32px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    color: rgba(255, 255, 255, 0.04);
+    pointer-events: none;
+    user-select: none;
+  }}
+  .slide-inner {{
+    position: relative;
+    z-index: 2;
+  }}
+  .slide-header-box {{
+    border-bottom: 2px solid rgba(217, 167, 74, 0.4);
+    padding-bottom: 16px;
+    margin-bottom: 24px;
+  }}
+  .slide-meta-label {{
+    font-size: 12px;
+    text-transform: uppercase;
+    color: var(--txwes-gold);
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }}
+  .slide-title-text {{
+    font-size: 24px;
+    color: #FFFFFF;
+    margin: 0;
+    font-weight: 700;
+    line-height: 1.3;
+  }}
+  .slide-body-box {{
+    min-height: 160px;
+  }}
+  .slide-bullet-list {{
+    list-style: none !important;
+    padding-left: 0 !important;
+    margin: 0 !important;
+  }}
+  .slide-bullet-list li {{
+    position: relative;
+    padding-left: 28px;
+    margin-bottom: 14px;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #E2E8F0;
+  }}
+  .slide-bullet-list li::before {{
+    content: "■";
+    position: absolute;
+    left: 4px;
+    top: 1px;
+    color: var(--txwes-gold);
+    font-size: 12px;
+  }}
+  .slide-deck-controls {{
+    background: #090D16;
+    padding: 14px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #1E293B;
+  }}
+  .slide-btn {{
+    background: #1E293B;
+    color: #E2E8F0;
+    border: 1px solid #334155;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }}
+  .slide-btn:hover:not(:disabled) {{
+    background: #334155;
+    color: #FFFFFF;
+    border-color: var(--txwes-gold);
+  }}
+  .slide-btn:disabled {{
+    opacity: 0.4;
+    cursor: not-allowed;
+  }}
+  .slide-btn-primary {{
+    background: var(--txwes-gold);
+    color: #0F172A;
+    border-color: var(--txwes-gold);
+    font-weight: 700;
+  }}
+  .slide-btn-primary:hover:not(:disabled) {{
+    background: #E5B55B;
+    color: #000000;
+  }}
+  .slide-keyboard-hint {{
+    font-size: 12px;
+    color: #94A3B8;
+  }}
 </style>
 </head>
 <body>
@@ -605,6 +978,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <span>{item_title}</span>
     </div>
     <div class="doc-wrapper">
+      {slide_deck_html}
       {rendered_html}
     </div>
   </div>
@@ -679,15 +1053,30 @@ th {{ background: #f8fafc; color: #1B365D; }}
         else:
             self.send_error(404, "Syllabus not found")
 
-def run(port=8080):
-    server_address = ('', port)
+def run(port=3000):
+    import socket
+    # Attempt to bind to requested port, otherwise auto-search next available
+    chosen_port = port
+    for test_p in range(port, port + 50):
+        try:
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+            s.bind(('', test_p))
+            s.close()
+            chosen_port = test_p
+            break
+        except OSError:
+            continue
+
+    server_address = ('', chosen_port)
     httpd = HTTPServer(server_address, CanvasViewerHandler)
     print(f"=================================================================")
     print(f"🏛️ Texas Wesleyan University - Local Canvas LMS Simulator")
-    print(f"Serving all 48 courses at: http://localhost:{port}")
+    print(f"Serving all 48 courses at: http://localhost:{chosen_port}")
     print(f"=================================================================")
     httpd.serve_forever()
 
 if __name__ == "__main__":
-    port = int(sys.argv[1]) if len(sys.argv) > 1 and sys.argv[1].isdigit() else 8080
+    port = int(sys.argv[1]) if len(sys.argv) > 1 and sys.argv[1].isdigit() else 3000
     run(port)
+
