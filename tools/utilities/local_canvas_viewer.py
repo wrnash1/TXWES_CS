@@ -153,6 +153,160 @@ def get_all_courses():
                 })
     return sorted(courses, key=lambda x: (x["tier_folder"], x["code"]))
 
+
+def sanitize_for_students(text):
+    if not text:
+        return ""
+    # 1. Blockquote production notes (e.g. > **PRODUCTION NOTES FOR INSTRUCTOR:**)
+    text = re.sub(
+        r'>\s*\*\*PRODUCTION\s+NOTES[^\*]*\*\*[\s\S]*?(?=\n\s*\n[^\>]|\n\s*---\s*\n|\n\s*##|\Z)',
+        '',
+        text,
+        flags=re.IGNORECASE
+    )
+    # 2. Section header production notes (e.g. ## Production Notes, ## Pre-Production Notes)
+    text = re.sub(
+        r'(?:\n|^)#{2,4}\s+(?:Pre-)?Production\s+Notes[\s\S]*?(?=\n\s*#{1,4}\s+|\n\s*---\s*\n|\Z)',
+        '',
+        text,
+        flags=re.IGNORECASE
+    )
+    # 3. Inline italicized production notes (e.g. *Production notes: ...*)
+    text = re.sub(
+        r'\*Production\s+notes:[^\*]*\*',
+        '',
+        text,
+        flags=re.IGNORECASE
+    )
+    # 4. Clean up any leftover duplicate divider rules or multiple blank lines
+    text = re.sub(r'---\s*\n\s*---', '---', text)
+    text = re.sub(r'\n{3,}', '\n\n', text)
+    return text.strip()
+
+def extract_slides_for_item(course_path, item_rel, content):
+    slides = []
+    course_name = os.path.basename(course_path).replace('_', ' ')
+    
+    # Check if item is a lecture, script, or reading guide
+    item_l = item_rel.lower()
+    is_lecture = any(k in item_l for k in ['video', 'reading', 'lecture', 'script', 'notes'])
+    if not is_lecture:
+        return []
+
+    # 1. Video scripts with timestamped sections or SHOW SLIDE tags
+    sections = re.findall(r'(##\s+\[(.*?)\]\s+(.*?)\n([\s\S]*?)(?=\n##\s+\[|\Z))', content)
+    if sections:
+        doc_title_m = re.search(r'#\s+(.*?)\n(?:##\s+(.*?)\n)?', content)
+        t1 = doc_title_m.group(1).strip() if doc_title_m else "Lecture Presentation"
+        t2 = doc_title_m.group(2).strip() if (doc_title_m and doc_title_m.group(2)) else course_name
+        slides.append({
+            "title": t2,
+            "subtitle": f"{t1} • Texas Wesleyan University",
+            "bullets": [
+                "Texas Wesleyan University — Department of Computer Science & Information Technology",
+                "Master Interactive Presentation & Slide Deck Viewer",
+                "Use the [◀ Previous] and [Next ▶] buttons or keyboard Arrow Left / Right keys to navigate.",
+                "Synchronized with module video lecture, lab benchmarks, and certification blueprints."
+            ]
+        })
+        for full_sec, ts, sec_title, sec_body in sections:
+            slide_m = re.findall(r'\[SHOW SLIDE:?\s*[\"“]?(.*?)[\"”]?\]', sec_body, re.IGNORECASE)
+            heading = slide_m[0] if slide_m else sec_title
+            
+            raw_paras = [p.strip() for p in sec_body.split('\n\n') if p.strip()]
+            bullets = []
+            for p in raw_paras:
+                if p.startswith('>') or p.startswith('---') or p.startswith('```') or (p.startswith('**[') and p.endswith(']**')):
+                    continue
+                clean = re.sub(r'[\*\`\#]', '', p).strip('" ')
+                sents = re.split(r'(?<=[.!?])\s+', clean)
+                for s in sents:
+                    s = s.strip()
+                    if len(s) > 25 and not s.startswith('<'):
+                        bullets.append(s[:150] + ('...' if len(s) > 150 else ''))
+                        if len(bullets) >= 4:
+                            break
+                if len(bullets) >= 4:
+                    break
+            if not bullets:
+                bullets = ["Core technical principles, theoretical framework, and laboratory mastery."]
+            slides.append({
+                "title": heading,
+                "subtitle": f"Section [{ts}] • {sec_title}",
+                "bullets": bullets
+            })
+        return slides
+
+    # 2. Reading Guides: extract conceptual headings
+    rg_sections = re.findall(r'(##\s+([0-9]+\.\s+.*?|[A-Z].*?)\n([\s\S]*?)(?=\n##\s+|\Z))', content)
+    if rg_sections:
+        doc_title_m = re.search(r'#\s+(.*?)\n', content)
+        t1 = doc_title_m.group(1).strip() if doc_title_m else "Module Reading Guide"
+        slides.append({
+            "title": t1,
+            "subtitle": f"{course_name} • Texas Wesleyan University",
+            "bullets": [
+                "Texas Wesleyan University — Department of Computer Science & Information Technology",
+                "Module Core Architecture & Theoretical Slide Summary",
+                "Use the [◀ Previous] and [Next ▶] buttons or keyboard Arrow Left / Right keys to navigate.",
+                "Mastery review companion for textbook readings and laboratory applications."
+            ]
+        })
+        for full_sec, sec_title, sec_body in rg_sections[:12]:
+            clean_title = re.sub(r'^[0-9]+\.\s*', '', sec_title).strip()
+            raw_paras = [p.strip() for p in sec_body.split('\n\n') if p.strip()]
+            bullets = []
+            for p in raw_paras:
+                if p.startswith('>') or p.startswith('---') or p.startswith('```') or p.startswith('<'):
+                    continue
+                clean = re.sub(r'[\*\`\#\|]', '', p).strip('" ')
+                sents = re.split(r'(?<=[.!?])\s+', clean)
+                for s in sents:
+                    s = s.strip()
+                    if len(s) > 25 and not s.startswith('<'):
+                        bullets.append(s[:150] + ('...' if len(s) > 150 else ''))
+                        if len(bullets) >= 4:
+                            break
+                if len(bullets) >= 4:
+                    break
+            if bullets:
+                slides.append({
+                    "title": clean_title,
+                    "subtitle": f"Domain Blueprint • {sec_title}",
+                    "bullets": bullets
+                })
+        if len(slides) > 1:
+            return slides
+
+    # 3. Fallback: Parse Course Master PPTX
+    import zipfile
+    import xml.etree.ElementTree as ET
+    pptx_dir = os.path.join(course_path, 'PowerPoints')
+    if os.path.exists(pptx_dir):
+        pptx_files = [os.path.join(pptx_dir, f) for f in os.listdir(pptx_dir) if f.endswith('.pptx')]
+        if pptx_files:
+            try:
+                with zipfile.ZipFile(pptx_files[0], 'r') as z:
+                    slide_names = [n for n in z.namelist() if re.match(r'^ppt/slides/slide\d+\.xml$', n)]
+                    slide_names.sort(key=lambda s: int(re.search(r'\d+', s).group(0)))
+                    for sname in slide_names:
+                        tree = ET.fromstring(z.read(sname))
+                        paras = []
+                        for p in tree.iter('{http://schemas.openxmlformats.org/drawingml/2006/main}p'):
+                            t = ''.join([elem.text for elem in p.iter('{http://schemas.openxmlformats.org/drawingml/2006/main}t') if elem.text])
+                            if t.strip():
+                                paras.append(t.strip())
+                        if paras:
+                            slides.append({
+                                "title": paras[0],
+                                "subtitle": "Master Course Presentation Deck",
+                                "bullets": paras[1:] if len(paras) > 1 else ["Course syllabus and curriculum alignment."]
+                            })
+            except Exception as e:
+                pass
+    return slides
+
+
 class CanvasViewerHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         url_parts = urllib.parse.urlparse(self.path)
@@ -481,129 +635,6 @@ class CanvasViewerHandler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(html.encode("utf-8"))
 
-def extract_slides_for_item(course_path, item_rel, content):
-    slides = []
-    course_name = os.path.basename(course_path).replace('_', ' ')
-    
-    # Check if item is a lecture, script, or reading guide
-    item_l = item_rel.lower()
-    is_lecture = any(k in item_l for k in ['video', 'reading', 'lecture', 'script', 'notes'])
-    if not is_lecture:
-        return []
-
-    # 1. Video scripts with timestamped sections or SHOW SLIDE tags
-    sections = re.findall(r'(##\s+\[(.*?)\]\s+(.*?)\n([\s\S]*?)(?=\n##\s+\[|\Z))', content)
-    if sections:
-        doc_title_m = re.search(r'#\s+(.*?)\n(?:##\s+(.*?)\n)?', content)
-        t1 = doc_title_m.group(1).strip() if doc_title_m else "Lecture Presentation"
-        t2 = doc_title_m.group(2).strip() if (doc_title_m and doc_title_m.group(2)) else course_name
-        slides.append({
-            "title": t2,
-            "subtitle": f"{t1} • Texas Wesleyan University",
-            "bullets": [
-                "Texas Wesleyan University — Department of Computer Science & Information Technology",
-                "Master Interactive Presentation & Slide Deck Viewer",
-                "Use the [◀ Previous] and [Next ▶] buttons or keyboard Arrow Left / Right keys to navigate.",
-                "Synchronized with module video lecture, lab benchmarks, and certification blueprints."
-            ]
-        })
-        for full_sec, ts, sec_title, sec_body in sections:
-            slide_m = re.findall(r'\[SHOW SLIDE:?\s*[\"“]?(.*?)[\"”]?\]', sec_body, re.IGNORECASE)
-            heading = slide_m[0] if slide_m else sec_title
-            
-            raw_paras = [p.strip() for p in sec_body.split('\n\n') if p.strip()]
-            bullets = []
-            for p in raw_paras:
-                if p.startswith('>') or p.startswith('---') or p.startswith('```') or (p.startswith('**[') and p.endswith(']**')):
-                    continue
-                clean = re.sub(r'[\*\`\#]', '', p).strip('" ')
-                sents = re.split(r'(?<=[.!?])\s+', clean)
-                for s in sents:
-                    s = s.strip()
-                    if len(s) > 25 and not s.startswith('<'):
-                        bullets.append(s[:150] + ('...' if len(s) > 150 else ''))
-                        if len(bullets) >= 4:
-                            break
-                if len(bullets) >= 4:
-                    break
-            if not bullets:
-                bullets = ["Core technical principles, theoretical framework, and laboratory mastery."]
-            slides.append({
-                "title": heading,
-                "subtitle": f"Section [{ts}] • {sec_title}",
-                "bullets": bullets
-            })
-        return slides
-
-    # 2. Reading Guides: extract conceptual headings
-    rg_sections = re.findall(r'(##\s+([0-9]+\.\s+.*?|[A-Z].*?)\n([\s\S]*?)(?=\n##\s+|\Z))', content)
-    if rg_sections:
-        doc_title_m = re.search(r'#\s+(.*?)\n', content)
-        t1 = doc_title_m.group(1).strip() if doc_title_m else "Module Reading Guide"
-        slides.append({
-            "title": t1,
-            "subtitle": f"{course_name} • Texas Wesleyan University",
-            "bullets": [
-                "Texas Wesleyan University — Department of Computer Science & Information Technology",
-                "Module Core Architecture & Theoretical Slide Summary",
-                "Use the [◀ Previous] and [Next ▶] buttons or keyboard Arrow Left / Right keys to navigate.",
-                "Mastery review companion for textbook readings and laboratory applications."
-            ]
-        })
-        for full_sec, sec_title, sec_body in rg_sections[:12]:
-            clean_title = re.sub(r'^[0-9]+\.\s*', '', sec_title).strip()
-            raw_paras = [p.strip() for p in sec_body.split('\n\n') if p.strip()]
-            bullets = []
-            for p in raw_paras:
-                if p.startswith('>') or p.startswith('---') or p.startswith('```') or p.startswith('<'):
-                    continue
-                clean = re.sub(r'[\*\`\#\|]', '', p).strip('" ')
-                sents = re.split(r'(?<=[.!?])\s+', clean)
-                for s in sents:
-                    s = s.strip()
-                    if len(s) > 25 and not s.startswith('<'):
-                        bullets.append(s[:150] + ('...' if len(s) > 150 else ''))
-                        if len(bullets) >= 4:
-                            break
-                if len(bullets) >= 4:
-                    break
-            if bullets:
-                slides.append({
-                    "title": clean_title,
-                    "subtitle": f"Domain Blueprint • {sec_title}",
-                    "bullets": bullets
-                })
-        if len(slides) > 1:
-            return slides
-
-    # 3. Fallback: Parse Course Master PPTX
-    import zipfile
-    import xml.etree.ElementTree as ET
-    pptx_dir = os.path.join(course_path, 'PowerPoints')
-    if os.path.exists(pptx_dir):
-        pptx_files = [os.path.join(pptx_dir, f) for f in os.listdir(pptx_dir) if f.endswith('.pptx')]
-        if pptx_files:
-            try:
-                with zipfile.ZipFile(pptx_files[0], 'r') as z:
-                    slide_names = [n for n in z.namelist() if re.match(r'^ppt/slides/slide\d+\.xml$', n)]
-                    slide_names.sort(key=lambda s: int(re.search(r'\d+', s).group(0)))
-                    for sname in slide_names:
-                        tree = ET.fromstring(z.read(sname))
-                        paras = []
-                        for p in tree.iter('{http://schemas.openxmlformats.org/drawingml/2006/main}p'):
-                            t = ''.join([elem.text for elem in p.iter('{http://schemas.openxmlformats.org/drawingml/2006/main}t') if elem.text])
-                            if t.strip():
-                                paras.append(t.strip())
-                        if paras:
-                            slides.append({
-                                "title": paras[0],
-                                "subtitle": "Master Course Presentation Deck",
-                                "bullets": paras[1:] if len(paras) > 1 else ["Course syllabus and curriculum alignment."]
-                            })
-            except Exception as e:
-                pass
-    return slides
-
     def render_item(self, course_rel, item_rel):
         course_path = os.path.join(BASE_DIR, course_rel)
         item_path = os.path.join(course_path, item_rel)
@@ -616,7 +647,8 @@ def extract_slides_for_item(course_path, item_rel, content):
 
         course_title = os.path.basename(course_path).replace('_', ' ')
         item_title = os.path.basename(item_path).replace('.md', '').replace('_', ' ')
-        rendered_html = md_to_html(content)
+        clean_content = sanitize_for_students(content)
+        rendered_html = md_to_html(clean_content)
 
         slides_data = extract_slides_for_item(course_path, item_rel, content)
         slides_json = json.dumps(slides_data) if slides_data else "[]"
@@ -1030,7 +1062,8 @@ document.addEventListener('DOMContentLoaded', () => {{
             with open(found_md, "r", encoding="utf-8", errors="ignore") as f:
                 content = f.read()
             course_title = os.path.basename(course_path).replace('_', ' ')
-            rendered = md_to_html(content)
+            clean_content = sanitize_for_students(content)
+            rendered = md_to_html(clean_content)
             html = f"""<!DOCTYPE html>
 <html><head><meta charset="UTF-8"><title>Syllabus - {course_title}</title>
 <style>
@@ -1052,6 +1085,7 @@ th {{ background: #f8fafc; color: #1B365D; }}
             self.wfile.write(html.encode("utf-8"))
         else:
             self.send_error(404, "Syllabus not found")
+
 
 def run(port=3000):
     import socket
