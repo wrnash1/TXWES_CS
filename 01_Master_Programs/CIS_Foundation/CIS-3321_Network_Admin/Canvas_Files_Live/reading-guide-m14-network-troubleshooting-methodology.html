@@ -1,0 +1,465 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Reading Guide (M14): Network Troubleshooting Methodology</title>
+</head>
+<body>
+<h2>Reading Guide (M14): Network Troubleshooting Methodology</h2>
+<h1>Reading Guide: Module 14 — Network Troubleshooting Methodology</h1>
+<h2>Course: CIS-3321 Network Administration</h2>
+<p><strong>Certification Alignment:</strong> CompTIA Network+ (N10-009)</p>
+<hr />
+<h2>Overview</h2>
+<p>This reading guide supports Module 14 video lectures and prepares you for the quiz and the CompTIA Network+ N10-009 exam. Network troubleshooting and tools make up a significant portion of Domain 5 (Network Troubleshooting and Tools) — one of the exam's largest domains. The seven-step methodology and scenario-based reasoning are directly tested.</p>
+<p><strong>Estimated Reading Time:</strong> 55–70 minutes</p>
+<hr />
+<h2>Part 1: The CompTIA Seven-Step Troubleshooting Model</h2>
+<h3>1.1 Step-by-Step Reference</h3>
+<p>The seven steps must be memorized in order. The exam presents scenarios that ask which step should be performed next, or which step was skipped.</p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Name</th>
+<th>Key Activities</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Identify the Problem</td>
+<td>Gather information, duplicate the problem, identify symptoms, question users</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Establish a Theory of Probable Cause</td>
+<td>Consider common causes, use OSI model, consult documentation</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Test the Theory</td>
+<td>Run diagnostics, verify one hypothesis at a time</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Establish a Plan of Action</td>
+<td>Define the fix, assess impact, schedule if needed</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Implement the Solution or Escalate</td>
+<td>Apply the fix or escalate appropriately</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Verify Full System Functionality</td>
+<td>Confirm resolution, test related systems, check for new problems</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Document Findings, Actions, and Outcomes</td>
+<td>Update knowledge base, file change records, post-incident review</td>
+</tr>
+</tbody>
+</table>
+<h3>1.2 Step 1 — Identify the Problem in Detail</h3>
+<p>Effective information gathering uses open-ended questions:</p>
+<ul>
+<li>"What is not working?" (not "Is the network down?" — yes/no answers are less informative)</li>
+<li>"When did the problem start?"</li>
+<li>"What changed recently? New hardware? Software update? Configuration change?"</li>
+<li>"Who else is affected? Just you, your floor, or the whole building?"</li>
+<li>"What error messages are you seeing?"</li>
+</ul>
+<p>Duplicate the problem yourself if possible. You need firsthand observation, not just a user's description.</p>
+<h3>1.3 Step 2 — OSI Model as a Troubleshooting Framework</h3>
+<p>The OSI model organizes symptoms by layer. When building your theory, identify the lowest OSI layer at which a problem could explain all observed symptoms.</p>
+<table>
+<thead>
+<tr>
+<th>OSI Layer</th>
+<th>Common Problem Types</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Layer 1 — Physical</td>
+<td>No link, broken cable, port failure, duplex mismatch from auto-negotiation, NIC failure</td>
+</tr>
+<tr>
+<td>Layer 2 — Data Link</td>
+<td>Wrong VLAN, STP blocking, MAC table issue, duplex mismatch</td>
+</tr>
+<tr>
+<td>Layer 3 — Network</td>
+<td>Wrong IP, wrong subnet, missing route, wrong gateway, ARP failure</td>
+</tr>
+<tr>
+<td>Layer 4 — Transport</td>
+<td>Firewall blocking port, application not listening, NAT/PAT issue</td>
+</tr>
+<tr>
+<td>Layer 5-7 — Session/Presentation/Application</td>
+<td>DNS failure, authentication error, SSL certificate error, application crash</td>
+</tr>
+</tbody>
+</table>
+<h3>1.4 Step 3 — Diagnostic Testing Principles</h3>
+<p>When testing theories:</p>
+<ul>
+<li>Change one variable at a time.</li>
+<li>Test the most likely cause first.</li>
+<li>Test the least disruptive option before the most disruptive.</li>
+<li>Use known-good substitutes when possible (test with a known-good cable before blaming the switch).</li>
+<li>Roll back changes that do not fix the problem — do not leave unrelated changes in place.</li>
+</ul>
+<h3>1.5 Step 5 — Escalation Guidelines</h3>
+<p>Escalation is appropriate when:</p>
+<ul>
+<li>The issue is beyond your skill level or authority</li>
+<li>The problem requires vendor support (hardware warranty, carrier circuit fault)</li>
+<li>The fix requires change management approval</li>
+<li>Resolution requires access or resources you do not have</li>
+</ul>
+<p>Escalation tiers:</p>
+<ul>
+<li>Tier 1: Help desk / frontline support</li>
+<li>Tier 2: Network engineers, system administrators</li>
+<li>Tier 3: Senior engineers, vendor TAC (Technical Assistance Center)</li>
+</ul>
+<p>Always provide complete documentation when escalating — what you observed, what you tested, what the results were.</p>
+<h3>1.6 Step 7 — Documentation Value</h3>
+<p>Documentation after every incident provides:</p>
+<ul>
+<li>Incident record for audit and compliance purposes</li>
+<li>Knowledge base entry for faster future resolution</li>
+<li>Pattern data — if the same problem recurs monthly, there is an underlying design flaw</li>
+<li>Protection for the administrator — documented actions show professional practice</li>
+<li>Input for change management — repeated incidents may trigger a formal change proposal</li>
+</ul>
+<hr />
+<h2>Part 2: Troubleshooting Approaches</h2>
+<h3>2.1 Bottom-Up</h3>
+<p>Start at Layer 1 (Physical) and verify each layer before moving up. Best when:</p>
+<ul>
+<li>The problem could be at any layer</li>
+<li>Physical layer has not been verified</li>
+<li>No prior knowledge about the affected system</li>
+</ul>
+<p>Steps: Verify cable/port → Verify Layer 2 (VLAN, STP) → Verify Layer 3 (IP, routing) → Verify Layer 4 (firewall, NAT) → Verify DNS and application.</p>
+<h3>2.2 Top-Down</h3>
+<p>Start at Layer 7 (Application) and work down. Best when:</p>
+<ul>
+<li>Users can access some services but not a specific application</li>
+<li>Physical and network layers are known to be working for other traffic</li>
+</ul>
+<h3>2.3 Divide and Conquer</h3>
+<p>Start at Layer 3 and test bidirectionally. If ping works (Layer 3 OK), move up. If ping fails, move down to Layer 2 and 1. Best for experienced troubleshooters who want to quickly narrow the search space.</p>
+<h3>2.4 Follow the Path</h3>
+<p>Trace the traffic path from source to destination, verifying at each hop. Useful for routing and WAN problems. <code>traceroute</code> / <code>tracert</code> implements this approach automatically.</p>
+<h3>2.5 Swap the Component</h3>
+<p>Replace a suspected component with a known-good unit. If the problem goes away, the original component was faulty. If not, the component was not the cause.</p>
+<hr />
+<h2>Part 3: Diagnostic Commands Reference</h2>
+<h3>3.1 Windows / Linux Command Comparison</h3>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Windows</th>
+<th>Linux/macOS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>View IP configuration</td>
+<td><code>ipconfig /all</code></td>
+<td><code>ip addr show</code> / <code>ifconfig</code></td>
+</tr>
+<tr>
+<td>Ping</td>
+<td><code>ping &lt;host&gt;</code></td>
+<td><code>ping &lt;host&gt;</code></td>
+</tr>
+<tr>
+<td>Trace route</td>
+<td><code>tracert &lt;host&gt;</code></td>
+<td><code>traceroute &lt;host&gt;</code></td>
+</tr>
+<tr>
+<td>DNS query</td>
+<td><code>nslookup &lt;host&gt;</code></td>
+<td><code>nslookup &lt;host&gt;</code> / <code>dig &lt;host&gt;</code></td>
+</tr>
+<tr>
+<td>View ARP cache</td>
+<td><code>arp -a</code></td>
+<td><code>arp -a</code> / <code>ip neigh</code></td>
+</tr>
+<tr>
+<td>View routing table</td>
+<td><code>route print</code> / <code>netstat -r</code></td>
+<td><code>ip route</code> / <code>route -n</code></td>
+</tr>
+<tr>
+<td>View open connections</td>
+<td><code>netstat -an</code></td>
+<td><code>netstat -an</code> / <code>ss -an</code></td>
+</tr>
+<tr>
+<td>Path MTU discovery</td>
+<td><code>ping -l 1472 -f &lt;host&gt;</code></td>
+<td><code>ping -s 1472 -M do &lt;host&gt;</code></td>
+</tr>
+</tbody>
+</table>
+<h3>3.2 Command Deep Dives</h3>
+<h4>ipconfig /all (Windows)</h4>
+<p>Key fields to check:</p>
+<ul>
+<li>IPv4 Address — should match expected subnet</li>
+<li>Subnet Mask — verify correct length for the network</li>
+<li>Default Gateway — must be reachable for off-subnet connectivity</li>
+<li>DNS Servers — must be reachable and contain correct records</li>
+<li>DHCP Server — shows which server issued the address</li>
+<li>IPv4 Address in 169.254.0.0/16 range = APIPA — DHCP failed</li>
+</ul>
+<h4>ping</h4>
+<p>Options:</p>
+<ul>
+<li><code>ping -t &lt;host&gt;</code> (Windows): Continuous ping — useful for monitoring during changes</li>
+<li><code>ping -n 100 &lt;host&gt;</code> (Windows): Send 100 pings — better sample for packet loss measurement</li>
+<li>Result analysis: Successful = Layer 1-3 reachable. TTL Exceeded = routing loop. Destination Unreachable = no route or firewall. Request Timeout = packet filtered or host down.</li>
+</ul>
+<h4>traceroute / tracert</h4>
+<p>Each line shows one router hop, with round-trip time to that hop. Three asterisks (***) mean the router did not respond to the probe — may be firewall-filtered, not necessarily a problem. Loss at a hop with successful replies at later hops indicates ICMP rate-limiting, not an actual break.</p>
+<h4>nslookup</h4>
+<p>Usage patterns:</p>
+<ul>
+<li><code>nslookup hostname</code> — forward lookup</li>
+<li><code>nslookup -type=MX domain.com</code> — query mail records</li>
+<li><code>nslookup hostname &lt;DNS server IP&gt;</code> — query a specific server directly</li>
+<li>Identifies whether DNS failure is at the client DNS server or authoritative server level</li>
+</ul>
+<hr />
+<h2>Part 4: Physical Layer and Hardware Troubleshooting</h2>
+<h3>4.1 Copper Cable Faults</h3>
+<table>
+<thead>
+<tr>
+<th>Fault Type</th>
+<th>Description</th>
+<th>Detectable With</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Open circuit</td>
+<td>Wire completely broken</td>
+<td>Basic cable tester, TDR</td>
+</tr>
+<tr>
+<td>Short circuit</td>
+<td>Two wires touching</td>
+<td>Basic cable tester</td>
+</tr>
+<tr>
+<td>Crossed pair (transposed)</td>
+<td>Two pairs swapped end-to-end</td>
+<td>Basic cable tester</td>
+</tr>
+<tr>
+<td>Reversed pair</td>
+<td>Wire pair polarity flipped</td>
+<td>Basic cable tester</td>
+</tr>
+<tr>
+<td>Split pair</td>
+<td>Pair formed from wrong wires</td>
+<td>Advanced tester (NEXT measurement)</td>
+</tr>
+<tr>
+<td>Excessive crosstalk (NEXT)</td>
+<td>Adjacent pair interference</td>
+<td>Cable certifier</td>
+</tr>
+<tr>
+<td>Attenuation</td>
+<td>Signal loss over distance</td>
+<td>Cable certifier</td>
+</tr>
+</tbody>
+</table>
+<h3>4.2 Cable Testing Tools</h3>
+<h4>Basic Cable Tester</h4>
+<ul>
+<li>Tests continuity of all eight conductors</li>
+<li>Detects: opens, shorts, crossed pairs, reversed pairs, split pairs</li>
+<li>Does not measure performance (attenuation, NEXT)</li>
+<li>Inexpensive — suitable for basic field troubleshooting</li>
+</ul>
+<h4>Cable Certifier (e.g., Fluke DSX)</h4>
+<ul>
+<li>Measures all TIA/EIA performance parameters</li>
+<li>Certifies cable as Cat5e, Cat6, Cat6a</li>
+<li>Includes TDR — locates faults by distance</li>
+<li>Required for formal structured cabling certification</li>
+<li>Expensive — typically $5,000–$15,000</li>
+</ul>
+<h4>Time Domain Reflectometer (TDR)</h4>
+<ul>
+<li>Sends signal pulse down cable; measures reflected signal</li>
+<li>Calculates distance to any impedance discontinuity (break, short, connector)</li>
+<li>Available standalone or integrated in cable certifiers</li>
+</ul>
+<h4>Tone Generator and Inductive Probe</h4>
+<ul>
+<li>Tone generator (transmitter) injects a tone signal onto the cable</li>
+<li>Probe detects the tone inductively through insulation and walls</li>
+<li>Used to trace cables from one end to the other through conduit, walls, and patch panels</li>
+<li>Also called a "toner" or "fox and hound" tool</li>
+</ul>
+<h3>4.3 Fiber Optic Testing Tools</h3>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Optical power meter</td>
+<td>Measures signal strength (dBm) — detects attenuation</td>
+</tr>
+<tr>
+<td>OTDR (Optical TDR)</td>
+<td>Locates faults and measures attenuation per segment</td>
+</tr>
+<tr>
+<td>Visual fault locator (VFL)</td>
+<td>Red laser light visible at faults and tight bends</td>
+</tr>
+<tr>
+<td>Fiber inspection microscope</td>
+<td>Inspects connector end-face for contamination</td>
+</tr>
+<tr>
+<td>Fiber cleaning kit</td>
+<td>Removes contamination from connectors</td>
+</tr>
+</tbody>
+</table>
+<p>Most common fiber problem: dirty connectors. Clean before testing. Always.</p>
+<h3>4.4 Common Hardware Failure Symptoms</h3>
+<table>
+<thead>
+<tr>
+<th>Hardware</th>
+<th>Failure Symptom</th>
+<th>Diagnosis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NIC</td>
+<td>No link light, 169.254 APIPA, wrong speed</td>
+<td>Test with known-good cable; check device manager</td>
+</tr>
+<tr>
+<td>Switch port</td>
+<td>Dark LED, no link</td>
+<td>Move device to different port; check <code>show interfaces</code></td>
+</tr>
+<tr>
+<td>PoE port</td>
+<td>Device not powering</td>
+<td>Check PoE budget; check PoE standard match</td>
+</tr>
+<tr>
+<td>SFP/transceiver</td>
+<td>No link on fiber port</td>
+<td>Replace SFP; check fiber polarity; clean connectors</td>
+</tr>
+<tr>
+<td>Switch PSU</td>
+<td>Switch powers off or reboots</td>
+<td>Check redundant PSU status; replace failed unit</td>
+</tr>
+<tr>
+<td>Router WAN module</td>
+<td>WAN interface down</td>
+<td>Check CSU/DSU; contact carrier for circuit status</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>Part 5: Common Troubleshooting Scenarios</h2>
+<h3>5.1 APIPA Address (169.254.x.x)</h3>
+<p>Symptom: Client has 169.254.x.x address.</p>
+<p>Cause: DHCP request failed — client assigned itself an APIPA address per RFC 3927.</p>
+<p>Diagnosis: Can the client reach the DHCP server? Is the DHCP server running? Is the helper-address (DHCP relay) configured on the router interface?</p>
+<h3>5.2 Duplicate IP Address</h3>
+<p>Symptom: Intermittent connectivity, ARP conflicts in logs, IP conflict notification.</p>
+<p>Cause: Two devices configured with the same IP address.</p>
+<p>Diagnosis: <code>arp -a</code> on other devices — which MAC addresses are associated with the IP? Use <code>ping -n 100</code> and observe which device responds.</p>
+<h3>5.3 Duplex Mismatch</h3>
+<p>Symptom: Slow throughput on a Gigabit link; late collisions in switch statistics.</p>
+<p>Cause: One side set to full-duplex (or auto-negotiated); other set to half-duplex.</p>
+<p>Diagnosis: <code>show interfaces</code> on the switch — look for "Half-duplex" or high collision counts.</p>
+<p>Fix: Set both sides to the same explicit duplex and speed (full/1000), or both to auto-negotiation.</p>
+<h3>5.4 Incorrect DNS Configuration</h3>
+<p>Symptom: Can ping by IP, cannot connect by name.</p>
+<p>Cause: DNS server unreachable, wrong DNS server configured, or missing DNS record.</p>
+<p>Diagnosis: <code>nslookup</code> to test name resolution. <code>ipconfig /all</code> to verify DNS server addresses. Check if DNS server is reachable via ping.</p>
+<hr />
+<h2>Key Terms Glossary</h2>
+<ul>
+<li><strong>APIPA</strong>: Automatic Private IP Addressing — 169.254.0.0/16 range; assigned when DHCP fails.</li>
+<li><strong>Cable certifier</strong>: Advanced tool measuring cable performance and certifying compliance.</li>
+<li><strong>Divide and conquer</strong>: Troubleshooting approach starting at Layer 3.</li>
+<li><strong>Duplex mismatch</strong>: Mismatched full/half duplex settings causing slow performance and collisions.</li>
+<li><strong>Escalation</strong>: Transferring a problem to a higher support tier.</li>
+<li><strong>NEXT</strong>: Near End Crosstalk — interference between adjacent pairs measured at the same end.</li>
+<li><strong>OTDR</strong>: Optical Time Domain Reflectometer — locates fiber faults by distance.</li>
+<li><strong>Split pair</strong>: Wiring error using wires from different pairs — passes continuity but fails performance.</li>
+<li><strong>TDR</strong>: Time Domain Reflectometer — locates cable faults by measuring signal reflection.</li>
+<li><strong>Tone generator</strong>: Injects audible tone into cable for tracing.</li>
+<li><strong>VFL</strong>: Visual Fault Locator — red laser reveals fiber breaks and tight bends.</li>
+</ul>
+<hr />
+<h2>Review Questions</h2>
+<ol>
+<li>
+<p>List the seven steps of the CompTIA troubleshooting methodology in order.</p>
+</li>
+<li>
+<p>A user can ping a server by IP address but cannot connect to it by hostname. Which OSI layer is likely at fault? What command would you use to diagnose this?</p>
+</li>
+<li>
+<p>A new workstation receives a 169.254.47.23 IP address. What does this indicate and what is the likely cause?</p>
+</li>
+<li>
+<p>Describe three types of cable faults that a basic cable tester can detect but a TDR can additionally locate by distance.</p>
+</li>
+<li>
+<p>What is a duplex mismatch? What symptom would you see in switch interface statistics?</p>
+</li>
+<li>
+<p>A fiber link shows no light and the optical power meter reads no signal. List three possible causes in order from most to least common.</p>
+</li>
+<li>
+<p>When should you escalate a problem rather than continue troubleshooting independently?</p>
+</li>
+<li>
+<p>What is the purpose of Step 6 (Verify Full System Functionality) and why should it not be skipped?</p>
+</li>
+<li>
+<p>Describe the divide-and-conquer troubleshooting approach and when it is most effective.</p>
+</li>
+<li>
+<p>A switch port shows the following: Speed 10Mb/s, Duplex Half, Input errors: 45,000, CRC: 12,000. What are the likely causes?</p>
+</li>
+</ol>
+</body>
+</html>

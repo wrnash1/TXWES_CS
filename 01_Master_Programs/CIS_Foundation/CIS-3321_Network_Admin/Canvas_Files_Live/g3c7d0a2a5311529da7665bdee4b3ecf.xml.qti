@@ -1,0 +1,530 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/profile/cc/ccv1p1/ccv1p1_qtiasiv1p2p1_v1p0.xsd">
+  <assessment ident="g3c7d0a2a5311529da7665bdee4b3ecf" title="Quiz (M03): IP Addressing: IPv4, Subnetting, CIDR">
+    <qtimetadata>
+      <qtimetadatafield>
+        <fieldlabel>cc_profile</fieldlabel>
+        <fieldentry>cc.exam.v0p1</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_assessmenttype</fieldlabel>
+        <fieldentry>Examination</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_scoretype</fieldlabel>
+        <fieldentry>Percentage</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>cc_maxattempts</fieldlabel>
+        <fieldentry>1</fieldentry>
+      </qtimetadatafield>
+    </qtimetadata>
+    <section ident="root_section">
+      <item ident="g3c7d0a2a5311529da7665bdee4b3ecf_q01" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A network technician is assigned the subnet 192.168.10.0/26. How many usable host addresses are available in this subnet?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g3c7d0a2a5311529da7665bdee4b3ecf_q01_a">
+                <material>
+                  <mattext texttype="text/plain">30</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c7d0a2a5311529da7665bdee4b3ecf_q01_b">
+                <material>
+                  <mattext texttype="text/plain">62</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c7d0a2a5311529da7665bdee4b3ecf_q01_c">
+                <material>
+                  <mattext texttype="text/plain">126</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c7d0a2a5311529da7665bdee4b3ecf_q01_d">
+                <material>
+                  <mattext texttype="text/plain">254</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g3c7d0a2a5311529da7665bdee4b3ecf_q01_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g3c7d0a2a5311529da7665bdee4b3ecf_q02" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;Which of the following IPv4 addresses falls within a private address range defined by RFC 1918?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g3c7d0a2a5311529da7665bdee4b3ecf_q02_a">
+                <material>
+                  <mattext texttype="text/plain">172.32.10.5</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c7d0a2a5311529da7665bdee4b3ecf_q02_b">
+                <material>
+                  <mattext texttype="text/plain">11.0.0.1</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c7d0a2a5311529da7665bdee4b3ecf_q02_c">
+                <material>
+                  <mattext texttype="text/plain">10.200.15.33</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c7d0a2a5311529da7665bdee4b3ecf_q02_d">
+                <material>
+                  <mattext texttype="text/plain">192.169.1.1</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g3c7d0a2a5311529da7665bdee4b3ecf_q02_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g3c7d0a2a5311529da7665bdee4b3ecf_q03" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A host is assigned the IP address 192.168.1.75 with a subnet mask of 255.255.255.224 (/27). What is the broadcast address of this host's subnet?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g3c7d0a2a5311529da7665bdee4b3ecf_q03_a">
+                <material>
+                  <mattext texttype="text/plain">192.168.1.63</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c7d0a2a5311529da7665bdee4b3ecf_q03_b">
+                <material>
+                  <mattext texttype="text/plain">192.168.1.95</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c7d0a2a5311529da7665bdee4b3ecf_q03_c">
+                <material>
+                  <mattext texttype="text/plain">192.168.1.127</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c7d0a2a5311529da7665bdee4b3ecf_q03_d">
+                <material>
+                  <mattext texttype="text/plain">192.168.1.255</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g3c7d0a2a5311529da7665bdee4b3ecf_q03_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g3c7d0a2a5311529da7665bdee4b3ecf_q04" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A technician sees that a workstation has self-assigned the IP address 169.254.14.22 and cannot communicate with any network resources. What is the most likely root cause and correct remediation?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g3c7d0a2a5311529da7665bdee4b3ecf_q04_a">
+                <material>
+                  <mattext texttype="text/plain">The default gateway is unreachable; configure a static gateway address on the workstation.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c7d0a2a5311529da7665bdee4b3ecf_q04_b">
+                <material>
+                  <mattext texttype="text/plain">The DHCP server is unavailable or unreachable; restore the DHCP server or assign a static IP in the correct subnet.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c7d0a2a5311529da7665bdee4b3ecf_q04_c">
+                <material>
+                  <mattext texttype="text/plain">The DNS server is offline; change the DNS server setting on the workstation to 8.8.8.8.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c7d0a2a5311529da7665bdee4b3ecf_q04_d">
+                <material>
+                  <mattext texttype="text/plain">The subnet mask is misconfigured; correct it to match the rest of the network segment.</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g3c7d0a2a5311529da7665bdee4b3ecf_q04_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g3c7d0a2a5311529da7665bdee4b3ecf_q05" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A network design requires a subnet that connects exactly two routers on a point-to-point WAN link with minimal address waste. Which subnet mask is the most appropriate?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g3c7d0a2a5311529da7665bdee4b3ecf_q05_a">
+                <material>
+                  <mattext texttype="text/plain">/24 — provides 254 usable host addresses</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c7d0a2a5311529da7665bdee4b3ecf_q05_b">
+                <material>
+                  <mattext texttype="text/plain">/28 — provides 14 usable host addresses</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c7d0a2a5311529da7665bdee4b3ecf_q05_c">
+                <material>
+                  <mattext texttype="text/plain">/30 — provides 2 usable host addresses</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c7d0a2a5311529da7665bdee4b3ecf_q05_d">
+                <material>
+                  <mattext texttype="text/plain">/32 — a host route representing a single device with no broadcast domain</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g3c7d0a2a5311529da7665bdee4b3ecf_q05_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g3c7d0a2a5311529da7665bdee4b3ecf_q06" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;Which of the following statements about the 127.0.0.1 address is correct?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g3c7d0a2a5311529da7665bdee4b3ecf_q06_a">
+                <material>
+                  <mattext texttype="text/plain">It is an RFC 1918 private address used for internal LAN communication.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c7d0a2a5311529da7665bdee4b3ecf_q06_b">
+                <material>
+                  <mattext texttype="text/plain">It is the APIPA address assigned by Windows when DHCP fails.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c7d0a2a5311529da7665bdee4b3ecf_q06_c">
+                <material>
+                  <mattext texttype="text/plain">It is the loopback address used to test the local host's TCP/IP stack without transmitting traffic.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c7d0a2a5311529da7665bdee4b3ecf_q06_d">
+                <material>
+                  <mattext texttype="text/plain">It is the network address of the default Class C subnet 127.0.0.0/24.</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g3c7d0a2a5311529da7665bdee4b3ecf_q06_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g3c7d0a2a5311529da7665bdee4b3ecf_q07" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An administrator needs to create exactly 8 subnets from the 192.168.3.0/24 network block. What is the minimum number of bits that must be borrowed from the host portion?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g3c7d0a2a5311529da7665bdee4b3ecf_q07_a">
+                <material>
+                  <mattext texttype="text/plain">1 bit</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c7d0a2a5311529da7665bdee4b3ecf_q07_b">
+                <material>
+                  <mattext texttype="text/plain">2 bits</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c7d0a2a5311529da7665bdee4b3ecf_q07_c">
+                <material>
+                  <mattext texttype="text/plain">3 bits</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c7d0a2a5311529da7665bdee4b3ecf_q07_d">
+                <material>
+                  <mattext texttype="text/plain">4 bits</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g3c7d0a2a5311529da7665bdee4b3ecf_q07_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g3c7d0a2a5311529da7665bdee4b3ecf_q08" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;Two hosts have the following configurations:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Host A: IP 192.168.10.65, Mask 255.255.255.192&lt;/li&gt;
+&lt;li&gt;Host B: IP 192.168.10.130, Mask 255.255.255.192&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Can Host A communicate with Host B without a router?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g3c7d0a2a5311529da7665bdee4b3ecf_q08_a">
+                <material>
+                  <mattext texttype="text/plain">Yes, because both hosts share the same /24 network address (192.168.10.0).</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c7d0a2a5311529da7665bdee4b3ecf_q08_b">
+                <material>
+                  <mattext texttype="text/plain">No, because Host A is on the 192.168.10.64/26 subnet and Host B is on the 192.168.10.128/26 subnet.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c7d0a2a5311529da7665bdee4b3ecf_q08_c">
+                <material>
+                  <mattext texttype="text/plain">Yes, because both hosts have the same subnet mask (255.255.255.192).</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c7d0a2a5311529da7665bdee4b3ecf_q08_d">
+                <material>
+                  <mattext texttype="text/plain">No, because 192.168.10.65 is in the APIPA range and cannot communicate with RFC 1918 addresses.</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g3c7d0a2a5311529da7665bdee4b3ecf_q08_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g3c7d0a2a5311529da7665bdee4b3ecf_q09" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A network administrator is planning an address scheme for a new office with five departments. The largest department has 45 workstations and the smallest has 10. The administrator wants to use one contiguous block and minimize address waste. What is the smallest CIDR prefix that accommodates the largest department?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g3c7d0a2a5311529da7665bdee4b3ecf_q09_a">
+                <material>
+                  <mattext texttype="text/plain">/26 — supports 62 usable hosts</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c7d0a2a5311529da7665bdee4b3ecf_q09_b">
+                <material>
+                  <mattext texttype="text/plain">/27 — supports 30 usable hosts</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c7d0a2a5311529da7665bdee4b3ecf_q09_c">
+                <material>
+                  <mattext texttype="text/plain">/28 — supports 14 usable hosts</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c7d0a2a5311529da7665bdee4b3ecf_q09_d">
+                <material>
+                  <mattext texttype="text/plain">/25 — supports 126 usable hosts</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g3c7d0a2a5311529da7665bdee4b3ecf_q09_a</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g3c7d0a2a5311529da7665bdee4b3ecf_q10" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;What is the network address for the host 172.16.50.200 with a subnet mask of 255.255.255.248 (/29)?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g3c7d0a2a5311529da7665bdee4b3ecf_q10_a">
+                <material>
+                  <mattext texttype="text/plain">172.16.50.192</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c7d0a2a5311529da7665bdee4b3ecf_q10_b">
+                <material>
+                  <mattext texttype="text/plain">172.16.50.200</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c7d0a2a5311529da7665bdee4b3ecf_q10_c">
+                <material>
+                  <mattext texttype="text/plain">172.16.50.196</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c7d0a2a5311529da7665bdee4b3ecf_q10_d">
+                <material>
+                  <mattext texttype="text/plain">172.16.50.248</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g3c7d0a2a5311529da7665bdee4b3ecf_q10_a</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+    </section>
+  </assessment>
+</questestinterop>

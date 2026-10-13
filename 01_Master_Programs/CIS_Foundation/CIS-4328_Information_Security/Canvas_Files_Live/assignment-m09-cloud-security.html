@@ -1,0 +1,336 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Assignment: Lab (M09): Cloud Security</title>
+</head>
+<body>
+<h2>Lab (M09): Cloud Security</h2>
+<h1>Lab: Module 09 — Cloud Security</h1>
+<h2>Course: CIS-4328 Information Security</h2>
+<p><strong>Certification Alignment:</strong> CompTIA Security+ (SY0-701)</p>
+<hr />
+<h2>Lab Overview</h2>
+<p><strong>Title:</strong> Auditing and Hardening Cloud Storage Security</p>
+<p><strong>Duration:</strong> Approximately 75 minutes</p>
+<p><strong>Environment:</strong> AWS Free Tier (no cost expected) and manual configuration audit worksheet</p>
+<p><strong>Skill Level:</strong> Intermediate — assumes basic familiarity with web-based AWS console navigation</p>
+<hr />
+<h2>Objectives</h2>
+<p>Upon completing this lab, you will be able to:</p>
+<ol>
+<li>Identify misconfigured cloud storage settings that expose data publicly</li>
+<li>Apply Block Public Access controls to an S3 bucket</li>
+<li>Enable server-side encryption with customer-managed keys (SSE-KMS)</li>
+<li>Configure S3 bucket access logging for audit trail purposes</li>
+<li>Evaluate an S3 bucket policy for over-permissive access</li>
+<li>Complete a cloud security configuration checklist against CIS Benchmark standards</li>
+</ol>
+<hr />
+<h2>Prerequisites</h2>
+<ul>
+<li>AWS Free Tier account (create at <a href="https://aws.amazon.com/free/">https://aws.amazon.com/free/</a> if needed)</li>
+<li>Web browser</li>
+<li>This lab worksheet (keep open alongside the AWS console)</li>
+<li>Completed Module 09 video lectures and Reading Guide</li>
+</ul>
+<hr />
+<h2>Safety and Cost Notice</h2>
+<p>This lab uses only AWS S3 within Free Tier limits (5 GB storage, 20,000 GET requests, 2,000 PUT requests per month). Do not upload large files. Delete all resources you create at the end of the lab using the cleanup instructions in Section 7.</p>
+<hr />
+<h2>Part 1 — Create a Test S3 Bucket with Intentional Misconfigurations (15 minutes)</h2>
+<p>You will deliberately create an insecure bucket, then audit and fix it. This simulates what a security engineer finds during a cloud audit.</p>
+<h3>Step 1.1 — Create the Bucket</h3>
+<ol>
+<li>Log into the AWS Management Console at <a href="https://console.aws.amazon.com">https://console.aws.amazon.com</a></li>
+<li>Navigate to <strong>S3</strong> via the Services menu</li>
+<li>Click <strong>Create bucket</strong></li>
+<li>Set bucket name: <code>txwes-cis4328-lab09-[your-initials]</code> (bucket names must be globally unique)</li>
+<li>Set region: <strong>US East (N. Virginia) us-east-1</strong></li>
+<li>Under <strong>Block Public Access settings for this bucket</strong>: uncheck <strong>Block all public access</strong> and acknowledge the warning</li>
+<li>Under <strong>Default encryption</strong>: leave as <strong>Disabled</strong> for now</li>
+<li>Leave all other settings at defaults</li>
+<li>Click <strong>Create bucket</strong></li>
+</ol>
+<p><strong>What you just did:</strong> You created a bucket with public access potentially enabled and no encryption. This is a misconfiguration pattern found frequently in real breach investigations.</p>
+<h3>Step 1.2 — Upload a Test File</h3>
+<ol>
+<li>Click your new bucket name to open it</li>
+<li>Click <strong>Upload</strong></li>
+<li>Click <strong>Add files</strong> and upload any small text file (create a file named <code>test-data.txt</code> with the content "TXWES Lab 09 Test File — Not Sensitive")</li>
+<li>Click <strong>Upload</strong></li>
+</ol>
+<h3>Step 1.3 — Record Initial State</h3>
+<p>Complete the following audit fields for your lab report:</p>
+<table>
+<thead>
+<tr>
+<th>Configuration Item</th>
+<th>Current Value</th>
+<th>Compliant?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Block Public Access — Block all public access</td>
+<td>Disabled</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Default encryption</td>
+<td>Disabled</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Bucket versioning</td>
+<td>Disabled</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Server access logging</td>
+<td>Disabled</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Object lock</td>
+<td>Disabled</td>
+<td>N/A (optional)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>Part 2 — Audit Bucket Access (10 minutes)</h2>
+<h3>Step 2.1 — Review the Bucket Policy</h3>
+<ol>
+<li>Navigate to your bucket → <strong>Permissions</strong> tab</li>
+<li>Look at the <strong>Bucket policy</strong> section</li>
+<li>If empty, note "No bucket policy — defaults to private"</li>
+</ol>
+<h3>Step 2.2 — Check the Access Control List</h3>
+<ol>
+<li>Still in <strong>Permissions</strong>, find the <strong>Access control list (ACL)</strong> section</li>
+<li>Review what permissions are listed for "Everyone (public access)"</li>
+<li>Record what you see in your lab report</li>
+</ol>
+<h3>Step 2.3 — Attempt to Make Object Public (Demonstration)</h3>
+<p>Because you disabled Block Public Access during creation, you can now observe how easily a public ACL can be set:</p>
+<ol>
+<li>Click the <strong>Objects</strong> tab</li>
+<li>Click <code>test-data.txt</code></li>
+<li>Click <strong>Permissions</strong> for this object</li>
+<li>Note the current ACL status (should be owner-only at this point)</li>
+</ol>
+<p>Do NOT make the object public — this step is observation only. The point is to recognize that without Block Public Access, a developer could easily enable public access on any object.</p>
+<p><strong>Lab Reflection Question 1:</strong> In the context of the shared responsibility model, if a developer in your organization accidentally makes an S3 bucket public and customer data is exposed, who is responsible — your organization or AWS? Explain your answer in two to three sentences.</p>
+<hr />
+<h2>Part 3 — Enable Block Public Access (10 minutes)</h2>
+<h3>Step 3.1 — Enable the Guardrail</h3>
+<ol>
+<li>Navigate to your bucket → <strong>Permissions</strong> tab</li>
+<li>Click <strong>Edit</strong> in the Block Public Access section</li>
+<li>Check <strong>Block all public access</strong></li>
+<li>Click <strong>Save changes</strong> and type "confirm" when prompted</li>
+</ol>
+<h3>Step 3.2 — Verify the Setting</h3>
+<ol>
+<li>Confirm the Block Public Access status now shows all four options as <strong>On</strong></li>
+<li>Update your audit table:</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Configuration Item</th>
+<th>Current Value</th>
+<th>Compliant?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Block Public Access — Block all public access</td>
+<td>Enabled</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Lab Reflection Question 2:</strong> Block Public Access prevents public access even if a bucket policy or ACL would otherwise allow it. In what scenario would you legitimately disable this setting? What compensating controls would you put in place?</p>
+<hr />
+<h2>Part 4 — Enable Encryption (15 minutes)</h2>
+<h3>Step 4.1 — Enable SSE-KMS</h3>
+<ol>
+<li>Navigate to your bucket → <strong>Properties</strong> tab</li>
+<li>Scroll to <strong>Default encryption</strong> → click <strong>Edit</strong></li>
+<li>Select <strong>AWS Key Management Service key (SSE-KMS)</strong></li>
+<li>Under KMS key, select <strong>AWS managed key (aws/s3)</strong> — this is the AWS-managed KMS key (SSE-KMS with AWS-managed key, equivalent to SSE-KMS at no additional KMS cost for this lab)</li>
+<li>Click <strong>Save changes</strong></li>
+</ol>
+<h3>Step 4.2 — Review Key Policy Implications</h3>
+<p>Navigate to <strong>AWS KMS</strong> in the console (search "KMS" in the Services menu):</p>
+<ol>
+<li>Click <strong>AWS managed keys</strong></li>
+<li>Find the <code>aws/s3</code> key</li>
+<li>Review the Key policy tab — note which principals can use this key</li>
+</ol>
+<p><strong>Lab Reflection Question 3:</strong> What is the difference between SSE-S3, SSE-KMS with AWS-managed keys, and SSE-KMS with customer-managed keys? When would you choose each option? (Three to four sentences.)</p>
+<h3>Step 4.3 — Update Audit Table</h3>
+<table>
+<thead>
+<tr>
+<th>Configuration Item</th>
+<th>Current Value</th>
+<th>Compliant?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Default encryption</td>
+<td>SSE-KMS (aws/s3)</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>Part 5 — Enable Versioning and Access Logging (10 minutes)</h2>
+<h3>Step 5.1 — Enable Versioning</h3>
+<ol>
+<li>Navigate to your bucket → <strong>Properties</strong> tab</li>
+<li>Find <strong>Bucket Versioning</strong> → click <strong>Edit</strong></li>
+<li>Select <strong>Enable</strong></li>
+<li>Click <strong>Save changes</strong></li>
+</ol>
+<h3>Step 5.2 — Enable Server Access Logging</h3>
+<ol>
+<li>Still in <strong>Properties</strong>, find <strong>Server access logging</strong> → click <strong>Edit</strong></li>
+<li>Select <strong>Enable</strong></li>
+<li>For the target bucket, you can log to the same bucket with a prefix, or create a separate logging bucket</li>
+<li>Enter prefix: <code>access-logs/</code></li>
+<li>Click <strong>Save changes</strong></li>
+</ol>
+<p><strong>Lab Reflection Question 4:</strong> Why is it better practice to store access logs in a separate bucket rather than the bucket being monitored? What security principle does this support?</p>
+<h3>Step 5.3 — Final Audit State</h3>
+<p>Update your complete audit table:</p>
+<table>
+<thead>
+<tr>
+<th>Configuration Item</th>
+<th>Final Value</th>
+<th>Compliant?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Block Public Access — Block all public access</td>
+<td>Enabled</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Default encryption</td>
+<td>SSE-KMS</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Bucket versioning</td>
+<td>Enabled</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Server access logging</td>
+<td>Enabled</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>Part 6 — Write a Simulated Bucket Policy and Evaluate It (10 minutes)</h2>
+<h3>Step 6.1 — Review a Sample Over-Permissive Policy</h3>
+<p>Examine the following bucket policy. Do NOT apply it — this is a desk exercise.</p>
+<pre><code class="language-json">{
+  &quot;Version&quot;: &quot;2012-10-17&quot;,
+  &quot;Statement&quot;: [
+    {
+      &quot;Effect&quot;: &quot;Allow&quot;,
+      &quot;Principal&quot;: &quot;*&quot;,
+      &quot;Action&quot;: &quot;s3:*&quot;,
+      &quot;Resource&quot;: [
+        &quot;arn:aws:s3:::example-bucket&quot;,
+        &quot;arn:aws:s3:::example-bucket/*&quot;
+      ]
+    }
+  ]
+}
+</code></pre>
+<p><strong>Lab Reflection Question 5:</strong> Identify at least three specific security problems with this bucket policy. For each problem, write one sentence describing the risk and one sentence describing the fix.</p>
+<h3>Step 6.2 — Write a Corrected Policy</h3>
+<p>On paper or in a text editor, rewrite the policy above to:</p>
+<ul>
+<li>Allow read access (<code>s3:GetObject</code>) only</li>
+<li>Restrict access to a specific IAM role ARN (you can invent a realistic ARN: <code>arn:aws:iam::123456789012:role/AppReadRole</code>)</li>
+<li>Apply to all objects in the bucket but not bucket-level operations</li>
+</ul>
+<p>Include your corrected policy in your lab report.</p>
+<hr />
+<h2>Part 7 — Cleanup (5 minutes)</h2>
+<p>To avoid any unexpected charges and to keep your AWS account clean:</p>
+<ol>
+<li>Navigate to your bucket</li>
+<li>Click <strong>Empty</strong> and confirm — this deletes all objects and versions</li>
+<li>After emptying, click <strong>Delete bucket</strong> and confirm by typing the bucket name</li>
+<li>Navigate to <strong>KMS</strong> and verify no customer-managed keys were created (only AWS-managed keys were used; no action needed)</li>
+</ol>
+<hr />
+<h2>Lab Report Submission Requirements</h2>
+<p>Submit a single document containing:</p>
+<ol>
+<li>Your completed audit table (initial state and final state)</li>
+<li>Answers to all five Lab Reflection Questions (numbered, full paragraphs)</li>
+<li>Your corrected bucket policy from Step 6.2</li>
+<li>One paragraph (five to seven sentences) describing how the misconfigurations you fixed in this lab relate to the shared responsibility model — specifically, what your organization was responsible for and what AWS provides automatically</li>
+</ol>
+<p><strong>Format:</strong> PDF or Word document</p>
+<p><strong>Length:</strong> Minimum 500 words excluding the policy JSON and tables</p>
+<hr />
+<h2>Grading Rubric</h2>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Points</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Audit tables — initial and final states complete and accurate</td>
+<td>20</td>
+</tr>
+<tr>
+<td>Lab Reflection Question 1 — shared responsibility explanation</td>
+<td>15</td>
+</tr>
+<tr>
+<td>Lab Reflection Question 2 — justified scenario for disabling Block Public Access</td>
+<td>15</td>
+</tr>
+<tr>
+<td>Lab Reflection Question 3 — SSE comparison (three options)</td>
+<td>15</td>
+</tr>
+<tr>
+<td>Lab Reflection Question 4 — logging separation rationale</td>
+<td>10</td>
+</tr>
+<tr>
+<td>Lab Reflection Question 5 — policy analysis (three problems identified)</td>
+<td>15</td>
+</tr>
+<tr>
+<td>Corrected bucket policy — syntactically valid, least-privilege</td>
+<td>10</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td><strong>100</strong></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><em>Texas Wesleyan University | CIS-4328 Information Security | Module 09</em></p>
+</body>
+</html>

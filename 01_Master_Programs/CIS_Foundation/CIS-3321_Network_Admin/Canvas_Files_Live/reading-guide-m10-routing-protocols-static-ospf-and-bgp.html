@@ -1,0 +1,202 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Reading Guide (M10): Routing Protocols: Static, OSPF, and BGP</title>
+</head>
+<body>
+<h2>Reading Guide (M10): Routing Protocols: Static, OSPF, and BGP</h2>
+<h1>Reading Guide: Module 10 — Routing Protocols: Static, OSPF, and BGP</h1>
+<h2>Course: CIS-3321 Network Administration</h2>
+<h2>Texas Wesleyan University | Professor Nash</h2>
+<h2>Certification Alignment: CompTIA Network+ (N10-009)</h2>
+<hr />
+<h3>Introduction</h3>
+<p>Module 10 covers how routers actually decide where to send traffic: static routes configured by hand, and the two dynamic routing protocols most heavily tested on the Network+ exam — OSPF (used inside an organization) and BGP (used to route the internet itself). The exam tests routing concepts and protocol characteristics under Domain 1: Networking Concepts and Domain 2: Network Implementation. This reading guide directly supports the Module 10 Lab, Discussion, and Quiz.</p>
+<hr />
+<h3>1. Core Vocabulary</h3>
+<ul>
+<li>
+<p><strong>Static route</strong> — a manually configured route entry that does not change unless an administrator edits it. Reliable and predictable, but does not adapt automatically to link failures or topology changes.</p>
+</li>
+<li>
+<p><strong>Dynamic routing protocol</strong> — a protocol that allows routers to automatically discover, share, and adapt routes based on real-time network conditions (e.g., OSPF, BGP, EIGRP).</p>
+</li>
+<li>
+<p><strong>Administrative Distance (AD)</strong> — a value (0–255) representing how trustworthy a route source is; when a router learns the same destination from multiple sources, it prefers the route with the lowest AD. Directly connected routes = 0, static routes = 1, OSPF = 110, BGP (external) = 20.</p>
+</li>
+<li>
+<p><strong>Metric</strong> — the value a routing protocol uses to choose the <em>best</em> path among multiple routes learned from the <em>same</em> protocol (e.g., OSPF cost, BGP path attributes). AD chooses between protocols; metric chooses within a protocol.</p>
+</li>
+<li>
+<p><strong>Convergence</strong> — the state where all routers in a network have consistent, up-to-date routing information after a topology change. Faster convergence means less time with black-holed or looped traffic after a failure.</p>
+</li>
+<li>
+<p><strong>Interior Gateway Protocol (IGP)</strong> — a routing protocol used within a single autonomous system (organization), such as OSPF. <strong>Exterior Gateway Protocol (EGP)</strong> — a routing protocol used between autonomous systems, such as BGP.</p>
+</li>
+<li>
+<p><strong>Autonomous System (AS)</strong> — a network or group of networks under a single administrative authority, identified on the internet by a unique AS Number (ASN) used by BGP.</p>
+</li>
+<li>
+<p><strong>Link-state vs. distance-vector</strong> — link-state protocols (OSPF) build a complete map of the network topology and calculate the best path themselves (Dijkstra's SPF algorithm); distance-vector protocols share only "distance and direction" information learned secondhand from neighbors.</p>
+</li>
+</ul>
+<hr />
+<h3>2. Static Routing</h3>
+<p>Static routes are configured with a destination network, subnet mask, and next-hop address (or exit interface):</p>
+<pre><code>Router(config)# ip route 192.168.20.0 255.255.255.0 10.0.0.2
+</code></pre>
+<p>A <strong>default route</strong> (<code>ip route 0.0.0.0 0.0.0.0 &lt;next-hop&gt;</code>) matches any destination not found elsewhere in the routing table and is commonly used at the network edge to point toward the ISP.</p>
+<p><strong>When static routing is appropriate:</strong> small networks, stub networks with only one exit path, or as a backup/floating static route (configured with a higher AD than the primary dynamic route so it is only used if the dynamic route fails).</p>
+<p><strong>Limitations:</strong> does not scale to large or frequently changing topologies, requires manual reconfiguration for every topology change, and has no automatic failure detection beyond the interface going down.</p>
+<hr />
+<h3>3. OSPF (Open Shortest Path First)</h3>
+<p>OSPF is a link-state IGP, widely used inside enterprise networks, and heavily tested on the Network+ exam.</p>
+<ul>
+<li>
+<p><strong>Operation:</strong> OSPF routers discover neighbors via Hello packets (multicast 224.0.0.5), exchange Link-State Advertisements (LSAs) to build an identical topology database (the Link-State Database), and each router independently runs the Shortest Path First (Dijkstra) algorithm to calculate its own best routes.</p>
+</li>
+<li>
+<p><strong>Areas:</strong> OSPF divides a network into areas to limit the size of the topology database each router must maintain. <strong>Area 0</strong> (the backbone area) is mandatory in any multi-area OSPF design; all other areas must connect to Area 0, directly or through a virtual link.</p>
+</li>
+<li>
+<p><strong>Cost:</strong> OSPF's metric is cost, calculated by default as <code>reference bandwidth (100 Mbps) / interface bandwidth</code>. Lower cost is preferred. Faster links have lower cost and are therefore preferred paths.</p>
+</li>
+<li>
+<p><strong>Router roles in multi-area OSPF:</strong> an Area Border Router (ABR) connects two or more areas; an Autonomous System Boundary Router (ASBR) connects OSPF to an external routing domain (e.g., a different routing protocol or a static/default route redistributed into OSPF).</p>
+</li>
+<li>
+<p><strong>Why OSPF over RIP:</strong> OSPF converges far faster than legacy distance-vector protocols like RIP, supports VLSM/CIDR properly, and scales to large networks through areas. RIP's hop-count metric (max 15 hops) and slow convergence make it unsuitable for anything beyond very small, simple networks.</p>
+</li>
+</ul>
+<hr />
+<h3>4. BGP (Border Gateway Protocol)</h3>
+<p>BGP is the EGP that runs the global internet — it is the only protocol that connects autonomous systems together at internet scale.</p>
+<ul>
+<li>
+<p><strong>eBGP vs. iBGP:</strong> External BGP (eBGP) runs between routers in <em>different</em> autonomous systems (e.g., your organization's edge router and your ISP's router). Internal BGP (iBGP) runs between routers <em>within</em> the same autonomous system to carry BGP-learned routes across it.</p>
+</li>
+<li>
+<p><strong>Path selection:</strong> unlike OSPF's single numeric cost, BGP selects the best path using an ordered list of path attributes — the most commonly tested being AS-Path length (fewer autonomous systems traversed is generally preferred) and Local Preference (a value set by an organization to prefer one outbound path over another).</p>
+</li>
+<li>
+<p><strong>Why BGP does not use a simple metric:</strong> internet-scale routing decisions often reflect business relationships (peering agreements, transit contracts) rather than pure technical shortest-path logic — BGP's attribute-based selection allows policy, not just distance, to drive routing decisions.</p>
+</li>
+<li>
+<p><strong>BGP and multihoming:</strong> an organization connected to two different ISPs (multihoming) uses BGP to advertise its address space to both providers and to select or influence which provider's path is preferred for outbound traffic, and to fail over automatically if one ISP connection goes down.</p>
+</li>
+</ul>
+<hr />
+<h3>5. Administrative Distance Reference Table</h3>
+<table>
+<thead>
+<tr>
+<th>Route Source</th>
+<th>Default Administrative Distance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Directly connected</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Static route</td>
+<td>1</td>
+</tr>
+<tr>
+<td>eBGP</td>
+<td>20</td>
+</tr>
+<tr>
+<td>OSPF</td>
+<td>110</td>
+</tr>
+<tr>
+<td>RIP</td>
+<td>120</td>
+</tr>
+<tr>
+<td>iBGP</td>
+<td>200</td>
+</tr>
+</tbody>
+</table>
+<p>If a router learns a route to the same destination network via both a static route and OSPF, it installs the static route in the routing table (AD 1 beats AD 110) — regardless of which route is actually "better" by hop count or bandwidth. This is a frequently tested exam scenario.</p>
+<hr />
+<h3>6. Static vs. OSPF vs. BGP Comparison</h3>
+<table>
+<thead>
+<tr>
+<th>Characteristic</th>
+<th>Static</th>
+<th>OSPF</th>
+<th>BGP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Type</td>
+<td>Manual</td>
+<td>Dynamic, link-state, IGP</td>
+<td>Dynamic, path-vector, EGP</td>
+</tr>
+<tr>
+<td>Scope</td>
+<td>Any size, manually maintained</td>
+<td>Single autonomous system</td>
+<td>Between autonomous systems</td>
+</tr>
+<tr>
+<td>Convergence</td>
+<td>None (manual)</td>
+<td>Fast</td>
+<td>Slower, policy-driven</td>
+</tr>
+<tr>
+<td>Decision basis</td>
+<td>Administrator-defined</td>
+<td>Cost (bandwidth-based)</td>
+<td>Path attributes (policy-based)</td>
+</tr>
+<tr>
+<td>Typical use</td>
+<td>Small/stub networks, backup routes</td>
+<td>Enterprise internal routing</td>
+<td>Internet backbone, multihoming</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>7. Exam Tips for Module 10</h3>
+<ul>
+<li>
+<p>Memorize the Administrative Distance table — especially that a static route (AD 1) always wins over OSPF (AD 110) for the same destination, even if OSPF's path is technically better.</p>
+</li>
+<li>
+<p>Know that OSPF requires Area 0 (the backbone) in any multi-area design, and that all other areas must connect to it.</p>
+</li>
+<li>
+<p>Distinguish AD (chooses between different protocols) from metric (chooses between routes within the same protocol) — this distinction is a common exam distractor.</p>
+</li>
+<li>
+<p>Know that BGP is the only protocol that runs between autonomous systems (EGP), while OSPF, RIP, and EIGRP all run within one (IGP).</p>
+</li>
+</ul>
+<hr />
+<h3>8. Reading and Viewing Resources</h3>
+<p>Refer to the ZTC_OER_Reading_Materials list for the Module 10 video lecture links and any supplemental open-access readings on static routing, OSPF, and BGP fundamentals.</p>
+<hr />
+<h3>9. Study Checklist</h3>
+<ul>
+<li>[ ] I can write a static route command including destination network, mask, and next hop.</li>
+<li>[ ] I can explain the difference between Administrative Distance and metric.</li>
+<li>[ ] I can state the default AD for directly connected, static, OSPF, and eBGP routes.</li>
+<li>[ ] I can explain why OSPF Area 0 is mandatory in a multi-area design.</li>
+<li>[ ] I can distinguish eBGP from iBGP.</li>
+<li>[ ] I can explain why BGP uses path attributes instead of a single numeric metric.</li>
+<li>[ ] I can explain why a business might use BGP for multihoming.</li>
+</ul>
+<hr />
+<p>CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash</p>
+</body>
+</html>

@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/profile/cc/ccv1p1/ccv1p1_qtiasiv1p2p1_v1p0.xsd">
+  <assessment ident="ga1bbaea0b13b9674cbf26f189d1fc5d" title="Quiz (M02): TCP/IP Model and Network Protocols">
+    <qtimetadata>
+      <qtimetadatafield>
+        <fieldlabel>cc_profile</fieldlabel>
+        <fieldentry>cc.exam.v0p1</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_assessmenttype</fieldlabel>
+        <fieldentry>Examination</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_scoretype</fieldlabel>
+        <fieldentry>Percentage</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>cc_maxattempts</fieldlabel>
+        <fieldentry>1</fieldentry>
+      </qtimetadatafield>
+    </qtimetadata>
+    <section ident="root_section">
+      <item ident="ga1bbaea0b13b9674cbf26f189d1fc5d_q01" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An administrator wants to segment a switch's ports logically into separate broadcast domains. Which technology should they configure?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="ga1bbaea0b13b9674cbf26f189d1fc5d_q01_a">
+                <material>
+                  <mattext texttype="text/plain">NAT (Network Address Translation)</mattext>
+                </material>
+              </response_label>
+              <response_label ident="ga1bbaea0b13b9674cbf26f189d1fc5d_q01_b">
+                <material>
+                  <mattext texttype="text/plain">DHCP (Dynamic Host Configuration Protocol)</mattext>
+                </material>
+              </response_label>
+              <response_label ident="ga1bbaea0b13b9674cbf26f189d1fc5d_q01_c">
+                <material>
+                  <mattext texttype="text/plain">VLAN (Virtual Local Area Network)</mattext>
+                </material>
+              </response_label>
+              <response_label ident="ga1bbaea0b13b9674cbf26f189d1fc5d_q01_d">
+                <material>
+                  <mattext texttype="text/plain">STP (Spanning Tree Protocol)</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">ga1bbaea0b13b9674cbf26f189d1fc5d_q01_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="ga1bbaea0b13b9674cbf26f189d1fc5d_q02" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A network technician is troubleshooting email delivery. Users can receive email but cannot send new messages to external recipients. Which protocol and port combination is most likely involved in the sending failure?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="ga1bbaea0b13b9674cbf26f189d1fc5d_q02_a">
+                <material>
+                  <mattext texttype="text/plain">IMAP on port 143 — the client cannot retrieve messages from the mail server</mattext>
+                </material>
+              </response_label>
+              <response_label ident="ga1bbaea0b13b9674cbf26f189d1fc5d_q02_b">
+                <material>
+                  <mattext texttype="text/plain">SMTP on port 25 — the outbound mail server cannot relay messages to external domains</mattext>
+                </material>
+              </response_label>
+              <response_label ident="ga1bbaea0b13b9674cbf26f189d1fc5d_q02_c">
+                <material>
+                  <mattext texttype="text/plain">POP3 on port 110 — the client is downloading messages and deleting them from the server</mattext>
+                </material>
+              </response_label>
+              <response_label ident="ga1bbaea0b13b9674cbf26f189d1fc5d_q02_d">
+                <material>
+                  <mattext texttype="text/plain">HTTPS on port 443 — the webmail interface is unreachable due to a TLS certificate error</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">ga1bbaea0b13b9674cbf26f189d1fc5d_q02_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="ga1bbaea0b13b9674cbf26f189d1fc5d_q03" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A network engineer needs to verify basic IP connectivity and measure round-trip latency to a remote server. Which command is most appropriate?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="ga1bbaea0b13b9674cbf26f189d1fc5d_q03_a">
+                <material>
+                  <mattext texttype="text/plain">ping</mattext>
+                </material>
+              </response_label>
+              <response_label ident="ga1bbaea0b13b9674cbf26f189d1fc5d_q03_b">
+                <material>
+                  <mattext texttype="text/plain">traceroute</mattext>
+                </material>
+              </response_label>
+              <response_label ident="ga1bbaea0b13b9674cbf26f189d1fc5d_q03_c">
+                <material>
+                  <mattext texttype="text/plain">netstat -ano</mattext>
+                </material>
+              </response_label>
+              <response_label ident="ga1bbaea0b13b9674cbf26f189d1fc5d_q03_d">
+                <material>
+                  <mattext texttype="text/plain">nslookup</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">ga1bbaea0b13b9674cbf26f189d1fc5d_q03_a</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="ga1bbaea0b13b9674cbf26f189d1fc5d_q04" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A workstation receives an IP address of 169.254.x.x after booting. The user cannot access any network resources. What is the most likely cause?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="ga1bbaea0b13b9674cbf26f189d1fc5d_q04_a">
+                <material>
+                  <mattext texttype="text/plain">The DNS server is offline and cannot resolve hostnames.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="ga1bbaea0b13b9674cbf26f189d1fc5d_q04_b">
+                <material>
+                  <mattext texttype="text/plain">The workstation failed to receive a DHCP lease and self-assigned an APIPA address.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="ga1bbaea0b13b9674cbf26f189d1fc5d_q04_c">
+                <material>
+                  <mattext texttype="text/plain">The default gateway is configured with an incorrect subnet mask.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="ga1bbaea0b13b9674cbf26f189d1fc5d_q04_d">
+                <material>
+                  <mattext texttype="text/plain">The network switch port has Port Security enabled and is blocking the device's MAC address.</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">ga1bbaea0b13b9674cbf26f189d1fc5d_q04_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="ga1bbaea0b13b9674cbf26f189d1fc5d_q05" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A security audit finds that administrators are managing network switches using a protocol that transmits all credentials and commands in cleartext over port 23. Which security control should be implemented to remediate this vulnerability?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="ga1bbaea0b13b9674cbf26f189d1fc5d_q05_a">
+                <material>
+                  <mattext texttype="text/plain">Disable Telnet and configure SSH on port 22 for all switch management sessions.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="ga1bbaea0b13b9674cbf26f189d1fc5d_q05_b">
+                <material>
+                  <mattext texttype="text/plain">Enable HTTPS on port 443 and disable HTTP on port 80 for the switch web interface.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="ga1bbaea0b13b9674cbf26f189d1fc5d_q05_c">
+                <material>
+                  <mattext texttype="text/plain">Implement SNMP v3 with authentication and encryption to replace SNMP v1 community strings.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="ga1bbaea0b13b9674cbf26f189d1fc5d_q05_d">
+                <material>
+                  <mattext texttype="text/plain">Deploy a RADIUS server to centralize authentication for all management access using 802.1X.</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">ga1bbaea0b13b9674cbf26f189d1fc5d_q05_a</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="ga1bbaea0b13b9674cbf26f189d1fc5d_q06" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A client is sending an email from her corporate mail client to an external address. She reports the email appears to send successfully from her email application but the message never arrives at the recipient. Which two protocols are most likely involved in getting the message from her client to the recipient's mail server?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="ga1bbaea0b13b9674cbf26f189d1fc5d_q06_a">
+                <material>
+                  <mattext texttype="text/plain">IMAP and POP3</mattext>
+                </material>
+              </response_label>
+              <response_label ident="ga1bbaea0b13b9674cbf26f189d1fc5d_q06_b">
+                <material>
+                  <mattext texttype="text/plain">HTTP and HTTPS</mattext>
+                </material>
+              </response_label>
+              <response_label ident="ga1bbaea0b13b9674cbf26f189d1fc5d_q06_c">
+                <material>
+                  <mattext texttype="text/plain">SMTP (port 587 from client) and SMTP (port 25 for server relay)</mattext>
+                </material>
+              </response_label>
+              <response_label ident="ga1bbaea0b13b9674cbf26f189d1fc5d_q06_d">
+                <material>
+                  <mattext texttype="text/plain">DNS and NTP</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">ga1bbaea0b13b9674cbf26f189d1fc5d_q06_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="ga1bbaea0b13b9674cbf26f189d1fc5d_q07" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A network administrator wants to query the IP address of the mail server responsible for handling incoming email for the domain "university.edu." Which nslookup command accomplishes this?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="ga1bbaea0b13b9674cbf26f189d1fc5d_q07_a">
+                <material>
+                  <mattext texttype="text/plain">nslookup -type=A university.edu</mattext>
+                </material>
+              </response_label>
+              <response_label ident="ga1bbaea0b13b9674cbf26f189d1fc5d_q07_b">
+                <material>
+                  <mattext texttype="text/plain">nslookup -type=MX university.edu</mattext>
+                </material>
+              </response_label>
+              <response_label ident="ga1bbaea0b13b9674cbf26f189d1fc5d_q07_c">
+                <material>
+                  <mattext texttype="text/plain">nslookup -type=PTR university.edu</mattext>
+                </material>
+              </response_label>
+              <response_label ident="ga1bbaea0b13b9674cbf26f189d1fc5d_q07_d">
+                <material>
+                  <mattext texttype="text/plain">nslookup -type=CNAME university.edu</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">ga1bbaea0b13b9674cbf26f189d1fc5d_q07_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="ga1bbaea0b13b9674cbf26f189d1fc5d_q08" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;In the TCP three-way handshake, a client sends a SYN packet to a server. The server receives it and responds. What is the next packet the client sends, and what does it signify?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="ga1bbaea0b13b9674cbf26f189d1fc5d_q08_a">
+                <material>
+                  <mattext texttype="text/plain">The client sends a FIN packet, signifying it wants to close the connection.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="ga1bbaea0b13b9674cbf26f189d1fc5d_q08_b">
+                <material>
+                  <mattext texttype="text/plain">The client sends an ACK packet, completing the handshake and signifying that the connection is established.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="ga1bbaea0b13b9674cbf26f189d1fc5d_q08_c">
+                <material>
+                  <mattext texttype="text/plain">The client sends another SYN packet to confirm its original request.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="ga1bbaea0b13b9674cbf26f189d1fc5d_q08_d">
+                <material>
+                  <mattext texttype="text/plain">The client sends a RST packet to reset the connection before data transfer.</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">ga1bbaea0b13b9674cbf26f189d1fc5d_q08_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="ga1bbaea0b13b9674cbf26f189d1fc5d_q09" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;Which of the following correctly describes the purpose of ICMP Type 11 (Time Exceeded) messages in the context of network diagnostics?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="ga1bbaea0b13b9674cbf26f189d1fc5d_q09_a">
+                <material>
+                  <mattext texttype="text/plain">ICMP Type 11 is generated by a destination host to indicate that a specific service port is closed.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="ga1bbaea0b13b9674cbf26f189d1fc5d_q09_b">
+                <material>
+                  <mattext texttype="text/plain">ICMP Type 11 is generated by an intermediate router when it drops a packet because the TTL field has reached zero, and it is the mechanism traceroute uses to discover each hop.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="ga1bbaea0b13b9674cbf26f189d1fc5d_q09_c">
+                <material>
+                  <mattext texttype="text/plain">ICMP Type 11 is generated by the source host to signal that a fragmented packet was reassembled incorrectly.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="ga1bbaea0b13b9674cbf26f189d1fc5d_q09_d">
+                <material>
+                  <mattext texttype="text/plain">ICMP Type 11 is generated by a firewall to indicate that an access control list has denied the packet.</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">ga1bbaea0b13b9674cbf26f189d1fc5d_q09_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="ga1bbaea0b13b9674cbf26f189d1fc5d_q10" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A company is standardizing its email client configuration. Users need to access their corporate email from both desktop computers and mobile devices. Messages should remain on the server after being read so they are accessible on all devices. Which email protocol best meets this requirement?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="ga1bbaea0b13b9674cbf26f189d1fc5d_q10_a">
+                <material>
+                  <mattext texttype="text/plain">SMTP on port 25</mattext>
+                </material>
+              </response_label>
+              <response_label ident="ga1bbaea0b13b9674cbf26f189d1fc5d_q10_b">
+                <material>
+                  <mattext texttype="text/plain">POP3 on port 110</mattext>
+                </material>
+              </response_label>
+              <response_label ident="ga1bbaea0b13b9674cbf26f189d1fc5d_q10_c">
+                <material>
+                  <mattext texttype="text/plain">IMAP on port 143</mattext>
+                </material>
+              </response_label>
+              <response_label ident="ga1bbaea0b13b9674cbf26f189d1fc5d_q10_d">
+                <material>
+                  <mattext texttype="text/plain">FTP on port 21</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">ga1bbaea0b13b9674cbf26f189d1fc5d_q10_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+    </section>
+  </assessment>
+</questestinterop>

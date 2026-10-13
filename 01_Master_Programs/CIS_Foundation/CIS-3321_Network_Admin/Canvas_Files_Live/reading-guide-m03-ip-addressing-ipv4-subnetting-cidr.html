@@ -1,0 +1,408 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Reading Guide (M03): IP Addressing: IPv4, Subnetting, CIDR</title>
+</head>
+<body>
+<h2>Reading Guide (M03): IP Addressing: IPv4, Subnetting, CIDR</h2>
+<h1>Reading Guide: Module 03 – IP Addressing: IPv4, Subnetting, CIDR</h1>
+<h2>CIS-3321 Network Administration | CompTIA Network+ (N10-009)</h2>
+<h2>Texas Wesleyan University | Professor Nash</h2>
+<hr />
+<h3>Introduction</h3>
+<p>Module 03 covers the most calculation-intensive topic on the CompTIA Network+ exam: IPv4 addressing and subnetting. You must be able to determine the network address, broadcast address, valid host range, and number of usable hosts for any given IP address and subnet mask — and do it reliably under exam time pressure. This guide provides reference tables, the four-step calculation process, practice problems, and the exam tips you need to succeed.</p>
+<hr />
+<h3>1. Core Vocabulary</h3>
+<p><strong>IPv4 Address</strong> — A 32-bit logical address written in dotted-decimal notation (e.g., 192.168.1.10). Divided into a network portion and a host portion by the subnet mask.</p>
+<p><strong>Subnet Mask</strong> — A 32-bit value that identifies which bits belong to the network and which belong to the host. Bits set to 1 indicate network bits; bits set to 0 indicate host bits. Written in dotted-decimal or CIDR slash notation.</p>
+<p><strong>CIDR (Classless Inter-Domain Routing)</strong> — A method of expressing subnet masks as a prefix length (number of consecutive 1 bits) after a slash. Example: /24 means 24 network bits.</p>
+<p><strong>Network Address</strong> — The first address in a subnet (all host bits set to 0). Not assignable to a host. Identifies the subnet itself.</p>
+<p><strong>Broadcast Address</strong> — The last address in a subnet (all host bits set to 1). Not assignable to a host. Packets sent to the broadcast address reach all hosts on the subnet.</p>
+<p><strong>Usable Host Range</strong> — All addresses between the network address and the broadcast address. Formula: 2^(host bits) - 2.</p>
+<p><strong>Block Size</strong> — The total number of addresses in a subnet, calculated as 256 minus the interesting octet of the subnet mask. Equals 2^(host bits).</p>
+<p><strong>Classful Addressing</strong> — The original fixed-class IP address scheme. Class A (/8), Class B (/16), Class C (/24). Largely replaced by CIDR.</p>
+<p><strong>RFC 1918</strong> — The standard defining private IPv4 address ranges not routed on the public internet.</p>
+<p><strong>APIPA (Automatic Private IP Addressing)</strong> — The 169.254.0.0/16 range self-assigned by Windows hosts when DHCP fails.</p>
+<p><strong>Loopback Address</strong> — 127.0.0.1. Used to test the local TCP/IP stack. Pinging this address verifies the NIC driver and IP stack are functional.</p>
+<p><strong>VLSM (Variable Length Subnet Masking)</strong> — Using different prefix lengths on different subnets within the same major network to allocate addresses more efficiently.</p>
+<p><strong>Default Gateway</strong> — The IP address of the router interface on the local subnet. Hosts send all traffic destined for remote networks to the default gateway.</p>
+<p><strong>NAT (Network Address Translation)</strong> — Router function translating private internal IP addresses to public addresses for internet access.</p>
+<p><strong>PAT (Port Address Translation)</strong> — Also called NAT overload. Maps many private IPs to a single public IP using unique port numbers to track sessions.</p>
+<hr />
+<h3>2. IP Address Class Reference Table</h3>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>First Octet Range</th>
+<th>Default Mask</th>
+<th>CIDR</th>
+<th>Approx. Hosts/Network</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>1 – 126</td>
+<td>255.0.0.0</td>
+<td>/8</td>
+<td>~16,777,214</td>
+<td>127.x.x.x reserved (loopback)</td>
+</tr>
+<tr>
+<td>B</td>
+<td>128 – 191</td>
+<td>255.255.0.0</td>
+<td>/16</td>
+<td>~65,534</td>
+<td></td>
+</tr>
+<tr>
+<td>C</td>
+<td>192 – 223</td>
+<td>255.255.255.0</td>
+<td>/24</td>
+<td>254</td>
+<td></td>
+</tr>
+<tr>
+<td>D</td>
+<td>224 – 239</td>
+<td>N/A</td>
+<td>N/A</td>
+<td>N/A</td>
+<td>Multicast</td>
+</tr>
+<tr>
+<td>E</td>
+<td>240 – 255</td>
+<td>N/A</td>
+<td>N/A</td>
+<td>N/A</td>
+<td>Experimental/Reserved</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>3. RFC 1918 Private Address Ranges</h3>
+<p>Memorize these three ranges exactly, including the boundaries.</p>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Network</th>
+<th>CIDR</th>
+<th>Range Start</th>
+<th>Range End</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>10.0.0.0</td>
+<td>/8</td>
+<td>10.0.0.0</td>
+<td>10.255.255.255</td>
+</tr>
+<tr>
+<td>B</td>
+<td>172.16.0.0</td>
+<td>/12</td>
+<td>172.16.0.0</td>
+<td>172.31.255.255</td>
+</tr>
+<tr>
+<td>C</td>
+<td>192.168.0.0</td>
+<td>/16</td>
+<td>192.168.0.0</td>
+<td>192.168.255.255</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Special addresses to memorize:</strong></p>
+<ul>
+<li>127.0.0.1 — Loopback (tests local TCP/IP stack)</li>
+<li>169.254.0.0/16 — APIPA (DHCP failure self-assignment)</li>
+<li>0.0.0.0 — Unspecified address (before DHCP assignment)</li>
+<li>255.255.255.255 — Limited broadcast (all hosts on local segment)</li>
+</ul>
+<hr />
+<h3>4. Subnet Reference Table — /24 through /30</h3>
+<p>This is the most important table in this module. Memorize every row.</p>
+<table>
+<thead>
+<tr>
+<th>CIDR</th>
+<th>Subnet Mask</th>
+<th>Block Size</th>
+<th>Total Addresses</th>
+<th>Usable Hosts</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/24</td>
+<td>255.255.255.0</td>
+<td>256</td>
+<td>256</td>
+<td>254</td>
+</tr>
+<tr>
+<td>/25</td>
+<td>255.255.255.128</td>
+<td>128</td>
+<td>128</td>
+<td>126</td>
+</tr>
+<tr>
+<td>/26</td>
+<td>255.255.255.192</td>
+<td>64</td>
+<td>64</td>
+<td>62</td>
+</tr>
+<tr>
+<td>/27</td>
+<td>255.255.255.224</td>
+<td>32</td>
+<td>32</td>
+<td>30</td>
+</tr>
+<tr>
+<td>/28</td>
+<td>255.255.255.240</td>
+<td>16</td>
+<td>16</td>
+<td>14</td>
+</tr>
+<tr>
+<td>/29</td>
+<td>255.255.255.248</td>
+<td>8</td>
+<td>8</td>
+<td>6</td>
+</tr>
+<tr>
+<td>/30</td>
+<td>255.255.255.252</td>
+<td>4</td>
+<td>4</td>
+<td>2</td>
+</tr>
+<tr>
+<td>/32</td>
+<td>255.255.255.255</td>
+<td>1</td>
+<td>1</td>
+<td>0 (host route)</td>
+</tr>
+</tbody>
+</table>
+<p>Block size formula: 256 minus the interesting octet of the subnet mask.</p>
+<p>Usable hosts formula: 2^(host bits) - 2, where host bits = 32 - prefix length.</p>
+<hr />
+<h3>5. Binary Conversion Reference Table</h3>
+<table>
+<thead>
+<tr>
+<th>Decimal</th>
+<th>Binary</th>
+<th>Power</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>128</td>
+<td>10000000</td>
+<td>2^7</td>
+<td>128</td>
+</tr>
+<tr>
+<td>192</td>
+<td>11000000</td>
+<td>2^7+2^6</td>
+<td>128+64</td>
+</tr>
+<tr>
+<td>224</td>
+<td>11100000</td>
+<td>2^7+2^6+2^5</td>
+<td>128+64+32</td>
+</tr>
+<tr>
+<td>240</td>
+<td>11110000</td>
+<td>2^7 through 2^4</td>
+<td>128+64+32+16</td>
+</tr>
+<tr>
+<td>248</td>
+<td>11111000</td>
+<td>2^7 through 2^3</td>
+<td>sum=248</td>
+</tr>
+<tr>
+<td>252</td>
+<td>11111100</td>
+<td>2^7 through 2^2</td>
+<td>sum=252</td>
+</tr>
+<tr>
+<td>255</td>
+<td>11111111</td>
+<td>all 8 bits</td>
+<td>sum=255</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>6. Four-Step Subnet Calculation Process</h3>
+<p>Use this process for every subnetting question on the exam.</p>
+<p><strong>Step 1:</strong> Identify the CIDR prefix and calculate the block size.</p>
+<ul>
+<li>Block size = 256 minus the interesting octet of the subnet mask.</li>
+<li>The "interesting octet" is the last non-255, non-0 octet.</li>
+</ul>
+<p><strong>Step 2:</strong> Find the network address.</p>
+<ul>
+<li>Look at the same octet in the IP address.</li>
+<li>Find the largest multiple of the block size that does not exceed that octet value.</li>
+<li>That multiple, with all lower octets set to 0, is the network address.</li>
+</ul>
+<p><strong>Step 3:</strong> Find the broadcast address.</p>
+<ul>
+<li>Broadcast = Network address in interesting octet + Block size - 1.</li>
+<li>All remaining octets become 255.</li>
+</ul>
+<p><strong>Step 4:</strong> Determine the usable host range.</p>
+<ul>
+<li>First usable host = Network address + 1.</li>
+<li>Last usable host = Broadcast address - 1.</li>
+</ul>
+<hr />
+<h3>7. Worked Practice Problems</h3>
+<p><strong>Problem 1:</strong> Given 192.168.1.75 / 255.255.255.224 (/27)</p>
+<ul>
+<li>Block size: 256 - 224 = 32</li>
+<li>Interesting octet: 75</li>
+<li>Multiples of 32: 0, 32, 64, 96 — largest ≤ 75 is 64</li>
+<li>Network address: 192.168.1.64</li>
+<li>Broadcast: 64 + 32 - 1 = 95 → 192.168.1.95</li>
+<li>Usable range: 192.168.1.65 through 192.168.1.94</li>
+<li>Usable hosts: 30</li>
+</ul>
+<p><strong>Problem 2:</strong> Given 10.10.10.130 / 255.255.255.192 (/26)</p>
+<ul>
+<li>Block size: 256 - 192 = 64</li>
+<li>Interesting octet: 130</li>
+<li>Multiples of 64: 0, 64, 128 — largest ≤ 130 is 128</li>
+<li>Network address: 10.10.10.128</li>
+<li>Broadcast: 128 + 64 - 1 = 191 → 10.10.10.191</li>
+<li>Usable range: 10.10.10.129 through 10.10.10.190</li>
+<li>Usable hosts: 62</li>
+</ul>
+<p><strong>Problem 3:</strong> Point-to-point link needs exactly 2 usable hosts.</p>
+<ul>
+<li>Use /30: block size 4, 2 usable hosts</li>
+<li>Example: 172.16.0.0/30 → Network 172.16.0.0, Broadcast 172.16.0.3, hosts .1 and .2</li>
+</ul>
+<p><strong>Problem 4:</strong> How many subnets does 192.168.5.0/27 create from the original /24?</p>
+<ul>
+<li>Borrowed bits: 27 - 24 = 3 bits</li>
+<li>Number of subnets: 2^3 = 8 subnets</li>
+<li>Subnets start at: .0, .32, .64, .96, .128, .160, .192, .224</li>
+</ul>
+<hr />
+<h3>8. Subnetting from a /24 — Number of Subnets vs. Hosts</h3>
+<table>
+<thead>
+<tr>
+<th>Prefix</th>
+<th>Borrowed Bits</th>
+<th>Subnets</th>
+<th>Hosts per Subnet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/24</td>
+<td>0</td>
+<td>1</td>
+<td>254</td>
+</tr>
+<tr>
+<td>/25</td>
+<td>1</td>
+<td>2</td>
+<td>126</td>
+</tr>
+<tr>
+<td>/26</td>
+<td>2</td>
+<td>4</td>
+<td>62</td>
+</tr>
+<tr>
+<td>/27</td>
+<td>3</td>
+<td>8</td>
+<td>30</td>
+</tr>
+<tr>
+<td>/28</td>
+<td>4</td>
+<td>16</td>
+<td>14</td>
+</tr>
+<tr>
+<td>/29</td>
+<td>5</td>
+<td>32</td>
+<td>6</td>
+</tr>
+<tr>
+<td>/30</td>
+<td>6</td>
+<td>64</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>9. Certification Exam Tips</h3>
+<p><strong>Tip 1:</strong> Subnetting is tested in scenario form. You will be given an IP address and mask and asked to identify the network address, broadcast address, valid host range, or whether a specific host is in the correct subnet. Practice the four-step process until it is automatic.</p>
+<p><strong>Tip 2:</strong> The block size shortcut (256 minus the mask octet) is faster than binary conversion. Use it. Block size 64 → subnets at 0, 64, 128, 192.</p>
+<p><strong>Tip 3:</strong> The /30 subnet for point-to-point links is a guaranteed exam topic. It provides exactly 2 usable hosts with 4 total addresses. Know it cold.</p>
+<p><strong>Tip 4:</strong> RFC 1918 boundary trap: 172.32.x.x is NOT private (the private B range ends at 172.31.x.x). 192.169.x.x is NOT private (the private C range ends at 192.168.x.x). The exam deliberately tests these near-boundary addresses.</p>
+<p><strong>Tip 5:</strong> APIPA (169.254.x.x) is not RFC 1918. It is a separate self-assignment range. If a device has a 169.254.x.x address, DHCP failed.</p>
+<p><strong>Tip 6:</strong> When an exam question asks for the number of subnets created by borrowing bits, the formula is 2^(borrowed bits). When it asks for the number of usable hosts, the formula is 2^(host bits) - 2.</p>
+<p><strong>Tip 7:</strong> The loopback address is 127.0.0.1. The entire 127.x.x.x range is reserved for loopback. Pinging 127.0.0.1 tests the local IP stack and NIC driver, not the network.</p>
+<p><strong>Tip 8:</strong> VLSM allows different subnet sizes within the same major network. It requires classless routing protocols (OSPF, EIGRP, RIPv2) that carry the subnet mask with routing updates.</p>
+<hr />
+<h3>10. Required Reading and Viewing</h3>
+<p><strong>Required Reading:</strong> Computer Networking: Principles, Protocols and Practice — read the sections on IPv4 addressing and subnetting. Work through every calculation example by hand.</p>
+<p><strong>Required Viewing:</strong> Professor Messer's Network+ N10-009 video series — watch the IPv4 addressing and subnetting segments. Available free at professormesser.com.</p>
+<p><strong>Supplemental Reference:</strong> CompTIA official N10-009 exam objectives at comptia.org — review Domain 1.0 Networking Concepts for the subnetting and addressing objectives.</p>
+<hr />
+<h3>11. Study Checklist</h3>
+<ul>
+<li>[ ] Memorize all three RFC 1918 private address ranges, including exact boundaries</li>
+<li>[ ] Memorize the /24 through /30 subnet table (mask, block size, usable hosts)</li>
+<li>[ ] Practice the four-step subnet calculation process on at least 10 different addresses</li>
+<li>[ ] Memorize the binary conversion values for common subnet mask octets (128, 192, 224, 240, 248, 252, 255)</li>
+<li>[ ] Identify the APIPA range and explain what it indicates</li>
+<li>[ ] Explain the loopback address and what pinging it tests</li>
+<li>[ ] Calculate the number of subnets created when borrowing 1, 2, 3, and 4 bits from a /24</li>
+<li>[ ] Watch Professor Messer's subnetting videos at professormesser.com</li>
+<li>[ ] Read the IPv4 addressing chapter in the OER textbook</li>
+<li>[ ] Complete the Lab 03 subnet calculation and Packet Tracer activity</li>
+<li>[ ] Post your Module 03 Discussion initial response by Wednesday at 11:59 PM</li>
+<li>[ ] Complete the Module 03 Quiz</li>
+</ul>
+<hr />
+<p><em>CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash</em></p>
+</body>
+</html>

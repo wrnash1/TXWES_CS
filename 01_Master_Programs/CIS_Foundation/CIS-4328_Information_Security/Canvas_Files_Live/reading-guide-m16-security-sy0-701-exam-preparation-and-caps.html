@@ -1,0 +1,372 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Reading Guide (M16): Security+ SY0-701 Exam Preparation and Capstone</title>
+</head>
+<body>
+<h2>Reading Guide (M16): Security+ SY0-701 Exam Preparation and Capstone</h2>
+<h1>Reading Guide: Module 16 — Security+ SY0-701 Exam Preparation and Capstone</h1>
+<h2>Course: CIS-4328 Information Security</h2>
+<h2>Texas Wesleyan University | Professor Nash</h2>
+<h2>Certification Alignment: CompTIA Security+ (SY0-701)</h2>
+<hr />
+<h2>Purpose of This Guide</h2>
+<p>This reading guide consolidates the authoritative references for all five SY0-701 domains covered in Module 16. Use it alongside both video scripts. For each exam objective, you will find the primary reading, secondary references, and focused reading questions that mirror the cognitive level of actual exam items.</p>
+<hr />
+<h2>Primary Textbook Reference</h2>
+<p><strong>CompTIA Security+ Study Guide: Exam SY0-701</strong> — Mike Chapple and David Seidl (Sybex)</p>
+<p>Review the following chapters for Module 16:</p>
+<ul>
+<li>Chapters 1–3: Security Concepts, Cryptography, PKI (Domain 1)</li>
+<li>Chapters 4–6: Threats, Vulnerabilities, Social Engineering (Domain 2)</li>
+<li>Chapters 7–9: Security Architecture, Cloud, Network Design (Domain 3)</li>
+<li>Chapters 10–14: Security Operations, Incident Response, Identity Management (Domain 4)</li>
+<li>Chapters 15–18: GRC, Risk, Compliance, Data Privacy (Domain 5)</li>
+</ul>
+<hr />
+<h2>Authoritative Standards and Frameworks</h2>
+<h3>Domain 1 — General Security Concepts</h3>
+<p><strong>NIST SP 800-63B</strong> — Digital Identity Guidelines: Authentication and Lifecycle Management</p>
+<ul>
+<li>Read Section 4 (Authenticator Types) and Section 5 (Authenticator and Verifier Requirements)</li>
+<li>Focus on memorized secret authenticators, look-up secrets, and multi-factor cryptographic devices</li>
+</ul>
+<p><strong>NIST SP 800-57 Part 1</strong> — Recommendation for Key Management</p>
+<ul>
+<li>Read Section 5 (Cryptographic Key Types) and Section 6 (Cryptoperiods)</li>
+<li>Focus on key lifecycle stages: generation, distribution, storage, use, revocation, and destruction</li>
+</ul>
+<p><strong>RFC 5280</strong> — Internet X.509 Public Key Infrastructure Certificate and CRL Profile</p>
+<ul>
+<li>Read Section 4.1 (Basic Certificate Fields) to understand what fields appear on an X.509 certificate</li>
+<li>This directly supports PKI exam objectives</li>
+</ul>
+<h3>Domain 2 — Threats, Vulnerabilities, and Mitigations</h3>
+<p><strong>MITRE ATT&amp;CK Framework</strong> — Available at attack.mitre.org</p>
+<ul>
+<li>Review the Enterprise matrix Tactics column: Initial Access through Exfiltration</li>
+<li>For each tactic, note 2–3 example techniques you could recognize in a scenario</li>
+<li>Pay particular attention to: T1566 (Phishing), T1078 (Valid Accounts), T1027 (Obfuscated Files), T1486 (Data Encrypted for Impact)</li>
+</ul>
+<p><strong>MITRE ATT&amp;CK</strong> — Mitigation objects (M#### entries)</p>
+<ul>
+<li>Review mitigations for the above four techniques to understand the defensive countermeasures ATT&amp;CK recommends</li>
+</ul>
+<p><strong>CVSS v3.1 User Guide</strong> — Available at first.org/cvss</p>
+<ul>
+<li>Read Section 2 (Base Metrics) covering Attack Vector, Attack Complexity, Privileges Required, User Interaction, Scope, and three impact metrics</li>
+<li>Understand how a Critical (9.0–10.0) score differs from a High (7.0–8.9) score in terms of base metric values</li>
+</ul>
+<p><strong>Lockheed Martin Cyber Kill Chain</strong> — Available at lockheedmartin.com/cyber</p>
+<ul>
+<li>Review all seven stages and the corresponding defensive actions at each stage</li>
+<li>Note: Disrupting the kill chain at Delivery (Stage 3) is generally more cost-effective than responding at Exfiltration (Stage 7)</li>
+</ul>
+<h3>Domain 3 — Security Architecture</h3>
+<p><strong>NIST SP 800-207</strong> — Zero Trust Architecture</p>
+<ul>
+<li>Read Section 2 (Zero Trust Basics) and Section 3 (Zero Trust Architecture Logical Components)</li>
+<li>Focus on the Policy Engine, Policy Administrator, and Policy Enforcement Point model</li>
+</ul>
+<p><strong>CIS Controls Version 8</strong> — Available at cisecurity.org</p>
+<ul>
+<li>Review Controls 1–6 (Inventory, Software, Data Protection, Secure Configuration, Account Management, Access Control Management)</li>
+<li>These map directly to SY0-701 architecture objectives</li>
+</ul>
+<p><strong>Cloud Security Alliance (CSA)</strong> — Cloud Controls Matrix (CCM) v4</p>
+<ul>
+<li>Review the IAM and IVS (Infrastructure and Virtualization Security) domains</li>
+<li>Focus on shared responsibility delineation across IaaS, PaaS, and SaaS</li>
+</ul>
+<h3>Domain 4 — Security Operations</h3>
+<p><strong>NIST SP 800-61 Rev. 2</strong> — Computer Security Incident Handling Guide</p>
+<ul>
+<li>Read Section 2.3 (Incident Response Team Structure), Section 3 (Handling an Incident), and Section 3.6 (Post-Incident Activity)</li>
+<li>This is the canonical reference for the IR lifecycle on the Security+ exam</li>
+</ul>
+<p><strong>NIST SP 800-86</strong> — Guide to Integrating Forensic Techniques into Incident Response</p>
+<ul>
+<li>Read Section 4 (Performing the Forensic Process) for the order of volatility</li>
+<li>Section 5 covers media, network, software, and database forensics</li>
+</ul>
+<p><strong>Windows Security Event Log Reference</strong> — Microsoft Docs</p>
+<ul>
+<li>Review Event IDs: 4624, 4625, 4634, 4648, 4720, 4722, 4726, 4740, 4768, 4769, 4771</li>
+<li>For each, know what it logs and what malicious pattern it could indicate</li>
+</ul>
+<p><strong>OWASP Top Ten 2021</strong> — Available at owasp.org</p>
+<ul>
+<li>Review all ten categories; focus on A01 (Broken Access Control), A03 (Injection), A07 (Identification and Authentication Failures), A09 (Security Logging and Monitoring Failures)</li>
+</ul>
+<h3>Domain 5 — Security Program Management and Oversight</h3>
+<p><strong>NIST Cybersecurity Framework (CSF) 2.0</strong> — Available at nist.gov/cyberframework</p>
+<ul>
+<li>Review the six functions: Govern, Identify, Protect, Detect, Respond, Recover</li>
+<li>Note: CSF 2.0 added "Govern" as a sixth function; CSF 1.1 had only five</li>
+</ul>
+<p><strong>ISO/IEC 27001:2022</strong> — Overview sections available from iso.org</p>
+<ul>
+<li>Review Annex A control categories to understand the ISMS control framework</li>
+<li>Focus on domains: Access Control (A.9), Cryptography (A.10), Operations Security (A.12), Incident Management (A.16)</li>
+</ul>
+<p><strong>GDPR Official Text</strong> — Articles 5, 25, 32, 33, 34</p>
+<ul>
+<li>Article 5: Principles relating to processing of personal data (lawfulness, purpose limitation, data minimization)</li>
+<li>Article 25: Data protection by design and by default</li>
+<li>Article 32: Security of processing (encryption, pseudonymization requirements)</li>
+<li>Articles 33–34: Notification obligations after a personal data breach</li>
+</ul>
+<p><strong>PCI DSS v4.0 Summary</strong> — Available at pcisecuritystandards.org</p>
+<ul>
+<li>Review the 12 requirements at a summary level</li>
+<li>Understand scope: applies to any entity storing, processing, or transmitting cardholder data</li>
+</ul>
+<hr />
+<h2>Focused Reading Questions</h2>
+<p>Answer these questions as you read. They reflect the scenario-based format of the actual exam.</p>
+<h3>Domain 1 Questions</h3>
+<ol>
+<li>
+<p>A company encrypts files using AES-256 for storage and then uses RSA-2048 to encrypt the AES key for transmission. What is this pattern called, and what security problem does it solve?</p>
+</li>
+<li>
+<p>A new employee's certificate is signed by an intermediate CA, which is signed by the corporate root CA. The root CA certificate expires next month. What happens to all end-entity certificates in the chain when the root expires?</p>
+</li>
+<li>
+<p>Explain the difference between CRL and OCSP. In a high-security environment with real-time revocation requirements, which is preferred and why?</p>
+</li>
+</ol>
+<h3>Domain 2 Questions</h3>
+<ol start="4">
+<li>
+<p>A threat actor sends an email to a CFO impersonating the CEO, requesting a $200,000 wire transfer to a vendor for an urgent deal. What social engineering technique is this, and what two organizational controls would most directly prevent it?</p>
+</li>
+<li>
+<p>An analyst identifies malware that uses Windows Management Instrumentation (WMI) to execute PowerShell commands and communicates over port 443 with a legitimate-looking domain. The malware leaves no files on disk. What malware category is this, and why does it evade traditional antivirus?</p>
+</li>
+<li>
+<p>Using the CVSS v3.1 framework, describe what combination of base metrics would produce a Critical (CVSS 10.0) score. What real-world vulnerability scenario approaches this profile?</p>
+</li>
+</ol>
+<h3>Domain 3 Questions</h3>
+<ol start="7">
+<li>
+<p>A company is migrating its HR application to a SaaS platform. The CISO asks who is responsible for patching the application server. Who is responsible, and how does this responsibility shift when the company uses IaaS instead?</p>
+</li>
+<li>
+<p>A security architect proposes implementing micro-segmentation for the enterprise data center. What specific attack technique does micro-segmentation most directly prevent, and what tool or technology is commonly used to implement it?</p>
+</li>
+<li>
+<p>Describe the three logical components of Zero Trust Architecture as defined in NIST SP 800-207. How do they interact for a single access request?</p>
+</li>
+</ol>
+<h3>Domain 4 Questions</h3>
+<ol start="10">
+<li>
+<p>An incident responder arrives at a workstation suspected of compromise. List the evidence sources they should collect in order, explaining why volatile sources come first.</p>
+</li>
+<li>
+<p>A SIEM generates an alert after correlating these events within 10 minutes: 50 failed SSH login attempts from IP 203.0.113.42 against the same account, followed by one successful login. Write a one-paragraph description of the incident and identify the MITRE ATT&amp;CK tactic most applicable to this sequence.</p>
+</li>
+<li>
+<p>Explain the difference between SAML 2.0 and OpenID Connect. For a new mobile application that needs to authenticate users via Google accounts, which protocol is more appropriate and why?</p>
+</li>
+</ol>
+<h3>Domain 5 Questions</h3>
+<ol start="13">
+<li>
+<p>Calculate the ALE for the following scenario: A customer database has an asset value of $5,000,000. Historical data suggests there is a 20% chance of a breach in any given year (ARO = 0.2) and a typical breach exposes 40% of the data (Exposure Factor = 0.4). A new DLP system costs $80,000 per year and is expected to reduce the exposure factor to 10%.</p>
+</li>
+<li>
+<p>A healthcare company operates in California, processes EU patient records, and accepts credit card payments. List the three compliance frameworks that directly apply, and identify the most severe penalty structure among them.</p>
+</li>
+<li>
+<p>Explain the difference between anonymization and pseudonymization under GDPR. Why is pseudonymized data still considered personal data while anonymized data is not?</p>
+</li>
+</ol>
+<hr />
+<h2>Key Terms for Module 16</h2>
+<p>Study these terms until you can define each without prompting:</p>
+<ul>
+<li>AAA (Authentication, Authorization, Accounting)</li>
+<li>AES, RSA, ECC, SHA-256, HMAC</li>
+<li>PKI, CA, RA, CRL, OCSP, X.509</li>
+<li>MAC, DAC, RBAC, ABAC</li>
+<li>APT, threat actor, threat vector, threat surface</li>
+<li>Phishing, spear phishing, whaling, vishing, smishing, BEC</li>
+<li>Virus, worm, Trojan, ransomware, rootkit, fileless malware, logic bomb</li>
+<li>CVE, CWE, CVSS, zero-day</li>
+<li>MITRE ATT&amp;CK, Cyber Kill Chain, Diamond Model</li>
+<li>Zero Trust, micro-segmentation, SASE</li>
+<li>IaaS, PaaS, SaaS, shared responsibility model</li>
+<li>DMZ, VLAN, air gap, screened subnet</li>
+<li>IR lifecycle phases (NIST SP 800-61)</li>
+<li>SIEM, SOAR, EDR, XDR</li>
+<li>Order of volatility, chain of custody</li>
+<li>SAML, OAuth 2.0, OIDC, LDAP, Kerberos, TGT, TGS</li>
+<li>PAM, JIT access, privilege escalation</li>
+<li>GRC, risk appetite, risk tolerance</li>
+<li>SLE, ALE, ARO, exposure factor, ROSI</li>
+<li>Risk avoidance, mitigation, transference, acceptance</li>
+<li>NIST CSF, ISO 27001, HIPAA, GDPR, PCI DSS, SOC 2</li>
+<li>Data at rest, in transit, in use</li>
+<li>DLP, tokenization, anonymization, pseudonymization</li>
+</ul>
+<hr />
+<h2>Exam Readiness Self-Assessment</h2>
+<p>Rate your confidence for each domain on a scale of 1 (need significant review) to 5 (ready to test):</p>
+<table>
+<thead>
+<tr>
+<th>Domain</th>
+<th>Topic</th>
+<th>Self-Rating (1–5)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Domain 1</td>
+<td>AAA and authentication factors</td>
+<td></td>
+</tr>
+<tr>
+<td>Domain 1</td>
+<td>Symmetric vs. asymmetric encryption</td>
+<td></td>
+</tr>
+<tr>
+<td>Domain 1</td>
+<td>PKI, certificates, CRL, OCSP</td>
+<td></td>
+</tr>
+<tr>
+<td>Domain 2</td>
+<td>Threat actor types and motivations</td>
+<td></td>
+</tr>
+<tr>
+<td>Domain 2</td>
+<td>Social engineering techniques</td>
+<td></td>
+</tr>
+<tr>
+<td>Domain 2</td>
+<td>Malware taxonomy</td>
+<td></td>
+</tr>
+<tr>
+<td>Domain 2</td>
+<td>CVSS, CVE, vulnerability scanning</td>
+<td></td>
+</tr>
+<tr>
+<td>Domain 2</td>
+<td>MITRE ATT&amp;CK and Kill Chain</td>
+<td></td>
+</tr>
+<tr>
+<td>Domain 3</td>
+<td>Cloud shared responsibility model</td>
+<td></td>
+</tr>
+<tr>
+<td>Domain 3</td>
+<td>Zero Trust principles</td>
+<td></td>
+</tr>
+<tr>
+<td>Domain 3</td>
+<td>Network segmentation, DMZ, VLAN</td>
+<td></td>
+</tr>
+<tr>
+<td>Domain 4</td>
+<td>IR lifecycle phases and order</td>
+<td></td>
+</tr>
+<tr>
+<td>Domain 4</td>
+<td>SIEM correlation and log analysis</td>
+<td></td>
+</tr>
+<tr>
+<td>Domain 4</td>
+<td>Identity federation (SAML, OIDC)</td>
+<td></td>
+</tr>
+<tr>
+<td>Domain 4</td>
+<td>Forensics order of volatility</td>
+<td></td>
+</tr>
+<tr>
+<td>Domain 5</td>
+<td>Risk treatment options</td>
+<td></td>
+</tr>
+<tr>
+<td>Domain 5</td>
+<td>ALE/SLE calculations</td>
+<td></td>
+</tr>
+<tr>
+<td>Domain 5</td>
+<td>GDPR, HIPAA, PCI DSS applicability</td>
+<td></td>
+</tr>
+<tr>
+<td>Domain 5</td>
+<td>Data classification and DLP</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Any domain rated 3 or below should receive focused review time before your exam date.</p>
+<hr />
+<p><em>Proprietary and Confidential. Not for disclosure outside of Texas Wesleyan University.</em></p>
+<hr />
+<h3>Introduction</h3>
+<p>Welcome to <strong>Module 16 – Final Exam Prep and CompTIA Security+ SY0-701 Certification</strong>! This module prepares you for both the course final exam and the CompTIA Security+ SY0-701 certification exam. Rather than introducing new content, this module synthesizes all five exam domains covered in Modules 01–15 and provides targeted review strategies for the most heavily tested scenario types.</p>
+<hr />
+<h3>1. High-Yield Domain Review Summary</h3>
+<p>The SY0-701 exam is divided into five domains. Review each domain's core concepts using the summaries below:</p>
+<ul>
+<li><strong>Domain 1 – General Security Concepts (12%)</strong>: CIA Triad (Confidentiality, Integrity, Availability), cryptography fundamentals (symmetric vs. asymmetric, hashing, digital signatures, key exchange), PKI (CA hierarchy, CSR, X.509 certificates, CRL, OCSP), and access control models (MAC, DAC, RBAC, ABAC). Key trap: Two passwords are NOT MFA — different factor categories are required.</li>
+<li><strong>Domain 2 – Threats, Vulnerabilities, and Mitigations (22%)</strong>: Threat actor types (nation-state, hacktivist, insider, script kiddie), social engineering (phishing, spear phishing, whaling, vishing, smishing, pretexting, pharming), application attacks (SQLi, XSS, buffer overflow, CSRF, directory traversal, TOCTOU), network attacks (DDoS types, ARP poisoning, DNS poisoning, IP spoofing, Smurf), and malware types (ransomware, RAT, rootkit, keylogger, logic bomb). Key trap: Pharming redirects users via DNS/hosts file — it is not phishing.</li>
+<li><strong>Domain 3 – Security Architecture (18%)</strong>: Network security controls (stateful firewall vs. NGFW vs. IDS vs. IPS), VPN types (IPsec tunnel/transport, SSL/TLS clientless), cloud service models and shared responsibility (IaaS/PaaS/SaaS), virtualization security (VM escape, container breakout), wireless security (WPA3/SAE, evil twin, deauth attacks), and Zero Trust architecture. Key trap: IDS detects only — IPS blocks inline.</li>
+<li><strong>Domain 4 – Security Operations (28%)</strong>: Incident response lifecycle (NIST: Preparation → Detection → Containment → Eradication → Recovery → Post-Incident), digital forensics (order of volatility, chain of custody, write blockers, forensic imaging), threat intelligence (IOCs, MITRE ATT&amp;CK, STIX/TAXII), authentication (MFA factors, biometric FAR/FRR/CER, SSO, SAML), identity and access management (least privilege, SoD, provisioning/deprovisioning, PAM), and security tools (SIEM, SOAR, EDR, CASB, CSPM). Key trap: Contain before eradicating — never wipe a system before imaging it.</li>
+<li><strong>Domain 5 – Security Program Management and Oversight (20%)</strong>: Risk management (ALE = SLE × ARO, risk response strategies: mitigate/avoid/transfer/accept), business continuity (BCP, RTO, RPO, hot/warm/cold sites), governance (policy vs. standard vs. guideline vs. procedure), compliance frameworks (PCI-DSS, HIPAA, GDPR, NIST CSF, ISO 27001), data classification, privacy principles (PII, PHI, data minimization, purpose limitation), and third-party risk management. Key trap: RTO = downtime limit; RPO = data loss limit.</li>
+</ul>
+<hr />
+<h3>2. Certification Exam Strategy Tips</h3>
+<ul>
+<li><strong>Exam Format:</strong> SY0-701 consists of a maximum of 90 questions with a 90-minute time limit. Questions include multiple choice (single answer), multiple response (select all that apply), and performance-based questions (PBQs — drag-and-drop, matching, simulations). PBQs appear first; most candidates skip them initially and return after completing multiple choice.</li>
+<li><strong>Scenario Question Strategy:</strong> SY0-701 is scenario-heavy — most questions describe a situation and ask you to identify the attack, select the best control, or determine the correct response. Read the last sentence of the scenario first (the actual question) before reading the full scenario to focus your analysis on what is being asked.</li>
+<li><strong>Eliminate Clearly Wrong Answers:</strong> Most SY0-701 questions have one or two obviously incorrect distractors (often from a different domain or a completely irrelevant concept). Eliminate those first to improve your odds on uncertain questions.</li>
+<li><strong>"Best" and "Most" Language:</strong> When a question asks for the "best" or "most effective" control, there may be multiple technically correct answers — select the one most directly targeted at the specific risk described. Comprehensive controls that address the root cause beat generic or partial controls.</li>
+<li><strong>Passing Score:</strong> CompTIA SY0-701 has a passing score of 750 on a scale of 100–900. CompTIA does not penalize for wrong answers, so never leave a question blank — guess if necessary.</li>
+<li><strong>Registration:</strong> Register for the SY0-701 exam through <a href="https://www.comptia.org/certifications/security">CompTIA's official certification portal</a>. Exam vouchers are available through Pearson VUE testing centers or online proctored testing.</li>
+<li><strong>Study Resource:</strong> Professor Messer's free <a href="https://www.professormesser.com/">CompTIA Security+ SY0-701 study notes and video course</a> covers all five domains with practice questions, performance-based question walkthroughs, and exam day strategy guidance — use it as your primary free study resource alongside this course.</li>
+</ul>
+<hr />
+<h3>Required Readings &amp; Videos</h3>
+<p>To prepare for the final exam and certification:
+*   <strong>Required Reading:</strong> Review all five domain sections in the OER Textbook: <a href="https://www.professormesser.com/">Professor Messer's CompTIA Security+ SY0-701 Study Notes</a>. Focus on any domain where your practice quiz scores were weakest.
+*   <strong>Optional Review Video (not required):</strong> <a href="https://www.youtube.com/playlist?list=PLG49S3nxzAnl4Q7y9umx51bbtILyD4Syy">Professor Messer's SY0-701 Course Playlist on YouTube</a> — if you want additional review beyond this Reading Guide, prioritize the domain sections covering your weakest areas identified through practice testing.</p>
+<hr />
+<h3>Lab &amp; Command Integration</h3>
+<p>This module has no new lab activity. Use the available time to complete any outstanding practice exams, review flagged questions from previous module quizzes, and attempt full-length SY0-701 practice tests under timed conditions.</p>
+<hr />
+<h3>3. Final Exam Preparation Checklist</h3>
+<ul>
+<li>[ ] Review the Domain 1 glossary: CIA Triad, cryptography types, PKI chain of trust, access control models.</li>
+<li>[ ] Review the Domain 2 glossary: Threat actor types, social engineering attacks, application and network attacks.</li>
+<li>[ ] Review the Domain 3 glossary: Firewall types, IDS vs. IPS, VPN protocols, cloud service models, wireless security.</li>
+<li>[ ] Review the Domain 4 glossary: NIST IR phases, order of volatility, MFA factor types, SIEM vs. SOAR vs. EDR.</li>
+<li>[ ] Review the Domain 5 glossary: ALE formula, RTO vs. RPO, policy hierarchy, PCI-DSS/HIPAA/GDPR applicability.</li>
+<li>[ ] Complete at least two full-length practice exams using <a href="https://www.professormesser.com/">Professor Messer's SY0-701 practice tests</a> or another reputable source.</li>
+<li>[ ] Review every question you answered incorrectly on practice exams and identify the domain and concept gap.</li>
+<li>[ ] Register for the SY0-701 exam at <a href="https://www.comptia.org/certifications/security">Pearson VUE / CompTIA certification portal</a>.</li>
+</ul>
+</body>
+</html>

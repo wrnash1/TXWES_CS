@@ -1,0 +1,459 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Reading Guide (M01): Threats, Attacks, and Vulnerabilities</title>
+</head>
+<body>
+<h2>Reading Guide (M01): Threats, Attacks, and Vulnerabilities</h2>
+<h1>Reading Guide — Module 01: Threats, Attacks, and Vulnerabilities</h1>
+<h2>CIS-4328 Information Security | Texas Wesleyan University</h2>
+<h3>CompTIA Security+ SY0-701 | Domain 2 — Threats, Vulnerabilities, and Mitigations (22%)</h3>
+<hr />
+<h2>Introduction</h2>
+<p>Welcome to Module 01 — Threats, Attacks, and Vulnerabilities. This reading guide is your primary study document for the module. It expands on the video lectures with detailed definitions, comparison tables, and exam-focused analysis. Complete this guide before attempting the quiz or lab.</p>
+<p>Module 01 establishes the vocabulary and reasoning framework for the entire course. The SY0-701 exam dedicates 22 percent of its weight to Domain 2, making this material among the highest-yield content you will study.</p>
+<hr />
+<h2>1. Core Concepts and Definitions</h2>
+<h3>The CIA Triad</h3>
+<p>The CIA Triad represents the three foundational objectives of information security. Every security control maps back to one or more of these properties.</p>
+<p><strong>Confidentiality</strong> ensures that information is accessible only to those authorized to access it. Violations of confidentiality occur when unauthorized parties read, copy, or exfiltrate data. Technical controls for confidentiality include symmetric encryption (AES), asymmetric encryption (RSA), and access control lists. Administrative controls include classification policies and need-to-know enforcement.</p>
+<p><strong>Integrity</strong> ensures that data is accurate, complete, and has not been altered without authorization. Violations of integrity occur when an attacker modifies data, an error corrupts a file, or a system state is changed without proper authorization. Technical controls for integrity include cryptographic hashing (SHA-256, SHA-3), digital signatures, and file integrity monitoring systems. Administrative controls include change management procedures and separation of duties.</p>
+<p><strong>Availability</strong> ensures that systems and data are accessible to authorized users when needed. Violations of availability include denial-of-service attacks, hardware failure, ransomware that encrypts and locks data, and natural disasters that destroy infrastructure. Technical controls for availability include redundant systems, load balancing, failover clustering, and backup and recovery procedures. Administrative controls include business continuity plans and disaster recovery plans.</p>
+<p><strong>Non-repudiation</strong> extends the triad as a fourth property. Non-repudiation ensures that a party cannot deny having performed an action. It is enforced through digital signatures — a user signs a transaction with their private key, and the signature can be verified by anyone with the corresponding public key, proving the signer's identity. Non-repudiation is essential in legal, financial, and contractual contexts.</p>
+<hr />
+<h2>2. Security Controls — Category and Function Matrix</h2>
+<h3>Control Categories</h3>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Also Called</th>
+<th>Description</th>
+<th>Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Physical</td>
+<td>Physical</td>
+<td>Tangible, touchable barriers and mechanisms</td>
+<td>Fences, locks, mantraps, guards, cameras</td>
+</tr>
+<tr>
+<td>Technical</td>
+<td>Logical</td>
+<td>Software, hardware, or firmware enforcement</td>
+<td>Firewalls, IDS, encryption, MFA, ACLs</td>
+</tr>
+<tr>
+<td>Administrative</td>
+<td>Managerial</td>
+<td>Policies, procedures, and human-process controls</td>
+<td>AUP, training, background checks, audits</td>
+</tr>
+</tbody>
+</table>
+<h3>Control Functions</h3>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Description</th>
+<th>Physical Example</th>
+<th>Technical Example</th>
+<th>Administrative Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Preventive</td>
+<td>Stops an attack before it occurs</td>
+<td>Door lock</td>
+<td>Firewall</td>
+<td>Acceptable Use Policy</td>
+</tr>
+<tr>
+<td>Detective</td>
+<td>Identifies attacks in progress or after the fact</td>
+<td>Security camera</td>
+<td>IDS / SIEM alert</td>
+<td>Security audit</td>
+</tr>
+<tr>
+<td>Corrective</td>
+<td>Restores secure state after an incident</td>
+<td>Fire suppression system</td>
+<td>Backup restore</td>
+<td>Incident response plan</td>
+</tr>
+<tr>
+<td>Deterrent</td>
+<td>Discourages attack without physically blocking</td>
+<td>Warning signs</td>
+<td>Login banners</td>
+<td>Security awareness training</td>
+</tr>
+<tr>
+<td>Compensating</td>
+<td>Substitutes for a primary control that cannot be implemented</td>
+<td>Secondary access card reader</td>
+<td>Encryption on unpatched legacy system</td>
+<td>Increased monitoring of vulnerable systems</td>
+</tr>
+<tr>
+<td>Directive</td>
+<td>Provides guidance on expected behavior</td>
+<td>Posted safety rules</td>
+<td>Automated policy enforcement</td>
+<td>Mandatory training completion</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Exam Tip 1:</strong> On SY0-701, every scenario question about a control will require you to identify both its category (Physical/Technical/Administrative) and its function (Preventive/Detective/Corrective/Deterrent/Compensating/Directive). Practice applying both axes simultaneously.</p>
+<hr />
+<h2>3. Threat Actor Comparison Table</h2>
+<table>
+<thead>
+<tr>
+<th>Threat Actor</th>
+<th>Primary Motivation</th>
+<th>Sophistication Level</th>
+<th>Resource Level</th>
+<th>Typical Tactics</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nation-State</td>
+<td>Espionage, sabotage, geopolitical advantage</td>
+<td>Advanced (APT capability)</td>
+<td>Nation-level funding</td>
+<td>Zero-days, supply chain attacks, long dwell time</td>
+<td>Stuxnet, SolarWinds compromise</td>
+</tr>
+<tr>
+<td>Organized Crime</td>
+<td>Financial gain</td>
+<td>High</td>
+<td>Well-funded criminal networks</td>
+<td>Ransomware, banking trojans, credential theft</td>
+<td>REvil ransomware group</td>
+</tr>
+<tr>
+<td>Hacktivist</td>
+<td>Ideology, political cause, public embarrassment</td>
+<td>Moderate</td>
+<td>Crowdsourced, volunteer</td>
+<td>DDoS, website defacement, data leaking</td>
+<td>Anonymous operations</td>
+</tr>
+<tr>
+<td>Insider Threat</td>
+<td>Financial, revenge, coercion, negligence</td>
+<td>Varies (has authorized access)</td>
+<td>Authorized internal access</td>
+<td>Data exfiltration, sabotage, policy violations</td>
+<td>Edward Snowden NSA disclosures</td>
+</tr>
+<tr>
+<td>Script Kiddie</td>
+<td>Notoriety, curiosity, thrill</td>
+<td>Low</td>
+<td>Minimal</td>
+<td>Pre-built tools, automated scanners, known CVE exploitation</td>
+<td>Mass web defacement campaigns</td>
+</tr>
+<tr>
+<td>Competitor</td>
+<td>Economic advantage</td>
+<td>Varies</td>
+<td>Corporate resources</td>
+<td>Corporate espionage, social engineering</td>
+<td>Trade secret theft</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Exam Tip 2:</strong> The exam will describe a scenario and ask you to identify the most likely threat actor. Focus on three attributes: motivation, level of sophistication, and available resources. Nation-state = patient, stealthy, strategic. Script kiddie = opportunistic, noisy, uses known tools.</p>
+<hr />
+<h2>4. Vulnerability Classes</h2>
+<h3>Software Vulnerabilities</h3>
+<p><strong>Buffer Overflow</strong> — A program writes more data to a buffer than it can hold, overwriting adjacent memory. This can allow an attacker to inject and execute arbitrary code. Buffer overflows are among the oldest and most dangerous software vulnerabilities.</p>
+<p><strong>Race Condition</strong> — A flaw where a program's behavior depends on the timing or sequence of events. An attacker who can influence timing can change outcomes. Time-of-Check/Time-of-Use (TOCTOU) is a classic race condition subtype.</p>
+<p><strong>Integer Overflow</strong> — When an arithmetic operation produces a value that exceeds the maximum size of the data type, the value wraps around to an unexpected small or negative number, potentially causing program logic errors.</p>
+<p><strong>Null Pointer Dereference</strong> — A program attempts to use a null (empty) pointer as if it points to valid memory, causing a crash. Repeated crashes can be exploited for denial-of-service attacks.</p>
+<h3>Configuration Vulnerabilities</h3>
+<p><strong>Default Credentials</strong> — Vendor-supplied usernames and passwords (admin/admin, admin/password) that are publicly documented. Organizations that deploy equipment without changing default credentials are trivially compromised.</p>
+<p><strong>Open Ports</strong> — Network ports left open for services that are not needed. Every open port is a potential entry point. Port scanning tools like Nmap allow attackers to enumerate open ports rapidly.</p>
+<p><strong>Excessive Permissions</strong> — User accounts or service accounts granted more access than required for their function. A violation of the principle of least privilege.</p>
+<p><strong>Unencrypted Protocols</strong> — Use of protocols such as Telnet, FTP, or HTTP for sensitive communications, exposing credentials and data to interception.</p>
+<h3>Operational Vulnerabilities</h3>
+<p><strong>Missing Patches</strong> — Failure to apply vendor-released security updates. The interval between patch release and deployment is a window of active exploitation.</p>
+<p><strong>Unsupported Software</strong> — Applications and operating systems that have reached end-of-life and no longer receive security patches. Running unsupported software permanently exposes the organization to unpatched CVEs.</p>
+<p><strong>Weak Passwords</strong> — Simple, guessable, or reused passwords that can be compromised by brute force or credential stuffing attacks.</p>
+<hr />
+<h2>5. Attack Categories Reference Table</h2>
+<table>
+<thead>
+<tr>
+<th>Attack Category</th>
+<th>Definition</th>
+<th>Active or Passive</th>
+<th>Primary CIA Target</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Eavesdropping</td>
+<td>Capturing network traffic without modification</td>
+<td>Passive</td>
+<td>Confidentiality</td>
+<td>Packet sniffing with Wireshark</td>
+</tr>
+<tr>
+<td>Traffic Analysis</td>
+<td>Inferring information from traffic patterns without reading content</td>
+<td>Passive</td>
+<td>Confidentiality</td>
+<td>Analyzing metadata to map org structure</td>
+</tr>
+<tr>
+<td>Shoulder Surfing</td>
+<td>Visually observing someone entering sensitive information</td>
+<td>Passive</td>
+<td>Confidentiality</td>
+<td>Watching a PIN entry at an ATM</td>
+</tr>
+<tr>
+<td>Replay Attack</td>
+<td>Capturing and retransmitting valid authentication tokens</td>
+<td>Active</td>
+<td>Integrity, Authentication</td>
+<td>Retransmitting a captured Kerberos ticket</td>
+</tr>
+<tr>
+<td>Injection Attack</td>
+<td>Inserting malicious content into an input or data stream</td>
+<td>Active</td>
+<td>Integrity, Confidentiality</td>
+<td>SQL injection in a web login form</td>
+</tr>
+<tr>
+<td>Man-in-the-Middle</td>
+<td>Intercepting and potentially altering communication between two parties</td>
+<td>Active</td>
+<td>Confidentiality, Integrity</td>
+<td>ARP poisoning to redirect LAN traffic</td>
+</tr>
+<tr>
+<td>Denial of Service</td>
+<td>Overwhelming resources to deny access to legitimate users</td>
+<td>Active</td>
+<td>Availability</td>
+<td>SYN flood against a web server</td>
+</tr>
+<tr>
+<td>Brute Force</td>
+<td>Systematically trying all possible passwords until correct</td>
+<td>Active</td>
+<td>Authentication</td>
+<td>Automated password guessing tool</td>
+</tr>
+<tr>
+<td>Zero-Day Exploit</td>
+<td>Attacking an unknown, unpatched vulnerability</td>
+<td>Active</td>
+<td>Varies</td>
+<td>Nation-state attack using an undisclosed flaw</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>6. Common Ports Reference Table</h2>
+<table>
+<thead>
+<tr>
+<th>Port</th>
+<th>Protocol</th>
+<th>Service</th>
+<th>Security Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>21</td>
+<td>TCP</td>
+<td>FTP</td>
+<td>Unencrypted — use SFTP (22) or FTPS (990) instead</td>
+</tr>
+<tr>
+<td>22</td>
+<td>TCP</td>
+<td>SSH / SFTP</td>
+<td>Encrypted remote access and file transfer</td>
+</tr>
+<tr>
+<td>23</td>
+<td>TCP</td>
+<td>Telnet</td>
+<td>Unencrypted — replace with SSH (22)</td>
+</tr>
+<tr>
+<td>25</td>
+<td>TCP</td>
+<td>SMTP</td>
+<td>Email transmission — often blocked outbound to prevent spam</td>
+</tr>
+<tr>
+<td>53</td>
+<td>TCP/UDP</td>
+<td>DNS</td>
+<td>DNS poisoning and tunneling attacks target this port</td>
+</tr>
+<tr>
+<td>80</td>
+<td>TCP</td>
+<td>HTTP</td>
+<td>Unencrypted web — use HTTPS (443) for sensitive content</td>
+</tr>
+<tr>
+<td>110</td>
+<td>TCP</td>
+<td>POP3</td>
+<td>Unencrypted email retrieval</td>
+</tr>
+<tr>
+<td>143</td>
+<td>TCP</td>
+<td>IMAP</td>
+<td>Unencrypted email sync</td>
+</tr>
+<tr>
+<td>443</td>
+<td>TCP</td>
+<td>HTTPS</td>
+<td>Encrypted web traffic using TLS</td>
+</tr>
+<tr>
+<td>445</td>
+<td>TCP</td>
+<td>SMB</td>
+<td>File sharing — target of WannaCry and NotPetya</td>
+</tr>
+<tr>
+<td>3389</td>
+<td>TCP</td>
+<td>RDP</td>
+<td>Remote Desktop — frequent brute-force and exploitation target</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>7. Indicators of Compromise (IOC) Overview</h2>
+<p>Indicators of Compromise are pieces of forensic evidence suggesting a system has been breached. Security operations teams use IOCs to detect, contain, and investigate incidents.</p>
+<p><strong>Network IOCs:</strong></p>
+<ul>
+<li>Unusual large outbound data transfers to unknown foreign IP addresses.</li>
+<li>Connections to domains with recent registration dates or known bad reputation.</li>
+<li>Use of non-standard ports for common protocols.</li>
+<li>DNS queries to domains that follow domain generation algorithm patterns.</li>
+</ul>
+<p><strong>Host IOCs:</strong></p>
+<ul>
+<li>New files created in system directories outside of maintenance windows.</li>
+<li>Unexpected scheduled tasks, services, or startup registry entries.</li>
+<li>Processes spawning unexpected child processes (for example, Word spawning PowerShell).</li>
+<li>Security tools disabled or uninstalled.</li>
+</ul>
+<p><strong>Account IOCs:</strong></p>
+<ul>
+<li>Login from a geographic location inconsistent with the user's normal pattern.</li>
+<li>Multiple consecutive failed logins followed by a successful login.</li>
+<li>New privileged accounts created without a corresponding IT change ticket.</li>
+<li>Access to sensitive resources outside normal business hours.</li>
+</ul>
+<hr />
+<h2>8. Threat Intelligence Sources</h2>
+<table>
+<thead>
+<tr>
+<th>Source Type</th>
+<th>Description</th>
+<th>Best Used For</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OSINT</td>
+<td>Open-source intelligence from public internet, news, and research</td>
+<td>Initial reconnaissance context, broad threat landscape</td>
+</tr>
+<tr>
+<td>ISAC</td>
+<td>Sector-specific sharing organizations (FS-ISAC, H-ISAC)</td>
+<td>Industry-specific threats and peer organization incidents</td>
+</tr>
+<tr>
+<td>Commercial Feed</td>
+<td>Paid, curated intelligence with IOCs and TTPs</td>
+<td>Real-time operational intelligence for SOC teams</td>
+</tr>
+<tr>
+<td>CISA Advisories</td>
+<td>US government alerts on active threats and critical CVEs</td>
+<td>Government and critical infrastructure threats</td>
+</tr>
+<tr>
+<td>Dark Web Monitoring</td>
+<td>Monitoring criminal forums for stolen data or planned attacks</td>
+<td>Early warning of credential theft or targeted attacks</td>
+</tr>
+<tr>
+<td>Internal Telemetry</td>
+<td>SIEM data, firewall logs, EDR alerts from within the org</td>
+<td>Incident detection and response within the environment</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>9. Security+ Exam Tips for Module 01</h2>
+<p><strong>Exam Tip 1:</strong> Domain 2 is 22% of SY0-701 — the second-highest weighted domain. Budget significant study time here.</p>
+<p><strong>Exam Tip 2:</strong> Never interchange vulnerability, threat, and risk. Vulnerability = the weakness. Threat = the actor or event that could exploit it. Risk = likelihood × impact.</p>
+<p><strong>Exam Tip 3:</strong> Nation-state actor questions involve long dwell time, custom malware, strategic objectives, and zero-day exploits. If the scenario is patient, stealthy, and geopolitically motivated, the answer is nation-state.</p>
+<p><strong>Exam Tip 4:</strong> Passive attacks do not modify data. If the scenario says "captured," "monitored," or "observed" without any change to data, the attack is passive.</p>
+<p><strong>Exam Tip 5:</strong> Non-repudiation is enforced by digital signatures, not just any authentication mechanism. MFA proves identity at login; a digital signature proves identity at the time of a specific action.</p>
+<p><strong>Exam Tip 6:</strong> Attack surface reduction questions ask what you would do first. The answer is almost always: disable unused services or apply the principle of least privilege.</p>
+<p><strong>Exam Tip 7:</strong> IOC questions describe an observable symptom. Work backward from the symptom to the cause. Cleared event logs = attacker covering tracks. Impossible travel login = credential compromise.</p>
+<p><strong>Exam Tip 8:</strong> For control classification, the question will often give you a scenario rather than naming the control directly. A "sign warning employees not to plug in unknown USB drives" is Administrative/Deterrent. An automated script that blocks USB ports is Technical/Preventive.</p>
+<hr />
+<h2>10. Required Study Resources</h2>
+<p>Complete the following before taking the Module 01 quiz:</p>
+<ul>
+<li>Professor Messer's SY0-701 study notes covering Domain 2 objectives, available free at professormesser.com.</li>
+<li>Professor Messer's SY0-701 video lectures for Domain 2 objectives, available at professormesser.com.</li>
+<li>CompTIA's official SY0-701 exam objectives document, available at comptia.org.</li>
+</ul>
+<hr />
+<h2>11. Study Checklist</h2>
+<p>Work through this checklist before moving to the quiz:</p>
+<ul>
+<li>[ ] Define each CIA Triad property and give one technical control for each.</li>
+<li>[ ] Explain non-repudiation and identify the control that enforces it.</li>
+<li>[ ] Classify any given control using both the category axis and the function axis.</li>
+<li>[ ] Describe each of the five threat actor types by motivation, sophistication, and resource level.</li>
+<li>[ ] Distinguish between a vulnerability, a threat, and risk using the formal definitions.</li>
+<li>[ ] Identify all six vulnerability classes and give an example of each.</li>
+<li>[ ] Classify any attack scenario as active or passive and identify the CIA property targeted.</li>
+<li>[ ] List at least five common port numbers and their associated services.</li>
+<li>[ ] Describe three network IOCs and three host IOCs.</li>
+<li>[ ] Identify the appropriate threat intelligence source given a specific operational need.</li>
+<li>[ ] Complete the Module 01 Lab activity on threat classification.</li>
+<li>[ ] Post your initial discussion response by Wednesday at 11:59 PM.</li>
+<li>[ ] Post two peer replies by Sunday at 11:59 PM.</li>
+</ul>
+<hr />
+<p>Texas Wesleyan University — CIS-4328 Information Security — Module 01 Reading Guide</p>
+<p>Proprietary and Confidential. Not for disclosure outside of authorized course use.</p>
+</body>
+</html>

@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/profile/cc/ccv1p1/ccv1p1_qtiasiv1p2p1_v1p0.xsd">
+  <assessment ident="g3c1e1844aa4dd1f49a33808204972e7" title="Quiz (M08): Network Security Concepts">
+    <qtimetadata>
+      <qtimetadatafield>
+        <fieldlabel>cc_profile</fieldlabel>
+        <fieldentry>cc.exam.v0p1</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_assessmenttype</fieldlabel>
+        <fieldentry>Examination</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_scoretype</fieldlabel>
+        <fieldentry>Percentage</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>cc_maxattempts</fieldlabel>
+        <fieldentry>1</fieldentry>
+      </qtimetadatafield>
+    </qtimetadata>
+    <section ident="root_section">
+      <item ident="g3c1e1844aa4dd1f49a33808204972e7_q01" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A company's e-commerce database server stores customer payment card information. The security team implements AES-256 encryption for all data transmitted between the web application and the database server. Which component of the CIA triad does this encryption primarily address?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g3c1e1844aa4dd1f49a33808204972e7_q01_a">
+                <material>
+                  <mattext texttype="text/plain">Availability — encryption ensures the database server remains online and accessible during high-traffic periods.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c1e1844aa4dd1f49a33808204972e7_q01_b">
+                <material>
+                  <mattext texttype="text/plain">Integrity — AES-256 encryption creates a cryptographic hash of all transmitted data that detects any modification in transit.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c1e1844aa4dd1f49a33808204972e7_q01_c">
+                <material>
+                  <mattext texttype="text/plain">Confidentiality — AES-256 encryption ensures that payment card data is unreadable to any party that intercepts the traffic without the decryption key.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c1e1844aa4dd1f49a33808204972e7_q01_d">
+                <material>
+                  <mattext texttype="text/plain">Authentication — AES-256 verifies the identity of the database server before the web application is permitted to connect.</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g3c1e1844aa4dd1f49a33808204972e7_q01_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g3c1e1844aa4dd1f49a33808204972e7_q02" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A network administrator is reviewing firewall logs and notices that inbound TCP packets are arriving on port 443 with the ACK flag set but no corresponding SYN packet in the logs. The firewall permits these packets because the inbound policy allows TCP port 443 from any source. What type of firewall is most likely in use, and what firewall type would prevent this anomaly?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g3c1e1844aa4dd1f49a33808204972e7_q02_a">
+                <material>
+                  <mattext texttype="text/plain">The firewall is stateful; replacing it with a stateless packet filter would block unsolicited ACK packets.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c1e1844aa4dd1f49a33808204972e7_q02_b">
+                <material>
+                  <mattext texttype="text/plain">The firewall is stateless (packet filter); it permits the ACK packets because it evaluates each packet in isolation without tracking whether a connection was established. A stateful firewall would block these because no corresponding SYN is in the state table.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c1e1844aa4dd1f49a33808204972e7_q02_c">
+                <material>
+                  <mattext texttype="text/plain">The firewall is a NGFW; the ACK-only packets are passing because deep packet inspection has not been enabled on port 443.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c1e1844aa4dd1f49a33808204972e7_q02_d">
+                <material>
+                  <mattext texttype="text/plain">The firewall is stateless; replacing it with a honeypot would redirect these anomalous ACK packets to a decoy server.</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g3c1e1844aa4dd1f49a33808204972e7_q02_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g3c1e1844aa4dd1f49a33808204972e7_q03" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A security analyst detects that a monitoring sensor on a SPAN port is generating alerts about suspicious traffic patterns on the network but is not stopping the malicious traffic. After reviewing the configuration, the analyst confirms the sensor receives a copy of all traffic and logs alerts for matched signatures. Which technology is this, and what change would allow it to actively block the detected traffic?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g3c1e1844aa4dd1f49a33808204972e7_q03_a">
+                <material>
+                  <mattext texttype="text/plain">This is an IPS in alert-only mode; changing the action to "block" in the IPS policy will enable active blocking.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c1e1844aa4dd1f49a33808204972e7_q03_b">
+                <material>
+                  <mattext texttype="text/plain">This is an IDS deployed via a SPAN port; to actively block traffic the sensor must be repositioned inline in the traffic path and reconfigured as an IPS.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c1e1844aa4dd1f49a33808204972e7_q03_c">
+                <material>
+                  <mattext texttype="text/plain">This is a stateless firewall; adding a stateful inspection engine will enable the firewall to detect and block the traffic pattern.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c1e1844aa4dd1f49a33808204972e7_q03_d">
+                <material>
+                  <mattext texttype="text/plain">This is a NAC sensor in post-admission mode; switching to pre-admission mode will quarantine the offending host before it can communicate.</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g3c1e1844aa4dd1f49a33808204972e7_q03_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g3c1e1844aa4dd1f49a33808204972e7_q04" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A company places its public web server in a DMZ using a two-firewall design. The outer firewall permits inbound TCP port 80 and 443 from the internet to the web server. The inner firewall permits only TCP port 3306 from the web server to the internal database server. An attacker successfully exploits a vulnerability in the web server and gains full control of it. What can the attacker access from the compromised web server?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g3c1e1844aa4dd1f49a33808204972e7_q04_a">
+                <material>
+                  <mattext texttype="text/plain">The attacker can access any internal host because the web server is fully trusted once it is inside the network perimeter.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c1e1844aa4dd1f49a33808204972e7_q04_b">
+                <material>
+                  <mattext texttype="text/plain">The attacker can access the internal database server on TCP port 3306 only; all other traffic from the compromised web server to the internal LAN is blocked by the inner firewall.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c1e1844aa4dd1f49a33808204972e7_q04_c">
+                <material>
+                  <mattext texttype="text/plain">The attacker can access all services on the internal database server because the inner firewall permits the web server's IP address and all ports once a connection is established.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c1e1844aa4dd1f49a33808204972e7_q04_d">
+                <material>
+                  <mattext texttype="text/plain">The attacker cannot access anything because the outer firewall blocks all outbound traffic from the DMZ.</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g3c1e1844aa4dd1f49a33808204972e7_q04_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g3c1e1844aa4dd1f49a33808204972e7_q05" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A network engineer observes 800 Gbps of inbound traffic arriving from tens of thousands of distinct source IP addresses spread across multiple continents. The traffic consists entirely of TCP SYN packets destined for the company's public web server. The web server is unresponsive to legitimate users. Which attack type is this, and what is the most effective enterprise mitigation strategy?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g3c1e1844aa4dd1f49a33808204972e7_q05_a">
+                <material>
+                  <mattext texttype="text/plain">This is a DoS TCP SYN flood from a single attacker; the most effective mitigation is to block the attacking IP address at the perimeter firewall.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c1e1844aa4dd1f49a33808204972e7_q05_b">
+                <material>
+                  <mattext texttype="text/plain">This is a DDoS attack using a botnet; the most effective mitigation is to engage an upstream traffic scrubbing service that absorbs the attack traffic at the provider's distributed network before it reaches the company's infrastructure.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c1e1844aa4dd1f49a33808204972e7_q05_c">
+                <material>
+                  <mattext texttype="text/plain">This is ARP poisoning; the most effective mitigation is to enable Dynamic ARP Inspection on all access layer switches.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c1e1844aa4dd1f49a33808204972e7_q05_d">
+                <material>
+                  <mattext texttype="text/plain">This is a DNS poisoning attack; the most effective mitigation is to enable DNSSEC on the company's authoritative DNS servers.</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g3c1e1844aa4dd1f49a33808204972e7_q05_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g3c1e1844aa4dd1f49a33808204972e7_q06" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;While reviewing the ARP table on a workstation, a security analyst notices that the MAC address for the default gateway (192.168.1.1) matches the MAC address of another host on the same subnet (192.168.1.50). Wireshark captures show that 192.168.1.50 is sending periodic unsolicited ARP Replies claiming to be 192.168.1.1. Which attack is occurring and which switch-level countermeasure prevents it?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g3c1e1844aa4dd1f49a33808204972e7_q06_a">
+                <material>
+                  <mattext texttype="text/plain">DNS poisoning is occurring; the countermeasure is DNSSEC on the local DNS resolver.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c1e1844aa4dd1f49a33808204972e7_q06_b">
+                <material>
+                  <mattext texttype="text/plain">ARP poisoning is occurring; the countermeasure is Dynamic ARP Inspection (DAI), which validates ARP packets against the DHCP snooping binding table and drops forged ARP Replies.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c1e1844aa4dd1f49a33808204972e7_q06_c">
+                <material>
+                  <mattext texttype="text/plain">VLAN hopping is occurring; the countermeasure is configuring all access ports as switchport mode access to prevent trunk negotiation.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c1e1844aa4dd1f49a33808204972e7_q06_d">
+                <material>
+                  <mattext texttype="text/plain">A TCP SYN flood is occurring; the countermeasure is enabling SYN cookies on the gateway router.</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g3c1e1844aa4dd1f49a33808204972e7_q06_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g3c1e1844aa4dd1f49a33808204972e7_q07" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A financial services company deploys a decoy system on their internal network configured to look like a domain controller with enticing share names. The system contains no real data. Security logs show three connection attempts to this system over the past month from internal IP addresses. What type of security control is this, and what does each connection attempt indicate?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g3c1e1844aa4dd1f49a33808204972e7_q07_a">
+                <material>
+                  <mattext texttype="text/plain">This is a honeypot; each connection attempt is by definition suspicious because no legitimate user or process has a reason to access a system that serves no production function.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c1e1844aa4dd1f49a33808204972e7_q07_b">
+                <material>
+                  <mattext texttype="text/plain">This is a NAC quarantine server; each connection attempt indicates a non-compliant device attempting to bypass remediation and reach production systems.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c1e1844aa4dd1f49a33808204972e7_q07_c">
+                <material>
+                  <mattext texttype="text/plain">This is an IDS sensor in honeypot mode; connection attempts are legitimate users accidentally navigating to the wrong server, and the alerts can be safely ignored.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c1e1844aa4dd1f49a33808204972e7_q07_d">
+                <material>
+                  <mattext texttype="text/plain">This is a DMZ web server; connection attempts from internal IP addresses indicate employees are accessing the public website from within the corporate network, which is normal behavior.</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g3c1e1844aa4dd1f49a33808204972e7_q07_a</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g3c1e1844aa4dd1f49a33808204972e7_q08" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An organization wants to ensure that every device connecting to the corporate wired network has a current OS patch level and active endpoint protection software before being granted access to production resources. Non-compliant devices should be automatically placed in a restricted segment where they can only reach a patch server. Which technology framework satisfies all three requirements?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g3c1e1844aa4dd1f49a33808204972e7_q08_a">
+                <material>
+                  <mattext texttype="text/plain">SNMPv3 polling — the network management system polls each device's OID for OS version and AV status before granting VLAN access.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c1e1844aa4dd1f49a33808204972e7_q08_b">
+                <material>
+                  <mattext texttype="text/plain">Network Access Control (NAC) using 802.1X port authentication, a RADIUS server for policy enforcement, and a quarantine VLAN for non-compliant devices.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c1e1844aa4dd1f49a33808204972e7_q08_c">
+                <material>
+                  <mattext texttype="text/plain">A two-firewall DMZ architecture with an outer ACL that checks device certificates before forwarding traffic to the internal LAN.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c1e1844aa4dd1f49a33808204972e7_q08_d">
+                <material>
+                  <mattext texttype="text/plain">Syslog centralization — all device log messages are forwarded to a SIEM that generates alerts when patch levels are outdated, triggering manual port shutdown by the helpdesk.</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g3c1e1844aa4dd1f49a33808204972e7_q08_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g3c1e1844aa4dd1f49a33808204972e7_q09" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A junior network administrator is configuring remote management access on a new branch router. She wants to allow the network operations team to manage the router remotely from headquarters. She enables Telnet on the router and creates an ACL allowing Telnet connections from the headquarters management subnet. A senior engineer reviews the configuration and immediately requires a change. What is the security problem and what is the correct remediation?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g3c1e1844aa4dd1f49a33808204972e7_q09_a">
+                <material>
+                  <mattext texttype="text/plain">Telnet should not be limited to the management subnet — all subnets should be permitted to use Telnet for troubleshooting purposes.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c1e1844aa4dd1f49a33808204972e7_q09_b">
+                <material>
+                  <mattext texttype="text/plain">Telnet transmits all data including usernames and passwords in plain text; the remediation is to disable Telnet and enable SSH, which encrypts the entire management session.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c1e1844aa4dd1f49a33808204972e7_q09_c">
+                <material>
+                  <mattext texttype="text/plain">Telnet uses TCP port 22, which conflicts with SSH; the remediation is to change the Telnet port to 23 to avoid the conflict.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c1e1844aa4dd1f49a33808204972e7_q09_d">
+                <material>
+                  <mattext texttype="text/plain">The ACL should be applied outbound rather than inbound to prevent unauthorized users from receiving login prompts.</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g3c1e1844aa4dd1f49a33808204972e7_q09_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g3c1e1844aa4dd1f49a33808204972e7_q10" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A company is designing its AAA infrastructure for network device management. The security team requires that every command executed on network devices by an administrator is individually authorized and logged — not just the login event — and that the authorization and accounting records be kept separately from authentication records for compliance auditing. Which AAA protocol best satisfies these requirements?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g3c1e1844aa4dd1f49a33808204972e7_q10_a">
+                <material>
+                  <mattext texttype="text/plain">RADIUS on UDP 1812 and 1813 — combines authentication, authorization, and accounting into a single transaction with full command-level logging.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c1e1844aa4dd1f49a33808204972e7_q10_b">
+                <material>
+                  <mattext texttype="text/plain">TACACS+ on TCP 49 — separates authentication, authorization, and accounting into distinct transactions, supports per-command authorization, and encrypts the entire session payload.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c1e1844aa4dd1f49a33808204972e7_q10_c">
+                <material>
+                  <mattext texttype="text/plain">SNMPv3 with authPriv — provides per-command authentication and authorization for all management operations on network devices.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3c1e1844aa4dd1f49a33808204972e7_q10_d">
+                <material>
+                  <mattext texttype="text/plain">RADIUS on UDP 1812 with syslog on UDP 514 — RADIUS handles authentication while syslog independently logs all executed commands.</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g3c1e1844aa4dd1f49a33808204972e7_q10_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+    </section>
+  </assessment>
+</questestinterop>

@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/profile/cc/ccv1p1/ccv1p1_qtiasiv1p2p1_v1p0.xsd">
+  <assessment ident="gf4ed5b310d1049df8ef0b8f7753253e" title="Quiz (M04): IPv6 Addressing and Transition Technologies">
+    <qtimetadata>
+      <qtimetadatafield>
+        <fieldlabel>cc_profile</fieldlabel>
+        <fieldentry>cc.exam.v0p1</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_assessmenttype</fieldlabel>
+        <fieldentry>Examination</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_scoretype</fieldlabel>
+        <fieldentry>Percentage</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>cc_maxattempts</fieldlabel>
+        <fieldentry>1</fieldentry>
+      </qtimetadatafield>
+    </qtimetadata>
+    <section ident="root_section">
+      <item ident="gf4ed5b310d1049df8ef0b8f7753253e_q01" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;Which of the following security controls operates at Layer 7 of the OSI model to inspect application payload for malicious signatures and actively drop matching traffic?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gf4ed5b310d1049df8ef0b8f7753253e_q01_a">
+                <material>
+                  <mattext texttype="text/plain">Stateless packet-filtering firewall</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf4ed5b310d1049df8ef0b8f7753253e_q01_b">
+                <material>
+                  <mattext texttype="text/plain">Intrusion Detection System (IDS)</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf4ed5b310d1049df8ef0b8f7753253e_q01_c">
+                <material>
+                  <mattext texttype="text/plain">Intrusion Prevention System (IPS)</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf4ed5b310d1049df8ef0b8f7753253e_q01_d">
+                <material>
+                  <mattext texttype="text/plain">Layer 3 access control list (ACL)</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gf4ed5b310d1049df8ef0b8f7753253e_q01_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gf4ed5b310d1049df8ef0b8f7753253e_q02" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An IPv6-enabled workstation automatically generates a link-local address without any DHCP server or manual configuration. Which prefix identifies this auto-generated address?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gf4ed5b310d1049df8ef0b8f7753253e_q02_a">
+                <material>
+                  <mattext texttype="text/plain">2001:db8::/32</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf4ed5b310d1049df8ef0b8f7753253e_q02_b">
+                <material>
+                  <mattext texttype="text/plain">fc00::/7</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf4ed5b310d1049df8ef0b8f7753253e_q02_c">
+                <material>
+                  <mattext texttype="text/plain">fe80::/10</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf4ed5b310d1049df8ef0b8f7753253e_q02_d">
+                <material>
+                  <mattext texttype="text/plain">ff02::/16</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gf4ed5b310d1049df8ef0b8f7753253e_q02_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gf4ed5b310d1049df8ef0b8f7753253e_q03" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A network administrator needs to query DNS to verify that a hostname resolves to the correct IP address. Which command is most appropriate?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gf4ed5b310d1049df8ef0b8f7753253e_q03_a">
+                <material>
+                  <mattext texttype="text/plain">nslookup</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf4ed5b310d1049df8ef0b8f7753253e_q03_b">
+                <material>
+                  <mattext texttype="text/plain">traceroute</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf4ed5b310d1049df8ef0b8f7753253e_q03_c">
+                <material>
+                  <mattext texttype="text/plain">ping</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf4ed5b310d1049df8ef0b8f7753253e_q03_d">
+                <material>
+                  <mattext texttype="text/plain">netstat -ano</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gf4ed5b310d1049df8ef0b8f7753253e_q03_a</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gf4ed5b310d1049df8ef0b8f7753253e_q04" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A company is migrating from IPv4 to IPv6 and wants both protocols to operate simultaneously on all devices during the transition period. Which transition technology best supports this requirement?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gf4ed5b310d1049df8ef0b8f7753253e_q04_a">
+                <material>
+                  <mattext texttype="text/plain">NAT64 — translates between IPv6 client addresses and IPv4 server addresses at the network border</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf4ed5b310d1049df8ef0b8f7753253e_q04_b">
+                <material>
+                  <mattext texttype="text/plain">6to4 tunneling — encapsulates IPv6 packets inside IPv4 headers to cross IPv4-only segments</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf4ed5b310d1049df8ef0b8f7753253e_q04_c">
+                <material>
+                  <mattext texttype="text/plain">Dual stack — runs both IPv4 and IPv6 natively on the same interface simultaneously</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf4ed5b310d1049df8ef0b8f7753253e_q04_d">
+                <material>
+                  <mattext texttype="text/plain">Teredo — tunnels IPv6 traffic through IPv4 NAT devices using UDP encapsulation</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gf4ed5b310d1049df8ef0b8f7753253e_q04_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gf4ed5b310d1049df8ef0b8f7753253e_q05" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A security policy requires that all IPv6 network devices must enforce authentication before granting access, and that management traffic must be encrypted. Which combination of controls best satisfies both requirements?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gf4ed5b310d1049df8ef0b8f7753253e_q05_a">
+                <material>
+                  <mattext texttype="text/plain">Implement 802.1X port-based Network Access Control with EAP-TLS for authentication and SSH/TLS for encrypted management sessions.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf4ed5b310d1049df8ef0b8f7753253e_q05_b">
+                <material>
+                  <mattext texttype="text/plain">Deploy SLAAC on all interfaces to auto-configure addresses and disable DHCPv6 to reduce attack surface.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf4ed5b310d1049df8ef0b8f7753253e_q05_c">
+                <material>
+                  <mattext texttype="text/plain">Enable full disk encryption on all servers storing network configuration files.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf4ed5b310d1049df8ef0b8f7753253e_q05_d">
+                <material>
+                  <mattext texttype="text/plain">Configure IPv6 ACLs to block all traffic from fe80::/10 link-local addresses on routed interfaces.</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gf4ed5b310d1049df8ef0b8f7753253e_q05_a</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gf4ed5b310d1049df8ef0b8f7753253e_q06" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;Which of the following correctly describes the IPv6 loopback address?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gf4ed5b310d1049df8ef0b8f7753253e_q06_a">
+                <material>
+                  <mattext texttype="text/plain">::1/128 — used to test the local host's IPv6 stack without transmitting traffic to the network</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf4ed5b310d1049df8ef0b8f7753253e_q06_b">
+                <material>
+                  <mattext texttype="text/plain">fe80::1/64 — the default link-local address used when no DHCP server is available</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf4ed5b310d1049df8ef0b8f7753253e_q06_c">
+                <material>
+                  <mattext texttype="text/plain">2001:db8::1/128 — the documentation prefix used in examples and should not appear on a production network</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf4ed5b310d1049df8ef0b8f7753253e_q06_d">
+                <material>
+                  <mattext texttype="text/plain">ff02::1/128 — the all-nodes multicast address used to reach every IPv6 host on the local segment</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gf4ed5b310d1049df8ef0b8f7753253e_q06_a</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gf4ed5b310d1049df8ef0b8f7753253e_q07" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A host has MAC address 00:1A:2B:3C:4D:5E and is using SLAAC to configure its IPv6 address. After applying the EUI-64 process, which value will appear in the middle of the 64-bit interface identifier?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gf4ed5b310d1049df8ef0b8f7753253e_q07_a">
+                <material>
+                  <mattext texttype="text/plain">00:00</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf4ed5b310d1049df8ef0b8f7753253e_q07_b">
+                <material>
+                  <mattext texttype="text/plain">FF:FE</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf4ed5b310d1049df8ef0b8f7753253e_q07_c">
+                <material>
+                  <mattext texttype="text/plain">7F:7F</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf4ed5b310d1049df8ef0b8f7753253e_q07_d">
+                <material>
+                  <mattext texttype="text/plain">The MAC address is used unchanged</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gf4ed5b310d1049df8ef0b8f7753253e_q07_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gf4ed5b310d1049df8ef0b8f7753253e_q08" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A network uses SLAAC for IPv6 address assignment. Users report that they have IPv6 addresses and can reach other hosts on the local segment, but they cannot resolve hostnames or reach the internet. What is the most likely missing configuration?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gf4ed5b310d1049df8ef0b8f7753253e_q08_a">
+                <material>
+                  <mattext texttype="text/plain">The router has not been configured to send Router Advertisement messages.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf4ed5b310d1049df8ef0b8f7753253e_q08_b">
+                <material>
+                  <mattext texttype="text/plain">No DNS server address was provided to the clients; SLAAC does not provide DNS by default without RDNSS or DHCPv6.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf4ed5b310d1049df8ef0b8f7753253e_q08_c">
+                <material>
+                  <mattext texttype="text/plain">The clients do not have a MAC address configured, so EUI-64 cannot generate an interface identifier.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf4ed5b310d1049df8ef0b8f7753253e_q08_d">
+                <material>
+                  <mattext texttype="text/plain">Link-local addresses are blocking internet traffic because they are not globally routable.</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gf4ed5b310d1049df8ef0b8f7753253e_q08_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gf4ed5b310d1049df8ef0b8f7753253e_q09" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An organization needs IPv6-only hosts to access legacy IPv4-only web servers on the internet. Which transition technology is the most appropriate solution?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gf4ed5b310d1049df8ef0b8f7753253e_q09_a">
+                <material>
+                  <mattext texttype="text/plain">Dual stack — both IPv4 and IPv6 are assigned to each host</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf4ed5b310d1049df8ef0b8f7753253e_q09_b">
+                <material>
+                  <mattext texttype="text/plain">6to4 tunneling — wraps IPv6 packets in IPv4 headers</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf4ed5b310d1049df8ef0b8f7753253e_q09_c">
+                <material>
+                  <mattext texttype="text/plain">NAT64 — translates between IPv6 and IPv4 addresses at the network border</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf4ed5b310d1049df8ef0b8f7753253e_q09_d">
+                <material>
+                  <mattext texttype="text/plain">ISATAP — tunnels IPv6 over an IPv4 intranet</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gf4ed5b310d1049df8ef0b8f7753253e_q09_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gf4ed5b310d1049df8ef0b8f7753253e_q10" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;Which IPv6 mechanism has completely replaced the function of IPv4's ARP (Address Resolution Protocol) for resolving layer 3 addresses to layer 2 MAC addresses on a local segment?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gf4ed5b310d1049df8ef0b8f7753253e_q10_a">
+                <material>
+                  <mattext texttype="text/plain">DHCPv6 Stateful — the DHCPv6 server maintains a mapping of IPv6 addresses to MAC addresses</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf4ed5b310d1049df8ef0b8f7753253e_q10_b">
+                <material>
+                  <mattext texttype="text/plain">NDP (Neighbor Discovery Protocol) — uses ICMPv6 Neighbor Solicitation and Neighbor Advertisement messages</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf4ed5b310d1049df8ef0b8f7753253e_q10_c">
+                <material>
+                  <mattext texttype="text/plain">SLAAC — the EUI-64 process derives MAC addresses directly from IPv6 interface identifiers</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf4ed5b310d1049df8ef0b8f7753253e_q10_d">
+                <material>
+                  <mattext texttype="text/plain">DNS AAAA records — IPv6 addresses include embedded MAC information for resolution</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gf4ed5b310d1049df8ef0b8f7753253e_q10_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+    </section>
+  </assessment>
+</questestinterop>

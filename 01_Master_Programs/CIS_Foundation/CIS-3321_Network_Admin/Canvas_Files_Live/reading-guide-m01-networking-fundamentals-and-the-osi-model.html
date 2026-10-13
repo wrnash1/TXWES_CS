@@ -1,0 +1,359 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Reading Guide (M01): Networking Fundamentals and the OSI Model</title>
+</head>
+<body>
+<h2>Reading Guide (M01): Networking Fundamentals and the OSI Model</h2>
+<h1>Reading Guide: Module 01 – Networking Fundamentals and the OSI Model</h1>
+<h2>CIS-3321 Network Administration | CompTIA Network+ (N10-009)</h2>
+<h2>Texas Wesleyan University | Professor Nash</h2>
+<hr />
+<h3>Introduction</h3>
+<p>Module 01 establishes the conceptual foundation for every topic in this course. The OSI (Open Systems Interconnection) model is the most heavily tested architecture on the CompTIA Network+ exam. You must be able to identify which layer handles which function, which PDU exists at each layer, which devices operate at each layer, and which protocols map to which layer — all from a scenario description. Invest the time to master this module and every subsequent module becomes easier.</p>
+<hr />
+<h3>1. Core Vocabulary</h3>
+<p>The following terms are essential. Study each definition carefully and be able to apply it in a scenario context.</p>
+<p><strong>OSI Model</strong> — A seven-layer conceptual framework developed by the International Organization for Standardization (ISO) in 1984. It standardizes how data travels from one application to another across a network, allowing interoperability between devices from different vendors.</p>
+<p><strong>Layer 7 – Application</strong> — The layer closest to the end user where network-facing application protocols operate. Examples: HTTP (port 80), HTTPS (port 443), SMTP (port 25), FTP (ports 20/21), DNS (port 53), DHCP (ports 67/68). Note that this layer refers to the protocol interface, not the end-user application software itself.</p>
+<p><strong>Layer 6 – Presentation</strong> — Handles data formatting, translation, encryption/decryption, and compression. TLS/SSL encryption for HTTPS operates here. Character encoding standards such as ASCII and Unicode are a Presentation layer concern.</p>
+<p><strong>Layer 5 – Session</strong> — Manages the establishment, maintenance, and orderly termination of communication sessions between two hosts. Protocols: NetBIOS, RPC (Remote Procedure Call), SQL sessions.</p>
+<p><strong>Layer 4 – Transport</strong> — Provides end-to-end communication and reliability. TCP is connection-oriented, guarantees delivery through sequencing and acknowledgements, and initiates connections with the three-way handshake (SYN → SYN-ACK → ACK). UDP is connectionless, faster, with no delivery guarantee. PDU: segment (TCP) or datagram (UDP).</p>
+<p><strong>Layer 3 – Network</strong> — Handles logical addressing (IP addresses) and routing packets across networks. Routers and Layer 3 switches operate here. PDU: packet.</p>
+<p><strong>Layer 2 – Data Link</strong> — Handles physical (MAC) addressing and framing for node-to-node delivery on the same network segment. Switches and bridges operate here. Two sub-layers: LLC (Logical Link Control) and MAC (Media Access Control). PDU: frame.</p>
+<p><strong>Layer 1 – Physical</strong> — Transmits raw bits over the physical medium (copper wire, fiber optic, radio frequency). Devices: hubs, repeaters, cables, NICs (the physical aspect). PDU: bit.</p>
+<p><strong>Encapsulation</strong> — The process of wrapping data with protocol headers (and trailers) as it moves down the OSI stack toward transmission. Each layer adds its own header.</p>
+<p><strong>Decapsulation</strong> — The reverse process of stripping headers as data moves up the OSI stack at the receiving end.</p>
+<p><strong>Protocol Data Unit (PDU)</strong> — The name given to data at each OSI layer. The PDU names are: bit (Layer 1), frame (Layer 2), packet (Layer 3), segment or datagram (Layer 4), data (Layers 5–7).</p>
+<p><strong>MAC Address</strong> — A 48-bit hardware address burned into a Network Interface Card, expressed as six pairs of hexadecimal digits (e.g., 00:1A:2B:3C:4D:5E). The first 24 bits (OUI) identify the manufacturer. Used for Layer 2 delivery within a local segment.</p>
+<p><strong>IP Address</strong> — A logical Layer 3 address assigned to a network interface. IPv4 uses 32-bit dotted-decimal notation. IPv6 uses 128-bit hexadecimal notation. IP addresses identify both the network portion and the host portion.</p>
+<p><strong>TCP (Transmission Control Protocol)</strong> — A connection-oriented Layer 4 protocol that guarantees reliable, ordered delivery of data. Uses SYN/SYN-ACK/ACK handshake to establish connections. Provides flow control, error checking, and retransmission.</p>
+<p><strong>UDP (User Datagram Protocol)</strong> — A connectionless Layer 4 protocol optimized for speed over reliability. No handshake, no retransmission. Used for DNS queries, VoIP, video streaming, online gaming.</p>
+<p><strong>Physical Topology</strong> — The physical arrangement of network devices and cables.</p>
+<p><strong>Logical Topology</strong> — The path that data actually takes through the network, which may differ from the physical layout.</p>
+<hr />
+<h3>2. OSI Layer Reference Table</h3>
+<p>The following table summarizes the key attributes of each OSI layer. Memorize every column.</p>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Name</th>
+<th>PDU</th>
+<th>Key Devices</th>
+<th>Representative Protocols/Standards</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>7</td>
+<td>Application</td>
+<td>Data</td>
+<td>—</td>
+<td>HTTP, HTTPS, FTP, SMTP, DNS, DHCP, SNMP</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Presentation</td>
+<td>Data</td>
+<td>—</td>
+<td>TLS, SSL, JPEG, MPEG, ASCII, Unicode</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Session</td>
+<td>Data</td>
+<td>—</td>
+<td>NetBIOS, RPC, SQL (session establishment)</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Transport</td>
+<td>Segment/Datagram</td>
+<td>—</td>
+<td>TCP, UDP</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Network</td>
+<td>Packet</td>
+<td>Router, Layer 3 Switch</td>
+<td>IP, ICMP, ARP (some sources), OSPF, BGP</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Data Link</td>
+<td>Frame</td>
+<td>Switch, Bridge, NIC (L2)</td>
+<td>Ethernet, Wi-Fi (802.11), ARP, PPP</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Physical</td>
+<td>Bit</td>
+<td>Hub, Repeater, Cable, NIC (physical)</td>
+<td>1000BASE-T, 802.3, DSL, T1</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>3. TCP/IP Model vs. OSI Model Mapping Table</h3>
+<table>
+<thead>
+<tr>
+<th>TCP/IP Layer</th>
+<th>OSI Layers Covered</th>
+<th>Protocols</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Application</td>
+<td>Layers 5, 6, 7</td>
+<td>HTTP, HTTPS, FTP, SMTP, DNS, DHCP</td>
+</tr>
+<tr>
+<td>Transport</td>
+<td>Layer 4</td>
+<td>TCP, UDP</td>
+</tr>
+<tr>
+<td>Internet</td>
+<td>Layer 3</td>
+<td>IP, ICMP, OSPF, BGP</td>
+</tr>
+<tr>
+<td>Network Access</td>
+<td>Layers 1 and 2</td>
+<td>Ethernet, Wi-Fi, ARP, PPP</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>4. Network Topology Reference Table</h3>
+<table>
+<thead>
+<tr>
+<th>Topology</th>
+<th>Physical Layout</th>
+<th>Key Advantage</th>
+<th>Key Disadvantage</th>
+<th>Modern Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bus</td>
+<td>Single shared backbone</td>
+<td>Low cost, simple</td>
+<td>One break kills entire network</td>
+<td>Legacy only</td>
+</tr>
+<tr>
+<td>Ring</td>
+<td>Circular daisy chain</td>
+<td>Equal access, predictable</td>
+<td>One break can disrupt ring</td>
+<td>SONET/SDH</td>
+</tr>
+<tr>
+<td>Star</td>
+<td>All devices to central hub/switch</td>
+<td>Fault isolation, scalable</td>
+<td>Central switch is single point of failure</td>
+<td>Modern LANs</td>
+</tr>
+<tr>
+<td>Mesh</td>
+<td>Every device connects to all others</td>
+<td>Full redundancy</td>
+<td>Expensive, complex cabling</td>
+<td>WAN backbones</td>
+</tr>
+<tr>
+<td>Hybrid</td>
+<td>Combination of topologies</td>
+<td>Flexible</td>
+<td>Complex to manage</td>
+<td>Enterprise LANs</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Full mesh connection formula:</strong> n(n-1)/2, where n = number of nodes. For 5 nodes: 5(4)/2 = 10 connections required.</p>
+<hr />
+<h3>5. Well-Known Port Numbers</h3>
+<p>Memorizing these port numbers is mandatory for the Network+ exam.</p>
+<table>
+<thead>
+<tr>
+<th>Port</th>
+<th>Protocol</th>
+<th>Layer</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>20</td>
+<td>FTP-Data</td>
+<td>7</td>
+<td>FTP data transfer</td>
+</tr>
+<tr>
+<td>21</td>
+<td>FTP-Control</td>
+<td>7</td>
+<td>FTP command channel</td>
+</tr>
+<tr>
+<td>22</td>
+<td>SSH</td>
+<td>7</td>
+<td>Secure Shell encrypted terminal</td>
+</tr>
+<tr>
+<td>23</td>
+<td>Telnet</td>
+<td>7</td>
+<td>Unencrypted remote terminal (legacy)</td>
+</tr>
+<tr>
+<td>25</td>
+<td>SMTP</td>
+<td>7</td>
+<td>Simple Mail Transfer Protocol (send)</td>
+</tr>
+<tr>
+<td>53</td>
+<td>DNS</td>
+<td>7</td>
+<td>Domain Name System queries</td>
+</tr>
+<tr>
+<td>67</td>
+<td>DHCP</td>
+<td>7</td>
+<td>DHCP server (receives client request)</td>
+</tr>
+<tr>
+<td>68</td>
+<td>DHCP</td>
+<td>7</td>
+<td>DHCP client (receives server reply)</td>
+</tr>
+<tr>
+<td>80</td>
+<td>HTTP</td>
+<td>7</td>
+<td>Web traffic unencrypted</td>
+</tr>
+<tr>
+<td>110</td>
+<td>POP3</td>
+<td>7</td>
+<td>Post Office Protocol v3 (receive)</td>
+</tr>
+<tr>
+<td>123</td>
+<td>NTP</td>
+<td>7</td>
+<td>Network Time Protocol</td>
+</tr>
+<tr>
+<td>143</td>
+<td>IMAP</td>
+<td>7</td>
+<td>Internet Message Access Protocol</td>
+</tr>
+<tr>
+<td>161</td>
+<td>SNMP</td>
+<td>7</td>
+<td>Simple Network Management Protocol</td>
+</tr>
+<tr>
+<td>162</td>
+<td>SNMP Trap</td>
+<td>7</td>
+<td>SNMP trap notification</td>
+</tr>
+<tr>
+<td>389</td>
+<td>LDAP</td>
+<td>7</td>
+<td>Lightweight Directory Access Protocol</td>
+</tr>
+<tr>
+<td>443</td>
+<td>HTTPS</td>
+<td>7</td>
+<td>HTTP over TLS (secure web)</td>
+</tr>
+<tr>
+<td>3389</td>
+<td>RDP</td>
+<td>7</td>
+<td>Remote Desktop Protocol</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>6. Encapsulation Process Detail</h3>
+<p>When a web browser sends an HTTP request, here is the layer-by-layer encapsulation sequence:</p>
+<ol>
+<li>Layer 7 (Application): HTTP request created — "GET /index.html HTTP/1.1"</li>
+<li>Layer 6 (Presentation): Data formatted; TLS encryption applied if HTTPS</li>
+<li>Layer 5 (Session): Session established and tracked</li>
+<li>Layer 4 (Transport): TCP header added — source port (random ephemeral), destination port 80 or 443, sequence number, ACK flag. PDU = Segment</li>
+<li>Layer 3 (Network): IP header added — source IP address, destination IP address, TTL. PDU = Packet</li>
+<li>Layer 2 (Data Link): Ethernet frame header added — source MAC, destination MAC. FCS trailer added. PDU = Frame</li>
+<li>Layer 1 (Physical): Frame converted to electrical signals or light pulses and transmitted as bits</li>
+</ol>
+<p>At the receiving end, decapsulation reverses this process layer by layer.</p>
+<hr />
+<h3>7. TCP Three-Way Handshake</h3>
+<p>The three-way handshake establishes a TCP connection before any data is sent.</p>
+<ol>
+<li>SYN — Client sends a Synchronize packet to the server to initiate connection</li>
+<li>SYN-ACK — Server responds with Synchronize-Acknowledge, confirming it received the SYN</li>
+<li>ACK — Client sends a final Acknowledgement, completing the handshake. Data transfer begins.</li>
+</ol>
+<p>Connection termination uses a four-way FIN/ACK process.</p>
+<hr />
+<h3>8. Certification Exam Tips</h3>
+<p>The following tips are based on the CompTIA Network+ N10-009 exam objectives and common question patterns.</p>
+<p><strong>Tip 1:</strong> OSI model questions fall under Domain 1.0 Networking Concepts, which accounts for 23% of the N10-009 exam — the largest domain. Prioritize this material above all others.</p>
+<p><strong>Tip 2:</strong> Use the mnemonic "Please Do Not Throw Sausage Pizza Away" (bottom to top) to recall layer order. Practice writing it from memory 10 times before test day.</p>
+<p><strong>Tip 3:</strong> When asked which layer a firewall operates at, the answer depends on the firewall type. A stateless packet-filtering firewall operates at Layer 3/4. A stateful inspection firewall operates at Layer 4. A next-generation or application-layer firewall operates at Layer 7.</p>
+<p><strong>Tip 4:</strong> The exam tests the distinction between PDU names. If the question involves a switch making forwarding decisions, the PDU is a frame (Layer 2). If the question involves a router making routing decisions, the PDU is a packet (Layer 3). Never confuse these.</p>
+<p><strong>Tip 5:</strong> The TCP/IP model question pattern: "An administrator is reviewing protocols at the TCP/IP Internet layer. Which OSI layer does this correspond to?" Answer: Layer 3 (Network). The TCP/IP Internet layer = OSI Network layer.</p>
+<p><strong>Tip 6:</strong> Know both physical and logical topology definitions. An exam scenario that physically looks like a star but data flows in a ring is logically a ring topology.</p>
+<p><strong>Tip 7:</strong> The three-way handshake sequence SYN → SYN-ACK → ACK is tested in connection troubleshooting scenarios. If you see that a TCP connection cannot complete, the exam will describe which step failed.</p>
+<p><strong>Tip 8:</strong> ARP (Address Resolution Protocol) is debated in OSI placement — it is commonly placed at Layer 2 or between Layers 2 and 3. For exam purposes, when asked about resolving an IP address to a MAC address on a local network, the answer involves ARP and Layer 2/3 boundary behavior.</p>
+<hr />
+<h3>9. Required Reading and Viewing</h3>
+<p>The following resources are free and directly aligned to this module.</p>
+<p><strong>Required Reading:</strong> Computer Networking: Principles, Protocols and Practice — Read the sections covering the OSI model, TCP/IP model, and network topologies. This open-access textbook is available at no cost.</p>
+<p><strong>Required Viewing:</strong> Professor Messer's Network+ N10-009 video series — watch the segments on the OSI model, network topologies, and the TCP/IP model. Available free at professormesser.com.</p>
+<p><strong>Supplemental Reference:</strong> CompTIA official N10-009 exam objectives — available at comptia.org. Review Domain 1.0 Networking Concepts for the full list of testable objectives related to this module.</p>
+<hr />
+<h3>10. Study Checklist</h3>
+<p>Complete each item before moving to Module 02.</p>
+<ul>
+<li>[ ] Memorize all 7 OSI layers by name, number, and PDU — both top-to-bottom and bottom-to-top</li>
+<li>[ ] Write out the OSI layer table from memory with PDU, devices, and protocols for each layer</li>
+<li>[ ] Map all 4 TCP/IP model layers to their corresponding OSI layers</li>
+<li>[ ] Memorize all port numbers in Section 5 of this guide</li>
+<li>[ ] Explain encapsulation and decapsulation in your own words without notes</li>
+<li>[ ] Distinguish between physical topology and logical topology with an example</li>
+<li>[ ] Describe the TCP three-way handshake steps in order</li>
+<li>[ ] Watch Professor Messer's OSI model video at professormesser.com</li>
+<li>[ ] Read the network models chapter in the OER textbook</li>
+<li>[ ] Complete the Lab 01 Packet Tracer activity</li>
+<li>[ ] Post your Module 01 Discussion initial response by Wednesday at 11:59 PM</li>
+<li>[ ] Complete the Module 01 Quiz</li>
+</ul>
+<hr />
+<p><em>CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash</em></p>
+</body>
+</html>

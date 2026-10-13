@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/profile/cc/ccv1p1/ccv1p1_qtiasiv1p2p1_v1p0.xsd">
+  <assessment ident="gcb33155b5e54bc53184c35ddaef6540" title="Quiz (M02): Social Engineering and Phishing">
+    <qtimetadata>
+      <qtimetadatafield>
+        <fieldlabel>cc_profile</fieldlabel>
+        <fieldentry>cc.exam.v0p1</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_assessmenttype</fieldlabel>
+        <fieldentry>Examination</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_scoretype</fieldlabel>
+        <fieldentry>Percentage</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>cc_maxattempts</fieldlabel>
+        <fieldentry>1</fieldentry>
+      </qtimetadatafield>
+    </qtimetadata>
+    <section ident="root_section">
+      <item ident="gcb33155b5e54bc53184c35ddaef6540_q01" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An attacker calls an employee, claims to be from the company's IT help desk, and asks the employee to confirm their username and current password so IT can "migrate your account to the new system." The caller ID shows the company's main office number. Which social engineering technique is this?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gcb33155b5e54bc53184c35ddaef6540_q01_a">
+                <material>
+                  <mattext texttype="text/plain">Smishing</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gcb33155b5e54bc53184c35ddaef6540_q01_b">
+                <material>
+                  <mattext texttype="text/plain">Vishing combined with pretexting</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gcb33155b5e54bc53184c35ddaef6540_q01_c">
+                <material>
+                  <mattext texttype="text/plain">Spear phishing combined with baiting</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gcb33155b5e54bc53184c35ddaef6540_q01_d">
+                <material>
+                  <mattext texttype="text/plain">Tailgating combined with impersonation</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gcb33155b5e54bc53184c35ddaef6540_q01_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gcb33155b5e54bc53184c35ddaef6540_q02" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An organization deploys SPF, DKIM, and DMARC for its email domain. An attacker registers the domain "c0rpname.com" (using a zero instead of the letter O) and sends targeted emails from that domain. The emails reach employee inboxes. Which statement best explains this outcome?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gcb33155b5e54bc53184c35ddaef6540_q02_a">
+                <material>
+                  <mattext texttype="text/plain">DMARC failed because the SPF record for the legitimate domain was not configured correctly.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gcb33155b5e54bc53184c35ddaef6540_q02_b">
+                <material>
+                  <mattext texttype="text/plain">SPF, DKIM, and DMARC passed for the attacker's domain because the attacker legitimately controls that domain.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gcb33155b5e54bc53184c35ddaef6540_q02_c">
+                <material>
+                  <mattext texttype="text/plain">DKIM failed because the attacker cannot generate a valid signature for the legitimate domain.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gcb33155b5e54bc53184c35ddaef6540_q02_d">
+                <material>
+                  <mattext texttype="text/plain">DMARC blocked the email but it was incorrectly delivered due to a misconfiguration in the mail gateway.</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gcb33155b5e54bc53184c35ddaef6540_q02_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gcb33155b5e54bc53184c35ddaef6540_q03" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A company's receptionist receives a visit from a person in a delivery uniform carrying several packages. The visitor says she needs to drop the packages in the server room since the regular IT contact "is out sick today." The receptionist badges her through the server room door to be helpful. What two social engineering techniques are demonstrated?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gcb33155b5e54bc53184c35ddaef6540_q03_a">
+                <material>
+                  <mattext texttype="text/plain">Vishing and baiting</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gcb33155b5e54bc53184c35ddaef6540_q03_b">
+                <material>
+                  <mattext texttype="text/plain">Pretexting and tailgating</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gcb33155b5e54bc53184c35ddaef6540_q03_c">
+                <material>
+                  <mattext texttype="text/plain">Spear phishing and impersonation</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gcb33155b5e54bc53184c35ddaef6540_q03_d">
+                <material>
+                  <mattext texttype="text/plain">Smishing and shoulder surfing</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gcb33155b5e54bc53184c35ddaef6540_q03_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gcb33155b5e54bc53184c35ddaef6540_q04" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An attacker researches a specific employee on LinkedIn, discovers she is the CFO of a healthcare company, identifies her direct supervisor by name, and sends her an email that references a real upcoming board meeting and asks her to review a "revised budget attachment." The attachment installs malware when opened. What type of attack is this?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gcb33155b5e54bc53184c35ddaef6540_q04_a">
+                <material>
+                  <mattext texttype="text/plain">Generic phishing</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gcb33155b5e54bc53184c35ddaef6540_q04_b">
+                <material>
+                  <mattext texttype="text/plain">Smishing</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gcb33155b5e54bc53184c35ddaef6540_q04_c">
+                <material>
+                  <mattext texttype="text/plain">Whaling</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gcb33155b5e54bc53184c35ddaef6540_q04_d">
+                <material>
+                  <mattext texttype="text/plain">Clone phishing</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gcb33155b5e54bc53184c35ddaef6540_q04_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gcb33155b5e54bc53184c35ddaef6540_q05" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A security awareness manager wants to measure how susceptible employees are to phishing and provide immediate remediation when an employee clicks a malicious link. Which control best accomplishes both goals simultaneously?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gcb33155b5e54bc53184c35ddaef6540_q05_a">
+                <material>
+                  <mattext texttype="text/plain">Deploy a DMARC policy set to reject on the company's email domain.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gcb33155b5e54bc53184c35ddaef6540_q05_b">
+                <material>
+                  <mattext texttype="text/plain">Run quarterly phishing simulations with immediate redirect to training when employees click.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gcb33155b5e54bc53184c35ddaef6540_q05_c">
+                <material>
+                  <mattext texttype="text/plain">Require all employees to complete annual security awareness training.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gcb33155b5e54bc53184c35ddaef6540_q05_d">
+                <material>
+                  <mattext texttype="text/plain">Install URL sandboxing on the email gateway to test all links before delivery.</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gcb33155b5e54bc53184c35ddaef6540_q05_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gcb33155b5e54bc53184c35ddaef6540_q06" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;Which psychological principle is most directly exploited when an attacker's phishing email states: "Your account has been flagged for unusual activity. If you do not verify your identity within the next 30 minutes, your account will be permanently suspended"?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gcb33155b5e54bc53184c35ddaef6540_q06_a">
+                <material>
+                  <mattext texttype="text/plain">Reciprocity</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gcb33155b5e54bc53184c35ddaef6540_q06_b">
+                <material>
+                  <mattext texttype="text/plain">Social proof</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gcb33155b5e54bc53184c35ddaef6540_q06_c">
+                <material>
+                  <mattext texttype="text/plain">Urgency and fear</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gcb33155b5e54bc53184c35ddaef6540_q06_d">
+                <material>
+                  <mattext texttype="text/plain">Familiarity</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gcb33155b5e54bc53184c35ddaef6540_q06_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gcb33155b5e54bc53184c35ddaef6540_q07" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An employee finds a USB drive in the company parking lot labeled "Q4 Layoff List — Confidential." She plugs it into her work laptop and the drive automatically executes code that installs a remote access trojan. Which two social engineering and technical elements made this attack successful?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gcb33155b5e54bc53184c35ddaef6540_q07_a">
+                <material>
+                  <mattext texttype="text/plain">Pretexting to create a false identity; SQL injection to execute the payload</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gcb33155b5e54bc53184c35ddaef6540_q07_b">
+                <material>
+                  <mattext texttype="text/plain">Baiting to exploit curiosity; autorun execution of unsigned code on plug-in</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gcb33155b5e54bc53184c35ddaef6540_q07_c">
+                <material>
+                  <mattext texttype="text/plain">Vishing to deliver the lure; cross-site scripting to execute the payload</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gcb33155b5e54bc53184c35ddaef6540_q07_d">
+                <material>
+                  <mattext texttype="text/plain">Tailgating to gain physical access; buffer overflow to execute the payload</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gcb33155b5e54bc53184c35ddaef6540_q07_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gcb33155b5e54bc53184c35ddaef6540_q08" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An organization wants to prevent attackers from sending emails that appear to come from their domain. They implement SPF and DKIM but have not yet deployed DMARC. An attacker sends an email that passes SPF but fails DKIM. What happens to the email without DMARC in place?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gcb33155b5e54bc53184c35ddaef6540_q08_a">
+                <material>
+                  <mattext texttype="text/plain">The email is automatically rejected because DKIM failed.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gcb33155b5e54bc53184c35ddaef6540_q08_b">
+                <material>
+                  <mattext texttype="text/plain">The receiving mail server has no policy instruction and may deliver the email anyway.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gcb33155b5e54bc53184c35ddaef6540_q08_c">
+                <material>
+                  <mattext texttype="text/plain">The email is quarantined by SPF because SPF enforces policy when DMARC is absent.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gcb33155b5e54bc53184c35ddaef6540_q08_d">
+                <material>
+                  <mattext texttype="text/plain">The email is rejected because the combination of SPF pass and DKIM fail triggers a conflict rule.</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gcb33155b5e54bc53184c35ddaef6540_q08_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gcb33155b5e54bc53184c35ddaef6540_q09" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A threat actor calls a junior employee claiming to be the company's external auditor and says he urgently needs the list of all user accounts and their associated departments emailed to him before the end of business today or the annual audit report will flag a compliance deficiency. The employee is about to comply. What should the employee do, and which security principle does this scenario illustrate?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gcb33155b5e54bc53184c35ddaef6540_q09_a">
+                <material>
+                  <mattext texttype="text/plain">Comply immediately; the urgency of an external audit supersedes normal security procedures.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gcb33155b5e54bc53184c35ddaef6540_q09_b">
+                <material>
+                  <mattext texttype="text/plain">Verify the auditor's identity through an independent callback to the auditing firm before taking any action; this illustrates that urgency cues should trigger more caution, not less.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gcb33155b5e54bc53184c35ddaef6540_q09_c">
+                <material>
+                  <mattext texttype="text/plain">Reject all audit requests via phone; this illustrates that external auditors should never contact employees directly.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gcb33155b5e54bc53184c35ddaef6540_q09_d">
+                <material>
+                  <mattext texttype="text/plain">Forward the request to the CEO for approval; this illustrates the principle of least privilege.</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gcb33155b5e54bc53184c35ddaef6540_q09_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gcb33155b5e54bc53184c35ddaef6540_q10" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A security analyst is reviewing logs after a business email compromise incident. The attacker sent emails from the domain "firstnatl-bank-secure.com" to employees of First National Bank. The emails appeared to come from the CEO and instructed employees to reset their credentials on a linked page. Which email security control, if properly deployed by First National Bank for their own domain, would have had NO direct effect on preventing this specific attack?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gcb33155b5e54bc53184c35ddaef6540_q10_a">
+                <material>
+                  <mattext texttype="text/plain">DMARC with a reject policy</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gcb33155b5e54bc53184c35ddaef6540_q10_b">
+                <material>
+                  <mattext texttype="text/plain">DKIM signing of outbound email</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gcb33155b5e54bc53184c35ddaef6540_q10_c">
+                <material>
+                  <mattext texttype="text/plain">SPF record listing authorized sending IP addresses</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gcb33155b5e54bc53184c35ddaef6540_q10_d">
+                <material>
+                  <mattext texttype="text/plain">Employee security awareness training on look-alike domains</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gcb33155b5e54bc53184c35ddaef6540_q10_a</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+    </section>
+  </assessment>
+</questestinterop>

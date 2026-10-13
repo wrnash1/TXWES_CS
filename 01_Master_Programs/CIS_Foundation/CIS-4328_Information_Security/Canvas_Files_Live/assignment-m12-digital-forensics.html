@@ -1,0 +1,405 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Assignment: Lab (M12): Digital Forensics</title>
+</head>
+<body>
+<h2>Lab (M12): Digital Forensics</h2>
+<h1>Lab: Module 12 — Digital Forensics</h1>
+<h2>Course: CIS-4328 Information Security</h2>
+<p><strong>Certification Alignment:</strong> CompTIA Security+ (SY0-701)</p>
+<hr />
+<h2>Lab Overview</h2>
+<p><strong>Title:</strong> Memory Forensics and Log Analysis Investigation</p>
+<p><strong>Duration:</strong> Approximately 90 minutes</p>
+<p><strong>Environment:</strong> Volatility 3 (free, open source), FTK Imager Free, provided forensic artifacts, Windows or Linux</p>
+<p><strong>Skill Level:</strong> Intermediate — requires completion of Module 12 video lectures and Reading Guide</p>
+<hr />
+<h2>Objectives</h2>
+<p>Upon completing this lab, you will be able to:</p>
+<ol>
+<li>Install and run Volatility 3 to analyze a memory image</li>
+<li>Use Volatility plugins to identify running processes, network connections, and suspicious code injection</li>
+<li>Analyze a simulated Windows Event Log export to identify attacker activity</li>
+<li>Complete a chain of custody form for collected evidence</li>
+<li>Interpret web server log entries to identify attack attempts</li>
+<li>Produce a brief forensic findings report documenting discovered artifacts</li>
+</ol>
+<hr />
+<h2>Prerequisites</h2>
+<ul>
+<li>Python 3.6+ installed (<a href="https://www.python.org/downloads/">https://www.python.org/downloads/</a>)</li>
+<li>Volatility 3 installed (instructions below)</li>
+<li>FTK Imager Free (optional — installation instructions included)</li>
+<li>Internet connection for downloading tools and sample files</li>
+</ul>
+<hr />
+<h2>Part 1 — Environment Setup (15 minutes)</h2>
+<h3>Step 1.1 — Install Volatility 3</h3>
+<p>Volatility 3 is a Python-based memory forensics framework. Install it via pip:</p>
+<pre><code class="language-bash">pip install volatility3
+</code></pre>
+<p>Or install from source:</p>
+<pre><code class="language-bash">git clone https://github.com/volatilityfoundation/volatility3.git
+cd volatility3
+pip install -r requirements.txt
+</code></pre>
+<p>Verify installation:</p>
+<pre><code class="language-bash">python vol.py --help
+</code></pre>
+<h3>Step 1.2 — Download the Lab Memory Image</h3>
+<p>Download the sample Windows memory image used for this lab:</p>
+<p><strong>Memory image:</strong> A sample infected Windows 7 SP1 memory image from the Volatility Foundation's test suite is available at:</p>
+<p><a href="https://github.com/volatilityfoundation/volatility/wiki/Memory-Samples">https://github.com/volatilityfoundation/volatility/wiki/Memory-Samples</a></p>
+<p>Download: <code>cridex.vmem</code> — a Windows XP memory image captured during a Cridex malware infection (classic teaching sample).</p>
+<p>If the above link is unavailable, the instructor will provide an alternative link on the course LMS.</p>
+<p><strong>File size:</strong> approximately 128 MB</p>
+<p>Note the MD5 hash of the file you download for the chain of custody entry in Part 3.</p>
+<h3>Step 1.3 — (Optional) Install FTK Imager Free</h3>
+<p>FTK Imager is available free from Exterro/AccessData:</p>
+<p><a href="https://www.exterro.com/digital-forensics-software/ftk-imager">https://www.exterro.com/digital-forensics-software/ftk-imager</a></p>
+<p>This is optional for this lab (the memory image is pre-provided) but you should install it to familiarize yourself with the tool for the Reading Guide review questions.</p>
+<hr />
+<h2>Part 2 — Memory Forensics with Volatility (35 minutes)</h2>
+<p>All commands below use Volatility 3 syntax. Run them from the directory containing <code>vol.py</code> (or <code>volatility3/vol.py</code>). Replace <code>cridex.vmem</code> with the path to your downloaded memory image.</p>
+<h3>Step 2.1 — Identify the OS Profile</h3>
+<pre><code class="language-bash">python vol.py -f cridex.vmem windows.info
+</code></pre>
+<p>Record in your lab notes:</p>
+<ul>
+<li>Operating system version</li>
+<li>Architecture (32-bit or 64-bit)</li>
+<li>System time when memory was captured</li>
+</ul>
+<h3>Step 2.2 — List Running Processes</h3>
+<pre><code class="language-bash">python vol.py -f cridex.vmem windows.pslist
+</code></pre>
+<p>Review the output. Look for:</p>
+<ul>
+<li>Processes with unusual parent/child relationships (e.g., <code>explorer.exe</code> spawning <code>cmd.exe</code>)</li>
+<li>Processes with suspicious names or numbers of instances</li>
+<li>System processes running from unusual paths</li>
+</ul>
+<p>Record in your lab notes: List any processes you find suspicious and explain why.</p>
+<pre><code class="language-bash">python vol.py -f cridex.vmem windows.pstree
+</code></pre>
+<p>The pstree plugin shows processes in a hierarchical tree by parent-child relationship. This makes it easier to identify injected processes or unusual execution chains.</p>
+<p><strong>Lab Reflection Question 1:</strong> Describe what you observe in the process tree. Are there any parent-child relationships that seem abnormal? What would a normal Windows XP process tree look like for <code>explorer.exe</code>?</p>
+<h3>Step 2.3 — Network Connections</h3>
+<pre><code class="language-bash">python vol.py -f cridex.vmem windows.netscan
+</code></pre>
+<p>Review the output for:</p>
+<ul>
+<li>Established connections to external IP addresses</li>
+<li>Listening ports on unusual port numbers</li>
+<li>Connections to port 80/443 from processes that should not make web connections</li>
+</ul>
+<p>Record in your lab notes:</p>
+<ul>
+<li>All external IP addresses in the connection list</li>
+<li>The process names associated with suspicious connections</li>
+</ul>
+<p><strong>Lab Reflection Question 2:</strong> Do any network connections appear suspicious? Research the destination IP addresses using a public WHOIS service (such as arin.net for IP lookups). What do you find? (Note: for this lab, the IPs in the cridex sample are documented; the purpose is practicing the investigative methodology.)</p>
+<h3>Step 2.4 — Detecting Code Injection with malfind</h3>
+<pre><code class="language-bash">python vol.py -f cridex.vmem windows.malfind
+</code></pre>
+<p>The malfind plugin identifies memory regions that are:</p>
+<ul>
+<li>Marked as executable</li>
+<li>Not backed by a file on disk</li>
+<li>Contain MZ headers (executable code)</li>
+</ul>
+<p>These characteristics are indicators of code injection or process hollowing — techniques used by malware to hide in legitimate processes.</p>
+<p>Record in your lab notes:</p>
+<ul>
+<li>How many suspicious memory regions were found</li>
+<li>Which processes contain the flagged memory regions</li>
+<li>The hex dump shown for each finding — what does the <code>MZ</code> marker indicate?</li>
+</ul>
+<p><strong>Lab Reflection Question 3:</strong> Explain what code injection is and why a legitimate process having executable memory not backed by a file on disk is suspicious. How does this relate to fileless malware concepts from the lecture?</p>
+<h3>Step 2.5 — DLL and Command Line Analysis</h3>
+<p>Run the following to gather additional context:</p>
+<pre><code class="language-bash">python vol.py -f cridex.vmem windows.cmdline
+python vol.py -f cridex.vmem windows.dlllist --pid [PID of suspicious process]
+</code></pre>
+<p>Replace <code>[PID]</code> with the process ID of any suspicious process found in Step 2.2 or 2.4.</p>
+<p>Record in your lab notes: Any unusual DLLs loaded by suspicious processes, or suspicious command-line arguments.</p>
+<hr />
+<h2>Part 3 — Chain of Custody Documentation (10 minutes)</h2>
+<p>Complete the following chain of custody form for the memory image you analyzed. Use the actual filename and hash of your downloaded file.</p>
+<h3>Evidence Chain of Custody Form</h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Evidence ID</td>
+<td>LAB12-MEM-001</td>
+</tr>
+<tr>
+<td>Evidence Type</td>
+<td>RAM Memory Image</td>
+</tr>
+<tr>
+<td>File Name</td>
+<td></td>
+</tr>
+<tr>
+<td>File Size</td>
+<td></td>
+</tr>
+<tr>
+<td>MD5 Hash (record actual hash)</td>
+<td></td>
+</tr>
+<tr>
+<td>SHA-256 Hash (record actual hash)</td>
+<td></td>
+</tr>
+<tr>
+<td>Source / Origin</td>
+<td>Downloaded from Volatility Foundation GitHub</td>
+</tr>
+<tr>
+<td>Date/Time Obtained</td>
+<td></td>
+</tr>
+<tr>
+<td>Obtained by (your full name)</td>
+<td></td>
+</tr>
+<tr>
+<td>Storage Location</td>
+<td></td>
+</tr>
+<tr>
+<td>Analysis Performed By</td>
+<td></td>
+</tr>
+<tr>
+<td>Analysis Date</td>
+<td></td>
+</tr>
+<tr>
+<td>Notes</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>To calculate the hash on Windows:</p>
+<pre><code class="language-powershell">Get-FileHash cridex.vmem -Algorithm MD5
+Get-FileHash cridex.vmem -Algorithm SHA256
+</code></pre>
+<p>To calculate on Linux/macOS:</p>
+<pre><code class="language-bash">md5sum cridex.vmem
+sha256sum cridex.vmem
+</code></pre>
+<hr />
+<h2>Part 4 — Windows Event Log Analysis (15 minutes)</h2>
+<p>The following is a simulated excerpt from a Windows Security Event Log export. Analyze it as if you were investigating a suspected intrusion.</p>
+<pre><code>Date: 2024-11-15 02:17:44
+EventID: 4624
+Account: Administrator
+Logon Type: 3 (Network)
+Source IP: 185.220.101.45
+Workstation: FINANCE-PC-04
+
+Date: 2024-11-15 02:18:02
+EventID: 4688
+Process: cmd.exe
+Parent Process: services.exe
+Command Line: cmd.exe /c whoami
+
+Date: 2024-11-15 02:18:15
+EventID: 4688
+Process: net.exe
+Parent Process: cmd.exe
+Command Line: net user hacker P@ssw0rd123 /add
+
+Date: 2024-11-15 02:18:16
+EventID: 4720
+Account Created: hacker
+Created By: Administrator
+
+Date: 2024-11-15 02:18:17
+EventID: 4688
+Process: net.exe
+Parent Process: cmd.exe
+Command Line: net localgroup administrators hacker /add
+
+Date: 2024-11-15 02:19:34
+EventID: 4688
+Process: mimikatz.exe
+Parent Process: cmd.exe
+Command Line: mimikatz.exe privilege::debug sekurlsa::logonpasswords
+
+Date: 2024-11-15 02:21:55
+EventID: 7045
+Service Name: WindowsUpdater
+Service File: C:\Windows\Temp\svchost32.exe
+
+Date: 2024-11-15 02:22:01
+EventID: 1102
+Log: Security
+Cleared By: Administrator
+</code></pre>
+<p><strong>Task 4.1 — Event Log Analysis Table</strong></p>
+<p>Complete the table for each log entry:</p>
+<table>
+<thead>
+<tr>
+<th>Timestamp</th>
+<th>Event ID</th>
+<th>What Happened</th>
+<th>Why It Is Significant</th>
+<th>MITRE ATT&amp;CK Technique (research or guess)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>02:17:44</td>
+<td>4624</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>02:18:02</td>
+<td>4688</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>02:18:15</td>
+<td>4688</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>02:18:16</td>
+<td>4720</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>02:18:17</td>
+<td>4688</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>02:19:34</td>
+<td>4688</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>02:21:55</td>
+<td>7045</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>02:22:01</td>
+<td>1102</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Lab Reflection Question 4:</strong> Write a narrative attack timeline (five to eight sentences) describing what the attacker did on FINANCE-PC-04 from 02:17 to 02:22. Identify which specific actions were most damaging and explain why.</p>
+<hr />
+<h2>Part 5 — Web Server Log Analysis (15 minutes)</h2>
+<p>Analyze the following Apache web server log excerpt:</p>
+<pre><code>192.168.1.105 - - [15/Nov/2024:09:01:22] &quot;GET /search?q=test HTTP/1.1&quot; 200 4523
+192.168.1.105 - - [15/Nov/2024:09:01:45] &quot;GET /search?q=test' HTTP/1.1&quot; 200 4523
+192.168.1.105 - - [15/Nov/2024:09:01:47] &quot;GET /search?q=test'-- HTTP/1.1&quot; 500 892
+192.168.1.105 - - [15/Nov/2024:09:01:49] &quot;GET /search?q=1+OR+1%3D1 HTTP/1.1&quot; 200 18934
+192.168.1.105 - - [15/Nov/2024:09:01:52] &quot;GET /search?q=1+UNION+SELECT+username%2Cpassword+FROM+users-- HTTP/1.1&quot; 200 19102
+192.168.1.105 - - [15/Nov/2024:09:02:14] &quot;GET /admin HTTP/1.1&quot; 302 -
+192.168.1.105 - - [15/Nov/2024:09:02:15] &quot;GET /admin/login HTTP/1.1&quot; 200 3412
+192.168.1.105 - - [15/Nov/2024:09:02:31] &quot;POST /admin/login HTTP/1.1&quot; 200 512
+192.168.1.105 - - [15/Nov/2024:09:02:33] &quot;GET /admin/users HTTP/1.1&quot; 200 45201
+</code></pre>
+<p><strong>Task 5.1 — Log Analysis</strong></p>
+<p>Answer the following questions based on the log:</p>
+<ol>
+<li>
+<p>What type of attack is visible in the first seven log entries? Be specific about the technique and explain your reasoning using the URL parameters.</p>
+</li>
+<li>
+<p>What does the HTTP 500 response in the third entry indicate?</p>
+</li>
+<li>
+<p>Decode <code>%3D</code> and <code>%2C</code> from the UNION SELECT entry. What do these characters represent and why would an attacker URL-encode them?</p>
+</li>
+<li>
+<p>What appears to have happened at 09:02:31 and 09:02:33? What sequence of events does this suggest?</p>
+</li>
+<li>
+<p>From a forensics perspective, what additional evidence sources would you want to collect to continue this investigation? List at least three.</p>
+</li>
+</ol>
+<hr />
+<h2>Lab Report Submission Requirements</h2>
+<p>Submit a single document containing:</p>
+<ol>
+<li>Completed memory forensics notes from Part 2 (all recorded observations)</li>
+<li>Answers to Lab Reflection Questions 1, 2, and 3</li>
+<li>Completed chain of custody form with actual hash values from Part 3</li>
+<li>Completed event log analysis table and Lab Reflection Question 4 narrative</li>
+<li>Answers to all five web server log analysis questions from Part 5</li>
+</ol>
+<p><strong>Format:</strong> PDF or Word document</p>
+<p><strong>Minimum length:</strong> 700 words excluding tables and log excerpts</p>
+<hr />
+<h2>Grading Rubric</h2>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Points</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Memory forensics — Volatility output recorded and analyzed</td>
+<td>25</td>
+</tr>
+<tr>
+<td>Lab Reflection Questions 1–3</td>
+<td>30</td>
+</tr>
+<tr>
+<td>Chain of custody form — complete with actual hash values</td>
+<td>15</td>
+</tr>
+<tr>
+<td>Event log analysis table and narrative</td>
+<td>20</td>
+</tr>
+<tr>
+<td>Web server log analysis — all five questions</td>
+<td>10</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td><strong>100</strong></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><em>Texas Wesleyan University | CIS-4328 Information Security | Module 12</em></p>
+</body>
+</html>

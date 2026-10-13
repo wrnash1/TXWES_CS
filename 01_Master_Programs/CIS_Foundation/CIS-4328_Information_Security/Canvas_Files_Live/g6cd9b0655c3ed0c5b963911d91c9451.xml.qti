@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/profile/cc/ccv1p1/ccv1p1_qtiasiv1p2p1_v1p0.xsd">
+  <assessment ident="g6cd9b0655c3ed0c5b963911d91c9451" title="Quiz (M07): Network Security Architecture">
+    <qtimetadata>
+      <qtimetadatafield>
+        <fieldlabel>cc_profile</fieldlabel>
+        <fieldentry>cc.exam.v0p1</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_assessmenttype</fieldlabel>
+        <fieldentry>Examination</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_scoretype</fieldlabel>
+        <fieldentry>Percentage</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>cc_maxattempts</fieldlabel>
+        <fieldentry>1</fieldentry>
+      </qtimetadatafield>
+    </qtimetadata>
+    <section ident="root_section">
+      <item ident="g6cd9b0655c3ed0c5b963911d91c9451_q01" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A security engineer needs to deploy a solution that can automatically block malicious traffic in real time as it passes through the network perimeter. Which control BEST meets this requirement?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g6cd9b0655c3ed0c5b963911d91c9451_q01_a">
+                <material>
+                  <mattext texttype="text/plain">Network IDS with a SPAN port connection</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6cd9b0655c3ed0c5b963911d91c9451_q01_b">
+                <material>
+                  <mattext texttype="text/plain">Host-based IDS on each endpoint</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6cd9b0655c3ed0c5b963911d91c9451_q01_c">
+                <material>
+                  <mattext texttype="text/plain">Network IPS deployed inline</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6cd9b0655c3ed0c5b963911d91c9451_q01_d">
+                <material>
+                  <mattext texttype="text/plain">SIEM with automated alerting</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g6cd9b0655c3ed0c5b963911d91c9451_q01_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g6cd9b0655c3ed0c5b963911d91c9451_q02" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An organization's web application is being targeted by SQL injection attacks. The perimeter NGFW has not detected the attacks because they arrive over HTTPS on port 443. Which additional control would MOST effectively mitigate this specific threat?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g6cd9b0655c3ed0c5b963911d91c9451_q02_a">
+                <material>
+                  <mattext texttype="text/plain">Deploy a second NGFW in tandem with the existing one</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6cd9b0655c3ed0c5b963911d91c9451_q02_b">
+                <material>
+                  <mattext texttype="text/plain">Implement a Web Application Firewall (WAF) in front of the web application</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6cd9b0655c3ed0c5b963911d91c9451_q02_c">
+                <material>
+                  <mattext texttype="text/plain">Enable the IPS signatures for port 443 on the NGFW</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6cd9b0655c3ed0c5b963911d91c9451_q02_d">
+                <material>
+                  <mattext texttype="text/plain">Switch the web application from HTTPS to HTTP so the NGFW can inspect it</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g6cd9b0655c3ed0c5b963911d91c9451_q02_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g6cd9b0655c3ed0c5b963911d91c9451_q03" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A company runs a customer-facing web server that must be accessible from the internet, and an internal database server containing customer financial records. Which placement BEST represents a secure architecture?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g6cd9b0655c3ed0c5b963911d91c9451_q03_a">
+                <material>
+                  <mattext texttype="text/plain">Both servers on the internal network, accessible via port forwarding</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6cd9b0655c3ed0c5b963911d91c9451_q03_b">
+                <material>
+                  <mattext texttype="text/plain">Web server in the DMZ; database server on the internal network</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6cd9b0655c3ed0c5b963911d91c9451_q03_c">
+                <material>
+                  <mattext texttype="text/plain">Both servers in the DMZ for simplified firewall management</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6cd9b0655c3ed0c5b963911d91c9451_q03_d">
+                <material>
+                  <mattext texttype="text/plain">Web server on the internet with a direct connection to the database</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g6cd9b0655c3ed0c5b963911d91c9451_q03_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g6cd9b0655c3ed0c5b963911d91c9451_q04" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An IPS deployed inline at a healthcare facility fails during a software update. Patient monitoring systems lose network connectivity. Which fail behavior was configured, and which would have been MORE appropriate for this environment?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g6cd9b0655c3ed0c5b963911d91c9451_q04_a">
+                <material>
+                  <mattext texttype="text/plain">Fail-open was configured; fail-closed would be more appropriate</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6cd9b0655c3ed0c5b963911d91c9451_q04_b">
+                <material>
+                  <mattext texttype="text/plain">Fail-closed was configured; fail-open would be more appropriate</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6cd9b0655c3ed0c5b963911d91c9451_q04_c">
+                <material>
+                  <mattext texttype="text/plain">Fail-closed was configured; fail-closed remains appropriate for healthcare</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6cd9b0655c3ed0c5b963911d91c9451_q04_d">
+                <material>
+                  <mattext texttype="text/plain">Fail-open was configured; fail-open remains appropriate for healthcare</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g6cd9b0655c3ed0c5b963911d91c9451_q04_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g6cd9b0655c3ed0c5b963911d91c9451_q05" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An organization wants to replace their remote access VPN with a solution where authenticated users can only access the specific application they are authorized for, rather than gaining access to the entire corporate subnet. Which solution BEST meets this requirement?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g6cd9b0655c3ed0c5b963911d91c9451_q05_a">
+                <material>
+                  <mattext texttype="text/plain">Site-to-site IPsec VPN with split tunneling</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6cd9b0655c3ed0c5b963911d91c9451_q05_b">
+                <material>
+                  <mattext texttype="text/plain">Zero Trust Network Access (ZTNA)</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6cd9b0655c3ed0c5b963911d91c9451_q05_c">
+                <material>
+                  <mattext texttype="text/plain">Full-tunnel SSL VPN</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6cd9b0655c3ed0c5b963911d91c9451_q05_d">
+                <material>
+                  <mattext texttype="text/plain">Network Access Control (NAC)</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g6cd9b0655c3ed0c5b963911d91c9451_q05_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g6cd9b0655c3ed0c5b963911d91c9451_q06" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A firewall policy contains the following rules in order: (1) PERMIT TCP from 10.0.0.0/8 to ANY on port 443; (2) DENY TCP from 10.0.1.50 to ANY on port 443; (3) DENY ALL. A workstation at 10.0.1.50 attempts to connect to an external HTTPS server. What is the result?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g6cd9b0655c3ed0c5b963911d91c9451_q06_a">
+                <material>
+                  <mattext texttype="text/plain">The connection is permitted by Rule 1</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6cd9b0655c3ed0c5b963911d91c9451_q06_b">
+                <material>
+                  <mattext texttype="text/plain">The connection is denied by Rule 2</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6cd9b0655c3ed0c5b963911d91c9451_q06_c">
+                <material>
+                  <mattext texttype="text/plain">The connection is denied by Rule 3</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6cd9b0655c3ed0c5b963911d91c9451_q06_d">
+                <material>
+                  <mattext texttype="text/plain">The connection is permitted because HTTPS is allowed by default</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g6cd9b0655c3ed0c5b963911d91c9451_q06_a</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g6cd9b0655c3ed0c5b963911d91c9451_q07" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A security analyst notices that workstations on the internal network are making frequent DNS queries for domain names that follow a random-looking pattern: &lt;code&gt;xkqprzalbf3927.example.com&lt;/code&gt;, &lt;code&gt;mzqtbnaldf7421.example.com&lt;/code&gt;. What attack technique do these patterns suggest?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g6cd9b0655c3ed0c5b963911d91c9451_q07_a">
+                <material>
+                  <mattext texttype="text/plain">DNS cache poisoning</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6cd9b0655c3ed0c5b963911d91c9451_q07_b">
+                <material>
+                  <mattext texttype="text/plain">Domain Generation Algorithm (DGA) beaconing</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6cd9b0655c3ed0c5b963911d91c9451_q07_c">
+                <material>
+                  <mattext texttype="text/plain">DNS zone transfer</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6cd9b0655c3ed0c5b963911d91c9451_q07_d">
+                <material>
+                  <mattext texttype="text/plain">Pharming</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g6cd9b0655c3ed0c5b963911d91c9451_q07_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g6cd9b0655c3ed0c5b963911d91c9451_q08" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;Which network segmentation technology enforces access policies between individual workloads running in the same subnet, preventing east-west lateral movement between workloads that share a VLAN?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g6cd9b0655c3ed0c5b963911d91c9451_q08_a">
+                <material>
+                  <mattext texttype="text/plain">VLAN tagging</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6cd9b0655c3ed0c5b963911d91c9451_q08_b">
+                <material>
+                  <mattext texttype="text/plain">Stateful perimeter firewall</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6cd9b0655c3ed0c5b963911d91c9451_q08_c">
+                <material>
+                  <mattext texttype="text/plain">Microsegmentation</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6cd9b0655c3ed0c5b963911d91c9451_q08_d">
+                <material>
+                  <mattext texttype="text/plain">DMZ</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g6cd9b0655c3ed0c5b963911d91c9451_q08_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g6cd9b0655c3ed0c5b963911d91c9451_q09" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A company configures their remote access VPN with split tunneling enabled. What is the PRIMARY security concern with this configuration?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g6cd9b0655c3ed0c5b963911d91c9451_q09_a">
+                <material>
+                  <mattext texttype="text/plain">Split tunneling increases VPN gateway load beyond capacity</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6cd9b0655c3ed0c5b963911d91c9451_q09_b">
+                <material>
+                  <mattext texttype="text/plain">Users' internet traffic bypasses corporate security controls, reducing visibility and protection</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6cd9b0655c3ed0c5b963911d91c9451_q09_c">
+                <material>
+                  <mattext texttype="text/plain">Split tunneling prevents access to internal resources</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6cd9b0655c3ed0c5b963911d91c9451_q09_d">
+                <material>
+                  <mattext texttype="text/plain">Encrypted tunnels cannot be established when split tunneling is active</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g6cd9b0655c3ed0c5b963911d91c9451_q09_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g6cd9b0655c3ed0c5b963911d91c9451_q10" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An organization implements Network Access Control (NAC). A device connecting to the network fails the posture assessment because its antivirus definitions are 45 days old. What should NAC do with this device?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g6cd9b0655c3ed0c5b963911d91c9451_q10_a">
+                <material>
+                  <mattext texttype="text/plain">Permit full network access since the device is owned by the organization</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6cd9b0655c3ed0c5b963911d91c9451_q10_b">
+                <material>
+                  <mattext texttype="text/plain">Deny all network access and require the user to contact IT support</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6cd9b0655c3ed0c5b963911d91c9451_q10_c">
+                <material>
+                  <mattext texttype="text/plain">Place the device in a quarantine VLAN where it can only access remediation resources</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6cd9b0655c3ed0c5b963911d91c9451_q10_d">
+                <material>
+                  <mattext texttype="text/plain">Alert the SIEM and permit the connection pending manual review</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g6cd9b0655c3ed0c5b963911d91c9451_q10_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+    </section>
+  </assessment>
+</questestinterop>

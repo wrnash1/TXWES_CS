@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/profile/cc/ccv1p1/ccv1p1_qtiasiv1p2p1_v1p0.xsd">
+  <assessment ident="g556fa69cc2e6f24bb8674118204c4d8" title="Quiz (M12): Wide Area Networks">
+    <qtimetadata>
+      <qtimetadatafield>
+        <fieldlabel>cc_profile</fieldlabel>
+        <fieldentry>cc.exam.v0p1</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_assessmenttype</fieldlabel>
+        <fieldentry>Examination</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_scoretype</fieldlabel>
+        <fieldentry>Percentage</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>cc_maxattempts</fieldlabel>
+        <fieldentry>1</fieldentry>
+      </qtimetadatafield>
+    </qtimetadata>
+    <section ident="root_section">
+      <item ident="g556fa69cc2e6f24bb8674118204c4d8_q01" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;Which of the following correctly defines the demarcation point in a WAN connection?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g556fa69cc2e6f24bb8674118204c4d8_q01_a">
+                <material>
+                  <mattext texttype="text/plain">The router interface where IP addressing begins</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g556fa69cc2e6f24bb8674118204c4d8_q01_b">
+                <material>
+                  <mattext texttype="text/plain">The physical boundary between the carrier's network and the customer's network</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g556fa69cc2e6f24bb8674118204c4d8_q01_c">
+                <material>
+                  <mattext texttype="text/plain">The firewall appliance separating the WAN from the LAN</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g556fa69cc2e6f24bb8674118204c4d8_q01_d">
+                <material>
+                  <mattext texttype="text/plain">The logical point where the ISP assigns a public IP address</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g556fa69cc2e6f24bb8674118204c4d8_q01_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g556fa69cc2e6f24bb8674118204c4d8_q02" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A company needs to connect two offices in the same metropolitan area with a point-to-point Ethernet service. The carrier will provide a single virtual connection between the two sites. Which Metro Ethernet service type applies?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g556fa69cc2e6f24bb8674118204c4d8_q02_a">
+                <material>
+                  <mattext texttype="text/plain">E-Tree</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g556fa69cc2e6f24bb8674118204c4d8_q02_b">
+                <material>
+                  <mattext texttype="text/plain">E-LAN</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g556fa69cc2e6f24bb8674118204c4d8_q02_c">
+                <material>
+                  <mattext texttype="text/plain">E-Line</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g556fa69cc2e6f24bb8674118204c4d8_q02_d">
+                <material>
+                  <mattext texttype="text/plain">E-Ring</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g556fa69cc2e6f24bb8674118204c4d8_q02_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g556fa69cc2e6f24bb8674118204c4d8_q03" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;What is the bandwidth of a T3 (DS3) leased line?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g556fa69cc2e6f24bb8674118204c4d8_q03_a">
+                <material>
+                  <mattext texttype="text/plain">1.544 Mbps</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g556fa69cc2e6f24bb8674118204c4d8_q03_b">
+                <material>
+                  <mattext texttype="text/plain">6.312 Mbps</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g556fa69cc2e6f24bb8674118204c4d8_q03_c">
+                <material>
+                  <mattext texttype="text/plain">44.736 Mbps</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g556fa69cc2e6f24bb8674118204c4d8_q03_d">
+                <material>
+                  <mattext texttype="text/plain">155.52 Mbps</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g556fa69cc2e6f24bb8674118204c4d8_q03_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g556fa69cc2e6f24bb8674118204c4d8_q04" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;In an MPLS network, which device is responsible for adding a label to an incoming IP packet at the edge of the MPLS cloud?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g556fa69cc2e6f24bb8674118204c4d8_q04_a">
+                <material>
+                  <mattext texttype="text/plain">Label Switch Router (LSR)</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g556fa69cc2e6f24bb8674118204c4d8_q04_b">
+                <material>
+                  <mattext texttype="text/plain">Label Edge Router (LER)</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g556fa69cc2e6f24bb8674118204c4d8_q04_c">
+                <material>
+                  <mattext texttype="text/plain">Virtual Routing and Forwarding (VRF) instance</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g556fa69cc2e6f24bb8674118204c4d8_q04_d">
+                <material>
+                  <mattext texttype="text/plain">Forwarding Equivalence Class (FEC) table</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g556fa69cc2e6f24bb8674118204c4d8_q04_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g556fa69cc2e6f24bb8674118204c4d8_q05" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A company is evaluating WAN options for a remote field office in a location where fiber and cable are unavailable. Employees will conduct daily video conferencing sessions. Which WAN technology best meets these requirements?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g556fa69cc2e6f24bb8674118204c4d8_q05_a">
+                <material>
+                  <mattext texttype="text/plain">GEO satellite — 75 Mbps, 650 ms latency</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g556fa69cc2e6f24bb8674118204c4d8_q05_b">
+                <material>
+                  <mattext texttype="text/plain">LEO satellite — 200 Mbps, 30 ms latency</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g556fa69cc2e6f24bb8674118204c4d8_q05_c">
+                <material>
+                  <mattext texttype="text/plain">ADSL — 8 Mbps, 10 ms latency</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g556fa69cc2e6f24bb8674118204c4d8_q05_d">
+                <material>
+                  <mattext texttype="text/plain">T1 leased line — 1.544 Mbps, 5 ms latency</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g556fa69cc2e6f24bb8674118204c4d8_q05_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g556fa69cc2e6f24bb8674118204c4d8_q06" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;Which of the following is a key advantage of SD-WAN over traditional MPLS-only WAN architecture for a cloud-first enterprise?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g556fa69cc2e6f24bb8674118204c4d8_q06_a">
+                <material>
+                  <mattext texttype="text/plain">SD-WAN provides dedicated private circuits between all sites</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g556fa69cc2e6f24bb8674118204c4d8_q06_b">
+                <material>
+                  <mattext texttype="text/plain">SD-WAN enables direct internet breakout for SaaS traffic at the branch, avoiding data center backhaul</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g556fa69cc2e6f24bb8674118204c4d8_q06_c">
+                <material>
+                  <mattext texttype="text/plain">SD-WAN requires less CPE hardware than MPLS</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g556fa69cc2e6f24bb8674118204c4d8_q06_d">
+                <material>
+                  <mattext texttype="text/plain">SD-WAN eliminates the need for encryption on all WAN links</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g556fa69cc2e6f24bb8674118204c4d8_q06_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g556fa69cc2e6f24bb8674118204c4d8_q07" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A WAN optimization appliance has reduced a 10 GB backup transfer to 500 MB by recognizing previously transmitted data blocks. Which WAN optimization technique does this describe?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g556fa69cc2e6f24bb8674118204c4d8_q07_a">
+                <material>
+                  <mattext texttype="text/plain">Compression</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g556fa69cc2e6f24bb8674118204c4d8_q07_b">
+                <material>
+                  <mattext texttype="text/plain">Traffic shaping</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g556fa69cc2e6f24bb8674118204c4d8_q07_c">
+                <material>
+                  <mattext texttype="text/plain">Data deduplication</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g556fa69cc2e6f24bb8674118204c4d8_q07_d">
+                <material>
+                  <mattext texttype="text/plain">Protocol optimization</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g556fa69cc2e6f24bb8674118204c4d8_q07_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g556fa69cc2e6f24bb8674118204c4d8_q08" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;Which cellular WAN technology offers speeds up to 4 Gbps but is limited to dense urban areas due to very short signal range and poor building penetration?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g556fa69cc2e6f24bb8674118204c4d8_q08_a">
+                <material>
+                  <mattext texttype="text/plain">4G LTE-Advanced</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g556fa69cc2e6f24bb8674118204c4d8_q08_b">
+                <material>
+                  <mattext texttype="text/plain">5G Sub-6 GHz</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g556fa69cc2e6f24bb8674118204c4d8_q08_c">
+                <material>
+                  <mattext texttype="text/plain">5G mmWave</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g556fa69cc2e6f24bb8674118204c4d8_q08_d">
+                <material>
+                  <mattext texttype="text/plain">HSPA+</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g556fa69cc2e6f24bb8674118204c4d8_q08_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g556fa69cc2e6f24bb8674118204c4d8_q09" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;What does zero-touch provisioning mean in the context of SD-WAN?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g556fa69cc2e6f24bb8674118204c4d8_q09_a">
+                <material>
+                  <mattext texttype="text/plain">All WAN traffic is transmitted without encryption</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g556fa69cc2e6f24bb8674118204c4d8_q09_b">
+                <material>
+                  <mattext texttype="text/plain">New branch edge devices automatically configure themselves by contacting the SD-WAN controller on first boot without manual intervention</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g556fa69cc2e6f24bb8674118204c4d8_q09_c">
+                <material>
+                  <mattext texttype="text/plain">SD-WAN routes traffic without inspecting packet headers</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g556fa69cc2e6f24bb8674118204c4d8_q09_d">
+                <material>
+                  <mattext texttype="text/plain">WAN links are established without requiring any physical cabling</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g556fa69cc2e6f24bb8674118204c4d8_q09_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g556fa69cc2e6f24bb8674118204c4d8_q10" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A company's primary 50 Mbps MPLS circuit fails. Traffic automatically reroutes over a backup 4G LTE link within one second without any manual intervention. Which SD-WAN capability enabled this behavior?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g556fa69cc2e6f24bb8674118204c4d8_q10_a">
+                <material>
+                  <mattext texttype="text/plain">Data deduplication</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g556fa69cc2e6f24bb8674118204c4d8_q10_b">
+                <material>
+                  <mattext texttype="text/plain">Zero-touch provisioning</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g556fa69cc2e6f24bb8674118204c4d8_q10_c">
+                <material>
+                  <mattext texttype="text/plain">Dynamic path selection with sub-second failover</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g556fa69cc2e6f24bb8674118204c4d8_q10_d">
+                <material>
+                  <mattext texttype="text/plain">Application-aware routing policy enforcement</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g556fa69cc2e6f24bb8674118204c4d8_q10_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+    </section>
+  </assessment>
+</questestinterop>

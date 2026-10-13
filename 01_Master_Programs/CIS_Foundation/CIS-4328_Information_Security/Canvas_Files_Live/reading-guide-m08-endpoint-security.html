@@ -1,0 +1,362 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Reading Guide (M08): Endpoint Security</title>
+</head>
+<body>
+<h2>Reading Guide (M08): Endpoint Security</h2>
+<h1>Reading Guide: Module 08 — Endpoint Security</h1>
+<h2>CIS-4328 Information Security | Texas Wesleyan University</h2>
+<h3>CompTIA Security+ SY0-701 Alignment</h3>
+<hr />
+<h2>Overview</h2>
+<p>This reading guide supports Module 08 of CIS-4328. It covers the full endpoint security stack tested on the Security+ exam: EDR versus antivirus, CIS hardening benchmarks, patch management, host-based firewalls, full disk encryption, application allowlisting, and mobile device management.</p>
+<p>All readings use zero-cost, openly licensed resources.</p>
+<hr />
+<h2>Learning Objectives</h2>
+<p>By the end of this module, you will be able to:</p>
+<ul>
+<li>
+<p>Describe the evolution from traditional antivirus to NGAV to EDR and explain the key capability added at each stage.</p>
+</li>
+<li>
+<p>Explain what CIS Benchmarks are, how they are structured, and how they are used in enterprise hardening programs.</p>
+</li>
+<li>
+<p>Describe the patch management lifecycle and apply a risk-based prioritization approach.</p>
+</li>
+<li>
+<p>Explain how full disk encryption protects against physical theft, including the role of the TPM.</p>
+</li>
+<li>
+<p>Describe application allowlisting and contrast it with blacklisting, including the specific threat it addresses.</p>
+</li>
+<li>
+<p>Distinguish MDM from MAM and identify the appropriate choice for BYOD scenarios.</p>
+</li>
+<li>
+<p>Explain the security value of host-based firewalls as a defense-in-depth control.</p>
+</li>
+</ul>
+<hr />
+<h2>Primary Readings</h2>
+<h3>Reading 1 — CIS Benchmarks Overview</h3>
+<p>Source: <a href="https://www.cisecurity.org/cis-benchmarks/">https://www.cisecurity.org/cis-benchmarks/</a></p>
+<p>Read: The overview page and download the CIS Benchmark for Windows 10 or Windows 11 (Level 1 sections only — the full document is very long; focus on the Introduction and any 10 hardening controls of your choosing).</p>
+<p>Focus areas:</p>
+<ul>
+<li>
+<p>The Level 1 vs. Level 2 distinction and the rationale for each.</p>
+</li>
+<li>
+<p>The format of a CIS recommendation: rationale, impact, and remediation.</p>
+</li>
+<li>
+<p>How the benchmark translates to Group Policy or registry settings.</p>
+</li>
+</ul>
+<h3>Reading 2 — CISA Known Exploited Vulnerabilities Catalog</h3>
+<p>Source: <a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">https://www.cisa.gov/known-exploited-vulnerabilities-catalog</a></p>
+<p>Read: The introduction and methodology, then browse any 10 entries to understand the format.</p>
+<p>Focus areas:</p>
+<ul>
+<li>
+<p>How CISA classifies vulnerabilities as "known exploited."</p>
+</li>
+<li>
+<p>The remediation deadlines CISA sets for federal agencies and the rationale for those timelines.</p>
+</li>
+<li>
+<p>Why the KEV catalog changes patch prioritization for any organization beyond just federal agencies.</p>
+</li>
+</ul>
+<h3>Reading 3 — NIST SP 800-124 Rev. 2: Guidelines for Managing Mobile Device Security</h3>
+<p>Source: <a href="https://csrc.nist.gov/publications/detail/sp/800-124/rev-2/final">https://csrc.nist.gov/publications/detail/sp/800-124/rev-2/final</a></p>
+<p>Read: Section 4 (Mobile Device Management Technologies) and Section 5 (Recommendations).</p>
+<p>Focus areas:</p>
+<ul>
+<li>
+<p>The distinction between device management (MDM) and application management (MAM/containerization).</p>
+</li>
+<li>
+<p>Security considerations for BYOD vs. corporate-owned device policies.</p>
+</li>
+<li>
+<p>The role of remote wipe and certificate-based authentication in mobile security.</p>
+</li>
+</ul>
+<hr />
+<h2>Supplemental Readings</h2>
+<h3>Reading 4 — Microsoft: BitLocker Overview</h3>
+<p>Source: <a href="https://learn.microsoft.com/en-us/windows/security/operating-system-security/data-protection/bitlocker/">https://learn.microsoft.com/en-us/windows/security/operating-system-security/data-protection/bitlocker/</a></p>
+<p>Read: The overview and "How BitLocker Works" sections.</p>
+<p>Focus areas:</p>
+<ul>
+<li>
+<p>The role of the TPM in storing and protecting the BitLocker encryption key.</p>
+</li>
+<li>
+<p>The difference between TPM-only protection and TPM + PIN protection.</p>
+</li>
+<li>
+<p>Recovery key scenarios and why they must be stored securely and separately.</p>
+</li>
+</ul>
+<h3>Reading 5 — CISA Endpoint Security Guide</h3>
+<p>Source: <a href="https://www.cisa.gov/sites/default/files/publications/Capacity_Enhancement_Guide-Securing_Endpoints.pdf">https://www.cisa.gov/sites/default/files/publications/Capacity_Enhancement_Guide-Securing_Endpoints.pdf</a></p>
+<p>Read: The full document (approximately 20 pages).</p>
+<p>Focus areas:</p>
+<ul>
+<li>
+<p>EDR capabilities and the distinction from traditional AV.</p>
+</li>
+<li>
+<p>Application allowlisting as a high-impact control.</p>
+</li>
+<li>
+<p>The relationship between endpoint controls and the MITRE ATT&amp;CK framework.</p>
+</li>
+</ul>
+<hr />
+<h2>Concept Reference Tables</h2>
+<h3>Table 1 — Endpoint Protection Technology Comparison</h3>
+<table>
+<thead>
+<tr>
+<th>Technology</th>
+<th>Detection Method</th>
+<th>Capability</th>
+<th>Exam Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Traditional AV</td>
+<td>Signature-based</td>
+<td>Detect and quarantine known malware</td>
+<td>Legacy environments</td>
+</tr>
+<tr>
+<td>NGAV</td>
+<td>Behavioral + ML</td>
+<td>Detect polymorphic and behavioral threats</td>
+<td>Modern signature-less malware</td>
+</tr>
+<tr>
+<td>EDR</td>
+<td>Continuous telemetry + behavioral</td>
+<td>Detect, investigate, respond, hunt</td>
+<td>Forensic timeline, incident response</td>
+</tr>
+<tr>
+<td>XDR</td>
+<td>Multi-domain telemetry correlation</td>
+<td>Unified detection across endpoint/network/cloud</td>
+<td>Enterprise SOC integration</td>
+</tr>
+</tbody>
+</table>
+<h3>Table 2 — Full Disk Encryption Options</h3>
+<table>
+<thead>
+<tr>
+<th>Product</th>
+<th>Platform</th>
+<th>Key Storage</th>
+<th>Exam Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BitLocker</td>
+<td>Windows</td>
+<td>TPM + AD/Azure AD</td>
+<td>TPM + PIN = strongest; recovery key required</td>
+</tr>
+<tr>
+<td>FileVault</td>
+<td>macOS</td>
+<td>iCloud or institutional key</td>
+<td>Enterprise uses MDM-managed recovery key</td>
+</tr>
+<tr>
+<td>LUKS</td>
+<td>Linux</td>
+<td>Passphrase or key file</td>
+<td>Common in enterprise Linux deployments</td>
+</tr>
+<tr>
+<td>Self-Encrypting Drive (SED)</td>
+<td>Hardware-level</td>
+<td>Drive firmware</td>
+<td>Effective only with proper user-defined key</td>
+</tr>
+</tbody>
+</table>
+<h3>Table 3 — Mobile Device Management Models</h3>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Scope</th>
+<th>Best For</th>
+<th>Privacy Impact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MDM</td>
+<td>Full device</td>
+<td>Corporate-owned devices</td>
+<td>High — organization sees full device</td>
+</tr>
+<tr>
+<td>MAM</td>
+<td>Application and data only</td>
+<td>BYOD</td>
+<td>Low — personal data untouched</td>
+</tr>
+<tr>
+<td>COPE</td>
+<td>Full device, personal use permitted</td>
+<td>Corporate-issued with personal use policy</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>COBO</td>
+<td>Full device, business only</td>
+<td>High-security or kiosk deployments</td>
+<td>High</td>
+</tr>
+</tbody>
+</table>
+<h3>Table 4 — Application Control Comparison</h3>
+<table>
+<thead>
+<tr>
+<th>Approach</th>
+<th>Default Stance</th>
+<th>Effectiveness Against Zero-Day</th>
+<th>Operational Complexity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Blacklisting (AV)</td>
+<td>Allow all, block known bad</td>
+<td>Low</td>
+<td>Low</td>
+</tr>
+<tr>
+<td>Allowlisting</td>
+<td>Block all, permit approved</td>
+<td>High</td>
+<td>High</td>
+</tr>
+<tr>
+<td>NGAV behavioral</td>
+<td>Block suspicious behavior</td>
+<td>Medium-High</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>EDR detection</td>
+<td>Detect and respond</td>
+<td>High (but post-execution)</td>
+<td>Medium</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>Key Terms and Definitions</h2>
+<p><strong>Antivirus (AV)</strong> — Endpoint protection using signature-based detection of known malware.</p>
+<p><strong>NGAV</strong> — Next-Generation Antivirus; adds behavioral analysis and machine learning to signature detection.</p>
+<p><strong>EDR</strong> — Endpoint Detection and Response; provides continuous telemetry recording, behavioral detection, threat hunting, and automated response.</p>
+<p><strong>XDR</strong> — Extended Detection and Response; correlates endpoint, network, cloud, and identity telemetry.</p>
+<p><strong>CIS Benchmarks</strong> — Industry-standard configuration hardening baselines for operating systems, applications, and cloud platforms, developed by the Center for Internet Security.</p>
+<p><strong>System Hardening</strong> — The process of reducing a system's attack surface by removing unnecessary components and applying secure configurations.</p>
+<p><strong>Gold Image</strong> — A standardized, pre-hardened OS image used for deploying new systems with a consistent security baseline.</p>
+<p><strong>Patch Management</strong> — The lifecycle of identifying, testing, and deploying software updates to address vulnerabilities.</p>
+<p><strong>CISA KEV</strong> — CISA Known Exploited Vulnerabilities catalog; authoritative list of vulnerabilities actively exploited in the wild.</p>
+<p><strong>Compensating Control</strong> — A substitute control applied when the primary control (patching) cannot be implemented immediately.</p>
+<p><strong>FDE</strong> — Full Disk Encryption; encrypts all data on a storage device.</p>
+<p><strong>BitLocker</strong> — Microsoft's full disk encryption solution for Windows.</p>
+<p><strong>TPM</strong> — Trusted Platform Module; a hardware chip that stores cryptographic keys and performs boot-time integrity measurements.</p>
+<p><strong>Secure Boot</strong> — UEFI feature that verifies bootloader signatures before execution, preventing bootkits.</p>
+<p><strong>SED</strong> — Self-Encrypting Drive; hardware-level disk encryption built into the drive firmware.</p>
+<p><strong>Application Allowlisting</strong> — Security control permitting only approved applications to execute; blocks all others by default.</p>
+<p><strong>Application Blacklisting</strong> — Security control blocking known malicious applications; permits all others by default.</p>
+<p><strong>AppLocker</strong> — Windows built-in application control policy tool.</p>
+<p><strong>WDAC</strong> — Windows Defender Application Control; kernel-level application execution policy tool.</p>
+<p><strong>MDM</strong> — Mobile Device Management; platform for managing and enforcing security policies on mobile devices.</p>
+<p><strong>MAM</strong> — Mobile Application Management; manages only corporate applications and their data, not the full device.</p>
+<p><strong>BYOD</strong> — Bring Your Own Device; policy allowing employees to use personal devices for work.</p>
+<p><strong>Remote Wipe</strong> — MDM capability to erase all data on a managed device remotely.</p>
+<p><strong>Host-Based Firewall</strong> — A firewall running on the individual endpoint, independent of network perimeter controls.</p>
+<p><strong>Configuration Drift</strong> — The gradual divergence of a system's configuration from the approved security baseline over time.</p>
+<hr />
+<h2>Security+ Exam Alignment</h2>
+<p>The following SY0-701 exam objectives are covered in this module:</p>
+<ul>
+<li>
+<p>2.5 — Explain the purpose of mitigation techniques used to secure the enterprise.</p>
+</li>
+<li>
+<p>4.1 — Given a scenario, apply common access control concepts.</p>
+</li>
+<li>
+<p>4.6 — Given a scenario, implement and configure wireless security.</p>
+</li>
+</ul>
+<hr />
+<h2>Critical Thinking Questions</h2>
+<ol>
+<li>
+<p>An organization relies entirely on signature-based antivirus across 5,000 endpoints. A new ransomware campaign uses a polymorphic packer that generates a unique binary for each target, ensuring no two samples share the same hash. Why does this defeat signature-based AV? What would EDR offer that AV cannot in this scenario?</p>
+</li>
+<li>
+<p>A security team is trying to decide between deploying application allowlisting and deploying EDR as their primary endpoint control enhancement. Compare the two approaches: what threats does each control best address, what are the operational requirements of each, and under what circumstances would you choose one over the other?</p>
+</li>
+<li>
+<p>A company deploys BitLocker with TPM-only protection (no PIN required). A laptop is stolen from an unlocked, powered-off state. Is the data protected? Now consider the same scenario where the attacker is a sophisticated nation-state actor who can manipulate the boot process. What does TPM-only protection not defend against?</p>
+</li>
+<li>
+<p>An organization allows employees to use personal iPhones for corporate email and Slack. The CISO wants the ability to remote-wipe corporate data if an employee is terminated without affecting the employee's personal photos and messages. Which mobile device management model supports this requirement? What are the limitations?</p>
+</li>
+<li>
+<p>A patch for a critical vulnerability is released. The vulnerability has a CVSS score of 9.8 and is listed on the CISA KEV catalog. The affected system is a legacy manufacturing control system that cannot be patched without a four-hour production shutdown. What is your recommended approach? Identify the compensating controls and the timeline.</p>
+</li>
+</ol>
+<hr />
+<h2>Review Checklist</h2>
+<p>Before taking the Module 08 quiz, verify you can do each of the following without notes:</p>
+<ul>
+<li>
+<p>Explain what EDR provides that traditional AV cannot.</p>
+</li>
+<li>
+<p>State what CIS Level 1 and Level 2 benchmarks represent.</p>
+</li>
+<li>
+<p>Describe the patch management lifecycle in five steps.</p>
+</li>
+<li>
+<p>Explain what the CISA KEV catalog is and how it changes patch prioritization.</p>
+</li>
+<li>
+<p>Describe how BitLocker with TPM protects a stolen laptop.</p>
+</li>
+<li>
+<p>Explain why application allowlisting is more effective than blacklisting against zero-days.</p>
+</li>
+<li>
+<p>Distinguish MDM from MAM and identify when each is appropriate.</p>
+</li>
+<li>
+<p>Explain why a host-based firewall provides protection that a perimeter firewall cannot.</p>
+</li>
+</ul>
+<hr />
+<p>Module 08 Reading Guide — End</p>
+</body>
+</html>

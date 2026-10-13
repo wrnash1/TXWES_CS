@@ -1,0 +1,214 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Assignment: Lab (M06): Identity and Access Management</title>
+</head>
+<body>
+<h2>Lab (M06): Identity and Access Management</h2>
+<h1>Lab Activity — Module 06: IAM Configuration and Analysis</h1>
+<h2>CIS-4328 Information Security | Texas Wesleyan University</h2>
+<h3>CompTIA Security+ SY0-701 Alignment | Authorized Educational Use Only</h3>
+<hr />
+<h2>Lab Overview</h2>
+<p><strong>Lab Title:</strong> Identity and Access Management Analysis and Design</p>
+<p><strong>Estimated Completion Time:</strong> 90 minutes</p>
+<p><strong>Submission:</strong> Upload your completed deliverables to Canvas before the module deadline.</p>
+<p><strong>Learning Objectives:</strong></p>
+<ul>
+<li>
+<p>Evaluate an organization's IAM configuration against least-privilege principles.</p>
+</li>
+<li>
+<p>Analyze SAML assertions and OAuth 2.0 flows to identify their components.</p>
+</li>
+<li>
+<p>Design an access control model for a realistic organizational scenario.</p>
+</li>
+<li>
+<p>Identify PAM deficiencies and recommend specific remediation.</p>
+</li>
+<li>
+<p>Trace an authentication flow using correct protocol terminology.</p>
+</li>
+</ul>
+<hr />
+<h2>Background</h2>
+<p>In this lab you will act as an IAM security analyst reviewing and designing access control systems. This is a document-based analysis lab — no systems are modified. The analysis skills practiced here directly map to Security+ performance-based questions and to real-world IAM audit engagements.</p>
+<hr />
+<h2>Required Tools</h2>
+<p>All tools are free and browser-based:</p>
+<ul>
+<li>
+<p>JWT Decoder: <a href="https://jwt.io">https://jwt.io</a></p>
+</li>
+<li>
+<p>SAML Decoder: <a href="https://www.samltool.com/decode.php">https://www.samltool.com/decode.php</a></p>
+</li>
+<li>
+<p>Any text editor</p>
+</li>
+</ul>
+<hr />
+<h2>Part 1 — Access Review: Least Privilege Audit (25 minutes)</h2>
+<h3>Part 1 Background</h3>
+<p>The following table shows current access assignments for five employees at a mid-size healthcare company. You are conducting a least-privilege access review.</p>
+<table>
+<thead>
+<tr>
+<th>User</th>
+<th>Current Role</th>
+<th>Access Assigned</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Alice Chen</td>
+<td>HR Coordinator</td>
+<td>HR records, Payroll system, Finance reports, IT admin portal</td>
+<td>Previously worked in IT</td>
+</tr>
+<tr>
+<td>Bob Martinez</td>
+<td>Software Developer</td>
+<td>Source code repository, Dev database, Production database, HR records</td>
+<td>"Needs HR access for a project"</td>
+</tr>
+<tr>
+<td>Carol Johnson</td>
+<td>Finance Analyst</td>
+<td>Finance reports, Payroll system, Executive compensation data, All-staff directory</td>
+<td>Standard role</td>
+</tr>
+<tr>
+<td>David Park</td>
+<td>IT Help Desk</td>
+<td>User account reset, Ticketing system, Domain admin rights, All file shares</td>
+<td>"Makes his job easier"</td>
+</tr>
+<tr>
+<td>Eve Williams</td>
+<td>Marketing Manager</td>
+<td>Marketing tools, CRM, Customer PII database, Competitor intelligence files</td>
+<td>No documented justification on file</td>
+</tr>
+</tbody>
+</table>
+<h3>Part 1 Tasks</h3>
+<ol>
+<li>
+<p>For each user, identify which access assignments violate the principle of least privilege. Explain why each flagged assignment is excessive for the stated role.</p>
+</li>
+<li>
+<p>For Alice Chen specifically, identify the IAM failure mode that explains why she has IT admin access in addition to HR access. Name this failure mode using the correct IAM term.</p>
+</li>
+<li>
+<p>David Park has domain admin rights on a help desk account. Identify the specific risk this creates. What PAM architecture would provide him the access he needs for specific tasks without persistent domain admin privileges?</p>
+</li>
+<li>
+<p>Design a revised access assignment table with the minimum necessary access for each user. Include a justification column explaining what business function requires each access grant you retained.</p>
+</li>
+<li>
+<p>What process control should be implemented to prevent access accumulation from recurring? Describe the process, its recommended frequency, and who should be responsible for approving retained access.</p>
+</li>
+</ol>
+<h3>Part 1 Deliverable</h3>
+<p>A written analysis for tasks 1–3, a revised access table for task 4, and a process description for task 5.</p>
+<hr />
+<h2>Part 2 — JWT Analysis (20 minutes)</h2>
+<h3>Part 2 Background</h3>
+<p>A developer has provided you with an ID token from an OIDC authentication flow. JWT tokens are base64URL-encoded and consist of three sections: header, payload, and signature.</p>
+<h3>Part 2 Tasks</h3>
+<p>Navigate to <a href="https://jwt.io">https://jwt.io</a> and decode the following token by pasting it into the "Encoded" field:</p>
+<pre><code class="language-text">eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjEyMzQ1NiJ9.eyJzdWIiOiJ1c2VyXzEyMzQ1IiwiaXNzIjoiaHR0cHM6Ly9pZHAuZXhhbXBsZS5jb20iLCJhdWQiOiJjbGllbnRfYXBwXzAwMSIsImV4cCI6MTcxNzAwMDAwMCwiaWF0IjoxNzE2OTk2NDAwLCJlbWFpbCI6ImFsaWNlQGV4YW1wbGUuY29tIiwibmFtZSI6IkFsaWNlIENoZW4iLCJyb2xlcyI6WyJ1c2VyIiwiZmluYW5jZV9yZWFkIl19.SIGNATURE_PLACEHOLDER
+</code></pre>
+<ol>
+<li>
+<p>Identify the algorithm used to sign this token (from the header section).</p>
+</li>
+<li>
+<p>From the payload, identify and record the values of: <code>sub</code>, <code>iss</code>, <code>aud</code>, <code>exp</code>, <code>email</code>, and <code>roles</code>.</p>
+</li>
+<li>
+<p>The <code>exp</code> claim represents a Unix timestamp. Using any Unix timestamp converter, determine when this token expires. Based on the current date, is this token valid or expired?</p>
+</li>
+<li>
+<p>What does the <code>aud</code> (audience) claim specify, and why is it important for security? What vulnerability could occur if a service did not validate the <code>aud</code> claim?</p>
+</li>
+<li>
+<p>This token contains <code>roles</code> claims. Is including authorization roles in an ID token a good practice? What security consideration must be addressed when using JWT claims for access control decisions?</p>
+</li>
+</ol>
+<h3>Part 2 Deliverable</h3>
+<p>Written answers to all five tasks with specific references to the decoded token values.</p>
+<hr />
+<h2>Part 3 — Authentication Protocol Selection (20 minutes)</h2>
+<h3>Part 3 Background</h3>
+<p>You are the IAM architect for a mid-size enterprise. Five integration requirements have been submitted for your review. For each requirement, you must select the appropriate authentication or authorization protocol and justify your selection.</p>
+<h3>Part 3 Requirements</h3>
+<p><strong>Requirement A:</strong> A third-party expense management SaaS application (Concur) needs to integrate with the company's on-premises Active Directory so that employees use their corporate credentials to log in. The vendor's documentation shows their product supports SAML 2.0 and OIDC.</p>
+<p><strong>Requirement B:</strong> A mobile expense reporting app (iOS and Android) needs to allow employees to log in with their corporate identity and submit expense reports. The app is a native mobile app with no server-side component for the login flow.</p>
+<p><strong>Requirement C:</strong> A microservice in the company's internal API platform needs to call another microservice to retrieve data. No user is involved — the calling service needs to authenticate itself and obtain an access token.</p>
+<p><strong>Requirement D:</strong> A partner company needs to grant your employees read access to their project management portal without creating accounts for your employees in their system. Your company uses Azure AD; the partner uses Google Workspace.</p>
+<p><strong>Requirement E:</strong> A legacy on-premises application from 2008 only supports LDAP bind authentication. Employees currently use a separate username and password for this system.</p>
+<h3>Part 3 Tasks</h3>
+<ol>
+<li>
+<p>For each requirement, select the most appropriate protocol from: SAML 2.0, OIDC, OAuth 2.0 Authorization Code + PKCE, OAuth 2.0 Client Credentials, or LDAP.</p>
+</li>
+<li>
+<p>For each selection, write two to three sentences explaining why that protocol is best suited for the requirement.</p>
+</li>
+<li>
+<p>For Requirement E specifically, what security risks does LDAP bind authentication introduce compared to a modern protocol? What configuration change would at minimum reduce the risk of credential exposure?</p>
+</li>
+</ol>
+<h3>Part 3 Deliverable</h3>
+<p>A five-row table with columns for Requirement, Selected Protocol, and Justification. Plus a written paragraph for task 3.</p>
+<hr />
+<h2>Part 4 — PAM Gap Analysis (25 minutes)</h2>
+<h3>Part 4 Background</h3>
+<p>A security audit of a 500-person financial services company has produced the following findings related to privileged access:</p>
+<p><strong>Finding A:</strong> The domain administrator account (<code>DOMAIN\Administrator</code>) is used by three different IT staff members, who share the password via a team chat application.</p>
+<p><strong>Finding B:</strong> When an IT engineer needs to perform maintenance on a production server, they remote desktop from their regular workstation (which they also use for email and web browsing) to the server using their personal admin account.</p>
+<p><strong>Finding C:</strong> Service accounts for 23 different applications all use the same password, which has not been changed in four years. The password is stored in a shared spreadsheet accessible to all IT staff.</p>
+<p><strong>Finding D:</strong> There is no process for removing privileged access when an IT employee changes roles or departs. A former network administrator who left six months ago still has an active account with domain admin rights.</p>
+<p><strong>Finding E:</strong> Administrative actions are performed via RDP sessions that are not recorded. When an audit questioned what changes were made to a firewall two months ago, no one could determine who made the change.</p>
+<h3>Part 4 Tasks</h3>
+<ol>
+<li>
+<p>For each finding, identify the specific IAM or PAM principle that has been violated.</p>
+</li>
+<li>
+<p>Assign a severity (Critical, High, Medium) to each finding. Justify your ranking.</p>
+</li>
+<li>
+<p>For each finding, recommend a specific, actionable remediation. Name the specific PAM control or IAM process that would address it.</p>
+</li>
+<li>
+<p>Finding A and Finding C both involve shared credentials. Explain why shared administrative credentials are particularly dangerous in a financial services environment. What regulatory frameworks require individual accountability for privileged access?</p>
+</li>
+</ol>
+<h3>Part 4 Deliverable</h3>
+<p>A five-row findings table with columns for Finding, Violated Principle, Severity, and Remediation. Plus a written paragraph for task 4.</p>
+<hr />
+<h2>Lab Submission Checklist</h2>
+<p>Before submitting, verify:</p>
+<ul>
+<li>
+<p>Part 1: Written analysis for tasks 1–3, revised access table for task 4, process description for task 5.</p>
+</li>
+<li>
+<p>Part 2: Written answers to all five JWT analysis tasks with decoded values referenced.</p>
+</li>
+<li>
+<p>Part 3: Five-row protocol selection table and written paragraph for task 3.</p>
+</li>
+<li>
+<p>Part 4: Five-row PAM findings table and written paragraph for task 4.</p>
+</li>
+</ul>
+<hr />
+<p>Module 06 Lab — End</p>
+</body>
+</html>

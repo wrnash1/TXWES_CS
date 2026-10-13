@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/profile/cc/ccv1p1/ccv1p1_qtiasiv1p2p1_v1p0.xsd">
+  <assessment ident="g07968321224f88e77348d142720a23c" title="Quiz (M06): Identity and Access Management">
+    <qtimetadata>
+      <qtimetadatafield>
+        <fieldlabel>cc_profile</fieldlabel>
+        <fieldentry>cc.exam.v0p1</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_assessmenttype</fieldlabel>
+        <fieldentry>Examination</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_scoretype</fieldlabel>
+        <fieldentry>Percentage</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>cc_maxattempts</fieldlabel>
+        <fieldentry>1</fieldentry>
+      </qtimetadatafield>
+    </qtimetadata>
+    <section ident="root_section">
+      <item ident="g07968321224f88e77348d142720a23c_q01" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A user authenticates to a corporate portal by providing a password and then approving a push notification on their smartphone. Which authentication factor categories are being used?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g07968321224f88e77348d142720a23c_q01_a">
+                <material>
+                  <mattext texttype="text/plain">Something you know and something you are</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g07968321224f88e77348d142720a23c_q01_b">
+                <material>
+                  <mattext texttype="text/plain">Something you know and something you have</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g07968321224f88e77348d142720a23c_q01_c">
+                <material>
+                  <mattext texttype="text/plain">Something you have and something you do</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g07968321224f88e77348d142720a23c_q01_d">
+                <material>
+                  <mattext texttype="text/plain">Something you are and something you have</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g07968321224f88e77348d142720a23c_q01_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g07968321224f88e77348d142720a23c_q02" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A company wants employees to use their Active Directory credentials to log in to a cloud-hosted SaaS application without requiring a separate username and password. The SaaS vendor supports SAML 2.0. Which architectural component issues the SAML assertion to the SaaS application?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g07968321224f88e77348d142720a23c_q02_a">
+                <material>
+                  <mattext texttype="text/plain">Service Provider</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g07968321224f88e77348d142720a23c_q02_b">
+                <material>
+                  <mattext texttype="text/plain">Registration Authority</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g07968321224f88e77348d142720a23c_q02_c">
+                <material>
+                  <mattext texttype="text/plain">Identity Provider</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g07968321224f88e77348d142720a23c_q02_d">
+                <material>
+                  <mattext texttype="text/plain">Certificate Authority</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g07968321224f88e77348d142720a23c_q02_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g07968321224f88e77348d142720a23c_q03" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A mobile app developer needs to allow users to grant the app access to their Google Drive files without sharing their Google password with the app. Which protocol is MOST appropriate for implementing this delegated access?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g07968321224f88e77348d142720a23c_q03_a">
+                <material>
+                  <mattext texttype="text/plain">SAML 2.0</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g07968321224f88e77348d142720a23c_q03_b">
+                <material>
+                  <mattext texttype="text/plain">Kerberos</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g07968321224f88e77348d142720a23c_q03_c">
+                <material>
+                  <mattext texttype="text/plain">LDAP</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g07968321224f88e77348d142720a23c_q03_d">
+                <material>
+                  <mattext texttype="text/plain">OAuth 2.0</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g07968321224f88e77348d142720a23c_q03_d</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g07968321224f88e77348d142720a23c_q04" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A penetration tester runs a tool that extracts NTLM credential hashes from memory on a compromised Windows workstation. The tester then uses these hashes to authenticate to other servers on the network without cracking them. Which attack technique is being demonstrated?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g07968321224f88e77348d142720a23c_q04_a">
+                <material>
+                  <mattext texttype="text/plain">Credential stuffing</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g07968321224f88e77348d142720a23c_q04_b">
+                <material>
+                  <mattext texttype="text/plain">Pass-the-Hash</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g07968321224f88e77348d142720a23c_q04_c">
+                <material>
+                  <mattext texttype="text/plain">Kerberoasting</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g07968321224f88e77348d142720a23c_q04_d">
+                <material>
+                  <mattext texttype="text/plain">Golden Ticket</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g07968321224f88e77348d142720a23c_q04_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g07968321224f88e77348d142720a23c_q05" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An access control system grants permissions based on the user's department, their security clearance level, the classification of the data being requested, and the time of day. Which access control model BEST describes this system?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g07968321224f88e77348d142720a23c_q05_a">
+                <material>
+                  <mattext texttype="text/plain">DAC</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g07968321224f88e77348d142720a23c_q05_b">
+                <material>
+                  <mattext texttype="text/plain">MAC</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g07968321224f88e77348d142720a23c_q05_c">
+                <material>
+                  <mattext texttype="text/plain">RBAC</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g07968321224f88e77348d142720a23c_q05_d">
+                <material>
+                  <mattext texttype="text/plain">ABAC</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g07968321224f88e77348d142720a23c_q05_d</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g07968321224f88e77348d142720a23c_q06" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A company discovers that a former IT administrator who resigned three months ago still has an active account with domain admin privileges. The account has been used twice in the past month. Which IAM process failure PRIMARILY allowed this situation to occur?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g07968321224f88e77348d142720a23c_q06_a">
+                <material>
+                  <mattext texttype="text/plain">Lack of multi-factor authentication</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g07968321224f88e77348d142720a23c_q06_b">
+                <material>
+                  <mattext texttype="text/plain">Inadequate offboarding procedures</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g07968321224f88e77348d142720a23c_q06_c">
+                <material>
+                  <mattext texttype="text/plain">Missing access reviews</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g07968321224f88e77348d142720a23c_q06_d">
+                <material>
+                  <mattext texttype="text/plain">Failure to implement role-based access control</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g07968321224f88e77348d142720a23c_q06_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g07968321224f88e77348d142720a23c_q07" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;Which LDAP port number provides encrypted communication by default?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g07968321224f88e77348d142720a23c_q07_a">
+                <material>
+                  <mattext texttype="text/plain">389</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g07968321224f88e77348d142720a23c_q07_b">
+                <material>
+                  <mattext texttype="text/plain">443</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g07968321224f88e77348d142720a23c_q07_c">
+                <material>
+                  <mattext texttype="text/plain">636</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g07968321224f88e77348d142720a23c_q07_d">
+                <material>
+                  <mattext texttype="text/plain">3268</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g07968321224f88e77348d142720a23c_q07_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g07968321224f88e77348d142720a23c_q08" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A developer implements a login system where users can authenticate with their corporate credentials via OAuth 2.0. After testing, the security team notes that the application does not know who the user is — only that they have been granted access. What is MISSING from the implementation?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g07968321224f88e77348d142720a23c_q08_a">
+                <material>
+                  <mattext texttype="text/plain">A SAML assertion</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g07968321224f88e77348d142720a23c_q08_b">
+                <material>
+                  <mattext texttype="text/plain">An LDAP bind</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g07968321224f88e77348d142720a23c_q08_c">
+                <material>
+                  <mattext texttype="text/plain">OpenID Connect (OIDC) for identity claims</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g07968321224f88e77348d142720a23c_q08_d">
+                <material>
+                  <mattext texttype="text/plain">A Kerberos service ticket</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g07968321224f88e77348d142720a23c_q08_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g07968321224f88e77348d142720a23c_q09" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An organization implements a PAM solution where IT administrators must request elevated access for a specific task, and that access is automatically revoked after the task window expires. Which PAM control does this describe?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g07968321224f88e77348d142720a23c_q09_a">
+                <material>
+                  <mattext texttype="text/plain">Privileged Access Workstation</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g07968321224f88e77348d142720a23c_q09_b">
+                <material>
+                  <mattext texttype="text/plain">Password Vaulting</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g07968321224f88e77348d142720a23c_q09_c">
+                <material>
+                  <mattext texttype="text/plain">Just-in-Time Access</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g07968321224f88e77348d142720a23c_q09_d">
+                <material>
+                  <mattext texttype="text/plain">Session Recording</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g07968321224f88e77348d142720a23c_q09_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g07968321224f88e77348d142720a23c_q10" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An employee moves from the Finance department to the HR department. Six months later, an access review reveals the employee still has Finance system access in addition to newly granted HR access. Which term BEST describes this IAM condition?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g07968321224f88e77348d142720a23c_q10_a">
+                <material>
+                  <mattext texttype="text/plain">Privilege escalation</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g07968321224f88e77348d142720a23c_q10_b">
+                <material>
+                  <mattext texttype="text/plain">Excessive entitlement accumulation</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g07968321224f88e77348d142720a23c_q10_c">
+                <material>
+                  <mattext texttype="text/plain">Separation of duties violation</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g07968321224f88e77348d142720a23c_q10_d">
+                <material>
+                  <mattext texttype="text/plain">Insider threat</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g07968321224f88e77348d142720a23c_q10_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+    </section>
+  </assessment>
+</questestinterop>

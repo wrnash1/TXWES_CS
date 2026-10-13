@@ -1,0 +1,593 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Reading Guide (M13): Unified Communications and Collaboration</title>
+</head>
+<body>
+<h2>Reading Guide (M13): Unified Communications and Collaboration</h2>
+<h1>Reading Guide: Module 13 — Unified Communications and Collaboration</h1>
+<h2>Course: CIS-3321 Network Administration</h2>
+<p><strong>Certification Alignment:</strong> CompTIA Network+ (N10-009)</p>
+<hr />
+<h2>Overview</h2>
+<p>This reading guide supports Module 13 video lectures and prepares you for the quiz and the CompTIA Network+ N10-009 exam. UC and VoIP topics appear in Domain 1 (Networking Concepts) and Domain 2 (Infrastructure). Pay particular attention to QoS terminology, codec bandwidth values, and SIP call flow — these are frequently tested.</p>
+<p><strong>Estimated Reading Time:</strong> 55–70 minutes</p>
+<hr />
+<h2>Part 1: Unified Communications Foundations</h2>
+<h3>1.1 UC Platform Components</h3>
+<p>A Unified Communications platform integrates multiple real-time communication services:</p>
+<ul>
+<li>Voice calling (VoIP)</li>
+<li>Video conferencing</li>
+<li>Instant messaging and presence</li>
+<li>Voicemail and unified messaging</li>
+<li>Web/desktop collaboration and screen sharing</li>
+<li>Mobile integration</li>
+</ul>
+<p>Common enterprise UC platforms:</p>
+<ul>
+<li>Microsoft Teams (cloud-based)</li>
+<li>Cisco Unified Communications Manager (CUCM) — on-premises IP PBX</li>
+<li>Avaya Aura — enterprise telephony</li>
+<li>Zoom Phone — cloud UCaaS</li>
+<li>RingCentral — cloud UCaaS</li>
+</ul>
+<h3>1.2 VoIP Codec Reference</h3>
+<table>
+<thead>
+<tr>
+<th>Codec</th>
+<th>Bandwidth (payload only)</th>
+<th>Bandwidth with overhead (20 ms)</th>
+<th>Quality</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>G.711</td>
+<td>64 Kbps</td>
+<td>~87 Kbps</td>
+<td>Toll-quality</td>
+<td>North America: G.711u; Europe: G.711a</td>
+</tr>
+<tr>
+<td>G.729</td>
+<td>8 Kbps</td>
+<td>~24–31 Kbps</td>
+<td>Good</td>
+<td>Compressed; widely used for WAN</td>
+</tr>
+<tr>
+<td>G.722</td>
+<td>64 Kbps</td>
+<td>~87 Kbps</td>
+<td>HD voice</td>
+<td>Wideband; better frequency range than G.711</td>
+</tr>
+<tr>
+<td>G.726</td>
+<td>16–40 Kbps</td>
+<td>varies</td>
+<td>Moderate</td>
+<td>ADPCM compression</td>
+</tr>
+<tr>
+<td>Opus</td>
+<td>6–510 Kbps</td>
+<td>adaptive</td>
+<td>Excellent</td>
+<td>WebRTC, Zoom; adaptive bitrate</td>
+</tr>
+</tbody>
+</table>
+<p>Overhead calculation for G.711 at 20 ms packetization:</p>
+<ul>
+<li>Payload: 160 bytes (64 Kbps × 20 ms)</li>
+<li>RTP header: 12 bytes</li>
+<li>UDP header: 8 bytes</li>
+<li>IP header: 20 bytes</li>
+<li>Total: 200 bytes per packet × 50 packets/sec = 80,000 bytes/sec = 640 Kbps? No — recalculate: 200 bytes × 8 bits × 50 pps = 80,000 bps = 80 Kbps</li>
+</ul>
+<p>Note: Different sources calculate overhead slightly differently based on framing. CompTIA exam uses approximately 87 Kbps for G.711 and 31 Kbps for G.729 per call including all headers.</p>
+<hr />
+<h2>Part 2: SIP — Session Initiation Protocol</h2>
+<h3>2.1 SIP Architecture Components</h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>User Agent (UA)</td>
+<td>Endpoint — initiates or receives sessions (IP phone, softphone)</td>
+</tr>
+<tr>
+<td>SIP Proxy</td>
+<td>Routes SIP requests between UAs</td>
+</tr>
+<tr>
+<td>SIP Registrar</td>
+<td>Records UA location (IP/port) from REGISTER requests</td>
+</tr>
+<tr>
+<td>Redirect Server</td>
+<td>Returns contact address; client contacts destination directly</td>
+</tr>
+<tr>
+<td>B2BUA</td>
+<td>Acts as both UA client and server; typical IP PBX function</td>
+</tr>
+</tbody>
+</table>
+<h3>2.2 SIP Methods</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>REGISTER</td>
+<td>UA registers current address with registrar</td>
+</tr>
+<tr>
+<td>INVITE</td>
+<td>Initiate a session</td>
+</tr>
+<tr>
+<td>ACK</td>
+<td>Confirm final response to INVITE</td>
+</tr>
+<tr>
+<td>BYE</td>
+<td>Terminate an established session</td>
+</tr>
+<tr>
+<td>CANCEL</td>
+<td>Cancel a pending INVITE (before answer)</td>
+</tr>
+<tr>
+<td>OPTIONS</td>
+<td>Query server/endpoint capabilities</td>
+</tr>
+<tr>
+<td>REFER</td>
+<td>Transfer a call to another party</td>
+</tr>
+<tr>
+<td>NOTIFY</td>
+<td>Deliver event notifications (voicemail, presence)</td>
+</tr>
+</tbody>
+</table>
+<h3>2.3 SIP Response Codes</h3>
+<table>
+<thead>
+<tr>
+<th>Range</th>
+<th>Class</th>
+<th>Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1xx</td>
+<td>Provisional</td>
+<td>100 Trying, 180 Ringing, 183 Session Progress</td>
+</tr>
+<tr>
+<td>2xx</td>
+<td>Success</td>
+<td>200 OK</td>
+</tr>
+<tr>
+<td>3xx</td>
+<td>Redirection</td>
+<td>301 Moved Permanently, 302 Moved Temporarily</td>
+</tr>
+<tr>
+<td>4xx</td>
+<td>Client error</td>
+<td>400 Bad Request, 401 Unauthorized, 403 Forbidden, 486 Busy Here</td>
+</tr>
+<tr>
+<td>5xx</td>
+<td>Server error</td>
+<td>500 Internal Server Error, 503 Service Unavailable</td>
+</tr>
+<tr>
+<td>6xx</td>
+<td>Global failure</td>
+<td>600 Busy Everywhere, 603 Decline</td>
+</tr>
+</tbody>
+</table>
+<h3>2.4 SIP Call Flow</h3>
+<p>A basic SIP call between two phones through a proxy:</p>
+<ol>
+<li>Phone A → Proxy: INVITE (SDP with codec offer)</li>
+<li>Proxy → Phone B: INVITE</li>
+<li>Phone B → Proxy → Phone A: 100 Trying</li>
+<li>Phone B → Proxy → Phone A: 180 Ringing (phone B rings)</li>
+<li>Phone B answered → Phone B → Proxy → Phone A: 200 OK (SDP with codec answer)</li>
+<li>Phone A → Phone B: ACK (three-way handshake complete)</li>
+<li>RTP media flows directly: Phone A ↔ Phone B (bypasses proxy)</li>
+<li>Call ends: Phone A (or B) → Proxy: BYE</li>
+<li>Proxy → Phone B (or A): BYE</li>
+<li>Phone B → Proxy → Phone A: 200 OK</li>
+</ol>
+<p>Key exam point: RTP media typically flows directly between endpoints after signaling — it does not pass through the SIP proxy.</p>
+<h3>2.5 SDP — Session Description Protocol</h3>
+<p>SDP (Session Description Protocol) is carried inside SIP INVITE and 200 OK messages. It describes:</p>
+<ul>
+<li>Media type (audio, video)</li>
+<li>IP address and UDP port for RTP</li>
+<li>Supported codecs (in priority order)</li>
+<li>Packetization interval</li>
+</ul>
+<p>The exchange of SDP between caller and callee is the codec negotiation — each party advertises what it supports and they agree on a common format.</p>
+<hr />
+<h2>Part 3: H.323</h2>
+<h3>3.1 H.323 Architecture</h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Terminal</td>
+<td>H.323 endpoint (IP phone, video endpoint)</td>
+</tr>
+<tr>
+<td>Gateway</td>
+<td>Translates H.323 to PSTN or other networks</td>
+</tr>
+<tr>
+<td>Gatekeeper</td>
+<td>Optional — provides address translation, admission control, bandwidth management</td>
+</tr>
+<tr>
+<td>MCU (Multipoint Control Unit)</td>
+<td>Enables multipoint audio/video conferences</td>
+</tr>
+</tbody>
+</table>
+<h3>3.2 H.323 Protocol Suite</h3>
+<table>
+<thead>
+<tr>
+<th>Protocol</th>
+<th>Function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>H.225</td>
+<td>Call setup and signaling</td>
+</tr>
+<tr>
+<td>H.245</td>
+<td>Capability exchange and media channel control</td>
+</tr>
+<tr>
+<td>RAS</td>
+<td>Registration, Admission, Status — between terminals and gatekeeper</td>
+</tr>
+<tr>
+<td>RTP/RTCP</td>
+<td>Media transport</td>
+</tr>
+<tr>
+<td>H.235</td>
+<td>Security (authentication, encryption)</td>
+</tr>
+</tbody>
+</table>
+<h3>3.3 H.323 vs. SIP Comparison</h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>H.323</th>
+<th>SIP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Standard body</td>
+<td>ITU-T</td>
+<td>IETF</td>
+</tr>
+<tr>
+<td>Year introduced</td>
+<td>1996</td>
+<td>1999</td>
+</tr>
+<tr>
+<td>Message encoding</td>
+<td>Binary (ASN.1)</td>
+<td>Text (UTF-8)</td>
+</tr>
+<tr>
+<td>Architecture</td>
+<td>Hierarchical, complex</td>
+<td>Peer-to-peer capable, simpler</td>
+</tr>
+<tr>
+<td>Firewall traversal</td>
+<td>Difficult</td>
+<td>Easier (still requires ALG or SBC)</td>
+</tr>
+<tr>
+<td>Current status</td>
+<td>Legacy (still deployed)</td>
+<td>Dominant modern standard</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>Part 4: RTP and RTCP</h2>
+<h3>4.1 RTP — Real-time Transport Protocol</h3>
+<p>RTP (RFC 3550) provides end-to-end delivery for real-time audio and video.</p>
+<p>Key header fields:</p>
+<ul>
+<li><strong>Payload type (PT)</strong>: Identifies the codec. Defined in RFC 3551.</li>
+<li><strong>Sequence number</strong>: Sequential number for each packet — receiver detects gaps (packet loss) and reorders if needed.</li>
+<li><strong>Timestamp</strong>: Media clock value — used for synchronization and jitter buffer operation.</li>
+<li><strong>SSRC</strong>: Synchronization Source — unique identifier for the RTP stream source.</li>
+</ul>
+<p>RTP runs over UDP — not TCP. Reliability is not needed because late retransmissions are useless for real-time media.</p>
+<h3>4.2 RTCP — RTP Control Protocol</h3>
+<p>RTCP provides quality monitoring feedback. It uses the RTP port + 1 (if RTP is on UDP 16384, RTCP is on UDP 16385).</p>
+<p>RTCP report types:</p>
+<ul>
+<li><strong>SR (Sender Report)</strong>: Statistics from the sender — packets sent, bytes sent, NTP timestamp.</li>
+<li><strong>RR (Receiver Report)</strong>: Statistics from receivers — fraction lost, cumulative packets lost, jitter, last SR received.</li>
+<li><strong>SDES (Source Description)</strong>: Describes source (SSRC, CNAME canonical name).</li>
+<li><strong>BYE</strong>: Indicates end of participation.</li>
+</ul>
+<p>RTCP data is used by network management systems and UC platforms to monitor call quality and detect issues.</p>
+<hr />
+<h2>Part 5: QoS for Voice and Video</h2>
+<h3>5.1 Voice and Video Performance Requirements</h3>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Acceptable Threshold</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>One-way latency</td>
+<td>Under 150 ms (ITU G.114)</td>
+<td>Up to 400 ms is absolute maximum</td>
+</tr>
+<tr>
+<td>Round-trip latency</td>
+<td>Under 300 ms</td>
+<td>Double the one-way value</td>
+</tr>
+<tr>
+<td>Jitter</td>
+<td>Under 30 ms</td>
+<td>Addressed by jitter buffer</td>
+</tr>
+<tr>
+<td>Packet loss</td>
+<td>Under 1%</td>
+<td>Concealment algorithms handle brief losses</td>
+</tr>
+</tbody>
+</table>
+<h3>5.2 DSCP Markings for Voice and Video</h3>
+<table>
+<thead>
+<tr>
+<th>Traffic Type</th>
+<th>DSCP Value</th>
+<th>DSCP Name</th>
+<th>PHB</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Voice RTP</td>
+<td>46 (101110)</td>
+<td>EF</td>
+<td>Expedited Forwarding</td>
+</tr>
+<tr>
+<td>Interactive video</td>
+<td>34 (100010)</td>
+<td>AF41</td>
+<td>Assured Forwarding Class 4</td>
+</tr>
+<tr>
+<td>Call signaling (SIP)</td>
+<td>24 (011000)</td>
+<td>CS3</td>
+<td>Class Selector 3</td>
+</tr>
+<tr>
+<td>Best-effort data</td>
+<td>0</td>
+<td>BE</td>
+<td>Best Effort</td>
+</tr>
+<tr>
+<td>Network management</td>
+<td>48 (110000)</td>
+<td>CS6</td>
+<td>Class Selector 6</td>
+</tr>
+</tbody>
+</table>
+<h3>5.3 CoS — Class of Service (Layer 2)</h3>
+<p>CoS uses the 3-bit PCP field in the 802.1Q VLAN tag:</p>
+<table>
+<thead>
+<tr>
+<th>CoS Value</th>
+<th>Traffic Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>7</td>
+<td>Network control</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Internetwork control</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Voice (EF equivalent)</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Video conferencing</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Critical applications / signaling</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Excellent effort</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Background</td>
+</tr>
+<tr>
+<td>0</td>
+<td>Best effort (default)</td>
+</tr>
+</tbody>
+</table>
+<h3>5.4 Queuing Mechanisms</h3>
+<h4>FIFO (First In, First Out)</h4>
+<p>No prioritization — all packets served in order received. Default for most interfaces. Unacceptable for voice on congested links.</p>
+<h4>Priority Queuing (PQ)</h4>
+<p>Four fixed priority queues (high, medium, normal, low). Higher queues always served first. Risk: lower queues can starve during heavy high-priority traffic.</p>
+<h4>Class-Based Weighted Fair Queuing (CBWFQ)</h4>
+<p>Multiple queues with minimum bandwidth guarantees per class. Proportional sharing of remaining bandwidth. No strict priority — voice still experiences variable queuing delay under congestion.</p>
+<h4>Low Latency Queuing (LLQ)</h4>
+<p>Combines strict priority queue for voice (policed to prevent starvation) with CBWFQ for other classes. The recommended Cisco mechanism for VoIP. Voice gets absolute priority up to the policed bandwidth limit; other classes share remaining bandwidth via CBWFQ.</p>
+<h3>5.5 Jitter Buffer</h3>
+<p>The jitter buffer holds incoming RTP packets briefly before playback to smooth arrival-time variation.</p>
+<p>Types:</p>
+<ul>
+<li><strong>Static jitter buffer</strong>: Fixed depth. Simple but wastes buffer on low-jitter networks or drops packets on high-jitter networks.</li>
+<li><strong>Adaptive jitter buffer</strong>: Adjusts depth dynamically based on observed jitter. Minimizes added delay while absorbing network jitter. Used in most modern endpoints.</li>
+</ul>
+<p>Trade-off: deeper buffer = better jitter absorption but higher latency. The buffer adds to total one-way delay.</p>
+<h3>5.6 Call Admission Control</h3>
+<p>CAC prevents voice quality degradation from oversubscription. When a new call would exceed the WAN voice bandwidth limit, CAC rejects the call with a busy signal.</p>
+<p>Without CAC: 50 calls on a link sized for 30 calls = all 50 calls experience poor quality simultaneously.</p>
+<p>With CAC: 30 calls succeed; calls 31–50 receive busy signal. The 30 active calls maintain acceptable quality.</p>
+<p>CAC is typically configured on the IP PBX or SIP proxy, and optionally on WAN routers.</p>
+<hr />
+<h2>Part 6: Network Design for VoIP and UC</h2>
+<h3>6.1 Voice VLAN Design</h3>
+<p>Best practice: dedicated Voice VLAN separate from data VLAN.</p>
+<p>Benefits:</p>
+<ul>
+<li>Consistent QoS marking for all voice traffic</li>
+<li>Layer 2 security isolation</li>
+<li>Simplified troubleshooting</li>
+<li>QoS policy applied by VLAN at the access switch</li>
+</ul>
+<p>Typical access switch port configuration:</p>
+<ul>
+<li>Native VLAN (untagged): data VLAN for PC</li>
+<li>Voice VLAN (tagged with voice VLAN ID): VoIP phone traffic</li>
+</ul>
+<h3>6.2 NAT Traversal Issues</h3>
+<p>SIP and H.323 embed IP addresses in the application payload (SDP body). NAT rewrites IP headers but not payload — resulting in mismatched addresses for RTP streams.</p>
+<p>Solutions:</p>
+<ul>
+<li><strong>ALG (Application Layer Gateway)</strong>: NAT device inspects and rewrites SIP/H.323 payloads. Included in most routers but can cause issues with encrypted SIP.</li>
+<li><strong>STUN (Session Traversal Utilities for NAT)</strong>: Client-side mechanism to discover external NAT mapping. Used in WebRTC.</li>
+<li><strong>TURN (Traversal Using Relays around NAT)</strong>: Relay server provides media traversal when direct path is blocked.</li>
+<li><strong>ICE (Interactive Connectivity Establishment)</strong>: Framework combining STUN and TURN to find best media path.</li>
+<li><strong>Session Border Controller (SBC)</strong>: Enterprise-grade NAT traversal, security, and protocol normalization for SIP trunks.</li>
+</ul>
+<h3>6.3 Bandwidth Planning Formula</h3>
+<p>Total voice bandwidth = Concurrent calls × Per-call bandwidth (with overhead)</p>
+<p>Example — G.711, 30 concurrent calls:</p>
+<p>30 × 87 Kbps = 2,610 Kbps = 2.61 Mbps (each direction)</p>
+<p>Add 20% buffer: 2.61 × 1.20 = 3.13 Mbps required per direction.</p>
+<hr />
+<h2>Key Terms Glossary</h2>
+<ul>
+<li><strong>ALG</strong>: Application Layer Gateway — NAT helper for SIP/H.323.</li>
+<li><strong>B2BUA</strong>: Back-to-Back User Agent — terminates and re-originates SIP sessions.</li>
+<li><strong>CAC</strong>: Call Admission Control — prevents voice bandwidth oversubscription.</li>
+<li><strong>CoS</strong>: Class of Service — Layer 2 QoS marking (802.1Q PCP field).</li>
+<li><strong>DSCP</strong>: Differentiated Services Code Point — Layer 3 QoS marking in IP header.</li>
+<li><strong>EF</strong>: Expedited Forwarding — DSCP 46; used for voice RTP.</li>
+<li><strong>G.711</strong>: 64 Kbps uncompressed voice codec; toll-quality.</li>
+<li><strong>G.729</strong>: 8 Kbps compressed voice codec; widely used for WAN.</li>
+<li><strong>Gatekeeper</strong>: H.323 component providing address translation and admission control.</li>
+<li><strong>Jitter</strong>: Variation in packet delay.</li>
+<li><strong>Jitter buffer</strong>: Endpoint buffer that smooths variable packet arrival times.</li>
+<li><strong>LLQ</strong>: Low Latency Queuing — strict priority for voice plus CBWFQ.</li>
+<li><strong>MCU</strong>: Multipoint Control Unit — H.323 conference bridging.</li>
+<li><strong>RTP</strong>: Real-time Transport Protocol — carries voice/video media over UDP.</li>
+<li><strong>RTCP</strong>: RTP Control Protocol — quality monitoring feedback.</li>
+<li><strong>SBC</strong>: Session Border Controller — SIP NAT traversal and security device.</li>
+<li><strong>SDP</strong>: Session Description Protocol — codec and media parameter negotiation.</li>
+<li><strong>SIP</strong>: Session Initiation Protocol — dominant VoIP signaling protocol.</li>
+<li><strong>STUN</strong>: Session Traversal Utilities for NAT.</li>
+<li><strong>UC</strong>: Unified Communications.</li>
+<li><strong>VoIP</strong>: Voice over IP.</li>
+</ul>
+<hr />
+<h2>Review Questions</h2>
+<ol>
+<li>
+<p>What are the four network performance metrics critical for VoIP quality? State the acceptable threshold for each.</p>
+</li>
+<li>
+<p>Calculate the WAN bandwidth required for 45 concurrent G.729 calls including overhead, plus a 20% buffer.</p>
+</li>
+<li>
+<p>Describe the SIP call setup sequence from INVITE to the beginning of RTP media flow.</p>
+</li>
+<li>
+<p>What is the difference between SIP and RTP in a VoIP call? Which handles signaling and which handles media?</p>
+</li>
+<li>
+<p>Compare H.323 and SIP. Give two reasons why SIP has become the dominant modern standard.</p>
+</li>
+<li>
+<p>What is DSCP EF and why is it used for voice RTP specifically?</p>
+</li>
+<li>
+<p>Why is NAT problematic for VoIP, and what are three solutions?</p>
+</li>
+<li>
+<p>What is Low Latency Queuing (LLQ) and why is it preferred over simple priority queuing for VoIP?</p>
+</li>
+<li>
+<p>What is Call Admission Control and what problem does it solve?</p>
+</li>
+<li>
+<p>Explain the trade-off involved in configuring a jitter buffer depth.</p>
+</li>
+</ol>
+</body>
+</html>

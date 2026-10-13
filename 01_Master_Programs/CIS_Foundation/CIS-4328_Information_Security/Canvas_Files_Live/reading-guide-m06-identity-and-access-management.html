@@ -1,0 +1,366 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Reading Guide (M06): Identity and Access Management</title>
+</head>
+<body>
+<h2>Reading Guide (M06): Identity and Access Management</h2>
+<h1>Reading Guide: Module 06 — Identity and Access Management</h1>
+<h2>CIS-4328 Information Security | Texas Wesleyan University</h2>
+<h3>CompTIA Security+ SY0-701 Alignment</h3>
+<hr />
+<h2>Overview</h2>
+<p>This reading guide supports Module 06 of CIS-4328. It covers authentication factors, MFA, SSO, federation protocols (SAML, OAuth 2.0, OIDC), directory services, IAM best practices, access control models, and privileged access management.</p>
+<p>All readings use zero-cost, openly licensed resources.</p>
+<hr />
+<h2>Learning Objectives</h2>
+<p>By the end of this module, you will be able to:</p>
+<ul>
+<li>
+<p>Classify authentication factors by type and explain the requirement for multi-factor authentication.</p>
+</li>
+<li>
+<p>Describe how SSO and federation work, identifying the roles of IdP and SP.</p>
+</li>
+<li>
+<p>Distinguish SAML, OAuth 2.0, and OIDC by use case, token type, and what each provides.</p>
+</li>
+<li>
+<p>Describe LDAP's role as a directory query protocol and explain its relationship to Active Directory.</p>
+</li>
+<li>
+<p>Explain Kerberos ticket-based authentication and contrast it with NTLM challenge-response.</p>
+</li>
+<li>
+<p>Apply least privilege, separation of duties, and access reviews as core IAM best practices.</p>
+</li>
+<li>
+<p>Describe the four access control models (DAC, MAC, RBAC, ABAC) and identify the defining characteristic of each.</p>
+</li>
+<li>
+<p>Explain privileged access management controls including JIT access, PAWs, and password vaulting.</p>
+</li>
+</ul>
+<hr />
+<h2>Primary Readings</h2>
+<h3>Reading 1 — NIST SP 800-63B: Digital Identity Guidelines — Authentication</h3>
+<p>Source: <a href="https://pages.nist.gov/800-63-3/sp800-63b.html">https://pages.nist.gov/800-63-3/sp800-63b.html</a></p>
+<p>Read: Section 4 (Authenticator Assurance Levels) and Section 5 (Authenticator and Verifier Requirements).</p>
+<p>Focus areas:</p>
+<ul>
+<li>
+<p>The three Authenticator Assurance Levels (AAL1, AAL2, AAL3) and what each requires.</p>
+</li>
+<li>
+<p>Why phishing-resistant authenticators (hardware keys, PIV) are designated AAL3.</p>
+</li>
+<li>
+<p>The specific weaknesses of SMS-based OTP (in the context of SIM-swapping attacks).</p>
+</li>
+</ul>
+<h3>Reading 2 — NIST SP 800-162: Guide to Attribute-Based Access Control</h3>
+<p>Source: <a href="https://csrc.nist.gov/publications/detail/sp/800-162/final">https://csrc.nist.gov/publications/detail/sp/800-162/final</a></p>
+<p>Read: Section 3 (ABAC Overview) and Section 4 (ABAC vs. RBAC).</p>
+<p>Focus areas:</p>
+<ul>
+<li>
+<p>The structural differences between RBAC and ABAC.</p>
+</li>
+<li>
+<p>When ABAC provides better security granularity than RBAC.</p>
+</li>
+<li>
+<p>Environmental attributes and their role in context-aware access decisions.</p>
+</li>
+</ul>
+<h3>Reading 3 — CISA Zero Trust Maturity Model</h3>
+<p>Source: <a href="https://www.cisa.gov/zero-trust-maturity-model">https://www.cisa.gov/zero-trust-maturity-model</a></p>
+<p>Read: The Identity pillar section.</p>
+<p>Focus areas:</p>
+<ul>
+<li>
+<p>How IAM underpins the zero trust model.</p>
+</li>
+<li>
+<p>The role of continuous authentication and risk-based access decisions.</p>
+</li>
+<li>
+<p>MFA as a baseline zero-trust requirement.</p>
+</li>
+</ul>
+<hr />
+<h2>Supplemental Readings</h2>
+<h3>Reading 4 — OAuth 2.0 Overview (Auth0 Documentation)</h3>
+<p>Source: <a href="https://auth0.com/intro-to-iam/what-is-oauth-2/">https://auth0.com/intro-to-iam/what-is-oauth-2/</a></p>
+<p>Read: The full article.</p>
+<p>Focus areas:</p>
+<ul>
+<li>
+<p>The distinction between OAuth 2.0 authorization and OIDC authentication.</p>
+</li>
+<li>
+<p>The Authorization Code flow and why it is more secure than the Implicit flow.</p>
+</li>
+<li>
+<p>The PKCE extension and when it is required.</p>
+</li>
+</ul>
+<h3>Reading 5 — Microsoft: How Kerberos Authentication Works</h3>
+<p>Source: <a href="https://learn.microsoft.com/en-us/windows-server/security/kerberos/kerberos-authentication-overview">https://learn.microsoft.com/en-us/windows-server/security/kerberos/kerberos-authentication-overview</a></p>
+<p>Read: The overview and the "Kerberos Authentication Process" section.</p>
+<p>Focus areas:</p>
+<ul>
+<li>
+<p>The three-party model: client, KDC, and service.</p>
+</li>
+<li>
+<p>The TGT and service ticket flow.</p>
+</li>
+<li>
+<p>Why Kerberos is preferred over NTLM for modern AD environments.</p>
+</li>
+</ul>
+<hr />
+<h2>Concept Reference Tables</h2>
+<h3>Table 1 — Authentication Factor Categories</h3>
+<table>
+<thead>
+<tr>
+<th>Factor Type</th>
+<th>Examples</th>
+<th>Exam Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Something you know</td>
+<td>Password, PIN, security question</td>
+<td>Most common; weakest alone</td>
+</tr>
+<tr>
+<td>Something you have</td>
+<td>Smart card, hardware token, OTP app, phone</td>
+<td>TOTP and HOTP are both "have" factors</td>
+</tr>
+<tr>
+<td>Something you are</td>
+<td>Fingerprint, retina, facial recognition, voice</td>
+<td>Biometrics</td>
+</tr>
+<tr>
+<td>Somewhere you are</td>
+<td>Geolocation, IP restriction</td>
+<td>Less common on exam</td>
+</tr>
+<tr>
+<td>Something you do</td>
+<td>Typing rhythm, gait, behavioral biometrics</td>
+<td>Emerging category</td>
+</tr>
+</tbody>
+</table>
+<h3>Table 2 — Federation Protocol Comparison</h3>
+<table>
+<thead>
+<tr>
+<th>Protocol</th>
+<th>Standard</th>
+<th>Token Format</th>
+<th>Primary Use Case</th>
+<th>Provides</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SAML 2.0</td>
+<td>OASIS</td>
+<td>XML</td>
+<td>Enterprise web SSO, B2B</td>
+<td>Authentication + Authorization</td>
+</tr>
+<tr>
+<td>OAuth 2.0</td>
+<td>IETF RFC 6749</td>
+<td>Access Token (opaque or JWT)</td>
+<td>API authorization, delegated access</td>
+<td>Authorization only</td>
+</tr>
+<tr>
+<td>OIDC</td>
+<td>OpenID Foundation</td>
+<td>ID Token (JWT)</td>
+<td>Consumer authentication on OAuth 2.0</td>
+<td>Authentication</td>
+</tr>
+</tbody>
+</table>
+<h3>Table 3 — Access Control Models</h3>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Control Mechanism</th>
+<th>Defining Characteristic</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DAC</td>
+<td>Resource owner discretion</td>
+<td>Owner assigns permissions; flexible but hard to enforce policy</td>
+</tr>
+<tr>
+<td>MAC</td>
+<td>Central authority assigns labels</td>
+<td>Labels on subjects and objects; cannot be overridden by owner</td>
+</tr>
+<tr>
+<td>RBAC</td>
+<td>Role assignment</td>
+<td>Access tied to job role; scalable for enterprises</td>
+</tr>
+<tr>
+<td>ABAC</td>
+<td>Policy evaluated against attributes</td>
+<td>Most flexible; considers user, resource, and environment attributes</td>
+</tr>
+</tbody>
+</table>
+<h3>Table 4 — PAM Control Summary</h3>
+<table>
+<thead>
+<tr>
+<th>Control</th>
+<th>Mechanism</th>
+<th>Risk Addressed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Just-in-Time Access</td>
+<td>Temporary elevation; auto-expires</td>
+<td>Persistent privileged credentials</td>
+</tr>
+<tr>
+<td>Privileged Access Workstation</td>
+<td>Dedicated hardened device</td>
+<td>Credential theft from general-use workstations</td>
+</tr>
+<tr>
+<td>Password Vaulting</td>
+<td>Encrypted storage; auto-rotation</td>
+<td>Password reuse; insider knowledge of credentials</td>
+</tr>
+<tr>
+<td>Session Recording</td>
+<td>Full keystroke/screen capture</td>
+<td>Audit trail; insider threat detection</td>
+</tr>
+<tr>
+<td>Break Glass Account</td>
+<td>Emergency access; sealed</td>
+<td>Unavailability of normal admin access</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>Key Terms and Definitions</h2>
+<p><strong>Authentication</strong> — The process of verifying a claimed identity.</p>
+<p><strong>Authorization</strong> — The process of determining what an authenticated identity is permitted to do.</p>
+<p><strong>MFA (Multi-Factor Authentication)</strong> — Authentication using two or more factors from different categories.</p>
+<p><strong>TOTP</strong> — Time-based One-Time Password; OTP valid for a short time window.</p>
+<p><strong>HOTP</strong> — HMAC-based One-Time Password; OTP valid until used; counter-based.</p>
+<p><strong>Biometrics</strong> — Authentication using physical or behavioral characteristics.</p>
+<p><strong>FAR</strong> — False Acceptance Rate; rate of incorrectly accepting unauthorized users.</p>
+<p><strong>FRR</strong> — False Rejection Rate; rate of incorrectly rejecting authorized users.</p>
+<p><strong>CER</strong> — Crossover Error Rate; point where FAR equals FRR; lower is better.</p>
+<p><strong>SSO</strong> — Single Sign-On; one authentication grants access to multiple systems.</p>
+<p><strong>Identity Provider (IdP)</strong> — The system that authenticates users and issues identity assertions.</p>
+<p><strong>Service Provider (SP)</strong> — The system that relies on the IdP's assertion to grant access.</p>
+<p><strong>SAML</strong> — Security Assertion Markup Language; XML-based SSO standard.</p>
+<p><strong>OAuth 2.0</strong> — Authorization framework allowing delegated access to resources.</p>
+<p><strong>OIDC</strong> — OpenID Connect; identity authentication layer built on OAuth 2.0.</p>
+<p><strong>JWT</strong> — JSON Web Token; compact, signed token format used in OIDC.</p>
+<p><strong>LDAP</strong> — Lightweight Directory Access Protocol; protocol for querying directory services.</p>
+<p><strong>Active Directory</strong> — Microsoft's enterprise directory service; uses LDAP and Kerberos.</p>
+<p><strong>Kerberos</strong> — Ticket-based network authentication protocol used in AD environments.</p>
+<p><strong>NTLM</strong> — NT LAN Manager; legacy challenge-response authentication; fallback in AD.</p>
+<p><strong>Least Privilege</strong> — Users and systems receive only the permissions required for their function.</p>
+<p><strong>Separation of Duties</strong> — No single individual can complete a sensitive transaction alone.</p>
+<p><strong>DAC</strong> — Discretionary Access Control; owner determines access.</p>
+<p><strong>MAC</strong> — Mandatory Access Control; central authority assigns classification labels.</p>
+<p><strong>RBAC</strong> — Role-Based Access Control; access based on organizational role.</p>
+<p><strong>ABAC</strong> — Attribute-Based Access Control; access based on user, resource, and environment attributes.</p>
+<p><strong>PAM</strong> — Privileged Access Management; controls for high-privilege accounts.</p>
+<p><strong>JIT Access</strong> — Just-in-Time Access; temporary elevation of privilege.</p>
+<p><strong>PAW</strong> — Privileged Access Workstation; hardened device for administrative tasks only.</p>
+<p><strong>Offboarding</strong> — The process of revoking access when an employee departs.</p>
+<hr />
+<h2>Security+ Exam Alignment</h2>
+<p>The following SY0-701 exam objectives are covered in this module:</p>
+<ul>
+<li>
+<p>4.1 — Given a scenario, apply common access control concepts.</p>
+</li>
+<li>
+<p>4.2 — Given a scenario, manage identities and authentication.</p>
+</li>
+<li>
+<p>4.3 — Given a scenario, implement and manage authorization.</p>
+</li>
+<li>
+<p>4.4 — Explain the importance of wireless security protocols.</p>
+</li>
+</ul>
+<hr />
+<h2>Critical Thinking Questions</h2>
+<ol>
+<li>
+<p>An employee in the accounting department is transferred to the IT department. After the transfer, their manager requests additional permissions for the new role. Three months later, a security audit finds the employee has accumulated permissions from both roles. What principle has been violated, what is the specific risk, and what process control would have prevented it?</p>
+</li>
+<li>
+<p>A startup is building a consumer-facing mobile app and wants users to be able to log in with their existing Google or Apple accounts. The app will also need to read the user's Google Drive files. Which protocols should be implemented? Explain the role of each protocol and which specific security properties each provides.</p>
+</li>
+<li>
+<p>A hospital uses a shared nursing station account that multiple nurses log in to throughout the day. The account has access to all patient records. Identify all the security and compliance problems this configuration creates. What IAM architecture would you recommend to replace it?</p>
+</li>
+<li>
+<p>An attacker has obtained NTLM hashes from a Windows domain controller using a credential-dumping tool. The attacker does not crack the hashes but uses them directly to authenticate to other systems. What attack technique is this, and what specific controls in the PAM domain would have reduced the risk?</p>
+</li>
+<li>
+<p>A company is evaluating whether to implement RBAC or ABAC for their cloud environment. They need to restrict access based on user department, time of day, geographic location, and the sensitivity classification of the data being accessed. Which model is better suited, and why?</p>
+</li>
+</ol>
+<hr />
+<h2>Review Checklist</h2>
+<p>Before taking the Module 06 quiz, verify you can do each of the following without notes:</p>
+<ul>
+<li>
+<p>Name the five authentication factor types and give one example of each.</p>
+</li>
+<li>
+<p>Explain the difference between FAR and FRR and which is a security problem vs. a usability problem.</p>
+</li>
+<li>
+<p>Describe the SAML authentication flow in four steps.</p>
+</li>
+<li>
+<p>Explain what OAuth 2.0 provides and what it does NOT provide.</p>
+</li>
+<li>
+<p>State how OIDC extends OAuth 2.0 and what the ID token contains.</p>
+</li>
+<li>
+<p>Distinguish Kerberos from NTLM and explain why Kerberos is preferred.</p>
+</li>
+<li>
+<p>Name the four access control models and state the defining characteristic of each.</p>
+</li>
+<li>
+<p>List three PAM controls and explain what risk each addresses.</p>
+</li>
+</ul>
+<hr />
+<p>Module 06 Reading Guide — End</p>
+</body>
+</html>

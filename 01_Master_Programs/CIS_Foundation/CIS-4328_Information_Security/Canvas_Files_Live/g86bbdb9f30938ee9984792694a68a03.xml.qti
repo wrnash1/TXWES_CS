@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/profile/cc/ccv1p1/ccv1p1_qtiasiv1p2p1_v1p0.xsd">
+  <assessment ident="g86bbdb9f30938ee9984792694a68a03" title="Quiz (M15): Security Operations">
+    <qtimetadata>
+      <qtimetadatafield>
+        <fieldlabel>cc_profile</fieldlabel>
+        <fieldentry>cc.exam.v0p1</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_assessmenttype</fieldlabel>
+        <fieldentry>Examination</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_scoretype</fieldlabel>
+        <fieldentry>Percentage</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>cc_maxattempts</fieldlabel>
+        <fieldentry>1</fieldentry>
+      </qtimetadatafield>
+    </qtimetadata>
+    <section ident="root_section">
+      <item ident="g86bbdb9f30938ee9984792694a68a03_q01" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A SOC analyst notices that 92% of daily alerts are automatically closed without investigation because they match known false positive patterns. The remaining 8% are routed to analysts. Which term best describes the technology performing this automated triage and routing?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g86bbdb9f30938ee9984792694a68a03_q01_a">
+                <material>
+                  <mattext texttype="text/plain">SIEM</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g86bbdb9f30938ee9984792694a68a03_q01_b">
+                <material>
+                  <mattext texttype="text/plain">SOAR</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g86bbdb9f30938ee9984792694a68a03_q01_c">
+                <material>
+                  <mattext texttype="text/plain">EDR</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g86bbdb9f30938ee9984792694a68a03_q01_d">
+                <material>
+                  <mattext texttype="text/plain">CASB</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g86bbdb9f30938ee9984792694a68a03_q01_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g86bbdb9f30938ee9984792694a68a03_q02" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A production database server has a critical CVSS 9.8 vulnerability. The vendor patch requires a four-hour maintenance window unavailable for 12 days. Which is the BEST immediate action?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g86bbdb9f30938ee9984792694a68a03_q02_a">
+                <material>
+                  <mattext texttype="text/plain">Accept the risk and schedule the patch for the next available window</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g86bbdb9f30938ee9984792694a68a03_q02_b">
+                <material>
+                  <mattext texttype="text/plain">Take the server offline until the patch can be applied</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g86bbdb9f30938ee9984792694a68a03_q02_c">
+                <material>
+                  <mattext texttype="text/plain">Implement compensating controls such as network segmentation and enhanced monitoring</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g86bbdb9f30938ee9984792694a68a03_q02_d">
+                <material>
+                  <mattext texttype="text/plain">Escalate to the vendor and wait for an emergency patch</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g86bbdb9f30938ee9984792694a68a03_q02_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g86bbdb9f30938ee9984792694a68a03_q03" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;Which of the following BEST describes the difference between a credentialed and an uncredentialed vulnerability scan?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g86bbdb9f30938ee9984792694a68a03_q03_a">
+                <material>
+                  <mattext texttype="text/plain">Credentialed scans run from inside the network; uncredentialed scans run from outside</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g86bbdb9f30938ee9984792694a68a03_q03_b">
+                <material>
+                  <mattext texttype="text/plain">Credentialed scans authenticate to each target and inspect local configuration; uncredentialed scans test only network-accessible services</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g86bbdb9f30938ee9984792694a68a03_q03_c">
+                <material>
+                  <mattext texttype="text/plain">Credentialed scans use active probing; uncredentialed scans use passive traffic analysis</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g86bbdb9f30938ee9984792694a68a03_q03_d">
+                <material>
+                  <mattext texttype="text/plain">Credentialed scans are faster because they skip port discovery</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g86bbdb9f30938ee9984792694a68a03_q03_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g86bbdb9f30938ee9984792694a68a03_q04" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;Which metric measures the elapsed time between when an attack begins and when the SOC first identifies it as a real incident?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g86bbdb9f30938ee9984792694a68a03_q04_a">
+                <material>
+                  <mattext texttype="text/plain">MTTR</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g86bbdb9f30938ee9984792694a68a03_q04_b">
+                <material>
+                  <mattext texttype="text/plain">False positive rate</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g86bbdb9f30938ee9984792694a68a03_q04_c">
+                <material>
+                  <mattext texttype="text/plain">MTTD</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g86bbdb9f30938ee9984792694a68a03_q04_d">
+                <material>
+                  <mattext texttype="text/plain">Patch compliance rate</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g86bbdb9f30938ee9984792694a68a03_q04_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g86bbdb9f30938ee9984792694a68a03_q05" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An organization wants a free, publicly available standard to define minimum security configurations for every new Windows Server before production deployment. Which resource is MOST appropriate?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g86bbdb9f30938ee9984792694a68a03_q05_a">
+                <material>
+                  <mattext texttype="text/plain">DISA STIG for Windows Server</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g86bbdb9f30938ee9984792694a68a03_q05_b">
+                <material>
+                  <mattext texttype="text/plain">CIS Benchmark for Windows Server</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g86bbdb9f30938ee9984792694a68a03_q05_c">
+                <material>
+                  <mattext texttype="text/plain">NIST SP 800-53 control catalog</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g86bbdb9f30938ee9984792694a68a03_q05_d">
+                <material>
+                  <mattext texttype="text/plain">ISO/IEC 27001 Annex A</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g86bbdb9f30938ee9984792694a68a03_q05_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g86bbdb9f30938ee9984792694a68a03_q06" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An investigation reveals a production server was modified outside change control three weeks ago, disabling a key log source. Which control would have MOST effectively prevented this?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g86bbdb9f30938ee9984792694a68a03_q06_a">
+                <material>
+                  <mattext texttype="text/plain">Mandatory CAB approval for all production changes</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g86bbdb9f30938ee9984792694a68a03_q06_b">
+                <material>
+                  <mattext texttype="text/plain">Automated patch deployment using WSUS</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g86bbdb9f30938ee9984792694a68a03_q06_c">
+                <material>
+                  <mattext texttype="text/plain">Weekly vulnerability scanning</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g86bbdb9f30938ee9984792694a68a03_q06_d">
+                <material>
+                  <mattext texttype="text/plain">SIEM alert correlation rules</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g86bbdb9f30938ee9984792694a68a03_q06_a</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g86bbdb9f30938ee9984792694a68a03_q07" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A security manager reports a 97% critical patch compliance rate within 72 hours and a 94% security awareness training completion rate. What type of metrics are these?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g86bbdb9f30938ee9984792694a68a03_q07_a">
+                <material>
+                  <mattext texttype="text/plain">Key Risk Indicators (KRIs)</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g86bbdb9f30938ee9984792694a68a03_q07_b">
+                <material>
+                  <mattext texttype="text/plain">Key Performance Indicators (KPIs)</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g86bbdb9f30938ee9984792694a68a03_q07_c">
+                <material>
+                  <mattext texttype="text/plain">Vulnerability metrics</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g86bbdb9f30938ee9984792694a68a03_q07_d">
+                <material>
+                  <mattext texttype="text/plain">Incident metrics</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g86bbdb9f30938ee9984792694a68a03_q07_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g86bbdb9f30938ee9984792694a68a03_q08" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A SIEM collects logs from 47 systems using different date formats, field names, and severity labels. Before correlation rules can be applied, the SIEM must perform which process?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g86bbdb9f30938ee9984792694a68a03_q08_a">
+                <material>
+                  <mattext texttype="text/plain">Log compression</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g86bbdb9f30938ee9984792694a68a03_q08_b">
+                <material>
+                  <mattext texttype="text/plain">Log encryption</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g86bbdb9f30938ee9984792694a68a03_q08_c">
+                <material>
+                  <mattext texttype="text/plain">Log normalization</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g86bbdb9f30938ee9984792694a68a03_q08_d">
+                <material>
+                  <mattext texttype="text/plain">Log archiving</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g86bbdb9f30938ee9984792694a68a03_q08_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g86bbdb9f30938ee9984792694a68a03_q09" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;Critical patches must be deployed within 72 hours per policy. A critical Apache vulnerability published 96 hours ago is still unpatched because CAB approval took too long. What is the BEST resolution to prevent this conflict in the future?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g86bbdb9f30938ee9984792694a68a03_q09_a">
+                <material>
+                  <mattext texttype="text/plain">Eliminate change control for security patches entirely</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g86bbdb9f30938ee9984792694a68a03_q09_b">
+                <material>
+                  <mattext texttype="text/plain">Define critical security patches as a pre-approved standard change type</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g86bbdb9f30938ee9984792694a68a03_q09_c">
+                <material>
+                  <mattext texttype="text/plain">Extend the critical patch SLA to 14 days</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g86bbdb9f30938ee9984792694a68a03_q09_d">
+                <material>
+                  <mattext texttype="text/plain">Deploy patches directly to production without testing</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g86bbdb9f30938ee9984792694a68a03_q09_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g86bbdb9f30938ee9984792694a68a03_q10" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A SOC team's MTTD has remained at 18 hours despite new SIEM hardware. Investigation reveals correlation rules are 14 months old and alerts from critical systems are suppressed by an outdated filter. Which action MOST directly reduces MTTD?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g86bbdb9f30938ee9984792694a68a03_q10_a">
+                <material>
+                  <mattext texttype="text/plain">Purchase a SOAR platform to automate response</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g86bbdb9f30938ee9984792694a68a03_q10_b">
+                <material>
+                  <mattext texttype="text/plain">Hire additional Tier 1 analysts</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g86bbdb9f30938ee9984792694a68a03_q10_c">
+                <material>
+                  <mattext texttype="text/plain">Update SIEM correlation rules and remove outdated suppression filters</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g86bbdb9f30938ee9984792694a68a03_q10_d">
+                <material>
+                  <mattext texttype="text/plain">Increase vulnerability scanning frequency to daily</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g86bbdb9f30938ee9984792694a68a03_q10_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+    </section>
+  </assessment>
+</questestinterop>

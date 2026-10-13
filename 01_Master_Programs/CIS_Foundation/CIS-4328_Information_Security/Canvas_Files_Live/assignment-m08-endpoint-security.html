@@ -1,0 +1,287 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Assignment: Lab (M08): Endpoint Security</title>
+</head>
+<body>
+<h2>Lab (M08): Endpoint Security</h2>
+<h1>Lab Activity — Module 08: Endpoint Security Analysis and Configuration</h1>
+<h2>CIS-4328 Information Security | Texas Wesleyan University</h2>
+<h3>CompTIA Security+ SY0-701 Alignment | Authorized Educational Use Only</h3>
+<hr />
+<h2>Lab Overview</h2>
+<p><strong>Lab Title:</strong> Endpoint Security Assessment and Hardening Design</p>
+<p><strong>Estimated Completion Time:</strong> 90 minutes</p>
+<p><strong>Submission:</strong> Upload your completed deliverables to Canvas before the module deadline.</p>
+<p><strong>Learning Objectives:</strong></p>
+<ul>
+<li>
+<p>Evaluate an organization's endpoint security posture against CIS Benchmark principles.</p>
+</li>
+<li>
+<p>Design a patch prioritization strategy using CVSS scores and the CISA KEV catalog.</p>
+</li>
+<li>
+<p>Analyze EDR telemetry to reconstruct an attack timeline.</p>
+</li>
+<li>
+<p>Design an MDM policy for a BYOD scenario.</p>
+</li>
+<li>
+<p>Identify application allowlisting gaps and design an improvement.</p>
+</li>
+</ul>
+<hr />
+<h2>Background</h2>
+<p>This lab uses scenario-based analysis. No software is installed, no systems are modified, and all work is document-based. The analytical skills practiced here directly map to Security+ performance-based questions involving endpoint configuration and incident response.</p>
+<hr />
+<h2>Part 1 — CIS Benchmark Audit (20 minutes)</h2>
+<h3>Part 1 Background</h3>
+<p>You have been asked to audit a Windows 10 workstation against selected CIS Benchmark Level 1 controls. The following table shows the CIS control description, the expected configuration, and the current configuration found on the system.</p>
+<table>
+<thead>
+<tr>
+<th>Control</th>
+<th>CIS Level 1 Requirement</th>
+<th>Current Configuration</th>
+<th>Compliant?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Screen lock timeout</td>
+<td>Lock screen after 15 minutes of inactivity</td>
+<td>Set to 60 minutes</td>
+<td>?</td>
+</tr>
+<tr>
+<td>Guest account</td>
+<td>Guest account disabled</td>
+<td>Guest account enabled</td>
+<td>?</td>
+</tr>
+<tr>
+<td>AutoRun</td>
+<td>AutoRun disabled for all drives</td>
+<td>AutoRun enabled</td>
+<td>?</td>
+</tr>
+<tr>
+<td>Minimum password length</td>
+<td>14 characters minimum</td>
+<td>8 characters minimum</td>
+<td>?</td>
+</tr>
+<tr>
+<td>Audit logon events</td>
+<td>Audit success and failure</td>
+<td>Audit disabled</td>
+<td>?</td>
+</tr>
+<tr>
+<td>Remote Registry service</td>
+<td>Disabled</td>
+<td>Running</td>
+<td>?</td>
+</tr>
+<tr>
+<td>Telnet client</td>
+<td>Not installed</td>
+<td>Installed</td>
+<td>?</td>
+</tr>
+</tbody>
+</table>
+<h3>Part 1 Tasks</h3>
+<ol>
+<li>
+<p>Complete the Compliant column for each row.</p>
+</li>
+<li>
+<p>For each non-compliant finding, write a brief explanation (two to three sentences) of the specific security risk the non-compliant configuration creates.</p>
+</li>
+<li>
+<p>Rank the findings by severity from most critical to least critical. Justify your ranking based on the type of attack each misconfiguration enables or facilitates.</p>
+</li>
+<li>
+<p>Two of the findings — AutoRun enabled and the Telnet client installed — are related to a specific attack technique covered in Module 04. Identify the attack technique and explain the connection.</p>
+</li>
+<li>
+<p>What process control would ensure this workstation is checked against the benchmark regularly and that drift is detected automatically? Name the specific type of tool that performs this function.</p>
+</li>
+</ol>
+<h3>Part 1 Deliverable</h3>
+<p>Completed table with compliance column, written explanations for tasks 2 and 4, ranked findings list for task 3, and process control description for task 5.</p>
+<hr />
+<h2>Part 2 — Patch Prioritization Exercise (20 minutes)</h2>
+<h3>Part 2 Background</h3>
+<p>Your organization's vulnerability scanner has produced the following findings. You must prioritize them for patching using CVSS scores and the CISA KEV catalog status.</p>
+<table>
+<thead>
+<tr>
+<th>CVE</th>
+<th>CVSS Score</th>
+<th>Severity</th>
+<th>KEV Catalog</th>
+<th>Affected System</th>
+<th>System Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CVE-2021-44228</td>
+<td>10.0</td>
+<td>Critical</td>
+<td>Yes</td>
+<td>App Server 01</td>
+<td>Internal Java application</td>
+</tr>
+<tr>
+<td>CVE-2023-23397</td>
+<td>9.8</td>
+<td>Critical</td>
+<td>Yes</td>
+<td>Exchange Server</td>
+<td>Corporate email</td>
+</tr>
+<tr>
+<td>CVE-2022-30190</td>
+<td>7.8</td>
+<td>High</td>
+<td>Yes</td>
+<td>All workstations</td>
+<td>Windows</td>
+</tr>
+<tr>
+<td>CVE-2023-36884</td>
+<td>8.8</td>
+<td>High</td>
+<td>No</td>
+<td>All workstations</td>
+<td>Windows</td>
+</tr>
+<tr>
+<td>CVE-2022-41040</td>
+<td>8.8</td>
+<td>High</td>
+<td>Yes</td>
+<td>Exchange Server</td>
+<td>Corporate email</td>
+</tr>
+<tr>
+<td>CVE-2021-34527</td>
+<td>8.8</td>
+<td>High</td>
+<td>Yes</td>
+<td>Print Spooler</td>
+<td>Internal print server</td>
+</tr>
+<tr>
+<td>CVE-2020-1472</td>
+<td>10.0</td>
+<td>Critical</td>
+<td>Yes</td>
+<td>Domain Controller</td>
+<td>Active Directory</td>
+</tr>
+</tbody>
+</table>
+<h3>Part 2 Tasks</h3>
+<ol>
+<li>
+<p>Rank all seven CVEs by patching priority. Justify your ordering using the CVSS score and KEV catalog status for each.</p>
+</li>
+<li>
+<p>CVE-2020-1472 (Zerologon) affects the domain controller. Explain why a domain controller vulnerability should receive special urgency considerations beyond the CVSS score alone.</p>
+</li>
+<li>
+<p>CVE-2023-36884 has a High CVSS score but is NOT on the KEV catalog. Does this mean it should be deprioritized below CVE-2021-34527, which has the same CVSS score and is on the KEV catalog? Explain your reasoning.</p>
+</li>
+<li>
+<p>Patching the Exchange Server requires a four-hour maintenance window that cannot be scheduled for two weeks. CVE-2023-23397 is on the KEV catalog and affects Outlook. What compensating controls would you implement for the two-week period before the patch can be applied?</p>
+</li>
+<li>
+<p>Write a one-paragraph patch management policy statement for this organization that incorporates CVSS thresholds and KEV catalog guidance into a defined patching cadence.</p>
+</li>
+</ol>
+<h3>Part 2 Deliverable</h3>
+<p>Prioritized CVE table with justifications, written answers to tasks 2 and 3, compensating controls for task 4, and policy statement for task 5.</p>
+<hr />
+<h2>Part 3 — EDR Telemetry Analysis (25 minutes)</h2>
+<h3>Part 3 Background</h3>
+<p>Your organization's EDR platform has captured the following telemetry from a Windows workstation during an incident. Events are listed in chronological order.</p>
+<pre><code class="language-text">[08:14:22] Process: outlook.exe spawned child process winword.exe
+[08:14:31] Process: winword.exe opened file: Invoice_Q3.docm
+[08:14:35] Process: winword.exe spawned child process cmd.exe
+[08:14:36] Process: cmd.exe executed: powershell.exe -exec bypass -enc &lt;base64&gt;
+[08:14:38] Network: powershell.exe connected to 91.198.174.55:443 (outbound)
+[08:14:42] File: powershell.exe wrote file C:\Users\user\AppData\Temp\svcs.exe
+[08:14:43] Process: svcs.exe executed
+[08:15:01] Registry: HKCU\Software\Microsoft\Windows\CurrentVersion\Run value added: svcs.exe
+[08:15:15] Network: svcs.exe connected to 185.220.101.47:443 (outbound HTTPS, repeating every 60 seconds)
+[09:43:17] Process: svcs.exe executed net.exe user admin2 Password123! /add
+[09:43:18] Process: svcs.exe executed net.exe localgroup administrators admin2 /add
+[09:44:02] Network: svcs.exe initiated SMB connection to 10.0.2.15 (file server)
+</code></pre>
+<h3>Part 3 Tasks</h3>
+<ol>
+<li>
+<p>Reconstruct the attack timeline in plain language. Describe what happened at each stage without technical jargon — write it as you would for a non-technical executive summary.</p>
+</li>
+<li>
+<p>Map each significant event to a MITRE ATT&amp;CK tactic. You do not need to provide technique IDs — just the tactic name (Initial Access, Execution, Persistence, Command and Control, etc.).</p>
+</li>
+<li>
+<p>The base64-encoded PowerShell command at 08:14:36 is a common obfuscation technique. Why do attackers use base64 encoding for PowerShell commands? What detection technique in the EDR would flag this behavior?</p>
+</li>
+<li>
+<p>At 08:15:15, svcs.exe begins connecting to 185.220.101.47 every 60 seconds. What is this activity called, and what is its purpose in the attack? What network-level control from Module 07 could have detected or prevented this communication?</p>
+</li>
+<li>
+<p>What is the earliest point in this timeline where the attack could have been stopped by a properly configured endpoint security control? Identify the control and explain what it would have done.</p>
+</li>
+</ol>
+<h3>Part 3 Deliverable</h3>
+<p>Written executive summary for task 1, MITRE tactic mapping table for task 2, and written answers for tasks 3, 4, and 5.</p>
+<hr />
+<h2>Part 4 — MDM Policy Design (25 minutes)</h2>
+<h3>Part 4 Background</h3>
+<p>A professional services firm with 300 employees has approved a BYOD policy for mobile devices. Employees may use personal iPhones and Android devices to access corporate email (Microsoft 365), the HR portal, and a project management application (Asana). The firm handles client financial data subject to SOC 2 requirements.</p>
+<h3>Part 4 Tasks</h3>
+<ol>
+<li>
+<p>Recommend MDM or MAM for this scenario and justify your choice. Consider both the security requirements and the employee privacy implications.</p>
+</li>
+<li>
+<p>Design a mobile security policy for this organization. Your policy must address the following requirements: screen lock enforcement, minimum OS version, encryption requirement, remote wipe capability (corporate data only), application restrictions, and VPN requirements for accessing internal systems. For each requirement, specify the control and its technical implementation via MDM/MAM.</p>
+</li>
+<li>
+<p>An employee whose device is enrolled in the MAM program is terminated for cause. The security team suspects the employee may have copied client financial data to personal storage. Describe the steps the security team should take using MDM/MAM capabilities. What can they do, and what are the limitations of MAM in this scenario?</p>
+</li>
+<li>
+<p>Some employees object to any MDM or MAM enrollment, citing privacy concerns. They refuse to enroll their devices. What are the organization's options? Evaluate each option in terms of security effectiveness and employee relations impact.</p>
+</li>
+</ol>
+<h3>Part 4 Deliverable</h3>
+<p>Written justification for task 1, a policy table for task 2 (requirement, control, technical implementation), written response for task 3, and written evaluation of options for task 4.</p>
+<hr />
+<h2>Lab Submission Checklist</h2>
+<p>Before submitting, verify:</p>
+<ul>
+<li>
+<p>Part 1: Completed compliance table, written explanations, ranked findings, and process control description.</p>
+</li>
+<li>
+<p>Part 2: Prioritized CVE table, written answers for tasks 2 and 3, compensating controls for task 4, and policy statement for task 5.</p>
+</li>
+<li>
+<p>Part 3: Executive summary, MITRE tactic table, and written answers for tasks 3, 4, and 5.</p>
+</li>
+<li>
+<p>Part 4: Justification for task 1, policy table for task 2, written responses for tasks 3 and 4.</p>
+</li>
+</ul>
+<hr />
+<p>Module 08 Lab — End</p>
+</body>
+</html>

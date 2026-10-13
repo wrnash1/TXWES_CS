@@ -1,0 +1,291 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Reading Guide (M13): Risk Management</title>
+</head>
+<body>
+<h2>Reading Guide (M13): Risk Management</h2>
+<h1>Reading Guide: Module 13 — Risk Management</h1>
+<h2>Course: CIS-4328 Information Security</h2>
+<p><strong>Certification Alignment:</strong> CompTIA Security+ (SY0-701)</p>
+<hr />
+<h2>Overview</h2>
+<p>This reading guide supports Module 13: Risk Management. You will study the risk vocabulary, qualitative and quantitative risk analysis frameworks, risk response strategies, the risk register, and Business Impact Analysis. These topics map to Security+ Domain 5 (Governance, Risk, and Compliance) and are essential for any security role that involves advising leadership, managing a security program, or producing documentation for audits or compliance.</p>
+<p><strong>Estimated reading and study time:</strong> 2.5 to 3 hours</p>
+<hr />
+<h2>Learning Objectives</h2>
+<p>By the end of this module you should be able to:</p>
+<ul>
+<li>Define and distinguish threat, vulnerability, exploit, risk, likelihood, and impact.</li>
+<li>Perform quantitative risk calculations using the AV/EF/SLE/ARO/ALE formulas.</li>
+<li>Apply a qualitative risk matrix to prioritize risks.</li>
+<li>Identify and select the appropriate risk response strategy for a given scenario.</li>
+<li>Describe the structure and purpose of a risk register.</li>
+<li>Explain what a Business Impact Analysis produces and how it supports continuity planning.</li>
+<li>Distinguish between inherent risk and residual risk.</li>
+</ul>
+<hr />
+<h2>Required Reading</h2>
+<ul>
+<li><strong>NIST SP 800-30 Revision 1</strong> — Guide for Conducting Risk Assessments (free at csrc.nist.gov)</li>
+<li><strong>NIST SP 800-34 Revision 1</strong> — Contingency Planning Guide, Section 3 (BIA)</li>
+<li><strong>ISO/IEC 27005</strong> — Information security risk management overview (summary available via free NIST summaries)</li>
+<li><strong>Professor Messer Security+ SY0-701 Study Guide</strong> — Domain 5 sections on risk management</li>
+</ul>
+<hr />
+<h2>Section A — Risk Vocabulary</h2>
+<h3>Core Terms</h3>
+<p><strong>Threat</strong></p>
+<p>Any potential event or action that could cause harm to an organizational asset. Threats are classified by source:</p>
+<ul>
+<li><strong>Environmental</strong>: Natural disasters, power outages, HVAC failure.</li>
+<li><strong>Human — unintentional</strong>: Employee error, accidental deletion, misconfiguration.</li>
+<li><strong>Human — intentional</strong>: Cyberattacks, insider theft, sabotage.</li>
+</ul>
+<p><strong>Vulnerability</strong></p>
+<p>A weakness in a system, process, or control that reduces its ability to withstand a threat. Vulnerabilities exist in software (unpatched code), configurations (default passwords), processes (no MFA requirement), and physical controls (unlocked server rooms).</p>
+<p>A vulnerability does not cause harm by itself. It requires a threat to exploit it.</p>
+<p><strong>Exploit</strong></p>
+<p>The mechanism by which a threat actor takes advantage of a vulnerability. Exploits may be publicly known (listed in CVE databases) or zero-day (unknown to the vendor).</p>
+<p><strong>Risk</strong></p>
+<p>The probability that a threat will exploit a vulnerability to cause harm to an asset, combined with the magnitude of that harm. Risk is not the threat itself, not the vulnerability itself — it is the intersection of both with their potential impact.</p>
+<p><strong>Asset</strong></p>
+<p>Anything of organizational value that requires protection. The Security+ exam tests five asset categories:</p>
+<ul>
+<li><strong>Tangible</strong>: Hardware, infrastructure.</li>
+<li><strong>Intangible</strong>: Intellectual property, brand, customer trust.</li>
+<li><strong>Data</strong>: Customer records, financial data, proprietary algorithms.</li>
+<li><strong>People</strong>: Employees with specialized knowledge.</li>
+<li><strong>Processes</strong>: Business operations and workflows.</li>
+</ul>
+<p><strong>Impact</strong></p>
+<p>The consequence of a successful threat exploitation. Impact dimensions include:</p>
+<ul>
+<li><strong>Financial</strong>: Direct losses, fines, remediation costs, litigation.</li>
+<li><strong>Reputational</strong>: Customer trust loss, brand damage.</li>
+<li><strong>Operational</strong>: Downtime, productivity loss.</li>
+<li><strong>Regulatory</strong>: Compliance penalties, license revocation.</li>
+<li><strong>Safety</strong>: Physical harm to people or critical infrastructure.</li>
+</ul>
+<p><strong>Likelihood</strong></p>
+<p>The probability that a given threat will successfully exploit a given vulnerability in a defined time period. In qualitative analysis, expressed as High/Medium/Low. In quantitative analysis, expressed as Annual Rate of Occurrence (ARO).</p>
+<hr />
+<h2>Section B — Qualitative Risk Analysis</h2>
+<p>Qualitative risk analysis uses descriptive scales rather than financial figures. It is faster, requires less data, and is more accessible to non-technical stakeholders.</p>
+<h3>Risk Matrix</h3>
+<p>A risk matrix plots likelihood against impact. A 5×5 matrix is common.</p>
+<table>
+<thead>
+<tr>
+<th>Likelihood / Impact</th>
+<th>Negligible (1)</th>
+<th>Minor (2)</th>
+<th>Moderate (3)</th>
+<th>Major (4)</th>
+<th>Catastrophic (5)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Almost Certain (5)</td>
+<td>5</td>
+<td>10</td>
+<td>15</td>
+<td>20</td>
+<td>25</td>
+</tr>
+<tr>
+<td>Likely (4)</td>
+<td>4</td>
+<td>8</td>
+<td>12</td>
+<td>16</td>
+<td>20</td>
+</tr>
+<tr>
+<td>Possible (3)</td>
+<td>3</td>
+<td>6</td>
+<td>9</td>
+<td>12</td>
+<td>15</td>
+</tr>
+<tr>
+<td>Unlikely (2)</td>
+<td>2</td>
+<td>4</td>
+<td>6</td>
+<td>8</td>
+<td>10</td>
+</tr>
+<tr>
+<td>Rare (1)</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+</tr>
+</tbody>
+</table>
+<p>Scores above a defined threshold (e.g., 15) receive priority treatment. Scores below a lower threshold (e.g., 5) may be accepted without treatment.</p>
+<p><strong>Advantages</strong>: Fast, no financial data required, communicates relative priority.</p>
+<p><strong>Disadvantages</strong>: Subjective, does not support cost-benefit analysis for specific controls.</p>
+<hr />
+<h2>Section C — Quantitative Risk Analysis</h2>
+<p>Quantitative risk analysis expresses risk in monetary terms, enabling direct comparison of control cost to risk reduction value.</p>
+<h3>Formulas</h3>
+<p><strong>Asset Value (AV)</strong>: Total value of the asset, including replacement cost, revenue impact of loss, and regulatory/reputational consequences.</p>
+<p><strong>Exposure Factor (EF)</strong>: The percentage of asset value lost if the threat occurs. Expressed as a decimal (0.0 to 1.0).</p>
+<p><strong>Single Loss Expectancy (SLE)</strong>: Expected loss from one occurrence.</p>
+<pre><code>SLE = AV × EF
+</code></pre>
+<p><strong>Annual Rate of Occurrence (ARO)</strong>: Expected number of occurrences per year.</p>
+<p><strong>Annual Loss Expectancy (ALE)</strong>: Expected annual loss from the threat.</p>
+<pre><code>ALE = SLE × ARO
+</code></pre>
+<h3>Worked Example</h3>
+<p>A healthcare organization has a database of patient records with an asset value of $2,000,000. A ransomware attack would render 70% of the data inaccessible until recovered. The organization estimates ransomware attacks occur approximately once every two years.</p>
+<ul>
+<li>AV = $2,000,000</li>
+<li>EF = 0.70</li>
+<li>SLE = $2,000,000 × 0.70 = $1,400,000</li>
+<li>ARO = 0.5 (once every two years)</li>
+<li>ALE = $1,400,000 × 0.5 = $700,000</li>
+</ul>
+<p>If an immutable backup solution costs $80,000 per year and would reduce EF from 70% to 10%:</p>
+<ul>
+<li>New SLE = $2,000,000 × 0.10 = $200,000</li>
+<li>New ALE = $200,000 × 0.5 = $100,000</li>
+<li>ALE reduction = $700,000 − $100,000 = $600,000 per year</li>
+<li>Annual control cost = $80,000</li>
+<li>Net benefit = $520,000 per year</li>
+</ul>
+<p>The control is strongly justified.</p>
+<h3>Value of a Safeguard Formula</h3>
+<pre><code>Value of Safeguard = (Pre-control ALE) − (Post-control ALE) − (Annual cost of safeguard)
+</code></pre>
+<p>A positive value means the safeguard is economically justified.</p>
+<hr />
+<h2>Section D — Risk Response Strategies</h2>
+<p>The four NIST-defined risk response strategies are tested extensively on Security+.</p>
+<h3>Risk Avoidance</h3>
+<p>Eliminating the activity that creates the risk. The risk is removed entirely because the organization stops doing whatever creates the exposure.</p>
+<ul>
+<li><strong>Example</strong>: Discontinuing an unencrypted FTP server and replacing it with SFTP.</li>
+<li><strong>Trade-off</strong>: Losing the business capability the activity provided.</li>
+<li><strong>When to use</strong>: When no treatment can reduce residual risk to within tolerance and the activity is not essential.</li>
+</ul>
+<h3>Risk Transference</h3>
+<p>Shifting the financial consequence of a risk to a third party.</p>
+<ul>
+<li><strong>Cyber insurance</strong>: Pays out in the event of covered incidents. Does not prevent the incident — only compensates the financial loss.</li>
+<li><strong>Contractual transfer</strong>: Contracts that assign liability to vendors for breaches resulting from their negligence.</li>
+<li><strong>When to use</strong>: When the risk cannot be fully mitigated but financial exposure can be shared or shifted.</li>
+</ul>
+<h3>Risk Mitigation</h3>
+<p>Reducing the likelihood and/or impact of a risk through the application of controls.</p>
+<ul>
+<li><strong>Reducing likelihood</strong>: Patching vulnerabilities, implementing MFA, network segmentation.</li>
+<li><strong>Reducing impact</strong>: Backups, incident response plan, data encryption (reduces impact of exfiltration).</li>
+<li><strong>Residual risk</strong>: Mitigation never eliminates all risk. The remaining risk after controls are applied is residual risk.</li>
+<li><strong>When to use</strong>: The most common response — applied to risks within the control of the organization.</li>
+</ul>
+<h3>Risk Acceptance</h3>
+<p>Acknowledging a risk and deciding not to take additional action.</p>
+<ul>
+<li><strong>Formal acceptance</strong>: Documented decision by an authorized executive that the residual risk is within tolerance.</li>
+<li><strong>When to use</strong>: When the cost of treatment exceeds the value of the asset or when risk is within tolerance.</li>
+<li><strong>Risk acceptance is not ignorance</strong>: Acceptance requires awareness. Undocumented tolerance of risk is not acceptance — it is a control failure.</li>
+</ul>
+<hr />
+<h2>Section E — Inherent Risk vs. Residual Risk</h2>
+<p><strong>Inherent risk</strong>: The risk level before any controls are applied. Raw exposure.</p>
+<p><strong>Residual risk</strong>: The risk level remaining after controls are applied.</p>
+<pre><code>Residual Risk = Inherent Risk − Risk Reduction from Controls
+</code></pre>
+<p>The goal of a security program is to reduce inherent risk to residual risk that falls within the organization's risk tolerance through appropriate mitigation, with formal acceptance of whatever remains.</p>
+<p><strong>Control risk</strong> is the additional risk introduced when a control fails. A backup that has never been tested has control risk — it may not work when needed.</p>
+<hr />
+<h2>Section F — Risk Register</h2>
+<p>A risk register is the central artifact of a risk management program.</p>
+<h3>Key Fields</h3>
+<ul>
+<li><strong>Risk ID</strong>: Unique identifier.</li>
+<li><strong>Risk Description</strong>: What could happen and why.</li>
+<li><strong>Category</strong>: Technical, operational, regulatory, reputational.</li>
+<li><strong>Likelihood</strong>: H/M/L or ARO value.</li>
+<li><strong>Impact</strong>: H/M/L or ALE value.</li>
+<li><strong>Risk Score</strong>: Likelihood × Impact.</li>
+<li><strong>Risk Response</strong>: Avoid/Transfer/Mitigate/Accept.</li>
+<li><strong>Controls in Place</strong>: Existing mitigating controls.</li>
+<li><strong>Residual Risk Score</strong>: After-control risk level.</li>
+<li><strong>Risk Owner</strong>: Accountable person.</li>
+<li><strong>Treatment Deadline</strong>: When treatment is due.</li>
+<li><strong>Status</strong>: Open/In Progress/Closed.</li>
+</ul>
+<p>The risk register enables consistent tracking, executive reporting, and audit evidence. It is reviewed and updated on a defined schedule.</p>
+<hr />
+<h2>Section G — Business Impact Analysis</h2>
+<p>The BIA identifies critical business functions and determines the impact of their disruption. It produces the input parameters for business continuity and disaster recovery planning.</p>
+<h3>BIA Key Terms</h3>
+<p><strong>MTD (Maximum Tolerable Downtime)</strong>: The maximum time a business function can be disrupted before the organization suffers unacceptable harm. Recovery targets must be set shorter than MTD.</p>
+<p><strong>RTO (Recovery Time Objective)</strong>: The target time to restore a function after a disruption. RTO must be less than MTD.</p>
+<p><strong>RPO (Recovery Point Objective)</strong>: The maximum acceptable data loss measured in time. If RPO is 2 hours, backups must occur at least every 2 hours.</p>
+<p><strong>MTBF (Mean Time Between Failures)</strong>: Average time between system failures.</p>
+<p><strong>MTTF (Mean Time to Failure)</strong>: Average lifespan of a non-repairable component.</p>
+<p><strong>MTTR (Mean Time to Repair/Recover)</strong>: Average time to restore a failed system.</p>
+<h3>BIA Process</h3>
+<ol>
+<li>Identify business functions and supporting systems.</li>
+<li>Assign criticality ratings.</li>
+<li>Establish MTD, RTO, and RPO for each critical function.</li>
+<li>Identify dependencies and single points of failure.</li>
+<li>Document minimum resource requirements for each function during disruption.</li>
+</ol>
+<hr />
+<h2>Key Terms</h2>
+<ul>
+<li><strong>Threat</strong>: Potential event causing harm to assets</li>
+<li><strong>Vulnerability</strong>: Weakness exploitable by a threat</li>
+<li><strong>Exploit</strong>: Mechanism that takes advantage of a vulnerability</li>
+<li><strong>Risk</strong>: Probability of harm × magnitude of harm</li>
+<li><strong>Asset Value (AV)</strong>: Dollar value of an asset</li>
+<li><strong>Exposure Factor (EF)</strong>: Percentage of asset value lost per incident</li>
+<li><strong>SLE (Single Loss Expectancy)</strong>: AV × EF</li>
+<li><strong>ARO (Annual Rate of Occurrence)</strong>: Expected incidents per year</li>
+<li><strong>ALE (Annual Loss Expectancy)</strong>: SLE × ARO</li>
+<li><strong>Risk matrix</strong>: Qualitative grid of likelihood vs. impact</li>
+<li><strong>Risk avoidance</strong>: Eliminating the risky activity</li>
+<li><strong>Risk transference</strong>: Shifting financial impact (e.g., cyber insurance)</li>
+<li><strong>Risk mitigation</strong>: Reducing likelihood or impact with controls</li>
+<li><strong>Risk acceptance</strong>: Formal decision to accept residual risk</li>
+<li><strong>Inherent risk</strong>: Risk before controls</li>
+<li><strong>Residual risk</strong>: Risk remaining after controls</li>
+<li><strong>Risk register</strong>: Central document tracking all identified risks</li>
+<li><strong>BIA (Business Impact Analysis)</strong>: Analysis of business function criticality</li>
+<li><strong>MTD</strong>: Maximum Tolerable Downtime</li>
+<li><strong>RTO</strong>: Recovery Time Objective</li>
+<li><strong>RPO</strong>: Recovery Point Objective</li>
+</ul>
+<hr />
+<h2>Review Questions</h2>
+<ol>
+<li>What is the formula for ALE, and what does each variable represent?</li>
+<li>An asset is worth $400,000. A flood would destroy 40% of its value. Floods occur on average once every five years. Calculate SLE and ALE.</li>
+<li>A $50,000 per year flood control system would reduce EF from 40% to 5%. Using your ALE from Question 2, calculate the value of the safeguard.</li>
+<li>What is the difference between qualitative and quantitative risk analysis? Give one advantage of each.</li>
+<li>Describe the four risk response strategies. Give a real-world example of each.</li>
+<li>What is the difference between inherent risk and residual risk?</li>
+<li>What is the purpose of formal risk acceptance documentation?</li>
+<li>What is the relationship between MTD and RTO?</li>
+<li>What does a risk register contain, and how often should it be updated?</li>
+<li>What is the difference between risk tolerance and risk appetite?</li>
+</ol>
+<hr />
+<h2>Certification Exam Tip</h2>
+<p>Security+ SY0-701 heavily tests risk calculations. You must be able to compute SLE, ALE, and value of a safeguard from provided values without a formula sheet. Practice working through calculation scenarios until the formulas are automatic. For risk response, expect scenario questions like "The organization purchases cyber insurance to cover financial losses from a data breach — which risk strategy is this?" (transference). Know the specific definitions cold.</p>
+<hr />
+<p><em>End of Reading Guide — Module 13</em></p>
+</body>
+</html>

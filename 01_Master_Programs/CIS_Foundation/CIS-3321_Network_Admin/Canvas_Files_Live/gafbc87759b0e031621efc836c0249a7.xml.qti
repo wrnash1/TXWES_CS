@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/profile/cc/ccv1p1/ccv1p1_qtiasiv1p2p1_v1p0.xsd">
+  <assessment ident="gafbc87759b0e031621efc836c0249a7" title="Quiz (M01): Networking Fundamentals and the OSI Model">
+    <qtimetadata>
+      <qtimetadatafield>
+        <fieldlabel>cc_profile</fieldlabel>
+        <fieldentry>cc.exam.v0p1</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_assessmenttype</fieldlabel>
+        <fieldentry>Examination</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_scoretype</fieldlabel>
+        <fieldentry>Percentage</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>cc_maxattempts</fieldlabel>
+        <fieldentry>1</fieldentry>
+      </qtimetadatafield>
+    </qtimetadata>
+    <section ident="root_section">
+      <item ident="gafbc87759b0e031621efc836c0249a7_q01" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;Which layer of the OSI model is responsible for routing packets across multiple logical networks using IP addressing?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gafbc87759b0e031621efc836c0249a7_q01_a">
+                <material>
+                  <mattext texttype="text/plain">Layer 2 (Data Link Layer)</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gafbc87759b0e031621efc836c0249a7_q01_b">
+                <material>
+                  <mattext texttype="text/plain">Layer 3 (Network Layer)</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gafbc87759b0e031621efc836c0249a7_q01_c">
+                <material>
+                  <mattext texttype="text/plain">Layer 4 (Transport Layer)</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gafbc87759b0e031621efc836c0249a7_q01_d">
+                <material>
+                  <mattext texttype="text/plain">Layer 7 (Application Layer)</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gafbc87759b0e031621efc836c0249a7_q01_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gafbc87759b0e031621efc836c0249a7_q02" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A network administrator is documenting the OSI model for a training session. Which of the following correctly identifies the Protocol Data Unit (PDU) and the primary device associated with Layer 2 of the OSI model?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gafbc87759b0e031621efc836c0249a7_q02_a">
+                <material>
+                  <mattext texttype="text/plain">PDU: Packet; Device: Router</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gafbc87759b0e031621efc836c0249a7_q02_b">
+                <material>
+                  <mattext texttype="text/plain">PDU: Segment; Device: Firewall</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gafbc87759b0e031621efc836c0249a7_q02_c">
+                <material>
+                  <mattext texttype="text/plain">PDU: Frame; Device: Switch</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gafbc87759b0e031621efc836c0249a7_q02_d">
+                <material>
+                  <mattext texttype="text/plain">PDU: Bit; Device: Hub</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gafbc87759b0e031621efc836c0249a7_q02_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gafbc87759b0e031621efc836c0249a7_q03" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A network engineer needs to map and trace the exact path of router hops that packets travel to reach a target destination. Which of the following commands is the most appropriate?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gafbc87759b0e031621efc836c0249a7_q03_a">
+                <material>
+                  <mattext texttype="text/plain">traceroute</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gafbc87759b0e031621efc836c0249a7_q03_b">
+                <material>
+                  <mattext texttype="text/plain">ping</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gafbc87759b0e031621efc836c0249a7_q03_c">
+                <material>
+                  <mattext texttype="text/plain">netstat -ano</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gafbc87759b0e031621efc836c0249a7_q03_d">
+                <material>
+                  <mattext texttype="text/plain">nslookup</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gafbc87759b0e031621efc836c0249a7_q03_a</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gafbc87759b0e031621efc836c0249a7_q04" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A user reports they cannot browse the internet but can ping 8.8.8.8 by IP address successfully. Which of the following is the most likely cause?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gafbc87759b0e031621efc836c0249a7_q04_a">
+                <material>
+                  <mattext texttype="text/plain">The default gateway is misconfigured.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gafbc87759b0e031621efc836c0249a7_q04_b">
+                <material>
+                  <mattext texttype="text/plain">The network cable is unplugged.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gafbc87759b0e031621efc836c0249a7_q04_c">
+                <material>
+                  <mattext texttype="text/plain">DNS resolution is failing because the configured DNS server is unreachable.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gafbc87759b0e031621efc836c0249a7_q04_d">
+                <material>
+                  <mattext texttype="text/plain">The user's subnet mask does not match the rest of the network.</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gafbc87759b0e031621efc836c0249a7_q04_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gafbc87759b0e031621efc836c0249a7_q05" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;When securing a network against attackers connecting rogue devices directly to internal switch ports, which of the following security controls is the most appropriate first line of defense?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gafbc87759b0e031621efc836c0249a7_q05_a">
+                <material>
+                  <mattext texttype="text/plain">Implement switch Port Security to restrict access to switch ports based on approved MAC addresses.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gafbc87759b0e031621efc836c0249a7_q05_b">
+                <material>
+                  <mattext texttype="text/plain">Configure SSH (port 22) for terminal access and HTTPS (port 443) for web interfaces, disabling Telnet and HTTP.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gafbc87759b0e031621efc836c0249a7_q05_c">
+                <material>
+                  <mattext texttype="text/plain">Enable 802.1X Network Access Control (NAC) to require authentication before any device is granted network access.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gafbc87759b0e031621efc836c0249a7_q05_d">
+                <material>
+                  <mattext texttype="text/plain">Deploy an Intrusion Prevention System (IPS) to detect and block malicious traffic signatures inline.</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gafbc87759b0e031621efc836c0249a7_q05_a</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gafbc87759b0e031621efc836c0249a7_q06" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A technician is reviewing a network diagram and observes that all devices connect to a single central switch via dedicated cables. If the central switch loses power, all communication on the network stops. Which topology does this describe?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gafbc87759b0e031621efc836c0249a7_q06_a">
+                <material>
+                  <mattext texttype="text/plain">Bus topology</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gafbc87759b0e031621efc836c0249a7_q06_b">
+                <material>
+                  <mattext texttype="text/plain">Mesh topology</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gafbc87759b0e031621efc836c0249a7_q06_c">
+                <material>
+                  <mattext texttype="text/plain">Ring topology</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gafbc87759b0e031621efc836c0249a7_q06_d">
+                <material>
+                  <mattext texttype="text/plain">Star topology</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gafbc87759b0e031621efc836c0249a7_q06_d</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gafbc87759b0e031621efc836c0249a7_q07" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;During troubleshooting, a technician applies the bottom-up OSI model approach. A workstation cannot communicate on the network. The technician observes that the NIC link light is not lit. At which OSI layer should the technician focus first?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gafbc87759b0e031621efc836c0249a7_q07_a">
+                <material>
+                  <mattext texttype="text/plain">Layer 3 – Network</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gafbc87759b0e031621efc836c0249a7_q07_b">
+                <material>
+                  <mattext texttype="text/plain">Layer 2 – Data Link</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gafbc87759b0e031621efc836c0249a7_q07_c">
+                <material>
+                  <mattext texttype="text/plain">Layer 1 – Physical</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gafbc87759b0e031621efc836c0249a7_q07_d">
+                <material>
+                  <mattext texttype="text/plain">Layer 4 – Transport</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gafbc87759b0e031621efc836c0249a7_q07_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gafbc87759b0e031621efc836c0249a7_q08" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;Which of the following best describes the process of encapsulation in the OSI model?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gafbc87759b0e031621efc836c0249a7_q08_a">
+                <material>
+                  <mattext texttype="text/plain">Stripping protocol headers from data as it moves up the OSI stack at the receiving device.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gafbc87759b0e031621efc836c0249a7_q08_b">
+                <material>
+                  <mattext texttype="text/plain">Adding protocol headers at each layer as data moves down the OSI stack toward the physical medium.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gafbc87759b0e031621efc836c0249a7_q08_c">
+                <material>
+                  <mattext texttype="text/plain">Compressing data at Layer 6 to reduce the size of packets for more efficient transmission.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gafbc87759b0e031621efc836c0249a7_q08_d">
+                <material>
+                  <mattext texttype="text/plain">Translating a hostname into an IP address before a packet is transmitted.</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gafbc87759b0e031621efc836c0249a7_q08_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gafbc87759b0e031621efc836c0249a7_q09" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A host running Windows cannot establish a TCP connection to a web server. A packet capture shows the host sending a SYN packet but never receiving a SYN-ACK. Which phase of the TCP connection process has failed?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gafbc87759b0e031621efc836c0249a7_q09_a">
+                <material>
+                  <mattext texttype="text/plain">The three-way handshake is complete; the failure is in data transfer.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gafbc87759b0e031621efc836c0249a7_q09_b">
+                <material>
+                  <mattext texttype="text/plain">The server has not acknowledged the initial connection request, so the handshake was never completed.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gafbc87759b0e031621efc836c0249a7_q09_c">
+                <material>
+                  <mattext texttype="text/plain">The client sent an ACK before the SYN, violating TCP sequence rules.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gafbc87759b0e031621efc836c0249a7_q09_d">
+                <material>
+                  <mattext texttype="text/plain">The connection failed because UDP was used instead of TCP for this web session.</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gafbc87759b0e031621efc836c0249a7_q09_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gafbc87759b0e031621efc836c0249a7_q10" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An administrator needs to identify which OSI layer a specific network problem affects. A switch is receiving frames but forwarding them to the wrong ports, flooding traffic everywhere. Which layer is experiencing this problem?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gafbc87759b0e031621efc836c0249a7_q10_a">
+                <material>
+                  <mattext texttype="text/plain">Layer 1 – Physical</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gafbc87759b0e031621efc836c0249a7_q10_b">
+                <material>
+                  <mattext texttype="text/plain">Layer 2 – Data Link</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gafbc87759b0e031621efc836c0249a7_q10_c">
+                <material>
+                  <mattext texttype="text/plain">Layer 3 – Network</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gafbc87759b0e031621efc836c0249a7_q10_d">
+                <material>
+                  <mattext texttype="text/plain">Layer 4 – Transport</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gafbc87759b0e031621efc836c0249a7_q10_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+    </section>
+  </assessment>
+</questestinterop>

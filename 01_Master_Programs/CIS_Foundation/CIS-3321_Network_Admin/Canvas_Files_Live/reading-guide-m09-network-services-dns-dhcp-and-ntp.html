@@ -1,0 +1,292 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Reading Guide (M09): Network Services: DNS, DHCP, and NTP</title>
+</head>
+<body>
+<h2>Reading Guide (M09): Network Services: DNS, DHCP, and NTP</h2>
+<h1>Reading Guide: Module 09 — Network Services: DNS, DHCP, and NTP</h1>
+<h2>Course: CIS-3321 Network Administration</h2>
+<p>Certification Alignment: CompTIA Network+ (N10-009)</p>
+<hr />
+<h3>Introduction</h3>
+<p>Module 09 covers three foundational network services that every host depends on: DNS (name resolution), DHCP (automatic IP address assignment), and NTP (time synchronization). These services are individually invisible when working and catastrophic when broken. Together, they underpin authentication, connectivity, and nearly every higher-layer application. DNS, DHCP, and NTP topics appear in Domain 1 (Networking Concepts), Domain 2 (Network Implementation), and Domain 5 (Network Troubleshooting) of the CompTIA Network+ N10-009 exam.</p>
+<hr />
+<h3>1. Core Vocabulary</h3>
+<p>DNS (Domain Name System) — The distributed hierarchical system that translates human-readable hostnames (<code>www.example.com</code>) into IP addresses (<code>93.184.216.34</code>) and back.</p>
+<p>DNS resolver — A client-side or recursive-server component that performs DNS queries on behalf of end-user applications. Also called a recursive resolver or caching name server.</p>
+<p>Authoritative name server — The DNS server that holds the official DNS zone records for a domain. It is the final source of truth for that domain's records.</p>
+<p>Root name server — Thirteen logical name server clusters at the top of the DNS hierarchy. They respond to queries for the root zone and refer resolvers to the correct TLD name server. Operated by IANA.</p>
+<p>TLD name server — Name servers responsible for a top-level domain such as .com, .org, .edu, or .net. They refer resolvers to the authoritative name server for the specific domain.</p>
+<p>Zone — A portion of the DNS namespace managed by a specific authoritative name server. A zone contains resource records for a domain and its subdomains.</p>
+<p>Forward lookup zone — Resolves hostnames to IP addresses (the most common direction).</p>
+<p>Reverse lookup zone — Resolves IP addresses back to hostnames. Uses the in-addr.arpa domain. Requires PTR records.</p>
+<p>Resource record (RR) — An entry in a DNS zone. Each record has a name, type, class, TTL, and data field.</p>
+<p>TTL (Time to Live) — The number of seconds a DNS response can be cached by a resolver before it must be re-queried. Lower TTL = more frequent re-queries. Higher TTL = less DNS traffic but slower propagation of changes.</p>
+<p>Non-authoritative answer — A DNS response served from a resolver's cache rather than directly from the authoritative name server. This is normal behavior and does not indicate incorrect data.</p>
+<p>NXDOMAIN — The DNS response code returned when a queried hostname does not exist in DNS. Distinct from a server error.</p>
+<p>Recursive query — A DNS query in which the client asks the resolver to perform the full resolution process and return a complete answer.</p>
+<p>Iterative query — A DNS query in which the server returns either the answer or a referral to another server. The querying resolver follows each referral itself.</p>
+<p>DHCP (Dynamic Host Configuration Protocol) — A protocol that automatically assigns IP addresses and network configuration parameters (subnet mask, default gateway, DNS server, lease time) to clients. Operates over UDP ports 67 (server) and 68 (client).</p>
+<p>DORA — The four-message DHCP exchange: Discover (client broadcasts), Offer (server responds with proposed address), Request (client accepts the offer), Acknowledgment (server confirms the assignment).</p>
+<p>DHCP lease — The time period during which a client is permitted to use the assigned IP address. After 50% of the lease expires, the client attempts to renew with the same server.</p>
+<p>DHCP scope — A defined range of IP addresses a DHCP server can assign to clients on a specific subnet.</p>
+<p>DHCP reservation — A static DHCP assignment that maps a specific client MAC address to a specific IP address, ensuring the client always receives the same address via DHCP.</p>
+<p>DHCP relay agent (ip helper-address) — A router configuration that forwards DHCP broadcast messages across subnet boundaries to a DHCP server on a different subnet.</p>
+<p>APIPA (Automatic Private IP Addressing) — Windows feature that assigns a self-configured address in the 169.254.0.0/16 range when no DHCP server is reachable. APIPA hosts cannot communicate outside the local link.</p>
+<p>DHCP snooping — A Layer 2 switch security feature that filters DHCP messages on untrusted ports, blocking rogue DHCP server responses from unauthorized devices.</p>
+<p>NTP (Network Time Protocol) — The protocol used to synchronize clocks across network devices. Uses UDP port 123.</p>
+<p>Stratum — A measure of an NTP source's accuracy and distance from a reference clock. Stratum 0 = atomic/GPS reference (not on network). Stratum 1 = primary server directly connected to stratum 0. Stratum 2 = synchronized to stratum 1. Each hop adds one to the stratum number.</p>
+<p>Clock skew — The difference between a client's current clock and the correct time as reported by an NTP server.</p>
+<p>Kerberos — The authentication protocol used by Active Directory Windows domains. Requires all participants to have synchronized clocks. Authentication fails if clock skew exceeds 5 minutes (default maximum tolerance).</p>
+<p>Static NAT — A permanent one-to-one mapping between a private IP address and a specific public IP address. Used for servers that must be reachable at a consistent public address.</p>
+<p>Dynamic NAT — A many-to-many NAT configuration in which internal hosts are assigned public IPs from a pool when they initiate connections. The assigned public IP changes each session.</p>
+<p>PAT (Port Address Translation) — Also called NAT Overload. Many internal hosts share a single public IP address, differentiated by unique source port numbers. The standard deployment method for outbound internet access.</p>
+<p>IPAM (IP Address Management) — Software or systems used to track, manage, and audit IP address allocation across a network. Often integrates with DHCP and DNS.</p>
+<p>DDNS (Dynamic DNS) — A service that automatically updates DNS A records when a host's IP address changes. Used when DHCP assigns addresses dynamically but DNS must remain current.</p>
+<hr />
+<h3>2. DNS Record Types</h3>
+<table>
+<thead>
+<tr>
+<th>Record Type</th>
+<th>Full Name</th>
+<th>Purpose</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>Address</td>
+<td>Maps hostname to IPv4 address</td>
+<td><code>www.example.com</code> → <code>93.184.216.34</code></td>
+</tr>
+<tr>
+<td>AAAA</td>
+<td>IPv6 Address</td>
+<td>Maps hostname to IPv6 address</td>
+<td><code>www.example.com</code> → <code>2606:2800::/32</code></td>
+</tr>
+<tr>
+<td>CNAME</td>
+<td>Canonical Name</td>
+<td>Creates an alias to another hostname</td>
+<td><code>ftp.example.com</code> → <code>www.example.com</code></td>
+</tr>
+<tr>
+<td>MX</td>
+<td>Mail Exchanger</td>
+<td>Identifies mail server for a domain; includes priority value</td>
+<td><code>example.com</code> MX 10 <code>mail.example.com</code></td>
+</tr>
+<tr>
+<td>NS</td>
+<td>Name Server</td>
+<td>Identifies authoritative name servers for a zone</td>
+<td><code>example.com</code> NS <code>ns1.example.com</code></td>
+</tr>
+<tr>
+<td>PTR</td>
+<td>Pointer</td>
+<td>Reverse lookup: maps IP to hostname</td>
+<td><code>34.216.184.93.in-addr.arpa</code> → <code>www.example.com</code></td>
+</tr>
+<tr>
+<td>TXT</td>
+<td>Text</td>
+<td>Stores arbitrary text; used for SPF, DKIM, DMARC</td>
+<td><code>v=spf1 include:example.com ~all</code></td>
+</tr>
+<tr>
+<td>SOA</td>
+<td>Start of Authority</td>
+<td>Zone metadata: primary NS, admin email, serial, refresh/retry/expire timers</td>
+<td>One per zone</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>3. DNS Resolution Hierarchy</h3>
+<p>When a resolver has no cached answer, it follows this path:</p>
+<p>Step 1 — Client queries the local recursive resolver (configured by DHCP or manually).</p>
+<p>Step 2 — Resolver queries a root name server for the TLD (.com, .org, etc.). Root server returns a referral to the correct TLD name server.</p>
+<p>Step 3 — Resolver queries the TLD name server (e.g., .com). TLD server returns a referral to the domain's authoritative name server.</p>
+<p>Step 4 — Resolver queries the authoritative name server for the domain (e.g., example.com). Authoritative server returns the final answer.</p>
+<p>Step 5 — Resolver caches the response (per TTL) and returns the answer to the client.</p>
+<p>Step 6 — Client receives the IP address and initiates a connection.</p>
+<hr />
+<h3>4. DHCP DORA Process</h3>
+<table>
+<thead>
+<tr>
+<th>Message</th>
+<th>Sender</th>
+<th>Destination</th>
+<th>Content</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Discover</td>
+<td>Client</td>
+<td>255.255.255.255 (broadcast)</td>
+<td>"I need an IP address" — no source IP yet</td>
+</tr>
+<tr>
+<td>Offer</td>
+<td>Server</td>
+<td>255.255.255.255 (broadcast)</td>
+<td>"Here is 192.168.1.10, lease 8 hours"</td>
+</tr>
+<tr>
+<td>Request</td>
+<td>Client</td>
+<td>255.255.255.255 (broadcast)</td>
+<td>"I accept the offer from server 192.168.1.1"</td>
+</tr>
+<tr>
+<td>Acknowledgment</td>
+<td>Server</td>
+<td>Client IP or broadcast</td>
+<td>"Confirmed. Use 192.168.1.10 for 8 hours"</td>
+</tr>
+</tbody>
+</table>
+<p>Note: Discover and Request are broadcast because the client has no IP address yet. Multiple DHCP servers may send Offers; the client selects one and broadcasts the Request to inform all servers which offer was accepted.</p>
+<hr />
+<h3>5. DHCP Relay Agent Operation</h3>
+<p>DHCP uses broadcast. Routers do not forward broadcasts by default. When a DHCP client is on a different subnet than the DHCP server, a relay agent is required.</p>
+<p>The ip helper-address command on a Cisco router interface:</p>
+<ul>
+<li>Intercepts DHCP Discover broadcasts arriving on that interface</li>
+<li>Converts the broadcast to a unicast packet addressed to the DHCP server</li>
+<li>Inserts the giaddr (gateway interface address) field — the IP of the router's interface facing the client</li>
+<li>Forwards the unicast packet to the DHCP server</li>
+</ul>
+<p>The DHCP server uses the giaddr to determine which scope to assign from. Each relay-facing interface IP must correspond to a subnet that has a configured scope on the DHCP server.</p>
+<hr />
+<h3>6. NTP Stratum Hierarchy</h3>
+<table>
+<thead>
+<tr>
+<th>Stratum</th>
+<th>Description</th>
+<th>Example</th>
+<th>Typical Accuracy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Reference clock (not on network)</td>
+<td>GPS receiver, atomic clock, CDMA signal</td>
+<td>Nanoseconds</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Primary NTP server, directly connected to stratum 0</td>
+<td>time.nist.gov</td>
+<td>Microseconds</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Synchronized to stratum 1</td>
+<td>Corporate NTP server</td>
+<td>Milliseconds</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Synchronized to stratum 2</td>
+<td>Branch office NTP server</td>
+<td>Milliseconds</td>
+</tr>
+<tr>
+<td>4–15</td>
+<td>Successively further from reference</td>
+<td>Client workstations</td>
+<td>Varies</td>
+</tr>
+<tr>
+<td>16</td>
+<td>Unsynchronized</td>
+<td>A device that has lost its time source</td>
+<td>N/A</td>
+</tr>
+</tbody>
+</table>
+<p>Kerberos authentication in Active Directory requires all domain members to be within 5 minutes of domain controller time. When clock skew exceeds this threshold, Kerberos tickets are rejected and authentication fails. The "clock skew too great" error is a Kerberos-specific error, not a generic NTP error.</p>
+<hr />
+<h3>7. NAT Comparison Table</h3>
+<table>
+<thead>
+<tr>
+<th>NAT Type</th>
+<th>Mapping</th>
+<th>Use Case</th>
+<th>Public IP Stability</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Static NAT</td>
+<td>1 private → 1 public (permanent)</td>
+<td>Servers requiring fixed public address</td>
+<td>Always the same</td>
+</tr>
+<tr>
+<td>Dynamic NAT</td>
+<td>1 private → 1 public (from pool, per session)</td>
+<td>Outbound access when public IPs available</td>
+<td>Changes per session</td>
+</tr>
+<tr>
+<td>PAT / NAT Overload</td>
+<td>Many private → 1 public (differentiated by port)</td>
+<td>Outbound internet access for entire network</td>
+<td>Shared single IP</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>8. Exam Tips</h3>
+<p>Exam Tip 1: DHCP uses UDP 67 (server) and UDP 68 (client). DNS uses UDP 53 for queries and TCP 53 for zone transfers. NTP uses UDP 123. These port numbers appear on the exam.</p>
+<p>Exam Tip 2: APIPA range is 169.254.0.0/16. Any workstation showing a 169.254.x.x address failed to reach a DHCP server. The exam tests whether you know the cause and the troubleshooting step (check DHCP server connectivity and relay agent configuration).</p>
+<p>Exam Tip 3: A non-authoritative DNS answer is not an error. It is a cached response from a resolver. An authoritative answer comes directly from the zone's authoritative name server.</p>
+<p>Exam Tip 4: DHCP snooping blocks rogue DHCP servers by restricting DHCP server responses to trusted switch ports only. This is the correct answer to "rogue DHCP server" security questions.</p>
+<p>Exam Tip 5: The ip helper-address command must be configured on the Layer 3 interface of the VLAN where clients reside — not on the DHCP server side. The server does not need any special relay configuration.</p>
+<p>Exam Tip 6: MX records must point to a hostname (not an IP). That hostname must have a valid A record. A broken A record for the MX target causes email delivery failure even though the MX record itself is correct.</p>
+<p>Exam Tip 7: Kerberos clock skew is exactly 5 minutes (300 seconds). The exam tests this specific value. NTP drift beyond 5 minutes causes "clock skew too great" authentication failures.</p>
+<p>Exam Tip 8: Static NAT is the correct choice when an internal server must be reachable at a consistent public IP by external partners. PAT (NAT Overload) is correct for outbound internet access by many internal clients sharing one public IP.</p>
+<hr />
+<h3>9. Reading and Viewing Resources</h3>
+<p>CompTIA Network+ N10-009 Exam Objectives — Domain 1.6 (DNS), Domain 1.7 (DHCP, NTP), Domain 2.1 (NAT types)</p>
+<p>Professor Messer — Network+ Study Groups (free video series): DNS, DHCP, and NTP explanations aligned to N10-009</p>
+<p>Mike Meyers — CompTIA Network+ All-in-One Exam Guide, 8th Edition: Chapter 19 (DNS), Chapter 20 (DHCP), Chapter 23 (NTP and time services)</p>
+<p>RFC 1034 and RFC 1035 — Original DNS specification documents (authoritative but dense; reference for exam-depth understanding)</p>
+<p>RFC 2131 — DHCP specification (defines DORA, relay agent behavior, lease renewal)</p>
+<p>RFC 5905 — NTP Version 4 specification (stratum definitions, authentication, best-practice deployment)</p>
+<hr />
+<h3>10. Study Checklist</h3>
+<p>Before moving to the next module, confirm you can do each of the following:</p>
+<ul>
+<li>[ ] Describe all six steps in the full DNS resolution hierarchy (client to root to TLD to authoritative)</li>
+<li>[ ] List all eight DNS record types and their functions from memory</li>
+<li>[ ] Explain the difference between a recursive query and an iterative query</li>
+<li>[ ] Define TTL and explain how it affects DNS caching behavior</li>
+<li>[ ] Explain what a non-authoritative answer means and why it is not an error</li>
+<li>[ ] Describe the DORA process message by message including source/destination addresses</li>
+<li>[ ] Explain why DHCP Discover is a broadcast and what address it uses</li>
+<li>[ ] Explain what ip helper-address does and where it must be configured</li>
+<li>[ ] Explain APIPA: what triggers it, what address range it uses, and what it prevents</li>
+<li>[ ] Describe the NTP stratum hierarchy from stratum 0 through client workstations</li>
+<li>[ ] State the Kerberos maximum clock skew tolerance value (5 minutes)</li>
+<li>[ ] Distinguish Static NAT, Dynamic NAT, and PAT by mapping type and use case</li>
+<li>[ ] State the port numbers for DNS (UDP/TCP 53), DHCP (UDP 67/68), and NTP (UDP 123)</li>
+<li>[ ] Explain what DHCP snooping does and what attack it prevents</li>
+<li>[ ] Explain what DDNS does and why it is needed in dynamic IP environments</li>
+</ul>
+<hr />
+<p>CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash</p>
+</body>
+</html>

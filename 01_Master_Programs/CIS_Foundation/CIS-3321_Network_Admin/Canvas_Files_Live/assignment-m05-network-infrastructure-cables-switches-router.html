@@ -1,0 +1,207 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Assignment: Lab (M05): Network Infrastructure: Cables, Switches, Routers</title>
+</head>
+<body>
+<h2>Lab (M05): Network Infrastructure: Cables, Switches, Routers</h2>
+<h1>Lab Activity: Module 05 – Network Infrastructure: Cables, Switches, Routers</h1>
+<h2>CIS-3321 Network Administration | CompTIA Network+ (N10-009)</h2>
+<h2>Texas Wesleyan University | Professor Nash</h2>
+<hr />
+<h3>Lab Overview</h3>
+<p><strong>Lab Title:</strong> Switch MAC Address Table Observation and Hub vs. Switch Behavior Comparison</p>
+<p><strong>Format:</strong> Cisco Packet Tracer Simulation</p>
+<p><strong>Estimated Time:</strong> 60–75 minutes</p>
+<p><strong>Points:</strong> 100 points total</p>
+<p><strong>Prerequisites:</strong></p>
+<ul>
+<li>Module 05 video lectures watched (both Part 1 and Part 2)</li>
+<li>Module 05 Reading Guide reviewed</li>
+<li>Cisco Packet Tracer installed</li>
+</ul>
+<p><strong>Learning Objectives:</strong></p>
+<p>By completing this lab, you will be able to:</p>
+<ul>
+<li>Build a switched Ethernet network in Cisco Packet Tracer</li>
+<li>Observe how a switch populates its MAC address table through traffic</li>
+<li>Use the show mac address-table command to verify learned MAC addresses</li>
+<li>Use Simulation Mode to observe the difference between switch unicast forwarding and unknown unicast flooding</li>
+<li>Compare traffic behavior on a hub versus a switch</li>
+</ul>
+<hr />
+<h3>Background</h3>
+<p>The MAC address table (CAM table) is what makes a switch intelligent. By learning which device is on which port, a switch can forward frames only to the correct destination — dramatically reducing unnecessary traffic compared to a hub. This lab makes that behavior visible and measurable.</p>
+<hr />
+<h3>Part 1: Build a Switched Network and Observe MAC Learning</h3>
+<h4>Step 1: Build the Topology</h4>
+<ol>
+<li>Open Cisco Packet Tracer.</li>
+<li>Place four PCs: PC0, PC1, PC2, PC3.</li>
+<li>Place one Cisco 2960 switch in the center.</li>
+<li>Connect each PC to the switch using straight-through copper cables:
+   - PC0 → FastEthernet0/1
+   - PC1 → FastEthernet0/2
+   - PC2 → FastEthernet0/3
+   - PC3 → FastEthernet0/4</li>
+<li>Confirm all link lights turn green after a few seconds.</li>
+</ol>
+<h4>Step 2: Assign IP Addresses to All PCs</h4>
+<p>Configure each PC (Desktop tab → IP Configuration → Static):</p>
+<ul>
+<li>PC0: 192.168.1.10 / 255.255.255.0</li>
+<li>PC1: 192.168.1.20 / 255.255.255.0</li>
+<li>PC2: 192.168.1.30 / 255.255.255.0</li>
+<li>PC3: 192.168.1.40 / 255.255.255.0</li>
+</ul>
+<h4>Step 3: Clear the Switch MAC Table (Start Fresh)</h4>
+<p>Click the switch → CLI tab. Enter privileged mode and clear the table:</p>
+<pre><code>enable
+clear mac address-table dynamic
+show mac address-table
+</code></pre>
+<p>Confirm the table is empty (or contains only static entries).</p>
+<h4>Step 4: Generate Traffic Between Two PCs</h4>
+<ol>
+<li>Click PC0 → Desktop → Command Prompt.</li>
+<li>Type: <code>ping 192.168.1.20</code></li>
+<li>After the ping completes, return to the switch CLI.</li>
+</ol>
+<h4>Step 5: Observe the MAC Address Table</h4>
+<pre><code>show mac address-table
+</code></pre>
+<p>Record the current table entries:</p>
+<table>
+<thead>
+<tr>
+<th>VLAN</th>
+<th>MAC Address</th>
+<th>Type</th>
+<th>Port</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Question 1:</strong> After pinging from PC0 to PC1, how many MAC addresses appear in the table? Which ports are they associated with? Why are MAC addresses from PC2 and PC3 not yet in the table?</p>
+<h4>Step 6: Ping All PCs</h4>
+<p>From PC0, ping PC2 and PC3:</p>
+<pre><code>ping 192.168.1.30
+ping 192.168.1.40
+</code></pre>
+<p>Then run <code>show mac address-table</code> again.</p>
+<p><strong>Question 2:</strong> How many entries are now in the MAC address table? Is the table fully populated? Explain why pinging from PC0 causes the switch to learn all four MAC addresses rather than just PC0's.</p>
+<hr />
+<h3>Part 2: Observe Unknown Unicast Flooding vs. Known Unicast Forwarding</h3>
+<h4>Step 1: Switch to Simulation Mode</h4>
+<p>In Packet Tracer, switch to Simulation mode (bottom right). Filter events to show only ICMP.</p>
+<h4>Step 2: Clear the MAC Table Again</h4>
+<p>In the switch CLI:</p>
+<pre><code>enable
+clear mac address-table dynamic
+</code></pre>
+<h4>Step 3: Send One Ping in Simulation Mode</h4>
+<ol>
+<li>From PC0's Command Prompt, type <code>ping 192.168.1.20</code> and press Enter.</li>
+<li>In Simulation mode, click Play once to advance the first step.</li>
+<li>Observe the ICMP packet icon leaving PC0.</li>
+</ol>
+<h4>Step 4: Watch the Flooding Behavior</h4>
+<p>Before the switch knows PC1's MAC, the first ICMP Echo Request will be preceded by an ARP request. Watch the ARP request:</p>
+<ul>
+<li>Does the switch send it to only one port, or does it flood to all ports?</li>
+<li>Note which ports receive the frame.</li>
+</ul>
+<p><strong>Question 3:</strong> When the switch receives the ARP request and the destination MAC is unknown (FF:FF:FF:FF:FF:FF broadcast), which ports does it send the frame to? Is this flooding or forwarding? What OSI layer is the switch operating at when it makes this decision?</p>
+<h4>Step 5: Watch the Known Unicast Forwarding</h4>
+<p>After the ARP reply returns from PC1, the switch now knows PC1's MAC address.</p>
+<ol>
+<li>Continue stepping through the simulation.</li>
+<li>Observe the next ICMP Echo Request (the ping itself).</li>
+<li>Watch which ports the switch uses to forward the packet.</li>
+</ol>
+<p><strong>Question 4:</strong> After the ARP exchange completes and the switch has learned PC1's MAC, does the ICMP packet go to all ports or only to the port connected to PC1? What does this demonstrate about the switch's forwarding behavior for known unicast frames?</p>
+<hr />
+<h3>Part 3: Hub vs. Switch Comparison</h3>
+<h4>Step 1: Add a Hub Segment</h4>
+<ol>
+<li>In Realtime mode, add a new Hub device from the Hubs section of the device panel.</li>
+<li>Connect two new PCs (PC4 and PC5) to the hub.</li>
+<li>Connect the hub to the switch's FastEthernet0/5 port using a straight-through cable.</li>
+<li>Assign IPs:
+   - PC4: 192.168.1.50 / 255.255.255.0
+   - PC5: 192.168.1.60 / 255.255.255.0</li>
+</ol>
+<h4>Step 2: Test Traffic in Simulation Mode</h4>
+<p>Switch to Simulation Mode. From PC4, ping PC5.</p>
+<p><strong>Question 5:</strong> Observe the behavior of the hub. When PC4 sends a frame destined for PC5, which devices connected to the hub receive the frame (including PC5 and the switch)? How does this contrast with switch forwarding behavior observed in Part 2?</p>
+<p><strong>Question 6:</strong> What is a collision domain? Is the hub segment (PC4, PC5, and the hub port on the switch) one collision domain or multiple? How does this compare to the switch's individual ports?</p>
+<hr />
+<h3>Deliverables</h3>
+<p>Submit the following to the Canvas assignment dropbox:</p>
+<p><strong>Deliverable 1 (25 points):</strong> Screenshots of the switch MAC address table after Step 5 (partial) and Step 6 (full). Include answers to Questions 1 and 2 typed below the screenshots.</p>
+<p><strong>Deliverable 2 (25 points):</strong> Screenshots from Simulation Mode showing the ARP flooding behavior (Step 4) and the known unicast forwarding behavior (Step 5). Include answers to Questions 3 and 4.</p>
+<p><strong>Deliverable 3 (25 points):</strong> Screenshot showing the hub segment in the topology and the simulation of hub flooding behavior. Include answers to Questions 5 and 6.</p>
+<p><strong>Deliverable 4 (25 points):</strong> A typed analysis (150–200 words) comparing hub and switch performance. Address: why switches replaced hubs, how MAC address learning enables efficient forwarding, and what the difference between a collision domain and a broadcast domain means for network design.</p>
+<hr />
+<h3>Grading Rubric</h3>
+<table>
+<thead>
+<tr>
+<th>Deliverable</th>
+<th>Points</th>
+<th>Full Credit Criteria</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MAC table screenshots and answers</td>
+<td>25</td>
+<td>Both partial and full MAC table captured; Questions 1–2 answered correctly</td>
+</tr>
+<tr>
+<td>Simulation flooding/forwarding screenshots</td>
+<td>25</td>
+<td>Flooding and unicast forwarding screenshots captured; Questions 3–4 answered with correct OSI layer references</td>
+</tr>
+<tr>
+<td>Hub topology and behavior screenshot</td>
+<td>25</td>
+<td>Hub segment visible; flooding behavior documented; Questions 5–6 answered correctly</td>
+</tr>
+<tr>
+<td>Written analysis</td>
+<td>25</td>
+<td>150–200 words; accurate technical comparison; collision vs. broadcast domain distinction correct</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td><strong>100</strong></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>Common Issues and Fixes</h3>
+<p><strong>Issue:</strong> MAC address table shows entries before Step 3 clearing.</p>
+<p><strong>Fix:</strong> Run <code>clear mac address-table dynamic</code> from privileged exec mode on the switch before generating test traffic.</p>
+<p><strong>Issue:</strong> Simulation Mode shows no ICMP events.</p>
+<p><strong>Fix:</strong> In Simulation Panel, click Edit Filters and ensure ICMP and ARP are checked. Both are needed to observe the ARP exchange that precedes the first ping.</p>
+<p><strong>Issue:</strong> Hub does not appear in device panel.</p>
+<p><strong>Fix:</strong> Hubs are in the "Hubs" subcategory under Network Devices, not under Switches. Look specifically for the Hub category.</p>
+<hr />
+<p><em>CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash</em></p>
+</body>
+</html>

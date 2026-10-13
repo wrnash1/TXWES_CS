@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/profile/cc/ccv1p1/ccv1p1_qtiasiv1p2p1_v1p0.xsd">
+  <assessment ident="gfb67caa6cdd48842eb6078e0ecbe4e5" title="Quiz (M06): Wireless Networking: 802.11 Standards and Security">
+    <qtimetadata>
+      <qtimetadatafield>
+        <fieldlabel>cc_profile</fieldlabel>
+        <fieldentry>cc.exam.v0p1</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_assessmenttype</fieldlabel>
+        <fieldentry>Examination</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_scoretype</fieldlabel>
+        <fieldentry>Percentage</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>cc_maxattempts</fieldlabel>
+        <fieldentry>1</fieldentry>
+      </qtimetadatafield>
+    </qtimetadata>
+    <section ident="root_section">
+      <item ident="gfb67caa6cdd48842eb6078e0ecbe4e5_q01" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A network engineer is deploying wireless access points in a high-density auditorium where hundreds of devices will connect simultaneously. Which 802.11 standard and its key technology are best suited for efficient multi-client handling in this environment?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gfb67caa6cdd48842eb6078e0ecbe4e5_q01_a">
+                <material>
+                  <mattext texttype="text/plain">802.11b — uses DSSS spread spectrum to maximize range across the 2.4 GHz band</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gfb67caa6cdd48842eb6078e0ecbe4e5_q01_b">
+                <material>
+                  <mattext texttype="text/plain">802.11g — backward compatible with 802.11b and supports up to 54 Mbps</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gfb67caa6cdd48842eb6078e0ecbe4e5_q01_c">
+                <material>
+                  <mattext texttype="text/plain">802.11ax (Wi-Fi 6) — uses OFDMA to divide channels into sub-carriers, serving multiple clients simultaneously with reduced contention</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gfb67caa6cdd48842eb6078e0ecbe4e5_q01_d">
+                <material>
+                  <mattext texttype="text/plain">802.11ac (Wi-Fi 5) — uses beamforming to direct the signal toward a single high-priority client</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gfb67caa6cdd48842eb6078e0ecbe4e5_q01_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gfb67caa6cdd48842eb6078e0ecbe4e5_q02" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A security analyst discovers that an access point is using RC4 encryption with a static 40-bit key that has been cracked in under five minutes using freely available tools. Which wireless security protocol is in use, and what is the correct replacement?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gfb67caa6cdd48842eb6078e0ecbe4e5_q02_a">
+                <material>
+                  <mattext texttype="text/plain">WPA-TKIP — replace with WPA2-AES-CCMP or WPA3-SAE for current minimum standards</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gfb67caa6cdd48842eb6078e0ecbe4e5_q02_b">
+                <material>
+                  <mattext texttype="text/plain">WEP (Wired Equivalent Privacy) — replace with WPA2-AES-CCMP or WPA3-SAE immediately</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gfb67caa6cdd48842eb6078e0ecbe4e5_q02_c">
+                <material>
+                  <mattext texttype="text/plain">WPA3-SAE — replace with WPA2-Enterprise using 802.1X/RADIUS for backward compatibility</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gfb67caa6cdd48842eb6078e0ecbe4e5_q02_d">
+                <material>
+                  <mattext texttype="text/plain">WPA2-CCMP — replace with WPA-TKIP to restore compatibility with legacy client devices</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gfb67caa6cdd48842eb6078e0ecbe4e5_q02_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gfb67caa6cdd48842eb6078e0ecbe4e5_q03" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A wireless technician is deploying three access points in a small office that all operate in the 2.4 GHz band. To prevent co-channel interference between neighboring APs, which channel assignments are correct?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gfb67caa6cdd48842eb6078e0ecbe4e5_q03_a">
+                <material>
+                  <mattext texttype="text/plain">Channels 1, 2, and 3 — these are the lowest available channels in the 2.4 GHz band</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gfb67caa6cdd48842eb6078e0ecbe4e5_q03_b">
+                <material>
+                  <mattext texttype="text/plain">Channels 1, 6, and 11 — the only three non-overlapping channels in the US 2.4 GHz band</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gfb67caa6cdd48842eb6078e0ecbe4e5_q03_c">
+                <material>
+                  <mattext texttype="text/plain">Channels 3, 7, and 11 — evenly spaced throughout the 2.4 GHz spectrum</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gfb67caa6cdd48842eb6078e0ecbe4e5_q03_d">
+                <material>
+                  <mattext texttype="text/plain">Channels 6, 11, and 14 — channel 14 is available for high-density deployments in the US</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gfb67caa6cdd48842eb6078e0ecbe4e5_q03_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gfb67caa6cdd48842eb6078e0ecbe4e5_q04" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A corporate wireless network currently uses WPA2-Personal (PSK) with a shared passphrase distributed to all employees. The security team reports that a former employee could still decrypt previously captured wireless traffic using the shared key. Which upgrade eliminates this risk?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gfb67caa6cdd48842eb6078e0ecbe4e5_q04_a">
+                <material>
+                  <mattext texttype="text/plain">Switch to WPA2-Enterprise with 802.1X/RADIUS authentication so each user has individual credentials that can be revoked without affecting others</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gfb67caa6cdd48842eb6078e0ecbe4e5_q04_b">
+                <material>
+                  <mattext texttype="text/plain">Increase the WPA2-PSK passphrase length to 20 characters or more to prevent brute-force attacks</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gfb67caa6cdd48842eb6078e0ecbe4e5_q04_c">
+                <material>
+                  <mattext texttype="text/plain">Enable SSID broadcast hiding so the network name is not visible to unauthorized users</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gfb67caa6cdd48842eb6078e0ecbe4e5_q04_d">
+                <material>
+                  <mattext texttype="text/plain">Configure MAC address filtering on the access point to block devices not on the approved list</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gfb67caa6cdd48842eb6078e0ecbe4e5_q04_a</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gfb67caa6cdd48842eb6078e0ecbe4e5_q05" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A security administrator needs to ensure that wireless clients must authenticate with individual user credentials before gaining network access, and that the wireless management traffic between APs and the controller must be encrypted in transit. Which combination of controls best satisfies both requirements?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gfb67caa6cdd48842eb6078e0ecbe4e5_q05_a">
+                <material>
+                  <mattext texttype="text/plain">Deploy WPA2-Enterprise with 802.1X/EAP-TLS for per-user certificate-based authentication and use a CAPWAP tunnel with DTLS encryption for AP-to-controller management traffic.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gfb67caa6cdd48842eb6078e0ecbe4e5_q05_b">
+                <material>
+                  <mattext texttype="text/plain">Configure WPA2-Personal with a complex 25-character pre-shared key and enable SSID broadcast suppression on all access points.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gfb67caa6cdd48842eb6078e0ecbe4e5_q05_c">
+                <material>
+                  <mattext texttype="text/plain">Enable full disk encryption on all wireless client devices and place all APs on an isolated management VLAN.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gfb67caa6cdd48842eb6078e0ecbe4e5_q05_d">
+                <material>
+                  <mattext texttype="text/plain">Deploy a captive portal requiring username and password acceptance before granting internet access, with HTTP-only management access restricted to the wired VLAN.</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gfb67caa6cdd48842eb6078e0ecbe4e5_q05_a</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gfb67caa6cdd48842eb6078e0ecbe4e5_q06" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An attacker parks outside a corporate office and uses a laptop to set up a wireless access point broadcasting the same SSID as the company's legitimate Wi-Fi network. Unsuspecting employees connect to the attacker's AP and all their traffic is intercepted. Which attack is being described, and what is the most effective technical mitigation?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gfb67caa6cdd48842eb6078e0ecbe4e5_q06_a">
+                <material>
+                  <mattext texttype="text/plain">Deauthentication flood attack — mitigated by enabling 802.11w Management Frame Protection on all APs</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gfb67caa6cdd48842eb6078e0ecbe4e5_q06_b">
+                <material>
+                  <mattext texttype="text/plain">Evil Twin attack — mitigated by deploying WPA2-Enterprise with 802.1X/RADIUS so that connecting to a rogue AP does not expose user credentials</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gfb67caa6cdd48842eb6078e0ecbe4e5_q06_c">
+                <material>
+                  <mattext texttype="text/plain">War driving attack — mitigated by disabling SSID broadcast on all legitimate access points</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gfb67caa6cdd48842eb6078e0ecbe4e5_q06_d">
+                <material>
+                  <mattext texttype="text/plain">Captive portal phishing attack — mitigated by enabling WEP on the guest network to prevent sniffing</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gfb67caa6cdd48842eb6078e0ecbe4e5_q06_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gfb67caa6cdd48842eb6078e0ecbe4e5_q07" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A network administrator observes that wireless clients are repeatedly disconnecting from the corporate AP during business hours. A wireless packet capture reveals a flood of 802.11 management frames with the reason code "deauthentication." No hardware failure is found. Which attack is occurring and what is the correct mitigation?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gfb67caa6cdd48842eb6078e0ecbe4e5_q07_a">
+                <material>
+                  <mattext texttype="text/plain">An Evil Twin attack is broadcasting a stronger signal; the mitigation is to increase transmit power on the legitimate AP.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gfb67caa6cdd48842eb6078e0ecbe4e5_q07_b">
+                <material>
+                  <mattext texttype="text/plain">A deauthentication flood attack is in progress using forged management frames; the mitigation is to enable 802.11w Management Frame Protection.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gfb67caa6cdd48842eb6078e0ecbe4e5_q07_c">
+                <material>
+                  <mattext texttype="text/plain">WPA2-PSK passphrase cracking is causing client disconnections; the mitigation is to extend the passphrase to 25 characters.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gfb67caa6cdd48842eb6078e0ecbe4e5_q07_d">
+                <material>
+                  <mattext texttype="text/plain">Co-channel interference from a neighboring AP is causing client drops; the mitigation is to change the channel assignment to avoid overlap.</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gfb67caa6cdd48842eb6078e0ecbe4e5_q07_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gfb67caa6cdd48842eb6078e0ecbe4e5_q08" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A university is upgrading its wireless network and wants to ensure that previously captured wireless traffic cannot be decrypted even if the network passphrase is compromised in the future. Which wireless security standard provides this capability, and what is the name of the property it offers?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gfb67caa6cdd48842eb6078e0ecbe4e5_q08_a">
+                <material>
+                  <mattext texttype="text/plain">WPA2-Personal (PSK) — provides backward secrecy by rotating keys every 30 minutes using TKIP</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gfb67caa6cdd48842eb6078e0ecbe4e5_q08_b">
+                <material>
+                  <mattext texttype="text/plain">WPA3-Personal using SAE — provides forward secrecy because each session derives a unique key that cannot be reconstructed from the passphrase alone</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gfb67caa6cdd48842eb6078e0ecbe4e5_q08_c">
+                <material>
+                  <mattext texttype="text/plain">WPA2-Enterprise with 802.1X — provides forward secrecy because the RADIUS server re-issues new certificates after each authentication</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gfb67caa6cdd48842eb6078e0ecbe4e5_q08_d">
+                <material>
+                  <mattext texttype="text/plain">WEP with a 104-bit key — provides forward secrecy because the longer key increases the time required to crack any single session</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gfb67caa6cdd48842eb6078e0ecbe4e5_q08_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gfb67caa6cdd48842eb6078e0ecbe4e5_q09" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A wireless network uses a single access point that serves all connected clients. A second building requires wireless coverage under the same SSID so employees can roam between buildings without reconnecting. What wireless architecture is required for the second building, and what is the term for the combined multi-AP network?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gfb67caa6cdd48842eb6078e0ecbe4e5_q09_a">
+                <material>
+                  <mattext texttype="text/plain">Add a second AP with a different SSID in the second building; this creates an Independent Basic Service Set (IBSS) between the buildings.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gfb67caa6cdd48842eb6078e0ecbe4e5_q09_b">
+                <material>
+                  <mattext texttype="text/plain">Add a second AP configured with the same SSID and a unique BSSID; this extends the network into an Extended Service Set (ESS).</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gfb67caa6cdd48842eb6078e0ecbe4e5_q09_c">
+                <material>
+                  <mattext texttype="text/plain">Add a second AP and configure it to operate as an ad-hoc node; this creates a Mesh Basic Service Set automatically.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gfb67caa6cdd48842eb6078e0ecbe4e5_q09_d">
+                <material>
+                  <mattext texttype="text/plain">Add a second AP with a different SSID and different channel; this creates a new BSS that clients can join by selecting the correct SSID manually.</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gfb67caa6cdd48842eb6078e0ecbe4e5_q09_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gfb67caa6cdd48842eb6078e0ecbe4e5_q10" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A network technician receives a trouble ticket stating that several users on the wireless network have been redirected to a web page asking them to re-enter their username and password before accessing the internet. The IT team did not deploy this page. Which attack is described, and what is the primary risk?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gfb67caa6cdd48842eb6078e0ecbe4e5_q10_a">
+                <material>
+                  <mattext texttype="text/plain">A deauthentication flood attack is occurring; the risk is that clients will be forced offline permanently until the attack stops.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gfb67caa6cdd48842eb6078e0ecbe4e5_q10_b">
+                <material>
+                  <mattext texttype="text/plain">A captive portal phishing attack is occurring; the risk is that users will submit their real credentials to an attacker-controlled web page.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gfb67caa6cdd48842eb6078e0ecbe4e5_q10_c">
+                <material>
+                  <mattext texttype="text/plain">An 802.11w Management Frame Protection misconfiguration is redirecting clients; the risk is that management frames are being dropped.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gfb67caa6cdd48842eb6078e0ecbe4e5_q10_d">
+                <material>
+                  <mattext texttype="text/plain">A WIPS false-positive detection is blocking clients; the risk is that legitimate APs are being quarantined incorrectly.</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gfb67caa6cdd48842eb6078e0ecbe4e5_q10_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+    </section>
+  </assessment>
+</questestinterop>

@@ -1,0 +1,325 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Reading Guide (M12): Digital Forensics</title>
+</head>
+<body>
+<h2>Reading Guide (M12): Digital Forensics</h2>
+<h1>Reading Guide: Module 12 — Digital Forensics</h1>
+<h2>Course: CIS-4328 Information Security</h2>
+<p><strong>Certification Alignment:</strong> CompTIA Security+ (SY0-701)</p>
+<hr />
+<h2>Overview</h2>
+<p>This reading guide supports Module 12: Digital Forensics. You will study the forensic process, evidence collection tools, memory analysis, log analysis, file system forensics, and the legal framework governing digital investigations. These topics map to Security+ Domain 4 and are foundational for incident response, security operations, and any career path involving investigation or compliance.</p>
+<p><strong>Estimated reading and study time:</strong> 2.5 to 3 hours</p>
+<hr />
+<h2>Learning Objectives</h2>
+<p>By the end of this module you should be able to:</p>
+<ul>
+<li>Describe the stages of the digital forensic process.</li>
+<li>Explain the purpose and operation of write blockers.</li>
+<li>Describe how to create a forensically sound disk image using dd and FTK Imager.</li>
+<li>Identify what types of evidence can be recovered from memory analysis.</li>
+<li>Describe MAC times and their significance in timeline reconstruction.</li>
+<li>Explain the legal bases that authorize digital forensic investigations.</li>
+<li>Describe the structure and contents of a forensic report.</li>
+</ul>
+<hr />
+<h2>Required Reading</h2>
+<ul>
+<li><strong>NIST SP 800-86</strong> — Guide to Integrating Forensic Techniques into Incident Response (free at csrc.nist.gov)</li>
+<li><strong>SWGDE Best Practices for Digital and Multimedia Evidence</strong> — Sections 1 through 4</li>
+<li><strong>Professor Messer Security+ SY0-701 Study Guide</strong> — Domain 4 sections on digital forensics</li>
+<li><strong>Volatility Documentation</strong> — Overview and plugin reference at volatilityfoundation.org</li>
+</ul>
+<hr />
+<h2>Section A — The Forensic Process</h2>
+<p>The digital forensic process provides a structured, repeatable methodology that supports both technical accuracy and legal defensibility. NIST SP 800-86 describes four primary stages.</p>
+<h3>Stage 1 — Identification</h3>
+<p>Identification determines what potential evidence sources exist. In a typical investigation this includes:</p>
+<ul>
+<li>Endpoint devices: workstations, laptops, mobile phones.</li>
+<li>Server systems: file servers, email servers, domain controllers.</li>
+<li>Network devices: firewalls, routers, switches with logging enabled.</li>
+<li>Cloud services: email (O365, Gmail), cloud storage (SharePoint, OneDrive, S3), SaaS applications.</li>
+<li>External media: USB drives, portable hard drives, optical media.</li>
+</ul>
+<p>Identification must also assess legal authority. Before collecting from any source, the investigator must confirm authorization — consent, warrant, or other legal basis.</p>
+<h3>Stage 2 — Preservation</h3>
+<p>Preservation prevents evidence modification. Key actions:</p>
+<ul>
+<li>Attach write blockers to all storage media before connecting to forensic workstations.</li>
+<li>Issue legal holds to suspend data retention policies for affected systems.</li>
+<li>Document the state of systems (running vs. powered off) at the time of collection.</li>
+<li>Apply the order of volatility — capture volatile evidence before non-volatile.</li>
+</ul>
+<h3>Stage 3 — Collection</h3>
+<p>Collection is the acquisition of evidence using validated tools and documented procedures. All collection activities are logged in the chain of custody. Hash values are computed and recorded for all collected items.</p>
+<h3>Stage 4 — Analysis</h3>
+<p>Analysis extracts meaning from collected evidence. Analysis is always performed on forensic copies. Findings are documented in working notes as analysis proceeds, forming the basis of the final report.</p>
+<h3>Stage 5 — Reporting</h3>
+<p>The forensic report translates technical findings into findings suitable for legal, executive, or law enforcement audiences.</p>
+<hr />
+<h2>Section B — Write Blockers and Disk Imaging</h2>
+<h3>Write Blockers</h3>
+<p>A write blocker prevents any write operations from reaching a storage device while allowing reads to proceed normally. Hardware write blockers are preferred in legal investigations because they operate at the hardware layer, independent of operating system software.</p>
+<p><strong>Why write blockers matter:</strong> Modern operating systems modify storage devices automatically on mount — updating last-access times, writing journal entries, updating metadata. These modifications alter the device's hash and make it impossible to prove the evidence is unchanged from the time of seizure.</p>
+<h3>dd — Disk Imaging</h3>
+<p><code>dd</code> (Data Duplicator) is a standard Unix/Linux command that copies data at the block level. For forensic imaging:</p>
+<pre><code>dd if=/dev/sdb of=/forensic/images/sdb.img bs=4096 conv=noerror,sync
+</code></pre>
+<p>After imaging:</p>
+<pre><code>md5sum /dev/sdb &amp;&amp; md5sum /forensic/images/sdb.img
+sha256sum /dev/sdb &amp;&amp; sha256sum /forensic/images/sdb.img
+</code></pre>
+<p>Both hashes must match to confirm the image is identical to the source.</p>
+<p><strong>dcfldd</strong> enhances dd with integrated hashing and verification during the imaging process, reducing the time required for post-imaging verification.</p>
+<h3>FTK Imager</h3>
+<p>FTK Imager (free from Exterro/AccessData) provides a Windows GUI for forensic imaging. Key features:</p>
+<ul>
+<li>Supports E01, raw (dd), AD1 formats.</li>
+<li>Generates hash verification reports automatically after imaging.</li>
+<li>Can acquire live memory from Windows systems.</li>
+<li>Allows read-only mounting of forensic images for browsing.</li>
+<li>Can preview file system contents without creating an image (triage).</li>
+</ul>
+<p><strong>E01 format (Expert Witness Format)</strong> is the most common format for enterprise and law enforcement forensics. It stores compressed, segmented images with embedded hash values, examiner notes, and case information — making it self-documenting and court-friendly.</p>
+<hr />
+<h2>Section C — Memory Analysis</h2>
+<h3>What Memory Contains</h3>
+<p>RAM holds the working state of a live system. Forensically, memory may contain:</p>
+<ul>
+<li>All running processes, including hidden/injected malware.</li>
+<li>Open and recently closed network connections (attacker C2 communication).</li>
+<li>Plaintext credentials cached by LSASS (Windows password manager).</li>
+<li>Encryption keys held by volume managers (BitLocker) or ransomware.</li>
+<li>Command history from terminal sessions.</li>
+<li>Injected malicious code residing in legitimate process memory.</li>
+<li>Registry hives loaded in memory.</li>
+</ul>
+<h3>Memory Acquisition Tools</h3>
+<ul>
+<li><strong>WinPmem</strong>: Open-source, command-line memory acquisition for Windows.</li>
+<li><strong>DumpIt</strong>: Single-executable memory capture, popular in IR jump kits.</li>
+<li><strong>LiME (Linux Memory Extractor)</strong>: Loadable kernel module for Linux memory acquisition.</li>
+<li><strong>FTK Imager</strong>: GUI-based memory capture available in Windows.</li>
+</ul>
+<h3>Volatility Framework</h3>
+<p>Volatility is the industry standard open-source framework for memory analysis. It supports images from Windows, Linux, and macOS.</p>
+<p>Key Volatility plugins:</p>
+<table>
+<thead>
+<tr>
+<th>Plugin</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pslist</code></td>
+<td>Lists processes from the EPROCESS linked list</td>
+</tr>
+<tr>
+<td><code>pstree</code></td>
+<td>Shows parent-child process relationships</td>
+</tr>
+<tr>
+<td><code>psscan</code></td>
+<td>Scans raw memory for EPROCESS structures (finds hidden processes)</td>
+</tr>
+<tr>
+<td><code>netscan</code></td>
+<td>Lists network connections from memory</td>
+</tr>
+<tr>
+<td><code>hashdump</code></td>
+<td>Extracts NTLM password hashes from LSASS</td>
+</tr>
+<tr>
+<td><code>malfind</code></td>
+<td>Finds memory regions with suspicious execute permissions</td>
+</tr>
+<tr>
+<td><code>dlllist</code></td>
+<td>Lists DLLs loaded by each process</td>
+</tr>
+<tr>
+<td><code>cmdline</code></td>
+<td>Shows command-line arguments for each process</td>
+</tr>
+</tbody>
+</table>
+<p>The difference between <code>pslist</code> and <code>psscan</code> is significant. <code>pslist</code> reads the OS's linked list of processes — an attacker can unlink a process from this list to hide it. <code>psscan</code> searches raw memory for process structures directly and can find processes that <code>pslist</code> misses.</p>
+<hr />
+<h2>Section D — Log Analysis</h2>
+<h3>Windows Event Log Key Event IDs</h3>
+<p>Forensic investigators focus on specific event IDs when reviewing Windows Security logs:</p>
+<table>
+<thead>
+<tr>
+<th>Event ID</th>
+<th>Meaning</th>
+<th>Forensic Significance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4624</td>
+<td>Successful logon</td>
+<td>Track user logon activity and source IPs</td>
+</tr>
+<tr>
+<td>4625</td>
+<td>Failed logon</td>
+<td>Brute force detection</td>
+</tr>
+<tr>
+<td>4648</td>
+<td>Logon using explicit credentials</td>
+<td>Possible pass-the-hash or lateral movement</td>
+</tr>
+<tr>
+<td>4720</td>
+<td>User account created</td>
+<td>Attacker persistence via new accounts</td>
+</tr>
+<tr>
+<td>4732</td>
+<td>User added to local group</td>
+<td>Privilege escalation</td>
+</tr>
+<tr>
+<td>4688</td>
+<td>Process created</td>
+<td>Track command execution (requires audit policy)</td>
+</tr>
+<tr>
+<td>4698</td>
+<td>Scheduled task created</td>
+<td>Common persistence mechanism</td>
+</tr>
+<tr>
+<td>7045</td>
+<td>Service installed</td>
+<td>Common persistence mechanism</td>
+</tr>
+<tr>
+<td>1102</td>
+<td>Audit log cleared</td>
+<td>Attacker covering tracks</td>
+</tr>
+</tbody>
+</table>
+<h3>Linux Log Files</h3>
+<table>
+<thead>
+<tr>
+<th>Log File</th>
+<th>Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/var/log/auth.log</td>
+<td>SSH logins, sudo usage, authentication events</td>
+</tr>
+<tr>
+<td>/var/log/syslog</td>
+<td>General system events</td>
+</tr>
+<tr>
+<td>/var/log/apache2/access.log</td>
+<td>Web server requests</td>
+</tr>
+<tr>
+<td>~/.bash_history</td>
+<td>User command history</td>
+</tr>
+<tr>
+<td>/var/log/lastlog</td>
+<td>Last login per user</td>
+</tr>
+</tbody>
+</table>
+<h3>Timeline Analysis</h3>
+<p>Timeline analysis merges events from multiple log sources, normalized to UTC, into a single chronological record. This allows reconstruction of the attacker's full activity sequence. Key tools:</p>
+<ul>
+<li><strong>Plaso (log2timeline)</strong>: Extracts timestamps from forensic images and log files, creates unified supertimeline files.</li>
+<li><strong>Timeline Explorer</strong>: Windows GUI tool for reviewing timeline files.</li>
+</ul>
+<hr />
+<h2>Section E — File System Forensics</h2>
+<h3>MAC Times</h3>
+<p>Every file has timestamps that record its history. On Windows (NTFS) and Linux (ext4) the three key timestamps are:</p>
+<ul>
+<li><strong>Modified (M)</strong>: When the file content was last changed.</li>
+<li><strong>Accessed (A)</strong>: When the file was last read.</li>
+<li><strong>Created/Changed (C)</strong>: When the file was created (Windows) or when its metadata last changed (Linux).</li>
+</ul>
+<p><strong>Timestomping</strong> is the modification of MAC times by an attacker to disguise when files were created or modified. For example, setting a malware file's timestamps to match legitimate Windows system files makes it appear to be original OS content.</p>
+<h3>Deleted File Recovery</h3>
+<p>When a file is deleted:</p>
+<ol>
+<li>The directory entry (MFT record in NTFS) is marked as available.</li>
+<li>The data blocks are marked as unallocated.</li>
+<li>The data remains on disk until overwritten.</li>
+</ol>
+<p>Forensic tools scan unallocated space to recover deleted files. The likelihood of recovery decreases the longer the system has been in use after deletion and the higher the disk activity.</p>
+<p><strong>File carving</strong> recovers files based on known file signatures (magic bytes). Common signatures: JPEG (<code>FF D8 FF</code>), PDF (<code>25 50 44 46</code>), ZIP (<code>50 4B 03 04</code>). File carving works even without intact file system metadata.</p>
+<hr />
+<h2>Section F — Legal Considerations</h2>
+<h3>Authorization</h3>
+<p>Three legal bases for forensic access:</p>
+<ol>
+<li><strong>Consent</strong>: System owner or authorized representative grants permission. In corporate investigations, acceptable use policies provide employee consent for company-owned devices.</li>
+<li><strong>Search warrant</strong>: Court-issued authorization for law enforcement to search specific systems.</li>
+<li><strong>Exigent circumstances</strong>: Imminent destruction of evidence or threat to life justifies warrantless access in narrowly defined emergency situations.</li>
+</ol>
+<h3>Relevant Laws</h3>
+<ul>
+<li><strong>ECPA (Electronic Communications Privacy Act)</strong>: Governs access to stored electronic communications.</li>
+<li><strong>CFAA (Computer Fraud and Abuse Act)</strong>: Prohibits unauthorized computer access. Investigators must ensure their access is authorized.</li>
+<li><strong>GDPR</strong>: Processing EU residents' personal data requires lawful basis; forensic investigations of EU employee data must comply.</li>
+<li><strong>Fourth Amendment (US)</strong>: Protects against unreasonable government searches. Applies to law enforcement investigations; corporate investigators are generally not bound by the Fourth Amendment.</li>
+</ul>
+<hr />
+<h2>Key Terms</h2>
+<ul>
+<li><strong>Forensic process</strong>: Identification, preservation, collection, analysis, reporting</li>
+<li><strong>Write blocker</strong>: Device that allows read access while preventing writes to evidence</li>
+<li><strong>dd</strong>: Unix bit-copy utility used for disk imaging</li>
+<li><strong>FTK Imager</strong>: Free forensic imaging tool supporting E01 and raw formats</li>
+<li><strong>E01 format</strong>: Expert Witness Format — compressed, self-documenting forensic image</li>
+<li><strong>Volatility</strong>: Open-source memory forensics framework</li>
+<li><strong>Memory acquisition</strong>: Capturing RAM contents before system shutdown</li>
+<li><strong>Order of volatility</strong>: Hierarchy prioritizing most-fleeting evidence first</li>
+<li><strong>MAC times</strong>: Modified, Accessed, Changed/Created timestamps on files</li>
+<li><strong>Timestomping</strong>: Modifying timestamps to obscure file activity</li>
+<li><strong>File carving</strong>: Recovering files from unallocated space using file signatures</li>
+<li><strong>Timeline analysis</strong>: Merging multi-source log events into a unified chronology</li>
+<li><strong>Chain of custody</strong>: Documented record of all evidence handling</li>
+<li><strong>Legal hold</strong>: Instruction to suspend deletion of records for potential litigation</li>
+<li><strong>ECPA</strong>: Electronic Communications Privacy Act</li>
+<li><strong>CFAA</strong>: Computer Fraud and Abuse Act</li>
+</ul>
+<hr />
+<h2>Review Questions</h2>
+<ol>
+<li>What are the five stages of the forensic process?</li>
+<li>Why does connecting a storage device to a Windows computer without a write blocker invalidate forensic integrity?</li>
+<li>What does the <code>conv=noerror,sync</code> option in a dd command do?</li>
+<li>What is the difference between the <code>pslist</code> and <code>psscan</code> Volatility plugins?</li>
+<li>Name four types of evidence that can be found in a Windows RAM image.</li>
+<li>What does Windows Event ID 1102 indicate and why is it forensically significant?</li>
+<li>What is timestomping, and what does evidence of it suggest about an attacker?</li>
+<li>Explain how file carving can recover deleted files even when file system metadata is destroyed.</li>
+<li>What is the legal basis for corporate digital forensic investigations of employee-owned devices versus company-owned devices?</li>
+<li>What is the purpose of the forensic report and what must it contain?</li>
+</ol>
+<hr />
+<h2>Certification Exam Tip</h2>
+<p>Security+ SY0-701 tests digital forensics with scenario-based questions. Common question types: "Which action should the investigator perform first on a live system?" (answer involves volatile memory or order of volatility), "What device prevents modification of evidence during imaging?" (write blocker), and "Which tool creates a bit-for-bit copy of a drive?" (dd, dcfldd, or FTK Imager). Know the difference between dd and FTK Imager (command-line vs. GUI, raw vs. E01 output) and understand what chain of custody protects.</p>
+<hr />
+<p><em>End of Reading Guide — Module 12</em></p>
+</body>
+</html>

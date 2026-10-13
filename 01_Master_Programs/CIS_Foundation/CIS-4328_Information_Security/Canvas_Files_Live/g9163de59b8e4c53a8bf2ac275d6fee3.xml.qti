@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/profile/cc/ccv1p1/ccv1p1_qtiasiv1p2p1_v1p0.xsd">
+  <assessment ident="g9163de59b8e4c53a8bf2ac275d6fee3" title="Quiz (M08): Endpoint Security">
+    <qtimetadata>
+      <qtimetadatafield>
+        <fieldlabel>cc_profile</fieldlabel>
+        <fieldentry>cc.exam.v0p1</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_assessmenttype</fieldlabel>
+        <fieldentry>Examination</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_scoretype</fieldlabel>
+        <fieldentry>Percentage</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>cc_maxattempts</fieldlabel>
+        <fieldentry>1</fieldentry>
+      </qtimetadatafield>
+    </qtimetadata>
+    <section ident="root_section">
+      <item ident="g9163de59b8e4c53a8bf2ac275d6fee3_q01" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;After a security incident, an analyst needs to determine the exact sequence of events on a compromised workstation — every process that executed, every file that was written, and every network connection that was made — over the past 72 hours. Which tool BEST provides this capability?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g9163de59b8e4c53a8bf2ac275d6fee3_q01_a">
+                <material>
+                  <mattext texttype="text/plain">Traditional signature-based antivirus</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g9163de59b8e4c53a8bf2ac275d6fee3_q01_b">
+                <material>
+                  <mattext texttype="text/plain">Host-based IDS</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g9163de59b8e4c53a8bf2ac275d6fee3_q01_c">
+                <material>
+                  <mattext texttype="text/plain">Endpoint Detection and Response (EDR)</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g9163de59b8e4c53a8bf2ac275d6fee3_q01_d">
+                <material>
+                  <mattext texttype="text/plain">SIEM</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g9163de59b8e4c53a8bf2ac275d6fee3_q01_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g9163de59b8e4c53a8bf2ac275d6fee3_q02" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An organization wants to prevent any application that has not been explicitly approved from executing on its ATM kiosks. The ATMs run a limited set of fixed applications that rarely change. Which control BEST meets this requirement?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g9163de59b8e4c53a8bf2ac275d6fee3_q02_a">
+                <material>
+                  <mattext texttype="text/plain">Next-generation antivirus with behavioral detection</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g9163de59b8e4c53a8bf2ac275d6fee3_q02_b">
+                <material>
+                  <mattext texttype="text/plain">Application allowlisting</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g9163de59b8e4c53a8bf2ac275d6fee3_q02_c">
+                <material>
+                  <mattext texttype="text/plain">Host-based IPS</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g9163de59b8e4c53a8bf2ac275d6fee3_q02_d">
+                <material>
+                  <mattext texttype="text/plain">Signature-based antivirus</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g9163de59b8e4c53a8bf2ac275d6fee3_q02_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g9163de59b8e4c53a8bf2ac275d6fee3_q03" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A laptop with BitLocker encryption and TPM integration is stolen from an employee's car. The drive is removed and inserted into a different computer. What is the status of the data?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g9163de59b8e4c53a8bf2ac275d6fee3_q03_a">
+                <material>
+                  <mattext texttype="text/plain">The data is accessible because BitLocker uses a software key stored in the OS</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g9163de59b8e4c53a8bf2ac275d6fee3_q03_b">
+                <material>
+                  <mattext texttype="text/plain">The data is accessible once the attacker enters the Windows login password</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g9163de59b8e4c53a8bf2ac275d6fee3_q03_c">
+                <material>
+                  <mattext texttype="text/plain">The data is encrypted and unreadable because the TPM on the original laptop holds the key</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g9163de59b8e4c53a8bf2ac275d6fee3_q03_d">
+                <material>
+                  <mattext texttype="text/plain">The data is accessible because removing the drive disables the encryption</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g9163de59b8e4c53a8bf2ac275d6fee3_q03_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g9163de59b8e4c53a8bf2ac275d6fee3_q04" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A new ransomware variant is discovered that uses a polymorphic engine to modify its own code, producing a unique binary hash for every infection. Traditional antivirus reports no threats. Which detection approach would MOST likely identify this threat?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g9163de59b8e4c53a8bf2ac275d6fee3_q04_a">
+                <material>
+                  <mattext texttype="text/plain">Updating antivirus signatures within 24 hours</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g9163de59b8e4c53a8bf2ac275d6fee3_q04_b">
+                <material>
+                  <mattext texttype="text/plain">Behavioral detection that identifies the mass file encryption activity pattern</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g9163de59b8e4c53a8bf2ac275d6fee3_q04_c">
+                <material>
+                  <mattext texttype="text/plain">File hash comparison against known threat databases</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g9163de59b8e4c53a8bf2ac275d6fee3_q04_d">
+                <material>
+                  <mattext texttype="text/plain">Port scanning to detect ransomware command-and-control traffic</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g9163de59b8e4c53a8bf2ac275d6fee3_q04_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g9163de59b8e4c53a8bf2ac275d6fee3_q05" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An organization's security team receives a report of a vulnerability with a CVSS score of 6.5 (Medium severity). The same day, a different vulnerability with a CVSS score of 5.8 (Medium severity) is added to the CISA Known Exploited Vulnerabilities catalog. Which should be patched first?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g9163de59b8e4c53a8bf2ac275d6fee3_q05_a">
+                <material>
+                  <mattext texttype="text/plain">The CVSS 6.5 vulnerability because it has a higher severity score</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g9163de59b8e4c53a8bf2ac275d6fee3_q05_b">
+                <material>
+                  <mattext texttype="text/plain">The CVSS 5.8 vulnerability because it is being actively exploited in the wild</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g9163de59b8e4c53a8bf2ac275d6fee3_q05_c">
+                <material>
+                  <mattext texttype="text/plain">Both simultaneously since both are Medium severity</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g9163de59b8e4c53a8bf2ac275d6fee3_q05_d">
+                <material>
+                  <mattext texttype="text/plain">Neither — Medium severity vulnerabilities do not require emergency patching</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g9163de59b8e4c53a8bf2ac275d6fee3_q05_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g9163de59b8e4c53a8bf2ac275d6fee3_q06" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A company issues corporate smartphones to all employees and allows personal use within an acceptable use policy. IT needs full visibility and control over the device, including the ability to locate and wipe the entire device if lost. Which mobile device management model is MOST appropriate?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g9163de59b8e4c53a8bf2ac275d6fee3_q06_a">
+                <material>
+                  <mattext texttype="text/plain">MAM</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g9163de59b8e4c53a8bf2ac275d6fee3_q06_b">
+                <material>
+                  <mattext texttype="text/plain">BYOD with app containerization</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g9163de59b8e4c53a8bf2ac275d6fee3_q06_c">
+                <material>
+                  <mattext texttype="text/plain">MDM</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g9163de59b8e4c53a8bf2ac275d6fee3_q06_d">
+                <material>
+                  <mattext texttype="text/plain">COPE with MAM-only enrollment</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g9163de59b8e4c53a8bf2ac275d6fee3_q06_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g9163de59b8e4c53a8bf2ac275d6fee3_q07" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An employee connects their personal laptop to a coffee shop Wi-Fi network. The laptop's corporate-issued security software includes an antivirus, but the host-based firewall has been disabled. Which threat does the disabled host-based firewall MOST directly expose the employee to?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g9163de59b8e4c53a8bf2ac275d6fee3_q07_a">
+                <material>
+                  <mattext texttype="text/plain">Malware delivered via drive-by download from a web browser</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g9163de59b8e4c53a8bf2ac275d6fee3_q07_b">
+                <material>
+                  <mattext texttype="text/plain">Unsolicited inbound connections from other devices on the same network</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g9163de59b8e4c53a8bf2ac275d6fee3_q07_c">
+                <material>
+                  <mattext texttype="text/plain">Phishing emails delivered to the employee's inbox</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g9163de59b8e4c53a8bf2ac275d6fee3_q07_d">
+                <material>
+                  <mattext texttype="text/plain">Keylogging by a rogue access point</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g9163de59b8e4c53a8bf2ac275d6fee3_q07_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g9163de59b8e4c53a8bf2ac275d6fee3_q08" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A CIS Benchmark Level 1 control recommends disabling the LLMNR (Link-Local Multicast Name Resolution) protocol on Windows workstations. What is the PRIMARY security rationale for this recommendation?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g9163de59b8e4c53a8bf2ac275d6fee3_q08_a">
+                <material>
+                  <mattext texttype="text/plain">LLMNR uses unencrypted DNS traffic that can be intercepted</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g9163de59b8e4c53a8bf2ac275d6fee3_q08_b">
+                <material>
+                  <mattext texttype="text/plain">LLMNR queries can be hijacked to capture NTLM credential hashes via responder tools</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g9163de59b8e4c53a8bf2ac275d6fee3_q08_c">
+                <material>
+                  <mattext texttype="text/plain">LLMNR consumes excessive network bandwidth</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g9163de59b8e4c53a8bf2ac275d6fee3_q08_d">
+                <material>
+                  <mattext texttype="text/plain">LLMNR is incompatible with modern Active Directory environments</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g9163de59b8e4c53a8bf2ac275d6fee3_q08_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g9163de59b8e4c53a8bf2ac275d6fee3_q09" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;Employees at a law firm use personal iPhones to access corporate email and document systems. The firm wants to protect client documents stored in corporate applications without restricting what employees do with their personal photos, contacts, or personal apps. Which approach BEST meets this requirement?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g9163de59b8e4c53a8bf2ac275d6fee3_q09_a">
+                <material>
+                  <mattext texttype="text/plain">Enroll all devices in full MDM with remote wipe capability</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g9163de59b8e4c53a8bf2ac275d6fee3_q09_b">
+                <material>
+                  <mattext texttype="text/plain">Require all employees to use corporate-issued devices only</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g9163de59b8e4c53a8bf2ac275d6fee3_q09_c">
+                <material>
+                  <mattext texttype="text/plain">Deploy MAM to containerize corporate applications and their data</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g9163de59b8e4c53a8bf2ac275d6fee3_q09_d">
+                <material>
+                  <mattext texttype="text/plain">Implement a VPN requirement and rely on server-side access controls</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g9163de59b8e4c53a8bf2ac275d6fee3_q09_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g9163de59b8e4c53a8bf2ac275d6fee3_q10" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A security team is hardening a new Windows server. According to the CIS Benchmark, which of the following is a Level 1 hardening action?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g9163de59b8e4c53a8bf2ac275d6fee3_q10_a">
+                <material>
+                  <mattext texttype="text/plain">Enabling all Windows features for maximum compatibility</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g9163de59b8e4c53a8bf2ac275d6fee3_q10_b">
+                <material>
+                  <mattext texttype="text/plain">Disabling the Guest account and default local administrator account</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g9163de59b8e4c53a8bf2ac275d6fee3_q10_c">
+                <material>
+                  <mattext texttype="text/plain">Installing a real-time antivirus solution on every service</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g9163de59b8e4c53a8bf2ac275d6fee3_q10_d">
+                <material>
+                  <mattext texttype="text/plain">Requiring biometric authentication for all remote desktop sessions</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g9163de59b8e4c53a8bf2ac275d6fee3_q10_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+    </section>
+  </assessment>
+</questestinterop>

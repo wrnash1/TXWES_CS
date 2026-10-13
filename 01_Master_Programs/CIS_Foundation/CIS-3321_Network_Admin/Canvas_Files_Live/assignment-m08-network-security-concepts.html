@@ -1,0 +1,364 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Assignment: Lab (M08): Network Security Concepts</title>
+</head>
+<body>
+<h2>Lab (M08): Network Security Concepts</h2>
+<h1>Lab Activity: Module 08 — Network Security Concepts</h1>
+<h2>Course: CIS-3321 Network Administration</h2>
+<p><strong>Certification Alignment:</strong> CompTIA Network+ (N10-009)</p>
+<hr />
+<h3>Overview</h3>
+<p>This lab has two parts. Part 1 uses Cisco Packet Tracer to build a DMZ network architecture with two firewalls and apply basic access control lists that enforce a security policy. Part 2 is an ARP analysis exercise using Wireshark, where you will capture ARP traffic on your local network, identify normal and potentially anomalous ARP behavior, and practice identifying the indicators of ARP poisoning in a capture file.</p>
+<p>Estimated Time: 60–75 minutes</p>
+<p>Required Tools:</p>
+<ul>
+<li>Cisco Packet Tracer 8.x (free at netacad.com with a free account)</li>
+<li>Wireshark (free at wireshark.org)</li>
+<li>Windows, Linux, or macOS with an active network connection</li>
+</ul>
+<hr />
+<h3>Learning Objectives</h3>
+<p>By the end of this lab, you will be able to:</p>
+<ol>
+<li>Build a two-firewall DMZ topology in Packet Tracer.</li>
+<li>Apply ACL rules that implement a real-world DMZ security policy.</li>
+<li>Verify that traffic permitted by policy flows correctly and that prohibited traffic is blocked.</li>
+<li>Capture and interpret ARP traffic in Wireshark.</li>
+<li>Identify the indicators of ARP poisoning in a packet capture.</li>
+<li>Explain how Dynamic ARP Inspection would prevent the attack.</li>
+</ol>
+<hr />
+<h3>Part 1: DMZ Architecture in Cisco Packet Tracer</h3>
+<h3>Part 1A: Build the Topology</h3>
+<p>Open Packet Tracer and build the following topology:</p>
+<p>Internet Zone (outside):</p>
+<ul>
+<li>1 PC labeled "Internet-Host" — IP: 203.0.113.100 /24, Gateway: 203.0.113.1</li>
+</ul>
+<p>Outer Firewall (Router0):</p>
+<ul>
+<li>GigabitEthernet0/0 (outside/internet): 203.0.113.1 /24</li>
+<li>GigabitEthernet0/1 (DMZ): 10.10.10.1 /24</li>
+</ul>
+<p>DMZ Zone:</p>
+<ul>
+<li>1 Server labeled "Web-Server" — IP: 10.10.10.10 /24, Gateway: 10.10.10.1</li>
+</ul>
+<p>Inner Firewall (Router1):</p>
+<ul>
+<li>GigabitEthernet0/0 (DMZ): 10.10.10.2 /24</li>
+<li>GigabitEthernet0/1 (internal LAN): 192.168.1.1 /24</li>
+</ul>
+<p>Internal LAN Zone:</p>
+<ul>
+<li>1 PC labeled "Internal-Host" — IP: 192.168.1.10 /24, Gateway: 192.168.1.1</li>
+<li>1 Server labeled "DB-Server" — IP: 192.168.1.20 /24, Gateway: 192.168.1.1</li>
+</ul>
+<p>Connect devices:</p>
+<ul>
+<li>Internet-Host FastEthernet → Router0 GigabitEthernet0/0</li>
+<li>Router0 GigabitEthernet0/1 → Web-Server FastEthernet (via switch if needed)</li>
+<li>Router0 GigabitEthernet0/1 also connects to Router1 GigabitEthernet0/0 (same DMZ subnet 10.10.10.0/24)</li>
+<li>Router1 GigabitEthernet0/1 → Internal-Host and DB-Server (via switch)</li>
+</ul>
+<hr />
+<h3>Part 1B: Configure Static Routing</h3>
+<p>On Router0 (Outer Firewall), add a route to the internal LAN via Router1:</p>
+<pre><code class="language-text">ip route 192.168.1.0 255.255.255.0 10.10.10.2
+</code></pre>
+<p>On Router1 (Inner Firewall), add a default route to the internet via Router0:</p>
+<pre><code class="language-text">ip route 0.0.0.0 0.0.0.0 10.10.10.1
+</code></pre>
+<hr />
+<h3>Part 1C: Test Connectivity Without ACLs</h3>
+<p>Before applying security rules, verify that all devices can communicate:</p>
+<p>From Internet-Host, ping Web-Server (10.10.10.10) — should succeed.</p>
+<p>From Internet-Host, ping DB-Server (192.168.1.20) — should succeed (no rules yet).</p>
+<p>From Web-Server, ping DB-Server (192.168.1.20) — should succeed.</p>
+<p>From Internal-Host, ping Web-Server (10.10.10.10) — should succeed.</p>
+<p>Record all ping results. Note that without security rules, the internet can reach the internal database server directly — this is the security problem the DMZ architecture must solve.</p>
+<hr />
+<h3>Part 1D: Apply the DMZ Security Policy</h3>
+<p>Now apply the following security policy using ACLs:</p>
+<p>Policy rules:</p>
+<ul>
+<li>Internet can reach Web-Server on TCP port 80 (HTTP) only</li>
+<li>Internet cannot directly reach Internal-Host or DB-Server</li>
+<li>Web-Server can reach DB-Server on TCP port 3306 (MySQL) only</li>
+<li>Internal-Host can reach Web-Server (any traffic)</li>
+<li>All other traffic not explicitly permitted is denied</li>
+</ul>
+<p>On Router0, apply an inbound ACL on the outside interface (GigabitEthernet0/0) to control internet-to-DMZ traffic:</p>
+<pre><code class="language-text">ip access-list extended OUTSIDE-IN
+ permit tcp any host 10.10.10.10 eq 80
+ deny   ip any 192.168.1.0 0.0.0.255
+ permit ip any any
+!
+interface GigabitEthernet0/0
+ ip access-group OUTSIDE-IN in
+</code></pre>
+<p>On Router1, apply an inbound ACL on the DMZ-facing interface (GigabitEthernet0/0) to control DMZ-to-LAN traffic:</p>
+<pre><code class="language-text">ip access-list extended DMZ-TO-LAN
+ permit tcp host 10.10.10.10 host 192.168.1.20 eq 3306
+ deny   ip 10.10.10.0 0.0.0.255 192.168.1.0 0.0.0.255
+ permit ip any any
+!
+interface GigabitEthernet0/0
+ ip access-group DMZ-TO-LAN in
+</code></pre>
+<hr />
+<h3>Part 1E: Verify the Security Policy</h3>
+<p>After applying ACLs, repeat the connectivity tests:</p>
+<p>Test 1: From Internet-Host, open a browser or send a simulated HTTP request to Web-Server on port 80 — should be permitted.</p>
+<p>Test 2: From Internet-Host, ping DB-Server (192.168.1.20) — should be denied by the OUTSIDE-IN ACL.</p>
+<p>Test 3: From Web-Server, attempt to connect to DB-Server on port 3306 — should be permitted by DMZ-TO-LAN ACL.</p>
+<p>Test 4: From Web-Server, attempt to ping Internal-Host on port 22 (SSH) — should be denied.</p>
+<p>Test 5: From Internal-Host, ping Web-Server — should be permitted (the DMZ-TO-LAN ACL does not restrict internal-to-DMZ traffic; only DMZ-to-LAN).</p>
+<p>Record all test results in the table below.</p>
+<p>Security Policy Verification Table:</p>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Source</th>
+<th>Destination</th>
+<th>Port/Protocol</th>
+<th>Expected</th>
+<th>Actual</th>
+<th>Pass/Fail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Internet-Host</td>
+<td>Web-Server</td>
+<td>TCP 80</td>
+<td>Permit</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2</td>
+<td>Internet-Host</td>
+<td>DB-Server</td>
+<td>ICMP</td>
+<td>Deny</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>3</td>
+<td>Web-Server</td>
+<td>DB-Server</td>
+<td>TCP 3306</td>
+<td>Permit</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>4</td>
+<td>Web-Server</td>
+<td>Internal-Host</td>
+<td>TCP 22</td>
+<td>Deny</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>5</td>
+<td>Internal-Host</td>
+<td>Web-Server</td>
+<td>ICMP</td>
+<td>Permit</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>Part 1 Questions</h3>
+<p>Question 1-1: In your initial testing (before ACLs), Internet-Host could ping DB-Server. What is the security risk this represents in a real-world environment? What type of server is DB-Server, and why should it never be directly reachable from the internet?</p>
+<p>Question 1-2: The DMZ-TO-LAN ACL permits Web-Server to reach DB-Server on port 3306 only. This is an example of which security principle? Explain how this specific rule limits the blast radius if the Web-Server is compromised by an attacker.</p>
+<p>Question 1-3: The OUTSIDE-IN ACL ends with <code>permit ip any any</code>. What would happen if this line were changed to <code>deny ip any any</code>? Would Test 5 (Internal-Host pinging Web-Server) still pass? Explain why or why not based on where the OUTSIDE-IN ACL is applied.</p>
+<p>Question 1-4: An attacker compromises the Web-Server in the DMZ. They attempt to connect to DB-Server on port 22 (SSH) to exfiltrate data. Trace through the ACL rule-by-rule and explain exactly which ACL and which specific rule blocks this attempt.</p>
+<hr />
+<h3>Part 2: ARP Analysis with Wireshark</h3>
+<h3>Part 2A: Capture ARP Traffic</h3>
+<p>Step 1: Open Wireshark and select your active network interface.</p>
+<p>Step 2: Start capturing.</p>
+<p>Step 3: Open a Command Prompt (Windows) or terminal (Linux/macOS) and run:</p>
+<pre><code class="language-text">arp -d *
+</code></pre>
+<p>This clears the ARP cache on Windows (on Linux use <code>ip neigh flush all</code>). This forces your machine to send ARP requests when it next needs to communicate.</p>
+<p>Step 4: Ping your default gateway:</p>
+<pre><code class="language-text">ping -n 1 192.168.1.1
+</code></pre>
+<p>(Replace 192.168.1.1 with your actual gateway if different.)</p>
+<p>Step 5: Run a few more pings to local hosts if available:</p>
+<pre><code class="language-text">ping -n 1 192.168.1.1
+</code></pre>
+<p>Step 6: Stop the Wireshark capture after about 20 seconds.</p>
+<p>Step 7: Apply the display filter:</p>
+<pre><code class="language-text">arp
+</code></pre>
+<hr />
+<h3>Part 2B: Analyze ARP Packets</h3>
+<p>Examine the ARP packets in your capture. Identify at least one ARP Request and one ARP Reply.</p>
+<p>ARP Capture Analysis Table:</p>
+<table>
+<thead>
+<tr>
+<th>Frame</th>
+<th>ARP Type</th>
+<th>Sender MAC</th>
+<th>Sender IP</th>
+<th>Target MAC</th>
+<th>Target IP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(Request)</td>
+<td>Who has?</td>
+<td></td>
+<td></td>
+<td>ff:ff:ff:ff:ff:ff</td>
+<td></td>
+</tr>
+<tr>
+<td>(Reply)</td>
+<td>Is at</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Question 2-1: In the ARP Request, the Target MAC is ff:ff:ff:ff:ff:ff. What does this MAC address represent, and why is it used in ARP Requests?</p>
+<p>Question 2-2: After the ARP Reply is received, your machine caches the IP-to-MAC mapping in its ARP table. Run <code>arp -a</code> in a command prompt and record the entry for your default gateway. What IP address and MAC address are shown? Does this match the ARP Reply you captured in Wireshark?</p>
+<hr />
+<h3>Part 2C: ARP Poisoning Indicators</h3>
+<p>In this section you will not conduct an actual ARP poisoning attack — instead you will analyze what one looks like in a capture and identify the indicators.</p>
+<p>The following is a sample ARP capture excerpt (fictional MAC addresses for illustration):</p>
+<pre><code class="language-text">Frame 1: ARP Reply — Sender: 192.168.1.1 is at AA:BB:CC:11:22:33 (legitimate gateway)
+Frame 2: ARP Reply — Sender: 192.168.1.1 is at DD:EE:FF:44:55:66 (sent by attacker's host)
+Frame 3: ARP Reply — Sender: 192.168.1.1 is at DD:EE:FF:44:55:66 (repeated every 10 seconds)
+</code></pre>
+<p>Question 2C-1: What is the specific indicator in this capture that suggests ARP poisoning is in progress? Identify the key observation that distinguishes this from normal ARP behavior.</p>
+<p>Question 2C-2: If a host receives both Frame 1 and Frame 2, which ARP Reply will take effect in the host's ARP cache, and why? What impact does this have on traffic flow?</p>
+<p>Question 2C-3: The capture shows the attacker's ARP Reply being sent repeatedly every 10 seconds. Why does an ARP poisoning attacker need to send repeated ARP Replies rather than just sending one? What network behavior would cause a single forged reply to eventually become ineffective?</p>
+<p>Question 2C-4: A network administrator wants to implement Dynamic ARP Inspection (DAI) to prevent this attack. Explain in your own words how DAI works — what database does it use to validate ARP packets, and what happens to a forged ARP Reply when DAI is enabled?</p>
+<hr />
+<h3>Deliverables</h3>
+<p>Submit the following in a single PDF or Word document:</p>
+<ol>
+<li>
+<p>Part 1 Topology Screenshot — A screenshot of your completed Packet Tracer topology showing all devices, labels, and connections.</p>
+</li>
+<li>
+<p>Part 1 Pre-ACL Ping Results — A written record (or screenshot) of the five connectivity tests before ACLs were applied, confirming Internet-Host could reach DB-Server.</p>
+</li>
+<li>
+<p>Part 1 Security Policy Verification Table — Completed table with all five tests showing Actual result and Pass/Fail.</p>
+</li>
+<li>
+<p>Part 1 Questions — Written answers to Questions 1-1 through 1-4 in complete sentences.</p>
+</li>
+<li>
+<p>Part 2 ARP Capture Table — Completed ARP packet analysis table from your live capture.</p>
+</li>
+<li>
+<p>Part 2 Wireshark Screenshot — A screenshot of your ARP-filtered Wireshark capture showing at least one Request and one Reply.</p>
+</li>
+<li>
+<p>Part 2 Questions — Written answers to Questions 2-1, 2-2, and 2C-1 through 2C-4.</p>
+</li>
+</ol>
+<hr />
+<h3>Grading Rubric (100 Points Total)</h3>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Points</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Part 1 Topology Screenshot — all devices and connections correct</td>
+<td>8</td>
+</tr>
+<tr>
+<td>Part 1 Pre-ACL results showing unrestricted access (security problem identified)</td>
+<td>7</td>
+</tr>
+<tr>
+<td>Part 1 Security Policy Verification Table — all 5 tests recorded correctly</td>
+<td>15</td>
+</tr>
+<tr>
+<td>Question 1-1 — DB-Server risk and why it must not be internet-facing</td>
+<td>8</td>
+</tr>
+<tr>
+<td>Question 1-2 — Least privilege principle correctly identified and explained</td>
+<td>8</td>
+</tr>
+<tr>
+<td>Question 1-3 — ACL placement and permit/deny analysis correct</td>
+<td>8</td>
+</tr>
+<tr>
+<td>Question 1-4 — Correct ACL trace identifying the specific blocking rule</td>
+<td>9</td>
+</tr>
+<tr>
+<td>Part 2 ARP Capture Table — Request and Reply correctly documented</td>
+<td>8</td>
+</tr>
+<tr>
+<td>Part 2 Wireshark Screenshot — ARP filter applied, Request and Reply visible</td>
+<td>5</td>
+</tr>
+<tr>
+<td>Question 2-1 — Broadcast MAC address purpose correct</td>
+<td>6</td>
+</tr>
+<tr>
+<td>Question 2-2 — arp -a output matches capture</td>
+<td>4</td>
+</tr>
+<tr>
+<td>Question 2C-1 — Duplicate IP-to-MAC indicator identified</td>
+<td>6</td>
+</tr>
+<tr>
+<td>Question 2C-2 — ARP cache overwrite behavior correct</td>
+<td>4</td>
+</tr>
+<tr>
+<td>Question 2C-3 — ARP cache TTL / expiration explanation correct</td>
+<td>5</td>
+</tr>
+<tr>
+<td>Question 2C-4 — DAI mechanism and DHCP snooping binding table explained</td>
+<td>9</td>
+</tr>
+<tr>
+<td>Total</td>
+<td>100</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>Submission Instructions</h3>
+<p>Save your document as: Lab08_Firstname_Lastname.pdf</p>
+<p>Submit to the Module 08 Lab assignment in the course LMS before the posted deadline. Late submissions are subject to the course late policy.</p>
+<hr />
+<p>CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash</p>
+</body>
+</html>

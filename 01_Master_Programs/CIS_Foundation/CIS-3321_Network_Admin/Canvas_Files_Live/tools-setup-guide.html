@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>Tools Setup Guide — CIS-3321 Network Administration</title>
+<style>
+body{font-family:Arial,Helvetica,sans-serif;max-width:860px;margin:0 auto;padding:20px;color:#222;}
+h1{background:#4a1942;color:#fff;padding:12px 16px;border-radius:4px;}
+h2{color:#4a1942;border-bottom:2px solid #4a1942;padding-bottom:4px;}
+h3{color:#6d2e63;}
+.step{background:#f5f0f5;border-left:4px solid #6d2e63;padding:10px 14px;margin:10px 0;border-radius:0 4px 4px 0;}
+.notice{background:#fff8dc;border-left:4px solid #d4a017;padding:10px 14px;margin:12px 0;}
+.success{background:#e8f5e9;border-left:4px solid #388e3c;padding:10px 14px;margin:10px 0;}
+.warning{background:#fff3e0;border-left:4px solid #f57c00;padding:10px 14px;margin:10px 0;}
+table{width:100%;border-collapse:collapse;margin:12px 0;}
+th{background:#4a1942;color:#fff;padding:8px;text-align:left;}
+td{padding:7px 8px;border:1px solid #ccc;}
+code{background:#f0eaf0;padding:2px 6px;border-radius:3px;font-family:monospace;}
+</style>
+</head>
+<body>
+
+<h1>Tools Setup Guide &mdash; CIS-3321 Network Administration</h1>
+<p><strong>Texas Wesleyan University | Professor Nash | Fall 2026</strong></p>
+
+<div class="notice">
+<strong>Complete this setup during the first week of class (before Aug 30).</strong>
+Both tools are free and will be used throughout the semester. Installation takes about 20&ndash;30 minutes total.
+</div>
+
+<h2>Overview</h2>
+<p>CIS-3321 uses two free simulation tools for hands-on networking labs:</p>
+<table>
+<tr><th>Tool</th><th>Used For</th><th>Cost</th><th>Platform</th></tr>
+<tr><td><strong>Cisco Packet Tracer</strong></td><td>Network topology simulations: building LANs, configuring routers/switches, testing protocols</td><td>Free</td><td>Windows, Mac, Linux</td></tr>
+<tr><td><strong>Oracle VirtualBox</strong></td><td>Running virtual machines: Windows Server, Linux VMs for OS and server configuration labs</td><td>Free</td><td>Windows, Mac, Linux</td></tr>
+</table>
+
+<div class="warning">
+<strong>VirtualBox Hardware Requirements:</strong> Your computer needs at least <strong>8 GB of RAM</strong> (16 GB recommended) and <strong>50 GB of free disk space</strong>. Virtualization must be enabled in your BIOS/UEFI settings. If your computer does not meet these requirements, contact Professor Nash during the first week for alternative arrangements.
+</div>
+
+<hr/>
+
+<h2>Part 1: Install Cisco Packet Tracer</h2>
+
+<p>Cisco Packet Tracer is a network simulation tool that lets you build, configure, and troubleshoot virtual networks without physical hardware. It is free from Cisco's NetAcad platform.</p>
+
+<h3>Step 1: Create a Free Cisco NetAcad Account</h3>
+<div class="step">
+<ol>
+<li>Go to <a href="https://www.netacad.com" target="_blank">www.netacad.com</a></li>
+<li>Click <strong>Sign Up</strong> (top right)</li>
+<li>Select <strong>Continue as a Learner</strong></li>
+<li>Fill in your name, email, and create a password</li>
+<li>Verify your email address (check spam if you don't see it)</li>
+</ol>
+<p><em>Use your personal email for this account — you'll keep it after graduation.</em></p>
+</div>
+
+<h3>Step 2: Download Cisco Packet Tracer</h3>
+<div class="step">
+<ol>
+<li>Log in at <a href="https://www.netacad.com" target="_blank">netacad.com</a></li>
+<li>Click your profile icon (top right) &rarr; <strong>My NetAcad</strong></li>
+<li>Search for <strong>"Packet Tracer"</strong> in the course catalog</li>
+<li>Enroll in the free <strong>"Introduction to Packet Tracer"</strong> course (this gives you the download)</li>
+<li>Go to <strong>Resources</strong> within the course and download the installer for your operating system:
+  <ul>
+    <li>Windows: <code>.exe</code> installer</li>
+    <li>macOS: <code>.dmg</code> file</li>
+    <li>Linux: <code>.deb</code> or <code>.rpm</code> package</li>
+  </ul>
+</li>
+<li>Run the installer and follow the prompts (accept defaults)</li>
+</ol>
+</div>
+
+<h3>Step 3: Verify Packet Tracer Launches Correctly</h3>
+<div class="step">
+<ol>
+<li>Open Cisco Packet Tracer from your Start Menu / Applications folder</li>
+<li>Log in with your NetAcad account credentials when prompted</li>
+<li>The main workspace should open with a toolbar on the left and a blank canvas</li>
+<li><strong>Drag a PC and a switch</strong> onto the canvas as a quick test</li>
+<li>If they appear, Packet Tracer is working correctly</li>
+</ol>
+</div>
+
+<div class="success">
+<strong>Success check:</strong> You should see the Packet Tracer workspace with a device toolbar on the lower-left. If you can drag a device onto the canvas, you're ready for Module 01's lab.
+</div>
+
+<h3>Troubleshooting Packet Tracer</h3>
+<table>
+<tr><th>Problem</th><th>Solution</th></tr>
+<tr><td>"Login failed" or authentication error</td><td>Make sure you're connected to the internet. Try resetting your NetAcad password at netacad.com.</td></tr>
+<tr><td>Can't find the download link</td><td>Search "Packet Tracer download" directly on netacad.com. You must be enrolled in the PT course to see the link.</td></tr>
+<tr><td>Application won't open on macOS (security warning)</td><td>Go to System Preferences &rarr; Security &amp; Privacy &rarr; click "Open Anyway" for Packet Tracer.</td></tr>
+<tr><td>Application crashes on startup</td><td>Try uninstalling and re-downloading. Make sure your OS is up to date.</td></tr>
+</table>
+
+<hr/>
+
+<h2>Part 2: Install Oracle VirtualBox</h2>
+
+<p>Oracle VirtualBox is a free virtual machine manager that lets you run a complete operating system (Windows Server, Linux) inside a window on your computer. It is used in select modules for OS and server configuration labs.</p>
+
+<h3>Step 1: Check Your Hardware</h3>
+<div class="step">
+<p>Before installing, confirm your computer meets the requirements:</p>
+<ul>
+<li><strong>RAM:</strong> 8 GB minimum (16 GB strongly recommended for comfortable use)</li>
+<li><strong>Disk Space:</strong> 50 GB free (VM images are large)</li>
+<li><strong>Processor:</strong> Any modern Intel or AMD processor from the last 6 years</li>
+<li><strong>Virtualization:</strong> Must be enabled in BIOS (Intel VT-x or AMD-V)</li>
+</ul>
+<p>To check RAM on Windows: Press <code>Win + R</code>, type <code>dxdiag</code>, press Enter. Look for "Memory" in the System tab.</p>
+</div>
+
+<h3>Step 2: Enable Virtualization in BIOS (if not already enabled)</h3>
+<div class="step">
+<p>Most computers have virtualization enabled by default. If VirtualBox gives you a warning about it:</p>
+<ol>
+<li>Restart your computer</li>
+<li>Press the BIOS key during startup (usually <code>F2</code>, <code>F10</code>, <code>Del</code>, or <code>Esc</code> — varies by manufacturer)</li>
+<li>Look for <strong>Virtualization Technology</strong>, <strong>Intel VT-x</strong>, or <strong>AMD-V</strong> in the CPU or Advanced settings</li>
+<li>Set it to <strong>Enabled</strong></li>
+<li>Save and exit (usually <code>F10</code>)</li>
+</ol>
+<p><em>Not sure which key? Search: "[your laptop brand] enable virtualization BIOS"</em></p>
+</div>
+
+<h3>Step 3: Download and Install VirtualBox</h3>
+<div class="step">
+<ol>
+<li>Go to <a href="https://www.virtualbox.org/wiki/Downloads" target="_blank">virtualbox.org/wiki/Downloads</a></li>
+<li>Under <strong>"VirtualBox platform packages"</strong> click the link for your OS:
+  <ul>
+    <li>Windows: <strong>Windows hosts</strong></li>
+    <li>macOS Intel: <strong>macOS / Intel hosts</strong></li>
+    <li>macOS Apple Silicon (M1/M2/M3): <strong>macOS / Apple Silicon hosts</strong> (use the ARM version)</li>
+    <li>Linux: choose your distribution</li>
+  </ul>
+</li>
+<li>Also download the <strong>VirtualBox Extension Pack</strong> (same page, click "All supported platforms")</li>
+<li>Run the VirtualBox installer first, accept all defaults</li>
+<li>After installation, open VirtualBox and go to <strong>File &rarr; Tools &rarr; Extension Pack Manager &rarr; Install</strong> to add the Extension Pack</li>
+</ol>
+</div>
+
+<h3>Step 4: Verify VirtualBox Launches</h3>
+<div class="step">
+<ol>
+<li>Open Oracle VirtualBox from your Start Menu / Applications</li>
+<li>The main VirtualBox Manager window opens with an empty VM list</li>
+<li>Click <strong>New</strong> to confirm the VM creation wizard opens (you don't need to create one now)</li>
+<li>Cancel the wizard and close</li>
+</ol>
+</div>
+
+<div class="success">
+<strong>Success check:</strong> VirtualBox Manager opens without errors and you can see the "New" button. VM images for specific labs will be provided in the module instructions when needed.
+</div>
+
+<h3>Troubleshooting VirtualBox</h3>
+<table>
+<tr><th>Problem</th><th>Solution</th></tr>
+<tr><td>"VT-x/AMD-V hardware acceleration is not available"</td><td>Enable virtualization in BIOS (Step 2 above).</td></tr>
+<tr><td>Installation fails on Windows (error 0x80004005)</td><td>Run the installer as Administrator: right-click &rarr; "Run as administrator."</td></tr>
+<tr><td>VirtualBox won't install on macOS (Sequoia / Ventura)</td><td>Go to System Settings &rarr; Privacy &amp; Security &rarr; allow the Oracle kernel extension.</td></tr>
+<tr><td>VM runs very slowly</td><td>Increase the VM's RAM in Settings &rarr; System. Close other applications. Enable 3D acceleration if available.</td></tr>
+<tr><td>Mac with Apple Silicon (M1/M2/M3)</td><td>Download the ARM version from VirtualBox downloads. Some Windows VM images may not be available — contact Professor Nash for alternative lab instructions.</td></tr>
+</table>
+
+<hr/>
+
+<h2>Getting Help</h2>
+<p>If you run into an issue not covered here:</p>
+<ol>
+<li>Post a question with a screenshot to the <strong>Q&amp;A Discussion</strong> in this module — classmates may have solved the same problem.</li>
+<li>Email Professor Nash at <a href="mailto:nash@txwes.edu">nash@txwes.edu</a> with a description and screenshot of the error.</li>
+<li>Visit the <strong>TXWES Help Desk</strong> at helpdesk@txwes.edu for computer/IT issues unrelated to the tools themselves.</li>
+</ol>
+
+<div class="notice">
+<strong>Don't wait!</strong> If you're having trouble installing either tool, reach out during the first week. Both tools are needed for Module 01's lab (due Aug 30).
+</div>
+
+<p style="text-align:center;color:#888;font-size:.85em;margin-top:30px;">
+CIS-3321-40 Network Administration &bull; Fall 2026 &bull; Texas Wesleyan University &bull; Professor Nash
+</p>
+</body>
+</html>

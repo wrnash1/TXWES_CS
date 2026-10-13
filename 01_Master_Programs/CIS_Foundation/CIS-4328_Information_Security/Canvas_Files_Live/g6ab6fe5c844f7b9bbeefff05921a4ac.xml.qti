@@ -1,0 +1,1025 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/profile/cc/ccv1p1/ccv1p1_qtiasiv1p2p1_v1p0.xsd">
+  <assessment ident="g6ab6fe5c844f7b9bbeefff05921a4ac" title="Quiz (M11): Incident Response">
+    <qtimetadata>
+      <qtimetadatafield>
+        <fieldlabel>cc_profile</fieldlabel>
+        <fieldentry>cc.exam.v0p1</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_assessmenttype</fieldlabel>
+        <fieldentry>Examination</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_scoretype</fieldlabel>
+        <fieldentry>Percentage</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>cc_maxattempts</fieldlabel>
+        <fieldentry>1</fieldentry>
+      </qtimetadatafield>
+    </qtimetadata>
+    <section ident="root_section">
+      <item ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q01" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An organization has just completed drafting an incident response plan, identified team members, deployed SIEM and EDR tools, and conducted a tabletop exercise. Which phase of the NIST SP 800-61 incident response lifecycle do all of these activities belong to?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q01_a">
+                <material>
+                  <mattext texttype="text/plain">Detection and Analysis</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q01_b">
+                <material>
+                  <mattext texttype="text/plain">Containment, Eradication, and Recovery</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q01_c">
+                <material>
+                  <mattext texttype="text/plain">Preparation</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q01_d">
+                <material>
+                  <mattext texttype="text/plain">Post-Incident Activity</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g6ab6fe5c844f7b9bbeefff05921a4ac_q01_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q02" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A security analyst receives an EDR alert indicating that a process on a workstation is attempting to encrypt files and delete shadow copies. The analyst validates the alert is a true positive. Which phase of the NIST IR lifecycle are these activities — receiving and validating the alert — part of?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q02_a">
+                <material>
+                  <mattext texttype="text/plain">Preparation</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q02_b">
+                <material>
+                  <mattext texttype="text/plain">Detection and Analysis</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q02_c">
+                <material>
+                  <mattext texttype="text/plain">Containment</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q02_d">
+                <material>
+                  <mattext texttype="text/plain">Post-Incident Activity</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g6ab6fe5c844f7b9bbeefff05921a4ac_q02_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q03" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;During an incident involving ransomware, a responder needs to collect evidence from an infected Windows workstation that is still powered on. Which evidence source should be collected FIRST based on the order of volatility?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q03_a">
+                <material>
+                  <mattext texttype="text/plain">The contents of the hard drive</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q03_b">
+                <material>
+                  <mattext texttype="text/plain">The Windows Event Logs stored on disk</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q03_c">
+                <material>
+                  <mattext texttype="text/plain">The contents of system RAM</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q03_d">
+                <material>
+                  <mattext texttype="text/plain">The ransom note file on the desktop</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g6ab6fe5c844f7b9bbeefff05921a4ac_q03_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q04" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An incident responder follows these steps: disconnects the affected server from the network, blocks the attacker's known IP addresses at the firewall, and applies emergency access restrictions on affected accounts. Which sub-phase of the NIST IR lifecycle do these actions represent?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q04_a">
+                <material>
+                  <mattext texttype="text/plain">Eradication</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q04_b">
+                <material>
+                  <mattext texttype="text/plain">Recovery</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q04_c">
+                <material>
+                  <mattext texttype="text/plain">Short-term containment</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q04_d">
+                <material>
+                  <mattext texttype="text/plain">Detection</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g6ab6fe5c844f7b9bbeefff05921a4ac_q04_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q05" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;After containing an incident, the IR team removes all malware artifacts, deletes unauthorized accounts the attacker created, resets all compromised credentials, and patches the exploited vulnerability. Which sub-phase does this describe?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q05_a">
+                <material>
+                  <mattext texttype="text/plain">Containment</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q05_b">
+                <material>
+                  <mattext texttype="text/plain">Eradication</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q05_c">
+                <material>
+                  <mattext texttype="text/plain">Recovery</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q05_d">
+                <material>
+                  <mattext texttype="text/plain">Post-Incident Activity</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g6ab6fe5c844f7b9bbeefff05921a4ac_q05_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q06" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A forensic investigator collects a hard drive from a compromised server. The investigator documents the drive's make, model, and serial number; records the SHA-256 hash; seals it in a tamper-evident bag; and logs their name, the date/time, and the collection location. The investigator then hands the drive to a colleague for analysis and records this transfer. What does this documentation practice establish?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q06_a">
+                <material>
+                  <mattext texttype="text/plain">Non-repudiation for the attacker</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q06_b">
+                <material>
+                  <mattext texttype="text/plain">Chain of custody</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q06_c">
+                <material>
+                  <mattext texttype="text/plain">Order of volatility compliance</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q06_d">
+                <material>
+                  <mattext texttype="text/plain">Evidence classification level</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g6ab6fe5c844f7b9bbeefff05921a4ac_q06_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q07" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An organization's security team discovers an active data exfiltration event. The team wants to observe the attacker to gather threat intelligence about their tools and targets before intervening. Which containment approach does this describe?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q07_a">
+                <material>
+                  <mattext texttype="text/plain">Aggressive short-term containment</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q07_b">
+                <material>
+                  <mattext texttype="text/plain">Long-term containment</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q07_c">
+                <material>
+                  <mattext texttype="text/plain">Delayed containment for intelligence gathering</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q07_d">
+                <material>
+                  <mattext texttype="text/plain">Eradication without prior containment</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g6ab6fe5c844f7b9bbeefff05921a4ac_q07_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q08" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A CISO reports that the organization's Mean Time to Detect (MTTD) for the previous year was 210 days. What does this metric indicate about the organization's security posture?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q08_a">
+                <material>
+                  <mattext texttype="text/plain">The organization responds to incidents in 210 days on average</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q08_b">
+                <material>
+                  <mattext texttype="text/plain">Attackers were present in the environment for an average of 210 days before detection</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q08_c">
+                <material>
+                  <mattext texttype="text/plain">The organization takes 210 days to fully recover from incidents</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q08_d">
+                <material>
+                  <mattext texttype="text/plain">The organization has had no incidents detected in 210 days</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g6ab6fe5c844f7b9bbeefff05921a4ac_q08_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q09" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;During an incident, the security team communicates exclusively via the company's normal Microsoft Teams environment. The IR manager is later concerned that the attacker may have had access to Teams and monitored the response. What specific control should the IR plan have required?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q09_a">
+                <material>
+                  <mattext texttype="text/plain">Encrypted email for all communications</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q09_b">
+                <material>
+                  <mattext texttype="text/plain">An out-of-band communication channel separate from potentially compromised systems</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q09_c">
+                <material>
+                  <mattext texttype="text/plain">All communications routed through legal counsel</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q09_d">
+                <material>
+                  <mattext texttype="text/plain">Verbal-only communications with no electronic records</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g6ab6fe5c844f7b9bbeefff05921a4ac_q09_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q10" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An incident responder is analyzing a compromised endpoint. Which item in the following list is classified as volatile evidence that must be collected before the system is powered off?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q10_a">
+                <material>
+                  <mattext texttype="text/plain">Files stored in the Documents folder</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q10_b">
+                <material>
+                  <mattext texttype="text/plain">The Windows Registry hive files on disk</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q10_c">
+                <material>
+                  <mattext texttype="text/plain">The list of currently active network connections</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q10_d">
+                <material>
+                  <mattext texttype="text/plain">Log files archived to a SIEM two weeks ago</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g6ab6fe5c844f7b9bbeefff05921a4ac_q10_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q11" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;Following a security incident, the organization holds a meeting to review the timeline, identify what worked and what failed, and assign improvement actions. Which phase of the NIST IR lifecycle does this meeting occur in?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q11_a">
+                <material>
+                  <mattext texttype="text/plain">Preparation</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q11_b">
+                <material>
+                  <mattext texttype="text/plain">Detection and Analysis</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q11_c">
+                <material>
+                  <mattext texttype="text/plain">Containment, Eradication, and Recovery</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q11_d">
+                <material>
+                  <mattext texttype="text/plain">Post-Incident Activity</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g6ab6fe5c844f7b9bbeefff05921a4ac_q11_d</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q12" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A company experiences a data breach involving customer PII. The company's breach notification legal obligation requires informing affected individuals within 30 days. On day 29, legal counsel has not yet approved the draft notification. Who bears responsibility for ensuring the notification is sent on time?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q12_a">
+                <material>
+                  <mattext texttype="text/plain">Legal counsel, as they control the approval process</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q12_b">
+                <material>
+                  <mattext texttype="text/plain">The incident commander and legal counsel jointly, as notifications require both technical accuracy and legal review</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q12_c">
+                <material>
+                  <mattext texttype="text/plain">The PR team, as customer communications are their responsibility</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q12_d">
+                <material>
+                  <mattext texttype="text/plain">The CISO, as the most senior security official</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g6ab6fe5c844f7b9bbeefff05921a4ac_q12_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q13" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An IR team collects a forensic image of a compromised hard drive. They verify the SHA-256 hash matches the value recorded at collection after the image is copied to the analysis workstation. What does a matching hash confirm?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q13_a">
+                <material>
+                  <mattext texttype="text/plain">The drive was not involved in the incident</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q13_b">
+                <material>
+                  <mattext texttype="text/plain">The forensic image has not been modified since collection</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q13_c">
+                <material>
+                  <mattext texttype="text/plain">The drive contains no malware</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q13_d">
+                <material>
+                  <mattext texttype="text/plain">The chain of custody is complete</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g6ab6fe5c844f7b9bbeefff05921a4ac_q13_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q14" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;The playbook for responding to phishing incidents includes specific steps for: identifying affected accounts, resetting compromised passwords, reviewing mail server logs, and notifying potentially affected users. What is the PRIMARY purpose of documenting playbooks in advance?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q14_a">
+                <material>
+                  <mattext texttype="text/plain">To satisfy audit requirements for ISO 27001 certification</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q14_b">
+                <material>
+                  <mattext texttype="text/plain">To ensure responders can execute consistent, tested procedures under pressure during an actual incident</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q14_c">
+                <material>
+                  <mattext texttype="text/plain">To document the organization's legal obligations during incidents</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q14_d">
+                <material>
+                  <mattext texttype="text/plain">To demonstrate IR capability to cyber insurance underwriters</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g6ab6fe5c844f7b9bbeefff05921a4ac_q14_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q15" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;During an incident, the CISO instructs the IT team to rebuild compromised servers from clean OS images and restore data from the last known-good backup. Which IR phase does rebuilding systems from backups represent?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q15_a">
+                <material>
+                  <mattext texttype="text/plain">Containment</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q15_b">
+                <material>
+                  <mattext texttype="text/plain">Eradication</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q15_c">
+                <material>
+                  <mattext texttype="text/plain">Recovery</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q15_d">
+                <material>
+                  <mattext texttype="text/plain">Post-Incident Activity</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g6ab6fe5c844f7b9bbeefff05921a4ac_q15_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q16" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An organization's incident response team is composed of members from IT security, legal, HR, PR, and business operations. These individuals work their normal jobs between incidents and assemble when an incident is declared. What is this team structure called?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q16_a">
+                <material>
+                  <mattext texttype="text/plain">Dedicated CSIRT</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q16_b">
+                <material>
+                  <mattext texttype="text/plain">Virtual CSIRT</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q16_c">
+                <material>
+                  <mattext texttype="text/plain">External IR retainer</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q16_d">
+                <material>
+                  <mattext texttype="text/plain">Managed Security Service Provider (MSSP)</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g6ab6fe5c844f7b9bbeefff05921a4ac_q16_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q17" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A security analyst discovers an attacker has been present in the network for 45 days. During that time, the attacker moved laterally to 12 systems and accessed a file server containing sensitive contracts. The incident is now contained. Which IR metric does the "45 days" represent?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q17_a">
+                <material>
+                  <mattext texttype="text/plain">MTTR</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q17_b">
+                <material>
+                  <mattext texttype="text/plain">MTTD</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q17_c">
+                <material>
+                  <mattext texttype="text/plain">RPO (Recovery Point Objective)</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q17_d">
+                <material>
+                  <mattext texttype="text/plain">RTO (Recovery Time Objective)</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g6ab6fe5c844f7b9bbeefff05921a4ac_q17_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q18" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An IR team member discovers that a compromised server stores customer health records. HIPAA requires covered entities to notify the Department of Health and Human Services of breaches affecting more than 500 individuals. At what point in the IR process should legal counsel be engaged regarding this notification?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q18_a">
+                <material>
+                  <mattext texttype="text/plain">Only after full eradication is complete</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q18_b">
+                <material>
+                  <mattext texttype="text/plain">Only during post-incident activity</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q18_c">
+                <material>
+                  <mattext texttype="text/plain">As early as Detection and Analysis when a breach is suspected</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q18_d">
+                <material>
+                  <mattext texttype="text/plain">Only when HHS proactively contacts the organization</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g6ab6fe5c844f7b9bbeefff05921a4ac_q18_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q19" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;During a lessons learned meeting, the team discovers that the IR plan did not include a procedure for notifying the cyber insurance carrier during an incident. As a result, the carrier is denying coverage because they were not notified within their required timeframe. What type of improvement action should result from this finding?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q19_a">
+                <material>
+                  <mattext texttype="text/plain">Replace the SIEM with a tool that automatically notifies the insurer</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q19_b">
+                <material>
+                  <mattext texttype="text/plain">Update the IR plan and notification procedures to include cyber insurance carrier notification as a required step with a defined timeline</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q19_c">
+                <material>
+                  <mattext texttype="text/plain">Remove cyber insurance from the organization's risk management strategy</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q19_d">
+                <material>
+                  <mattext texttype="text/plain">Require all analysts to take additional training in legal compliance</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g6ab6fe5c844f7b9bbeefff05921a4ac_q19_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q20" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A security analyst collects the following items during an incident response. Arrange them from most volatile to least volatile: (A) a backup tape, (B) a running process list, (C) a file on a USB drive found near a workstation, (D) the contents of the workstation's RAM.&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q20_a">
+                <material>
+                  <mattext texttype="text/plain">D → B → C → A</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q20_b">
+                <material>
+                  <mattext texttype="text/plain">B → D → A → C</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q20_c">
+                <material>
+                  <mattext texttype="text/plain">A → C → B → D</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g6ab6fe5c844f7b9bbeefff05921a4ac_q20_d">
+                <material>
+                  <mattext texttype="text/plain">D → B → A → C</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g6ab6fe5c844f7b9bbeefff05921a4ac_q20_a</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+    </section>
+  </assessment>
+</questestinterop>

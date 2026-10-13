@@ -1,0 +1,463 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Assignment: Lab (M13): Risk Management</title>
+</head>
+<body>
+<h2>Lab (M13): Risk Management</h2>
+<h1>Lab: Module 13 — Risk Management for Security+</h1>
+<h2>Course: CIS-4328 Information Security</h2>
+<p><strong>Certification Alignment:</strong> CompTIA Security+ (SY0-701)</p>
+<hr />
+<h2>Lab Overview</h2>
+<p><strong>Title:</strong> Risk Register and Risk Analysis Workshop</p>
+<p><strong>Duration:</strong> Approximately 90 minutes</p>
+<p><strong>Environment:</strong> No special software required — Microsoft Excel/Google Sheets recommended; paper works also</p>
+<p><strong>Skill Level:</strong> Intermediate — requires completion of Module 13 video lectures and Reading Guide</p>
+<hr />
+<h2>Objectives</h2>
+<p>Upon completing this lab, you will be able to:</p>
+<ol>
+<li>Perform a quantitative risk analysis including AV, EF, SLE, ARO, and ALE calculations</li>
+<li>Conduct a cost-benefit analysis to justify a proposed security control investment</li>
+<li>Create a qualitative risk matrix and apply it to multiple identified risks</li>
+<li>Construct a formatted risk register entry for at least three risks</li>
+<li>Derive BIA metrics (MTD, RTO, RPO) from organizational requirements</li>
+<li>Classify identified security controls by function and type</li>
+</ol>
+<hr />
+<h2>Scenario: Cascade Regional Medical Center</h2>
+<p><strong>Organization Overview:</strong> Cascade Regional Medical Center is a 350-bed regional hospital with 2,000 employees. They operate a mix of on-premises and cloud-hosted systems including:</p>
+<ul>
+<li>Electronic Health Record (EHR) system — hosted on-premises; stores PHI for 180,000 patients</li>
+<li>Medical billing system — on-premises; processes insurance claims and stores financial data</li>
+<li>Hospital website and patient portal — cloud-hosted (AWS); allows appointment scheduling and test result access</li>
+<li>Clinical imaging systems (PACS — Picture Archiving and Communication System) — on-premises; stores 15 TB of radiology images</li>
+<li>Building management system (BMS) — controls HVAC, access control, and medical gas systems</li>
+<li>Nurse workstations — 320 Windows PCs throughout the hospital</li>
+</ul>
+<p><strong>Security concerns identified in the annual risk assessment:</strong></p>
+<ol>
+<li>The EHR system runs on Windows Server 2019 and has 14 unpatched critical CVEs outstanding; patch testing is required before deployment (risk: ransomware exploitation)</li>
+<li>Nurse workstation accounts use shared passwords (departmental passwords) and no MFA (risk: unauthorized access to patient records)</li>
+<li>The patient portal has not had a penetration test in three years; OWASP Top 10 vulnerabilities are suspected (risk: patient data breach through web application attack)</li>
+<li>Staff cybersecurity awareness training was last conducted 18 months ago; phishing simulation shows a 34% click rate (risk: phishing leading to credential compromise)</li>
+<li>The PACS imaging system has no backup; data is stored on a single RAID array with no offsite copy (risk: permanent data loss from hardware failure or ransomware)</li>
+</ol>
+<hr />
+<h2>Part 1 — Quantitative Risk Analysis (25 minutes)</h2>
+<h3>Task 1.1 — EHR Ransomware Risk Analysis</h3>
+<p>Using the information below, perform a full quantitative risk analysis for Risk #1 (EHR ransomware):</p>
+<p><strong>Given values:</strong></p>
+<ul>
+<li>Asset: EHR system and the patient data it contains</li>
+<li>Asset Value (AV): $3,500,000 (estimated regulatory fines + breach notification costs + data reconstruction + operational disruption)</li>
+<li>Exposure Factor (EF): 0.65 (estimated 65% of EHR data/system would be impacted in a ransomware event)</li>
+<li>Annual Rate of Occurrence (ARO): 0.35 (industry base rate for healthcare ransomware, adjusted for the presence of 14 unpatched critical CVEs)</li>
+</ul>
+<p><strong>Calculate and record:</strong></p>
+<ol>
+<li>SLE (Single Loss Expectancy) = AV × EF</li>
+<li>ALE (Annual Loss Expectancy) = SLE × ARO</li>
+</ol>
+<p><strong>Proposed control: Emergency Patch Deployment Program</strong></p>
+<ul>
+<li>Cost: $85,000 one-time implementation + $40,000/year ongoing</li>
+<li>Effect: Reduces ARO from 0.35 to 0.08 (by closing the vulnerability window)</li>
+<li>First year total cost: $125,000 ($85,000 + $40,000)</li>
+<li>Ongoing annual cost: $40,000</li>
+</ul>
+<p><strong>Calculate:</strong></p>
+<ol start="3">
+<li>New ALE after control (using ARO = 0.08)</li>
+<li>ALE reduction = Old ALE − New ALE</li>
+<li>First-year net benefit = ALE reduction − First-year control cost</li>
+<li>Ongoing annual net benefit = ALE reduction − Annual control cost (years 2+)</li>
+</ol>
+<p><strong>Task 1.2 — Interpretation</strong></p>
+<p>Based on your calculations, write a three- to four-sentence recommendation to hospital leadership addressing: Is the patch deployment program financially justified? What does the ALE reduction represent in practical terms?</p>
+<h3>Task 1.3 — Patient Portal Web Application Risk Analysis</h3>
+<p>Using the following given values, repeat the quantitative analysis for Risk #3 (patient portal web application breach):</p>
+<ul>
+<li><strong>AV:</strong> $1,200,000</li>
+<li><strong>EF:</strong> 0.45</li>
+<li><strong>ARO:</strong> 0.20</li>
+</ul>
+<p><strong>Proposed control: Annual Penetration Testing</strong></p>
+<ul>
+<li>Cost: $35,000/year</li>
+<li>Effect: Reduces ARO from 0.20 to 0.08</li>
+</ul>
+<p>Calculate: SLE, original ALE, new ALE, ALE reduction, net annual benefit.</p>
+<hr />
+<h2>Part 2 — Qualitative Risk Matrix (15 minutes)</h2>
+<h3>Task 2.1 — Build the Risk Matrix</h3>
+<p>Create a 3×3 qualitative risk matrix using the following scale:</p>
+<p><strong>Likelihood:</strong> Low (L), Medium (M), High (H)</p>
+<p><strong>Impact:</strong> Low (1), Medium (2), High (3)</p>
+<p><strong>Risk Rating:</strong> Combine to produce: Low, Medium, High, or Critical</p>
+<p>Fill in the nine cells of the matrix with appropriate risk ratings.</p>
+<h3>Task 2.2 — Rate All Five Risks</h3>
+<p>For each of the five identified risks at Cascade Regional, assign a likelihood and impact rating using the qualitative scale, then determine the risk rating from your matrix.</p>
+<p>Complete the following table:</p>
+<table>
+<thead>
+<tr>
+<th>Risk #</th>
+<th>Risk Description</th>
+<th>Likelihood</th>
+<th>Impact</th>
+<th>Risk Rating</th>
+<th>Justification (2 sentences)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>EHR unpatched CVEs</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2</td>
+<td>Shared passwords / no MFA</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>3</td>
+<td>Patient portal no pen test</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>4</td>
+<td>Phishing — 34% click rate</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>5</td>
+<td>PACS no backup</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3>Task 2.3 — Prioritization</h3>
+<p>Based on your risk ratings, rank the five risks from highest to lowest priority for treatment. Write one paragraph (four to five sentences) explaining your prioritization rationale. Note if any risks should be treated together.</p>
+<hr />
+<h2>Part 3 — Risk Register Construction (20 minutes)</h2>
+<h3>Task 3.1 — Populate Risk Register Entries</h3>
+<p>Using the template below, create complete risk register entries for Risks #1, #4, and #5. For each entry, fill in all fields. Use your quantitative analysis results where applicable and supplement with reasonable assumptions for fields not covered by the scenario.</p>
+<p><strong>Risk Register Template:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Risk #1</th>
+<th>Risk #4</th>
+<th>Risk #5</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Risk ID</td>
+<td>CAS-001</td>
+<td>CAS-004</td>
+<td>CAS-005</td>
+</tr>
+<tr>
+<td>Risk Description</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Risk Category</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Threat</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Vulnerability</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Likelihood</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Impact</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Risk Rating</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Risk Owner (role title)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Current Controls</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Risk Response (Avoid/Transfer/Mitigate/Accept)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Planned Actions</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Residual Risk (after planned actions)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Target Completion Date</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Status</td>
+<td>Open</td>
+<td>Open</td>
+<td>Open</td>
+</tr>
+<tr>
+<td>Review Date</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3>Task 3.2 — Risk Ownership Analysis</h3>
+<p>Write a two- to three-sentence explanation of who should be the Risk Owner for Risk #5 (PACS no backup). Why should the Risk Owner NOT be the CISO or the security team? What principle does this assignment reflect?</p>
+<hr />
+<h2>Part 4 — Business Impact Analysis (15 minutes)</h2>
+<h3>Task 4.1 — Identify MTD for Critical Systems</h3>
+<p>For each system below, the hospital operations team has provided the business context. Based on this context, assign a Maximum Tolerable Downtime (MTD) and justify your choice:</p>
+<p><strong>EHR System:</strong> Without the EHR, nurses use paper records. After 12 hours, paper records cannot be reconciled with EHR data and patient safety errors become likely. After 24 hours, critical clinical functions (medication orders, lab results) are severely impaired.</p>
+<ul>
+<li>Your MTD assignment: ______</li>
+<li>Justification (2 sentences): ______</li>
+</ul>
+<p><strong>Medical Billing System:</strong> Insurance claims can be queued manually for up to 5 business days before cash flow becomes critical. After 5 days, the hospital cannot meet payroll obligations.</p>
+<ul>
+<li>Your MTD assignment: ______</li>
+<li>Justification (2 sentences): ______</li>
+</ul>
+<p><strong>Patient Portal:</strong> Patients cannot schedule appointments or view lab results online. Staff can handle scheduling by phone. Minor operational impact — no patient safety risk.</p>
+<ul>
+<li>Your MTD assignment: ______</li>
+<li>Justification (2 sentences): ______</li>
+</ul>
+<p><strong>Building Management System (BMS):</strong> Controls HVAC, medical gas systems, and physical access. Without HVAC, operating rooms exceed safe temperature limits within 4 hours. Without medical gas control, surgical procedures cannot continue.</p>
+<ul>
+<li>Your MTD assignment: ______</li>
+<li>Justification (2 sentences): ______</li>
+</ul>
+<h3>Task 4.2 — Derive RTO and RPO</h3>
+<p>For each system, set the RTO and RPO based on your MTD assignments:</p>
+<table>
+<thead>
+<tr>
+<th>System</th>
+<th>MTD</th>
+<th>RTO</th>
+<th>RPO</th>
+<th>Backup Frequency Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>EHR</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Billing</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Patient Portal</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>BMS</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Note:</strong> RTO must be less than MTD. RPO determines backup frequency (if RPO = 4 hours, backups must run at least every 4 hours).</p>
+<h3>Task 4.3 — Gap Analysis</h3>
+<p>The hospital's current backup and recovery plan specifies:</p>
+<ul>
+<li>EHR: nightly backups (RPO = up to 24 hours), RTO = 6 hours</li>
+<li>PACS: no backup</li>
+<li>Billing: daily backup (RPO = up to 24 hours), RTO = 12 hours</li>
+<li>Patient Portal: AWS handles recovery (cloud provider SLA of 4 hours)</li>
+<li>BMS: no documented recovery plan</li>
+</ul>
+<p>Identify which systems have a gap between their current plan and the requirements you established in Task 4.2. For each gap, state the specific problem and propose a one-sentence remediation.</p>
+<hr />
+<h2>Part 5 — Security Controls Classification (15 minutes)</h2>
+<h3>Task 5.1 — Classify the Controls</h3>
+<p>For each control below, classify by both function (Preventive, Detective, Corrective, Deterrent, Compensating, Directive) and type (Technical, Administrative, Physical):</p>
+<table>
+<thead>
+<tr>
+<th>Control</th>
+<th>Function</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Requiring MFA on all hospital workstations</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Monthly phishing simulation with training for employees who click</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Security camera coverage in the server room</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Incident response plan and playbooks</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Encrypted backup copies of PACS images in AWS S3</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Visible signage: "This area is monitored. Unauthorized access will be prosecuted."</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Audit logging of all EHR access with alerts on anomalous access patterns</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Using a jump server to access the BMS from the administrative network</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Annual security awareness training program</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Network segmentation isolating BMS from clinical and administrative networks</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3>Task 5.2 — Defense in Depth Analysis</h3>
+<p>Write a paragraph (five to seven sentences) analyzing how the controls above, when combined, represent a defense-in-depth strategy for protecting the EHR. Identify at least one gap in the control coverage and propose a specific control to address it.</p>
+<hr />
+<h2>Lab Report Submission Requirements</h2>
+<p>Submit a single document containing all completed tables, calculations, and written responses.</p>
+<p><strong>Format:</strong> PDF or Word document</p>
+<p><strong>Minimum length:</strong> 800 words excluding tables and calculations</p>
+<hr />
+<h2>Grading Rubric</h2>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Points</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Part 1 — Quantitative analysis (correct calculations and interpretation)</td>
+<td>25</td>
+</tr>
+<tr>
+<td>Part 2 — Risk matrix construction and risk ratings with justification</td>
+<td>20</td>
+</tr>
+<tr>
+<td>Part 3 — Risk register entries complete and ownership analysis</td>
+<td>20</td>
+</tr>
+<tr>
+<td>Part 4 — BIA: MTD assignments, RTO/RPO derivation, gap analysis</td>
+<td>20</td>
+</tr>
+<tr>
+<td>Part 5 — Controls classification and defense-in-depth analysis</td>
+<td>15</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td><strong>100</strong></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><em>Texas Wesleyan University | CIS-4328 Information Security | Module 13</em></p>
+</body>
+</html>

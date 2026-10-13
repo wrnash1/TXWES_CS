@@ -1,0 +1,289 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Reading Guide (M06): Wireless Networking: 802.11 Standards and Security</title>
+</head>
+<body>
+<h2>Reading Guide (M06): Wireless Networking: 802.11 Standards and Security</h2>
+<h1>Reading Guide: Module 06 – Wireless Networking: 802.11 Standards and Security</h1>
+<h2>CIS-3321 Network Administration | CompTIA Network+ (N10-009)</h2>
+<h2>Texas Wesleyan University | Professor Nash</h2>
+<hr />
+<h3>Introduction</h3>
+<p>Module 06 covers wireless networking — a significant portion of the CompTIA Network+ exam. You must know the 802.11 standard generations by name, frequency band, maximum theoretical speed, and key features. Equally important are wireless security protocols — the exam tests your ability to identify which encryption standard is appropriate and recognize the vulnerabilities of legacy protocols. Channel planning and the difference between WPA2-Personal and WPA2-Enterprise are directly tested.</p>
+<hr />
+<h3>1. Core Vocabulary</h3>
+<p><strong>802.11a</strong> — 5 GHz only; 54 Mbps maximum; OFDM modulation. Less range than 2.4 GHz standards.</p>
+<p><strong>802.11b</strong> — 2.4 GHz only; 11 Mbps maximum; DSSS modulation. Legacy standard with good range.</p>
+<p><strong>802.11g</strong> — 2.4 GHz only; 54 Mbps maximum; OFDM. Backward compatible with 802.11b.</p>
+<p><strong>802.11n (Wi-Fi 4)</strong> — 2.4 GHz and 5 GHz dual-band; up to 600 Mbps; MIMO (up to 4 spatial streams); introduced channel bonding (40 MHz channels).</p>
+<p><strong>802.11ac (Wi-Fi 5)</strong> — 5 GHz only; up to 3.5 Gbps; MU-MIMO; beamforming; channels up to 160 MHz.</p>
+<p><strong>802.11ax (Wi-Fi 6)</strong> — 2.4, 5, and 6 GHz; up to 9.6 Gbps; OFDMA for multi-client efficiency in dense environments.</p>
+<p><strong>Wi-Fi 6E</strong> — Wi-Fi 6 extended to the newly opened 6 GHz band (1,200 MHz of new spectrum).</p>
+<p><strong>MIMO</strong> — Multiple-Input Multiple-Output. Uses multiple antennas to transmit multiple spatial streams simultaneously to increase throughput.</p>
+<p><strong>MU-MIMO</strong> — Multi-User MIMO. Allows an AP to communicate with multiple clients simultaneously rather than sequentially.</p>
+<p><strong>OFDMA</strong> — Orthogonal Frequency Division Multiple Access. Wi-Fi 6 feature dividing channels into sub-carriers (Resource Units) to serve multiple clients per transmission cycle.</p>
+<p><strong>Beamforming</strong> — AP focuses its radio signal toward a specific client device rather than broadcasting equally in all directions.</p>
+<p><strong>SSID (Service Set Identifier)</strong> — Human-readable wireless network name broadcast in beacon frames. Hiding the SSID provides negligible security benefit.</p>
+<p><strong>BSS (Basic Service Set)</strong> — A single AP and its associated clients. Identified by a BSSID (the AP's MAC address).</p>
+<p><strong>ESS (Extended Service Set)</strong> — Multiple APs sharing the same SSID, enabling seamless client roaming across a campus or building.</p>
+<p><strong>IBSS (Independent Basic Service Set)</strong> — Ad-hoc wireless network where devices communicate directly without an AP.</p>
+<p><strong>WEP (Wired Equivalent Privacy)</strong> — 1997 wireless encryption using RC4 with static 40-bit or 104-bit keys. Completely broken — crackable in minutes. Never use.</p>
+<p><strong>WPA</strong> — Wi-Fi Protected Access (2003). Uses TKIP (RC4-based with per-packet key mixing). Deprecated. Do not use.</p>
+<p><strong>TKIP (Temporal Key Integrity Protocol)</strong> — WPA encryption protocol using RC4 with per-packet key mixing. Deprecated.</p>
+<p><strong>WPA2</strong> — Current minimum standard (2004). Uses AES-CCMP. Two modes: Personal (PSK) and Enterprise (802.1X/RADIUS).</p>
+<p><strong>AES-CCMP</strong> — Advanced Encryption Standard with Counter Mode CBC-MAC Protocol. Used by WPA2. Block cipher with 128-bit keys. Currently unbroken by practical means.</p>
+<p><strong>WPA3</strong> — Current best practice (2018). Uses SAE (Simultaneous Authentication of Equals). Provides forward secrecy. WPA3-Enterprise uses 192-bit encryption.</p>
+<p><strong>SAE (Simultaneous Authentication of Equals)</strong> — WPA3 key exchange replacing PSK. Based on Dragonfly key exchange. Eliminates offline dictionary attacks and provides forward secrecy.</p>
+<p><strong>Forward Secrecy</strong> — A property where past sessions cannot be decrypted even if the long-term key (passphrase) is later compromised. WPA3 provides forward secrecy; WPA2-PSK does not.</p>
+<p><strong>WPA2-Personal (PSK)</strong> — Uses a shared pre-shared key. All users share the same passphrase. Simple to deploy; no individual credential tracking.</p>
+<p><strong>WPA2-Enterprise (802.1X)</strong> — Uses RADIUS server for individual user authentication via EAP. Each user has unique credentials that can be independently revoked.</p>
+<p><strong>802.1X</strong> — Port-based Network Access Control framework. Requires an authenticator (AP), a supplicant (client), and an authentication server (RADIUS). Used in both wired and wireless enterprise security.</p>
+<p><strong>RADIUS</strong> — Remote Authentication Dial-In User Service. Authentication server used in WPA2/WPA3-Enterprise. Receives credential validation requests from APs and returns approve/deny decisions.</p>
+<p><strong>EAP (Extensible Authentication Protocol)</strong> — Authentication framework used with 802.1X. Common types: EAP-TLS (certificate-based, highest security), PEAP (protected EAP, password-based).</p>
+<p><strong>Captive Portal</strong> — Web page presented to users on guest/public networks requiring acceptance of terms of service before internet access is granted.</p>
+<p><strong>Evil Twin</strong> — Rogue access point broadcasting the same SSID as a legitimate network to intercept user traffic.</p>
+<p><strong>Deauthentication Attack</strong> — Attacker sends forged deauthentication frames to disconnect clients from an AP. Used to capture WPA2 4-way handshake for offline cracking.</p>
+<p><strong>802.11w (Management Frame Protection)</strong> — Standard that authenticates 802.11 management frames to prevent deauthentication and disassociation attacks.</p>
+<p><strong>WIPS (Wireless Intrusion Prevention System)</strong> — System that detects and responds to unauthorized APs, clients, and wireless attacks.</p>
+<p><strong>Channel</strong> — A specific radio frequency sub-band used for wireless communication. In 2.4 GHz, 11 channels exist in the US; only channels 1, 6, and 11 are non-overlapping.</p>
+<p><strong>Co-channel Interference</strong> — Interference caused by two APs operating on the same or overlapping channels within range of each other.</p>
+<p><strong>Omnidirectional Antenna</strong> — Radiates signal equally in all horizontal directions. Used in most APs and client devices.</p>
+<p><strong>Directional Antenna</strong> — Focuses signal in a specific direction. Used for point-to-point building-to-building wireless links.</p>
+<p><strong>CAPWAP</strong> — Control and Provisioning of Wireless Access Points. Protocol used to manage multiple APs from a central Wireless LAN Controller (WLC). Uses DTLS encryption for control traffic.</p>
+<hr />
+<h3>2. 802.11 Standard Comparison Table</h3>
+<table>
+<thead>
+<tr>
+<th>Standard</th>
+<th>Common Name</th>
+<th>Band(s)</th>
+<th>Max Speed</th>
+<th>Key Technology</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>802.11a</td>
+<td>—</td>
+<td>5 GHz</td>
+<td>54 Mbps</td>
+<td>OFDM</td>
+</tr>
+<tr>
+<td>802.11b</td>
+<td>—</td>
+<td>2.4 GHz</td>
+<td>11 Mbps</td>
+<td>DSSS</td>
+</tr>
+<tr>
+<td>802.11g</td>
+<td>—</td>
+<td>2.4 GHz</td>
+<td>54 Mbps</td>
+<td>OFDM; backward compat b</td>
+</tr>
+<tr>
+<td>802.11n</td>
+<td>Wi-Fi 4</td>
+<td>2.4 and 5 GHz</td>
+<td>600 Mbps</td>
+<td>MIMO, 40 MHz channels</td>
+</tr>
+<tr>
+<td>802.11ac</td>
+<td>Wi-Fi 5</td>
+<td>5 GHz only</td>
+<td>3.5 Gbps</td>
+<td>MU-MIMO, beamforming, 160 MHz</td>
+</tr>
+<tr>
+<td>802.11ax</td>
+<td>Wi-Fi 6/6E</td>
+<td>2.4, 5, 6 GHz</td>
+<td>9.6 Gbps</td>
+<td>OFDMA, improved MU-MIMO</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>3. Wireless Security Protocol Comparison Table</h3>
+<table>
+<thead>
+<tr>
+<th>Protocol</th>
+<th>Encryption</th>
+<th>Key Management</th>
+<th>Vulnerabilities</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>WEP</td>
+<td>RC4 (static)</td>
+<td>Static 40/104-bit key</td>
+<td>IV reuse, crackable in minutes</td>
+<td>Broken — never use</td>
+</tr>
+<tr>
+<td>WPA</td>
+<td>TKIP (RC4)</td>
+<td>Per-packet key mixing</td>
+<td>TKIP vulnerabilities, deprecated</td>
+<td>Deprecated</td>
+</tr>
+<tr>
+<td>WPA2</td>
+<td>AES-CCMP</td>
+<td>PSK or 802.1X/RADIUS</td>
+<td>PSK offline dictionary attack</td>
+<td>Minimum standard</td>
+</tr>
+<tr>
+<td>WPA3</td>
+<td>AES-GCMP-256</td>
+<td>SAE (Dragonfly)</td>
+<td>No known practical attacks</td>
+<td>Current best practice</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>4. WPA2-Personal vs. WPA2-Enterprise</h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>WPA2-Personal (PSK)</th>
+<th>WPA2-Enterprise (802.1X)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Authentication method</td>
+<td>Shared passphrase</td>
+<td>Individual credentials via RADIUS</td>
+</tr>
+<tr>
+<td>Server required</td>
+<td>No</td>
+<td>RADIUS authentication server</td>
+</tr>
+<tr>
+<td>Per-user credential revocation</td>
+<td>No (must rekey all)</td>
+<td>Yes (revoke individual user)</td>
+</tr>
+<tr>
+<td>Audit trail</td>
+<td>None (shared key)</td>
+<td>Per-user authentication log</td>
+</tr>
+<tr>
+<td>Resistance to insider threat</td>
+<td>Low</td>
+<td>High</td>
+</tr>
+<tr>
+<td>Deployment complexity</td>
+<td>Simple</td>
+<td>Requires RADIUS infrastructure</td>
+</tr>
+<tr>
+<td>Best for</td>
+<td>Home, small office</td>
+<td>Enterprise, education, healthcare</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>5. Channel Planning — 2.4 GHz Non-Overlapping Channels</h3>
+<p>The 2.4 GHz band contains 11 channels in the US. Each channel is approximately 22 MHz wide. Channels are spaced 5 MHz apart. Only three channels are non-overlapping:</p>
+<ul>
+<li>Channel 1: Center frequency 2.412 GHz</li>
+<li>Channel 6: Center frequency 2.437 GHz</li>
+<li>Channel 11: Center frequency 2.462 GHz</li>
+</ul>
+<p>When deploying multiple APs in the same area, assign channels 1, 6, and 11 in rotation. Never assign adjacent channels (e.g., 1, 2, 3) to neighboring APs.</p>
+<p>The 5 GHz band has 24+ non-overlapping 20 MHz channels (regulatory domain dependent). This is one reason 5 GHz is preferred for high-density deployments.</p>
+<hr />
+<h3>6. Common Wireless Attacks Reference</h3>
+<table>
+<thead>
+<tr>
+<th>Attack</th>
+<th>Description</th>
+<th>Mitigation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Evil Twin (Rogue AP)</td>
+<td>Attacker AP broadcasts legitimate SSID to intercept traffic</td>
+<td>802.1X authentication, WIPS, certificate pinning</td>
+</tr>
+<tr>
+<td>Deauth Flood</td>
+<td>Forged deauthentication frames disconnect clients</td>
+<td>802.11w Management Frame Protection</td>
+</tr>
+<tr>
+<td>WPA2-PSK Dictionary</td>
+<td>Offline attack on captured 4-way handshake</td>
+<td>Long passphrase; upgrade to WPA3-SAE</td>
+</tr>
+<tr>
+<td>War Driving</td>
+<td>Scanning for open/weak APs while mobile</td>
+<td>WPA2-AES minimum; disable SSID broadcast</td>
+</tr>
+<tr>
+<td>SSID Spoofing</td>
+<td>Creating AP with same SSID as legitimate network</td>
+<td>WIPS; 802.1X (prevents credential capture)</td>
+</tr>
+<tr>
+<td>Captive Portal Phishing</td>
+<td>Rogue captive portal harvests credentials</td>
+<td>HTTPS-only portals; certificate validation</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>7. Certification Exam Tips</h3>
+<p><strong>Tip 1:</strong> 802.11ac is 5 GHz ONLY. 802.11n is dual-band (2.4 AND 5 GHz). This is the most commonly tested distinction between the two standards.</p>
+<p><strong>Tip 2:</strong> Channels 1, 6, and 11 are the three non-overlapping channels in the US 2.4 GHz band. This is tested directly. Any answer with channels 1, 2, 3 or other combinations is wrong.</p>
+<p><strong>Tip 3:</strong> WPA2-AES is the minimum secure wireless configuration. WEP is completely broken and always the wrong answer in a security scenario. WPA-TKIP is deprecated.</p>
+<p><strong>Tip 4:</strong> WPA2-Enterprise with 802.1X/RADIUS allows individual credential revocation. WPA2-PSK does not. When the exam describes an enterprise needing to revoke one user's access, 802.1X is always the answer.</p>
+<p><strong>Tip 5:</strong> WPA3-SAE provides forward secrecy — previously captured traffic cannot be decrypted if the passphrase is later compromised. WPA2-PSK does not provide forward secrecy.</p>
+<p><strong>Tip 6:</strong> SSID hiding (disabling broadcast) provides virtually no security benefit. Clients still probe for the SSID, making it discoverable with passive monitoring.</p>
+<p><strong>Tip 7:</strong> 802.11w (Management Frame Protection) prevents deauthentication attacks by authenticating management frames. This is the specific mitigation for deauth flood attacks.</p>
+<p><strong>Tip 8:</strong> OFDMA is the key technology introduced by Wi-Fi 6 (802.11ax) for high-density environments. It allows multiple clients to use sub-channels simultaneously, reducing contention.</p>
+<hr />
+<h3>8. Required Reading and Viewing</h3>
+<p><strong>Required Reading:</strong> Computer Networking: Principles, Protocols and Practice — read the sections on wireless networking standards and security. Focus on the 802.11 standard comparison and WPA2/WPA3 mechanisms.</p>
+<p><strong>Required Viewing:</strong> Professor Messer's Network+ N10-009 video series — watch the wireless standards and wireless security segments. Available free at professormesser.com.</p>
+<p><strong>Supplemental Reference:</strong> CompTIA official N10-009 exam objectives at comptia.org — review Domain 2.0 Network Implementations for wireless objectives.</p>
+<hr />
+<h3>9. Study Checklist</h3>
+<ul>
+<li>[ ] Memorize the 802.11 standards table — name, frequency band, max speed, key technology</li>
+<li>[ ] Distinguish 802.11ac (5 GHz only) from 802.11n (dual-band) — this distinction is a common exam trap</li>
+<li>[ ] Know all four wireless security protocols (WEP, WPA, WPA2, WPA3) and the vulnerability of each</li>
+<li>[ ] Explain the difference between WPA2-Personal (PSK) and WPA2-Enterprise (802.1X/RADIUS)</li>
+<li>[ ] Memorize the three non-overlapping 2.4 GHz channels: 1, 6, and 11</li>
+<li>[ ] Describe the Evil Twin attack and the deauthentication attack with their mitigations</li>
+<li>[ ] Explain what forward secrecy means and which wireless standard provides it</li>
+<li>[ ] Watch Professor Messer's wireless standards and security videos at professormesser.com</li>
+<li>[ ] Read the wireless networking chapter in the OER textbook</li>
+<li>[ ] Complete the Lab 06 wireless scanning activity</li>
+<li>[ ] Post your Module 06 Discussion initial response by Wednesday at 11:59 PM</li>
+<li>[ ] Complete the Module 06 Quiz</li>
+</ul>
+<hr />
+<p><em>CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash</em></p>
+</body>
+</html>

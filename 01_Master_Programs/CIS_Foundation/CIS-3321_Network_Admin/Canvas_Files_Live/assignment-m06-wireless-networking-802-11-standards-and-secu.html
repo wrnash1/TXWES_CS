@@ -1,0 +1,297 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Assignment: Lab (M06): Wireless Networking: 802.11 Standards and Security</title>
+</head>
+<body>
+<h2>Lab (M06): Wireless Networking: 802.11 Standards and Security</h2>
+<h1>Lab Activity: Module 06 – Wireless Networking: 802.11 Standards and Security</h1>
+<h2>CIS-3321 Network Administration | CompTIA Network+ (N10-009)</h2>
+<h2>Texas Wesleyan University | Professor Nash</h2>
+<hr />
+<h3>Overview</h3>
+<p>This lab has two parts. Part 1 uses built-in command-line tools to scan and analyze nearby Wi-Fi networks on your physical machine. Part 2 uses Cisco Packet Tracer to configure a wireless access point with WPA2-AES and connect a wireless client. Together, the two parts connect the lecture content on 802.11 standards, frequency bands, channels, and security protocols to observable real-world behavior.</p>
+<p>Estimated Time: 60–75 minutes</p>
+<p>Required Tools:</p>
+<ul>
+<li>Windows 10 or 11 (for Part 1 Windows commands), OR a Linux system with <code>iw</code> or <code>nmcli</code> installed</li>
+<li>Cisco Packet Tracer 8.x (free download at netacad.com with a free account)</li>
+</ul>
+<hr />
+<h3>Learning Objectives</h3>
+<p>By the end of this lab, you will be able to:</p>
+<ol>
+<li>Use command-line tools to scan nearby wireless networks and extract 802.11 standard, frequency band, channel, and security information.</li>
+<li>Identify which 802.11 standard and security protocol a network is using based on command output.</li>
+<li>Configure a wireless access point in Packet Tracer with WPA2-Personal using AES encryption.</li>
+<li>Connect a wireless client to a secured SSID and verify connectivity.</li>
+<li>Explain the channel assignments observed in your environment using the non-overlapping channel rule.</li>
+</ol>
+<hr />
+<h3>Part 1: Wireless Network Scanning with Command-Line Tools</h3>
+<h4>Part 1A: Windows — netsh wlan show networks</h4>
+<p>On Windows, the <code>netsh wlan</code> command can display all Wi-Fi networks visible to your wireless adapter, including SSID, authentication type, encryption, and signal strength.</p>
+<p>Step 1: Open a Command Prompt (not necessarily elevated).</p>
+<p>Step 2: Run the basic scan command:</p>
+<pre><code class="language-bat">netsh wlan show networks
+</code></pre>
+<p>This displays a condensed list. Each network shows the SSID, network type (Infrastructure or Ad Hoc), authentication method, and encryption type.</p>
+<p>Step 3: Run the detailed mode command:</p>
+<pre><code class="language-bat">netsh wlan show networks mode=bssid
+</code></pre>
+<p>This expands each entry to include the BSSID (AP MAC address), signal strength, radio type, channel, and basic rates.</p>
+<p>Step 4: Record your results in the table below. You must capture at least five distinct networks (or as many as are visible in your location). If fewer than five are visible, record all visible networks and note the total count.</p>
+<p>Observation Table — Part 1A:</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>SSID</th>
+<th>Authentication</th>
+<th>Encryption</th>
+<th>Radio Type</th>
+<th>Channel</th>
+<th>Signal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>3</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>4</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>5</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Analysis Questions — Part 1A:</p>
+<p>Question 1: Look at the "Radio Type" column in your output. What 802.11 standard designations appear (for example, 802.11n, 802.11ac, 802.11ax)? For each standard you observe, identify the frequency band it should be operating in based on what you learned in the lecture.</p>
+<p>Question 2: How many of the networks you observed are using WPA2-Personal (PSK) vs. WPA3? How many (if any) are using WEP or open (no encryption)? If you found any open networks or WEP networks, explain why this is a security concern.</p>
+<p>Question 3: Look at the channel numbers listed for the networks operating on 2.4 GHz. Are any neighboring APs on adjacent channels (for example, channels 2 through 5, or 7 through 10)? If so, explain what problem this creates and what channels should have been used instead.</p>
+<hr />
+<h4>Part 1B: Linux — iw and nmcli (Alternative if Windows is unavailable)</h4>
+<p>If you are using Linux (or a VM with a wireless adapter passed through), use the following commands.</p>
+<p>Step 1: List available wireless interfaces:</p>
+<pre><code class="language-bash">iw dev
+</code></pre>
+<p>Note the interface name (commonly <code>wlan0</code> or <code>wlp2s0</code>).</p>
+<p>Step 2: Scan for nearby networks. Replace <code>wlan0</code> with your interface name:</p>
+<pre><code class="language-bash">sudo iw dev wlan0 scan | grep -E &quot;SSID:|freq:|signal:|capability:|RSN:|WPA:&quot;
+</code></pre>
+<p>Step 3: Alternatively, use NetworkManager's <code>nmcli</code>:</p>
+<pre><code class="language-bash">nmcli dev wifi list
+</code></pre>
+<p>This displays SSID, BSSID, mode, channel, rate, signal, bars, and security type in a single readable table.</p>
+<p>Step 4: Record the output in the same observation table format used in Part 1A above. If both Windows and Linux are available, compare the results for the same physical location.</p>
+<p>Question 4: Compare the <code>nmcli</code> output format to the <code>netsh wlan show networks mode=bssid</code> output. Which provides more immediately readable information? Which requires post-processing to interpret? Explain.</p>
+<hr />
+<h4>Part 1C: Frequency Band and Security Analysis</h4>
+<p>Use your collected data to answer the following questions.</p>
+<p>Question 5: Identify one network from your scan that is using 5 GHz. What 802.11 standard is it using? What are the advantages of 5 GHz over 2.4 GHz in a high-density environment like a classroom or office building?</p>
+<p>Question 6: If you observed any network using WPA2-CCMP (AES), explain why AES-CCMP is considered secure while WEP (RC4 with a static key) is not. Reference the specific vulnerability that makes WEP crackable.</p>
+<hr />
+<h3>Part 2: Wireless AP Configuration in Cisco Packet Tracer</h3>
+<p>In Part 2, you will build a small wireless network topology in Packet Tracer, configure an access point with WPA2-Personal using AES encryption, and verify that a wireless client can connect and communicate.</p>
+<h4>Step 1: Build the Topology</h4>
+<p>Open Packet Tracer and create the following topology:</p>
+<ul>
+<li>1 Wireless Router (use the WRT300N or Linksys WRT300N from the Network Devices &gt; Wireless Devices section)</li>
+<li>2 Laptop PCs (from End Devices — use the Laptop device, which has a wireless NIC)</li>
+<li>1 PC (wired, connected to the wireless router's LAN port via straight-through Cat5e cable)</li>
+</ul>
+<p>Connect the wired PC to LAN port 1 on the wireless router using a copper straight-through cable.</p>
+<p>The two laptops will connect wirelessly — no physical cable needed.</p>
+<h4>Step 2: Configure the Wireless Router</h4>
+<p>Click on the wireless router. Go to the GUI tab.</p>
+<p>Under the Wireless section, configure:</p>
+<ul>
+<li>SSID: CIS3321-Lab06</li>
+<li>Network Mode: Mixed (to support multiple standards)</li>
+<li>Radio Band: 2.4 GHz</li>
+<li>Channel: 6</li>
+</ul>
+<p>Under the Wireless Security section, configure:</p>
+<ul>
+<li>Security Mode: WPA2 Personal</li>
+<li>Encryption: AES</li>
+<li>Passphrase: NetPlus2024!</li>
+</ul>
+<p>Save the configuration.</p>
+<h4>Step 3: Configure DHCP on the Wireless Router</h4>
+<p>On the same router GUI, go to the Setup tab. Under the Network Setup section:</p>
+<ul>
+<li>Set the router IP to 192.168.6.1 with subnet mask 255.255.255.0</li>
+<li>Enable the DHCP server</li>
+<li>Set the DHCP range to start at 192.168.6.100 and end at 192.168.6.150</li>
+</ul>
+<p>Save the configuration.</p>
+<h4>Step 4: Connect the Laptops Wirelessly</h4>
+<p>Click on Laptop 1. Go to the Config tab, then select the Wireless0 interface. Enter:</p>
+<ul>
+<li>SSID: CIS3321-Lab06</li>
+<li>Authentication: WPA2-PSK</li>
+<li>PSK Pass Phrase: NetPlus2024!</li>
+<li>Encryption Type: AES</li>
+</ul>
+<p>Set the IP configuration to DHCP.</p>
+<p>Repeat for Laptop 2.</p>
+<h4>Step 5: Verify Connectivity</h4>
+<p>On Laptop 1, open the Desktop tab and launch the Command Prompt. Run:</p>
+<pre><code class="language-bat">ipconfig
+</code></pre>
+<p>Confirm that Laptop 1 received a DHCP address in the 192.168.6.100–150 range.</p>
+<p>Then ping the wireless router:</p>
+<pre><code class="language-bat">ping 192.168.6.1
+</code></pre>
+<p>Then ping Laptop 2 using its assigned DHCP address:</p>
+<pre><code class="language-bat">ping 192.168.6.10x
+</code></pre>
+<p>Replace 10x with the actual address from Laptop 2's ipconfig output.</p>
+<p>Then ping the wired PC, which should also have a DHCP address in the same range.</p>
+<h4>Step 6: Security Verification</h4>
+<p>On the wireless router GUI, change the Security Mode temporarily to WEP and set a 10-character hex key. Save.</p>
+<p>Observe what happens to the laptop connections — they should disconnect because the client is still configured for WPA2-PSK.</p>
+<p>Restore the configuration to WPA2-Personal/AES with passphrase NetPlus2024!. Save. Confirm the laptops reconnect.</p>
+<p>Lab Questions — Part 2:</p>
+<p>Question 7: After completing Step 5, record the DHCP-assigned IP addresses for both laptops and the wired PC. Are all three in the same subnet? What is the network address and broadcast address for the 192.168.6.0/24 network?</p>
+<p>Question 8: In Step 6, why did the laptops disconnect when you changed the router to WEP? What would a real-world attacker need to do to capture and crack the WEP key? Name the specific WEP vulnerability that makes this possible.</p>
+<p>Question 9: You configured the wireless router to use channel 6. If a neighboring business's AP is visible on your scan and it is using channel 6, what problem exists and what channels would you reassign to avoid it? What is the term for the interference that results from APs on the same or overlapping channels?</p>
+<p>Question 10: Your wireless router is set to Mixed mode (supporting 802.11b/g/n). If you were to upgrade the router to 802.11ac only, what change to the radio band configuration would be required? Why can't 802.11ac operate on 2.4 GHz?</p>
+<hr />
+<h3>Deliverables</h3>
+<p>Submit the following in a single PDF or Word document:</p>
+<ol>
+<li>
+<p>Part 1 Observation Table — Completed with at least five networks (or all visible networks if fewer than five are in range). Include the full <code>netsh wlan show networks mode=bssid</code> output or <code>nmcli dev wifi list</code> output as a screenshot or copy-pasted text block.</p>
+</li>
+<li>
+<p>Part 1 Written Responses — Answers to Questions 1 through 6 in complete sentences.</p>
+</li>
+<li>
+<p>Part 2 Topology Screenshot — A screenshot of your completed Packet Tracer topology showing the wireless router, two laptops, and one wired PC with all green link indicators visible.</p>
+</li>
+<li>
+<p>Part 2 Connectivity Screenshot — A screenshot showing a successful ping from Laptop 1 to Laptop 2 and to the wireless router (192.168.6.1).</p>
+</li>
+<li>
+<p>Part 2 Written Responses — Answers to Questions 7 through 10 in complete sentences.</p>
+</li>
+</ol>
+<hr />
+<h3>Grading Rubric (100 Points Total)</h3>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Points</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Part 1 Observation Table — at least 5 networks recorded with all columns filled</td>
+<td>15</td>
+</tr>
+<tr>
+<td>Part 1A/1B — Full command output included (screenshot or copy-paste)</td>
+<td>10</td>
+</tr>
+<tr>
+<td>Question 1 — 802.11 standard identified with correct frequency band mapping</td>
+<td>8</td>
+</tr>
+<tr>
+<td>Question 2 — Security type analysis with correct identification of WPA2 vs open/WEP risk</td>
+<td>8</td>
+</tr>
+<tr>
+<td>Question 3 — Channel overlap analysis with correct identification of 1/6/11 rule</td>
+<td>8</td>
+</tr>
+<tr>
+<td>Question 4 — Linux/Windows tool comparison</td>
+<td>6</td>
+</tr>
+<tr>
+<td>Question 5 — 5 GHz network identified with correct standard and band advantages</td>
+<td>7</td>
+</tr>
+<tr>
+<td>Question 6 — WEP vulnerability explained (IV reuse, RC4 static key)</td>
+<td>7</td>
+</tr>
+<tr>
+<td>Part 2 Topology Screenshot — correct devices and connections</td>
+<td>5</td>
+</tr>
+<tr>
+<td>Part 2 Connectivity Screenshot — successful ping output visible</td>
+<td>5</td>
+</tr>
+<tr>
+<td>Question 7 — DHCP addresses recorded, network/broadcast correct</td>
+<td>7</td>
+</tr>
+<tr>
+<td>Question 8 — WEP disconnection explained, IV reuse vulnerability named</td>
+<td>7</td>
+</tr>
+<tr>
+<td>Question 9 — Co-channel interference explained, 1/6/11 reassignment stated</td>
+<td>7</td>
+</tr>
+<tr>
+<td>Question 10 — 802.11ac 5 GHz requirement explained correctly</td>
+<td>4</td>
+</tr>
+<tr>
+<td>Total</td>
+<td>100</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>Submission Instructions</h3>
+<p>Save your document as: Lab06_Firstname_Lastname.pdf</p>
+<p>Submit to the Module 06 Lab assignment in the course LMS before the posted deadline. Late submissions are subject to the course late policy.</p>
+<hr />
+<p>CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash</p>
+</body>
+</html>

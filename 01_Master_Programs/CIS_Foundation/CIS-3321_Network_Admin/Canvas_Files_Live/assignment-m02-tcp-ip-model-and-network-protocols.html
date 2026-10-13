@@ -1,0 +1,294 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Assignment: Lab (M02): TCP/IP Model and Network Protocols</title>
+</head>
+<body>
+<h2>Lab (M02): TCP/IP Model and Network Protocols</h2>
+<h1>Lab Activity: Module 02 – TCP/IP Model and Network Protocols</h1>
+<h2>CIS-3321 Network Administration | CompTIA Network+ (N10-009)</h2>
+<h2>Texas Wesleyan University | Professor Nash</h2>
+<hr />
+<h3>Lab Overview</h3>
+<p><strong>Lab Title:</strong> Protocol Identification and Network Diagnostics Using Command-Line Tools</p>
+<p><strong>Format:</strong> Command-Line Tools on Local Machine (Windows or Linux/Mac)</p>
+<p><strong>Estimated Time:</strong> 60–75 minutes</p>
+<p><strong>Points:</strong> 100 points total</p>
+<p><strong>Prerequisites:</strong></p>
+<ul>
+<li>Module 02 video lectures watched (both Part 1 and Part 2)</li>
+<li>Module 02 Reading Guide reviewed, especially the port number table</li>
+<li>A Windows, Linux, or macOS computer with internet access</li>
+<li>No additional software required — all tools are built into the OS</li>
+</ul>
+<p><strong>Learning Objectives:</strong></p>
+<p>By completing this lab, you will be able to:</p>
+<ul>
+<li>Use nslookup to query DNS records and identify DNS server addresses</li>
+<li>Use ping to test ICMP connectivity and interpret TTL values</li>
+<li>Use tracert (Windows) or traceroute (Linux/Mac) to trace network paths</li>
+<li>Use netstat to observe active TCP connections and listening ports</li>
+<li>Map observed protocols and ports to entries in the TCP/IP protocol reference table</li>
+</ul>
+<hr />
+<h3>Background</h3>
+<p>Every concept in Module 02 — TCP, UDP, ICMP, DNS, port numbers — can be observed directly using command-line tools built into your operating system. This lab uses no special software. You will be making real network requests, observing real protocol behavior, and recording your findings. The commands used here — ping, tracert/traceroute, nslookup, and netstat — are standard tools every network administrator uses daily and appear regularly in Network+ exam scenarios.</p>
+<hr />
+<h3>Part 1: DNS Queries with nslookup</h3>
+<p><strong>Objective:</strong> Use nslookup to resolve hostnames, identify record types, and examine DNS server responses.</p>
+<h4>Step 1: Open a Command Prompt or Terminal</h4>
+<ul>
+<li>Windows: Press Win+R, type cmd, press Enter</li>
+<li>Linux/macOS: Open Terminal</li>
+</ul>
+<h4>Step 2: Perform a Basic DNS Lookup</h4>
+<p>Type the following command (substitute any reachable public hostname):</p>
+<p><code>nslookup google.com</code></p>
+<p>Record your results:</p>
+<ul>
+<li>Server (DNS resolver used): <strong><em>_</em></strong><strong><em>_</em></strong>______</li>
+<li>Address (DNS resolver IP): <strong><em>_</em></strong><strong><em>_</em></strong>______</li>
+<li>Name (resolved hostname): <strong><em>_</em></strong><strong><em>_</em></strong>______</li>
+<li>Resolved IP Address(es): <strong><em>_</em></strong><strong><em>_</em></strong>______</li>
+</ul>
+<p><strong>Question 1:</strong> What type of DNS record (A or AAAA) does your result represent? How do you know?</p>
+<h4>Step 3: Query for a Specific Record Type</h4>
+<p>Query the MX record for a domain to identify its mail server:</p>
+<p><code>nslookup -type=MX gmail.com</code></p>
+<p>Record your results:</p>
+<ul>
+<li>MX record(s) returned: <strong><em>_</em></strong><strong><em>_</em></strong>______</li>
+<li>Preference value(s): <strong><em>_</em></strong><strong><em>_</em></strong>______</li>
+</ul>
+<p><strong>Question 2:</strong> What does the MX record tell you, and which protocol uses MX records?</p>
+<h4>Step 4: Perform a Reverse DNS Lookup</h4>
+<p><code>nslookup 8.8.8.8</code></p>
+<p>Record your results:</p>
+<ul>
+<li>PTR record (hostname): <strong><em>_</em></strong><strong><em>_</em></strong>______</li>
+</ul>
+<p><strong>Question 3:</strong> What DNS record type is used for reverse lookups (IP to hostname)?</p>
+<h4>Step 5: Query a Specific DNS Server</h4>
+<p><code>nslookup google.com 8.8.8.8</code></p>
+<p><strong>Question 4:</strong> What is the significance of specifying a DNS server in the nslookup command? In what troubleshooting scenario would you do this?</p>
+<hr />
+<h3>Part 2: ICMP Testing with ping and tracert</h3>
+<p><strong>Objective:</strong> Use ping to test reachability and interpret TTL values; use tracert to map network paths.</p>
+<h4>Step 1: Basic Ping Test</h4>
+<p><code>ping google.com</code></p>
+<p>Windows adds <code>/n 4</code> by default (4 packets). Linux/Mac requires <code>-c 4</code>.</p>
+<p>Record your results:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IP resolved</td>
+<td></td>
+</tr>
+<tr>
+<td>Packets sent</td>
+<td></td>
+</tr>
+<tr>
+<td>Packets received</td>
+<td></td>
+</tr>
+<tr>
+<td>Packet loss %</td>
+<td></td>
+</tr>
+<tr>
+<td>Average RTT (ms)</td>
+<td></td>
+</tr>
+<tr>
+<td>TTL value</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Question 5:</strong> What does the TTL value in the ping response represent? If the TTL is 115, what can you infer about the operating system of the remote host and the number of hops traversed? (Hint: Windows typically starts TTL at 128; Linux starts at 64.)</p>
+<h4>Step 2: Ping a Nonexistent Host</h4>
+<p><code>ping 192.168.254.254</code></p>
+<p><strong>Question 6:</strong> What error or timeout message do you receive? Which ICMP message type is typically returned when a destination is unreachable?</p>
+<h4>Step 3: Trace the Route to a Remote Host</h4>
+<p>Windows:</p>
+<p><code>tracert google.com</code></p>
+<p>Linux/Mac:</p>
+<p><code>traceroute google.com</code></p>
+<p>Record your results:</p>
+<table>
+<thead>
+<tr>
+<th>Hop</th>
+<th>RTT (ms)</th>
+<th>IP Address or Hostname</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>3</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>4</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>5</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Question 7:</strong> How does tracert use the TTL field to discover each router hop? Describe the mechanism in two to three sentences.</p>
+<p><strong>Question 8:</strong> If a hop shows "* * * Request timed out" instead of a latency value, what does this typically indicate about that router?</p>
+<hr />
+<h3>Part 3: TCP Connection Inspection with netstat</h3>
+<p><strong>Objective:</strong> Use netstat to observe active TCP connections, identify ports, and map them to known protocols.</p>
+<h4>Step 1: View All Active Connections</h4>
+<p>Windows:</p>
+<p><code>netstat -an</code></p>
+<p>Linux/Mac:</p>
+<p><code>netstat -an</code></p>
+<p><strong>Question 9:</strong> In the output, identify and record three TCP connections in the ESTABLISHED state. For each, record the local address and port, the foreign address and port, and identify the protocol name for any well-known port you recognize.</p>
+<table>
+<thead>
+<tr>
+<th>Local Address:Port</th>
+<th>Foreign Address:Port</th>
+<th>State</th>
+<th>Protocol (if known)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h4>Step 2: View Listening Ports</h4>
+<p>Windows:</p>
+<p><code>netstat -an | findstr LISTEN</code></p>
+<p>Linux/Mac:</p>
+<p><code>netstat -an | grep LISTEN</code></p>
+<p><strong>Question 10:</strong> List three services listening on your local machine with their port numbers. For each, identify the protocol name from the Module 02 port reference table if applicable.</p>
+<table>
+<thead>
+<tr>
+<th>Listening Port</th>
+<th>Protocol Name (if known)</th>
+<th>Transport (TCP/UDP)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h4>Step 3: Open a Web Browser and Observe New Connections</h4>
+<ol>
+<li>Open a web browser and navigate to any HTTPS website.</li>
+<li>Immediately return to the terminal and run netstat -an again.</li>
+<li>Look for new ESTABLISHED connections to port 443.</li>
+</ol>
+<p><strong>Question 11:</strong> Did you observe a new connection to port 443 after visiting an HTTPS website? What does the presence of port 443 in an ESTABLISHED connection confirm about the transport and encryption used?</p>
+<hr />
+<h3>Deliverables</h3>
+<p>Submit the following to the Canvas assignment dropbox:</p>
+<p><strong>Deliverable 1 (25 points):</strong> A screenshot of your nslookup output for Steps 2 through 5, with your answers to Questions 1 through 4 typed below each screenshot.</p>
+<p><strong>Deliverable 2 (25 points):</strong> A screenshot of your ping output (Step 1) and tracert/traceroute output (Step 3), with your answers to Questions 5 through 8 typed below.</p>
+<p><strong>Deliverable 3 (25 points):</strong> A screenshot of your netstat output, with the three ESTABLISHED connections and three LISTEN ports clearly identified, and your answers to Questions 9 through 11 typed below.</p>
+<p><strong>Deliverable 4 (25 points):</strong> A typed summary (150–200 words) connecting your lab observations to the TCP/IP model. Identify which layer each command operates at and what you observed that confirmed your module reading.</p>
+<hr />
+<h3>Grading Rubric</h3>
+<table>
+<thead>
+<tr>
+<th>Deliverable</th>
+<th>Points</th>
+<th>Full Credit Criteria</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DNS screenshots and answers</td>
+<td>25</td>
+<td>All 4 nslookup steps captured; Questions 1–4 answered correctly with protocol/record type identification</td>
+</tr>
+<tr>
+<td>Ping and tracert screenshots and answers</td>
+<td>25</td>
+<td>Ping output captured; tracert table populated with at least 5 hops; Questions 5–8 answered accurately</td>
+</tr>
+<tr>
+<td>Netstat screenshots and answers</td>
+<td>25</td>
+<td>Connections table populated; LISTEN ports identified; Questions 9–11 answered correctly</td>
+</tr>
+<tr>
+<td>Written summary</td>
+<td>25</td>
+<td>150–200 words; connects each command to a specific TCP/IP layer; accurate technical terminology</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td><strong>100</strong></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>Helpful Notes</h3>
+<p>All commands in this lab require internet access. If you are behind a restrictive firewall that blocks ICMP, ping and tracert may show timeouts — document this and explain why it occurs in your written summary.</p>
+<p>On Windows, tracert uses ICMP Echo Requests. On Linux and macOS, traceroute uses UDP by default, but the mechanism (TTL exhaustion) is the same.</p>
+<p>The nslookup command is available on Windows, Linux, and macOS without any installation.</p>
+<hr />
+<p><em>CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash</em></p>
+</body>
+</html>

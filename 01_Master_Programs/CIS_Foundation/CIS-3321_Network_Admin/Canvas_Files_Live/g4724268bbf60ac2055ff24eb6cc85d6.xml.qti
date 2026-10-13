@@ -1,0 +1,1025 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/profile/cc/ccv1p1/ccv1p1_qtiasiv1p2p1_v1p0.xsd">
+  <assessment ident="g4724268bbf60ac2055ff24eb6cc85d6" title="Quiz (M16): Network+ N10-008 Exam Preparation">
+    <qtimetadata>
+      <qtimetadatafield>
+        <fieldlabel>cc_profile</fieldlabel>
+        <fieldentry>cc.exam.v0p1</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_assessmenttype</fieldlabel>
+        <fieldentry>Examination</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_scoretype</fieldlabel>
+        <fieldentry>Percentage</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>cc_maxattempts</fieldlabel>
+        <fieldentry>1</fieldentry>
+      </qtimetadatafield>
+    </qtimetadata>
+    <section ident="root_section">
+      <item ident="g4724268bbf60ac2055ff24eb6cc85d6_q01" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A host receives the IP address 169.254.45.12 automatically. Which service has most likely failed?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q01_a">
+                <material>
+                  <mattext texttype="text/plain">DNS</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q01_b">
+                <material>
+                  <mattext texttype="text/plain">DHCP</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q01_c">
+                <material>
+                  <mattext texttype="text/plain">NTP</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q01_d">
+                <material>
+                  <mattext texttype="text/plain">NAT</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g4724268bbf60ac2055ff24eb6cc85d6_q01_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g4724268bbf60ac2055ff24eb6cc85d6_q02" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;Which OSI layer is responsible for logical addressing and routing packets between networks?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q02_a">
+                <material>
+                  <mattext texttype="text/plain">Layer 2 (Data Link)</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q02_b">
+                <material>
+                  <mattext texttype="text/plain">Layer 3 (Network)</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q02_c">
+                <material>
+                  <mattext texttype="text/plain">Layer 4 (Transport)</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q02_d">
+                <material>
+                  <mattext texttype="text/plain">Layer 5 (Session)</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g4724268bbf60ac2055ff24eb6cc85d6_q02_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g4724268bbf60ac2055ff24eb6cc85d6_q03" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A network administrator wants to bundle four physical links between two switches into a single logical link to maximize available bandwidth and prevent STP from blocking redundant ports. Which technology should be configured?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q03_a">
+                <material>
+                  <mattext texttype="text/plain">RSTP</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q03_b">
+                <material>
+                  <mattext texttype="text/plain">PortFast</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q03_c">
+                <material>
+                  <mattext texttype="text/plain">EtherChannel</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q03_d">
+                <material>
+                  <mattext texttype="text/plain">BPDU Guard</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g4724268bbf60ac2055ff24eb6cc85d6_q03_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g4724268bbf60ac2055ff24eb6cc85d6_q04" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;Which wireless security standard uses Simultaneous Authentication of Equals (SAE) and is resistant to offline dictionary attacks?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q04_a">
+                <material>
+                  <mattext texttype="text/plain">WEP</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q04_b">
+                <material>
+                  <mattext texttype="text/plain">WPA/TKIP</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q04_c">
+                <material>
+                  <mattext texttype="text/plain">WPA2/AES-CCMP</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q04_d">
+                <material>
+                  <mattext texttype="text/plain">WPA3/SAE</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g4724268bbf60ac2055ff24eb6cc85d6_q04_d</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g4724268bbf60ac2055ff24eb6cc85d6_q05" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A company uses MPLS for its WAN. Which statement about MPLS is accurate?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q05_a">
+                <material>
+                  <mattext texttype="text/plain">MPLS routes packets using IP addresses at each hop</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q05_b">
+                <material>
+                  <mattext texttype="text/plain">MPLS uses labels to forward traffic, enabling traffic engineering and any-to-any connectivity</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q05_c">
+                <material>
+                  <mattext texttype="text/plain">MPLS is limited to point-to-point connections between two sites</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q05_d">
+                <material>
+                  <mattext texttype="text/plain">MPLS operates only over fiber optic transport media</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g4724268bbf60ac2055ff24eb6cc85d6_q05_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g4724268bbf60ac2055ff24eb6cc85d6_q06" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;Which port and protocol combination is used by SNMP traps?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q06_a">
+                <material>
+                  <mattext texttype="text/plain">TCP 161</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q06_b">
+                <material>
+                  <mattext texttype="text/plain">UDP 161</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q06_c">
+                <material>
+                  <mattext texttype="text/plain">UDP 162</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q06_d">
+                <material>
+                  <mattext texttype="text/plain">TCP 162</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g4724268bbf60ac2055ff24eb6cc85d6_q06_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g4724268bbf60ac2055ff24eb6cc85d6_q07" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A technician runs &lt;code&gt;tracert&lt;/code&gt; from a Windows workstation to a remote server. The output shows that hops 3 through 6 are responding but hop 7 shows three asterisks (***) for all three probes, and all subsequent hops also show asterisks. What does this indicate?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q07_a">
+                <material>
+                  <mattext texttype="text/plain">The remote server is unreachable due to a DNS failure</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q07_b">
+                <material>
+                  <mattext texttype="text/plain">The connection is being encrypted at hop 7</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q07_c">
+                <material>
+                  <mattext texttype="text/plain">Traffic is being dropped or a device at hop 7 is not responding to TTL-expired packets</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q07_d">
+                <material>
+                  <mattext texttype="text/plain">The workstation has an incorrect default gateway</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g4724268bbf60ac2055ff24eb6cc85d6_q07_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g4724268bbf60ac2055ff24eb6cc85d6_q08" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;Which authentication protocol uses TCP port 49, encrypts the entire authentication payload, and is Cisco's preferred protocol for network device administration?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q08_a">
+                <material>
+                  <mattext texttype="text/plain">RADIUS</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q08_b">
+                <material>
+                  <mattext texttype="text/plain">TACACS+</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q08_c">
+                <material>
+                  <mattext texttype="text/plain">802.1X</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q08_d">
+                <material>
+                  <mattext texttype="text/plain">LDAP</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g4724268bbf60ac2055ff24eb6cc85d6_q08_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g4724268bbf60ac2055ff24eb6cc85d6_q09" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A host with IP address 192.168.50.75 and subnet mask 255.255.255.192 needs to communicate with a host at 192.168.50.130. A network technician reports the hosts cannot reach each other without routing. Why?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q09_a">
+                <material>
+                  <mattext texttype="text/plain">Both hosts are in the same /26 subnet and should communicate directly</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q09_b">
+                <material>
+                  <mattext texttype="text/plain">192.168.50.75 is in the 192.168.50.64/26 subnet; 192.168.50.130 is in the 192.168.50.128/26 subnet</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q09_c">
+                <material>
+                  <mattext texttype="text/plain">The subnet mask 255.255.255.192 is not a valid mask</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q09_d">
+                <material>
+                  <mattext texttype="text/plain">The hosts need an ARP proxy to communicate across subnets</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g4724268bbf60ac2055ff24eb6cc85d6_q09_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g4724268bbf60ac2055ff24eb6cc85d6_q10" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;Which VPN type encrypts only the payload of the original IP packet, preserving the original IP header in the clear?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q10_a">
+                <material>
+                  <mattext texttype="text/plain">IPsec Tunnel mode</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q10_b">
+                <material>
+                  <mattext texttype="text/plain">IPsec Transport mode</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q10_c">
+                <material>
+                  <mattext texttype="text/plain">SSL/TLS VPN</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q10_d">
+                <material>
+                  <mattext texttype="text/plain">GRE tunnel</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g4724268bbf60ac2055ff24eb6cc85d6_q10_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g4724268bbf60ac2055ff24eb6cc85d6_q11" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A network administrator is configuring RSTP on a switch. An access port connected to a workstation is taking 30 seconds to start forwarding traffic after the workstation boots. Which RSTP feature should be enabled to eliminate this delay?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q11_a">
+                <material>
+                  <mattext texttype="text/plain">BPDU Guard</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q11_b">
+                <material>
+                  <mattext texttype="text/plain">Root Guard</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q11_c">
+                <material>
+                  <mattext texttype="text/plain">PortFast</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q11_d">
+                <material>
+                  <mattext texttype="text/plain">Loop Guard</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g4724268bbf60ac2055ff24eb6cc85d6_q11_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g4724268bbf60ac2055ff24eb6cc85d6_q12" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A company has two ISP circuits: fiber at 1 Gbps and cable broadband at 100 Mbps. They want to automatically route latency-sensitive VoIP traffic over the fiber link and route bulk file transfers over cable broadband. Which WAN technology provides this application-aware path selection?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q12_a">
+                <material>
+                  <mattext texttype="text/plain">MPLS</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q12_b">
+                <material>
+                  <mattext texttype="text/plain">SD-WAN</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q12_c">
+                <material>
+                  <mattext texttype="text/plain">Metro Ethernet E-Line</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q12_d">
+                <material>
+                  <mattext texttype="text/plain">DMVPN</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g4724268bbf60ac2055ff24eb6cc85d6_q12_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g4724268bbf60ac2055ff24eb6cc85d6_q13" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;Which step in the CompTIA seven-step troubleshooting model immediately follows "Implement the solution or escalate"?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q13_a">
+                <material>
+                  <mattext texttype="text/plain">Establish a theory of probable cause</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q13_b">
+                <material>
+                  <mattext texttype="text/plain">Establish a plan of action</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q13_c">
+                <material>
+                  <mattext texttype="text/plain">Verify full system functionality</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q13_d">
+                <material>
+                  <mattext texttype="text/plain">Document findings, actions, and outcomes</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g4724268bbf60ac2055ff24eb6cc85d6_q13_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g4724268bbf60ac2055ff24eb6cc85d6_q14" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A security analyst discovers that an attacker has sent gratuitous ARP replies associating the attacker's MAC address with the default gateway's IP address. What type of attack is this and what is the likely goal?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q14_a">
+                <material>
+                  <mattext texttype="text/plain">MAC flooding; to fill the CAM table and cause the switch to broadcast all traffic</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q14_b">
+                <material>
+                  <mattext texttype="text/plain">ARP poisoning; to redirect traffic through the attacker's device for interception</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q14_c">
+                <material>
+                  <mattext texttype="text/plain">VLAN hopping; to gain access to a restricted VLAN segment</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q14_d">
+                <material>
+                  <mattext texttype="text/plain">DNS poisoning; to redirect users to a malicious web server</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g4724268bbf60ac2055ff24eb6cc85d6_q14_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g4724268bbf60ac2055ff24eb6cc85d6_q15" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An administrator runs &lt;code&gt;show spanning-tree&lt;/code&gt; on a Cisco switch and observes that one port is in "BLK" (Blocking) state. What does this indicate?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q15_a">
+                <material>
+                  <mattext texttype="text/plain">The port is err-disabled due to a security violation</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q15_b">
+                <material>
+                  <mattext texttype="text/plain">The port is forwarding traffic normally but not learning MAC addresses</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q15_c">
+                <material>
+                  <mattext texttype="text/plain">STP has placed the port in Blocking state to prevent a Layer 2 loop</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q15_d">
+                <material>
+                  <mattext texttype="text/plain">The port has lost physical connectivity</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g4724268bbf60ac2055ff24eb6cc85d6_q15_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g4724268bbf60ac2055ff24eb6cc85d6_q16" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;Which IPv6 address type is automatically configured on every IPv6-enabled interface and is used for communication within a single network link only?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q16_a">
+                <material>
+                  <mattext texttype="text/plain">Global unicast (2000::/3)</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q16_b">
+                <material>
+                  <mattext texttype="text/plain">Multicast (ff00::/8)</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q16_c">
+                <material>
+                  <mattext texttype="text/plain">Link-local (fe80::/10)</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q16_d">
+                <material>
+                  <mattext texttype="text/plain">Unique local (fc00::/7)</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g4724268bbf60ac2055ff24eb6cc85d6_q16_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g4724268bbf60ac2055ff24eb6cc85d6_q17" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A network technician is troubleshooting a fiber connection. The receiving end of the link reports very low signal strength despite a short run. Which tool should the technician use to test for a physical break or severe bend in the fiber strand?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q17_a">
+                <material>
+                  <mattext texttype="text/plain">TDR (Time Domain Reflectometer)</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q17_b">
+                <material>
+                  <mattext texttype="text/plain">Basic cable tester</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q17_c">
+                <material>
+                  <mattext texttype="text/plain">Visual fault locator (VFL)</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q17_d">
+                <material>
+                  <mattext texttype="text/plain">Protocol analyzer</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g4724268bbf60ac2055ff24eb6cc85d6_q17_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g4724268bbf60ac2055ff24eb6cc85d6_q18" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A user can successfully ping a server by its IP address but cannot connect to it using its hostname. All other users in the organization can connect by hostname without issues. Which service should be investigated first?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q18_a">
+                <material>
+                  <mattext texttype="text/plain">DHCP</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q18_b">
+                <material>
+                  <mattext texttype="text/plain">DNS</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q18_c">
+                <material>
+                  <mattext texttype="text/plain">Default gateway</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q18_d">
+                <material>
+                  <mattext texttype="text/plain">Firewall</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g4724268bbf60ac2055ff24eb6cc85d6_q18_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g4724268bbf60ac2055ff24eb6cc85d6_q19" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;What is the administrative distance of OSPF routes on a Cisco router?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q19_a">
+                <material>
+                  <mattext texttype="text/plain">90</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q19_b">
+                <material>
+                  <mattext texttype="text/plain">100</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q19_c">
+                <material>
+                  <mattext texttype="text/plain">110</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q19_d">
+                <material>
+                  <mattext texttype="text/plain">120</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g4724268bbf60ac2055ff24eb6cc85d6_q19_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g4724268bbf60ac2055ff24eb6cc85d6_q20" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A company's SLA with its ISP guarantees 99.99% availability. Approximately how much total downtime per year is permitted under this SLA?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q20_a">
+                <material>
+                  <mattext texttype="text/plain">87.6 hours</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q20_b">
+                <material>
+                  <mattext texttype="text/plain">8.76 hours</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q20_c">
+                <material>
+                  <mattext texttype="text/plain">52.6 minutes</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4724268bbf60ac2055ff24eb6cc85d6_q20_d">
+                <material>
+                  <mattext texttype="text/plain">5.26 minutes</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g4724268bbf60ac2055ff24eb6cc85d6_q20_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+    </section>
+  </assessment>
+</questestinterop>

@@ -1,0 +1,1025 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/profile/cc/ccv1p1/ccv1p1_qtiasiv1p2p1_v1p0.xsd">
+  <assessment ident="gf2a5824da3c1999d9f9fe1b097daa69" title="Quiz (M13): Risk Management">
+    <qtimetadata>
+      <qtimetadatafield>
+        <fieldlabel>cc_profile</fieldlabel>
+        <fieldentry>cc.exam.v0p1</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_assessmenttype</fieldlabel>
+        <fieldentry>Examination</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_scoretype</fieldlabel>
+        <fieldentry>Percentage</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>cc_maxattempts</fieldlabel>
+        <fieldentry>1</fieldentry>
+      </qtimetadatafield>
+    </qtimetadata>
+    <section ident="root_section">
+      <item ident="gf2a5824da3c1999d9f9fe1b097daa69_q01" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An organization's Asset Value (AV) is $500,000. The Exposure Factor (EF) is 0.40. The Annual Rate of Occurrence (ARO) is 0.25. What is the Annual Loss Expectancy (ALE)?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q01_a">
+                <material>
+                  <mattext texttype="text/plain">$200,000</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q01_b">
+                <material>
+                  <mattext texttype="text/plain">$50,000</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q01_c">
+                <material>
+                  <mattext texttype="text/plain">$125,000</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q01_d">
+                <material>
+                  <mattext texttype="text/plain">$125</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gf2a5824da3c1999d9f9fe1b097daa69_q01_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gf2a5824da3c1999d9f9fe1b097daa69_q02" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A security team calculates that a proposed intrusion prevention system (IPS) costs $20,000/year to operate. Without the IPS, the ALE is $120,000. With the IPS, the projected ALE is $30,000. What is the net annual benefit of deploying the IPS?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q02_a">
+                <material>
+                  <mattext texttype="text/plain">$90,000</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q02_b">
+                <material>
+                  <mattext texttype="text/plain">$70,000</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q02_c">
+                <material>
+                  <mattext texttype="text/plain">$150,000</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q02_d">
+                <material>
+                  <mattext texttype="text/plain">$110,000</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gf2a5824da3c1999d9f9fe1b097daa69_q02_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gf2a5824da3c1999d9f9fe1b097daa69_q03" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A company decides not to move their customer data into the cloud because the legal liability from a potential cloud breach is unacceptable under their risk appetite. Which risk response strategy does this represent?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q03_a">
+                <material>
+                  <mattext texttype="text/plain">Risk mitigation</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q03_b">
+                <material>
+                  <mattext texttype="text/plain">Risk transference</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q03_c">
+                <material>
+                  <mattext texttype="text/plain">Risk acceptance</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q03_d">
+                <material>
+                  <mattext texttype="text/plain">Risk avoidance</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gf2a5824da3c1999d9f9fe1b097daa69_q03_d</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gf2a5824da3c1999d9f9fe1b097daa69_q04" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An organization purchases cyber liability insurance that will reimburse breach notification costs, forensic investigation expenses, and regulatory fines in the event of a data breach. Which risk response strategy does this represent?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q04_a">
+                <material>
+                  <mattext texttype="text/plain">Risk mitigation</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q04_b">
+                <material>
+                  <mattext texttype="text/plain">Risk transference</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q04_c">
+                <material>
+                  <mattext texttype="text/plain">Risk acceptance</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q04_d">
+                <material>
+                  <mattext texttype="text/plain">Risk avoidance</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gf2a5824da3c1999d9f9fe1b097daa69_q04_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gf2a5824da3c1999d9f9fe1b097daa69_q05" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A security team implements patch management, network segmentation, and MFA to reduce the likelihood and impact of a ransomware attack. After implementing these controls, the risk level falls from Critical to Medium. Which risk response strategy does this represent?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q05_a">
+                <material>
+                  <mattext texttype="text/plain">Risk avoidance</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q05_b">
+                <material>
+                  <mattext texttype="text/plain">Risk transference</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q05_c">
+                <material>
+                  <mattext texttype="text/plain">Risk mitigation</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q05_d">
+                <material>
+                  <mattext texttype="text/plain">Risk acceptance</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gf2a5824da3c1999d9f9fe1b097daa69_q05_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gf2a5824da3c1999d9f9fe1b097daa69_q06" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;After applying all feasible controls to a known risk, the security team documents the remaining risk level as "Low" and the CISO formally acknowledges this in writing. No further treatment is planned. Which risk response strategy does this represent?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q06_a">
+                <material>
+                  <mattext texttype="text/plain">Risk avoidance</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q06_b">
+                <material>
+                  <mattext texttype="text/plain">Risk transference</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q06_c">
+                <material>
+                  <mattext texttype="text/plain">Risk mitigation</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q06_d">
+                <material>
+                  <mattext texttype="text/plain">Risk acceptance</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gf2a5824da3c1999d9f9fe1b097daa69_q06_d</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gf2a5824da3c1999d9f9fe1b097daa69_q07" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;Which of the following BEST describes the difference between inherent risk and residual risk?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q07_a">
+                <material>
+                  <mattext texttype="text/plain">Inherent risk applies to high-impact events; residual risk applies to low-impact events</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q07_b">
+                <material>
+                  <mattext texttype="text/plain">Inherent risk is the risk before any controls are applied; residual risk is the risk remaining after controls are implemented</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q07_c">
+                <material>
+                  <mattext texttype="text/plain">Inherent risk is managed by technical controls; residual risk is managed by administrative controls</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q07_d">
+                <material>
+                  <mattext texttype="text/plain">Inherent risk is calculated quantitatively; residual risk is always assessed qualitatively</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gf2a5824da3c1999d9f9fe1b097daa69_q07_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gf2a5824da3c1999d9f9fe1b097daa69_q08" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An organization's risk appetite statement reads: "We will not accept any risk that could result in loss of patient data." Despite this, the CISO formally documents and accepts a known risk of a data breach via a legacy system that cannot be immediately decommissioned. What is this documented decision an example of?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q08_a">
+                <material>
+                  <mattext texttype="text/plain">Risk transference</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q08_b">
+                <material>
+                  <mattext texttype="text/plain">Risk avoidance</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q08_c">
+                <material>
+                  <mattext texttype="text/plain">Risk acceptance (exception to stated risk appetite with documented rationale)</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q08_d">
+                <material>
+                  <mattext texttype="text/plain">Residual risk elimination</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gf2a5824da3c1999d9f9fe1b097daa69_q08_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gf2a5824da3c1999d9f9fe1b097daa69_q09" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A hospital determines that their EHR system cannot be offline for more than 8 hours before patient safety is compromised. Their disaster recovery plan targets a 10-hour recovery time. Which BIA concept does this gap violate?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q09_a">
+                <material>
+                  <mattext texttype="text/plain">The RPO exceeds the MTD</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q09_b">
+                <material>
+                  <mattext texttype="text/plain">The RTO exceeds the MTD</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q09_c">
+                <material>
+                  <mattext texttype="text/plain">The MTBF is too low</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q09_d">
+                <material>
+                  <mattext texttype="text/plain">The ALE has not been calculated</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gf2a5824da3c1999d9f9fe1b097daa69_q09_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gf2a5824da3c1999d9f9fe1b097daa69_q10" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A company performs daily database backups. A ransomware attack encrypts the production database at 3:00 PM on a Tuesday. The database is restored from the Monday night backup. How much data was lost?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q10_a">
+                <material>
+                  <mattext texttype="text/plain">24 hours</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q10_b">
+                <material>
+                  <mattext texttype="text/plain">Approximately 15 hours (from Monday night backup to 3 PM Tuesday)</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q10_c">
+                <material>
+                  <mattext texttype="text/plain">Zero — all data was in the backup</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q10_d">
+                <material>
+                  <mattext texttype="text/plain">One week</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gf2a5824da3c1999d9f9fe1b097daa69_q10_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gf2a5824da3c1999d9f9fe1b097daa69_q11" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An organization uses a risk matrix that plots likelihood against impact on a 3×3 grid. A risk is assessed as High Likelihood and High Impact. Which risk rating cell would this risk fall into?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q11_a">
+                <material>
+                  <mattext texttype="text/plain">Low</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q11_b">
+                <material>
+                  <mattext texttype="text/plain">Medium</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q11_c">
+                <material>
+                  <mattext texttype="text/plain">High</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q11_d">
+                <material>
+                  <mattext texttype="text/plain">Critical</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gf2a5824da3c1999d9f9fe1b097daa69_q11_d</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gf2a5824da3c1999d9f9fe1b097daa69_q12" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A firewall that blocks unauthorized inbound network traffic is BEST classified as which type of security control?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q12_a">
+                <material>
+                  <mattext texttype="text/plain">Physical preventive</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q12_b">
+                <material>
+                  <mattext texttype="text/plain">Technical detective</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q12_c">
+                <material>
+                  <mattext texttype="text/plain">Technical preventive</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q12_d">
+                <material>
+                  <mattext texttype="text/plain">Administrative preventive</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gf2a5824da3c1999d9f9fe1b097daa69_q12_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gf2a5824da3c1999d9f9fe1b097daa69_q13" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A SIEM system monitors security logs and sends an alert when it detects multiple failed login attempts from the same IP address within a short time window. Which type of security control is this?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q13_a">
+                <material>
+                  <mattext texttype="text/plain">Technical preventive</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q13_b">
+                <material>
+                  <mattext texttype="text/plain">Technical detective</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q13_c">
+                <material>
+                  <mattext texttype="text/plain">Administrative corrective</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q13_d">
+                <material>
+                  <mattext texttype="text/plain">Physical deterrent</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gf2a5824da3c1999d9f9fe1b097daa69_q13_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gf2a5824da3c1999d9f9fe1b097daa69_q14" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An organization cannot patch a legacy industrial control system because the patch requires an 8-hour maintenance window that production operations cannot support. They implement continuous network traffic monitoring specifically for that system. The monitoring system is an example of which type of control?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q14_a">
+                <material>
+                  <mattext texttype="text/plain">Preventive</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q14_b">
+                <material>
+                  <mattext texttype="text/plain">Directive</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q14_c">
+                <material>
+                  <mattext texttype="text/plain">Compensating</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q14_d">
+                <material>
+                  <mattext texttype="text/plain">Deterrent</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gf2a5824da3c1999d9f9fe1b097daa69_q14_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gf2a5824da3c1999d9f9fe1b097daa69_q15" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An organization's security policy requires all employees to complete annual cybersecurity training. This policy is an example of which type of security control?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q15_a">
+                <material>
+                  <mattext texttype="text/plain">Technical preventive</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q15_b">
+                <material>
+                  <mattext texttype="text/plain">Physical detective</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q15_c">
+                <material>
+                  <mattext texttype="text/plain">Administrative directive</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q15_d">
+                <material>
+                  <mattext texttype="text/plain">Technical compensating</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gf2a5824da3c1999d9f9fe1b097daa69_q15_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gf2a5824da3c1999d9f9fe1b097daa69_q16" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;Which of the following is the BEST definition of the term "risk owner" in a risk register?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q16_a">
+                <material>
+                  <mattext texttype="text/plain">The security analyst who identified the risk</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q16_b">
+                <material>
+                  <mattext texttype="text/plain">The CISO, who is responsible for all organizational security risks</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q16_c">
+                <material>
+                  <mattext texttype="text/plain">The individual responsible for managing the risk, typically the owner of the affected asset or business process</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q16_d">
+                <material>
+                  <mattext texttype="text/plain">The IT manager who implements the risk mitigation controls</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gf2a5824da3c1999d9f9fe1b097daa69_q16_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gf2a5824da3c1999d9f9fe1b097daa69_q17" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;The NIST Cybersecurity Framework organizes security activities into five core functions. An organization is implementing network monitoring, user behavior analytics, and intrusion detection systems. Which CSF function do these activities primarily support?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q17_a">
+                <material>
+                  <mattext texttype="text/plain">Identify</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q17_b">
+                <material>
+                  <mattext texttype="text/plain">Protect</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q17_c">
+                <material>
+                  <mattext texttype="text/plain">Detect</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q17_d">
+                <material>
+                  <mattext texttype="text/plain">Respond</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gf2a5824da3c1999d9f9fe1b097daa69_q17_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gf2a5824da3c1999d9f9fe1b097daa69_q18" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An organization's annual security risk assessment produces a long list of identified risks. The security team wants to perform detailed quantitative analysis on the highest-priority risks and use a faster, less resource-intensive method for low-priority risks. Which approach does this describe?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q18_a">
+                <material>
+                  <mattext texttype="text/plain">Using qualitative analysis for all risks first to identify priority risks, then applying quantitative analysis to the highest-rated risks</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q18_b">
+                <material>
+                  <mattext texttype="text/plain">Applying quantitative analysis to all risks and then qualitative analysis to validate results</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q18_c">
+                <material>
+                  <mattext texttype="text/plain">Performing only qualitative analysis because quantitative analysis is not applicable to cybersecurity</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q18_d">
+                <material>
+                  <mattext texttype="text/plain">Delegating all risk analysis to external consultants</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gf2a5824da3c1999d9f9fe1b097daa69_q18_a</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gf2a5824da3c1999d9f9fe1b097daa69_q19" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A company's RPO for their customer database is 4 hours. The current backup strategy creates daily backups at midnight. A database failure occurs at 6:00 PM. How much data could potentially be lost and does this meet the RPO?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q19_a">
+                <material>
+                  <mattext texttype="text/plain">18 hours of data lost — does not meet the RPO</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q19_b">
+                <material>
+                  <mattext texttype="text/plain">4 hours of data lost — meets the RPO</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q19_c">
+                <material>
+                  <mattext texttype="text/plain">No data lost — backups cover all scenarios</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q19_d">
+                <material>
+                  <mattext texttype="text/plain">24 hours of data lost — does not meet the RPO</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gf2a5824da3c1999d9f9fe1b097daa69_q19_a</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gf2a5824da3c1999d9f9fe1b097daa69_q20" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An organization performs a Business Impact Analysis and determines that the payroll system has an MTD of 3 business days. The current disaster recovery plan provides an RTO of 2 business days. Which statement is TRUE?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q20_a">
+                <material>
+                  <mattext texttype="text/plain">The RTO exceeds the MTD, creating a gap in the recovery plan</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q20_b">
+                <material>
+                  <mattext texttype="text/plain">The RTO is within the MTD, which is acceptable</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q20_c">
+                <material>
+                  <mattext texttype="text/plain">The MTD should always equal the RTO</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gf2a5824da3c1999d9f9fe1b097daa69_q20_d">
+                <material>
+                  <mattext texttype="text/plain">The RTO is irrelevant because the MTD covers the required recovery time</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gf2a5824da3c1999d9f9fe1b097daa69_q20_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+    </section>
+  </assessment>
+</questestinterop>

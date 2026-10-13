@@ -1,0 +1,452 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Assignment: Lab (M07): Network Monitoring and Troubleshooting Tools</title>
+</head>
+<body>
+<h2>Lab (M07): Network Monitoring and Troubleshooting Tools</h2>
+<h1>Lab Activity: Module 07 — Network Monitoring and Troubleshooting Tools</h1>
+<h2>Course: CIS-3321 Network Administration</h2>
+<p><strong>Certification Alignment:</strong> CompTIA Network+ (N10-009)</p>
+<hr />
+<h3>Overview</h3>
+<p>This lab has two parts. Part 1 uses the command-line diagnostic tools covered in the video lectures — ping, traceroute/tracert, nslookup, and netstat — to investigate real network connectivity and DNS behavior from your own machine. Part 2 introduces Wireshark packet capture, where you will capture live traffic, apply display filters, and identify the TCP three-way handshake and DNS query/response pairs in a real capture.</p>
+<p>Estimated Time: 60–75 minutes</p>
+<p>Required Tools:</p>
+<ul>
+<li>Windows 10 or 11 with Command Prompt, or Linux/macOS with terminal</li>
+<li>Wireshark (free download at wireshark.org) — install before the lab session</li>
+<li>Active internet connection</li>
+</ul>
+<hr />
+<h3>Learning Objectives</h3>
+<p>By the end of this lab, you will be able to:</p>
+<ol>
+<li>Use ping to test Layer 3 reachability and interpret TTL and RTT values.</li>
+<li>Use traceroute/tracert to map a network path and explain intermediate hop behavior.</li>
+<li>Use nslookup to resolve hostnames and query specific DNS record types.</li>
+<li>Use netstat to identify active connections and listening ports on a live system.</li>
+<li>Capture live network traffic in Wireshark and apply display filters.</li>
+<li>Identify the TCP three-way handshake in a Wireshark capture.</li>
+<li>Identify DNS Query and DNS Response packets in a Wireshark capture.</li>
+</ol>
+<hr />
+<h3>Part 1: Command-Line Diagnostic Tools</h3>
+<h3>Part 1A: ping — Testing Reachability and Interpreting Output</h3>
+<p>Step 1: Open a Command Prompt (Windows) or terminal (Linux/macOS).</p>
+<p>Step 2: Run the following three ping commands. On Windows, 4 packets are sent by default. On Linux/macOS, press Ctrl+C after 4 replies.</p>
+<pre><code class="language-text">ping 127.0.0.1
+ping 8.8.8.8
+ping txwes.edu
+</code></pre>
+<p>Step 3: Record your results in the table below.</p>
+<p>Ping Results Table:</p>
+<table>
+<thead>
+<tr>
+<th>Target</th>
+<th>Packets Sent</th>
+<th>Packets Received</th>
+<th>Packet Loss %</th>
+<th>Average RTT (ms)</th>
+<th>TTL Received</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>127.0.0.1</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>8.8.8.8</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>txwes.edu</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Step 4: Answer the following questions based on your results.</p>
+<p>Question 1A-1: The target 127.0.0.1 is the loopback address. What does a successful ping to 127.0.0.1 tell you about the health of the TCP/IP stack on your own machine? What OSI layer does this test verify?</p>
+<p>Question 1A-2: Compare the TTL value you received from 8.8.8.8 to the TTL value from txwes.edu. Assuming a standard starting TTL of 128 for Windows hosts and 64 for Linux hosts, calculate the approximate number of hops to each destination. Show your calculation.</p>
+<p>Question 1A-3: If a ping to 8.8.8.8 succeeds (receives replies) but a ping to txwes.edu fails with "Ping: unknown host," what specific network service has failed, and what command would you run next to diagnose it?</p>
+<hr />
+<h3>Part 1B: tracert / traceroute — Mapping the Network Path</h3>
+<p>Step 1: Run a traceroute to two destinations. On Windows use <code>tracert</code>; on Linux/macOS use <code>traceroute</code>.</p>
+<pre><code class="language-text">tracert 8.8.8.8
+tracert txwes.edu
+</code></pre>
+<p>Step 2: For each traceroute, record the first hop, the last hop, the total hop count, and the RTT values at the hop where you observe the largest single increase in latency.</p>
+<p>Traceroute Results Table:</p>
+<table>
+<thead>
+<tr>
+<th>Destination</th>
+<th>Total Hops</th>
+<th>First Hop IP</th>
+<th>Last Hop IP</th>
+<th>Largest RTT Jump at Hop #</th>
+<th>RTT Before Jump</th>
+<th>RTT After Jump</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>8.8.8.8</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>txwes.edu</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Question 1B-1: Examine your traceroute to 8.8.8.8. At what hop number does the largest RTT jump occur? What does a sudden large increase in RTT between two consecutive hops suggest about the geographic or infrastructure relationship between those two routers?</p>
+<p>Question 1B-2: If hop 4 in your traceroute shows three asterisks (***), does this mean hop 4 is down and the path to the destination is broken? Explain two reasons why a router might not respond to traceroute probes even when it is actively forwarding traffic.</p>
+<p>Question 1B-3: The first hop in your traceroute should be your default gateway (typically your home router or campus router). What is the IP address of your first hop? Is it a private IP address (RFC 1918)? What RFC 1918 range does it fall into?</p>
+<hr />
+<h3>Part 1C: nslookup — DNS Diagnostics</h3>
+<p>Step 1: Run the following nslookup commands and record the results.</p>
+<p>Default resolver lookup:</p>
+<pre><code class="language-text">nslookup txwes.edu
+</code></pre>
+<p>Query against an alternate resolver:</p>
+<pre><code class="language-text">nslookup txwes.edu 8.8.8.8
+</code></pre>
+<p>Query for MX records:</p>
+<pre><code class="language-text">nslookup -type=MX txwes.edu
+</code></pre>
+<p>Query for NS records:</p>
+<pre><code class="language-text">nslookup -type=NS txwes.edu
+</code></pre>
+<p>Reverse lookup:</p>
+<pre><code class="language-text">nslookup 8.8.8.8
+</code></pre>
+<p>Step 2: Record results.</p>
+<p>nslookup Results Table:</p>
+<table>
+<thead>
+<tr>
+<th>Query</th>
+<th>DNS Server Used</th>
+<th>Result / Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>nslookup txwes.edu (default)</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>nslookup txwes.edu 8.8.8.8</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>nslookup -type=MX txwes.edu</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>nslookup -type=NS txwes.edu</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>nslookup 8.8.8.8</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Question 1C-1: When you ran <code>nslookup txwes.edu</code>, the output likely showed "Non-authoritative answer." What does this mean? Which server would provide an authoritative answer for txwes.edu, and how would you query it directly?</p>
+<p>Question 1C-2: Examine the MX records returned for txwes.edu. What is the purpose of MX records in DNS? If a mail server cannot deliver email to a txwes.edu address, why would checking MX records be an early troubleshooting step?</p>
+<p>Question 1C-3: Compare the results of <code>nslookup txwes.edu</code> (using your default resolver) with <code>nslookup txwes.edu 8.8.8.8</code> (using Google's resolver). Are the IP addresses the same? What does it mean if they differ?</p>
+<hr />
+<h3>Part 1D: netstat — Active Connections and Listening Ports</h3>
+<p>Step 1: Open an elevated Command Prompt (Run as Administrator on Windows) or terminal.</p>
+<p>Step 2: Run the following commands and record a sample of the output.</p>
+<pre><code class="language-text">netstat -an
+</code></pre>
+<pre><code class="language-text">netstat -r
+</code></pre>
+<p>Step 3: From the <code>netstat -an</code> output, identify at least one LISTENING port, one ESTABLISHED connection (if any), and any UDP entries.</p>
+<p>netstat Results Table:</p>
+<table>
+<thead>
+<tr>
+<th>Protocol</th>
+<th>Local Address:Port</th>
+<th>Foreign Address:Port</th>
+<th>State</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(record one LISTENING)</td>
+<td></td>
+<td></td>
+<td>LISTENING</td>
+<td></td>
+</tr>
+<tr>
+<td>(record one ESTABLISHED, if any)</td>
+<td></td>
+<td></td>
+<td>ESTABLISHED</td>
+<td></td>
+</tr>
+<tr>
+<td>(record one UDP entry)</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Question 1D-1: What is the significance of a TCP port showing state LISTENING? What would you expect to find if you opened a web browser and navigated to a website — which new state should appear in the netstat output?</p>
+<p>Question 1D-2: Review the netstat -r (routing table) output. Identify the default route entry (destination 0.0.0.0 on Windows or default on Linux). What is the gateway address shown? How does this relate to the first hop you saw in your traceroute?</p>
+<p>Question 1D-3: A security analyst discovers that a process is listening on TCP port 4444 on a workstation. The workstation is not a server and no applications should be listening on non-standard ports. What does this finding suggest, and what netstat flag (on Windows) would reveal which executable is associated with that listening port?</p>
+<hr />
+<h3>Part 2: Wireshark Packet Capture and Analysis</h3>
+<h3>Part 2A: Capture Setup and Basic Filtering</h3>
+<p>Step 1: Launch Wireshark. On the main screen, select your active network interface (the one with traffic activity shown on the waveform graph — typically "Ethernet" or "Wi-Fi").</p>
+<p>Step 2: Click the blue shark-fin Start button to begin capturing.</p>
+<p>Step 3: Open a web browser and navigate to http://neverssl.com (this site deliberately uses unencrypted HTTP so you can see the content in Wireshark).</p>
+<p>Step 4: Return to Wireshark and click the red Stop button after about 10 seconds of capture.</p>
+<p>Step 5: In the Display Filter bar, enter the following filter and press Enter:</p>
+<pre><code class="language-text">http
+</code></pre>
+<p>You should now see only HTTP packets. Browse through a few packets and note the HTTP GET request and the HTTP 200 OK response.</p>
+<p>Step 6: Clear the display filter and try:</p>
+<pre><code class="language-text">dns
+</code></pre>
+<p>You should see DNS query and response packets.</p>
+<hr />
+<h3>Part 2B: Identifying the TCP Three-Way Handshake</h3>
+<p>Step 1: Clear all display filters (empty the filter bar and press Enter).</p>
+<p>Step 2: Apply this filter to isolate TCP connection establishment:</p>
+<pre><code class="language-text">tcp.flags.syn == 1
+</code></pre>
+<p>Step 3: Find a SYN packet in the list. Note the source IP, destination IP, and destination port.</p>
+<p>Step 4: Right-click that SYN packet and select "Follow &gt; TCP Stream." Wireshark will automatically filter to show all packets in that TCP conversation.</p>
+<p>Step 5: Identify the three packets that form the handshake:</p>
+<ul>
+<li>Packet 1: SYN — flags show SYN=1, ACK=0</li>
+<li>Packet 2: SYN-ACK — flags show SYN=1, ACK=1</li>
+<li>Packet 3: ACK — flags show SYN=0, ACK=1</li>
+</ul>
+<p>Record the frame numbers and timestamp of each handshake packet.</p>
+<p>Handshake Capture Table:</p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Frame Number</th>
+<th>Source IP</th>
+<th>Destination IP</th>
+<th>TCP Flags</th>
+<th>Sequence Number</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SYN</td>
+<td></td>
+<td></td>
+<td></td>
+<td>SYN</td>
+<td></td>
+</tr>
+<tr>
+<td>SYN-ACK</td>
+<td></td>
+<td></td>
+<td></td>
+<td>SYN, ACK</td>
+<td></td>
+</tr>
+<tr>
+<td>ACK</td>
+<td></td>
+<td></td>
+<td></td>
+<td>ACK</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>Part 2C: Identifying DNS Queries and Responses</h3>
+<p>Step 1: Clear the display filter and apply:</p>
+<pre><code class="language-text">dns
+</code></pre>
+<p>Step 2: Locate a DNS Query packet (the Info column shows "Standard query"). Click on it. In the packet detail pane, expand the "Domain Name System (query)" section. Note the queried name and query type (A, AAAA, MX, etc.).</p>
+<p>Step 3: Locate the corresponding DNS Response packet immediately following the query (same transaction ID, Info column shows "Standard query response"). Note the answer section — the returned IP address.</p>
+<p>DNS Capture Table:</p>
+<table>
+<thead>
+<tr>
+<th>Frame</th>
+<th>Type</th>
+<th>Queried Name</th>
+<th>Record Type</th>
+<th>Answer / IP Returned</th>
+<th>Latency (ms)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(Query)</td>
+<td>Query</td>
+<td></td>
+<td></td>
+<td>N/A</td>
+<td></td>
+</tr>
+<tr>
+<td>(Response)</td>
+<td>Response</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Question 2C-1: In the DNS packets you captured, what port number was used as the destination port for DNS queries, and what transport protocol (TCP or UDP) was used? Why is this protocol typically chosen for DNS?</p>
+<p>Question 2C-2: Each DNS query and response pair shares a "Transaction ID" field. What is the purpose of this identifier? What would happen if two DNS queries were outstanding simultaneously and there were no transaction IDs?</p>
+<hr />
+<h3>Part 2D: Wireshark Display Filter Practice</h3>
+<p>Write the correct Wireshark display filter for each of the following requirements. Do not run these — write them as answers.</p>
+<p>Question 2D-1: Show only traffic where the source OR destination IP is 192.168.1.50.</p>
+<p>Question 2D-2: Show only TCP traffic on port 443 (HTTPS).</p>
+<p>Question 2D-3: Show only ICMP packets (ping traffic).</p>
+<p>Question 2D-4: Show only DNS response packets (not queries).</p>
+<p>Question 2D-5: Show traffic between 192.168.1.10 and 10.0.0.1 only.</p>
+<hr />
+<h3>Deliverables</h3>
+<p>Submit the following in a single PDF or Word document:</p>
+<ol>
+<li>
+<p>Part 1 Result Tables — All four tables (ping, traceroute, nslookup, netstat) with all columns filled from your actual command output.</p>
+</li>
+<li>
+<p>Part 1 Written Responses — Answers to Questions 1A-1 through 1D-3 in complete sentences (11 questions total). Include at least one screenshot of actual command output for each Part 1 section.</p>
+</li>
+<li>
+<p>Part 2 Capture Tables — Completed handshake table (Part 2B) and DNS capture table (Part 2C).</p>
+</li>
+<li>
+<p>Part 2 Wireshark Screenshots — One screenshot showing the TCP three-way handshake with the packet detail pane open on the SYN packet. One screenshot showing a DNS query and response pair.</p>
+</li>
+<li>
+<p>Part 2 Written Responses — Answers to Questions 2C-1, 2C-2, and all five filter-writing questions (2D-1 through 2D-5).</p>
+</li>
+</ol>
+<hr />
+<h3>Grading Rubric (100 Points Total)</h3>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Points</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Part 1A — Ping table complete with all three targets</td>
+<td>6</td>
+</tr>
+<tr>
+<td>Part 1A — Questions 1A-1 through 1A-3 correct</td>
+<td>9</td>
+</tr>
+<tr>
+<td>Part 1B — Traceroute table with RTT jump data</td>
+<td>6</td>
+</tr>
+<tr>
+<td>Part 1B — Questions 1B-1 through 1B-3 correct</td>
+<td>9</td>
+</tr>
+<tr>
+<td>Part 1C — nslookup table complete</td>
+<td>5</td>
+</tr>
+<tr>
+<td>Part 1C — Questions 1C-1 through 1C-3 correct</td>
+<td>9</td>
+</tr>
+<tr>
+<td>Part 1D — netstat table with LISTENING and ESTABLISHED entries</td>
+<td>5</td>
+</tr>
+<tr>
+<td>Part 1D — Questions 1D-1 through 1D-3 correct</td>
+<td>9</td>
+</tr>
+<tr>
+<td>Part 2B — Handshake table with correct frame/flag data</td>
+<td>8</td>
+</tr>
+<tr>
+<td>Part 2B — Wireshark screenshot showing three-way handshake</td>
+<td>5</td>
+</tr>
+<tr>
+<td>Part 2C — DNS table with query and response pair</td>
+<td>8</td>
+</tr>
+<tr>
+<td>Part 2C — Questions 2C-1 and 2C-2 correct</td>
+<td>6</td>
+</tr>
+<tr>
+<td>Part 2D — Display filter questions 2D-1 through 2D-5</td>
+<td>10</td>
+</tr>
+<tr>
+<td>Screenshots — One per Part 1 section (4 total)</td>
+<td>5</td>
+</tr>
+<tr>
+<td>Total</td>
+<td>100</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>Submission Instructions</h3>
+<p>Save your document as: Lab07_Firstname_Lastname.pdf</p>
+<p>Submit to the Module 07 Lab assignment in the course LMS before the posted deadline. Late submissions are subject to the course late policy.</p>
+<hr />
+<p>CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash</p>
+</body>
+</html>

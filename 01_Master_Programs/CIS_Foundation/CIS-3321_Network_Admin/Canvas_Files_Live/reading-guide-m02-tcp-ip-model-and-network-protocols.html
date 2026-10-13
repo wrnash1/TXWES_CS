@@ -1,0 +1,433 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Reading Guide (M02): TCP/IP Model and Network Protocols</title>
+</head>
+<body>
+<h2>Reading Guide (M02): TCP/IP Model and Network Protocols</h2>
+<h1>Reading Guide: Module 02 – TCP/IP Model and Network Protocols</h1>
+<h2>CIS-3321 Network Administration | CompTIA Network+ (N10-009)</h2>
+<h2>Texas Wesleyan University | Professor Nash</h2>
+<hr />
+<h3>Introduction</h3>
+<p>Module 02 bridges the OSI model from Module 01 to the practical TCP/IP protocol suite that powers every modern network. The TCP/IP model is what actually runs on the internet. CompTIA Network+ N10-009 expects you to map protocols to their correct layers, know their port numbers, distinguish TCP from UDP, and understand how key protocols like DHCP and DNS operate. Port numbers are among the most directly tested facts on the entire exam. Invest the time to memorize every entry in the tables below.</p>
+<hr />
+<h3>1. Core Vocabulary</h3>
+<p><strong>TCP/IP Model</strong> — A four-layer practical networking model describing how data is transmitted across the internet. Layers (bottom to top): Network Access, Internet, Transport, Application.</p>
+<p><strong>TCP (Transmission Control Protocol)</strong> — A connection-oriented, reliable Layer 4 protocol that guarantees delivery through acknowledgements, sequencing, and retransmission. Establishes connections with a three-way handshake: SYN → SYN-ACK → ACK.</p>
+<p><strong>UDP (User Datagram Protocol)</strong> — A connectionless, unreliable Layer 4 protocol with no handshake and no guaranteed delivery. Used where speed outweighs reliability (VoIP, DNS queries, DHCP, video streaming).</p>
+<p><strong>ICMP (Internet Control Message Protocol)</strong> — A Layer 3 Internet-layer protocol for error reporting and diagnostics. Used by ping (Echo Request/Reply) and traceroute (Time Exceeded). Has no port number.</p>
+<p><strong>HTTP (HyperText Transfer Protocol)</strong> — Application-layer protocol for web browsing over port 80, TCP. Transmits data in cleartext.</p>
+<p><strong>HTTPS (HTTP Secure)</strong> — HTTP encrypted with TLS/SSL over port 443, TCP. The standard for all modern web traffic.</p>
+<p><strong>FTP (File Transfer Protocol)</strong> — File transfer protocol using port 21 (control) and port 20 (active data transfer). Credentials are sent in cleartext; SFTP (port 22) or FTPS are secure replacements.</p>
+<p><strong>SSH (Secure Shell)</strong> — Encrypted remote terminal access over port 22, TCP. Replaces Telnet (port 23, cleartext).</p>
+<p><strong>Telnet</strong> — Unencrypted remote terminal access over port 23, TCP. Legacy only; replace with SSH in all modern environments.</p>
+<p><strong>SMTP (Simple Mail Transfer Protocol)</strong> — Email sending and relay protocol over port 25, TCP. Port 587 for authenticated client submission.</p>
+<p><strong>POP3 (Post Office Protocol v3)</strong> — Downloads email to client and deletes from server. Port 110, TCP. Secure version POP3S uses port 995.</p>
+<p><strong>IMAP (Internet Message Access Protocol)</strong> — Accesses email on the server without deleting it. Port 143, TCP. Enables multi-device access. Secure IMAP uses port 993.</p>
+<p><strong>DNS (Domain Name System)</strong> — Resolves hostnames to IP addresses. Port 53 — UDP for queries, TCP for zone transfers.</p>
+<p><strong>DHCP (Dynamic Host Configuration Protocol)</strong> — Automatically assigns IP address, subnet mask, gateway, and DNS to clients. Port 67 (server), port 68 (client), UDP. Process: DORA.</p>
+<p><strong>SNMP (Simple Network Management Protocol)</strong> — Monitors and manages network devices. Port 161 (queries), port 162 (traps), UDP. SNMPv3 adds authentication and encryption.</p>
+<p><strong>RDP (Remote Desktop Protocol)</strong> — Microsoft graphical remote desktop. Port 3389, TCP.</p>
+<p><strong>NTP (Network Time Protocol)</strong> — Clock synchronization across network devices. Port 123, UDP.</p>
+<p><strong>LDAP (Lightweight Directory Access Protocol)</strong> — Directory service queries. Port 389, TCP. Secure LDAPS uses port 636.</p>
+<p><strong>TTYL (Time to Live)</strong> — An IP header field specifying the maximum number of router hops a packet may traverse. Decremented by 1 at each router. When TTL reaches 0, the packet is discarded and an ICMP Time Exceeded message is returned.</p>
+<p><strong>DORA</strong> — The DHCP four-step process: Discover, Offer, Request, Acknowledge.</p>
+<p><strong>Three-Way Handshake</strong> — TCP connection establishment: SYN → SYN-ACK → ACK.</p>
+<p><strong>Well-Known Ports</strong> — Port numbers 0–1,023 reserved for standard services assigned by IANA.</p>
+<p><strong>Ephemeral Ports</strong> — Temporary high-numbered ports (1,024–65,535) assigned dynamically by the OS for client-side connections.</p>
+<hr />
+<h3>2. TCP/IP Model vs. OSI Model Mapping</h3>
+<table>
+<thead>
+<tr>
+<th>TCP/IP Layer</th>
+<th>OSI Layers</th>
+<th>Key Protocols and Technologies</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Application</td>
+<td>5, 6, 7</td>
+<td>HTTP, HTTPS, FTP, SSH, Telnet, SMTP, POP3, IMAP, DNS, DHCP, SNMP, RDP, NTP, LDAP</td>
+</tr>
+<tr>
+<td>Transport</td>
+<td>4</td>
+<td>TCP, UDP</td>
+</tr>
+<tr>
+<td>Internet</td>
+<td>3</td>
+<td>IP, ICMP, ARP (logical), OSPF, BGP</td>
+</tr>
+<tr>
+<td>Network Access</td>
+<td>1, 2</td>
+<td>Ethernet (802.3), Wi-Fi (802.11), PPP, ARP (physical)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>3. Comprehensive Port Number Reference Table</h3>
+<p>Memorize every row in this table. Port number questions appear frequently on the Network+ exam.</p>
+<table>
+<thead>
+<tr>
+<th>Port</th>
+<th>Protocol</th>
+<th>Transport</th>
+<th>Direction / Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>20</td>
+<td>FTP-Data</td>
+<td>TCP</td>
+<td>FTP data channel (active mode)</td>
+</tr>
+<tr>
+<td>21</td>
+<td>FTP-Control</td>
+<td>TCP</td>
+<td>FTP command/control channel</td>
+</tr>
+<tr>
+<td>22</td>
+<td>SSH / SFTP</td>
+<td>TCP</td>
+<td>Encrypted terminal and file transfer</td>
+</tr>
+<tr>
+<td>23</td>
+<td>Telnet</td>
+<td>TCP</td>
+<td>Unencrypted terminal — legacy, replace with SSH</td>
+</tr>
+<tr>
+<td>25</td>
+<td>SMTP</td>
+<td>TCP</td>
+<td>Email sending (server-to-server relay)</td>
+</tr>
+<tr>
+<td>53</td>
+<td>DNS</td>
+<td>UDP/TCP</td>
+<td>UDP for queries; TCP for zone transfers</td>
+</tr>
+<tr>
+<td>67</td>
+<td>DHCP Server</td>
+<td>UDP</td>
+<td>Server listens on 67, receives client requests</td>
+</tr>
+<tr>
+<td>68</td>
+<td>DHCP Client</td>
+<td>UDP</td>
+<td>Client listens on 68, receives server responses</td>
+</tr>
+<tr>
+<td>80</td>
+<td>HTTP</td>
+<td>TCP</td>
+<td>Unencrypted web traffic</td>
+</tr>
+<tr>
+<td>110</td>
+<td>POP3</td>
+<td>TCP</td>
+<td>Email download (deletes from server)</td>
+</tr>
+<tr>
+<td>123</td>
+<td>NTP</td>
+<td>UDP</td>
+<td>Clock synchronization</td>
+</tr>
+<tr>
+<td>143</td>
+<td>IMAP</td>
+<td>TCP</td>
+<td>Email access (keeps mail on server)</td>
+</tr>
+<tr>
+<td>161</td>
+<td>SNMP</td>
+<td>UDP</td>
+<td>Network device polling/queries</td>
+</tr>
+<tr>
+<td>162</td>
+<td>SNMP Trap</td>
+<td>UDP</td>
+<td>Unsolicited alerts from managed devices</td>
+</tr>
+<tr>
+<td>389</td>
+<td>LDAP</td>
+<td>TCP</td>
+<td>Directory service queries</td>
+</tr>
+<tr>
+<td>443</td>
+<td>HTTPS</td>
+<td>TCP</td>
+<td>Encrypted web traffic (HTTP over TLS)</td>
+</tr>
+<tr>
+<td>636</td>
+<td>LDAPS</td>
+<td>TCP</td>
+<td>LDAP over TLS (encrypted directory service)</td>
+</tr>
+<tr>
+<td>993</td>
+<td>IMAPS</td>
+<td>TCP</td>
+<td>IMAP over TLS (encrypted email access)</td>
+</tr>
+<tr>
+<td>995</td>
+<td>POP3S</td>
+<td>TCP</td>
+<td>POP3 over TLS (encrypted email download)</td>
+</tr>
+<tr>
+<td>3389</td>
+<td>RDP</td>
+<td>TCP</td>
+<td>Windows Remote Desktop Protocol</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>4. TCP vs. UDP Comparison Table</h3>
+<table>
+<thead>
+<tr>
+<th>Characteristic</th>
+<th>TCP</th>
+<th>UDP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Connection model</td>
+<td>Connection-oriented</td>
+<td>Connectionless</td>
+</tr>
+<tr>
+<td>Handshake</td>
+<td>Three-way (SYN/SYN-ACK/ACK)</td>
+<td>None</td>
+</tr>
+<tr>
+<td>Delivery guarantee</td>
+<td>Yes (acknowledgements + retry)</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Ordering</td>
+<td>Sequence numbers maintained</td>
+<td>Not guaranteed</td>
+</tr>
+<tr>
+<td>Error correction</td>
+<td>Retransmission on loss</td>
+<td>None built in</td>
+</tr>
+<tr>
+<td>Speed</td>
+<td>Slower (overhead for reliability)</td>
+<td>Faster (minimal overhead)</td>
+</tr>
+<tr>
+<td>Use cases</td>
+<td>HTTP, HTTPS, FTP, SMTP, SSH, RDP</td>
+<td>DNS queries, DHCP, VoIP, streaming, gaming</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>5. DHCP DORA Sequence Detail</h3>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Message</th>
+<th>Source</th>
+<th>Destination</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 Discover</td>
+<td>DHCPDISCOVER</td>
+<td>Client</td>
+<td>255.255.255.255 (broadcast)</td>
+<td>Client has no IP; broadcasts to find server</td>
+</tr>
+<tr>
+<td>2 Offer</td>
+<td>DHCPOFFER</td>
+<td>Server</td>
+<td>Client (broadcast or unicast)</td>
+<td>Server proposes IP, mask, gateway, DNS, lease</td>
+</tr>
+<tr>
+<td>3 Request</td>
+<td>DHCPREQUEST</td>
+<td>Client</td>
+<td>255.255.255.255 (broadcast)</td>
+<td>Client formally requests offered IP</td>
+</tr>
+<tr>
+<td>4 Acknowledge</td>
+<td>DHCPACK</td>
+<td>Server</td>
+<td>Client</td>
+<td>Server confirms lease; client configures IP</td>
+</tr>
+</tbody>
+</table>
+<p>DHCP lease renewal: Client attempts renewal at 50% of lease duration, then again at 87.5%. If both fail, the lease expires and the DORA process restarts.</p>
+<hr />
+<h3>6. DNS Record Types Reference Table</h3>
+<table>
+<thead>
+<tr>
+<th>Record Type</th>
+<th>Purpose</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>Maps hostname to IPv4 address</td>
+<td>www.example.com → 93.184.216.34</td>
+</tr>
+<tr>
+<td>AAAA</td>
+<td>Maps hostname to IPv6 address</td>
+<td>www.example.com → 2606:2800:220:1:248:1893:25c8:1946</td>
+</tr>
+<tr>
+<td>MX</td>
+<td>Identifies mail server for a domain</td>
+<td>example.com mail handled by mail.example.com</td>
+</tr>
+<tr>
+<td>CNAME</td>
+<td>Canonical name — alias pointing to another hostname</td>
+<td>shop.example.com → www.example.com</td>
+</tr>
+<tr>
+<td>PTR</td>
+<td>Reverse lookup — IP address to hostname</td>
+<td>93.184.216.34 → www.example.com</td>
+</tr>
+<tr>
+<td>NS</td>
+<td>Identifies authoritative name servers for a zone</td>
+<td>example.com → ns1.example.com</td>
+</tr>
+<tr>
+<td>SOA</td>
+<td>Start of Authority — zone admin information</td>
+<td>Serial, refresh, retry, expire parameters</td>
+</tr>
+<tr>
+<td>TXT</td>
+<td>Text records — used for SPF, DKIM, domain verification</td>
+<td>"v=spf1 include:example.com ~all"</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>7. IP Header Key Fields</h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Size</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Version</td>
+<td>4 bits</td>
+<td>IP version (4 for IPv4, 6 for IPv6)</td>
+</tr>
+<tr>
+<td>IHL</td>
+<td>4 bits</td>
+<td>Internet Header Length — number of 32-bit words in the header</td>
+</tr>
+<tr>
+<td>Total Length</td>
+<td>16 bits</td>
+<td>Total packet size including header and data</td>
+</tr>
+<tr>
+<td>TTL</td>
+<td>8 bits</td>
+<td>Maximum hops; decremented by 1 at each router; packet dropped at 0</td>
+</tr>
+<tr>
+<td>Protocol</td>
+<td>8 bits</td>
+<td>Layer 4 protocol: 1=ICMP, 6=TCP, 17=UDP</td>
+</tr>
+<tr>
+<td>Source Address</td>
+<td>32 bits</td>
+<td>Sender's IP address</td>
+</tr>
+<tr>
+<td>Destination Address</td>
+<td>32 bits</td>
+<td>Receiver's IP address</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>8. Certification Exam Tips</h3>
+<p><strong>Tip 1:</strong> Port numbers are tested constantly. The exam may give a scenario and ask which port is involved, or show a port number and ask you to identify the protocol. Both directions require memorization.</p>
+<p><strong>Tip 2:</strong> TCP vs. UDP decision rule: "reliability," "guaranteed delivery," "connection-oriented," and "acknowledgements" all point to TCP. "Speed," "real-time," "low overhead," and "streaming" point to UDP.</p>
+<p><strong>Tip 3:</strong> DNS is unique — it uses both UDP (queries) and TCP (zone transfers). The exam specifically tests this distinction.</p>
+<p><strong>Tip 4:</strong> The DHCP DORA sequence is a guaranteed exam topic. Remember that Discover and Request are broadcasts; Offer and Acknowledge can be unicast.</p>
+<p><strong>Tip 5:</strong> The exam describes Telnet as the cleartext management protocol on port 23. The correct secure replacement is always SSH on port 22.</p>
+<p><strong>Tip 6:</strong> The "secure" version rule: add TLS to the protocol name (HTTPS, FTPS, LDAPS, IMAPS, POP3S) and the port number shifts. HTTP 80 becomes HTTPS 443. IMAP 143 becomes IMAPS 993. POP3 110 becomes POP3S 995. LDAP 389 becomes LDAPS 636.</p>
+<p><strong>Tip 7:</strong> ICMP has no port number and is Protocol 1 in the IP header. The exam will never associate ping or traceroute with a port number.</p>
+<p><strong>Tip 8:</strong> TTL field exhaustion (TTL = 0) produces an ICMP Type 11 Time Exceeded message. This is the mechanism traceroute exploits to discover each hop.</p>
+<hr />
+<h3>9. Required Reading and Viewing</h3>
+<p><strong>Required Reading:</strong> Computer Networking: Principles, Protocols and Practice — read the sections on Application Layer Protocols and the TCP/IP model. Focus on the TCP/UDP comparison and the DHCP exchange.</p>
+<p><strong>Required Viewing:</strong> Professor Messer's Network+ N10-009 video series — watch the segments on network protocols, TCP and UDP, DHCP, and DNS. Available free at professormesser.com.</p>
+<p><strong>Supplemental Reference:</strong> CompTIA official N10-009 exam objectives — available at comptia.org. Review Domain 1.0 Networking Concepts for the complete list of protocol and port objectives.</p>
+<hr />
+<h3>10. Study Checklist</h3>
+<ul>
+<li>[ ] Memorize all port numbers in the reference table in Section 3 — both number and protocol name</li>
+<li>[ ] Be able to identify for each protocol whether it uses TCP, UDP, or both, and explain why</li>
+<li>[ ] Recite the DHCP DORA sequence from memory with source, destination, and purpose of each step</li>
+<li>[ ] Identify all DNS record types and their purposes from memory</li>
+<li>[ ] Explain the TCP three-way handshake in detail including what happens if the SYN-ACK is never received</li>
+<li>[ ] Explain why ICMP has no port number</li>
+<li>[ ] Watch Professor Messer's protocol and TCP/UDP videos at professormesser.com</li>
+<li>[ ] Read the application-layer protocols chapter in the OER textbook</li>
+<li>[ ] Complete the Lab 02 activity using nslookup and netstat</li>
+<li>[ ] Post your Module 02 Discussion initial response by Wednesday at 11:59 PM</li>
+<li>[ ] Complete the Module 02 Quiz</li>
+</ul>
+<hr />
+<p><em>CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash</em></p>
+</body>
+</html>

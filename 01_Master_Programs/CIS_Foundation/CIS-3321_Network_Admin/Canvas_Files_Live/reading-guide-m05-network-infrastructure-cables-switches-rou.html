@@ -1,0 +1,352 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Reading Guide (M05): Network Infrastructure: Cables, Switches, Routers</title>
+</head>
+<body>
+<h2>Reading Guide (M05): Network Infrastructure: Cables, Switches, Routers</h2>
+<h1>Reading Guide: Module 05 – Network Infrastructure: Cables, Switches, Routers</h1>
+<h2>CIS-3321 Network Administration | CompTIA Network+ (N10-009)</h2>
+<h2>Texas Wesleyan University | Professor Nash</h2>
+<hr />
+<h3>Introduction</h3>
+<p>Module 05 covers the physical and data-link layer infrastructure that makes all higher-layer networking possible. The CompTIA Network+ exam tests cabling standards extensively — in both theoretical questions about specifications and practical troubleshooting scenarios where a symptom must be matched to a cable or device limitation. You must also understand how switches build MAC address tables, what happens to unknown unicast frames, and how routers differ from switches at the broadcast domain boundary.</p>
+<hr />
+<h3>1. Core Vocabulary</h3>
+<p><strong>Twisted Pair Cable</strong> — Copper cable using pairs of wires twisted together to reduce electromagnetic interference (EMI). Used for all standard Ethernet connections.</p>
+<p><strong>Cat5e</strong> — Enhanced Category 5. Maximum 1 Gbps at 100 meters. Minimum recommended standard for new installations.</p>
+<p><strong>Cat6</strong> — Category 6. Maximum 1 Gbps at 100 m or 10 Gbps at 55 m. Includes a plastic separator (spline) between pairs. Standard for current enterprise deployments.</p>
+<p><strong>Cat6a</strong> — Augmented Category 6. Maximum 10 Gbps at 100 m. Eliminates alien crosstalk. Required for 10GBase-T at full distance. Thicker and less flexible than Cat6.</p>
+<p><strong>Cat8</strong> — Supports 25–40 Gbps at 30 m maximum. Primarily for data center short-run connections.</p>
+<p><strong>Single-Mode Fiber (SMF)</strong> — Narrow core (8–10 µm) carrying a single light mode. Long distance (up to 100+ km). Uses laser light sources. Higher cost.</p>
+<p><strong>Multi-Mode Fiber (MMF)</strong> — Wider core (50 or 62.5 µm) carrying multiple light modes. Shorter distances (up to 550 m for OM3/OM4). Uses LED or VCSEL. Lower cost for short runs.</p>
+<p><strong>OM Rating</strong> — Multi-mode fiber bandwidth/distance classification: OM1 (62.5 µm), OM2 (50 µm), OM3 (50 µm, 300 m for 10GbE), OM4 (50 µm, 400 m for 10GbE), OM5 (50 µm, 100 Gbps capable).</p>
+<p><strong>Straight-Through Cable</strong> — Both ends wired with the same standard (T568A–T568A or T568B–T568B). Connects unlike devices (PC to switch, switch to router).</p>
+<p><strong>Crossover Cable</strong> — One end T568A, one end T568B. Historically connects like devices (switch to switch, PC to PC). Obsolete due to Auto-MDIX.</p>
+<p><strong>Auto-MDIX</strong> — Automatic Medium-Dependent Interface Crossover. Switch/NIC feature that automatically detects whether a straight-through or crossover cable is connected and adjusts pin assignment accordingly.</p>
+<p><strong>Rollover/Console Cable</strong> — Flat cable (often blue) with reverse pin mapping. RJ-45 to DB9/USB. Used for Cisco device initial CLI configuration via console port.</p>
+<p><strong>Hub</strong> — Layer 1 repeater. Floods all incoming signals to all ports. Single collision domain. Obsolete.</p>
+<p><strong>Switch</strong> — Layer 2 device. Forwards frames based on destination MAC address. Builds MAC address table (CAM table). Separate collision domain per port. Supports full duplex.</p>
+<p><strong>CAM Table</strong> — Content Addressable Memory table in a switch. Maps MAC addresses to physical ports. Built dynamically by reading source MAC addresses. Entries age out after timeout period (default 300 seconds).</p>
+<p><strong>Unknown Unicast Flooding</strong> — Behavior when a switch receives a frame with a destination MAC address not in the CAM table. Switch floods the frame out all ports except the source port.</p>
+<p><strong>Collision Domain</strong> — A network segment where only one device can transmit at a time. Hub = one collision domain for all ports. Switch = one collision domain per port.</p>
+<p><strong>Broadcast Domain</strong> — A group of devices that receive each other's broadcasts. Switches extend broadcast domains (all ports in the same VLAN = same broadcast domain). Routers separate broadcast domains.</p>
+<p><strong>Router</strong> — Layer 3 device that forwards packets between different IP subnets using a routing table. Each interface is a different subnet and broadcast domain.</p>
+<p><strong>Layer 3 Switch (Multilayer Switch)</strong> — Switch that performs both Layer 2 switching and Layer 3 inter-VLAN routing in hardware. Uses Switched Virtual Interfaces (SVIs) as VLAN gateways.</p>
+<p><strong>SVI (Switched Virtual Interface)</strong> — A logical Layer 3 interface on a Layer 3 switch assigned to a VLAN. Acts as the default gateway for hosts in that VLAN.</p>
+<p><strong>PoE (Power over Ethernet)</strong> — Delivers DC power to remote devices over Cat5e/Cat6 cables. Eliminates need for separate power adapters.</p>
+<p><strong>IEEE 802.3af</strong> — PoE standard. Up to 15.4 watts per port.</p>
+<p><strong>IEEE 802.3at</strong> — PoE+ standard. Up to 30 watts per port.</p>
+<p><strong>IEEE 802.3bt</strong> — PoE++ standard. Up to 60 W (Type 3) or 100 W (Type 4) per port.</p>
+<p><strong>SFP (Small Form-factor Pluggable)</strong> — Hot-swappable transceiver module for switch/router ports. Supports different media types (copper, SMF, MMF) and speeds (1 Gbps). SFP+ supports 10 Gbps.</p>
+<p><strong>GBIC (Gigabit Interface Converter)</strong> — Older, larger hot-swappable transceiver. Replaced by SFP in modern equipment.</p>
+<hr />
+<h3>2. Copper Cable Category Comparison Table</h3>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Max Speed</th>
+<th>Max Distance</th>
+<th>10 Gbps Distance</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cat3</td>
+<td>10 Mbps</td>
+<td>100 m</td>
+<td>Not supported</td>
+<td>Legacy voice-grade; do not use for data</td>
+</tr>
+<tr>
+<td>Cat5</td>
+<td>100 Mbps</td>
+<td>100 m</td>
+<td>Not supported</td>
+<td>Obsolete; replaced by Cat5e</td>
+</tr>
+<tr>
+<td>Cat5e</td>
+<td>1 Gbps</td>
+<td>100 m</td>
+<td>Not supported</td>
+<td>Minimum for new installations</td>
+</tr>
+<tr>
+<td>Cat6</td>
+<td>1 Gbps</td>
+<td>100 m</td>
+<td>55 m</td>
+<td>Standard enterprise; spline separator</td>
+</tr>
+<tr>
+<td>Cat6a</td>
+<td>10 Gbps</td>
+<td>100 m</td>
+<td>100 m</td>
+<td>Full 10GbE at distance; required for 10GBase-T</td>
+</tr>
+<tr>
+<td>Cat7</td>
+<td>10 Gbps</td>
+<td>100 m</td>
+<td>100 m</td>
+<td>Uses GG45/TERA connectors; rarely deployed</td>
+</tr>
+<tr>
+<td>Cat8</td>
+<td>25–40 Gbps</td>
+<td>30 m</td>
+<td>30 m</td>
+<td>Data center rack cabling only</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>3. Fiber Optic Comparison Table</h3>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Core Diameter</th>
+<th>Light Source</th>
+<th>Max Distance</th>
+<th>Typical Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SMF OS1</td>
+<td>8–10 µm</td>
+<td>Laser</td>
+<td>Up to 10 km</td>
+<td>Campus/WAN backbone</td>
+</tr>
+<tr>
+<td>SMF OS2</td>
+<td>8–10 µm</td>
+<td>Laser</td>
+<td>Up to 200 km</td>
+<td>Long-haul/metro fiber</td>
+</tr>
+<tr>
+<td>MMF OM1</td>
+<td>62.5 µm</td>
+<td>LED</td>
+<td>33 m (10GbE)</td>
+<td>Legacy; not recommended for new work</td>
+</tr>
+<tr>
+<td>MMF OM2</td>
+<td>50 µm</td>
+<td>LED</td>
+<td>82 m (10GbE)</td>
+<td>Legacy</td>
+</tr>
+<tr>
+<td>MMF OM3</td>
+<td>50 µm</td>
+<td>VCSEL</td>
+<td>300 m (10GbE)</td>
+<td>Current standard short-run</td>
+</tr>
+<tr>
+<td>MMF OM4</td>
+<td>50 µm</td>
+<td>VCSEL</td>
+<td>400 m (10GbE)</td>
+<td>Enhanced short-run</td>
+</tr>
+<tr>
+<td>MMF OM5</td>
+<td>50 µm</td>
+<td>VCSEL</td>
+<td>150 m (100 Gbps)</td>
+<td>Data center 100GbE</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>4. Switch MAC Address Learning Process</h3>
+<p>When a frame arrives at a switch:</p>
+<ol>
+<li>The switch reads the source MAC address from the frame header.</li>
+<li>If the source MAC is not in the CAM table, the switch adds it, associating it with the incoming port.</li>
+<li>The switch reads the destination MAC address.</li>
+<li>If the destination MAC is in the CAM table (known unicast): forward the frame only to the port associated with that MAC address.</li>
+<li>If the destination MAC is not in the CAM table (unknown unicast): flood the frame out all ports except the source port.</li>
+<li>If the destination is FF:FF:FF:FF:FF:FF (broadcast): flood out all ports except source port.</li>
+<li>CAM table entries age out after 300 seconds of inactivity (default). The next frame from that device triggers re-learning.</li>
+</ol>
+<hr />
+<h3>5. Hub vs. Switch vs. Router Comparison</h3>
+<table>
+<thead>
+<tr>
+<th>Characteristic</th>
+<th>Hub (Layer 1)</th>
+<th>Switch (Layer 2)</th>
+<th>Router (Layer 3)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OSI Layer</td>
+<td>1 (Physical)</td>
+<td>2 (Data Link)</td>
+<td>3 (Network)</td>
+</tr>
+<tr>
+<td>Forwarding basis</td>
+<td>Repeats all signals</td>
+<td>Destination MAC address</td>
+<td>Destination IP address</td>
+</tr>
+<tr>
+<td>Collision domains</td>
+<td>1 (shared)</td>
+<td>1 per port</td>
+<td>1 per interface</td>
+</tr>
+<tr>
+<td>Broadcast domains</td>
+<td>1</td>
+<td>1 per VLAN</td>
+<td>1 per interface (separate)</td>
+</tr>
+<tr>
+<td>Intelligence</td>
+<td>None</td>
+<td>MAC table (CAM)</td>
+<td>Routing table</td>
+</tr>
+<tr>
+<td>Unknown unicast</td>
+<td>Floods all ports</td>
+<td>Floods all except source</td>
+<td>Does not forward (drops or routes)</td>
+</tr>
+<tr>
+<td>Full duplex</td>
+<td>No (CSMA/CD required)</td>
+<td>Yes (per port)</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Modern use</td>
+<td>Obsolete</td>
+<td>Universal LAN device</td>
+<td>WAN/inter-subnet routing</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>6. PoE Standards Reference Table</h3>
+<table>
+<thead>
+<tr>
+<th>Standard</th>
+<th>Max Power per Port</th>
+<th>Common Applications</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>802.3af (PoE)</td>
+<td>15.4 W</td>
+<td>IP phones, single-radio APs, basic IP cameras</td>
+</tr>
+<tr>
+<td>802.3at (PoE+)</td>
+<td>30 W</td>
+<td>Dual-radio APs, PTZ cameras, video phones</td>
+</tr>
+<tr>
+<td>802.3bt Type 3 (UPoE)</td>
+<td>60 W</td>
+<td>Multi-radio APs, building automation</td>
+</tr>
+<tr>
+<td>802.3bt Type 4 (UPoE+)</td>
+<td>100 W</td>
+<td>Laptops, advanced devices</td>
+</tr>
+</tbody>
+</table>
+<p>PoE requires a PoE-capable switch (PSE — Power Sourcing Equipment) or a PoE injector (midspan device). The powered device (PD) negotiates power level using LLDP-MED or Cisco Discovery Protocol.</p>
+<hr />
+<h3>7. Fiber Connector Types Reference</h3>
+<table>
+<thead>
+<tr>
+<th>Connector</th>
+<th>Description</th>
+<th>Common Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LC</td>
+<td>Small form factor, latch mechanism</td>
+<td>Enterprise switch SFP ports; most common</td>
+</tr>
+<tr>
+<td>SC</td>
+<td>Square connector, push-pull</td>
+<td>Older infrastructure</td>
+</tr>
+<tr>
+<td>ST</td>
+<td>Bayonet twist-lock connector</td>
+<td>Legacy installations</td>
+</tr>
+<tr>
+<td>MTP/MPO</td>
+<td>Multi-fiber connector (12 or 24 fibers)</td>
+<td>Data center trunk cables</td>
+</tr>
+<tr>
+<td>FC</td>
+<td>Threaded connector</td>
+<td>Telecom and test equipment</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>8. Certification Exam Tips</h3>
+<p><strong>Tip 1:</strong> The 100-meter maximum for twisted-pair Ethernet applies to all categories including Cat6a. Exceeding 100 meters causes signal attenuation. The solution is always to add a switch at or before 100 meters.</p>
+<p><strong>Tip 2:</strong> Cat6 supports 10 Gbps only at 55 meters, not 100 meters, due to alien crosstalk. Cat6a eliminates alien crosstalk and achieves 10 Gbps at the full 100-meter distance.</p>
+<p><strong>Tip 3:</strong> SMF for long distances (campus backbone, WAN), MMF for short distances (building runs, data center). If the exam scenario involves anything over 1 km, the answer is always single-mode fiber.</p>
+<p><strong>Tip 4:</strong> A switch performing "unknown unicast flooding" is not a malfunction — it is normal behavior. Flooding occurs when the destination MAC is not in the CAM table. The switch learns the MAC after the destination device responds.</p>
+<p><strong>Tip 5:</strong> Hubs create one collision domain for all ports; switches create one collision domain per port. Switches (like hubs) extend one broadcast domain per VLAN. Only routers (or Layer 3 switches) create separate broadcast domains.</p>
+<p><strong>Tip 6:</strong> PoE wattage is critical. 802.3af = 15.4W for phones and basic APs. 802.3at = 30W for dual-radio APs and PTZ cameras. If the exam describes a high-power device (laptop, industrial sensor), 802.3bt is the answer.</p>
+<p><strong>Tip 7:</strong> Auto-MDIX eliminates the need to use a crossover cable for like-device connections in modern equipment. The exam still tests the concept of which cable type was required before Auto-MDIX, but in practice you will never need to carry crossover cables.</p>
+<p><strong>Tip 8:</strong> SFP modules allow a single switch port to support different media types (copper, MMF, SMF) and speeds without replacing the switch. This is the answer when the exam describes a need for media flexibility or a port type upgrade on existing hardware.</p>
+<hr />
+<h3>9. Required Reading and Viewing</h3>
+<p><strong>Required Reading:</strong> Computer Networking: Principles, Protocols and Practice — read the sections on network media, cables, and switching. Focus on the cable specifications and Layer 2 forwarding process.</p>
+<p><strong>Required Viewing:</strong> Professor Messer's Network+ N10-009 video series — watch the copper cabling, fiber optic, and networking devices segments. Available free at professormesser.com.</p>
+<p><strong>Supplemental Reference:</strong> CompTIA official N10-009 exam objectives at comptia.org — review Domain 2.0 Network Implementations and Domain 5.0 Network Troubleshooting for cabling and device objectives.</p>
+<hr />
+<h3>10. Study Checklist</h3>
+<ul>
+<li>[ ] Memorize the cable category comparison table — speeds and distances for Cat5e, Cat6, Cat6a</li>
+<li>[ ] Distinguish single-mode from multi-mode fiber by core size, light source, and maximum distance</li>
+<li>[ ] Explain how a switch builds its MAC address table and what triggers unknown unicast flooding</li>
+<li>[ ] Describe the difference between a collision domain and a broadcast domain</li>
+<li>[ ] Identify which device separates broadcast domains (router or Layer 3 switch)</li>
+<li>[ ] Know the three PoE standards (802.3af, 802.3at, 802.3bt) and their wattage limits</li>
+<li>[ ] Explain when a crossover cable was required and why Auto-MDIX makes it obsolete</li>
+<li>[ ] Describe the purpose of the rollover/console cable</li>
+<li>[ ] Watch Professor Messer's cabling and switching videos at professormesser.com</li>
+<li>[ ] Read the network media and switching chapters in the OER textbook</li>
+<li>[ ] Complete the Lab 05 Packet Tracer switching activity</li>
+<li>[ ] Post your Module 05 Discussion initial response by Wednesday at 11:59 PM</li>
+<li>[ ] Complete the Module 05 Quiz</li>
+</ul>
+<hr />
+<p><em>CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash</em></p>
+</body>
+</html>

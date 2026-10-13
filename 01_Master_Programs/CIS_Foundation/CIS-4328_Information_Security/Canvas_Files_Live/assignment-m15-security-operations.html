@@ -1,0 +1,232 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Assignment: Lab (M15): Security Operations</title>
+</head>
+<body>
+<h2>Lab (M15): Security Operations</h2>
+<h1>Lab Activity: Module 15 — Security Operations</h1>
+<h2>Course: CIS-4328 Information Security</h2>
+<h2>Texas Wesleyan University | Professor Nash</h2>
+<h2>Certification Alignment: CompTIA Security+ (SY0-701)</h2>
+<hr />
+<h3>Overview</h3>
+<p>This lab has two parts. Part A gives you hands-on experience with Nessus Essentials, the free student edition of the industry-standard vulnerability scanner. Part B walks you through evaluating a simulated patch prioritization scenario and drafting a SOC metrics report.</p>
+<p>Both parts reinforce the Security Operations domain (Domain 4, 28% of SY0-701) through direct practice with tools and workflows used in real SOC environments.</p>
+<p><strong>Estimated time:</strong> 90–120 minutes</p>
+<p><strong>Prerequisites:</strong> A Windows or Linux VM, or your local machine. Internet access to download Nessus Essentials.</p>
+<hr />
+<h3>Part A — Vulnerability Scanning with Nessus Essentials</h3>
+<h4>Step 1: Install Nessus Essentials</h4>
+<ol>
+<li>Navigate to <a href="https://www.tenable.com/products/nessus/nessus-essentials">https://www.tenable.com/products/nessus/nessus-essentials</a> and click "Download Nessus Essentials."</li>
+<li>Register with your student email to receive a free activation code.</li>
+<li>Download the installer appropriate for your operating system (Windows .msi or Linux .deb/.rpm).</li>
+<li>Run the installer. Nessus runs as a local web service; after installation, open a browser and navigate to <code>https://localhost:8834</code>.</li>
+<li>Accept the self-signed certificate warning and complete the setup wizard using your activation code.</li>
+<li>Allow Nessus to download and compile its plugins — this may take 15–30 minutes on first run.</li>
+</ol>
+<h4>Step 2: Configure a Basic Network Scan</h4>
+<ol>
+<li>In the Nessus interface, click <strong>New Scan</strong> in the top-right corner.</li>
+<li>Select <strong>Basic Network Scan</strong> from the scan templates.</li>
+<li>Give the scan a name: <code>Module 15 Lab Scan</code>.</li>
+<li>In the <strong>Targets</strong> field, enter <code>127.0.0.1</code> (your local machine) or the IP address of a VM you own.</li>
+</ol>
+<blockquote>
+<p><strong>Important:</strong> Only scan systems you own or have explicit written permission to scan. Scanning systems without authorization is illegal under the Computer Fraud and Abuse Act and similar laws worldwide.</p>
+</blockquote>
+<ol>
+<li>Leave all other settings at their defaults.</li>
+<li>Click <strong>Save</strong>, then click the play button to launch the scan.</li>
+<li>Wait for the scan to complete (typically 5–15 minutes for a single host).</li>
+</ol>
+<h4>Step 3: Review Scan Results</h4>
+<ol>
+<li>When the scan completes, click on the scan name to open the results.</li>
+<li>Review the <strong>Vulnerabilities</strong> tab. Note the breakdown by severity: Critical, High, Medium, Low, Info.</li>
+<li>Click on any Critical or High finding to expand the details. For each finding, record:
+   - The plugin name and ID
+   - The CVE number (if listed)
+   - The CVSS score
+   - The solution recommended by Nessus</li>
+</ol>
+<h4>Step 4: Run a Second Scan with Credentials</h4>
+<ol>
+<li>Create a second scan (New Scan → Basic Network Scan) targeting the same host.</li>
+<li>Name it <code>Module 15 Lab Scan — Credentialed</code>.</li>
+<li>Under the <strong>Credentials</strong> tab, add your local system credentials:
+   - For Windows: select <strong>Windows</strong> credential type and enter a local administrator username and password.
+   - For Linux: select <strong>SSH</strong> and enter a username and password or upload your SSH key.</li>
+<li>Save and run the scan.</li>
+<li>When complete, compare the number of findings in the credentialed scan versus the uncredentialed scan from Step 3.</li>
+</ol>
+<h4>Lab Questions — Part A</h4>
+<p>Answer these questions in your submission document.</p>
+<ol>
+<li>
+<p>How many total vulnerabilities did the uncredentialed scan find? How many did the credentialed scan find? What explains the difference?</p>
+</li>
+<li>
+<p>Select one Critical or High finding from either scan. In your own words, describe what the vulnerability is, what an attacker could do if they exploited it, and what remediation is recommended.</p>
+</li>
+<li>
+<p>If you found a Critical CVSS 9.8 vulnerability on a production web server that is internet-facing, what would be your recommended remediation timeline, and what compensating control would you deploy while waiting for the patch window?</p>
+</li>
+</ol>
+<hr />
+<h3>Part B — Patch Prioritization and SOC Metrics</h3>
+<h4>Scenario</h4>
+<p>You are a Tier 2 SOC analyst at a mid-size financial services company. Your vulnerability scanner has completed its weekly scan and produced the following findings summary for your environment of 340 systems:</p>
+<table>
+<thead>
+<tr>
+<th>Severity</th>
+<th>Count</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Critical</td>
+<td>8</td>
+<td>All 8 are on internet-facing web servers; 3 CVEs have published exploits</td>
+</tr>
+<tr>
+<td>High</td>
+<td>34</td>
+<td>Mix of internal servers and workstations</td>
+</tr>
+<tr>
+<td>Medium</td>
+<td>187</td>
+<td>Largely Windows workstations; many require scheduled reboots</td>
+</tr>
+<tr>
+<td>Low</td>
+<td>412</td>
+<td>Informational / configuration observations</td>
+</tr>
+</tbody>
+</table>
+<p>Your organization's patch SLA policy:</p>
+<ul>
+<li>Critical: remediate within 72 hours</li>
+<li>High: remediate within 14 days</li>
+<li>Medium: remediate within 30 days</li>
+<li>Low: remediate within 90 days</li>
+</ul>
+<p>This week's SOC performance data:</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>This Week</th>
+<th>Last Week</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Total alerts generated</td>
+<td>1,847</td>
+<td>1,923</td>
+</tr>
+<tr>
+<td>Alerts investigated</td>
+<td>412</td>
+<td>389</td>
+</tr>
+<tr>
+<td>True positives (confirmed incidents)</td>
+<td>23</td>
+<td>19</td>
+</tr>
+<tr>
+<td>False positives</td>
+<td>389</td>
+<td>370</td>
+</tr>
+<tr>
+<td>Mean Time to Detect (MTTD)</td>
+<td>4.2 hours</td>
+<td>5.1 hours</td>
+</tr>
+<tr>
+<td>Mean Time to Respond (MTTR)</td>
+<td>6.8 hours</td>
+<td>8.3 hours</td>
+</tr>
+</tbody>
+</table>
+<h4>Task 1: Patch Prioritization Memo</h4>
+<p>Write a short memo (150–200 words) addressed to your IT operations manager. The memo must:</p>
+<ul>
+<li>Identify which vulnerabilities require immediate action and explain why</li>
+<li>Recommend a specific remediation order and timeline</li>
+<li>Propose at least one compensating control for critical findings while patches are being tested</li>
+<li>Reference the organization's patch SLA policy</li>
+</ul>
+<h4>Task 2: SOC Metrics Analysis</h4>
+<p>Using the weekly metrics table above, answer the following questions.</p>
+<ol>
+<li>
+<p>Calculate the false positive rate for this week. Show your calculation. Is this rate acceptable? What threshold would you recommend?</p>
+</li>
+<li>
+<p>MTTD improved from 5.1 hours to 4.2 hours. Is this a positive or negative trend? What specific SIEM tuning action could further reduce MTTD?</p>
+</li>
+<li>
+<p>MTTR improved from 8.3 hours to 6.8 hours. What SOC capability — SIEM or SOAR — would be most effective at continuing to drive MTTR downward, and why?</p>
+</li>
+<li>
+<p>Only 412 of 1,847 alerts were investigated. What is this problem called? Describe two strategies a SOC manager could implement to address it without hiring additional analysts.</p>
+</li>
+</ol>
+<hr />
+<h3>Submission Requirements</h3>
+<p>Submit a single document containing:</p>
+<ul>
+<li><strong>Part A:</strong> Screenshots of your Nessus scan results (uncredentialed and credentialed), and written answers to the three Part A questions.</li>
+<li><strong>Part B:</strong> Your completed patch prioritization memo and written answers to the four metrics analysis questions.</li>
+</ul>
+<p>Format your submission with clear section headers. Label each answer with its question number.</p>
+<hr />
+<h3>Grading Rubric</h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Points</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nessus scan completed and screenshots provided</td>
+<td>20</td>
+</tr>
+<tr>
+<td>Uncredentialed vs. credentialed comparison explained correctly</td>
+<td>15</td>
+</tr>
+<tr>
+<td>Critical/High vulnerability analysis (Part A Q2)</td>
+<td>15</td>
+</tr>
+<tr>
+<td>Patch prioritization memo — accurate, complete, professional</td>
+<td>20</td>
+</tr>
+<tr>
+<td>SOC metrics analysis — correct calculations and sound reasoning</td>
+<td>30</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td><strong>100</strong></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p>End of Lab — Module 15</p>
+</body>
+</html>

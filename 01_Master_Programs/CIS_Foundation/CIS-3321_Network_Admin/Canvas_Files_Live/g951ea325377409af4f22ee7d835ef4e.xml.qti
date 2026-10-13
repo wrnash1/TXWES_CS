@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/profile/cc/ccv1p1/ccv1p1_qtiasiv1p2p1_v1p0.xsd">
+  <assessment ident="g951ea325377409af4f22ee7d835ef4e" title="Quiz (M05): Network Infrastructure: Cables, Switches, Routers">
+    <qtimetadata>
+      <qtimetadatafield>
+        <fieldlabel>cc_profile</fieldlabel>
+        <fieldentry>cc.exam.v0p1</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_assessmenttype</fieldlabel>
+        <fieldentry>Examination</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_scoretype</fieldlabel>
+        <fieldentry>Percentage</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>cc_maxattempts</fieldlabel>
+        <fieldentry>1</fieldentry>
+      </qtimetadatafield>
+    </qtimetadata>
+    <section ident="root_section">
+      <item ident="g951ea325377409af4f22ee7d835ef4e_q01" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A network technician needs to support 10 Gbps Ethernet over copper at the full 100-meter distance. Which cable standard meets this requirement?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g951ea325377409af4f22ee7d835ef4e_q01_a">
+                <material>
+                  <mattext texttype="text/plain">Cat5e</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g951ea325377409af4f22ee7d835ef4e_q01_b">
+                <material>
+                  <mattext texttype="text/plain">Cat6</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g951ea325377409af4f22ee7d835ef4e_q01_c">
+                <material>
+                  <mattext texttype="text/plain">Cat6a</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g951ea325377409af4f22ee7d835ef4e_q01_d">
+                <material>
+                  <mattext texttype="text/plain">Cat3</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g951ea325377409af4f22ee7d835ef4e_q01_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g951ea325377409af4f22ee7d835ef4e_q02" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A switch receives a frame destined for a MAC address that is not in its CAM table. Which action does the switch take?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g951ea325377409af4f22ee7d835ef4e_q02_a">
+                <material>
+                  <mattext texttype="text/plain">Drops the frame and sends an ICMP Destination Unreachable message to the source.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g951ea325377409af4f22ee7d835ef4e_q02_b">
+                <material>
+                  <mattext texttype="text/plain">Forwards the frame only to the default gateway port for routing.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g951ea325377409af4f22ee7d835ef4e_q02_c">
+                <material>
+                  <mattext texttype="text/plain">Floods the frame out all ports except the port it was received on.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g951ea325377409af4f22ee7d835ef4e_q02_d">
+                <material>
+                  <mattext texttype="text/plain">Sends an ARP request on behalf of the source to discover the destination MAC.</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g951ea325377409af4f22ee7d835ef4e_q02_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g951ea325377409af4f22ee7d835ef4e_q03" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A wireless access point in a remote location has no nearby power outlet. The network closet is 40 meters away, connected via Cat5e. Which technology eliminates the need for a separate power adapter at the access point?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g951ea325377409af4f22ee7d835ef4e_q03_a">
+                <material>
+                  <mattext texttype="text/plain">Fiber optic uplink with a media converter</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g951ea325377409af4f22ee7d835ef4e_q03_b">
+                <material>
+                  <mattext texttype="text/plain">Power over Ethernet (PoE) via IEEE 802.3af or 802.3at</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g951ea325377409af4f22ee7d835ef4e_q03_c">
+                <material>
+                  <mattext texttype="text/plain">A crossover cable to connect the AP directly to the router</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g951ea325377409af4f22ee7d835ef4e_q03_d">
+                <material>
+                  <mattext texttype="text/plain">An SFP transceiver module installed in the AP</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g951ea325377409af4f22ee7d835ef4e_q03_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g951ea325377409af4f22ee7d835ef4e_q04" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A network segment experiences frequent collisions and slow performance. Investigation reveals all workstations share a single device where every incoming signal is repeated out every port simultaneously. Which device is causing this behavior, and what should replace it?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g951ea325377409af4f22ee7d835ef4e_q04_a">
+                <material>
+                  <mattext texttype="text/plain">The device is a Layer 2 switch; replace it with a Layer 3 switch for inter-VLAN routing.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g951ea325377409af4f22ee7d835ef4e_q04_b">
+                <material>
+                  <mattext texttype="text/plain">The device is a hub; replace it with a managed switch to give each device its own collision domain.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g951ea325377409af4f22ee7d835ef4e_q04_c">
+                <material>
+                  <mattext texttype="text/plain">The device is a router; replace it with a firewall to control inter-network traffic.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g951ea325377409af4f22ee7d835ef4e_q04_d">
+                <material>
+                  <mattext texttype="text/plain">The device is a wireless access point operating in bridge mode; replace it with one in access point mode.</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g951ea325377409af4f22ee7d835ef4e_q04_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g951ea325377409af4f22ee7d835ef4e_q05" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A security administrator wants to prevent unauthorized devices from connecting to open switch ports in a corporate office. Which combination of controls provides the most effective defense?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g951ea325377409af4f22ee7d835ef4e_q05_a">
+                <material>
+                  <mattext texttype="text/plain">Enable IEEE 802.1X port authentication on all access ports and configure Port Security with sticky MAC learning as a backup.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g951ea325377409af4f22ee7d835ef4e_q05_b">
+                <material>
+                  <mattext texttype="text/plain">Disable unused switch ports in the configuration and place them in an unused VLAN.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g951ea325377409af4f22ee7d835ef4e_q05_c">
+                <material>
+                  <mattext texttype="text/plain">Deploy network-based IDS sensors on each floor to detect unauthorized connection attempts.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g951ea325377409af4f22ee7d835ef4e_q05_d">
+                <material>
+                  <mattext texttype="text/plain">Require all users to register their MAC addresses manually with the help desk before connecting.</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g951ea325377409af4f22ee7d835ef4e_q05_a</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g951ea325377409af4f22ee7d835ef4e_q06" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A network engineer is connecting two Cisco switches together without Auto-MDIX support. Which cable type is required to correctly cross the transmit and receive pairs between the two switches?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g951ea325377409af4f22ee7d835ef4e_q06_a">
+                <material>
+                  <mattext texttype="text/plain">Straight-through cable</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g951ea325377409af4f22ee7d835ef4e_q06_b">
+                <material>
+                  <mattext texttype="text/plain">Rollover/console cable</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g951ea325377409af4f22ee7d835ef4e_q06_c">
+                <material>
+                  <mattext texttype="text/plain">Crossover cable</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g951ea325377409af4f22ee7d835ef4e_q06_d">
+                <material>
+                  <mattext texttype="text/plain">Coaxial cable</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g951ea325377409af4f22ee7d835ef4e_q06_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g951ea325377409af4f22ee7d835ef4e_q07" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A network design calls for a 400-meter fiber run between two campus buildings for a 10 Gbps backbone connection. Which fiber type is the most appropriate?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g951ea325377409af4f22ee7d835ef4e_q07_a">
+                <material>
+                  <mattext texttype="text/plain">Single-mode fiber OS1</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g951ea325377409af4f22ee7d835ef4e_q07_b">
+                <material>
+                  <mattext texttype="text/plain">Multi-mode fiber OM1</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g951ea325377409af4f22ee7d835ef4e_q07_c">
+                <material>
+                  <mattext texttype="text/plain">Multi-mode fiber OM4</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g951ea325377409af4f22ee7d835ef4e_q07_d">
+                <material>
+                  <mattext texttype="text/plain">Cat6a copper twisted pair</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g951ea325377409af4f22ee7d835ef4e_q07_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g951ea325377409af4f22ee7d835ef4e_q08" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;Which of the following correctly describes the difference between a collision domain and a broadcast domain?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g951ea325377409af4f22ee7d835ef4e_q08_a">
+                <material>
+                  <mattext texttype="text/plain">A collision domain is defined by the subnet mask; a broadcast domain is defined by the switch VLAN.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g951ea325377409af4f22ee7d835ef4e_q08_b">
+                <material>
+                  <mattext texttype="text/plain">A collision domain is a segment where simultaneous transmissions cause interference; a broadcast domain is a group of devices that receive each other's broadcast frames.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g951ea325377409af4f22ee7d835ef4e_q08_c">
+                <material>
+                  <mattext texttype="text/plain">A collision domain is created by a router separating subnets; a broadcast domain is created by a hub repeating signals.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g951ea325377409af4f22ee7d835ef4e_q08_d">
+                <material>
+                  <mattext texttype="text/plain">A collision domain and a broadcast domain are the same thing when switches are used.</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g951ea325377409af4f22ee7d835ef4e_q08_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g951ea325377409af4f22ee7d835ef4e_q09" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A Layer 3 switch is being used for inter-VLAN routing in a campus network. Which logical interface type on the switch acts as the default gateway for hosts in each VLAN?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g951ea325377409af4f22ee7d835ef4e_q09_a">
+                <material>
+                  <mattext texttype="text/plain">Physical FastEthernet access port</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g951ea325377409af4f22ee7d835ef4e_q09_b">
+                <material>
+                  <mattext texttype="text/plain">VLAN trunk port (802.1Q)</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g951ea325377409af4f22ee7d835ef4e_q09_c">
+                <material>
+                  <mattext texttype="text/plain">Switched Virtual Interface (SVI)</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g951ea325377409af4f22ee7d835ef4e_q09_d">
+                <material>
+                  <mattext texttype="text/plain">Serial WAN interface</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g951ea325377409af4f22ee7d835ef4e_q09_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g951ea325377409af4f22ee7d835ef4e_q10" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A company is installing wireless access points throughout a large office building. The APs are dual-radio (2.4 GHz and 5 GHz) models that require 25 watts each. The installed switch supports 802.3af but not 802.3at. What is the problem, and what is the correct solution?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g951ea325377409af4f22ee7d835ef4e_q10_a">
+                <material>
+                  <mattext texttype="text/plain">There is no problem; 802.3af delivers 25 watts per port by default.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g951ea325377409af4f22ee7d835ef4e_q10_b">
+                <material>
+                  <mattext texttype="text/plain">The switch supports only 15.4 watts per port (802.3af); upgrade to a switch supporting 802.3at to deliver the required 30 watts per port.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g951ea325377409af4f22ee7d835ef4e_q10_c">
+                <material>
+                  <mattext texttype="text/plain">Dual-radio APs require fiber uplinks; install a media converter between the switch and each AP.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g951ea325377409af4f22ee7d835ef4e_q10_d">
+                <material>
+                  <mattext texttype="text/plain">The switch must be configured with a dedicated PoE VLAN to allocate additional power.</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g951ea325377409af4f22ee7d835ef4e_q10_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+    </section>
+  </assessment>
+</questestinterop>

@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/profile/cc/ccv1p1/ccv1p1_qtiasiv1p2p1_v1p0.xsd">
+  <assessment ident="g1d8f8064c12e99d2902818aa764e999" title="Quiz (M01): Threats, Attacks, and Vulnerabilities">
+    <qtimetadata>
+      <qtimetadatafield>
+        <fieldlabel>cc_profile</fieldlabel>
+        <fieldentry>cc.exam.v0p1</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_assessmenttype</fieldlabel>
+        <fieldentry>Examination</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_scoretype</fieldlabel>
+        <fieldentry>Percentage</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>cc_maxattempts</fieldlabel>
+        <fieldentry>1</fieldentry>
+      </qtimetadatafield>
+    </qtimetadata>
+    <section ident="root_section">
+      <item ident="g1d8f8064c12e99d2902818aa764e999_q01" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An organization implements an automated system that checks the hash of system files every hour. If a hash mismatch is detected, an alert is sent to the security operations center. Which pillar of the CIA triad is this control primarily enforcing?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g1d8f8064c12e99d2902818aa764e999_q01_a">
+                <material>
+                  <mattext texttype="text/plain">Confidentiality</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g1d8f8064c12e99d2902818aa764e999_q01_b">
+                <material>
+                  <mattext texttype="text/plain">Integrity</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g1d8f8064c12e99d2902818aa764e999_q01_c">
+                <material>
+                  <mattext texttype="text/plain">Availability</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g1d8f8064c12e99d2902818aa764e999_q01_d">
+                <material>
+                  <mattext texttype="text/plain">Non-repudiation</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g1d8f8064c12e99d2902818aa764e999_q01_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g1d8f8064c12e99d2902818aa764e999_q02" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A security analyst reviews a report listing four threat actors involved in separate incidents. Which of the following actors represents the HIGHEST level of sophistication, available resources, and long-term persistence?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g1d8f8064c12e99d2902818aa764e999_q02_a">
+                <material>
+                  <mattext texttype="text/plain">Script Kiddie</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g1d8f8064c12e99d2902818aa764e999_q02_b">
+                <material>
+                  <mattext texttype="text/plain">Hacktivist</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g1d8f8064c12e99d2902818aa764e999_q02_c">
+                <material>
+                  <mattext texttype="text/plain">Nation-State Actor</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g1d8f8064c12e99d2902818aa764e999_q02_d">
+                <material>
+                  <mattext texttype="text/plain">Insider Threat</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g1d8f8064c12e99d2902818aa764e999_q02_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g1d8f8064c12e99d2902818aa764e999_q03" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An attacker exploits a vulnerability in a web application that the vendor has not yet discovered or patched. Which type of attack does this describe?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g1d8f8064c12e99d2902818aa764e999_q03_a">
+                <material>
+                  <mattext texttype="text/plain">Replay attack</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g1d8f8064c12e99d2902818aa764e999_q03_b">
+                <material>
+                  <mattext texttype="text/plain">Zero-day exploit</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g1d8f8064c12e99d2902818aa764e999_q03_c">
+                <material>
+                  <mattext texttype="text/plain">SQL injection</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g1d8f8064c12e99d2902818aa764e999_q03_d">
+                <material>
+                  <mattext texttype="text/plain">Pass-the-hash attack</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g1d8f8064c12e99d2902818aa764e999_q03_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g1d8f8064c12e99d2902818aa764e999_q04" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A company requires all employees to sign an Acceptable Use Policy before being granted network access. How should this security control be classified?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g1d8f8064c12e99d2902818aa764e999_q04_a">
+                <material>
+                  <mattext texttype="text/plain">Physical / Corrective</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g1d8f8064c12e99d2902818aa764e999_q04_b">
+                <material>
+                  <mattext texttype="text/plain">Logical / Detective</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g1d8f8064c12e99d2902818aa764e999_q04_c">
+                <material>
+                  <mattext texttype="text/plain">Administrative / Preventive</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g1d8f8064c12e99d2902818aa764e999_q04_d">
+                <material>
+                  <mattext texttype="text/plain">Technical / Compensating</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g1d8f8064c12e99d2902818aa764e999_q04_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g1d8f8064c12e99d2902818aa764e999_q05" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;When designing a security architecture, you need to prevent attackers from deleting local system event logs after a breach to cover their tracks. Which of the following controls best mitigates this risk?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g1d8f8064c12e99d2902818aa764e999_q05_a">
+                <material>
+                  <mattext texttype="text/plain">Forward all system logs to a remote, write-protected SIEM platform in real time.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g1d8f8064c12e99d2902818aa764e999_q05_b">
+                <material>
+                  <mattext texttype="text/plain">Enforce full disk encryption on all endpoints to prevent unauthorized file deletion.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g1d8f8064c12e99d2902818aa764e999_q05_c">
+                <material>
+                  <mattext texttype="text/plain">Require multi-factor authentication for all administrative console logins.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g1d8f8064c12e99d2902818aa764e999_q05_d">
+                <material>
+                  <mattext texttype="text/plain">Deploy a host-based intrusion detection system on every endpoint.</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g1d8f8064c12e99d2902818aa764e999_q05_a</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g1d8f8064c12e99d2902818aa764e999_q06" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A penetration tester connects to a coffee shop wireless network and uses a tool to silently capture all traffic flowing between other patrons and the access point. The tester does not modify any packets or inject any data. Which attack category best describes this activity?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g1d8f8064c12e99d2902818aa764e999_q06_a">
+                <material>
+                  <mattext texttype="text/plain">Man-in-the-Middle</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g1d8f8064c12e99d2902818aa764e999_q06_b">
+                <material>
+                  <mattext texttype="text/plain">Replay attack</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g1d8f8064c12e99d2902818aa764e999_q06_c">
+                <material>
+                  <mattext texttype="text/plain">Eavesdropping</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g1d8f8064c12e99d2902818aa764e999_q06_d">
+                <material>
+                  <mattext texttype="text/plain">Injection</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g1d8f8064c12e99d2902818aa764e999_q06_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g1d8f8064c12e99d2902818aa764e999_q07" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An organization's risk assessment identifies an unpatched operating system vulnerability (CVE-2023-XXXX) on a critical server. The security team cannot apply the patch because the server runs a legacy application that is not compatible with the updated OS version. The team decides to place the server in an isolated network segment with strict firewall rules. What type of control is the network segmentation in this context?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g1d8f8064c12e99d2902818aa764e999_q07_a">
+                <material>
+                  <mattext texttype="text/plain">Corrective / Technical</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g1d8f8064c12e99d2902818aa764e999_q07_b">
+                <material>
+                  <mattext texttype="text/plain">Preventive / Administrative</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g1d8f8064c12e99d2902818aa764e999_q07_c">
+                <material>
+                  <mattext texttype="text/plain">Compensating / Technical</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g1d8f8064c12e99d2902818aa764e999_q07_d">
+                <material>
+                  <mattext texttype="text/plain">Detective / Physical</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g1d8f8064c12e99d2902818aa764e999_q07_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g1d8f8064c12e99d2902818aa764e999_q08" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A threat actor sends thousands of automated login requests to a cloud-based application using username and password pairs obtained from a publicly leaked credential database belonging to a different company. The attacker assumes that many users reuse passwords across services. What attack technique is this?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g1d8f8064c12e99d2902818aa764e999_q08_a">
+                <material>
+                  <mattext texttype="text/plain">Brute force</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g1d8f8064c12e99d2902818aa764e999_q08_b">
+                <material>
+                  <mattext texttype="text/plain">Credential stuffing</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g1d8f8064c12e99d2902818aa764e999_q08_c">
+                <material>
+                  <mattext texttype="text/plain">Password spraying</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g1d8f8064c12e99d2902818aa764e999_q08_d">
+                <material>
+                  <mattext texttype="text/plain">Rainbow table attack</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g1d8f8064c12e99d2902818aa764e999_q08_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g1d8f8064c12e99d2902818aa764e999_q09" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;During a threat hunt, an analyst finds that a standard user account on a file server has been granted Domain Admin privileges. The change was made at 11:47 PM on a Saturday. No IT change ticket exists for this modification. Which type of Indicator of Compromise does this represent, and what is the most likely explanation?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g1d8f8064c12e99d2902818aa764e999_q09_a">
+                <material>
+                  <mattext texttype="text/plain">Network IOC — the account was accessed from an unusual IP address.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g1d8f8064c12e99d2902818aa764e999_q09_b">
+                <material>
+                  <mattext texttype="text/plain">Account-based IOC — the attacker created or elevated a privileged account to maintain persistence.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g1d8f8064c12e99d2902818aa764e999_q09_c">
+                <material>
+                  <mattext texttype="text/plain">Host-based IOC — a new service was installed on the server that requires elevated privileges.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g1d8f8064c12e99d2902818aa764e999_q09_d">
+                <material>
+                  <mattext texttype="text/plain">Log-based IOC — the security event log was cleared to hide the privilege escalation.</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g1d8f8064c12e99d2902818aa764e999_q09_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g1d8f8064c12e99d2902818aa764e999_q10" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An organization is building a new security awareness program. The CISO wants to ensure employees understand that receiving an email that appears to come from the CEO asking for an immediate wire transfer is a known attack technique, even if the email address looks legitimate. Which threat actor type most commonly uses this technique, and what is the correct term for this specific attack?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g1d8f8064c12e99d2902818aa764e999_q10_a">
+                <material>
+                  <mattext texttype="text/plain">Script Kiddie — phishing</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g1d8f8064c12e99d2902818aa764e999_q10_b">
+                <material>
+                  <mattext texttype="text/plain">Nation-State Actor — spear phishing</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g1d8f8064c12e99d2902818aa764e999_q10_c">
+                <material>
+                  <mattext texttype="text/plain">Organized Crime — business email compromise (BEC)</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g1d8f8064c12e99d2902818aa764e999_q10_d">
+                <material>
+                  <mattext texttype="text/plain">Hacktivist — whaling</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g1d8f8064c12e99d2902818aa764e999_q10_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+    </section>
+  </assessment>
+</questestinterop>

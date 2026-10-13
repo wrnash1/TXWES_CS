@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/profile/cc/ccv1p1/ccv1p1_qtiasiv1p2p1_v1p0.xsd">
+  <assessment ident="g3ff07ceae47ad8907f84c74f19acfc1" title="Quiz (M16): Security+ SY0-701 Exam Preparation and Capstone">
+    <qtimetadata>
+      <qtimetadatafield>
+        <fieldlabel>cc_profile</fieldlabel>
+        <fieldentry>cc.exam.v0p1</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_assessmenttype</fieldlabel>
+        <fieldentry>Examination</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_scoretype</fieldlabel>
+        <fieldentry>Percentage</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>cc_maxattempts</fieldlabel>
+        <fieldentry>1</fieldentry>
+      </qtimetadatafield>
+    </qtimetadata>
+    <section ident="root_section">
+      <item ident="g3ff07ceae47ad8907f84c74f19acfc1_q01" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A penetration tester discovers that a web application constructs SQL queries by directly concatenating user input into the query string. By entering the value &lt;code&gt;' OR '1'='1&lt;/code&gt; into the login field, the tester is able to bypass authentication and access all user accounts in the database. The development team asks the tester to recommend the single most effective remediation. Which control should the tester recommend?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g3ff07ceae47ad8907f84c74f19acfc1_q01_a">
+                <material>
+                  <mattext texttype="text/plain">Deploy a web application firewall (WAF) to detect and block SQL injection payloads at the network perimeter.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3ff07ceae47ad8907f84c74f19acfc1_q01_b">
+                <material>
+                  <mattext texttype="text/plain">Rewrite all database queries to use parameterized queries (prepared statements) so that user input is never interpreted as SQL code.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3ff07ceae47ad8907f84c74f19acfc1_q01_c">
+                <material>
+                  <mattext texttype="text/plain">Encrypt the database contents at rest using AES-256 so that stolen data cannot be read.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3ff07ceae47ad8907f84c74f19acfc1_q01_d">
+                <material>
+                  <mattext texttype="text/plain">Require all users to authenticate with MFA before accessing the application.</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g3ff07ceae47ad8907f84c74f19acfc1_q01_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g3ff07ceae47ad8907f84c74f19acfc1_q02" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A CISO reviews a security incident report and notes the following timeline: Day 1 — security analysts deployed honeypots and updated incident response playbooks. Day 3 — SIEM alerts triggered on anomalous outbound traffic from a finance workstation. Day 4 — the workstation was isolated from the network. Day 6 — malware was removed and the OS was reimaged. Day 7 — the workstation was returned to service. Day 10 — the team held a meeting to document lessons learned and identify three new detection rules. Which NIST IR phase occurred on Day 10?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g3ff07ceae47ad8907f84c74f19acfc1_q02_a">
+                <material>
+                  <mattext texttype="text/plain">Preparation</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3ff07ceae47ad8907f84c74f19acfc1_q02_b">
+                <material>
+                  <mattext texttype="text/plain">Detection and Analysis</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3ff07ceae47ad8907f84c74f19acfc1_q02_c">
+                <material>
+                  <mattext texttype="text/plain">Containment, Eradication, and Recovery</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3ff07ceae47ad8907f84c74f19acfc1_q02_d">
+                <material>
+                  <mattext texttype="text/plain">Post-Incident Activity</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g3ff07ceae47ad8907f84c74f19acfc1_q02_d</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g3ff07ceae47ad8907f84c74f19acfc1_q03" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An organization stores customer records containing names, Social Security Numbers, dates of birth, and credit card numbers in a cloud-based database. A security assessment identifies that the database is accessible via a publicly routable IP address with no firewall restrictions, the data is stored in plaintext, and access logs show three login attempts from foreign IP addresses last month. The security team must prioritize remediation. Which action addresses the MOST critical vulnerability first?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g3ff07ceae47ad8907f84c74f19acfc1_q03_a">
+                <material>
+                  <mattext texttype="text/plain">Implement IP allowlisting and a firewall rule restricting database access to the application servers only.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3ff07ceae47ad8907f84c74f19acfc1_q03_b">
+                <material>
+                  <mattext texttype="text/plain">Encrypt the database at rest using AES-256 to protect the stored PII and financial data.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3ff07ceae47ad8907f84c74f19acfc1_q03_c">
+                <material>
+                  <mattext texttype="text/plain">Enable multi-factor authentication on the database administrator accounts.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3ff07ceae47ad8907f84c74f19acfc1_q03_d">
+                <material>
+                  <mattext texttype="text/plain">Review and investigate the three foreign login attempts to determine if a breach occurred.</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g3ff07ceae47ad8907f84c74f19acfc1_q03_a</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g3ff07ceae47ad8907f84c74f19acfc1_q04" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A company's legal team is reviewing contracts with a new SaaS vendor that will process employee payroll data including Social Security Numbers, bank account details, and salary information. The legal team asks the security team which compliance obligations are triggered and what contractual security requirements must be included. Which of the following responses correctly identifies the applicable obligation?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g3ff07ceae47ad8907f84c74f19acfc1_q04_a">
+                <material>
+                  <mattext texttype="text/plain">The company must comply with PCI-DSS because payroll data includes bank account numbers, which are financial data equivalent to cardholder data.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3ff07ceae47ad8907f84c74f19acfc1_q04_b">
+                <material>
+                  <mattext texttype="text/plain">The company must include contractual data processing requirements and right-to-audit clauses, and the vendor must demonstrate adequate security controls for the PII being processed.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3ff07ceae47ad8907f84c74f19acfc1_q04_c">
+                <material>
+                  <mattext texttype="text/plain">The company has no compliance obligations because SaaS vendors assume full responsibility for data security under the shared responsibility model.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3ff07ceae47ad8907f84c74f19acfc1_q04_d">
+                <material>
+                  <mattext texttype="text/plain">The company must comply with HIPAA because employee benefit data may include health insurance information.</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g3ff07ceae47ad8907f84c74f19acfc1_q04_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g3ff07ceae47ad8907f84c74f19acfc1_q05" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A security architect is designing the authentication system for a new enterprise application that will be used by 5,000 employees. The requirements state: employees must not need to remember separate credentials for this application; the system must use the existing Active Directory identity store; authentication must be phishing-resistant; and access must be revocable immediately when an employee leaves the organization. Which combination of controls best meets all four requirements?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g3ff07ceae47ad8907f84c74f19acfc1_q05_a">
+                <material>
+                  <mattext texttype="text/plain">Local application username and password with complexity requirements and a 90-day rotation policy.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3ff07ceae47ad8907f84c74f19acfc1_q05_b">
+                <material>
+                  <mattext texttype="text/plain">SAML 2.0 SSO federated to Active Directory as the identity provider, combined with hardware security key (FIDO2) MFA.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3ff07ceae47ad8907f84c74f19acfc1_q05_c">
+                <material>
+                  <mattext texttype="text/plain">Shared department passwords stored in a team password manager, with IP-based access restrictions.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g3ff07ceae47ad8907f84c74f19acfc1_q05_d">
+                <material>
+                  <mattext texttype="text/plain">OAuth 2.0 authorization with SMS-based OTP as the second factor and monthly access reviews.</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g3ff07ceae47ad8907f84c74f19acfc1_q05_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+    </section>
+  </assessment>
+</questestinterop>

@@ -1,0 +1,1047 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/profile/cc/ccv1p1/ccv1p1_qtiasiv1p2p1_v1p0.xsd">
+  <assessment ident="g4676feb4fec452edd8be8f1db964cbf" title="Quiz (M09): Cloud Security">
+    <qtimetadata>
+      <qtimetadatafield>
+        <fieldlabel>cc_profile</fieldlabel>
+        <fieldentry>cc.exam.v0p1</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_assessmenttype</fieldlabel>
+        <fieldentry>Examination</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_scoretype</fieldlabel>
+        <fieldentry>Percentage</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>cc_maxattempts</fieldlabel>
+        <fieldentry>1</fieldentry>
+      </qtimetadatafield>
+    </qtimetadata>
+    <section ident="root_section">
+      <item ident="g4676feb4fec452edd8be8f1db964cbf_q01" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A company migrates its HR database to an AWS RDS managed database service. After migration, a vulnerability scanner detects that the underlying database engine is running an outdated version with known CVEs. Who is responsible for patching the database engine in this scenario?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q01_a">
+                <material>
+                  <mattext texttype="text/plain">The company, because all software vulnerabilities are the customer's responsibility</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q01_b">
+                <material>
+                  <mattext texttype="text/plain">AWS, because RDS is a managed service and AWS patches the database engine</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q01_c">
+                <material>
+                  <mattext texttype="text/plain">The company, because RDS is IaaS and the customer manages the OS</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q01_d">
+                <material>
+                  <mattext texttype="text/plain">Neither party — patching managed services is an optional cloud feature</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g4676feb4fec452edd8be8f1db964cbf_q01_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g4676feb4fec452edd8be8f1db964cbf_q02" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An organization's security team wants to prevent employees from uploading sensitive documents to personal cloud storage services such as consumer Dropbox accounts. The employees use a mix of company-managed laptops and personal smartphones. Which CASB deployment mode is BEST suited for this requirement?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q02_a">
+                <material>
+                  <mattext texttype="text/plain">Forward proxy, because it inspects all outbound traffic</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q02_b">
+                <material>
+                  <mattext texttype="text/plain">API mode, because it connects to Dropbox's API to monitor uploads</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q02_c">
+                <material>
+                  <mattext texttype="text/plain">Reverse proxy, because it does not require agents on unmanaged devices</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q02_d">
+                <material>
+                  <mattext texttype="text/plain">Inline DLP sensor, because it operates at the network perimeter</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g4676feb4fec452edd8be8f1db964cbf_q02_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g4676feb4fec452edd8be8f1db964cbf_q03" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_response.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A security engineer reviews an S3 bucket and finds the following configuration: encryption is disabled, Block Public Access is off, and there is a bucket policy granting &lt;code&gt;s3:GetObject&lt;/code&gt; to &lt;code&gt;"Principal": "*"&lt;/code&gt;. Which combination of actions addresses all three findings? (Select TWO)&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Multiple">
+            <render_choice>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q03_a">
+                <material>
+                  <mattext texttype="text/plain">Enable Block Public Access</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q03_b">
+                <material>
+                  <mattext texttype="text/plain">Enable MFA delete on the bucket</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q03_c">
+                <material>
+                  <mattext texttype="text/plain">Enable default encryption (SSE-KMS)</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q03_d">
+                <material>
+                  <mattext texttype="text/plain">Enable CloudTrail for the account</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q03_e">
+                <material>
+                  <mattext texttype="text/plain">Change bucket storage class to Glacier</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <and>
+              <varequal respident="response1">g4676feb4fec452edd8be8f1db964cbf_q03_a</varequal>
+              <varequal respident="response1">g4676feb4fec452edd8be8f1db964cbf_q03_c</varequal>
+              <not><varequal respident="response1">g4676feb4fec452edd8be8f1db964cbf_q03_b</varequal></not>
+              <not><varequal respident="response1">g4676feb4fec452edd8be8f1db964cbf_q03_d</varequal></not>
+              <not><varequal respident="response1">g4676feb4fec452edd8be8f1db964cbf_q03_e</varequal></not>
+            </and>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g4676feb4fec452edd8be8f1db964cbf_q04" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A developer builds a Docker container for a web application. During a security review, an analyst discovers that the container runs as root, has access to all Linux capabilities, and the production database password is stored as a plain-text environment variable. Which finding poses the GREATEST immediate security risk?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q04_a">
+                <material>
+                  <mattext texttype="text/plain">Running as root</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q04_b">
+                <material>
+                  <mattext texttype="text/plain">Access to all Linux capabilities</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q04_c">
+                <material>
+                  <mattext texttype="text/plain">Plain-text database password in an environment variable</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q04_d">
+                <material>
+                  <mattext texttype="text/plain">Using Docker instead of a virtual machine</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g4676feb4fec452edd8be8f1db964cbf_q04_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g4676feb4fec452edd8be8f1db964cbf_q05" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An organization uses AWS Lambda functions to process customer payment data. A penetration tester reports that one Lambda function's IAM execution role has the &lt;code&gt;AdministratorAccess&lt;/code&gt; managed policy attached. Which security principle does this violate?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q05_a">
+                <material>
+                  <mattext texttype="text/plain">Defense in depth</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q05_b">
+                <material>
+                  <mattext texttype="text/plain">Separation of duties</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q05_c">
+                <material>
+                  <mattext texttype="text/plain">Least privilege</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q05_d">
+                <material>
+                  <mattext texttype="text/plain">Need to know</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g4676feb4fec452edd8be8f1db964cbf_q05_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g4676feb4fec452edd8be8f1db964cbf_q06" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A company must comply with US federal government security requirements before its cloud-hosted application can process federal agency data. Which compliance authorization should the company obtain?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q06_a">
+                <material>
+                  <mattext texttype="text/plain">ISO 27001 certification</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q06_b">
+                <material>
+                  <mattext texttype="text/plain">SOC 2 Type II report</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q06_c">
+                <material>
+                  <mattext texttype="text/plain">FedRAMP Authority to Operate (ATO)</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q06_d">
+                <material>
+                  <mattext texttype="text/plain">CSA STAR Level 2 certification</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g4676feb4fec452edd8be8f1db964cbf_q06_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g4676feb4fec452edd8be8f1db964cbf_q07" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A CASB solution is deployed in API mode. A security analyst reports that the CASB successfully audits files stored in Microsoft SharePoint but cannot block a user from uploading a sensitive file to SharePoint in real time. Which limitation of API-mode CASB explains this behavior?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q07_a">
+                <material>
+                  <mattext texttype="text/plain">API mode cannot connect to Microsoft 365 services</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q07_b">
+                <material>
+                  <mattext texttype="text/plain">API mode inspects stored content and logs after the fact but does not intercept live traffic flows</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q07_c">
+                <material>
+                  <mattext texttype="text/plain">API mode requires agent installation on user devices</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q07_d">
+                <material>
+                  <mattext texttype="text/plain">API mode only works with IaaS services, not SaaS</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g4676feb4fec452edd8be8f1db964cbf_q07_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g4676feb4fec452edd8be8f1db964cbf_q08" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_response.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An organization stores audit logs in the same S3 bucket as the application data they audit. A ransomware attack encrypts all files in the bucket, including the logs. Which security configuration would have prevented the loss of audit integrity? (Select TWO)&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Multiple">
+            <render_choice>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q08_a">
+                <material>
+                  <mattext texttype="text/plain">Enable S3 Object Lock with Compliance mode on the logging bucket</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q08_b">
+                <material>
+                  <mattext texttype="text/plain">Store access logs in a separate, dedicated logging bucket</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q08_c">
+                <material>
+                  <mattext texttype="text/plain">Enable server access logging on the same bucket</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q08_d">
+                <material>
+                  <mattext texttype="text/plain">Use SSE-S3 encryption instead of SSE-KMS</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q08_e">
+                <material>
+                  <mattext texttype="text/plain">Enable S3 Transfer Acceleration</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <and>
+              <varequal respident="response1">g4676feb4fec452edd8be8f1db964cbf_q08_a</varequal>
+              <varequal respident="response1">g4676feb4fec452edd8be8f1db964cbf_q08_b</varequal>
+              <not><varequal respident="response1">g4676feb4fec452edd8be8f1db964cbf_q08_c</varequal></not>
+              <not><varequal respident="response1">g4676feb4fec452edd8be8f1db964cbf_q08_d</varequal></not>
+              <not><varequal respident="response1">g4676feb4fec452edd8be8f1db964cbf_q08_e</varequal></not>
+            </and>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g4676feb4fec452edd8be8f1db964cbf_q09" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A cloud security architect is evaluating a vendor that provides SaaS payroll software. The architect requests documentation proving that the vendor's security controls have been independently tested over a six-month period. Which document satisfies this requirement?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q09_a">
+                <material>
+                  <mattext texttype="text/plain">The vendor's ISO 27001 certificate</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q09_b">
+                <material>
+                  <mattext texttype="text/plain">A SOC 2 Type I report</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q09_c">
+                <material>
+                  <mattext texttype="text/plain">A SOC 2 Type II report</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q09_d">
+                <material>
+                  <mattext texttype="text/plain">The vendor's penetration test executive summary</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g4676feb4fec452edd8be8f1db964cbf_q09_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g4676feb4fec452edd8be8f1db964cbf_q10" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A multinational organization deploys workloads across AWS, Azure, and Google Cloud. The security team struggles to maintain consistent encryption and logging configurations across all three platforms. Which tool category addresses this challenge most directly?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q10_a">
+                <material>
+                  <mattext texttype="text/plain">SIEM (Security Information and Event Management)</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q10_b">
+                <material>
+                  <mattext texttype="text/plain">CASB (Cloud Access Security Broker)</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q10_c">
+                <material>
+                  <mattext texttype="text/plain">CSPM (Cloud Security Posture Management)</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q10_d">
+                <material>
+                  <mattext texttype="text/plain">WAF (Web Application Firewall)</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g4676feb4fec452edd8be8f1db964cbf_q10_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g4676feb4fec452edd8be8f1db964cbf_q11" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;Which of the following BEST describes the shared responsibility model for SaaS?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q11_a">
+                <material>
+                  <mattext texttype="text/plain">The customer manages the OS and the provider manages the application</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q11_b">
+                <material>
+                  <mattext texttype="text/plain">The provider manages the application and the customer manages data and access</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q11_c">
+                <material>
+                  <mattext texttype="text/plain">The customer manages networking and the provider manages identity</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q11_d">
+                <material>
+                  <mattext texttype="text/plain">Both the provider and customer share equal responsibility for all layers</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g4676feb4fec452edd8be8f1db964cbf_q11_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g4676feb4fec452edd8be8f1db964cbf_q12" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A security team discovers that multiple employees have been using an unapproved file-sharing service to collaborate on work documents. This is an example of which threat category?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q12_a">
+                <material>
+                  <mattext texttype="text/plain">Insider threat</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q12_b">
+                <material>
+                  <mattext texttype="text/plain">Shadow IT</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q12_c">
+                <material>
+                  <mattext texttype="text/plain">Data exfiltration</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q12_d">
+                <material>
+                  <mattext texttype="text/plain">Privilege escalation</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g4676feb4fec452edd8be8f1db964cbf_q12_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g4676feb4fec452edd8be8f1db964cbf_q13" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A DevOps engineer wants to ensure that container images deployed to production have not been tampered with after they were scanned and approved. Which security control addresses this requirement?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q13_a">
+                <material>
+                  <mattext texttype="text/plain">Runtime application self-protection (RASP)</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q13_b">
+                <material>
+                  <mattext texttype="text/plain">Container image signing and verification</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q13_c">
+                <material>
+                  <mattext texttype="text/plain">Web application firewall (WAF) integration</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q13_d">
+                <material>
+                  <mattext texttype="text/plain">Network segmentation between containers</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g4676feb4fec452edd8be8f1db964cbf_q13_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g4676feb4fec452edd8be8f1db964cbf_q14" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An organization must ensure that customer data stored in a European data center cannot be accessed by the cloud provider's administrators in other regions. This requirement relates to which cloud security concept?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q14_a">
+                <material>
+                  <mattext texttype="text/plain">Encryption in transit</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q14_b">
+                <material>
+                  <mattext texttype="text/plain">Data sovereignty and residency controls</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q14_c">
+                <material>
+                  <mattext texttype="text/plain">Multi-cloud federation</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q14_d">
+                <material>
+                  <mattext texttype="text/plain">CASB API mode inspection</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g4676feb4fec452edd8be8f1db964cbf_q14_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g4676feb4fec452edd8be8f1db964cbf_q15" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A serverless function processes user-submitted search queries and passes them directly to a database query string without sanitization. What attack is this function vulnerable to?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q15_a">
+                <material>
+                  <mattext texttype="text/plain">Cross-site scripting (XSS)</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q15_b">
+                <material>
+                  <mattext texttype="text/plain">SQL injection</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q15_c">
+                <material>
+                  <mattext texttype="text/plain">CSRF (Cross-Site Request Forgery)</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q15_d">
+                <material>
+                  <mattext texttype="text/plain">Privilege escalation via IAM role assumption</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g4676feb4fec452edd8be8f1db964cbf_q15_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g4676feb4fec452edd8be8f1db964cbf_q16" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An organization implements federated identity management using SAML to connect Azure Active Directory to AWS, GCP, and Salesforce. What is the PRIMARY security benefit of this approach in a multi-cloud environment?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q16_a">
+                <material>
+                  <mattext texttype="text/plain">It eliminates the need for MFA across all connected services</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q16_b">
+                <material>
+                  <mattext texttype="text/plain">It provides a single source of truth for user identities and enables centralized access revocation</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q16_c">
+                <material>
+                  <mattext texttype="text/plain">It automatically enforces least privilege on cloud service IAM roles</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q16_d">
+                <material>
+                  <mattext texttype="text/plain">It replaces the need for encryption keys in each cloud environment</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g4676feb4fec452edd8be8f1db964cbf_q16_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g4676feb4fec452edd8be8f1db964cbf_q17" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A company's security policy requires that all S3 bucket objects be encrypted and that the encryption keys can be audited and revoked by the security team. Which encryption option meets BOTH requirements?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q17_a">
+                <material>
+                  <mattext texttype="text/plain">SSE-S3 (Amazon S3 managed keys)</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q17_b">
+                <material>
+                  <mattext texttype="text/plain">SSE-KMS with AWS-managed keys</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q17_c">
+                <material>
+                  <mattext texttype="text/plain">SSE-KMS with customer-managed keys in AWS KMS</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q17_d">
+                <material>
+                  <mattext texttype="text/plain">Client-side encryption with keys stored on developer workstations</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g4676feb4fec452edd8be8f1db964cbf_q17_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g4676feb4fec452edd8be8f1db964cbf_q18" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A Zero Trust architecture is being implemented for a multi-cloud environment. Which statement BEST describes how Zero Trust applies to cloud workloads?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q18_a">
+                <material>
+                  <mattext texttype="text/plain">Workloads on the same cloud VPC are automatically trusted and do not require authentication</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q18_b">
+                <material>
+                  <mattext texttype="text/plain">Every service-to-service request must be authenticated and authorized regardless of network location</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q18_c">
+                <material>
+                  <mattext texttype="text/plain">Zero Trust applies only to user-facing applications, not to backend cloud services</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q18_d">
+                <material>
+                  <mattext texttype="text/plain">Zero Trust replaces the need for network segmentation in cloud environments</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g4676feb4fec452edd8be8f1db964cbf_q18_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g4676feb4fec452edd8be8f1db964cbf_q19" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;During a cloud security audit, an analyst finds that a development team has disabled CloudTrail logging in a non-production AWS account to "reduce costs." Why is this a security concern even in non-production environments?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q19_a">
+                <material>
+                  <mattext texttype="text/plain">Development accounts never contain sensitive data</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q19_b">
+                <material>
+                  <mattext texttype="text/plain">Attackers who compromise development accounts can use them as pivot points to production; logging loss eliminates the ability to reconstruct attack timelines</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q19_c">
+                <material>
+                  <mattext texttype="text/plain">CloudTrail is only required for PCI DSS compliance</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q19_d">
+                <material>
+                  <mattext texttype="text/plain">Logging is a shared responsibility and AWS is responsible for maintaining it</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g4676feb4fec452edd8be8f1db964cbf_q19_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g4676feb4fec452edd8be8f1db964cbf_q20" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A security team uses Policy as Code to enforce that all S3 buckets must have versioning enabled. A developer creates a new bucket without versioning and the automated policy check immediately flags and blocks the deployment. Which security benefit does this illustrate?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q20_a">
+                <material>
+                  <mattext texttype="text/plain">Defense in depth at the data layer</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q20_b">
+                <material>
+                  <mattext texttype="text/plain">Shift-left security — catching misconfigurations at deployment time rather than after the fact</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q20_c">
+                <material>
+                  <mattext texttype="text/plain">Just-in-time access provisioning for cloud resources</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4676feb4fec452edd8be8f1db964cbf_q20_d">
+                <material>
+                  <mattext texttype="text/plain">Separation of duties between development and operations teams</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g4676feb4fec452edd8be8f1db964cbf_q20_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+    </section>
+  </assessment>
+</questestinterop>

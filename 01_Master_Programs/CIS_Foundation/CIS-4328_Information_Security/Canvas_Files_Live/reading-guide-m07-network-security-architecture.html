@@ -1,0 +1,375 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Reading Guide (M07): Network Security Architecture</title>
+</head>
+<body>
+<h2>Reading Guide (M07): Network Security Architecture</h2>
+<h1>Reading Guide: Module 07 — Network Security Architecture</h1>
+<h2>CIS-4328 Information Security | Texas Wesleyan University</h2>
+<h3>CompTIA Security+ SY0-701 Alignment</h3>
+<hr />
+<h2>Overview</h2>
+<p>This reading guide supports Module 07 of CIS-4328. It covers firewall types, IDS/IPS, DMZ design, proxy servers, load balancers, network segmentation, microsegmentation, zero-trust network architecture, NAC, and VPN configurations.</p>
+<p>All readings use zero-cost, openly licensed resources.</p>
+<hr />
+<h2>Learning Objectives</h2>
+<p>By the end of this module, you will be able to:</p>
+<ul>
+<li>
+<p>Classify firewall types by capability (stateless, stateful, application-layer, NGFW, WAF).</p>
+</li>
+<li>
+<p>Distinguish IDS from IPS by deployment model, detection method, and function.</p>
+</li>
+<li>
+<p>Describe DMZ design using the dual-firewall architecture.</p>
+</li>
+<li>
+<p>Explain the difference between forward proxy and reverse proxy.</p>
+</li>
+<li>
+<p>Describe how load balancers contribute to availability and DDoS mitigation.</p>
+</li>
+<li>
+<p>Apply network segmentation and microsegmentation to reduce lateral movement.</p>
+</li>
+<li>
+<p>Describe the principles of zero-trust network architecture and contrast them with the perimeter model.</p>
+</li>
+<li>
+<p>Explain NAC posture assessment and quarantine VLAN.</p>
+</li>
+<li>
+<p>Compare site-to-site and remote access VPN, and evaluate the security implications of split tunneling.</p>
+</li>
+</ul>
+<hr />
+<h2>Primary Readings</h2>
+<h3>Reading 1 — NIST SP 800-41 Rev. 1: Guidelines on Firewalls and Firewall Policy</h3>
+<p>Source: <a href="https://csrc.nist.gov/publications/detail/sp/800-41/rev-1/final">https://csrc.nist.gov/publications/detail/sp/800-41/rev-1/final</a></p>
+<p>Read: Chapter 2 (Firewall Overview) and Chapter 3 (Firewall Policy).</p>
+<p>Focus areas:</p>
+<ul>
+<li>
+<p>The evolution from packet filtering to stateful inspection to application-layer gateways.</p>
+</li>
+<li>
+<p>The principle of implicit deny and default-deny policy design.</p>
+</li>
+<li>
+<p>Ingress versus egress filtering and why both are necessary.</p>
+</li>
+</ul>
+<h3>Reading 2 — CISA Zero Trust Maturity Model</h3>
+<p>Source: <a href="https://www.cisa.gov/zero-trust-maturity-model">https://www.cisa.gov/zero-trust-maturity-model</a></p>
+<p>Read: The full document (approximately 24 pages).</p>
+<p>Focus areas:</p>
+<ul>
+<li>
+<p>The five pillars of zero trust: Identity, Devices, Networks, Applications/Workloads, Data.</p>
+</li>
+<li>
+<p>The maturity stages: Traditional, Initial, Advanced, Optimal.</p>
+</li>
+<li>
+<p>How microsegmentation relates to the Network pillar.</p>
+</li>
+</ul>
+<h3>Reading 3 — NIST SP 800-207: Zero Trust Architecture</h3>
+<p>Source: <a href="https://csrc.nist.gov/publications/detail/sp/800-207/final">https://csrc.nist.gov/publications/detail/sp/800-207/final</a></p>
+<p>Read: Section 2 (Zero Trust Basics) and Section 3 (Zero Trust Architecture Logical Components).</p>
+<p>Focus areas:</p>
+<ul>
+<li>
+<p>The Policy Enforcement Point (PEP) and Policy Decision Point (PDP) concepts.</p>
+</li>
+<li>
+<p>How zero trust applies to enterprise network design.</p>
+</li>
+<li>
+<p>The contrast between perimeter-based security and ZTA.</p>
+</li>
+</ul>
+<hr />
+<h2>Supplemental Readings</h2>
+<h3>Reading 4 — CISA IDS/IPS Overview</h3>
+<p>Source: <a href="https://www.cisa.gov/uscert/ncas/tips/ST04-015">https://www.cisa.gov/uscert/ncas/tips/ST04-015</a></p>
+<p>Read: The full article.</p>
+<p>Focus areas:</p>
+<ul>
+<li>
+<p>Signature-based vs. anomaly-based detection trade-offs.</p>
+</li>
+<li>
+<p>Network-based vs. host-based deployment models.</p>
+</li>
+<li>
+<p>The role of IDS/IPS in a layered defense architecture.</p>
+</li>
+</ul>
+<h3>Reading 5 — NIST SP 800-77 Rev. 1: Guide to IPsec VPNs</h3>
+<p>Source: <a href="https://csrc.nist.gov/publications/detail/sp/800-77/rev-1/final">https://csrc.nist.gov/publications/detail/sp/800-77/rev-1/final</a></p>
+<p>Read: Chapter 2 (IPsec Architecture Overview).</p>
+<p>Focus areas:</p>
+<ul>
+<li>
+<p>IPsec Transport mode vs. Tunnel mode.</p>
+</li>
+<li>
+<p>IKE (Internet Key Exchange) protocol overview.</p>
+</li>
+<li>
+<p>Comparison to TLS-based VPN approaches.</p>
+</li>
+</ul>
+<hr />
+<h2>Concept Reference Tables</h2>
+<h3>Table 1 — Firewall Type Comparison</h3>
+<table>
+<thead>
+<tr>
+<th>Firewall Type</th>
+<th>OSI Layer</th>
+<th>Key Capability</th>
+<th>Exam Trigger</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Packet Filter</td>
+<td>Layer 3/4</td>
+<td>IP/port-based rules; stateless</td>
+<td>Legacy; simple ACLs</td>
+</tr>
+<tr>
+<td>Stateful Firewall</td>
+<td>Layer 3/4</td>
+<td>Connection state tracking</td>
+<td>Baseline for modern firewalls</td>
+</tr>
+<tr>
+<td>Application-Layer Gateway</td>
+<td>Layer 7</td>
+<td>Protocol-aware; proxy function</td>
+<td>Deep content inspection</td>
+</tr>
+<tr>
+<td>NGFW</td>
+<td>Layer 3–7</td>
+<td>App ID, user identity, integrated IPS</td>
+<td>"Identify apps regardless of port"</td>
+</tr>
+<tr>
+<td>WAF</td>
+<td>Layer 7 (HTTP)</td>
+<td>Web app protection; OWASP Top 10</td>
+<td>SQL injection, XSS protection</td>
+</tr>
+</tbody>
+</table>
+<h3>Table 2 — IDS vs. IPS</h3>
+<table>
+<thead>
+<tr>
+<th>Characteristic</th>
+<th>IDS</th>
+<th>IPS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Function</td>
+<td>Detect and alert</td>
+<td>Detect and block</td>
+</tr>
+<tr>
+<td>Placement</td>
+<td>Out-of-band (SPAN/tap)</td>
+<td>Inline (traffic flows through)</td>
+</tr>
+<tr>
+<td>Impact on traffic</td>
+<td>None</td>
+<td>Can block; inline failure affects traffic</td>
+</tr>
+<tr>
+<td>Fail behavior</td>
+<td>N/A (passive)</td>
+<td>Fail-open or fail-closed</td>
+</tr>
+<tr>
+<td>False positive risk</td>
+<td>Alerts only; no traffic impact</td>
+<td>Can block legitimate traffic</td>
+</tr>
+</tbody>
+</table>
+<h3>Table 3 — Segmentation Models</h3>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Scope</th>
+<th>Technology</th>
+<th>Security Benefit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>VLAN segmentation</td>
+<td>Zone-level</td>
+<td>Managed switch VLANs</td>
+<td>Separate broadcast domains</td>
+</tr>
+<tr>
+<td>Firewall zones</td>
+<td>Zone-level</td>
+<td>Firewall policies</td>
+<td>Enforced traffic policy between zones</td>
+</tr>
+<tr>
+<td>Microsegmentation</td>
+<td>Workload-level</td>
+<td>SDN, host-based agents</td>
+<td>Policy between individual workloads</td>
+</tr>
+<tr>
+<td>Zero Trust</td>
+<td>End-to-end</td>
+<td>Identity + device + policy</td>
+<td>No implicit trust; verify all access</td>
+</tr>
+</tbody>
+</table>
+<h3>Table 4 — VPN Comparison</h3>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Scope</th>
+<th>Protocol</th>
+<th>Common Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Site-to-site</td>
+<td>Network-to-network</td>
+<td>IPsec Tunnel mode</td>
+<td>Branch office connectivity</td>
+</tr>
+<tr>
+<td>Remote access (IPsec)</td>
+<td>Client-to-network</td>
+<td>IPsec Transport mode</td>
+<td>Legacy corporate remote access</td>
+</tr>
+<tr>
+<td>Remote access (TLS)</td>
+<td>Client-to-application</td>
+<td>TLS/HTTPS</td>
+<td>Modern remote access; firewall-friendly</td>
+</tr>
+<tr>
+<td>ZTNA</td>
+<td>Client-to-application</td>
+<td>TLS + identity</td>
+<td>Zero trust remote access; replaces VPN</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>Key Terms and Definitions</h2>
+<p><strong>Firewall</strong> — A network security device that monitors and controls incoming and outgoing traffic based on configured rules.</p>
+<p><strong>NGFW</strong> — Next-Generation Firewall; combines stateful inspection with application awareness, user identity, and integrated IPS.</p>
+<p><strong>WAF</strong> — Web Application Firewall; inspects HTTP/HTTPS traffic to protect web applications from application-layer attacks.</p>
+<p><strong>IDS</strong> — Intrusion Detection System; passively monitors traffic and generates alerts on suspicious activity.</p>
+<p><strong>IPS</strong> — Intrusion Prevention System; inline device that monitors and actively blocks suspicious traffic.</p>
+<p><strong>Signature-Based Detection</strong> — Compares traffic against known attack signatures; cannot detect novel attacks.</p>
+<p><strong>Anomaly-Based Detection</strong> — Compares traffic against a baseline; can detect novel attacks but generates more false positives.</p>
+<p><strong>False Positive</strong> — An alert triggered by benign activity.</p>
+<p><strong>False Negative</strong> — A failure to alert on actual malicious activity.</p>
+<p><strong>Fail-Open</strong> — Device failure allows traffic to pass uninspected; prioritizes availability.</p>
+<p><strong>Fail-Closed</strong> — Device failure blocks all traffic; prioritizes security.</p>
+<p><strong>DMZ</strong> — Demilitarized Zone; a network segment hosting internet-accessible servers, isolated from the internal network.</p>
+<p><strong>Screened Subnet</strong> — The technical term for a DMZ; a subnet filtered by one or more firewalls.</p>
+<p><strong>Forward Proxy</strong> — Intermediary between internal users and the internet.</p>
+<p><strong>Reverse Proxy</strong> — Intermediary between external clients and internal servers.</p>
+<p><strong>SSL Offloading</strong> — Terminating TLS at the load balancer or reverse proxy to reduce backend server load.</p>
+<p><strong>Network Segmentation</strong> — Dividing a network into separate zones with enforced access policies between them.</p>
+<p><strong>Microsegmentation</strong> — Applying access policies between individual workloads, not just network zones.</p>
+<p><strong>Zero Trust</strong> — Security model based on "never trust, always verify" regardless of network location.</p>
+<p><strong>ZTNA</strong> — Zero Trust Network Access; provides application-specific access based on identity and device posture, replacing broad VPN access.</p>
+<p><strong>SDP</strong> — Software-Defined Perimeter; makes resources invisible until authenticated; implements ZTNA principles.</p>
+<p><strong>NAC</strong> — Network Access Control; enforces device security posture before granting network access.</p>
+<p><strong>Quarantine VLAN</strong> — A restricted network segment for non-compliant devices where they can access only remediation resources.</p>
+<p><strong>Implicit Deny</strong> — The default rule at the end of a firewall policy that denies all traffic not explicitly permitted.</p>
+<p><strong>Ingress Filtering</strong> — Controlling inbound traffic.</p>
+<p><strong>Egress Filtering</strong> — Controlling outbound traffic.</p>
+<p><strong>Split Tunneling</strong> — VPN configuration where only corporate-bound traffic is encrypted through the VPN; internet traffic bypasses.</p>
+<p><strong>Full Tunneling</strong> — VPN configuration where all traffic routes through the corporate VPN gateway.</p>
+<p><strong>VLAN</strong> — Virtual LAN; a logical network segment within a physical switch infrastructure.</p>
+<hr />
+<h2>Security+ Exam Alignment</h2>
+<p>The following SY0-701 exam objectives are covered in this module:</p>
+<ul>
+<li>
+<p>3.2 — Given a scenario, apply infrastructure security best practices.</p>
+</li>
+<li>
+<p>3.3 — Compare and contrast concepts and strategies to protect data.</p>
+</li>
+<li>
+<p>4.5 — Given a scenario, implement network security infrastructure.</p>
+</li>
+</ul>
+<hr />
+<h2>Critical Thinking Questions</h2>
+<ol>
+<li>
+<p>An organization has placed its web server in the DMZ and its database server on the internal network. The web application needs to query the database. What firewall rule would you add to the inner firewall to enable this? How would you write the rule to apply least privilege?</p>
+</li>
+<li>
+<p>A security team wants to detect lateral movement within the internal network. They have a SIEM, a NGFW at the perimeter, and no internal segmentation. What additional controls would most improve their ability to detect east-west (internal) lateral movement?</p>
+</li>
+<li>
+<p>An attacker has compromised a workstation in the finance department of a fully microsegmented network. The workstation can communicate with finance servers but cannot reach HR, IT, or payroll servers. Compare the blast radius of this attack in a microsegmented network versus a flat network with no internal segmentation.</p>
+</li>
+<li>
+<p>A company is evaluating replacing their remote access VPN with a ZTNA solution. What are the specific security advantages of ZTNA over traditional VPN? What challenges might the organization face during the transition?</p>
+</li>
+<li>
+<p>An IPS deployed inline at a hospital network is set to fail-closed. During a software update, the IPS crashes and all network traffic stops, including communications to patient monitoring systems. Evaluate this design decision. What change would you recommend, and how would you compensate for the reduced security that change introduces?</p>
+</li>
+</ol>
+<hr />
+<h2>Review Checklist</h2>
+<p>Before taking the Module 07 quiz, verify you can do each of the following without notes:</p>
+<ul>
+<li>
+<p>Name the five firewall types and state the key capability that distinguishes each from the previous.</p>
+</li>
+<li>
+<p>Explain why an IDS is out-of-band and an IPS is inline, and what consequence each placement has.</p>
+</li>
+<li>
+<p>Describe the dual-firewall DMZ and explain which servers belong in it.</p>
+</li>
+<li>
+<p>Distinguish forward proxy from reverse proxy by what each protects.</p>
+</li>
+<li>
+<p>Explain implicit deny in your own words without using the term "firewall."</p>
+</li>
+<li>
+<p>Describe microsegmentation and explain how it limits lateral movement compared to VLAN segmentation.</p>
+</li>
+<li>
+<p>State the three zero-trust principles and apply them to a specific network scenario.</p>
+</li>
+</ul>
+<hr />
+<p>Module 07 Reading Guide — End</p>
+</body>
+</html>

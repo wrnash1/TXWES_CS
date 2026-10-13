@@ -1,0 +1,230 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Reading Guide (M10): Application Security</title>
+</head>
+<body>
+<h2>Reading Guide (M10): Application Security</h2>
+<h1>Reading Guide: Module 10 — Application Security</h1>
+<h2>Course: CIS-4328 Information Security</h2>
+<p><strong>Certification Alignment:</strong> CompTIA Security+ (SY0-701)</p>
+<hr />
+<h2>Overview</h2>
+<p>This reading guide supports Module 10: Application Security. You will study the OWASP Top 10, the secure software development lifecycle, testing methodologies, and code signing. These topics map to Security+ Domain 4 (Application Security) and appear throughout real-world security assessments and breach investigations.</p>
+<p><strong>Estimated reading and study time:</strong> 2.5 to 3 hours</p>
+<hr />
+<h2>Learning Objectives</h2>
+<p>By the end of this module you should be able to:</p>
+<ul>
+<li>Identify and describe each of the ten OWASP Top 10 vulnerability categories.</li>
+<li>Explain the mechanisms behind injection, XSS, IDOR, and SSRF attacks.</li>
+<li>Compare static application security testing (SAST) and dynamic application security testing (DAST).</li>
+<li>Describe the phases of a secure software development lifecycle.</li>
+<li>Explain what code signing proves and what it does not prove.</li>
+<li>Identify security controls appropriate for each OWASP category.</li>
+</ul>
+<hr />
+<h2>Required Reading</h2>
+<h3>OER Textbook Sections</h3>
+<p>Refer to the ZTC_OER_Reading_Materials list for open-access chapter links. For this module read:</p>
+<ul>
+<li><strong>OWASP Top 10 2021</strong> — Full document (free at owasp.org/Top10)</li>
+<li><strong>OWASP Testing Guide v4.2</strong> — Chapter 1: Introduction to the OWASP Testing Guide</li>
+<li><strong>NIST SP 800-64</strong> — Security Considerations in the System Development Life Cycle, Sections 2 and 3</li>
+<li><strong>Professor Messer Security+ SY0-701 Study Guide</strong> — Domain 4 sections on application security</li>
+</ul>
+<hr />
+<h2>Section A — OWASP Top 10 (2021)</h2>
+<p>The OWASP Top 10 is the industry-standard reference for web application security risk. The 2021 edition reflects data from thousands of organizations and hundreds of security firms. Each category has an assigned identifier (A01 through A10), example attack scenarios, and recommended countermeasures.</p>
+<h3>A01 — Broken Access Control</h3>
+<p>Access control enforces the rule that authenticated users may only access resources and perform actions within their intended permissions. Broken Access Control moved to number one in 2021, appearing in 94 percent of applications tested. The key subtypes are:</p>
+<ul>
+<li><strong>Vertical privilege escalation</strong>: A regular user accesses admin functions.</li>
+<li><strong>Horizontal privilege escalation / IDOR</strong>: A user accesses another user's resources by manipulating an ID in the request.</li>
+<li><strong>Forced browsing</strong>: Accessing URLs that are not linked but are accessible without authorization.</li>
+</ul>
+<p>The primary countermeasure is server-side enforcement of access control checks on every protected resource, every time.</p>
+<h3>A02 — Cryptographic Failures</h3>
+<p>This category captures failures in protecting data in transit and at rest. Key failure modes include:</p>
+<ul>
+<li>Transmitting sensitive data over HTTP (unencrypted).</li>
+<li>Using deprecated algorithms: MD5, SHA-1, DES, 3DES, RC4.</li>
+<li>Storing passwords as plain text or reversibly encrypted rather than using one-way hashing with a salt.</li>
+<li>Generating weak random values for cryptographic functions.</li>
+</ul>
+<p>Current recommendations include TLS 1.2 or 1.3 for transport, bcrypt or Argon2 for password hashing, and AES-256-GCM for symmetric encryption of stored sensitive data.</p>
+<h3>A03 — Injection</h3>
+<p>Injection flaws occur when the interpreter cannot distinguish between code/commands and data. Subtypes include SQL injection, LDAP injection, OS command injection, and template injection.</p>
+<p>Parameterized queries are the primary defense against SQL injection. The key principle is that user-supplied data must never be directly concatenated into query or command strings.</p>
+<h3>A04 — Insecure Design</h3>
+<p>Insecure design covers architectural weaknesses that no implementation fix can fully address. Threat modeling during the design phase is the countermeasure. The STRIDE methodology — Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, Elevation of Privilege — provides a structured approach to identifying design-level threats.</p>
+<h3>A05 — Security Misconfiguration</h3>
+<p>This category spans all layers of the stack: network, platform, web server, application server, database, and framework. Common misconfigurations include:</p>
+<ul>
+<li>Default credentials on databases, admin panels, or network devices.</li>
+<li>Directory listing enabled on web servers.</li>
+<li>Verbose error messages or stack traces exposed to users.</li>
+<li>Overly permissive cloud storage policies (public S3 buckets).</li>
+<li>Unnecessary features, ports, or services enabled.</li>
+</ul>
+<p>Automated configuration management and hardening baselines are the primary countermeasures.</p>
+<h3>A06 — Vulnerable and Outdated Components</h3>
+<p>Applications depend on third-party libraries, frameworks, and runtime environments. Each dependency may carry known vulnerabilities. Key concepts:</p>
+<ul>
+<li><strong>CVE (Common Vulnerabilities and Exposures)</strong>: A public list of known software vulnerabilities maintained by MITRE.</li>
+<li><strong>CVSS (Common Vulnerability Scoring System)</strong>: A numerical score (0–10) that rates the severity of CVEs.</li>
+<li><strong>SBOM (Software Bill of Materials)</strong>: A formal list of all components in a software product, enabling rapid identification of affected systems when new CVEs are published.</li>
+</ul>
+<h3>A07 — Identification and Authentication Failures</h3>
+<p>Authentication failures include weak password policies, missing multi-factor authentication, broken session management, and insecure credential storage. Two specific attack types to know:</p>
+<ul>
+<li><strong>Credential stuffing</strong>: Using lists of known username/password pairs from previous breaches to automate login attempts against other sites.</li>
+<li><strong>Session fixation</strong>: An attacker establishes a known session token and tricks the victim into using it, gaining access after the victim authenticates.</li>
+</ul>
+<h3>A08 — Software and Data Integrity Failures</h3>
+<p>This category covers scenarios where applications rely on plugins, libraries, or updates from untrusted sources without integrity verification. Supply chain attacks, where malicious code is inserted into the software build or distribution process, fall under this category.</p>
+<p>Subresource Integrity (SRI) is a browser mechanism that verifies the integrity of externally loaded JavaScript by comparing a cryptographic hash in the HTML tag to the actual file hash.</p>
+<h3>A09 — Security Logging and Monitoring Failures</h3>
+<p>Without adequate logging, breaches go undetected for extended periods. Effective logging requires:</p>
+<ul>
+<li>Recording all authentication attempts (success and failure).</li>
+<li>Capturing the source IP, timestamp, and user identity for all security-relevant events.</li>
+<li>Storing logs on a separate, protected system the application cannot modify.</li>
+<li>Alerting on anomalous patterns in near real-time.</li>
+</ul>
+<p>A SIEM (Security Information and Event Management) system centralizes log collection and applies correlation rules to detect threats.</p>
+<h3>A10 — Server-Side Request Forgery (SSRF)</h3>
+<p>SSRF forces the server to make outbound HTTP requests to attacker-chosen destinations. In cloud environments, SSRF frequently targets the instance metadata service (IMDS) at 169.254.169.254 to retrieve IAM credentials. Countermeasures include URL allow-listing, blocking RFC-1918 addresses in outbound requests, and restricting outbound network access from application servers.</p>
+<hr />
+<h2>Section B — Secure Software Development Lifecycle</h2>
+<p>The Secure SDLC integrates security activities into every phase rather than treating security as a final gate.</p>
+<h3>Phase 1 — Requirements</h3>
+<p>Security requirements are gathered alongside functional requirements. This includes identifying applicable regulations (PCI-DSS for payment card data, HIPAA for health data, GDPR for personal data of EU residents), conducting an initial data classification, and capturing security acceptance criteria for each user story.</p>
+<h3>Phase 2 — Design</h3>
+<p>Threat modeling identifies potential attack vectors before implementation. The output of threat modeling is a list of threats with associated mitigations designed into the architecture. Data flow diagrams (DFDs) identify trust boundaries where data crosses from one zone to another.</p>
+<p>Secure design principles applied in this phase:</p>
+<ul>
+<li><strong>Least privilege</strong>: Components receive only the permissions they require.</li>
+<li><strong>Defense in depth</strong>: Multiple layers of controls so no single failure is catastrophic.</li>
+<li><strong>Fail-safe defaults</strong>: Default behavior denies access; access must be explicitly granted.</li>
+<li><strong>Separation of duties</strong>: No single component or user controls an entire sensitive workflow.</li>
+<li><strong>Economy of mechanism</strong>: Simple designs are easier to analyze and secure than complex ones.</li>
+</ul>
+<h3>Phase 3 — Development</h3>
+<p>Secure coding standards provide language-specific guidelines. Peer code review with a security checklist ensures a second developer validates security-relevant code paths. Pre-commit hooks prevent secrets — API keys, passwords, private keys — from entering version control.</p>
+<h3>Phase 4 — Testing</h3>
+<p>Security testing includes SAST, DAST, and penetration testing. Security test cases derived from the threat model are executed alongside functional tests. Acceptance criteria include passing SAST and DAST scans with no critical or high findings.</p>
+<h3>Phase 5 — Deployment</h3>
+<p>Hardened build pipelines sign artifacts and verify integrity before deploying to production. Configuration baselines are applied to infrastructure. Deployment to production requires formal change approval.</p>
+<h3>Phase 6 — Maintenance</h3>
+<p>Vulnerability management monitors CVEs in all components and applies patches within defined SLAs based on severity. Bug bounty or responsible disclosure programs allow external researchers to report vulnerabilities safely.</p>
+<hr />
+<h2>Section C — SAST vs. DAST</h2>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>SAST</th>
+<th>DAST</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>What it tests</td>
+<td>Source code or compiled binary</td>
+<td>Running application</td>
+</tr>
+<tr>
+<td>Testing approach</td>
+<td>White-box</td>
+<td>Black-box</td>
+</tr>
+<tr>
+<td>When in SDLC</td>
+<td>Early (development, CI)</td>
+<td>Late (staging, pre-prod)</td>
+</tr>
+<tr>
+<td>Can find</td>
+<td>Logic flaws, hardcoded secrets, unsafe functions</td>
+<td>Runtime bugs, auth bypasses, injection in live app</td>
+</tr>
+<tr>
+<td>Cannot find</td>
+<td>Runtime-only issues</td>
+<td>Code-level logic errors</td>
+</tr>
+<tr>
+<td>Example tools</td>
+<td>SonarQube, Checkmarx, Semgrep</td>
+<td>OWASP ZAP, Burp Suite, Nikto</td>
+</tr>
+</tbody>
+</table>
+<p>IAST (Interactive Application Security Testing) instruments the application at runtime, combining code-level visibility with runtime context.</p>
+<hr />
+<h2>Section D — Code Signing</h2>
+<p>Code signing uses asymmetric cryptography to bind a software publisher's identity to a software artifact.</p>
+<p><strong>Process:</strong></p>
+<ol>
+<li>Developer obtains a code-signing certificate from a trusted CA (Comodo, DigiCert, etc.).</li>
+<li>Before release, the developer hashes the compiled binary.</li>
+<li>The developer encrypts the hash with their private key, producing a digital signature.</li>
+<li>The signature and certificate are embedded in or distributed alongside the binary.</li>
+<li>End users or operating systems verify the signature by decrypting with the publisher's public key and comparing hashes.</li>
+</ol>
+<p><strong>What code signing guarantees:</strong></p>
+<ul>
+<li><strong>Authenticity</strong>: The binary was signed by the holder of the private key.</li>
+<li><strong>Integrity</strong>: The binary has not changed since signing.</li>
+</ul>
+<p><strong>What code signing does not guarantee:</strong></p>
+<ul>
+<li>The software is free of malware or vulnerabilities.</li>
+<li>The private key has not been compromised.</li>
+</ul>
+<p>The SolarWinds supply chain attack illustrates this limitation — attackers signed malicious code with the legitimate SolarWinds key because they compromised the build environment.</p>
+<hr />
+<h2>Key Terms</h2>
+<ul>
+<li><strong>OWASP</strong>: Open Web Application Security Project</li>
+<li><strong>IDOR</strong>: Insecure Direct Object Reference</li>
+<li><strong>SSRF</strong>: Server-Side Request Forgery</li>
+<li><strong>XSS</strong>: Cross-Site Scripting (reflected, stored, DOM-based)</li>
+<li><strong>SQL Injection</strong>: Injection of SQL code through unsanitized input</li>
+<li><strong>Parameterized query</strong>: A query that separates code from data, preventing injection</li>
+<li><strong>SAST</strong>: Static Application Security Testing (white-box)</li>
+<li><strong>DAST</strong>: Dynamic Application Security Testing (black-box)</li>
+<li><strong>IAST</strong>: Interactive Application Security Testing</li>
+<li><strong>Threat modeling</strong>: Structured analysis of threats during design phase</li>
+<li><strong>STRIDE</strong>: Spoofing, Tampering, Repudiation, Information Disclosure, DoS, Elevation of Privilege</li>
+<li><strong>SBOM</strong>: Software Bill of Materials</li>
+<li><strong>CVE</strong>: Common Vulnerabilities and Exposures</li>
+<li><strong>CVSS</strong>: Common Vulnerability Scoring System</li>
+<li><strong>Code signing</strong>: Digital signature applied to software to prove origin and integrity</li>
+<li><strong>DevSecOps</strong>: Development, Security, and Operations integrated practice</li>
+<li><strong>Shift left</strong>: Moving security testing earlier in the development lifecycle</li>
+<li><strong>SRI</strong>: Subresource Integrity</li>
+<li><strong>IMDS</strong>: Instance Metadata Service (cloud metadata endpoint)</li>
+</ul>
+<hr />
+<h2>Review Questions</h2>
+<ol>
+<li>What is IDOR and what access control check does it bypass?</li>
+<li>Explain the difference between reflected XSS and stored XSS.</li>
+<li>Why does parameterized querying prevent SQL injection?</li>
+<li>What does A08 (Software and Data Integrity Failures) have in common with supply chain attacks?</li>
+<li>Compare SAST and DAST: what does each test, when is each applied, and what type of issues does each find?</li>
+<li>In a DAST test, what does "black-box" mean?</li>
+<li>What two properties does code signing guarantee, and what does it fail to guarantee?</li>
+<li>Define "shift left" in the context of application security.</li>
+<li>What is a threat model and which phase of the SDLC should it occur in?</li>
+<li>Why is A09 (Logging and Monitoring Failures) in the OWASP Top 10 even though it is not an attack technique itself?</li>
+</ol>
+<hr />
+<h2>Certification Exam Tip</h2>
+<p>Security+ SY0-701 Domain 4 tests OWASP categories, secure development concepts, and testing methodologies. Pay close attention to the SAST versus DAST comparison — exam questions frequently ask which tool applies to which scenario and what "white-box" versus "black-box" means. Know code signing as a supply chain control and be able to explain its limitations.</p>
+<hr />
+<p><em>End of Reading Guide — Module 10</em></p>
+</body>
+</html>

@@ -1,0 +1,527 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/profile/cc/ccv1p1/ccv1p1_qtiasiv1p2p1_v1p0.xsd">
+  <assessment ident="g8b9f2f8a4d5d026c3e78b581afd9c17" title="Quiz (M07): Network Monitoring and Troubleshooting Tools">
+    <qtimetadata>
+      <qtimetadatafield>
+        <fieldlabel>cc_profile</fieldlabel>
+        <fieldentry>cc.exam.v0p1</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_assessmenttype</fieldlabel>
+        <fieldentry>Examination</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_scoretype</fieldlabel>
+        <fieldentry>Percentage</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>cc_maxattempts</fieldlabel>
+        <fieldentry>1</fieldentry>
+      </qtimetadatafield>
+    </qtimetadata>
+    <section ident="root_section">
+      <item ident="g8b9f2f8a4d5d026c3e78b581afd9c17_q01" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A network administrator runs &lt;code&gt;ping 10.10.10.1&lt;/code&gt; from a workstation and receives "Request timed out" for all four packets. She then runs &lt;code&gt;ping 127.0.0.1&lt;/code&gt; successfully. Which of the following conclusions is best supported by these two results?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g8b9f2f8a4d5d026c3e78b581afd9c17_q01_a">
+                <material>
+                  <mattext texttype="text/plain">The workstation's NIC is defective because ping to the gateway failed, and all network functionality is lost.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8b9f2f8a4d5d026c3e78b581afd9c17_q01_b">
+                <material>
+                  <mattext texttype="text/plain">The workstation's TCP/IP stack is functional, but there is a Layer 3 reachability problem between the workstation and 10.10.10.1 — the gateway may be down, the IP address may be misconfigured, or ICMP may be blocked by a firewall.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8b9f2f8a4d5d026c3e78b581afd9c17_q01_c">
+                <material>
+                  <mattext texttype="text/plain">The ping failure proves that 10.10.10.1 does not exist on the network and the router should be replaced.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8b9f2f8a4d5d026c3e78b581afd9c17_q01_d">
+                <material>
+                  <mattext texttype="text/plain">The workstation must have the wrong subnet mask because successful loopback ping is only possible with a /32 subnet mask.</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g8b9f2f8a4d5d026c3e78b581afd9c17_q01_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g8b9f2f8a4d5d026c3e78b581afd9c17_q02" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;While running &lt;code&gt;tracert 8.8.8.8&lt;/code&gt; on a Windows workstation, the administrator notices that hop 5 shows three asterisks (***) and "Request timed out," but hops 6 through 9 show normal RTT values, and the final destination at hop 9 responds successfully. What is the correct interpretation?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g8b9f2f8a4d5d026c3e78b581afd9c17_q02_a">
+                <material>
+                  <mattext texttype="text/plain">The path is broken at hop 5 and the successful responses from hops 6–9 are cached results from a previous successful path.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8b9f2f8a4d5d026c3e78b581afd9c17_q02_b">
+                <material>
+                  <mattext texttype="text/plain">Hop 5 is a router that does not respond to ICMP Time Exceeded messages due to rate limiting or firewall policy, but it is actively forwarding packets — the path to the destination is intact.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8b9f2f8a4d5d026c3e78b581afd9c17_q02_c">
+                <material>
+                  <mattext texttype="text/plain">The three asterisks indicate that hop 5 is a firewall that has blocked all traffic; the administrator should open a help desk ticket to have the firewall rule removed.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8b9f2f8a4d5d026c3e78b581afd9c17_q02_d">
+                <material>
+                  <mattext texttype="text/plain">The TTL was exhausted at hop 5, so all subsequent hops are unreachable and the displayed RTTs for hops 6–9 are fabricated by tracert.</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g8b9f2f8a4d5d026c3e78b581afd9c17_q02_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g8b9f2f8a4d5d026c3e78b581afd9c17_q03" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A help desk ticket reports that users in the office can access internal servers by IP address but cannot reach any website by name (for example, typing google.com in a browser fails, but typing 142.250.80.78 directly works). Which tool should the administrator run first, and what does the symptom indicate?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g8b9f2f8a4d5d026c3e78b581afd9c17_q03_a">
+                <material>
+                  <mattext texttype="text/plain">Run Wireshark and capture all traffic on the LAN; the symptom indicates a Layer 2 switching loop that is causing intermittent packet loss.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8b9f2f8a4d5d026c3e78b581afd9c17_q03_b">
+                <material>
+                  <mattext texttype="text/plain">Run nslookup google.com; the symptom indicates a DNS resolution failure — name-to-IP translation is not functioning, but Layer 3 IP connectivity is intact.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8b9f2f8a4d5d026c3e78b581afd9c17_q03_c">
+                <material>
+                  <mattext texttype="text/plain">Run netstat -r; the symptom indicates the default route is missing from the routing table, which is preventing access to external names.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8b9f2f8a4d5d026c3e78b581afd9c17_q03_d">
+                <material>
+                  <mattext texttype="text/plain">Run tracert google.com; the symptom indicates the WAN link to the ISP is saturated and DNS packets are being dropped due to congestion.</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g8b9f2f8a4d5d026c3e78b581afd9c17_q03_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g8b9f2f8a4d5d026c3e78b581afd9c17_q04" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An administrator runs &lt;code&gt;netstat -an&lt;/code&gt; on a Windows server and sees the following entry:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;TCP    0.0.0.0:3389    0.0.0.0:0    LISTENING&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;What does this entry indicate, and what is the security implication?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g8b9f2f8a4d5d026c3e78b581afd9c17_q04_a">
+                <material>
+                  <mattext texttype="text/plain">The server has an established RDP connection to a remote client on port 3389 and data is actively being transferred.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8b9f2f8a4d5d026c3e78b581afd9c17_q04_b">
+                <material>
+                  <mattext texttype="text/plain">TCP port 3389 (Remote Desktop Protocol) is open and accepting connections from any IP address on all interfaces; if RDP is not intentionally enabled, this may be a security risk.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8b9f2f8a4d5d026c3e78b581afd9c17_q04_c">
+                <material>
+                  <mattext texttype="text/plain">The server is attempting to connect to a remote service on port 3389 but the connection has not yet been established.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8b9f2f8a4d5d026c3e78b581afd9c17_q04_d">
+                <material>
+                  <mattext texttype="text/plain">Port 3389 is blocked by the Windows Firewall and the LISTENING state indicates the block is active.</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g8b9f2f8a4d5d026c3e78b581afd9c17_q04_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g8b9f2f8a4d5d026c3e78b581afd9c17_q05" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A network engineer wants to implement automated, continuous monitoring of CPU utilization, interface bandwidth, and memory usage across 200 network devices. She needs version-specific security: all monitoring traffic must be authenticated and encrypted because the management network traverses a shared infrastructure segment. Which solution satisfies all requirements?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g8b9f2f8a4d5d026c3e78b581afd9c17_q05_a">
+                <material>
+                  <mattext texttype="text/plain">Deploy SNMPv2c with the default community strings public and private — these strings serve as encrypted authentication tokens in v2c.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8b9f2f8a4d5d026c3e78b581afd9c17_q05_b">
+                <material>
+                  <mattext texttype="text/plain">Deploy SNMPv3 with authPriv security level, which provides HMAC-SHA authentication and AES encryption for all management traffic.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8b9f2f8a4d5d026c3e78b581afd9c17_q05_c">
+                <material>
+                  <mattext texttype="text/plain">Use syslog on UDP 514 to collect performance metrics from each device; syslog provides both authentication and encryption for metric data.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8b9f2f8a4d5d026c3e78b581afd9c17_q05_d">
+                <material>
+                  <mattext texttype="text/plain">Configure NetFlow on each device to export CPU and memory utilization records to a central collector.</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g8b9f2f8a4d5d026c3e78b581afd9c17_q05_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g8b9f2f8a4d5d026c3e78b581afd9c17_q06" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A security analyst is reviewing traffic on a core router and needs to identify which specific hosts and applications are consuming the most WAN bandwidth over the past 24 hours, including source/destination IP pairs, port numbers, and byte counts per flow. Which monitoring technology provides this information?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g8b9f2f8a4d5d026c3e78b581afd9c17_q06_a">
+                <material>
+                  <mattext texttype="text/plain">SNMP polling — queries interface input/output octet counters every 5 minutes to track total bandwidth utilization per interface.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8b9f2f8a4d5d026c3e78b581afd9c17_q06_b">
+                <material>
+                  <mattext texttype="text/plain">NetFlow — exports flow-level records for every unique source IP, destination IP, source port, destination port, and protocol combination observed on the interface.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8b9f2f8a4d5d026c3e78b581afd9c17_q06_c">
+                <material>
+                  <mattext texttype="text/plain">Syslog — generates a log entry for every packet that crosses the router interface and includes byte counts in each entry.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8b9f2f8a4d5d026c3e78b581afd9c17_q06_d">
+                <material>
+                  <mattext texttype="text/plain">Wireshark running continuously on the router — captures full packet contents for all 24 hours and stores them for later analysis.</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g8b9f2f8a4d5d026c3e78b581afd9c17_q06_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g8b9f2f8a4d5d026c3e78b581afd9c17_q07" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A network administrator receives a syslog message from a core router with severity level 2. A second message arrives from the same router with severity level 6. Which statement correctly characterizes these messages?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g8b9f2f8a4d5d026c3e78b581afd9c17_q07_a">
+                <material>
+                  <mattext texttype="text/plain">Severity 6 is more critical than severity 2 because higher numbers indicate greater urgency in the syslog severity scale.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8b9f2f8a4d5d026c3e78b581afd9c17_q07_b">
+                <material>
+                  <mattext texttype="text/plain">Severity 2 is Critical and requires immediate attention; severity 6 is Informational and represents a routine operational message.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8b9f2f8a4d5d026c3e78b581afd9c17_q07_c">
+                <material>
+                  <mattext texttype="text/plain">Both severity 2 and severity 6 represent Warning-level messages; the difference is only the specific subsystem reporting them.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8b9f2f8a4d5d026c3e78b581afd9c17_q07_d">
+                <material>
+                  <mattext texttype="text/plain">Severity 2 messages are sent to the syslog server on TCP port 514; severity 6 messages are sent on UDP port 514 based on their urgency level.</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g8b9f2f8a4d5d026c3e78b581afd9c17_q07_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g8b9f2f8a4d5d026c3e78b581afd9c17_q08" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;During a Wireshark capture of traffic between a client at 192.168.1.20 and a web server at 203.0.113.50, an administrator observes three packets in sequence: first a packet with SYN flag only, then a packet with both SYN and ACK flags, then a packet with ACK flag only. The administrator then applies the display filter &lt;code&gt;tcp.flags.syn == 1 &amp;amp;&amp;amp; tcp.flags.ack == 0&lt;/code&gt;. Which packet(s) will this filter display?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g8b9f2f8a4d5d026c3e78b581afd9c17_q08_a">
+                <material>
+                  <mattext texttype="text/plain">All three packets in the handshake, because SYN is set in the first two packets and ACK is set in the last two.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8b9f2f8a4d5d026c3e78b581afd9c17_q08_b">
+                <material>
+                  <mattext texttype="text/plain">Only the first packet (SYN only), because it is the only packet where SYN=1 and ACK=0 simultaneously.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8b9f2f8a4d5d026c3e78b581afd9c17_q08_c">
+                <material>
+                  <mattext texttype="text/plain">Only the second packet (SYN-ACK), because it has both SYN and ACK set, which satisfies both conditions in the AND filter.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8b9f2f8a4d5d026c3e78b581afd9c17_q08_d">
+                <material>
+                  <mattext texttype="text/plain">None of the packets, because the filter requires SYN=1 AND ACK=0 simultaneously, which is not a valid TCP flag combination.</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g8b9f2f8a4d5d026c3e78b581afd9c17_q08_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g8b9f2f8a4d5d026c3e78b581afd9c17_q09" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A network administrator is tasked with establishing a network baseline for a new corporate campus. She plans to collect SNMP interface utilization data, NetFlow records, and syslog messages. A colleague suggests collecting data for just 48 hours since the network is new and traffic patterns are simple. What is the standard recommended minimum collection period for a meaningful baseline, and why?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g8b9f2f8a4d5d026c3e78b581afd9c17_q09_a">
+                <material>
+                  <mattext texttype="text/plain">48 hours is sufficient because modern networks have consistent traffic patterns that stabilize within two days of initial deployment.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8b9f2f8a4d5d026c3e78b581afd9c17_q09_b">
+                <material>
+                  <mattext texttype="text/plain">One full business week (5 days) is required to capture peak business hours; weekend data is unnecessary for an office environment.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8b9f2f8a4d5d026c3e78b581afd9c17_q09_c">
+                <material>
+                  <mattext texttype="text/plain">At least two full business weeks, to capture both daily traffic cycles (peak vs. off-hours) and weekly cycles (business days vs. weekends and any recurring weekly patterns).</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8b9f2f8a4d5d026c3e78b581afd9c17_q09_d">
+                <material>
+                  <mattext texttype="text/plain">Six months of data is required before any baseline is considered valid, because seasonal traffic variations must be captured.</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g8b9f2f8a4d5d026c3e78b581afd9c17_q09_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g8b9f2f8a4d5d026c3e78b581afd9c17_q10" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A junior administrator is troubleshooting a report that users on VLAN 20 cannot reach the internet. He starts by running &lt;code&gt;ping 8.8.8.8&lt;/code&gt; from a VLAN 20 workstation — it fails. He then runs &lt;code&gt;ping 10.20.0.1&lt;/code&gt; (the VLAN 20 default gateway) — it succeeds. He then runs &lt;code&gt;ping 172.16.1.1&lt;/code&gt; (the WAN router's LAN interface) — it fails. Which troubleshooting approach is this administrator using, and what has he determined so far?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g8b9f2f8a4d5d026c3e78b581afd9c17_q10_a">
+                <material>
+                  <mattext texttype="text/plain">He is using the top-down approach. He has determined that the application layer is functioning correctly and the problem is at the transport layer.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8b9f2f8a4d5d026c3e78b581afd9c17_q10_b">
+                <material>
+                  <mattext texttype="text/plain">He is using the divide-and-conquer approach. He has determined that Layer 3 connectivity exists within VLAN 20 (workstation can reach its gateway) but fails beyond the gateway — the problem is between the distribution/core layer and the WAN router or on the WAN link itself.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8b9f2f8a4d5d026c3e78b581afd9c17_q10_c">
+                <material>
+                  <mattext texttype="text/plain">He is using the bottom-up approach. He has determined that the physical cable is functioning because ping succeeded to the gateway, and the problem must be a duplex mismatch.</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8b9f2f8a4d5d026c3e78b581afd9c17_q10_d">
+                <material>
+                  <mattext texttype="text/plain">He is using the top-down approach. He has determined that DNS is the root cause because ping uses DNS to resolve 8.8.8.8 before sending ICMP packets.</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g8b9f2f8a4d5d026c3e78b581afd9c17_q10_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+    </section>
+  </assessment>
+</questestinterop>

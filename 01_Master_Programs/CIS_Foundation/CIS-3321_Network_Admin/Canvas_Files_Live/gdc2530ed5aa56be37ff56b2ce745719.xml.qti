@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/profile/cc/ccv1p1/ccv1p1_qtiasiv1p2p1_v1p0.xsd">
+  <assessment ident="gdc2530ed5aa56be37ff56b2ce745719" title="Quiz (M09): Network Services: DNS, DHCP, and NTP">
+    <qtimetadata>
+      <qtimetadatafield>
+        <fieldlabel>cc_profile</fieldlabel>
+        <fieldentry>cc.exam.v0p1</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_assessmenttype</fieldlabel>
+        <fieldentry>Examination</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_scoretype</fieldlabel>
+        <fieldentry>Percentage</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>cc_maxattempts</fieldlabel>
+        <fieldentry>1</fieldentry>
+      </qtimetadatafield>
+    </qtimetadata>
+    <section ident="root_section">
+      <item ident="gdc2530ed5aa56be37ff56b2ce745719_q01" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A DNS administrator needs to configure the company's domain so that email sent to @example.com is delivered to the correct mail server. Which DNS record type must be created?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gdc2530ed5aa56be37ff56b2ce745719_q01_a">
+                <material>
+                  <mattext texttype="text/plain">A record — maps the mail server's hostname to its IPv4 address for delivery routing</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gdc2530ed5aa56be37ff56b2ce745719_q01_b">
+                <material>
+                  <mattext texttype="text/plain">CNAME record — creates an alias from the mail server hostname to the domain's canonical name</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gdc2530ed5aa56be37ff56b2ce745719_q01_c">
+                <material>
+                  <mattext texttype="text/plain">MX record — identifies the mail server responsible for accepting email for the domain, with a priority value</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gdc2530ed5aa56be37ff56b2ce745719_q01_d">
+                <material>
+                  <mattext texttype="text/plain">PTR record — resolves the mail server's IP address back to its hostname for reverse DNS lookup</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gdc2530ed5aa56be37ff56b2ce745719_q01_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gdc2530ed5aa56be37ff56b2ce745719_q02" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A network administrator receives a support ticket: a workstation on VLAN 20 cannot obtain an IP address from the DHCP server located on VLAN 1. Workstations on VLAN 1 obtain addresses normally. The VLAN 20 interface has an IP address of 192.168.20.1 and the DHCP server is at 192.168.1.50. Which configuration resolves this issue?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gdc2530ed5aa56be37ff56b2ce745719_q02_a">
+                <material>
+                  <mattext texttype="text/plain">Create a DHCP reservation on the server mapping the VLAN 20 interface MAC address to 192.168.20.1</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gdc2530ed5aa56be37ff56b2ce745719_q02_b">
+                <material>
+                  <mattext texttype="text/plain">Configure ip helper-address 192.168.1.50 on the VLAN 20 switch virtual interface to relay DHCP broadcasts to the server</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gdc2530ed5aa56be37ff56b2ce745719_q02_c">
+                <material>
+                  <mattext texttype="text/plain">Add a static route on the DHCP server pointing 192.168.20.0/24 to the default gateway</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gdc2530ed5aa56be37ff56b2ce745719_q02_d">
+                <material>
+                  <mattext texttype="text/plain">Configure the workstations on VLAN 20 with static IP addresses in the 192.168.20.0/24 range</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gdc2530ed5aa56be37ff56b2ce745719_q02_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gdc2530ed5aa56be37ff56b2ce745719_q03" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A security engineer reviews authentication failures showing "clock skew too great" errors for multiple workstations. Which service failure is causing these errors, and what is the standard maximum tolerance?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gdc2530ed5aa56be37ff56b2ce745719_q03_a">
+                <material>
+                  <mattext texttype="text/plain">DNS — the domain controller cannot resolve workstation hostnames because TTL on A records has expired</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gdc2530ed5aa56be37ff56b2ce745719_q03_b">
+                <material>
+                  <mattext texttype="text/plain">DHCP — workstations are receiving expired IP leases that no longer match the domain controller subnet</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gdc2530ed5aa56be37ff56b2ce745719_q03_c">
+                <material>
+                  <mattext texttype="text/plain">NTP — clocks are not synchronized; Kerberos authentication fails when clock skew exceeds 5 minutes</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gdc2530ed5aa56be37ff56b2ce745719_q03_d">
+                <material>
+                  <mattext texttype="text/plain">RADIUS — the authentication server is rejecting credentials because the session token timestamp is out of range</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gdc2530ed5aa56be37ff56b2ce745719_q03_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gdc2530ed5aa56be37ff56b2ce745719_q04" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A user reports they can access websites by IP address but cannot browse by hostname. Which service has failed, and what is the first troubleshooting step?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gdc2530ed5aa56be37ff56b2ce745719_q04_a">
+                <material>
+                  <mattext texttype="text/plain">DHCP has failed — run ipconfig /release and ipconfig /renew to obtain a new IP address</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gdc2530ed5aa56be37ff56b2ce745719_q04_b">
+                <material>
+                  <mattext texttype="text/plain">DNS has failed — run nslookup www.example.com to confirm whether the DNS server is responding</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gdc2530ed5aa56be37ff56b2ce745719_q04_c">
+                <material>
+                  <mattext texttype="text/plain">The default gateway is unreachable — run ping to the default gateway to verify Layer 3 connectivity</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gdc2530ed5aa56be37ff56b2ce745719_q04_d">
+                <material>
+                  <mattext texttype="text/plain">NTP has failed — synchronize the workstation clock and retry the hostname lookup</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gdc2530ed5aa56be37ff56b2ce745719_q04_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gdc2530ed5aa56be37ff56b2ce745719_q05" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A network administrator needs to harden the DNS, DHCP, and NTP infrastructure against common attacks: (1) DNS cache poisoning, (2) rogue DHCP servers, and (3) NTP amplification attacks. Which combination of controls best addresses all three?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gdc2530ed5aa56be37ff56b2ce745719_q05_a">
+                <material>
+                  <mattext texttype="text/plain">Enable DNSSEC on all authoritative zones, configure DHCP snooping on all access switches, and restrict NTP to respond only to trusted client IP ranges using ACLs</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gdc2530ed5aa56be37ff56b2ce745719_q05_b">
+                <material>
+                  <mattext texttype="text/plain">Increase DNS TTL values to 86400 seconds, assign static IPs to all DHCP clients, and disable NTP on all network devices</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gdc2530ed5aa56be37ff56b2ce745719_q05_c">
+                <material>
+                  <mattext texttype="text/plain">Configure split-horizon DNS, enable DHCP relay agents on all VLANs, and upgrade to NTPv4</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gdc2530ed5aa56be37ff56b2ce745719_q05_d">
+                <material>
+                  <mattext texttype="text/plain">Deploy a DNSSEC-validating recursive resolver, enable DHCP failover for redundancy, and configure NTP authentication using MD5 keys</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gdc2530ed5aa56be37ff56b2ce745719_q05_a</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gdc2530ed5aa56be37ff56b2ce745719_q06" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A network administrator runs nslookup and sees the response labeled "Non-authoritative answer." What does this indicate?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gdc2530ed5aa56be37ff56b2ce745719_q06_a">
+                <material>
+                  <mattext texttype="text/plain">The DNS server is not authorized to make changes to the zone and returned an error</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gdc2530ed5aa56be37ff56b2ce745719_q06_b">
+                <material>
+                  <mattext texttype="text/plain">The answer was served from the resolver's cache rather than directly from the domain's authoritative name server</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gdc2530ed5aa56be37ff56b2ce745719_q06_c">
+                <material>
+                  <mattext texttype="text/plain">The DNS record returned is for a CNAME alias and cannot be used directly to reach the destination</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gdc2530ed5aa56be37ff56b2ce745719_q06_d">
+                <material>
+                  <mattext texttype="text/plain">The DNS server found no matching record and returned a best-guess approximation from a nearby zone</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gdc2530ed5aa56be37ff56b2ce745719_q06_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gdc2530ed5aa56be37ff56b2ce745719_q07" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A Windows workstation is assigned the IP address 169.254.47.12 with subnet mask 255.255.0.0. The user cannot access any network resources. What is the most likely cause?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gdc2530ed5aa56be37ff56b2ce745719_q07_a">
+                <material>
+                  <mattext texttype="text/plain">The workstation has been assigned an IPv6 link-local address and cannot communicate using IPv4</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gdc2530ed5aa56be37ff56b2ce745719_q07_b">
+                <material>
+                  <mattext texttype="text/plain">The DHCP server assigned a duplicate IP and the workstation detected the conflict, reverting to the APIPA range</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gdc2530ed5aa56be37ff56b2ce745719_q07_c">
+                <material>
+                  <mattext texttype="text/plain">The workstation was unable to reach a DHCP server and self-assigned an APIPA address in the 169.254.0.0/16 range</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gdc2530ed5aa56be37ff56b2ce745719_q07_d">
+                <material>
+                  <mattext texttype="text/plain">The workstation's static IP was entered incorrectly and the address falls outside the valid subnet range</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gdc2530ed5aa56be37ff56b2ce745719_q07_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gdc2530ed5aa56be37ff56b2ce745719_q08" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An organization needs an internal database server with private IP 10.10.10.100 to be accessible from the internet at a dedicated public IP that partner companies can always reach at the same address. Which NAT type is appropriate?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gdc2530ed5aa56be37ff56b2ce745719_q08_a">
+                <material>
+                  <mattext texttype="text/plain">PAT (Port Address Translation) — many internal hosts share one public IP differentiated by port numbers</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gdc2530ed5aa56be37ff56b2ce745719_q08_b">
+                <material>
+                  <mattext texttype="text/plain">Dynamic NAT — the database server is assigned a public IP from a pool each time it initiates a connection</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gdc2530ed5aa56be37ff56b2ce745719_q08_c">
+                <material>
+                  <mattext texttype="text/plain">Static NAT — a permanent one-to-one mapping is created between 10.10.10.100 and a specific public IP address</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gdc2530ed5aa56be37ff56b2ce745719_q08_d">
+                <material>
+                  <mattext texttype="text/plain">NAT Overload — port numbers track sessions so multiple internal servers share the same public IP</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gdc2530ed5aa56be37ff56b2ce745719_q08_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gdc2530ed5aa56be37ff56b2ce745719_q09" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A DNS administrator is troubleshooting email delivery failures. The MX record for example.com points to mail.example.com. A follow-up A record query for mail.example.com returns no result. What is the cause of the delivery failure?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gdc2530ed5aa56be37ff56b2ce745719_q09_a">
+                <material>
+                  <mattext texttype="text/plain">The MX record priority of 10 is too high — email servers require MX priorities of 5 or lower to accept mail</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gdc2530ed5aa56be37ff56b2ce745719_q09_b">
+                <material>
+                  <mattext texttype="text/plain">The MX record points to mail.example.com but no A record exists for that hostname, so sending servers cannot resolve the mail exchanger's IP address</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gdc2530ed5aa56be37ff56b2ce745719_q09_c">
+                <material>
+                  <mattext texttype="text/plain">The MX record uses the wrong record type — email routing requires an AAAA record, not an MX record</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gdc2530ed5aa56be37ff56b2ce745719_q09_d">
+                <material>
+                  <mattext texttype="text/plain">The nslookup output shows the MX record is cached (non-authoritative) and the actual MX record may differ</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gdc2530ed5aa56be37ff56b2ce745719_q09_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gdc2530ed5aa56be37ff56b2ce745719_q10" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A company has a single DHCP server serving three VLANs: VLAN 10, 20, and 30. Each VLAN has its own scope on the DHCP server. What configuration ensures clients on each VLAN receive addresses from the correct scope?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gdc2530ed5aa56be37ff56b2ce745719_q10_a">
+                <material>
+                  <mattext texttype="text/plain">Configure the DHCP server with a superscope encompassing all three subnets, allowing clients from any VLAN to receive any available address</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gdc2530ed5aa56be37ff56b2ce745719_q10_b">
+                <material>
+                  <mattext texttype="text/plain">Configure ip helper-address pointing to the DHCP server on the Layer 3 interface for each VLAN, so the relayed DHCP Discover includes the gateway interface IP, allowing the server to select the correct scope</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gdc2530ed5aa56be37ff56b2ce745719_q10_c">
+                <material>
+                  <mattext texttype="text/plain">Create a separate DHCP server on each VLAN and disable inter-VLAN routing</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gdc2530ed5aa56be37ff56b2ce745719_q10_d">
+                <material>
+                  <mattext texttype="text/plain">Configure each client with a DHCP client ID matching their VLAN number so the server can identify which scope to assign</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gdc2530ed5aa56be37ff56b2ce745719_q10_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+    </section>
+  </assessment>
+</questestinterop>

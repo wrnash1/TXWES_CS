@@ -1,0 +1,173 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Assignment: Lab (M03): Application Attacks and Software Vulnerabilities</title>
+</head>
+<body>
+<h2>Lab (M03): Application Attacks and Software Vulnerabilities</h2>
+<h1>Lab Activity — Module 03: Application Attacks and Software Vulnerabilities</h1>
+<h2>CIS-4328 Information Security | Texas Wesleyan University</h2>
+<h3>CompTIA Security+ SY0-701 Alignment | Authorized Educational Use Only</h3>
+<hr />
+<h2>Lab Overview</h2>
+<p><strong>Lab Title:</strong> Web Application Vulnerability Analysis and Secure Architecture Design</p>
+<p><strong>Estimated Completion Time:</strong> 90 minutes</p>
+<p><strong>Environment:</strong> Kali Linux VM with a local intentionally-vulnerable web application (e.g., DVWA or OWASP Juice Shop, run locally — never test against a live production site)</p>
+<p><strong>Submission:</strong> Upload your completed deliverables to Canvas before the module deadline.</p>
+<p><strong>Learning Objectives:</strong></p>
+<ul>
+<li>
+<p>Identify and exploit a SQL injection vulnerability in a controlled lab environment, and explain the underlying flaw.</p>
+</li>
+<li>
+<p>Identify and demonstrate a reflected XSS vulnerability.</p>
+</li>
+<li>
+<p>Distinguish static (SAST) from dynamic (DAST) testing by applying both to the same code sample.</p>
+</li>
+<li>
+<p>Design a corrected network architecture that properly isolates a web tier from a data tier.</p>
+</li>
+</ul>
+<hr />
+<h2>Background</h2>
+<p>This lab uses a local, intentionally vulnerable web application so you can safely observe real attack techniques without risk to any production system. Only test applications you own or that are explicitly provided for this purpose — attacking systems without authorization is illegal.</p>
+<hr />
+<h2>Part 1 — SQL Injection Exploitation (25 minutes)</h2>
+<h3>Part 1 Background</h3>
+<p>You will use your vulnerable web application's login or search form to demonstrate a classic SQL injection.</p>
+<h3>Part 1 Tasks</h3>
+<ol>
+<li>
+<p>Boot your Kali Linux VM and start your local vulnerable web application (DVWA or Juice Shop).</p>
+</li>
+<li>
+<p>Locate a login form or search field. Attempt the classic authentication bypass payload:
+   <code>' OR '1'='1</code></p>
+</li>
+<li>
+<p>Record whether the payload succeeds in bypassing authentication or returning unintended data.</p>
+</li>
+<li>
+<p>Open the application's source code (provided with DVWA/Juice Shop) and locate the vulnerable query. Identify exactly where user input is concatenated into the SQL string.</p>
+</li>
+<li>
+<p>Locate (or write) the corrected version of the same query using a parameterized query / prepared statement, and explain why it is not vulnerable to the same payload.</p>
+</li>
+</ol>
+<h3>Part 1 Analysis Questions</h3>
+<ol>
+<li>
+<p>Walk through, character by character, what the database actually executes when your payload is submitted to the vulnerable query. Why does <code>'1'='1'</code> cause the query to return unintended rows?</p>
+</li>
+<li>
+<p>Show the corrected parameterized version of the query and explain specifically why the same payload fails against it — what does the database engine do differently with parameterized input versus concatenated input?</p>
+</li>
+<li>
+<p>This vulnerability exists at the application code layer. Name one network-layer or database-layer control (not a code fix) that would reduce the impact of this vulnerability even if the code were never fixed.</p>
+</li>
+</ol>
+<h3>Part 1 Deliverable</h3>
+<p>Screenshot of the successful injection, the vulnerable code snippet, the corrected parameterized code snippet, and written answers to the three analysis questions.</p>
+<hr />
+<h2>Part 2 — Reflected XSS Exploitation (20 minutes)</h2>
+<h3>Part 2 Background</h3>
+<p>Cross-Site Scripting occurs when unsanitized user input is reflected back into a page and executed as script by the victim's browser.</p>
+<h3>Part 2 Tasks</h3>
+<ol>
+<li>
+<p>Locate a search box or comment field in your vulnerable application that reflects input back to the page.</p>
+</li>
+<li>
+<p>Submit the following test payload:
+   ```
+ <br />
+<script>alert('XSS-Test')</script></p>
+</li>
+</ol>
+<p>```</p>
+<ol start="3">
+<li>
+<p>Record whether the alert box executes, confirming the reflected XSS vulnerability.</p>
+</li>
+<li>
+<p>Identify the specific output-encoding function or library that, if applied to the reflected output, would neutralize this payload without breaking legitimate input.</p>
+</li>
+</ol>
+<h3>Part 2 Analysis Questions</h3>
+<ol>
+<li>
+<p>Explain why this is called "reflected" XSS specifically (as opposed to stored or DOM-based XSS). What has to be true about how the attacker delivers the malicious link to a victim for a real-world reflected XSS attack to succeed?</p>
+</li>
+<li>
+<p>Your test payload only popped an alert box. Describe one realistic, more damaging payload an attacker could use in this same vulnerable field (in general terms — do not provide fully weaponized exploit code), and what it would accomplish against a real victim.</p>
+</li>
+<li>
+<p>Both input validation and output encoding are mentioned as XSS defenses in the reading guide. Explain why output encoding is considered the more reliable primary defense against XSS specifically.</p>
+</li>
+</ol>
+<h3>Part 2 Deliverable</h3>
+<p>Screenshot of the executed alert box, and written answers to the three analysis questions.</p>
+<hr />
+<h2>Part 3 — SAST vs. DAST on the Same Vulnerability (20 minutes)</h2>
+<h3>Part 3 Background</h3>
+<p>Static and dynamic testing find different classes of issues. You will apply both perspectives to the SQL injection vulnerability from Part 1.</p>
+<h3>Part 3 Tasks</h3>
+<ol>
+<li>
+<p><strong>Static perspective:</strong> Without running the application, read the vulnerable query's source code from Part 1 and identify the line(s) that would be flagged by a SAST tool. Write the reasoning a SAST tool's rule engine would use to flag it (e.g., "untrusted input reaches a SQL sink without sanitization").</p>
+</li>
+<li>
+<p><strong>Dynamic perspective:</strong> Using the actual exploitation you performed in Part 1 as your "DAST" result, describe what a DAST scanner report would show for this same finding (e.g., which HTTP request, which parameter, what response indicated the vulnerability).</p>
+</li>
+</ol>
+<h3>Part 3 Analysis Questions</h3>
+<ol>
+<li>
+<p>If your organization can only afford one type of testing (SAST or DAST) before this application's release, which would you recommend for catching this specific SQL injection, and why?</p>
+</li>
+<li>
+<p>Name one vulnerability type that SAST would likely miss but DAST would catch, and one that DAST would likely miss but SAST would catch. Justify each.</p>
+</li>
+</ol>
+<h3>Part 3 Deliverable</h3>
+<p>Written SAST-perspective and DAST-perspective descriptions, and written answers to both analysis questions.</p>
+<hr />
+<h2>Part 4 — Secure Architecture Redesign (25 minutes)</h2>
+<h3>Part 4 Background</h3>
+<p>A company has deployed a customer portal with the web server and database server both placed in the DMZ (see this module's Discussion, Scenario B) because "they need to talk to each other anyway."</p>
+<h3>Part 4 Tasks</h3>
+<ol>
+<li>
+<p>Draw (or describe in detail, if you cannot draw) the corrected network architecture: internet, firewall, DMZ, internal network, and the correct placement of the web server and database server.</p>
+</li>
+<li>
+<p>Specify exactly which firewall rules (source, destination, port) should exist between each zone in your corrected design.</p>
+</li>
+<li>
+<p>Explain what security benefit this corrected architecture provides if the web server is compromised via the SQL injection or XSS vulnerabilities you exploited in Parts 1 and 2.</p>
+</li>
+</ol>
+<h3>Part 4 Deliverable</h3>
+<p>Architecture diagram or detailed written description, firewall rule table, and written explanation of the security benefit.</p>
+<hr />
+<h2>Lab Submission Checklist</h2>
+<p>Before submitting, verify:</p>
+<ul>
+<li>
+<p>Part 1: Injection screenshot, vulnerable and corrected code snippets, and written answers.</p>
+</li>
+<li>
+<p>Part 2: XSS alert screenshot and written answers.</p>
+</li>
+<li>
+<p>Part 3: SAST and DAST perspective write-ups and written answers.</p>
+</li>
+<li>
+<p>Part 4: Architecture diagram/description, firewall rule table, and written explanation.</p>
+</li>
+</ul>
+<hr />
+<p>Module 03 Lab — End</p>
+</body>
+</html>

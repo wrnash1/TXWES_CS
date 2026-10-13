@@ -1,0 +1,457 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Reading Guide (M12): Wide Area Networks</title>
+</head>
+<body>
+<h2>Reading Guide (M12): Wide Area Networks</h2>
+<h1>Reading Guide: Module 12 — Wide Area Networks</h1>
+<h2>Course: CIS-3321 Network Administration</h2>
+<p><strong>Certification Alignment:</strong> CompTIA Network+ (N10-009)</p>
+<hr />
+<h2>Overview</h2>
+<p>This reading guide supports Module 12 video lectures and prepares you for the Module 12 Quiz and the CompTIA Network+ N10-009 exam. WAN technologies appear throughout Domain 1 (Networking Concepts) and Domain 2 (Infrastructure). Focus especially on identifying the correct WAN technology for a given scenario — a frequent exam question type.</p>
+<p><strong>Estimated Reading Time:</strong> 60–75 minutes</p>
+<hr />
+<h2>Part 1: WAN Fundamentals</h2>
+<h3>1.1 WAN Terminology Reference</h3>
+<p>Understanding WAN requires a precise vocabulary. The following terms appear frequently on the Network+ exam.</p>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CPE</td>
+<td>Customer Premises Equipment — network gear at the customer site</td>
+</tr>
+<tr>
+<td>Demarc</td>
+<td>Demarcation point — boundary between carrier and customer responsibility</td>
+</tr>
+<tr>
+<td>Local loop</td>
+<td>Connection from customer demarc to carrier Central Office</td>
+</tr>
+<tr>
+<td>Central Office (CO)</td>
+<td>Carrier facility where local loops terminate</td>
+</tr>
+<tr>
+<td>Last mile</td>
+<td>Informal term for the local loop</td>
+</tr>
+<tr>
+<td>CSU/DSU</td>
+<td>Channel Service Unit / Data Service Unit — interface between T-carrier line and router</td>
+</tr>
+<tr>
+<td>Latency</td>
+<td>Time for data to travel source to destination</td>
+</tr>
+<tr>
+<td>Jitter</td>
+<td>Variation in latency; harmful to real-time applications</td>
+</tr>
+<tr>
+<td>Bandwidth</td>
+<td>Data capacity of a link (Kbps, Mbps, Gbps)</td>
+</tr>
+</tbody>
+</table>
+<h3>1.2 Circuit-Switched vs. Packet-Switched</h3>
+<h4>Circuit-Switched Networks</h4>
+<p>In circuit switching, a dedicated physical path is reserved for the entire duration of a connection. All capacity on that path is reserved even when no data is transmitting.</p>
+<p>Characteristics:</p>
+<ul>
+<li>Guaranteed, consistent bandwidth</li>
+<li>Predictable performance</li>
+<li>Inefficient — idle circuits waste capacity</li>
+<li>Legacy technology (PSTN, ISDN)</li>
+</ul>
+<p>Historical WAN example — ISDN (Integrated Services Digital Network):</p>
+<ul>
+<li>BRI (Basic Rate Interface): 2 × 64 Kbps B-channels + 1 × 16 Kbps D-channel = 128 Kbps usable data</li>
+<li>PRI (Primary Rate Interface): 23 × B-channels + 1 D-channel (T1 equivalent) in North America</li>
+</ul>
+<h4>Packet-Switched Networks</h4>
+<p>In packet switching, data is divided into packets that are routed independently through shared network infrastructure.</p>
+<p>Characteristics:</p>
+<ul>
+<li>Efficient — bandwidth shared across users</li>
+<li>Variable latency possible (congestion, different paths)</li>
+<li>Dominant modern WAN model</li>
+</ul>
+<hr />
+<h2>Part 2: Dedicated WAN Technologies</h2>
+<h3>2.1 T-Carrier and E-Carrier Leased Lines</h3>
+<p>T-carrier lines use Time Division Multiplexing (TDM) to divide a digital circuit into 24 DS0 channels of 64 Kbps each.</p>
+<table>
+<thead>
+<tr>
+<th>Line</th>
+<th>Bandwidth</th>
+<th>DS0 Channels</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DS0</td>
+<td>64 Kbps</td>
+<td>1</td>
+</tr>
+<tr>
+<td>T1 (DS1)</td>
+<td>1.544 Mbps</td>
+<td>24</td>
+</tr>
+<tr>
+<td>T3 (DS3)</td>
+<td>44.736 Mbps</td>
+<td>672 (28 × T1)</td>
+</tr>
+</tbody>
+</table>
+<p>European E-carrier equivalents:</p>
+<ul>
+<li>E1: 2.048 Mbps (32 channels)</li>
+<li>E3: 34.368 Mbps</li>
+</ul>
+<p>A CSU/DSU is required to connect a router to a T-carrier line. The CSU terminates the carrier signal; the DSU converts it to a format the router can use.</p>
+<h3>2.2 SONET/SDH and Optical Carrier Lines</h3>
+<p>Synchronous Optical Network (SONET) in North America and Synchronous Digital Hierarchy (SDH) in Europe define optical carrier standards.</p>
+<table>
+<thead>
+<tr>
+<th>OC Level</th>
+<th>Bandwidth</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OC-1</td>
+<td>51.84 Mbps</td>
+</tr>
+<tr>
+<td>OC-3</td>
+<td>155.52 Mbps</td>
+</tr>
+<tr>
+<td>OC-12</td>
+<td>622.08 Mbps</td>
+</tr>
+<tr>
+<td>OC-48</td>
+<td>2.488 Gbps</td>
+</tr>
+<tr>
+<td>OC-192</td>
+<td>9.953 Gbps</td>
+</tr>
+<tr>
+<td>OC-768</td>
+<td>39.813 Gbps</td>
+</tr>
+</tbody>
+</table>
+<p>SONET uses a self-healing ring topology. If a link fails, traffic automatically reroutes in the opposite direction around the ring — recovery time under 50 ms.</p>
+<h3>2.3 MPLS — Multiprotocol Label Switching</h3>
+<h4>MPLS Architecture and Label Forwarding</h4>
+<p>MPLS operates between Layer 2 and Layer 3 — sometimes called Layer 2.5. It inserts a label stack between the Layer 2 frame header and the Layer 3 IP header.</p>
+<p>Key MPLS components:</p>
+<ul>
+<li><strong>Label Edge Router (LER) / Provider Edge (PE) router</strong>: Adds labels at ingress, removes at egress.</li>
+<li><strong>Label Switch Router (LSR) / Provider (P) router</strong>: Forwards based on label only — never examines IP header.</li>
+<li><strong>Label Switched Path (LSP)</strong>: Predetermined path through the MPLS network for a traffic flow.</li>
+<li><strong>Forwarding Equivalence Class (FEC)</strong>: A group of packets forwarded the same way (same label, same path).</li>
+</ul>
+<p>Label operations:</p>
+<ul>
+<li>Push: Add a label (ingress PE)</li>
+<li>Swap: Replace label with new label (P router)</li>
+<li>Pop: Remove label (egress PE)</li>
+</ul>
+<h4>MPLS VPN (L3VPN)</h4>
+<p>MPLS Layer 3 VPN uses Virtual Routing and Forwarding (VRF) instances to separate customer routing tables on shared PE routers. Each customer has a dedicated VRF — routes are completely isolated from other customers.</p>
+<p>The carrier uses BGP with VPN extensions (VPNv4/VPNv6 address families) to distribute customer routes between PE routers across the MPLS backbone.</p>
+<h4>MPLS QoS and Traffic Engineering</h4>
+<p>MPLS supports differentiated QoS through the EXP (Experimental) bits in the label header — 3 bits providing 8 classes of service.</p>
+<p>MPLS-TE uses RSVP-TE or CR-LDP to establish LSPs along explicit paths, allowing operators to route around congestion and guarantee bandwidth for specific traffic types.</p>
+<hr />
+<h2>Part 3: Metro and Broadband WAN</h2>
+<h3>3.1 Metro Ethernet</h3>
+<p>Metro Ethernet Forum (MEF) service definitions:</p>
+<table>
+<thead>
+<tr>
+<th>Service</th>
+<th>Topology</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>E-Line</td>
+<td>Point-to-point</td>
+<td>Single virtual connection between two sites</td>
+</tr>
+<tr>
+<td>E-LAN</td>
+<td>Multipoint-to-multipoint</td>
+<td>All sites communicate with all others</td>
+</tr>
+<tr>
+<td>E-Tree</td>
+<td>Hub-and-spoke</td>
+<td>Root communicates with all leaves; leaves isolated from each other</td>
+</tr>
+</tbody>
+</table>
+<p>Metro Ethernet uses Provider Bridging (802.1ad — Q-in-Q) or MPLS/VPLS to carry customer 802.1Q VLANs across the carrier network. The outer S-tag identifies the service; the inner C-tag identifies the customer VLAN.</p>
+<h3>3.2 Broadband Internet WAN Technologies</h3>
+<h4>DSL Technologies</h4>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Max Download</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ADSL</td>
+<td>8 Mbps</td>
+<td>Asymmetric, legacy</td>
+</tr>
+<tr>
+<td>ADSL2+</td>
+<td>24 Mbps</td>
+<td>Improved ADSL</td>
+</tr>
+<tr>
+<td>VDSL2</td>
+<td>100 Mbps</td>
+<td>Short range — under 1 km</td>
+</tr>
+<tr>
+<td>G.fast</td>
+<td>1 Gbps</td>
+<td>Very short range — under 100 m</td>
+</tr>
+</tbody>
+</table>
+<p>DSL uses existing copper telephone infrastructure. A DSLAM (Digital Subscriber Line Access Multiplexer) at the CO aggregates multiple DSL connections.</p>
+<h4>Cable (DOCSIS)</h4>
+<ul>
+<li>DOCSIS 3.0: 1 Gbps downstream / 200 Mbps upstream (channel bonding)</li>
+<li>DOCSIS 3.1: 10 Gbps downstream / 1–2 Gbps upstream</li>
+<li>Shared medium: bandwidth shared in the cable node neighborhood</li>
+</ul>
+<h4>Fiber to the Premises (FTTP/FTTH)</h4>
+<p>GPON (Gigabit Passive Optical Network) characteristics:</p>
+<ul>
+<li>2.488 Gbps downstream / 1.244 Gbps upstream shared among up to 64 ONUs</li>
+<li>Passive splitters — no powered equipment between CO and customer</li>
+<li>Low latency, high reliability</li>
+</ul>
+<hr />
+<h2>Part 4: Wireless and Satellite WAN</h2>
+<h3>4.1 Cellular WAN Technologies</h3>
+<table>
+<thead>
+<tr>
+<th>Generation</th>
+<th>Typical Speed</th>
+<th>Latency</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4G LTE</td>
+<td>20–150 Mbps</td>
+<td>30–50 ms</td>
+<td>Widely deployed WAN option</td>
+</tr>
+<tr>
+<td>4G LTE-A</td>
+<td>Up to 300 Mbps</td>
+<td>15–30 ms</td>
+<td>Carrier aggregation</td>
+</tr>
+<tr>
+<td>5G Sub-6 GHz</td>
+<td>100–400 Mbps</td>
+<td>10–30 ms</td>
+<td>Broad coverage nationwide</td>
+</tr>
+<tr>
+<td>5G mmWave</td>
+<td>1–4 Gbps</td>
+<td>Under 10 ms</td>
+<td>Dense urban, limited range</td>
+</tr>
+</tbody>
+</table>
+<p>Cellular WAN hardware: LTE/5G routers with enterprise features — dual-SIM, failover, VPN, QoS.</p>
+<h3>4.2 Satellite WAN</h3>
+<h4>Geostationary (GEO) Satellite</h4>
+<ul>
+<li>Altitude: 35,786 km</li>
+<li>Round-trip latency: 600–700 ms (physics-limited)</li>
+<li>Throughput: 10–100 Mbps</li>
+<li>Not suitable for VoIP, interactive gaming, or real-time trading</li>
+<li>Suitable for remote monitoring, email, periodic data sync, backup</li>
+</ul>
+<h4>Low Earth Orbit (LEO) Satellite</h4>
+<ul>
+<li>Altitude: 550–1,200 km</li>
+<li>Round-trip latency: 20–40 ms (Starlink typical)</li>
+<li>Throughput: 100–300 Mbps typical</li>
+<li>Near-global coverage including polar regions</li>
+<li>Use cases: Remote enterprise sites, maritime, aviation, rural broadband</li>
+</ul>
+<hr />
+<h2>Part 5: SD-WAN</h2>
+<h3>5.1 SD-WAN Architecture</h3>
+<p>SD-WAN decouples WAN management from the physical transport, using a centralized controller to manage all WAN edge devices.</p>
+<p>Key components:</p>
+<ul>
+<li><strong>SD-WAN Controller/Orchestrator</strong>: Centralized management plane. Pushes policies to all edge devices. Provides single-pane-of-glass visibility.</li>
+<li><strong>SD-WAN Edge Device (vCPE)</strong>: Deployed at each branch. Connects to multiple WAN transports. Executes policies received from the controller.</li>
+<li><strong>WAN Transports</strong>: Any combination of MPLS, broadband internet, 4G/5G, satellite.</li>
+</ul>
+<h3>5.2 SD-WAN Key Capabilities</h3>
+<p>Application-aware routing identifies applications using deep packet inspection (DPI) and routes based on policy:</p>
+<ul>
+<li>Real-time traffic (VoIP, video) routes via lowest-latency link</li>
+<li>SaaS traffic routes via direct internet breakout</li>
+<li>Sensitive data routes via MPLS or encrypted tunnel</li>
+<li>Bulk transfers use least-cost link</li>
+</ul>
+<p>Dynamic path selection continuously monitors link quality (latency, jitter, packet loss) and steers traffic away from degraded links in real time — sub-second failover.</p>
+<p>Zero-touch provisioning: New branch devices self-configure by contacting the cloud controller on first boot.</p>
+<h3>5.3 SD-WAN vs. Traditional WAN</h3>
+<table>
+<thead>
+<tr>
+<th>Factor</th>
+<th>Traditional MPLS WAN</th>
+<th>SD-WAN</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cost</td>
+<td>High (dedicated circuits)</td>
+<td>Lower (broadband + policy)</td>
+</tr>
+<tr>
+<td>Flexibility</td>
+<td>Low (long provisioning)</td>
+<td>High (software-defined)</td>
+</tr>
+<tr>
+<td>Cloud optimization</td>
+<td>Poor (backhaul to DC)</td>
+<td>Excellent (direct breakout)</td>
+</tr>
+<tr>
+<td>Visibility</td>
+<td>Limited</td>
+<td>Rich per-app analytics</td>
+</tr>
+<tr>
+<td>Management</td>
+<td>Per-device CLI</td>
+<td>Centralized dashboard</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>Part 6: WAN Optimization</h2>
+<h3>6.1 WAN Optimization Techniques</h3>
+<h4>Data Deduplication</h4>
+<p>Operates at the byte level. The optimizer builds a dictionary of data patterns seen across all traffic. When a pattern recurs, only a short reference token is sent instead of the full data. Particularly effective for file transfers and backups — may reduce data volume by 90–99%.</p>
+<h4>Compression</h4>
+<p>Standard algorithms (LZ77/LZ78) compress the WAN stream in real time. Effective for text-heavy protocols. Limited benefit for already-compressed or encrypted data.</p>
+<h4>Protocol Optimization</h4>
+<p>The optimizer proxies WAN-unfriendly protocols:</p>
+<ul>
+<li>SMB/CIFS: Predictive prefetching replaces chatty acknowledge cycles.</li>
+<li>Exchange MAPI: Local caching serves repeated email/attachment requests.</li>
+<li>HTTP: Web object caching reduces repeat WAN traversal.</li>
+</ul>
+<h4>TCP Optimization</h4>
+<p>On high-latency WAN links, TCP congestion control throttles throughput unnecessarily. WAN optimizers use large TCP window scaling, SACK improvements, and local TCP termination to maximize throughput.</p>
+<h4>QoS and Traffic Shaping</h4>
+<ul>
+<li>Voice/video: Strict priority queue</li>
+<li>Business-critical applications: Guaranteed minimum bandwidth</li>
+<li>Bulk transfers: Best-effort, rate-limited during business hours</li>
+</ul>
+<hr />
+<h2>Key Terms Glossary</h2>
+<ul>
+<li><strong>ADSL</strong>: Asymmetric DSL — download faster than upload.</li>
+<li><strong>Backhaul</strong>: Routing WAN-bound traffic back to a central site before forwarding.</li>
+<li><strong>CO</strong>: Central Office — carrier switching facility.</li>
+<li><strong>CSU/DSU</strong>: Interface device for T-carrier lines.</li>
+<li><strong>DOCSIS</strong>: Data Over Cable Service Interface Specification.</li>
+<li><strong>FEC</strong>: Forwarding Equivalence Class — group of MPLS packets forwarded identically.</li>
+<li><strong>GPON</strong>: Gigabit Passive Optical Network.</li>
+<li><strong>GEO</strong>: Geostationary orbit satellite — approximately 36,000 km altitude, high latency.</li>
+<li><strong>Jitter</strong>: Variation in packet delay — harmful to real-time applications.</li>
+<li><strong>LER</strong>: Label Edge Router — adds/removes MPLS labels at network edge.</li>
+<li><strong>LEO</strong>: Low Earth Orbit satellite — approximately 550–1200 km altitude, low latency.</li>
+<li><strong>Local loop</strong>: Physical connection from customer to carrier CO.</li>
+<li><strong>LSP</strong>: Label Switched Path — predetermined MPLS forwarding route.</li>
+<li><strong>LSR</strong>: Label Switch Router — forwards based on label only.</li>
+<li><strong>MPLS</strong>: Multiprotocol Label Switching.</li>
+<li><strong>OC-x</strong>: Optical Carrier — SONET bandwidth designation.</li>
+<li><strong>SD-WAN</strong>: Software-Defined WAN.</li>
+<li><strong>SONET</strong>: Synchronous Optical Network.</li>
+<li><strong>T1</strong>: 1.544 Mbps T-carrier leased line.</li>
+<li><strong>vCPE</strong>: Virtual Customer Premises Equipment — SD-WAN edge device.</li>
+<li><strong>VRF</strong>: Virtual Routing and Forwarding — MPLS customer isolation mechanism.</li>
+</ul>
+<hr />
+<h2>Review Questions</h2>
+<ol>
+<li>
+<p>What is the demarcation point and who is responsible for equipment on each side?</p>
+</li>
+<li>
+<p>Compare circuit-switched and packet-switched WAN technologies. Which is more efficient for bursty data traffic and why?</p>
+</li>
+<li>
+<p>A company has three offices and needs any-to-any connectivity with guaranteed performance for voice traffic. The company wants carrier-managed routing. Which WAN technology is most appropriate?</p>
+</li>
+<li>
+<p>What is the difference between a T1 and a T3 leased line in terms of bandwidth and channel count?</p>
+</li>
+<li>
+<p>Describe the MPLS label forwarding process: what happens at the ingress PE router, P routers, and egress PE router?</p>
+</li>
+<li>
+<p>What is SD-WAN application-aware routing? Give two examples of how different applications might be routed differently.</p>
+</li>
+<li>
+<p>A remote mining site needs WAN access but no terrestrial connectivity is available. What WAN option should be considered, and what latency limitations apply?</p>
+</li>
+<li>
+<p>What is data deduplication in WAN optimization and why is it particularly effective for backup traffic?</p>
+</li>
+<li>
+<p>What is zero-touch provisioning in SD-WAN and what operational benefit does it provide?</p>
+</li>
+<li>
+<p>Compare GEO satellite and LEO satellite WAN in terms of latency and suitability for real-time applications.</p>
+</li>
+</ol>
+</body>
+</html>

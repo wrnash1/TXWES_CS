@@ -1,0 +1,198 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Assignment: Lab (M10): Routing Protocols: Static, OSPF, and BGP</title>
+</head>
+<body>
+<h2>Lab (M10): Routing Protocols: Static, OSPF, and BGP</h2>
+<h1>Lab Activity: Module 10 — Routing Protocols: Static, OSPF, and BGP</h1>
+<h2>CIS-3321 Network Administration | CompTIA Network+ (N10-009)</h2>
+<h2>Texas Wesleyan University | Professor Nash</h2>
+<hr />
+<h3>Overview</h3>
+<p>This lab has two parts. Part 1 uses Cisco Packet Tracer to configure static routes and single-area OSPF between three routers and verify connectivity and administrative distance behavior. Part 2 is a paper-based BGP path-selection exercise, since a realistic multi-AS BGP topology exceeds what a single Packet Tracer lab can meaningfully simulate — you will analyze a provided routing table and path-attribute data to determine BGP's actual path selection.</p>
+<p>Estimated Time: 70–85 minutes</p>
+<p>Required Tools:</p>
+<ul>
+<li>Cisco Packet Tracer 8.x (free download at netacad.com with a free account)</li>
+</ul>
+<hr />
+<h3>Learning Objectives</h3>
+<p>By the end of this lab, you will be able to:</p>
+<ol>
+<li>Configure static routes, including a default route, on a Cisco router.</li>
+<li>Configure single-area OSPF on multiple routers and verify neighbor adjacency.</li>
+<li>Interpret <code>show ip route</code> output to identify route sources and administrative distance in action.</li>
+<li>Explain why a static route is preferred over an OSPF-learned route to the same destination.</li>
+<li>Apply BGP path-selection rules (AS-Path length, Local Preference) to determine the best path in a given scenario.</li>
+</ol>
+<hr />
+<h3>Part 1: Static Routing and OSPF in Packet Tracer</h3>
+<h4>Part 1 Step 1: Build the Topology</h4>
+<p>Open Packet Tracer and create the following topology:</p>
+<ul>
+<li><strong>R1</strong> (LAN: 192.168.1.0/24) — connected to <strong>R2</strong> via a serial or Ethernet WAN link (10.0.12.0/30)</li>
+<li><strong>R2</strong> — connected to <strong>R3</strong> via a WAN link (10.0.23.0/30)</li>
+<li><strong>R3</strong> (LAN: 192.168.3.0/24)</li>
+</ul>
+<p>Assign IP addresses to all interfaces per the addressing scheme above and bring all interfaces up (<code>no shutdown</code>).</p>
+<h4>Part 1 Step 2: Configure Static Routes</h4>
+<p>On <strong>R1</strong>, configure a static route to reach R3's LAN (192.168.3.0/24) via R2:</p>
+<pre><code>R1(config)# ip route 192.168.3.0 255.255.255.0 10.0.12.2
+</code></pre>
+<p>On <strong>R3</strong>, configure a static route to reach R1's LAN (192.168.1.0/24) via R2:</p>
+<pre><code>R3(config)# ip route 192.168.1.0 255.255.255.0 10.0.23.1
+</code></pre>
+<p>On <strong>R2</strong>, no static routes are needed if R2 has directly connected interfaces to both WAN links — R2 already knows both.</p>
+<p>Verify with <code>show ip route</code> on R1 and R3. Confirm the routes appear with an <code>S</code> code (static). Test connectivity with <code>ping 192.168.3.1</code> from a PC on R1's LAN to a PC on R3's LAN.</p>
+<h4>Part 1 Step 3: Convert to OSPF</h4>
+<p>Remove the static routes you configured in Step 2 (<code>no ip route ...</code>), then configure single-area OSPF (Area 0) on all three routers, advertising all connected networks:</p>
+<pre><code>R1(config)# router ospf 1
+R1(config-router)# network 192.168.1.0 0.0.0.255 area 0
+R1(config-router)# network 10.0.12.0 0.0.0.3 area 0
+</code></pre>
+<p>Configure equivalent OSPF network statements on R2 (both WAN links) and R3 (its LAN and WAN link).</p>
+<p>Verify with <code>show ip ospf neighbor</code> on each router to confirm full adjacency, and <code>show ip route</code> to confirm routes now appear with an <code>O</code> code (OSPF) instead of <code>S</code>.</p>
+<p>Re-test connectivity with <code>ping 192.168.3.1</code> from R1's LAN.</p>
+<h4>Part 1 Step 4: Administrative Distance Conflict</h4>
+<p>With OSPF still running, re-add the original static route on R1 from Step 2:</p>
+<pre><code>R1(config)# ip route 192.168.3.0 255.255.255.0 10.0.12.2
+</code></pre>
+<p>Run <code>show ip route 192.168.3.0</code> on R1 again.</p>
+<h3>Part 1 Analysis Questions</h3>
+<ol>
+<li>
+<p>After Step 4, which route (static or OSPF) appears as the active route in R1's routing table for 192.168.3.0/24, and what administrative distance value explains this outcome?</p>
+</li>
+<li>
+<p>Both the static route and the OSPF route in this topology have the exact same next hop and lead to the same destination. In a more complex topology where OSPF had discovered a <em>better</em> (lower-cost, more direct) path than the static route, would OSPF's better path be used? Explain why or why not, referencing AD specifically.</p>
+</li>
+<li>
+<p>If R2 completely failed (powered off) while only the static routes from Step 2 were configured, would R1 automatically detect the failure and find an alternate path? Would the same be true if OSPF were configured instead (assuming no alternate physical path exists)? Explain the real difference in behavior between static and dynamic routing here, even in a topology with no redundant path.</p>
+</li>
+<li>
+<p><code>show ip ospf neighbor</code> showed a "FULL" state once adjacency completed. Name one reason two directly connected OSPF routers might fail to reach FULL state (e.g., a specific configuration mismatch).</p>
+</li>
+</ol>
+<h3>Part 1 Deliverable</h3>
+<p>Screenshots of: the topology, <code>show ip route</code> output after Step 2 (static), <code>show ip ospf neighbor</code> and <code>show ip route</code> output after Step 3 (OSPF), <code>show ip route 192.168.3.0</code> output after Step 4 (AD conflict), and both successful ping tests. Written answers to all four analysis questions.</p>
+<hr />
+<h3>Part 2: BGP Path Selection Analysis (Paper Exercise)</h3>
+<h4>Part 2 Background</h4>
+<p>Your organization (AS 65001) is multihomed to two ISPs and receives the following two paths to reach the destination network 203.0.113.0/24 from its BGP table:</p>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Next Hop</th>
+<th>AS-Path</th>
+<th>Local Preference</th>
+<th>Learned From</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Path A</td>
+<td>ISP-1 router</td>
+<td>65010 65020 65030</td>
+<td>100</td>
+<td>eBGP (ISP-1)</td>
+</tr>
+<tr>
+<td>Path B</td>
+<td>ISP-2 router</td>
+<td>65040 65030</td>
+<td>150</td>
+<td>eBGP (ISP-2)</td>
+</tr>
+</tbody>
+</table>
+<p>BGP's best-path selection process evaluates attributes in a defined order; for this exercise, apply only Local Preference first (higher value preferred), and AS-Path length second (shorter path preferred) if Local Preference is equal.</p>
+<h3>Part 2 Questions</h3>
+<ol>
+<li>
+<p>Which path (A or B) will this organization's router select as the best path to 203.0.113.0/24? Show your reasoning by applying Local Preference first.</p>
+</li>
+<li>
+<p>If both paths had the identical Local Preference of 100, which path would be selected instead, and why? Show the AS-Path length comparison explicitly.</p>
+</li>
+<li>
+<p>Local Preference is only exchanged via iBGP within an autonomous system — it is never advertised to an external AS via eBGP. Given this, explain why Local Preference is described as a way for an organization to control its own <em>outbound</em> traffic, but not something it can use to influence how <em>other</em> autonomous systems route traffic toward it.</p>
+</li>
+<li>
+<p>Suppose your organization wants to make ISP-2 the preferred outbound path for cost reasons (ISP-2 has a cheaper contract), regardless of AS-Path length. Which BGP attribute from this exercise would you adjust, and on which routers would you configure it?</p>
+</li>
+</ol>
+<h3>Part 2 Deliverable</h3>
+<p>Written answers to all four questions, including the explicit attribute comparisons for Questions 1 and 2.</p>
+<hr />
+<h3>Lab Submission Checklist</h3>
+<p>Before submitting, verify:</p>
+<ul>
+<li>
+<p>Part 1: Topology screenshot, static-route routing table screenshot, OSPF neighbor and routing table screenshots, AD-conflict routing table screenshot, successful ping screenshots, and written answers to all four analysis questions.</p>
+</li>
+<li>
+<p>Part 2: Written answers to all four questions with explicit attribute comparisons shown.</p>
+</li>
+</ul>
+<hr />
+<h3>Grading Rubric (100 Points Total)</h3>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Points</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Part 1 — Topology built correctly with correct addressing</td>
+<td>8</td>
+</tr>
+<tr>
+<td>Part 1 — Static route configuration and successful ping</td>
+<td>10</td>
+</tr>
+<tr>
+<td>Part 1 — OSPF configuration and full neighbor adjacency</td>
+<td>12</td>
+</tr>
+<tr>
+<td>Part 1 — AD conflict routing table screenshot correct</td>
+<td>10</td>
+</tr>
+<tr>
+<td>Part 1 — Questions 1–4 answered correctly</td>
+<td>20</td>
+</tr>
+<tr>
+<td>Part 2 — Question 1 (Local Preference reasoning)</td>
+<td>10</td>
+</tr>
+<tr>
+<td>Part 2 — Question 2 (AS-Path reasoning)</td>
+<td>10</td>
+</tr>
+<tr>
+<td>Part 2 — Question 3 (Local Preference scope)</td>
+<td>10</td>
+</tr>
+<tr>
+<td>Part 2 — Question 4 (attribute to adjust)</td>
+<td>10</td>
+</tr>
+<tr>
+<td>Total</td>
+<td>100</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>Submission Instructions</h3>
+<p>Save your document as: Lab10_Firstname_Lastname.pdf</p>
+<p>Submit to the Module 10 Lab assignment in the course LMS before the posted deadline. Late submissions are subject to the course late policy.</p>
+<hr />
+<p>CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash</p>
+</body>
+</html>

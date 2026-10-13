@@ -1,0 +1,266 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Reading Guide (M07): Network Monitoring and Troubleshooting Tools</title>
+</head>
+<body>
+<h2>Reading Guide (M07): Network Monitoring and Troubleshooting Tools</h2>
+<h1>Reading Guide: Module 07 — Network Monitoring and Troubleshooting Tools</h1>
+<h2>Course: CIS-3321 Network Administration</h2>
+<h2>Texas Wesleyan University | Professor Nash</h2>
+<h2>Certification Alignment: CompTIA Network+ (N10-009)</h2>
+<hr />
+<h3>Introduction</h3>
+<p>Module 07 shifts from network design to network operations: how administrators verify connectivity, diagnose failures, and monitor a live network. The CompTIA Network+ exam tests command-line diagnostic tools and monitoring protocols under Domain 5: Network Troubleshooting. This reading guide organizes the tools, protocols, and exam tips for the Module 07 video lectures, and directly supports the Module 07 Lab (ping, tracert, nslookup, netstat, Wireshark) and Discussion.</p>
+<hr />
+<h3>1. Core Vocabulary</h3>
+<ul>
+<li>
+<p><strong>ICMP (Internet Control Message Protocol)</strong> — the Layer 3 protocol used by <code>ping</code> and <code>traceroute</code>/<code>tracert</code> to test reachability and report errors. ICMP has no port number; it is identified by protocol number 1 in the IP header.</p>
+</li>
+<li>
+<p><strong>TTL (Time to Live)</strong> — a field in the IP header that decrements by one at each router hop; when it reaches zero, the packet is discarded and the router returns an ICMP "Time Exceeded" message. TTL is the mechanism <code>traceroute</code> exploits to map a path hop by hop.</p>
+</li>
+<li>
+<p><strong>RTT (Round-Trip Time)</strong> — the time for a packet to travel to a destination and back, reported by <code>ping</code> and <code>traceroute</code> in milliseconds. High or highly variable RTT (jitter) affects real-time applications like VoIP and video conferencing.</p>
+</li>
+<li>
+<p><strong>Divide-and-conquer troubleshooting</strong> — a methodology that tests connectivity at a midpoint of the path (e.g., the default gateway) to isolate whether a fault lies on the local segment or beyond it, narrowing the search space faster than testing end-to-end first.</p>
+</li>
+<li>
+<p><strong>Packet capture (packet sniffing)</strong> — recording raw frames/packets as they cross an interface, typically with Wireshark or <code>tcpdump</code>, for detailed protocol-level analysis.</p>
+</li>
+<li>
+<p><strong>Display filter vs. capture filter</strong> — a capture filter (BPF syntax) limits what Wireshark records at capture time; a display filter (Wireshark's own syntax, e.g., <code>tcp.port == 443</code>) limits what is shown from an already-captured file without discarding data.</p>
+</li>
+<li>
+<p><strong>SNMP (Simple Network Management Protocol)</strong> — a protocol (UDP 161 for queries, UDP 162 for traps) used to monitor and manage network devices, pulling metrics (SNMP GET) or receiving unsolicited alerts (SNMP traps) from devices.</p>
+</li>
+<li>
+<p><strong>Syslog</strong> — a standard (UDP/TCP 514) for forwarding log messages from network devices to a centralized logging server, enabling correlation and long-term retention of event data across the network.</p>
+</li>
+<li>
+<p><strong>NetFlow / sFlow</strong> — protocols that export traffic flow summaries (source/destination, ports, byte counts) from routers and switches to a collector for bandwidth analysis and anomaly detection, without capturing full packet contents.</p>
+</li>
+</ul>
+<hr />
+<h3>2. Command-Line Diagnostic Tool Reference</h3>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Layer Tested</th>
+<th>What It Confirms</th>
+<th>Key Syntax Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ping</code></td>
+<td>Layer 3 (Network)</td>
+<td>Basic reachability, RTT, packet loss</td>
+<td><code>ping 8.8.8.8</code></td>
+</tr>
+<tr>
+<td><code>tracert</code> / <code>traceroute</code></td>
+<td>Layer 3 (Network)</td>
+<td>Path/route to destination, hop-by-hop latency</td>
+<td><code>tracert 8.8.8.8</code></td>
+</tr>
+<tr>
+<td><code>nslookup</code> / <code>dig</code></td>
+<td>Layer 7 (DNS)</td>
+<td>Name resolution, specific record types (A, MX, NS)</td>
+<td><code>nslookup -type=MX txwes.edu</code></td>
+</tr>
+<tr>
+<td><code>netstat</code></td>
+<td>Layer 4 (Transport)</td>
+<td>Active connections, listening ports, routing table</td>
+<td><code>netstat -an</code></td>
+</tr>
+<tr>
+<td><code>arp -a</code></td>
+<td>Layer 2 (Data Link)</td>
+<td>IP-to-MAC address mappings in the local ARP cache</td>
+<td><code>arp -a</code></td>
+</tr>
+<tr>
+<td><code>ipconfig</code> / <code>ifconfig</code></td>
+<td>Layer 3 (Network)</td>
+<td>Local interface IP configuration, DHCP lease info</td>
+<td><code>ipconfig /all</code></td>
+</tr>
+<tr>
+<td><code>pathping</code> (Windows)</td>
+<td>Layer 3 (Network)</td>
+<td>Combines ping and traceroute; statistical loss per hop</td>
+<td><code>pathping 8.8.8.8</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>3. Interpreting ping and traceroute Output</h3>
+<p><code>ping</code> and <code>tracert</code>/<code>traceroute</code> are the two most heavily tested command-line tools on the Network+ exam. Key interpretation rules:</p>
+<ul>
+<li>
+<p>A successful ping to <code>127.0.0.1</code> (loopback) confirms the local TCP/IP stack is installed and functioning — it never leaves the network interface card.</p>
+</li>
+<li>
+<p>Default starting TTL values are commonly 128 (Windows), 64 (Linux/macOS), and 255 (some network devices/Cisco IOS). Subtracting the received TTL from the nearest standard starting value estimates the hop count to a destination.</p>
+</li>
+<li>
+<p>Three asterisks (<code>***</code>) at a single hop in a traceroute mean that hop did not respond to the probe — commonly because the router is configured to not respond to ICMP (rate-limiting or security policy), not necessarily that the path is broken. If later hops respond normally, traffic is still being forwarded through that hop.</p>
+</li>
+<li>
+<p>A large, sudden RTT increase between two consecutive hops usually indicates a long-distance or congested link between those two routers (e.g., a transoceanic or inter-carrier hop), not a fault.</p>
+</li>
+</ul>
+<hr />
+<h3>4. netstat State Reference</h3>
+<table>
+<thead>
+<tr>
+<th>State</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LISTENING</td>
+<td>A local process is bound to a port, waiting for incoming connections</td>
+</tr>
+<tr>
+<td>ESTABLISHED</td>
+<td>An active, fully connected TCP session exists</td>
+</tr>
+<tr>
+<td>TIME_WAIT</td>
+<td>The connection has closed but the OS is holding the socket briefly to catch delayed packets</td>
+</tr>
+<tr>
+<td>CLOSE_WAIT</td>
+<td>The remote side has closed the connection; the local application has not yet closed its end</td>
+</tr>
+</tbody>
+</table>
+<p>A listening port on an unexpected high-numbered port (e.g., TCP 4444, commonly associated with certain remote-access tools) on a workstation that should not be running any server software is a classic indicator of compromise worth investigating with a process-mapping flag (<code>netstat -anb</code> on Windows, run elevated).</p>
+<hr />
+<h3>5. Wireshark Fundamentals</h3>
+<ul>
+<li>
+<p><strong>Capture setup:</strong> select the correct interface (the one showing live traffic activity) before starting a capture; capturing on the wrong interface yields an empty or irrelevant capture.</p>
+</li>
+<li>
+<p><strong>The TCP three-way handshake</strong> appears in a capture as three consecutive packets: SYN (SYN=1, ACK=0) from the client, SYN-ACK (SYN=1, ACK=1) from the server, and ACK (SYN=0, ACK=1) from the client. The filter <code>tcp.flags.syn == 1</code> isolates connection-establishment attempts.</p>
+</li>
+<li>
+<p><strong>DNS in a capture</strong> appears as UDP port 53 traffic by default (TCP 53 is used for zone transfers and responses too large for a single UDP datagram, and by DNS-over-TCP/DoT/DoH implementations). A query and its response share the same Transaction ID, allowing a client to match responses to outstanding queries even under concurrent lookups.</p>
+</li>
+<li>
+<p><strong>Common display filters:</strong></p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Filter</th>
+<th>Shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ip.addr == 192.168.1.50</code></td>
+<td>Traffic where 192.168.1.50 is source OR destination</td>
+</tr>
+<tr>
+<td><code>tcp.port == 443</code></td>
+<td>TCP traffic on port 443 (HTTPS)</td>
+</tr>
+<tr>
+<td><code>icmp</code></td>
+<td>ICMP traffic (ping)</td>
+</tr>
+<tr>
+<td><code>dns.flags.response == 1</code></td>
+<td>DNS response packets only</td>
+</tr>
+<tr>
+<td><code>ip.addr == 192.168.1.10 &amp;&amp; ip.addr == 10.0.0.1</code></td>
+<td>Traffic specifically between two given hosts</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>6. Monitoring Protocols Comparison</h3>
+<table>
+<thead>
+<tr>
+<th>Protocol</th>
+<th>Transport</th>
+<th>Purpose</th>
+<th>Push or Pull</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SNMP GET</td>
+<td>UDP 161</td>
+<td>Manager queries a device for current metric values</td>
+<td>Pull</td>
+</tr>
+<tr>
+<td>SNMP Trap</td>
+<td>UDP 162</td>
+<td>Device sends an unsolicited alert to the manager</td>
+<td>Push</td>
+</tr>
+<tr>
+<td>Syslog</td>
+<td>UDP/TCP 514</td>
+<td>Device forwards log/event messages to a central server</td>
+<td>Push</td>
+</tr>
+<tr>
+<td>NetFlow/sFlow</td>
+<td>UDP (varies by vendor)</td>
+<td>Device exports traffic flow summaries to a collector</td>
+<td>Push</td>
+</tr>
+</tbody>
+</table>
+<p>For a WAN link failure scenario, the typical design pairs syslog (to capture the event details for later analysis) with an SNMP trap (to trigger an immediate alert to the operations team) — using both gives both historical record-keeping and real-time notification.</p>
+<hr />
+<h3>7. Exam Tips for Module 07</h3>
+<ul>
+<li>
+<p>Know the default TTL values (64, 128, 255) cold — TTL/hop-count questions are common and calculation-based.</p>
+</li>
+<li>
+<p>Distinguish "no response" from "path broken" for traceroute asterisks — this is a frequently tested distractor.</p>
+</li>
+<li>
+<p>Memorize the SNMP port pair (161 query / 162 trap) and the syslog port (514) — these appear on both Network+ and Security+ style questions.</p>
+</li>
+<li>
+<p>Be able to identify the three TCP handshake packets by their flag combinations, not just by position in a list.</p>
+</li>
+</ul>
+<hr />
+<h3>8. Reading and Viewing Resources</h3>
+<p>Refer to the ZTC_OER_Reading_Materials list for the Module 07 video lecture links and any supplemental open-access readings on network troubleshooting methodology and Wireshark basics.</p>
+<hr />
+<h3>9. Study Checklist</h3>
+<ul>
+<li>[ ] I can explain what a successful ping to 127.0.0.1 confirms and what OSI/TCP-IP layer it tests.</li>
+<li>[ ] I can calculate approximate hop count from a TTL value given a standard starting TTL.</li>
+<li>[ ] I can explain why traceroute asterisks do not necessarily mean a broken path.</li>
+<li>[ ] I can identify a LISTENING vs. ESTABLISHED netstat entry and explain the security significance of an unexpected listening port.</li>
+<li>[ ] I can identify the three packets of a TCP three-way handshake by their SYN/ACK flag values.</li>
+<li>[ ] I can write basic Wireshark display filters for IP address, port, and protocol.</li>
+<li>[ ] I can state the port numbers for SNMP GET, SNMP trap, and syslog.</li>
+</ul>
+<hr />
+<p>CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash</p>
+</body>
+</html>

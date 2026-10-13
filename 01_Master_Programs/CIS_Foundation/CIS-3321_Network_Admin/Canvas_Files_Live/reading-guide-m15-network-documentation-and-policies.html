@@ -1,0 +1,483 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Reading Guide (M15): Network Documentation and Policies</title>
+</head>
+<body>
+<h2>Reading Guide (M15): Network Documentation and Policies</h2>
+<h1>Reading Guide: Module 15 — Network Documentation and Policies</h1>
+<h2>Course: CIS-3321 Network Administration</h2>
+<p><strong>Certification Alignment:</strong> CompTIA Network+ (N10-009)</p>
+<hr />
+<h2>Overview</h2>
+<p>This reading guide supports Module 15 video lectures and prepares you for the quiz and the CompTIA Network+ N10-009 exam. Documentation and operational policies are tested throughout Domain 3 (Network Operations). Understanding SLA metrics, change management, and DR terminology requires precise definition — do not paraphrase these terms on the exam.</p>
+<p><strong>Estimated Reading Time:</strong> 55–65 minutes</p>
+<hr />
+<h2>Part 1: Network Diagrams</h2>
+<h3>1.1 Diagram Types and Content</h3>
+<h4>Logical Network Diagram</h4>
+<p>Purpose: Shows how the network is organized logically — IP addressing, routing, VLANs, traffic flows.</p>
+<p>Content includes:</p>
+<ul>
+<li>Device hostnames and types (using standardized icons)</li>
+<li>IP addresses on all interfaces</li>
+<li>Subnet boundaries and VLAN IDs</li>
+<li>Routing protocol indicators (OSPF areas, EIGRP AS numbers)</li>
+<li>WAN circuit identifiers and bandwidth</li>
+<li>Demarcation points</li>
+<li>Cloud and internet boundaries</li>
+<li>Security zones (DMZ, internal, external)</li>
+</ul>
+<p>Use cases: Network design planning, troubleshooting, security reviews, new staff orientation</p>
+<h4>Physical Network Diagram</h4>
+<p>Purpose: Shows actual physical connections, hardware locations, and cable plant.</p>
+<p>Content includes:</p>
+<ul>
+<li>Device make/model and serial numbers</li>
+<li>Physical port connections (e.g., "Switch1 Fa0/1 → Server1 NIC1")</li>
+<li>Cable types and lengths</li>
+<li>Patch panel locations and port assignments</li>
+<li>Rack diagrams (U-position of each device)</li>
+<li>Building floor plans showing wiring closet locations</li>
+<li>External demarcation points</li>
+</ul>
+<p>Use cases: Cable management, hardware replacement, physical security, data center layout</p>
+<h4>Rack Diagram</h4>
+<p>A specialized physical diagram showing the front-face layout of a rack:</p>
+<ul>
+<li>Each device shown at its actual height in rack units (U)</li>
+<li>Device name, model, and power consumption</li>
+<li>Cable management panels and patch panels</li>
+<li>Blank panels and power distribution units (PDUs)</li>
+</ul>
+<h3>1.2 Diagram Maintenance</h3>
+<table>
+<thead>
+<tr>
+<th>Practice</th>
+<th>Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Update after every physical change</td>
+<td>Stale diagrams mislead troubleshooters</td>
+</tr>
+<tr>
+<td>Version control with dates</td>
+<td>Enables rollback to previous topology understanding</td>
+</tr>
+<tr>
+<td>Shared team access</td>
+<td>All team members need current diagrams</td>
+</tr>
+<tr>
+<td>Periodic review</td>
+<td>Catches undocumented drift — quarterly recommended</td>
+</tr>
+</tbody>
+</table>
+<h3>1.3 Diagram Tools</h3>
+<ul>
+<li>Microsoft Visio — industry-standard diagramming tool</li>
+<li>draw.io (diagrams.net) — free browser-based; Visio-compatible</li>
+<li>Lucidchart — cloud-based collaborative diagramming</li>
+<li>NetBox — open-source network documentation platform with auto-generated diagrams</li>
+<li>SolarWinds Network Topology Mapper — auto-discovers and maps physical topology</li>
+</ul>
+<hr />
+<h2>Part 2: IP Address Management (IPAM)</h2>
+<h3>2.1 IPAM Concepts</h3>
+<p>IP Address Management is the planning, tracking, and management of IP address space.</p>
+<p>Core IPAM components:</p>
+<ul>
+<li><strong>Subnet planning</strong>: Allocating address space to network segments with correct prefix lengths</li>
+<li><strong>IP assignment tracking</strong>: Recording which device has each address (hostname, MAC, location, purpose)</li>
+<li><strong>Conflict detection</strong>: Identifying duplicate IP addresses before or after assignment</li>
+<li><strong>Utilization reporting</strong>: Tracking how much of each subnet is in use</li>
+</ul>
+<h3>2.2 IPAM Documentation Fields</h3>
+<p>For each managed subnet, document:</p>
+<ul>
+<li>Network address and prefix (e.g., 192.168.20.0/24)</li>
+<li>VLAN association (e.g., VLAN 20 — Finance)</li>
+<li>Gateway address</li>
+<li>DHCP scope range (start to end)</li>
+<li>DHCP exclusions (statically assigned addresses to reserve)</li>
+<li>Physical/logical location</li>
+<li>Purpose description</li>
+</ul>
+<p>For each statically assigned address, document:</p>
+<ul>
+<li>IP address</li>
+<li>Hostname (DNS name)</li>
+<li>MAC address</li>
+<li>Device type and model</li>
+<li>Physical location</li>
+<li>Owner/contact</li>
+<li>Date assigned</li>
+</ul>
+<h3>2.3 DDI — DNS, DHCP, IPAM Integration</h3>
+<p>Enterprise IPAM integrates three services (DDI):</p>
+<ul>
+<li><strong>DNS</strong>: Automatically creates and removes A records and PTR records as devices are added or removed</li>
+<li><strong>DHCP</strong>: Records all dynamic leases; flags conflicts; manages scope utilization</li>
+<li><strong>IPAM</strong>: Unified view of all address allocations — static and dynamic</li>
+</ul>
+<p>DDI platforms: Infoblox, BlueCat, SolarWinds IPAM, phpIPAM (open source), NetBox (open source)</p>
+<hr />
+<h2>Part 3: Change Management</h2>
+<h3>3.1 Change Management Process</h3>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Change Request submitted</td>
+<td>Requestor documents change, justification, risk, rollback plan</td>
+</tr>
+<tr>
+<td>Change reviewed</td>
+<td>Technical review by peers for completeness and accuracy</td>
+</tr>
+<tr>
+<td>CAB approval</td>
+<td>Change Advisory Board approves scheduling and authorizes implementation</td>
+</tr>
+<tr>
+<td>Pre-change communication</td>
+<td>Stakeholders notified of planned maintenance window</td>
+</tr>
+<tr>
+<td>Implementation</td>
+<td>Change implemented during approved window</td>
+</tr>
+<tr>
+<td>Verification</td>
+<td>Requestor confirms change success; tests affected systems</td>
+</tr>
+<tr>
+<td>Post-change documentation</td>
+<td>Change record updated with actual steps, outcome, and any deviations</td>
+</tr>
+</tbody>
+</table>
+<h3>3.2 Change Types</h3>
+<h4>Standard Change</h4>
+<ul>
+<li>Pre-approved procedure for routine, low-risk activities</li>
+<li>No individual CAB review required per occurrence</li>
+<li>Examples: Adding a workstation to a VLAN, rebooting a switch per scheduled maintenance</li>
+<li>Must follow a documented and previously approved procedure exactly</li>
+</ul>
+<h4>Normal Change</h4>
+<ul>
+<li>Requires CAB review and approval before implementation</li>
+<li>Submitted at least 24–72 hours before planned implementation (varies by organization)</li>
+<li>Examples: Firewall rule changes, router configuration updates, VLAN redesign, firmware upgrades</li>
+</ul>
+<h4>Emergency Change</h4>
+<ul>
+<li>Unplanned, urgent change required immediately to restore service or address a security threat</li>
+<li>Expedited or verbal approval from authority (CTO, IT manager, security officer)</li>
+<li>Full documentation must be completed after the fact — never skip documentation even for emergencies</li>
+<li>Subject to post-incident review</li>
+</ul>
+<h3>3.3 Change Request Contents</h3>
+<p>A complete Change Request includes:</p>
+<ul>
+<li>Change title and reference number</li>
+<li>Submitter and assigned implementer</li>
+<li>Date/time submitted and proposed implementation window</li>
+<li>Description of the change (what exactly will be done)</li>
+<li>Business justification (why is this needed?)</li>
+<li>Impact assessment (who/what is affected, expected outage duration)</li>
+<li>Risk rating (Low / Medium / High) with rationale</li>
+<li>Rollback plan (step-by-step instructions to undo the change)</li>
+<li>Test plan (how success will be verified)</li>
+<li>Required approvals</li>
+</ul>
+<h3>3.4 Configuration Baseline and Drift</h3>
+<p>A configuration baseline is the documented, approved configuration state for a device or system type.</p>
+<p>Configuration drift occurs when a device's running configuration diverges from the baseline — through unauthorized changes, ad-hoc fixes, or accumulated temporary changes that were never formalized.</p>
+<p>Tools that detect drift:</p>
+<ul>
+<li>RANCID (free) — backs up device configs; alerts on changes</li>
+<li>Oxidized (free) — modern RANCID replacement</li>
+<li>SolarWinds NCM — enterprise configuration management</li>
+<li>Cisco DNA Center — Cisco-specific intent-based policy enforcement</li>
+</ul>
+<hr />
+<h2>Part 4: Service Level Agreements</h2>
+<h3>4.1 SLA Metrics Reference</h3>
+<h4>Availability (Uptime)</h4>
+<table>
+<thead>
+<tr>
+<th>SLA Level</th>
+<th>Downtime per Year</th>
+<th>Downtime per Month</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>99%</td>
+<td>87.6 hours</td>
+<td>7.3 hours</td>
+</tr>
+<tr>
+<td>99.9%</td>
+<td>8.76 hours</td>
+<td>43.8 minutes</td>
+</tr>
+<tr>
+<td>99.99%</td>
+<td>52.6 minutes</td>
+<td>4.38 minutes</td>
+</tr>
+<tr>
+<td>99.999%</td>
+<td>5.26 minutes</td>
+<td>26.3 seconds</td>
+</tr>
+</tbody>
+</table>
+<p>Calculate allowed downtime: (1 - availability%) × period in minutes</p>
+<p>Example: 99.9% monthly = (0.001) × 43,800 minutes/month = 43.8 minutes per month allowed.</p>
+<h4>MTBF — Mean Time Between Failures</h4>
+<p>MTBF = Total uptime / Number of failures</p>
+<p>Used for hardware reliability comparisons. Higher MTBF = more reliable.</p>
+<p>Example: A switch runs for 100,000 hours and fails 4 times → MTBF = 25,000 hours</p>
+<h4>MTTR — Mean Time to Repair</h4>
+<p>MTTR = Total repair time / Number of repairs</p>
+<p>Measures how quickly the team restores service. Lower MTTR = faster recovery.</p>
+<h4>RTO — Recovery Time Objective</h4>
+<p>Maximum tolerable downtime before business impact becomes unacceptable. Defined per system or process.</p>
+<p>Example: "ERP system RTO = 4 hours" — the ERP must be restored within 4 hours of any failure.</p>
+<h4>RPO — Recovery Point Objective</h4>
+<p>Maximum acceptable data loss measured in time. Defines backup/replication frequency needed.</p>
+<p>Example: "RPO = 1 hour" — backups must occur at least hourly so no more than 1 hour of data can be lost.</p>
+<h3>4.2 RTO vs. RPO Relationship</h3>
+<table>
+<thead>
+<tr>
+<th>RTO</th>
+<th>RPO</th>
+<th>Implication</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Low (minutes)</td>
+<td>Low (minutes)</td>
+<td>Hot site + real-time replication required</td>
+</tr>
+<tr>
+<td>Low (hours)</td>
+<td>Low (hours)</td>
+<td>Warm site + frequent backups</td>
+</tr>
+<tr>
+<td>High (days)</td>
+<td>High (days)</td>
+<td>Cold site + daily backups acceptable</td>
+</tr>
+</tbody>
+</table>
+<p>Lower RTO/RPO = higher cost. Organizations must match DR investment to business impact.</p>
+<hr />
+<h2>Part 5: Acceptable Use Policies</h2>
+<h3>5.1 AUP Core Elements</h3>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>Content</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Permitted use</td>
+<td>Business use; limited personal use if authorized</td>
+</tr>
+<tr>
+<td>Prohibited activities</td>
+<td>Illegal downloads, adult content, gambling, circumventing security controls</td>
+</tr>
+<tr>
+<td>Privacy notice</td>
+<td>Organization monitors network; no expectation of privacy</td>
+</tr>
+<tr>
+<td>Security responsibilities</td>
+<td>Password management, clean desk, workstation locking</td>
+</tr>
+<tr>
+<td>BYOD rules</td>
+<td>Personal device requirements for corporate network access</td>
+</tr>
+<tr>
+<td>Remote access rules</td>
+<td>VPN requirements, home network security</td>
+</tr>
+<tr>
+<td>Consequences</td>
+<td>Disciplinary action, termination, legal action</td>
+</tr>
+</tbody>
+</table>
+<h3>5.2 AUP Enforcement Technical Controls</h3>
+<p>Network administrators implement technical controls that enforce AUP provisions:</p>
+<ul>
+<li>Content filtering (web proxy, DNS filtering) — blocks prohibited websites</li>
+<li>Application control (firewall/NGFW DPI) — blocks unauthorized applications</li>
+<li>Bandwidth management — throttles non-business traffic during business hours</li>
+<li>Network access control (NAC) — enforces device compliance before allowing access</li>
+<li>Monitoring and logging — captures network activity for audit and investigation</li>
+</ul>
+<hr />
+<h2>Part 6: Disaster Recovery Documentation</h2>
+<h3>6.1 DR Site Types</h3>
+<table>
+<thead>
+<tr>
+<th>Site Type</th>
+<th>State</th>
+<th>Failover Time</th>
+<th>Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hot site</td>
+<td>Fully operational; data replicated in real time</td>
+<td>Minutes</td>
+<td>Very high</td>
+</tr>
+<tr>
+<td>Warm site</td>
+<td>Hardware ready; data must be restored</td>
+<td>Hours to 1 day</td>
+<td>Moderate</td>
+</tr>
+<tr>
+<td>Cold site</td>
+<td>Facility only; hardware must be procured/installed</td>
+<td>Days to weeks</td>
+<td>Low</td>
+</tr>
+</tbody>
+</table>
+<h3>6.2 DR Plan Structure</h3>
+<ol>
+<li>Purpose, scope, and objectives</li>
+<li>Recovery team — roles and 24/7 contact information</li>
+<li>Activation criteria — conditions that trigger the plan</li>
+<li>System inventory — critical systems with RTO/RPO targets</li>
+<li>Recovery procedures — step-by-step per system (must be usable under stress)</li>
+<li>Communication plan — internal and external notifications</li>
+<li>Vendor/carrier contacts — emergency numbers for ISP, hardware vendors</li>
+<li>Testing schedule and results history</li>
+<li>Plan review and approval signatures</li>
+</ol>
+<h3>6.3 DR Testing Methods</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+<th>Disruption</th>
+<th>Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tabletop exercise</td>
+<td>Verbal walkthrough of scenario</td>
+<td>None</td>
+<td>Low</td>
+</tr>
+<tr>
+<td>Walkthrough test</td>
+<td>Perform procedures without actual failover</td>
+<td>Minimal</td>
+<td>Low–moderate</td>
+</tr>
+<tr>
+<td>Simulation test</td>
+<td>Declare disaster; activate DR in controlled environment</td>
+<td>Low</td>
+<td>Moderate</td>
+</tr>
+<tr>
+<td>Full interruption test</td>
+<td>Actually fail over production to DR site</td>
+<td>Significant</td>
+<td>High</td>
+</tr>
+</tbody>
+</table>
+<p>Annual testing is standard. Mission-critical systems should test more frequently.</p>
+<hr />
+<h2>Key Terms Glossary</h2>
+<ul>
+<li><strong>AUP</strong>: Acceptable Use Policy — defines permitted and prohibited network use.</li>
+<li><strong>BIA</strong>: Business Impact Analysis — identifies critical processes and their recovery requirements.</li>
+<li><strong>CAB</strong>: Change Advisory Board — group that reviews and approves changes.</li>
+<li><strong>Change Request</strong>: Formal document proposing a change to a production system.</li>
+<li><strong>Cold site</strong>: DR facility with space and power; no pre-installed equipment.</li>
+<li><strong>Configuration baseline</strong>: Documented approved configuration state for a device.</li>
+<li><strong>Configuration drift</strong>: Deviation of a running configuration from the baseline.</li>
+<li><strong>DDI</strong>: DNS, DHCP, IPAM — integrated address management suite.</li>
+<li><strong>Emergency change</strong>: Urgent, expedited change to restore service or address a security threat.</li>
+<li><strong>Hot site</strong>: Fully operational DR facility with real-time data replication.</li>
+<li><strong>IPAM</strong>: IP Address Management.</li>
+<li><strong>MTBF</strong>: Mean Time Between Failures.</li>
+<li><strong>MTTR</strong>: Mean Time to Repair.</li>
+<li><strong>Normal change</strong>: Standard change requiring CAB approval.</li>
+<li><strong>RPO</strong>: Recovery Point Objective — maximum acceptable data loss in time.</li>
+<li><strong>RTO</strong>: Recovery Time Objective — maximum acceptable system downtime.</li>
+<li><strong>SLA</strong>: Service Level Agreement.</li>
+<li><strong>Standard change</strong>: Pre-approved routine change not requiring individual CAB review.</li>
+<li><strong>Warm site</strong>: DR facility with pre-installed hardware; data must be restored.</li>
+</ul>
+<hr />
+<h2>Review Questions</h2>
+<ol>
+<li>
+<p>What is the difference between a logical network diagram and a physical network diagram? Give two examples of information found in each.</p>
+</li>
+<li>
+<p>Calculate the maximum monthly downtime allowed by a 99.99% availability SLA.</p>
+</li>
+<li>
+<p>What is the difference between RTO and RPO? Give an example of each.</p>
+</li>
+<li>
+<p>A company has an RPO of 15 minutes for its transaction database. What backup or replication strategy does this require?</p>
+</li>
+<li>
+<p>List the three change management types and describe one scenario that would fall into each category.</p>
+</li>
+<li>
+<p>What must a Change Request include in addition to the description of the change?</p>
+</li>
+<li>
+<p>What is the difference between a hot site and a warm site for disaster recovery?</p>
+</li>
+<li>
+<p>What is configuration drift and how can it be detected automatically?</p>
+</li>
+<li>
+<p>Name three technical controls that network administrators implement to enforce AUP provisions.</p>
+</li>
+<li>
+<p>What is the purpose of a tabletop exercise in disaster recovery testing, and what are its limitations compared to a full interruption test?</p>
+</li>
+</ol>
+</body>
+</html>

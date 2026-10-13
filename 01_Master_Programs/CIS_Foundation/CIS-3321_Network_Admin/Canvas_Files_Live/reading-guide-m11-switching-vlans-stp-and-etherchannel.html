@@ -1,0 +1,316 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Reading Guide (M11): Switching: VLANs, STP, and EtherChannel</title>
+</head>
+<body>
+<h2>Reading Guide (M11): Switching: VLANs, STP, and EtherChannel</h2>
+<h1>Reading Guide: Module 11 — Switching: VLANs, STP, and EtherChannel</h1>
+<h2>Course: CIS-3321 Network Administration</h2>
+<p>Certification Alignment: CompTIA Network+ (N10-009)</p>
+<hr />
+<h3>Introduction</h3>
+<p>Module 11 covers Layer 2 switching technology: VLANs for logical network segmentation, Spanning Tree Protocol for loop prevention, and EtherChannel for link aggregation. These topics appear throughout Domain 2 (Network Implementation) and Domain 5 (Network Troubleshooting) of the CompTIA Network+ N10-009 exam. Mastery of VLAN design, STP behavior, and EtherChannel configuration is essential for both the exam and day-to-day network administration work.</p>
+<hr />
+<h3>1. Core Vocabulary</h3>
+<p>Switch — A Layer 2 network device that forwards frames based on destination MAC addresses. Maintains a MAC address table (CAM table) mapping MAC addresses to ports.</p>
+<p>MAC address table (CAM table) — The switch's internal database mapping learned MAC addresses to specific ports. Used for unicast forwarding decisions.</p>
+<p>Flooding — When a switch sends a frame out all ports except the incoming port. Occurs when the destination MAC is unknown or the destination is a broadcast/multicast.</p>
+<p>Broadcast domain — The set of devices that receive a broadcast frame. One VLAN = one broadcast domain.</p>
+<p>Collision domain — The set of devices that share the same transmission medium and can collide. Each switch port is its own collision domain.</p>
+<p>VLAN (Virtual Local Area Network) — A logical segmentation of a switched network creating separate broadcast domains. Devices in different VLANs cannot communicate at Layer 2 without routing.</p>
+<p>VLAN ID — A number from 1 to 4094 assigned to each VLAN. VLAN 1 is the default. Standard range: 1–1001. Extended range: 1006–4094.</p>
+<p>Access port — A switch port assigned to exactly one VLAN. Carries untagged traffic. End devices (PCs, printers, servers) connect to access ports.</p>
+<p>Trunk port — A switch port that carries traffic for multiple VLANs simultaneously using 802.1Q tagging. Used for switch-to-switch and switch-to-router connections.</p>
+<p>802.1Q — The IEEE standard for VLAN tagging. Inserts a 4-byte tag into the Ethernet frame header containing the VLAN ID. The native VLAN is not tagged on trunk ports.</p>
+<p>Native VLAN — The VLAN whose traffic is sent untagged on a trunk port. Default is VLAN 1 on Cisco switches. Best practice: change to an unused VLAN and match on both ends.</p>
+<p>DTP (Dynamic Trunking Protocol) — Cisco proprietary protocol that negotiates trunk formation automatically. Best practice: disable on access ports to prevent VLAN hopping attacks.</p>
+<p>SVI (Switch Virtual Interface) — A logical Layer 3 interface on a multilayer switch, one per VLAN, serving as the default gateway for that VLAN. Enables inter-VLAN routing without a separate router.</p>
+<p>Router-on-a-Stick (ROAS) — An inter-VLAN routing design using subinterfaces on a single router interface connected to a trunk port. Each subinterface handles one VLAN.</p>
+<p>STP (Spanning Tree Protocol) — IEEE 802.1D protocol that prevents Layer 2 loops in switched networks by blocking redundant paths while maintaining them as backups.</p>
+<p>Root Bridge — The reference switch in an STP topology. The switch with the lowest Bridge ID. All STP path calculations reference the Root Bridge.</p>
+<p>Bridge ID — A value combining a configurable priority (default 32768) and the switch's MAC address. The switch with the lowest Bridge ID becomes Root Bridge.</p>
+<p>Root Port — A non-root switch port with the lowest-cost path to the Root Bridge. Each non-root switch has exactly one Root Port.</p>
+<p>Designated Port — The port on each network segment that forwards traffic toward the Root Bridge. The Root Bridge has all Designated Ports.</p>
+<p>Blocking state — An STP port state where the port receives BPDUs but does not forward frames or learn MAC addresses. Prevents loops.</p>
+<p>BPDU (Bridge Protocol Data Unit) — STP control messages exchanged between switches to elect the Root Bridge, calculate port roles, and detect topology changes.</p>
+<p>RSTP (Rapid Spanning Tree Protocol) — IEEE 802.1w. Converges in under one second by negotiating port states directly between switches instead of waiting for timers.</p>
+<p>Alternate Port — RSTP role. Backup to the Root Port. Immediately takes over if the Root Port fails, with no timer delay.</p>
+<p>PortFast — STP feature that bypasses Listening and Learning states for access ports connected to end devices. Port immediately enters Forwarding state.</p>
+<p>BPDU Guard — Feature that err-disables a PortFast port if a BPDU is received. Prevents rogue switches from affecting the STP topology.</p>
+<p>Root Guard — Feature that prevents a port from becoming a Root Port. If a superior BPDU arrives on a Root Guard port, the port enters root-inconsistent state.</p>
+<p>EtherChannel — A technology that bundles multiple physical links into one logical link. STP sees one link; all physical members carry traffic simultaneously.</p>
+<p>LACP (Link Aggregation Control Protocol) — IEEE 802.3ad standard for EtherChannel negotiation. Port modes: Active (initiates) and Passive (responds). Requires at least one Active end.</p>
+<p>PAgP (Port Aggregation Protocol) — Cisco proprietary EtherChannel negotiation. Port modes: Desirable (initiates) and Auto (responds). Requires at least one Desirable end.</p>
+<p>Port-Channel interface — The logical interface representing an EtherChannel bundle. VLAN and trunk configurations are applied here, not to individual physical member ports.</p>
+<p>Port Security — Switch feature limiting the number of MAC addresses on a port. Violation actions: Shutdown (err-disable), Restrict (drop and count), Protect (drop silently).</p>
+<p>Sticky MAC — Port Security feature that automatically learns and permanently saves allowed MAC addresses to the running configuration.</p>
+<p>err-disabled — A Cisco switch port state where the port has been administratively disabled due to a security violation or protocol error. Recovery requires <code>shutdown</code> then <code>no shutdown</code> after fixing the root cause.</p>
+<hr />
+<h3>2. STP Port States (802.1D)</h3>
+<table>
+<thead>
+<tr>
+<th>State</th>
+<th>Forward Frames</th>
+<th>Learn MACs</th>
+<th>Receive BPDUs</th>
+<th>Duration</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Blocking</td>
+<td>No</td>
+<td>No</td>
+<td>Yes</td>
+<td>Up to 20 sec (Max Age)</td>
+</tr>
+<tr>
+<td>Listening</td>
+<td>No</td>
+<td>No</td>
+<td>Yes</td>
+<td>15 sec (Forward Delay)</td>
+</tr>
+<tr>
+<td>Learning</td>
+<td>No</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>15 sec (Forward Delay)</td>
+</tr>
+<tr>
+<td>Forwarding</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Indefinite</td>
+</tr>
+<tr>
+<td>Disabled</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>Administrative</td>
+</tr>
+</tbody>
+</table>
+<p>Total convergence time for classic 802.1D: up to 50 seconds (Max Age + 2x Forward Delay).</p>
+<p>RSTP replaces Blocking, Listening, and Learning with a single Discarding state. Convergence: under 1 second via BPDU negotiation.</p>
+<hr />
+<h3>3. STP Administrative Distance Values</h3>
+<table>
+<thead>
+<tr>
+<th>STP Link Speed</th>
+<th>Default Port Cost (802.1D)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10 Gbps</td>
+<td>2</td>
+</tr>
+<tr>
+<td>1 Gbps</td>
+<td>4</td>
+</tr>
+<tr>
+<td>100 Mbps</td>
+<td>19</td>
+</tr>
+<tr>
+<td>10 Mbps</td>
+<td>100</td>
+</tr>
+</tbody>
+</table>
+<p>Lower cost = preferred path toward Root Bridge.</p>
+<hr />
+<h3>4. EtherChannel Negotiation Protocols</h3>
+<table>
+<thead>
+<tr>
+<th>Protocol</th>
+<th>Standard</th>
+<th>Port Modes</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LACP</td>
+<td>IEEE 802.3ad (open)</td>
+<td>Active / Passive</td>
+<td>At least one Active end</td>
+</tr>
+<tr>
+<td>PAgP</td>
+<td>Cisco proprietary</td>
+<td>Desirable / Auto</td>
+<td>At least one Desirable end</td>
+</tr>
+<tr>
+<td>Static (On)</td>
+<td>None</td>
+<td>On / On</td>
+<td>Both sides must be On; no error detection</td>
+</tr>
+</tbody>
+</table>
+<p>Mode compatibility:</p>
+<ul>
+<li>LACP Active + LACP Active = Channel forms</li>
+<li>LACP Active + LACP Passive = Channel forms</li>
+<li>LACP Passive + LACP Passive = No channel</li>
+<li>PAgP Desirable + PAgP Desirable = Channel forms</li>
+<li>PAgP Desirable + PAgP Auto = Channel forms</li>
+<li>PAgP Auto + PAgP Auto = No channel</li>
+</ul>
+<hr />
+<h3>5. VLAN Cisco IOS Command Reference</h3>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>vlan 10</code></td>
+<td>Create VLAN 10</td>
+</tr>
+<tr>
+<td><code>name Finance</code></td>
+<td>Assign name to VLAN</td>
+</tr>
+<tr>
+<td><code>switchport mode access</code></td>
+<td>Set port to access mode</td>
+</tr>
+<tr>
+<td><code>switchport access vlan 10</code></td>
+<td>Assign port to VLAN 10</td>
+</tr>
+<tr>
+<td><code>switchport mode trunk</code></td>
+<td>Set port to trunk mode</td>
+</tr>
+<tr>
+<td><code>switchport trunk encapsulation dot1q</code></td>
+<td>Set trunk encapsulation to 802.1Q</td>
+</tr>
+<tr>
+<td><code>switchport trunk allowed vlan 10,20,30</code></td>
+<td>Restrict allowed VLANs on trunk</td>
+</tr>
+<tr>
+<td><code>switchport trunk native vlan 999</code></td>
+<td>Set native VLAN to 999</td>
+</tr>
+<tr>
+<td><code>switchport nonegotiate</code></td>
+<td>Disable DTP negotiation</td>
+</tr>
+<tr>
+<td><code>show vlan brief</code></td>
+<td>Display VLAN assignments and port membership</td>
+</tr>
+<tr>
+<td><code>show interfaces trunk</code></td>
+<td>Display trunk ports and active VLANs</td>
+</tr>
+<tr>
+<td><code>show interfaces Fa0/1 switchport</code></td>
+<td>Display port mode and VLAN assignment</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>6. STP Cisco IOS Command Reference</h3>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>show spanning-tree</code></td>
+<td>Display STP topology for all VLANs</td>
+</tr>
+<tr>
+<td><code>show spanning-tree vlan 10</code></td>
+<td>Display STP for VLAN 10 specifically</td>
+</tr>
+<tr>
+<td><code>spanning-tree vlan 10 priority 4096</code></td>
+<td>Set Root Bridge priority</td>
+</tr>
+<tr>
+<td><code>spanning-tree vlan 10 root primary</code></td>
+<td>Automatically set lowest priority</td>
+</tr>
+<tr>
+<td><code>spanning-tree portfast</code></td>
+<td>Enable PortFast on an interface</td>
+</tr>
+<tr>
+<td><code>spanning-tree bpduguard enable</code></td>
+<td>Enable BPDU Guard on an interface</td>
+</tr>
+<tr>
+<td><code>spanning-tree portfast bpduguard default</code></td>
+<td>Enable BPDU Guard globally on PortFast ports</td>
+</tr>
+<tr>
+<td><code>spanning-tree guard root</code></td>
+<td>Enable Root Guard on an interface</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>7. Exam Tips</h3>
+<p>Exam Tip 1: A trunk port carries traffic for multiple VLANs. An access port carries traffic for exactly one VLAN. This distinction is tested frequently.</p>
+<p>Exam Tip 2: The native VLAN is sent untagged on a trunk port. A native VLAN mismatch between two switches causes STP issues, CDP warnings, and traffic problems. Best practice: use an unused VLAN as the native VLAN on all trunks.</p>
+<p>Exam Tip 3: STP prevents loops by blocking redundant ports. The Root Bridge has all Designated Ports. Non-root switches each have exactly one Root Port. All remaining ports are in Blocking state.</p>
+<p>Exam Tip 4: PortFast should only be enabled on ports connected to end devices (PCs, printers, servers). Never enable PortFast on a port that connects to another switch — this could prevent loop detection.</p>
+<p>Exam Tip 5: BPDU Guard err-disables a port if a BPDU is received. Root Guard prevents a port from becoming a Root Port. Know which protection applies in which scenario.</p>
+<p>Exam Tip 6: LACP is the open-standard protocol (IEEE 802.3ad). PAgP is Cisco proprietary. For multi-vendor environments, always use LACP. The exam will ask which is open-standard.</p>
+<p>Exam Tip 7: EtherChannel load balances per-flow (per source/destination pair), not per-packet. This preserves packet ordering within a conversation. Traffic from the same source/destination pair always uses the same physical link.</p>
+<p>Exam Tip 8: MAC flooding fills the CAM table, causing the switch to flood all traffic to all ports. Port Security prevents this by limiting allowed MAC addresses per port.</p>
+<hr />
+<h3>8. Reading and Viewing Resources</h3>
+<p>CompTIA Network+ N10-009 Exam Objectives — Domain 2.3 (VLANs), Domain 2.4 (Spanning Tree), Domain 2.5 (EtherChannel)</p>
+<p>Professor Messer — Network+ Study Groups (free video series): VLANs, STP, EtherChannel topics aligned to N10-009</p>
+<p>Mike Meyers — CompTIA Network+ All-in-One Exam Guide, 8th Edition: Chapter 10 (VLANs), Chapter 11 (STP), Chapter 12 (Link Aggregation)</p>
+<p>Cisco Documentation — Cisco Catalyst Switch Configuration Guide: VLAN and STP configuration chapters (available at Cisco.com)</p>
+<p>IEEE 802.1Q-2018 — The authoritative VLAN tagging standard specification</p>
+<p>IEEE 802.3ad (802.1AX) — The LACP link aggregation standard specification</p>
+<hr />
+<h3>9. Study Checklist</h3>
+<p>Before moving to the next module, confirm you can do each of the following:</p>
+<ul>
+<li>[ ] Explain how a switch uses the MAC address table to make forwarding decisions</li>
+<li>[ ] Define a broadcast domain and explain how VLANs create separate broadcast domains</li>
+<li>[ ] Distinguish between access ports and trunk ports by function and configuration</li>
+<li>[ ] Explain what 802.1Q tagging does and what happens to the native VLAN</li>
+<li>[ ] Describe two VLAN hopping attack methods and the prevention for each</li>
+<li>[ ] Explain why STP is needed and what happens without it (broadcast storm, MAC table instability)</li>
+<li>[ ] Describe the Root Bridge election process using Bridge ID and priority</li>
+<li>[ ] Identify the three non-disabled STP port roles: Root Port, Designated Port, Blocking</li>
+<li>[ ] List the four 802.1D STP port states and their durations</li>
+<li>[ ] Explain the RSTP improvement over 802.1D and what Alternate Port does</li>
+<li>[ ] Explain PortFast: what it does, when to use it, and why BPDU Guard must accompany it</li>
+<li>[ ] Distinguish LACP from PAgP and explain which is the open standard</li>
+<li>[ ] Explain EtherChannel per-flow load balancing and why per-packet is not used</li>
+<li>[ ] State the Port Security violation modes: Shutdown, Restrict, and Protect</li>
+<li>[ ] Identify the commands show vlan brief, show interfaces trunk, and show spanning-tree</li>
+</ul>
+<hr />
+<p>CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash</p>
+</body>
+</html>

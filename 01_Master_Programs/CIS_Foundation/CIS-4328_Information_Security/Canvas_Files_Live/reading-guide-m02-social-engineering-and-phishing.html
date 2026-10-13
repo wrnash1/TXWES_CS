@@ -1,0 +1,285 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Reading Guide (M02): Social Engineering and Phishing</title>
+</head>
+<body>
+<h2>Reading Guide (M02): Social Engineering and Phishing</h2>
+<h1>Reading Guide — Module 02: Social Engineering and Phishing</h1>
+<h2>CIS-4328 Information Security | Texas Wesleyan University</h2>
+<h3>CompTIA Security+ SY0-701 | Domain 2 — Threats, Vulnerabilities, and Mitigations (22%)</h3>
+<hr />
+<h2>Introduction</h2>
+<p>Module 02 covers the human side of information security — social engineering and its most prevalent form, phishing. These attacks bypass technical controls entirely by targeting the human element. The SY0-701 exam expects you to identify social engineering techniques by scenario, understand the psychological principles that make them effective, and recommend appropriate technical and administrative countermeasures.</p>
+<hr />
+<h2>1. Core Concepts and Definitions</h2>
+<p><strong>Social Engineering</strong> is the manipulation of individuals into performing actions or divulging confidential information by exploiting psychological tendencies rather than technical vulnerabilities. The attacker exploits trust, authority, urgency, and fear rather than software flaws.</p>
+<p><strong>Phishing</strong> is any deceptive communication — typically email — designed to trick the recipient into revealing credentials, clicking a malicious link, or opening a malicious attachment. Phishing is the most common initial access vector in enterprise breaches.</p>
+<p><strong>Pretexting</strong> is the creation of a fabricated identity, scenario, or backstory that provides a believable justification for the attacker's request. The pretext makes the request seem legitimate and reduces the target's suspicion.</p>
+<p><strong>Impersonation</strong> is a specific form of pretexting where the attacker claims to be a real, known individual rather than a generic role. Impersonating the CEO, IT director, or a named colleague requires targeted research but is highly effective.</p>
+<p><strong>Baiting</strong> is a social engineering technique that exploits curiosity or greed. Leaving infected USB drives labeled with enticing titles in a target's environment is the classic example. Online baiting includes fraudulent offers of free software or media that deliver malware upon download.</p>
+<p><strong>Quid Pro Quo</strong> is a social engineering technique where the attacker offers something of value in exchange for information or access. An example is calling employees and offering to help solve a computer problem in exchange for login credentials.</p>
+<hr />
+<h2>2. Phishing Variant Comparison Table</h2>
+<table>
+<thead>
+<tr>
+<th>Variant</th>
+<th>Delivery Channel</th>
+<th>Target Profile</th>
+<th>Key Distinguishing Feature</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Phishing</td>
+<td>Email</td>
+<td>Mass, untargeted</td>
+<td>Generic lure sent to thousands</td>
+<td>Fake bank email to all customers</td>
+</tr>
+<tr>
+<td>Spear Phishing</td>
+<td>Email</td>
+<td>Specific individual or org</td>
+<td>Personalized with OSINT details</td>
+<td>Email referencing target's boss and project</td>
+</tr>
+<tr>
+<td>Whaling</td>
+<td>Email</td>
+<td>Executives, high-value targets</td>
+<td>Targets "big fish" for large impact</td>
+<td>BEC attack targeting CFO for wire transfer</td>
+</tr>
+<tr>
+<td>Vishing</td>
+<td>Phone / VoIP</td>
+<td>Varies</td>
+<td>Voice delivery with caller ID spoofing</td>
+<td>IT help desk impersonation call</td>
+</tr>
+<tr>
+<td>Smishing</td>
+<td>SMS / text message</td>
+<td>Mobile users</td>
+<td>Link in text message</td>
+<td>Fake package delivery notification</td>
+</tr>
+<tr>
+<td>Clone Phishing</td>
+<td>Email</td>
+<td>Previous email recipients</td>
+<td>Duplicates a legitimate prior email with malicious substitution</td>
+<td>Resent invoice email with swapped attachment</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>3. Psychological Principles Exploited by Social Engineers</h2>
+<table>
+<thead>
+<tr>
+<th>Principle</th>
+<th>Definition</th>
+<th>Attack Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Authority</td>
+<td>People comply with perceived authority figures without question</td>
+<td>Caller claims to be the CEO and demands immediate action</td>
+</tr>
+<tr>
+<td>Urgency</td>
+<td>Time pressure short-circuits critical thinking</td>
+<td>"Your account will be locked in one hour"</td>
+</tr>
+<tr>
+<td>Scarcity</td>
+<td>Limited availability drives impulsive action</td>
+<td>"This is the only way to restore access before the deadline"</td>
+</tr>
+<tr>
+<td>Familiarity</td>
+<td>People trust those they recognize or feel connected to</td>
+<td>Attacker references the target's colleague's name and project</td>
+</tr>
+<tr>
+<td>Social Proof</td>
+<td>People assume others' behavior represents the correct action</td>
+<td>"All your teammates have already updated their credentials"</td>
+</tr>
+<tr>
+<td>Fear</td>
+<td>Threat of negative consequences triggers panic</td>
+<td>"Legal action will be taken unless you verify immediately"</td>
+</tr>
+<tr>
+<td>Reciprocity</td>
+<td>People feel obligated to return favors</td>
+<td>Attacker helps with a minor issue then asks for credentials in return</td>
+</tr>
+<tr>
+<td>Intimidation</td>
+<td>Aggressive pressure prevents logical evaluation</td>
+<td>Impersonated executive berating a help desk employee</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>4. Physical Social Engineering Techniques</h2>
+<p><strong>Tailgating (Piggybacking)</strong> — An unauthorized person follows an authorized employee through a secured door or access point without independently authenticating. Social norms discourage people from challenging others who appear to belong in a space. The technical countermeasure is a mantrap — a double-door vestibule where only one person can enter per authentication cycle. Administrative countermeasures include a tailgating awareness policy and training.</p>
+<p><strong>Dumpster Diving</strong> — Retrieving sensitive information from discarded physical materials including printed documents, old hard drives, sticky notes with passwords, and printed organizational charts. Countermeasures: mandatory cross-cut shredding policy for all documents, secure disposal procedures for electronic media, and clean desk policy.</p>
+<p><strong>Shoulder Surfing</strong> — Visually observing sensitive information as a target enters it — passwords at a keyboard, PINs at an ATM, documents on a screen in a public space. Countermeasures: privacy screens on laptops and monitors, screen orientation awareness, and training for public workspace security.</p>
+<p><strong>Badge Cloning</strong> — Copying the data from a proximity card or RFID badge using a concealed reader to create a duplicate that allows unauthorized physical access. Countermeasures: shielded badge holders (Faraday cage wallets), upgraded access card technology with stronger encryption, and continuous access log review.</p>
+<hr />
+<h2>5. Email Security Protocol Reference</h2>
+<table>
+<thead>
+<tr>
+<th>Protocol</th>
+<th>Full Name</th>
+<th>What It Does</th>
+<th>DNS Record Type</th>
+<th>Protection Against</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SPF</td>
+<td>Sender Policy Framework</td>
+<td>Lists authorized sending IP addresses for a domain</td>
+<td>TXT</td>
+<td>Unauthorized servers sending email as your domain</td>
+</tr>
+<tr>
+<td>DKIM</td>
+<td>DomainKeys Identified Mail</td>
+<td>Adds a cryptographic signature to outgoing email headers</td>
+<td>TXT</td>
+<td>Message tampering in transit; confirms authorized sending server</td>
+</tr>
+<tr>
+<td>DMARC</td>
+<td>Domain-based Message Authentication, Reporting and Conformance</td>
+<td>Enforcement policy combining SPF and DKIM; specifies reject/quarantine/none action</td>
+<td>TXT</td>
+<td>Domain spoofing; provides aggregate reports on spoofing attempts</td>
+</tr>
+</tbody>
+</table>
+<p><strong>How they work together:</strong> SPF verifies the sending IP. DKIM verifies the message content and header integrity. DMARC uses the results of both to apply an enforcement action and report on failures. A complete anti-spoofing deployment requires all three.</p>
+<hr />
+<h2>6. Anti-Phishing Technical Controls Summary</h2>
+<table>
+<thead>
+<tr>
+<th>Control</th>
+<th>Category</th>
+<th>Function</th>
+<th>How It Addresses Phishing</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Email filtering / anti-spam gateway</td>
+<td>Technical</td>
+<td>Preventive</td>
+<td>Blocks known malicious messages before delivery</td>
+</tr>
+<tr>
+<td>URL sandboxing</td>
+<td>Technical</td>
+<td>Preventive / Detective</td>
+<td>Detonates links in isolation to detect malicious redirects</td>
+</tr>
+<tr>
+<td>Attachment sandboxing</td>
+<td>Technical</td>
+<td>Preventive / Detective</td>
+<td>Opens attachments in isolation to observe malicious behavior</td>
+</tr>
+<tr>
+<td>SPF / DKIM / DMARC</td>
+<td>Technical</td>
+<td>Preventive</td>
+<td>Reduces domain spoofing; enables rejection of spoofed email</td>
+</tr>
+<tr>
+<td>Multi-factor authentication</td>
+<td>Technical</td>
+<td>Compensating</td>
+<td>Prevents credential use even when phishing captures username and password</td>
+</tr>
+<tr>
+<td>Endpoint detection and response (EDR)</td>
+<td>Technical</td>
+<td>Detective / Corrective</td>
+<td>Detects malware installed via phishing click and enables response</td>
+</tr>
+<tr>
+<td>Phishing simulation</td>
+<td>Administrative</td>
+<td>Detective / Corrective</td>
+<td>Measures human susceptibility; triggers just-in-time training</td>
+</tr>
+<tr>
+<td>Security awareness training</td>
+<td>Administrative</td>
+<td>Preventive</td>
+<td>Builds employee ability to recognize and report phishing</td>
+</tr>
+<tr>
+<td>Incident reporting procedure</td>
+<td>Administrative</td>
+<td>Detective</td>
+<td>Enables rapid containment when phishing succeeds</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>7. Social Engineering Defense-in-Depth Framework</h2>
+<p>Effective defense requires controls at every layer because no single control eliminates phishing risk.</p>
+<p><strong>Layer 1 — Reduce email reaching the inbox:</strong> SPF, DKIM, DMARC configured correctly. Email gateway with sandboxing. URL rewriting and reputation checking.</p>
+<p><strong>Layer 2 — Reduce clicks by trained humans:</strong> Security awareness training conducted at least annually, with phishing simulations run quarterly. Employees trained to inspect sender addresses, hover over links before clicking, and report suspicious messages.</p>
+<p><strong>Layer 3 — Limit damage when credentials are captured:</strong> Multi-factor authentication deployed on all externally accessible systems. Even with captured credentials, the attacker cannot authenticate without the second factor.</p>
+<p><strong>Layer 4 — Detect and respond when malware executes:</strong> EDR on all endpoints. SIEM correlating alerts. Incident response plan with defined steps for phishing compromise. Procedures for rapid password reset and account quarantine.</p>
+<hr />
+<h2>8. Security+ Exam Tips for Module 02</h2>
+<p><strong>Exam Tip 1:</strong> The exam will describe a scenario and ask you to name the social engineering type. Focus on the delivery channel first: email = phishing variant, phone = vishing, SMS = smishing. Then assess targeting: personalized = spear phishing, executive target = whaling.</p>
+<p><strong>Exam Tip 2:</strong> Pretexting is almost always combined with another technique. Pretexting + phone call = vishing + pretexting. Pretexting + physical entry = impersonation + tailgating. Name all applicable techniques.</p>
+<p><strong>Exam Tip 3:</strong> On email security protocols — SPF = IP authorization; DKIM = digital signature on message; DMARC = policy enforcement layer combining both. If the question asks what allows a domain owner to specify that receiving servers should reject spoofed email, the answer is DMARC.</p>
+<p><strong>Exam Tip 4:</strong> The best defense against phishing at the human level is security awareness training. The best technical control that limits damage after credentials are captured is MFA. Know which answer fits which question context.</p>
+<p><strong>Exam Tip 5:</strong> Baiting questions commonly describe a USB drive found in a parking lot. The attacker is relying on curiosity and autorun functionality. The countermeasure is disabling autorun/autoplay via Group Policy and blocking unmanaged USB devices via endpoint policy.</p>
+<p><strong>Exam Tip 6:</strong> Quid pro quo is a social engineering technique where the attacker offers something in exchange for information. This is different from baiting (which offers something and does not require information in return) — quid pro quo is an exchange.</p>
+<p><strong>Exam Tip 7:</strong> Tailgating and piggybacking are the same technique — an unauthorized person follows an authorized person through a secured entry. The technical countermeasure is a mantrap. The administrative countermeasure is a challenge policy and training.</p>
+<p><strong>Exam Tip 8:</strong> Shoulder surfing targets the Confidentiality pillar of the CIA Triad and is a passive attack — the attacker does not modify any data, only observes it.</p>
+<hr />
+<h2>9. Required Study Resources</h2>
+<ul>
+<li>Professor Messer's SY0-701 study notes and video lectures for Domain 2 social engineering objectives, available free at professormesser.com.</li>
+<li>CompTIA's official SY0-701 exam objectives document, available at comptia.org. Review all Domain 2 objectives related to social engineering.</li>
+</ul>
+<hr />
+<h2>10. Study Checklist</h2>
+<ul>
+<li>[ ] Define social engineering and list the six psychological principles it exploits.</li>
+<li>[ ] Name and describe all six phishing variants with their delivery channel and target profile.</li>
+<li>[ ] Explain pretexting, impersonation, baiting, quid pro quo, tailgating, and dumpster diving.</li>
+<li>[ ] Describe SPF, DKIM, and DMARC and explain how they work together to prevent email spoofing.</li>
+<li>[ ] List at least four technical controls that reduce phishing risk and state the function of each.</li>
+<li>[ ] Explain why MFA is the highest-impact control for limiting credential phishing damage.</li>
+<li>[ ] Describe the full attack chain that starts with a phishing email and ends with data exfiltration.</li>
+<li>[ ] Identify the CIA Triad property targeted by each phishing variant.</li>
+<li>[ ] Complete the Module 02 Lab activity.</li>
+<li>[ ] Post your initial discussion response by Wednesday at 11:59 PM.</li>
+<li>[ ] Post two peer replies by Sunday at 11:59 PM.</li>
+</ul>
+<hr />
+<p>Texas Wesleyan University — CIS-4328 Information Security — Module 02 Reading Guide</p>
+<p>Proprietary and Confidential. Not for disclosure outside of authorized course use.</p>
+</body>
+</html>

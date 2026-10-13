@@ -1,0 +1,237 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Assignment: Lab (M09): Network Services: DNS, DHCP, and NTP</title>
+</head>
+<body>
+<h2>Lab (M09): Network Services: DNS, DHCP, and NTP</h2>
+<h1>Lab Activity: Module 09 — Network Services: DNS, DHCP, and NTP</h1>
+<h2>CIS-3321 Network Administration | CompTIA Network+ (N10-009)</h2>
+<h2>Texas Wesleyan University | Professor Nash</h2>
+<hr />
+<h3>Overview</h3>
+<p>This lab has two parts. Part 1 uses command-line tools to investigate DNS resolution — querying record types, interpreting results, and tracing the resolution hierarchy. Part 2 uses Cisco Packet Tracer to configure a DHCP server on a router and verify that clients on two subnets receive correct addresses through a relay agent.</p>
+<p>Estimated Time: 60–75 minutes</p>
+<p>Required Tools:</p>
+<ul>
+<li>Windows Command Prompt or Linux/macOS Terminal (for Part 1)</li>
+<li>Cisco Packet Tracer 8.x (free download at netacad.com with a free account)</li>
+</ul>
+<hr />
+<h3>Learning Objectives</h3>
+<p>By the end of this lab, you will be able to:</p>
+<ol>
+<li>Use nslookup to query A, AAAA, MX, NS, TXT, and PTR records for real domains.</li>
+<li>Explain the difference between a non-authoritative answer and an authoritative answer.</li>
+<li>Configure a DHCP scope on a Cisco router and exclude static device addresses.</li>
+<li>Configure ip helper-address on a router interface to relay DHCP broadcasts to a central DHCP server.</li>
+<li>Verify DHCP lease assignment and trace the DORA exchange in Packet Tracer simulation mode.</li>
+</ol>
+<hr />
+<h3>Part 1: DNS Query Investigation</h3>
+<h4>Step 1: Query an A Record</h4>
+<p>Open a Command Prompt (Windows) or Terminal (Linux/macOS) and run:</p>
+<pre><code class="language-bat">nslookup google.com
+</code></pre>
+<p>On Linux/macOS:</p>
+<pre><code class="language-bash">nslookup google.com
+</code></pre>
+<p>Record the output: the server address, the response IP addresses, and whether the answer is labeled "Non-authoritative answer."</p>
+<h4>Step 2: Query an MX Record</h4>
+<pre><code class="language-bat">nslookup -type=MX gmail.com
+</code></pre>
+<p>Record the mail server hostnames and their priority values.</p>
+<h4>Step 3: Query an NS Record</h4>
+<pre><code class="language-bat">nslookup -type=NS google.com
+</code></pre>
+<p>Record the authoritative name server hostnames returned.</p>
+<h4>Step 4: Query a TXT Record for SPF</h4>
+<pre><code class="language-bat">nslookup -type=TXT google.com
+</code></pre>
+<p>Find the record beginning with "v=spf1" in the output.</p>
+<h4>Step 5: Perform a Reverse DNS Lookup</h4>
+<p>Choose one of the IP addresses returned in Step 1. Run:</p>
+<pre><code class="language-bat">nslookup 142.250.80.46
+</code></pre>
+<p>Replace the IP with one you received for google.com.</p>
+<h4>Step 6: Query an Alternate DNS Server</h4>
+<pre><code class="language-bat">nslookup example.com 8.8.8.8
+</code></pre>
+<p>This queries Google's public DNS server directly instead of your default resolver.</p>
+<p>Lab Questions — Part 1:</p>
+<p>Question 1: What is the difference between a non-authoritative and an authoritative DNS answer? Which query returned a non-authoritative answer, and why?</p>
+<p>Question 2: A user reports they cannot reach a company intranet site by name but can reach it by IP address. Which DNS diagnostic command would you run first, and what output would confirm the problem?</p>
+<p>Question 3: Explain the full DNS resolution path that your resolver followed when you queried google.com in Step 1. Include each level of the hierarchy and what each server responded with.</p>
+<p>Question 4: An email administrator needs to verify that an SPF record is published for their domain. Write the exact nslookup command to query the TXT record for the domain yourdomain.com and explain what a v=spf1 record means.</p>
+<hr />
+<h3>Part 2: DHCP Server and Relay Agent Configuration in Packet Tracer</h3>
+<h4>Part 2 Step 1: Build the Topology</h4>
+<p>Open Packet Tracer and create the following three-subnet topology:</p>
+<p>Subnet A — Client LAN 1:</p>
+<ul>
+<li>Network: 192.168.10.0/24</li>
+<li>Router1 interface Fa0/0: 192.168.10.1/24</li>
+<li>PC1 and PC2 will receive DHCP assignments</li>
+</ul>
+<p>Subnet B — Client LAN 2:</p>
+<ul>
+<li>Network: 192.168.20.0/24</li>
+<li>Router1 interface Fa0/1: 192.168.20.1/24</li>
+<li>PC3 will receive DHCP assignment</li>
+</ul>
+<p>Server Subnet:</p>
+<ul>
+<li>Network: 10.0.0.0/30</li>
+<li>Router1 interface Fa1/0: 10.0.0.1/30</li>
+<li>DHCP-Server: 10.0.0.2/30 (static)</li>
+</ul>
+<p>Connect PC1 and PC2 to a switch on Fa0/0 side; PC3 to a switch on Fa0/1 side; DHCP-Server directly to Router1 Fa1/0.</p>
+<h4>Part 2 Step 2: Configure Router1 Interfaces</h4>
+<pre><code class="language-cisco">interface FastEthernet0/0
+ ip address 192.168.10.1 255.255.255.0
+ no shutdown
+!
+interface FastEthernet0/1
+ ip address 192.168.20.1 255.255.255.0
+ no shutdown
+!
+interface FastEthernet1/0
+ ip address 10.0.0.1 255.255.255.252
+ no shutdown
+</code></pre>
+<h4>Part 2 Step 3: Configure the DHCP Server</h4>
+<p>On the DHCP-Server device in Packet Tracer, click Services then DHCP.</p>
+<p>Create two pools:</p>
+<p>Pool 1 — for Subnet A:</p>
+<ul>
+<li>Pool name: LAN_A</li>
+<li>Default gateway: 192.168.10.1</li>
+<li>DNS server: 8.8.8.8</li>
+<li>Start IP: 192.168.10.100</li>
+<li>Subnet mask: 255.255.255.0</li>
+<li>Maximum users: 50</li>
+</ul>
+<p>Pool 2 — for Subnet B:</p>
+<ul>
+<li>Pool name: LAN_B</li>
+<li>Default gateway: 192.168.20.1</li>
+<li>DNS server: 8.8.8.8</li>
+<li>Start IP: 192.168.20.100</li>
+<li>Subnet mask: 255.255.255.0</li>
+<li>Maximum users: 50</li>
+</ul>
+<p>Enable the DHCP service on the server.</p>
+<h4>Part 2 Step 4: Configure DHCP Relay Agents</h4>
+<p>On Router1, configure ip helper-address on both client-facing interfaces:</p>
+<pre><code class="language-cisco">interface FastEthernet0/0
+ ip helper-address 10.0.0.2
+!
+interface FastEthernet0/1
+ ip helper-address 10.0.0.2
+</code></pre>
+<h4>Part 2 Step 5: Test DHCP Assignment</h4>
+<p>On each PC, set IP Configuration to DHCP. PC1 and PC2 should receive addresses in 192.168.10.100 range; PC3 in 192.168.20.100 range.</p>
+<p>Verify on each PC:</p>
+<pre><code class="language-bat">ipconfig /all
+</code></pre>
+<p>Record the IP address, subnet mask, default gateway, and DNS server for each PC.</p>
+<h4>Part 2 Step 6: Observe DORA in Simulation Mode</h4>
+<p>Switch Packet Tracer to Simulation mode. Filter to DHCP only. Click Fast Forward to generate DHCP traffic. Observe the Discover, Offer, Request, ACK sequence.</p>
+<p>Lab Questions — Part 2:</p>
+<p>Question 5: Explain why ip helper-address is required. What happens to a DHCP Discover broadcast at a router interface if ip helper-address is not configured?</p>
+<p>Question 6: PC1 and PC3 are on different subnets but use the same DHCP server. How does the server know which pool to assign to each client?</p>
+<p>Question 7: In simulation mode, was the DHCP Discover sent as a broadcast or unicast? Was the ACK sent as broadcast or unicast? Explain the technical reason for each.</p>
+<p>Question 8: A rogue DHCP server on the network responds to DHCP Discovers before the legitimate server. What attack is this, and which switch security feature prevents it?</p>
+<p>Question 9: What is the disadvantage of setting a very short DHCP lease time (for example, 2 hours)?</p>
+<p>Question 10: An administrator needs a specific device to always receive the same IP address via DHCP. What DHCP feature accomplishes this, and what information must be configured?</p>
+<hr />
+<h3>Deliverables</h3>
+<p>Submit the following in a single PDF or Word document:</p>
+<ol>
+<li>Part 1 Screenshots — all six nslookup command outputs.</li>
+<li>Part 1 Written Responses — answers to Questions 1 through 4.</li>
+<li>Part 2 Topology Screenshot — completed Packet Tracer topology.</li>
+<li>Part 2 DHCP Verification — ipconfig /all output from PC1, PC2, and PC3.</li>
+<li>Part 2 Simulation Screenshot — DORA sequence in Simulation mode.</li>
+<li>Part 2 Written Responses — answers to Questions 5 through 10.</li>
+</ol>
+<hr />
+<h3>Grading Rubric (100 Points Total)</h3>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Points</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Part 1 nslookup screenshots — all six commands shown</td>
+<td>12</td>
+</tr>
+<tr>
+<td>Question 1 — non-authoritative vs. authoritative explained</td>
+<td>8</td>
+</tr>
+<tr>
+<td>Question 2 — correct diagnostic command described</td>
+<td>8</td>
+</tr>
+<tr>
+<td>Question 3 — DNS resolution path with all hierarchy levels</td>
+<td>8</td>
+</tr>
+<tr>
+<td>Question 4 — correct nslookup syntax and SPF explanation</td>
+<td>8</td>
+</tr>
+<tr>
+<td>Part 2 topology screenshot</td>
+<td>8</td>
+</tr>
+<tr>
+<td>Part 2 DHCP verification — correct IPs from correct pools</td>
+<td>8</td>
+</tr>
+<tr>
+<td>Part 2 simulation screenshot — DORA sequence visible</td>
+<td>8</td>
+</tr>
+<tr>
+<td>Question 5 — ip helper-address function explained</td>
+<td>6</td>
+</tr>
+<tr>
+<td>Question 6 — subnet identification in relayed DHCP explained</td>
+<td>6</td>
+</tr>
+<tr>
+<td>Question 7 — broadcast vs. unicast reasoning correct</td>
+<td>6</td>
+</tr>
+<tr>
+<td>Question 8 — rogue DHCP and DHCP Snooping described</td>
+<td>6</td>
+</tr>
+<tr>
+<td>Question 9 — short lease disadvantage described</td>
+<td>4</td>
+</tr>
+<tr>
+<td>Question 10 — DHCP reservation described</td>
+<td>4</td>
+</tr>
+<tr>
+<td>Total</td>
+<td>100</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>Submission Instructions</h3>
+<p>Save your document as: Lab09_Firstname_Lastname.pdf</p>
+<p>Submit to the Module 09 Lab assignment in the course LMS before the posted deadline.</p>
+<hr />
+<p>CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash</p>
+</body>
+</html>

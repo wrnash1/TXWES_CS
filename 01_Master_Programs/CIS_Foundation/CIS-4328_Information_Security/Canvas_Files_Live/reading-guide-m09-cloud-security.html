@@ -1,0 +1,208 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Reading Guide (M09): Cloud Security</title>
+</head>
+<body>
+<h2>Reading Guide (M09): Cloud Security</h2>
+<h1>Reading Guide: Module 09 — Cloud Security</h1>
+<h2>Course: CIS-4328 Information Security</h2>
+<p><strong>Certification Alignment:</strong> CompTIA Security+ (SY0-701)</p>
+<hr />
+<h2>Overview</h2>
+<p>This reading guide accompanies the Module 09 video lectures. Complete all assigned readings before attempting the quiz or lab. Cloud security is tested across multiple Security+ domains, and this module's content directly supports exam objectives in Domain 2 (Architecture and Design) and Domain 4 (Operations).</p>
+<hr />
+<h2>Learning Objectives</h2>
+<p>By the end of this module, you will be able to:</p>
+<ol>
+<li>Explain the shared responsibility model for IaaS, PaaS, and SaaS deployments</li>
+<li>Describe the four core functions of a Cloud Access Security Broker (CASB)</li>
+<li>Compare CASB deployment modes and select the appropriate mode for a given scenario</li>
+<li>Apply encryption and access control best practices to cloud storage</li>
+<li>Identify container security risks and corresponding mitigations</li>
+<li>Explain the security model for serverless computing and its unique risks</li>
+<li>Map cloud deployments to relevant compliance frameworks</li>
+<li>Describe the key challenges and controls in a multi-cloud security strategy</li>
+</ol>
+<hr />
+<h2>Assigned Readings (Zero-Cost / Open Access)</h2>
+<h3>Primary Reading</h3>
+<p><strong>NIST SP 800-144 — Guidelines on Security and Privacy in Public Cloud Computing</strong></p>
+<ul>
+<li>Publisher: National Institute of Standards and Technology</li>
+<li>Access: <a href="https://csrc.nist.gov/publications/detail/sp/800-144/final">https://csrc.nist.gov/publications/detail/sp/800-144/final</a></li>
+<li>Read: Sections 1–4 (pages 1–38)</li>
+<li>Focus areas: cloud deployment models, cloud service models, threats to cloud environments, security recommendations</li>
+</ul>
+<p><strong>CSA Security Guidance for Critical Areas of Focus in Cloud Computing v4.0</strong></p>
+<ul>
+<li>Publisher: Cloud Security Alliance</li>
+<li>Access: <a href="https://cloudsecurityalliance.org/research/guidance/">https://cloudsecurityalliance.org/research/guidance/</a> (free registration required)</li>
+<li>Read: Domain 1 (Cloud Architecture), Domain 6 (Management Plane), Domain 9 (Incident Response)</li>
+<li>Focus areas: shared responsibility decomposition, management plane threats, cloud-specific IR considerations</li>
+</ul>
+<h3>Supplemental Reading</h3>
+<p><strong>OWASP Docker Security Cheat Sheet</strong></p>
+<ul>
+<li>Access: <a href="https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html">https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html</a></li>
+<li>Read: Full document (approximately 20 minutes)</li>
+<li>Focus areas: image hardening, runtime controls, secrets handling</li>
+</ul>
+<p><strong>CIS Benchmarks for Cloud Providers (Public Summaries)</strong></p>
+<ul>
+<li>Access: <a href="https://www.cisecurity.org/cis-benchmarks">https://www.cisecurity.org/cis-benchmarks</a></li>
+<li>Read: Download the free PDF summary for AWS Foundations or Azure Security Benchmark</li>
+<li>Focus areas: storage encryption settings, logging configurations, IAM hardening</li>
+</ul>
+<hr />
+<h2>Key Terms and Definitions</h2>
+<p>Study these terms. Each one may appear on the Security+ exam.</p>
+<p><strong>Shared Responsibility Model</strong> — The division of security obligations between a cloud provider and cloud customer, where the provider secures the underlying infrastructure and the customer secures their data, identities, and configurations.</p>
+<p><strong>IaaS (Infrastructure as a Service)</strong> — Cloud service model where the provider delivers virtualized compute, storage, and networking; the customer manages OS, middleware, application, and data.</p>
+<p><strong>PaaS (Platform as a Service)</strong> — Cloud service model where the provider manages the OS and runtime; the customer manages the application and data.</p>
+<p><strong>SaaS (Software as a Service)</strong> — Cloud service model where the provider delivers a complete application; the customer manages access, data classification, and usage policy.</p>
+<p><strong>CASB (Cloud Access Security Broker)</strong> — A security control point between users and cloud services that enforces visibility, compliance, data security, and threat protection policies.</p>
+<p><strong>Shadow IT</strong> — Cloud applications or services used by employees without official IT approval or oversight.</p>
+<p><strong>Forward Proxy CASB</strong> — CASB deployment mode where outbound traffic is routed through the CASB before reaching cloud services; requires device configuration.</p>
+<p><strong>Reverse Proxy CASB</strong> — CASB deployment mode where traffic passes through the CASB between the cloud service and the user; does not require device agents; preferred for BYOD.</p>
+<p><strong>API-mode CASB</strong> — CASB deployment mode that connects to cloud provider APIs to inspect stored content and audit logs without intercepting traffic flows.</p>
+<p><strong>SSE-KMS</strong> — Server-Side Encryption with Key Management Service; the cloud provider encrypts data using customer-managed keys stored in a key management service.</p>
+<p><strong>Object Lock / WORM</strong> — A cloud storage feature that prevents objects from being deleted or modified for a defined retention period; Write Once Read Many.</p>
+<p><strong>Container</strong> — A lightweight, portable execution environment that packages application code and dependencies and shares the host operating system kernel.</p>
+<p><strong>Container Registry</strong> — A repository for storing and distributing container images; must be secured with access controls, image scanning, and signing.</p>
+<p><strong>Serverless Computing</strong> — A cloud execution model where the provider manages all infrastructure and the customer deploys only function code; billed per execution.</p>
+<p><strong>CSPM (Cloud Security Posture Management)</strong> — Automated tools that continuously assess cloud environment configurations against security benchmarks and compliance frameworks.</p>
+<p><strong>FedRAMP</strong> — Federal Risk and Authorization Management Program; a US government compliance framework for cloud services used by federal agencies.</p>
+<p><strong>CSA CCM</strong> — Cloud Security Alliance Cloud Controls Matrix; a framework mapping security controls to cloud-specific domains, cross-referencing major compliance standards.</p>
+<p><strong>Multi-cloud</strong> — The use of cloud services from two or more distinct cloud providers within a single organization.</p>
+<p><strong>Zero Trust</strong> — A security model that requires explicit verification of every request regardless of network location; never assumes trust based on network position.</p>
+<p><strong>Policy as Code</strong> — The practice of expressing security and compliance policies as version-controlled code that is automatically enforced across infrastructure.</p>
+<hr />
+<h2>Concept Deep Dives</h2>
+<h3>Shared Responsibility Breakdown Table</h3>
+<p>Study this table until it is second nature:</p>
+<table>
+<thead>
+<tr>
+<th>Security Area</th>
+<th>IaaS</th>
+<th>PaaS</th>
+<th>SaaS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Physical infrastructure</td>
+<td>Provider</td>
+<td>Provider</td>
+<td>Provider</td>
+</tr>
+<tr>
+<td>Hypervisor / virtualization</td>
+<td>Provider</td>
+<td>Provider</td>
+<td>Provider</td>
+</tr>
+<tr>
+<td>Operating system</td>
+<td><strong>Customer</strong></td>
+<td>Provider</td>
+<td>Provider</td>
+</tr>
+<tr>
+<td>Runtime / middleware</td>
+<td><strong>Customer</strong></td>
+<td>Provider</td>
+<td>Provider</td>
+</tr>
+<tr>
+<td>Application code</td>
+<td><strong>Customer</strong></td>
+<td><strong>Customer</strong></td>
+<td>Provider</td>
+</tr>
+<tr>
+<td>Data</td>
+<td><strong>Customer</strong></td>
+<td><strong>Customer</strong></td>
+<td><strong>Customer</strong></td>
+</tr>
+<tr>
+<td>Identity and access</td>
+<td><strong>Customer</strong></td>
+<td><strong>Customer</strong></td>
+<td><strong>Customer</strong></td>
+</tr>
+<tr>
+<td>Endpoint security</td>
+<td><strong>Customer</strong></td>
+<td><strong>Customer</strong></td>
+<td><strong>Customer</strong></td>
+</tr>
+</tbody>
+</table>
+<p>The customer always owns data and identity. The provider always owns physical infrastructure. Everything in between depends on the model.</p>
+<h3>CASB Decision Framework</h3>
+<p>When a scenario question describes an organization's environment, use this logic:</p>
+<ol>
+<li>Can the organization install software on all user devices? If yes → forward proxy CASB is viable.</li>
+<li>Are users on BYOD/unmanaged devices? If yes → reverse proxy or API mode.</li>
+<li>Does the organization need to inspect stored cloud data rather than live traffic? If yes → API mode.</li>
+<li>Does the organization need to block uploads in real time? If yes → proxy mode (forward or reverse).</li>
+</ol>
+<h3>Container Image Supply Chain Security</h3>
+<p>Understand this flow for the exam and for real-world practice:</p>
+<p><strong>Developer commits code → CI/CD pipeline builds image → image scanned for vulnerabilities → image signed → image pushed to private registry → deployment pulls signed image → runtime security enforced</strong></p>
+<p>Breaking the chain at any point creates risk. If the scan step is skipped, vulnerable images reach production. If signing is skipped, an attacker who compromises the registry could substitute a malicious image.</p>
+<hr />
+<h2>Security+ Exam Alignment</h2>
+<h3>Relevant Exam Objectives (SY0-701)</h3>
+<ul>
+<li><strong>2.2</strong> — Summarize virtualization and cloud computing concepts (cloud models, shared responsibility, CASB, CSPM)</li>
+<li><strong>2.4</strong> — Summarize network infrastructure concepts (cloud networking, segmentation)</li>
+<li><strong>4.1</strong> — Given a scenario, apply common security techniques to computing resources (container hardening, serverless security)</li>
+</ul>
+<h3>High-Probability Exam Topics from This Module</h3>
+<ul>
+<li>Identifying the correct CASB deployment mode for a described scenario</li>
+<li>Determining which party (customer or provider) is responsible for a described security failure</li>
+<li>Distinguishing between SSE-S3, SSE-KMS, and SSE-C</li>
+<li>Recognizing container security misconfigurations (running as root, embedded secrets)</li>
+<li>Understanding FedRAMP's role in government cloud procurement</li>
+</ul>
+<hr />
+<h2>Review Questions (Self-Check — Not Graded)</h2>
+<p>Answer these before the quiz to confirm comprehension:</p>
+<ol>
+<li>
+<p>A company uses AWS EC2 virtual machines. A vulnerability is discovered in the Windows Server OS running on those VMs. Who is responsible for applying the patch?</p>
+</li>
+<li>
+<p>An organization's employees are using personal smartphones to access Microsoft 365. The security team wants to monitor and control what data users upload to Teams. Which CASB deployment mode is most appropriate and why?</p>
+</li>
+<li>
+<p>A developer builds a Docker container and hard-codes an API key in the Dockerfile ENV instruction. What specific security risk does this create and what is the correct remediation?</p>
+</li>
+<li>
+<p>A federal agency evaluates cloud storage vendors. What compliance authorization should they verify the vendor holds before procurement?</p>
+</li>
+<li>
+<p>A company operates in AWS and Azure. Security configurations in AWS are properly hardened but Azure has misconfigured storage containers with public access enabled. What tool category would detect this configuration gap automatically?</p>
+</li>
+<li>
+<p>An AWS Lambda function processes user-submitted forms and queries a database. The function's IAM role has AdministratorAccess. What principle is violated and what is the correct fix?</p>
+</li>
+</ol>
+<hr />
+<h2>Preparation for the Lab</h2>
+<p>The Module 09 lab uses the AWS Free Tier and focuses on cloud storage security configuration. Before the lab session:</p>
+<ul>
+<li>Create or log in to your AWS Free Tier account at <a href="https://aws.amazon.com/free/">https://aws.amazon.com/free/</a></li>
+<li>Verify you can access the S3 console</li>
+<li>Review the AWS S3 Block Public Access documentation: <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html">https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html</a></li>
+</ul>
+<p>No cloud costs are expected for the lab. All activities use Free Tier services or read-only configurations.</p>
+<hr />
+<p><em>Texas Wesleyan University | CIS-4328 Information Security | Module 09</em></p>
+</body>
+</html>

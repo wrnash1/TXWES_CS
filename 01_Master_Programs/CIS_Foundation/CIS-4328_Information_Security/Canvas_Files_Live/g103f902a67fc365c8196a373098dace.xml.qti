@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/profile/cc/ccv1p1/ccv1p1_qtiasiv1p2p1_v1p0.xsd">
+  <assessment ident="g103f902a67fc365c8196a373098dace" title="Quiz (M14): Governance, Compliance, and Regulatory Frameworks">
+    <qtimetadata>
+      <qtimetadatafield>
+        <fieldlabel>cc_profile</fieldlabel>
+        <fieldentry>cc.exam.v0p1</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_assessmenttype</fieldlabel>
+        <fieldentry>Examination</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_scoretype</fieldlabel>
+        <fieldentry>Percentage</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>cc_maxattempts</fieldlabel>
+        <fieldentry>1</fieldentry>
+      </qtimetadatafield>
+    </qtimetadata>
+    <section ident="root_section">
+      <item ident="g103f902a67fc365c8196a373098dace_q01" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A company based in Canada operates an e-commerce website that accepts orders from customers in France and Germany. The company collects names, addresses, and payment details. Which regulation most directly governs how this company must handle the European customers' personal data?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g103f902a67fc365c8196a373098dace_q01_a">
+                <material>
+                  <mattext texttype="text/plain">HIPAA</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g103f902a67fc365c8196a373098dace_q01_b">
+                <material>
+                  <mattext texttype="text/plain">SOX</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g103f902a67fc365c8196a373098dace_q01_c">
+                <material>
+                  <mattext texttype="text/plain">GDPR</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g103f902a67fc365c8196a373098dace_q01_d">
+                <material>
+                  <mattext texttype="text/plain">PCI-DSS</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g103f902a67fc365c8196a373098dace_q01_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g103f902a67fc365c8196a373098dace_q02" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A security analyst discovers that a cloud storage vendor used by a hospital to archive patient records has no signed agreement defining the vendor's data protection obligations. Under HIPAA, which requirement is the hospital violating?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g103f902a67fc365c8196a373098dace_q02_a">
+                <material>
+                  <mattext texttype="text/plain">The Minimum Necessary Standard</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g103f902a67fc365c8196a373098dace_q02_b">
+                <material>
+                  <mattext texttype="text/plain">The requirement to have a Business Associate Agreement in place</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g103f902a67fc365c8196a373098dace_q02_c">
+                <material>
+                  <mattext texttype="text/plain">The 60-day breach notification requirement</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g103f902a67fc365c8196a373098dace_q02_d">
+                <material>
+                  <mattext texttype="text/plain">The requirement to conduct an annual risk analysis</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g103f902a67fc365c8196a373098dace_q02_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g103f902a67fc365c8196a373098dace_q03" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An organization has documented that it uses AES-256 for all encryption of data at rest on servers containing sensitive data. This document is reviewed and approved annually by the security team. Which type of governance document does this best represent?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g103f902a67fc365c8196a373098dace_q03_a">
+                <material>
+                  <mattext texttype="text/plain">Policy</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g103f902a67fc365c8196a373098dace_q03_b">
+                <material>
+                  <mattext texttype="text/plain">Guideline</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g103f902a67fc365c8196a373098dace_q03_c">
+                <material>
+                  <mattext texttype="text/plain">Procedure</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g103f902a67fc365c8196a373098dace_q03_d">
+                <material>
+                  <mattext texttype="text/plain">Standard</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g103f902a67fc365c8196a373098dace_q03_d</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g103f902a67fc365c8196a373098dace_q04" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A retail merchant processes approximately 2 million credit card transactions per year. The merchant stores the cardholder's full name, primary account number (PAN), expiration date, and the 3-digit CVV security code in its transaction database after each sale is completed. Which stored data element is explicitly prohibited by PCI-DSS?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g103f902a67fc365c8196a373098dace_q04_a">
+                <material>
+                  <mattext texttype="text/plain">Full cardholder name</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g103f902a67fc365c8196a373098dace_q04_b">
+                <material>
+                  <mattext texttype="text/plain">Primary account number (PAN)</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g103f902a67fc365c8196a373098dace_q04_c">
+                <material>
+                  <mattext texttype="text/plain">Expiration date</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g103f902a67fc365c8196a373098dace_q04_d">
+                <material>
+                  <mattext texttype="text/plain">CVV security code</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g103f902a67fc365c8196a373098dace_q04_d</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g103f902a67fc365c8196a373098dace_q05" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A software developer at a publicly traded company has the ability to write code changes to the company's financial reporting system and also has deployment access to push those changes directly to the production environment without any approval. Which internal control principle required for SOX compliance does this situation violate?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g103f902a67fc365c8196a373098dace_q05_a">
+                <material>
+                  <mattext texttype="text/plain">Data minimization</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g103f902a67fc365c8196a373098dace_q05_b">
+                <material>
+                  <mattext texttype="text/plain">Segregation of duties</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g103f902a67fc365c8196a373098dace_q05_c">
+                <material>
+                  <mattext texttype="text/plain">Privacy by Design</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g103f902a67fc365c8196a373098dace_q05_d">
+                <material>
+                  <mattext texttype="text/plain">Least privilege</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g103f902a67fc365c8196a373098dace_q05_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g103f902a67fc365c8196a373098dace_q06" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An organization wants to understand its current cybersecurity capabilities, identify where it wants to be in 18 months, and prioritize investments to close the gap. Which NIST Cybersecurity Framework concept most directly supports this activity?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g103f902a67fc365c8196a373098dace_q06_a">
+                <material>
+                  <mattext texttype="text/plain">Tiers 1 through 4 maturity ratings</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g103f902a67fc365c8196a373098dace_q06_b">
+                <material>
+                  <mattext texttype="text/plain">Current Profile and Target Profile comparison</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g103f902a67fc365c8196a373098dace_q06_c">
+                <material>
+                  <mattext texttype="text/plain">Annex A control selection</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g103f902a67fc365c8196a373098dace_q06_d">
+                <material>
+                  <mattext texttype="text/plain">Plan-Do-Check-Act cycle</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g103f902a67fc365c8196a373098dace_q06_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g103f902a67fc365c8196a373098dace_q07" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An organization pursuing ISO 27001 certification has completed its risk assessment and selected applicable controls from Annex A. Which required document must it produce that lists all Annex A controls, indicates which are applicable, and provides justification for any controls that were excluded?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g103f902a67fc365c8196a373098dace_q07_a">
+                <material>
+                  <mattext texttype="text/plain">Risk Treatment Plan</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g103f902a67fc365c8196a373098dace_q07_b">
+                <material>
+                  <mattext texttype="text/plain">Information Security Policy</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g103f902a67fc365c8196a373098dace_q07_c">
+                <material>
+                  <mattext texttype="text/plain">Statement of Applicability</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g103f902a67fc365c8196a373098dace_q07_d">
+                <material>
+                  <mattext texttype="text/plain">ISMS Scope Document</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g103f902a67fc365c8196a373098dace_q07_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g103f902a67fc365c8196a373098dace_q08" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A healthcare organization experiences a ransomware attack that encrypts files containing ePHI for 12,000 patients across three states. Assuming the encryption constitutes a breach under HIPAA's definition, what are the organization's notification obligations?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g103f902a67fc365c8196a373098dace_q08_a">
+                <material>
+                  <mattext texttype="text/plain">Notify affected individuals within 30 days; no media notification required</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g103f902a67fc365c8196a373098dace_q08_b">
+                <material>
+                  <mattext texttype="text/plain">Notify affected individuals within 60 days; notify media in each affected state; notify HHS</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g103f902a67fc365c8196a373098dace_q08_c">
+                <material>
+                  <mattext texttype="text/plain">Notify HHS within 24 hours; notify affected individuals within 72 hours</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g103f902a67fc365c8196a373098dace_q08_d">
+                <material>
+                  <mattext texttype="text/plain">Notify affected individuals within 60 days; notify the FBI immediately</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g103f902a67fc365c8196a373098dace_q08_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g103f902a67fc365c8196a373098dace_q09" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A company collects customer email addresses to send order confirmation emails. Six months later, marketing wants to use those same email addresses to send promotional newsletters. The customers never consented to marketing communications. Which privacy principle does using the emails for marketing violate?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g103f902a67fc365c8196a373098dace_q09_a">
+                <material>
+                  <mattext texttype="text/plain">Data minimization</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g103f902a67fc365c8196a373098dace_q09_b">
+                <material>
+                  <mattext texttype="text/plain">Right to erasure</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g103f902a67fc365c8196a373098dace_q09_c">
+                <material>
+                  <mattext texttype="text/plain">Purpose limitation</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g103f902a67fc365c8196a373098dace_q09_d">
+                <material>
+                  <mattext texttype="text/plain">Privacy by Design</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g103f902a67fc365c8196a373098dace_q09_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g103f902a67fc365c8196a373098dace_q10" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A manager in the finance department is responsible for deciding how long financial records must be retained and who within the department may access them. She has delegated the task of configuring access controls in the financial system to the IT team. Which data governance roles do the manager and IT team respectively hold?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g103f902a67fc365c8196a373098dace_q10_a">
+                <material>
+                  <mattext texttype="text/plain">Manager: Data Steward; IT team: Data Owner</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g103f902a67fc365c8196a373098dace_q10_b">
+                <material>
+                  <mattext texttype="text/plain">Manager: Data Custodian; IT team: Data Processor</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g103f902a67fc365c8196a373098dace_q10_c">
+                <material>
+                  <mattext texttype="text/plain">Manager: Data Owner; IT team: Data Custodian</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g103f902a67fc365c8196a373098dace_q10_d">
+                <material>
+                  <mattext texttype="text/plain">Manager: Data Controller; IT team: Data Processor</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g103f902a67fc365c8196a373098dace_q10_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+    </section>
+  </assessment>
+</questestinterop>

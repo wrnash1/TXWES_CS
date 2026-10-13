@@ -1,0 +1,379 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Reading Guide (M05): Cryptography and PKI</title>
+</head>
+<body>
+<h2>Reading Guide (M05): Cryptography and PKI</h2>
+<h1>Reading Guide: Module 05 — Cryptography and PKI</h1>
+<h2>CIS-4328 Information Security | Texas Wesleyan University</h2>
+<h3>CompTIA Security+ SY0-701 Alignment</h3>
+<hr />
+<h2>Overview</h2>
+<p>This reading guide supports Module 05 of CIS-4328. It covers the cryptographic foundations tested on the Security+ exam, including symmetric and asymmetric encryption, hashing algorithms, digital signatures, the TLS handshake, PKI components, and the certificate lifecycle.</p>
+<p>All readings use zero-cost, openly licensed resources.</p>
+<hr />
+<h2>Learning Objectives</h2>
+<p>By the end of this module, you will be able to:</p>
+<ul>
+<li>
+<p>Explain the key distribution problem and describe how asymmetric encryption solves it.</p>
+</li>
+<li>
+<p>Compare symmetric and asymmetric encryption by speed, key structure, and appropriate use cases.</p>
+</li>
+<li>
+<p>Identify AES, RSA, and ECC by their mathematical basis, key size requirements, and exam-relevant properties.</p>
+</li>
+<li>
+<p>Describe the properties of a cryptographic hash function and explain why MD5 and SHA-1 are deprecated.</p>
+</li>
+<li>
+<p>Trace the steps of a digital signature creation and verification process.</p>
+</li>
+<li>
+<p>Describe the TLS handshake and explain why it uses both asymmetric and symmetric cryptography.</p>
+</li>
+<li>
+<p>Identify the components of a PKI and explain the role of each.</p>
+</li>
+<li>
+<p>Describe the X.509 certificate structure and the three certificate validation levels.</p>
+</li>
+<li>
+<p>Explain CRL, OCSP, and OCSP Stapling and their relative advantages.</p>
+</li>
+</ul>
+<hr />
+<h2>Primary Readings</h2>
+<h3>Reading 1 — NIST SP 800-175B Rev. 1: Guideline for Using Cryptographic Standards</h3>
+<p>Source: <a href="https://csrc.nist.gov/publications/detail/sp/800-175b/rev-1/final">https://csrc.nist.gov/publications/detail/sp/800-175b/rev-1/final</a></p>
+<p>Read: Chapter 2 (Cryptographic Mechanisms Overview) and Chapter 3 (Symmetric Encryption).</p>
+<p>Focus areas:</p>
+<ul>
+<li>
+<p>NIST's current recommendations for symmetric algorithms (AES) and deprecation of DES/3DES.</p>
+</li>
+<li>
+<p>The concept of modes of operation and why mode selection matters for security.</p>
+</li>
+<li>
+<p>Key length requirements and the relationship between key length and security margin.</p>
+</li>
+</ul>
+<h3>Reading 2 — NIST SP 800-57 Part 1 Rev. 5: Recommendation for Key Management</h3>
+<p>Source: <a href="https://csrc.nist.gov/publications/detail/sp/800-57-part-1/rev-5/final">https://csrc.nist.gov/publications/detail/sp/800-57-part-1/rev-5/final</a></p>
+<p>Read: Section 5.6 (Asymmetric Key Pair Management) and Section 7 (Cryptographic Key Transitions).</p>
+<p>Focus areas:</p>
+<ul>
+<li>
+<p>RSA key size recommendations and the transition away from 1024-bit keys.</p>
+</li>
+<li>
+<p>ECC key sizes and their equivalence to RSA key sizes.</p>
+</li>
+<li>
+<p>Guidance on algorithm transitions — why organizations must plan migrations away from deprecated algorithms.</p>
+</li>
+</ul>
+<h3>Reading 3 — NIST FIPS 180-4: Secure Hash Standard</h3>
+<p>Source: <a href="https://csrc.nist.gov/publications/detail/fips/180/4/final">https://csrc.nist.gov/publications/detail/fips/180/4/final</a></p>
+<p>Read: Section 1 (Purpose and Scope) and the summary of SHA-1, SHA-224, SHA-256, SHA-384, SHA-512.</p>
+<p>Focus areas:</p>
+<ul>
+<li>
+<p>Output sizes for each SHA-2 variant.</p>
+</li>
+<li>
+<p>Why SHA-256 is the baseline for current security applications.</p>
+</li>
+<li>
+<p>The deprecation status of SHA-1.</p>
+</li>
+</ul>
+<hr />
+<h2>Supplemental Readings</h2>
+<h3>Reading 4 — Mozilla Developer Network: TLS Handshake</h3>
+<p>Source: <a href="https://developer.mozilla.org/en-US/docs/Web/Security/Transport_Layer_Security">https://developer.mozilla.org/en-US/docs/Web/Security/Transport_Layer_Security</a></p>
+<p>Read: The full article.</p>
+<p>Focus areas:</p>
+<ul>
+<li>
+<p>How cipher suite negotiation works.</p>
+</li>
+<li>
+<p>The role of the server certificate in the handshake.</p>
+</li>
+<li>
+<p>TLS 1.3 improvements over TLS 1.2.</p>
+</li>
+</ul>
+<h3>Reading 5 — Let's Encrypt: How It Works</h3>
+<p>Source: <a href="https://letsencrypt.org/how-it-works/">https://letsencrypt.org/how-it-works/</a></p>
+<p>Read: The full article.</p>
+<p>Focus areas:</p>
+<ul>
+<li>
+<p>The ACME protocol and automated certificate issuance.</p>
+</li>
+<li>
+<p>Domain validation in practice.</p>
+</li>
+<li>
+<p>The certificate lifecycle as implemented in a real CA.</p>
+</li>
+</ul>
+<hr />
+<h2>Concept Reference Tables</h2>
+<h3>Table 1 — Encryption Algorithm Comparison</h3>
+<table>
+<thead>
+<tr>
+<th>Algorithm</th>
+<th>Type</th>
+<th>Key Sizes</th>
+<th>Mathematical Basis</th>
+<th>Primary Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AES-128/192/256</td>
+<td>Symmetric</td>
+<td>128, 192, 256 bits</td>
+<td>Substitution-permutation network</td>
+<td>Bulk data encryption</td>
+</tr>
+<tr>
+<td>DES</td>
+<td>Symmetric</td>
+<td>56 bits</td>
+<td>Feistel network</td>
+<td>Deprecated — do not use</td>
+</tr>
+<tr>
+<td>3DES</td>
+<td>Symmetric</td>
+<td>112/168 bits</td>
+<td>Triple DES</td>
+<td>Deprecated — do not use</td>
+</tr>
+<tr>
+<td>RSA</td>
+<td>Asymmetric</td>
+<td>2048+ bits</td>
+<td>Integer factorization</td>
+<td>Key exchange, digital signatures</td>
+</tr>
+<tr>
+<td>ECC</td>
+<td>Asymmetric</td>
+<td>256+ bits</td>
+<td>Elliptic curve discrete log</td>
+<td>Key exchange, digital signatures (resource-constrained)</td>
+</tr>
+<tr>
+<td>ECDHE</td>
+<td>Asymmetric</td>
+<td>256+ bits</td>
+<td>ECC + Diffie-Hellman</td>
+<td>Key exchange with Perfect Forward Secrecy</td>
+</tr>
+</tbody>
+</table>
+<h3>Table 2 — Hashing Algorithm Status</h3>
+<table>
+<thead>
+<tr>
+<th>Algorithm</th>
+<th>Output Size</th>
+<th>Status</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MD5</td>
+<td>128 bits</td>
+<td>Broken</td>
+<td>Collision attacks are practical</td>
+</tr>
+<tr>
+<td>SHA-1</td>
+<td>160 bits</td>
+<td>Deprecated</td>
+<td>SHAttered collision attack (2017)</td>
+</tr>
+<tr>
+<td>SHA-256</td>
+<td>256 bits</td>
+<td>Current standard</td>
+<td>SHA-2 family; use as baseline</td>
+</tr>
+<tr>
+<td>SHA-384</td>
+<td>384 bits</td>
+<td>Current</td>
+<td>SHA-2 family; higher security</td>
+</tr>
+<tr>
+<td>SHA-512</td>
+<td>512 bits</td>
+<td>Current</td>
+<td>SHA-2 family; higher security</td>
+</tr>
+<tr>
+<td>SHA-3</td>
+<td>Variable</td>
+<td>Current</td>
+<td>Alternative design; Keccak</td>
+</tr>
+</tbody>
+</table>
+<h3>Table 3 — PKI Component Roles</h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Root CA</td>
+<td>Top of trust hierarchy; signs Intermediate CA certificates; kept offline</td>
+</tr>
+<tr>
+<td>Intermediate CA</td>
+<td>Issues end-entity certificates; signed by Root CA</td>
+</tr>
+<tr>
+<td>Registration Authority (RA)</td>
+<td>Verifies applicant identity; approves or rejects CSR</td>
+</tr>
+<tr>
+<td>Certificate Revocation List (CRL)</td>
+<td>Periodic list of revoked certificate serial numbers</td>
+</tr>
+<tr>
+<td>OCSP Responder</td>
+<td>Real-time certificate status query service</td>
+</tr>
+<tr>
+<td>End-Entity Certificate</td>
+<td>The certificate installed on a server, device, or user</td>
+</tr>
+</tbody>
+</table>
+<h3>Table 4 — Certificate Validation Levels</h3>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Validation Performed</th>
+<th>Identity Assurance</th>
+<th>Common Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Domain Validation (DV)</td>
+<td>Domain control only</td>
+<td>Low</td>
+<td>General HTTPS</td>
+</tr>
+<tr>
+<td>Organization Validation (OV)</td>
+<td>Domain + legal identity</td>
+<td>Medium</td>
+<td>Business websites</td>
+</tr>
+<tr>
+<td>Extended Validation (EV)</td>
+<td>Most rigorous vetting</td>
+<td>High</td>
+<td>Financial, high-trust sites</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>Key Terms and Definitions</h2>
+<p><strong>Symmetric Encryption</strong> — Encryption that uses the same key for both encryption and decryption.</p>
+<p><strong>Asymmetric Encryption</strong> — Encryption that uses a mathematically linked key pair: one public, one private.</p>
+<p><strong>AES</strong> — Advanced Encryption Standard; current symmetric encryption standard using 128, 192, or 256-bit keys.</p>
+<p><strong>RSA</strong> — Rivest–Shamir–Adleman; asymmetric algorithm based on integer factorization difficulty.</p>
+<p><strong>ECC</strong> — Elliptic Curve Cryptography; asymmetric algorithm providing equivalent security with shorter keys.</p>
+<p><strong>ECDHE</strong> — Elliptic Curve Diffie-Hellman Ephemeral; provides Perfect Forward Secrecy.</p>
+<p><strong>Perfect Forward Secrecy (PFS)</strong> — Property ensuring that compromise of a long-term key does not expose past session keys.</p>
+<p><strong>Hash Function</strong> — A one-way function producing a fixed-size digest from variable-size input.</p>
+<p><strong>SHA-256</strong> — Secure Hash Algorithm with 256-bit output; current hashing standard.</p>
+<p><strong>MD5</strong> — Message Digest 5; cryptographically broken due to practical collision attacks.</p>
+<p><strong>Digital Signature</strong> — A hash of a message encrypted with the sender's private key; provides authentication, integrity, and non-repudiation.</p>
+<p><strong>Non-repudiation</strong> — Inability for a sender to deny having sent a message; provided by digital signatures.</p>
+<p><strong>TLS</strong> — Transport Layer Security; protocol securing HTTPS and other network communication.</p>
+<p><strong>PKI</strong> — Public Key Infrastructure; the system for creating, managing, distributing, and revoking digital certificates.</p>
+<p><strong>Certificate Authority (CA)</strong> — An entity trusted to issue digital certificates.</p>
+<p><strong>Root CA</strong> — The top-level CA in a trust hierarchy; typically kept offline.</p>
+<p><strong>Intermediate CA</strong> — A CA subordinate to the Root CA that issues end-entity certificates.</p>
+<p><strong>Registration Authority (RA)</strong> — Verifies identity of certificate requestors on behalf of the CA.</p>
+<p><strong>X.509</strong> — The standard format for digital certificates.</p>
+<p><strong>CSR</strong> — Certificate Signing Request; a formatted request containing a public key and identity information.</p>
+<p><strong>CRL</strong> — Certificate Revocation List; a periodically published list of revoked certificates.</p>
+<p><strong>OCSP</strong> — Online Certificate Status Protocol; real-time certificate revocation status query.</p>
+<p><strong>OCSP Stapling</strong> — Server-side caching and presentation of a signed OCSP response during the TLS handshake.</p>
+<p><strong>Chain of Trust</strong> — The hierarchical relationship from Root CA through Intermediate CA to end-entity certificate.</p>
+<hr />
+<h2>Security+ Exam Alignment</h2>
+<p>The following SY0-701 exam objectives are covered in this module:</p>
+<ul>
+<li>1.4 — Explain the importance of using appropriate cryptographic solutions.</li>
+</ul>
+<hr />
+<h2>Critical Thinking Questions</h2>
+<ol>
+<li>
+<p>A web server is using a certificate with a SHA-1 signature and a 1024-bit RSA key. What specific risks does each of these properties introduce? What should an administrator do, and in what order of priority?</p>
+</li>
+<li>
+<p>An organization's root CA private key is compromised. What is the impact? What steps must the organization take? Why is keeping the root CA offline a primary architectural control against this scenario?</p>
+</li>
+<li>
+<p>A browser displays a padlock icon for a website. A user interprets this as meaning "this website is safe." Is this interpretation correct? What does the padlock actually guarantee, and what does it not guarantee?</p>
+</li>
+<li>
+<p>Your organization's security policy requires Perfect Forward Secrecy for all TLS connections. What specific cipher suite components must be present to satisfy this requirement? What TLS cipher suites do NOT provide PFS?</p>
+</li>
+<li>
+<p>An incident responder discovers that an internal application is using MD5 to hash user passwords stored in a database. Explain why this is a security risk, what specific attacks become practical, and what migration steps are required.</p>
+</li>
+</ol>
+<hr />
+<h2>Review Checklist</h2>
+<p>Before taking the Module 05 quiz, verify you can do each of the following without notes:</p>
+<ul>
+<li>
+<p>State the key size options for AES and the minimum acceptable RSA key size.</p>
+</li>
+<li>
+<p>Explain why ECC keys can be shorter than RSA keys for equivalent security.</p>
+</li>
+<li>
+<p>Describe the digital signature process in the correct order, identifying which key is used at each step.</p>
+</li>
+<li>
+<p>Explain why TLS uses both asymmetric and symmetric cryptography rather than one or the other alone.</p>
+</li>
+<li>
+<p>Name the four PKI components and state the role of each in one sentence.</p>
+</li>
+<li>
+<p>Distinguish CRL from OCSP and explain OCSP Stapling's purpose.</p>
+</li>
+<li>
+<p>State which hashing algorithms are deprecated and why each was deprecated.</p>
+</li>
+</ul>
+<hr />
+<p>Module 05 Reading Guide — End</p>
+</body>
+</html>

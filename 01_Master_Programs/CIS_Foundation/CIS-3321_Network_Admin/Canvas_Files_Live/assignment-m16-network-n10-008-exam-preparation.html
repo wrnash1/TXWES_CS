@@ -1,0 +1,207 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Assignment: Lab (M16): Network+ N10-009 Exam Preparation</title>
+</head>
+<body>
+<h2>Lab (M16): Network+ N10-009 Exam Preparation</h2>
+<h1>Lab Activity: Module 16 — Network+ N10-009 Exam Preparation Self-Assessment</h1>
+<h2>Course: CIS-3321 Network Administration</h2>
+<h2>Texas Wesleyan University | Professor Nash</h2>
+<h2>Certification Alignment: CompTIA Network+ (N10-009)</h2>
+<p><strong>Estimated Time:</strong> 90 minutes</p>
+<p><strong>Format:</strong> Written self-assessment, scenario analysis, and timed practice</p>
+<hr />
+<h2>Overview</h2>
+<p>This lab is your final exam preparation self-assessment. It does not use Packet Tracer — it uses your brain. Working through this lab under near-exam conditions is one of the highest-value preparation activities you can do in the days before sitting for Network+.</p>
+<p>Complete each part in order. Do not skip ahead. Do not look up answers until you have written your best response.</p>
+<hr />
+<h2>Part 1: Port Number Sprint</h2>
+<h3>Objective</h3>
+<p>Recall well-known port numbers from memory without reference material.</p>
+<h3>Instructions</h3>
+<p>Without looking at the Reading Guide or any notes, write the port number and transport protocol (TCP, UDP, or both) for each service listed below. After completing the list, check your answers against the port table in the Module 16 Reading Guide.</p>
+<h3>Service List</h3>
+<p>Write your answers on paper or in a text editor before checking:</p>
+<ol>
+<li>FTP Control</li>
+<li>FTP Data</li>
+<li>SSH</li>
+<li>Telnet</li>
+<li>SMTP</li>
+<li>DNS</li>
+<li>DHCP server</li>
+<li>TFTP</li>
+<li>HTTP</li>
+<li>POP3</li>
+<li>NTP</li>
+<li>IMAP</li>
+<li>SNMP queries</li>
+<li>SNMP traps</li>
+<li>LDAP</li>
+<li>HTTPS</li>
+<li>SMB</li>
+<li>Syslog</li>
+<li>LDAPS</li>
+<li>IMAPS</li>
+<li>POP3S</li>
+<li>RDP</li>
+<li>SIP</li>
+<li>SIP over TLS</li>
+</ol>
+<h3>Scoring</h3>
+<p>Count your correct answers (port number + protocol both required for full credit).</p>
+<ul>
+<li>22–24 correct: Exam-ready on ports</li>
+<li>18–21 correct: Review the 3–6 you missed; you are close</li>
+<li>Below 18: Spend 20 minutes with flash cards on the port table before exam day</li>
+</ul>
+<hr />
+<h2>Part 2: Subnetting Under Pressure</h2>
+<h3>Part 2 Objective</h3>
+<p>Perform subnet calculations at the speed required on the actual exam.</p>
+<h3>Part 2 Instructions</h3>
+<p>Set a timer for 8 minutes. Solve all five problems before the timer expires. Show your work.</p>
+<h3>Problems</h3>
+<h4>Problem 1</h4>
+<p>A host has IP address 192.168.10.50 and subnet mask 255.255.255.224.</p>
+<ul>
+<li>What is the network address?</li>
+<li>What is the broadcast address?</li>
+<li>What is the usable host range?</li>
+<li>How many usable hosts does this subnet support?</li>
+</ul>
+<h4>Problem 2</h4>
+<p>You need to subnet 10.0.0.0/8 to support exactly 500 hosts per subnet. What is the minimum prefix length (/XX) that supports this requirement?</p>
+<h4>Problem 3</h4>
+<p>Your company is allocated the block 172.16.0.0/16. You need to create exactly 8 equal subnets. What prefix length do you use and how many usable hosts does each subnet support?</p>
+<h4>Problem 4</h4>
+<p>A point-to-point WAN link requires exactly 2 usable IP addresses. What subnet mask do you use and what CIDR notation does that represent?</p>
+<h4>Problem 5</h4>
+<p>A host at 192.168.100.200/27 cannot communicate with a host at 192.168.100.230/27. Without performing any calculation, explain in one sentence why these hosts cannot communicate at Layer 3 without a router.</p>
+<h3>Part 2 Answer Key</h3>
+<p>Check your work after the timer expires:</p>
+<ul>
+<li>Problem 1: Network = 192.168.10.32; Broadcast = 192.168.10.63; Range = .33–.62; 30 hosts (/27)</li>
+<li>Problem 2: /23 supports 510 hosts (2^9 - 2 = 510)</li>
+<li>Problem 3: /19 (adds 3 bits = 8 subnets); each supports 8,190 hosts (2^13 - 2)</li>
+<li>Problem 4: 255.255.255.252 = /30</li>
+<li>Problem 5: 192.168.100.200/27 is in the .193–.222 subnet; 192.168.100.230/27 is in the .225–.254 subnet — they are in different subnets</li>
+</ul>
+<hr />
+<h2>Part 3: OSI Layer Identification Drill</h2>
+<h3>Part 3 Objective</h3>
+<p>Map symptoms and technologies to the correct OSI layer under timed conditions.</p>
+<h3>Part 3 Instructions</h3>
+<p>For each item below, identify the OSI layer number and name. Set a 5-minute timer. Do not refer to notes.</p>
+<h3>Items</h3>
+<ol>
+<li>A frame is tagged with an 802.1Q VLAN ID</li>
+<li>An IP packet is routed between two subnets</li>
+<li>The physical wire carries electrical signals</li>
+<li>TCP establishes a three-way handshake</li>
+<li>SSL/TLS negotiates an encryption cipher suite</li>
+<li>DNS resolves a hostname to an IP address</li>
+<li>ARP resolves an IP address to a MAC address</li>
+<li>STP elects a Root Bridge</li>
+<li>A switch forwards a frame based on its MAC address table</li>
+<li>OSPF distributes routing updates between routers</li>
+</ol>
+<h3>Part 3 Answer Key</h3>
+<ol>
+<li>Layer 2 (Data Link) — 802.1Q is a Data Link standard</li>
+<li>Layer 3 (Network) — routing is a Network layer function</li>
+<li>Layer 1 (Physical) — electrical signals are Physical layer</li>
+<li>Layer 4 (Transport) — TCP handshake is Transport layer</li>
+<li>Layer 6 (Presentation) — TLS is Presentation layer encryption negotiation</li>
+<li>Layer 7 (Application) — DNS is an Application layer service</li>
+<li>Layer 2 (Data Link) — ARP resolves MAC addresses (operates at Data Link, though it straddles 2/3)</li>
+<li>Layer 2 (Data Link) — STP operates on Ethernet frames</li>
+<li>Layer 2 (Data Link) — MAC address table forwarding is Data Link</li>
+<li>Layer 3 (Network) — OSPF is a Network layer routing protocol</li>
+</ol>
+<hr />
+<h2>Part 4: Troubleshooting Scenario — Seven-Step Application</h2>
+<h3>Part 4 Objective</h3>
+<p>Apply the CompTIA seven-step troubleshooting model to a realistic scenario.</p>
+<h3>Scenario</h3>
+<p>On Tuesday morning, three users in the Accounting department call the help desk. They cannot access the company's internal accounting application at 10.10.5.20. Other users on the same floor have no issues. The three affected users can browse the internet normally and receive email. The accounting application uses HTTPS on port 8443. All three affected users are on the same switch, connected to ports 9, 10, and 11 on SW-ACC-03. The other users on the floor are connected to SW-ACC-03 ports 1 through 8 on a different VLAN.</p>
+<h3>Task</h3>
+<p>On paper, document your complete troubleshooting response using all seven CompTIA steps. For each step, write at least two sentences explaining what you would do at that step and why.</p>
+<p>Include at least:</p>
+<ul>
+<li>Step 2: At least three distinct theories of probable cause, ranked by likelihood</li>
+<li>Step 3: The specific command(s) you would run to test your most likely theory</li>
+<li>Step 4: A rollback plan for your proposed solution</li>
+<li>Step 7: The minimum information required in the documentation record</li>
+</ul>
+<h3>Debrief Questions</h3>
+<p>After writing your response, consider:</p>
+<ul>
+<li>What symptom pattern suggests the problem is Layer 2 (VLAN) rather than Layer 3 (routing)?</li>
+<li>What command would you run on SW-ACC-03 to verify VLAN assignments for ports 9–11?</li>
+<li>What command would you run to verify port 8443 is reachable from an affected host?</li>
+</ul>
+<hr />
+<h2>Part 5: Protocol Matching Exercise</h2>
+<h3>Part 5 Objective</h3>
+<p>Match authentication and security protocols to their key characteristics.</p>
+<h3>Part 5 Instructions</h3>
+<p>Match each item in Column A to its description in Column B. Write your answers before checking.</p>
+<h3>Column A</h3>
+<ol>
+<li>RADIUS</li>
+<li>TACACS+</li>
+<li>802.1X</li>
+<li>SNMPv3</li>
+<li>IPsec Tunnel mode</li>
+<li>SSL/TLS VPN</li>
+<li>WPA3/SAE</li>
+<li>LDAPS</li>
+</ol>
+<h3>Column B</h3>
+<p>A. Port 49, TCP, Cisco-preferred for device administration, encrypts entire payload</p>
+<p>B. Port 443, clientless or full-tunnel, traverses most firewalls</p>
+<p>C. Port 1812/1813, UDP, centralized network access authentication, encrypts only the password</p>
+<p>D. Uses EAP; three components: supplicant, authenticator, authentication server</p>
+<p>E. Encrypts the entire original IP packet including headers; used for site-to-site VPNs</p>
+<p>F. Adds authentication and encryption to network device monitoring; uses ports 161/162</p>
+<p>G. Resistant to offline dictionary attacks; uses Simultaneous Authentication of Equals</p>
+<p>H. LDAP over TLS; port 636; encrypted directory queries</p>
+<h3>Part 5 Answer Key</h3>
+<p>1-C, 2-A, 3-D, 4-F, 5-E, 6-B, 7-G, 8-H</p>
+<hr />
+<h2>Part 6: Timed Practice Review</h2>
+<h3>Part 6 Objective</h3>
+<p>Simulate exam time pressure on scenario-style questions.</p>
+<h3>Part 6 Instructions</h3>
+<p>Set a timer for 20 minutes. Answer the following scenario questions in order. Write your answer and a one-sentence explanation before moving to the next question. Stop when the timer expires.</p>
+<h3>Scenarios</h3>
+<h4>Scenario 1</h4>
+<p>A network administrator notices that all traffic between two switches is taking the same slow path even though four physical links exist between the switches. Three of the four links show as blocking in the switch output. What is the most likely cause?</p>
+<h4>Scenario 2</h4>
+<p>A user reports they can access all internal resources but cannot reach any internet sites. They receive a 169.254.x.x IP address. What is the most likely Layer 3 issue and what command confirms it?</p>
+<h4>Scenario 3</h4>
+<p>After a router configuration change, the OSPF routes are gone from the routing table and only directly connected and static routes remain. The change removed the <code>network</code> statement from the OSPF process. What administrative distance value would a new static route to the same destination need to have to be preferred over a reinstated OSPF route?</p>
+<h4>Scenario 4</h4>
+<p>A wireless user on 2.4 GHz reports intermittent disconnections during the workday. A Wi-Fi analyzer shows the AP is on channel 6 and a neighboring company's AP is also on channel 6 at -65 dBm. What is the most appropriate remediation?</p>
+<h4>Scenario 5</h4>
+<p>A company is replacing its legacy WAN with SD-WAN. The primary driver is that branch offices use three ISP connections — fiber, cable broadband, and 4G LTE — but traffic currently uses only the fiber link because all routes point to it. What SD-WAN capability directly solves this problem?</p>
+<h3>Debrief</h3>
+<p>Review your answers after the timer:</p>
+<ul>
+<li>Scenario 1: STP is blocking redundant links; configure EtherChannel (LACP) to bundle the links into one logical link</li>
+<li>Scenario 2: DHCP failure; <code>ipconfig /all</code> confirms 169.254.x.x (APIPA) address</li>
+<li>Scenario 3: Less than 110 (OSPF AD); a static route with AD 1 would always be preferred over OSPF AD 110</li>
+<li>Scenario 4: Change the AP to a non-overlapping channel (1 or 11) or migrate the user to 5 GHz</li>
+<li>Scenario 5: Application-aware dynamic path selection across multiple WAN transports</li>
+</ul>
+<hr />
+<h2>Submission</h2>
+<p>There is nothing to submit for this lab. The value is entirely in the doing — working through each part honestly, checking your answers accurately, and identifying the gaps you need to close before exam day.</p>
+<p>Record your weak areas from each part and spend your remaining study time on those specific topics.</p>
+<p>Good luck.</p>
+<hr />
+<p>CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash</p>
+</body>
+</html>

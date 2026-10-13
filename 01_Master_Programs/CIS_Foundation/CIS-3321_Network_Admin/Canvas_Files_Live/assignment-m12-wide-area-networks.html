@@ -1,0 +1,230 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Assignment: Lab (M12): Wide Area Networks</title>
+</head>
+<body>
+<h2>Lab (M12): Wide Area Networks</h2>
+<h1>Lab: Module 12 — Wide Area Networks</h1>
+<h2>Course: CIS-3321 Network Administration</h2>
+<p><strong>Certification Alignment:</strong> CompTIA Network+ (N10-009)</p>
+<hr />
+<h2>Lab Overview</h2>
+<p>This lab uses Cisco Packet Tracer (free from the Cisco Networking Academy) to simulate WAN topologies. You will build a multi-site WAN, configure serial leased line links, simulate MPLS routing behavior, and analyze WAN failover using dual-path SD-WAN-style routing. You will also use a web-based tool to compare WAN latency across satellite types.</p>
+<p><strong>Estimated Time:</strong> 90–120 minutes</p>
+<p><strong>Required Tools:</strong></p>
+<ul>
+<li>Cisco Packet Tracer 8.x (free at netacad.com — create a free account)</li>
+<li>Web browser (for latency simulation exercise)</li>
+<li>Calculator or spreadsheet (for bandwidth calculations)</li>
+</ul>
+<hr />
+<h2>Safety and Submission Notice</h2>
+<p>Save your Packet Tracer file (.pkt) frequently. Export screenshots at each checkpoint. Submit the .pkt file and a lab report PDF. All work must be your own.</p>
+<hr />
+<h2>Part 1: WAN Topology Build — Multi-Site Leased Line Network</h2>
+<h3>Part 1 Objective</h3>
+<p>Build a three-site WAN using serial leased line connections in Packet Tracer. Configure IP addressing and verify end-to-end connectivity.</p>
+<h3>Step 1: Create the Topology</h3>
+<p>Open Packet Tracer. Using the logical workspace, place the following devices:</p>
+<ul>
+<li>Three 2911 routers: name them HQ, Branch1, Branch2</li>
+<li>Three switches (2960): one behind each router for LAN connectivity</li>
+<li>Three PCs: one connected to each switch</li>
+</ul>
+<p>Connect devices as follows:</p>
+<ul>
+<li>HQ Router Serial0/0/0 → Branch1 Router Serial0/0/0 (use a Serial DCE cable from HQ to Branch1)</li>
+<li>HQ Router Serial0/0/1 → Branch2 Router Serial0/0/0 (use a Serial DCE cable from HQ to Branch2)</li>
+<li>Each router FastEthernet0/0 → its local switch → PC</li>
+</ul>
+<h3>Step 2: Configure IP Addressing</h3>
+<p>Use this addressing scheme:</p>
+<p>WAN links:</p>
+<ul>
+<li>HQ–Branch1: <code>10.1.1.0/30</code> (HQ = .1, Branch1 = .2)</li>
+<li>HQ–Branch2: <code>10.1.2.0/30</code> (HQ = .1, Branch2 = .2)</li>
+</ul>
+<p>LAN subnets:</p>
+<ul>
+<li>HQ LAN: <code>192.168.1.0/24</code> (router = .1, PC = .10)</li>
+<li>Branch1 LAN: <code>192.168.2.0/24</code> (router = .1, PC = .10)</li>
+<li>Branch2 LAN: <code>192.168.3.0/24</code> (router = .1, PC = .10)</li>
+</ul>
+<p>On each router, configure interfaces. Example for HQ:</p>
+<pre><code class="language-bash">interface Serial0/0/0
+ ip address 10.1.1.1 255.255.255.252
+ clock rate 64000
+ no shutdown
+
+interface Serial0/0/1
+ ip address 10.1.2.1 255.255.255.252
+ clock rate 64000
+ no shutdown
+
+interface FastEthernet0/0
+ ip address 192.168.1.1 255.255.255.0
+ no shutdown
+</code></pre>
+<h3>Step 3: Configure Static Routing</h3>
+<p>On HQ, add static routes to reach each branch LAN:</p>
+<pre><code class="language-bash">ip route 192.168.2.0 255.255.255.0 10.1.1.2
+ip route 192.168.3.0 255.255.255.0 10.1.2.2
+</code></pre>
+<p>On Branch1, add static routes:</p>
+<pre><code class="language-bash">ip route 192.168.1.0 255.255.255.0 10.1.1.1
+ip route 192.168.3.0 255.255.255.0 10.1.1.1
+</code></pre>
+<p>On Branch2, add static routes:</p>
+<pre><code class="language-bash">ip route 192.168.1.0 255.255.255.0 10.1.2.1
+ip route 192.168.2.0 255.255.255.0 10.1.2.1
+</code></pre>
+<p>Configure default gateways on each PC to match its router LAN interface.</p>
+<h3>Step 4: Verify Connectivity</h3>
+<p>From Branch1 PC (192.168.2.10), ping:</p>
+<ul>
+<li>Branch1 router LAN: <code>192.168.2.1</code></li>
+<li>HQ router WAN: <code>10.1.1.1</code></li>
+<li>HQ PC: <code>192.168.1.10</code></li>
+<li>Branch2 PC: <code>192.168.3.10</code></li>
+</ul>
+<p>All pings should succeed.</p>
+<h3>Checkpoint 1</h3>
+<p>Screenshot the topology showing all green link indicators. Screenshot the successful ping output from Branch1 PC to Branch2 PC.</p>
+<hr />
+<h2>Part 2: Simulating WAN Redundancy</h2>
+<h3>Part 2 Objective</h3>
+<p>Add a backup WAN link between Branch1 and Branch2 to simulate dual-path redundancy, similar to an SD-WAN multi-transport design.</p>
+<h3>Step 5: Add a Direct Branch-to-Branch Link</h3>
+<p>Add a serial link between Branch1 Serial0/0/1 and Branch2 Serial0/0/1:</p>
+<ul>
+<li>Link subnet: <code>10.1.3.0/30</code> (Branch1 = .1, Branch2 = .2)</li>
+</ul>
+<p>Configure both interfaces with the appropriate IP addresses.</p>
+<h3>Step 6: Update Routing for Redundancy</h3>
+<p>On Branch1, add a floating static route to Branch2 LAN via the direct link (higher administrative distance = lower preference — backup route):</p>
+<pre><code class="language-bash">ip route 192.168.3.0 255.255.255.0 10.1.3.2 5
+</code></pre>
+<p>The number <code>5</code> is the administrative distance — lower than the default static route AD of 1 is NOT what we want here. Use <code>200</code> to make it a floating (backup) route:</p>
+<pre><code class="language-bash">no ip route 192.168.3.0 255.255.255.0 10.1.3.2 5
+ip route 192.168.3.0 255.255.255.0 10.1.3.2 200
+</code></pre>
+<p>Do the same on Branch2 for the reverse path to Branch1 LAN.</p>
+<h3>Step 7: Test Failover</h3>
+<p>With the primary paths (via HQ) active, verify Branch1 can reach Branch2.</p>
+<p>Now simulate an HQ WAN failure: right-click the HQ-Branch1 serial cable and select "Shutdown" on HQ Serial0/0/0. Wait 30 seconds for route convergence, then re-ping from Branch1 to Branch2.</p>
+<p>The ping should still succeed — now routed via the direct Branch1–Branch2 link.</p>
+<h3>Checkpoint 2</h3>
+<p>Screenshot the routing table on Branch1 (<code>show ip route</code>) before and after the simulated failure. Screenshot successful ping from Branch1 to Branch2 after the failure.</p>
+<hr />
+<h2>Part 3: Bandwidth and Latency Calculations</h2>
+<h3>Part 3 Objective</h3>
+<p>Calculate WAN bandwidth requirements and analyze the impact of latency on application performance.</p>
+<h3>Step 8: Bandwidth Requirement Calculations</h3>
+<p>A company has three branch offices connecting to HQ via WAN. Calculate the minimum WAN bandwidth needed for each scenario:</p>
+<p>Scenario A — Branch1:</p>
+<ul>
+<li>25 concurrent VoIP calls (G.711 codec: 87.2 Kbps per call including overhead)</li>
+<li>15 users transferring files simultaneously (average 500 Kbps each)</li>
+<li>10 users browsing web applications (average 200 Kbps each)</li>
+<li>Add 20% overhead for protocol and management traffic</li>
+</ul>
+<p>Show your calculation and state the minimum link speed required. What T-carrier service (T1 or fractional T3) would you provision?</p>
+<p>Scenario B — Branch2:</p>
+<ul>
+<li>10 concurrent video conference sessions (HD video: 3 Mbps per session)</li>
+<li>20 users accessing SaaS applications (average 1 Mbps each)</li>
+<li>Add 25% overhead</li>
+</ul>
+<p>Show your calculation. Would a single T1 suffice? What alternative WAN technology would you recommend?</p>
+<h3>Step 9: Latency Impact Analysis</h3>
+<p>Answer the following questions in your lab report:</p>
+<p>A company is evaluating two WAN options for its remote Alaska office:</p>
+<ul>
+<li>Option 1: GEO satellite — 50 Mbps, 650 ms one-way latency</li>
+<li>Option 2: LEO satellite (Starlink) — 150 Mbps, 25 ms one-way latency, $500/month more expensive</li>
+</ul>
+<p>The office has these requirements:</p>
+<ul>
+<li>50 VoIP calls daily (acceptable VoIP one-way latency: under 150 ms per ITU G.114)</li>
+<li>Video conferencing 4 hours/day</li>
+<li>File transfers and email (latency-insensitive)</li>
+</ul>
+<p>Which option meets the VoIP latency requirement? Show your math (round-trip time = 2 × one-way latency). Is the additional cost of Option 2 justified? Explain your reasoning with reference to specific applications.</p>
+<h3>Checkpoint 3</h3>
+<p>Show all calculations in your lab report. Clearly state your T-carrier recommendation for Scenario A and your WAN recommendation for the Alaska office.</p>
+<hr />
+<h2>Part 4: SD-WAN Concepts — Policy Mapping Exercise</h2>
+<h3>Part 4 Objective</h3>
+<p>Apply SD-WAN application-aware routing concepts by mapping application traffic to appropriate WAN transports.</p>
+<h3>Step 10: SD-WAN Policy Design</h3>
+<p>A company has three WAN transports at each branch:</p>
+<ul>
+<li>Transport A: MPLS — 10 Mbps, 8 ms latency, $2,000/month, SLA-guaranteed</li>
+<li>Transport B: Broadband fiber — 500 Mbps, 15 ms latency, $300/month, best-effort</li>
+<li>Transport C: 4G LTE — 50 Mbps, 35 ms latency, $150/month, usage-capped at 100 GB/month</li>
+</ul>
+<p>For each application below, identify which transport(s) should carry it and explain your policy reasoning:</p>
+<ol>
+<li>Microsoft Teams voice calls (VoIP)</li>
+<li>Microsoft 365 email and calendar sync</li>
+<li>Nightly backup to cloud storage (2 TB)</li>
+<li>Salesforce CRM (interactive web app)</li>
+<li>Emergency failover when Transport A and B are both down</li>
+</ol>
+<p>Record your policy table in the lab report: Application | Primary Transport | Secondary Transport | Reasoning.</p>
+<h3>Checkpoint 4</h3>
+<p>Complete the policy mapping table and submit with the lab report. For each choice, reference at least one SD-WAN concept from the Module 12 lecture (e.g., application-aware routing, dynamic path selection, zero-touch provisioning).</p>
+<hr />
+<h2>Lab Report Requirements</h2>
+<p>Submit a PDF lab report containing:</p>
+<ol>
+<li>Checkpoint 1: Topology screenshot and ping output.</li>
+<li>Checkpoint 2: Routing table screenshots (before and after failure) and failover ping output.</li>
+<li>Checkpoint 3: Full bandwidth calculations for both scenarios with final recommendations.</li>
+<li>Checkpoint 4: Completed SD-WAN policy mapping table with reasoning.</li>
+<li>Reflection (150–200 words): How does simulated WAN redundancy in Packet Tracer reflect real-world SD-WAN dynamic failover? What limitations does static routing have compared to SD-WAN dynamic path selection?</li>
+<li>Packet Tracer file (.pkt) attached to submission.</li>
+</ol>
+<hr />
+<h2>Grading Rubric</h2>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Points</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Part 1 — Topology build and connectivity screenshots</td>
+<td>20</td>
+</tr>
+<tr>
+<td>Part 2 — Redundancy config and failover screenshots</td>
+<td>20</td>
+</tr>
+<tr>
+<td>Part 3 — Bandwidth calculations (both scenarios)</td>
+<td>20</td>
+</tr>
+<tr>
+<td>Part 3 — Latency analysis with correct math</td>
+<td>15</td>
+</tr>
+<tr>
+<td>Part 4 — SD-WAN policy mapping table</td>
+<td>15</td>
+</tr>
+<tr>
+<td>Reflection paragraph</td>
+<td>10</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td><strong>100</strong></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

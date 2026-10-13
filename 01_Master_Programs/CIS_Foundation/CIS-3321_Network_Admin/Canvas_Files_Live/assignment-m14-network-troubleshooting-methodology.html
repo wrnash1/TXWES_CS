@@ -1,0 +1,226 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Assignment: Lab (M14): Network Troubleshooting Methodology</title>
+</head>
+<body>
+<h2>Lab (M14): Network Troubleshooting Methodology</h2>
+<h1>Lab: Module 14 — Network Troubleshooting Methodology</h1>
+<h2>Course: CIS-3321 Network Administration</h2>
+<p><strong>Certification Alignment:</strong> CompTIA Network+ (N10-009)</p>
+<hr />
+<h2>Lab Overview</h2>
+<p>This lab practices the CompTIA seven-step troubleshooting methodology using Cisco Packet Tracer to diagnose pre-configured network faults, and uses Windows or Linux commands to practice real diagnostic workflows. You will document your troubleshooting process following the seven-step model for each scenario — the process documentation is as important as finding the fix.</p>
+<p><strong>Estimated Time:</strong> 90–120 minutes</p>
+<p><strong>Required Tools:</strong></p>
+<ul>
+<li>Cisco Packet Tracer 8.x (free — netacad.com)</li>
+<li>Windows or Linux terminal (commands built-in to OS)</li>
+<li>Lab report template (your own document with the seven-step headers)</li>
+</ul>
+<hr />
+<h2>Instructions</h2>
+<p>For each lab scenario, complete a seven-step troubleshooting worksheet documenting your process:</p>
+<ol>
+<li>Problem statement (what you identified)</li>
+<li>Theory of probable cause (your hypotheses ranked most to least likely)</li>
+<li>Test results (what commands or checks you ran and what they showed)</li>
+<li>Plan of action (specific fix you will apply)</li>
+<li>Implementation (steps taken)</li>
+<li>Verification (how you confirmed the fix worked)</li>
+<li>Documentation summary (one paragraph describing the incident)</li>
+</ol>
+<hr />
+<h2>Part 1: Packet Tracer Fault Isolation — Layer 1 and Layer 2</h2>
+<h3>Part 1 Objective</h3>
+<p>Diagnose and resolve physical and switching layer problems in a pre-built topology.</p>
+<h3>Step 1: Build the Fault Topology</h3>
+<p>Build the following topology in Packet Tracer:</p>
+<ul>
+<li>One 2960 switch</li>
+<li>Four PCs (PC0–PC3)</li>
+<li>Connect all four PCs to the switch on FastEthernet0/1 through FastEthernet0/4</li>
+</ul>
+<p>Configure the PCs with static IPs:</p>
+<ul>
+<li>PC0: 192.168.1.10 / 255.255.255.0 / gateway 192.168.1.1</li>
+<li>PC1: 192.168.1.20 / 255.255.255.0 / gateway 192.168.1.1</li>
+<li>PC2: 192.168.1.30 / 255.255.255.0 / gateway 192.168.1.1</li>
+<li>PC3: 192.168.1.40 / 255.255.255.0 / gateway 192.168.1.1</li>
+</ul>
+<p>Verify all four PCs can ping each other.</p>
+<h3>Step 2: Introduce Fault 1 — VLAN Isolation</h3>
+<p>On the switch, move PC2's port to VLAN 10 and PC3's port to VLAN 20 (all other ports remain on default VLAN 1):</p>
+<pre><code class="language-bash">interface FastEthernet0/3
+ switchport access vlan 10
+
+interface FastEthernet0/4
+ switchport access vlan 20
+</code></pre>
+<p>Now test connectivity:</p>
+<ul>
+<li>PC0 pings PC1: should succeed (both VLAN 1)</li>
+<li>PC0 pings PC2: should fail (different VLAN)</li>
+<li>PC0 pings PC3: should fail (different VLAN)</li>
+<li>PC2 pings PC3: should fail (different VLANs)</li>
+</ul>
+<p>Apply the seven-step worksheet:</p>
+<ul>
+<li>In Step 1, document the exact symptoms (which pings fail, which succeed).</li>
+<li>In Step 2, list your top hypothesis before checking the switch.</li>
+<li>In Step 3, check <code>show vlan brief</code> to confirm your theory.</li>
+<li>In Steps 4–5, correct PC2 and PC3 back to VLAN 1.</li>
+<li>In Step 6, re-verify all four pings succeed.</li>
+</ul>
+<h3>Step 3: Introduce Fault 2 — IP Misconfiguration</h3>
+<p>Change PC1's IP address to 192.168.2.20 (wrong subnet) without changing the gateway.</p>
+<p>Test:</p>
+<ul>
+<li>PC0 pings PC1: should fail</li>
+<li>PC1 pings gateway 192.168.1.1: should fail (different subnet)</li>
+</ul>
+<p>Apply the seven-step worksheet:</p>
+<ul>
+<li>In Step 3, use <code>ipconfig</code> on PC1 and PC0 to identify the mismatch.</li>
+<li>Document the specific Layer 3 cause.</li>
+</ul>
+<h3>Checkpoint 1</h3>
+<p>Screenshot: <code>show vlan brief</code> from Fault 1 (before fix). Screenshot: <code>ipconfig</code> from PC1 showing wrong subnet in Fault 2. Submit both seven-step worksheets.</p>
+<hr />
+<h2>Part 2: Packet Tracer Fault Isolation — Layer 3</h2>
+<h3>Part 2 Objective</h3>
+<p>Diagnose routing problems using diagnostic commands.</p>
+<h3>Step 4: Build a Multi-Router Topology</h3>
+<p>Place three routers (R1, R2, R3) and one PC behind each router:</p>
+<ul>
+<li>R1 LAN: 10.1.1.0/24, PC1 = 10.1.1.10</li>
+<li>R2 LAN: 10.2.2.0/24, PC2 = 10.2.2.10</li>
+<li>R3 LAN: 10.3.3.0/24, PC3 = 10.3.3.10</li>
+<li>R1–R2 link: 172.16.1.0/30</li>
+<li>R2–R3 link: 172.16.2.0/30</li>
+</ul>
+<p>Configure static routes on all three routers for full connectivity. Verify that PC1 can ping PC3.</p>
+<h3>Step 5: Introduce Fault 3 — Missing Route</h3>
+<p>Remove the static route from R1 that points toward R3's network:</p>
+<pre><code class="language-bash">no ip route 10.3.3.0 255.255.255.0 172.16.1.2
+</code></pre>
+<p>Symptom: PC1 cannot reach PC3. PC1 can still reach PC2.</p>
+<p>Apply the seven-step worksheet. In Step 3, use these commands:</p>
+<pre><code class="language-bash">show ip route
+tracert 10.3.3.10
+</code></pre>
+<p>The traceroute from PC1 will show the path dying after R1 or R2 — identifying where the missing route is. Document which router is missing the route and for which destination network.</p>
+<h3>Step 6: Introduce Fault 4 — Wrong Default Gateway</h3>
+<p>After restoring the missing route, change PC2's default gateway to an incorrect address (e.g., 10.2.2.99 instead of 10.2.2.1).</p>
+<p>Symptom: PC2 can ping devices on its own subnet (10.2.2.0/24) but cannot reach any other network.</p>
+<p>Apply the seven-step worksheet. In Step 3, use <code>ipconfig</code> on PC2 and <code>ping 10.1.1.10</code> to confirm the fault pattern.</p>
+<h3>Checkpoint 2</h3>
+<p>Screenshot: <code>show ip route</code> from R1 with missing route, and again after the fix. Screenshot: <code>ipconfig</code> from PC2 with wrong gateway. Submit both seven-step worksheets.</p>
+<hr />
+<h2>Part 3: Command-Line Diagnostic Practice (Windows/Linux)</h2>
+<h3>Part 3 Objective</h3>
+<p>Practice the diagnostic commands from the module on your real host machine.</p>
+<h3>Step 7: Document Your Host Network Configuration</h3>
+<p>Open a terminal or command prompt and run <code>ipconfig /all</code> (Windows) or <code>ip addr show &amp;&amp; ip route</code> (Linux).</p>
+<p>In your lab report, document:</p>
+<ul>
+<li>Your IP address and subnet mask</li>
+<li>Default gateway</li>
+<li>DNS server(s)</li>
+<li>DHCP server (Windows) or whether DHCP is in use</li>
+<li>MAC address of your primary interface</li>
+</ul>
+<h3>Step 8: Test Reachability with Ping</h3>
+<p>Run the following pings and record results (latency and whether each succeeds):</p>
+<ul>
+<li><code>ping 127.0.0.1</code> — loopback (tests local TCP/IP stack)</li>
+<li><code>ping &lt;your default gateway&gt;</code> — tests Layer 1-3 to the gateway</li>
+<li><code>ping 8.8.8.8</code> — tests internet reachability by IP</li>
+<li><code>ping google.com</code> — tests DNS resolution and internet reachability</li>
+</ul>
+<p>For any failed ping, describe at which layer the problem would be located.</p>
+<h3>Step 9: Trace the Path</h3>
+<p>Run <code>tracert google.com</code> (Windows) or <code>traceroute google.com</code> (Linux). Record:</p>
+<ul>
+<li>Number of hops to google.com</li>
+<li>Latency at each of the first three hops</li>
+<li>Which hop (if any) shows high latency or packet loss</li>
+</ul>
+<h3>Step 10: DNS Test</h3>
+<p>Run <code>nslookup google.com</code> and <code>nslookup texas-wesleyan.edu</code>. Record:</p>
+<ul>
+<li>The resolved IP address for each</li>
+<li>Which DNS server responded</li>
+<li>If either fails, document the error message</li>
+</ul>
+<h3>Step 11: ARP Cache</h3>
+<p>Run <code>arp -a</code>. Record the MAC address of your default gateway. This confirms Layer 2 ARP resolution is working between your host and the gateway.</p>
+<h3>Checkpoint 3</h3>
+<p>Screenshots of all command outputs from Steps 7–11, embedded in the lab report.</p>
+<hr />
+<h2>Part 4: Troubleshooting Scenario Written Exercise</h2>
+<h3>Part 4 Objective</h3>
+<p>Apply the seven-step methodology to a written scenario without using Packet Tracer.</p>
+<h3>Step 12: Analyze the Scenario</h3>
+<p>Read the following scenario and complete a full seven-step troubleshooting worksheet for it:</p>
+<p>Scenario: A receptionist at a law firm calls the help desk and says she cannot send or receive emails. She says "the internet has been broken since this morning." You remote into her workstation and observe: she can open websites by IP address (e.g., typing 8.8.8.8 into the browser shows Google's page). She cannot open any website by name. Outlook shows "Cannot connect to server — check network connection." Other employees in the office are working normally.</p>
+<p>Complete all seven steps:</p>
+<ul>
+<li>Step 1: What is the specific, precise problem statement?</li>
+<li>Step 2: List three hypotheses in order of likelihood. Which OSI layer does each implicate?</li>
+<li>Step 3: What commands or checks would you run to test each hypothesis?</li>
+<li>Step 4: What is your plan of action once the cause is identified?</li>
+<li>Step 5: What is the fix?</li>
+<li>Step 6: How would you verify the problem is fully resolved?</li>
+<li>Step 7: Write a one-paragraph incident documentation summary.</li>
+</ul>
+<h3>Checkpoint 4</h3>
+<p>Submit the completed seven-step worksheet for the written scenario.</p>
+<hr />
+<h2>Lab Report Requirements</h2>
+<p>Submit a PDF containing:</p>
+<ol>
+<li>Checkpoint 1: Both seven-step worksheets from Part 1 and required screenshots.</li>
+<li>Checkpoint 2: Both seven-step worksheets from Part 2 and required screenshots.</li>
+<li>Checkpoint 3: All command output screenshots from Part 3.</li>
+<li>Checkpoint 4: Written scenario seven-step worksheet.</li>
+<li>Reflection (150–200 words): Why is documenting each troubleshooting step (Step 7) important even for problems you resolve quickly? Describe one situation — real or hypothetical — where skipping documentation could cause a significant problem later.</li>
+</ol>
+<hr />
+<h2>Grading Rubric</h2>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Points</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Part 1 — VLAN and IP fault worksheets + screenshots</td>
+<td>20</td>
+</tr>
+<tr>
+<td>Part 2 — Routing fault worksheets + screenshots</td>
+<td>20</td>
+</tr>
+<tr>
+<td>Part 3 — Command output screenshots and analysis</td>
+<td>20</td>
+</tr>
+<tr>
+<td>Part 4 — Written scenario seven-step worksheet</td>
+<td>30</td>
+</tr>
+<tr>
+<td>Reflection paragraph</td>
+<td>10</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td><strong>100</strong></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

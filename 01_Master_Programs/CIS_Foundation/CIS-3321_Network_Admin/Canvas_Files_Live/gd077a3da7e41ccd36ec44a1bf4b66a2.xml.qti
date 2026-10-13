@@ -1,0 +1,528 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/profile/cc/ccv1p1/ccv1p1_qtiasiv1p2p1_v1p0.xsd">
+  <assessment ident="gd077a3da7e41ccd36ec44a1bf4b66a2" title="Quiz (M11): Switching: VLANs, STP, and EtherChannel">
+    <qtimetadata>
+      <qtimetadatafield>
+        <fieldlabel>cc_profile</fieldlabel>
+        <fieldentry>cc.exam.v0p1</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_assessmenttype</fieldlabel>
+        <fieldentry>Examination</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_scoretype</fieldlabel>
+        <fieldentry>Percentage</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>cc_maxattempts</fieldlabel>
+        <fieldentry>1</fieldentry>
+      </qtimetadatafield>
+    </qtimetadata>
+    <section ident="root_section">
+      <item ident="gd077a3da7e41ccd36ec44a1bf4b66a2_q01" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A network administrator needs to segment a company's 48-port switch so that the Finance department (ports 1–12), the HR department (ports 13–24), and the Engineering department (ports 25–36) cannot exchange traffic at Layer 2 with each other, even though all devices are on the same physical switch. Which technology accomplishes this?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gd077a3da7e41ccd36ec44a1bf4b66a2_q01_a">
+                <material>
+                  <mattext texttype="text/plain">Subnetting — assigning each group a different IP subnet prevents Layer 2 communication between groups</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gd077a3da7e41ccd36ec44a1bf4b66a2_q01_b">
+                <material>
+                  <mattext texttype="text/plain">VLANs — creating separate VLANs for each department creates separate broadcast domains, preventing Layer 2 communication between groups</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gd077a3da7e41ccd36ec44a1bf4b66a2_q01_c">
+                <material>
+                  <mattext texttype="text/plain">Port Security — limiting the MAC addresses on each port prevents cross-department communication</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gd077a3da7e41ccd36ec44a1bf4b66a2_q01_d">
+                <material>
+                  <mattext texttype="text/plain">STP — Spanning Tree blocks ports between departments to prevent cross-department traffic</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gd077a3da7e41ccd36ec44a1bf4b66a2_q01_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gd077a3da7e41ccd36ec44a1bf4b66a2_q02" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A switch administrator configures a trunk port and sees this warning in the console: "Native VLAN mismatch on FastEthernet0/1 (1), with FastEthernet0/1 (10) on remote switch." What does this indicate and what is the correct action?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gd077a3da7e41ccd36ec44a1bf4b66a2_q02_a">
+                <material>
+                  <mattext texttype="text/plain">The switch is running two different spanning tree instances and the native VLAN configuration has no effect on security</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gd077a3da7e41ccd36ec44a1bf4b66a2_q02_b">
+                <material>
+                  <mattext texttype="text/plain">The trunk port native VLAN is VLAN 1 on this switch and VLAN 10 on the remote switch — they must be set to the same unused VLAN on both ends</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gd077a3da7e41ccd36ec44a1bf4b66a2_q02_c">
+                <material>
+                  <mattext texttype="text/plain">The trunk port can only carry traffic for the native VLAN and must be reconfigured to carry additional VLANs</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gd077a3da7e41ccd36ec44a1bf4b66a2_q02_d">
+                <material>
+                  <mattext texttype="text/plain">VLAN 10 is not in the allowed VLAN list on the trunk — adding it to the allowed list will resolve the warning</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gd077a3da7e41ccd36ec44a1bf4b66a2_q02_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gd077a3da7e41ccd36ec44a1bf4b66a2_q03" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An attacker connects to a switch access port and configures their laptop's NIC to send DTP negotiation frames. The port negotiates into trunk mode and the attacker begins receiving traffic from all VLANs. Which attack is this, and what configuration prevents it?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gd077a3da7e41ccd36ec44a1bf4b66a2_q03_a">
+                <material>
+                  <mattext texttype="text/plain">MAC flooding attack — prevented by enabling Port Security with a maximum of one MAC address per port</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gd077a3da7e41ccd36ec44a1bf4b66a2_q03_b">
+                <material>
+                  <mattext texttype="text/plain">DHCP starvation attack — prevented by enabling DHCP Snooping on all access ports</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gd077a3da7e41ccd36ec44a1bf4b66a2_q03_c">
+                <material>
+                  <mattext texttype="text/plain">Switch spoofing VLAN hopping attack — prevented by disabling DTP and setting all access ports to static access mode</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gd077a3da7e41ccd36ec44a1bf4b66a2_q03_d">
+                <material>
+                  <mattext texttype="text/plain">ARP poisoning attack — prevented by enabling Dynamic ARP Inspection on all access VLANs</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gd077a3da7e41ccd36ec44a1bf4b66a2_q03_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gd077a3da7e41ccd36ec44a1bf4b66a2_q04" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A network administrator runs show spanning-tree vlan 10 and sees that the switch has a Bridge Priority of 32778 and no Root Bridge indicator is shown. A different switch on the network shows "This bridge is the root" with Bridge Priority 24576. Which switch is the Root Bridge and why?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gd077a3da7e41ccd36ec44a1bf4b66a2_q04_a">
+                <material>
+                  <mattext texttype="text/plain">The local switch is the Root Bridge because 32778 is higher than 24576, and STP always elects the switch with the highest priority</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gd077a3da7e41ccd36ec44a1bf4b66a2_q04_b">
+                <material>
+                  <mattext texttype="text/plain">The remote switch is the Root Bridge because 24576 is lower than 32778, and STP elects the switch with the lowest Bridge ID</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gd077a3da7e41ccd36ec44a1bf4b66a2_q04_c">
+                <material>
+                  <mattext texttype="text/plain">The switch with the lowest MAC address is always the Root Bridge regardless of priority</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gd077a3da7e41ccd36ec44a1bf4b66a2_q04_d">
+                <material>
+                  <mattext texttype="text/plain">Neither switch is the Root Bridge because the priority values must be equal before STP elects a Root Bridge</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gd077a3da7e41ccd36ec44a1bf4b66a2_q04_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gd077a3da7e41ccd36ec44a1bf4b66a2_q05" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A switch port connected to a PC is configured with PortFast. The next morning, a user plugged an unmanaged 5-port hub into that port and connected three PCs to the hub. After one hour, the port is in err-disabled state. What feature caused this, and why?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gd077a3da7e41ccd36ec44a1bf4b66a2_q05_a">
+                <material>
+                  <mattext texttype="text/plain">Port Security — the port detected more than one MAC address (three PCs through the hub) and disabled due to a security violation</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gd077a3da7e41ccd36ec44a1bf4b66a2_q05_b">
+                <material>
+                  <mattext texttype="text/plain">BPDU Guard — the unmanaged hub generated a broadcast storm that triggered BPDU Guard</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gd077a3da7e41ccd36ec44a1bf4b66a2_q05_c">
+                <material>
+                  <mattext texttype="text/plain">BPDU Guard — a BPDU was received on the PortFast port from the hub, which should never happen on an access port connected to an end device</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gd077a3da7e41ccd36ec44a1bf4b66a2_q05_d">
+                <material>
+                  <mattext texttype="text/plain">Root Guard — the hub's MAC address matched the Root Bridge address, triggering a topology protection mechanism</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gd077a3da7e41ccd36ec44a1bf4b66a2_q05_a</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gd077a3da7e41ccd36ec44a1bf4b66a2_q06" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An administrator configures EtherChannel between two switches using channel-group 1 mode passive on both sides. The channel does not form. What is the reason?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gd077a3da7e41ccd36ec44a1bf4b66a2_q06_a">
+                <material>
+                  <mattext texttype="text/plain">LACP Passive mode does not support trunk encapsulation and requires access mode ports</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gd077a3da7e41ccd36ec44a1bf4b66a2_q06_b">
+                <material>
+                  <mattext texttype="text/plain">Both sides are set to Passive mode — LACP requires at least one side to be in Active mode to initiate negotiation</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gd077a3da7e41ccd36ec44a1bf4b66a2_q06_c">
+                <material>
+                  <mattext texttype="text/plain">Passive mode is only valid for PAgP — LACP requires Active or Desirable mode</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gd077a3da7e41ccd36ec44a1bf4b66a2_q06_d">
+                <material>
+                  <mattext texttype="text/plain">Channel-group 1 is already in use on both switches and a different group number must be used</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gd077a3da7e41ccd36ec44a1bf4b66a2_q06_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gd077a3da7e41ccd36ec44a1bf4b66a2_q07" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A network engineer runs show etherchannel summary and sees this output for a Port-Channel:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-text"&gt;Po1(SU)    LACP    Fa0/1(P)    Fa0/2(P)    Fa0/3(D)    Fa0/4(P)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;What does the (D) flag on Fa0/3 indicate, and what is the impact on the EtherChannel?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gd077a3da7e41ccd36ec44a1bf4b66a2_q07_a">
+                <material>
+                  <mattext texttype="text/plain">Fa0/3 is in Discarding state — it will not carry traffic until STP converges</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gd077a3da7e41ccd36ec44a1bf4b66a2_q07_b">
+                <material>
+                  <mattext texttype="text/plain">Fa0/3 is down (link failure) — the EtherChannel continues operating with three active members instead of four</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gd077a3da7e41ccd36ec44a1bf4b66a2_q07_c">
+                <material>
+                  <mattext texttype="text/plain">Fa0/3 is in Desirable mode — it is negotiating using PAgP while the other ports use LACP</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gd077a3da7e41ccd36ec44a1bf4b66a2_q07_d">
+                <material>
+                  <mattext texttype="text/plain">Fa0/3 is a duplicate port and has been removed from the bundle to prevent a loop</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gd077a3da7e41ccd36ec44a1bf4b66a2_q07_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gd077a3da7e41ccd36ec44a1bf4b66a2_q08" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An attacker on VLAN 10 sends a frame with two 802.1Q tags. The outer tag is VLAN 1 (the native VLAN of the uplink trunk). The inner tag is VLAN 50 (the victim VLAN). What happens when Switch A receives this frame on the trunk, and why does this constitute a security vulnerability?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gd077a3da7e41ccd36ec44a1bf4b66a2_q08_a">
+                <material>
+                  <mattext texttype="text/plain">Switch A drops the frame because double-tagged frames are rejected by 802.1Q as malformed</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gd077a3da7e41ccd36ec44a1bf4b66a2_q08_b">
+                <material>
+                  <mattext texttype="text/plain">Switch A strips the outer VLAN 1 tag (native VLAN, sent untagged) and forwards the frame — Switch B receives the frame tagged with VLAN 50 and delivers it to devices in VLAN 50 without routing</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gd077a3da7e41ccd36ec44a1bf4b66a2_q08_c">
+                <material>
+                  <mattext texttype="text/plain">Switch A recognizes the double tag and generates an SNMP alert but forwards the frame normally</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gd077a3da7e41ccd36ec44a1bf4b66a2_q08_d">
+                <material>
+                  <mattext texttype="text/plain">Switch A forwards the frame to the router for inter-VLAN routing since the destination VLAN differs from the source VLAN</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gd077a3da7e41ccd36ec44a1bf4b66a2_q08_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gd077a3da7e41ccd36ec44a1bf4b66a2_q09" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A network administrator needs to ensure that a specific workstation always receives the OSPF routing advertisements from the correct switch. The administrator wants to prevent any switch on the network from accidentally becoming Root Bridge due to a misconfigured or malicious low-priority BPDU. Which STP feature should be applied to the uplink ports on access layer switches facing the distribution layer?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gd077a3da7e41ccd36ec44a1bf4b66a2_q09_a">
+                <material>
+                  <mattext texttype="text/plain">PortFast — immediately moves ports to Forwarding state so legitimate BPDUs are processed faster</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gd077a3da7e41ccd36ec44a1bf4b66a2_q09_b">
+                <material>
+                  <mattext texttype="text/plain">BPDU Guard — disables any port that receives a BPDU to prevent unauthorized STP participation</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gd077a3da7e41ccd36ec44a1bf4b66a2_q09_c">
+                <material>
+                  <mattext texttype="text/plain">Root Guard — prevents ports from becoming Root Ports if a superior BPDU is received, protecting the intended Root Bridge placement</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gd077a3da7e41ccd36ec44a1bf4b66a2_q09_d">
+                <material>
+                  <mattext texttype="text/plain">BPDU Filter — prevents all BPDUs from being sent or received, ensuring the access switch cannot affect the Root Bridge election</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gd077a3da7e41ccd36ec44a1bf4b66a2_q09_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="gd077a3da7e41ccd36ec44a1bf4b66a2_q10" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A company has two distribution switches connected to each other and to 10 access layer switches. The STP topology is stable. A new server is connected to an access port on one of the distribution switches. The port is configured with PortFast and immediately becomes active. The server begins sending frames. Which statement correctly describes the behavior of the access port after PortFast is applied?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="gd077a3da7e41ccd36ec44a1bf4b66a2_q10_a">
+                <material>
+                  <mattext texttype="text/plain">The port bypasses the Blocking and Listening states, skips the Learning state, and immediately enters Forwarding — the server can send and receive traffic within seconds of connecting</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gd077a3da7e41ccd36ec44a1bf4b66a2_q10_b">
+                <material>
+                  <mattext texttype="text/plain">The port bypasses the Blocking state only, still transitions through Listening (15 sec) and Learning (15 sec) before entering Forwarding — total delay is 30 seconds instead of 50</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gd077a3da7e41ccd36ec44a1bf4b66a2_q10_c">
+                <material>
+                  <mattext texttype="text/plain">The port immediately enters Forwarding state, skipping all STP states including Learning — the switch's MAC address table cannot be populated for this port</mattext>
+                </material>
+              </response_label>
+              <response_label ident="gd077a3da7e41ccd36ec44a1bf4b66a2_q10_d">
+                <material>
+                  <mattext texttype="text/plain">The port enters Forwarding immediately and ignores all future BPDUs — even if a switch is plugged in later, STP reconvergence will not occur on this port</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">gd077a3da7e41ccd36ec44a1bf4b66a2_q10_a</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+    </section>
+  </assessment>
+</questestinterop>

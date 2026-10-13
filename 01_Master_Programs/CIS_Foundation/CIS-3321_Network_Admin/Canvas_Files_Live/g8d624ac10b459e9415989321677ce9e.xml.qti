@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/profile/cc/ccv1p1/ccv1p1_qtiasiv1p2p1_v1p0.xsd">
+  <assessment ident="g8d624ac10b459e9415989321677ce9e" title="Quiz (M14): Network Troubleshooting Methodology">
+    <qtimetadata>
+      <qtimetadatafield>
+        <fieldlabel>cc_profile</fieldlabel>
+        <fieldentry>cc.exam.v0p1</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_assessmenttype</fieldlabel>
+        <fieldentry>Examination</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_scoretype</fieldlabel>
+        <fieldentry>Percentage</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>cc_maxattempts</fieldlabel>
+        <fieldentry>1</fieldentry>
+      </qtimetadatafield>
+    </qtimetadata>
+    <section ident="root_section">
+      <item ident="g8d624ac10b459e9415989321677ce9e_q01" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A network technician is following the CompTIA troubleshooting methodology. After gathering information and talking to the user, the technician immediately changes several settings on the router to see if any of them fix the problem. Which step of the methodology did the technician skip?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g8d624ac10b459e9415989321677ce9e_q01_a">
+                <material>
+                  <mattext texttype="text/plain">Step 1 — Identify the Problem</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8d624ac10b459e9415989321677ce9e_q01_b">
+                <material>
+                  <mattext texttype="text/plain">Step 2 — Establish a Theory of Probable Cause</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8d624ac10b459e9415989321677ce9e_q01_c">
+                <material>
+                  <mattext texttype="text/plain">Step 6 — Verify Full System Functionality</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8d624ac10b459e9415989321677ce9e_q01_d">
+                <material>
+                  <mattext texttype="text/plain">Step 7 — Document Findings</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g8d624ac10b459e9415989321677ce9e_q01_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g8d624ac10b459e9415989321677ce9e_q02" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A user receives the IP address 169.254.82.44 on their Windows workstation. What is the most likely cause?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g8d624ac10b459e9415989321677ce9e_q02_a">
+                <material>
+                  <mattext texttype="text/plain">The user manually configured a static IP in the 169.254.0.0/16 range</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8d624ac10b459e9415989321677ce9e_q02_b">
+                <material>
+                  <mattext texttype="text/plain">The DHCP server assigned this address as part of the voice VLAN</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8d624ac10b459e9415989321677ce9e_q02_c">
+                <material>
+                  <mattext texttype="text/plain">DHCP discovery failed and Windows assigned an APIPA address</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8d624ac10b459e9415989321677ce9e_q02_d">
+                <material>
+                  <mattext texttype="text/plain">DNS resolution failed and the workstation cannot resolve the DHCP server name</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g8d624ac10b459e9415989321677ce9e_q02_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g8d624ac10b459e9415989321677ce9e_q03" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A technician uses a cable certifier on a Cat6 horizontal run and the test reports a NEXT failure. What type of cable problem does NEXT measure?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g8d624ac10b459e9415989321677ce9e_q03_a">
+                <material>
+                  <mattext texttype="text/plain">Signal attenuation over distance</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8d624ac10b459e9415989321677ce9e_q03_b">
+                <material>
+                  <mattext texttype="text/plain">Near End Crosstalk — interference between adjacent wire pairs measured at the same end</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8d624ac10b459e9415989321677ce9e_q03_c">
+                <material>
+                  <mattext texttype="text/plain">Far End Crosstalk — interference measured at the opposite end from the signal source</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8d624ac10b459e9415989321677ce9e_q03_d">
+                <material>
+                  <mattext texttype="text/plain">Open circuit — a wire with no continuity</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g8d624ac10b459e9415989321677ce9e_q03_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g8d624ac10b459e9415989321677ce9e_q04" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A user can ping a server by its IP address (192.168.5.50) but cannot connect to it by hostname (fileserver.corp.local). Which troubleshooting step should be performed next?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g8d624ac10b459e9415989321677ce9e_q04_a">
+                <material>
+                  <mattext texttype="text/plain">Replace the network cable</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8d624ac10b459e9415989321677ce9e_q04_b">
+                <material>
+                  <mattext texttype="text/plain">Check the default gateway configuration</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8d624ac10b459e9415989321677ce9e_q04_c">
+                <material>
+                  <mattext texttype="text/plain">Run nslookup fileserver.corp.local to test DNS resolution</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8d624ac10b459e9415989321677ce9e_q04_d">
+                <material>
+                  <mattext texttype="text/plain">Reboot the server</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g8d624ac10b459e9415989321677ce9e_q04_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g8d624ac10b459e9415989321677ce9e_q05" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A switch port shows the following statistics: Speed 100Mb/s, Duplex Half, Input errors 78,000, Late collisions 12,000. What is the most likely cause?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g8d624ac10b459e9415989321677ce9e_q05_a">
+                <material>
+                  <mattext texttype="text/plain">The cable connecting the device is broken</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8d624ac10b459e9415989321677ce9e_q05_b">
+                <material>
+                  <mattext texttype="text/plain">A duplex mismatch — one end is set to full-duplex, the other to half-duplex</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8d624ac10b459e9415989321677ce9e_q05_c">
+                <material>
+                  <mattext texttype="text/plain">The SFP transceiver has failed</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8d624ac10b459e9415989321677ce9e_q05_d">
+                <material>
+                  <mattext texttype="text/plain">STP has placed the port in a blocking state</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g8d624ac10b459e9415989321677ce9e_q05_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g8d624ac10b459e9415989321677ce9e_q06" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;Which tool should be used to trace a specific cable through a conduit and patch panel when the cable is not labeled?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g8d624ac10b459e9415989321677ce9e_q06_a">
+                <material>
+                  <mattext texttype="text/plain">Cable certifier</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8d624ac10b459e9415989321677ce9e_q06_b">
+                <material>
+                  <mattext texttype="text/plain">Optical power meter</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8d624ac10b459e9415989321677ce9e_q06_c">
+                <material>
+                  <mattext texttype="text/plain">Tone generator and inductive probe</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8d624ac10b459e9415989321677ce9e_q06_d">
+                <material>
+                  <mattext texttype="text/plain">Time Domain Reflectometer (TDR)</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g8d624ac10b459e9415989321677ce9e_q06_c</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g8d624ac10b459e9415989321677ce9e_q07" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A technician follows the bottom-up OSI troubleshooting approach. They confirm the physical link is active, the VLAN is correctly configured, and the IP address is correct. The next step in the bottom-up approach is to verify which layer?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g8d624ac10b459e9415989321677ce9e_q07_a">
+                <material>
+                  <mattext texttype="text/plain">Layer 1 — Physical (again)</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8d624ac10b459e9415989321677ce9e_q07_b">
+                <material>
+                  <mattext texttype="text/plain">Layer 3 — Network routing and gateway</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8d624ac10b459e9415989321677ce9e_q07_c">
+                <material>
+                  <mattext texttype="text/plain">Layer 7 — Application service availability</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8d624ac10b459e9415989321677ce9e_q07_d">
+                <material>
+                  <mattext texttype="text/plain">Layer 4 — Transport layer (firewall, port availability)</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g8d624ac10b459e9415989321677ce9e_q07_d</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g8d624ac10b459e9415989321677ce9e_q08" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;After resolving a complex network outage, a technician skips Step 7 (Documentation) because the fix was straightforward. Three months later, an identical issue occurs and takes the same 4 hours to resolve. What could documentation have prevented?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g8d624ac10b459e9415989321677ce9e_q08_a">
+                <material>
+                  <mattext texttype="text/plain">Nothing — the problem was hardware failure and would recur regardless</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8d624ac10b459e9415989321677ce9e_q08_b">
+                <material>
+                  <mattext texttype="text/plain">Faster resolution using the knowledge base record from the first incident</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8d624ac10b459e9415989321677ce9e_q08_c">
+                <material>
+                  <mattext texttype="text/plain">The initial outage from occurring</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8d624ac10b459e9415989321677ce9e_q08_d">
+                <material>
+                  <mattext texttype="text/plain">The need for escalation during the second incident</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g8d624ac10b459e9415989321677ce9e_q08_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g8d624ac10b459e9415989321677ce9e_q09" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A technician runs tracert from a workstation to a remote server and observes that the first three hops respond normally, but hop 4 shows *** (three asterisks) and hop 5 responds normally. What does this most likely indicate?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g8d624ac10b459e9415989321677ce9e_q09_a">
+                <material>
+                  <mattext texttype="text/plain">The network path is broken at hop 4</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8d624ac10b459e9415989321677ce9e_q09_b">
+                <material>
+                  <mattext texttype="text/plain">Hop 4 is a router configured to not respond to traceroute probes (ICMP filtered)</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8d624ac10b459e9415989321677ce9e_q09_c">
+                <material>
+                  <mattext texttype="text/plain">Hop 4 is the destination server and the trace is complete</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8d624ac10b459e9415989321677ce9e_q09_d">
+                <material>
+                  <mattext texttype="text/plain">The workstation has a routing loop between hops 3 and 4</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g8d624ac10b459e9415989321677ce9e_q09_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g8d624ac10b459e9415989321677ce9e_q10" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A technician is troubleshooting a fiber optic link that shows no signal. They have checked that the fiber cables are connected at both ends. Which action should be performed FIRST?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g8d624ac10b459e9415989321677ce9e_q10_a">
+                <material>
+                  <mattext texttype="text/plain">Replace the SFP transceivers on both switches</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8d624ac10b459e9415989321677ce9e_q10_b">
+                <material>
+                  <mattext texttype="text/plain">Inspect and clean the fiber connectors using a fiber inspection microscope and cleaning tool</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8d624ac10b459e9415989321677ce9e_q10_c">
+                <material>
+                  <mattext texttype="text/plain">Replace the fiber cable with a new one</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g8d624ac10b459e9415989321677ce9e_q10_d">
+                <material>
+                  <mattext texttype="text/plain">Check whether the switches have the correct firmware version</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g8d624ac10b459e9415989321677ce9e_q10_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+    </section>
+  </assessment>
+</questestinterop>

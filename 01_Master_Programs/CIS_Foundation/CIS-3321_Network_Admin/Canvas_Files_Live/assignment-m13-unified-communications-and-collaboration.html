@@ -1,0 +1,248 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Assignment: Lab (M13): Unified Communications and Collaboration</title>
+</head>
+<body>
+<h2>Lab (M13): Unified Communications and Collaboration</h2>
+<h1>Lab: Module 13 — Unified Communications and Collaboration</h1>
+<h2>Course: CIS-3321 Network Administration</h2>
+<p><strong>Certification Alignment:</strong> CompTIA Network+ (N10-009)</p>
+<hr />
+<h2>Lab Overview</h2>
+<p>This lab uses Cisco Packet Tracer to configure a VoIP network with IP phones, a call manager (CUCM simulation), voice VLANs, and QoS markings. You will also perform bandwidth calculations and analyze VoIP quality metrics. Part 4 uses Wireshark to capture and inspect RTP traffic characteristics.</p>
+<p><strong>Estimated Time:</strong> 90–120 minutes</p>
+<p><strong>Required Tools:</strong></p>
+<ul>
+<li>Cisco Packet Tracer 8.x (free — netacad.com)</li>
+<li>Wireshark 4.x (free — wireshark.org) with a sample RTP capture file (provided or downloadable from wireshark.org/docs/wsug_html_chunked/AppTools.html)</li>
+<li>Calculator or spreadsheet for bandwidth calculations</li>
+</ul>
+<hr />
+<h2>Part 1: VoIP Network Build in Packet Tracer</h2>
+<h3>Part 1 Objective</h3>
+<p>Configure a small VoIP network with IP phones, a router acting as CUCM, voice VLANs, and QoS-enabled switches. Verify that IP phones register and calls complete.</p>
+<h3>Step 1: Build the Topology</h3>
+<p>Place the following in the Packet Tracer logical workspace:</p>
+<ul>
+<li>One 2811 Router (acts as CUCM/Call Manager)</li>
+<li>Two 2960 switches (Switch1 — Floor 1, Switch2 — Floor 2)</li>
+<li>Four Cisco IP Phones (7960 model) — two connected to each switch</li>
+<li>Two PCs — one connected to each switch via the phone's built-in switch port</li>
+</ul>
+<p>Connect devices:</p>
+<ul>
+<li>Router FastEthernet0/0 → Switch1 (trunk port)</li>
+<li>Switch1 uplink → Switch2 (trunk port)</li>
+<li>IP Phones connect to switch access ports</li>
+<li>PCs connect to phone pass-through ports</li>
+</ul>
+<h3>Step 2: Configure VLANs on Switches</h3>
+<p>On both switches, create two VLANs:</p>
+<ul>
+<li>VLAN 10 — name: DATA</li>
+<li>VLAN 20 — name: VOICE</li>
+</ul>
+<p>Configure access ports for the IP phones:</p>
+<pre><code class="language-bash">interface FastEthernet0/1
+ switchport mode access
+ switchport access vlan 10
+ switchport voice vlan 20
+ spanning-tree portfast
+</code></pre>
+<p>Repeat for all phone-connected ports. Configure trunk ports between switches and toward the router with both VLANs allowed.</p>
+<h3>Step 3: Configure the Router as Call Manager</h3>
+<p>On the 2811 router, configure sub-interfaces for each VLAN:</p>
+<pre><code class="language-bash">interface FastEthernet0/0.10
+ encapsulation dot1Q 10
+ ip address 192.168.10.1 255.255.255.0
+
+interface FastEthernet0/0.20
+ encapsulation dot1Q 20
+ ip address 192.168.20.1 255.255.255.0
+</code></pre>
+<p>Enable DHCP on the router to assign IPs and provide CUCM Option 150 (TFTP server address) to the phones:</p>
+<pre><code class="language-bash">ip dhcp pool DATA
+ network 192.168.10.0 255.255.255.0
+ default-router 192.168.10.1
+ dns-server 8.8.8.8
+
+ip dhcp pool VOICE
+ network 192.168.20.0 255.255.255.0
+ default-router 192.168.20.1
+ option 150 ip 192.168.20.1
+
+ip dhcp excluded-address 192.168.10.1 192.168.10.10
+ip dhcp excluded-address 192.168.20.1 192.168.20.10
+</code></pre>
+<p>Configure Telephony Service (Packet Tracer CUCM simulation):</p>
+<pre><code class="language-bash">telephony-service
+ max-ephones 4
+ max-dn 4
+ ip source-address 192.168.20.1 port 2000
+ auto assign 1 to 4
+
+ephone-dn 1
+ number 1001
+
+ephone-dn 2
+ number 1002
+
+ephone-dn 3
+ number 1003
+
+ephone-dn 4
+ number 1004
+</code></pre>
+<h3>Step 4: Verify Phone Registration</h3>
+<p>After the phones receive DHCP addresses and contact the CUCM, they should display their assigned extension numbers. Verify by checking each phone's display.</p>
+<p>From Phone 1001, dial Phone 1003 — a call should complete across the inter-switch trunk.</p>
+<h3>Checkpoint 1</h3>
+<p>Screenshot each IP phone showing its assigned extension. Screenshot a successful call in progress between Phone 1001 and Phone 1003.</p>
+<hr />
+<h2>Part 2: QoS Configuration</h2>
+<h3>Part 2 Objective</h3>
+<p>Configure DSCP marking and queuing policies on the router to prioritize voice traffic.</p>
+<h3>Step 5: Configure QoS Policy</h3>
+<p>Create a class map to identify voice traffic (from VLAN 20):</p>
+<pre><code class="language-bash">class-map match-any VOICE-TRAFFIC
+ match ip dscp ef
+
+class-map match-any SIGNALING
+ match ip dscp cs3
+</code></pre>
+<p>Create a policy map with LLQ for voice:</p>
+<pre><code class="language-bash">policy-map VOIP-QOS
+ class VOICE-TRAFFIC
+  priority 512
+ class SIGNALING
+  bandwidth 64
+ class class-default
+  fair-queue
+</code></pre>
+<p>Apply the policy to the WAN-facing interface (in this lab, apply to the FastEthernet0/0 interface):</p>
+<pre><code class="language-bash">interface FastEthernet0/0
+ service-policy output VOIP-QOS
+</code></pre>
+<h3>Step 6: Verify QoS Policy</h3>
+<p>Use <code>show policy-map interface FastEthernet0/0</code> to verify the policy is active. During an active call, observe the packet counters for the VOICE-TRAFFIC class increment.</p>
+<h3>Checkpoint 2</h3>
+<p>Screenshot the <code>show policy-map interface</code> output showing the VOIP-QOS policy applied and active packet counters.</p>
+<hr />
+<h2>Part 3: Bandwidth Calculations</h2>
+<h3>Part 3 Objective</h3>
+<p>Calculate VoIP bandwidth requirements for several deployment scenarios.</p>
+<h3>Step 7: Bandwidth Calculation Exercises</h3>
+<p>Complete the following calculations in your lab report. Show all work.</p>
+<p>Scenario A — Branch Office Sizing (G.729):</p>
+<ul>
+<li>35 concurrent calls using G.729 codec</li>
+<li>Packetization: 20 ms</li>
+<li>Per-call bandwidth with overhead: 31 Kbps</li>
+<li>Add 20% overhead buffer for signaling and burst</li>
+</ul>
+<p>Calculate: (a) minimum raw voice bandwidth, (b) total with buffer, (c) can this fit on a T1 (1.544 Mbps) alongside 500 Kbps of data traffic?</p>
+<p>Scenario B — Corporate HQ (G.711):</p>
+<ul>
+<li>150 concurrent calls using G.711 codec</li>
+<li>Per-call bandwidth with overhead: 87 Kbps</li>
+<li>WAN link available: 50 Mbps</li>
+<li>CAC limit: 80% of link reserved for non-voice traffic</li>
+</ul>
+<p>Calculate: (a) total voice bandwidth required, (b) voice bandwidth as a percentage of the 50 Mbps link, (c) what is the maximum additional concurrent calls the remaining link capacity can support?</p>
+<p>Scenario C — Video Conferencing:</p>
+<ul>
+<li>20 simultaneous HD video conference sessions</li>
+<li>Each session: 3 Mbps bidirectional</li>
+<li>Available WAN bandwidth: 200 Mbps</li>
+<li>Voice calls running simultaneously: 100 × G.711</li>
+</ul>
+<p>Calculate: (a) total video bandwidth, (b) total voice bandwidth, (c) combined utilization as a percentage of 200 Mbps, (d) recommended DSCP markings for each traffic type.</p>
+<h3>Checkpoint 3</h3>
+<p>Include completed calculations and recommendations in the lab report.</p>
+<hr />
+<h2>Part 4: RTP Traffic Analysis with Wireshark</h2>
+<h3>Part 4 Objective</h3>
+<p>Analyze a pre-captured RTP stream to identify VoIP quality metrics and packet characteristics.</p>
+<h3>Step 8: Open a RTP Capture</h3>
+<p>Download a sample VoIP PCAP file from the Wireshark sample captures page (wiki.wireshark.org/SampleCaptures — search for "SIP" or "VoIP"). Alternatively, use any VoIP PCAP provided by your instructor.</p>
+<p>Open the file in Wireshark.</p>
+<h3>Step 9: Analyze the RTP Stream</h3>
+<ol>
+<li>Apply the filter <code>rtp</code> to isolate RTP packets.</li>
+<li>Navigate to Telephony &gt; RTP &gt; RTP Streams to view the RTP stream summary.</li>
+<li>Select the audio stream and click Analyze.</li>
+</ol>
+<p>Record the following from the RTP stream analysis:</p>
+<ul>
+<li>Source IP and port</li>
+<li>Destination IP and port</li>
+<li>Payload type (codec identifier)</li>
+<li>Total packets in stream</li>
+<li>Packet loss percentage</li>
+<li>Maximum delta (jitter proxy)</li>
+<li>Mean jitter</li>
+</ul>
+<ol>
+<li>Apply the filter <code>sip</code> to view SIP signaling packets.</li>
+<li>Identify the INVITE, 180 Ringing, 200 OK, ACK, and BYE messages.</li>
+<li>Examine the SDP body in the INVITE — identify the offered codecs and the proposed RTP port.</li>
+</ol>
+<h3>Step 10: Quality Assessment</h3>
+<p>Using the values you recorded, answer these questions in your lab report:</p>
+<ul>
+<li>Does the packet loss percentage meet the acceptable threshold for voice (under 1%)?</li>
+<li>Does the jitter value meet the acceptable threshold (under 30 ms)?</li>
+<li>Based on the payload type number, what codec is in use?</li>
+<li>What SIP method does the caller use to end the call?</li>
+</ul>
+<h3>Checkpoint 4</h3>
+<p>Screenshot the Wireshark RTP stream analysis window showing the metrics. Screenshot one SIP INVITE packet with the SDP body expanded showing codec list and RTP port.</p>
+<hr />
+<h2>Lab Report Requirements</h2>
+<p>Submit a PDF report containing:</p>
+<ol>
+<li>Checkpoint 1: Phone registration and active call screenshots.</li>
+<li>Checkpoint 2: QoS policy verification output.</li>
+<li>Checkpoint 3: All bandwidth calculations with work shown and final recommendations.</li>
+<li>Checkpoint 4: RTP analysis screenshot and written answers to quality assessment questions.</li>
+<li>Reflection (150–200 words): Why is UDP used instead of TCP for RTP voice transport? What happens to call quality if packet loss exceeds 5%? How does the jitter buffer help, and what is its limitation?</li>
+</ol>
+<hr />
+<h2>Grading Rubric</h2>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Points</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Part 1 — Phone registration and call screenshots</td>
+<td>20</td>
+</tr>
+<tr>
+<td>Part 2 — QoS policy configuration and verification</td>
+<td>20</td>
+</tr>
+<tr>
+<td>Part 3 — Bandwidth calculations (all three scenarios)</td>
+<td>25</td>
+</tr>
+<tr>
+<td>Part 4 — Wireshark RTP analysis and quality assessment</td>
+<td>25</td>
+</tr>
+<tr>
+<td>Reflection paragraph</td>
+<td>10</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td><strong>100</strong></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

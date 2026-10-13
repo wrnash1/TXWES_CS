@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/profile/cc/ccv1p1/ccv1p1_qtiasiv1p2p1_v1p0.xsd">
+  <assessment ident="g4c69dcc48ba64537a75812c185b6d42" title="Quiz (M10): Routing Protocols: Static, OSPF, and BGP">
+    <qtimetadata>
+      <qtimetadatafield>
+        <fieldlabel>cc_profile</fieldlabel>
+        <fieldentry>cc.exam.v0p1</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_assessmenttype</fieldlabel>
+        <fieldentry>Examination</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_scoretype</fieldlabel>
+        <fieldentry>Percentage</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>cc_maxattempts</fieldlabel>
+        <fieldentry>1</fieldentry>
+      </qtimetadatafield>
+    </qtimetadata>
+    <section ident="root_section">
+      <item ident="g4c69dcc48ba64537a75812c185b6d42_q01" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A router has learned a route to 192.168.50.0/24 via a manually configured static route and also via OSPF. Both routes are present in the routing process, but only one is installed in the routing table. Which route is installed, and why?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g4c69dcc48ba64537a75812c185b6d42_q01_a">
+                <material>
+                  <mattext texttype="text/plain">The OSPF route, because dynamic routing protocols always take precedence over static configuration</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4c69dcc48ba64537a75812c185b6d42_q01_b">
+                <material>
+                  <mattext texttype="text/plain">The static route, because its administrative distance (1) is lower than OSPF's administrative distance (110)</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4c69dcc48ba64537a75812c185b6d42_q01_c">
+                <material>
+                  <mattext texttype="text/plain">Whichever route was configured first is installed permanently</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4c69dcc48ba64537a75812c185b6d42_q01_d">
+                <material>
+                  <mattext texttype="text/plain">Both routes are installed and traffic is load-balanced equally between them</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g4c69dcc48ba64537a75812c185b6d42_q01_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g4c69dcc48ba64537a75812c185b6d42_q02" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;Which statement correctly distinguishes Administrative Distance from metric?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g4c69dcc48ba64537a75812c185b6d42_q02_a">
+                <material>
+                  <mattext texttype="text/plain">Administrative Distance and metric are two names for the same value</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4c69dcc48ba64537a75812c185b6d42_q02_b">
+                <material>
+                  <mattext texttype="text/plain">Administrative Distance chooses between routes learned from different protocols; metric chooses between routes learned from the same protocol</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4c69dcc48ba64537a75812c185b6d42_q02_c">
+                <material>
+                  <mattext texttype="text/plain">Metric is used only by static routes; Administrative Distance is used only by dynamic protocols</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4c69dcc48ba64537a75812c185b6d42_q02_d">
+                <material>
+                  <mattext texttype="text/plain">Administrative Distance is configured per-interface; metric is configured globally</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g4c69dcc48ba64537a75812c185b6d42_q02_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g4c69dcc48ba64537a75812c185b6d42_q03" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A network engineer is designing a multi-area OSPF deployment with four areas. Which of the following is a mandatory requirement of this design?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g4c69dcc48ba64537a75812c185b6d42_q03_a">
+                <material>
+                  <mattext texttype="text/plain">Every area must contain exactly the same number of routers</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4c69dcc48ba64537a75812c185b6d42_q03_b">
+                <material>
+                  <mattext texttype="text/plain">All areas must connect to Area 0 (the backbone area), directly or via a virtual link</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4c69dcc48ba64537a75812c185b6d42_q03_c">
+                <material>
+                  <mattext texttype="text/plain">OSPF requires a minimum of six areas to function correctly</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4c69dcc48ba64537a75812c185b6d42_q03_d">
+                <material>
+                  <mattext texttype="text/plain">Each area must use a different routing protocol</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g4c69dcc48ba64537a75812c185b6d42_q03_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g4c69dcc48ba64537a75812c185b6d42_q04" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;Which best describes the difference between an Interior Gateway Protocol (IGP) and an Exterior Gateway Protocol (EGP)?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g4c69dcc48ba64537a75812c185b6d42_q04_a">
+                <material>
+                  <mattext texttype="text/plain">An IGP is used within a single autonomous system; an EGP is used between autonomous systems</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4c69dcc48ba64537a75812c185b6d42_q04_b">
+                <material>
+                  <mattext texttype="text/plain">An IGP is always faster than an EGP</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4c69dcc48ba64537a75812c185b6d42_q04_c">
+                <material>
+                  <mattext texttype="text/plain">An EGP can only be used on wireless networks</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4c69dcc48ba64537a75812c185b6d42_q04_d">
+                <material>
+                  <mattext texttype="text/plain">There is no functional difference; the terms are interchangeable</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g4c69dcc48ba64537a75812c185b6d42_q04_a</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g4c69dcc48ba64537a75812c185b6d42_q05" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An organization's edge router is connected to two different ISPs for redundancy (multihoming) using BGP. Both ISPs advertise a path to the same destination network. Assuming Local Preference is equal on both paths, which BGP attribute is evaluated next to select the best path?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g4c69dcc48ba64537a75812c185b6d42_q05_a">
+                <material>
+                  <mattext texttype="text/plain">Interface bandwidth</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4c69dcc48ba64537a75812c185b6d42_q05_b">
+                <material>
+                  <mattext texttype="text/plain">AS-Path length (shorter path preferred)</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4c69dcc48ba64537a75812c185b6d42_q05_c">
+                <material>
+                  <mattext texttype="text/plain">The router's uptime</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4c69dcc48ba64537a75812c185b6d42_q05_d">
+                <material>
+                  <mattext texttype="text/plain">The physical distance between routers in miles</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g4c69dcc48ba64537a75812c185b6d42_q05_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g4c69dcc48ba64537a75812c185b6d42_q06" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;Why is Local Preference described as controlling only outbound traffic from an autonomous system, and not inbound traffic from other autonomous systems?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g4c69dcc48ba64537a75812c185b6d42_q06_a">
+                <material>
+                  <mattext texttype="text/plain">Local Preference is a physical layer setting that only affects local hardware</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4c69dcc48ba64537a75812c185b6d42_q06_b">
+                <material>
+                  <mattext texttype="text/plain">Local Preference is exchanged only via iBGP within an autonomous system and is never advertised to external autonomous systems via eBGP</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4c69dcc48ba64537a75812c185b6d42_q06_c">
+                <material>
+                  <mattext texttype="text/plain">Local Preference cannot be configured by network administrators</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4c69dcc48ba64537a75812c185b6d42_q06_d">
+                <material>
+                  <mattext texttype="text/plain">Local Preference only applies to networks smaller than a /24</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g4c69dcc48ba64537a75812c185b6d42_q06_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g4c69dcc48ba64537a75812c185b6d42_q07" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A small branch office has exactly one connection to the internet through a single router, with no redundant path. Which routing approach is most appropriate for this scenario, and why?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g4c69dcc48ba64537a75812c185b6d42_q07_a">
+                <material>
+                  <mattext texttype="text/plain">BGP, because it is the most powerful routing protocol available</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4c69dcc48ba64537a75812c185b6d42_q07_b">
+                <material>
+                  <mattext texttype="text/plain">A static default route, because there is only one possible exit path and no dynamic decision-making is needed</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4c69dcc48ba64537a75812c185b6d42_q07_c">
+                <material>
+                  <mattext texttype="text/plain">OSPF with 10 areas, to maximize scalability</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4c69dcc48ba64537a75812c185b6d42_q07_d">
+                <material>
+                  <mattext texttype="text/plain">No routing configuration is needed since there is only one router</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g4c69dcc48ba64537a75812c185b6d42_q07_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g4c69dcc48ba64537a75812c185b6d42_q08" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;Which of the following correctly describes OSPF's approach to calculating the best path, in contrast to a distance-vector protocol?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g4c69dcc48ba64537a75812c185b6d42_q08_a">
+                <material>
+                  <mattext texttype="text/plain">OSPF routers build a complete map of the network topology and each independently calculates the shortest path using the SPF (Dijkstra) algorithm</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4c69dcc48ba64537a75812c185b6d42_q08_b">
+                <material>
+                  <mattext texttype="text/plain">OSPF routers only know the distance and direction to a destination as reported by a neighbor, with no visibility into the full topology</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4c69dcc48ba64537a75812c185b6d42_q08_c">
+                <material>
+                  <mattext texttype="text/plain">OSPF does not calculate paths at all; it uses only manually configured static routes</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4c69dcc48ba64537a75812c185b6d42_q08_d">
+                <material>
+                  <mattext texttype="text/plain">OSPF requires a central controller server to calculate all paths for every router</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g4c69dcc48ba64537a75812c185b6d42_q08_a</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g4c69dcc48ba64537a75812c185b6d42_q09" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;A router's routing table shows a directly connected network, a static route, and an OSPF-learned route, all to different destination networks (no conflict). Which administrative distance values would correctly rank these route sources from most trusted to least trusted?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g4c69dcc48ba64537a75812c185b6d42_q09_a">
+                <material>
+                  <mattext texttype="text/plain">OSPF (110), Static (1), Connected (0)</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4c69dcc48ba64537a75812c185b6d42_q09_b">
+                <material>
+                  <mattext texttype="text/plain">Connected (0), Static (1), OSPF (110)</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4c69dcc48ba64537a75812c185b6d42_q09_c">
+                <material>
+                  <mattext texttype="text/plain">Static (1), Connected (0), OSPF (110)</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4c69dcc48ba64537a75812c185b6d42_q09_d">
+                <material>
+                  <mattext texttype="text/plain">All three have the same administrative distance since there is no conflict</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g4c69dcc48ba64537a75812c185b6d42_q09_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="g4c69dcc48ba64537a75812c185b6d42_q10" title="Question">
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;div&gt;&lt;p&gt;An organization wants a network design where outbound traffic automatically reroutes to a secondary ISP if the primary ISP connection fails, without any manual intervention. Which technology is required to achieve this specific requirement?&lt;/p&gt;&lt;/div&gt;</mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="g4c69dcc48ba64537a75812c185b6d42_q10_a">
+                <material>
+                  <mattext texttype="text/plain">A single static default route to the primary ISP only</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4c69dcc48ba64537a75812c185b6d42_q10_b">
+                <material>
+                  <mattext texttype="text/plain">BGP multihoming with two ISP connections, allowing automatic path failover based on route withdrawal</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4c69dcc48ba64537a75812c185b6d42_q10_c">
+                <material>
+                  <mattext texttype="text/plain">A single OSPF area covering only the internal LAN</mattext>
+                </material>
+              </response_label>
+              <response_label ident="g4c69dcc48ba64537a75812c185b6d42_q10_d">
+                <material>
+                  <mattext texttype="text/plain">Manually reconfiguring the static route every time the primary ISP fails</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar maxvalue="100" minvalue="0" varname="SCORE" vartype="Decimal"/>
+          </outcomes>
+          <respcondition continue="No">
+            <conditionvar>
+              <varequal respident="response1">g4c69dcc48ba64537a75812c185b6d42_q10_b</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+    </section>
+  </assessment>
+</questestinterop>

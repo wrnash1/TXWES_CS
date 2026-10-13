@@ -1,0 +1,208 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Assignment: Lab (M01): Networking Fundamentals and the OSI Model</title>
+</head>
+<body>
+<h2>Lab (M01): Networking Fundamentals and the OSI Model</h2>
+<h1>Lab Activity: Module 01 – Networking Fundamentals and the OSI Model</h1>
+<h2>CIS-3321 Network Administration | CompTIA Network+ (N10-009)</h2>
+<h2>Texas Wesleyan University | Professor Nash</h2>
+<hr />
+<h3>Lab Overview</h3>
+<p><strong>Lab Title:</strong> OSI Model Observation and Star Topology Construction</p>
+<p><strong>Format:</strong> Cisco Packet Tracer Simulation</p>
+<p><strong>Estimated Time:</strong> 60–75 minutes</p>
+<p><strong>Points:</strong> 100 points total</p>
+<p><strong>Prerequisites:</strong></p>
+<ul>
+<li>Cisco Packet Tracer installed (free download at netacad.com with free account)</li>
+<li>Module 01 video lectures watched (both Part 1 and Part 2)</li>
+<li>Module 01 Reading Guide reviewed</li>
+</ul>
+<p><strong>Learning Objectives:</strong></p>
+<p>By completing this lab, you will be able to:</p>
+<ul>
+<li>Build a functional star topology network in Cisco Packet Tracer</li>
+<li>Assign static IP addresses to hosts and verify connectivity</li>
+<li>Use the ping command to test Layer 3 ICMP connectivity</li>
+<li>Use Packet Tracer Simulation Mode to observe Layer 2 frames and Layer 3 packets in transit</li>
+<li>Identify encapsulation headers at different OSI layers within captured PDUs</li>
+</ul>
+<hr />
+<h3>Background</h3>
+<p>The OSI model is not just a chart on a slide — it describes real processes that occur every time data crosses a network. In this lab, you will observe the OSI model in action. When you use Packet Tracer's Simulation Mode, you can pause a transmission and inspect the headers that have been added at each layer. This is encapsulation made visible.</p>
+<p>The lab is divided into two parts. Part 1 focuses on building the topology and testing basic connectivity. Part 2 uses Simulation Mode to observe OSI layer behavior at the frame and packet level.</p>
+<hr />
+<h3>Part 1: Build a Star Topology and Test IP Connectivity</h3>
+<p><strong>Objective:</strong> Create a star topology with three hosts connected to a switch, assign IP addresses, and verify connectivity using ping.</p>
+<h4>Step 1: Launch Packet Tracer and Place Devices</h4>
+<ol>
+<li>Open Cisco Packet Tracer.</li>
+<li>From the bottom device panel, select the End Devices category.</li>
+<li>Drag three PCs onto the workspace. Label them PC0, PC1, and PC2.</li>
+<li>From the Network Devices category, select Switches.</li>
+<li>Drag one Cisco 2960 switch onto the workspace. Place it in the center.</li>
+</ol>
+<h4>Step 2: Connect the Devices</h4>
+<ol>
+<li>In the bottom toolbar, click the Connections category (lightning bolt icon).</li>
+<li>Select the straight-through copper cable (solid line).</li>
+<li>Click PC0, select FastEthernet0, then click the switch and select any available FastEthernet port (e.g., Fa0/1).</li>
+<li>Repeat for PC1 (connect to Fa0/2) and PC2 (connect to Fa0/3).</li>
+<li>Observe that after a few seconds, all link lights turn green, indicating a successful Layer 1 physical connection.</li>
+</ol>
+<h4>Step 3: Assign Static IP Addresses</h4>
+<ol>
+<li>Click on PC0 to open its configuration window.</li>
+<li>Click the Desktop tab, then click IP Configuration.</li>
+<li>Select Static, then enter:
+   - IP Address: 192.168.1.10
+   - Subnet Mask: 255.255.255.0
+   - Default Gateway: (leave blank for now)</li>
+<li>Close the window.</li>
+<li>Repeat for PC1:
+   - IP Address: 192.168.1.20
+   - Subnet Mask: 255.255.255.0</li>
+<li>Repeat for PC2:
+   - IP Address: 192.168.1.30
+   - Subnet Mask: 255.255.255.0</li>
+</ol>
+<h4>Step 4: Test Connectivity with Ping</h4>
+<ol>
+<li>Click on PC0, go to the Desktop tab, and click Command Prompt.</li>
+<li>Type the following command and press Enter:</li>
+</ol>
+<p><code>ping 192.168.1.20</code></p>
+<ol start="3">
+<li>You should see four successful replies from 192.168.1.20 with round-trip times.</li>
+<li>Now ping PC2:</li>
+</ol>
+<p><code>ping 192.168.1.30</code></p>
+<ol start="5">
+<li>Record your results in the table below:</li>
+</ol>
+<p><strong>Lab Part 1 Results Table:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Source</th>
+<th>Destination IP</th>
+<th>Packets Sent</th>
+<th>Packets Received</th>
+<th>% Success</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PC0</td>
+<td>192.168.1.20</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>PC0</td>
+<td>192.168.1.30</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<ol start="6">
+<li>Take a screenshot showing the successful ping output in the PC0 Command Prompt window.</li>
+</ol>
+<blockquote>
+<p><strong>Troubleshooting Note:</strong> If ping fails, verify that both PCs are using the same subnet mask (255.255.255.0) and that the last octet of each IP address is unique. Also confirm the switch port link lights are green.</p>
+</blockquote>
+<hr />
+<h3>Part 2: OSI Layer Observation Using Simulation Mode</h3>
+<p><strong>Objective:</strong> Use Packet Tracer Simulation Mode to inspect the PDU headers added at each OSI layer during a ping transmission.</p>
+<h4>Step 1: Switch to Simulation Mode</h4>
+<ol>
+<li>In the bottom right of the Packet Tracer window, locate the mode toggle. It reads "Realtime." Click it to switch to "Simulation."</li>
+<li>In the Simulation Panel on the right, ensure ICMP is checked in the Event List Filters. If no filters are shown, click "Show All/None" and then check only ICMP.</li>
+</ol>
+<h4>Step 2: Generate a Ping in Simulation Mode</h4>
+<ol>
+<li>Click on PC0 and open the Command Prompt (Desktop tab).</li>
+<li>Type <code>ping 192.168.1.20</code> and press Enter.</li>
+<li>Switch focus back to the main Packet Tracer workspace. You will see a small ICMP packet icon appear near PC0, waiting for you to step through the simulation.</li>
+</ol>
+<h4>Step 3: Step Through the Simulation</h4>
+<ol>
+<li>Click the Play button once in the Simulation Panel to advance one step.</li>
+<li>Click the envelope icon (PDU) that appears on the topology diagram. A PDU Information window opens.</li>
+<li>In the PDU Information window, click the Outbound PDU Details tab.</li>
+<li>Answer the following questions in your lab report:</li>
+</ol>
+<p><strong>Simulation Observation Questions:</strong></p>
+<p><strong>Question A:</strong> In the Outbound PDU Details, find the Ethernet II frame header. What is the value of the Destination MAC Address field for the first ping from PC0? (Hint: it may initially show as a broadcast FF:FF:FF:FF:FF:FF for ARP.)</p>
+<p><strong>Question B:</strong> Find the IP header section. What are the Source IP and Destination IP address values in this packet? Which OSI layer corresponds to these fields?</p>
+<p><strong>Question C:</strong> Find the ICMP section. What type value is shown? (Type 8 = Echo Request, Type 0 = Echo Reply.) Which OSI layer does ICMP operate at?</p>
+<p><strong>Question D:</strong> Based on your observations, list the headers present in the PDU from outermost to innermost (Layer 2 to Layer 7 application). This demonstrates encapsulation.</p>
+<h4>Step 4: Observe the Return Path</h4>
+<ol>
+<li>Continue stepping through the simulation using the Play (one step) button.</li>
+<li>Observe the packet traveling from PC0 to the switch, then from the switch to PC1.</li>
+<li>When the packet arrives at PC1, observe that the destination MAC address now matches PC1's MAC address (the switch replaced the broadcast ARP response with a unicast address).</li>
+<li>Take a screenshot showing the PDU Information window with the IP header fields visible.</li>
+</ol>
+<hr />
+<h3>Deliverables</h3>
+<p>Submit the following to the Canvas assignment dropbox:</p>
+<p><strong>Deliverable 1 (20 points):</strong> A screenshot of the Packet Tracer workspace showing the completed star topology with green link lights on all three PCs.</p>
+<p><strong>Deliverable 2 (30 points):</strong> A screenshot showing successful ping output from PC0 to both PC1 and PC2 in the Command Prompt window.</p>
+<p><strong>Deliverable 3 (30 points):</strong> A screenshot of the PDU Information window in Simulation Mode showing the Outbound PDU Details with the Ethernet, IP, and ICMP layers visible.</p>
+<p><strong>Deliverable 4 (20 points):</strong> A typed summary (100–150 words) answering Simulation Observation Questions A through D. Submit this as a text entry in the Canvas assignment or as a separate Word/PDF document.</p>
+<hr />
+<h3>Grading Rubric</h3>
+<table>
+<thead>
+<tr>
+<th>Deliverable</th>
+<th>Points</th>
+<th>Full Credit Criteria</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Star topology screenshot</td>
+<td>20</td>
+<td>All 3 PCs and 1 switch visible, all link lights green, devices labeled</td>
+</tr>
+<tr>
+<td>Successful ping screenshot</td>
+<td>30</td>
+<td>Ping output shows 4/4 packets received for both target IPs</td>
+</tr>
+<tr>
+<td>PDU Information screenshot</td>
+<td>30</td>
+<td>Window clearly shows Ethernet, IP, and ICMP header fields</td>
+</tr>
+<tr>
+<td>Written summary</td>
+<td>20</td>
+<td>All 4 questions answered with accurate OSI layer references</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td><strong>100</strong></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>Common Issues and Fixes</h3>
+<p><strong>Issue:</strong> Ping shows "Request timed out."</p>
+<p><strong>Fix:</strong> Check IP addresses and subnet masks on all PCs. Ensure all are in the 192.168.1.0/24 range with mask 255.255.255.0. Confirm switch port link lights are green.</p>
+<p><strong>Issue:</strong> Simulation Mode shows no ICMP events.</p>
+<p><strong>Fix:</strong> In the Event List Filters, click "Edit Filters" and ensure ICMP is checked. Then re-run the ping.</p>
+<p><strong>Issue:</strong> PDU information window shows only Layer 1 and 2.</p>
+<p><strong>Fix:</strong> Ensure you click the envelope icon that appears after the ARP exchange completes. The first event may be ARP (Layer 2 only). Wait for the ICMP echo request event.</p>
+<hr />
+<p><em>CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash</em></p>
+</body>
+</html>

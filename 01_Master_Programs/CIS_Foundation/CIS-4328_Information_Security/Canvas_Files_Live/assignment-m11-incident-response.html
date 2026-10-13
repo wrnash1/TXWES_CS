@@ -1,0 +1,202 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Assignment: Lab (M11): Incident Response</title>
+</head>
+<body>
+<h2>Lab (M11): Incident Response</h2>
+<h1>Lab: Module 11 — Incident Response</h1>
+<h2>Course: CIS-4328 Information Security</h2>
+<p><strong>Certification Alignment:</strong> CompTIA Security+ (SY0-701)</p>
+<hr />
+<h2>Lab Overview</h2>
+<p><strong>Title:</strong> Tabletop Incident Response Exercise — Ransomware Scenario</p>
+<p><strong>Duration:</strong> Approximately 75 minutes</p>
+<p><strong>Environment:</strong> No special software required — this is a structured analytical exercise using the provided scenario</p>
+<p><strong>Skill Level:</strong> Intermediate — requires completion of Module 11 video lectures and Reading Guide</p>
+<hr />
+<h2>Objectives</h2>
+<p>Upon completing this lab, you will be able to:</p>
+<ol>
+<li>Apply the NIST SP 800-61 incident response lifecycle phases to a real-world scenario</li>
+<li>Identify appropriate containment, eradication, and recovery actions for a ransomware incident</li>
+<li>Apply the order of volatility to prioritize evidence collection decisions</li>
+<li>Construct a chain of custody entry for identified evidence</li>
+<li>Document a communications plan for internal and external stakeholders</li>
+<li>Produce an abbreviated post-incident lessons learned report</li>
+</ol>
+<hr />
+<h2>Background: What Is a Tabletop Exercise?</h2>
+<p>A tabletop exercise is a discussion-based simulation in which participants work through a hypothetical incident scenario, applying their knowledge of IR procedures without actually deploying technical tools. Tabletops are one of the primary preparation activities specified in NIST SP 800-61. They reveal gaps in plans, training, and team coordination before a real incident exposes them.</p>
+<p>In this lab, you are playing the role of the Incident Response Analyst responsible for leading the response. Work through each section, documenting your decisions and rationale.</p>
+<hr />
+<h2>Scenario: Ransomware at Meridian Financial Services</h2>
+<p><strong>Organization Background:</strong> Meridian Financial Services is a mid-sized regional bank with approximately 800 employees across 12 branch locations. They operate a hybrid environment: on-premises Active Directory, a core banking system on physical servers, and Microsoft 365 for email and collaboration. Their security team consists of three full-time security analysts and a CISO who reports to the CTO.</p>
+<p><strong>Monday, 7:14 AM:</strong> The branch manager at the downtown location calls the IT help desk. He reports that when he arrived this morning, every workstation displays a ransom note. The ransom note states that all files have been encrypted, demands 15 Bitcoin (~$450,000 at current price), and threatens to publish "sensitive customer financial records" on a dark web site in 72 hours if payment is not received.</p>
+<p><strong>7:22 AM:</strong> The help desk escalates to the security team. Analyst Jordan arrives and confirms that the ransom note is also visible on the file server in the downtown branch server room.</p>
+<p><strong>7:35 AM:</strong> Jordan runs a quick scan and finds three other branch locations are showing similar symptoms. The core banking system — located in the primary data center — appears to be operational, but Jordan cannot confirm for how long.</p>
+<hr />
+<h2>Part 1 — Detection and Analysis (15 minutes)</h2>
+<h3>Task 1.1 — Incident Triage</h3>
+<p>Based on the information provided:</p>
+<p><strong>1a.</strong> What evidence indicates this is a ransomware incident rather than a false alarm? List at least three observable indicators.</p>
+<p><strong>1b.</strong> Using NIST SP 800-61's incident prioritization criteria, assign an initial severity level to this incident. Your answer must address all three criteria: functional impact, information impact, and recoverability. Justify each choice.</p>
+<p><strong>1c.</strong> What additional information do you need to complete your analysis? List at least five specific questions you would want answered in the first 30 minutes, and for each question, identify where you would look for the answer.</p>
+<h3>Task 1.2 — Evidence Identification</h3>
+<p>The following systems and artifacts have been identified as potentially relevant to the investigation. Using the order of volatility, rank them from MOST volatile to LEAST volatile and explain why each item falls where it does in your ranking:</p>
+<ul>
+<li>Ransom note displayed on employee monitor</li>
+<li>RAM contents of an infected workstation that is still powered on</li>
+<li>Windows Event Logs on the file server (stored on disk)</li>
+<li>Active network connections from an infected workstation</li>
+<li>Backup tapes stored in the offsite facility</li>
+<li>The running process list on the infected file server</li>
+<li>A USB drive found near the server room door</li>
+</ul>
+<hr />
+<h2>Part 2 — Containment Decisions (15 minutes)</h2>
+<h3>Task 2.1 — Short-Term Containment</h3>
+<p>At 7:40 AM, you have confirmed ransomware on at least four branch locations. The core banking system is still operational.</p>
+<p><strong>2a.</strong> List your immediate containment actions in priority order. For each action, state:</p>
+<ul>
+<li>The specific action (e.g., "disconnect VLAN 10 from the core network at the main distribution switch")</li>
+<li>The rationale (why this action now)</li>
+<li>The potential risk or downside of this action</li>
+</ul>
+<p><strong>2b.</strong> The CTO calls at 7:45 AM and asks you to "shut everything down immediately including the core banking system to be safe." Evaluate this request. Should you comply? What risks does immediate shutdown of the core banking system create? What is your recommendation?</p>
+<h3>Task 2.2 — Evidence Preservation Before Containment</h3>
+<p>Before powering off any infected systems, identify what evidence you would capture. For each item:</p>
+<ul>
+<li>Name the evidence</li>
+<li>Describe how you would collect it</li>
+<li>State why it is important to collect before shutdown</li>
+</ul>
+<p>Your answer must address volatile memory, running process information, and network connections.</p>
+<h3>Task 2.3 — Chain of Custody Entry</h3>
+<p>You collect a forensic image of the hard drive from an infected workstation at the downtown branch. Complete the chain of custody entry below:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Your Entry</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Evidence ID</td>
+<td></td>
+</tr>
+<tr>
+<td>Description</td>
+<td></td>
+</tr>
+<tr>
+<td>Collection date/time</td>
+<td></td>
+</tr>
+<tr>
+<td>Collection location</td>
+<td></td>
+</tr>
+<tr>
+<td>Collected by (use your name)</td>
+<td></td>
+</tr>
+<tr>
+<td>MD5 hash (use this simulated value: <code>a3b8c1d7e2f4a9b0c5d6e7f8a1b2c3d4</code>)</td>
+<td></td>
+</tr>
+<tr>
+<td>SHA-256 hash (use this simulated value: <code>e3b0c44298fc1c149afbf4c8996fb924...</code>)</td>
+<td></td>
+</tr>
+<tr>
+<td>Transfer 1: transferred to</td>
+<td></td>
+</tr>
+<tr>
+<td>Transfer 1: date/time</td>
+<td></td>
+</tr>
+<tr>
+<td>Storage location</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>Part 3 — Communication Plan (15 minutes)</h2>
+<h3>Task 3.1 — Internal Communication</h3>
+<p><strong>3a.</strong> List all internal stakeholders who must be notified of this incident in the first two hours. For each stakeholder, state: their role, when they are notified, what information is shared, and what you need from them.</p>
+<p><strong>3b.</strong> The attackers claim they will publish customer financial records in 72 hours. An employee posts about the incident on their personal Twitter/X account: "major ransomware attack at work, bank systems down, hope customer data is safe!" How do you respond to this? What communication controls in the IR plan should have prevented this?</p>
+<h3>Task 3.2 — External Communication</h3>
+<p><strong>3c.</strong> As a bank, Meridian Financial Services is regulated by multiple agencies. Identify at least two regulatory bodies or legal requirements that may impose breach notification obligations in this scenario. For each, state the potential notification deadline and what must be disclosed.</p>
+<p><strong>3d.</strong> Draft a brief customer notification (three to five sentences) for the bank's website assuming you have confirmed that customer data has NOT been exfiltrated but branch banking systems are temporarily unavailable.</p>
+<hr />
+<h2>Part 4 — Eradication and Recovery (10 minutes)</h2>
+<h3>Task 4.1 — Eradication Steps</h3>
+<p>At 2:00 PM on Monday, the security team has identified the attack vector: a phishing email received by a branch employee on Friday afternoon. The employee clicked a malicious link that downloaded a dropper, which then spread laterally over the weekend using stolen administrator credentials.</p>
+<p>List your eradication steps in order. Address: removing malware, addressing the attack vector, handling compromised credentials, and closing the vulnerability that allowed lateral movement.</p>
+<h3>Task 4.2 — Recovery Prioritization</h3>
+<p>The following systems need to be restored. Rank them in order of restoration priority and explain your reasoning for each:</p>
+<ul>
+<li>Branch workstations (affected by ransomware)</li>
+<li>Branch file server (encrypted)</li>
+<li>Core banking system (currently operational but at risk)</li>
+<li>Email system</li>
+<li>ATM network (currently down due to containment network isolation)</li>
+<li>Customer-facing online banking portal</li>
+</ul>
+<hr />
+<h2>Part 5 — Post-Incident Lessons Learned (20 minutes)</h2>
+<h3>Task 5.1 — Lessons Learned Meeting Agenda</h3>
+<p>It is now two weeks after the incident. Draft an agenda for the lessons learned meeting. Include at least five agenda items, a timeframe for each, and the appropriate participants for each agenda item.</p>
+<h3>Task 5.2 — Root Cause Analysis</h3>
+<p>Using the "five whys" technique, document the root cause analysis for this incident. Start from the immediate cause (ransomware executed on an employee workstation) and drill down to the underlying organizational failure. Show at least five levels.</p>
+<h3>Task 5.3 — Incident Report Executive Summary</h3>
+<p>Write a one-page executive summary (approximately 300 words) of this incident suitable for presentation to the board of directors. It must be non-technical, include the business impact, and end with three specific recommendations.</p>
+<hr />
+<h2>Lab Report Submission Requirements</h2>
+<p>Submit a single document containing all completed tasks. Label each task clearly.</p>
+<p><strong>Format:</strong> PDF or Word document</p>
+<p><strong>Minimum length:</strong> 800 words excluding tables and lists</p>
+<hr />
+<h2>Grading Rubric</h2>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Points</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Part 1 — Triage and evidence ranking</td>
+<td>20</td>
+</tr>
+<tr>
+<td>Part 2 — Containment decisions, evidence preservation, chain of custody</td>
+<td>25</td>
+</tr>
+<tr>
+<td>Part 3 — Communication plan (internal and external)</td>
+<td>20</td>
+</tr>
+<tr>
+<td>Part 4 — Eradication and recovery prioritization</td>
+<td>15</td>
+</tr>
+<tr>
+<td>Part 5 — Lessons learned agenda, root cause, executive summary</td>
+<td>20</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td><strong>100</strong></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><em>Texas Wesleyan University | CIS-4328 Information Security | Module 11</em></p>
+</body>
+</html>

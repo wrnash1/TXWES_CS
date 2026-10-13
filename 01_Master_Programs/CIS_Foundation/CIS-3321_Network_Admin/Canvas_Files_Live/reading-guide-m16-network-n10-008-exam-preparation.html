@@ -1,0 +1,1316 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Reading Guide (M16): Network+ N10-009 Exam Preparation</title>
+</head>
+<body>
+<h2>Reading Guide (M16): Network+ N10-009 Exam Preparation</h2>
+<h1>Reading Guide: Module 16 — Network+ N10-009 Exam Preparation</h1>
+<h2>Course: CIS-3321 Network Administration</h2>
+<h2>Texas Wesleyan University | Professor Nash</h2>
+<h2>Certification Alignment: CompTIA Network+ (N10-009)</h2>
+<hr />
+<h2>Purpose</h2>
+<p>This reading guide consolidates key facts, tables, and reference material across all five N10-009 exam domains. Use it as your primary study reference during the final week before your exam. Highlight anything you cannot immediately recall and return to those items daily.</p>
+<hr />
+<h2>Domain 1: Networking Concepts (23%)</h2>
+<h3>OSI Model — Layer to Protocol Mapping</h3>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Name</th>
+<th>Protocols and Technologies</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>7</td>
+<td>Application</td>
+<td>HTTP, HTTPS, FTP, SFTP, SSH, DNS, DHCP, SMTP, SNMP, NTP, SIP, H.323, RDP</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Presentation</td>
+<td>SSL/TLS, JPEG, MPEG, ASCII — data formatting and encryption negotiation</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Session</td>
+<td>NetBIOS, RPC — session establishment and teardown</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Transport</td>
+<td>TCP (connection-oriented), UDP (connectionless)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Network</td>
+<td>IP (v4 and v6), ICMP, OSPF, EIGRP, BGP</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Data Link</td>
+<td>Ethernet (802.3), Wi-Fi (802.11), ARP, STP, 802.1Q VLANs</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Physical</td>
+<td>Ethernet physical, fiber, coaxial, DSL — the medium itself</td>
+</tr>
+</tbody>
+</table>
+<h3>TCP vs. UDP</h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>TCP</th>
+<th>UDP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Connection</td>
+<td>Connection-oriented (3-way handshake)</td>
+<td>Connectionless</td>
+</tr>
+<tr>
+<td>Reliability</td>
+<td>Guaranteed delivery, acknowledgments</td>
+<td>No guarantee</td>
+</tr>
+<tr>
+<td>Ordering</td>
+<td>Ordered delivery</td>
+<td>No ordering</td>
+</tr>
+<tr>
+<td>Speed</td>
+<td>Slower — overhead for reliability</td>
+<td>Faster — no overhead</td>
+</tr>
+<tr>
+<td>Use cases</td>
+<td>HTTP, FTP, SSH, SMTP, DNS (large)</td>
+<td>DNS (small), DHCP, VoIP, streaming</td>
+</tr>
+</tbody>
+</table>
+<h3>IPv4 Subnetting Reference</h3>
+<table>
+<thead>
+<tr>
+<th>CIDR</th>
+<th>Subnet Mask</th>
+<th>Usable Hosts</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/24</td>
+<td>255.255.255.0</td>
+<td>254</td>
+<td>Standard LAN subnet</td>
+</tr>
+<tr>
+<td>/25</td>
+<td>255.255.255.128</td>
+<td>126</td>
+<td>Splits /24 into 2</td>
+</tr>
+<tr>
+<td>/26</td>
+<td>255.255.255.192</td>
+<td>62</td>
+<td>Splits /24 into 4</td>
+</tr>
+<tr>
+<td>/27</td>
+<td>255.255.255.224</td>
+<td>30</td>
+<td>Splits /24 into 8</td>
+</tr>
+<tr>
+<td>/28</td>
+<td>255.255.255.240</td>
+<td>14</td>
+<td>Small department subnet</td>
+</tr>
+<tr>
+<td>/29</td>
+<td>255.255.255.248</td>
+<td>6</td>
+<td>Very small subnet</td>
+</tr>
+<tr>
+<td>/30</td>
+<td>255.255.255.252</td>
+<td>2</td>
+<td>Point-to-point links</td>
+</tr>
+</tbody>
+</table>
+<p>Formula: usable hosts = 2^(32 - prefix) - 2</p>
+<h3>Special IPv4 Addresses</h3>
+<table>
+<thead>
+<tr>
+<th>Range</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10.0.0.0/8</td>
+<td>RFC 1918 private</td>
+</tr>
+<tr>
+<td>172.16.0.0/12</td>
+<td>RFC 1918 private</td>
+</tr>
+<tr>
+<td>192.168.0.0/16</td>
+<td>RFC 1918 private</td>
+</tr>
+<tr>
+<td>169.254.0.0/16</td>
+<td>APIPA — DHCP failure</td>
+</tr>
+<tr>
+<td>127.0.0.0/8</td>
+<td>Loopback (127.0.0.1 standard)</td>
+</tr>
+</tbody>
+</table>
+<h3>IPv6 Address Types</h3>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Prefix</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Global unicast</td>
+<td>2000::/3</td>
+<td>Publicly routable — equivalent to public IPv4</td>
+</tr>
+<tr>
+<td>Link-local</td>
+<td>fe80::/10</td>
+<td>Non-routable — auto-assigned on each interface</td>
+</tr>
+<tr>
+<td>Loopback</td>
+<td>::1/128</td>
+<td>Equivalent to 127.0.0.1</td>
+</tr>
+<tr>
+<td>Unspecified</td>
+<td>::/128</td>
+<td>Source address during DAD</td>
+</tr>
+<tr>
+<td>Multicast</td>
+<td>ff00::/8</td>
+<td>Replaces broadcast in IPv6</td>
+</tr>
+</tbody>
+</table>
+<h3>Well-Known Port Numbers</h3>
+<table>
+<thead>
+<tr>
+<th>Port</th>
+<th>Protocol</th>
+<th>Service</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>20</td>
+<td>TCP</td>
+<td>FTP Data</td>
+</tr>
+<tr>
+<td>21</td>
+<td>TCP</td>
+<td>FTP Control</td>
+</tr>
+<tr>
+<td>22</td>
+<td>TCP</td>
+<td>SSH, SFTP, SCP</td>
+</tr>
+<tr>
+<td>23</td>
+<td>TCP</td>
+<td>Telnet</td>
+</tr>
+<tr>
+<td>25</td>
+<td>TCP</td>
+<td>SMTP</td>
+</tr>
+<tr>
+<td>53</td>
+<td>TCP/UDP</td>
+<td>DNS</td>
+</tr>
+<tr>
+<td>67/68</td>
+<td>UDP</td>
+<td>DHCP (server/client)</td>
+</tr>
+<tr>
+<td>69</td>
+<td>UDP</td>
+<td>TFTP</td>
+</tr>
+<tr>
+<td>80</td>
+<td>TCP</td>
+<td>HTTP</td>
+</tr>
+<tr>
+<td>110</td>
+<td>TCP</td>
+<td>POP3</td>
+</tr>
+<tr>
+<td>119</td>
+<td>TCP</td>
+<td>NNTP</td>
+</tr>
+<tr>
+<td>123</td>
+<td>UDP</td>
+<td>NTP</td>
+</tr>
+<tr>
+<td>143</td>
+<td>TCP</td>
+<td>IMAP</td>
+</tr>
+<tr>
+<td>161/162</td>
+<td>UDP</td>
+<td>SNMP (queries/traps)</td>
+</tr>
+<tr>
+<td>389</td>
+<td>TCP/UDP</td>
+<td>LDAP</td>
+</tr>
+<tr>
+<td>443</td>
+<td>TCP</td>
+<td>HTTPS</td>
+</tr>
+<tr>
+<td>445</td>
+<td>TCP</td>
+<td>SMB</td>
+</tr>
+<tr>
+<td>465/587</td>
+<td>TCP</td>
+<td>SMTPS / SMTP Submission</td>
+</tr>
+<tr>
+<td>514</td>
+<td>UDP</td>
+<td>Syslog</td>
+</tr>
+<tr>
+<td>636</td>
+<td>TCP</td>
+<td>LDAPS</td>
+</tr>
+<tr>
+<td>993</td>
+<td>TCP</td>
+<td>IMAPS</td>
+</tr>
+<tr>
+<td>995</td>
+<td>TCP</td>
+<td>POP3S</td>
+</tr>
+<tr>
+<td>1433</td>
+<td>TCP</td>
+<td>MS SQL Server</td>
+</tr>
+<tr>
+<td>1521</td>
+<td>TCP</td>
+<td>Oracle Database</td>
+</tr>
+<tr>
+<td>3306</td>
+<td>TCP</td>
+<td>MySQL</td>
+</tr>
+<tr>
+<td>3389</td>
+<td>TCP</td>
+<td>RDP</td>
+</tr>
+<tr>
+<td>5060</td>
+<td>TCP/UDP</td>
+<td>SIP</td>
+</tr>
+<tr>
+<td>5061</td>
+<td>TCP</td>
+<td>SIP over TLS</td>
+</tr>
+</tbody>
+</table>
+<h3>Routing Protocols and Administrative Distance</h3>
+<table>
+<thead>
+<tr>
+<th>Route Source</th>
+<th>Administrative Distance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Connected interface</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Static route</td>
+<td>1</td>
+</tr>
+<tr>
+<td>EIGRP (internal)</td>
+<td>90</td>
+</tr>
+<tr>
+<td>OSPF</td>
+<td>110</td>
+</tr>
+<tr>
+<td>RIP</td>
+<td>120</td>
+</tr>
+<tr>
+<td>EIGRP (external)</td>
+<td>170</td>
+</tr>
+</tbody>
+</table>
+<p>Lower administrative distance = more trusted. When two routes to the same destination exist, the lower-AD route wins.</p>
+<h3>Routing Protocol Classifications</h3>
+<ul>
+<li>Static: manually configured, no overhead, no automatic failover</li>
+<li>Dynamic IGP (within AS): RIP (distance vector), OSPF (link state), EIGRP (hybrid)</li>
+<li>Dynamic EGP (between AS): BGP — the internet routing protocol</li>
+<li>Distance vector: routing by rumor — each router only knows what neighbors report</li>
+<li>Link state: each router builds a complete topology map via LSA flooding</li>
+</ul>
+<hr />
+<h2>Domain 2: Infrastructure (18%)</h2>
+<h3>Switching Concepts</h3>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Key Points</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MAC address table (CAM)</td>
+<td>Maps MAC address to port. Entries age out at 300 seconds (Cisco default).</td>
+</tr>
+<tr>
+<td>Unicast forwarding</td>
+<td>Frame sent only to the port where destination MAC was learned.</td>
+</tr>
+<tr>
+<td>Flooding</td>
+<td>Used when destination MAC is unknown or destination is broadcast (FF:FF:FF:FF:FF:FF).</td>
+</tr>
+<tr>
+<td>VLAN</td>
+<td>Logical Layer 2 segmentation. Each VLAN is a separate broadcast domain.</td>
+</tr>
+<tr>
+<td>802.1Q trunk</td>
+<td>Carries multiple VLANs on one link. Tags frames with 4-byte header containing 12-bit VLAN ID.</td>
+</tr>
+<tr>
+<td>Native VLAN</td>
+<td>Untagged VLAN on a trunk. Default is VLAN 1. Best practice: change to unused VLAN ID.</td>
+</tr>
+<tr>
+<td>STP (802.1D)</td>
+<td>Prevents Layer 2 loops by blocking redundant paths. Convergence time: up to 50 seconds.</td>
+</tr>
+<tr>
+<td>RSTP (802.1w)</td>
+<td>Rapid STP — sub-second convergence via direct negotiation. Replaces 802.1D.</td>
+</tr>
+<tr>
+<td>PortFast</td>
+<td>Bypasses STP listening/learning on access ports. For end devices only.</td>
+</tr>
+<tr>
+<td>BPDU Guard</td>
+<td>Err-disables a PortFast port if a BPDU is received. Protects against rogue switches.</td>
+</tr>
+<tr>
+<td>EtherChannel</td>
+<td>Bundles 2–8 physical links into one logical link. STP sees one link. LACP (802.3ad) or PAgP.</td>
+</tr>
+</tbody>
+</table>
+<h3>STP Port States (802.1D)</h3>
+<table>
+<thead>
+<tr>
+<th>State</th>
+<th>Forwards Frames</th>
+<th>Learns MACs</th>
+<th>Duration</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Blocking</td>
+<td>No</td>
+<td>No</td>
+<td>Up to 20 seconds (Max Age)</td>
+</tr>
+<tr>
+<td>Listening</td>
+<td>No</td>
+<td>No</td>
+<td>15 seconds (Forward Delay)</td>
+</tr>
+<tr>
+<td>Learning</td>
+<td>No</td>
+<td>Yes</td>
+<td>15 seconds (Forward Delay)</td>
+</tr>
+<tr>
+<td>Forwarding</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Indefinite</td>
+</tr>
+</tbody>
+</table>
+<h3>Wireless Standards</h3>
+<table>
+<thead>
+<tr>
+<th>Standard</th>
+<th>Band</th>
+<th>Max Speed</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>802.11a</td>
+<td>5 GHz</td>
+<td>54 Mbps</td>
+<td>Legacy; less 2.4 GHz interference</td>
+</tr>
+<tr>
+<td>802.11b</td>
+<td>2.4 GHz</td>
+<td>11 Mbps</td>
+<td>Legacy; widely adopted</td>
+</tr>
+<tr>
+<td>802.11g</td>
+<td>2.4 GHz</td>
+<td>54 Mbps</td>
+<td>Backward compatible with b</td>
+</tr>
+<tr>
+<td>802.11n</td>
+<td>2.4/5 GHz</td>
+<td>600 Mbps</td>
+<td>MIMO; dual-band</td>
+</tr>
+<tr>
+<td>802.11ac</td>
+<td>5 GHz</td>
+<td>3.5 Gbps</td>
+<td>MU-MIMO; beamforming; Wave 2</td>
+</tr>
+<tr>
+<td>802.11ax</td>
+<td>2.4/5/6 GHz</td>
+<td>9.6 Gbps</td>
+<td>Wi-Fi 6; OFDMA; high-density environments</td>
+</tr>
+</tbody>
+</table>
+<p>Non-overlapping 2.4 GHz channels (North America): 1, 6, 11. 5 GHz has many more non-overlapping channels.</p>
+<h3>WAN Technologies</h3>
+<table>
+<thead>
+<tr>
+<th>Technology</th>
+<th>Speed</th>
+<th>Key Characteristics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T1</td>
+<td>1.544 Mbps</td>
+<td>Legacy leased line; 24 DS0 channels</td>
+</tr>
+<tr>
+<td>T3</td>
+<td>44.736 Mbps</td>
+<td>Legacy leased line; 28 T1s</td>
+</tr>
+<tr>
+<td>MPLS</td>
+<td>Varies</td>
+<td>Label-switched; any-to-any VPN; traffic engineering; carrier-managed</td>
+</tr>
+<tr>
+<td>SD-WAN</td>
+<td>Varies</td>
+<td>App-aware routing; multiple transports; ZTP; policy-based path selection</td>
+</tr>
+<tr>
+<td>Metro E-Line</td>
+<td>Varies</td>
+<td>Point-to-point Ethernet service</td>
+</tr>
+<tr>
+<td>Metro E-LAN</td>
+<td>Varies</td>
+<td>Multipoint-to-multipoint Ethernet service</td>
+</tr>
+<tr>
+<td>DSL (ADSL)</td>
+<td>Asymmetric</td>
+<td>Copper local loop; higher download than upload</td>
+</tr>
+<tr>
+<td>Cable (DOCSIS)</td>
+<td>Up to 10 Gbps</td>
+<td>Shared coaxial medium; DOCSIS 3.1</td>
+</tr>
+<tr>
+<td>GEO Satellite</td>
+<td>Varies</td>
+<td>35,000 km altitude; 600+ ms latency; not for real-time</td>
+</tr>
+<tr>
+<td>LEO Satellite</td>
+<td>Varies</td>
+<td>~550 km altitude; 20–40 ms latency; viable for remote sites</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>Domain 3: Network Operations (17%)</h2>
+<h3>Network Monitoring Protocols</h3>
+<table>
+<thead>
+<tr>
+<th>Protocol</th>
+<th>Port</th>
+<th>Purpose</th>
+<th>Key Details</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SNMP</td>
+<td>UDP 161/162</td>
+<td>Device monitoring and management</td>
+<td>161 = queries; 162 = traps. SNMPv3 adds authentication and encryption.</td>
+</tr>
+<tr>
+<td>Syslog</td>
+<td>UDP 514</td>
+<td>Log collection from network devices</td>
+<td>Severity levels 0–7 (0=Emergency, 7=Debug)</td>
+</tr>
+<tr>
+<td>NetFlow/IPFIX</td>
+<td>Varies</td>
+<td>Traffic flow statistics</td>
+<td>Source/dest IP, port, protocol, byte count. Used for bandwidth analysis.</td>
+</tr>
+<tr>
+<td>NTP</td>
+<td>UDP 123</td>
+<td>Clock synchronization</td>
+<td>Stratum 0 = atomic clock; Stratum 1 = primary server; Stratum 2 = secondary.</td>
+</tr>
+</tbody>
+</table>
+<h3>Syslog Severity Levels</h3>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Name</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Emergency</td>
+<td>System unusable</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Alert</td>
+<td>Immediate action required</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Critical</td>
+<td>Critical condition</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Error</td>
+<td>Error condition</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Warning</td>
+<td>Warning condition</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Notice</td>
+<td>Normal but significant</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Informational</td>
+<td>Informational messages</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Debug</td>
+<td>Debug-level messages</td>
+</tr>
+</tbody>
+</table>
+<h3>Documentation Types</h3>
+<table>
+<thead>
+<tr>
+<th>Document</th>
+<th>Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Logical diagram</td>
+<td>IP addressing, subnets, VLANs, routing, Layer 3 topology</td>
+</tr>
+<tr>
+<td>Physical diagram</td>
+<td>Device locations, port connections, cable paths, rack layouts</td>
+</tr>
+<tr>
+<td>IPAM</td>
+<td>IP address assignments, subnet allocations, DHCP ranges, DNS mappings</td>
+</tr>
+<tr>
+<td>Change request</td>
+<td>Description, risk assessment, rollback plan, maintenance window, approvals</td>
+</tr>
+<tr>
+<td>Baseline</td>
+<td>Normal performance metrics used to identify deviations</td>
+</tr>
+</tbody>
+</table>
+<h3>Change Management Types</h3>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+<th>Approval</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Standard</td>
+<td>Pre-approved, routine, low-risk</td>
+<td>Pre-approved — no CAB review needed</td>
+</tr>
+<tr>
+<td>Normal</td>
+<td>Non-urgent change to production</td>
+<td>CAB review required</td>
+</tr>
+<tr>
+<td>Emergency</td>
+<td>Critical fix for outage or security incident</td>
+<td>Expedited approval; documented after</td>
+</tr>
+</tbody>
+</table>
+<h3>SLA Metrics</h3>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Availability</td>
+<td>Percentage of time a service is operational. 99.9% = 8.7 hours downtime/year.</td>
+</tr>
+<tr>
+<td>MTBF</td>
+<td>Mean Time Between Failures — average operating time between failures.</td>
+</tr>
+<tr>
+<td>MTTR</td>
+<td>Mean Time To Repair — average time to restore after a failure.</td>
+</tr>
+<tr>
+<td>RTO</td>
+<td>Recovery Time Objective — maximum acceptable time to restore after a disaster.</td>
+</tr>
+<tr>
+<td>RPO</td>
+<td>Recovery Point Objective — maximum acceptable data loss measured in time.</td>
+</tr>
+</tbody>
+</table>
+<h3>Availability Reference</h3>
+<table>
+<thead>
+<tr>
+<th>Availability</th>
+<th>Annual Downtime</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>99%</td>
+<td>87.6 hours</td>
+</tr>
+<tr>
+<td>99.9%</td>
+<td>8.76 hours</td>
+</tr>
+<tr>
+<td>99.99% (four nines)</td>
+<td>52.6 minutes</td>
+</tr>
+<tr>
+<td>99.999% (five nines)</td>
+<td>5.26 minutes</td>
+</tr>
+</tbody>
+</table>
+<h3>High Availability Concepts</h3>
+<ul>
+<li>Redundancy: duplicate components eliminate single points of failure</li>
+<li>Load balancing: distributes traffic across multiple servers or links</li>
+<li>NIC teaming: multiple physical NICs aggregated into one logical interface</li>
+<li>Clustering: multiple servers providing the same service with failover</li>
+<li>Hot standby: instant failover, no data loss; Warm standby: some delay; Cold standby: manual restore</li>
+</ul>
+<hr />
+<h2>Domain 4: Network Security (20%)</h2>
+<h3>Common Network Attacks</h3>
+<table>
+<thead>
+<tr>
+<th>Attack</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DoS/DDoS</td>
+<td>Overwhelms a target to prevent legitimate use. DDoS uses multiple sources.</td>
+</tr>
+<tr>
+<td>Man-in-the-Middle</td>
+<td>Attacker intercepts communication between two parties.</td>
+</tr>
+<tr>
+<td>ARP Poisoning</td>
+<td>Fraudulent ARP replies associate attacker MAC with legitimate IP — redirects traffic.</td>
+</tr>
+<tr>
+<td>DNS Poisoning</td>
+<td>Corrupts DNS cache with fraudulent records — redirects users to attacker servers.</td>
+</tr>
+<tr>
+<td>VLAN Hopping</td>
+<td>Gains access to unauthorized VLANs via DTP trunk negotiation or double-tagging.</td>
+</tr>
+<tr>
+<td>IP/MAC Spoofing</td>
+<td>Forges source IP, MAC, or identity fields in packets.</td>
+</tr>
+<tr>
+<td>Replay Attack</td>
+<td>Captures and retransmits a previously valid packet.</td>
+</tr>
+<tr>
+<td>Deauthentication</td>
+<td>Wi-Fi attack sending forged deauth frames — disconnects clients, captures handshake for cracking.</td>
+</tr>
+</tbody>
+</table>
+<h3>Firewall Types</h3>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Layer</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Packet filter</td>
+<td>3/4</td>
+<td>Stateless rules based on IP, port, protocol</td>
+</tr>
+<tr>
+<td>Stateful inspection</td>
+<td>4</td>
+<td>Tracks connection state — allows return traffic automatically</td>
+</tr>
+<tr>
+<td>NGFW (Application-aware)</td>
+<td>7</td>
+<td>Deep packet inspection — identifies apps regardless of port</td>
+</tr>
+<tr>
+<td>WAF</td>
+<td>7</td>
+<td>Protects web applications from SQL injection, XSS, HTTP-layer attacks</td>
+</tr>
+</tbody>
+</table>
+<p>Network zones (outside to inside): Internet → DMZ → Internal. DMZ hosts public-facing servers.</p>
+<h3>VPN Types</h3>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Protocol</th>
+<th>Key Details</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IPsec Transport</td>
+<td>Layer 3</td>
+<td>Encrypts payload only; original IP header intact</td>
+</tr>
+<tr>
+<td>IPsec Tunnel</td>
+<td>Layer 3</td>
+<td>Encrypts entire original packet; new IP header added</td>
+</tr>
+<tr>
+<td>SSL/TLS VPN</td>
+<td>SSL/TLS</td>
+<td>Port 443; clientless or full-tunnel; traverses most firewalls</td>
+</tr>
+<tr>
+<td>Split tunneling</td>
+<td>N/A</td>
+<td>Only corporate traffic goes through VPN; internet traffic bypasses</td>
+</tr>
+</tbody>
+</table>
+<p>IPsec protocols: AH (authentication only) and ESP (authentication + encryption). ESP preferred.</p>
+<h3>Authentication Protocols</h3>
+<table>
+<thead>
+<tr>
+<th>Protocol</th>
+<th>Transport</th>
+<th>Port</th>
+<th>Key Details</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RADIUS</td>
+<td>UDP</td>
+<td>1812/1813</td>
+<td>Network access AAA. Encrypts only the password.</td>
+</tr>
+<tr>
+<td>TACACS+</td>
+<td>TCP</td>
+<td>49</td>
+<td>Cisco-preferred for device administration. Encrypts entire payload.</td>
+</tr>
+<tr>
+<td>802.1X</td>
+<td>N/A</td>
+<td>N/A</td>
+<td>Port-based NAC. Supplicant → Authenticator → RADIUS server. Uses EAP.</td>
+</tr>
+<tr>
+<td>LDAP</td>
+<td>TCP/UDP</td>
+<td>389</td>
+<td>Directory service queries. LDAPS (encrypted) = port 636.</td>
+</tr>
+</tbody>
+</table>
+<h3>Wireless Security Standards</h3>
+<table>
+<thead>
+<tr>
+<th>Standard</th>
+<th>Encryption</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>WEP</td>
+<td>RC4 (broken)</td>
+<td>Never use</td>
+</tr>
+<tr>
+<td>WPA/TKIP</td>
+<td>TKIP (flawed)</td>
+<td>Do not use for new deployments</td>
+</tr>
+<tr>
+<td>WPA2/AES-CCMP</td>
+<td>AES-CCMP</td>
+<td>Current enterprise minimum standard</td>
+</tr>
+<tr>
+<td>WPA3/SAE</td>
+<td>SAE</td>
+<td>Resistant to offline dictionary attacks; required for Wi-Fi 6 certification</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>Domain 5: Network Troubleshooting (22%)</h2>
+<h3>CompTIA Seven-Step Troubleshooting Model</h3>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Identify the problem — gather information, observe symptoms, define scope</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Establish a theory of probable cause — apply OSI model, generate hypotheses</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Test the theory — confirm or disprove with minimal targeted action</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Establish a plan of action — plan the fix with a rollback strategy</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Implement the solution or escalate — apply fix; escalate if beyond expertise</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Verify full system functionality — confirm the problem is resolved end-to-end</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Document findings, actions, and outcomes — close the change record</td>
+</tr>
+</tbody>
+</table>
+<p>Never skip Step 7. The exam tests the order and purpose of every step.</p>
+<h3>OSI Troubleshooting — Layer to Symptom Mapping</h3>
+<table>
+<thead>
+<tr>
+<th>OSI Layer</th>
+<th>Symptoms</th>
+<th>Tools/Commands</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 Physical</td>
+<td>No link light, cable faults, attenuation</td>
+<td>Cable tester, TDR, optical power meter, VFL</td>
+</tr>
+<tr>
+<td>2 Data Link</td>
+<td>Wrong VLAN, trunk issues, duplex mismatch, STP issues</td>
+<td>show vlan, show interfaces trunk, show spanning-tree</td>
+</tr>
+<tr>
+<td>3 Network</td>
+<td>Wrong IP, no route, APIPA address, wrong gateway</td>
+<td>ping, traceroute, ipconfig, route print</td>
+</tr>
+<tr>
+<td>4 Transport</td>
+<td>Port blocked, firewall drop, connection refused</td>
+<td>netstat -an, telnet to port</td>
+</tr>
+<tr>
+<td>7 Application</td>
+<td>DNS failure, service error, SSL certificate</td>
+<td>nslookup, dig, browser error messages</td>
+</tr>
+</tbody>
+</table>
+<h3>Diagnostic Commands</h3>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Command</th>
+<th>What to Look For</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Wrong IP configuration</td>
+<td><code>ipconfig /all</code></td>
+<td>169.254.x.x, wrong subnet, wrong gateway</td>
+</tr>
+<tr>
+<td>Host unreachable</td>
+<td><code>ping</code></td>
+<td>TTL exceeded, Destination Unreachable, Request Timeout</td>
+</tr>
+<tr>
+<td>Routing problem</td>
+<td><code>traceroute</code> / <code>tracert</code></td>
+<td>Where the path fails or shows high latency</td>
+</tr>
+<tr>
+<td>DNS failure</td>
+<td><code>nslookup</code> / <code>dig</code></td>
+<td>No answer, SERVFAIL, wrong server responding</td>
+</tr>
+<tr>
+<td>Port blocked</td>
+<td><code>netstat -an</code></td>
+<td>Expected port not in LISTENING state</td>
+</tr>
+<tr>
+<td>ARP problem</td>
+<td><code>arp -a</code></td>
+<td>Missing or incomplete ARP entry</td>
+</tr>
+<tr>
+<td>Bandwidth problem</td>
+<td><code>iperf</code> / speedtest</td>
+<td>Actual vs. expected throughput</td>
+</tr>
+</tbody>
+</table>
+<h3>Common Symptom Patterns</h3>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Likely Cause</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>No link light</td>
+<td>Physical layer failure (cable, NIC, port)</td>
+</tr>
+<tr>
+<td>Slow speed + late collisions</td>
+<td>Duplex mismatch</td>
+</tr>
+<tr>
+<td>169.254.x.x address</td>
+<td>DHCP failure (APIPA assigned)</td>
+</tr>
+<tr>
+<td>Can ping by IP, not by name</td>
+<td>DNS failure</td>
+</tr>
+<tr>
+<td>All apps work except one</td>
+<td>Firewall or port blocking</td>
+</tr>
+<tr>
+<td>Intermittent drops on 2.4 GHz Wi-Fi</td>
+<td>Channel interference</td>
+</tr>
+<tr>
+<td>Authentication failure on Wi-Fi</td>
+<td>Wrong PSK, expired certificate, RADIUS unavailable</td>
+</tr>
+</tbody>
+</table>
+<h3>Cable Faults</h3>
+<table>
+<thead>
+<tr>
+<th>Fault</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Open circuit</td>
+<td>Break in conductor — no continuity</td>
+</tr>
+<tr>
+<td>Short circuit</td>
+<td>Two conductors touching — unintended path</td>
+</tr>
+<tr>
+<td>Crosstalk</td>
+<td>Signal from one pair induces interference in adjacent pair</td>
+</tr>
+<tr>
+<td>Split pair</td>
+<td>Wires from different pairs twisted together — passes continuity, fails data</td>
+</tr>
+<tr>
+<td>Reversed pair</td>
+<td>Both wires in a pair swapped end-to-end</td>
+</tr>
+<tr>
+<td>Attenuation</td>
+<td>Signal loss over distance — exceeds cable specifications</td>
+</tr>
+</tbody>
+</table>
+<h3>Cable Testing Tools</h3>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Tests For</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Basic cable tester</td>
+<td>Continuity only — opens, shorts, reversed pairs</td>
+</tr>
+<tr>
+<td>Cable certifier</td>
+<td>Full performance test including TDR, attenuation, crosstalk, length</td>
+</tr>
+<tr>
+<td>Tone generator and probe</td>
+<td>Traces cable path without labeling</td>
+</tr>
+<tr>
+<td>Optical power meter</td>
+<td>Measures fiber signal strength — identifies attenuation</td>
+</tr>
+<tr>
+<td>Visual fault locator (VFL)</td>
+<td>Red laser for fiber — identifies breaks and bends visually</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>Memorization Priority List</h2>
+<p>If study time is limited, master these in order:</p>
+<ol>
+<li>Port numbers — the full table above</li>
+<li>Subnetting — /24 through /30 host counts from memory</li>
+<li>OSI layer to protocol mapping</li>
+<li>STP port states and convergence times (802.1D vs RSTP)</li>
+<li>VPN types — IPsec modes (Transport vs Tunnel), SSL VPN, split tunneling</li>
+<li>Wireless standards — speeds, bands, and security (WPA2/WPA3)</li>
+<li>SNMP — ports 161/162, SNMPv3 for security, traps vs. polling</li>
+<li>CompTIA seven-step troubleshooting model — order and purpose of each step</li>
+<li>Administrative distance values — Connected 0, Static 1, EIGRP 90, OSPF 110, RIP 120</li>
+<li>Authentication protocols — RADIUS vs TACACS+, 802.1X components</li>
+</ol>
+<hr />
+<h2>Exam Format Reference</h2>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Questions</td>
+<td>Up to 90 (multiple choice + performance-based)</td>
+</tr>
+<tr>
+<td>Time</td>
+<td>90 minutes</td>
+</tr>
+<tr>
+<td>Passing score</td>
+<td>720 out of 900</td>
+</tr>
+<tr>
+<td>Domain 1</td>
+<td>Networking Concepts — 23%</td>
+</tr>
+<tr>
+<td>Domain 2</td>
+<td>Infrastructure — 18%</td>
+</tr>
+<tr>
+<td>Domain 3</td>
+<td>Network Operations — 17%</td>
+</tr>
+<tr>
+<td>Domain 4</td>
+<td>Network Security — 20%</td>
+</tr>
+<tr>
+<td>Domain 5</td>
+<td>Network Troubleshooting — 22%</td>
+</tr>
+</tbody>
+</table>
+<p>Performance-based questions (PBQs) appear at the beginning. Many candidates skip PBQs and return to them after completing multiple-choice questions.</p>
+<hr />
+<p>CIS-3321 Network Administration | Texas Wesleyan University | Professor Nash</p>
+</body>
+</html>
