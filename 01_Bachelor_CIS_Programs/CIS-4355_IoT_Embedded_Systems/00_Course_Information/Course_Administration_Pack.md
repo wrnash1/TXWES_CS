@@ -31,7 +31,7 @@ This course is designated **Zero Textbook Cost**. All required learning material
 ### Primary OER Resources
 
 *   **Primary Open Reference:** [OWASP IoT Security Project Guides & Embedded Systems Wiki](https://owasp.org/www-project-internet-of-things/) — the OWASP IoT Top 10 and associated guidance documents serve as the primary security framework reference throughout the course.
-*   **Primary Video Lecture Series:** [IoT Course & Embedded Systems Tutorials by freeCodeCamp](https://www.youtube.com/watch?v=h0J8f60LdB0) — a 7-hour open-access video course covering IoT hardware, protocols, cloud integration, and security concepts aligned with the course curriculum.
+*   **Primary Video Lecture Series:** [IoT Course & Embedded Systems Tutorials by freeCodeCamp](https://www.youtube.com/watch?v=eidD14dXW8s — a 7-hour open-access video course covering IoT hardware, protocols, cloud integration, and security concepts aligned with the course curriculum.
 *   **Supplementary Reference:** Vendor documentation for AWS IoT Core, Azure IoT Hub, TensorFlow Lite, and InfluxDB is freely accessible at their respective developer portals and is linked within individual module reading guides.
 
 ### Optional Hardware (Not Required)

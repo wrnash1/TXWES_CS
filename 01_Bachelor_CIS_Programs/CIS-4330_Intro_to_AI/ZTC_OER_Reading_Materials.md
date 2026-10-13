@@ -14,7 +14,7 @@ To help you study and prepare for your examinations, we recommend the following 
     *   *Study Guide:* Refer to this open resource for weekly reading assignments.
 
 2.  **Video Study Stream Lectures:**
-    *   [Microsoft Azure AI Fundamentals Complete Course](https://www.youtube.com/watch?v=s0H3G50vGgU)
+    *   [Microsoft Azure AI Fundamentals Complete Course](https://www.youtube.com/playlist?list=PLhQjrBD2T382Nz7z1AEXmioc27axa19Kv
     *   *Study Guide:* Follow this playlist for weekly video lectures.
 
 3.  **Official Vendor Documentation:**

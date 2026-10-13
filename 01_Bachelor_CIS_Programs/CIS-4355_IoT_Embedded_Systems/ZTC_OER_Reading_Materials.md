@@ -14,7 +14,7 @@ To help you study and prepare for your examinations, we recommend the following 
     *   *Study Guide:* Refer to this open resource for weekly reading assignments.
 
 2.  **Video Study Stream Lectures:**
-    *   [IoT Course & Embedded Systems Tutorials by freeCodeCamp](https://www.youtube.com/watch?v=h0J8f60LdB0)
+    *   [IoT Course & Embedded Systems Tutorials by freeCodeCamp](https://www.youtube.com/watch?v=eidD14dXW8s
     *   *Study Guide:* Follow this playlist for weekly video lectures.
 
 3.  **Official Vendor Documentation:**

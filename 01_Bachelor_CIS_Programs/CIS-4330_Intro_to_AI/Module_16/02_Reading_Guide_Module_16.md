@@ -8,10 +8,10 @@
       <span style="background: #d9a74a; color: #0f172a; font-weight: 800; font-size: 11px; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Vendor Video Lecture</span>
       <strong style="margin-left: 10px; font-size: 14px;">Microsoft Learn / Stanford Online &bull; CIS-4330 Module 16</strong>
     </div>
-    <a href="https://www.youtube.com/watch?v=s0H3G50vGgU" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
+    <a href="https://www.youtube.com/playlist?list=PLhQjrBD2T382Nz7z1AEXmioc27axa19Kv" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
   </div>
   <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #0f172a;">
-    <iframe src="https://www.youtube.com/embed/s0H3G50vGgU" title="Artificial Intelligence Foundations & Machine Learning Principles" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    <iframe src="https://www.youtube.com/embed/videoseries?list=PLhQjrBD2T382Nz7z1AEXmioc27axa19Kv" title="Artificial Intelligence Foundations & Machine Learning Principles" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
   </div>
   <div style="padding: 12px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 13px; color: #475569;">
     <strong>Recommended Viewing:</strong> <em>Artificial Intelligence Foundations & Machine Learning Principles</em>. This vendor-aligned lecture stream reinforces this module's theoretical principles, certification blueprints, and hands-on laboratory benchmarks.
@@ -50,7 +50,7 @@ Review these essential definitions carefully. The certification exam expects you
 ### Required Readings & Videos
 To prepare for this module's topics, you must complete the following readings and videos:
 *   **Required Reading:** Review the full table of contents and chapter summaries of the OER Textbook: [Artificial Intelligence: Foundations of Computational Agents](http://artint.info/). Focus your review on the sections most directly mapped to AI-900: supervised learning (Modules 2–3), neural networks (Module 4), NLP (Modules 5 and 10), computer vision (Modules 6 and 9), Responsible AI (Module 10), and generative AI (Module 11). This freely available textbook by Poole and Mackworth provides the theoretical grounding behind every Azure AI service on the exam.
-*   **Required Video:** Watch the full AI-900 exam review and certification prep segment of the official preparation playlist: [Microsoft Azure AI Fundamentals Complete Course](https://www.youtube.com/watch?v=s0H3G50vGgU). This video includes a comprehensive final review of all five AI-900 exam domains with sample questions, common pitfalls, and last-minute exam strategy — the most efficient use of your final study hours before sitting the certification exam.
+*   **Required Video:** Watch the full AI-900 exam review and certification prep segment of the official preparation playlist: [Microsoft Azure AI Fundamentals Complete Course](https://www.youtube.com/playlist?list=PLhQjrBD2T382Nz7z1AEXmioc27axa19Kv This video includes a comprehensive final review of all five AI-900 exam domains with sample questions, common pitfalls, and last-minute exam strategy — the most efficient use of your final study hours before sitting the certification exam.
 
 ---
 
@@ -65,7 +65,7 @@ In this module's final lab activity, you will consolidate and demonstrate master
 ### 3. Study Checklist
 *   [ ] Read the glossary terms and review all definitions from Modules 1–15.
 *   [ ] Complete the final chapters review in [Artificial Intelligence: Foundations of Computational Agents](http://artint.info/).
-*   [ ] Watch the full AI-900 exam review video in [Microsoft Azure AI Fundamentals Complete Course](https://www.youtube.com/watch?v=s0H3G50vGgU).
+*   [ ] Watch the full AI-900 exam review video in [Microsoft Azure AI Fundamentals Complete Course](https://www.youtube.com/playlist?list=PLhQjrBD2T382Nz7z1AEXmioc27axa19Kv
 *   [ ] Complete the Microsoft Learn [AI-900 Practice Assessment](https://learn.microsoft.com/en-us/certifications/exams/ai-900/practice/assessment?assessmentId=26&assessment-type=practice).
 *   [ ] Register for your AI-900 exam at [Microsoft Learn Certifications](https://learn.microsoft.com/en-us/certifications/exams/ai-900/).
 *   [ ] Proceed to the final course exam activity.

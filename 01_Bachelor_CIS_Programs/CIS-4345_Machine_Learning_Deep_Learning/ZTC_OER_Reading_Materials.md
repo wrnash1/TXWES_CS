@@ -14,7 +14,7 @@ To help you study and prepare for your examinations, we recommend the following 
     *   *Study Guide:* Refer to this open resource for weekly reading assignments.
 
 2.  **Video Study Stream Lectures:**
-    *   [Machine Learning with Python & TensorFlow Course](https://www.youtube.com/watch?v=cKzgMFG5HpU)
+    *   [Machine Learning with Python & TensorFlow Course](https://www.youtube.com/watch?v=NWONeJKn6kc
     *   *Study Guide:* Follow this playlist for weekly video lectures.
 
 3.  **Official Vendor Documentation:**

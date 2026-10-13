@@ -67,10 +67,10 @@
       <span style="background: #d9a74a; color: #0f172a; font-weight: 800; font-size: 11px; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Vendor Video Lecture</span>
       <strong style="margin-left: 10px; font-size: 14px;">CompTIA / freeCodeCamp &bull; CIS-4333 Module 16</strong>
     </div>
-    <a href="https://www.youtube.com/watch?v=3Kq1MIfC-4U" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
+    <a href="https://www.youtube.com/watch?v=3Kq1MIfTWCE" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
   </div>
   <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #0f172a;">
-    <iframe src="https://www.youtube.com/embed/3Kq1MIfC-4U" title="CompTIA PenTest+ (PT0-002) Ethical Hacking & Penetration Testing" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    <iframe src="https://www.youtube.com/embed/3Kq1MIfTWCE" title="CompTIA PenTest+ (PT0-002) Ethical Hacking & Penetration Testing" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
   </div>
   <div style="padding: 12px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 13px; color: #475569;">
     <strong>Recommended Viewing:</strong> <em>CompTIA PenTest+ (PT0-002) Ethical Hacking & Penetration Testing</em>. This vendor-aligned lecture stream reinforces this module's theoretical principles, certification blueprints, and hands-on laboratory benchmarks.
@@ -117,7 +117,7 @@ Review these essential concepts carefully. These represent the highest-frequency
 * **Tools & Code Analysis (16%):** PT0-002 expects you to read simple scripts and identify what they do. Review: bash one-liners for enumeration, Python socket code, PowerShell execution policy bypass, and identifying malicious script patterns (reverse shell callbacks, file downloads via LOLBins).
 * **Exam Trap — Scope and Authorization:** Any scenario where a tester acts outside the agreed scope, skips authorization steps, or tests cloud/third-party systems without provider consent is incorrect — regardless of technical justification. Authorization and RoE compliance questions always have one clearly correct ethical answer.
 * **Study Resource:** [TryHackMe Pentest Learning Path](https://tryhackme.com/path/outline/pentesting) — This browser-based, guided learning path covers all PT0-002 domains with hands-on rooms for every major topic. Completing the full path provides practical reinforcement of every concept tested on the exam. No local VM or special hardware required — all labs run in the browser.
-* **Video Lecture:** [CompTIA PenTest+ Complete Course by freeCodeCamp](https://www.youtube.com/watch?v=3Kq1MIfC-4U) — This free, full-length YouTube course maps directly to all five PT0-002 domains. Use it as a comprehensive final review resource — watch at 1.25–1.5x speed and pause to test yourself on each concept before moving forward.
+* **Video Lecture:** [CompTIA PenTest+ Complete Course by freeCodeCamp](https://www.youtube.com/watch?v=3Kq1MIfTWCE — This free, full-length YouTube course maps directly to all five PT0-002 domains. Use it as a comprehensive final review resource — watch at 1.25–1.5x speed and pause to test yourself on each concept before moving forward.
 
 ---
 
@@ -126,7 +126,7 @@ Review these essential concepts carefully. These represent the highest-frequency
 To prepare for this module's exam review, you must complete the following:
 
 * **Required Reading:** Complete any remaining rooms in the [TryHackMe Pentest Learning Path](https://tryhackme.com/path/outline/pentesting) that correspond to domains where you feel least confident — particularly Reporting & Communication and Tools & Code Analysis, which are commonly under-practiced. TryHackMe is a browser-based cybersecurity training platform — all practice is hands-on and maps directly to PT0-002 objectives.
-* **Required Video:** Watch the full [CompTIA PenTest+ Complete Course by freeCodeCamp](https://www.youtube.com/watch?v=3Kq1MIfC-4U) as a complete final review. This free YouTube course covers every PT0-002 domain in sequence. Use it alongside your course notes to reinforce concepts and identify any remaining knowledge gaps before the certification exam.
+* **Required Video:** Watch the full [CompTIA PenTest+ Complete Course by freeCodeCamp](https://www.youtube.com/watch?v=3Kq1MIfTWCE as a complete final review. This free YouTube course covers every PT0-002 domain in sequence. Use it alongside your course notes to reinforce concepts and identify any remaining knowledge gaps before the certification exam.
 
 ---
 
@@ -144,7 +144,7 @@ In this final module's review activity, you will perform the following consolida
 
 * [ ] Review all five PT0-002 domain weights and confirm you can describe the top 3 exam topics in each domain.
 * [ ] Complete remaining TryHackMe rooms in [TryHackMe Pentest Learning Path](https://tryhackme.com/path/outline/pentesting) for any under-studied domains.
-* [ ] Watch the complete [CompTIA PenTest+ Complete Course by freeCodeCamp](https://www.youtube.com/watch?v=3Kq1MIfC-4U) as a final review.
+* [ ] Watch the complete [CompTIA PenTest+ Complete Course by freeCodeCamp](https://www.youtube.com/watch?v=3Kq1MIfTWCE as a final review.
 * [ ] Complete a full-length timed practice exam and review all missed questions.
 * [ ] Schedule your PT0-002 certification exam through CompTIA's exam registration portal.
 

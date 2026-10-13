@@ -67,10 +67,10 @@
       <span style="background: #d9a74a; color: #0f172a; font-weight: 800; font-size: 11px; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Vendor Video Lecture</span>
       <strong style="margin-left: 10px; font-size: 14px;">ISACA / NIST &bull; CIS-4315 Module 11</strong>
     </div>
-    <a href="https://www.youtube.com/watch?v=p4Z8jI1m0e8" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
+    <a href="https://www.youtube.com/watch?v=U1BApne3BmY" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
   </div>
   <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #0f172a;">
-    <iframe src="https://www.youtube.com/embed/p4Z8jI1m0e8" title="Cybersecurity Governance, Risk Management & Compliance (CISM/NIST)" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    <iframe src="https://www.youtube.com/embed/U1BApne3BmY" title="Cybersecurity Governance, Risk Management & Compliance (CISM/NIST)" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
   </div>
   <div style="padding: 12px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 13px; color: #475569;">
     <strong>Recommended Viewing:</strong> <em>Cybersecurity Governance, Risk Management & Compliance (CISM/NIST)</em>. This vendor-aligned lecture stream reinforces this module's theoretical principles, certification blueprints, and hands-on laboratory benchmarks.

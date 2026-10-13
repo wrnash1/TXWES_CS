@@ -67,10 +67,10 @@
       <span style="background: #d9a74a; color: #0f172a; font-weight: 800; font-size: 11px; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Vendor Video Lecture</span>
       <strong style="margin-left: 10px; font-size: 14px;">CompTIA / freeCodeCamp &bull; CIS-4333 Module 04</strong>
     </div>
-    <a href="https://www.youtube.com/watch?v=3Kq1MIfC-4U" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
+    <a href="https://www.youtube.com/watch?v=3Kq1MIfTWCE" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
   </div>
   <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #0f172a;">
-    <iframe src="https://www.youtube.com/embed/3Kq1MIfC-4U" title="CompTIA PenTest+ (PT0-002) Ethical Hacking & Penetration Testing" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    <iframe src="https://www.youtube.com/embed/3Kq1MIfTWCE" title="CompTIA PenTest+ (PT0-002) Ethical Hacking & Penetration Testing" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
   </div>
   <div style="padding: 12px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 13px; color: #475569;">
     <strong>Recommended Viewing:</strong> <em>CompTIA PenTest+ (PT0-002) Ethical Hacking & Penetration Testing</em>. This vendor-aligned lecture stream reinforces this module's theoretical principles, certification blueprints, and hands-on laboratory benchmarks.
@@ -111,14 +111,14 @@ Review these essential definitions carefully. The certification exam expects you
 *   **Exam Trap — `-A` Flag:** The `-A` flag enables OS detection, version detection, script scanning, and traceroute simultaneously. It is aggressive and noisy — PT0-002 may ask which flag produces the most comprehensive but detectable scan.
 *   **Timing Templates:** `-T0` (paranoid, very slow) through `-T5` (insane, fast/noisy). For stealth, use `-T1` or `-T2`. Default is `-T3`. PT0-002 tests whether students know that faster templates increase detection risk.
 *   **Study Resource:** [TryHackMe Pentest Learning Path](https://tryhackme.com/path/outline/pentesting) — The "Nmap" room series on TryHackMe provides hands-on practice with every major Nmap flag against live vulnerable machines in a legal lab environment. No local VM required.
-*   **Video Lecture:** [CompTIA PenTest+ Complete Course by freeCodeCamp](https://www.youtube.com/watch?v=3Kq1MIfC-4U) — Navigate to the Active Reconnaissance and Nmap section for PT0-002 domain 2 content covering all tested scan types and flags.
+*   **Video Lecture:** [CompTIA PenTest+ Complete Course by freeCodeCamp](https://www.youtube.com/watch?v=3Kq1MIfTWCE — Navigate to the Active Reconnaissance and Nmap section for PT0-002 domain 2 content covering all tested scan types and flags.
 
 ---
 
 ### Required Readings & Videos
 To prepare for this module's topics, you must complete the following readings and videos:
 *   **Required Reading:** Complete the Nmap rooms in the [TryHackMe Pentest Learning Path](https://tryhackme.com/path/outline/pentesting). These guided rooms cover every major scan type, NSE scripts, and output formats with hands-on exercises against vulnerable targets in a safe lab environment.
-*   **Required Video:** Watch the Active Reconnaissance and Nmap segment of the [CompTIA PenTest+ Complete Course by freeCodeCamp](https://www.youtube.com/watch?v=3Kq1MIfC-4U). Use chapter markers to navigate to domain 2 content on active scanning techniques.
+*   **Required Video:** Watch the Active Reconnaissance and Nmap segment of the [CompTIA PenTest+ Complete Course by freeCodeCamp](https://www.youtube.com/watch?v=3Kq1MIfTWCE Use chapter markers to navigate to domain 2 content on active scanning techniques.
 
 ---
 
@@ -133,7 +133,7 @@ In this week's hands-on lab, you will perform the following steps to apply these
 ### 3. Study Checklist
 - [ ] Read the glossary terms and be able to explain each in your own words.
 - [ ] Complete the Nmap rooms in [TryHackMe Pentest Learning Path](https://tryhackme.com/path/outline/pentesting).
-- [ ] Watch the Active Reconnaissance section of the [CompTIA PenTest+ Complete Course by freeCodeCamp](https://www.youtube.com/watch?v=3Kq1MIfC-4U).
+- [ ] Watch the Active Reconnaissance section of the [CompTIA PenTest+ Complete Course by freeCodeCamp](https://www.youtube.com/watch?v=3Kq1MIfTWCE
 - [ ] Review the lab instructions and understand the purpose of each step before starting.
 - [ ] Proceed to the weekly hands-on lab activity.
 

@@ -34,7 +34,7 @@ All required course materials are free to access. Students should bookmark these
 
 | Resource | URL | Notes |
 |---|---|---|
-| Machine Learning with Python & TensorFlow Course | https://www.youtube.com/watch?v=cKzgMFG5HpU | Primary video lecture series — used in all modules |
+| Machine Learning with Python & TensorFlow Course | https://www.youtube.com/watch?v=NWONeJKn6kc | Primary video lecture series — used in all modules |
 | TF Developer Certificate on Coursera (free audit) | https://www.coursera.org/professional-certificates/tensorflow-in-practice | Most exam-representative free resource; Laurence Moroney |
 | fast.ai Practical Deep Learning | https://course.fast.ai/ | Strongly recommended supplemental; free; covers CNNs and transfer learning |
 | Kaggle Learn: Intro to Deep Learning | https://www.kaggle.com/learn/intro-to-deep-learning | Free hands-on notebooks; no setup required |

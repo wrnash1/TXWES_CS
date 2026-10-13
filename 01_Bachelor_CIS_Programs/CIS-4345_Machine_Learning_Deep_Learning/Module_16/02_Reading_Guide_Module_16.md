@@ -67,10 +67,10 @@
       <span style="background: #d9a74a; color: #0f172a; font-weight: 800; font-size: 11px; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Vendor Video Lecture</span>
       <strong style="margin-left: 10px; font-size: 14px;">TensorFlow / deeplearning.ai &bull; CIS-4345 Module 16</strong>
     </div>
-    <a href="https://www.youtube.com/watch?v=cKzgMFG5HpU" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
+    <a href="https://www.youtube.com/watch?v=NWONeJKn6kc" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
   </div>
   <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #0f172a;">
-    <iframe src="https://www.youtube.com/embed/cKzgMFG5HpU" title="Deep Learning & Neural Networks Masterclass" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    <iframe src="https://www.youtube.com/embed/NWONeJKn6kc" title="Deep Learning & Neural Networks Masterclass" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
   </div>
   <div style="padding: 12px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 13px; color: #475569;">
     <strong>Recommended Viewing:</strong> <em>Deep Learning & Neural Networks Masterclass</em>. This vendor-aligned lecture stream reinforces this module's theoretical principles, certification blueprints, and hands-on laboratory benchmarks.
@@ -125,7 +125,7 @@ Review these essential definitions carefully. The certification exam expects you
 To prepare for this module's topics, you must complete the following readings and videos:
 
 * **Required Reading:** Review the [TensorFlow Developer Certificate candidate handbook](https://www.tensorflow.org/certificate) at tensorflow.org. This covers the exact exam format, task categories, scoring criteria, and allowed resources. Also review the [Keras API documentation](https://keras.io/api/) for the specific layers and methods used across all four task categories.
-* **Required Video:** Watch the final review lecture in the course playlist: [Machine Learning with Python & TensorFlow Course](https://www.youtube.com/watch?v=cKzgMFG5HpU). This covers the full TF Developer Certificate exam structure, common pitfalls, and a walkthrough of each task category using the build-compile-fit pattern.
+* **Required Video:** Watch the final review lecture in the course playlist: [Machine Learning with Python & TensorFlow Course](https://www.youtube.com/watch?v=NWONeJKn6kc This covers the full TF Developer Certificate exam structure, common pitfalls, and a walkthrough of each task category using the build-compile-fit pattern.
 
 ---
 
@@ -143,7 +143,7 @@ In this week's hands-on lab, you will perform the following steps to apply these
 
 * [ ] Review the glossary terms and write out the build-compile-fit pattern for each of the four exam task categories from memory.
 * [ ] Read the [TensorFlow Developer Certificate candidate handbook](https://www.tensorflow.org/certificate) and review the exam scoring criteria.
-* [ ] Watch the final review lecture in the [Machine Learning with Python & TensorFlow Course](https://www.youtube.com/watch?v=cKzgMFG5HpU).
+* [ ] Watch the final review lecture in the [Machine Learning with Python & TensorFlow Course](https://www.youtube.com/watch?v=NWONeJKn6kc
 * [ ] Complete the Module 16 mock exam lab: four task categories, all models saved as `.h5`, all thresholds verified.
 * [ ] Proceed to the Module 16 final exam quiz.
 

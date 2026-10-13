@@ -67,10 +67,10 @@
       <span style="background: #d9a74a; color: #0f172a; font-weight: 800; font-size: 11px; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Vendor Video Lecture</span>
       <strong style="margin-left: 10px; font-size: 14px;">ARM / freeCodeCamp &bull; CIS-4355 Module 11</strong>
     </div>
-    <a href="https://www.youtube.com/watch?v=h0J8f60LdB0" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
+    <a href="https://www.youtube.com/watch?v=eidD14dXW8s" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
   </div>
   <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #0f172a;">
-    <iframe src="https://www.youtube.com/embed/h0J8f60LdB0" title="IoT & Embedded Systems Architecture (Raspberry Pi & FreeRTOS)" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    <iframe src="https://www.youtube.com/embed/eidD14dXW8s" title="IoT & Embedded Systems Architecture (Raspberry Pi & FreeRTOS)" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
   </div>
   <div style="padding: 12px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 13px; color: #475569;">
     <strong>Recommended Viewing:</strong> <em>IoT & Embedded Systems Architecture (Raspberry Pi & FreeRTOS)</em>. This vendor-aligned lecture stream reinforces this module's theoretical principles, certification blueprints, and hands-on laboratory benchmarks.
@@ -114,7 +114,7 @@ Review these essential definitions carefully. The certification exam expects you
 ### Required Readings & Videos
 To prepare for this module's topics, you must complete the following readings and videos:
 *   **Required Reading:** The [OWASP IoT Security Project Guides & Embedded Systems Wiki](https://owasp.org/www-project-internet-of-things/) — focus on OWASP IoT Top 10 categories #4 (Lack of Secure Update Mechanism) and #8 (Lack of Device Management), which describe the real-world consequences of unmanaged device fleets and insecure OTA pipelines.
-*   **Required Video:** The [IoT Course & Embedded Systems Tutorials by freeCodeCamp](https://www.youtube.com/watch?v=h0J8f60LdB0) covers device lifecycle management patterns, OTA update workflow design, and fleet monitoring architectures for large-scale IoT deployments.
+*   **Required Video:** The [IoT Course & Embedded Systems Tutorials by freeCodeCamp](https://www.youtube.com/watch?v=eidD14dXW8s covers device lifecycle management patterns, OTA update workflow design, and fleet monitoring architectures for large-scale IoT deployments.
 
 ---
 
@@ -129,7 +129,7 @@ In this week's hands-on lab, you will perform the following steps to apply these
 ### 3. Study Checklist
 - [ ] Read the glossary terms and memorize the five device lifecycle stages: provision, operate, monitor, update, decommission.
 - [ ] Read OWASP IoT Top 10 categories #4 and #8 at [OWASP IoT Security Project Guides & Embedded Systems Wiki](https://owasp.org/www-project-internet-of-things/).
-- [ ] Watch the device management sections of [IoT Course & Embedded Systems Tutorials by freeCodeCamp](https://www.youtube.com/watch?v=h0J8f60LdB0).
+- [ ] Watch the device management sections of [IoT Course & Embedded Systems Tutorials by freeCodeCamp](https://www.youtube.com/watch?v=eidD14dXW8s
 - [ ] Review the staged rollout and certificate revocation concepts before the lab.
 - [ ] Proceed to the weekly hands-on lab activity.
 

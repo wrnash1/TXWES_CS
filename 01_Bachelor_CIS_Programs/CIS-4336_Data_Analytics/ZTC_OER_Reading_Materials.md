@@ -14,7 +14,7 @@ To help you study and prepare for your examinations, we recommend the following 
     *   *Study Guide:* Refer to this open resource for weekly reading assignments.
 
 2.  **Video Study Stream Lectures:**
-    *   [Data Analysis with Python Course by freeCodeCamp](https://www.youtube.com/watch?v=GPVsHOl2238)
+    *   [Data Analysis with Python Course by freeCodeCamp](https://www.youtube.com/watch?v=r-uOLxNrNk8
     *   *Study Guide:* Follow this playlist for weekly video lectures.
 
 3.  **Official Vendor Documentation:**

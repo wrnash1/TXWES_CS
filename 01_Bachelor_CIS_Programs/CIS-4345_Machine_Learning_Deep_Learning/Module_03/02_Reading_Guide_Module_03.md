@@ -67,10 +67,10 @@
       <span style="background: #d9a74a; color: #0f172a; font-weight: 800; font-size: 11px; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Vendor Video Lecture</span>
       <strong style="margin-left: 10px; font-size: 14px;">TensorFlow / deeplearning.ai &bull; CIS-4345 Module 03</strong>
     </div>
-    <a href="https://www.youtube.com/watch?v=cKzgMFG5HpU" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
+    <a href="https://www.youtube.com/watch?v=NWONeJKn6kc" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
   </div>
   <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #0f172a;">
-    <iframe src="https://www.youtube.com/embed/cKzgMFG5HpU" title="Deep Learning & Neural Networks Masterclass" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    <iframe src="https://www.youtube.com/embed/NWONeJKn6kc" title="Deep Learning & Neural Networks Masterclass" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
   </div>
   <div style="padding: 12px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 13px; color: #475569;">
     <strong>Recommended Viewing:</strong> <em>Deep Learning & Neural Networks Masterclass</em>. This vendor-aligned lecture stream reinforces this module's theoretical principles, certification blueprints, and hands-on laboratory benchmarks.
@@ -117,7 +117,7 @@ Review these essential definitions carefully. The certification exam expects you
 ### Required Readings & Videos
 To prepare for this module's topics, you must complete the following readings and videos:
 *   **Required Reading:** Read the [Keras Dense layer documentation](https://www.tensorflow.org/api_docs/python/tf/keras/layers/Dense) at tensorflow.org, focusing on the `activation` parameter and how it maps to regression vs. classification. Also review the [loss functions guide](https://www.tensorflow.org/api_docs/python/tf/keras/losses) to understand when each loss applies.
-*   **Required Video:** Watch the Linear and Logistic Regression section of the course playlist: [Machine Learning with Python & TensorFlow Course](https://www.youtube.com/watch?v=cKzgMFG5HpU). This covers gradient descent, MSE, and binary crossentropy with scikit-learn and TensorFlow implementations.
+*   **Required Video:** Watch the Linear and Logistic Regression section of the course playlist: [Machine Learning with Python & TensorFlow Course](https://www.youtube.com/watch?v=NWONeJKn6kc This covers gradient descent, MSE, and binary crossentropy with scikit-learn and TensorFlow implementations.
 
 ---
 
@@ -132,7 +132,7 @@ In this week's hands-on lab, you will perform the following steps to apply these
 ### 3. Study Checklist
 *   [ ] Read the glossary terms and write the Keras code equivalent for each concept.
 *   [ ] Review the [Keras losses guide](https://www.tensorflow.org/api_docs/python/tf/keras/losses) and [Dense layer docs](https://www.tensorflow.org/api_docs/python/tf/keras/layers/Dense).
-*   [ ] Watch the regression module in the [Machine Learning with Python & TensorFlow Course](https://www.youtube.com/watch?v=cKzgMFG5HpU).
+*   [ ] Watch the regression module in the [Machine Learning with Python & TensorFlow Course](https://www.youtube.com/watch?v=NWONeJKn6kc
 *   [ ] Complete the Module 03 lab: linear and logistic regression with Keras.
 *   [ ] Proceed to the Module 03 quiz.
 
