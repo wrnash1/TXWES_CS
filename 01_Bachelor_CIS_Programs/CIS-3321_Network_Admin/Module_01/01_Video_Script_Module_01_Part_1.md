@@ -43,6 +43,98 @@ The OSI model does not describe actual software. It is a reference model — a c
 
 [03:30 – 07:00]
 
+<div style="text-align: center; margin: 24px 0;">
+<svg viewBox="0 0 850 490" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="max-width: 850px; background:#0f172a; border-radius:10px; border:2px solid #1b365d; font-family:-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;">
+  <rect width="100%" height="45" fill="#1b365d"/>
+  <text x="425" y="28" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">🏛️ TEXAS WESLEYAN UNIVERSITY • CIS-3321 NETWORK ADMINISTRATION</text>
+  <text x="425" y="75" fill="#d9a74a" font-size="18" font-weight="bold" text-anchor="middle">OSI 7-Layer Reference Model &amp; Protocol Data Unit (PDU) Encapsulation</text>
+
+  <!-- Left: OSI 7 Layers -->
+  <g transform="translate(40, 95)">
+    <rect width="400" height="340" fill="#1e293b" stroke="#38bdf8" stroke-width="1.5" rx="6"/>
+    <text x="200" y="24" fill="#38bdf8" font-size="13" font-weight="bold" text-anchor="middle">OSI 7-Layer Stack (Top to Bottom)</text>
+
+    <!-- Layer 7 -->
+    <rect x="20" y="38" width="360" height="36" fill="#0f172a" stroke="#a855f7" rx="3"/>
+    <text x="35" y="60" fill="#c084fc" font-size="11" font-weight="bold">Layer 7: Application</text>
+    <text x="365" y="60" fill="#94a3b8" font-size="10" text-anchor="end">HTTP, DNS, DHCP, SSH (Data)</text>
+
+    <!-- Layer 6 -->
+    <rect x="20" y="79" width="360" height="36" fill="#0f172a" stroke="#a855f7" rx="3"/>
+    <text x="35" y="101" fill="#c084fc" font-size="11" font-weight="bold">Layer 6: Presentation</text>
+    <text x="365" y="101" fill="#94a3b8" font-size="10" text-anchor="end">TLS/SSL, JPEG, ASCII, Encryption</text>
+
+    <!-- Layer 5 -->
+    <rect x="20" y="120" width="360" height="36" fill="#0f172a" stroke="#a855f7" rx="3"/>
+    <text x="35" y="142" fill="#c084fc" font-size="11" font-weight="bold">Layer 5: Session</text>
+    <text x="365" y="142" fill="#94a3b8" font-size="10" text-anchor="end">RPC, NetBIOS, Sockets (Dialog)</text>
+
+    <!-- Layer 4 -->
+    <rect x="20" y="161" width="360" height="36" fill="#0f172a" stroke="#3b82f6" rx="3"/>
+    <text x="35" y="183" fill="#60a5fa" font-size="11" font-weight="bold">Layer 4: Transport</text>
+    <text x="365" y="183" fill="#93c5fd" font-size="10" text-anchor="end">TCP / UDP Ports (Segment)</text>
+
+    <!-- Layer 3 -->
+    <rect x="20" y="202" width="360" height="36" fill="#0f172a" stroke="#ef4444" rx="3"/>
+    <text x="35" y="224" fill="#f87171" font-size="11" font-weight="bold">Layer 3: Network</text>
+    <text x="365" y="224" fill="#fca5a5" font-size="10" text-anchor="end">IP Addressing, Routers (Packet)</text>
+
+    <!-- Layer 2 -->
+    <rect x="20" y="243" width="360" height="36" fill="#0f172a" stroke="#10b981" rx="3"/>
+    <text x="35" y="265" fill="#34d399" font-size="11" font-weight="bold">Layer 2: Data Link</text>
+    <text x="365" y="265" fill="#86efac" font-size="10" text-anchor="end">MAC Addr, Switches (Frame)</text>
+
+    <!-- Layer 1 -->
+    <rect x="20" y="284" width="360" height="36" fill="#0f172a" stroke="#d9a74a" rx="3"/>
+    <text x="35" y="306" fill="#fde047" font-size="11" font-weight="bold">Layer 1: Physical</text>
+    <text x="365" y="306" fill="#fef08a" font-size="10" text-anchor="end">Cables, Radio, Bits (1s &amp; 0s)</text>
+  </g>
+
+  <!-- Right: Encapsulation Flow -->
+  <g transform="translate(460, 95)">
+    <rect width="350" height="340" fill="#1e293b" stroke="#10b981" stroke-width="1.5" rx="6"/>
+    <text x="175" y="24" fill="#10b981" font-size="13" font-weight="bold" text-anchor="middle">Data Encapsulation Flow (Downward)</text>
+
+    <!-- Payload -->
+    <rect x="25" y="45" width="300" height="35" fill="#0f172a" stroke="#a855f7" rx="3"/>
+    <text x="175" y="67" fill="#c084fc" font-size="11" font-weight="bold" text-anchor="middle">Application Data Payload</text>
+
+    <!-- Transport Segment -->
+    <rect x="25" y="100" width="300" height="40" fill="#0f172a" stroke="#3b82f6" rx="3"/>
+    <rect x="30" y="105" width="90" height="30" fill="#1e3a8a" rx="2"/>
+    <text x="75" y="124" fill="#93c5fd" font-size="10" font-weight="bold" text-anchor="middle">TCP/UDP Hdr</text>
+    <text x="215" y="124" fill="#c084fc" font-size="10" text-anchor="middle">Data Segment</text>
+
+    <!-- Network Packet -->
+    <rect x="25" y="160" width="300" height="40" fill="#0f172a" stroke="#ef4444" rx="3"/>
+    <rect x="30" y="165" width="65" height="30" fill="#7f1d1d" rx="2"/>
+    <text x="62" y="184" fill="#fca5a5" font-size="9" font-weight="bold" text-anchor="middle">IP Header</text>
+    <rect x="100" y="165" width="70" height="30" fill="#1e3a8a" rx="2"/>
+    <text x="135" y="184" fill="#93c5fd" font-size="9" text-anchor="middle">TCP Hdr</text>
+    <text x="240" y="184" fill="#c084fc" font-size="10" text-anchor="middle">IP Packet</text>
+
+    <!-- Data Link Frame -->
+    <rect x="25" y="220" width="300" height="40" fill="#0f172a" stroke="#10b981" rx="3"/>
+    <rect x="30" y="225" width="60" height="30" fill="#064e3b" rx="2"/>
+    <text x="60" y="244" fill="#86efac" font-size="9" font-weight="bold" text-anchor="middle">Frame Hdr</text>
+    <rect x="95" y="225" width="55" height="30" fill="#7f1d1d" rx="2"/>
+    <text x="122" y="244" fill="#fca5a5" font-size="8" text-anchor="middle">IP Hdr</text>
+    <rect x="155" y="225" width="55" height="30" fill="#1e3a8a" rx="2"/>
+    <text x="182" y="244" fill="#93c5fd" font-size="8" text-anchor="middle">TCP Hdr</text>
+    <rect x="265" y="225" width="55" height="30" fill="#064e3b" rx="2"/>
+    <text x="292" y="244" fill="#86efac" font-size="8" font-weight="bold" text-anchor="middle">FCS Trail</text>
+
+    <!-- Physical Bits -->
+    <rect x="25" y="280" width="300" height="35" fill="#0f172a" stroke="#d9a74a" rx="3"/>
+    <text x="175" y="302" fill="#fde047" font-size="11" font-weight="bold" text-anchor="middle">01101001 01101110 01110100 (Physical Bits on Wire)</text>
+  </g>
+
+  <!-- Footer Banner -->
+  <rect x="40" y="445" width="770" height="32" fill="#1e293b" stroke="#334155" rx="6"/>
+  <text x="425" y="466" fill="#f8fafc" font-size="11" font-weight="bold" text-anchor="middle">⚡ Mnemonic: All People Seem To Need Data Processing | PDUs: Don't Some People Fear Birthdays (Data, Segment, Packet, Frame, Bit)</text>
+</svg>
+</div>
+
 [SHOW DIAGRAM: Vertical stack of seven labeled rectangles, numbered bottom to top: Layer 1 Physical, Layer 2 Data Link, Layer 3 Network, Layer 4 Transport, Layer 5 Session, Layer 6 Presentation, Layer 7 Application. Each layer has a color band — warm colors for Layers 1–4, cool colors for Layers 5–7.]
 
 [Alt-text: A vertical diagram showing seven stacked rectangles representing the OSI model layers. From bottom to top: Layer 1 Physical (red), Layer 2 Data Link (orange), Layer 3 Network (yellow), Layer 4 Transport (green), Layer 5 Session (teal), Layer 6 Presentation (blue), Layer 7 Application (purple). Each rectangle is labeled with the layer number and name.]

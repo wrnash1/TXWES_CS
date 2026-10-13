@@ -78,6 +78,89 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
+<div style="text-align: center; margin: 24px 0;">
+<svg viewBox="0 0 850 500" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="max-width: 850px; background:#0f172a; border-radius:10px; border:2px solid #1b365d; font-family:-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;">
+  <rect width="100%" height="45" fill="#1b365d"/>
+  <text x="425" y="28" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">🏛️ TEXAS WESLEYAN UNIVERSITY • CIS-2320 HARDWARE FUNDAMENTALS</text>
+  <text x="425" y="75" fill="#d9a74a" font-size="18" font-weight="bold" text-anchor="middle">Storage Technology Tiers &amp; RAID Levels Architecture</text>
+
+  <!-- Drive Comparisons -->
+  <g transform="translate(40, 95)">
+    <!-- 3.5" HDD -->
+    <rect x="0" y="0" width="235" height="175" fill="#1e293b" stroke="#64748b" stroke-width="1.5" rx="6"/>
+    <text x="117" y="22" fill="#f8fafc" font-size="12" font-weight="bold" text-anchor="middle">3.5-inch Mechanical HDD</text>
+    <circle cx="117" cy="80" r="35" fill="#0f172a" stroke="#94a3b8" stroke-width="2"/>
+    <circle cx="117" cy="80" r="10" fill="#475569"/>
+    <line x1="117" y1="80" x2="145" y2="60" stroke="#d9a74a" stroke-width="2"/>
+    <text x="117" y="135" fill="#cbd5e1" font-size="10" text-anchor="middle">Spinning Platters • 7,200 RPM</text>
+    <text x="117" y="152" fill="#94a3b8" font-size="10" text-anchor="middle">SATA III: ~150 - 200 MB/s</text>
+    <text x="117" y="167" fill="#38bdf8" font-size="9" text-anchor="middle">Best $/TB for Bulk Storage</text>
+
+    <!-- 2.5" SATA SSD -->
+    <rect x="255" y="0" width="235" height="175" fill="#1e293b" stroke="#0284c7" stroke-width="1.5" rx="6"/>
+    <text x="372" y="22" fill="#38bdf8" font-size="12" font-weight="bold" text-anchor="middle">2.5-inch SATA SSD</text>
+    <rect x="290" y="45" width="165" height="70" fill="#0f172a" rx="4"/>
+    <rect x="305" y="55" width="30" height="25" fill="#334155" rx="2"/><rect x="345" y="55" width="30" height="25" fill="#334155" rx="2"/><rect x="385" y="55" width="30" height="25" fill="#334155" rx="2"/>
+    <rect x="305" y="85" width="30" height="25" fill="#334155" rx="2"/><rect x="345" y="85" width="30" height="25" fill="#334155" rx="2"/><rect x="385" y="85" width="30" height="25" fill="#334155" rx="2"/>
+    <text x="372" y="135" fill="#cbd5e1" font-size="10" text-anchor="middle">NAND Flash • No Moving Parts</text>
+    <text x="372" y="152" fill="#94a3b8" font-size="10" text-anchor="middle">SATA III: Max ~550 MB/s (Capped)</text>
+    <text x="372" y="167" fill="#10b981" font-size="9" text-anchor="middle">Drop-in replacement for HDDs</text>
+
+    <!-- M.2 NVMe SSD -->
+    <rect x="510" y="0" width="260" height="175" fill="#1e293b" stroke="#10b981" stroke-width="1.5" rx="6"/>
+    <text x="640" y="22" fill="#10b981" font-size="12" font-weight="bold" text-anchor="middle">M.2 2280 NVMe SSD</text>
+    <rect x="535" y="55" width="210" height="50" fill="#0f172a" stroke="#d9a74a" rx="3"/>
+    <rect x="550" y="65" width="35" height="30" fill="#334155" rx="2"/><rect x="600" y="65" width="35" height="30" fill="#334155" rx="2"/><rect x="650" y="65" width="35" height="30" fill="#334155" rx="2"/>
+    <rect x="735" y="75" width="10" height="10" fill="#0f172a"/>
+    <text x="640" y="135" fill="#cbd5e1" font-size="10" text-anchor="middle">PCIe Gen 4/5 x4 Bus Architecture</text>
+    <text x="640" y="152" fill="#d9a74a" font-size="10" font-weight="bold" text-anchor="middle">Speeds: 3,500 – 7,500+ MB/s</text>
+    <text x="640" y="167" fill="#38bdf8" font-size="9" text-anchor="middle">Direct Motherboard Screw Mount</text>
+  </g>
+
+  <!-- RAID Levels Breakdown -->
+  <g transform="translate(40, 290)">
+    <rect width="770" height="150" fill="#1e293b" stroke="#334155" stroke-width="1.5" rx="6"/>
+    <text x="385" y="24" fill="#f8fafc" font-size="13" font-weight="bold" text-anchor="middle">CompTIA A+ RAID Level Reference</text>
+
+    <!-- RAID 0 -->
+    <rect x="15" y="38" width="170" height="100" fill="#0f172a" stroke="#ef4444" rx="4"/>
+    <text x="100" y="58" fill="#ef4444" font-size="12" font-weight="bold" text-anchor="middle">RAID 0 (Striping)</text>
+    <text x="100" y="78" fill="#cbd5e1" font-size="10" text-anchor="middle">Min Drives: 2</text>
+    <text x="100" y="96" fill="#fca5a5" font-size="10" font-weight="bold" text-anchor="middle">Fault Tolerance: ZERO</text>
+    <text x="100" y="115" fill="#94a3b8" font-size="9" text-anchor="middle">High Performance Only</text>
+    <text x="100" y="128" fill="#64748b" font-size="9" text-anchor="middle">1 Drive Lost = All Lost</text>
+
+    <!-- RAID 1 -->
+    <rect x="200" y="38" width="170" height="100" fill="#0f172a" stroke="#38bdf8" rx="4"/>
+    <text x="285" y="58" fill="#38bdf8" font-size="12" font-weight="bold" text-anchor="middle">RAID 1 (Mirroring)</text>
+    <text x="285" y="78" fill="#cbd5e1" font-size="10" text-anchor="middle">Min Drives: 2</text>
+    <text x="285" y="96" fill="#38bdf8" font-size="10" font-weight="bold" text-anchor="middle">Fault Tolerance: 1 Drive</text>
+    <text x="285" y="115" fill="#94a3b8" font-size="9" text-anchor="middle">50% Usable Capacity</text>
+    <text x="285" y="128" fill="#64748b" font-size="9" text-anchor="middle">Duplicate Exact Copy</text>
+
+    <!-- RAID 5 -->
+    <rect x="385" y="38" width="180" height="100" fill="#0f172a" stroke="#10b981" rx="4"/>
+    <text x="475" y="58" fill="#10b981" font-size="12" font-weight="bold" text-anchor="middle">RAID 5 (Parity)</text>
+    <text x="475" y="78" fill="#cbd5e1" font-size="10" text-anchor="middle">Min Drives: 3</text>
+    <text x="475" y="96" fill="#10b981" font-size="10" font-weight="bold" text-anchor="middle">Fault Tolerance: 1 Drive</text>
+    <text x="475" y="115" fill="#94a3b8" font-size="9" text-anchor="middle">Capacity: (N-1) Drives</text>
+    <text x="475" y="128" fill="#64748b" font-size="9" text-anchor="middle">Distributed Parity Blocks</text>
+
+    <!-- RAID 10 -->
+    <rect x="580" y="38" width="175" height="100" fill="#0f172a" stroke="#d9a74a" rx="4"/>
+    <text x="667" y="58" fill="#d9a74a" font-size="12" font-weight="bold" text-anchor="middle">RAID 10 (1+0 Striped Mirrors)</text>
+    <text x="667" y="78" fill="#cbd5e1" font-size="10" text-anchor="middle">Min Drives: 4</text>
+    <text x="667" y="96" fill="#d9a74a" font-size="10" font-weight="bold" text-anchor="middle">Fault Tolerance: 1 Per Pair</text>
+    <text x="667" y="115" fill="#94a3b8" font-size="9" text-anchor="middle">Capacity: 50% Total</text>
+    <text x="667" y="128" fill="#64748b" font-size="9" text-anchor="middle">High Speed + Redundancy</text>
+  </g>
+
+  <!-- Footer Banner -->
+  <rect x="40" y="455" width="770" height="35" fill="#1e293b" stroke="#334155" rx="6"/>
+  <text x="425" y="477" fill="#f8fafc" font-size="11" font-weight="bold" text-anchor="middle">⚡ A+ Blueprint Trap: M.2 is a physical form factor — always verify if the motherboard M.2 slot supports NVMe (PCIe) or SATA!</text>
+</svg>
+</div>
+
 
 
 

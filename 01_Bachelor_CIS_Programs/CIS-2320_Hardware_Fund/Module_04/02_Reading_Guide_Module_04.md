@@ -95,7 +95,68 @@ This module covers the DDR SDRAM generations currently in use (DDR3, DDR4, DDR5)
 
 ---
 
-### 1. High-Yield Glossary
+#<div style="text-align: center; margin: 24px 0;">
+<svg viewBox="0 0 850 480" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="max-width: 850px; background:#0f172a; border-radius:10px; border:2px solid #1b365d; font-family:-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;">
+  <rect width="100%" height="45" fill="#1b365d"/>
+  <text x="425" y="28" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">🏛️ TEXAS WESLEYAN UNIVERSITY • CIS-2320 HARDWARE FUNDAMENTALS</text>
+  <text x="425" y="75" fill="#d9a74a" font-size="18" font-weight="bold" text-anchor="middle">RAM Architecture: DDR4 vs. DDR5 &amp; DIMM vs. SO-DIMM</text>
+
+  <!-- Desktop DDR4 DIMM -->
+  <g transform="translate(50, 95)">
+    <rect width="750" height="85" fill="#1e293b" stroke="#38bdf8" stroke-width="2" rx="4"/>
+    <text x="20" y="25" fill="#38bdf8" font-size="13" font-weight="bold">Standard Desktop DDR4 DIMM (288 Pins • 1.2V • 133.35 mm)</text>
+    <!-- DRAM Chips -->
+    <rect x="40" y="35" width="45" height="35" fill="#0f172a" rx="2"/><rect x="100" y="35" width="45" height="35" fill="#0f172a" rx="2"/><rect x="160" y="35" width="45" height="35" fill="#0f172a" rx="2"/><rect x="220" y="35" width="45" height="35" fill="#0f172a" rx="2"/>
+    <!-- Key Notch -->
+    <rect x="360" y="70" width="16" height="15" fill="#0f172a"/>
+    <text x="368" y="65" fill="#ef4444" font-size="10" font-weight="bold" text-anchor="middle">DDR4 Notch</text>
+    <rect x="460" y="35" width="45" height="35" fill="#0f172a" rx="2"/><rect x="520" y="35" width="45" height="35" fill="#0f172a" rx="2"/><rect x="580" y="35" width="45" height="35" fill="#0f172a" rx="2"/><rect x="640" y="35" width="45" height="35" fill="#0f172a" rx="2"/>
+  </g>
+
+  <!-- Desktop DDR5 DIMM -->
+  <g transform="translate(50, 200)">
+    <rect width="750" height="85" fill="#1e293b" stroke="#10b981" stroke-width="2" rx="4"/>
+    <text x="20" y="25" fill="#10b981" font-size="13" font-weight="bold">Standard Desktop DDR5 DIMM (288 Pins • 1.1V • On-Die ECC • PMIC Onboard)</text>
+    <!-- DRAM Chips -->
+    <rect x="40" y="35" width="45" height="35" fill="#0f172a" rx="2"/><rect x="100" y="35" width="45" height="35" fill="#0f172a" rx="2"/><rect x="160" y="35" width="45" height="35" fill="#0f172a" rx="2"/><rect x="220" y="35" width="45" height="35" fill="#0f172a" rx="2"/>
+    <!-- Centered Key Notch -->
+    <rect x="375" y="70" width="16" height="15" fill="#0f172a"/>
+    <text x="383" y="65" fill="#10b981" font-size="10" font-weight="bold" text-anchor="middle">DDR5 Notch (Shifted)</text>
+    <!-- PMIC Chip -->
+    <rect x="300" y="38" width="30" height="25" fill="#d9a74a" rx="2"/>
+    <text x="315" y="54" fill="#0f172a" font-size="8" font-weight="bold" text-anchor="middle">PMIC</text>
+    <rect x="460" y="35" width="45" height="35" fill="#0f172a" rx="2"/><rect x="520" y="35" width="45" height="35" fill="#0f172a" rx="2"/><rect x="580" y="35" width="45" height="35" fill="#0f172a" rx="2"/><rect x="640" y="35" width="45" height="35" fill="#0f172a" rx="2"/>
+  </g>
+
+  <!-- Laptop SO-DIMM -->
+  <g transform="translate(50, 305)">
+    <rect width="400" height="110" fill="#1e293b" stroke="#f59e0b" stroke-width="2" rx="4"/>
+    <text x="20" y="24" fill="#f59e0b" font-size="12" font-weight="bold">Laptop SO-DIMM (Small Outline DIMM • 67.6 mm)</text>
+    <rect x="30" y="40" width="40" height="40" fill="#0f172a" rx="2"/><rect x="85" y="40" width="40" height="40" fill="#0f172a" rx="2"/>
+    <rect x="140" y="40" width="40" height="40" fill="#0f172a" rx="2"/>
+    <!-- Notch -->
+    <rect x="210" y="85" width="12" height="25" fill="#0f172a"/>
+    <rect x="250" y="40" width="40" height="40" fill="#0f172a" rx="2"/><rect x="305" y="40" width="40" height="40" fill="#0f172a" rx="2"/>
+    <text x="200" y="103" fill="#cbd5e1" font-size="10" text-anchor="middle">DDR4: 260 Pins | DDR5: 262 Pins</text>
+  </g>
+
+  <!-- Dual Channel Explanation -->
+  <g transform="translate(470, 305)">
+    <rect width="330" height="110" fill="#1e293b" stroke="#cbd5e1" stroke-width="1.5" rx="4"/>
+    <text x="20" y="24" fill="#ffffff" font-size="12" font-weight="bold">Dual-Channel Installation Best Practice</text>
+    <text x="20" y="48" fill="#94a3b8" font-size="11">• Matching pairs must go into <b>identical color slots</b>.</text>
+    <text x="20" y="68" fill="#94a3b8" font-size="11">• Slots 1 &amp; 3 (Channel A) / Slots 2 &amp; 4 (Channel B).</text>
+    <text x="20" y="88" fill="#38bdf8" font-size="11">• Doubles memory bus width from <b>64-bit to 128-bit</b>.</text>
+    <text x="20" y="103" fill="#10b981" font-size="10" font-weight="bold">• Never mix speeds or latencies between channels.</text>
+  </g>
+
+  <!-- Footer Banner -->
+  <rect x="50" y="430" width="750" height="35" fill="#1e293b" stroke="#334155" rx="6"/>
+  <text x="425" y="452" fill="#f8fafc" font-size="11" font-weight="bold" text-anchor="middle">⚡ Critical A+ Rule: DDR4 and DDR5 DIMMs both have 288 pins, but incompatible notch alignments prevent cross-insertion.</text>
+</svg>
+</div>
+
+## 1. High-Yield Glossary
 
 #### DDR3 (Double Data Rate 3)
 

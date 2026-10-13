@@ -32,6 +32,88 @@ Today we cover the foundation: what's inside a desktop PC, why electrostatic dis
 
 ## [01:30 – 06:00] Part 1 — Internal PC Components Overview
 
+<div style="text-align: center; margin: 24px 0;">
+<svg viewBox="0 0 850 480" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="max-width: 850px; background:#0f172a; border-radius:10px; border:2px solid #1b365d; font-family:-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;">
+  <rect width="100%" height="45" fill="#1b365d"/>
+  <text x="425" y="28" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">🏛️ TEXAS WESLEYAN UNIVERSITY • CIS-2320 HARDWARE FUNDAMENTALS</text>
+  <text x="425" y="75" fill="#d9a74a" font-size="18" font-weight="bold" text-anchor="middle">Core Internal PC Components Anatomy &amp; Interconnections</text>
+
+  <!-- Chassis Outline -->
+  <rect x="40" y="95" width="770" height="330" fill="#1e293b" stroke="#334155" stroke-width="2" rx="8"/>
+  <text x="55" y="115" fill="#64748b" font-size="11" font-weight="bold">DESKTOP CHASSIS (INTERIOR LAYOUT)</text>
+
+  <!-- PSU -->
+  <rect x="60" y="130" width="180" height="130" fill="#0f172a" stroke="#d9a74a" stroke-width="1.5" rx="6"/>
+  <text x="150" y="160" fill="#d9a74a" font-size="14" font-weight="bold" text-anchor="middle">POWER SUPPLY (PSU)</text>
+  <text x="150" y="180" fill="#94a3b8" font-size="11" text-anchor="middle">120V AC → +12V, +5V, +3.3V DC</text>
+  <rect x="80" y="200" width="140" height="20" fill="#1e293b" rx="3"/>
+  <text x="150" y="214" fill="#38bdf8" font-size="10" text-anchor="middle">24-pin ATX / 8-pin EPS / PCIe</text>
+  <rect x="80" y="225" width="140" height="20" fill="#1e293b" rx="3"/>
+  <text x="150" y="239" fill="#10b981" font-size="10" text-anchor="middle">80 PLUS Certified Efficiency</text>
+
+  <!-- Drive Bays -->
+  <rect x="60" y="280" width="180" height="125" fill="#0f172a" stroke="#64748b" stroke-width="1.5" rx="6"/>
+  <text x="150" y="305" fill="#f8fafc" font-size="13" font-weight="bold" text-anchor="middle">STORAGE DRIVE BAYS</text>
+  <rect x="75" y="320" width="150" height="35" fill="#1e293b" stroke="#0284c7" rx="4"/>
+  <text x="150" y="342" fill="#38bdf8" font-size="11" text-anchor="middle">3.5" HDD / 2.5" SATA SSD</text>
+  <rect x="75" y="365" width="150" height="25" fill="#1e293b" stroke="#334155" rx="4"/>
+  <text x="150" y="382" fill="#94a3b8" font-size="10" text-anchor="middle">SATA 7-pin Data + 15-pin Pwr</text>
+
+  <!-- Motherboard Area -->
+  <rect x="270" y="130" width="520" height="275" fill="#0f172a" stroke="#38bdf8" stroke-width="2" rx="6"/>
+  <text x="530" y="152" fill="#38bdf8" font-size="13" font-weight="bold" text-anchor="middle">SYSTEM MOTHERBOARD (ATX)</text>
+
+  <!-- CPU Socket & Cooler -->
+  <rect x="290" y="170" width="115" height="115" fill="#1e293b" stroke="#ef4444" stroke-width="2" rx="6"/>
+  <rect x="315" y="185" width="65" height="65" fill="#334155" rx="4"/>
+  <text x="347" y="215" fill="#f8fafc" font-size="11" font-weight="bold" text-anchor="middle">CPU</text>
+  <text x="347" y="232" fill="#fca5a5" font-size="9" text-anchor="middle">(LGA / PGA)</text>
+  <text x="347" y="272" fill="#cbd5e1" font-size="9" text-anchor="middle">Heatsink + Fan (4-pin)</text>
+
+  <!-- RAM Slots -->
+  <g transform="translate(425, 170)">
+    <rect x="0" y="0" width="15" height="115" fill="#1e293b" stroke="#3b82f6" rx="2"/>
+    <rect x="22" y="0" width="15" height="115" fill="#1e293b" stroke="#10b981" rx="2"/>
+    <rect x="44" y="0" width="15" height="115" fill="#1e293b" stroke="#3b82f6" rx="2"/>
+    <rect x="66" y="0" width="15" height="115" fill="#1e293b" stroke="#10b981" rx="2"/>
+    <text x="40" y="132" fill="#cbd5e1" font-size="10" text-anchor="middle">DIMM Slots (DDR4/DDR5)</text>
+    <text x="40" y="145" fill="#94a3b8" font-size="8" text-anchor="middle">Dual-Channel Pairs</text>
+  </g>
+
+  <!-- M.2 NVMe Slot -->
+  <rect x="530" y="175" width="110" height="28" fill="#1e293b" stroke="#d9a74a" rx="4"/>
+  <text x="585" y="193" fill="#d9a74a" font-size="10" font-weight="bold" text-anchor="middle">M.2 NVMe SSD (PCIe x4)</text>
+
+  <!-- Expansion Slots -->
+  <g transform="translate(290, 305)">
+    <rect x="0" y="0" width="230" height="16" fill="#0284c7" rx="3"/>
+    <text x="115" y="12" fill="#ffffff" font-size="10" font-weight="bold" text-anchor="middle">PCIe 5.0 ×16 Slot (Discrete GPU / Graphics Card)</text>
+    <rect x="0" y="22" width="70" height="12" fill="#64748b" rx="2"/>
+    <text x="35" y="31" fill="#ffffff" font-size="8" text-anchor="middle">PCIe ×1</text>
+    <rect x="0" y="39" width="140" height="14" fill="#0284c7" rx="2"/>
+    <text x="70" y="50" fill="#ffffff" font-size="9" text-anchor="middle">PCIe ×4 Expansion</text>
+    <rect x="0" y="58" width="230" height="16" fill="#0284c7" rx="3"/>
+    <text x="115" y="70" fill="#ffffff" font-size="10" text-anchor="middle">PCIe ×16 Secondary Slot</text>
+  </g>
+
+  <!-- Rear I/O Panel -->
+  <rect x="665" y="170" width="110" height="210" fill="#1e293b" stroke="#94a3b8" rx="4"/>
+  <text x="720" y="190" fill="#f8fafc" font-size="11" font-weight="bold" text-anchor="middle">REAR I/O PANEL</text>
+  <rect x="680" y="205" width="80" height="20" fill="#0f172a" rx="2"/>
+  <text x="720" y="219" fill="#38bdf8" font-size="9" text-anchor="middle">USB 3.2 Ports</text>
+  <rect x="680" y="235" width="80" height="20" fill="#0f172a" rx="2"/>
+  <text x="720" y="249" fill="#10b981" font-size="9" text-anchor="middle">2.5GbE RJ-45 LAN</text>
+  <rect x="680" y="265" width="80" height="20" fill="#0f172a" rx="2"/>
+  <text x="720" y="279" fill="#d9a74a" font-size="9" text-anchor="middle">HDMI / DisplayPort</text>
+  <rect x="680" y="295" width="80" height="20" fill="#0f172a" rx="2"/>
+  <text x="720" y="309" fill="#f43f5e" font-size="9" text-anchor="middle">HD Audio Jacks</text>
+
+  <!-- Footer Banner -->
+  <rect x="40" y="435" width="770" height="35" fill="#1e293b" stroke="#334155" rx="6"/>
+  <text x="425" y="457" fill="#f8fafc" font-size="11" font-weight="bold" text-anchor="middle">⚡ CompTIA A+ Blueprint: Identify all 7 primary internal components on sight and know their physical interconnects.</text>
+</svg>
+</div>
+
 **[SHOW COMPONENT: Desktop PC case with side panel removed]**
 
 "Before you can work on a PC, you need to know what you're looking at. Let me walk you through the major internal components.

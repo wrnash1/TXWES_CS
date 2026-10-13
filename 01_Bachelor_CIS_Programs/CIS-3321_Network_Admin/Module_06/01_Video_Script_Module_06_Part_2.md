@@ -25,6 +25,69 @@ Welcome back to Module 06. In Part 1 we covered the 802.11 standard generations,
 
 [00:45 – 05:30]
 
+<div style="text-align: center; margin: 24px 0;">
+<svg viewBox="0 0 850 480" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="max-width: 850px; background:#0f172a; border-radius:10px; border:2px solid #1b365d; font-family:-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;">
+  <rect width="100%" height="45" fill="#1b365d"/>
+  <text x="425" y="28" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">🏛️ TEXAS WESLEYAN UNIVERSITY • CIS-3321 NETWORK ADMINISTRATION</text>
+  <text x="425" y="75" fill="#d9a74a" font-size="18" font-weight="bold" text-anchor="middle">Wi-Fi Generations (802.11) &amp; 2.4 GHz vs. 5 GHz Channel Spectrum</text>
+
+  <!-- 2.4 GHz Channels Spectrum -->
+  <g transform="translate(40, 95)">
+    <rect width="770" height="150" fill="#1e293b" stroke="#38bdf8" stroke-width="1.5" rx="6"/>
+    <text x="385" y="24" fill="#38bdf8" font-size="13" font-weight="bold" text-anchor="middle">2.4 GHz Spectrum: Only 3 Non-Overlapping 20 MHz Channels (1, 6, 11)</text>
+
+    <!-- Channel 1 -->
+    <path d="M 60 120 Q 140 45 220 120 Z" fill="rgba(16, 185, 129, 0.3)" stroke="#10b981" stroke-width="2"/>
+    <text x="140" y="80" fill="#10b981" font-size="13" font-weight="bold" text-anchor="middle">Channel 1</text>
+    <text x="140" y="100" fill="#cbd5e1" font-size="10" text-anchor="middle">2412 MHz</text>
+
+    <!-- Channel 6 -->
+    <path d="M 300 120 Q 380 45 460 120 Z" fill="rgba(16, 185, 129, 0.3)" stroke="#10b981" stroke-width="2"/>
+    <text x="380" y="80" fill="#10b981" font-size="13" font-weight="bold" text-anchor="middle">Channel 6</text>
+    <text x="380" y="100" fill="#cbd5e1" font-size="10" text-anchor="middle">2437 MHz</text>
+
+    <!-- Channel 11 -->
+    <path d="M 540 120 Q 620 45 700 120 Z" fill="rgba(16, 185, 129, 0.3)" stroke="#10b981" stroke-width="2"/>
+    <text x="620" y="80" fill="#10b981" font-size="13" font-weight="bold" text-anchor="middle">Channel 11</text>
+    <text x="620" y="100" fill="#cbd5e1" font-size="10" text-anchor="middle">2462 MHz</text>
+
+    <text x="385" y="140" fill="#fca5a5" font-size="10" text-anchor="middle">Channels 2, 3, 4, 5, 7, 8, 9, 10 overlap and cause severe Co-Channel Interference (CCI)!</text>
+  </g>
+
+  <!-- 802.11 Generations Matrix -->
+  <g transform="translate(40, 260)">
+    <rect width="770" height="160" fill="#1e293b" stroke="#10b981" stroke-width="1.5" rx="6"/>
+    <text x="385" y="24" fill="#10b981" font-size="13" font-weight="bold" text-anchor="middle">Wi-Fi Standards Evolution &amp; Maximum Data Rates</text>
+
+    <g transform="translate(25, 40)">
+      <!-- Row 1 -->
+      <rect x="0" y="0" width="230" height="50" fill="#0f172a" rx="3"/>
+      <text x="15" y="20" fill="#38bdf8" font-size="11" font-weight="bold">802.11n (Wi-Fi 4)</text>
+      <text x="15" y="38" fill="#94a3b8" font-size="10">2.4 / 5 GHz • Up to 600 Mbps • MIMO</text>
+
+      <!-- Row 2 -->
+      <rect x="245" y="0" width="230" height="50" fill="#0f172a" rx="3"/>
+      <text x="260" y="20" fill="#10b981" font-size="11" font-weight="bold">802.11ac (Wi-Fi 5)</text>
+      <text x="260" y="38" fill="#94a3b8" font-size="10">5 GHz Only • Up to 3.5 Gbps • MU-MIMO</text>
+
+      <!-- Row 3 -->
+      <rect x="490" y="0" width="230" height="50" fill="#0f172a" rx="3"/>
+      <text x="505" y="20" fill="#d9a74a" font-size="11" font-weight="bold">802.11ax (Wi-Fi 6 / 6E)</text>
+      <text x="505" y="38" fill="#94a3b8" font-size="10">2.4 / 5 / 6 GHz • 9.6 Gbps • OFDMA</text>
+
+      <!-- Comparison Summary -->
+      <rect x="0" y="60" width="720" height="45" fill="#0f172a" rx="3"/>
+      <text x="15" y="80" fill="#cbd5e1" font-size="10"><b>2.4 GHz Band:</b> Greater physical range, superior wall penetration, high congestion from microwaves/Bluetooth.</text>
+      <text x="15" y="96" fill="#38bdf8" font-size="10"><b>5.0 GHz Band:</b> Shorter range, reduced wall penetration, vastly larger channel count (24+ non-overlapping 20 MHz channels).</text>
+    </g>
+  </g>
+
+  <!-- Footer Banner -->
+  <rect x="40" y="430" width="770" height="35" fill="#1e293b" stroke="#334155" rx="6"/>
+  <text x="425" y="452" fill="#f8fafc" font-size="11" font-weight="bold" text-anchor="middle">⚡ Security Standard: WPA3 uses SAE (Simultaneous Authentication of Equals) to defeat offline dictionary attacks.</text>
+</svg>
+</div>
+
 [SHOW DIAGRAM: A timeline showing the progression of wireless security standards. Left to right: WEP (1997, RC4 static key, broken), WPA (2003, TKIP/RC4, deprecated), WPA2 (2004, AES-CCMP, current minimum), WPA3 (2018, SAE, current best practice).]
 
 [Alt-text: A horizontal timeline diagram. From left to right: WEP introduced in 1997 using RC4 with static keys, labeled Completely Broken. WPA introduced in 2003 using TKIP with RC4, labeled Deprecated. WPA2 introduced in 2004 using AES-CCMP, labeled Current Minimum Standard. WPA3 introduced in 2018 using SAE (Simultaneous Authentication of Equals) and forward secrecy, labeled Current Best Practice.]

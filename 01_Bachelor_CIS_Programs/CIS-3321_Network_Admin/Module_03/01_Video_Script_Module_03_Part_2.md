@@ -25,6 +25,77 @@ Welcome back to Module 03. In Part 1 we covered IPv4 address structure, classful
 
 [00:45 – 03:30]
 
+<div style="text-align: center; margin: 24px 0;">
+<svg viewBox="0 0 850 480" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="max-width: 850px; background:#0f172a; border-radius:10px; border:2px solid #1b365d; font-family:-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;">
+  <rect width="100%" height="45" fill="#1b365d"/>
+  <text x="425" y="28" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">🏛️ TEXAS WESLEYAN UNIVERSITY • CIS-3321 NETWORK ADMINISTRATION</text>
+  <text x="425" y="75" fill="#d9a74a" font-size="18" font-weight="bold" text-anchor="middle">IPv4 Addressing Structure, Subnet Masking &amp; RFC 1918 Private Scopes</text>
+
+  <!-- Octet Decomposition -->
+  <g transform="translate(40, 95)">
+    <rect width="770" height="110" fill="#1e293b" stroke="#38bdf8" stroke-width="1.5" rx="6"/>
+    <text x="385" y="24" fill="#38bdf8" font-size="13" font-weight="bold" text-anchor="middle">32-Bit Dotted-Decimal Architecture Example: 192.168.1.50 /24</text>
+
+    <!-- Octet 1 -->
+    <rect x="25" y="40" width="165" height="55" fill="#0f172a" rx="4"/>
+    <text x="107" y="60" fill="#f8fafc" font-size="12" font-weight="bold" text-anchor="middle">Octet 1: 192</text>
+    <text x="107" y="80" fill="#38bdf8" font-size="11" font-family="monospace" text-anchor="middle">11000000</text>
+
+    <!-- Octet 2 -->
+    <rect x="215" y="40" width="165" height="55" fill="#0f172a" rx="4"/>
+    <text x="297" y="60" fill="#f8fafc" font-size="12" font-weight="bold" text-anchor="middle">Octet 2: 168</text>
+    <text x="297" y="80" fill="#38bdf8" font-size="11" font-family="monospace" text-anchor="middle">10101000</text>
+
+    <!-- Octet 3 -->
+    <rect x="405" y="40" width="165" height="55" fill="#0f172a" rx="4"/>
+    <text x="487" y="60" fill="#f8fafc" font-size="12" font-weight="bold" text-anchor="middle">Octet 3: 1</text>
+    <text x="487" y="80" fill="#38bdf8" font-size="11" font-family="monospace" text-anchor="middle">00000001</text>
+
+    <!-- Octet 4 -->
+    <rect x="595" y="40" width="150" height="55" fill="#0f172a" rx="4"/>
+    <text x="670" y="60" fill="#f8fafc" font-size="12" font-weight="bold" text-anchor="middle">Octet 4: 50</text>
+    <text x="670" y="80" fill="#10b981" font-size="11" font-family="monospace" text-anchor="middle">00110010 (Host)</text>
+  </g>
+
+  <!-- RFC 1918 Private Address Ranges -->
+  <g transform="translate(40, 220)">
+    <rect width="770" height="200" fill="#1e293b" stroke="#10b981" stroke-width="1.5" rx="6"/>
+    <text x="385" y="24" fill="#10b981" font-size="13" font-weight="bold" text-anchor="middle">RFC 1918 Private IP Address Spaces (Non-Routable over Public Internet)</text>
+
+    <!-- Class A Private -->
+    <rect x="25" y="40" width="225" height="140" fill="#0f172a" stroke="#38bdf8" rx="4"/>
+    <text x="137" y="62" fill="#38bdf8" font-size="12" font-weight="bold" text-anchor="middle">Class A Private</text>
+    <text x="137" y="82" fill="#f8fafc" font-size="11" font-weight="bold" text-anchor="middle">10.0.0.0 /8</text>
+    <text x="35" y="105" fill="#94a3b8" font-size="10">Range:</text>
+    <text x="35" y="120" fill="#cbd5e1" font-size="10">10.0.0.0 – 10.255.255.255</text>
+    <text x="35" y="145" fill="#94a3b8" font-size="10">Usable Hosts:</text>
+    <text x="35" y="160" fill="#38bdf8" font-size="10" font-weight="bold">16,777,214 Hosts</text>
+
+    <!-- Class B Private -->
+    <rect x="270" y="40" width="230" height="140" fill="#0f172a" stroke="#f59e0b" rx="4"/>
+    <text x="385" y="62" fill="#f59e0b" font-size="12" font-weight="bold" text-anchor="middle">Class B Private</text>
+    <text x="385" y="82" fill="#f8fafc" font-size="11" font-weight="bold" text-anchor="middle">172.16.0.0 /12</text>
+    <text x="280" y="105" fill="#94a3b8" font-size="10">Range:</text>
+    <text x="280" y="120" fill="#cbd5e1" font-size="10">172.16.0.0 – 172.31.255.255</text>
+    <text x="280" y="145" fill="#94a3b8" font-size="10">Usable Hosts:</text>
+    <text x="280" y="160" fill="#f59e0b" font-size="10" font-weight="bold">1,048,574 Hosts (16 Subnets)</text>
+
+    <!-- Class C Private -->
+    <rect x="520" y="40" width="225" height="140" fill="#0f172a" stroke="#10b981" rx="4"/>
+    <text x="632" y="62" fill="#10b981" font-size="12" font-weight="bold" text-anchor="middle">Class C Private</text>
+    <text x="632" y="82" fill="#f8fafc" font-size="11" font-weight="bold" text-anchor="middle">192.168.0.0 /16</text>
+    <text x="530" y="105" fill="#94a3b8" font-size="10">Range:</text>
+    <text x="530" y="120" fill="#cbd5e1" font-size="10">192.168.0.0 – 192.168.255.255</text>
+    <text x="530" y="145" fill="#94a3b8" font-size="10">Usable Hosts:</text>
+    <text x="530" y="160" fill="#10b981" font-size="10" font-weight="bold">65,534 Hosts (256 Subnets)</text>
+  </g>
+
+  <!-- Footer Banner -->
+  <rect x="40" y="430" width="770" height="35" fill="#1e293b" stroke="#334155" rx="6"/>
+  <text x="425" y="452" fill="#f8fafc" font-size="11" font-weight="bold" text-anchor="middle">⚡ Exam Rule: APIPA (Automatic Private IP Addressing) is 169.254.0.0/16 — assigned automatically when DHCP fails.</text>
+</svg>
+</div>
+
 [SHOW DIAGRAM: A subnet reference table. Three columns: CIDR Prefix, Subnet Mask, Block Size, Usable Hosts. Rows: /24 = 255.255.255.0, block 256, 254 hosts. /25 = 255.255.255.128, block 128, 126 hosts. /26 = 255.255.255.192, block 64, 62 hosts. /27 = 255.255.255.224, block 32, 30 hosts. /28 = 255.255.255.240, block 16, 14 hosts. /29 = 255.255.255.248, block 8, 6 hosts. /30 = 255.255.255.252, block 4, 2 hosts.]
 
 [Alt-text: A seven-row reference table. Column headers are CIDR Prefix, Subnet Mask, Block Size, and Usable Hosts. Rows from top to bottom: /24 with mask 255.255.255.0, block size 256, 254 usable hosts. /25 with mask 255.255.255.128, block size 128, 126 hosts. /26 with mask 255.255.255.192, block size 64, 62 hosts. /27 with mask 255.255.255.224, block size 32, 30 hosts. /28 with mask 255.255.255.240, block size 16, 14 hosts. /29 with mask 255.255.255.248, block size 8, 6 hosts. /30 with mask 255.255.255.252, block size 4, 2 hosts.]

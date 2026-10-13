@@ -27,6 +27,87 @@ Part 1 covers the TCP/IP model structure, how it compares to the OSI model, and 
 
 [01:15 – 04:00]
 
+<div style="text-align: center; margin: 24px 0;">
+<svg viewBox="0 0 850 480" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="max-width: 850px; background:#0f172a; border-radius:10px; border:2px solid #1b365d; font-family:-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;">
+  <rect width="100%" height="45" fill="#1b365d"/>
+  <text x="425" y="28" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">🏛️ TEXAS WESLEYAN UNIVERSITY • CIS-3321 NETWORK ADMINISTRATION</text>
+  <text x="425" y="75" fill="#d9a74a" font-size="18" font-weight="bold" text-anchor="middle">TCP Reliable Connection Architecture: 3-Way Handshake &amp; 4-Step Teardown</text>
+
+  <!-- Left: 3-Way Handshake -->
+  <g transform="translate(40, 95)">
+    <rect width="380" height="330" fill="#1e293b" stroke="#38bdf8" stroke-width="1.5" rx="6"/>
+    <text x="190" y="24" fill="#38bdf8" font-size="13" font-weight="bold" text-anchor="middle">TCP 3-Way Handshake (Establishment)</text>
+
+    <!-- Client & Server Columns -->
+    <rect x="30" y="45" width="80" height="30" fill="#0f172a" stroke="#cbd5e1" rx="4"/><text x="70" y="65" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle">CLIENT</text>
+    <rect x="270" y="45" width="80" height="30" fill="#0f172a" stroke="#cbd5e1" rx="4"/><text x="310" y="65" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle">SERVER</text>
+
+    <line x1="70" y1="80" x2="70" y2="280" stroke="#64748b" stroke-width="2" stroke-dasharray="4,4"/>
+    <line x1="310" y1="80" x2="310" y2="280" stroke="#64748b" stroke-width="2" stroke-dasharray="4,4"/>
+
+    <!-- Step 1 SYN -->
+    <line x1="70" y1="110" x2="305" y2="140" stroke="#38bdf8" stroke-width="2.5"/>
+    <polygon points="310,140 298,133 300,145" fill="#38bdf8"/>
+    <rect x="120" y="105" width="140" height="24" fill="#0f172a" rx="3"/>
+    <text x="190" y="121" fill="#38bdf8" font-size="10" font-weight="bold" text-anchor="middle">1. SYN (Seq = x)</text>
+
+    <!-- Step 2 SYN-ACK -->
+    <line x1="310" y1="165" x2="75" y2="195" stroke="#10b981" stroke-width="2.5"/>
+    <polygon points="70,195 82,188 80,200" fill="#10b981"/>
+    <rect x="100" y="160" width="180" height="24" fill="#0f172a" rx="3"/>
+    <text x="190" y="176" fill="#10b981" font-size="10" font-weight="bold" text-anchor="middle">2. SYN-ACK (Seq=y, Ack=x+1)</text>
+
+    <!-- Step 3 ACK -->
+    <line x1="70" y1="220" x2="305" y2="250" stroke="#d9a74a" stroke-width="2.5"/>
+    <polygon points="310,250 298,243 300,255" fill="#d9a74a"/>
+    <rect x="120" y="215" width="140" height="24" fill="#0f172a" rx="3"/>
+    <text x="190" y="231" fill="#d9a74a" font-size="10" font-weight="bold" text-anchor="middle">3. ACK (Seq=x+1, Ack=y+1)</text>
+
+    <rect x="30" y="285" width="320" height="25" fill="#059669" rx="3"/>
+    <text x="190" y="302" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle">STATUS: ESTABLISHED (Bidirectional Stream)</text>
+  </g>
+
+  <!-- Right: 4-Step Teardown -->
+  <g transform="translate(440, 95)">
+    <rect width="370" height="330" fill="#1e293b" stroke="#f59e0b" stroke-width="1.5" rx="6"/>
+    <text x="185" y="24" fill="#f59e0b" font-size="13" font-weight="bold" text-anchor="middle">TCP 4-Step Connection Termination</text>
+
+    <rect x="30" y="45" width="80" height="30" fill="#0f172a" stroke="#cbd5e1" rx="4"/><text x="70" y="65" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle">CLIENT</text>
+    <rect x="260" y="45" width="80" height="30" fill="#0f172a" stroke="#cbd5e1" rx="4"/><text x="300" y="65" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle">SERVER</text>
+
+    <line x1="70" y1="80" x2="70" y2="280" stroke="#64748b" stroke-width="2" stroke-dasharray="4,4"/>
+    <line x1="300" y1="80" x2="300" y2="280" stroke="#64748b" stroke-width="2" stroke-dasharray="4,4"/>
+
+    <!-- Step 1 FIN -->
+    <line x1="70" y1="105" x2="295" y2="130" stroke="#ef4444" stroke-width="2"/>
+    <polygon points="300,130 288,124 290,135" fill="#ef4444"/>
+    <text x="185" y="115" fill="#fca5a5" font-size="10" font-weight="bold" text-anchor="middle">1. FIN (Client Closes)</text>
+
+    <!-- Step 2 ACK -->
+    <line x1="300" y1="145" x2="75" y2="170" stroke="#cbd5e1" stroke-width="2"/>
+    <polygon points="70,170 82,164 80,175" fill="#cbd5e1"/>
+    <text x="185" y="155" fill="#cbd5e1" font-size="10" text-anchor="middle">2. ACK (Server Confirms)</text>
+
+    <!-- Step 3 FIN -->
+    <line x1="300" y1="190" x2="75" y2="215" stroke="#ef4444" stroke-width="2"/>
+    <polygon points="70,215 82,209 80,220" fill="#ef4444"/>
+    <text x="185" y="200" fill="#fca5a5" font-size="10" font-weight="bold" text-anchor="middle">3. FIN (Server Closes)</text>
+
+    <!-- Step 4 ACK -->
+    <line x1="70" y1="235" x2="295" y2="260" stroke="#cbd5e1" stroke-width="2"/>
+    <polygon points="300,260 288,254 290,265" fill="#cbd5e1"/>
+    <text x="185" y="245" fill="#cbd5e1" font-size="10" text-anchor="middle">4. ACK (Client Confirms)</text>
+
+    <rect x="25" y="285" width="320" height="25" fill="#b91c1c" rx="3"/>
+    <text x="185" y="302" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle">STATUS: CLOSED (TIME_WAIT Expired)</text>
+  </g>
+
+  <!-- Footer Banner -->
+  <rect x="40" y="435" width="770" height="35" fill="#1e293b" stroke="#334155" rx="6"/>
+  <text x="425" y="457" fill="#f8fafc" font-size="11" font-weight="bold" text-anchor="middle">⚡ Network+ Rule: UDP has NO handshake, no sequence numbers, and no delivery acknowledgments.</text>
+</svg>
+</div>
+
 [SHOW DIAGRAM: A four-layer vertical stack for the TCP/IP model. From bottom to top: Network Access Layer, Internet Layer, Transport Layer, Application Layer. To the right, a seven-layer OSI model stack with dotted lines connecting: Network Access to Layers 1 and 2, Internet to Layer 3, Transport to Layer 4, Application to Layers 5 through 7.]
 
 [Alt-text: Two vertical stacks shown side by side. Left stack is the TCP/IP model with four layers from bottom to top: Network Access, Internet, Transport, Application. Right stack is the OSI model with seven layers from bottom to top: Physical, Data Link, Network, Transport, Session, Presentation, Application. Dotted horizontal lines connect Network Access to Physical and Data Link, Internet to Network, Transport to Transport, and Application to Session through Application.]

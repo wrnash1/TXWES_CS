@@ -57,6 +57,75 @@ Let's get into it."
 
 **[SHOW COMPONENT: Place ATX motherboard flat on the table. Hold up a ruler showing the 12-inch length and 9.6-inch width]**
 
+
+<div style="text-align: center; margin: 24px 0;">
+<svg viewBox="0 0 800 520" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="max-width: 800px; background:#0f172a; border-radius:10px; border:2px solid #1b365d; font-family:-apple-system, sans-serif;">
+  <rect width="100%" height="45" fill="#1b365d"/>
+  <text x="400" y="28" fill="#ffffff" font-size="15" font-weight="bold" text-anchor="middle">🏛️ TEXAS WESLEYAN UNIVERSITY • CIS-2320 HARDWARE FUNDAMENTALS</text>
+  <text x="400" y="80" fill="#d9a74a" font-size="18" font-weight="bold" text-anchor="middle">Motherboard Form Factor Comparison: ATX vs. Micro-ATX vs. Mini-ITX</text>
+  
+  <!-- ATX Board -->
+  <g transform="translate(50, 110)">
+    <rect width="260" height="325" fill="#1e293b" stroke="#38bdf8" stroke-width="2" rx="6"/>
+    <rect width="260" height="28" fill="#0284c7" rx="6"/>
+    <text x="130" y="19" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle">Standard ATX (12" × 9.6")</text>
+    <rect x="30" y="45" width="80" height="80" fill="#334155" stroke="#94a3b8" stroke-dasharray="3,3" rx="4"/>
+    <text x="70" y="90" fill="#94a3b8" font-size="11" text-anchor="middle">CPU Socket</text>
+    <rect x="130" y="45" width="20" height="80" fill="#475569" rx="2"/>
+    <rect x="160" y="45" width="20" height="80" fill="#475569" rx="2"/>
+    <rect x="190" y="45" width="20" height="80" fill="#475569" rx="2"/>
+    <rect x="220" y="45" width="20" height="80" fill="#475569" rx="2"/>
+    <text x="185" y="140" fill="#cbd5e1" font-size="10" text-anchor="middle">4× DIMM RAM Slots</text>
+    <rect x="30" y="170" width="200" height="12" fill="#0284c7" rx="2"/>
+    <text x="130" y="181" fill="#ffffff" font-size="9" font-weight="bold" text-anchor="middle">PCIe 5.0 ×16 Slot</text>
+    <rect x="30" y="195" width="70" height="10" fill="#64748b" rx="2"/>
+    <rect x="30" y="215" width="200" height="12" fill="#0284c7" rx="2"/>
+    <rect x="30" y="240" width="70" height="10" fill="#64748b" rx="2"/>
+    <rect x="30" y="260" width="200" height="12" fill="#0284c7" rx="2"/>
+    <rect x="30" y="285" width="200" height="12" fill="#0284c7" rx="2"/>
+    <text x="130" y="312" fill="#38bdf8" font-size="10" font-weight="bold" text-anchor="middle">Up to 7 Expansion Slots</text>
+  </g>
+
+  <!-- Micro-ATX Board -->
+  <g transform="translate(340, 110)">
+    <rect width="240" height="240" fill="#1e293b" stroke="#a855f7" stroke-width="2" rx="6"/>
+    <rect width="240" height="28" fill="#9333ea" rx="6"/>
+    <text x="120" y="19" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle">Micro-ATX (9.6" × 9.6")</text>
+    <rect x="25" y="45" width="70" height="70" fill="#334155" stroke="#94a3b8" stroke-dasharray="3,3" rx="4"/>
+    <text x="60" y="85" fill="#94a3b8" font-size="10" text-anchor="middle">CPU Socket</text>
+    <rect x="115" y="45" width="18" height="70" fill="#475569" rx="2"/>
+    <rect x="145" y="45" width="18" height="70" fill="#475569" rx="2"/>
+    <rect x="175" y="45" width="18" height="70" fill="#475569" rx="2"/>
+    <rect x="205" y="45" width="18" height="70" fill="#475569" rx="2"/>
+    <text x="165" y="130" fill="#cbd5e1" font-size="10" text-anchor="middle">4× DIMM Slots</text>
+    <rect x="25" y="150" width="190" height="12" fill="#9333ea" rx="2"/>
+    <rect x="25" y="172" width="60" height="10" fill="#64748b" rx="2"/>
+    <rect x="25" y="192" width="60" height="10" fill="#64748b" rx="2"/>
+    <rect x="25" y="212" width="190" height="12" fill="#9333ea" rx="2"/>
+    <text x="120" y="235" fill="#c084fc" font-size="10" font-weight="bold" text-anchor="middle">Up to 4 Expansion Slots</text>
+  </g>
+
+  <!-- Mini-ITX Board -->
+  <g transform="translate(610, 110)">
+    <rect width="150" height="150" fill="#1e293b" stroke="#22c55e" stroke-width="2" rx="6"/>
+    <rect width="150" height="28" fill="#16a34a" rx="6"/>
+    <text x="75" y="19" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">Mini-ITX (6.7" × 6.7")</text>
+    <rect x="15" y="40" width="60" height="60" fill="#334155" stroke="#94a3b8" stroke-dasharray="3,3" rx="4"/>
+    <text x="45" y="75" fill="#94a3b8" font-size="9" text-anchor="middle">CPU Socket</text>
+    <rect x="90" y="40" width="15" height="60" fill="#475569" rx="2"/>
+    <rect x="115" y="40" width="15" height="60" fill="#475569" rx="2"/>
+    <text x="108" y="112" fill="#cbd5e1" font-size="9" text-anchor="middle">2× DIMM</text>
+    <rect x="15" y="122" width="120" height="12" fill="#16a34a" rx="2"/>
+    <text x="75" y="145" fill="#4ade80" font-size="9" font-weight="bold" text-anchor="middle">1× PCIe ×16 Only</text>
+  </g>
+
+  <!-- Bottom Legend -->
+  <rect x="50" y="460" width="700" height="40" fill="#1e293b" rx="6" stroke="#334155"/>
+  <text x="400" y="485" fill="#f8fafc" font-size="12" font-weight="bold" text-anchor="middle">⚡ CompTIA A+ Blueprint Key Fact: Micro-ATX (9.6" × 9.6") is backward-compatible with standard ATX desktop cases.</text>
+</svg>
+</div>
+
+
 "This is an ATX motherboard. ATX stands for Advanced Technology eXtended, and it has been the standard full-size desktop form factor since 1995. The dimensions are 12 inches by 9.6 inches. When you pick up any standard full tower or mid tower desktop case, this is the board it was designed to hold.
 
 Count the expansion slots along the bottom edge — you will typically see five to seven PCIe slots on a full ATX board. Count the RAM slots — usually four, sometimes eight on high-end boards. That expandability is the entire reason ATX is still the dominant form factor for desktops.

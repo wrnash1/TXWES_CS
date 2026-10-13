@@ -32,6 +32,89 @@
 
 ## [00:00 - 02:30] Section 1 — Introduction and Safety Foundation
 
+<div style="text-align: center; margin: 24px 0;">
+<svg viewBox="0 0 850 480" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="max-width: 850px; background:#0f172a; border-radius:10px; border:2px solid #1b365d; font-family:-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;">
+  <rect width="100%" height="45" fill="#1b365d"/>
+  <text x="425" y="28" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">🏛️ TEXAS WESLEYAN UNIVERSITY • CIS-2320 HARDWARE FUNDAMENTALS</text>
+  <text x="425" y="75" fill="#d9a74a" font-size="18" font-weight="bold" text-anchor="middle">Laptop Internal Architecture &amp; Safe Field Disassembly Protocol</text>
+
+  <!-- Laptop Base Schematic -->
+  <g transform="translate(40, 95)">
+    <rect width="480" height="325" fill="#1e293b" stroke="#38bdf8" stroke-width="2" rx="8"/>
+    <text x="240" y="25" fill="#38bdf8" font-size="13" font-weight="bold" text-anchor="middle">Laptop Chassis Under-Panel Component Map</text>
+
+    <!-- Battery -->
+    <rect x="30" y="45" width="420" height="75" fill="#0f172a" stroke="#d9a74a" stroke-width="1.5" rx="4"/>
+    <text x="240" y="75" fill="#d9a74a" font-size="12" font-weight="bold" text-anchor="middle">Lithium-Ion / Li-Polymer Battery Pack</text>
+    <text x="240" y="95" fill="#fca5a5" font-size="10" text-anchor="middle">⚠️ STEP 1: Disconnect Battery Connector Before Touching Any Internal Circuits!</text>
+    <text x="240" y="110" fill="#94a3b8" font-size="9" text-anchor="middle">Inspect for swelling / pouch distension — replace immediately if deformed</text>
+
+    <!-- Motherboard internals -->
+    <g transform="translate(30, 130)">
+      <!-- CPU & Heatpipe -->
+      <rect x="0" y="0" width="130" height="90" fill="#0f172a" stroke="#ef4444" rx="4"/>
+      <text x="65" y="25" fill="#ef4444" font-size="11" font-weight="bold" text-anchor="middle">BGA CPU &amp; Heatpipe</text>
+      <line x1="20" y1="45" x2="110" y2="45" stroke="#d9a74a" stroke-width="4"/>
+      <text x="65" y="70" fill="#94a3b8" font-size="9" text-anchor="middle">Copper heatpipe to blower fan</text>
+
+      <!-- SO-DIMM Slots -->
+      <rect x="145" y="0" width="130" height="90" fill="#0f172a" stroke="#10b981" rx="4"/>
+      <text x="210" y="25" fill="#10b981" font-size="11" font-weight="bold" text-anchor="middle">SO-DIMM RAM</text>
+      <rect x="160" y="38" width="100" height="15" fill="#334155" rx="2"/>
+      <rect x="160" y="58" width="100" height="15" fill="#334155" rx="2"/>
+      <text x="210" y="84" fill="#94a3b8" font-size="8" text-anchor="middle">Spring clips at 45° angle</text>
+
+      <!-- M.2 SSD & Wi-Fi -->
+      <rect x="290" y="0" width="130" height="90" fill="#0f172a" stroke="#38bdf8" rx="4"/>
+      <text x="355" y="20" fill="#38bdf8" font-size="10" font-weight="bold" text-anchor="middle">M.2 NVMe SSD (2280/2230)</text>
+      <rect x="305" y="28" width="100" height="22" fill="#1e293b" rx="2"/>
+      <text x="355" y="65" fill="#a855f7" font-size="10" font-weight="bold" text-anchor="middle">M.2 Wi-Fi / Bluetooth Card</text>
+      <text x="355" y="80" fill="#cbd5e1" font-size="8" text-anchor="middle">Main (White) &amp; Aux (Black) Antennas</text>
+    </g>
+
+    <!-- Connectors -->
+    <g transform="translate(30, 235)">
+      <rect x="0" y="0" width="420" height="75" fill="#0f172a" rx="4"/>
+      <text x="210" y="20" fill="#cbd5e1" font-size="10" font-weight="bold" text-anchor="middle">Flat Ribbon Cables &amp; ZIF (Zero Insertion Force) Sockets</text>
+      <text x="20" y="42" fill="#94a3b8" font-size="10">• <b>ZIF Connectors:</b> Flip locking bail up gently; never pull cable with bail locked.</text>
+      <text x="20" y="60" fill="#94a3b8" font-size="10">• <b>Wi-Fi Antennas:</b> Snap onto micro-coaxial U.FL/MHF4 connectors with spudger.</text>
+    </g>
+  </g>
+
+  <!-- Disassembly Best Practices Checklist -->
+  <g transform="translate(540, 95)">
+    <rect width="270" height="325" fill="#1e293b" stroke="#cbd5e1" stroke-width="1.5" rx="6"/>
+    <text x="135" y="25" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle">Field Disassembly Protocol</text>
+
+    <g transform="translate(15, 45)">
+      <rect x="0" y="0" width="240" height="45" fill="#0f172a" rx="3"/>
+      <text x="10" y="18" fill="#38bdf8" font-size="10" font-weight="bold">1. Screw Organization Tray</text>
+      <text x="10" y="34" fill="#94a3b8" font-size="9">Label screw lengths and locations.</text>
+
+      <rect x="0" y="52" width="240" height="45" fill="#0f172a" rx="3"/>
+      <text x="10" y="70" fill="#10b981" font-size="10" font-weight="bold">2. Anti-Static Wrist Strap</text>
+      <text x="10" y="86" fill="#94a3b8" font-size="9">Attach to grounded work mat.</text>
+
+      <rect x="0" y="104" width="240" height="45" fill="#0f172a" rx="3"/>
+      <text x="10" y="122" fill="#d9a74a" font-size="10" font-weight="bold">3. Plastic Spudger / Pry Tool</text>
+      <text x="10" y="138" fill="#94a3b8" font-size="9">Never use metal tools on plastic tabs.</text>
+
+      <rect x="0" y="156" width="240" height="45" fill="#0f172a" rx="3"/>
+      <text x="10" y="174" fill="#ef4444" font-size="10" font-weight="bold">4. Battery Isolation First</text>
+      <text x="10" y="190" fill="#94a3b8" font-size="9">Disconnect battery before cables.</text>
+
+      <rect x="0" y="208" width="240" height="50" fill="#0f172a" rx="3"/>
+      <text x="10" y="226" fill="#a855f7" font-size="10" font-weight="bold">5. Antenna Route Tracking</text>
+      <text x="10" y="244" fill="#94a3b8" font-size="9">Route wires in chassis grooves.</text>
+    </g>
+  </g>
+
+  <!-- Footer Banner -->
+  <rect x="40" y="430" width="770" height="35" fill="#1e293b" stroke="#334155" rx="6"/>
+  <text x="425" y="452" fill="#f8fafc" font-size="11" font-weight="bold" text-anchor="middle">⚡ A+ Exam Warning: Mixing screw lengths during reassembly can puncture motherboards or crack palm rests!</text>
+</svg>
+</div>
+
 **[SHOW COMPONENT: Title slide — "Module 13: Laptop Components and Disassembly"]**
 
 Welcome to Module 13 of CIS-2320 Hardware Fundamentals. I am Professor Nash. Today we go inside the laptop — one of the most interesting and challenging areas of A+ hardware service. Laptops are different from desktops in one critical way: everything is smaller, more tightly integrated, and more fragile. The same upgrade or repair that takes five minutes on a desktop can take thirty minutes on a laptop because of the proprietary design, the miniaturized connectors, and the very specific order of operations required to disassemble without breaking anything.

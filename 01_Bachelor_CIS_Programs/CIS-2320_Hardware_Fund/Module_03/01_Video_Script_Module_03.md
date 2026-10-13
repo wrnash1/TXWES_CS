@@ -56,6 +56,98 @@ Let's get started."
 
 **[CAMERA: Cut to component table]**
 
+<div style="text-align: center; margin: 24px 0;">
+<svg viewBox="0 0 850 480" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="max-width: 850px; background:#0f172a; border-radius:10px; border:2px solid #1b365d; font-family:-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;">
+  <rect width="100%" height="45" fill="#1b365d"/>
+  <text x="425" y="28" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">🏛️ TEXAS WESLEYAN UNIVERSITY • CIS-2320 HARDWARE FUNDAMENTALS</text>
+  <text x="425" y="75" fill="#d9a74a" font-size="18" font-weight="bold" text-anchor="middle">CPU Socket Architecture Comparison: LGA vs. PGA vs. BGA</text>
+
+  <!-- LGA Panel -->
+  <g transform="translate(40, 95)">
+    <rect width="235" height="325" fill="#1e293b" stroke="#38bdf8" stroke-width="2" rx="8"/>
+    <rect width="235" height="32" fill="#0284c7" rx="8"/>
+    <rect width="235" height="10" y="22" fill="#0284c7"/>
+    <text x="117" y="21" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle">LGA (Land Grid Array)</text>
+    
+    <!-- Socket Visual -->
+    <rect x="42" y="45" width="150" height="110" fill="#0f172a" stroke="#cbd5e1" rx="4"/>
+    <circle cx="65" cy="70" r="2.5" fill="#d9a74a"/><circle cx="85" cy="70" r="2.5" fill="#d9a74a"/><circle cx="105" cy="70" r="2.5" fill="#d9a74a"/><circle cx="125" cy="70" r="2.5" fill="#d9a74a"/><circle cx="145" cy="70" r="2.5" fill="#d9a74a"/><circle cx="165" cy="70" r="2.5" fill="#d9a74a"/>
+    <circle cx="65" cy="90" r="2.5" fill="#d9a74a"/><circle cx="85" cy="90" r="2.5" fill="#d9a74a"/><circle cx="105" cy="90" r="2.5" fill="#d9a74a"/><circle cx="125" cy="90" r="2.5" fill="#d9a74a"/><circle cx="145" cy="90" r="2.5" fill="#d9a74a"/><circle cx="165" cy="90" r="2.5" fill="#d9a74a"/>
+    <circle cx="65" cy="110" r="2.5" fill="#d9a74a"/><circle cx="85" cy="110" r="2.5" fill="#d9a74a"/><circle cx="105" cy="110" r="2.5" fill="#d9a74a"/><circle cx="125" cy="110" r="2.5" fill="#d9a74a"/><circle cx="145" cy="110" r="2.5" fill="#d9a74a"/><circle cx="165" cy="110" r="2.5" fill="#d9a74a"/>
+    <circle cx="65" cy="130" r="2.5" fill="#d9a74a"/><circle cx="85" cy="130" r="2.5" fill="#d9a74a"/><circle cx="105" cy="130" r="2.5" fill="#d9a74a"/><circle cx="125" cy="130" r="2.5" fill="#d9a74a"/><circle cx="145" cy="130" r="2.5" fill="#d9a74a"/><circle cx="165" cy="130" r="2.5" fill="#d9a74a"/>
+    <text x="117" y="172" fill="#38bdf8" font-size="11" font-weight="bold" text-anchor="middle">Pins on Motherboard Socket</text>
+    
+    <rect x="15" y="185" width="205" height="125" fill="#0f172a" rx="4"/>
+    <text x="25" y="205" fill="#f8fafc" font-size="11"><b>CPU Underside:</b> Flat gold pads</text>
+    <text x="25" y="225" fill="#f8fafc" font-size="11"><b>Primary Vendors:</b> Intel, AMD AM5</text>
+    <text x="25" y="245" fill="#f8fafc" font-size="11"><b>Key Examples:</b> LGA1700, LGA1200</text>
+    <text x="25" y="268" fill="#fca5a5" font-size="10">⚠️ <b>Risk:</b> Bent socket pins</text>
+    <text x="25" y="283" fill="#fca5a5" font-size="10">destroys the entire motherboard.</text>
+    <text x="25" y="300" fill="#38bdf8" font-size="10">Retained via load lever &amp; bracket.</text>
+  </g>
+
+  <!-- PGA Panel -->
+  <g transform="translate(305, 95)">
+    <rect width="235" height="325" fill="#1e293b" stroke="#10b981" stroke-width="2" rx="8"/>
+    <rect width="235" height="32" fill="#059669" rx="8"/>
+    <rect width="235" height="10" y="22" fill="#059669"/>
+    <text x="117" y="21" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle">PGA (Pin Grid Array)</text>
+    
+    <!-- CPU Underside Visual -->
+    <rect x="42" y="45" width="150" height="110" fill="#0f172a" stroke="#cbd5e1" rx="4"/>
+    <!-- Pins extending -->
+    <line x1="65" y1="65" x2="65" y2="78" stroke="#d9a74a" stroke-width="3"/>
+    <line x1="85" y1="65" x2="85" y2="78" stroke="#d9a74a" stroke-width="3"/>
+    <line x1="105" y1="65" x2="105" y2="78" stroke="#d9a74a" stroke-width="3"/>
+    <line x1="125" y1="65" x2="125" y2="78" stroke="#d9a74a" stroke-width="3"/>
+    <line x1="145" y1="65" x2="145" y2="78" stroke="#d9a74a" stroke-width="3"/>
+    <line x1="165" y1="65" x2="165" y2="78" stroke="#d9a74a" stroke-width="3"/>
+    <line x1="65" y1="95" x2="65" y2="108" stroke="#d9a74a" stroke-width="3"/>
+    <line x1="85" y1="95" x2="85" y2="108" stroke="#d9a74a" stroke-width="3"/>
+    <line x1="105" y1="95" x2="105" y2="108" stroke="#d9a74a" stroke-width="3"/>
+    <line x1="125" y1="95" x2="125" y2="108" stroke="#d9a74a" stroke-width="3"/>
+    <line x1="145" y1="95" x2="145" y2="108" stroke="#d9a74a" stroke-width="3"/>
+    <line x1="165" y1="95" x2="165" y2="108" stroke="#d9a74a" stroke-width="3"/>
+    <text x="117" y="172" fill="#10b981" font-size="11" font-weight="bold" text-anchor="middle">Pins on CPU Package Underside</text>
+    
+    <rect x="15" y="185" width="205" height="125" fill="#0f172a" rx="4"/>
+    <text x="25" y="205" fill="#f8fafc" font-size="11"><b>Socket:</b> Receptacle pin holes</text>
+    <text x="25" y="225" fill="#f8fafc" font-size="11"><b>Primary Vendors:</b> Legacy AMD (AM4)</text>
+    <text x="25" y="245" fill="#f8fafc" font-size="11"><b>Insertion:</b> Zero Insertion Force (ZIF)</text>
+    <text x="25" y="268" fill="#fef08a" font-size="10">⚠️ <b>Risk:</b> Dropping CPU bends pins.</text>
+    <text x="25" y="283" fill="#fef08a" font-size="10">Pins can be straightened gently.</text>
+    <text x="25" y="300" fill="#10b981" font-size="10">Locked into socket with ZIF arm.</text>
+  </g>
+
+  <!-- BGA Panel -->
+  <g transform="translate(570, 95)">
+    <rect width="240" height="325" fill="#1e293b" stroke="#a855f7" stroke-width="2" rx="8"/>
+    <rect width="240" height="32" fill="#7e22ce" rx="8"/>
+    <rect width="240" height="10" y="22" fill="#7e22ce"/>
+    <text x="120" y="21" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle">BGA (Ball Grid Array)</text>
+    
+    <!-- Solder Ball Visual -->
+    <rect x="45" y="45" width="150" height="110" fill="#0f172a" stroke="#cbd5e1" rx="4"/>
+    <circle cx="70" cy="75" r="4.5" fill="#cbd5e1"/><circle cx="95" cy="75" r="4.5" fill="#cbd5e1"/><circle cx="120" cy="75" r="4.5" fill="#cbd5e1"/><circle cx="145" cy="75" r="4.5" fill="#cbd5e1"/><circle cx="170" cy="75" r="4.5" fill="#cbd5e1"/>
+    <circle cx="70" cy="105" r="4.5" fill="#cbd5e1"/><circle cx="95" cy="105" r="4.5" fill="#cbd5e1"/><circle cx="120" cy="105" r="4.5" fill="#cbd5e1"/><circle cx="145" cy="105" r="4.5" fill="#cbd5e1"/><circle cx="170" cy="105" r="4.5" fill="#cbd5e1"/>
+    <circle cx="70" cy="135" r="4.5" fill="#cbd5e1"/><circle cx="95" cy="135" r="4.5" fill="#cbd5e1"/><circle cx="120" cy="135" r="4.5" fill="#cbd5e1"/><circle cx="145" cy="135" r="4.5" fill="#cbd5e1"/><circle cx="170" cy="135" r="4.5" fill="#cbd5e1"/>
+    <text x="120" y="172" fill="#c084fc" font-size="11" font-weight="bold" text-anchor="middle">Solder Balls Bonded to Board</text>
+    
+    <rect x="15" y="185" width="210" height="125" fill="#0f172a" rx="4"/>
+    <text x="25" y="205" fill="#f8fafc" font-size="11"><b>Socket:</b> NONE (Surface Mount)</text>
+    <text x="25" y="225" fill="#f8fafc" font-size="11"><b>Target Devices:</b> Laptops, Tablets, IoT</text>
+    <text x="25" y="245" fill="#f8fafc" font-size="11"><b>Serviceability:</b> Non-removable</text>
+    <text x="25" y="268" fill="#e9d5ff" font-size="10">⚡ <b>Exam Fact:</b> CPU failure requires</text>
+    <text x="25" y="283" fill="#e9d5ff" font-size="10">complete motherboard replacement.</text>
+    <text x="25" y="300" fill="#a855f7" font-size="10">Zero field swappability.</text>
+  </g>
+
+  <!-- Footer Banner -->
+  <rect x="40" y="435" width="770" height="35" fill="#1e293b" stroke="#334155" rx="6"/>
+  <text x="425" y="457" fill="#f8fafc" font-size="11" font-weight="bold" text-anchor="middle">⚡ A+ Rule of Thumb: LGA = Pins in Socket | PGA = Pins on Processor | BGA = Bonded by Solder Ball</text>
+</svg>
+</div>
+
 **[SHOW COMPONENT: Intel LGA socket on motherboard — overhead close-up of the socket showing the dense grid of pin contacts]**
 
 "Let's start with the two primary socket types you will work with in the field and see on the exam: LGA and PGA.

@@ -78,6 +78,55 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
+<div style="text-align: center; margin: 24px 0;">
+<svg viewBox="0 0 850 480" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="max-width: 850px; background:#0f172a; border-radius:10px; border:2px solid #1b365d; font-family:-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;">
+  <rect width="100%" height="45" fill="#1b365d"/>
+  <text x="425" y="28" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">🏛️ TEXAS WESLEYAN UNIVERSITY • CIS-2320 HARDWARE FUNDAMENTALS</text>
+  <text x="425" y="75" fill="#d9a74a" font-size="18" font-weight="bold" text-anchor="middle">Ethernet Cable Categories &amp; T568A vs. T568B Color Wiring Standards</text>
+
+  <!-- Wiring Diagrams (T568A vs T568B) -->
+  <g transform="translate(40, 95)">
+    <!-- T568A -->
+    <rect x="0" y="0" width="375" height="325" fill="#1e293b" stroke="#10b981" stroke-width="2" rx="6"/>
+    <text x="187" y="25" fill="#10b981" font-size="13" font-weight="bold" text-anchor="middle">T568A Pinout Standard (Residential / Gov)</text>
+    
+    <g transform="translate(25, 45)">
+      <rect x="0" y="0" width="325" height="24" fill="#0f172a" rx="3"/><text x="10" y="16" fill="#86efac" font-size="10">Pin 1: White / Green</text>
+      <rect x="0" y="28" width="325" height="24" fill="#0f172a" rx="3"/><text x="10" y="44" fill="#22c55e" font-size="10">Pin 2: Green</text>
+      <rect x="0" y="56" width="325" height="24" fill="#0f172a" rx="3"/><text x="10" y="72" fill="#fdba74" font-size="10">Pin 3: White / Orange</text>
+      <rect x="0" y="84" width="325" height="24" fill="#0f172a" rx="3"/><text x="10" y="100" fill="#3b82f6" font-size="10">Pin 4: Blue</text>
+      <rect x="0" y="112" width="325" height="24" fill="#0f172a" rx="3"/><text x="10" y="128" fill="#93c5fd" font-size="10">Pin 5: White / Blue</text>
+      <rect x="0" y="140" width="325" height="24" fill="#0f172a" rx="3"/><text x="10" y="156" fill="#f97316" font-size="10">Pin 6: Orange</text>
+      <rect x="0" y="168" width="325" height="24" fill="#0f172a" rx="3"/><text x="10" y="184" fill="#d6d3d1" font-size="10">Pin 7: White / Brown</text>
+      <rect x="0" y="196" width="325" height="24" fill="#0f172a" rx="3"/><text x="10" y="212" fill="#a8a29e" font-size="10">Pin 8: Brown</text>
+    </g>
+    <text x="187" y="300" fill="#cbd5e1" font-size="10" text-anchor="middle">Used primarily in federal installations &amp; residential telecom</text>
+  </g>
+
+  <!-- T568B -->
+  <g transform="translate(435, 95)">
+    <rect x="0" y="0" width="375" height="325" fill="#1e293b" stroke="#f59e0b" stroke-width="2" rx="6"/>
+    <text x="187" y="25" fill="#f59e0b" font-size="13" font-weight="bold" text-anchor="middle">T568B Pinout Standard (Commercial Default)</text>
+    
+    <g transform="translate(25, 45)">
+      <rect x="0" y="0" width="325" height="24" fill="#0f172a" rx="3"/><text x="10" y="16" fill="#fdba74" font-size="10">Pin 1: White / Orange</text>
+      <rect x="0" y="28" width="325" height="24" fill="#0f172a" rx="3"/><text x="10" y="44" fill="#f97316" font-size="10">Pin 2: Orange</text>
+      <rect x="0" y="56" width="325" height="24" fill="#0f172a" rx="3"/><text x="10" y="72" fill="#86efac" font-size="10">Pin 3: White / Green</text>
+      <rect x="0" y="84" width="325" height="24" fill="#0f172a" rx="3"/><text x="10" y="100" fill="#3b82f6" font-size="10">Pin 4: Blue</text>
+      <rect x="0" y="112" width="325" height="24" fill="#0f172a" rx="3"/><text x="10" y="128" fill="#93c5fd" font-size="10">Pin 5: White / Blue</text>
+      <rect x="0" y="140" width="325" height="24" fill="#0f172a" rx="3"/><text x="10" y="156" fill="#22c55e" font-size="10">Pin 6: Green</text>
+      <rect x="0" y="168" width="325" height="24" fill="#0f172a" rx="3"/><text x="10" y="184" fill="#d6d3d1" font-size="10">Pin 7: White / Brown</text>
+      <rect x="0" y="196" width="325" height="24" fill="#0f172a" rx="3"/><text x="10" y="212" fill="#a8a29e" font-size="10">Pin 8: Brown</text>
+    </g>
+    <text x="187" y="300" fill="#cbd5e1" font-size="10" text-anchor="middle">De facto commercial standard across modern enterprise networks</text>
+  </g>
+
+  <!-- Footer Banner -->
+  <rect x="40" y="430" width="770" height="35" fill="#1e293b" stroke="#334155" rx="6"/>
+  <text x="425" y="452" fill="#f8fafc" font-size="11" font-weight="bold" text-anchor="middle">⚡ Cable Rule: Straight-through = Same on both ends | Crossover = T568A on one end, T568B on the other.</text>
+</svg>
+</div>
+
 
 
 

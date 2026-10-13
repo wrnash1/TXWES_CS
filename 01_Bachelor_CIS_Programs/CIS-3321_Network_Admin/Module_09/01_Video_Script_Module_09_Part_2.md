@@ -28,6 +28,97 @@ Welcome back to Module 09. In Part 1 we covered DNS record types, the resolution
 
 [00:45 – 04:00]
 
+<div style="text-align: center; margin: 24px 0;">
+<svg viewBox="0 0 850 480" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="max-width: 850px; background:#0f172a; border-radius:10px; border:2px solid #1b365d; font-family:-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;">
+  <rect width="100%" height="45" fill="#1b365d"/>
+  <text x="425" y="28" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">🏛️ TEXAS WESLEYAN UNIVERSITY • CIS-3321 NETWORK ADMINISTRATION</text>
+  <text x="425" y="75" fill="#d9a74a" font-size="18" font-weight="bold" text-anchor="middle">Core Network Services: DNS Resolution Hierarchy &amp; DHCP DORA Handshake</text>
+
+  <!-- Left: DNS Resolution Hierarchy -->
+  <g transform="translate(40, 95)">
+    <rect width="380" height="325" fill="#1e293b" stroke="#38bdf8" stroke-width="1.5" rx="6"/>
+    <text x="190" y="24" fill="#38bdf8" font-size="13" font-weight="bold" text-anchor="middle">DNS Hierarchical Namespace (Port 53)</text>
+
+    <!-- Root -->
+    <rect x="130" y="40" width="120" height="35" fill="#0f172a" stroke="#d9a74a" rx="4"/>
+    <text x="190" y="62" fill="#d9a74a" font-size="12" font-weight="bold" text-anchor="middle">Root Domain (.)</text>
+
+    <line x1="160" y1="75" x2="80" y2="105" stroke="#64748b" stroke-width="2"/>
+    <line x1="220" y1="75" x2="300" y2="105" stroke="#64748b" stroke-width="2"/>
+
+    <!-- TLDs -->
+    <rect x="25" y="105" width="110" height="32" fill="#0f172a" stroke="#38bdf8" rx="3"/>
+    <text x="80" y="126" fill="#38bdf8" font-size="11" font-weight="bold" text-anchor="middle">.edu / .com</text>
+
+    <rect x="245" y="105" width="110" height="32" fill="#0f172a" stroke="#38bdf8" rx="3"/>
+    <text x="300" y="126" fill="#38bdf8" font-size="11" font-weight="bold" text-anchor="middle">.org / .net</text>
+
+    <line x1="80" y1="137" x2="80" y2="165" stroke="#64748b" stroke-width="2"/>
+
+    <!-- Second Level -->
+    <rect x="20" y="165" width="130" height="32" fill="#0f172a" stroke="#10b981" rx="3"/>
+    <text x="85" y="186" fill="#10b981" font-size="11" font-weight="bold" text-anchor="middle">txwes.edu</text>
+
+    <line x1="85" y1="197" x2="85" y2="225" stroke="#64748b" stroke-width="2"/>
+
+    <!-- Host / Subdomain -->
+    <rect x="15" y="225" width="140" height="32" fill="#0f172a" stroke="#a855f7" rx="3"/>
+    <text x="85" y="246" fill="#c084fc" font-size="11" font-weight="bold" text-anchor="middle">canvas.txwes.edu</text>
+
+    <!-- Key Record Types Table -->
+    <rect x="170" y="155" width="195" height="150" fill="#0f172a" rx="4"/>
+    <text x="267" y="174" fill="#f8fafc" font-size="11" font-weight="bold" text-anchor="middle">Essential Record Types</text>
+    <text x="180" y="196" fill="#38bdf8" font-size="10"><b>A:</b> IPv4 Address</text>
+    <text x="180" y="214" fill="#10b981" font-size="10"><b>AAAA:</b> IPv6 Address</text>
+    <text x="180" y="232" fill="#d9a74a" font-size="10"><b>CNAME:</b> Canonical Alias</text>
+    <text x="180" y="250" fill="#f59e0b" font-size="10"><b>MX:</b> Mail Exchange Server</text>
+    <text x="180" y="268" fill="#c084fc" font-size="10"><b>PTR:</b> Reverse DNS (IP→Name)</text>
+    <text x="180" y="286" fill="#ef4444" font-size="10"><b>SOA / NS:</b> Authority / Nameserver</text>
+  </g>
+
+  <!-- Right: DHCP DORA Process -->
+  <g transform="translate(440, 95)">
+    <rect width="370" height="325" fill="#1e293b" stroke="#10b981" stroke-width="1.5" rx="6"/>
+    <text x="185" y="24" fill="#10b981" font-size="13" font-weight="bold" text-anchor="middle">DHCP 4-Step Handshake (D-O-R-A)</text>
+
+    <rect x="25" y="45" width="80" height="30" fill="#0f172a" stroke="#cbd5e1" rx="4"/><text x="65" y="65" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle">CLIENT</text>
+    <rect x="265" y="45" width="80" height="30" fill="#0f172a" stroke="#cbd5e1" rx="4"/><text x="305" y="65" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle">DHCP SRV</text>
+
+    <line x1="65" y1="80" x2="65" y2="280" stroke="#64748b" stroke-width="2" stroke-dasharray="4,4"/>
+    <line x1="305" y1="80" x2="305" y2="280" stroke="#64748b" stroke-width="2" stroke-dasharray="4,4"/>
+
+    <!-- 1. DISCOVER -->
+    <line x1="65" y1="105" x2="300" y2="125" stroke="#ef4444" stroke-width="2"/>
+    <polygon points="305,125 293,120 295,130" fill="#ef4444"/>
+    <text x="185" y="112" fill="#fca5a5" font-size="10" font-weight="bold" text-anchor="middle">1. DISCOVER (Broadcast)</text>
+
+    <!-- 2. OFFER -->
+    <line x1="305" y1="145" x2="70" y2="165" stroke="#38bdf8" stroke-width="2"/>
+    <polygon points="65,165 77,160 75,170" fill="#38bdf8"/>
+    <text x="185" y="152" fill="#93c5fd" font-size="10" font-weight="bold" text-anchor="middle">2. OFFER (Unicast IP Lease)</text>
+
+    <!-- 3. REQUEST -->
+    <line x1="65" y1="185" x2="300" y2="205" stroke="#d9a74a" stroke-width="2"/>
+    <polygon points="305,205 293,200 295,210" fill="#d9a74a"/>
+    <text x="185" y="192" fill="#fde047" font-size="10" font-weight="bold" text-anchor="middle">3. REQUEST (Broadcast Accept)</text>
+
+    <!-- 4. ACKNOWLEDGE -->
+    <line x1="305" y1="225" x2="70" y2="245" stroke="#10b981" stroke-width="2"/>
+    <polygon points="65,245 77,240 75,250" fill="#10b981"/>
+    <text x="185" y="232" fill="#86efac" font-size="10" font-weight="bold" text-anchor="middle">4. ACK (Lease Confirmed)</text>
+
+    <!-- Lease Details -->
+    <rect x="25" y="260" width="320" height="50" fill="#0f172a" rx="4"/>
+    <text x="35" y="278" fill="#f8fafc" font-size="9"><b>Client Receives:</b> IP Address, Subnet Mask, Default Gateway,</text>
+    <text x="35" y="295" fill="#38bdf8" font-size="9">DNS Servers, Lease Time. Ports: UDP 67 (Server) / 68 (Client).</text>
+  </g>
+
+  <!-- Footer Banner -->
+  <rect x="40" y="430" width="770" height="35" fill="#1e293b" stroke="#334155" rx="6"/>
+  <text x="425" y="452" fill="#f8fafc" font-size="11" font-weight="bold" text-anchor="middle">⚡ Security Warning: DHCP Snooping prevents rogue DHCP servers by designating switch ports as trusted or untrusted.</text>
+</svg>
+</div>
+
 [SHOW DIAGRAM: An NTP hierarchy showing three levels. Level 0 (Stratum 0) shows a GPS satellite and atomic clock labeled "Reference Clock — not on the network." Level 1 (Stratum 1) shows two NTP servers labeled "Primary NTP Servers — synchronized directly to Stratum 0." Level 2 (Stratum 2) shows four NTP servers. Level 3 (Stratum 3) shows eight client devices labeled "End devices and infrastructure."]
 
 [Alt-text: A four-level NTP stratum diagram. Stratum 0 shows a GPS satellite and atomic clock icon labeled Reference Clock. Stratum 1 shows two server icons labeled Primary NTP Servers synchronized directly to Stratum 0. Stratum 2 shows four server icons labeled Secondary NTP Servers synchronized to Stratum 1. Stratum 3 shows eight device icons including workstations and network switches. Downward arrows between each stratum represent time synchronization flowing down the hierarchy.]

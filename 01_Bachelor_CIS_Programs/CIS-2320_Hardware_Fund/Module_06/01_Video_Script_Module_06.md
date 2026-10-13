@@ -14,7 +14,82 @@
 
 SHOW COMPONENT cues in this script:
 
-- [SHOW COMPONENT: ATX PSU held up to camera — label 80 Plus Gold sticker, modular cable ports, fan grill]
+- <div style="text-align: center; margin: 24px 0;">
+<svg viewBox="0 0 850 480" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="max-width: 850px; background:#0f172a; border-radius:10px; border:2px solid #1b365d; font-family:-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;">
+  <rect width="100%" height="45" fill="#1b365d"/>
+  <text x="425" y="28" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">🏛️ TEXAS WESLEYAN UNIVERSITY • CIS-2320 HARDWARE FUNDAMENTALS</text>
+  <text x="425" y="75" fill="#d9a74a" font-size="18" font-weight="bold" text-anchor="middle">Power Supply Connectors &amp; PC Chassis Airflow Dynamics</text>
+
+  <!-- PSU Connectors -->
+  <g transform="translate(40, 95)">
+    <rect width="380" height="325" fill="#1e293b" stroke="#38bdf8" stroke-width="1.5" rx="6"/>
+    <text x="190" y="24" fill="#38bdf8" font-size="13" font-weight="bold" text-anchor="middle">Essential PSU Power Connectors</text>
+
+    <!-- 24-Pin ATX -->
+    <rect x="20" y="40" width="340" height="48" fill="#0f172a" rx="4"/>
+    <text x="35" y="60" fill="#f8fafc" font-size="11" font-weight="bold">24-Pin ATX Main Power</text>
+    <text x="35" y="78" fill="#94a3b8" font-size="10">Powers motherboard chipset, PCIe slots, logic (3.3V, 5V, 12V)</text>
+
+    <!-- 4/8-Pin EPS -->
+    <rect x="20" y="98" width="340" height="48" fill="#0f172a" rx="4"/>
+    <text x="35" y="118" fill="#f8fafc" font-size="11" font-weight="bold">4-Pin / 8-Pin (4+4) EPS 12V CPU</text>
+    <text x="35" y="136" fill="#94a3b8" font-size="10">Dedicated power directly to the CPU socket power regulation</text>
+
+    <!-- 6/8-Pin PCIe -->
+    <rect x="20" y="156" width="340" height="48" fill="#0f172a" rx="4"/>
+    <text x="35" y="176" fill="#f8fafc" font-size="11" font-weight="bold">6-Pin (75W) &amp; 8-Pin (150W) PCIe</text>
+    <text x="35" y="194" fill="#94a3b8" font-size="10">Dedicated supplemental 12V power for discrete graphics cards</text>
+
+    <!-- 15-Pin SATA -->
+    <rect x="20" y="214" width="340" height="48" fill="#0f172a" rx="4"/>
+    <text x="35" y="234" fill="#f8fafc" font-size="11" font-weight="bold">15-Pin SATA Power (L-Shaped)</text>
+    <text x="35" y="252" fill="#94a3b8" font-size="10">Supplies 3.3V, 5V, and 12V to SATA SSDs, HDDs, and RGB hubs</text>
+
+    <!-- 4-Pin Molex -->
+    <rect x="20" y="272" width="340" height="42" fill="#0f172a" rx="4"/>
+    <text x="35" y="290" fill="#f8fafc" font-size="11" font-weight="bold">4-Pin Molex Legacy Connector</text>
+    <text x="35" y="306" fill="#94a3b8" font-size="10">Legacy drives, case fans, water cooling pumps (5V &amp; 12V)</text>
+  </g>
+
+  <!-- Airflow & Thermal Dynamics -->
+  <g transform="translate(440, 95)">
+    <rect width="370" height="325" fill="#1e293b" stroke="#10b981" stroke-width="1.5" rx="6"/>
+    <text x="185" y="24" fill="#10b981" font-size="13" font-weight="bold" text-anchor="middle">Chassis Airflow &amp; Pressure Profiles</text>
+
+    <!-- Chassis Case Schematic -->
+    <rect x="25" y="45" width="320" height="175" fill="#0f172a" stroke="#64748b" rx="4"/>
+    
+    <!-- Front Intake Fans -->
+    <rect x="35" y="65" width="20" height="50" fill="#0284c7" rx="2"/>
+    <rect x="35" y="125" width="20" height="50" fill="#0284c7" rx="2"/>
+    <text x="45" y="195" fill="#38bdf8" font-size="9" text-anchor="middle">Front Intake</text>
+    <path d="M 65 90 L 130 90" stroke="#38bdf8" stroke-width="2" marker-end="url(#arr)"/>
+    <path d="M 65 150 L 130 150" stroke="#38bdf8" stroke-width="2"/>
+
+    <!-- CPU Cooler Center -->
+    <rect x="150" y="90" width="60" height="60" fill="#334155" stroke="#ef4444" rx="4"/>
+    <text x="180" y="125" fill="#f8fafc" font-size="10" font-weight="bold" text-anchor="middle">CPU HSF</text>
+
+    <!-- Rear Exhaust -->
+    <rect x="315" y="80" width="20" height="50" fill="#ef4444" rx="2"/>
+    <text x="325" y="150" fill="#fca5a5" font-size="9" text-anchor="middle">Rear Exhaust</text>
+    <path d="M 220 105 L 305 105" stroke="#ef4444" stroke-width="2"/>
+
+    <!-- Pressure Types -->
+    <rect x="25" y="230" width="320" height="80" fill="#0f172a" rx="4"/>
+    <text x="35" y="248" fill="#10b981" font-size="11" font-weight="bold">Positive Pressure (Recommended):</text>
+    <text x="35" y="265" fill="#cbd5e1" font-size="10">Intake CFM &gt; Exhaust CFM. Forces air out cracks,</text>
+    <text x="35" y="280" fill="#cbd5e1" font-size="10">preventing unfiltered dust accumulation.</text>
+    <text x="35" y="298" fill="#fca5a5" font-size="10"><b>Negative Pressure:</b> Exhaust &gt; Intake (draws dust in).</text>
+  </g>
+
+  <!-- Footer Banner -->
+  <rect x="40" y="430" width="770" height="35" fill="#1e293b" stroke="#334155" rx="6"/>
+  <text x="425" y="452" fill="#f8fafc" font-size="11" font-weight="bold" text-anchor="middle">⚡ Technician Safety Warning: Never open a PSU chassis. High-voltage capacitors store lethal charges for days.</text>
+</svg>
+</div>
+
+[SHOW COMPONENT: ATX PSU held up to camera — label 80 Plus Gold sticker, modular cable ports, fan grill]
 - [SHOW COMPONENT: 24-pin ATX motherboard power connector and matching motherboard header side-by-side]
 - [SHOW COMPONENT: 4-pin and 8-pin EPS CPU power connectors labeled]
 - [SHOW COMPONENT: 6-pin and 8-pin PCIe power connectors labeled]

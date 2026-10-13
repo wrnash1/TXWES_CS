@@ -29,6 +29,76 @@
 
 ## [00:00 - 02:30] Section 1 — Introduction and Certification Alignment
 
+<div style="text-align: center; margin: 24px 0;">
+<svg viewBox="0 0 850 480" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="max-width: 850px; background:#0f172a; border-radius:10px; border:2px solid #1b365d; font-family:-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;">
+  <rect width="100%" height="45" fill="#1b365d"/>
+  <text x="425" y="28" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">🏛️ TEXAS WESLEYAN UNIVERSITY • CIS-2320 HARDWARE FUNDAMENTALS</text>
+  <text x="425" y="75" fill="#d9a74a" font-size="18" font-weight="bold" text-anchor="middle">Network Infrastructure Devices &amp; Standard 19" Rack Architecture</text>
+
+  <!-- OSI Device Hierarchy -->
+  <g transform="translate(40, 95)">
+    <rect width="420" height="325" fill="#1e293b" stroke="#38bdf8" stroke-width="1.5" rx="6"/>
+    <text x="210" y="24" fill="#38bdf8" font-size="13" font-weight="bold" text-anchor="middle">OSI Device Layer Assignments</text>
+
+    <!-- Layer 3 Router -->
+    <rect x="20" y="40" width="380" height="80" fill="#0f172a" stroke="#ef4444" rx="4"/>
+    <text x="35" y="60" fill="#ef4444" font-size="12" font-weight="bold">Layer 3: Network Layer Router / Firewall</text>
+    <text x="35" y="78" fill="#f8fafc" font-size="10">• Addresses: Logical IP Addresses (IPv4/IPv6)</text>
+    <text x="35" y="94" fill="#cbd5e1" font-size="10">• Function: Connects disparate networks; breaks broadcast domains</text>
+    <text x="35" y="108" fill="#94a3b8" font-size="9">PDU: Packet | Protocol: OSPF, BGP, NAT</text>
+
+    <!-- Layer 2 Switch -->
+    <rect x="20" y="130" width="380" height="85" fill="#0f172a" stroke="#10b981" rx="4"/>
+    <text x="35" y="150" fill="#10b981" font-size="12" font-weight="bold">Layer 2: Data Link Layer Switch / WAP / Bridge</text>
+    <text x="35" y="168" fill="#f8fafc" font-size="10">• Addresses: Physical MAC Addresses (48-bit EUI-48)</text>
+    <text x="35" y="184" fill="#cbd5e1" font-size="10">• Function: Forwards frames via MAC Address Table; separates collision domains</text>
+    <text x="35" y="200" fill="#94a3b8" font-size="9">PDU: Frame | Features: VLANs (802.1Q), PoE (802.3af/at/bt)</text>
+
+    <!-- Layer 1 Hub -->
+    <rect x="20" y="225" width="380" height="85" fill="#0f172a" stroke="#64748b" rx="4"/>
+    <text x="35" y="245" fill="#94a3b8" font-size="12" font-weight="bold">Layer 1: Physical Layer Hub / Repeater / Patch Panel</text>
+    <text x="35" y="263" fill="#f8fafc" font-size="10">• Signals: Electrical, Optical, or RF Bits</text>
+    <text x="35" y="279" fill="#cbd5e1" font-size="10">• Function: Multi-port repeater; single collision &amp; broadcast domain</text>
+    <text x="35" y="295" fill="#fca5a5" font-size="9">Legacy device — high collision rates. Replaced by switches.</text>
+  </g>
+
+  <!-- 19-inch Equipment Rack Layout -->
+  <g transform="translate(480, 95)">
+    <rect width="330" height="325" fill="#1e293b" stroke="#d9a74a" stroke-width="1.5" rx="6"/>
+    <text x="165" y="24" fill="#d9a74a" font-size="13" font-weight="bold" text-anchor="middle">Standard 19" Rack Elevation (Top to Bottom)</text>
+
+    <!-- Rack Posts -->
+    <line x1="20" y1="40" x2="20" y2="310" stroke="#475569" stroke-width="4"/>
+    <line x1="310" y1="40" x2="310" y2="310" stroke="#475569" stroke-width="4"/>
+
+    <!-- Patch Panel -->
+    <rect x="30" y="45" width="270" height="35" fill="#0f172a" stroke="#94a3b8" rx="2"/>
+    <text x="165" y="67" fill="#ffffff" font-size="10" font-weight="bold" text-anchor="middle">1U 24-Port Patch Panel (Structured Cable Punchdown)</text>
+
+    <!-- Switch -->
+    <rect x="30" y="90" width="270" height="35" fill="#0f172a" stroke="#10b981" rx="2"/>
+    <text x="165" y="112" fill="#10b981" font-size="10" font-weight="bold" text-anchor="middle">1U Managed Gigabit PoE+ Switch</text>
+
+    <!-- Router / Firewall -->
+    <rect x="30" y="135" width="270" height="35" fill="#0f172a" stroke="#ef4444" rx="2"/>
+    <text x="165" y="157" fill="#ef4444" font-size="10" font-weight="bold" text-anchor="middle">1U Enterprise Next-Gen Firewall / Edge Router</text>
+
+    <!-- Server -->
+    <rect x="30" y="180" width="270" height="50" fill="#0f172a" stroke="#38bdf8" rx="2"/>
+    <text x="165" y="210" fill="#38bdf8" font-size="10" font-weight="bold" text-anchor="middle">2U Rackmount Server (Host / SAN)</text>
+
+    <!-- UPS -->
+    <rect x="30" y="240" width="270" height="60" fill="#0f172a" stroke="#f59e0b" rx="2"/>
+    <text x="165" y="268" fill="#f59e0b" font-size="11" font-weight="bold" text-anchor="middle">2U / 3U UPS Battery Backup</text>
+    <text x="165" y="285" fill="#94a3b8" font-size="9" text-anchor="middle">Placed at lowest U for center of gravity stability</text>
+  </g>
+
+  <!-- Footer Banner -->
+  <rect x="40" y="430" width="770" height="35" fill="#1e293b" stroke="#334155" rx="6"/>
+  <text x="425" y="452" fill="#f8fafc" font-size="11" font-weight="bold" text-anchor="middle">⚡ CompTIA A+ Key Principle: Always mount heavy UPS units at the rack bottom to prevent tipping hazards.</text>
+</svg>
+</div>
+
 **[SHOW COMPONENT: Title slide — "Module 12: Network Infrastructure Devices"]**
 
 Welcome back, everyone. I am Professor Nash, and this is Module 12 of CIS-2320 Hardware Fundamentals. Today we are covering the devices that make up a functioning network — not the cables, but the actual hardware boxes: switches, routers, wireless access points, firewalls, modems, and patch panels. We will also cover Power over Ethernet, which is the IEEE standard that lets a switch deliver electrical power to devices like phones and cameras over the same Ethernet cable used for data.
