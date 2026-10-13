@@ -1,0 +1,79 @@
+# Reading Guide: Module 11 — Responsible AI Governance, Bias Mitigation & Model Auditing
+## DIT-7320 | Texas Wesleyan University
+
+<div style="text-align: center; margin: 24px 0;">
+<svg viewBox="0 0 800 240" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="max-width: 800px; background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+  <rect width="100%" height="45" fill="#1b365d" rx="8" ry="8"/>
+  <rect width="100%" height="20" y="30" fill="#1b365d"/>
+  <text x="400" y="28" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="14" font-weight="bold" text-anchor="middle">🏛️ TEXAS WESLEYAN UNIVERSITY &bull; DIT-7320 &BULL; MODULE 11</text>
+  <g transform="translate(40, 75)">
+    <rect width="210" height="120" rx="8" fill="#ffffff" stroke="#1b365d" stroke-width="2"/>
+    <rect width="210" height="28" rx="8" fill="#1b365d"/>
+    <text x="105" y="19" fill="#d9a74a" font-size="11" font-weight="bold" text-anchor="middle">1. THEORETICAL INQUIRY</text>
+    <text x="105" y="65" fill="#1e293b" font-size="12" font-weight="600" text-anchor="middle">Foundational Literature</text>
+    <text x="105" y="85" fill="#64748b" font-size="10" text-anchor="middle">Rigorous Peer Review</text>
+  </g>
+  <g transform="translate(295, 75)">
+    <rect width="210" height="120" rx="8" fill="#ffffff" stroke="#1b365d" stroke-width="2"/>
+    <rect width="210" height="28" rx="8" fill="#1b365d"/>
+    <text x="105" y="19" fill="#d9a74a" font-size="11" font-weight="bold" text-anchor="middle">2. APPLIED BENCHMARK</text>
+    <text x="105" y="65" fill="#1e293b" font-size="12" font-weight="600" text-anchor="middle">Empirical Execution</text>
+    <text x="105" y="85" fill="#64748b" font-size="10" text-anchor="middle">Industry Validation</text>
+  </g>
+  <g transform="translate(550, 75)">
+    <rect width="210" height="120" rx="8" fill="#ffffff" stroke="#1b365d" stroke-width="2"/>
+    <rect width="210" height="28" rx="8" fill="#1b365d"/>
+    <text x="105" y="19" fill="#d9a74a" font-size="11" font-weight="bold" text-anchor="middle">3. SYNTHESIS & DEFENSE</text>
+    <text x="105" y="65" fill="#1e293b" font-size="12" font-weight="600" text-anchor="middle">Doctoral Colloquium</text>
+    <text x="105" y="85" fill="#64748b" font-size="10" text-anchor="middle">SACSCOC RSI Artifact</text>
+  </g>
+</svg>
+</div>
+
+
+<!-- TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+<div class="video-container-card" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; margin: 24px 0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);">
+  <div style="background: #1b365d; color: #ffffff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+      <span style="background: #d9a74a; color: #0f172a; font-weight: 800; font-size: 11px; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">Vendor Video Lecture</span>
+      <strong style="margin-left: 10px; font-size: 14px;">NIST / Stanford HAI &bull; DIT-7320 Module 11</strong>
+    </div>
+    <a href="https://www.youtube.com/watch?v=X5z8mU7jB_Q" target="_blank" rel="noopener noreferrer" style="color: #cbd5e1; font-size: 12px; text-decoration: none; font-weight: 600;">↗ Open in YouTube</a>
+  </div>
+  <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #0f172a;">
+    <iframe src="https://www.youtube.com/embed/X5z8mU7jB_Q" title="DIT-7320 Module 11: Responsible AI Governance, Bias Mitigation & Model Auditing" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  </div>
+  <div style="padding: 12px 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 13px; color: #475569;">
+    <strong>Recommended Viewing:</strong> <em>DIT-7320 Module 11: Responsible AI Governance, Bias Mitigation & Model Auditing</em>. This vendor-aligned lecture stream reinforces this module's theoretical principles, certification blueprints, and hands-on laboratory benchmarks.
+  </div>
+</div>
+<!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
+
+
+---
+
+## 1. Modular Overview & Core Objectives
+Upon successful completion of this module, students and researchers will be able to:
+1. **Analyze and Evaluate** the computational, organizational, and regulatory implications of responsible ai governance, bias mitigation & model auditing.
+2. **Formulate and Justify** architectural or research interventions satisfying enterprise SLAs, fiduciary duties, and national standards.
+3. **Execute Empirical Benchmarking** that verifies system invariants, security posture, and resilience under adversarial conditions.
+
+---
+
+## 2. Theoretical Foundations & Literature Appraisal
+NIST AI RMF 1.0, algorithmic fairness, explainability (SHAP/LIME), and regulatory compliance.
+
+### Key Seminal References
+* National Institute of Standards and Technology (NIST Special Publications & Frameworks).
+* Peer-reviewed literature from IEEE Transactions, ACM Digital Library, and the Association for Information Systems (AIS).
+* Modern architectural benchmarks and enterprise governance models.
+
+---
+
+## 3. In-Depth Lecture Notes & Conceptual Analysis
+The transition to modern enterprise computing architectures requires continuous alignment between theoretical guarantees and practical deployment realities. When engineering systems for responsible ai governance, bias mitigation & model auditing, leaders must evaluate latency trade-offs, consistency models, and fault domains.
+
+### Key Architectural Invariants
+* **Correctness & Consistency:** Ensuring state synchronization under split-brain and network partition scenarios.
+* **Resilience & Fault Isolation:** Designing decoupled subsystems with circuit breakers, graceful degradation, and automated health checks.
+* **Fiduciary & Regulatory Compliance:** Maintaining defensible audit trails, role-based governance, and risk oversight compliant with federal mandates.
