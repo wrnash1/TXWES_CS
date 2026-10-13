@@ -19,6 +19,40 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
+<div style="text-align: center; margin: 24px 0;">
+<svg viewBox="0 0 800 480" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="max-width: 800px; background:#0f172a; border-radius:10px; border:2px solid #1b365d; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <rect width="100%" height="45" fill="#1b365d"/>
+  <text x="400" y="28" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">🏛️ TEXAS WESLEYAN UNIVERSITY • CIS-4328 INFORMATION SECURITY</text>
+  <text x="400" y="75" fill="#d9a74a" font-size="17" font-weight="bold" text-anchor="middle">Digital Forensics & Evidence Preservation Architecture</text>
+  <text x="400" y="98" fill="#94a3b8" font-size="12" text-anchor="middle">Chain of Custody, Write-Blockers, Memory Forensics, and Hash Verification</text>
+  
+  <g transform="translate(60, 130)">
+    <rect x="0" y="0" width="310" height="270" fill="#1e293b" stroke="#38bdf8" rx="8"/>
+    <rect x="0" y="0" width="310" height="32" fill="#0284c7" rx="8"/>
+    <text x="155" y="22" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">Forensic Evidence Acquisition Invariants</text>
+    <text x="20" y="65" fill="#f8fafc" font-size="11">• <strong>Hardware Write Blocker:</strong> Zero modification to disk</text>
+    <text x="20" y="95" fill="#f8fafc" font-size="11">• <strong>Bit-Stream Mirroring:</strong> dd / FTK Imager raw .E01 / .dd</text>
+    <text x="20" y="125" fill="#f8fafc" font-size="11">• <strong>Volatile RAM Dump:</strong> WinPmem / LiME memory capture</text>
+    <text x="20" y="155" fill="#f8fafc" font-size="11">• <strong>Dual Hashing:</strong> SHA-256 and MD5 generated immediately</text>
+    <text x="20" y="185" fill="#f8fafc" font-size="11">• <strong>Working Copy Rule:</strong> Always analyze bitstream copy, never original</text>
+    <rect x="20" y="215" width="270" height="35" fill="#0f172a" stroke="#38bdf8" rx="4"/>
+    <text x="155" y="237" fill="#38bdf8" font-size="10" font-weight="bold" text-anchor="middle">Standard: NIST SP 800-86 Guide to Forensics</text>
+
+    <rect x="360" y="0" width="310" height="270" fill="#1e293b" stroke="#10b981" rx="8"/>
+    <rect x="360" y="0" width="310" height="32" fill="#059669" rx="8"/>
+    <text x="515" y="22" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">Chain of Custody & Court Admissibility</text>
+    <text x="380" y="65" fill="#f8fafc" font-size="11">• <strong>Evidence Ledger:</strong> Date, time, collector, custody log</text>
+    <text x="380" y="95" fill="#f8fafc" font-size="11">• <strong>Anti-Tamper Bag:</strong> Tamper-evident tape, serial numbering</text>
+    <text x="380" y="125" fill="#f8fafc" font-size="11">• <strong>Faraday Cage/Bag:</strong> Blocks cellular/WiFi remote wipe signals</text>
+    <text x="380" y="155" fill="#f8fafc" font-size="11">• <strong>Federal Rules of Evidence (FRE):</strong> Rule 902(13) and 902(14)</text>
+    <text x="380" y="185" fill="#f8fafc" font-size="11">• <strong>Hash Verification:</strong> Re-hashed upon intake and court submission</text>
+    <rect x="380" y="215" width="270" height="35" fill="#0f172a" stroke="#10b981" rx="4"/>
+    <text x="515" y="237" fill="#10b981" font-size="10" font-weight="bold" text-anchor="middle">Admissibility Criterion: Unbroken Chain of Custody</text>
+  </g>
+
+</svg>
+</div>
+
 
 ## Course: CIS-4328 Information Security
 

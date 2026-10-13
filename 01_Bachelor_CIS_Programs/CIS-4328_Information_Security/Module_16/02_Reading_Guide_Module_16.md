@@ -19,6 +19,77 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
+<div style="text-align: center; margin: 24px 0;">
+<svg viewBox="0 0 800 480" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="max-width: 800px; background:#0f172a; border-radius:10px; border:2px solid #1b365d; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <rect width="100%" height="45" fill="#1b365d"/>
+  <text x="400" y="28" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">🏛️ TEXAS WESLEYAN UNIVERSITY • CIS-4328 INFORMATION SECURITY</text>
+  <text x="400" y="75" fill="#d9a74a" font-size="17" font-weight="bold" text-anchor="middle">CompTIA Security+ SY0-701 Exam Domain Weight & Strategy</text>
+  <text x="400" y="98" fill="#94a3b8" font-size="12" text-anchor="middle">5 Exam Domains, Performance-Based Questions (PBQs), and Final Review Framework</text>
+  
+  <g transform="translate(60, 130)">
+    <rect x="0" y="0" width="670" height="270" fill="#1e293b" stroke="#d9a74a" rx="8"/>
+    <rect x="0" y="0" width="670" height="32" fill="#1b365d" rx="8"/>
+    <text x="335" y="22" fill="#d9a74a" font-size="13" font-weight="bold" text-anchor="middle">SY0-701 Exam Blueprint Breakdown & Passing Criteria (750/900)</text>
+
+    <g transform="translate(20, 50)">
+      <rect width="115" height="190" fill="#0f172a" stroke="#38bdf8" rx="4"/>
+      <text x="57" y="25" fill="#38bdf8" font-size="10" font-weight="bold" text-anchor="middle">DOMAIN 1</text>
+      <text x="57" y="45" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">12%</text>
+      <text x="57" y="70" fill="#94a3b8" font-size="9" text-anchor="middle">General</text>
+      <text x="57" y="85" fill="#94a3b8" font-size="9" text-anchor="middle">Security</text>
+      <text x="57" y="100" fill="#94a3b8" font-size="9" text-anchor="middle">Concepts</text>
+      <text x="57" y="135" fill="#cbd5e1" font-size="8" text-anchor="middle">CIA, Zero Trust</text>
+      <text x="57" y="150" fill="#cbd5e1" font-size="8" text-anchor="middle">Control Types</text>
+    </g>
+
+    <g transform="translate(150, 50)">
+      <rect width="115" height="190" fill="#0f172a" stroke="#ef4444" rx="4"/>
+      <text x="57" y="25" fill="#ef4444" font-size="10" font-weight="bold" text-anchor="middle">DOMAIN 2</text>
+      <text x="57" y="45" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">22%</text>
+      <text x="57" y="70" fill="#94a3b8" font-size="9" text-anchor="middle">Threats,</text>
+      <text x="57" y="85" fill="#94a3b8" font-size="9" text-anchor="middle">Vulnerabilities</text>
+      <text x="57" y="100" fill="#94a3b8" font-size="9" text-anchor="middle">& Mitigations</text>
+      <text x="57" y="135" fill="#cbd5e1" font-size="8" text-anchor="middle">Actors, Vectors</text>
+      <text x="57" y="150" fill="#cbd5e1" font-size="8" text-anchor="middle">Malware, Phish</text>
+    </g>
+
+    <g transform="translate(280, 50)">
+      <rect width="115" height="190" fill="#0f172a" stroke="#10b981" rx="4"/>
+      <text x="57" y="25" fill="#10b981" font-size="10" font-weight="bold" text-anchor="middle">DOMAIN 3</text>
+      <text x="57" y="45" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">18%</text>
+      <text x="57" y="70" fill="#94a3b8" font-size="9" text-anchor="middle">Security</text>
+      <text x="57" y="85" fill="#94a3b8" font-size="9" text-anchor="middle">Architecture</text>
+      <text x="57" y="135" fill="#cbd5e1" font-size="8" text-anchor="middle">Cloud, Microseg</text>
+      <text x="57" y="150" fill="#cbd5e1" font-size="8" text-anchor="middle">Cryptographic</text>
+      <text x="57" y="165" fill="#cbd5e1" font-size="8" text-anchor="middle">PKI Deployments</text>
+    </g>
+
+    <g transform="translate(410, 50)">
+      <rect width="115" height="190" fill="#0f172a" stroke="#eab308" rx="4"/>
+      <text x="57" y="25" fill="#eab308" font-size="10" font-weight="bold" text-anchor="middle">DOMAIN 4</text>
+      <text x="57" y="45" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">28%</text>
+      <text x="57" y="70" fill="#94a3b8" font-size="9" text-anchor="middle">Security</text>
+      <text x="57" y="85" fill="#94a3b8" font-size="9" text-anchor="middle">Operations</text>
+      <text x="57" y="135" fill="#cbd5e1" font-size="8" text-anchor="middle">IR, Forensics</text>
+      <text x="57" y="150" fill="#cbd5e1" font-size="8" text-anchor="middle">Vulnerability</text>
+      <text x="57" y="165" fill="#cbd5e1" font-size="8" text-anchor="middle">Management</text>
+    </g>
+
+    <g transform="translate(540, 50)">
+      <rect width="110" height="190" fill="#0f172a" stroke="#a855f7" rx="4"/>
+      <text x="55" y="25" fill="#a855f7" font-size="10" font-weight="bold" text-anchor="middle">DOMAIN 5</text>
+      <text x="55" y="45" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">20%</text>
+      <text x="55" y="70" fill="#94a3b8" font-size="9" text-anchor="middle">Program</text>
+      <text x="55" y="85" fill="#94a3b8" font-size="9" text-anchor="middle">Management</text>
+      <text x="55" y="100" fill="#94a3b8" font-size="9" text-anchor="middle">& Oversight</text>
+      <text x="55" y="135" fill="#cbd5e1" font-size="8" text-anchor="middle">Governance, Risk</text>
+      <text x="55" y="150" fill="#cbd5e1" font-size="8" text-anchor="middle">Compliance, 3rd</text>
+    </g>
+  </g>
+
+</svg>
+</div>
+
 
 ## Course: CIS-4328 Information Security
 

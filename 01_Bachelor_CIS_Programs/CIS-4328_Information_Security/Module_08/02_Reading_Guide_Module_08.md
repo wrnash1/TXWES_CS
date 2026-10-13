@@ -19,6 +19,40 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
+<div style="text-align: center; margin: 24px 0;">
+<svg viewBox="0 0 800 480" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="max-width: 800px; background:#0f172a; border-radius:10px; border:2px solid #1b365d; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <rect width="100%" height="45" fill="#1b365d"/>
+  <text x="400" y="28" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">🏛️ TEXAS WESLEYAN UNIVERSITY • CIS-4328 INFORMATION SECURITY</text>
+  <text x="400" y="75" fill="#d9a74a" font-size="17" font-weight="bold" text-anchor="middle">Endpoint Security & Host-Based Hardening Architecture</text>
+  <text x="400" y="98" fill="#94a3b8" font-size="12" text-anchor="middle">EDR/XDR Telemetry, App Whitelisting, and OS Kernel Isolation</text>
+  
+  <g transform="translate(60, 130)">
+    <rect x="0" y="0" width="310" height="270" fill="#1e293b" stroke="#38bdf8" rx="8"/>
+    <rect x="0" y="0" width="310" height="32" fill="#0284c7" rx="8"/>
+    <text x="155" y="22" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">Host Hardening & OS Protection</text>
+    <text x="20" y="65" fill="#f8fafc" font-size="11">• <strong>Full Disk Encryption (FDE):</strong> BitLocker / FileVault</text>
+    <text x="20" y="95" fill="#f8fafc" font-size="11">• <strong>TPM 2.0 Integration:</strong> Hardware Root of Trust</text>
+    <text x="20" y="125" fill="#f8fafc" font-size="11">• <strong>App Control:</strong> AppLocker / WDAC Application Allowlisting</text>
+    <text x="20" y="155" fill="#f8fafc" font-size="11">• <strong>Host Firewall:</strong> Deny Inbound by Default</text>
+    <text x="20" y="185" fill="#f8fafc" font-size="11">• <strong>Patch Automation:</strong> Vulnerability Remediation SLA</text>
+    <rect x="20" y="215" width="270" height="35" fill="#0f172a" stroke="#38bdf8" rx="4"/>
+    <text x="155" y="237" fill="#38bdf8" font-size="10" font-weight="bold" text-anchor="middle">Standard: CIS Benchmarks Level 1 & 2</text>
+
+    <rect x="360" y="0" width="310" height="270" fill="#1e293b" stroke="#10b981" rx="8"/>
+    <rect x="360" y="0" width="310" height="32" fill="#059669" rx="8"/>
+    <text x="515" y="22" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">EDR / XDR Continuous Behavioral Detection</text>
+    <text x="380" y="65" fill="#f8fafc" font-size="11">• <strong>Process Tree Monitoring:</strong> Parent/Child Spawning</text>
+    <text x="380" y="95" fill="#f8fafc" font-size="11">• <strong>Memory Inspection:</strong> Reflective DLL / Shellcode injection</text>
+    <text x="380" y="125" fill="#f8fafc" font-size="11">• <strong>Network Hooking:</strong> Real-time C2 Connection Alerts</text>
+    <text x="380" y="155" fill="#f8fafc" font-size="11">• <strong>Automated Isolation:</strong> Host Quarantine via Agent</text>
+    <text x="380" y="185" fill="#f8fafc" font-size="11">• <strong>Live Forensic Triage:</strong> Volatile Memory Dumping</text>
+    <rect x="380" y="215" width="270" height="35" fill="#0f172a" stroke="#10b981" rx="4"/>
+    <text x="515" y="237" fill="#10b981" font-size="10" font-weight="bold" text-anchor="middle">Mitre ATT&CK Telemetry Alignment</text>
+  </g>
+
+</svg>
+</div>
+
 
 ## CIS-4328 Information Security | Texas Wesleyan University
 

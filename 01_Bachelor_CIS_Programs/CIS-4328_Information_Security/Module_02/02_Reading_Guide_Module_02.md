@@ -19,6 +19,59 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
+<div style="text-align: center; margin: 24px 0;">
+<svg viewBox="0 0 800 480" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="max-width: 800px; background:#0f172a; border-radius:10px; border:2px solid #1b365d; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <rect width="100%" height="45" fill="#1b365d"/>
+  <text x="400" y="28" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">🏛️ TEXAS WESLEYAN UNIVERSITY • CIS-4328 INFORMATION SECURITY</text>
+  <text x="400" y="75" fill="#d9a74a" font-size="17" font-weight="bold" text-anchor="middle">Social Engineering Attack Vectors & Psychological Triggers</text>
+  <text x="400" y="98" fill="#94a3b8" font-size="12" text-anchor="middle">Human Layer Vulnerabilities and Defensive Verification Protocols</text>
+  
+  <!-- Social Engineering Funnel -->
+  <g transform="translate(50, 120)">
+    <rect width="320" height="310" fill="#1e293b" stroke="#334155" rx="8"/>
+    <rect width="320" height="32" fill="#1b365d" rx="8"/>
+    <text x="160" y="22" fill="#d9a74a" font-size="13" font-weight="bold" text-anchor="middle">Robert Cialdini Psychological Triggers</text>
+    
+    <text x="20" y="65" fill="#f8fafc" font-size="12">🏛️ <strong>Authority:</strong> Impersonating Executive/C-Suite</text>
+    <text x="20" y="105" fill="#f8fafc" font-size="12">⏳ <strong>Urgency:</strong> Artificial Time Pressure ("Action Required Now")</text>
+    <text x="20" y="145" fill="#f8fafc" font-size="12">👥 <strong>Social Proof:</strong> "Everyone in Accounting has submitted"</text>
+    <text x="20" y="185" fill="#f8fafc" font-size="12">💎 <strong>Scarcity:</strong> Limited Access / Fear of Loss</text>
+    <text x="20" y="225" fill="#f8fafc" font-size="12">🤝 <strong>Likability:</strong> Establishing Rapid Emotional Rapport</text>
+    <text x="20" y="265" fill="#f8fafc" font-size="12">⚖️ <strong>Reciprocity:</strong> Providing Small Favors to Prompt Disclosures</text>
+    <text x="20" y="295" fill="#f8fafc" font-size="12">😨 <strong>Intimidation:</strong> Threat of Regulatory or HR Sanctions</text>
+  </g>
+
+  <!-- Technical Attack Variants -->
+  <g transform="translate(420, 120)">
+    <rect width="330" height="310" fill="#1e293b" stroke="#334155" rx="8"/>
+    <rect width="330" height="32" fill="#1b365d" rx="8"/>
+    <text x="165" y="22" fill="#38bdf8" font-size="13" font-weight="bold" text-anchor="middle">Delivery Vectors & Countermeasures</text>
+    
+    <g transform="translate(15, 45)">
+      <rect width="300" height="52" fill="#0f172a" stroke="#ef4444" rx="4"/>
+      <text x="10" y="20" fill="#ef4444" font-size="11" font-weight="bold">Spear Phishing & Whaling</text>
+      <text x="10" y="38" fill="#94a3b8" font-size="10">Targeted OSINT • Defense: DMARC, DKIM, Out-of-Band Auth</text>
+    </g>
+    <g transform="translate(15, 110)">
+      <rect width="300" height="52" fill="#0f172a" stroke="#f97316" rx="4"/>
+      <text x="10" y="20" fill="#f97316" font-size="11" font-weight="bold">Vishing & Smishing</text>
+      <text x="10" y="38" fill="#94a3b8" font-size="10">VoIP Spoofing & SMS Hooks • Defense: Callback Verification</text>
+    </g>
+    <g transform="translate(15, 175)">
+      <rect width="300" height="52" fill="#0f172a" stroke="#eab308" rx="4"/>
+      <text x="10" y="20" fill="#eab308" font-size="11" font-weight="bold">Watering Hole Attacks</text>
+      <text x="10" y="38" fill="#94a3b8" font-size="10">Compromising Trusted Portals • Defense: Web Filtering, EDR</text>
+    </g>
+    <g transform="translate(15, 240)">
+      <rect width="300" height="52" fill="#0f172a" stroke="#22c55e" rx="4"/>
+      <text x="10" y="20" fill="#22c55e" font-size="11" font-weight="bold">Baiting & Physical Drops</text>
+      <text x="10" y="38" fill="#94a3b8" font-size="10">Malicious USB Drives • Defense: Port Locks, Disabled Autorun</text>
+    </g>
+  </g>
+
+</svg>
+</div>
+
 
 ## CIS-4328 Information Security | Texas Wesleyan University
 

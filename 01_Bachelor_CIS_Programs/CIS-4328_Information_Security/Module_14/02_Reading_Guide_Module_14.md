@@ -19,6 +19,76 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
+<div style="text-align: center; margin: 24px 0;">
+<svg viewBox="0 0 800 480" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="max-width: 800px; background:#0f172a; border-radius:10px; border:2px solid #1b365d; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <rect width="100%" height="45" fill="#1b365d"/>
+  <text x="400" y="28" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">🏛️ TEXAS WESLEYAN UNIVERSITY • CIS-4328 INFORMATION SECURITY</text>
+  <text x="400" y="75" fill="#d9a74a" font-size="17" font-weight="bold" text-anchor="middle">Governance, Compliance & Regulatory Frameworks</text>
+  <text x="400" y="98" fill="#94a3b8" font-size="12" text-anchor="middle">NIST CSF 2.0, ISO/IEC 27001, SOC 2 Type II, and GDPR/HIPAA Invariants</text>
+  
+  <g transform="translate(60, 130)">
+    <rect x="0" y="0" width="670" height="260" fill="#1e293b" stroke="#38bdf8" rx="8"/>
+    <rect x="0" y="0" width="670" height="32" fill="#0284c7" rx="8"/>
+    <text x="335" y="22" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">NIST Cybersecurity Framework (CSF 2.0) Core Functions</text>
+
+    <g transform="translate(15, 50)">
+      <rect width="100" height="180" fill="#0f172a" stroke="#d9a74a" rx="4"/>
+      <text x="50" y="25" fill="#d9a74a" font-size="11" font-weight="bold" text-anchor="middle">GOVERN</text>
+      <text x="50" y="60" fill="#cbd5e1" font-size="9" text-anchor="middle">Strategy</text>
+      <text x="50" y="85" fill="#cbd5e1" font-size="9" text-anchor="middle">Risk Mgmt</text>
+      <text x="50" y="110" fill="#cbd5e1" font-size="9" text-anchor="middle">Policy</text>
+      <text x="50" y="135" fill="#cbd5e1" font-size="9" text-anchor="middle">Oversight</text>
+    </g>
+
+    <g transform="translate(125, 50)">
+      <rect width="100" height="180" fill="#0f172a" stroke="#38bdf8" rx="4"/>
+      <text x="50" y="25" fill="#38bdf8" font-size="11" font-weight="bold" text-anchor="middle">IDENTIFY</text>
+      <text x="50" y="60" fill="#cbd5e1" font-size="9" text-anchor="middle">Asset Inventory</text>
+      <text x="50" y="85" fill="#cbd5e1" font-size="9" text-anchor="middle">Vulnerabilities</text>
+      <text x="50" y="110" fill="#cbd5e1" font-size="9" text-anchor="middle">Threat Intel</text>
+      <text x="50" y="135" fill="#cbd5e1" font-size="9" text-anchor="middle">Supply Chain</text>
+    </g>
+
+    <g transform="translate(235, 50)">
+      <rect width="100" height="180" fill="#0f172a" stroke="#10b981" rx="4"/>
+      <text x="50" y="25" fill="#10b981" font-size="11" font-weight="bold" text-anchor="middle">PROTECT</text>
+      <text x="50" y="60" fill="#cbd5e1" font-size="9" text-anchor="middle">Identity (IAM)</text>
+      <text x="50" y="85" fill="#cbd5e1" font-size="9" text-anchor="middle">Encryption</text>
+      <text x="50" y="110" fill="#cbd5e1" font-size="9" text-anchor="middle">Zero Trust</text>
+      <text x="50" y="135" fill="#cbd5e1" font-size="9" text-anchor="middle">Awareness</text>
+    </g>
+
+    <g transform="translate(345, 50)">
+      <rect width="100" height="180" fill="#0f172a" stroke="#eab308" rx="4"/>
+      <text x="50" y="25" fill="#eab308" font-size="11" font-weight="bold" text-anchor="middle">DETECT</text>
+      <text x="50" y="60" fill="#cbd5e1" font-size="9" text-anchor="middle">SIEM / SOC</text>
+      <text x="50" y="85" fill="#cbd5e1" font-size="9" text-anchor="middle">Anomalies</text>
+      <text x="50" y="110" fill="#cbd5e1" font-size="9" text-anchor="middle">EDR Alerts</text>
+      <text x="50" y="135" fill="#cbd5e1" font-size="9" text-anchor="middle">Continuous</text>
+    </g>
+
+    <g transform="translate(455, 50)">
+      <rect width="100" height="180" fill="#0f172a" stroke="#ef4444" rx="4"/>
+      <text x="50" y="25" fill="#ef4444" font-size="11" font-weight="bold" text-anchor="middle">RESPOND</text>
+      <text x="50" y="60" fill="#cbd5e1" font-size="9" text-anchor="middle">CIRT Triage</text>
+      <text x="50" y="85" fill="#cbd5e1" font-size="9" text-anchor="middle">Containment</text>
+      <text x="50" y="110" fill="#cbd5e1" font-size="9" text-anchor="middle">Eradication</text>
+      <text x="50" y="135" fill="#cbd5e1" font-size="9" text-anchor="middle">Comms</text>
+    </g>
+
+    <g transform="translate(565, 50)">
+      <rect width="90" height="180" fill="#0f172a" stroke="#a855f7" rx="4"/>
+      <text x="45" y="25" fill="#a855f7" font-size="11" font-weight="bold" text-anchor="middle">RECOVER</text>
+      <text x="45" y="60" fill="#cbd5e1" font-size="9" text-anchor="middle">Disaster Rec</text>
+      <text x="45" y="85" fill="#cbd5e1" font-size="9" text-anchor="middle">Restoration</text>
+      <text x="45" y="110" fill="#cbd5e1" font-size="9" text-anchor="middle">Lessons</text>
+      <text x="45" y="135" fill="#cbd5e1" font-size="9" text-anchor="middle">Post-Mortem</text>
+    </g>
+  </g>
+
+</svg>
+</div>
+
 
 ## Course: CIS-4328 Information Security
 

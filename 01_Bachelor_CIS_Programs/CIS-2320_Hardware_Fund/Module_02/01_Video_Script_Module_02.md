@@ -197,6 +197,71 @@ For the A+ exam, you do not need to memorize every chipset model number. You nee
 
 **[SHOW COMPONENT: Point to each slot type on the board]**
 
+<div style="text-align: center; margin: 24px 0;">
+<svg viewBox="0 0 800 420" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="max-width: 800px; background:#0f172a; border-radius:10px; border:2px solid #1b365d; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <rect width="100%" height="45" fill="#1b365d"/>
+  <text x="400" y="28" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">🏛️ TEXAS WESLEYAN UNIVERSITY • CIS-2320 HARDWARE FUNDAMENTALS</text>
+  <text x="400" y="75" fill="#d9a74a" font-size="17" font-weight="bold" text-anchor="middle">PCI Express (PCIe) Physical Slot Architectures & Bandwidth</text>
+  <text x="400" y="98" fill="#94a3b8" font-size="12" text-anchor="middle">Pin Counts, Key Notches, Throughput per Lane, and Up-Plugging Compatibility</text>
+
+  <!-- PCIe x1 -->
+  <g transform="translate(60, 125)">
+    <rect width="130" height="200" fill="#1e293b" stroke="#38bdf8" rx="6"/>
+    <text x="65" y="25" fill="#38bdf8" font-size="13" font-weight="bold" text-anchor="middle">PCIe ×1 Slot</text>
+    <rect x="25" y="45" width="80" height="14" fill="#0284c7" rx="2"/>
+    <rect x="45" y="45" width="4" height="14" fill="#0f172a"/>
+    <text x="65" y="80" fill="#ffffff" font-size="11" text-anchor="middle">18 Pins Total</text>
+    <text x="65" y="105" fill="#cbd5e1" font-size="10" text-anchor="middle">Gen 3: ~1 GB/s</text>
+    <text x="65" y="125" fill="#cbd5e1" font-size="10" text-anchor="middle">Gen 4: ~2 GB/s</text>
+    <rect x="15" y="150" width="100" height="35" fill="#0f172a" stroke="#334155" rx="4"/>
+    <text x="65" y="172" fill="#94a3b8" font-size="9" text-anchor="middle">Wi-Fi, Audio,</text>
+  </g>
+
+  <!-- PCIe x4 -->
+  <g transform="translate(220, 125)">
+    <rect width="150" height="200" fill="#1e293b" stroke="#a855f7" rx="6"/>
+    <text x="75" y="25" fill="#a855f7" font-size="13" font-weight="bold" text-anchor="middle">PCIe ×4 Slot</text>
+    <rect x="20" y="45" width="110" height="14" fill="#9333ea" rx="2"/>
+    <rect x="40" y="45" width="4" height="14" fill="#0f172a"/>
+    <text x="75" y="80" fill="#ffffff" font-size="11" text-anchor="middle">32 Pins Total</text>
+    <text x="75" y="105" fill="#cbd5e1" font-size="10" text-anchor="middle">Gen 3: ~4 GB/s</text>
+    <text x="75" y="125" fill="#cbd5e1" font-size="10" text-anchor="middle">Gen 4: ~8 GB/s</text>
+    <rect x="15" y="150" width="120" height="35" fill="#0f172a" stroke="#334155" rx="4"/>
+    <text x="75" y="172" fill="#94a3b8" font-size="9" text-anchor="middle">M.2 NVMe Carrier</text>
+  </g>
+
+  <!-- PCIe x8 -->
+  <g transform="translate(400, 125)">
+    <rect width="150" height="200" fill="#1e293b" stroke="#eab308" rx="6"/>
+    <text x="75" y="25" fill="#eab308" font-size="13" font-weight="bold" text-anchor="middle">PCIe ×8 Slot</text>
+    <rect x="15" y="45" width="120" height="14" fill="#ca8a04" rx="2"/>
+    <rect x="35" y="45" width="4" height="14" fill="#0f172a"/>
+    <text x="75" y="80" fill="#ffffff" font-size="11" text-anchor="middle">49 Pins Total</text>
+    <text x="75" y="105" fill="#cbd5e1" font-size="10" text-anchor="middle">Gen 3: ~8 GB/s</text>
+    <text x="75" y="125" fill="#cbd5e1" font-size="10" text-anchor="middle">Gen 4: ~16 GB/s</text>
+    <rect x="15" y="150" width="120" height="35" fill="#0f172a" stroke="#334155" rx="4"/>
+    <text x="75" y="172" fill="#94a3b8" font-size="9" text-anchor="middle">10GbE NIC, RAID</text>
+  </g>
+
+  <!-- PCIe x16 -->
+  <g transform="translate(580, 125)">
+    <rect width="160" height="200" fill="#1e293b" stroke="#22c55e" rx="6"/>
+    <text x="80" y="25" fill="#22c55e" font-size="13" font-weight="bold" text-anchor="middle">PCIe ×16 Slot</text>
+    <rect x="10" y="45" width="140" height="14" fill="#16a34a" rx="2"/>
+    <rect x="30" y="45" width="4" height="14" fill="#0f172a"/>
+    <text x="80" y="80" fill="#ffffff" font-size="11" text-anchor="middle">82 Pins Total</text>
+    <text x="80" y="105" fill="#cbd5e1" font-size="10" text-anchor="middle">Gen 4: ~32 GB/s</text>
+    <text x="80" y="125" fill="#cbd5e1" font-size="10" text-anchor="middle">Gen 5: ~64 GB/s</text>
+    <rect x="15" y="150" width="130" height="35" fill="#0f172a" stroke="#334155" rx="4"/>
+    <text x="80" y="172" fill="#22c55e" font-size="9" font-weight="bold" text-anchor="middle">Discrete GPU</text>
+  </g>
+
+  <!-- Bottom Notice -->
+  <rect x="60" y="345" width="680" height="50" fill="#1e293b" stroke="#334155" rx="6"/>
+  <text x="400" y="375" fill="#f8fafc" font-size="12" font-weight="bold" text-anchor="middle">⚡ Up-Plugging Invariant: A shorter card (e.g. ×1 or ×4) physically functions in an ×16 slot.</text>
+</svg>
+</div>
+
 "PCI Express, or PCIe, is the standard interface for expansion cards. Every GPU, NVMe adapter, Wi-Fi card, and most sound cards connect to the motherboard via a PCIe slot. Let me show you the slot types.
 
 **[SHOW COMPONENT: Point to the short x1 slot]**

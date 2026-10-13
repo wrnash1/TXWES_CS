@@ -19,6 +19,70 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
+<div style="text-align: center; margin: 24px 0;">
+<svg viewBox="0 0 800 480" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="max-width: 800px; background:#0f172a; border-radius:10px; border:2px solid #1b365d; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <rect width="100%" height="45" fill="#1b365d"/>
+  <text x="400" y="28" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">🏛️ TEXAS WESLEYAN UNIVERSITY • CIS-4328 INFORMATION SECURITY</text>
+  <text x="400" y="75" fill="#d9a74a" font-size="17" font-weight="bold" text-anchor="middle">Incident Response Lifecycle & Forensics Chain of Custody</text>
+  <text x="400" y="98" fill="#94a3b8" font-size="12" text-anchor="middle">NIST SP 800-61 Rev 2 Four-Phase Process and Digital Evidence Preservation</text>
+  
+  <g transform="translate(40, 130)">
+    <!-- Phase 1 -->
+    <rect x="0" y="0" width="160" height="150" fill="#1e293b" stroke="#38bdf8" rx="6"/>
+    <rect x="0" y="0" width="160" height="28" fill="#0284c7" rx="6"/>
+    <text x="80" y="18" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle">1. PREPARATION</text>
+    <text x="10" y="50" fill="#cbd5e1" font-size="10">• Policy & Playbooks</text>
+    <text x="10" y="70" fill="#cbd5e1" font-size="10">• CIRT Team Assembled</text>
+    <text x="10" y="90" fill="#cbd5e1" font-size="10">• Toolkits & Jump Bags</text>
+    <text x="10" y="110" fill="#cbd5e1" font-size="10">• Out-of-band Comms</text>
+    <text x="10" y="130" fill="#cbd5e1" font-size="10">• Tabletop Exercises</text>
+
+    <text x="175" y="75" fill="#d9a74a" font-size="20">➔</text>
+
+    <!-- Phase 2 -->
+    <rect x="195" y="0" width="160" height="150" fill="#1e293b" stroke="#eab308" rx="6"/>
+    <rect x="195" y="0" width="160" height="28" fill="#ca8a04" rx="6"/>
+    <text x="275" y="18" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle">2. DETECTION & ANAL</text>
+    <text x="205" y="50" fill="#cbd5e1" font-size="10">• SIEM / SOAR Alerts</text>
+    <text x="205" y="70" fill="#cbd5e1" font-size="10">• IOC Triage & Validation</text>
+    <text x="205" y="90" fill="#cbd5e1" font-size="10">• Scope Determination</text>
+    <text x="205" y="110" fill="#cbd5e1" font-size="10">• Severity Classification</text>
+    <text x="205" y="130" fill="#cbd5e1" font-size="10">• Legal & CISO Escalation</text>
+
+    <text x="370" y="75" fill="#d9a74a" font-size="20">➔</text>
+
+    <!-- Phase 3 -->
+    <rect x="390" y="0" width="160" height="150" fill="#1e293b" stroke="#ef4444" rx="6"/>
+    <rect x="390" y="0" width="160" height="28" fill="#dc2626" rx="6"/>
+    <text x="470" y="18" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle">3. CONTAIN & ERAD</text>
+    <text x="400" y="50" fill="#cbd5e1" font-size="10">• Network Isolation</text>
+    <text x="400" y="70" fill="#cbd5e1" font-size="10">• Memory Capture (RAM)</text>
+    <text x="400" y="90" fill="#cbd5e1" font-size="10">• Kill Attacker Sessions</text>
+    <text x="400" y="110" fill="#cbd5e1" font-size="10">• Eradicate Implants</text>
+    <text x="400" y="130" fill="#cbd5e1" font-size="10">• Rebuild from Gold Image</text>
+
+    <text x="565" y="75" fill="#d9a74a" font-size="20">➔</text>
+
+    <!-- Phase 4 -->
+    <rect x="585" y="0" width="155" height="150" fill="#1e293b" stroke="#10b981" rx="6"/>
+    <rect x="585" y="0" width="155" height="28" fill="#059669" rx="6"/>
+    <text x="662" y="18" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle">4. POST-INCIDENT</text>
+    <text x="595" y="50" fill="#cbd5e1" font-size="10">• Lessons Learned</text>
+    <text x="595" y="70" fill="#cbd5e1" font-size="10">• Root Cause Analysis</text>
+    <text x="595" y="90" fill="#cbd5e1" font-size="10">• Playbook Remediation</text>
+    <text x="595" y="110" fill="#cbd5e1" font-size="10">• Regulatory Disclosure</text>
+    <text x="595" y="130" fill="#cbd5e1" font-size="10">• Evidence Retention</text>
+
+    <!-- Order of Volatility Box -->
+    <rect x="0" y="170" width="740" height="90" fill="#0f172a" stroke="#d9a74a" stroke-width="2" rx="6"/>
+    <text x="370" y="195" fill="#d9a74a" font-size="12" font-weight="bold" text-anchor="middle">RFC 3227 Forensic Order of Volatility (Preserve Fastest to Slowest)</text>
+    <text x="370" y="225" fill="#ffffff" font-size="11" text-anchor="middle">CPU Registers & Cache ➔ CPU / Memory RAM ➔ Network State & Routing Table ➔ Temp File Systems ➔ Disk Storage ➔ Remote Logs ➔ Archival Media</text>
+    <text x="370" y="245" fill="#94a3b8" font-size="10" text-anchor="middle">Cryptographic Hash (SHA-256) Verified Before & After Forensic Bit-Stream Image Acquisition</text>
+  </g>
+
+</svg>
+</div>
+
 
 ## Course: CIS-4328 Information Security
 

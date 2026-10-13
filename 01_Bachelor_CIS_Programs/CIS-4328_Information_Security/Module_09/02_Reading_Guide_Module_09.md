@@ -19,6 +19,55 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
+<div style="text-align: center; margin: 24px 0;">
+<svg viewBox="0 0 800 480" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="max-width: 800px; background:#0f172a; border-radius:10px; border:2px solid #1b365d; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <rect width="100%" height="45" fill="#1b365d"/>
+  <text x="400" y="28" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">🏛️ TEXAS WESLEYAN UNIVERSITY • CIS-4328 INFORMATION SECURITY</text>
+  <text x="400" y="75" fill="#d9a74a" font-size="17" font-weight="bold" text-anchor="middle">Modern Authentication Infrastructure & Federated Identity</text>
+  <text x="400" y="98" fill="#94a3b8" font-size="12" text-anchor="middle">FIDO2 / WebAuthn, OAuth 2.0 Token Flow, and SAML 2.0 Web SSO</text>
+  
+  <g transform="translate(60, 130)">
+    <!-- OIDC / OAuth Flow -->
+    <rect x="0" y="0" width="670" height="270" fill="#1e293b" stroke="#d9a74a" rx="8"/>
+    <rect x="0" y="0" width="670" height="32" fill="#1b365d" rx="8"/>
+    <text x="335" y="22" fill="#d9a74a" font-size="13" font-weight="bold" text-anchor="middle">OAuth 2.0 Authorization Code Flow with PKCE (Proof Key for Code Exchange)</text>
+
+    <!-- User Browser -->
+    <rect x="30" y="60" width="130" height="60" fill="#0f172a" stroke="#38bdf8" rx="4"/>
+    <text x="95" y="85" fill="#38bdf8" font-size="11" font-weight="bold" text-anchor="middle">Client App / User</text>
+    <text x="95" y="105" fill="#94a3b8" font-size="9" text-anchor="middle">PKCE code_challenge</text>
+
+    <!-- Arrow 1 -->
+    <line x1="160" y1="90" x2="250" y2="90" stroke="#d9a74a" stroke-width="2"/>
+    <polygon points="250,90 242,86 242,94" fill="#d9a74a"/>
+    <text x="205" y="80" fill="#d9a74a" font-size="8" text-anchor="middle">1. Auth Request</text>
+
+    <!-- IDP -->
+    <rect x="260" y="60" width="150" height="60" fill="#0f172a" stroke="#22c55e" rx="4"/>
+    <text x="335" y="85" fill="#22c55e" font-size="11" font-weight="bold" text-anchor="middle">IdP (Okta / Entra)</text>
+    <text x="335" y="105" fill="#94a3b8" font-size="9" text-anchor="middle">MFA + Auth Code</text>
+
+    <!-- Arrow 2 -->
+    <line x1="410" y1="90" x2="500" y2="90" stroke="#d9a74a" stroke-width="2"/>
+    <polygon points="500,90 492,86 492,94" fill="#d9a74a"/>
+    <text x="455" y="80" fill="#d9a74a" font-size="8" text-anchor="middle">2. Token Exchange</text>
+
+    <!-- API / Resource -->
+    <rect x="510" y="60" width="130" height="60" fill="#0f172a" stroke="#a855f7" rx="4"/>
+    <text x="575" y="85" fill="#a855f7" font-size="11" font-weight="bold" text-anchor="middle">Resource Server</text>
+    <text x="575" y="105" fill="#94a3b8" font-size="9" text-anchor="middle">JWT Access Token</text>
+
+    <!-- Key Attributes Below -->
+    <rect x="30" y="145" width="610" height="100" fill="#0f172a" stroke="#334155" rx="4"/>
+    <text x="50" y="170" fill="#38bdf8" font-size="11" font-weight="bold">Token Format & Security Validation:</text>
+    <text x="50" y="195" fill="#cbd5e1" font-size="10">• <strong>ID Token:</strong> JSON Web Token (JWT) containing cryptographically signed user identity assertions (OIDC).</text>
+    <text x="50" y="215" fill="#cbd5e1" font-size="10">• <strong>Access Token:</strong> Bearer token carrying delegated scopes, claims, and short expiration lifetime (OAuth 2.0).</text>
+    <text x="50" y="235" fill="#cbd5e1" font-size="10">• <strong>Refresh Token:</strong> Long-lived secure credential stored in HTTP-Only, Secure cookies to refresh access.</text>
+  </g>
+
+</svg>
+</div>
+
 ## Course: CIS-4328_Information_Security (CompTIA Security+ SY0-701)
 
 ---

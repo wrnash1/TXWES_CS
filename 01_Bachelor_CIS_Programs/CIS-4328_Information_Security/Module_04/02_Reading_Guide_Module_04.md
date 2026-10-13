@@ -19,6 +19,58 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
+<div style="text-align: center; margin: 24px 0;">
+<svg viewBox="0 0 800 480" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="max-width: 800px; background:#0f172a; border-radius:10px; border:2px solid #1b365d; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <rect width="100%" height="45" fill="#1b365d"/>
+  <text x="400" y="28" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">🏛️ TEXAS WESLEYAN UNIVERSITY • CIS-4328 INFORMATION SECURITY</text>
+  <text x="400" y="75" fill="#d9a74a" font-size="17" font-weight="bold" text-anchor="middle">Vulnerability Management & CVSS v3.1 Scoring Framework</text>
+  <text x="400" y="98" fill="#94a3b8" font-size="12" text-anchor="middle">Base, Temporal, and Environmental Severity Calculation Pipeline</text>
+  
+  <g transform="translate(60, 130)">
+    <!-- Metrics Pillars -->
+    <rect x="0" y="0" width="200" height="270" fill="#1e293b" stroke="#38bdf8" rx="8"/>
+    <text x="100" y="30" fill="#38bdf8" font-size="13" font-weight="bold" text-anchor="middle">Base Metric Group</text>
+    <text x="20" y="65" fill="#cbd5e1" font-size="11">• Attack Vector (AV: N/A/L/P)</text>
+    <text x="20" y="95" fill="#cbd5e1" font-size="11">• Complexity (AC: L/H)</text>
+    <text x="20" y="125" fill="#cbd5e1" font-size="11">• Privileges Required (PR: N/L/H)</text>
+    <text x="20" y="155" fill="#cbd5e1" font-size="11">• User Interaction (UI: N/R)</text>
+    <text x="20" y="185" fill="#cbd5e1" font-size="11">• Scope (S: U/C)</text>
+    <text x="20" y="215" fill="#cbd5e1" font-size="11">• CIA Impact (C/I/A: H/L/N)</text>
+
+    <!-- Arrow -->
+    <text x="225" y="135" fill="#d9a74a" font-size="24" font-weight="bold">➔</text>
+
+    <rect x="250" y="0" width="200" height="270" fill="#1e293b" stroke="#eab308" rx="8"/>
+    <text x="350" y="30" fill="#eab308" font-size="13" font-weight="bold" text-anchor="middle">Temporal & Context</text>
+    <text x="270" y="65" fill="#cbd5e1" font-size="11">• Exploit Code Maturity (E)</text>
+    <text x="270" y="95" fill="#cbd5e1" font-size="11">• Remediation Level (RL)</text>
+    <text x="270" y="125" fill="#cbd5e1" font-size="11">• Report Confidence (RC)</text>
+    <text x="270" y="155" fill="#cbd5e1" font-size="11">• Modified Base Metrics (M)</text>
+    <text x="270" y="185" fill="#cbd5e1" font-size="11">• Confidentiality Requirement</text>
+    <text x="270" y="215" fill="#cbd5e1" font-size="11">• Business Impact Factor</text>
+
+    <!-- Arrow -->
+    <text x="475" y="135" fill="#d9a74a" font-size="24" font-weight="bold">➔</text>
+
+    <!-- Severity Ratings -->
+    <rect x="500" y="0" width="180" height="270" fill="#1e293b" stroke="#d9a74a" rx="8"/>
+    <text x="590" y="30" fill="#d9a74a" font-size="13" font-weight="bold" text-anchor="middle">Qualitative Severity</text>
+    <rect x="520" y="55" width="140" height="35" fill="#7f1d1d" rx="4"/>
+    <text x="590" y="78" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle">CRITICAL (9.0 – 10.0)</text>
+
+    <rect x="520" y="100" width="140" height="35" fill="#c2410c" rx="4"/>
+    <text x="590" y="123" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle">HIGH (7.0 – 8.9)</text>
+
+    <rect x="520" y="145" width="140" height="35" fill="#ca8a04" rx="4"/>
+    <text x="590" y="168" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle">MEDIUM (4.0 – 6.9)</text>
+
+    <rect x="520" y="190" width="140" height="35" fill="#15803d" rx="4"/>
+    <text x="590" y="213" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle">LOW (0.1 – 3.9)</text>
+  </g>
+
+</svg>
+</div>
+
 
 ## Course: CIS-4328 Information Security
 

@@ -19,6 +19,42 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
+<div style="text-align: center; margin: 24px 0;">
+<svg viewBox="0 0 800 480" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="max-width: 800px; background:#0f172a; border-radius:10px; border:2px solid #1b365d; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <rect width="100%" height="45" fill="#1b365d"/>
+  <text x="400" y="28" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">🏛️ TEXAS WESLEYAN UNIVERSITY • CIS-4328 INFORMATION SECURITY</text>
+  <text x="400" y="75" fill="#d9a74a" font-size="17" font-weight="bold" text-anchor="middle">Identity & Access Management (IAM) — Authentication vs. Authorization</text>
+  <text x="400" y="98" fill="#94a3b8" font-size="12" text-anchor="middle">Kerberos Tickets, OAuth 2.0, OpenID Connect, and RBAC / ABAC Frameworks</text>
+  
+  <g transform="translate(60, 130)">
+    <rect x="0" y="0" width="310" height="270" fill="#1e293b" stroke="#38bdf8" rx="8"/>
+    <rect x="0" y="0" width="310" height="32" fill="#0284c7" rx="8"/>
+    <text x="155" y="22" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">Authentication (AuthN) — Who Are You?</text>
+    <text x="20" y="65" fill="#f8fafc" font-size="11"><strong>MFA Factors (At least 2 unique):</strong></text>
+    <text x="20" y="90" fill="#cbd5e1" font-size="10">• Something You Know: Password, PIN, Passphrase</text>
+    <text x="20" y="115" fill="#cbd5e1" font-size="10">• Something You Have: FIDO2 Token, TOTP Authenticator</text>
+    <text x="20" y="140" fill="#cbd5e1" font-size="10">• Something You Are: Fingerprint, Facial Recognition</text>
+    <text x="20" y="165" fill="#cbd5e1" font-size="10">• Somewhere You Are: GPS Location, IP Geofence</text>
+    <text x="20" y="190" fill="#cbd5e1" font-size="10">• Something You Do: Typing cadence, Signature gait</text>
+    <rect x="20" y="220" width="270" height="32" fill="#0f172a" stroke="#38bdf8" rx="4"/>
+    <text x="155" y="241" fill="#38bdf8" font-size="10" font-weight="bold" text-anchor="middle">Federation: SAML 2.0 • OpenID Connect (OIDC)</text>
+
+    <rect x="360" y="0" width="310" height="270" fill="#1e293b" stroke="#10b981" rx="8"/>
+    <rect x="360" y="0" width="310" height="32" fill="#059669" rx="8"/>
+    <text x="515" y="22" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">Authorization (AuthZ) — What Can You Do?</text>
+    <text x="380" y="65" fill="#f8fafc" font-size="11"><strong>Access Control Models:</strong></text>
+    <text x="380" y="90" fill="#cbd5e1" font-size="10">• <strong>DAC:</strong> Discretionary (Owner sets permissions)</text>
+    <text x="380" y="115" fill="#cbd5e1" font-size="10">• <strong>MAC:</strong> Mandatory (Security labels: Top Secret)</text>
+    <text x="380" y="140" fill="#cbd5e1" font-size="10">• <strong>RBAC:</strong> Role-Based (Job function determines access)</text>
+    <text x="380" y="165" fill="#cbd5e1" font-size="10">• <strong>ABAC:</strong> Attribute-Based (Context, time, device trust)</text>
+    <text x="380" y="190" fill="#cbd5e1" font-size="10">• <strong>OAuth 2.0:</strong> Scoped delegated token authorization</text>
+    <rect x="380" y="220" width="270" height="32" fill="#0f172a" stroke="#10b981" rx="4"/>
+    <text x="515" y="241" fill="#10b981" font-size="10" font-weight="bold" text-anchor="middle">Principle: Least Privilege & Separation of Duties</text>
+  </g>
+
+</svg>
+</div>
+
 
 ## CIS-4328 Information Security | Texas Wesleyan University
 

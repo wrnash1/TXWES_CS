@@ -20,6 +20,58 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
+<div style="text-align: center; margin: 24px 0;">
+<svg viewBox="0 0 800 480" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="max-width: 800px; background:#0f172a; border-radius:10px; border:2px solid #1b365d; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <rect width="100%" height="45" fill="#1b365d"/>
+  <text x="400" y="28" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">🏛️ TEXAS WESLEYAN UNIVERSITY • CIS-4328 INFORMATION SECURITY</text>
+  <text x="400" y="75" fill="#d9a74a" font-size="17" font-weight="bold" text-anchor="middle">Malware Taxonomy & Execution Lifecycles</text>
+  <text x="400" y="98" fill="#94a3b8" font-size="12" text-anchor="middle">Ransomware, Rootkits, Trojans, and Memory Injection Execution Chains</text>
+  
+  <g transform="translate(60, 130)">
+    <rect x="0" y="0" width="150" height="280" fill="#1e293b" stroke="#ef4444" stroke-width="2" rx="8"/>
+    <text x="75" y="30" fill="#ef4444" font-size="13" font-weight="bold" text-anchor="middle">Ransomware</text>
+    <text x="75" y="55" fill="#cbd5e1" font-size="10" text-anchor="middle">• Dropper Payload</text>
+    <text x="75" y="80" fill="#cbd5e1" font-size="10" text-anchor="middle">• Shadow Copy Delete</text>
+    <text x="75" y="105" fill="#cbd5e1" font-size="10" text-anchor="middle">• AES Key Generation</text>
+    <text x="75" y="130" fill="#cbd5e1" font-size="10" text-anchor="middle">• Asymmetric C2 Lock</text>
+    <text x="75" y="155" fill="#cbd5e1" font-size="10" text-anchor="middle">• Ransom Note Drop</text>
+    <rect x="15" y="220" width="120" height="35" fill="#b91c1c" rx="4"/>
+    <text x="75" y="242" fill="#ffffff" font-size="10" font-weight="bold" text-anchor="middle">Mitigation: Immutable WORM</text>
+
+    <rect x="180" y="0" width="150" height="280" fill="#1e293b" stroke="#f59e0b" stroke-width="2" rx="8"/>
+    <text x="255" y="30" fill="#f59e0b" font-size="13" font-weight="bold" text-anchor="middle">Rootkits / Bootkits</text>
+    <text x="255" y="55" fill="#cbd5e1" font-size="10" text-anchor="middle">• Ring 0 Hooking</text>
+    <text x="255" y="80" fill="#cbd5e1" font-size="10" text-anchor="middle">• Kernel Modification</text>
+    <text x="255" y="105" fill="#cbd5e1" font-size="10" text-anchor="middle">• Subverts Antivirus</text>
+    <text x="255" y="130" fill="#cbd5e1" font-size="10" text-anchor="middle">• UEFI/BIOS Implants</text>
+    <text x="255" y="155" fill="#cbd5e1" font-size="10" text-anchor="middle">• Process Hiding</text>
+    <rect x="195" y="220" width="120" height="35" fill="#d97706" rx="4"/>
+    <text x="255" y="242" fill="#ffffff" font-size="10" font-weight="bold" text-anchor="middle">Mitigation: UEFI Secure Boot</text>
+
+    <rect x="360" y="0" width="150" height="280" fill="#1e293b" stroke="#a855f7" stroke-width="2" rx="8"/>
+    <text x="435" y="30" fill="#a855f7" font-size="13" font-weight="bold" text-anchor="middle">Spyware & RATs</text>
+    <text x="435" y="55" fill="#cbd5e1" font-size="10" text-anchor="middle">• Keylogger Hook</text>
+    <text x="435" y="80" fill="#cbd5e1" font-size="10" text-anchor="middle">• Screen Scraping</text>
+    <text x="435" y="105" fill="#cbd5e1" font-size="10" text-anchor="middle">• Mic/Camera Capture</text>
+    <text x="435" y="130" fill="#cbd5e1" font-size="10" text-anchor="middle">• Reverse Shell Beacon</text>
+    <text x="435" y="155" fill="#cbd5e1" font-size="10" text-anchor="middle">• Credential Exfiltration</text>
+    <rect x="375" y="220" width="120" height="35" fill="#7e22ce" rx="4"/>
+    <text x="435" y="242" fill="#ffffff" font-size="10" font-weight="bold" text-anchor="middle">Mitigation: Behavioral EDR</text>
+
+    <rect x="540" y="0" width="150" height="280" fill="#1e293b" stroke="#38bdf8" stroke-width="2" rx="8"/>
+    <text x="615" y="30" fill="#38bdf8" font-size="13" font-weight="bold" text-anchor="middle">Fileless Malware</text>
+    <text x="615" y="55" fill="#cbd5e1" font-size="10" text-anchor="middle">• RAM-Only Execution</text>
+    <text x="615" y="80" fill="#cbd5e1" font-size="10" text-anchor="middle">• LOLBins Abuse</text>
+    <text x="615" y="105" fill="#cbd5e1" font-size="10" text-anchor="middle">• PowerShell Scripts</text>
+    <text x="615" y="130" fill="#cbd5e1" font-size="10" text-anchor="middle">• WMI Subscriptions</text>
+    <text x="615" y="155" fill="#cbd5e1" font-size="10" text-anchor="middle">• Memory Injection</text>
+    <rect x="555" y="220" width="120" height="35" fill="#0284c7" rx="4"/>
+    <text x="615" y="242" fill="#ffffff" font-size="10" font-weight="bold" text-anchor="middle">Mitigation: Script Block Logging</text>
+  </g>
+
+</svg>
+</div>
+
 
 ## CIS-4328 Information Security | Texas Wesleyan University
 

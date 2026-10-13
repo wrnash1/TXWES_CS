@@ -19,6 +19,40 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
+<div style="text-align: center; margin: 24px 0;">
+<svg viewBox="0 0 800 480" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="max-width: 800px; background:#0f172a; border-radius:10px; border:2px solid #1b365d; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <rect width="100%" height="45" fill="#1b365d"/>
+  <text x="400" y="28" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">🏛️ TEXAS WESLEYAN UNIVERSITY • CIS-4328 INFORMATION SECURITY</text>
+  <text x="400" y="75" fill="#d9a74a" font-size="17" font-weight="bold" text-anchor="middle">Application Security & OWASP Top 10 Defensive Architecture</text>
+  <text x="400" y="98" fill="#94a3b8" font-size="12" text-anchor="middle">SQL Injection, XSS, CSRF, and Secure SDLC Gateways</text>
+  
+  <g transform="translate(60, 130)">
+    <rect x="0" y="0" width="310" height="270" fill="#1e293b" stroke="#ef4444" rx="8"/>
+    <rect x="0" y="0" width="310" height="32" fill="#b91c1c" rx="8"/>
+    <text x="155" y="22" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">OWASP High-Impact Vulnerability Vectors</text>
+    <text x="20" y="65" fill="#f8fafc" font-size="11">• <strong>A01: Broken Access Control:</strong> IDOR, Privilege escalation</text>
+    <text x="20" y="95" fill="#f8fafc" font-size="11">• <strong>A02: Cryptographic Failures:</strong> Plaintext storage, weak ciphers</text>
+    <text x="20" y="125" fill="#f8fafc" font-size="11">• <strong>A03: Injection:</strong> SQLi, NoSQLi, OS Command Injection</text>
+    <text x="20" y="155" fill="#f8fafc" font-size="11">• <strong>A04: Insecure Design:</strong> Threat modeling omitted</text>
+    <text x="20" y="185" fill="#f8fafc" font-size="11">• <strong>A05: Security Misconfiguration:</strong> Default accounts, open S3</text>
+    <rect x="20" y="215" width="270" height="35" fill="#0f172a" stroke="#ef4444" rx="4"/>
+    <text x="155" y="237" fill="#ef4444" font-size="10" font-weight="bold" text-anchor="middle">Exploit Impact: Data Breach & RCE</text>
+
+    <rect x="360" y="0" width="310" height="270" fill="#1e293b" stroke="#22c55e" rx="8"/>
+    <rect x="360" y="0" width="310" height="32" fill="#15803d" rx="8"/>
+    <text x="515" y="22" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">Secure SDLC & DevSecOps Controls</text>
+    <text x="380" y="65" fill="#f8fafc" font-size="11">• <strong>SAST:</strong> Static Code Scanning in CI/CD pipeline</text>
+    <text x="380" y="95" fill="#f8fafc" font-size="11">• <strong>DAST:</strong> Dynamic Runtime Fuzzing & Black-Box Tests</text>
+    <text x="380" y="125" fill="#f8fafc" font-size="11">• <strong>SCA:</strong> Software Composition Analysis (SBOM, Dependabot)</text>
+    <text x="380" y="155" fill="#f8fafc" font-size="11">• <strong>Prepared Statements:</strong> Parameterized SQL Queries</text>
+    <text x="380" y="185" fill="#f8fafc" font-size="11">• <strong>CSP Headers:</strong> Content-Security-Policy to eliminate XSS</text>
+    <rect x="380" y="215" width="270" height="35" fill="#0f172a" stroke="#22c55e" rx="4"/>
+    <text x="515" y="237" fill="#22c55e" font-size="10" font-weight="bold" text-anchor="middle">Shift-Left Security Engineering Invariants</text>
+  </g>
+
+</svg>
+</div>
+
 
 ## Course: CIS-4328 Information Security
 

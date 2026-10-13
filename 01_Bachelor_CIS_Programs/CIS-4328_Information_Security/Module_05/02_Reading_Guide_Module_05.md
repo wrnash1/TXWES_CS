@@ -19,6 +19,78 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
+<div style="text-align: center; margin: 24px 0;">
+<svg viewBox="0 0 800 480" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="max-width: 800px; background:#0f172a; border-radius:10px; border:2px solid #1b365d; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <rect width="100%" height="45" fill="#1b365d"/>
+  <text x="400" y="28" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">🏛️ TEXAS WESLEYAN UNIVERSITY • CIS-4328 INFORMATION SECURITY</text>
+  <text x="400" y="75" fill="#d9a74a" font-size="17" font-weight="bold" text-anchor="middle">Cryptography & Public Key Infrastructure (PKI)</text>
+  <text x="400" y="98" fill="#94a3b8" font-size="12" text-anchor="middle">Asymmetric vs. Symmetric Cryptographic Pipelines and Certificate Authorities</text>
+  
+  <!-- Asymmetric Flow -->
+  <g transform="translate(50, 120)">
+    <rect width="690" height="140" fill="#1e293b" stroke="#334155" rx="8"/>
+    <rect width="690" height="28" fill="#1b365d" rx="8"/>
+    <text x="345" y="19" fill="#d9a74a" font-size="12" font-weight="bold" text-anchor="middle">Asymmetric Key Exchange & Digital Signatures (RSA / ECC)</text>
+    
+    <g transform="translate(30, 45)">
+      <rect width="160" height="65" fill="#0f172a" stroke="#38bdf8" rx="4"/>
+      <text x="80" y="25" fill="#38bdf8" font-size="11" font-weight="bold" text-anchor="middle">Alice (Sender)</text>
+      <text x="80" y="45" fill="#94a3b8" font-size="9" text-anchor="middle">Encrypts with Bob's Public Key</text>
+    </g>
+    <line x1="200" y1="78" x2="280" y2="78" stroke="#d9a74a" stroke-width="2" stroke-dasharray="4,4"/>
+    <polygon points="280,78 272,74 272,82" fill="#d9a74a"/>
+    <text x="240" y="70" fill="#d9a74a" font-size="9" text-anchor="middle">Ciphertext</text>
+
+    <g transform="translate(290, 45)">
+      <rect width="140" height="65" fill="#0f172a" stroke="#a855f7" rx="4"/>
+      <text x="70" y="25" fill="#a855f7" font-size="11" font-weight="bold" text-anchor="middle">Untrusted Transit</text>
+      <text x="70" y="45" fill="#94a3b8" font-size="9" text-anchor="middle">Public Internet / Wire</text>
+    </g>
+    <line x1="440" y1="78" x2="520" y2="78" stroke="#d9a74a" stroke-width="2" stroke-dasharray="4,4"/>
+    <polygon points="520,78 512,74 512,82" fill="#d9a74a"/>
+
+    <g transform="translate(530, 45)">
+      <rect width="140" height="65" fill="#0f172a" stroke="#22c55e" rx="4"/>
+      <text x="70" y="25" fill="#22c55e" font-size="11" font-weight="bold" text-anchor="middle">Bob (Receiver)</text>
+      <text x="70" y="45" fill="#94a3b8" font-size="9" text-anchor="middle">Decrypts with Bob's Private Key</text>
+    </g>
+  </g>
+
+  <!-- PKI Hierarchy -->
+  <g transform="translate(50, 280)">
+    <rect width="690" height="150" fill="#1e293b" stroke="#334155" rx="8"/>
+    <rect width="690" height="28" fill="#1b365d" rx="8"/>
+    <text x="345" y="19" fill="#38bdf8" font-size="12" font-weight="bold" text-anchor="middle">X.509 Certificate Chain of Trust Hierarchy</text>
+    
+    <g transform="translate(50, 45)">
+      <rect width="160" height="70" fill="#0f172a" stroke="#d9a74a" rx="4"/>
+      <text x="80" y="25" fill="#d9a74a" font-size="11" font-weight="bold" text-anchor="middle">Root CA (Offline)</text>
+      <text x="80" y="45" fill="#94a3b8" font-size="9" text-anchor="middle">Self-Signed Root Cert</text>
+      <text x="80" y="60" fill="#cbd5e1" font-size="9" text-anchor="middle">Air-Gapped Vault</text>
+    </g>
+    <line x1="220" y1="80" x2="280" y2="80" stroke="#94a3b8" stroke-width="2"/>
+    <polygon points="280,80 272,76 272,84" fill="#94a3b8"/>
+
+    <g transform="translate(290, 45)">
+      <rect width="160" height="70" fill="#0f172a" stroke="#38bdf8" rx="4"/>
+      <text x="80" y="25" fill="#38bdf8" font-size="11" font-weight="bold" text-anchor="middle">Intermediate CA</text>
+      <text x="80" y="45" fill="#94a3b8" font-size="9" text-anchor="middle">Signs End-Entity Certs</text>
+      <text x="80" y="60" fill="#cbd5e1" font-size="9" text-anchor="middle">CRL & OCSP Responder</text>
+    </g>
+    <line x1="460" y1="80" x2="520" y2="80" stroke="#94a3b8" stroke-width="2"/>
+    <polygon points="520,80 512,76 512,84" fill="#94a3b8"/>
+
+    <g transform="translate(530, 45)">
+      <rect width="140" height="70" fill="#0f172a" stroke="#22c55e" rx="4"/>
+      <text x="70" y="25" fill="#22c55e" font-size="11" font-weight="bold" text-anchor="middle">Leaf Certificate</text>
+      <text x="70" y="45" fill="#94a3b8" font-size="9" text-anchor="middle">Web Server / TLS End-Point</text>
+      <text x="70" y="60" fill="#cbd5e1" font-size="9" text-anchor="middle">SAN: domain.com</text>
+    </g>
+  </g>
+
+</svg>
+</div>
+
 
 ## CIS-4328 Information Security | Texas Wesleyan University
 

@@ -19,6 +19,68 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
+<div style="text-align: center; margin: 24px 0;">
+<svg viewBox="0 0 800 480" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="max-width: 800px; background:#0f172a; border-radius:10px; border:2px solid #1b365d; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <rect width="100%" height="45" fill="#1b365d"/>
+  <text x="400" y="28" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">🏛️ TEXAS WESLEYAN UNIVERSITY • CIS-4328 INFORMATION SECURITY</text>
+  <text x="400" y="75" fill="#d9a74a" font-size="17" font-weight="bold" text-anchor="middle">Enterprise Risk Management & Quantitative Formulas</text>
+  <text x="400" y="98" fill="#94a3b8" font-size="12" text-anchor="middle">NIST CSF, SLE, ARO, ALE Calculations, and Risk Response Strategies</text>
+  
+  <g transform="translate(60, 130)">
+    <!-- Formulas -->
+    <rect x="0" y="0" width="670" height="120" fill="#1e293b" stroke="#d9a74a" rx="8"/>
+    <rect x="0" y="0" width="670" height="28" fill="#1b365d" rx="8"/>
+    <text x="335" y="19" fill="#d9a74a" font-size="12" font-weight="bold" text-anchor="middle">CompTIA SY0-701 Quantitative Risk Analysis Invariants</text>
+    
+    <g transform="translate(30, 45)">
+      <rect width="180" height="55" fill="#0f172a" stroke="#38bdf8" rx="4"/>
+      <text x="90" y="22" fill="#38bdf8" font-size="11" font-weight="bold" text-anchor="middle">SLE = AV × EF</text>
+      <text x="90" y="42" fill="#94a3b8" font-size="9" text-anchor="middle">Single Loss Expectancy</text>
+    </g>
+    <text x="235" y="75" fill="#d9a74a" font-size="20" font-weight="bold">×</text>
+    <g transform="translate(260, 45)">
+      <rect width="150" height="55" fill="#0f172a" stroke="#eab308" rx="4"/>
+      <text x="75" y="22" fill="#eab308" font-size="11" font-weight="bold" text-anchor="middle">ARO</text>
+      <text x="75" y="42" fill="#94a3b8" font-size="9" text-anchor="middle">Annualized Rate of Occurrence</text>
+    </g>
+    <text x="435" y="75" fill="#d9a74a" font-size="20" font-weight="bold">=</text>
+    <g transform="translate(460, 45)">
+      <rect width="180" height="55" fill="#0f172a" stroke="#22c55e" rx="4"/>
+      <text x="90" y="22" fill="#22c55e" font-size="11" font-weight="bold" text-anchor="middle">ALE = SLE × ARO</text>
+      <text x="90" y="42" fill="#94a3b8" font-size="9" text-anchor="middle">Annualized Loss Expectancy</text>
+    </g>
+
+    <!-- 4 Risk Responses Below -->
+    <g transform="translate(0, 140)">
+      <rect width="150" height="120" fill="#1e293b" stroke="#3b82f6" rx="6"/>
+      <text x="75" y="25" fill="#3b82f6" font-size="12" font-weight="bold" text-anchor="middle">1. MITIGATION</text>
+      <text x="75" y="55" fill="#cbd5e1" font-size="10" text-anchor="middle">Deploy security controls</text>
+      <text x="75" y="80" fill="#cbd5e1" font-size="10" text-anchor="middle">Reduce likelihood &</text>
+      <text x="75" y="100" fill="#cbd5e1" font-size="10" text-anchor="middle">impact (e.g. Firewalls)</text>
+
+      <rect x="170" y="0" width="150" height="120" fill="#1e293b" stroke="#10b981" rx="6"/>
+      <text x="245" y="25" fill="#10b981" font-size="12" font-weight="bold" text-anchor="middle">2. TRANSFER</text>
+      <text x="245" y="55" fill="#cbd5e1" font-size="10" text-anchor="middle">Shift financial impact</text>
+      <text x="245" y="80" fill="#cbd5e1" font-size="10" text-anchor="middle">Cyber insurance policy</text>
+      <text x="245" y="100" fill="#cbd5e1" font-size="10" text-anchor="middle">3rd-party vendor SLA</text>
+
+      <rect x="340" y="0" width="150" height="120" fill="#1e293b" stroke="#f59e0b" rx="6"/>
+      <text x="415" y="25" fill="#f59e0b" font-size="12" font-weight="bold" text-anchor="middle">3. AVOIDANCE</text>
+      <text x="415" y="55" fill="#cbd5e1" font-size="10" text-anchor="middle">Cancel high-risk activity</text>
+      <text x="415" y="80" fill="#cbd5e1" font-size="10" text-anchor="middle">Decommission vulnerable</text>
+      <text x="415" y="100" fill="#cbd5e1" font-size="10" text-anchor="middle">legacy platforms</text>
+
+      <rect x="510" y="0" width="160" height="120" fill="#1e293b" stroke="#8b5cf6" rx="6"/>
+      <text x="590" y="25" fill="#8b5cf6" font-size="12" font-weight="bold" text-anchor="middle">4. ACCEPTANCE</text>
+      <text x="590" y="55" fill="#cbd5e1" font-size="10" text-anchor="middle">Cost of control exceeds</text>
+      <text x="590" y="80" fill="#cbd5e1" font-size="10" text-anchor="middle">the potential loss</text>
+      <text x="590" y="100" fill="#cbd5e1" font-size="10" text-anchor="middle">Formal CISO sign-off</text>
+    </g>
+  </g>
+
+</svg>
+</div>
+
 
 ## Course: CIS-4328 Information Security
 

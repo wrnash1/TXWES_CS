@@ -19,6 +19,54 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
+<div style="text-align: center; margin: 24px 0;">
+<svg viewBox="0 0 800 480" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="max-width: 800px; background:#0f172a; border-radius:10px; border:2px solid #1b365d; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <rect width="100%" height="45" fill="#1b365d"/>
+  <text x="400" y="28" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">🏛️ TEXAS WESLEYAN UNIVERSITY • CIS-4328 INFORMATION SECURITY</text>
+  <text x="400" y="75" fill="#d9a74a" font-size="17" font-weight="bold" text-anchor="middle">Zero-Trust Enterprise Network Architecture & Defense-in-Depth</text>
+  <text x="400" y="98" fill="#94a3b8" font-size="12" text-anchor="middle">Micro-Segmentation, Next-Gen Firewalls, and Bastion Ingress Pipelines</text>
+  
+  <g transform="translate(40, 120)">
+    <!-- Untrusted Internet -->
+    <rect x="0" y="50" width="120" height="230" fill="#1e293b" stroke="#ef4444" stroke-width="2" rx="6"/>
+    <text x="60" y="35" fill="#ef4444" font-size="12" font-weight="bold" text-anchor="middle">UNTRUSTED WAN</text>
+    <text x="60" y="90" fill="#94a3b8" font-size="10" text-anchor="middle">Adversary Recon</text>
+    <text x="60" y="120" fill="#94a3b8" font-size="10" text-anchor="middle">DDoS Ingress</text>
+    <text x="60" y="150" fill="#94a3b8" font-size="10" text-anchor="middle">Malicious Bots</text>
+
+    <!-- Edge FW / WAF -->
+    <rect x="150" y="30" width="40" height="270" fill="#b91c1c" rx="4"/>
+    <text x="170" y="170" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" transform="rotate(-90 170 170)">EDGE FIREWALL / WAF</text>
+
+    <!-- DMZ -->
+    <rect x="220" y="50" width="140" height="230" fill="#1e293b" stroke="#f59e0b" stroke-width="2" rx="6"/>
+    <text x="290" y="35" fill="#f59e0b" font-size="12" font-weight="bold" text-anchor="middle">DMZ (EXT-FACING)</text>
+    <rect x="235" y="70" width="110" height="40" fill="#0f172a" stroke="#cbd5e1" rx="4"/>
+    <text x="290" y="95" fill="#ffffff" font-size="10" text-anchor="middle">Reverse Proxy / CDN</text>
+    <rect x="235" y="130" width="110" height="40" fill="#0f172a" stroke="#cbd5e1" rx="4"/>
+    <text x="290" y="155" fill="#ffffff" font-size="10" text-anchor="middle">Public Web Server</text>
+    <rect x="235" y="190" width="110" height="40" fill="#0f172a" stroke="#cbd5e1" rx="4"/>
+    <text x="290" y="215" fill="#ffffff" font-size="10" text-anchor="middle">VPN Concentrator</text>
+
+    <!-- Internal FW -->
+    <rect x="390" y="30" width="40" height="270" fill="#b91c1c" rx="4"/>
+    <text x="410" y="170" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" transform="rotate(-90 410 170)">INTERNAL SEGMENTATION</text>
+
+    <!-- Trust Zones -->
+    <rect x="460" y="50" width="260" height="105" fill="#1e293b" stroke="#10b981" stroke-width="2" rx="6"/>
+    <text x="590" y="40" fill="#10b981" font-size="12" font-weight="bold" text-anchor="middle">APP / MICROSERVICE CLUSTER</text>
+    <text x="590" y="80" fill="#ffffff" font-size="10" text-anchor="middle">mTLS Communication • Istio Service Mesh</text>
+    <text x="590" y="105" fill="#94a3b8" font-size="9" text-anchor="middle">No Direct External Ingress Permitted</text>
+
+    <rect x="460" y="175" width="260" height="105" fill="#1e293b" stroke="#6366f1" stroke-width="2" rx="6"/>
+    <text x="590" y="170" fill="#6366f1" font-size="12" font-weight="bold" text-anchor="middle">SECURE DATA ENCLAVE</text>
+    <text x="590" y="210" fill="#ffffff" font-size="10" text-anchor="middle">Primary DB Clustered Storage • HSM Key Store</text>
+    <text x="590" y="235" fill="#94a3b8" font-size="9" text-anchor="middle">Strict Private Subnet • TDE Encrypted at Rest</text>
+  </g>
+
+</svg>
+</div>
+
 
 ## CIS-4328 Information Security | Texas Wesleyan University
 

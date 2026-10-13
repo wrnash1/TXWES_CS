@@ -19,6 +19,60 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
+<div style="text-align: center; margin: 24px 0;">
+<svg viewBox="0 0 800 480" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="max-width: 800px; background:#0f172a; border-radius:10px; border:2px solid #1b365d; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <rect width="100%" height="45" fill="#1b365d"/>
+  <text x="400" y="28" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">🏛️ TEXAS WESLEYAN UNIVERSITY • CIS-4328 INFORMATION SECURITY</text>
+  <text x="400" y="75" fill="#d9a74a" font-size="17" font-weight="bold" text-anchor="middle">Security Operations Center (SOC) & SIEM/SOAR Architecture</text>
+  <text x="400" y="98" fill="#94a3b8" font-size="12" text-anchor="middle">Telemetry Ingestion, Correlation Engines, Threat Intelligence, and Automated Playbooks</text>
+  
+  <g transform="translate(60, 130)">
+    <!-- SOC Pipeline -->
+    <rect x="0" y="0" width="670" height="270" fill="#1e293b" stroke="#a855f7" rx="8"/>
+    <rect x="0" y="0" width="670" height="32" fill="#7e22ce" rx="8"/>
+    <text x="335" y="22" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">SOC Continuous Monitoring & SOAR Orchestration Lifecycle</text>
+
+    <!-- Telemetry Ingest -->
+    <g transform="translate(20, 50)">
+      <rect width="180" height="190" fill="#0f172a" stroke="#38bdf8" rx="6"/>
+      <text x="90" y="25" fill="#38bdf8" font-size="11" font-weight="bold" text-anchor="middle">Data Sources</text>
+      <text x="15" y="55" fill="#cbd5e1" font-size="9">• Firewall / WAF Logs</text>
+      <text x="15" y="80" fill="#cbd5e1" font-size="9">• EDR Endpoint Telemetry</text>
+      <text x="15" y="105" fill="#cbd5e1" font-size="9">• DNS / NetFlow Traffic</text>
+      <text x="15" y="130" fill="#cbd5e1" font-size="9">• Cloud Audit Logs (CloudTrail)</text>
+      <text x="15" y="155" fill="#cbd5e1" font-size="9">• Identity & Auth Events</text>
+    </g>
+
+    <text x="215" y="145" fill="#d9a74a" font-size="22" font-weight="bold">➔</text>
+
+    <!-- SIEM Correlation -->
+    <g transform="translate(245, 50)">
+      <rect width="180" height="190" fill="#0f172a" stroke="#eab308" rx="6"/>
+      <text x="90" y="25" fill="#eab308" font-size="11" font-weight="bold" text-anchor="middle">SIEM Aggregation</text>
+      <text x="15" y="55" fill="#cbd5e1" font-size="9">• Normalization (CEF/JSON)</text>
+      <text x="15" y="80" fill="#cbd5e1" font-size="9">• Correlation Rules</text>
+      <text x="15" y="105" fill="#cbd5e1" font-size="9">• Threat Intel Feed (MISP/STIX)</text>
+      <text x="15" y="130" fill="#cbd5e1" font-size="9">• Anomaly Detection (UEBA)</text>
+      <text x="15" y="155" fill="#cbd5e1" font-size="9">• High-Fidelity Alerting</text>
+    </g>
+
+    <text x="440" y="145" fill="#d9a74a" font-size="22" font-weight="bold">➔</text>
+
+    <!-- SOAR Automation -->
+    <g transform="translate(470, 50)">
+      <rect width="180" height="190" fill="#0f172a" stroke="#22c55e" rx="6"/>
+      <text x="90" y="25" fill="#22c55e" font-size="11" font-weight="bold" text-anchor="middle">SOAR Automation</text>
+      <text x="15" y="55" fill="#cbd5e1" font-size="9">• Automated Ticket Generation</text>
+      <text x="15" y="80" fill="#cbd5e1" font-size="9">• IP / Domain Enrichment</text>
+      <text x="15" y="105" fill="#cbd5e1" font-size="9">• Auto-Quarantine Host</text>
+      <text x="15" y="130" fill="#cbd5e1" font-size="9">• Revoke Compromised Token</text>
+      <text x="15" y="155" fill="#cbd5e1" font-size="9">• Human-in-the-Loop Signoff</text>
+    </g>
+  </g>
+
+</svg>
+</div>
+
 
 ## Course: CIS-4328 Information Security
 

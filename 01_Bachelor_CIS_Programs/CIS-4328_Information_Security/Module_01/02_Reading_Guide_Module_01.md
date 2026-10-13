@@ -19,6 +19,72 @@
 </div>
 <!-- END TEXAS WESLEYAN VENDOR VIDEO EMBED -->
 
+<div style="text-align: center; margin: 24px 0;">
+<svg viewBox="0 0 800 480" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="max-width: 800px; background:#0f172a; border-radius:10px; border:2px solid #1b365d; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <rect width="100%" height="45" fill="#1b365d"/>
+  <text x="400" y="28" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">🏛️ TEXAS WESLEYAN UNIVERSITY • CIS-4328 INFORMATION SECURITY</text>
+  <text x="400" y="75" fill="#d9a74a" font-size="17" font-weight="bold" text-anchor="middle">The CIA Triad & Threat Vector Architecture</text>
+  <text x="400" y="98" fill="#94a3b8" font-size="12" text-anchor="middle">Confidentiality, Integrity, Availability Invariants and Defensive Controls</text>
+  
+  <!-- CIA Triad Triangle -->
+  <g transform="translate(100, 130)">
+    <!-- Central Shield -->
+    <polygon points="180,20 300,100 260,240 180,290 100,240 60,100" fill="#1e293b" stroke="#d9a74a" stroke-width="3"/>
+    <text x="180" y="165" fill="#ffffff" font-size="16" font-weight="bold" text-anchor="middle">INFORMATION</text>
+    <text x="180" y="188" fill="#d9a74a" font-size="14" font-weight="bold" text-anchor="middle">SECURITY ASSET</text>
+
+    <!-- Confidentiality Pillar -->
+    <circle cx="180" cy="-10" r="45" fill="#0284c7" stroke="#38bdf8" stroke-width="2"/>
+    <text x="180" y="-15" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">CONFIDENTIALITY</text>
+    <text x="180" y="5" fill="#e0f2fe" font-size="9" text-anchor="middle">AES-256 • TLS • RBAC</text>
+
+    <!-- Integrity Pillar -->
+    <circle cx="20" cy="250" r="45" fill="#16a34a" stroke="#4ade80" stroke-width="2"/>
+    <text x="20" y="245" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">INTEGRITY</text>
+    <text x="20" y="265" fill="#dcfce7" font-size="9" text-anchor="middle">SHA-256 • HMAC • FIM</text>
+
+    <!-- Availability Pillar -->
+    <circle cx="340" cy="250" r="45" fill="#ea580c" stroke="#fb923c" stroke-width="2"/>
+    <text x="340" y="245" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">AVAILABILITY</text>
+    <text x="340" y="265" fill="#ffedd5" font-size="9" text-anchor="middle">HA Clusters • RAID • BCP</text>
+  </g>
+
+  <!-- Threat Actor Matrix on Right -->
+  <g transform="translate(480, 120)">
+    <rect width="280" height="310" fill="#1e293b" stroke="#334155" rx="8"/>
+    <rect width="280" height="32" fill="#334155" rx="8"/>
+    <text x="140" y="22" fill="#d9a74a" font-size="13" font-weight="bold" text-anchor="middle">CompTIA SY0-701 Threat Vectors</text>
+    
+    <g transform="translate(15, 45)">
+      <rect width="250" height="42" fill="#0f172a" stroke="#ef4444" rx="4"/>
+      <text x="10" y="18" fill="#ef4444" font-size="11" font-weight="bold">Nation-State / APT</text>
+      <text x="10" y="32" fill="#94a3b8" font-size="9">High Funding • Stealth • Zero-Day Exploits</text>
+    </g>
+    <g transform="translate(15, 95)">
+      <rect width="250" height="42" fill="#0f172a" stroke="#f97316" rx="4"/>
+      <text x="10" y="18" fill="#f97316" font-size="11" font-weight="bold">Organized Cybercrime</text>
+      <text x="10" y="32" fill="#94a3b8" font-size="9">Financial Motivation • Ransomware • RaaS</text>
+    </g>
+    <g transform="translate(15, 145)">
+      <rect width="250" height="42" fill="#0f172a" stroke="#eab308" rx="4"/>
+      <text x="10" y="18" fill="#eab308" font-size="11" font-weight="bold">Insider Threats</text>
+      <text x="10" y="32" fill="#94a3b8" font-size="9">Legitimate Privileges • Data Exfiltration</text>
+    </g>
+    <g transform="translate(15, 195)">
+      <rect width="250" height="42" fill="#0f172a" stroke="#38bdf8" rx="4"/>
+      <text x="10" y="18" fill="#38bdf8" font-size="11" font-weight="bold">Hacktivists & Opportunists</text>
+      <text x="10" y="32" fill="#94a3b8" font-size="9">Ideological Exposure • DDoS • Public Leaks</text>
+    </g>
+    <g transform="translate(15, 245)">
+      <rect width="250" height="42" fill="#0f172a" stroke="#a855f7" rx="4"/>
+      <text x="10" y="18" fill="#a855f7" font-size="11" font-weight="bold">Supply Chain Infiltration</text>
+      <text x="10" y="32" fill="#94a3b8" font-size="9">3rd Party Dependencies • Code Signing Compromise</text>
+    </g>
+  </g>
+
+</svg>
+</div>
+
 
 ## CIS-4328 Information Security | Texas Wesleyan University
 
