@@ -1,3 +1,15 @@
+# ==============================================================================
+# STUDENT PRIVACY & FERPA PROTECTION - NEVER COMMIT TO GIT
+# ==============================================================================
+*grade*
+*roster*
+*attendance*
+*retention*
+*student*
+*.env*
+.canvas.env
+# ==============================================================================
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
